@@ -1,0 +1,9 @@
+{
+  "classification": "DEVELOPMENT_DIAGNOSTIC_NOT_HOLDOUT",
+  "locked_utc": "2026-10-23T02:23:05.044654+00:00",
+  "source_candidate": "84c729e0b0df7868dfcc0a6e48cac457d7959e92",
+  "sha256": {
+    "diagnostic-inputs.json": "df8369d5c647f542e9225c365d64916bf01c4a4cc0d6ba1ef31c838fbb805f2d",
+    "diagnostic-oracles.json": "1c3751835222b2379b757c4e9d4fba147b42e4d94b620cacb1c61787777f1f12"
+  }
+}

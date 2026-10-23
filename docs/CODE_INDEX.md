@@ -1,5 +1,14 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Session 4A offline readiness tooling (local, no product integration)
+
+Run `docs/evaluation/geometry/runs/hybrid-session4a-readiness/`: `audit_receipts.py` inventories refs/worktrees and reconciles
+immutable Session 3 receipts; `offline_replay.py::ReplayExtractor/replay_one` supplies a provider-independent local output seam,
+strict V2/source validation and code-based stage attribution, reusing the pinned Session 3 Adapter `/4` and existing scene validator.
+`test_offline_replay.py` checks that boundary; `planner_diagnostics.py` locks then measures twelve implementer-authored development
+probes and recovers benchmark-H row identities. These scripts require an explicitly selected Session 3 source checkout; they do not
+add a production provider or change flat/default/cache behavior. Reports and independent holdout protocol live beside the scripts.
+
 ## Backend Hybrid Session 2 — contract unification (`research/hybrid-backend-session2-contract`, LOCAL research, Hybrid off)
 
 Run `docs/evaluation/geometry/runs/backend-hybrid-contract-unification/` (report, `CONTRACT_DECISION_PROPOSAL.md`). No new module.

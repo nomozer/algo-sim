@@ -1,0 +1,677 @@
+{
+  "schema": "session4a_receipt_audit/1",
+  "provider_calls": 0,
+  "refs": {
+    "0f7b3a69": {
+      "exit_code": 0,
+      "stdout": "0f7b3a69d0f920a6cc115a7d9e1a89f693137208 3c96606bd605b633704365e23576f2677685ac90 2026-10-23T02:08:49+07:00 docs(eval): record Authoritative Full T3 Attempt 2 FULL_PRODUCT_GATE_PASS receipt at 84c729e0",
+      "stderr": ""
+    },
+    "227d447f": {
+      "exit_code": 0,
+      "stdout": "227d447f5c1ca55a2c4bd68f3c8c583228902cfc b208f1349adc7d4e46bf3742faca9dded2b15217 2026-10-22T23:23:11+07:00 docs(eval): record Session 2 Authoritative Full T3 PASS and handoff",
+      "stderr": ""
+    },
+    "69bd2fe4": {
+      "exit_code": 0,
+      "stdout": "69bd2fe48be1fd3afa6ce4112ccddda92a07d850 aefbe1e35564a0b278a88e94b27e573a4e49d598 2026-10-23T01:59:05+07:00 fix(registry): exempt derived-pyramid fresh labels only when question quote mentions solid operand",
+      "stderr": ""
+    },
+    "82d3d255": {
+      "exit_code": 0,
+      "stdout": "82d3d25540ea643a68bd7877eb1b67a78dfc7134 7b6f20cd3b2a0952a4757c58ae5991ae73e0aba9 2026-10-22T21:48:16+07:00 docs(eval): record Authoritative Full T3 Attempt 3 PASS and Session 1 continuation handoff",
+      "stderr": ""
+    },
+    "84c729e0": {
+      "exit_code": 0,
+      "stdout": "84c729e0b0df7868dfcc0a6e48cac457d7959e92 3194c9fb96e2f077638717e1c9b3706ce8a0ce32 2026-10-23T01:59:43+07:00 chore(eval): refreeze evaluation candidate for hybrid-contract-v2 (69bd2fe4, 116 files)",
+      "stderr": ""
+    },
+    "HEAD": {
+      "exit_code": 0,
+      "stdout": "fe9f555437498432427ae6bbd54402cdd59c7eb7 ba00c2410f42ecbc899cb8a5b330332bc63ee33d 2026-10-21T01:20:41+07:00 docs(geometry): record volume-reasoning Full T3, report and handoff",
+      "stderr": ""
+    },
+    "docs/real-model-e2e-readiness": {
+      "exit_code": 0,
+      "stdout": "4cfa547f0989e53b917cc020adf59e250acbf68d 752f928dd3f27cf5bf67ae623d1f3d52a2e2bed5 2026-10-10T02:29:58+07:00 docs(real-model-e2e-readiness): survey existing live harnesses, tooling gaps and a 16-problem G05 pilot proposal (0 model calls)",
+      "stderr": ""
+    },
+    "feat/real-model-pilot-tooling": {
+      "exit_code": 0,
+      "stdout": "471a2c796b44bf9bf8fc14ca02a5a365b440c2a7 5bf862568ae4a7aaf53c1325760e47d59a1ac7bf 2026-10-10T08:44:37+07:00 eval(g05-real-model-pilot): record PHASE B independent verification and the single live gemini-2.5-flash run",
+      "stderr": ""
+    },
+    "integration/extraction-v2-safety": {
+      "exit_code": 0,
+      "stdout": "330a222a2d4f627da7454378627a1497c239fb8c d875864115879a06e693575e6266592052bb8b0b 2026-10-17T17:20:17+07:00 eval(extraction-v2-safety): refreeze the candidate after the rightness binding fix",
+      "stderr": ""
+    },
+    "main": {
+      "exit_code": 0,
+      "stdout": "f10e6283dd3fd2cfdef189e1bef0ffdecf2be942 1a5ce85967755ac05b35460da27a29b7e6357e22 2026-10-22T19:30:36+07:00 docs(architecture,design): repair P0/P1 gateway docs for Hybrid and Scene3D scope",
+      "stderr": ""
+    },
+    "origin/main": {
+      "exit_code": 0,
+      "stdout": "43247c9e9375a3dbf2b5223324a58e6f932ca596 c157e44ef10bc8432f057342bc9001a3eebd2b70 2026-10-21T19:49:49+07:00 docs(eval): update archive-integrity.json and input-scenes byte count",
+      "stderr": ""
+    },
+    "research/compact-geometry-dsl": {
+      "exit_code": 0,
+      "stdout": "3db08a1e3c8a47a7284b7dbdfaac112640106593 01b0430ba090f8a77f9d706ff373b5635e2f8a7b 2026-10-13T17:52:59+07:00 docs(eval): record the compact DSL format evaluation (NO-GO, 0 model calls)",
+      "stderr": ""
+    },
+    "research/geometric-visual-correctness-framing": {
+      "exit_code": 0,
+      "stdout": "f95596716912e5550ed079287221274b2d70f24c fc13d72a8b197399659d8d193cf96b170c8753d9 2026-10-22T10:57:09+07:00 docs(evaluation): record independent review, authoritative T3 pass, and canonical doc sync",
+      "stderr": ""
+    },
+    "research/hybrid-backend-integration-session1": {
+      "exit_code": 0,
+      "stdout": "82d3d25540ea643a68bd7877eb1b67a78dfc7134 7b6f20cd3b2a0952a4757c58ae5991ae73e0aba9 2026-10-22T21:48:16+07:00 docs(eval): record Authoritative Full T3 Attempt 3 PASS and Session 1 continuation handoff",
+      "stderr": ""
+    },
+    "research/hybrid-backend-session2-contract": {
+      "exit_code": 0,
+      "stdout": "227d447f5c1ca55a2c4bd68f3c8c583228902cfc b208f1349adc7d4e46bf3742faca9dded2b15217 2026-10-22T23:23:11+07:00 docs(eval): record Session 2 Authoritative Full T3 PASS and handoff",
+      "stderr": ""
+    },
+    "research/hybrid-backend-session3-contract-v2": {
+      "exit_code": 0,
+      "stdout": "0f7b3a69d0f920a6cc115a7d9e1a89f693137208 3c96606bd605b633704365e23576f2677685ac90 2026-10-23T02:08:49+07:00 docs(eval): record Authoritative Full T3 Attempt 2 FULL_PRODUCT_GATE_PASS receipt at 84c729e0",
+      "stderr": ""
+    },
+    "research/hybrid-next-architecture-gap-audit": {
+      "exit_code": 0,
+      "stdout": "4f1d1a4886ae47c452fb533f21faa883918d175d 6e705053dd6ad44bdd10f9ba4c1abbc18744755e 2026-10-19T02:42:20+07:00 docs(research): add hybrid next-generation architecture gap audit and offline POCs",
+      "stderr": ""
+    },
+    "research/hybrid-route-d-preview-wiring": {
+      "exit_code": 0,
+      "stdout": "65d6ee97d6f693c6613153d28aaf40fa0f352ba1 79e9910186bef5bec2f76d2ddc3308e61ff8f570 2026-10-18T10:20:34+07:00 docs(eval): record the authoritative T3 and verdict for hybrid-route-d-preview-wiring",
+      "stderr": ""
+    },
+    "research/hybrid-semantic-extraction-v2": {
+      "exit_code": 0,
+      "stdout": "dc27009fe9530ced01c3e6d52898d789a62cb36f 7911ebc05dda8b62a22c7aa6e2014467b26dcefe 2026-10-17T16:58:27+07:00 fix(docs): restore 43 EVIDENCE_INDEX entries an unscoped substitution overwrote",
+      "stderr": ""
+    },
+    "research/hybrid-session4a-readiness": {
+      "exit_code": 0,
+      "stdout": "f10e6283dd3fd2cfdef189e1bef0ffdecf2be942 1a5ce85967755ac05b35460da27a29b7e6357e22 2026-10-22T19:30:36+07:00 docs(architecture,design): repair P0/P1 gateway docs for Hybrid and Scene3D scope",
+      "stderr": ""
+    },
+    "research/hybrid-wave3a-volume-reasoning": {
+      "exit_code": 0,
+      "stdout": "fe9f555437498432427ae6bbd54402cdd59c7eb7 ba00c2410f42ecbc899cb8a5b330332bc63ee33d 2026-10-21T01:20:41+07:00 docs(geometry): record volume-reasoning Full T3, report and handoff",
+      "stderr": ""
+    },
+    "research/nl-to-scene3d-e2e-readiness": {
+      "exit_code": 0,
+      "stdout": "25f57e31604c5a12ca30667276b17596dcceb71b a8b5c17329f51dbee878c29534f5396656216954 2026-10-21T22:00:39+07:00 eval(geometry): complete NL-to-Scene3D E2E research readiness campaign (nl-to-scene3d-e2e-readiness)",
+      "stderr": ""
+    },
+    "research/scene3d-plane-grid-camera": {
+      "exit_code": 0,
+      "stdout": "551a354174e1c213f3ad2bf03d7574ebf75f4d85 43715ba3c2cbddbc302a15dee3c1f1eb2143bb76 2026-10-18T19:32:31+07:00 docs(eval): close Scene3D metric boundary with clean full gates",
+      "stderr": ""
+    },
+    "research/scene3d-unified-visual-language": {
+      "exit_code": 0,
+      "stdout": "8618d84c917c5d5d41eb9a9cd41a40e93ae2996c 48262733d2239113f116b631f4712a21a4296452 2026-10-22T16:36:49+07:00 docs(evaluation): record Full T3 pass, freeze match and handoff for unified visual language",
+      "stderr": ""
+    },
+    "research/semantic-extraction-v3": {
+      "exit_code": 0,
+      "stdout": "7168d26963011433889dc907492df87ac62140f7 8994a3629a735cf67817958f181e172049b5974c 2026-10-18T01:08:33+07:00 docs(schema-contract): record takeover runtime blocker and verified gates",
+      "stderr": ""
+    },
+    "research/semantic-extraction-v3-runtime-revision": {
+      "exit_code": 0,
+      "stdout": "bb014eb832672948e613ac21984c7c65cee14b83 031bbeec2e2662a81b992332fc7b2daba2bda6fd 2026-10-18T02:25:38+07:00 docs: record semantic extraction v3 runtime revision report and T3 verification",
+      "stderr": ""
+    },
+    "research/simulation-coverage-visual-validation": {
+      "exit_code": 0,
+      "stdout": "d86c72031d8fc85cd4eef62d9379cd1690ba1417 bff7e8b20cb16755c8c7c3098ad22f4643d9333f 2026-10-21T13:29:00+07:00 docs(eval): record P12 authoritative full-product-gate pass and Round 2 review",
+      "stderr": ""
+    },
+    "research/simulation-visual-consistency-learning-ux": {
+      "exit_code": 0,
+      "stdout": "f6a8e30fb70d377c5a8a97db476ebd4d7c090336 bb47f201fa85112db608fa8b88d85ff8c271797d 2026-10-22T01:19:13+07:00 docs(geometry-ux): record authoritative T3 pass, final handoff, and canonical doc sync",
+      "stderr": ""
+    },
+    "research/visual-ux-final-quality": {
+      "exit_code": 0,
+      "stdout": "164a5e25ad25bf42d689df115ade5d74b5c733e9 6dfa8c57f4052bfa3bd483a57c7a6e50c9580adc 2026-10-22T06:43:01+07:00 docs(evaluation): record final visual UX correction evidence and T3 pass",
+      "stderr": ""
+    }
+  },
+  "worktrees": [
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim\nHEAD fe9f555437498432427ae6bbd54402cdd59c7eb7\nbranch refs/heads/research/hybrid-wave3a-volume-reasoning",
+      "status": {
+        "exit_code": 0,
+        "stdout": "?? docs/evaluation/geometry/runs/docs-final-go-main/\n?? docs/evaluation/geometry/runs/hybrid-go-main/\n?? docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/\n?? docs/evaluation/geometry/runs/hybrid-route-d-preview-go-main/\n?? docs/evaluation/geometry/runs/scene3d-go-main/\n?? docs/evaluation/geometry/runs/source-gate-hardening/verification/t3-fail-72d1595f.log\n?? frontend/public/",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: could not open directory '.pytest_cache/': Permission denied\nwarning: could not open directory 'backend/.pytest_cache/': Permission denied"
+      },
+      "backend_tree": "ce42ba14b809aae1b1ff9a74e2b2617bba9f22cc",
+      "frontend_tree": "194c2834441c3ebb388862e29fa2bc427f8bf72e"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/extraction-v2-safety\nHEAD 330a222a2d4f627da7454378627a1497c239fb8c\nbranch refs/heads/integration/extraction-v2-safety",
+      "status": {
+        "exit_code": 0,
+        "stdout": "M docs/EVIDENCE_INDEX.md\n M docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/handoff.md\n?? docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/integration.md",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied"
+      },
+      "backend_tree": "93b0327675714aa9acda441888f4e3f536457711",
+      "frontend_tree": "809a6771da360504968066a2b95579c2a613fb5b"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/freeze-scene3d-metric-boundary\nHEAD cb1f4954a7243de0561b3e724b7b2e94cb36bffc\ndetached",
+      "status": {
+        "exit_code": 0,
+        "stdout": "M docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied"
+      },
+      "backend_tree": "a7aaf0f99e1d6512d8f715f7879c52577f63516e",
+      "frontend_tree": "5b515feb212351c972b08c9c57590d7ef38ef9ae"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/freeze-scene3d-metric-final\nHEAD 216bbf84beb4a2bbd0e6d6c688a4f3e4becf24bc\ndetached",
+      "status": {
+        "exit_code": 0,
+        "stdout": "M docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied"
+      },
+      "backend_tree": "a7aaf0f99e1d6512d8f715f7879c52577f63516e",
+      "frontend_tree": "2404de2129b4d69ce59289b1d8919ba7e8419bb5"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/geometric-visual-correctness-framing\nHEAD f95596716912e5550ed079287221274b2d70f24c\nbranch refs/heads/research/geometric-visual-correctness-framing",
+      "status": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: could not open directory 'backend/.pytest_cache/': Permission denied"
+      },
+      "backend_tree": "af8ff28a2f25e6995e6b3f86dd6262d4556440cc",
+      "frontend_tree": "dd8c77ea1d7c42272a16cf331dde764c3b43c7a1"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-backend-continuation-verify\nHEAD 76a7ce33cc955a1e4a2e01d4d5374493c843d86c\ndetached",
+      "status": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: could not open directory 'backend/.pytest_cache/': Permission denied"
+      },
+      "backend_tree": "bc7bce376fb2eea809b9daac7d4665818af1fd30",
+      "frontend_tree": "0d4b20883c4b5741653579bc9b418ccd3d4db7b8"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-backend-s1\nHEAD 82d3d25540ea643a68bd7877eb1b67a78dfc7134\nbranch refs/heads/research/hybrid-backend-integration-session1",
+      "status": {
+        "exit_code": 0,
+        "stdout": "?? docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/bridge-boundary-red/stderr.log\n?? docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/bridge-boundary-red/stdout.log\n?? docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/full-t3/stderr.log\n?? docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/full-t3/stdout.log\n?? docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/plane-identity-red/stderr.log\n?? docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/plane-identity-red/stdout.log\n?? docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/qualified-edge-red/stderr.log\n?? docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/qualified-edge-red/stdout.log\n?? docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/repro-c2b/stderr.log\n?? docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/repro-c2b/stdout.log\n?? docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/t3-attempt1/stderr.log\n?? docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/t3-attempt1/stdout.log",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: could not open directory 'backend/.pytest_cache/': Permission denied"
+      },
+      "backend_tree": "bc7bce376fb2eea809b9daac7d4665818af1fd30",
+      "frontend_tree": "0d4b20883c4b5741653579bc9b418ccd3d4db7b8"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-backend-s2\nHEAD 227d447f5c1ca55a2c4bd68f3c8c583228902cfc\nbranch refs/heads/research/hybrid-backend-session2-contract",
+      "status": {
+        "exit_code": 0,
+        "stdout": "?? docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/d2-strict-fallout/nonstrict-before-test-corrections.log\n?? docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/d2-strict-fallout/strict-at-3553e4d4.log\n?? docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/full-t3/stderr.log\n?? docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/full-t3/stdout.log\n?? docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/geometry-dir-first-run-before-fixes.log\n?? docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/p3-composition-suites.log\n?? docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/red/p1-red.log\n?? docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/red/p2-red.log\n?? docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/red/p4-red.log\n?? docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/red/p5-red.log",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied"
+      },
+      "backend_tree": "200d34a972323bc5bb6f4c46a8bbe055a3982189",
+      "frontend_tree": "0d4b20883c4b5741653579bc9b418ccd3d4db7b8"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-backend-s3\nHEAD 0f7b3a69d0f920a6cc115a7d9e1a89f693137208\nbranch refs/heads/research/hybrid-backend-session3-contract-v2",
+      "status": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: could not open directory 'backend/.pytest_cache/': Permission denied"
+      },
+      "backend_tree": "357afcfae2289cfed286cb47f709c708a6c661cc",
+      "frontend_tree": "0d4b20883c4b5741653579bc9b418ccd3d4db7b8"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-route-d-preview-wiring\nHEAD 65d6ee97d6f693c6613153d28aaf40fa0f352ba1\nbranch refs/heads/research/hybrid-route-d-preview-wiring",
+      "status": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied"
+      },
+      "backend_tree": "34c40ffad698a210f835e32d498164284732a39d",
+      "frontend_tree": "2e4b0b3ca635bf2db1600edd522f73ae03792e09"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-semantic-extraction-v2\nHEAD dc27009fe9530ced01c3e6d52898d789a62cb36f\nbranch refs/heads/research/hybrid-semantic-extraction-v2",
+      "status": {
+        "exit_code": 0,
+        "stdout": "?? backend/.tmp/",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied"
+      },
+      "backend_tree": "d261fb7b7f5d517f31b67672e92ef2043dcdae2e",
+      "frontend_tree": "809a6771da360504968066a2b95579c2a613fb5b"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-session4a-readiness\nHEAD f10e6283dd3fd2cfdef189e1bef0ffdecf2be942\nbranch refs/heads/research/hybrid-session4a-readiness",
+      "status": {
+        "exit_code": 0,
+        "stdout": "?? docs/evaluation/geometry/runs/hybrid-session4a-readiness/",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied"
+      },
+      "backend_tree": "63ce7dfc3032fe9215fec0db5e5e2c006ae5a1c9",
+      "frontend_tree": "0d4b20883c4b5741653579bc9b418ccd3d4db7b8"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-session4a-s3-verify\nHEAD 84c729e0b0df7868dfcc0a6e48cac457d7959e92\ndetached",
+      "status": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied"
+      },
+      "backend_tree": "357afcfae2289cfed286cb47f709c708a6c661cc",
+      "frontend_tree": "0d4b20883c4b5741653579bc9b418ccd3d4db7b8"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/nl-to-scene3d-e2e-readiness\nHEAD 25f57e31604c5a12ca30667276b17596dcceb71b\nbranch refs/heads/research/nl-to-scene3d-e2e-readiness",
+      "status": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: could not open directory 'backend/.pytest_cache/': Permission denied"
+      },
+      "backend_tree": "63ce7dfc3032fe9215fec0db5e5e2c006ae5a1c9",
+      "frontend_tree": "0d4b20883c4b5741653579bc9b418ccd3d4db7b8"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/s1-freeze\nHEAD 404f0568a00651505ec0773754a04ef5c493f5f9\ndetached",
+      "status": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: could not open directory 'backend/.pytest_cache/': Permission denied"
+      },
+      "backend_tree": "b373b7969a423c9af7a1277721d6ac3e6e633432",
+      "frontend_tree": "0d4b20883c4b5741653579bc9b418ccd3d4db7b8"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/s2-freeze\nHEAD 3553e4d45991954dd0fb8c0ac30bf5fb79a3ff51\ndetached",
+      "status": {
+        "exit_code": 0,
+        "stdout": "M docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied"
+      },
+      "backend_tree": "200d34a972323bc5bb6f4c46a8bbe055a3982189",
+      "frontend_tree": "0d4b20883c4b5741653579bc9b418ccd3d4db7b8"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/scene3d-plane-grid-camera\nHEAD 551a354174e1c213f3ad2bf03d7574ebf75f4d85\nbranch refs/heads/research/scene3d-plane-grid-camera",
+      "status": {
+        "exit_code": 0,
+        "stdout": "?? docs/evaluation/geometry/runs/scene3d-human-visual-evidence/",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: could not open directory 'backend/.pytest_cache/': Permission denied"
+      },
+      "backend_tree": "a7aaf0f99e1d6512d8f715f7879c52577f63516e",
+      "frontend_tree": "2404de2129b4d69ce59289b1d8919ba7e8419bb5"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/scene3d-unified-visual-language\nHEAD 8618d84c917c5d5d41eb9a9cd41a40e93ae2996c\nbranch refs/heads/research/scene3d-unified-visual-language",
+      "status": {
+        "exit_code": 0,
+        "stdout": "?? .gitattributes\n?? debug.log\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/A-complete/\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/A/\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/B-complete/\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/C-complete/\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/baseline-complete/\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/baseline/\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/concave-pentagonal-pyramid-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/concave-pentagonal-pyramid-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/concave-pentagonal-pyramid-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/concave-pentagonal-pyramid-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/concave-pentagonal-pyramid-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/concave-pentagonal-pyramid-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/concave-pentagonal-pyramid-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/concave-pentagonal-pyramid-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/cone-oblique-ellipse-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/cone-oblique-ellipse-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/cone-oblique-ellipse-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/cone-oblique-ellipse-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/cone-oblique-ellipse-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/cone-oblique-ellipse-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/cone-oblique-ellipse-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/cone-oblique-ellipse-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family01_triangular_pyramid-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family01_triangular_pyramid-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family01_triangular_pyramid-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family01_triangular_pyramid-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family01_triangular_pyramid-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family01_triangular_pyramid-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family01_triangular_pyramid-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family01_triangular_pyramid-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family02_quadrilateral_pyramid-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family02_quadrilateral_pyramid-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family02_quadrilateral_pyramid-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family02_quadrilateral_pyramid-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family02_quadrilateral_pyramid-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family02_quadrilateral_pyramid-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family02_quadrilateral_pyramid-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family02_quadrilateral_pyramid-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family03_regular_pyramid-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family03_regular_pyramid-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family03_regular_pyramid-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family03_regular_pyramid-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family03_regular_pyramid-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family03_regular_pyramid-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family03_regular_pyramid-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family03_regular_pyramid-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family04_derived_sub_pyramid-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family04_derived_sub_pyramid-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family04_derived_sub_pyramid-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family04_derived_sub_pyramid-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family04_derived_sub_pyramid-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family04_derived_sub_pyramid-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family04_derived_sub_pyramid-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family04_derived_sub_pyramid-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family05_prism-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family05_prism-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family05_prism-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family05_prism-hidden.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family05_prism-isolated.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family05_prism-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family05_prism-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family05_prism-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family05_prism-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family05_prism-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family06a_cube-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family06a_cube-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family06a_cube-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family06a_cube-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family06a_cube-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family06a_cube-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family06a_cube-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family06a_cube-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family06b_cuboid-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family06b_cuboid-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family06b_cuboid-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family06b_cuboid-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family06b_cuboid-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family06b_cuboid-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family06b_cuboid-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family06b_cuboid-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family07_multi_solid_composition-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family07_multi_solid_composition-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family07_multi_solid_composition-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family07_multi_solid_composition-hidden.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family07_multi_solid_composition-isolated.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family07_multi_solid_composition-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family07_multi_solid_composition-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family07_multi_solid_composition-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family07_multi_solid_composition-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family07_multi_solid_composition-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family08_unnamed_section_vertices-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family08_unnamed_section_vertices-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family08_unnamed_section_vertices-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family08_unnamed_section_vertices-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family08_unnamed_section_vertices-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family08_unnamed_section_vertices-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family08_unnamed_section_vertices-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family08_unnamed_section_vertices-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family09_cylinder_and_sections-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family09_cylinder_and_sections-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family09_cylinder_and_sections-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family09_cylinder_and_sections-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family09_cylinder_and_sections-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family09_cylinder_and_sections-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family09_cylinder_and_sections-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family09_cylinder_and_sections-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family10_cone_frustum_cut-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family10_cone_frustum_cut-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family10_cone_frustum_cut-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family10_cone_frustum_cut-hidden.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family10_cone_frustum_cut-isolated.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family10_cone_frustum_cut-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family10_cone_frustum_cut-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family10_cone_frustum_cut-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family10_cone_frustum_cut-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family10_cone_frustum_cut-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family11_sphere_plane_cut-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family11_sphere_plane_cut-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family11_sphere_plane_cut-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family11_sphere_plane_cut-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family11_sphere_plane_cut-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family11_sphere_plane_cut-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family11_sphere_plane_cut-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family11_sphere_plane_cut-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family12_cylinder_ellipse_section-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family12_cylinder_ellipse_section-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family12_cylinder_ellipse_section-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family12_cylinder_ellipse_section-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family12_cylinder_ellipse_section-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family12_cylinder_ellipse_section-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family12_cylinder_ellipse_section-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family12_cylinder_ellipse_section-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/family13_invalid_geometry_refusal-refusal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/oblique-prism-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/oblique-prism-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/oblique-prism-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/oblique-prism-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/oblique-prism-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/oblique-prism-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/oblique-prism-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/oblique-prism-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/polygon-chain-base-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/polygon-chain-base-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/polygon-chain-base-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/polygon-chain-base-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/polygon-chain-base-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/polygon-chain-base-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/polygon-chain-base-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/polygon-chain-base-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/progress.json\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-cau-cat-mat-phang-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-cau-cat-mat-phang-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-cau-cat-mat-phang-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-cau-cat-mat-phang-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-cau-cat-mat-phang-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-cau-cat-mat-phang-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-cau-cat-mat-phang-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-cau-cat-mat-phang-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-cau-the-tich-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-cau-the-tich-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-cau-the-tich-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-cau-the-tich-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-cau-the-tich-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-cau-the-tich-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-cau-the-tich-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-cau-the-tich-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-mat-cheo-sac-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-mat-cheo-sac-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-mat-cheo-sac-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-mat-cheo-sac-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-mat-cheo-sac-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-mat-cheo-sac-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-mat-cheo-sac-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-mat-cheo-sac-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-mp-vuong-goc-duong-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-mp-vuong-goc-duong-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-mp-vuong-goc-duong-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-mp-vuong-goc-duong-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-mp-vuong-goc-duong-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-mp-vuong-goc-duong-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-mp-vuong-goc-duong-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-mp-vuong-goc-duong-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-non-duong-sinh-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-non-duong-sinh-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-non-duong-sinh-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-non-duong-sinh-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-non-duong-sinh-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-non-duong-sinh-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-non-duong-sinh-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-non-duong-sinh-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-non-thiet-dien-truc-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-non-thiet-dien-truc-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-non-thiet-dien-truc-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-non-thiet-dien-truc-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-non-thiet-dien-truc-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-non-thiet-dien-truc-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-non-thiet-dien-truc-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-non-thiet-dien-truc-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-the-tich-chop-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-the-tich-chop-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-the-tich-chop-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-the-tich-chop-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-the-tich-chop-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-the-tich-chop-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-the-tich-chop-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-the-tich-chop-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-thiet-dien-chop-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-thiet-dien-chop-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-thiet-dien-chop-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-thiet-dien-chop-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-thiet-dien-chop-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-thiet-dien-chop-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-thiet-dien-chop-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-thiet-dien-chop-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-tru-thiet-dien-tron-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-tru-thiet-dien-tron-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-tru-thiet-dien-tron-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-tru-thiet-dien-tron-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-tru-thiet-dien-tron-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-tru-thiet-dien-tron-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-tru-thiet-dien-tron-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-tru-thiet-dien-tron-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-tru-truc-xien-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-tru-truc-xien-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-tru-truc-xien-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-tru-truc-xien-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-tru-truc-xien-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-tru-truc-xien-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-tru-truc-xien-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-tru-truc-xien-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-vuong-goc-chop-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-vuong-goc-chop-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-vuong-goc-chop-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-vuong-goc-chop-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-vuong-goc-chop-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-vuong-goc-chop-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-vuong-goc-chop-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/public-vuong-goc-chop-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-hexagonal-pyramid-hex-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-hexagonal-pyramid-hex-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-hexagonal-pyramid-hex-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-hexagonal-pyramid-hex-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-hexagonal-pyramid-hex-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-hexagonal-pyramid-hex-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-hexagonal-pyramid-hex-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-hexagonal-pyramid-hex-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-prisms-3-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-prisms-3-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-prisms-3-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-prisms-3-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-prisms-3-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-prisms-3-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-prisms-3-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-prisms-3-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-prisms-6-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-prisms-6-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-prisms-6-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-prisms-6-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-prisms-6-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-prisms-6-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-prisms-6-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular-prisms-6-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular_tetrahedron-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular_tetrahedron-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular_tetrahedron-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular_tetrahedron-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular_tetrahedron-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular_tetrahedron-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular_tetrahedron-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular_tetrahedron-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular_triangular_pyramid-1024-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular_triangular_pyramid-820-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular_triangular_pyramid-analysis.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular_triangular_pyramid-normal.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular_triangular_pyramid-orbit.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular_triangular_pyramid-repeat.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular_triangular_pyramid-selected.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v2/regular_triangular_pyramid-xray.png\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final-v3/\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/final/\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/survey-A/\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/survey-B/\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/survey-C/\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/survey-development-A/\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/survey-development-B/",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied"
+      },
+      "backend_tree": "af8ff28a2f25e6995e6b3f86dd6262d4556440cc",
+      "frontend_tree": "3df6f1617536fa1fef16559594ac89bc87867e84"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/semantic-extraction-v3\nHEAD 7168d26963011433889dc907492df87ac62140f7\nbranch refs/heads/research/semantic-extraction-v3",
+      "status": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied"
+      },
+      "backend_tree": "9b834a9e024aeda9be823ac79df1e5b0cca472d2",
+      "frontend_tree": "2e4b0b3ca635bf2db1600edd522f73ae03792e09"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/semantic-extraction-v3-runtime-revision\nHEAD bb014eb832672948e613ac21984c7c65cee14b83\nbranch refs/heads/research/semantic-extraction-v3-runtime-revision",
+      "status": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied"
+      },
+      "backend_tree": "efe867355c56646a95f4cb446517d8f483376ad2",
+      "frontend_tree": "2e4b0b3ca635bf2db1600edd522f73ae03792e09"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/simulation-coverage-visual-validation\nHEAD d86c72031d8fc85cd4eef62d9379cd1690ba1417\nbranch refs/heads/research/simulation-coverage-visual-validation",
+      "status": {
+        "exit_code": 0,
+        "stdout": "M docs/EVIDENCE_INDEX.md\n?? docs/evaluation/geometry/runs/simulation-evidence-reconciliation/",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: could not open directory 'backend/.pytest_cache/': Permission denied"
+      },
+      "backend_tree": "63ce7dfc3032fe9215fec0db5e5e2c006ae5a1c9",
+      "frontend_tree": "4fafd8e74787d4cd936145b589b5f753a2787915"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/simulation-visual-consistency-learning-ux\nHEAD f6a8e30fb70d377c5a8a97db476ebd4d7c090336\nbranch refs/heads/research/simulation-visual-consistency-learning-ux",
+      "status": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: could not open directory '.pytest_cache/': Permission denied\nwarning: could not open directory 'backend/.pytest_cache/': Permission denied"
+      },
+      "backend_tree": "c203ee665c6fc1198f3db79530ca1da1d14a9dca",
+      "frontend_tree": "cb49119d9bec2f216d218206f0088cb5ffc82ce7"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-s2\nHEAD f1ae22384e3e01255879f52aa4104eb33ca46a3f\ndetached",
+      "status": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: could not open directory 'backend/.pytest_cache/': Permission denied"
+      },
+      "backend_tree": "200d34a972323bc5bb6f4c46a8bbe055a3982189",
+      "frontend_tree": "0d4b20883c4b5741653579bc9b418ccd3d4db7b8"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-scene3d-metric-boundary\nHEAD 2160fbcf3a8ec489f8ac792ffccdcf7436f30c86\ndetached",
+      "status": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied"
+      },
+      "backend_tree": "a7aaf0f99e1d6512d8f715f7879c52577f63516e",
+      "frontend_tree": "5b515feb212351c972b08c9c57590d7ef38ef9ae"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-scene3d-pre-main\nHEAD 61668c9362c49df39f1ae948b0e7a7e1cad33f95\ndetached",
+      "status": {
+        "exit_code": 0,
+        "stdout": "?? frontend/scripts/f4-harness.html\n?? frontend/scripts/f4-harness.tsx",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: could not open directory 'backend/.pytest_cache/': Permission denied"
+      },
+      "backend_tree": "a7aaf0f99e1d6512d8f715f7879c52577f63516e",
+      "frontend_tree": "28c654111024531791ac462e867d50393dabf4a4"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-scene3d-pre-main-2\nHEAD 8e2235e7a540da58c48adf6fcced12624676119c\ndetached",
+      "status": {
+        "exit_code": 0,
+        "stdout": "?? frontend/scripts/f4-harness.html\n?? frontend/scripts/f4-harness.tsx",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: could not open directory 'backend/.pytest_cache/': Permission denied"
+      },
+      "backend_tree": "a7aaf0f99e1d6512d8f715f7879c52577f63516e",
+      "frontend_tree": "86dfae72704ac0b73b4dd25167e093782fade9bd"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/verify-geometric-visual-correctness-framing\nHEAD 7868db0aef3810e2089b5f8b8d6aecfb8b3e1400\ndetached",
+      "status": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: could not open directory 'backend/.pytest_cache/': Permission denied"
+      },
+      "backend_tree": "af8ff28a2f25e6995e6b3f86dd6262d4556440cc",
+      "frontend_tree": "dd8c77ea1d7c42272a16cf331dde764c3b43c7a1"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/verify-visual-ux-final-quality\nHEAD 9343e8d0d4c4cdf5bf0865e0a550c13f238f28b5\ndetached",
+      "status": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied"
+      },
+      "backend_tree": "c203ee665c6fc1198f3db79530ca1da1d14a9dca",
+      "frontend_tree": "ac9a7cfa5b466c34af3ee2399b19dea7348593bc"
+    },
+    {
+      "identity": "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-ux-final-quality\nHEAD 164a5e25ad25bf42d689df115ade5d74b5c733e9\nbranch refs/heads/research/visual-ux-final-quality",
+      "status": {
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "warning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\Bunny/.config/git/ignore': Permission denied"
+      },
+      "backend_tree": "c203ee665c6fc1198f3db79530ca1da1d14a9dca",
+      "frontend_tree": "ac9a7cfa5b466c34af3ee2399b19dea7348593bc"
+    }
+  ],
+  "ancestry_exit_codes": {
+    "origin/main -> main": 0,
+    "82d3d255 -> 227d447f": 0,
+    "227d447f -> 0f7b3a69": 0,
+    "0f7b3a69 -> main": 1,
+    "main -> 0f7b3a69": 1
+  },
+  "remote_freshness": "LOCAL_TRACKING_REF_ONLY_NO_FETCH",
+  "merge_analysis": {
+    "base": "43247c9e9375a3dbf2b5223324a58e6f932ca596",
+    "command": "git merge-tree BASE main 0f7b3a69 (read-only three-tree mode)",
+    "exit_code": 0,
+    "conflict_markers": 0,
+    "output_sha256": "fa482a4a2e2c9c415f1b903b99c93773337734d8b4e7f43797faf1ce84fb9db5"
+  },
+  "diff_main_s3": "M\tbackend/app/ai/adapter3_simulation.py\nA\tbackend/app/ai/adapter4_route.py\nM\tbackend/app/ai/fact_extraction.py\nM\tbackend/app/ai/function_route.py\nM\tbackend/app/ai/hybrid_preview.py\nM\tbackend/app/simulation/geometry_functions/engine.py\nM\tbackend/app/simulation/geometry_functions/planner.py\nM\tbackend/app/simulation/geometry_functions/registry.py\nM\tbackend/app/simulation/geometry_functions/typed_fact_next.py\nA\tbackend/app/simulation/geometry_functions/typed_fact_next_bridge.py",
+  "units": {
+    "A_locked_payloads": 47,
+    "B_replayed_payloads": 60,
+    "C_parity_payloads": 316,
+    "D_metamorphic_payloads": 33,
+    "E_payload_conventions": 20,
+    "F_budget_payloads": 8,
+    "G_corpus_payloads": 16,
+    "H_two_arm_rows": 60
+  },
+  "mixed_unit_total": 560,
+  "claimed_562": "NOT_RECONCILED",
+  "composition_plan_inspections": 38,
+  "fuzz": {
+    "baseline-adapter3.json": {
+      "route": "adapter3",
+      "runs": 13661,
+      "escaped_exceptions": 1015,
+      "internal_errors": 0
+    },
+    "baseline-bridge.json": {
+      "route": "bridge",
+      "runs": 13661,
+      "escaped_exceptions": 0,
+      "internal_errors": 0
+    },
+    "p1-adapter3.json": {
+      "route": "adapter3",
+      "runs": 13661,
+      "escaped_exceptions": 0,
+      "internal_errors": 0
+    },
+    "p1-bridge.json": {
+      "route": "bridge",
+      "runs": 13661,
+      "escaped_exceptions": 0,
+      "internal_errors": 0
+    },
+    "p3-v2.json": {
+      "route": "v2",
+      "runs": 19114,
+      "escaped_exceptions": 0,
+      "internal_errors": 0
+    }
+  },
+  "grammar_expected": {
+    "SERVE": 22,
+    "REFUSE_SOURCE": 19,
+    "REFUSE_GEOMETRY": 4,
+    "REFUSE_KERNEL": 2
+  },
+  "immutable_sources": {
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/BACKEND_MIGRATION_READINESS.md": {
+      "bytes": 8741,
+      "sha256": "50854e8f36f6681ff142ffe129602e25e2388f4958e16e48cc4658b4b0cd5433",
+      "lf_sha256": "50854e8f36f6681ff142ffe129602e25e2388f4958e16e48cc4658b4b0cd5433"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/candidate_divergence.json": {
+      "bytes": 2262,
+      "sha256": "bbb541f10df5645bc0a4a4cb8763921df4c468c80133fe0e3f760edae740b41b",
+      "lf_sha256": "bbb541f10df5645bc0a4a4cb8763921df4c468c80133fe0e3f760edae740b41b"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/CONTRACT_V2_IMPLEMENTATION_REPORT.md": {
+      "bytes": 8104,
+      "sha256": "9b1d1acbf8d9308b01bb79575d6d8bdc7ec2f333719e06cf582310685ac45b01",
+      "lf_sha256": "9b1d1acbf8d9308b01bb79575d6d8bdc7ec2f333719e06cf582310685ac45b01"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/evaluate_grammar_set.py": {
+      "bytes": 4635,
+      "sha256": "67a4317ccd7e802fc27b2035fccfb88344c459364716727cf6af5ba31d47e81c",
+      "lf_sha256": "67a4317ccd7e802fc27b2035fccfb88344c459364716727cf6af5ba31d47e81c"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/evaluate_session3.py": {
+      "bytes": 24020,
+      "sha256": "f8c8968baaa2b5a00d92f68390eb313c3213677e0fdb2e8917c82af6133bf829",
+      "lf_sha256": "f8c8968baaa2b5a00d92f68390eb313c3213677e0fdb2e8917c82af6133bf829"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/fuzz_boundary.py": {
+      "bytes": 5380,
+      "sha256": "e52ea7c116f589fabded6f2995141e0df366b529c744dd221decb2d99a077e87",
+      "lf_sha256": "e52ea7c116f589fabded6f2995141e0df366b529c744dd221decb2d99a077e87"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/grammar-set.json": {
+      "bytes": 161970,
+      "sha256": "10c57be7b485d7b3f1a97183ff41b28988e70641e297e01cccf68d1434cc4abe",
+      "lf_sha256": "10c57be7b485d7b3f1a97183ff41b28988e70641e297e01cccf68d1434cc4abe"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/grammar-set.lock.json": {
+      "bytes": 653,
+      "sha256": "02542fe8f36c0ca5e85b540df7739347907f0dd69fc5541d29023e64e83800a5",
+      "lf_sha256": "02542fe8f36c0ca5e85b540df7739347907f0dd69fc5541d29023e64e83800a5"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/grammar_set.py": {
+      "bytes": 22803,
+      "sha256": "550ea560f0c3933a5b50a9ee67b3b87c050025349e2c352ecd10a26b4d818c8c",
+      "lf_sha256": "550ea560f0c3933a5b50a9ee67b3b87c050025349e2c352ecd10a26b4d818c8c"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/handoff.md": {
+      "bytes": 2895,
+      "sha256": "79539b7c432fb8bd345b4be94fbf4538633737ceed58442ac65323dbf3e7f3c3",
+      "lf_sha256": "79539b7c432fb8bd345b4be94fbf4538633737ceed58442ac65323dbf3e7f3c3"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/INDEPENDENT_REVIEW.md": {
+      "bytes": 10903,
+      "sha256": "7f1013999286a524ae5261c3d5192899866cd73ed031640169f078952dbb1fcc",
+      "lf_sha256": "7f1013999286a524ae5261c3d5192899866cd73ed031640169f078952dbb1fcc"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/plan.md": {
+      "bytes": 3879,
+      "sha256": "c7b59476d88dd3d69d59f3209b6253daadfa4b5fff779a64f97e34d1c15649fc",
+      "lf_sha256": "c7b59476d88dd3d69d59f3209b6253daadfa4b5fff779a64f97e34d1c15649fc"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/PLANNER_COMPOSITION_AND_REUSE_REPORT.md": {
+      "bytes": 8720,
+      "sha256": "f1b0942fb4efcb371a89b49ffb41c0c2de21fa7cc0c7eb5d43e7984faac41fe1",
+      "lf_sha256": "f1b0942fb4efcb371a89b49ffb41c0c2de21fa7cc0c7eb5d43e7984faac41fe1"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/report.md": {
+      "bytes": 2737,
+      "sha256": "0aa39ebe5bf0b7b8ce2ba3a4aa79492a1bf5e4abd0dde4391edd2b6c3f632827",
+      "lf_sha256": "0aa39ebe5bf0b7b8ce2ba3a4aa79492a1bf5e4abd0dde4391edd2b6c3f632827"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/run.json": {
+      "bytes": 3459,
+      "sha256": "0f8cf11c2274f29216c58259e1be16e5eb3c87c628dee10ff61428857075f6b5",
+      "lf_sha256": "0f8cf11c2274f29216c58259e1be16e5eb3c87c628dee10ff61428857075f6b5"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/SESSION3_FINAL_REPORT.md": {
+      "bytes": 9859,
+      "sha256": "a5f8b1efa147d7fb39698d711ebf40a7f3f78c9a5e6d25cac7a3f2b0f05ceddb",
+      "lf_sha256": "a5f8b1efa147d7fb39698d711ebf40a7f3f78c9a5e6d25cac7a3f2b0f05ceddb"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/SESSION3_RESUME_STATE.md": {
+      "bytes": 12313,
+      "sha256": "8640c8e09ebf232a82f03d511e9ef282fade972267c53db18bc2f8eab63adb56",
+      "lf_sha256": "8640c8e09ebf232a82f03d511e9ef282fade972267c53db18bc2f8eab63adb56"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/SOURCE_GATE_COVERAGE_MATRIX.md": {
+      "bytes": 10027,
+      "sha256": "d3059d7d615f4c0d0dace597560b4832918105a3b8a8fb59a3c492972f181d70",
+      "lf_sha256": "d3059d7d615f4c0d0dace597560b4832918105a3b8a8fb59a3c492972f181d70"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/evaluation/family-a-locked-grammar-v2.json": {
+      "bytes": 19831,
+      "sha256": "1de00b514100f242b0467ec0dfa3f0a933c7c21d6864b1b8a5fcce69da14ef70",
+      "lf_sha256": "7b6bf6628d9a1a8d0f6432f84b8225f52e167079f627c7db6dacbb342290cc74"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/evaluation/session1-family-replay.json": {
+      "bytes": 62990,
+      "sha256": "af59922eb596d0579d048bea8e3c8c3855dc9eb6cff39d622bd46c0335e47cd1",
+      "lf_sha256": "841076a63979e1a92ecdd9290f49974b93b835768c1b76a91bbfc3d716cbb077"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/evaluation/session3-evaluation-full.json": {
+      "bytes": 61489,
+      "sha256": "03afd727ad8910ce971a66ed4bf07fa9340c4bbeecdea167a0f4f1e16a366beb",
+      "lf_sha256": "fe5e775874ecc36dc74d42619ee804bbc6ac148278b4842418f9c152becffab4"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/evaluation/session3-evaluation-summary.json": {
+      "bytes": 5646,
+      "sha256": "784c0da33e8b3f5de43b44bbc8ff27c4b2a86591e6817df56ba87a2373674a0f",
+      "lf_sha256": "dcafd0b87fa4036c9894cf33f777e857d32d2e44b864fa48a31ddddf901a51fd"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/full-t3/execution.json": {
+      "bytes": 1008,
+      "sha256": "a3a9d957ddcbf9f74008d1884a3f7d5a5c816a20eb04905c43644a1d7a7f8c34",
+      "lf_sha256": "cb4f262d9324512bd00a4dbb07ca4eff0e0538d775a0e3a5b914f0e7244a0a15"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/full-t3/post-t3-freeze-verify.json": {
+      "bytes": 416,
+      "sha256": "a9f80408554ad3fbcb9e2b3101ea61d50f48f1c630b960a8cdb2f5296a90b0ee",
+      "lf_sha256": "9abe8434f90bba82da27eac47c543bad3b36f1bcc842ddeab0347aed6b866db6"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/full-t3-attempt1/execution.json": {
+      "bytes": 1008,
+      "sha256": "6ba485cc0d11d809421d1843539c80a4c9b4926727de1e72cd6ba4154dfd1f07",
+      "lf_sha256": "654d8b628789c21c4c270e128007ef7a72afd554553da98345568849bfaa66d0"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/full-t3-attempt1/post-t3-freeze-verify.json": {
+      "bytes": 416,
+      "sha256": "f2e0c49298761e5151dba5ab18b3c6c19bd5fae12a18b8b9486acfbcce47baeb",
+      "lf_sha256": "5469908b320b452a5b6bf0877ef80205f936ce421a76f6861cc6929e4ccfd042"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/fuzz/baseline-adapter3.json": {
+      "bytes": 2552,
+      "sha256": "82037dc62df99bba3bd0ce8fc332f2af8ca425166344165d5752590aec50f820",
+      "lf_sha256": "038351816485a2903e5a4649e3b0a58e072083599a04c9120a34d9abd0ddf56b"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/fuzz/baseline-bridge.json": {
+      "bytes": 1161,
+      "sha256": "9468b45c74a9ca9eb023b3be1f4a1b87a7964fab949684233b8922d7f96ed740",
+      "lf_sha256": "95c8fda1e807797bc28bc84c3c3b87f0152d5cf3268a17b69fc1bf255a8b56ee"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/fuzz/p1-adapter3.json": {
+      "bytes": 1304,
+      "sha256": "875b7cdff1ef5dba7d0ff3fa186e534c9cc5b6ef475fe2a5c1df7b7e4161513d",
+      "lf_sha256": "36a3f4ac3d296277386924338f5a1b2aa9b84d2d0b41bef4b5f5cb4f9ecb833d"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/fuzz/p1-bridge.json": {
+      "bytes": 1156,
+      "sha256": "2305b8549dc23efedefd360f209a0c32813eb0739fb082d6641be628089d4fc9",
+      "lf_sha256": "63c563eaa54636d3f30492c85e760f308a2e69815a88227389050b29cd1d0ad2"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/fuzz/p3-v2.json": {
+      "bytes": 1142,
+      "sha256": "05b385fc87d60cedc5163fb699b3a633a204b515540f361c63936e5eb9a44b32",
+      "lf_sha256": "2769b6b31aab07ecc9a41f96fcd7328842e20f1c25773732abb7f106b0b4be01"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/grammar/after-p4b-grammar.json": {
+      "bytes": 19836,
+      "sha256": "753e7f1750bd2540db88a7c1b0c45036b2a20dc0d61d0a5c50c4b8d377e1808e",
+      "lf_sha256": "6ab95695ced6d92923cf2254838c5ad285aa5691b858790bd003d444ac9cf47a"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/grammar/baseline-before-grammar.json": {
+      "bytes": 22477,
+      "sha256": "1191760342453aefcd1073643125bacb4338da4ae34f76003ba82564d608cff6",
+      "lf_sha256": "208024fabcf87f7436ef44cf1ed9085b093d429378242b716ff2934f4a26cf28"
+    }
+  }
+}

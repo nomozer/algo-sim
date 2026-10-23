@@ -1,0 +1,105 @@
+{
+  "schema": "session4a_verification/1",
+  "provider_calls": 0,
+  "workers": 1,
+  "blas_threads": 1,
+  "before": {
+    "source_head": "84c729e0b0df7868dfcc0a6e48cac457d7959e92",
+    "source_status": "",
+    "main": "f10e6283dd3fd2cfdef189e1bef0ffdecf2be942",
+    "origin_main": "43247c9e9375a3dbf2b5223324a58e6f932ca596",
+    "original_head": "fe9f555437498432427ae6bbd54402cdd59c7eb7",
+    "original_status": "?? docs/evaluation/geometry/runs/docs-final-go-main/\n?? docs/evaluation/geometry/runs/hybrid-go-main/\n?? docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/\n?? docs/evaluation/geometry/runs/hybrid-route-d-preview-go-main/\n?? docs/evaluation/geometry/runs/scene3d-go-main/\n?? docs/evaluation/geometry/runs/source-gate-hardening/verification/t3-fail-72d1595f.log\n?? frontend/public/"
+  },
+  "after": {
+    "source_head": "84c729e0b0df7868dfcc0a6e48cac457d7959e92",
+    "source_status": "",
+    "main": "f10e6283dd3fd2cfdef189e1bef0ffdecf2be942",
+    "origin_main": "43247c9e9375a3dbf2b5223324a58e6f932ca596",
+    "original_head": "fe9f555437498432427ae6bbd54402cdd59c7eb7",
+    "original_status": "?? docs/evaluation/geometry/runs/docs-final-go-main/\n?? docs/evaluation/geometry/runs/hybrid-go-main/\n?? docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/\n?? docs/evaluation/geometry/runs/hybrid-route-d-preview-go-main/\n?? docs/evaluation/geometry/runs/scene3d-go-main/\n?? docs/evaluation/geometry/runs/source-gate-hardening/verification/t3-fail-72d1595f.log\n?? frontend/public/"
+  },
+  "preserved": true,
+  "checks": [
+    {
+      "name": "candidate_verify",
+      "command": [
+        "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+        "backend/scripts/freeze_evaluation_candidate.py",
+        "--verify"
+      ],
+      "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-session4a-s3-verify",
+      "exit_code": 0,
+      "elapsed_seconds": 2.391,
+      "summary": [
+        "Candidate kh\u1edbp b\u1ea3n \u0111\u00e3 \u0111\u00f3ng b\u0103ng (m\u00e3 s\u1ea3n ph\u1ea9m: 116 file, 413ee525d20874aa\u2026)."
+      ],
+      "stdout_sha256": "3ec969aedac9e1f80ecfbab0247d7374a099d6cdbd7e90f598ded48b15ae8986",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "targeted_source_and_replay",
+      "command": [
+        "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--tb=no",
+        "--basetemp",
+        "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-session4a-readiness\\.superpowers\\verification-pytest-temp",
+        "backend/tests/geometry/test_hybrid_contract_v2.py",
+        "backend/tests/geometry/test_hybrid_contract_unification.py",
+        "backend/tests/geometry/test_goal_directed_function_composition.py",
+        "backend/tests/test_route_aware_cache.py",
+        "backend/tests/geometry/test_hybrid_backend_integration.py::test_version_constants_surface_fingerprints_and_historical_receipt_preservation",
+        "backend/tests/semantic_program/test_evaluation_candidate.py",
+        "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-session4a-readiness\\docs\\evaluation\\geometry\\runs\\hybrid-session4a-readiness\\test_offline_replay.py"
+      ],
+      "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-session4a-s3-verify",
+      "exit_code": 0,
+      "elapsed_seconds": 33.797,
+      "summary": [
+        "201 passed, 1 xfailed, 1 warning in 32.88s"
+      ],
+      "stdout_sha256": "d41be3224f4e1f8ff053652b4bde6643ac52ead59af99aa40979462bb6b90161",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "documentation_invariants",
+      "command": [
+        "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--tb=no",
+        "backend/tests/geometry/test_docs_information_architecture.py",
+        "-k",
+        "inv_06 or inv_07 or inv_08 or inv_10 or inv_11 or inv_12 or inv_23 or inv_24"
+      ],
+      "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-session4a-readiness",
+      "exit_code": 0,
+      "elapsed_seconds": 1.844,
+      "summary": [
+        "8 passed, 34 deselected in 1.07s"
+      ],
+      "stdout_sha256": "238d201c17c4d61bac466521ac609178e742ae5b6df831cb5d24bb7c01d4e02c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "measured_system": {
+    "sha256": "413ee525d20874aa346b13df7e51019266f7d4701af56719c2a2ee736266b5df",
+    "entries": 116,
+    "unique_files": 115,
+    "entry_prefix_counts": {
+      "backend": 110,
+      "frontend": 6
+    }
+  },
+  "historical_artifact_mutations": [],
+  "product_diff": "",
+  "status": "PASS"
+}

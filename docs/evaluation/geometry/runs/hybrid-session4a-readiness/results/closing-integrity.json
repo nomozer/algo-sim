@@ -1,0 +1,13 @@
+{
+  "schema": "session4a_closing_integrity/1",
+  "status": "PASS",
+  "historical_files_unchanged": 33,
+  "diagnostic_locks_match": true,
+  "new_scripts_parse": true,
+  "original_refs_and_status_preserved": true,
+  "product_diff_empty": true,
+  "source_provenance_checks": 2,
+  "required_deliverables": 6,
+  "network_attempts": 0,
+  "source_candidate": "84c729e0b0df7868dfcc0a6e48cac457d7959e92"
+}

@@ -1,0 +1,281 @@
+{
+  "schema": "session4a_receipt_audit/1",
+  "provider_calls": 0,
+  "refs": {
+    "0f7b3a69": {
+      "exit_code": 128,
+      "stdout": "",
+      "stderr": "fatal: detected dubious ownership in repository at 'D:/Documents/projects/algo-sim'\n'D:/Documents/projects/algo-sim' is owned by:\n\tDESKTOP-SCQFJL8/Bunny (S-1-5-21-2174772260-3933004771-2487040045-1001)\nbut the current user is:\n\tDESKTOP-SCQFJL8/CodexSandboxOffline (S-1-5-21-2174772260-3933004771-2487040045-1006)\nTo add an exception for this directory, call:\n\n\tgit config --global --add safe.directory D:/Documents/projects/algo-sim"
+    },
+    "227d447f": {
+      "exit_code": 128,
+      "stdout": "",
+      "stderr": "fatal: detected dubious ownership in repository at 'D:/Documents/projects/algo-sim'\n'D:/Documents/projects/algo-sim' is owned by:\n\tDESKTOP-SCQFJL8/Bunny (S-1-5-21-2174772260-3933004771-2487040045-1001)\nbut the current user is:\n\tDESKTOP-SCQFJL8/CodexSandboxOffline (S-1-5-21-2174772260-3933004771-2487040045-1006)\nTo add an exception for this directory, call:\n\n\tgit config --global --add safe.directory D:/Documents/projects/algo-sim"
+    },
+    "69bd2fe4": {
+      "exit_code": 128,
+      "stdout": "",
+      "stderr": "fatal: detected dubious ownership in repository at 'D:/Documents/projects/algo-sim'\n'D:/Documents/projects/algo-sim' is owned by:\n\tDESKTOP-SCQFJL8/Bunny (S-1-5-21-2174772260-3933004771-2487040045-1001)\nbut the current user is:\n\tDESKTOP-SCQFJL8/CodexSandboxOffline (S-1-5-21-2174772260-3933004771-2487040045-1006)\nTo add an exception for this directory, call:\n\n\tgit config --global --add safe.directory D:/Documents/projects/algo-sim"
+    },
+    "82d3d255": {
+      "exit_code": 128,
+      "stdout": "",
+      "stderr": "fatal: detected dubious ownership in repository at 'D:/Documents/projects/algo-sim'\n'D:/Documents/projects/algo-sim' is owned by:\n\tDESKTOP-SCQFJL8/Bunny (S-1-5-21-2174772260-3933004771-2487040045-1001)\nbut the current user is:\n\tDESKTOP-SCQFJL8/CodexSandboxOffline (S-1-5-21-2174772260-3933004771-2487040045-1006)\nTo add an exception for this directory, call:\n\n\tgit config --global --add safe.directory D:/Documents/projects/algo-sim"
+    },
+    "84c729e0": {
+      "exit_code": 128,
+      "stdout": "",
+      "stderr": "fatal: detected dubious ownership in repository at 'D:/Documents/projects/algo-sim'\n'D:/Documents/projects/algo-sim' is owned by:\n\tDESKTOP-SCQFJL8/Bunny (S-1-5-21-2174772260-3933004771-2487040045-1001)\nbut the current user is:\n\tDESKTOP-SCQFJL8/CodexSandboxOffline (S-1-5-21-2174772260-3933004771-2487040045-1006)\nTo add an exception for this directory, call:\n\n\tgit config --global --add safe.directory D:/Documents/projects/algo-sim"
+    },
+    "HEAD": {
+      "exit_code": 128,
+      "stdout": "",
+      "stderr": "fatal: detected dubious ownership in repository at 'D:/Documents/projects/algo-sim'\n'D:/Documents/projects/algo-sim' is owned by:\n\tDESKTOP-SCQFJL8/Bunny (S-1-5-21-2174772260-3933004771-2487040045-1001)\nbut the current user is:\n\tDESKTOP-SCQFJL8/CodexSandboxOffline (S-1-5-21-2174772260-3933004771-2487040045-1006)\nTo add an exception for this directory, call:\n\n\tgit config --global --add safe.directory D:/Documents/projects/algo-sim"
+    },
+    "main": {
+      "exit_code": 128,
+      "stdout": "",
+      "stderr": "fatal: detected dubious ownership in repository at 'D:/Documents/projects/algo-sim'\n'D:/Documents/projects/algo-sim' is owned by:\n\tDESKTOP-SCQFJL8/Bunny (S-1-5-21-2174772260-3933004771-2487040045-1001)\nbut the current user is:\n\tDESKTOP-SCQFJL8/CodexSandboxOffline (S-1-5-21-2174772260-3933004771-2487040045-1006)\nTo add an exception for this directory, call:\n\n\tgit config --global --add safe.directory D:/Documents/projects/algo-sim"
+    },
+    "origin/main": {
+      "exit_code": 128,
+      "stdout": "",
+      "stderr": "fatal: detected dubious ownership in repository at 'D:/Documents/projects/algo-sim'\n'D:/Documents/projects/algo-sim' is owned by:\n\tDESKTOP-SCQFJL8/Bunny (S-1-5-21-2174772260-3933004771-2487040045-1001)\nbut the current user is:\n\tDESKTOP-SCQFJL8/CodexSandboxOffline (S-1-5-21-2174772260-3933004771-2487040045-1006)\nTo add an exception for this directory, call:\n\n\tgit config --global --add safe.directory D:/Documents/projects/algo-sim"
+    }
+  },
+  "worktrees": [],
+  "ancestry_exit_codes": {
+    "origin/main -> main": 128,
+    "82d3d255 -> 227d447f": 128,
+    "227d447f -> 0f7b3a69": 128,
+    "0f7b3a69 -> main": 128,
+    "main -> 0f7b3a69": 128
+  },
+  "remote_freshness": "LOCAL_TRACKING_REF_ONLY_NO_FETCH",
+  "merge_analysis": {
+    "base": "",
+    "command": "git merge-tree BASE main 0f7b3a69 (read-only three-tree mode)",
+    "exit_code": 128,
+    "conflict_markers": 0,
+    "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "diff_main_s3": "",
+  "units": {
+    "A_locked_payloads": 47,
+    "B_replayed_payloads": 60,
+    "C_parity_payloads": 316,
+    "D_metamorphic_payloads": 33,
+    "E_payload_conventions": 20,
+    "F_budget_payloads": 8,
+    "G_corpus_payloads": 16,
+    "H_two_arm_rows": 60
+  },
+  "mixed_unit_total": 560,
+  "claimed_562": "NOT_RECONCILED",
+  "composition_plan_inspections": 38,
+  "fuzz": {
+    "baseline-adapter3.json": {
+      "route": "adapter3",
+      "runs": 13661,
+      "escaped_exceptions": 1015,
+      "internal_errors": 0
+    },
+    "baseline-bridge.json": {
+      "route": "bridge",
+      "runs": 13661,
+      "escaped_exceptions": 0,
+      "internal_errors": 0
+    },
+    "p1-adapter3.json": {
+      "route": "adapter3",
+      "runs": 13661,
+      "escaped_exceptions": 0,
+      "internal_errors": 0
+    },
+    "p1-bridge.json": {
+      "route": "bridge",
+      "runs": 13661,
+      "escaped_exceptions": 0,
+      "internal_errors": 0
+    },
+    "p3-v2.json": {
+      "route": "v2",
+      "runs": 19114,
+      "escaped_exceptions": 0,
+      "internal_errors": 0
+    }
+  },
+  "grammar_expected": {
+    "SERVE": 22,
+    "REFUSE_SOURCE": 19,
+    "REFUSE_GEOMETRY": 4,
+    "REFUSE_KERNEL": 2
+  },
+  "immutable_sources": {
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/BACKEND_MIGRATION_READINESS.md": {
+      "bytes": 8741,
+      "sha256": "50854e8f36f6681ff142ffe129602e25e2388f4958e16e48cc4658b4b0cd5433",
+      "lf_sha256": "50854e8f36f6681ff142ffe129602e25e2388f4958e16e48cc4658b4b0cd5433"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/candidate_divergence.json": {
+      "bytes": 2262,
+      "sha256": "bbb541f10df5645bc0a4a4cb8763921df4c468c80133fe0e3f760edae740b41b",
+      "lf_sha256": "bbb541f10df5645bc0a4a4cb8763921df4c468c80133fe0e3f760edae740b41b"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/CONTRACT_V2_IMPLEMENTATION_REPORT.md": {
+      "bytes": 8104,
+      "sha256": "9b1d1acbf8d9308b01bb79575d6d8bdc7ec2f333719e06cf582310685ac45b01",
+      "lf_sha256": "9b1d1acbf8d9308b01bb79575d6d8bdc7ec2f333719e06cf582310685ac45b01"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/evaluate_grammar_set.py": {
+      "bytes": 4635,
+      "sha256": "67a4317ccd7e802fc27b2035fccfb88344c459364716727cf6af5ba31d47e81c",
+      "lf_sha256": "67a4317ccd7e802fc27b2035fccfb88344c459364716727cf6af5ba31d47e81c"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/evaluate_session3.py": {
+      "bytes": 24020,
+      "sha256": "f8c8968baaa2b5a00d92f68390eb313c3213677e0fdb2e8917c82af6133bf829",
+      "lf_sha256": "f8c8968baaa2b5a00d92f68390eb313c3213677e0fdb2e8917c82af6133bf829"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/fuzz_boundary.py": {
+      "bytes": 5380,
+      "sha256": "e52ea7c116f589fabded6f2995141e0df366b529c744dd221decb2d99a077e87",
+      "lf_sha256": "e52ea7c116f589fabded6f2995141e0df366b529c744dd221decb2d99a077e87"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/grammar-set.json": {
+      "bytes": 161970,
+      "sha256": "10c57be7b485d7b3f1a97183ff41b28988e70641e297e01cccf68d1434cc4abe",
+      "lf_sha256": "10c57be7b485d7b3f1a97183ff41b28988e70641e297e01cccf68d1434cc4abe"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/grammar-set.lock.json": {
+      "bytes": 653,
+      "sha256": "02542fe8f36c0ca5e85b540df7739347907f0dd69fc5541d29023e64e83800a5",
+      "lf_sha256": "02542fe8f36c0ca5e85b540df7739347907f0dd69fc5541d29023e64e83800a5"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/grammar_set.py": {
+      "bytes": 22803,
+      "sha256": "550ea560f0c3933a5b50a9ee67b3b87c050025349e2c352ecd10a26b4d818c8c",
+      "lf_sha256": "550ea560f0c3933a5b50a9ee67b3b87c050025349e2c352ecd10a26b4d818c8c"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/handoff.md": {
+      "bytes": 2895,
+      "sha256": "79539b7c432fb8bd345b4be94fbf4538633737ceed58442ac65323dbf3e7f3c3",
+      "lf_sha256": "79539b7c432fb8bd345b4be94fbf4538633737ceed58442ac65323dbf3e7f3c3"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/INDEPENDENT_REVIEW.md": {
+      "bytes": 10903,
+      "sha256": "7f1013999286a524ae5261c3d5192899866cd73ed031640169f078952dbb1fcc",
+      "lf_sha256": "7f1013999286a524ae5261c3d5192899866cd73ed031640169f078952dbb1fcc"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/plan.md": {
+      "bytes": 3879,
+      "sha256": "c7b59476d88dd3d69d59f3209b6253daadfa4b5fff779a64f97e34d1c15649fc",
+      "lf_sha256": "c7b59476d88dd3d69d59f3209b6253daadfa4b5fff779a64f97e34d1c15649fc"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/PLANNER_COMPOSITION_AND_REUSE_REPORT.md": {
+      "bytes": 8720,
+      "sha256": "f1b0942fb4efcb371a89b49ffb41c0c2de21fa7cc0c7eb5d43e7984faac41fe1",
+      "lf_sha256": "f1b0942fb4efcb371a89b49ffb41c0c2de21fa7cc0c7eb5d43e7984faac41fe1"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/report.md": {
+      "bytes": 2737,
+      "sha256": "0aa39ebe5bf0b7b8ce2ba3a4aa79492a1bf5e4abd0dde4391edd2b6c3f632827",
+      "lf_sha256": "0aa39ebe5bf0b7b8ce2ba3a4aa79492a1bf5e4abd0dde4391edd2b6c3f632827"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/run.json": {
+      "bytes": 3459,
+      "sha256": "0f8cf11c2274f29216c58259e1be16e5eb3c87c628dee10ff61428857075f6b5",
+      "lf_sha256": "0f8cf11c2274f29216c58259e1be16e5eb3c87c628dee10ff61428857075f6b5"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/SESSION3_FINAL_REPORT.md": {
+      "bytes": 9859,
+      "sha256": "a5f8b1efa147d7fb39698d711ebf40a7f3f78c9a5e6d25cac7a3f2b0f05ceddb",
+      "lf_sha256": "a5f8b1efa147d7fb39698d711ebf40a7f3f78c9a5e6d25cac7a3f2b0f05ceddb"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/SESSION3_RESUME_STATE.md": {
+      "bytes": 12313,
+      "sha256": "8640c8e09ebf232a82f03d511e9ef282fade972267c53db18bc2f8eab63adb56",
+      "lf_sha256": "8640c8e09ebf232a82f03d511e9ef282fade972267c53db18bc2f8eab63adb56"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/SOURCE_GATE_COVERAGE_MATRIX.md": {
+      "bytes": 10027,
+      "sha256": "d3059d7d615f4c0d0dace597560b4832918105a3b8a8fb59a3c492972f181d70",
+      "lf_sha256": "d3059d7d615f4c0d0dace597560b4832918105a3b8a8fb59a3c492972f181d70"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/evaluation/family-a-locked-grammar-v2.json": {
+      "bytes": 19831,
+      "sha256": "1de00b514100f242b0467ec0dfa3f0a933c7c21d6864b1b8a5fcce69da14ef70",
+      "lf_sha256": "7b6bf6628d9a1a8d0f6432f84b8225f52e167079f627c7db6dacbb342290cc74"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/evaluation/session1-family-replay.json": {
+      "bytes": 62990,
+      "sha256": "af59922eb596d0579d048bea8e3c8c3855dc9eb6cff39d622bd46c0335e47cd1",
+      "lf_sha256": "841076a63979e1a92ecdd9290f49974b93b835768c1b76a91bbfc3d716cbb077"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/evaluation/session3-evaluation-full.json": {
+      "bytes": 61489,
+      "sha256": "03afd727ad8910ce971a66ed4bf07fa9340c4bbeecdea167a0f4f1e16a366beb",
+      "lf_sha256": "fe5e775874ecc36dc74d42619ee804bbc6ac148278b4842418f9c152becffab4"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/evaluation/session3-evaluation-summary.json": {
+      "bytes": 5646,
+      "sha256": "784c0da33e8b3f5de43b44bbc8ff27c4b2a86591e6817df56ba87a2373674a0f",
+      "lf_sha256": "dcafd0b87fa4036c9894cf33f777e857d32d2e44b864fa48a31ddddf901a51fd"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/full-t3/execution.json": {
+      "bytes": 1008,
+      "sha256": "a3a9d957ddcbf9f74008d1884a3f7d5a5c816a20eb04905c43644a1d7a7f8c34",
+      "lf_sha256": "cb4f262d9324512bd00a4dbb07ca4eff0e0538d775a0e3a5b914f0e7244a0a15"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/full-t3/post-t3-freeze-verify.json": {
+      "bytes": 416,
+      "sha256": "a9f80408554ad3fbcb9e2b3101ea61d50f48f1c630b960a8cdb2f5296a90b0ee",
+      "lf_sha256": "9abe8434f90bba82da27eac47c543bad3b36f1bcc842ddeab0347aed6b866db6"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/full-t3-attempt1/execution.json": {
+      "bytes": 1008,
+      "sha256": "6ba485cc0d11d809421d1843539c80a4c9b4926727de1e72cd6ba4154dfd1f07",
+      "lf_sha256": "654d8b628789c21c4c270e128007ef7a72afd554553da98345568849bfaa66d0"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/full-t3-attempt1/post-t3-freeze-verify.json": {
+      "bytes": 416,
+      "sha256": "f2e0c49298761e5151dba5ab18b3c6c19bd5fae12a18b8b9486acfbcce47baeb",
+      "lf_sha256": "5469908b320b452a5b6bf0877ef80205f936ce421a76f6861cc6929e4ccfd042"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/fuzz/baseline-adapter3.json": {
+      "bytes": 2552,
+      "sha256": "82037dc62df99bba3bd0ce8fc332f2af8ca425166344165d5752590aec50f820",
+      "lf_sha256": "038351816485a2903e5a4649e3b0a58e072083599a04c9120a34d9abd0ddf56b"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/fuzz/baseline-bridge.json": {
+      "bytes": 1161,
+      "sha256": "9468b45c74a9ca9eb023b3be1f4a1b87a7964fab949684233b8922d7f96ed740",
+      "lf_sha256": "95c8fda1e807797bc28bc84c3c3b87f0152d5cf3268a17b69fc1bf255a8b56ee"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/fuzz/p1-adapter3.json": {
+      "bytes": 1304,
+      "sha256": "875b7cdff1ef5dba7d0ff3fa186e534c9cc5b6ef475fe2a5c1df7b7e4161513d",
+      "lf_sha256": "36a3f4ac3d296277386924338f5a1b2aa9b84d2d0b41bef4b5f5cb4f9ecb833d"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/fuzz/p1-bridge.json": {
+      "bytes": 1156,
+      "sha256": "2305b8549dc23efedefd360f209a0c32813eb0739fb082d6641be628089d4fc9",
+      "lf_sha256": "63c563eaa54636d3f30492c85e760f308a2e69815a88227389050b29cd1d0ad2"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/fuzz/p3-v2.json": {
+      "bytes": 1142,
+      "sha256": "05b385fc87d60cedc5163fb699b3a633a204b515540f361c63936e5eb9a44b32",
+      "lf_sha256": "2769b6b31aab07ecc9a41f96fcd7328842e20f1c25773732abb7f106b0b4be01"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/grammar/after-p4b-grammar.json": {
+      "bytes": 19836,
+      "sha256": "753e7f1750bd2540db88a7c1b0c45036b2a20dc0d61d0a5c50c4b8d377e1808e",
+      "lf_sha256": "6ab95695ced6d92923cf2254838c5ad285aa5691b858790bd003d444ac9cf47a"
+    },
+    "docs/evaluation/geometry/runs/hybrid-contract-v2/verification/grammar/baseline-before-grammar.json": {
+      "bytes": 22477,
+      "sha256": "1191760342453aefcd1073643125bacb4338da4ae34f76003ba82564d608cff6",
+      "lf_sha256": "208024fabcf87f7436ef44cf1ed9085b093d429378242b716ff2934f4a26cf28"
+    }
+  }
+}
