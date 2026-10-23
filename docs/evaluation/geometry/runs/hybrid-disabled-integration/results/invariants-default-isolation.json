@@ -1,0 +1,59 @@
+{
+  "schema": "hybrid_disabled_integration_invariants/1",
+  "provider_calls": 0,
+  "head": "14cdc25a4c2332b6c1fb94690e11bacb3b33eb89",
+  "base": "f10e6283dd3fd2cfdef189e1bef0ffdecf2be942",
+  "invariants": {
+    "CACHE_VERSION": "127",
+    "DEFAULT_MODE": "LLM_ONLY",
+    "RESPONSE_CONTRACT": "flat",
+    "MAX_MEMORY_DECLARATIONS": 32,
+    "ALLOW_LIVE_AI": "0"
+  },
+  "invariants_hold": true,
+  "contract_versions": {
+    "registry": "geometry-functions/13",
+    "planner": "geometry-fact-planner/13",
+    "engine": "geometry-function-engine/11",
+    "adapter4": "hybrid-simulation-adapter/4",
+    "preview_adapter": "hybrid-preview-adapter/2",
+    "preview_envelope": "hybrid-route-d-preview/1",
+    "registry_functions": 35
+  },
+  "default_policy": [
+    "LLM_ONLY",
+    false,
+    "flat",
+    null
+  ],
+  "analyze_policy_with_preview_env": [
+    false,
+    null
+  ],
+  "product_files_changed_vs_base": [
+    "backend/app/ai/adapter3_simulation.py",
+    "backend/app/ai/adapter4_route.py",
+    "backend/app/ai/fact_extraction.py",
+    "backend/app/ai/function_route.py",
+    "backend/app/ai/hybrid_preview.py",
+    "backend/app/simulation/geometry_functions/engine.py",
+    "backend/app/simulation/geometry_functions/planner.py",
+    "backend/app/simulation/geometry_functions/registry.py",
+    "backend/app/simulation/geometry_functions/typed_fact_next.py",
+    "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py"
+  ],
+  "modules_loaded_by_production_entry": 47,
+  "loaded_modules_differing_from_base": [],
+  "changed_files_not_loaded_at_startup": [
+    "backend/app/ai/adapter3_simulation.py",
+    "backend/app/ai/adapter4_route.py",
+    "backend/app/ai/fact_extraction.py",
+    "backend/app/ai/function_route.py",
+    "backend/app/ai/hybrid_preview.py",
+    "backend/app/simulation/geometry_functions/engine.py",
+    "backend/app/simulation/geometry_functions/planner.py",
+    "backend/app/simulation/geometry_functions/registry.py",
+    "backend/app/simulation/geometry_functions/typed_fact_next.py",
+    "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py"
+  ]
+}

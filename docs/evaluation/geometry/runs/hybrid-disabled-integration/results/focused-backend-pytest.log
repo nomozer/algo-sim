@@ -1,0 +1,49 @@
+........................................................................ [  3%]
+........................................................................ [  7%]
+........................................................................ [ 10%]
+................................xx...................................... [ 14%]
+........................................................................ [ 18%]
+........................................................................ [ 21%]
+........................................................................ [ 25%]
+........................................................................ [ 29%]
+........................................................................ [ 32%]
+........................................................................ [ 36%]
+...................................................................xxxx. [ 39%]
+........................................................................ [ 43%]
+........................................................................ [ 47%]
+.......x................................................................ [ 50%]
+........................................................................ [ 54%]
+........................................................................ [ 58%]
+................................................x....................... [ 61%]
+........................................................................ [ 65%]
+........................................................................ [ 69%]
+........................................................................ [ 72%]
+........................................................................ [ 76%]
+........................................................................ [ 79%]
+........................................................................ [ 83%]
+...................xxxxx................................................ [ 87%]
+........................................................................ [ 90%]
+........................................................................ [ 94%]
+........................................................................ [ 98%]
+.....................................                                    [100%]
+============================== warnings summary ===============================
+..\..\..\..\backend\.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+XFAIL tests/geometry/test_generalized_goal_entry.py::test_length_goal_refusal[unread-second-ask] - Request coverage (M1, run hybrid-semantic-grounding-reliability) refuses REQUEST_NOT_ANSWERED, not the registered QUESTION_CONTEXT_UNSUPPORTED / NOT_ASKED_IN_SOURCE; label preserved
+XFAIL tests/geometry/test_generalized_goal_entry.py::test_length_goal_refusal[contradictory-length] - Registered code INCONSISTENT_CONSTRAINTS differs from existing INCONSISTENT_FACTS; label preserved
+XFAIL tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B27-facts] - GAP B27: unnamed derived operand: Typed Facts cannot name 'trung điểm của SC' inside a question
+XFAIL tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B27-pipeline] - GAP B27: unnamed derived operand: Typed Facts cannot name 'trung điểm của SC' inside a question
+XFAIL tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B28-facts] - GAP B28: 'tâm' of a square = centroid, but the centroid source keyword is only 'trọng tâm'
+XFAIL tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B28-pipeline] - GAP B28: 'tâm' of a square = centroid, but the centroid source keyword is only 'trọng tâm'
+XFAIL tests/geometry/test_hybrid_contract_unification.py::test_adapter3_refuses_what_the_shared_source_gate_refuses[_anonymous_ratio_operand] - owner decision D2 pending
+XFAIL tests/geometry/test_hybrid_simulation_capability_probes.py::test_centre_label_exhaustion_is_a_coded_outcome - ISSUE-ARCH-ENGINE-CENTRE-LABEL-EXHAUSTION: StopIteration instead of a coded refusal
+XFAIL tests/geometry/test_typedfact_next_adapter3.py::test_gate_grammar_false_refusals_are_known_not_expected[A3-DEV-10-False] - gate grammar false refusal (owner decision D3): 'thiết diện bởi (α)' not bound
+XFAIL tests/geometry/test_typedfact_next_adapter3.py::test_gate_grammar_false_refusals_are_known_not_expected[A3-DEV-03-True] - gate grammar false refusal (owner decision D3): 'thiết diện bởi (α)' not bound
+XFAIL tests/geometry/test_typedfact_next_adapter3.py::test_gate_grammar_false_refusals_are_known_not_expected[A3-DEV-04-True] - gate grammar false refusal (owner decision D3): 'thiết diện bởi (α)' not bound
+XFAIL tests/geometry/test_typedfact_next_adapter3.py::test_gate_grammar_false_refusals_are_known_not_expected[A3-DEV-06-True] - gate grammar false refusal (owner decision D3): 'thiết diện bởi (α)' not bound
+XFAIL tests/geometry/test_typedfact_next_adapter3.py::test_gate_grammar_false_refusals_are_known_not_expected[A3-DEV-09-True] - gate grammar false refusal (owner decision D3): 'thiết diện bởi (α)' not bound
+1968 passed, 13 xfailed, 1 warning in 102.29s (0:01:42)

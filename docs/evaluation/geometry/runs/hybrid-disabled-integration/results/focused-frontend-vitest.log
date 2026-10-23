@@ -1,0 +1,9 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-session4b-integration/frontend
+
+
+ Test Files  37 passed (37)
+      Tests  788 passed (788)
+   Start at  10:27:15
+   Duration  16.24s (transform 1.27s, setup 534ms, import 5.04s, tests 2.96s, environment 4ms)
+

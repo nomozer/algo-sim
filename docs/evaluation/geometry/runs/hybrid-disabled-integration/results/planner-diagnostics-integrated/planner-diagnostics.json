@@ -1,0 +1,1450 @@
+{
+  "schema": "session4a_planner_diagnostics/1",
+  "classification": "IMPLEMENTER_AUTHORED_DEVELOPMENT_NOT_BLIND",
+  "provider_calls": 0,
+  "lock_sha256": "b91ee281d76e7957719b7dec75b7c16fe246a66b94f9da944588b1d0fe833677",
+  "rows": [
+    {
+      "id": "section-new-1",
+      "route": "canonical_v2",
+      "status": "SERVED",
+      "code": null,
+      "failure_stage": null,
+      "answer_squared_or_cos2": {
+        "g_res": "74529/25",
+        "g_ratio": "64/15625"
+      },
+      "exact_match": true,
+      "scene_structurally_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "divide_segment",
+        "translate_point",
+        "translate_point",
+        "section",
+        "intersect_line_plane",
+        "intersect_line_plane",
+        "intersect_line_plane",
+        "pyramid",
+        "ask_volume_ratio",
+        "ask_residual_volume"
+      ],
+      "effect_resolution_steps": [
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SA, plane through M)",
+          "selection": "reuse_through_point",
+          "cost": 0,
+          "candidates": 1,
+          "label": "M"
+        },
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SB, plane through M)",
+          "selection": "named_intersection",
+          "cost": 1,
+          "candidates": 1,
+          "label": "N"
+        },
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SC, plane through M)",
+          "selection": "named_intersection",
+          "cost": 1,
+          "candidates": 1,
+          "label": "P"
+        },
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SD, plane through M)",
+          "selection": "named_intersection",
+          "cost": 1,
+          "candidates": 1,
+          "label": "Q"
+        }
+      ],
+      "effect_chain_certificates": []
+    },
+    {
+      "id": "section-new-2",
+      "route": "canonical_v2",
+      "status": "SERVED",
+      "code": null,
+      "failure_stage": null,
+      "answer_squared_or_cos2": {
+        "g_res": "99856/9",
+        "g_ratio": "729/117649"
+      },
+      "exact_match": true,
+      "scene_structurally_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "divide_segment",
+        "orthogonal_projection_line",
+        "orthogonal_projection_line",
+        "translate_point",
+        "translate_point",
+        "section",
+        "intersect_line_plane",
+        "intersect_line_plane",
+        "intersect_line_plane",
+        "pyramid",
+        "ask_volume_ratio",
+        "ask_residual_volume"
+      ],
+      "effect_resolution_steps": [
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SA, plane through M)",
+          "selection": "reuse_through_point",
+          "cost": 0,
+          "candidates": 1,
+          "label": "M"
+        },
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SB, plane through M)",
+          "selection": "named_intersection",
+          "cost": 1,
+          "candidates": 1,
+          "label": "N"
+        },
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SC, plane through M)",
+          "selection": "named_intersection",
+          "cost": 1,
+          "candidates": 1,
+          "label": "P"
+        },
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SD, plane through M)",
+          "selection": "named_intersection",
+          "cost": 1,
+          "candidates": 1,
+          "label": "Q"
+        }
+      ],
+      "effect_chain_certificates": []
+    },
+    {
+      "id": "section-new-3",
+      "route": "canonical_v2",
+      "status": "SERVED",
+      "code": null,
+      "failure_stage": null,
+      "answer_squared_or_cos2": {
+        "g_res": "3651921/625",
+        "g_ratio": "64/15625"
+      },
+      "exact_match": true,
+      "scene_structurally_valid": true,
+      "functions": [
+        "pyramid",
+        "rectangle",
+        "segment_length",
+        "segment_length",
+        "perpendicular_line_plane",
+        "segment_length",
+        "divide_segment",
+        "translate_point",
+        "translate_point",
+        "section",
+        "intersect_line_plane",
+        "intersect_line_plane",
+        "intersect_line_plane",
+        "pyramid",
+        "ask_volume_ratio",
+        "ask_residual_volume"
+      ],
+      "effect_resolution_steps": [
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SA, plane through M)",
+          "selection": "reuse_through_point",
+          "cost": 0,
+          "candidates": 1,
+          "label": "M"
+        },
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SB, plane through M)",
+          "selection": "named_intersection",
+          "cost": 1,
+          "candidates": 1,
+          "label": "N"
+        },
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SC, plane through M)",
+          "selection": "named_intersection",
+          "cost": 1,
+          "candidates": 1,
+          "label": "P"
+        },
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SD, plane through M)",
+          "selection": "named_intersection",
+          "cost": 1,
+          "candidates": 1,
+          "label": "Q"
+        }
+      ],
+      "effect_chain_certificates": []
+    },
+    {
+      "id": "section-new-4",
+      "route": "canonical_v2",
+      "status": "SERVED",
+      "code": null,
+      "failure_stage": null,
+      "answer_squared_or_cos2": {
+        "g_res": "12082576/441",
+        "g_ratio": "729/117649"
+      },
+      "exact_match": true,
+      "scene_structurally_valid": true,
+      "functions": [
+        "pyramid",
+        "rectangle",
+        "segment_length",
+        "segment_length",
+        "perpendicular_line_plane",
+        "segment_length",
+        "divide_segment",
+        "orthogonal_projection_line",
+        "orthogonal_projection_line",
+        "translate_point",
+        "translate_point",
+        "section",
+        "intersect_line_plane",
+        "intersect_line_plane",
+        "intersect_line_plane",
+        "pyramid",
+        "ask_volume_ratio",
+        "ask_residual_volume"
+      ],
+      "effect_resolution_steps": [
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SA, plane through M)",
+          "selection": "reuse_through_point",
+          "cost": 0,
+          "candidates": 1,
+          "label": "M"
+        },
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SB, plane through M)",
+          "selection": "named_intersection",
+          "cost": 1,
+          "candidates": 1,
+          "label": "N"
+        },
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SC, plane through M)",
+          "selection": "named_intersection",
+          "cost": 1,
+          "candidates": 1,
+          "label": "P"
+        },
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SD, plane through M)",
+          "selection": "named_intersection",
+          "cost": 1,
+          "candidates": 1,
+          "label": "Q"
+        }
+      ],
+      "effect_chain_certificates": []
+    },
+    {
+      "id": "section-new-5",
+      "route": "canonical_v2",
+      "status": "SERVED",
+      "code": null,
+      "failure_stage": null,
+      "answer_squared_or_cos2": {
+        "g_res": "2683044/625",
+        "g_ratio": "64/15625"
+      },
+      "exact_match": true,
+      "scene_structurally_valid": true,
+      "functions": [
+        "pyramid",
+        "right_angle",
+        "segment_length",
+        "segment_length",
+        "perpendicular_line_plane",
+        "segment_length",
+        "divide_segment",
+        "translate_point",
+        "translate_point",
+        "section",
+        "intersect_line_plane",
+        "intersect_line_plane",
+        "pyramid",
+        "ask_volume_ratio",
+        "ask_residual_volume"
+      ],
+      "effect_resolution_steps": [
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SA, plane through M)",
+          "selection": "reuse_through_point",
+          "cost": 0,
+          "candidates": 1,
+          "label": "M"
+        },
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SB, plane through M)",
+          "selection": "named_intersection",
+          "cost": 1,
+          "candidates": 1,
+          "label": "N"
+        },
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SC, plane through M)",
+          "selection": "named_intersection",
+          "cost": 1,
+          "candidates": 1,
+          "label": "P"
+        }
+      ],
+      "effect_chain_certificates": []
+    },
+    {
+      "id": "section-new-6",
+      "route": "canonical_v2",
+      "status": "SERVED",
+      "code": null,
+      "failure_stage": null,
+      "answer_squared_or_cos2": {
+        "g_res": "6241/3",
+        "g_ratio": "729/117649"
+      },
+      "exact_match": true,
+      "scene_structurally_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "divide_segment",
+        "orthogonal_projection_line",
+        "orthogonal_projection_line",
+        "translate_point",
+        "translate_point",
+        "section",
+        "intersect_line_plane",
+        "intersect_line_plane",
+        "pyramid",
+        "ask_volume_ratio",
+        "ask_residual_volume"
+      ],
+      "effect_resolution_steps": [
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SA, plane through M)",
+          "selection": "reuse_through_point",
+          "cost": 0,
+          "candidates": 1,
+          "label": "M"
+        },
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SB, plane through M)",
+          "selection": "named_intersection",
+          "cost": 1,
+          "candidates": 1,
+          "label": "N"
+        },
+        {
+          "fact": "sec",
+          "step": "effect_resolution",
+          "need": "SectionVertex(SC, plane through M)",
+          "selection": "named_intersection",
+          "cost": 1,
+          "candidates": 1,
+          "label": "P"
+        }
+      ],
+      "effect_chain_certificates": []
+    },
+    {
+      "id": "effect-new-1",
+      "route": "flat_planner_diagnostic",
+      "status": "SERVED",
+      "code": null,
+      "failure_stage": null,
+      "answer_squared_or_cos2": {
+        "q": "3725/36"
+      },
+      "exact_match": true,
+      "scene_structurally_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "centroid",
+        "ask_area"
+      ],
+      "effect_resolution_steps": [
+        {
+          "fact": "q",
+          "step": "effect_resolution",
+          "selection": "registry-effects",
+          "new_constructions": 1,
+          "needs": 7,
+          "candidates": 2,
+          "depth": 2
+        }
+      ],
+      "effect_chain_certificates": [
+        {
+          "rule": "effect-chain",
+          "effect_binding": true,
+          "goal": "q",
+          "ask": "q",
+          "operand": {
+            "descriptor": "centroid",
+            "points": [
+              "S",
+              "D",
+              "A"
+            ],
+            "label": "G"
+          },
+          "target": {
+            "points": [
+              "C",
+              "D"
+            ]
+          },
+          "chain": [
+            {
+              "call": "q_aux",
+              "fn": "centroid",
+              "env": {
+                "G": "G",
+                "A": "A",
+                "B": "D",
+                "C": "S"
+              },
+              "fresh": true
+            },
+            {
+              "call": "q",
+              "fn": "ask_area",
+              "env": {
+                "P": "G",
+                "Q": "C",
+                "R": "D"
+              },
+              "fresh": false
+            }
+          ],
+          "labels": [
+            "G"
+          ],
+          "quotes": [
+            "Tính diện tích tam giác tạo bởi trọng tâm của tam giác SDA và hai điểm C, D."
+          ],
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY"
+        }
+      ]
+    },
+    {
+      "id": "effect-new-2",
+      "route": "flat_planner_diagnostic",
+      "status": "SERVED",
+      "code": null,
+      "failure_stage": null,
+      "answer_squared_or_cos2": {
+        "q": "374/9"
+      },
+      "exact_match": true,
+      "scene_structurally_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "centroid",
+        "ask_length"
+      ],
+      "effect_resolution_steps": [
+        {
+          "fact": "q",
+          "step": "effect_resolution",
+          "selection": "registry-effects",
+          "new_constructions": 1,
+          "needs": 6,
+          "candidates": 2,
+          "depth": 2
+        }
+      ],
+      "effect_chain_certificates": [
+        {
+          "rule": "effect-chain",
+          "effect_binding": true,
+          "goal": "q",
+          "ask": "q",
+          "operand": {
+            "descriptor": "centroid",
+            "points": [
+              "S",
+              "D",
+              "A"
+            ],
+            "label": "G"
+          },
+          "target": {
+            "point": "C"
+          },
+          "chain": [
+            {
+              "call": "q_aux",
+              "fn": "centroid",
+              "env": {
+                "G": "G",
+                "A": "A",
+                "B": "D",
+                "C": "S"
+              },
+              "fresh": true
+            },
+            {
+              "call": "q",
+              "fn": "ask_length",
+              "env": {
+                "P": "G",
+                "Q": "C"
+              },
+              "fresh": false,
+              "effect": "AnswerLength"
+            }
+          ],
+          "labels": [
+            "G"
+          ],
+          "quotes": [
+            "Tính độ dài đoạn nối trọng tâm của tam giác SDA với điểm C."
+          ],
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY"
+        }
+      ]
+    },
+    {
+      "id": "effect-new-3",
+      "route": "flat_planner_diagnostic",
+      "status": "SERVED",
+      "code": null,
+      "failure_stage": null,
+      "answer_squared_or_cos2": {
+        "q": "2450/333"
+      },
+      "exact_match": true,
+      "scene_structurally_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "centroid",
+        "ask_distance_point_plane"
+      ],
+      "effect_resolution_steps": [
+        {
+          "fact": "q",
+          "step": "effect_resolution",
+          "selection": "registry-effects",
+          "new_constructions": 1,
+          "needs": 7,
+          "candidates": 3,
+          "depth": 2
+        }
+      ],
+      "effect_chain_certificates": [
+        {
+          "rule": "effect-chain",
+          "effect_binding": true,
+          "goal": "q",
+          "ask": "q",
+          "operand": {
+            "descriptor": "centroid",
+            "points": [
+              "S",
+              "D",
+              "A"
+            ],
+            "label": "G"
+          },
+          "target": {
+            "plane": [
+              "S",
+              "C",
+              "B"
+            ]
+          },
+          "chain": [
+            {
+              "call": "q_aux",
+              "fn": "centroid",
+              "env": {
+                "G": "G",
+                "A": "A",
+                "B": "D",
+                "C": "S"
+              },
+              "fresh": true
+            },
+            {
+              "call": "q",
+              "fn": "ask_distance_point_plane",
+              "env": {
+                "P": "G",
+                "Q": [
+                  "S",
+                  "C",
+                  "B"
+                ]
+              },
+              "fresh": false
+            }
+          ],
+          "labels": [
+            "G"
+          ],
+          "quotes": [
+            "Tính khoảng cách từ trọng tâm của tam giác SDA đến (SCB)."
+          ],
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY"
+        }
+      ]
+    },
+    {
+      "id": "effect-new-4",
+      "route": "flat_planner_diagnostic",
+      "status": "SERVED",
+      "code": null,
+      "failure_stage": null,
+      "answer_squared_or_cos2": {
+        "q": "274/9"
+      },
+      "exact_match": true,
+      "scene_structurally_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "centroid",
+        "orthogonal_projection_line",
+        "ask_length"
+      ],
+      "effect_resolution_steps": [
+        {
+          "fact": "q",
+          "step": "effect_resolution",
+          "selection": "registry-effects",
+          "new_constructions": 2,
+          "needs": 7,
+          "candidates": 3,
+          "depth": 2
+        }
+      ],
+      "effect_chain_certificates": [
+        {
+          "rule": "effect-chain",
+          "effect_binding": true,
+          "goal": "q",
+          "ask": "q",
+          "operand": {
+            "descriptor": "centroid",
+            "points": [
+              "S",
+              "D",
+              "A"
+            ],
+            "label": "G"
+          },
+          "target": {
+            "line": [
+              "B",
+              "C"
+            ]
+          },
+          "chain": [
+            {
+              "call": "q_aux",
+              "fn": "centroid",
+              "env": {
+                "G": "G",
+                "A": "A",
+                "B": "D",
+                "C": "S"
+              },
+              "fresh": true
+            },
+            {
+              "call": "q_aux2",
+              "fn": "orthogonal_projection_line",
+              "env": {
+                "F": "H",
+                "P": "G",
+                "L": [
+                  "named",
+                  [
+                    "B",
+                    "C"
+                  ]
+                ]
+              },
+              "fresh": true
+            },
+            {
+              "call": "q",
+              "fn": "ask_length",
+              "env": {
+                "P": "G",
+                "L": [
+                  "named",
+                  [
+                    "B",
+                    "C"
+                  ]
+                ],
+                "F": "H"
+              },
+              "fresh": false
+            }
+          ],
+          "labels": [
+            "G",
+            "H"
+          ],
+          "quotes": [
+            "Tính khoảng cách từ trọng tâm của tam giác SDA đến CB."
+          ],
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY"
+        }
+      ]
+    },
+    {
+      "id": "effect-new-5",
+      "route": "flat_planner_diagnostic",
+      "status": "SERVED",
+      "code": null,
+      "failure_stage": null,
+      "answer_squared_or_cos2": {
+        "q": "325/374"
+      },
+      "exact_match": true,
+      "scene_structurally_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "centroid",
+        "ask_angle_line_plane"
+      ],
+      "effect_resolution_steps": [
+        {
+          "fact": "q",
+          "step": "effect_resolution",
+          "selection": "registry-effects",
+          "new_constructions": 1,
+          "needs": 7,
+          "candidates": 2,
+          "depth": 2
+        }
+      ],
+      "effect_chain_certificates": [
+        {
+          "rule": "effect-chain",
+          "effect_binding": true,
+          "goal": "q",
+          "ask": "q",
+          "operand": {
+            "descriptor": "centroid",
+            "points": [
+              "S",
+              "D",
+              "A"
+            ],
+            "label": "G"
+          },
+          "target": {
+            "point": "C",
+            "plane": [
+              "C",
+              "D",
+              "A",
+              "B"
+            ]
+          },
+          "chain": [
+            {
+              "call": "q_aux",
+              "fn": "centroid",
+              "env": {
+                "G": "G",
+                "A": "A",
+                "B": "D",
+                "C": "S"
+              },
+              "fresh": true
+            },
+            {
+              "call": "q",
+              "fn": "ask_angle_line_plane",
+              "env": {
+                "P": "G",
+                "Q": "C",
+                "R": [
+                  "C",
+                  "D",
+                  "A",
+                  "B"
+                ]
+              },
+              "fresh": false
+            }
+          ],
+          "labels": [
+            "G"
+          ],
+          "quotes": [
+            "Tính góc giữa đường thẳng nối C với trọng tâm của tam giác SDA và (CDAB)."
+          ],
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY"
+        }
+      ]
+    },
+    {
+      "id": "effect-new-6",
+      "route": "flat_planner_diagnostic",
+      "status": "SERVED",
+      "code": null,
+      "failure_stage": null,
+      "answer_squared_or_cos2": {
+        "q": "25/748"
+      },
+      "exact_match": true,
+      "scene_structurally_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "centroid",
+        "ask_angle_lines"
+      ],
+      "effect_resolution_steps": [
+        {
+          "fact": "q",
+          "step": "effect_resolution",
+          "selection": "registry-effects",
+          "new_constructions": 1,
+          "needs": 7,
+          "candidates": 2,
+          "depth": 2
+        }
+      ],
+      "effect_chain_certificates": [
+        {
+          "rule": "effect-chain",
+          "effect_binding": true,
+          "goal": "q",
+          "ask": "q",
+          "operand": {
+            "descriptor": "centroid",
+            "points": [
+              "S",
+              "D",
+              "A"
+            ],
+            "label": "G"
+          },
+          "target": {
+            "point": "C",
+            "line": [
+              "B",
+              "D"
+            ]
+          },
+          "chain": [
+            {
+              "call": "q_aux",
+              "fn": "centroid",
+              "env": {
+                "G": "G",
+                "A": "A",
+                "B": "D",
+                "C": "S"
+              },
+              "fresh": true
+            },
+            {
+              "call": "q",
+              "fn": "ask_angle_lines",
+              "env": {
+                "P": "G",
+                "Q": "C",
+                "L": [
+                  "named",
+                  [
+                    "B",
+                    "D"
+                  ]
+                ]
+              },
+              "fresh": false
+            }
+          ],
+          "labels": [
+            "G"
+          ],
+          "quotes": [
+            "Tính góc giữa đường thẳng nối C với trọng tâm của tam giác SDA và đường thẳng DB."
+          ],
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY"
+        }
+      ]
+    }
+  ],
+  "exact_matches": 12,
+  "route_b_rows": [
+    {
+      "id": "B01",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B01",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B02",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B02",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B03",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B03",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B04",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B04",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B05",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B05",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B06",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B06",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B07",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B07",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B08",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B08",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B09",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B09",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B10",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B10",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B11",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B11",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B12",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B12",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B13",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B13",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B14",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B14",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B15",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B15",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B16",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B16",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B17",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_refusal",
+      "code": "MISSING_DIMENSION",
+      "class": "underconstrained"
+    },
+    {
+      "id": "B17",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_refusal",
+      "code": "MISSING_DIMENSION",
+      "class": "underconstrained"
+    },
+    {
+      "id": "B18",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_refusal",
+      "code": "MISSING_DIMENSION",
+      "class": "underconstrained"
+    },
+    {
+      "id": "B18",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_refusal",
+      "code": "MISSING_DIMENSION",
+      "class": "underconstrained"
+    },
+    {
+      "id": "B19",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_refusal",
+      "code": "INCONSISTENT_FACTS",
+      "class": "contradictory"
+    },
+    {
+      "id": "B19",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_refusal",
+      "code": "INCONSISTENT_FACTS",
+      "class": "contradictory"
+    },
+    {
+      "id": "B20",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_refusal",
+      "code": "INCONSISTENT_FACTS",
+      "class": "contradictory"
+    },
+    {
+      "id": "B20",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_refusal",
+      "code": "INCONSISTENT_FACTS",
+      "class": "contradictory"
+    },
+    {
+      "id": "B21",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_refusal",
+      "code": "FIGURE_NOT_UNIQUE",
+      "class": "figure_not_unique"
+    },
+    {
+      "id": "B21",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_refusal",
+      "code": "FIGURE_NOT_UNIQUE",
+      "class": "figure_not_unique"
+    },
+    {
+      "id": "B22",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_refusal",
+      "code": "UNDERDETERMINED_POINT",
+      "class": "underconstrained"
+    },
+    {
+      "id": "B22",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_refusal",
+      "code": "UNDERDETERMINED_POINT",
+      "class": "underconstrained"
+    },
+    {
+      "id": "B23",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_refusal",
+      "code": "OUT_OF_SCOPE",
+      "class": "unsupported"
+    },
+    {
+      "id": "B23",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_refusal",
+      "code": "OUT_OF_SCOPE",
+      "class": "unsupported"
+    },
+    {
+      "id": "B24",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_refusal",
+      "code": "OUT_OF_SCOPE",
+      "class": "unsupported"
+    },
+    {
+      "id": "B24",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_refusal",
+      "code": "OUT_OF_SCOPE",
+      "class": "unsupported"
+    },
+    {
+      "id": "B25",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_refusal",
+      "code": "OUT_OF_SCOPE",
+      "class": "unsupported"
+    },
+    {
+      "id": "B25",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_refusal",
+      "code": "OUT_OF_SCOPE",
+      "class": "unsupported"
+    },
+    {
+      "id": "B26",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B26",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B27",
+      "arm": "facts",
+      "gap": "unnamed derived operand: Typed Facts cannot name 'trung điểm của SC' inside a question",
+      "outcome": "false_refusal",
+      "code": "OUT_OF_SCOPE",
+      "class": "unsupported",
+      "diagnosis": "missing_composition"
+    },
+    {
+      "id": "B27",
+      "arm": "pipeline",
+      "gap": "unnamed derived operand: Typed Facts cannot name 'trung điểm của SC' inside a question",
+      "outcome": "false_refusal",
+      "code": "OUT_OF_SCOPE",
+      "class": "unsupported",
+      "diagnosis": "missing_composition"
+    },
+    {
+      "id": "B28",
+      "arm": "facts",
+      "gap": "'tâm' of a square = centroid, but the centroid source keyword is only 'trọng tâm'",
+      "outcome": "false_refusal",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "class": "grounding",
+      "diagnosis": "keyword_dependence"
+    },
+    {
+      "id": "B28",
+      "arm": "pipeline",
+      "gap": "'tâm' of a square = centroid, but the centroid source keyword is only 'trọng tâm'",
+      "outcome": "false_refusal",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "class": "grounding",
+      "diagnosis": "keyword_dependence"
+    },
+    {
+      "id": "B29",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B29",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B30",
+      "arm": "facts",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    },
+    {
+      "id": "B30",
+      "arm": "pipeline",
+      "gap": null,
+      "outcome": "correct_served",
+      "code": null
+    }
+  ],
+  "route_b_outcomes": {
+    "correct_served": 38,
+    "correct_refusal": 18,
+    "false_refusal": 4
+  },
+  "route_b_false_refusals": [
+    {
+      "id": "B27",
+      "arm": "facts",
+      "gap": "unnamed derived operand: Typed Facts cannot name 'trung điểm của SC' inside a question",
+      "outcome": "false_refusal",
+      "code": "OUT_OF_SCOPE",
+      "class": "unsupported",
+      "diagnosis": "missing_composition"
+    },
+    {
+      "id": "B27",
+      "arm": "pipeline",
+      "gap": "unnamed derived operand: Typed Facts cannot name 'trung điểm của SC' inside a question",
+      "outcome": "false_refusal",
+      "code": "OUT_OF_SCOPE",
+      "class": "unsupported",
+      "diagnosis": "missing_composition"
+    },
+    {
+      "id": "B28",
+      "arm": "facts",
+      "gap": "'tâm' of a square = centroid, but the centroid source keyword is only 'trọng tâm'",
+      "outcome": "false_refusal",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "class": "grounding",
+      "diagnosis": "keyword_dependence"
+    },
+    {
+      "id": "B28",
+      "arm": "pipeline",
+      "gap": "'tâm' of a square = centroid, but the centroid source keyword is only 'trọng tâm'",
+      "outcome": "false_refusal",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "class": "grounding",
+      "diagnosis": "keyword_dependence"
+    }
+  ]
+}

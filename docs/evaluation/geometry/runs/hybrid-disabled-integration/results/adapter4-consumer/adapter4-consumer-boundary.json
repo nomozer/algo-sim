@@ -1,0 +1,3604 @@
+{
+ "schema": "adapter4_consumer_boundary/1",
+ "provider_calls": 0,
+ "classification": "BACKEND_BOUNDARY_CHECK_NOT_BROWSER_ACCEPTANCE; DEVELOPMENT_EVALUATION_NOT_BLIND",
+ "cases": 47,
+ "served": 22,
+ "expected_serve_served": 22,
+ "expected_refuse_refused": 25,
+ "wrong_serves": [],
+ "refusals_without_code": [],
+ "scene_gate_failures": [],
+ "metric_disagreements": [],
+ "envelope_failures": [],
+ "learner_text_internal_id_leaks": {},
+ "oracle_mismatches": [],
+ "answers_not_bound_in_scene": {},
+ "max_solid_objects_per_scene": 2,
+ "rows": [
+  {
+   "id": "PARA-0",
+   "expected": "SERVE",
+   "category": "paraphrase_reference",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sec",
+      "boundary": [
+       "M",
+       "N",
+       "P",
+       "Q"
+      ],
+      "vertices": [
+       {
+        "label": "M",
+        "edge": [
+         "S",
+         "A"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": true
+       },
+       {
+        "label": "N",
+        "edge": [
+         "S",
+         "B"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "P",
+        "edge": [
+         "S",
+         "C"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "Q",
+        "edge": [
+         "S",
+         "D"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       }
+      ],
+      "closure_certificate": {
+       "boundary": [
+        "M",
+        "N",
+        "P",
+        "Q"
+       ],
+       "verified": true,
+       "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"
+      },
+      "declared_boundary": null
+     }
+    ],
+    "answers": {
+     "g_res": "7a³/24",
+     "g_ratio": "1/8"
+    },
+    "answer_exact": {
+     "g_res": {
+      "coef": "7/24",
+      "dim": 3,
+      "unit": "a"
+     },
+     "g_ratio": {
+      "coef": "1/8",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {
+    "g_ratio": true,
+    "g_res": true
+   },
+   "answers_bound_in_scene": {
+    "g_res": true,
+    "g_ratio": true
+   },
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "quantity",
+    "section",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 2,
+   "section_closure_certified": [
+    true
+   ]
+  },
+  {
+   "id": "PARA-1",
+   "expected": "SERVE",
+   "category": "known_paraphrase",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sec",
+      "boundary": [
+       "M",
+       "N",
+       "P",
+       "Q"
+      ],
+      "vertices": [
+       {
+        "label": "M",
+        "edge": [
+         "S",
+         "A"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": true
+       },
+       {
+        "label": "N",
+        "edge": [
+         "S",
+         "B"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "P",
+        "edge": [
+         "S",
+         "C"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "Q",
+        "edge": [
+         "S",
+         "D"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       }
+      ],
+      "closure_certificate": {
+       "boundary": [
+        "M",
+        "N",
+        "P",
+        "Q"
+       ],
+       "verified": true,
+       "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"
+      },
+      "declared_boundary": null
+     }
+    ],
+    "answers": {
+     "g_res": "7a³/24",
+     "g_ratio": "1/8"
+    },
+    "answer_exact": {
+     "g_res": {
+      "coef": "7/24",
+      "dim": 3,
+      "unit": "a"
+     },
+     "g_ratio": {
+      "coef": "1/8",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {
+    "g_ratio": true,
+    "g_res": true
+   },
+   "answers_bound_in_scene": {
+    "g_res": true,
+    "g_ratio": true
+   },
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "quantity",
+    "section",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 2,
+   "section_closure_certified": [
+    true
+   ]
+  },
+  {
+   "id": "PARA-2",
+   "expected": "SERVE",
+   "category": "known_paraphrase",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sec",
+      "boundary": [
+       "M",
+       "N",
+       "P",
+       "Q"
+      ],
+      "vertices": [
+       {
+        "label": "M",
+        "edge": [
+         "S",
+         "A"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": true
+       },
+       {
+        "label": "N",
+        "edge": [
+         "S",
+         "B"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "P",
+        "edge": [
+         "S",
+         "C"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "Q",
+        "edge": [
+         "S",
+         "D"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       }
+      ],
+      "closure_certificate": {
+       "boundary": [
+        "M",
+        "N",
+        "P",
+        "Q"
+       ],
+       "verified": true,
+       "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"
+      },
+      "declared_boundary": null
+     }
+    ],
+    "answers": {
+     "g_res": "7a³/24",
+     "g_ratio": "1/8"
+    },
+    "answer_exact": {
+     "g_res": {
+      "coef": "7/24",
+      "dim": 3,
+      "unit": "a"
+     },
+     "g_ratio": {
+      "coef": "1/8",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {
+    "g_ratio": true,
+    "g_res": true
+   },
+   "answers_bound_in_scene": {
+    "g_res": true,
+    "g_ratio": true
+   },
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "quantity",
+    "section",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 2,
+   "section_closure_certified": [
+    true
+   ]
+  },
+  {
+   "id": "PARA-3",
+   "expected": "SERVE",
+   "category": "known_paraphrase",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sec",
+      "boundary": [
+       "M",
+       "N",
+       "P",
+       "Q"
+      ],
+      "vertices": [
+       {
+        "label": "M",
+        "edge": [
+         "S",
+         "A"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": true
+       },
+       {
+        "label": "N",
+        "edge": [
+         "S",
+         "B"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "P",
+        "edge": [
+         "S",
+         "C"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "Q",
+        "edge": [
+         "S",
+         "D"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       }
+      ],
+      "closure_certificate": {
+       "boundary": [
+        "M",
+        "N",
+        "P",
+        "Q"
+       ],
+       "verified": true,
+       "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"
+      },
+      "declared_boundary": null
+     }
+    ],
+    "answers": {
+     "g_res": "7a³/24",
+     "g_ratio": "1/8"
+    },
+    "answer_exact": {
+     "g_res": {
+      "coef": "7/24",
+      "dim": 3,
+      "unit": "a"
+     },
+     "g_ratio": {
+      "coef": "1/8",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {
+    "g_ratio": true,
+    "g_res": true
+   },
+   "answers_bound_in_scene": {
+    "g_res": true,
+    "g_ratio": true
+   },
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "quantity",
+    "section",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 2,
+   "section_closure_certified": [
+    true
+   ]
+  },
+  {
+   "id": "PARA-4",
+   "expected": "SERVE",
+   "category": "known_paraphrase",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sec",
+      "boundary": [
+       "M",
+       "N",
+       "P",
+       "Q"
+      ],
+      "vertices": [
+       {
+        "label": "M",
+        "edge": [
+         "S",
+         "A"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": true
+       },
+       {
+        "label": "N",
+        "edge": [
+         "S",
+         "B"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "P",
+        "edge": [
+         "S",
+         "C"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "Q",
+        "edge": [
+         "S",
+         "D"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       }
+      ],
+      "closure_certificate": {
+       "boundary": [
+        "M",
+        "N",
+        "P",
+        "Q"
+       ],
+       "verified": true,
+       "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"
+      },
+      "declared_boundary": null
+     }
+    ],
+    "answers": {
+     "g_res": "7a³/24",
+     "g_ratio": "1/8"
+    },
+    "answer_exact": {
+     "g_res": {
+      "coef": "7/24",
+      "dim": 3,
+      "unit": "a"
+     },
+     "g_ratio": {
+      "coef": "1/8",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {
+    "g_ratio": true,
+    "g_res": true
+   },
+   "answers_bound_in_scene": {
+    "g_res": true,
+    "g_ratio": true
+   },
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "quantity",
+    "section",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 2,
+   "section_closure_certified": [
+    true
+   ]
+  },
+  {
+   "id": "PARA-5",
+   "expected": "SERVE",
+   "category": "known_paraphrase",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sec",
+      "boundary": [
+       "M",
+       "N",
+       "P",
+       "Q"
+      ],
+      "vertices": [
+       {
+        "label": "M",
+        "edge": [
+         "S",
+         "A"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": true
+       },
+       {
+        "label": "N",
+        "edge": [
+         "S",
+         "B"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "P",
+        "edge": [
+         "S",
+         "C"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "Q",
+        "edge": [
+         "S",
+         "D"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       }
+      ],
+      "closure_certificate": {
+       "boundary": [
+        "M",
+        "N",
+        "P",
+        "Q"
+       ],
+       "verified": true,
+       "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"
+      },
+      "declared_boundary": null
+     }
+    ],
+    "answers": {
+     "g_res": "7a³/24",
+     "g_ratio": "1/8"
+    },
+    "answer_exact": {
+     "g_res": {
+      "coef": "7/24",
+      "dim": 3,
+      "unit": "a"
+     },
+     "g_ratio": {
+      "coef": "1/8",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {
+    "g_ratio": true,
+    "g_res": true
+   },
+   "answers_bound_in_scene": {
+    "g_res": true,
+    "g_ratio": true
+   },
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "quantity",
+    "section",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 2,
+   "section_closure_certified": [
+    true
+   ]
+  },
+  {
+   "id": "CORPUS-DEV01-construct",
+   "expected": "SERVE",
+   "category": "dev_corpus_section_sentence",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sec",
+      "boundary": [
+       "M",
+       "I",
+       "I1",
+       "I2"
+      ],
+      "vertices": [
+       {
+        "label": "M",
+        "edge": [
+         "S",
+         "A"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": false
+       },
+       {
+        "label": "I",
+        "edge": [
+         "S",
+         "B"
+        ],
+        "provenance": "STATED_UNNAMED",
+        "stated": true
+       },
+       {
+        "label": "I1",
+        "edge": [
+         "S",
+         "C"
+        ],
+        "provenance": "STATED_UNNAMED",
+        "stated": true
+       },
+       {
+        "label": "I2",
+        "edge": [
+         "S",
+         "D"
+        ],
+        "provenance": "STATED_UNNAMED",
+        "stated": true
+       }
+      ],
+      "closure_certificate": {
+       "boundary": [
+        "M",
+        "I",
+        "I1",
+        "I2"
+       ],
+       "verified": true,
+       "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"
+      },
+      "declared_boundary": null
+     }
+    ],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {},
+   "answers_bound_in_scene": {},
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "polygon3",
+    "section",
+    "segment3",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 2,
+   "section_closure_certified": [
+    true
+   ]
+  },
+  {
+   "id": "CORPUS-DEV01-ratio-unowned",
+   "expected": "REFUSE_SOURCE",
+   "category": "ratio_without_operands",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "detail": "g_sub: đề không gọi khối chóp đỉnh S trên thiết diện bởi mặt này",
+     "calls": [
+      "g_sub"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "CORPUS-DEV03-construct",
+   "expected": "SERVE",
+   "category": "dev_corpus_section_sentence",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sec",
+      "boundary": [
+       "M",
+       "I",
+       "I1"
+      ],
+      "vertices": [
+       {
+        "label": "M",
+        "edge": [
+         "S",
+         "A"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": false
+       },
+       {
+        "label": "I",
+        "edge": [
+         "S",
+         "B"
+        ],
+        "provenance": "STATED_UNNAMED",
+        "stated": true
+       },
+       {
+        "label": "I1",
+        "edge": [
+         "S",
+         "C"
+        ],
+        "provenance": "STATED_UNNAMED",
+        "stated": true
+       }
+      ],
+      "closure_certificate": {
+       "boundary": [
+        "M",
+        "I",
+        "I1"
+       ],
+       "verified": true,
+       "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"
+      },
+      "declared_boundary": null
+     }
+    ],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {},
+   "answers_bound_in_scene": {},
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "polygon3",
+    "section",
+    "segment3",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 2,
+   "section_closure_certified": [
+    true
+   ]
+  },
+  {
+   "id": "CORPUS-DEV03-ratio-unowned",
+   "expected": "REFUSE_SOURCE",
+   "category": "ratio_without_operands",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "detail": "g_sub: đề không gọi khối chóp đỉnh S trên thiết diện bởi mặt này",
+     "calls": [
+      "g_sub"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "CORPUS-DEV06-construct",
+   "expected": "SERVE",
+   "category": "dev_corpus_section_sentence",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sec",
+      "boundary": [
+       "M",
+       "I",
+       "I1"
+      ],
+      "vertices": [
+       {
+        "label": "M",
+        "edge": [
+         "S",
+         "A"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": false
+       },
+       {
+        "label": "I",
+        "edge": [
+         "S",
+         "B"
+        ],
+        "provenance": "STATED_UNNAMED",
+        "stated": true
+       },
+       {
+        "label": "I1",
+        "edge": [
+         "S",
+         "C"
+        ],
+        "provenance": "STATED_UNNAMED",
+        "stated": true
+       }
+      ],
+      "closure_certificate": {
+       "boundary": [
+        "M",
+        "I",
+        "I1"
+       ],
+       "verified": true,
+       "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"
+      },
+      "declared_boundary": null
+     }
+    ],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {},
+   "answers_bound_in_scene": {},
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "polygon3",
+    "section",
+    "segment3",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 2,
+   "section_closure_certified": [
+    true
+   ]
+  },
+  {
+   "id": "CORPUS-DEV06-ratio-unowned",
+   "expected": "REFUSE_SOURCE",
+   "category": "ratio_without_operands",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "detail": "g_sub: đề không gọi khối chóp đỉnh S trên thiết diện bởi mặt này",
+     "calls": [
+      "g_sub"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "CORPUS-DEV09-construct",
+   "expected": "SERVE",
+   "category": "dev_corpus_section_sentence",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sec",
+      "boundary": [
+       "M",
+       "I",
+       "I1",
+       "I2"
+      ],
+      "vertices": [
+       {
+        "label": "M",
+        "edge": [
+         "S",
+         "A"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": false
+       },
+       {
+        "label": "I",
+        "edge": [
+         "S",
+         "B"
+        ],
+        "provenance": "STATED_UNNAMED",
+        "stated": true
+       },
+       {
+        "label": "I1",
+        "edge": [
+         "S",
+         "C"
+        ],
+        "provenance": "STATED_UNNAMED",
+        "stated": true
+       },
+       {
+        "label": "I2",
+        "edge": [
+         "S",
+         "D"
+        ],
+        "provenance": "STATED_UNNAMED",
+        "stated": true
+       }
+      ],
+      "closure_certificate": {
+       "boundary": [
+        "M",
+        "I",
+        "I1",
+        "I2"
+       ],
+       "verified": true,
+       "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"
+      },
+      "declared_boundary": null
+     }
+    ],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {},
+   "answers_bound_in_scene": {},
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "polygon3",
+    "section",
+    "segment3",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 2,
+   "section_closure_certified": [
+    true
+   ]
+  },
+  {
+   "id": "CORPUS-DEV09-ratio-unowned",
+   "expected": "REFUSE_SOURCE",
+   "category": "ratio_without_operands",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "detail": "g_sub: đề không gọi khối chóp đỉnh S trên thiết diện bởi mặt này",
+     "calls": [
+      "g_sub"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "CORPUS-DEV10-prism-area",
+   "expected": "SERVE",
+   "category": "dev_corpus_section_sentence",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sp",
+      "boundary": null,
+      "vertices": [
+       {
+        "label": "M",
+        "edge": [
+         "A",
+         "A'"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": false
+       },
+       {
+        "label": "I",
+        "edge": [
+         "B",
+         "B'"
+        ],
+        "provenance": "STATED_UNNAMED",
+        "stated": true
+       },
+       {
+        "label": "I1",
+        "edge": [
+         "C",
+         "C'"
+        ],
+        "provenance": "STATED_UNNAMED",
+        "stated": true
+       }
+      ],
+      "closure_certificate": null,
+      "declared_boundary": null
+     }
+    ],
+    "answers": {
+     "g_area": "a²√3/4"
+    },
+    "answer_exact": {
+     "g_area": {
+      "coef": "√3/4",
+      "dim": 2,
+      "unit": "a"
+     }
+    },
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sp": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {
+    "g_area": true
+   },
+   "answers_bound_in_scene": {
+    "g_area": true
+   },
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "polygon3",
+    "quantity",
+    "section",
+    "segment3",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 1,
+   "section_closure_certified": [
+    false
+   ]
+  },
+  {
+   "id": "PARTIAL-1of2-construct",
+   "expected": "SERVE",
+   "category": "partial_intersections",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sec",
+      "boundary": [
+       "M",
+       "N",
+       "I"
+      ],
+      "vertices": [
+       {
+        "label": "M",
+        "edge": [
+         "S",
+         "A"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": false
+       },
+       {
+        "label": "N",
+        "edge": [
+         "S",
+         "B"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "I",
+        "edge": [
+         "S",
+         "C"
+        ],
+        "provenance": "DERIVED_FRESH",
+        "stated": false
+       }
+      ],
+      "closure_certificate": {
+       "boundary": [
+        "M",
+        "N",
+        "I"
+       ],
+       "verified": true,
+       "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"
+      },
+      "declared_boundary": null
+     }
+    ],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {},
+   "answers_bound_in_scene": {},
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "polygon3",
+    "section",
+    "segment3",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 2,
+   "section_closure_certified": [
+    true
+   ]
+  },
+  {
+   "id": "PARTIAL-2of3-construct",
+   "expected": "SERVE",
+   "category": "partial_intersections",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sec",
+      "boundary": [
+       "M",
+       "N",
+       "I",
+       "Q"
+      ],
+      "vertices": [
+       {
+        "label": "M",
+        "edge": [
+         "S",
+         "A"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": false
+       },
+       {
+        "label": "N",
+        "edge": [
+         "S",
+         "B"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "I",
+        "edge": [
+         "S",
+         "C"
+        ],
+        "provenance": "DERIVED_FRESH",
+        "stated": false
+       },
+       {
+        "label": "Q",
+        "edge": [
+         "S",
+         "D"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       }
+      ],
+      "closure_certificate": {
+       "boundary": [
+        "M",
+        "N",
+        "I",
+        "Q"
+       ],
+       "verified": true,
+       "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"
+      },
+      "declared_boundary": null
+     }
+    ],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {},
+   "answers_bound_in_scene": {},
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "polygon3",
+    "section",
+    "segment3",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 2,
+   "section_closure_certified": [
+    true
+   ]
+  },
+  {
+   "id": "PLANE-ONLY-construct",
+   "expected": "SERVE",
+   "category": "plane_only",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sec",
+      "boundary": [
+       "M",
+       "I",
+       "I1"
+      ],
+      "vertices": [
+       {
+        "label": "M",
+        "edge": [
+         "S",
+         "A"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": false
+       },
+       {
+        "label": "I",
+        "edge": [
+         "S",
+         "B"
+        ],
+        "provenance": "DERIVED_FRESH",
+        "stated": false
+       },
+       {
+        "label": "I1",
+        "edge": [
+         "S",
+         "C"
+        ],
+        "provenance": "DERIVED_FRESH",
+        "stated": false
+       }
+      ],
+      "closure_certificate": {
+       "boundary": [
+        "M",
+        "I",
+        "I1"
+       ],
+       "verified": true,
+       "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"
+      },
+      "declared_boundary": null
+     }
+    ],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {},
+   "answers_bound_in_scene": {},
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "polygon3",
+    "section",
+    "segment3",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 2,
+   "section_closure_certified": [
+    true
+   ]
+  },
+  {
+   "id": "PLANE-ONLY-ratio-described",
+   "expected": "SERVE",
+   "category": "plane_only",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sec",
+      "boundary": [
+       "M",
+       "I",
+       "I1"
+      ],
+      "vertices": [
+       {
+        "label": "M",
+        "edge": [
+         "S",
+         "A"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": false
+       },
+       {
+        "label": "I",
+        "edge": [
+         "S",
+         "B"
+        ],
+        "provenance": "DERIVED_FRESH",
+        "stated": false
+       },
+       {
+        "label": "I1",
+        "edge": [
+         "S",
+         "C"
+        ],
+        "provenance": "DERIVED_FRESH",
+        "stated": false
+       }
+      ],
+      "closure_certificate": {
+       "boundary": [
+        "M",
+        "I",
+        "I1"
+       ],
+       "verified": true,
+       "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"
+      },
+      "declared_boundary": null
+     }
+    ],
+    "answers": {
+     "g_ratio": "1/8"
+    },
+    "answer_exact": {
+     "g_ratio": {
+      "coef": "1/8",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {
+    "g_ratio": true
+   },
+   "answers_bound_in_scene": {
+    "g_ratio": true
+   },
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "polygon3",
+    "quantity",
+    "section",
+    "segment3",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 2,
+   "section_closure_certified": [
+    true
+   ]
+  },
+  {
+   "id": "RELABEL-TDEF",
+   "expected": "SERVE",
+   "category": "relabel",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sec",
+      "boundary": [
+       "K",
+       "X",
+       "Y"
+      ],
+      "vertices": [
+       {
+        "label": "K",
+        "edge": [
+         "T",
+         "D"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": false
+       },
+       {
+        "label": "X",
+        "edge": [
+         "T",
+         "E"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "Y",
+        "edge": [
+         "T",
+         "F"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       }
+      ],
+      "closure_certificate": {
+       "boundary": [
+        "K",
+        "X",
+        "Y"
+       ],
+       "verified": true,
+       "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"
+      },
+      "declared_boundary": null
+     }
+    ],
+    "answers": {
+     "g_res": "7a³√3/96",
+     "g_ratio": "1/8"
+    },
+    "answer_exact": {
+     "g_res": {
+      "coef": "7√3/96",
+      "dim": 3,
+      "unit": "a"
+     },
+     "g_ratio": {
+      "coef": "1/8",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {
+    "g_ratio": true,
+    "g_res": true
+   },
+   "answers_bound_in_scene": {
+    "g_res": true,
+    "g_ratio": true
+   },
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "polygon3",
+    "quantity",
+    "section",
+    "segment3",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 2,
+   "section_closure_certified": [
+    true
+   ]
+  },
+  {
+   "id": "ORDER-premises-0",
+   "expected": "SERVE",
+   "category": "premise_order",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sec",
+      "boundary": [
+       "M",
+       "N",
+       "P",
+       "Q"
+      ],
+      "vertices": [
+       {
+        "label": "M",
+        "edge": [
+         "S",
+         "A"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": false
+       },
+       {
+        "label": "N",
+        "edge": [
+         "S",
+         "B"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "P",
+        "edge": [
+         "S",
+         "C"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "Q",
+        "edge": [
+         "S",
+         "D"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       }
+      ],
+      "closure_certificate": {
+       "boundary": [
+        "M",
+        "N",
+        "P",
+        "Q"
+       ],
+       "verified": true,
+       "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"
+      },
+      "declared_boundary": null
+     }
+    ],
+    "answers": {
+     "g_res": "7a³/24",
+     "g_ratio": "1/8"
+    },
+    "answer_exact": {
+     "g_res": {
+      "coef": "7/24",
+      "dim": 3,
+      "unit": "a"
+     },
+     "g_ratio": {
+      "coef": "1/8",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {
+    "g_ratio": true,
+    "g_res": true
+   },
+   "answers_bound_in_scene": {
+    "g_res": true,
+    "g_ratio": true
+   },
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "quantity",
+    "section",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 2,
+   "section_closure_certified": [
+    true
+   ]
+  },
+  {
+   "id": "ORDER-premises-1",
+   "expected": "SERVE",
+   "category": "premise_order",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sec",
+      "boundary": [
+       "M",
+       "N",
+       "P",
+       "Q"
+      ],
+      "vertices": [
+       {
+        "label": "M",
+        "edge": [
+         "S",
+         "A"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": false
+       },
+       {
+        "label": "N",
+        "edge": [
+         "S",
+         "B"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "P",
+        "edge": [
+         "S",
+         "C"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "Q",
+        "edge": [
+         "S",
+         "D"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       }
+      ],
+      "closure_certificate": {
+       "boundary": [
+        "M",
+        "N",
+        "P",
+        "Q"
+       ],
+       "verified": true,
+       "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"
+      },
+      "declared_boundary": null
+     }
+    ],
+    "answers": {
+     "g_res": "7a³/24",
+     "g_ratio": "1/8"
+    },
+    "answer_exact": {
+     "g_res": {
+      "coef": "7/24",
+      "dim": 3,
+      "unit": "a"
+     },
+     "g_ratio": {
+      "coef": "1/8",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {
+    "g_ratio": true,
+    "g_res": true
+   },
+   "answers_bound_in_scene": {
+    "g_res": true,
+    "g_ratio": true
+   },
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "quantity",
+    "section",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 2,
+   "section_closure_certified": [
+    true
+   ]
+  },
+  {
+   "id": "ORDER-goals",
+   "expected": "SERVE",
+   "category": "goal_order",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sec",
+      "boundary": [
+       "M",
+       "N",
+       "P",
+       "Q"
+      ],
+      "vertices": [
+       {
+        "label": "M",
+        "edge": [
+         "S",
+         "A"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": false
+       },
+       {
+        "label": "N",
+        "edge": [
+         "S",
+         "B"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "P",
+        "edge": [
+         "S",
+         "C"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "Q",
+        "edge": [
+         "S",
+         "D"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       }
+      ],
+      "closure_certificate": {
+       "boundary": [
+        "M",
+        "N",
+        "P",
+        "Q"
+       ],
+       "verified": true,
+       "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"
+      },
+      "declared_boundary": null
+     }
+    ],
+    "answers": {
+     "g_res": "7a³/24",
+     "g_ratio": "1/8"
+    },
+    "answer_exact": {
+     "g_res": {
+      "coef": "7/24",
+      "dim": 3,
+      "unit": "a"
+     },
+     "g_ratio": {
+      "coef": "1/8",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {
+    "g_ratio": true,
+    "g_res": true
+   },
+   "answers_bound_in_scene": {
+    "g_res": true,
+    "g_ratio": true
+   },
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "quantity",
+    "section",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 2,
+   "section_closure_certified": [
+    true
+   ]
+  },
+  {
+   "id": "PERP-square-third",
+   "expected": "SERVE",
+   "category": "reference",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sec",
+      "boundary": [
+       "M",
+       "N",
+       "P",
+       "Q"
+      ],
+      "vertices": [
+       {
+        "label": "M",
+        "edge": [
+         "S",
+         "A"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": false
+       },
+       {
+        "label": "N",
+        "edge": [
+         "S",
+         "B"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "P",
+        "edge": [
+         "S",
+         "C"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "Q",
+        "edge": [
+         "S",
+         "D"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       }
+      ],
+      "closure_certificate": {
+       "boundary": [
+        "M",
+        "N",
+        "P",
+        "Q"
+       ],
+       "verified": true,
+       "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"
+      },
+      "declared_boundary": null
+     }
+    ],
+    "answers": {
+     "g_res": "26a³/81",
+     "g_ratio": "1/27"
+    },
+    "answer_exact": {
+     "g_res": {
+      "coef": "26/81",
+      "dim": 3,
+      "unit": "a"
+     },
+     "g_ratio": {
+      "coef": "1/27",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {
+    "g_ratio": true,
+    "g_res": true
+   },
+   "answers_bound_in_scene": {
+    "g_res": true,
+    "g_ratio": true
+   },
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "quantity",
+    "section",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 2,
+   "section_closure_certified": [
+    true
+   ]
+  },
+  {
+   "id": "NEG-negated-plane",
+   "expected": "REFUSE_SOURCE",
+   "category": "negation",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "detail": "sec: đề không nói thiết diện của S.ABC với mặt phẳng qua M song song (ABC)",
+     "calls": [
+      "sec_plane1",
+      "sec_plane2",
+      "sec"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "NEG-conditional-plane",
+   "expected": "REFUSE_SOURCE",
+   "category": "condition",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "detail": "sec: đề không nói thiết diện của S.ABC với mặt phẳng qua M song song (ABC)",
+     "calls": [
+      "sec_plane1",
+      "sec_plane2",
+      "sec"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "NEG-missing-height",
+   "expected": "REFUSE_SOURCE",
+   "category": "missing_data",
+   "status": "REFUSED",
+   "code": "MISSING_DIMENSION",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "MISSING_DIMENSION",
+     "detail": "chưa có dữ kiện cho chiều cao của S",
+     "calls": []
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "NEG-number-wrong-object",
+   "expected": "REFUSE_SOURCE",
+   "category": "number_wrong_object",
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "UNGROUNDED_VALUE",
+     "detail": "p3: 'SB = a' không gắn a với vai trò của ô này trong một câu đọc trọn",
+     "calls": [
+      "p3"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "NEG-wrong-relation",
+   "expected": "REFUSE_SOURCE",
+   "category": "wrong_relation",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_IN_QUOTE",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "PLANE_NOT_IN_QUOTE",
+     "detail": "p2: mặt phẳng ['A', 'B', 'C'] không được nhắc trong 'SA vuông góc với SB'",
+     "calls": [
+      "p2"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "NEG-ratio-unowned-named",
+   "expected": "REFUSE_SOURCE",
+   "category": "ratio_without_operands",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "detail": "g_sub: đề không gọi khối chóp đỉnh S trên thiết diện bởi mặt này",
+     "calls": [
+      "g_sub"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "NEG-ratio-unowned-anonymous",
+   "expected": "REFUSE_SOURCE",
+   "category": "ratio_without_operands",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "detail": "g_sub: đề không gọi khối chóp đỉnh S trên thiết diện bởi mặt này",
+     "calls": [
+      "g_sub"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "NEG-residual-unowned",
+   "expected": "REFUSE_SOURCE",
+   "category": "residual_without_operands",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "detail": "g_sub: đề không gọi khối chóp đỉnh S trên thiết diện bởi mặt này",
+     "calls": [
+      "g_sub"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "NEG-swapped-names",
+   "expected": "REFUSE_SOURCE",
+   "category": "wrong_naming",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "detail": "sec: đề không nói thiết diện của S.ABC với mặt phẳng qua M song song (ABC)",
+     "calls": [
+      "sec_plane1",
+      "sec_plane2",
+      "sec"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "NEG-unread-condition",
+   "expected": "REFUSE_SOURCE",
+   "category": "unread_condition",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "detail": "sec: đề không nói thiết diện của S.ABC với mặt phẳng qua M song song (ABC)",
+     "calls": [
+      "sec_plane1",
+      "sec_plane2",
+      "sec"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "NEG-stated-edge-not-in-text",
+   "expected": "REFUSE_SOURCE",
+   "category": "stated_not_in_source",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "detail": "sec: đề không nói thiết diện của S.ABC với mặt phẳng qua M song song (ABC)",
+     "calls": [
+      "sec_plane1",
+      "sec_plane2",
+      "sec"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "NEG-contains-a-line",
+   "expected": "REFUSE_SOURCE",
+   "category": "grammar_negative_control",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "detail": "sec: đề không nói thiết diện của S.ABC với mặt phẳng qua M song song (ABC)",
+     "calls": [
+      "sec_plane1",
+      "sec_plane2",
+      "sec"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "NEG-other-plane-subject",
+   "expected": "REFUSE_SOURCE",
+   "category": "grammar_negative_control",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "detail": "sec: đề không nói thiết diện của S.ABC với mặt phẳng qua M song song (ABC)",
+     "calls": [
+      "sec_plane1",
+      "sec_plane2",
+      "sec"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "NEG-per-edge-same-name",
+   "expected": "REFUSE_SOURCE",
+   "category": "grammar_negative_control",
+   "status": "REFUSED",
+   "code": "INVALID_DERIVED_SECTION",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "INVALID_DERIVED_SECTION",
+     "detail": "Section 'sec': two stated intersections carry the same name",
+     "calls": []
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": null,
+     "bridge": {
+      "version": "typed-fact-next-bridge/2"
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "NEG-point-first-wrong-reference",
+   "expected": "REFUSE_SOURCE",
+   "category": "grammar_negative_control",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "detail": "sec: đề không nói thiết diện của S.ABC với mặt phẳng qua M song song (ABC)",
+     "calls": [
+      "sec_plane1",
+      "sec_plane2",
+      "sec"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "POS-per-edge-with-va-cat",
+   "expected": "SERVE",
+   "category": "grammar_positive_control",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sec",
+      "boundary": [
+       "M",
+       "N",
+       "P"
+      ],
+      "vertices": [
+       {
+        "label": "M",
+        "edge": [
+         "S",
+         "A"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": false
+       },
+       {
+        "label": "N",
+        "edge": [
+         "S",
+         "B"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "P",
+        "edge": [
+         "S",
+         "C"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       }
+      ],
+      "closure_certificate": {
+       "boundary": [
+        "M",
+        "N",
+        "P"
+       ],
+       "verified": true,
+       "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"
+      },
+      "declared_boundary": null
+     }
+    ],
+    "answers": {
+     "g_ratio": "1/8"
+    },
+    "answer_exact": {
+     "g_ratio": {
+      "coef": "1/8",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {
+    "g_ratio": true
+   },
+   "answers_bound_in_scene": {
+    "g_ratio": true
+   },
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "polygon3",
+    "quantity",
+    "section",
+    "segment3",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 2,
+   "section_closure_certified": [
+    true
+   ]
+  },
+  {
+   "id": "GEO-contradictory-length",
+   "expected": "REFUSE_GEOMETRY",
+   "category": "contradiction",
+   "status": "REFUSED",
+   "code": "INCONSISTENT_FACTS",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "INCONSISTENT_FACTS",
+     "detail": "đoạn SA nhận hai độ dài khác nhau từ các dữ kiện",
+     "calls": [
+      "p3",
+      "p5"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "GEO-parallel-to-cut-edges",
+   "expected": "REFUSE_GEOMETRY",
+   "category": "degenerate",
+   "status": "REFUSED",
+   "code": "PARALLEL_NO_INTERSECTION",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "PARALLEL_NO_INTERSECTION",
+     "detail": "PARALLEL_NO_INTERSECTION: đường thẳng SONG SONG với mặt phẳng — không có giao điểm",
+     "calls": [
+      "sec_cut2"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "GEO-declared-boundary-crossed",
+   "expected": "REFUSE_GEOMETRY",
+   "category": "declared_boundary",
+   "status": "REFUSED",
+   "code": "SECTION_BOUNDARY_INCOMPLETE",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "detail": "chu trình MPNQ (4 đỉnh) không phải thiết diện thật của S.ABCD (4 đỉnh) theo đúng thứ tự vòng",
+     "calls": [
+      "sec_cut2",
+      "sec_cut3",
+      "sec_cut4",
+      "g_sub"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "GEO-declared-boundary-partial",
+   "expected": "REFUSE_GEOMETRY",
+   "category": "declared_boundary",
+   "status": "REFUSED",
+   "code": "SECTION_BOUNDARY_INCOMPLETE",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "detail": "chu trình NPQ (3 đỉnh) không phải thiết diện thật của S.ABCD (4 đỉnh) theo đúng thứ tự vòng",
+     "calls": [
+      "sec_cut2",
+      "sec_cut3",
+      "sec_cut4",
+      "g_sub"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "GEO-declared-boundary-reversed",
+   "expected": "SERVE",
+   "category": "declared_boundary",
+   "status": "SERVED",
+   "code": null,
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "SERVED",
+    "refusal": null,
+    "source_verification": {
+     "authority": "registry.kiem_nguon"
+    },
+    "sections": [
+     {
+      "section_id": "sec",
+      "boundary": [
+       "M",
+       "N",
+       "P",
+       "Q"
+      ],
+      "vertices": [
+       {
+        "label": "M",
+        "edge": [
+         "S",
+         "A"
+        ],
+        "provenance": "THROUGH_POINT_REUSE",
+        "stated": false
+       },
+       {
+        "label": "N",
+        "edge": [
+         "S",
+         "B"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "P",
+        "edge": [
+         "S",
+         "C"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       },
+       {
+        "label": "Q",
+        "edge": [
+         "S",
+         "D"
+        ],
+        "provenance": "SOURCE_NAMED",
+        "stated": true
+       }
+      ],
+      "closure_certificate": {
+       "boundary": [
+        "M",
+        "N",
+        "P",
+        "Q"
+       ],
+       "verified": true,
+       "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"
+      },
+      "declared_boundary": [
+       [
+        "S",
+        "D"
+       ],
+       [
+        "S",
+        "C"
+       ],
+       [
+        "S",
+        "B"
+       ],
+       [
+        "S",
+        "A"
+       ]
+      ]
+     }
+    ],
+    "answers": {
+     "g_res": "7a³/24",
+     "g_ratio": "1/8"
+    },
+    "answer_exact": {
+     "g_res": {
+      "coef": "7/24",
+      "dim": 3,
+      "unit": "a"
+     },
+     "g_ratio": {
+      "coef": "1/8",
+      "dim": 0,
+      "unit": null
+     }
+    },
+    "length_unit": "a",
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "scene_gate": "PASS",
+   "metric_agrees": true,
+   "envelope_config_errors": null,
+   "execution_truncated": false,
+   "internal_ids_in_learner_text": [],
+   "oracle_answers_match": {
+    "g_ratio": true,
+    "g_res": true
+   },
+   "answers_bound_in_scene": {
+    "g_res": true,
+    "g_ratio": true
+   },
+   "object_types": [
+    "line3",
+    "plane3",
+    "point3",
+    "quantity",
+    "section",
+    "solid",
+    "vector3"
+   ],
+   "solid_objects": 2,
+   "section_closure_certified": [
+    true
+   ]
+  },
+  {
+   "id": "KER-plane-equation",
+   "expected": "REFUSE_KERNEL",
+   "category": "unsupported_plane_kind",
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_PLANE_KIND",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "BRIDGE_UNSUPPORTED_PLANE_KIND",
+     "detail": "sec: mặt plane_equation chưa có phép dựng của planner",
+     "calls": [
+      "sec"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": null,
+     "bridge": {
+      "version": "typed-fact-next-bridge/2"
+     }
+    }
+   },
+   "refusal_has_code": true
+  },
+  {
+   "id": "KER-section-on-base-edges",
+   "expected": "REFUSE_KERNEL",
+   "category": "unsupported_section_shape",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "route_d": {
+    "schema_version": "hybrid-route-d-simulation/4",
+    "adapter_version": "hybrid-simulation-adapter/4",
+    "contract_version": "typed-fact-next/2",
+    "status": "REFUSED",
+    "refusal": {
+     "code": "UNSUPPORTED_CAPABILITY",
+     "detail": "sec: ['AB', 'AC'] không phải cạnh bên của S.ABC",
+     "calls": [
+      "sec"
+     ]
+    },
+    "source_verification": null,
+    "sections": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "planner": {
+     "version": "geometry-fact-planner/13",
+     "bridge": {
+      "version": "typed-fact-next-bridge/2",
+      "goals_without_new_facts": [],
+      "declared_length_unit": null,
+      "declared_plane_names": {
+       "sec": "α"
+      }
+     }
+    }
+   },
+   "refusal_has_code": true
+  }
+ ]
+}
