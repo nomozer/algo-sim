@@ -969,6 +969,20 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
     cam.position.set(0, 0, 4); cam.lookAt(tam); cam.updateMatrixWorld(true);       // zoom: foot depth 10 → 4
     datCoGocVuong([root], cam, 720, tam);
     expect(goc.scale.x).toBeCloseTo(coDau * 0.4, 6);
+
+    // Review I1: the duplicate key is WORLD-space and the strongest mark wins. A faded copy met first must yield to
+    // a full-opacity one; the same local foot under a translated (exploded) parent is a different mark.
+    const root2 = new THREE.Group();
+    const diu = vatNhanChung({ ...w, id: "perpendicular:diu" }, diem, 0x0f766e, true);
+    const dam = vatNhanChung({ ...w, id: "perpendicular:dam" }, diem, 0x0f766e, false);
+    const tach = new THREE.Group();
+    tach.position.set(5, 0, 0);
+    tach.add(vatNhanChung({ ...w, id: "perpendicular:tach" }, diem, 0x0f766e, false));
+    root2.add(diu, dam, tach);
+    expect(datCoGocVuong([root2], cam, 720, tam)).toBe(2);
+    expect((diu.children[1] as THREE.Line).visible).toBe(false);
+    expect((dam.children[1] as THREE.Line).visible).toBe(true);
+    expect((tach.children[0].children[1] as THREE.Line).visible).toBe(true);
   });
 
   it("nhân chứng vuông góc trên khối đơn vị co giãn chu kỳ nét đứt và ô góc vuông theo đường kính cảnh, không phình quá khổ", () => {

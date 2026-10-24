@@ -294,9 +294,10 @@ describe("Session 1 P3 — Simulation Coverage & Visual Validation Fixes", () =>
     expect((xray.getObjectByName("polygon_fill:td_sec_axial") as THREE.Mesh<THREE.BufferGeometry, THREE.Material>).material.depthTest).toBe(false);
     expect(fillMat.depthWrite).toBe(false);
     expect(fillMat.polygonOffset).toBe(true);
-    // Section fill uses the single section opacity authority (SGK reference 0.27); legibility against shell and
-    // plane is measured by the browser gate SECTION_FILL_DISTINGUISHABLE, not by a literal here.
+    // Section fill uses the single section opacity authority. The SGK reference 0.27 measures ΔE76 ≈ 17 < 20 on the
+    // SECTION_FILL_DISTINGUISHABLE gate; 0.32 is the smallest passing value (owner decision), so it is the floor here.
     expect(fillMat.opacity).toBe(DO_DUC_TO_THIET_DIEN);
+    expect(fillMat.opacity).toBeGreaterThanOrEqual(0.32);
 
     // 2. Boundary lines in curved-solid scenes (occluders.length === 0) must retain both
     // LessEqualDepth visible solid pass (with polygonOffset) and GreaterDepth hidden dashed pass

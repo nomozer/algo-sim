@@ -6,6 +6,7 @@ import {
   doanNhuongCanh,
   dongBoNetDayManHinh,
   tinhViTriNhanDiem,
+  updateCanonicalEdgeVisibility,
 } from "./scene3d-view";
 import { diemHuuHan, type Scene3D, type SceneObject } from "./scene3d-model";
 import { hangCuThe } from "./pick-target";
@@ -377,7 +378,25 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
     )!;
     const standaloneBorder = standalonePlane.getObjectByName("plane_border:mp_P") as THREE.Line;
     expect(standaloneBorder.material).toBeInstanceOf(THREE.LineDashedMaterial);
+    expect((standaloneBorder.material as THREE.LineDashedMaterial).colorWrite).toBe(true);
     expect((standaloneBorder.material as THREE.LineDashedMaterial).opacity).toBeGreaterThanOrEqual(0.28);
+
+    // …and still dashed and drawn AFTER the visibility pass splits the border into spans (the path where the old
+    // closed-section suppression removed it), next to a real occluding solid.
+    const rootMp = new THREE.Group();
+    rootMp.add(buildObject3D(pyramid, false, undefined, diemNen)!, carrierPlane);
+    const camMp = new THREE.PerspectiveCamera(50, 4 / 3, 0.1, 200);
+    camMp.up.set(0, 0, 1); camMp.position.set(8, 3, 6); camMp.lookAt(0, 0, 1);
+    camMp.updateMatrixWorld(true); camMp.updateProjectionMatrix();
+    updateCanonicalEdgeVisibility(rootMp, camMp, "800x600@1");
+    const spans: THREE.Line[] = [];
+    rootMp.traverse((n) => { if ((n as THREE.Line).isLine && /^plane_border:mp_P:/.test(n.name)) spans.push(n as THREE.Line); });
+    expect(spans.length).toBeGreaterThan(0);
+    for (const sp of spans) {
+      expect(sp.material).toBeInstanceOf(THREE.LineDashedMaterial);
+      expect((sp.material as THREE.LineDashedMaterial).colorWrite).not.toBe(false);
+      expect((sp.material as THREE.LineDashedMaterial).opacity).toBeCloseTo(PHONG_CACH_SCENE3D.opacity.standalonePlaneEdge, 6);
+    }
 
     // 5. Outward radial & right-angle-avoiding vertex label placement
     const placed = tinhViTriNhanDiem(

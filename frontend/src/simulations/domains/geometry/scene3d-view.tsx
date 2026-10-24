@@ -2223,12 +2223,15 @@ function dauGocVuong(
   return line;
 }
 
-function khoaGocVuong(d: GocVuongDonVi): string {
+/** Khoá trùng của một dấu ở toạ độ THẾ GIỚI (sau phép tách/cô lập của cha): chân + cặp phương không phân biệt dấu. */
+function khoaGocVuong(d: GocVuongDonVi, cha: THREE.Matrix4): string {
   const chuan = (p: Vec3) => {
-    const k = p.find((x) => Math.abs(x) > 1e-6) ?? 1;
-    return p.map((x) => (Math.sign(k) * x).toFixed(3)).join(",");
+    const q = new THREE.Vector3(...p).transformDirection(cha).toArray();
+    const k = q.find((x) => Math.abs(x) > 1e-6) ?? 1;
+    return q.map((x) => (Math.sign(k) * x).toFixed(3)).join(",");
   };
-  return [d.foot.map((x) => x.toFixed(4)).join(","), ...[chuan(d.u), chuan(d.v)].sort()].join("|");
+  const chan = new THREE.Vector3(...d.foot).applyMatrix4(cha).toArray();
+  return [chan.map((x) => x.toFixed(4)).join(","), ...[chuan(d.u), chuan(d.v)].sort()].join("|");
 }
 
 /**
@@ -2237,8 +2240,8 @@ function khoaGocVuong(d: GocVuongDonVi): string {
  * Cỡ điểm ảnh tỉ lệ nghịch với ĐỘ SÂU view-space của chân — phép chiếu của camera, không phép hình học nào trên
  * cảnh. Có `tamNhin` (đích OrbitControls): chỉ tính lại khi độ sâu của TÂM NHÌN đổi (thu phóng, đặt khung) — lúc chỉ
  * XOAY, cỡ world giữ nguyên nên toạ độ dấu đứng yên và nét dày không cấp phát lại buffer GPU mỗi khung (cổng
- * `scene3d-orbit-gate`, `capPhat = 0`). Hai dấu cùng chân và cùng cặp phương ⇒ giữ dấu đầu, ẩn dấu lặp. Trả số dấu
- * đang hiện.
+ * `scene3d-orbit-gate`, `capPhat = 0`). Hai dấu cùng chân và cùng cặp phương (toạ độ thế giới) ⇒ giữ dấu ĐẬM nhất
+ * (dấu đang nhấn / không bị làm dịu), ẩn các dấu lặp; dấu dưới một tổ tiên ẩn không tranh khoá. Trả số dấu đang hiện.
  */
 export function datCoGocVuong(
   roots: readonly THREE.Object3D[], cam: THREE.Camera, hCss: number, tamNhin?: THREE.Vector3,
@@ -2249,35 +2252,51 @@ export function datCoGocVuong(
   const px = Math.min(cfg.maxPx, Math.max(cfg.minPx, cfg.perCanvasHeight * hCss));
   const f = hCss / (2 * Math.tan((pc.fov * Math.PI) / 360));
   pc.updateMatrixWorld();
-  const daCo = new Set<string>();
   const chan = new THREE.Vector3();
   const doSauTam = tamNhin ? -chan.copy(tamNhin).applyMatrix4(pc.matrixWorldInverse).z : null;
-  let hien = 0;
+  const DONG_NHAT_MT = new THREE.Matrix4();
+  // Lượt 1: gom ứng viên (khoá thế giới, độ đậm, tổ tiên có hiện không).
+  const ungVien: { node: THREE.Object3D; d: GocVuongDonVi; khoa: string; dam: number; toTienHien: boolean }[] = [];
   for (const r of roots) {
     r.updateMatrixWorld(true);
     r.traverse((node) => {
       const d = node.userData?.gocVuongDonVi as GocVuongDonVi | undefined;
       if (!d) return;
-      const khoa = khoaGocVuong(d);
-      node.visible = !daCo.has(khoa);
-      daCo.add(khoa);
-      if (!node.visible) return;
-      hien += 1;
-      // Chỉ XOAY (độ sâu tâm nhìn và cỡ khung không đổi) ⇒ giữ cỡ world đã đặt: không ghi toạ độ mới.
-      const khoaCo = doSauTam === null ? null : `${doSauTam.toFixed(6)}|${hCss}`;
-      if (khoaCo !== null && node.userData.khoaCoGocVuong === khoaCo) return;
-      node.userData.khoaCoGocVuong = khoaCo;
-      const doSau = node.parent
-        ? -chan.set(...d.foot).applyMatrix4(node.parent.matrixWorld).applyMatrix4(pc.matrixWorldInverse).z
-        : -chan.set(...d.foot).applyMatrix4(pc.matrixWorldInverse).z;
-      const k = doSau > 0 ? Math.min(d.maxWorld, (px * doSau) / f) / d.s0 : 1;
-      node.scale.setScalar(k);
-      node.position.set(d.foot[0] * (1 - k), d.foot[1] * (1 - k), d.foot[2] * (1 - k));
-      node.updateMatrixWorld(true);
-      const s = k * d.s0;
-      d.cornerOwner.userData.corner = [d.foot[0] + (d.u[0] + d.v[0]) * s, d.foot[1] + (d.u[1] + d.v[1]) * s,
-        d.foot[2] + (d.u[2] + d.v[2]) * s];
+      let toTienHien = true;
+      for (let p = node.parent; p; p = p.parent) if (!p.visible) { toTienHien = false; break; }
+      const mat = (node as THREE.Line).material as THREE.Material | undefined;
+      ungVien.push({ node, d, khoa: khoaGocVuong(d, node.parent?.matrixWorld ?? DONG_NHAT_MT),
+        dam: mat?.opacity ?? 1, toTienHien });
     });
+  }
+  // Lượt 2: mỗi khoá giữ MỘT dấu — dấu đậm nhất trong số dấu có tổ tiên hiện (hoà ⇒ dấu gặp trước).
+  const thang = new Map<string, (typeof ungVien)[number]>();
+  for (const c of ungVien) {
+    if (!c.toTienHien) continue;
+    const cu = thang.get(c.khoa);
+    if (!cu || c.dam > cu.dam) thang.set(c.khoa, c);
+  }
+  let hien = 0;
+  for (const c of ungVien) {
+    const { node, d } = c;
+    node.visible = thang.get(c.khoa) === c;
+    if (!node.visible) continue;
+    hien += 1;
+    // Chỉ XOAY (độ sâu tâm nhìn, cỡ khung và vị trí cha không đổi) ⇒ giữ cỡ world đã đặt: không ghi toạ độ mới.
+    const e = node.parent?.matrixWorld.elements;
+    const khoaCo = doSauTam === null ? null
+      : `${doSauTam.toFixed(6)}|${hCss}|${e ? [e[12], e[13], e[14]].map((x) => x.toFixed(6)).join(",") : ""}`;
+    if (khoaCo !== null && node.userData.khoaCoGocVuong === khoaCo) continue;
+    node.userData.khoaCoGocVuong = khoaCo;
+    const doSau = -chan.set(...d.foot).applyMatrix4(node.parent?.matrixWorld ?? DONG_NHAT_MT)
+      .applyMatrix4(pc.matrixWorldInverse).z;
+    const k = doSau > 0 ? Math.min(d.maxWorld, (px * doSau) / f) / d.s0 : 1;
+    node.scale.setScalar(k);
+    node.position.set(d.foot[0] * (1 - k), d.foot[1] * (1 - k), d.foot[2] * (1 - k));
+    node.updateMatrixWorld(true);
+    const s = k * d.s0;
+    d.cornerOwner.userData.corner = [d.foot[0] + (d.u[0] + d.v[0]) * s, d.foot[1] + (d.u[1] + d.v[1]) * s,
+      d.foot[2] + (d.u[2] + d.v[2]) * s];
   }
   return hien;
 }
@@ -3557,7 +3576,8 @@ export function Scene3DWorkspace({
   );
   const chuNhanDiem = kyHieuDiem(ungVienNhan);
   // Kiểu nhãn SGK theo vai trò (HTML tham chiếu: main-vertex / section-vertex / aux-vertex) — chỉ trình bày.
-  const dinhThietDien = useMemo(() => diemTaiDinhThietDien(scene), [scene]);
+  // Chỉ các vật CÓ MẶT ở bước đang xem (frame k ⇔ trace[k]): M chưa mang vai đỉnh thiết diện trước khi thiết diện dựng.
+  const dinhThietDien = useMemo(() => diemTaiDinhThietDien({ objects: objectsAt(scene, buoc) }), [scene, buoc]);
   const vaiNhan = (o: SceneObject) => dinhThietDien.has(o.id) ? " vai-thiet-dien"
     : o.origin === "derived" ? " vai-phu" : "";
   const nhanDiem = ungVienNhan.filter((o) => chuNhanDiem.has(o.id));
