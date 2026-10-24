@@ -237,7 +237,7 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
     expect(polyCat?.children.some((c) => c.id === "duong_tron_day_1")).toBe(true);
     expect(secCat?.children.some((c) => c.id === "td_cat")).toBe(true);
   });
-  it("aligns Scene3D V6.2 S1 selection semantics (preserving semantic section color #F59E0B/#D97706 and 0.72 context attenuation)", () => {
+  it("preserves terracotta section fill with a cobalt selected boundary", () => {
     const cutCircle: SceneObject = {
       id: "td_sec_sphere",
       label: "Thiết diện tròn",
@@ -254,14 +254,14 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
     const builtSelected = buildObject3D(cutCircle, true)!;
     const secFill = builtSelected.getObjectByName("section_fill:td_sec_sphere") as THREE.Mesh;
     const secFillMat = secFill.material as THREE.MeshBasicMaterial;
-    // SGK reference: section fill and outline are both terracotta; base circles stay shell grey (above).
+    // Owner P2: semantic fill stays terracotta, selected boundary is cobalt.
     expect(secFillMat.color.getHex()).toBe(PHONG_CACH_SCENE3D.colors.polygon);
     expect(secFillMat.color.getHex()).not.toBe(PHONG_CACH_SCENE3D.colors.mesh);
     expect(secFillMat.opacity).toBeCloseTo(PHONG_CACH_SCENE3D.opacity.selectedSection, 5);
     const secRim = builtSelected.children.find(
       (c): c is THREE.Mesh => c instanceof THREE.Mesh && c !== secFill,
     )!;
-    expect((secRim.material as THREE.MeshBasicMaterial).color.getHex()).toBe(PHONG_CACH_SCENE3D.colors.sectionOutline);
+    expect((secRim.material as THREE.MeshBasicMaterial).color.getHex()).toBe(0x2563eb);
   });
 
   it("pilots illustration-quality multi-pixel Line2 hierarchy, single-pass outward polyhedral shells, section-coincident base yielding, standalone plane visibility, and outward radial vertex labels", () => {

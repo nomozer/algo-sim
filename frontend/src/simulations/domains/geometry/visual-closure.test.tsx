@@ -1,0 +1,82 @@
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { renderToString } from "react-dom/server";
+import { readFileSync } from "node:fs";
+import * as THREE from "three";
+import { Scene3DExplorer } from "./Scene3DExplorer";
+import { buildObject3D } from "./scene3d-view";
+import { PHONG_CACH_SCENE3D } from "./scene3d-roles";
+import type { Scene3D, SceneObject } from "./scene3d-model";
+import { tapKetQuaCuoi } from "./scene3d-model";
+import fixture from "./scene3d-section-fixture.json";
+
+// Seed the learner's actual open panels/selection; render the real component without WebGL.
+const learner = vi.hoisted(() => ({ analysis: false, selected: null as string | null }));
+vi.mock("react", async (importOriginal) => {
+  const react = await importOriginal<typeof import("react")>();
+  return { ...react, useLayoutEffect: react.useEffect, useState: (initial: unknown) => react.useState(() => {
+    const value = typeof initial === "function" ? initial() : initial;
+    if (value && typeof value === "object" && "selected_id" in value)
+      return { ...value, selected_id: learner.selected, current_step: 999 };
+    if (value instanceof Set) return new Set(learner.analysis ? ["phan-tich"] : []);
+    return value;
+  }) };
+});
+afterEach(() => { learner.analysis = false; learner.selected = null; });
+
+const scene = fixture as unknown as Scene3D;
+const section = scene.objects.find(o => o.type === "section")!;
+const families = ["triangular_pyramid", "triangular_prism", "rectangular_pyramid", "cuboid", "cube", "regular_square_pyramid", "regular_triangular_pyramid"];
+const officialScene = (family: string): Scene3D => JSON.parse(readFileSync(new URL(
+  `../../../../../docs/evaluation/geometry/runs/visual-hybrid-final-corrections/visual/inputs/fixtures/${family}_positive.json`, import.meta.url), "utf8")).envelope.scene3d;
+
+describe("Owner F1: one formula region per selected quantity", () => {
+  it.each(families)("%s keeps the explanation in analysis and links the inspector to it", family => {
+    const scene = officialScene(family);
+    learner.analysis = true;
+    // Use a real backend measurement with a coherent formula.
+    const quantity = scene.objects.find(o => o.formula && o.value != null && tapKetQuaCuoi(scene).has(o.id))!;
+    expect(quantity).toBeDefined();
+    learner.selected = quantity.id;
+    const html = renderToString(<Scene3DExplorer scene={scene} />);
+    expect(html).toContain("data-analysis-formula=");
+    expect(html.includes(`data-formula-entity="${quantity.id}"`)).toBe(false);
+    expect(html).toContain('href="#geo3d-bang-phan-tich"');
+    expect(html).toContain('data-panel="soi"');
+  });
+
+  it("preserves the inspector formula in Mode A for a non-final measurement", () => {
+    const scene = officialScene("triangular_pyramid");
+    const quantity = scene.objects.find(o => o.formula && o.value != null && !tapKetQuaCuoi(scene).has(o.id))!;
+    learner.selected = quantity.id;
+    const html = renderToString(<Scene3DExplorer scene={scene} />);
+    expect(html).toContain(`data-formula-entity="${quantity.id}"`);
+    expect(html).not.toContain("data-math-analysis-panel");
+  });
+});
+
+function borderColors(object: THREE.Object3D): number[] {
+  const colors: number[] = [];
+  object.traverse(child => {
+    if (!child.name.startsWith("polygon_border:")) return;
+    const material = (child as THREE.Line).material as THREE.LineBasicMaterial;
+    if (material?.color) colors.push(material.color.getHex());
+  });
+  return colors;
+}
+
+describe("Owner F2: selected section preserves semantic fill and geometry", () => {
+  it.each(["section", "polygon3"] as const)("highlights only the selected %s boundary in cobalt", type => {
+    const input: SceneObject = { ...section, type, surface_role: "SECTION_REGION" };
+    const before = JSON.stringify(input);
+    const neutral = buildObject3D(input, false)!;
+    const selected = buildObject3D(input, "dich")!;
+    expect(borderColors(neutral)).toContain(0xc85a32);
+    expect(borderColors(selected)).toContain(0x2563eb);
+    const fills: THREE.Mesh[] = [];
+    selected.traverse(child => { if (child.name.startsWith("section_fill:") || child.name.startsWith("polygon_fill:")) fills.push(child as THREE.Mesh); });
+    expect(fills.length).toBeGreaterThan(0);
+    expect((fills[0].material as THREE.MeshBasicMaterial).color.getHex()).toBe(PHONG_CACH_SCENE3D.colors.polygon);
+    expect(JSON.stringify(input)).toBe(before);
+    expect(borderColors(buildObject3D(input, false)!)).toEqual(borderColors(neutral));
+  });
+});

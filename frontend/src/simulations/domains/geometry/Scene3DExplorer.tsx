@@ -377,6 +377,11 @@ export function Scene3DExplorer({
   };
   const ctThietDien = dangChon ? sectionDetails(day, dangChon.id) : null;
   const formula = dangChon ? coherentFormula(day, dangChon) : null;
+  const formulaInAnalysis = moBang.has("phan-tich") && formula && dangChon
+    ? [...phanTich.requestedResults, ...phanTich.derivedMeasurements].find((m) =>
+      m.formula === formula.text && (m.entityId === dangChon.id
+        || m.entityId === dangChon.annotation?.same_as || m.entityId === dangChon.alias_of))
+    : null;
   // Ô soi của một ĐẠI LƯỢNG: dữ kiện số trong chuỗi và đầu vào trực tiếp — backend phát, không tính.
   const nguon = dangChon ? quantitySources(day, dangChon.id) : null;
   // Vật đang chọn là một ĐẠI LƯỢNG (mang giá trị backend phát) — ô soi luôn hiện giá trị của nó.
@@ -625,9 +630,11 @@ export function Scene3DExplorer({
               </p>
             )}
 
-            {/* §16.6 → W05: ô soi là nơi DUY NHẤT mang công thức (thẻ lời giải dưới mô phỏng đã gỡ). Đại lượng
-                không có công thức nhất quán (thể tích đo thẳng trên khối) vẫn mang GIÁ TRỊ — W05 để trống ô ấy. */}
-            {formula && !dapAnAn.has(dangChon.id) && (
+            {/* Công thức có một nơi trình bày; khi mở phân tích, ô soi giữ danh tính và nguồn. */}
+            {formulaInAnalysis && (
+              <p><a href="#geo3d-bang-phan-tich">Xem công thức trong Phân tích toán học</a></p>
+            )}
+            {formula && !formulaInAnalysis && !dapAnAn.has(dangChon.id) && (
               <p className="geo3d-soi-cong-thuc" data-formula-entity={dangChon.id}>
                 {formula.text}
               </p>

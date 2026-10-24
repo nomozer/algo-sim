@@ -163,7 +163,7 @@ describe("E · không còn thẻ lời giải lặp dưới mô phỏng", () => 
   it("ô soi mang công thức trừ đáp án chưa được người học mở", () => {
     const ma = SRC("./Scene3DExplorer.tsx");
     expect(ma).not.toContain("moLoiGiai");
-    expect(ma).toMatch(/\{formula && !dapAnAn\.has\(dangChon\.id\) && \(\s*<p className="geo3d-soi-cong-thuc"/);
+    expect(ma).toMatch(/\{formula && !formulaInAnalysis && !dapAnAn\.has\(dangChon\.id\) && \(\s*<p className="geo3d-soi-cong-thuc"/);
   });
 
   it("đại lượng KHÔNG có công thức vẫn hiện giá trị; không nguồn số thì nêu vật"

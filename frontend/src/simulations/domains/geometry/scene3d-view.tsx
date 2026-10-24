@@ -1283,11 +1283,13 @@ export function buildObject3D(
     : noiBat ? MAU_TANG[noiBat as Exclude<TangNhanManh, "boi_canh">] : undefined;
   const nen = (macDinh: number) => boiCanh ? MAU_NEN_BOI_CANH : macDinh;
   const net = (macDinh: number) => mau ?? (boiCanh ? MAU_VAI_TRO.boi_canh : macDinh);
-  const netMien = (macDinh: number) => boiCanh ? MAU_VAI_TRO.boi_canh : macDinh;
   const mauKhoi = vaiKhoi === "secondary" ? MAU.secondaryMesh : MAU.mesh;
   const doDucKhoi = noiBat ? DO_DUC.selectedSolid : vaiKhoi === "secondary" ? DO_DUC.secondarySolid : DO_DUC.solid;
   const vaiMien = vaiTroMien(o);
   const laThietDien = vaiMien === "section";
+  // Giữ màu ngữ nghĩa của vùng tô; chỉ viền thiết diện đang xét chuyển sang xanh.
+  const netMien = (macDinh: number) => boiCanh ? MAU_VAI_TRO.boi_canh
+    : laThietDien && (noiBat === "dich" || noiBat === true) ? 0x2563eb : macDinh;
   const mauToMien = laThietDien ? MAU.polygon : vaiMien === "base" ? MAU.mesh : MAU.surface;
   const mauVienMien = laThietDien ? MAU.sectionOutline : vaiMien === "base" ? MAU.canh : MAU.planeOutline;
   const doDucMien = laThietDien ? (noiBat ? DO_DUC.selectedSection : DO_DUC.section)
