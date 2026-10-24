@@ -1,5 +1,7 @@
 # STATUS_LEDGER.md — SỔ TRẠNG THÁI SẢN PHẨM
 
+**LOCAL 2026-10-24 — Hybrid B1/B2 offline:** research/hybrid-primary-b1-b2-offline from C0; product c3c1eb80. Internal source-text/V2 orchestration and product Adapter /4 wrapper; default LLM_ONLY, flat, cache127, memory32 and Hybrid NO-GO unchanged. No main merge/push/live. New evidence and owner-review handoff: `evaluation/geometry/runs/hybrid-primary-b1-b2-offline/`; historical snapshots below retain their original scope.
+
 ## Result binding final acceptance — LOCAL, 2026-10-16
 
 Branch `research/source-bound-result-planning`, not merged, not pushed; `main`/`origin/main` `2a3c0787`.

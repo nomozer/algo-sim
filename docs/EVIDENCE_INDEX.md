@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_PRIMARY_B1_B2_OFFLINE
+
+REPORT = docs/evaluation/geometry/runs/hybrid-primary-b1-b2-offline/OFFLINE_E2E_ACCEPTANCE.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-primary-b1-b2-offline/
+CLASSIFICATION = OFFLINE_REPLAY_DEVELOPMENT_NOT_BLIND; source-only V2 extraction + internal opt-in service + product /4 wrapper; live extraction quality UNKNOWN; FULL_LIVE_NL_E2E_NOT_MEASURED; Hybrid production NO-GO
+CODE_COMMIT = c3c1eb803992e9a22b97ae1711d587a910f631ab; measured_system 71dd6aa6e277cd1feab0ab0cb89d4489a30fe881a7c7ab4bc889a0999510596b (118 files); NO_BUMP 127
+VERIFICATION = docs/evaluation/geometry/runs/hybrid-primary-b1-b2-offline/results/offline/acceptance.json; docs/evaluation/geometry/runs/hybrid-primary-b1-b2-offline/INDEPENDENT_REVIEW.md; docs/evaluation/geometry/runs/hybrid-primary-b1-b2-offline/candidate_divergence.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = SCENE3D_SECTION_INSPECTOR_C0 (candidate identity for new offline product integration only; historical results unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = SCENE3D_SECTION_INSPECTOR_C0
 
 REPORT = docs/evaluation/geometry/runs/scene3d-section-inspector-c0/FINAL_OWNER_HANDOFF.md
@@ -9,7 +20,7 @@ CODE_COMMIT = 4d3b8849d50adb3ceb427e8f7f630c2cbdcba66a (product: backend/app/ai/
 VERIFICATION = docs/evaluation/geometry/runs/scene3d-section-inspector-c0/run.json; docs/evaluation/geometry/runs/scene3d-section-inspector-c0/verification/full-t3/execution.json; docs/evaluation/geometry/runs/scene3d-section-inspector-c0/verification/browser/receipt.json; docs/evaluation/geometry/runs/scene3d-section-inspector-c0/verification/refusal/receipt.json; docs/evaluation/geometry/runs/scene3d-section-inspector-c0/results/adapter4-export-reviewed/before-after.json; docs/evaluation/geometry/runs/scene3d-section-inspector-c0/INDEPENDENT_REVIEW.md
 MODEL_REQUEST_COUNT = 0
 CORRECTS = SCENE3D_PLANE_SECTION_DISPLAY_IDENTITY (open residuals: prism inspector "Đỉnh k", R1 explanation, missing-derived branch, ASCII primes in shown labels; that run's files unchanged)
-CORRECTED_BY = NONE
+CORRECTED_BY = docs/evaluation/geometry/runs/hybrid-primary-b1-b2-offline/candidate_divergence.json
 
 ## WAVE_ID = SCENE3D_PLANE_SECTION_DISPLAY_IDENTITY
 

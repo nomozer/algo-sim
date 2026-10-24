@@ -1,0 +1,22 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-primary-b1-b2-offline",
+  "corrects": "docs/evaluation/geometry/runs/scene3d-section-inspector-c0/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "previous_candidate_hash": "4acdac53ba018a0561d3580006c55a9047613b06332a93ba4b2ea521382ab168",
+  "current_candidate_hash": "71dd6aa6e277cd1feab0ab0cb89d4489a30fe881a7c7ab4bc889a0999510596b",
+  "current_measured_files": 118,
+  "current_product_commit": "c3c1eb803992e9a22b97ae1711d587a910f631ab",
+  "diverged": true,
+  "reason": "Owner-authorized B1/B2 source-bound V2 extraction, internal opt-in orchestration and product Adapter /4 wrapper. Existing schema, Registry, Planner, exact geometry, IR budget, default endpoint and provider flat surface retained. New source hash, exact-memory/answer/certificate validation and sanitized lifecycle receipts. Offline injected extraction only; historical model measurements unchanged.",
+  "cache_version": 127,
+  "cache_version_hien_tai": 127,
+  "cache_decision": "NO_BUMP: default /api/analyze route and flat provider surface unchanged; new internal route never reads or writes product cache and its preview policy is rejected by _policy_identity.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical model measurements are not rescored with this new offline product code.",
+    "historical_evidence": "Original C0/S1-S5 artifacts and locked corpus/oracle remain unchanged; fresh service output is in this run."
+  }
+}

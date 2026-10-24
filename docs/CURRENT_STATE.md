@@ -1,5 +1,7 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+**LOCAL 2026-10-24 — Hybrid B1/B2 offline:** research/hybrid-primary-b1-b2-offline from C0; product c3c1eb80. Internal source-text/V2 orchestration and product Adapter /4 wrapper; default LLM_ONLY, flat, cache127, memory32 and Hybrid NO-GO unchanged. No main merge/push/live. New evidence and owner-review handoff: `evaluation/geometry/runs/hybrid-primary-b1-b2-offline/`; historical snapshots below retain their original scope.
+
 **LOCAL backend Session 2 (2026-10-22):** `research/hybrid-backend-session2-contract` from Session 1 `82d3d255`; product `3553e4d4`, candidate `5beb0e86` (115 files, `96962736…`). Backward-compatible safety + canonicalization only; contract decisions D1–D6 pending; status and T3 in `evaluation/geometry/runs/backend-hybrid-contract-unification/handoff.md`. Research only; no merge, push or production change.
 
 **LOCAL backend continuation (2026-10-22):** `research/hybrid-backend-integration-session1`, product `4f3aaea5` after inherited `8b5916e7`; typed bridge constraints fixed, independently reviewed. Historical T3 remains FAIL; new frozen verification recorded in `evaluation/geometry/runs/backend-hybrid-continuation/`. Scoped research only; no replacement of production or automatic merge.

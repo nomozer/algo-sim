@@ -1,0 +1,11 @@
+# Offline E2E acceptance
+
+Track A is canonical V2 -> verified scene, Track B is source -> injected extraction (OFFLINE_REPLAY), Track C is source -> service -> product wrapper -> frontend. These tracks do not establish live model performance. `FULL_LIVE_NL_E2E_NOT_MEASURED`; independent holdout NOT_EXECUTED.
+
+The exporter starts with each original problem text, passes that text alone to ReplayExtractor, then invokes the real product service. Neither case ID, expected disposition nor oracle answer is supplied to product code. Inputs are the existing authored, locked development corpus (`hybrid-contract-v2/grammar-set.json`, LF SHA-256 `10c57be7b485d7b3f1a97183ff41b28988e70641e297e01cccf68d1434cc4abe`). The original lock and independent numeric oracle are reused without edits.
+
+Fresh results/offline/acceptance.json records **47 cases: 22 served, 25 refused, zero wrong-served, zero oracle mismatch and zero false-refused** in this corpus. It records every source hash and linked execution stage receipt. The paired fixtures.json contains actual product responses; no harness synthesized their refusal envelopes.
+
+One refusal-category mismatch remains: `NEG-per-edge-same-name` is rejected at canonical schema validation with `INVALID_DERIVED_SECTION` before source verification, while its locked expected category is REFUSE_SOURCE. This safe earlier rejection was also reported as a 46/47 category match in Session 3. The oracle was not changed; the current receipt preserves the mismatch. Binary refusal success does not hide taxonomy disagreement.
+
+Frontend consumer selection: **171 tests passed** across current service wrappers and existing Adapter /4/preview contracts, including served -> refused clearing. Browser **FRONTEND_CONSUMER_ACCEPTANCE_PASS, 94/94 rows**, desktop/mobile, zero browser errors or forbidden requests; source commit `97072a723a24cbf5c0114ed482d2bc73f94df482`, initially clean checkout. The receipt under verification/browser evaluates exactly these service-produced wrappers (SHA-256 `1abad7c55cc31acd2c27123e347ebf6f125fd58a20544e55bc5680c5ea9b9df5`). Human visual approval is not inferred from automation. Final candidate/T3 evidence is recorded in FINAL_OWNER_HANDOFF and run.json after execution.

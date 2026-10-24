@@ -1,5 +1,7 @@
 # ROADMAP.md — Lộ trình nghiên cứu và phát triển AlgoSim
 
+**LOCAL 2026-10-24 — Hybrid B1/B2 offline:** research/hybrid-primary-b1-b2-offline from C0; product c3c1eb80. Internal source-text/V2 orchestration and product Adapter /4 wrapper; default LLM_ONLY, flat, cache127, memory32 and Hybrid NO-GO unchanged. No main merge/push/live. New evidence and owner-review handoff: `evaluation/geometry/runs/hybrid-primary-b1-b2-offline/`; historical snapshots below retain their original scope.
+
 **LOCAL Session 2 (2026-10-22):** next research step is the owner's decisions D1–D6 (`evaluation/geometry/runs/backend-hybrid-contract-unification/CONTRACT_DECISION_PROPOSAL.md`): `typed-fact-next/2` section contract, Source Gate strictness, gate grammar coverage, IR budget policy, version labels, planner-derived cuts. Live extraction and production enablement still need separate GO.
 
 **LOCAL Session 1 continuation (2026-10-22):** owner handoff and candidate evidence in `evaluation/geometry/runs/backend-hybrid-continuation/`; explicit user P0–P6 gap matrix there supplements this older roadmap numbering. Next research decision is cut_edges/identity/Adapter /3 compatibility; live extraction and production enablement need separate GO.
