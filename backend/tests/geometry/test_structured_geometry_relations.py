@@ -689,9 +689,10 @@ _COMPILER = "app.simulation.geometry_compiler"
 #: Cổng compiler DUY NHẤT được phép: (tệp sản phẩm, module nhập). `routing.quyet_dinh_dinh_tuyen` trả `DISABLED`
 #: khi `GEOMETRY_COMPILER_MODE` ≠ `DETERMINISTIC_FIRST`, không chạm `bien_dich`/`build_fact_graph`.
 _CONG_COMPILER = {("ai/pipeline.py", "app.simulation.geometry_compiler.routing")}
-# Explicit D boundaries: request snapshot metadata, guarded preview handler, diagnostics only.
+# Explicit lazy D boundaries: metadata, guarded preview, diagnostics and internal offline /4 validation.
 _CONG_PREVIEW = {("ai/pipeline.py", "app.ai.hybrid_preview"), ("main.py", "app.ai.hybrid_preview"),
-                 ("runtime_identity.py", "app.ai.hybrid_preview")}
+                 ("runtime_identity.py", "app.ai.hybrid_preview"),
+                 ("ai/adapter4_route.py", "app.ai.hybrid_preview"), ("ai/hybrid_offline.py", "app.ai.hybrid_preview")}
 
 _NAP_DONG_TEN = {"__import__", "exec", "eval", "compile", "__builtins__", "__loader__"}
 _NAP_DONG_THUOC_TINH = {"import_module", "__import__", "spec_from_file_location", "spec_from_loader",

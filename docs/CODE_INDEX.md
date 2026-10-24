@@ -1,5 +1,17 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Hybrid primary B1/B2 offline research
+
+Run `docs/evaluation/geometry/runs/hybrid-primary-b1-b2-offline/`; C0 baseline, opt-in internal service, default route unchanged.
+
+| path | owns | tests |
+|---|---|---|
+| `backend/app/ai/typed_fact_next_extraction.py` | source-only `Extractor`/`ReplayExtractor`/injected `TransportExtractor`; canonical V2 parsing, verbatim source/quote identity and Registry premise-role checks; no semantic completeness claim | `backend/tests/geometry/test_typed_fact_next_extraction.py` |
+| `backend/app/ai/hybrid_offline.py` | `hybrid_offline_policy` reuses immutable RoutePolicy and existing research flag; `run_hybrid_offline` joins extraction, existing /4 route and validated response; cooperative cancellation/deadline and sanitized linked receipts; no HTTP/cache/live transport | `backend/tests/geometry/test_hybrid_offline.py` |
+| `backend/app/ai/adapter4_route.py` | `build_adapter4_response` is the product /4 wrapper producer; source hash, exact-memory coordinates/answers/dimensions, certificates, scene/metric/proof/envelope validation; sanitized refusals | `backend/tests/geometry/test_adapter4_response.py` |
+| `backend/scripts/export_hybrid_offline.py` | fresh text-first replay export from locked development corpus through product service; reuses locked oracle, separates replay from model quality and preserves all dispositions | `backend/tests/geometry/test_hybrid_offline_export.py` |
+| `frontend/src/components/hybrid-offline-service.test.tsx` | consumes current service-produced /4 wrappers through the real transport boundary/store; served-to-refused transition clears active scene | committed run export; Vitest |
+
 ## Scene3D section inspector C0 (`research/scene3d-section-inspector-c0`, LOCAL, Hybrid off)
 
 Run `docs/evaluation/geometry/runs/scene3d-section-inspector-c0/`.
