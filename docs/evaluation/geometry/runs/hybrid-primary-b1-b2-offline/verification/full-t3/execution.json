@@ -1,0 +1,62 @@
+{
+  "schema": "authoritative-t3-receipt/2",
+  "run": "hybrid-primary-b1-b2-offline",
+  "t3_target_commit": "d8a22dbeda5c05f90bba877871f81f976f7a4465",
+  "candidate_freeze_commit": "d8a22dbeda5c05f90bba877871f81f976f7a4465",
+  "product_commit": "c3c1eb803992e9a22b97ae1711d587a910f631ab",
+  "measured_system": {
+    "paths": [
+      "backend/app",
+      "frontend/src/simulations/domains/semantic",
+      "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+    ],
+    "so_file": 118,
+    "tree_hash": "71dd6aa6e277cd1feab0ab0cb89d4489a30fe881a7c7ab4bc889a0999510596b",
+    "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
+  },
+  "detached_head": true,
+  "source_tree_before": "",
+  "source_tree_after": "",
+  "command": "ALLOW_LIVE_AI=0 PYTHONUTF8=1 ALGO_SIM_PYTHON=<existing Python3.12 venv> node frontend/scripts/full-gate.mjs",
+  "environment": {
+    "python": "3.12.10",
+    "node": "v24.13.0",
+    "pytest_temp_root": ".superpowers/pytest",
+    "platform": "win32"
+  },
+  "started_utc": "2026-10-24T05:31:14.837935+00:00",
+  "finished_utc": "2026-10-24T05:42:01.396776+00:00",
+  "seconds": 643.551,
+  "exit_code": 1,
+  "verdict": "FAIL",
+  "pytest_summary": [
+    "2 failed, 11834 passed, 1 skipped, 2 deselected, 15 xfailed, 1 warning in 615.41s (0:10:15)",
+    " Test Files  75 passed (75)"
+  ],
+  "vitest_summary": [
+    "Test Files  75 passed (75)",
+    "Tests  1293 passed (1293)"
+  ],
+  "failure_names": [
+    "FAILED tests/geometry/test_schema_contract_offline.py::test_watchdog_is_incomplete_runtime_failure_not_geometry_refusal",
+    "FAILED tests/geometry/test_schema_contract_offline.py::test_windows_watchdog_terminates_the_invocation_child_tree"
+  ],
+  "post_t3_freeze": {
+    "exit_code": 0,
+    "stdout": "Candidate khớp bản đã đóng băng (mã sản phẩm: 118 file, 71dd6aa6e277cd1f…)."
+  },
+  "streams": {
+    "stdout": {
+      "bytes": 29491,
+      "sha256_as_written": "c67d03b301ec578fc00115c5361900c15a598e7ca725ce2dcd9930da50e9f1b3",
+      "local_ignored_path": ".superpowers/hybrid-primary-b1-b2-offline/full-t3/stdout.log"
+    },
+    "stderr": {
+      "bytes": 332,
+      "sha256_as_written": "ccb6bf354a0674eeb1e49df9a880a000b75240079fdb849282bb899d81eeb58c",
+      "local_ignored_path": ".superpowers/hybrid-primary-b1-b2-offline/full-t3/stderr.log"
+    }
+  },
+  "provider_calls": 0,
+  "raw_logs": "Ignored local scratch only; no raw test traceback/provider output committed."
+}
