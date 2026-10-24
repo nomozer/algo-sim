@@ -27,21 +27,29 @@ describe('final visual quality', () => {
     const c=cylinder.anchor.map(Number), radius=Math.sqrt(Number(cylinder.radius_sq));
     expect(Math.max(...diemHuuHan([cylinder]).map(p=>p[0]-c[0]+p[1]-c[1]))).toBeGreaterThanOrEqual(radius*Math.sqrt(2));
   });
-  it('explains a nonintersecting sphere without an unsupported-family label or raw codes in the main text', () => {
+  // The whole learner notice, collapsed panels included, carries no technical code (codes stay in the envelope).
+  it('explains a nonintersecting sphere without an unsupported-family label or raw codes anywhere', () => {
     const html = renderToString(<UnsupportedNotice unsupported={{ reason:'CURVED_PLANE_DOES_NOT_CUT: CURVED_PLANE_DOES_NOT_CUT: mặt phẳng cách tâm mặt cầu một khoảng lớn hơn bán kính.', error_code:'CURVED_PLANE_DOES_NOT_CUT', failure_category:'postcondition_violated', refusal_cause:'SOURCE' }}/>);
-    const main = html.replace(/<details[\s\S]*?<\/details>/g,'');
-    expect(main).toContain('mặt phẳng cách tâm mặt cầu một khoảng lớn hơn bán kính');
-    expect(main).not.toContain('CURVED_');
-    expect(main).not.toContain('NGOÀI DANH MỤC');
-    expect(html).toContain('<details');
-    expect(html).toContain('CURVED_PLANE_DOES_NOT_CUT');
+    expect(html).toContain('mặt phẳng cách tâm mặt cầu một khoảng lớn hơn bán kính');
+    expect(html).not.toContain('CURVED_');
+    expect(html).not.toContain('NGOÀI DANH MỤC');
+    expect(html).not.toContain('<details');
+    expect(html).not.toContain('Chi tiết chẩn đoán');
   });
   it.each(['Mặt phẳng nằm ngoài chiều cao hình trụ.', 'Mặt phẳng chỉ đi qua đỉnh hình nón.'])('keeps the authoritative nonintersection explanation for %s', reason => {
     const html=renderToString(<UnsupportedNotice unsupported={{reason, error_code:'CURVED_PLANE_DOES_NOT_CUT'}}/>);
-    const main=html.replace(/<details[\s\S]*?<\/details>/g,'');
-    expect(main).toContain(reason);
-    expect(main).not.toContain('mặt cầu');
-    expect(main).not.toContain('CURVED_');
+    expect(html).toContain(reason);
+    expect(html).not.toContain('mặt cầu');
+    expect(html).not.toContain('CURVED_');
+  });
+  it.each(['INCONSISTENT_FACTS','MISSING_CURVED_DIMENSION','UNDERDETERMINED_POINT','AMBIGUOUS_REFERENCE','AMBIGUOUS_FACT','CURVED_PRIMITIVE_BLOCKED_BY_KERNEL'])('shows neither the code nor the technical reason for %s', code => {
+    for (const field of ['reason_code','error_code'] as const) {
+      const html=renderToString(<UnsupportedNotice unsupported={{reason:`${code}: kernel_trace_42`, [field]: code, learner_reason:'Hệ chưa dựng được hình.'}}/>);
+      expect(html, field).toContain('Hệ chưa dựng được hình.');
+      expect(html, field).not.toContain(code);
+      expect(html, field).not.toContain('kernel_trace_42');
+      expect(html, field).not.toContain('<details');
+    }
   });
   it.each([
     ['CURVED_PRIMITIVE_BLOCKED_BY_KERNEL','NGOÀI PHẠM VI DỰNG HÌNH'],

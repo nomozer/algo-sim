@@ -1,0 +1,25 @@
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx (23 tests | 9 failed)
+     × explains a nonintersecting sphere without an unsupported-family label or raw codes anywhere
+     × keeps the authoritative nonintersection explanation for Mặt phẳng nằm ngoài chiều cao hình trụ.
+     × keeps the authoritative nonintersection explanation for Mặt phẳng chỉ đi qua đỉnh hình nón.
+     × shows neither the code nor the technical reason for INCONSISTENT_FACTS
+     × shows neither the code nor the technical reason for MISSING_CURVED_DIMENSION
+     × shows neither the code nor the technical reason for UNDERDETERMINED_POINT
+     × shows neither the code nor the technical reason for AMBIGUOUS_REFERENCE
+     × shows neither the code nor the technical reason for AMBIGUOUS_FACT
+     × shows neither the code nor the technical reason for CURVED_PRIMITIVE_BLOCKED_BY_KERNEL
+ ❯ src/components/hybrid-preview-contract.test.tsx (41 tests | 1 failed)
+       × all 25 refusal fixtures keep technical codes out of the whole learner notice and preserve refusal_cause
+⎯⎯⎯⎯⎯⎯ Failed Tests 10 ⎯⎯⎯⎯⎯⎯⎯
+ ❯ src/components/hybrid-preview-contract.test.tsx:546:33
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx:34:22
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx:43:22
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx:43:22
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx:49:31
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx:49:31
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx:49:31
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx:49:31
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx:49:31
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx:49:31
+ Test Files  2 failed (2)
+      Tests  10 failed | 54 passed (64)

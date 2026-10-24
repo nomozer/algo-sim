@@ -348,9 +348,6 @@ export function UnsupportedNotice({
         </div>
       </dl>
       {!geometricRefusal && hint && <p className="notes">{hint}</p>}
-      {geometricRefusal && (
-        <details><summary>Chi tiết chẩn đoán</summary><code>{geometricCode}</code><p>{unsupported.reason}</p></details>
-      )}
     </section>
   );
 }
