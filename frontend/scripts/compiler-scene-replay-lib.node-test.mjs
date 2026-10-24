@@ -1162,6 +1162,21 @@ test("solution oracle merges a same_as measurement into the row it points to", (
   assert.equal(LIB.solutionRowOf(CANH_W18, "h", new Set(["d"])), "h");                // owner absent ⇒ itself
 });
 
+/* `aa458cc3` simulation-first learner policy (run `visual-hybrid-final-corrections`): mode A hides every final result
+   (FINAL_RESULT object, closed over same_as / alias_of); the default `revealFinal: true` is the full model-level oracle. */
+test("learner mode A: final results are absent from the solution and annotation oracles", () => {
+  assert.deepEqual([...LIB.finalResultIds(CANH_W18)], ["V"]);
+  const a = { revealFinal: false };
+  const rows = LIB.expectedSolutionRows(CANH_W18, 4, a);
+  assert.deepEqual([rows.givens, rows.steps, rows.results], [["AB"], ["d"], []]);
+  assert.deepEqual(LIB.expectedAnnotationIds(CANH_W18, 4, { showAll: true, ...a }), ["AB", "d"]);
+  assert.deepEqual(LIB.expectedAnnotationIds(CANH_W18, 4, { selectedId: "C", ...a }), ["AB", "d"]);
+  const bd = { ...CANH_W18, objects: [...CANH_W18.objects, { id: "V2", type: "quantity", render: "readout",
+    origin: "derived", value: "9", alias_of: "V", annotation: { kind: "length", same_as: "V", subject_ids: ["A", "B"],
+      anchor: "segment" } }] };
+  assert.ok(LIB.finalResultIds(bd).has("V2"), "an alias of a final result is final too");
+});
+
 test("one detail region and witness drawn exactly for shown distance labels", () => {
   assert.equal(LIB.assessDetailRegion({ formula_text: "V = 3·3", regions: ["inspector"] }).pass, true);
   assert.deepEqual(LIB.assessDetailRegion({ formula_text: "V = 3·3", regions: ["inspector", "solution:V"] })
@@ -1323,6 +1338,21 @@ test("§0.1-1/2 quantity picker: genuine drawer passes; each injected fault fail
   fault("PICKER_STEPS_MISMATCH", (x) => { x.drawer = x.drawer.filter((d) => d.sec !== "Đại lượng trung gian"); });
   fault("PICKER_NO_ANSWER", (x) => { x.expectedAnswer = "V = 11"; });
   fault("PICKER_UNKNOWN_SECTION", (x) => { x.drawer[0].sec = "Khác"; });
+});
+
+test("learner mode A quantity picker: no final row; a leaked final row fails PICKER_FINAL_SHOWN", () => {
+  const sc = w11Scene("triangular_pyramid");
+  const anchor = expectedGeometryTimeline(sc).at(-1).anchor;
+  const want = expectedSolutionRows(sc, anchor, { revealFinal: false });
+  assert.deepEqual(want.results, []);
+  const sec = { steps: "Đại lượng trung gian", givens: "Dữ kiện" };
+  const drawer = ["steps", "givens"].flatMap((k) => want[k].map((id) => ({ id, sec: sec[k], text: id })));
+  const x = { scene: sc, anchor, expectedAnswer: "10", resultCardWhileCollapsed: false, drawer, revealFinal: false };
+  assert.equal(LIB.assessQuantityPicker(x).pass, true);
+  const lo = LIB.assessQuantityPicker({ ...x, drawer: [{ id: [...LIB.finalResultIds(sc)][0], sec: "Kết quả",
+    text: "V = 10" }, ...drawer] });
+  assert.equal(lo.pass, false);
+  assert.ok(lo.reason_codes.includes("PICKER_FINAL_SHOWN"), String(lo.reason_codes));
 });
 
 test("§0.1-3/4/5 steps panel: synced at every step, jump and close keep sync; faults fail their own code", () => {

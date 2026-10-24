@@ -741,10 +741,31 @@ export function expectedGeometryTimeline(scene) {
   return ra;
 }
 
+/** Chính sách người học «mô phỏng trước» (sản phẩm `aa458cc3`): ĐÁP SỐ của đề — vật của sự kiện FINAL_RESULT (và
+ *  `alias_object` của nó), khép theo `same_as` / `alias_of` hai chiều. Đọc thẳng sự kiện của cảnh, không đọc mã
+ *  sản phẩm. Mặc định (chế độ A) chúng KHÔNG được hiện; người học mở «Phân tích toán học» (chế độ B) mới thấy. */
+export function finalResultIds(scene) {
+  const ra = new Set();
+  for (const e of scene?.events ?? []) {
+    if (e.semantic_kind !== "FINAL_RESULT") continue;
+    for (const id of [e.object, e.alias_object]) if (id) ra.add(id);
+  }
+  for (let doi = true; doi;) {
+    doi = false;
+    for (const o of scene?.objects ?? []) {
+      for (const s of [o.annotation?.same_as, o.alias_of]) {
+        if (s && ra.has(o.id) !== ra.has(s)) { ra.add(o.id); ra.add(s); doi = true; }
+      }
+    }
+  }
+  return ra;
+}
+
 /** Lớp lời giải kỳ vọng ở khung `anchor`: kết quả (FINAL_RESULT tới đó, mỗi
  *  vật một lần) · dữ kiện (đại lượng tự do đang hiện, trừ kết quả) · các bước
- *  tính (MEASUREMENT tới đó, trừ hai nhóm trên). */
-export function expectedSolutionRows(scene, anchor) {
+ *  tính (MEASUREMENT tới đó, trừ hai nhóm trên). `revealFinal: false` = chế độ A
+ *  của người học: không nhóm nào chứa đáp số (`finalResultIds`). */
+export function expectedSolutionRows(scene, anchor, { revealFinal = true } = {}) {
   const byId = new Map((scene?.objects ?? []).map((o) => [o.id, o]));
   const vat = (k) => (scene?.events ?? []).find((e) => e.step_index === k)?.object;
   const results = [];
@@ -768,7 +789,8 @@ export function expectedSolutionRows(scene, anchor) {
   }
   // W18 §16.6: đại lượng `same_as` một dòng đang có là CÙNG phép đo — không dòng thứ hai.
   const co = new Set([...givens, ...steps, ...results]);
-  const rieng = (ids) => ids.filter((id) => !co.has(byId.get(id)?.annotation?.same_as));
+  const dapSo = revealFinal ? new Set() : finalResultIds(scene);
+  const rieng = (ids) => ids.filter((id) => !co.has(byId.get(id)?.annotation?.same_as) && !dapSo.has(id));
   return { givens: rieng(givens), steps: rieng(steps), results: rieng(results) };
 }
 
@@ -783,7 +805,7 @@ export function solutionRowOf(scene, id, rows) {
  *  — `rendered`: vật vẽ lên khung; `focus_label`: nhãn bước (dòng "Đang dựng" tới W20; từ
  *  regular-square-pyramid-w01 là nhãn bước đang đánh dấu của panel «Các bước dựng»); `solution`:
  *  `{ givens, steps, results }` đọc từ bảng lời giải; `solution_collapsed: true` ⇒ card Kết quả vắng (§0.1-1). */
-export function assessGeometrySteps(scene, observed) {
+export function assessGeometrySteps(scene, observed, { revealFinal = true } = {}) {
   const t = expectedGeometryTimeline(scene);
   // Nhãn → MỌI vật mang nhãn ấy: đáp số và bí danh của nó trùng nhãn.
   const byLabel = new Map();
@@ -803,7 +825,7 @@ export function assessGeometrySteps(scene, observed) {
     .map((s) => s.index);
   const cung = (a, b) => JSON.stringify(a ?? []) === JSON.stringify(b ?? []);
   const sync = steps.map((s) => {
-    const day = t[s.index] ? expectedSolutionRows(scene, t[s.index].anchor) : null;
+    const day = t[s.index] ? expectedSolutionRows(scene, t[s.index].anchor, { revealFinal }) : null;
     // ROADMAP §0.1-1: lời giải thu gọn ⇒ card Kết quả vắng; đáp số đọc qua ngăn «Đại lượng».
     const want = day && s.solution_collapsed === true ? { ...day, results: [] } : day;
     return { index: s.index, want, got: s.solution,
@@ -1508,7 +1530,8 @@ export function builtSegmentPairs(scene, step) {
   return ra;
 }
 
-export function expectedAnnotationIds(scene, step, { showAll = false, selectedId = null } = {}) {
+export function expectedAnnotationIds(scene, step, { showAll = false, selectedId = null, revealFinal = true } = {}) {
+  const dapSo = revealFinal ? new Set() : finalResultIds(scene);   // chế độ A: nhãn đáp số không hiện, kể cả «Hiện tất cả»
   const sk = (scene?.events ?? []).filter((e) => (e.step_index ?? 0) <= step && e.object);
   const ketLuan = new Set(sk.filter((e) => e.semantic_kind === "FINAL_RESULT").map((e) => e.object));
   const daTinh = new Set(sk.filter((e) => e.semantic_kind === "MEASUREMENT" || e.semantic_kind === "FINAL_RESULT")
@@ -1523,6 +1546,7 @@ export function expectedAnnotationIds(scene, step, { showAll = false, selectedId
     : o.annotation.subject_ids.includes(chon));
   return sortedUnique((scene?.objects ?? [])
     .filter((o) => o.type === "quantity" && o.annotation && !o.annotation.same_as && o.value != null)
+    .filter((o) => !dapSo.has(o.id))
     .filter((o) => (vaiNhan(o) === "result" ? ketLuan.has(o.id)
       : daTinh.has(o.id) || (o.origin === "free" && coMat.has(o.id))))
     .filter((o) => o.annotation.subject_ids.every((s) => coMat.has(s)))
@@ -1660,8 +1684,9 @@ export function assessDetailRegion({ formula_text, regions }) {
 /** regular-square-pyramid-w01 · ROADMAP §0.1-1/2 — lời giải thu gọn: card Kết quả VẮNG; ngăn «Đại lượng»
  *  liệt kê đúng ba nhóm của oracle độc lập (Kết quả → trung gian → dữ kiện, `same_as` gộp) và một dòng Kết
  *  quả mang đáp số. `drawer = [{id, sec, text}]` theo thứ tự DOM. */
-export function assessQuantityPicker({ scene, anchor, resultCardWhileCollapsed, drawer, expectedAnswer }) {
-  const want = expectedSolutionRows(scene, anchor);
+export function assessQuantityPicker({ scene, anchor, resultCardWhileCollapsed, drawer, expectedAnswer,
+  revealFinal = true }) {
+  const want = expectedSolutionRows(scene, anchor, { revealFinal });
   const nhom = { "Kết quả": "results", "Đại lượng trung gian": "steps", "Dữ kiện": "givens" };
   const got = { results: [], steps: [], givens: [] };
   const r = [];
@@ -1673,8 +1698,14 @@ export function assessQuantityPicker({ scene, anchor, resultCardWhileCollapsed, 
   for (const k of ["results", "steps", "givens"]) {
     if (JSON.stringify(got[k]) !== JSON.stringify(want[k])) r.push(`PICKER_${k.toUpperCase()}_MISMATCH`);
   }
-  if (!(drawer ?? []).some((d) => d.sec === "Kết quả" && String(d.text).includes(expectedAnswer))) {
-    r.push("PICKER_NO_ANSWER");
+  if (revealFinal) {
+    if (!(drawer ?? []).some((d) => d.sec === "Kết quả" && String(d.text).includes(expectedAnswer))) {
+      r.push("PICKER_NO_ANSWER");
+    }
+  } else {
+    // Chế độ A (mặc định của người học): không mục nào của ngăn là một đáp số.
+    const dapSo = finalResultIds(scene);
+    if ((drawer ?? []).some((d) => dapSo.has(d.id))) r.push("PICKER_FINAL_SHOWN");
   }
   return { pass: r.length === 0, reason_codes: sortedUnique(r), expected: want, observed: got };
 }
