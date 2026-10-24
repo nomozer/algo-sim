@@ -1,0 +1,13 @@
+{
+  "schema": "visual-closure-supplemental-red-green/1",
+  "F1_browser_diagnosis": "Inspector screenshot has no formula, but a shared CSS class makes formulaRegions count the analysis paragraph as inspector and analysis. Product class split preserves style and oracle bytes.",
+  "class_and_sphere_red": {"passed": 3, "failed": 8, "sphere_lines": 3},
+  "class_and_sphere_green": {"targeted_passed": 79, "failed": 0, "sphere_lines": 0},
+  "hover_red": {"desktop_changes_canvas": false, "selected_id": null},
+  "hover_green": {"desktop_changes_canvas": true, "mobile_changes_canvas": true, "both_restore_original_png_hash": true, "selected_id": null},
+  "vitest_final": {"files": 80, "passed": 1354, "failed": 0},
+  "typecheck": "PASS",
+  "production_build": "PASS",
+  "locked_oracle_changes": 0,
+  "provider_calls": 0
+}

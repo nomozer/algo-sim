@@ -2,12 +2,13 @@
 import hashlib
 import json
 import subprocess
+import sys
 from pathlib import Path
 
 RUN = Path(__file__).resolve().parent
 ROOT = RUN.parents[4]
 OLD = RUN.parent / "visual-hybrid-final-corrections" / "visual" / "inputs"
-OUT = RUN / "visual" / "inputs"
+OUT = RUN / "visual" / (sys.argv[1] if len(sys.argv) > 1 else "inputs")
 assert not OUT.exists(), "Fresh inputs only"
 candidate = json.loads((ROOT / "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json").read_text(encoding="utf-8"))
 product = candidate["product_commit_sha"]
@@ -37,6 +38,6 @@ write(OUT / "suite.json", suite)
 old_suite = json.loads((OLD / "suite.json").read_text(encoding="utf-8"))
 assert suite["scenarios"] == old_suite["scenarios"]
 assert suite["viewports"] == old_suite["viewports"]
-write(RUN / "input-rebinding.json", {"source": str(OLD.relative_to(ROOT)), "product": product,
+write(RUN / ("input-rebinding.json" if OUT.name == "inputs" else f"{OUT.name}-rebinding.json"), {"source": str(OLD.relative_to(ROOT)), "product": product,
     "geometry_envelopes_changed": 0, "oracle_expectations_changed": 0, "fixtures": records})
 print(f"Rebound {len(records)} inputs; geometry and oracle unchanged")
