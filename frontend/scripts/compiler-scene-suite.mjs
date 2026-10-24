@@ -437,7 +437,7 @@ export const maDocCapDiem = (bat, tat, snapshot, diem, dai) => `(async()=>{${gia
 /** W15 SECTION_FILL_DISTINGUISHABLE (ngưỡng đăng ký trước, §11): bước khép-và-tô ĐẦU TIÊN phải
  *  phân biệt được (và có vật tô thật); mọi bước TRƯỚC đó kể từ khi mặt cắt hiện, và bước vừa
  *  lùi về sau bước khép, không được có tô. So bật/tắt cùng khung — không so bước với bước. */
-async function sectionFillEvidence(session, scene) {
+export async function sectionFillEvidence(session, scene) {
   const section = scene.objects.find((o) => o.type === "section" && (o.polygon?.length ?? 0) >= 3);
   if (!section) return undefined;
   const timeline = expectedGeometryTimeline(scene);
@@ -1701,6 +1701,11 @@ export async function runServed({ port, viewport, fixture, expected, outDir }) {
       no_failed_api_call: assertion(failedApiCalls.length === 0, failedApiCalls),
     };
     return { viewport, assertions, screenshot, pass: Object.values(assertions).every((item) => item.pass) };
+  } catch (error) {
+    const message = String(error?.message ?? error).split("\n")[0].slice(0, 300);
+    return { viewport, assertions: { run_completed: assertion(false, message) }, pass: false,
+      failure_class: phanLoaiLoi(message, false),
+      failure_screenshot: await capture(session, join(outDir, "failure.png"), { loi: true }).catch(() => null) };
   } finally {
     await session.close();
   }
@@ -1812,6 +1817,7 @@ export async function runSuite({
         && Object.values(record.negative).every((kind) => Object.values(kind).every((item) => item.pass))
         && Object.values(record.served).every((kind) => Object.values(kind).every((item) => item.pass));
       report.scenarios[scenario.id] = record;
+      writeFileSync(join(output, `${scenario.id}.json`), JSON.stringify(record, null, 2), "utf-8");
       console.log(`${scenario.id}: ${record.pass ? "PASS" : "FAIL"}`);
     }
   } finally {
