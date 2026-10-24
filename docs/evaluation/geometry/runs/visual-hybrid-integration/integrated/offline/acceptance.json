@@ -1,0 +1,3099 @@
+{
+ "schema": "hybrid-offline-acceptance/1",
+ "classification": "OFFLINE_REPLAY_DEVELOPMENT_NOT_BLIND",
+ "source_commit": "78e8847017abf81d35087dfcc56bde5ff72a50a3",
+ "corpus_sha256_lf": "10c57be7b485d7b3f1a97183ff41b28988e70641e297e01cccf68d1434cc4abe",
+ "cases": 47,
+ "served": 22,
+ "refused": 25,
+ "wrong_served": [],
+ "oracle_mismatches": [],
+ "false_refused": [],
+ "disposition_mismatches": [
+  "NEG-per-edge-same-name"
+ ],
+ "refusal_codes": {
+  "SOURCE_OBJECT_MISMATCH": 15,
+  "MISSING_DIMENSION": 1,
+  "UNGROUNDED_VALUE": 1,
+  "PLANE_NOT_IN_QUOTE": 1,
+  "INVALID_DERIVED_SECTION": 1,
+  "INCONSISTENT_FACTS": 1,
+  "PARALLEL_NO_INTERSECTION": 1,
+  "SECTION_BOUNDARY_INCOMPLETE": 2,
+  "BRIDGE_UNSUPPORTED_PLANE_KIND": 1,
+  "UNSUPPORTED_CAPABILITY": 1
+ },
+ "fixtures_sha256": "1abad7c55cc31acd2c27123e347ebf6f125fd58a20544e55bc5680c5ea9b9df5",
+ "provider_calls": 0,
+ "live_extraction_quality": "UNKNOWN",
+ "full_live_nl_e2e": "NOT_MEASURED",
+ "independent_holdout": "NOT_EXECUTED",
+ "browser": "NOT_EXECUTED_BY_THIS_SCRIPT",
+ "rows": [
+  {
+   "id": "PARA-0",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "661c9c0e7e5aef19b7fd41fab61a4214ad6548d1a1f19a2c3cc560095b92052a",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "13432784b1b248b19ac584f722c629db",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "661c9c0e7e5aef19b7fd41fab61a4214ad6548d1a1f19a2c3cc560095b92052a",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0028114000015193596,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.10015230000135489,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.022516199998790398,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.1255710999994335
+   }
+  },
+  {
+   "id": "PARA-1",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "58e8ed21dd28d95b64f2eecc2a33ec3b52069dd0a1abf6285429234b48f64b53",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "c5fa9825bc2c4d8cb500bbe9b4dbf53f",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "58e8ed21dd28d95b64f2eecc2a33ec3b52069dd0a1abf6285429234b48f64b53",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0023511999988841126,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.10171259999879112,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.026888200000030338,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.1310831999999209
+   }
+  },
+  {
+   "id": "PARA-2",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "63e4b490b5466159dc9e628af8fef21acf64d819055697b3c6f42ef0549ee336",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "5a6a005daade4ee6980e35c420b355d1",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "63e4b490b5466159dc9e628af8fef21acf64d819055697b3c6f42ef0549ee336",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0016644999996060506,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.10990119999951276,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.03274849999979779,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.14446310000130325
+   }
+  },
+  {
+   "id": "PARA-3",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "a4c369913814cb89e3760655ab55e06a32a3f3750043474edc2c60eb0eb75d4e",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "f3987d9fda3f4593945a072bbe21db71",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "a4c369913814cb89e3760655ab55e06a32a3f3750043474edc2c60eb0eb75d4e",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.003169300000081421,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.0853700999996363,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.024113900000884314,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.11295459999928426
+   }
+  },
+  {
+   "id": "PARA-4",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "18045d9c5b829b6b6521903761249681554ae7bb2a1ca33ee5a40e179d1972f0",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "85d92421f16a43de8d270ae6ce29f953",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "18045d9c5b829b6b6521903761249681554ae7bb2a1ca33ee5a40e179d1972f0",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.003497899999274523,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.09870870000122522,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.024348200000531506,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.12671360000058485
+   }
+  },
+  {
+   "id": "PARA-5",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "54bc97accf2d31c09bb6589077de630ed006d9dc7e729375c741f45e2a8c1bf1",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "64c1a32f30f646b5843ce8d217437a76",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "54bc97accf2d31c09bb6589077de630ed006d9dc7e729375c741f45e2a8c1bf1",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0019147999992128462,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.06901359999937995,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.01669170000059239,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.08772979999957897
+   }
+  },
+  {
+   "id": "CORPUS-DEV01-construct",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "c73203107ff94b6f9debbc848dbd2d7787ac95ef21ff6a83a8f2d235a61638ad",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "8eb3f2a7e47a412a8f2c232ccfa7bd7b",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "c73203107ff94b6f9debbc848dbd2d7787ac95ef21ff6a83a8f2d235a61638ad",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0018792999999277527,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.04974129999936849,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.018323199999940698,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.07003749999967113
+   }
+  },
+  {
+   "id": "CORPUS-DEV01-ratio-unowned",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "c11fccab47e04ac155b86c809edceed77721895744a26c6da29e550d10d5d8d7",
+   "expected": "REFUSE_SOURCE",
+   "observed": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "1464445e6beb4ab7b59f84c24971aea1",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "c11fccab47e04ac155b86c809edceed77721895744a26c6da29e550d10d5d8d7",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0025419000012334436,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.006203099999765982,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 3.389999983482994e-05,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "SOURCE_UNVERIFIED",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "offline_seconds": 0.008970999999291962
+   }
+  },
+  {
+   "id": "CORPUS-DEV03-construct",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "39efdf0bbf7afd83fc0f26a4297bf3a0181bc9b21c4bc7799d364adf10f6a931",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "0471f57cc0334924af8a4d8aa096e0c2",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "39efdf0bbf7afd83fc0f26a4297bf3a0181bc9b21c4bc7799d364adf10f6a931",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0014822000011918135,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.06378509999922244,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.04257490000054531,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.10793000000012398
+   }
+  },
+  {
+   "id": "CORPUS-DEV03-ratio-unowned",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "39e7b481a3ab844d19349d19ec217e12bde90cc766f5747845921027320d610c",
+   "expected": "REFUSE_SOURCE",
+   "observed": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "6bdf395cf6fe44d2a9cd4d4d17413fa4",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "39e7b481a3ab844d19349d19ec217e12bde90cc766f5747845921027320d610c",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.004786499999681837,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.013885899999877438,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 7.659999937459361e-05,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "SOURCE_UNVERIFIED",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "offline_seconds": 0.01899290000073961
+   }
+  },
+  {
+   "id": "CORPUS-DEV06-construct",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "d0b29a35ac9d10dffdd6083bca7cb1e5296707de71ac2e4a570022e6b6f845fa",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "ba686b6e894342d1b5743bedad36646f",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "d0b29a35ac9d10dffdd6083bca7cb1e5296707de71ac2e4a570022e6b6f845fa",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0030537000002368586,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.05011000000013155,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.011864000000059605,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.06521129999964614
+   }
+  },
+  {
+   "id": "CORPUS-DEV06-ratio-unowned",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "48603b0e072737020f0c3b7caa1a1667109a8bf9a621370996e522b0a7929686",
+   "expected": "REFUSE_SOURCE",
+   "observed": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "0b293ee7b5da490790b1e4a132cb2c97",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "48603b0e072737020f0c3b7caa1a1667109a8bf9a621370996e522b0a7929686",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0016013999993447214,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.004462400000193156,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 2.8899999961140566e-05,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "SOURCE_UNVERIFIED",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "offline_seconds": 0.006269299999985378
+   }
+  },
+  {
+   "id": "CORPUS-DEV09-construct",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "cad67f3faf90ca095f791f401f57c98dda86cb5fad2516e96a01725a098e662b",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "3eac308c103d4441b87f20ba924d73ff",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "cad67f3faf90ca095f791f401f57c98dda86cb5fad2516e96a01725a098e662b",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.001884299999801442,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.055382800001098076,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.016981099999611615,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.07434380000086094
+   }
+  },
+  {
+   "id": "CORPUS-DEV09-ratio-unowned",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "4ea4eee3eaffeee278a7fa4f69a638e81b555bc11abbdb9cec95f20da37d5df2",
+   "expected": "REFUSE_SOURCE",
+   "observed": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "3d7fbcdec70a4adc934d3439858a9879",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "4ea4eee3eaffeee278a7fa4f69a638e81b555bc11abbdb9cec95f20da37d5df2",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.001399400000082096,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.003720200000316254,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 3.7200001315795816e-05,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "SOURCE_UNVERIFIED",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "offline_seconds": 0.005263099999865517
+   }
+  },
+  {
+   "id": "CORPUS-DEV10-prism-area",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "ae2a0bf218d78d8108500f59f83b0f3bc7899a687711d74812b45ab2474b9c28",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "2b68f390b50f438f96eb43135f7cfe09",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "ae2a0bf218d78d8108500f59f83b0f3bc7899a687711d74812b45ab2474b9c28",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.001550300001326832,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.051083800000924384,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.016003799999452895,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.06872420000036072
+   }
+  },
+  {
+   "id": "PARTIAL-1of2-construct",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "253f85693b155b63f4cd9b279ebc4ec94229d898508a42c464cb1371fa36d94c",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "6aed95f76194461d92da25119ee8607a",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "253f85693b155b63f4cd9b279ebc4ec94229d898508a42c464cb1371fa36d94c",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0012977999995200662,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.0381532999999763,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.013308199999300996,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.05286070000147447
+   }
+  },
+  {
+   "id": "PARTIAL-2of3-construct",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "13237a4e0a3e067f60026141e9a23c0c21e80e47f7541d94eb1379fb782c853e",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "89821ce892c144978bf82516f04a2c04",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "13237a4e0a3e067f60026141e9a23c0c21e80e47f7541d94eb1379fb782c853e",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0013007000015932135,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.04112200000054145,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.01710800000000745,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.05962850000105391
+   }
+  },
+  {
+   "id": "PLANE-ONLY-construct",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "21af75e7e27872e230d2c5eedda81596e0e44c74e8147a7d7cfc37072c8a9ab9",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "bcecb875c2d042b7a8f28a91c4edbb6c",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "21af75e7e27872e230d2c5eedda81596e0e44c74e8147a7d7cfc37072c8a9ab9",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0012669999996433035,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.029797099999996135,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.017457699999795295,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.048635300001478754
+   }
+  },
+  {
+   "id": "PLANE-ONLY-ratio-described",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "717733dac41e512029c1193b2e4a5bff8d73d563b276402f759bb33c7ff90011",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "5d99c5c739034bb799d36f4b0ca1ee4f",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "717733dac41e512029c1193b2e4a5bff8d73d563b276402f759bb33c7ff90011",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0017358000004605856,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.041480900001261034,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.017544299998917268,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.060875000001033186
+   }
+  },
+  {
+   "id": "RELABEL-TDEF",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "fb5039e786cca83dd2d28fa32370f68ec8044341d39ad5ccd22ab9bfe53e5337",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "973952ab37dc410db266a82c92d68204",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "fb5039e786cca83dd2d28fa32370f68ec8044341d39ad5ccd22ab9bfe53e5337",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0024876000006770482,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.06969120000030671,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.060374299999239156,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.1327208000002429
+   }
+  },
+  {
+   "id": "ORDER-premises-0",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "c58dffe4e60dc7515add31828a407b62842b379270105a2d8d81810669759657",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "29cbc3d8931f436a89f30ef4f5c82e3a",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "c58dffe4e60dc7515add31828a407b62842b379270105a2d8d81810669759657",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.002372700000705663,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.06907710000086809,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.027880199999344768,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.09949570000026142
+   }
+  },
+  {
+   "id": "ORDER-premises-1",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "2a84e37c5452edd31c28dbf4909cb210206ff49eb77f4592cde3dec9b8073e38",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "a4e16c6d7bbb46f6bda7e1ffc13e733d",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "2a84e37c5452edd31c28dbf4909cb210206ff49eb77f4592cde3dec9b8073e38",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0024986000007629627,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.06522149999909743,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.015718299999207375,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.08354969999891182
+   }
+  },
+  {
+   "id": "ORDER-goals",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "e2bcda50e9b282df41009e00f4ab18d9982fffd4f35dcc0d19ba61d9d5459ec5",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "6d405024a74d4c7b896bfaf2d2e2dcdc",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "e2bcda50e9b282df41009e00f4ab18d9982fffd4f35dcc0d19ba61d9d5459ec5",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.001402700001563062,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.03948640000089654,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.01518949999990582,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.05617290000009234
+   }
+  },
+  {
+   "id": "PERP-square-third",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "bb15689037d29da41bd7fd884a1f8d914c370255f5897cb9fe9004bc6ba416e2",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "5e29a0b5a31946cdb21b7e7579207802",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "bb15689037d29da41bd7fd884a1f8d914c370255f5897cb9fe9004bc6ba416e2",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0020048999995196937,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.0586500999997952,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.018781799999487703,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.07955559999936668
+   }
+  },
+  {
+   "id": "NEG-negated-plane",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "f7735a12eeba2befbf23b76fdb33f198043349830c42d4abec82278af4be57e2",
+   "expected": "REFUSE_SOURCE",
+   "observed": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "73416817c6fa43558c27ff98beb1209a",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "f7735a12eeba2befbf23b76fdb33f198043349830c42d4abec82278af4be57e2",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.001443900000595022,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.00275829999918642,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 2.5499999537714757e-05,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "SOURCE_UNVERIFIED",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "offline_seconds": 0.004340199999205652
+   }
+  },
+  {
+   "id": "NEG-conditional-plane",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "a4af1827dd1a8312b6f317e655b05d06d85a10bccf3d3567d063d7a1c2e83aec",
+   "expected": "REFUSE_SOURCE",
+   "observed": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "4e089d3f38c74f999ddbfa081a5c0324",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "a4af1827dd1a8312b6f317e655b05d06d85a10bccf3d3567d063d7a1c2e83aec",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0011916000003111549,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.0026192000004812144,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 3.079999987676274e-05,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "SOURCE_UNVERIFIED",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "offline_seconds": 0.0038997000010567717
+   }
+  },
+  {
+   "id": "NEG-missing-height",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "f3ff808b6c25485fdaf815fa2eecc5fde27e7fcd21b4be267b06084ad35f5cd6",
+   "expected": "REFUSE_SOURCE",
+   "observed": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "MISSING_DIMENSION",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "708eed51eae24e1e8993625893a838e5",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "f3ff808b6c25485fdaf815fa2eecc5fde27e7fcd21b4be267b06084ad35f5cd6",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.001220999998622574,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.01636089999919932,
+      "code": "MISSING_DIMENSION"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 3.640000068116933e-05,
+      "code": "MISSING_DIMENSION"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "MISSING_DATA",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "offline_seconds": 0.017694800000754185
+   }
+  },
+  {
+   "id": "NEG-number-wrong-object",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "ec3ec4547ca94e3173b8f2be66b8f0892de05e612a637dcf838790e0a520973f",
+   "expected": "REFUSE_SOURCE",
+   "observed": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "5d7e824df5344669878f5045d4b4fd91",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "ec3ec4547ca94e3173b8f2be66b8f0892de05e612a637dcf838790e0a520973f",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.001251800000318326,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.0061623999990843,
+      "code": "UNGROUNDED_VALUE"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 3.509999987727497e-05,
+      "code": "UNGROUNDED_VALUE"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "SOURCE_UNVERIFIED",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "offline_seconds": 0.007521100000303704
+   }
+  },
+  {
+   "id": "NEG-wrong-relation",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "0841ae0d2d796438e7d40351ba592d78c402f68fc4a3be1763bfd47c1eb7f03e",
+   "expected": "REFUSE_SOURCE",
+   "observed": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_IN_QUOTE",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "40df3af6ea4b4687a553b88eaa5ce2e6",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "0841ae0d2d796438e7d40351ba592d78c402f68fc4a3be1763bfd47c1eb7f03e",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0011813000000984175,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.004787400001077913,
+      "code": "PLANE_NOT_IN_QUOTE"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 3.3499998608022e-05,
+      "code": "PLANE_NOT_IN_QUOTE"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "SOURCE_UNVERIFIED",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "PLANE_NOT_IN_QUOTE",
+    "offline_seconds": 0.006083099999159458
+   }
+  },
+  {
+   "id": "NEG-ratio-unowned-named",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "4fe7ffa88a59e9d6724e8f621e783ac970442aa10025fb9911444f3cd4128b9f",
+   "expected": "REFUSE_SOURCE",
+   "observed": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "a9bdb3c2d84448d88e72dced6c2eb27e",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "4fe7ffa88a59e9d6724e8f621e783ac970442aa10025fb9911444f3cd4128b9f",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.001507599999968079,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.005029399999330053,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 6.709999979648273e-05,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "SOURCE_UNVERIFIED",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "offline_seconds": 0.006750999998985208
+   }
+  },
+  {
+   "id": "NEG-ratio-unowned-anonymous",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "dc69a3d201bd039e4e1f6638aa1aba822b885b37447fba49e50b698a587d4040",
+   "expected": "REFUSE_SOURCE",
+   "observed": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "844d19c539664b61bffe940cc51f3d51",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "dc69a3d201bd039e4e1f6638aa1aba822b885b37447fba49e50b698a587d4040",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0020148999992670724,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.004927900001348462,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 4.4499998693936504e-05,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "SOURCE_UNVERIFIED",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "offline_seconds": 0.007115300000805291
+   }
+  },
+  {
+   "id": "NEG-residual-unowned",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "96aeae9ae36259c8aaaeed031904a41871b008379fdc6d9f382ee5a304f65986",
+   "expected": "REFUSE_SOURCE",
+   "observed": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "587481259c9547e0abaf57c6bbf1e464",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "96aeae9ae36259c8aaaeed031904a41871b008379fdc6d9f382ee5a304f65986",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0020427999988896772,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.007209499999589752,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 3.4199998481199145e-05,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "SOURCE_UNVERIFIED",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "offline_seconds": 0.009398300000611925
+   }
+  },
+  {
+   "id": "NEG-swapped-names",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "84a6976cdd1068690429083a5b1f3cbd9e518f7d2591a8d42c0eacad7a4dace2",
+   "expected": "REFUSE_SOURCE",
+   "observed": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "930b51f4d5324fd9b6bd44b24f6dfc4d",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "84a6976cdd1068690429083a5b1f3cbd9e518f7d2591a8d42c0eacad7a4dace2",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0013030999998591142,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.004579500000545522,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 3.06999991153134e-05,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "SOURCE_UNVERIFIED",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "offline_seconds": 0.005989400000544265
+   }
+  },
+  {
+   "id": "NEG-unread-condition",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "d0d13bf68560f283be76889c0731c3d6d3f5df6d3953daa03e123554afe0eefd",
+   "expected": "REFUSE_SOURCE",
+   "observed": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "d58ab6de4cda4a1a978db9fc9291dd61",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "d0d13bf68560f283be76889c0731c3d6d3f5df6d3953daa03e123554afe0eefd",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0012747000000672415,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.0037784999985888135,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 4.070000068168156e-05,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "SOURCE_UNVERIFIED",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "offline_seconds": 0.0051579000009951415
+   }
+  },
+  {
+   "id": "NEG-stated-edge-not-in-text",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "47ac1e8abaa2221add17740c7bd3bf37c37b5984e74b6b1686fbcb4ab51b2f0d",
+   "expected": "REFUSE_SOURCE",
+   "observed": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "b3ed94f71e7b41e5b250dae79e852dd5",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "47ac1e8abaa2221add17740c7bd3bf37c37b5984e74b6b1686fbcb4ab51b2f0d",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0014609999998356216,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.0029186000010668067,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 2.4199998733820394e-05,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "SOURCE_UNVERIFIED",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "offline_seconds": 0.004484399998545996
+   }
+  },
+  {
+   "id": "NEG-contains-a-line",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "435910b8ffcec2718ce5c838ea5162fc036b2a662f4633f33f63bbbb3d7d4144",
+   "expected": "REFUSE_SOURCE",
+   "observed": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "57926b10d43e4731a27807691aaac33d",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "435910b8ffcec2718ce5c838ea5162fc036b2a662f4633f33f63bbbb3d7d4144",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0025069000002986286,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.0026632999997673323,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 2.519999907235615e-05,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "SOURCE_UNVERIFIED",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "offline_seconds": 0.005261599999357713
+   }
+  },
+  {
+   "id": "NEG-other-plane-subject",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "89bff956eccbd17d0709122fb45bcaba15ba1b19fb3f40e5ef6e5653dfa34356",
+   "expected": "REFUSE_SOURCE",
+   "observed": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "9b5fde1a4c1f4d77b714ceb4eecb0d6d",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "89bff956eccbd17d0709122fb45bcaba15ba1b19fb3f40e5ef6e5653dfa34356",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0012708999984170077,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.002990200000567711,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 2.6199999410891905e-05,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "SOURCE_UNVERIFIED",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "offline_seconds": 0.0043619999996735714
+   }
+  },
+  {
+   "id": "NEG-per-edge-same-name",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "6a6f5e71c09c6d9c82d335b8699d1069da3fcbdfc050eba88898fbecf8c5069f",
+   "expected": "REFUSE_SOURCE",
+   "observed": "REFUSE_OTHER",
+   "status": "REFUSED",
+   "code": "INVALID_DERIVED_SECTION",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "bf790125f9a84e6698f24008629d280b",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "6a6f5e71c09c6d9c82d335b8699d1069da3fcbdfc050eba88898fbecf8c5069f",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0003192000003764406,
+      "code": "INVALID_DERIVED_SECTION",
+      "validation": {
+       "validation": "NOT_VALIDATED",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "extraction",
+    "failure_kind": "EXTRACTION_FAILURE",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "INVALID_DERIVED_SECTION",
+    "offline_seconds": 0.0003919000009773299
+   }
+  },
+  {
+   "id": "NEG-point-first-wrong-reference",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "8d57c47d4e01f6f5ed3a68a0ee7b127c84f5203566837dc25db088903e39a438",
+   "expected": "REFUSE_SOURCE",
+   "observed": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "0bec2f51d74649d5a2f5cabae10dcdb0",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "8d57c47d4e01f6f5ed3a68a0ee7b127c84f5203566837dc25db088903e39a438",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.001146599999628961,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.003989200000432902,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 2.5800000003073364e-05,
+      "code": "SOURCE_OBJECT_MISMATCH"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "SOURCE_UNVERIFIED",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "offline_seconds": 0.005207799998970586
+   }
+  },
+  {
+   "id": "POS-per-edge-with-va-cat",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "7fdd38f91ee700044ab5887066135ab494267ea69e6ece9812211342a7be6b35",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "75531b69c9664562bb3362e895ed7ea1",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "7fdd38f91ee700044ab5887066135ab494267ea69e6ece9812211342a7be6b35",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0012133999989600852,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.043493400000443216,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.012335500001427135,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.05711189999965427
+   }
+  },
+  {
+   "id": "GEO-contradictory-length",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "0dc5fc19e55b15638fbc3b34033ea74afbce1625396604524e29fd39325f65f2",
+   "expected": "REFUSE_GEOMETRY",
+   "observed": "REFUSE_GEOMETRY",
+   "status": "REFUSED",
+   "code": "INCONSISTENT_FACTS",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "413a54c06ae74c14a64ddcc0fe3897d5",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "0dc5fc19e55b15638fbc3b34033ea74afbce1625396604524e29fd39325f65f2",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.001485199998569442,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.014812700001129997,
+      "code": "INCONSISTENT_FACTS"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 3.619999915827066e-05,
+      "code": "INCONSISTENT_FACTS"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "INVALID_DATA",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "offline_seconds": 0.01643079999848851
+   }
+  },
+  {
+   "id": "GEO-parallel-to-cut-edges",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "ca2ae397fadb5849faf2d7635940922d29a56af54e7f56f73844b8b867d2a0d9",
+   "expected": "REFUSE_GEOMETRY",
+   "observed": "REFUSE_GEOMETRY",
+   "status": "REFUSED",
+   "code": "PARALLEL_NO_INTERSECTION",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "71c62551c41347fc978974448bb5a7fb",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "ca2ae397fadb5849faf2d7635940922d29a56af54e7f56f73844b8b867d2a0d9",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0013066999999864493,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.01967540000077861,
+      "code": "PARALLEL_NO_INTERSECTION"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 3.1600000511389226e-05,
+      "code": "PARALLEL_NO_INTERSECTION"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "INVALID_DATA",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "PARALLEL_NO_INTERSECTION",
+    "offline_seconds": 0.021106199999849196
+   }
+  },
+  {
+   "id": "GEO-declared-boundary-crossed",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "e64e59da83ccc8a619e5a7d3b9dcd2dc96bff4b4cea64370ad11a193504f48d1",
+   "expected": "REFUSE_GEOMETRY",
+   "observed": "REFUSE_GEOMETRY",
+   "status": "REFUSED",
+   "code": "SECTION_BOUNDARY_INCOMPLETE",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "e89a13fc88d14d77aa4645e5803c31d3",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "e64e59da83ccc8a619e5a7d3b9dcd2dc96bff4b4cea64370ad11a193504f48d1",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0014697000005980954,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.02687060000062047,
+      "code": "SECTION_BOUNDARY_INCOMPLETE"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 6.209999992279336e-05,
+      "code": "SECTION_BOUNDARY_INCOMPLETE"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "INVALID_DATA",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "SECTION_BOUNDARY_INCOMPLETE",
+    "offline_seconds": 0.03015179999965767
+   }
+  },
+  {
+   "id": "GEO-declared-boundary-partial",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "e64e59da83ccc8a619e5a7d3b9dcd2dc96bff4b4cea64370ad11a193504f48d1",
+   "expected": "REFUSE_GEOMETRY",
+   "observed": "REFUSE_GEOMETRY",
+   "status": "REFUSED",
+   "code": "SECTION_BOUNDARY_INCOMPLETE",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "1beeb9cc7918432bb8588506534fb95e",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "e64e59da83ccc8a619e5a7d3b9dcd2dc96bff4b4cea64370ad11a193504f48d1",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.004294000000300002,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.021599699999569566,
+      "code": "SECTION_BOUNDARY_INCOMPLETE"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 3.0199998946045525e-05,
+      "code": "SECTION_BOUNDARY_INCOMPLETE"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "INVALID_DATA",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "SECTION_BOUNDARY_INCOMPLETE",
+    "offline_seconds": 0.026050000000395812
+   }
+  },
+  {
+   "id": "GEO-declared-boundary-reversed",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "09be9faa102837a60514c879d1ddbbe3e05d4da306cbca5a0c269f9ee183b65e",
+   "expected": "SERVE",
+   "observed": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "oracle_answers_match": true,
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "be1438d2a823405094dd52d2881550df",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "09be9faa102837a60514c879d1ddbbe3e05d4da306cbca5a0c269f9ee183b65e",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0013426000004983507,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.04858389999935753,
+      "code": null
+     },
+     {
+      "name": "adapter4",
+      "seconds": 0.017373599999700673,
+      "code": null
+     }
+    ],
+    "source_gate": {
+     "status": "VERIFIED",
+     "authority": "registry.kiem_nguon"
+    },
+    "planner": {
+     "status": "EXECUTED",
+     "version": "geometry-fact-planner/13"
+    },
+    "engine": {
+     "status": "VERIFIED",
+     "kernel_check": true
+    },
+    "failure_stage": null,
+    "failure_kind": null,
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "SERVED",
+    "code": null,
+    "offline_seconds": 0.06736180000007153
+   }
+  },
+  {
+   "id": "KER-plane-equation",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "47ac1e8abaa2221add17740c7bd3bf37c37b5984e74b6b1686fbcb4ab51b2f0d",
+   "expected": "REFUSE_KERNEL",
+   "observed": "REFUSE_KERNEL",
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_PLANE_KIND",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "0a6b0ce48319478699753c30e0e95608",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "47ac1e8abaa2221add17740c7bd3bf37c37b5984e74b6b1686fbcb4ab51b2f0d",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0012903999995614868,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.0001649999994697282,
+      "code": "BRIDGE_UNSUPPORTED_PLANE_KIND"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 2.2799998987466097e-05,
+      "code": "BRIDGE_UNSUPPORTED_PLANE_KIND"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "CAPABILITY",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "BRIDGE_UNSUPPORTED_PLANE_KIND",
+    "offline_seconds": 0.0015930999998090556
+   }
+  },
+  {
+   "id": "KER-section-on-base-edges",
+   "input_class": "AUTHORED_V2_OFFLINE_REPLAY_NOT_PROVIDER_OUTPUT",
+   "source_sha256": "7d305028777f3957b162b740e062bf8822048d3d43030333a81c9eb20684a4a6",
+   "expected": "REFUSE_KERNEL",
+   "observed": "REFUSE_KERNEL",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "oracle_answers_match": "NOT_REACHED",
+   "execution_receipt": {
+    "schema": "hybrid-offline-execution/1",
+    "request_id": "d9d31f49278a48fab7fea6ea1e74e0b6",
+    "classification": "OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION",
+    "source_sha256": "7d305028777f3957b162b740e062bf8822048d3d43030333a81c9eb20684a4a6",
+    "policy_fingerprint": "b6b05ed91d2445b5605d84bc58d90cb9fe8f823e30780dec91211b69aa60b111",
+    "runtime_identity": {
+     "adapter_version": "hybrid-simulation-adapter/4",
+     "engine_version": "geometry-function-engine/11",
+     "envelope_version": "hybrid-route-d-simulation/4",
+     "planner_version": "geometry-fact-planner/13",
+     "provider_mode": "INJECTED_OFFLINE_EXTRACTOR",
+     "registry_version": "geometry-functions/13",
+     "response_contract": "typed-fact-next/2"
+    },
+    "provider_performance": "NOT_MEASURED",
+    "cache": "NOT_USED",
+    "stages": [
+     {
+      "name": "extraction",
+      "seconds": 0.0010922999990725657,
+      "code": null,
+      "validation": {
+       "validation": "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID",
+       "semantic_gate": "NOT_EXECUTED"
+      }
+     },
+     {
+      "name": "source_gate_planner_exact_engine",
+      "seconds": 0.0009718000001157634,
+      "code": "UNSUPPORTED_CAPABILITY"
+     },
+     {
+      "name": "adapter4",
+      "seconds": 1.779999911377672e-05,
+      "code": "UNSUPPORTED_CAPABILITY"
+     }
+    ],
+    "source_gate": {
+     "status": "NOT_CERTIFIED"
+    },
+    "planner": {
+     "status": "NOT_CERTIFIED"
+    },
+    "engine": {
+     "status": "NOT_CERTIFIED"
+    },
+    "failure_stage": "deterministic_route",
+    "failure_kind": "CAPABILITY",
+    "individual_source_gate_planner_engine_latency": "UNKNOWN_NOT_INSTRUMENTED",
+    "status": "REFUSED",
+    "code": "UNSUPPORTED_CAPABILITY",
+    "offline_seconds": 0.0021303999983501853
+   }
+  }
+ ]
+}

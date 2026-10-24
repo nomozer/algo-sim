@@ -1,0 +1,177 @@
+[
+  {
+    "head": "fe9f555437498432427ae6bbd54402cdd59c7eb7",
+    "path": "D:/Documents/projects/algo-sim",
+    "tracked_changes": [
+      " M frontend/src/components/SimulationWorkspace.tsx",
+      " M frontend/src/components/hybrid-preview-contract.test.tsx",
+      " M frontend/src/simulations/domains/geometry/Scene3DExplorer.test.tsx",
+      " M frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx",
+      " M frontend/src/simulations/domains/geometry/interaction-state.ts",
+      " M frontend/src/simulations/domains/geometry/pick-target.ts",
+      " M frontend/src/simulations/domains/geometry/scene3d-auxiliary.ts",
+      " M frontend/src/simulations/domains/geometry/scene3d-camera.ts",
+      " M frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts",
+      " M frontend/src/simulations/domains/geometry/scene3d-hidden-lines.test.tsx",
+      " M frontend/src/simulations/domains/geometry/scene3d-model.ts",
+      " M frontend/src/simulations/domains/geometry/scene3d-playback.tsx",
+      " M frontend/src/simulations/domains/geometry/scene3d-presentation.ts",
+      " M frontend/src/simulations/domains/geometry/scene3d-roles.ts",
+      " M frontend/src/simulations/domains/geometry/scene3d-section.test.ts",
+      " M frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      " M frontend/src/simulations/domains/geometry/scene3d.test.tsx",
+      " M frontend/src/styles/global.css",
+      " M frontend/src/styles/tokens.css"
+    ]
+  },
+  {
+    "head": "330a222a2d4f627da7454378627a1497c239fb8c",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/extraction-v2-safety",
+    "tracked_changes": [
+      " M docs/EVIDENCE_INDEX.md",
+      " M docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/handoff.md"
+    ]
+  },
+  {
+    "head": "cb1f4954a7243de0561b3e724b7b2e94cb36bffc",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/freeze-scene3d-metric-boundary",
+    "tracked_changes": [
+      " M docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json"
+    ]
+  },
+  {
+    "head": "216bbf84beb4a2bbd0e6d6c688a4f3e4becf24bc",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/freeze-scene3d-metric-final",
+    "tracked_changes": [
+      " M docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json"
+    ]
+  },
+  {
+    "head": "f95596716912e5550ed079287221274b2d70f24c",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/geometric-visual-correctness-framing",
+    "tracked_changes": []
+  },
+  {
+    "head": "82d3d25540ea643a68bd7877eb1b67a78dfc7134",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-backend-s1",
+    "tracked_changes": []
+  },
+  {
+    "head": "97d59bf95c0c87eae827e48148c1a5957195a82e",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-primary-b1-b2-offline",
+    "tracked_changes": []
+  },
+  {
+    "head": "65d6ee97d6f693c6613153d28aaf40fa0f352ba1",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-route-d-preview-wiring",
+    "tracked_changes": []
+  },
+  {
+    "head": "dc27009fe9530ced01c3e6d52898d789a62cb36f",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-semantic-extraction-v2",
+    "tracked_changes": []
+  },
+  {
+    "head": "5ee973406b75e19503158549a22bb3b24c5d9bf5",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-session5-offline-consumer",
+    "tracked_changes": []
+  },
+  {
+    "head": "25f57e31604c5a12ca30667276b17596dcceb71b",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/nl-to-scene3d-e2e-readiness",
+    "tracked_changes": []
+  },
+  {
+    "head": "7f90d9b398329d9fb99867ea784d3d126b005e31",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/scene3d-html-port",
+    "tracked_changes": []
+  },
+  {
+    "head": "551a354174e1c213f3ad2bf03d7574ebf75f4d85",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/scene3d-plane-grid-camera",
+    "tracked_changes": []
+  },
+  {
+    "head": "8618d84c917c5d5d41eb9a9cd41a40e93ae2996c",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/scene3d-unified-visual-language",
+    "tracked_changes": [
+      " M frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx",
+      " M frontend/src/simulations/domains/geometry/interaction-state.ts",
+      " M frontend/src/simulations/domains/geometry/scene3d-annotations.ts",
+      " M frontend/src/simulations/domains/geometry/scene3d-auxiliary.ts",
+      " M frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts",
+      " M frontend/src/simulations/domains/geometry/scene3d-hidden-lines.test.tsx",
+      " M frontend/src/simulations/domains/geometry/scene3d-model.ts",
+      " M frontend/src/simulations/domains/geometry/scene3d-playback.tsx",
+      " M frontend/src/simulations/domains/geometry/scene3d-presentation.ts",
+      " M frontend/src/simulations/domains/geometry/scene3d-roles.ts",
+      " M frontend/src/simulations/domains/geometry/scene3d-subentities.ts",
+      " M frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      " M frontend/src/simulations/domains/geometry/scene3d.test.tsx",
+      " M frontend/src/simulations/domains/geometry/simulation-visual-consistency-session1.test.tsx",
+      " M frontend/src/styles/global.css"
+    ]
+  },
+  {
+    "head": "7168d26963011433889dc907492df87ac62140f7",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/semantic-extraction-v3",
+    "tracked_changes": []
+  },
+  {
+    "head": "bb014eb832672948e613ac21984c7c65cee14b83",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/semantic-extraction-v3-runtime-revision",
+    "tracked_changes": []
+  },
+  {
+    "head": "d86c72031d8fc85cd4eef62d9379cd1690ba1417",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/simulation-coverage-visual-validation",
+    "tracked_changes": [
+      " M docs/EVIDENCE_INDEX.md"
+    ]
+  },
+  {
+    "head": "f6a8e30fb70d377c5a8a97db476ebd4d7c090336",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/simulation-visual-consistency-learning-ux",
+    "tracked_changes": []
+  },
+  {
+    "head": "13d28b844925ee0c9adb02698b54597c8f9d6eee",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-b1b2",
+    "tracked_changes": []
+  },
+  {
+    "head": "2160fbcf3a8ec489f8ac792ffccdcf7436f30c86",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-scene3d-metric-boundary",
+    "tracked_changes": []
+  },
+  {
+    "head": "61668c9362c49df39f1ae948b0e7a7e1cad33f95",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-scene3d-pre-main",
+    "tracked_changes": []
+  },
+  {
+    "head": "8e2235e7a540da58c48adf6fcced12624676119c",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-scene3d-pre-main-2",
+    "tracked_changes": []
+  },
+  {
+    "head": "7868db0aef3810e2089b5f8b8d6aecfb8b3e1400",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/verify-geometric-visual-correctness-framing",
+    "tracked_changes": []
+  },
+  {
+    "head": "9343e8d0d4c4cdf5bf0865e0a550c13f238f28b5",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/verify-visual-ux-final-quality",
+    "tracked_changes": []
+  },
+  {
+    "head": "13d28b844925ee0c9adb02698b54597c8f9d6eee",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-hybrid-integration",
+    "tracked_changes": []
+  },
+  {
+    "head": "164a5e25ad25bf42d689df115ade5d74b5c733e9",
+    "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-ux-final-quality",
+    "tracked_changes": []
+  }
+]

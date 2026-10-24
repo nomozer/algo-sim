@@ -1,0 +1,341 @@
+{
+  "schema": "official-section-fill-closure/1",
+  "measurement_commit": "13d28b844925ee0c9adb02698b54597c8f9d6eee",
+  "product_commit": "852f650158635b6dc402d4cfc905cbdcbbaebe43",
+  "measured_system_hash": "9bf35a1d6f4c3b3e90228964a3b5ee96288de29efcb3f580f22c6f126489bd9a",
+  "official_module_sha256": "9baf57ee54e08abd3e184e2e519377d7e82186d42c5e596fab5aaf86dd74514c",
+  "suite_sha256": "54331fdccd1bb1bfb365f90a91864b55bd5ec36e6dff11760865adc5232066ac",
+  "provider_calls": 0,
+  "rows": [
+    {
+      "id": "cross_section",
+      "viewport": "desktop",
+      "section_fill": {
+        "section_id": "T",
+        "cutting_plane_id": "alpha_plane",
+        "closed_ui_step": 9,
+        "pre_close": [
+          {
+            "ui_step": 4,
+            "fill_mesh_names": [],
+            "state": "pre_close",
+            "samples": 70,
+            "thresholds": {
+              "T_ON": 20,
+              "T_ON_MIN": 12,
+              "T_OFF": 3,
+              "margin_px": 3
+            },
+            "mean_delta_e": 0,
+            "min_delta_e": 0,
+            "max_delta_e": 0,
+            "pass": true
+          },
+          {
+            "ui_step": 5,
+            "fill_mesh_names": [],
+            "state": "pre_close",
+            "samples": 70,
+            "thresholds": {
+              "T_ON": 20,
+              "T_ON_MIN": 12,
+              "T_OFF": 3,
+              "margin_px": 3
+            },
+            "mean_delta_e": 0,
+            "min_delta_e": 0,
+            "max_delta_e": 0,
+            "pass": true
+          },
+          {
+            "ui_step": 6,
+            "fill_mesh_names": [],
+            "state": "pre_close",
+            "samples": 70,
+            "thresholds": {
+              "T_ON": 20,
+              "T_ON_MIN": 12,
+              "T_OFF": 3,
+              "margin_px": 3
+            },
+            "mean_delta_e": 0,
+            "min_delta_e": 0,
+            "max_delta_e": 0,
+            "pass": true
+          },
+          {
+            "ui_step": 7,
+            "fill_mesh_names": [],
+            "state": "pre_close",
+            "samples": 70,
+            "thresholds": {
+              "T_ON": 20,
+              "T_ON_MIN": 12,
+              "T_OFF": 3,
+              "margin_px": 3
+            },
+            "mean_delta_e": 0,
+            "min_delta_e": 0,
+            "max_delta_e": 0,
+            "pass": true
+          },
+          {
+            "ui_step": 8,
+            "fill_mesh_names": [],
+            "state": "pre_close",
+            "samples": 70,
+            "thresholds": {
+              "T_ON": 20,
+              "T_ON_MIN": 12,
+              "T_OFF": 3,
+              "margin_px": 3
+            },
+            "mean_delta_e": 0,
+            "min_delta_e": 0,
+            "max_delta_e": 0,
+            "pass": true
+          }
+        ],
+        "closed": {
+          "ui_step": 9,
+          "fill_mesh_names": [
+            "section_fill:T"
+          ],
+          "state": "closed",
+          "samples": 70,
+          "thresholds": {
+            "T_ON": 20,
+            "T_ON_MIN": 12,
+            "T_OFF": 3,
+            "margin_px": 3
+          },
+          "mean_delta_e": 24.564824204168126,
+          "min_delta_e": 20.07148455255914,
+          "max_delta_e": 25.019062566928007,
+          "pass": true,
+          "under_edges": {
+            "pass": true,
+            "edges": [
+              {
+                "id": "S-A",
+                "samples": 130,
+                "rho": 0.21524627622639955,
+                "reference_delta_e": 24.561124332010756,
+                "edge_contrast_off": 30.95047686761245,
+                "pass": true
+              },
+              {
+                "id": "S-C",
+                "samples": 150,
+                "rho": 0,
+                "reference_delta_e": 24.561124332010756,
+                "edge_contrast_off": 71.8569065909276,
+                "pass": true
+              }
+            ],
+            "rule": {
+              "rho_lt": 1,
+              "edge_contrast_min": 12
+            }
+          }
+        },
+        "rewound": {
+          "ui_step": 8,
+          "fill_mesh_names": [],
+          "state": "rewound",
+          "samples": 70,
+          "thresholds": {
+            "T_ON": 20,
+            "T_ON_MIN": 12,
+            "T_OFF": 3,
+            "margin_px": 3
+          },
+          "mean_delta_e": 0,
+          "min_delta_e": 0,
+          "max_delta_e": 0,
+          "pass": true
+        },
+        "pass": true
+      },
+      "analyze_calls": 1,
+      "images": [
+        {
+          "file": "cross_section-desktop-closed-default.png",
+          "sha256": "a1c0b24b8042784e260060d501a95581bd84c7eda2364c3470143b62961e3a68"
+        },
+        {
+          "file": "cross_section-desktop-closed-orbit.png",
+          "sha256": "d9971129e62ed40098f840fe0c60e76f8d9c80c82aec1bb4879e24a81f06e748"
+        }
+      ],
+      "auxiliary_requested": false,
+      "pass": true
+    },
+    {
+      "id": "cross_section",
+      "viewport": "mobile",
+      "section_fill": {
+        "section_id": "T",
+        "cutting_plane_id": "alpha_plane",
+        "closed_ui_step": 9,
+        "pre_close": [
+          {
+            "ui_step": 4,
+            "fill_mesh_names": [],
+            "state": "pre_close",
+            "samples": 10,
+            "thresholds": {
+              "T_ON": 20,
+              "T_ON_MIN": 12,
+              "T_OFF": 3,
+              "margin_px": 3
+            },
+            "mean_delta_e": 0,
+            "min_delta_e": 0,
+            "max_delta_e": 0,
+            "pass": true
+          },
+          {
+            "ui_step": 5,
+            "fill_mesh_names": [],
+            "state": "pre_close",
+            "samples": 10,
+            "thresholds": {
+              "T_ON": 20,
+              "T_ON_MIN": 12,
+              "T_OFF": 3,
+              "margin_px": 3
+            },
+            "mean_delta_e": 0,
+            "min_delta_e": 0,
+            "max_delta_e": 0,
+            "pass": true
+          },
+          {
+            "ui_step": 6,
+            "fill_mesh_names": [],
+            "state": "pre_close",
+            "samples": 10,
+            "thresholds": {
+              "T_ON": 20,
+              "T_ON_MIN": 12,
+              "T_OFF": 3,
+              "margin_px": 3
+            },
+            "mean_delta_e": 0,
+            "min_delta_e": 0,
+            "max_delta_e": 0,
+            "pass": true
+          },
+          {
+            "ui_step": 7,
+            "fill_mesh_names": [],
+            "state": "pre_close",
+            "samples": 10,
+            "thresholds": {
+              "T_ON": 20,
+              "T_ON_MIN": 12,
+              "T_OFF": 3,
+              "margin_px": 3
+            },
+            "mean_delta_e": 0,
+            "min_delta_e": 0,
+            "max_delta_e": 0,
+            "pass": true
+          },
+          {
+            "ui_step": 8,
+            "fill_mesh_names": [],
+            "state": "pre_close",
+            "samples": 10,
+            "thresholds": {
+              "T_ON": 20,
+              "T_ON_MIN": 12,
+              "T_OFF": 3,
+              "margin_px": 3
+            },
+            "mean_delta_e": 0,
+            "min_delta_e": 0,
+            "max_delta_e": 0,
+            "pass": true
+          }
+        ],
+        "closed": {
+          "ui_step": 9,
+          "fill_mesh_names": [
+            "section_fill:T"
+          ],
+          "state": "closed",
+          "samples": 10,
+          "thresholds": {
+            "T_ON": 20,
+            "T_ON_MIN": 12,
+            "T_OFF": 3,
+            "margin_px": 3
+          },
+          "mean_delta_e": 24.765146451211386,
+          "min_delta_e": 24.561124332010756,
+          "max_delta_e": 25.019062566928007,
+          "pass": true,
+          "under_edges": {
+            "pass": true,
+            "edges": [
+              {
+                "id": "S-A",
+                "samples": 45,
+                "rho": 0.31149749920048625,
+                "reference_delta_e": 24.839626960445624,
+                "edge_contrast_off": 26.88427848976261,
+                "pass": true
+              },
+              {
+                "id": "S-C",
+                "samples": 50,
+                "rho": 0,
+                "reference_delta_e": 24.561124332010756,
+                "edge_contrast_off": 72.12744505167251,
+                "pass": true
+              }
+            ],
+            "rule": {
+              "rho_lt": 1,
+              "edge_contrast_min": 12
+            }
+          }
+        },
+        "rewound": {
+          "ui_step": 8,
+          "fill_mesh_names": [],
+          "state": "rewound",
+          "samples": 10,
+          "thresholds": {
+            "T_ON": 20,
+            "T_ON_MIN": 12,
+            "T_OFF": 3,
+            "margin_px": 3
+          },
+          "mean_delta_e": 0,
+          "min_delta_e": 0,
+          "max_delta_e": 0,
+          "pass": true
+        },
+        "pass": true
+      },
+      "analyze_calls": 1,
+      "images": [
+        {
+          "file": "cross_section-mobile-closed-default.png",
+          "sha256": "09ba9d931ce949c16140b03227754fb7a35ade9915b964044f5803c4e36d3f71"
+        },
+        {
+          "file": "cross_section-mobile-closed-orbit.png",
+          "sha256": "6e1efe0525a9c05e8b69c9a1045a2df700375ce01336388e5ae8665449ec5564"
+        }
+      ],
+      "auxiliary_requested": false,
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "pass": true
+}

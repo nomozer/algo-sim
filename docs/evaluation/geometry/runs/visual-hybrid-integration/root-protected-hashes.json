@@ -1,0 +1,318 @@
+[
+  {
+    "path": "frontend/src/components/SimulationWorkspace.tsx",
+    "sha256": "88ee4e5491da74938315422ffd141426383075d511683a9d6821ae9756c64bc9"
+  },
+  {
+    "path": "frontend/src/components/hybrid-preview-contract.test.tsx",
+    "sha256": "97bf6d7470d7a3c02faac74a49424cbc3f0507f9da1fe941be260c2d803f5925"
+  },
+  {
+    "path": "frontend/src/simulations/domains/geometry/Scene3DExplorer.test.tsx",
+    "sha256": "9722cc1bfdedfb51e467851fb5be545ddd195a4d1c5cd0467f44e4f667c29c75"
+  },
+  {
+    "path": "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx",
+    "sha256": "34e0ff11f5ba5e83eb58065905f0d13fd4feb841b6c9b244ec37cb5525f43233"
+  },
+  {
+    "path": "frontend/src/simulations/domains/geometry/interaction-state.ts",
+    "sha256": "e45dfda3e579cf7832217abd3fe3d2bf7c657751fdff7cce8e41399c135de690"
+  },
+  {
+    "path": "frontend/src/simulations/domains/geometry/pick-target.ts",
+    "sha256": "64c602fe4991338381b314e74d30c002ae7dc1d370e44ace2df3dacc7a7d48f4"
+  },
+  {
+    "path": "frontend/src/simulations/domains/geometry/scene3d-auxiliary.ts",
+    "sha256": "af0f8e70ef9791d9907f39c031763b90b9352e5ec75d4adadcf388454512fb9b"
+  },
+  {
+    "path": "frontend/src/simulations/domains/geometry/scene3d-camera.ts",
+    "sha256": "8eeddf314bb63edbc901b68af74190717d28f67da0ac908cb2e929540a0c8add"
+  },
+  {
+    "path": "frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts",
+    "sha256": "5c18c575dc7ef151226940277bf62fd1e6194939e6054257923b3d63cbffa9eb"
+  },
+  {
+    "path": "frontend/src/simulations/domains/geometry/scene3d-hidden-lines.test.tsx",
+    "sha256": "6cfa83aa030f572d41deff3d21476c2ab5b432683cc9908d186202ae7aed41e5"
+  },
+  {
+    "path": "frontend/src/simulations/domains/geometry/scene3d-model.ts",
+    "sha256": "accdee312b8a26a509d85e99626a9c6f99076ce3433f25588719524832f0d419"
+  },
+  {
+    "path": "frontend/src/simulations/domains/geometry/scene3d-playback.tsx",
+    "sha256": "ec1b00d84d63cc89186b018f68fc5615d2c2f248911118942535e39e9b0832e1"
+  },
+  {
+    "path": "frontend/src/simulations/domains/geometry/scene3d-presentation.ts",
+    "sha256": "c4d2323b2ef3805ac2faeb74208103246bca1714d4326fbdb67eb51f0e1e6b93"
+  },
+  {
+    "path": "frontend/src/simulations/domains/geometry/scene3d-roles.ts",
+    "sha256": "18aa2ae4c2a27db8bc9b9187a24ab37b3b12284b6d86f424db5aeee05d07b1ae"
+  },
+  {
+    "path": "frontend/src/simulations/domains/geometry/scene3d-section.test.ts",
+    "sha256": "ec2313d7adea5c823946b356951ddfcb8329f56dad659fa6a18f4dc74e5fb082"
+  },
+  {
+    "path": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+    "sha256": "192235f608a92d066038c0dc5edddabaeef33caf252dc29756fcb8dfd8dd3904"
+  },
+  {
+    "path": "frontend/src/simulations/domains/geometry/scene3d.test.tsx",
+    "sha256": "fc30e8894bc25b5221c401b791f8f4c49089253fcdfe8e654745c49c833faf37"
+  },
+  {
+    "path": "frontend/src/styles/global.css",
+    "sha256": "01bc96219861efc8ebebf2b23e38ebe2340d042524f677183526a7803aaaf714"
+  },
+  {
+    "path": "frontend/src/styles/tokens.css",
+    "sha256": "4c2353ab87f5fd1701085baf1ea3c86ddded6a57cd0303cad82149bd28564346"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/docs-final-go-main/checksums.txt",
+    "sha256": "505c1a92d29387a4cbdbb90481b351d1b5a4e169530e89eb2a72489056012a83"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/docs-final-go-main/handoff.md",
+    "sha256": "b3e3686097436cde22bd9545c792042abeda505db8760a802363e868ea80ff95"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/docs-final-go-main/run.json",
+    "sha256": "c93e62692246ceed0119f0b5c1bda15f6f8d2d65bcc63505d921863ab369904c"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/docs-final-go-main/verification/chain.txt",
+    "sha256": "359a82dc937b401bc8b40bd30dca2860e8d441f48e2c2b4567aa7829e9b57dea"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/docs-final-go-main/verification/docs-gate.log",
+    "sha256": "6f6d4c1563bfa266d5cab036e56a34fbfbd433a47840a1597faf9f95aedf7b80"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/docs-final-go-main/verification/freeze.log",
+    "sha256": "8b6d1930cd87360c1873ac141bf585e0871e66f8e7a58fa3c88dc7fb6608af24"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/docs-final-go-main/verification/head.txt",
+    "sha256": "6897dcff52689efade454f46ee43305496e69cbfaeec2ac70ebf2a771756eaf5"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/docs-final-go-main/verification/invariants.log",
+    "sha256": "6c035b6c18c9d3f859ea1cdd8da791c3bffda6f113d6544920cb7ced506cf514"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/docs-final-go-main/verification/post-push.txt",
+    "sha256": "f2d4a8e6c0b530efb40dcebf41c058518a8664bcd817b4865a97aaadacdf1de4"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-go-main/checksums.json",
+    "sha256": "48bb6b5f86d154e6ebc105f5c59aa7d7e408b6b263ec621b2cdf0a574f3d07d7"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-go-main/cleanup-log.json",
+    "sha256": "2d3262632734640f2b0fa0466a5050c760c12ecfd886950fb09ecad26250cdfd"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-go-main/handoff.md",
+    "sha256": "2ffc4f7a42f80b23b9406be4138d84c3b8369d0a785ec95df48228840a7548b3"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-go-main/report.md",
+    "sha256": "3bf2c4e1eb90613e71722ba0c64778257568148e8177f1a8ae91b22efcf7e569"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-go-main/run.json",
+    "sha256": "ca7b53a1c1977168f0877d0f8067f77dd3231e02456fcb4bbf471243c633f35f"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/acl-audit.json",
+    "sha256": "0352892ecee8f6b59859bf3c31b693a822d0b55510ad201debbeb5ba46b01c87"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/concurrency-audit.json",
+    "sha256": "e0ceb23ad72922c7af633ba6ff9c27155e31b786848ba00dd110153d4d023267"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/integrated-commits.txt",
+    "sha256": "2bf5b0478c04d56400348aef49307eba75f94b1b56ce60a76c31724ec7f9e04d"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/inventory-before.json",
+    "sha256": "8c3d7f3251e1b8782d9f47db768b4841606be3db4247ab83c80553f13bd7568c"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/post-main-safety.log",
+    "sha256": "d1bfe8af71c7ed3c239312e161a6d5b857cfd61452bfa2c44b7adcceb8b47b96"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/post-push-integrity.json",
+    "sha256": "f5af34d3a3e3d48b1899f9d2e8c28faabd9aa42f31fb2fad1dbfbea92d8cce97"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/preflight-t3.log",
+    "sha256": "d55b8abf6dede522012cbaa1c9ce0ce9d9686d117b83b6aed36977be42452b26"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/preserved-runtime-data.json",
+    "sha256": "35391286c0aedbc6173746ce79deb48a9e15e15f21503473dee110814141d427"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/push.log",
+    "sha256": "6dafbd4c9f4c238150fc9a3e58c7a936eb39722c9e3e018c0b06de35fb9c546b"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/scope-first.json",
+    "sha256": "edf51be15d659970f9d3d849c3e89ad4e97af248e58cd4cb0185e697a9607731"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/scope-second.json",
+    "sha256": "8250320409cb91d30ab16d7c395a1f4548d4f32c594a04595fb5e804a54b8164"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/unregistered-audit.json",
+    "sha256": "6254fb168ec94a44c4414dbaf32e7f7b751334e5f955df4559c02f0c761f9fe8"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/unregistered-consumers.txt",
+    "sha256": "21a72c36cf7ce04a25fbfdabab098701b3ec0f54047e997c6f44949743a22194"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/checksums.json",
+    "sha256": "7fdea8d2501e31b5b9a8ec97725871caa2e83f1ee2975a7e58c6f79df9f1867f"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/cleanup-inventory.json",
+    "sha256": "d7c35ae24513906ae785ac6d24a95fd4d143135ae0c97a3fd336fd239b567406"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/report.md",
+    "sha256": "bdda426e7d782f26ebb0fe7a9006948b203a03107f5c78b96a0b8bced4f7df6d"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/run.json",
+    "sha256": "9028bec0938d4d94cb2e8c5cff8608c144dcb71529df0d42844dc5022452ae4c"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/verification/inventory-before.json",
+    "sha256": "983575997ae19f00cf7857373745a277a4279e61c434fd0b9f6d737d48db77ab"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/verification/ownership.json",
+    "sha256": "10082e80731fc8fea796565602f25306c55c92a2af15851a84e0bf9fde800f9b"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/verification/post-main-fixtures.log",
+    "sha256": "37435b3a1f725ad4f641b0ecb2d6b8ac32441e753676cc3095f80bb8430a50c4"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/verification/post-main-freeze.log",
+    "sha256": "a9c9ce0fda3c1adda75af4002caf864fd0c5a02c98d66ce8dbdc000efe7330b1"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/verification/post-main-results.json",
+    "sha256": "ab1d2b4e51b58ac11c58b84e7f0ead5bc1a758b092209382778f3d4c43802c93"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/verification/post-main-smoke.log",
+    "sha256": "cbf695a31cddd3f0a893ccc65d921dd52330443448680c24b9a2636cf19ff10b"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/verification/post-push-integrity.json",
+    "sha256": "51ed55988bde6e7da4e56fc867b9c5c5f1f876c6812290163cc9a2affff27308"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/verification/product-invariants.log",
+    "sha256": "8322c8985a2196c83c878b786418f2a2029aaee22db97f46980f5fb1555c46be"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-route-d-preview-go-main/handoff.md",
+    "sha256": "083d74c38e844750cd12d3a18657fd9614964c3dc5592b5eaa5080303ef4063f"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-route-d-preview-go-main/report.md",
+    "sha256": "9b38649f483f8c332ee3881f1ebb670b02c7fd1ef115dae4d6f7d78d9d916434"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-route-d-preview-go-main/run.json",
+    "sha256": "1a5ad03765f760cd15a15062706e65a0447dde6525697ff77701b5ad377efa0e"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-route-d-preview-go-main/verification/post-main-smoke.log",
+    "sha256": "daf889b4723c38b34009caba33aebc2d08959026087d0d02cf1d46f1b77e92ad"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-route-d-preview-go-main/verification/post-push-freeze.log",
+    "sha256": "c7493c49f58a04c0859b38abc49d6d8de1e59d80d8f861fcb3a4e4a26a715aee"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/hybrid-route-d-preview-go-main/verification/post-push-smoke.log",
+    "sha256": "8e7c7c42d09e10374c7a43eb4fcc76006d2ac91d31151decace744be185ca39b"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/scene3d-go-main/checksums.txt",
+    "sha256": "53363ec0d34e4b8db4de9b0bdf3f9632c350fb2eabdb56b4f548de4929c4ef7e"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/scene3d-go-main/handoff.md",
+    "sha256": "eb1d7bef89cfd4d431eb4c8652d03bfdece0a95e0010419609fd32208379ff2e"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/scene3d-go-main/run.json",
+    "sha256": "4313c1e26f21fdc33ffb3b0092009d649a6f7c16538537c1a589e00aae8b707e"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/scene3d-go-main/verification/backend-smoke.log",
+    "sha256": "a01e4a5e31074e2e391dbe984192c6e4c0692c084fe6bc0335d1326ab590c17b"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/scene3d-go-main/verification/build.log",
+    "sha256": "a68644ba711df0d2ce6f737828bc441f304781b2494d53fb194be362251625a7"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/scene3d-go-main/verification/fixtures.log",
+    "sha256": "8c2fec236fb0cfafe104817b9e2db3a59735f68c6294b229b619a046ad849a19"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/scene3d-go-main/verification/freeze.log",
+    "sha256": "8b6d1930cd87360c1873ac141bf585e0871e66f8e7a58fa3c88dc7fb6608af24"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/scene3d-go-main/verification/head.txt",
+    "sha256": "170beb139a0442b689b48466b619d84189629a9b22d035f5d523f7c85db18b1c"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/scene3d-go-main/verification/invariants.log",
+    "sha256": "4da2d153f8adfec4d5d058edf2d1cb4666f6675986c4d8bd87029ec1812c3a6b"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/scene3d-go-main/verification/post-push.txt",
+    "sha256": "6ebfe6b52e29d4496f2dd37c010b785daa88f12d345bdeb8862207ed1f4a0653"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/scene3d-go-main/verification/vitest-scene3d-targeted.log",
+    "sha256": "9a894c274ea6e051ed79246254a3d445361d14b589eec1852caf26e37d897d16"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/scene3d-go-main/verification/vitest.log",
+    "sha256": "129c1fd60f1944dedcf5014c794f1168fe4c20da5bdb0490638be69254a988d8"
+  },
+  {
+    "path": "docs/evaluation/geometry/runs/source-gate-hardening/verification/t3-fail-72d1595f.log",
+    "sha256": "e48eaa7c445c9522a571493797c64ba178fa5da8d588ad8d4ee54077b0324723"
+  },
+  {
+    "path": "frontend/public/favicon.svg",
+    "sha256": "c5172af1ced0ad43d18e8d66d4270870fe60cf02cb175c3d0f0287ef7f52439b"
+  },
+  {
+    "path": "frontend/src/simulations/domains/geometry/simulation-visual-consistency-session1.test.tsx",
+    "sha256": "153510e16615a0644d2e49aa261024ce16986dd52d7f0c0389ddf2d9e4087ae3"
+  }
+]

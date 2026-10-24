@@ -1,0 +1,4294 @@
+{
+  "positive": {
+    "desktop": {
+      "viewport": {
+        "id": "desktop",
+        "width": 1440,
+        "height": 900,
+        "formation": "full",
+        "orbit": true
+      },
+      "assertions": {
+        "quantity_picker": {
+          "pass": false,
+          "details": {
+            "pass": false,
+            "reason_codes": [
+              "PICKER_NO_ANSWER",
+              "PICKER_RESULTS_MISMATCH"
+            ],
+            "expected": {
+              "givens": [
+                "canh_day",
+                "chieu_cao"
+              ],
+              "steps": [
+                "dien_tich_day_ABCD",
+                "chieu_cao_SO"
+              ],
+              "results": [
+                "V"
+              ]
+            },
+            "observed": {
+              "results": [],
+              "steps": [
+                "dien_tich_day_ABCD",
+                "chieu_cao_SO"
+              ],
+              "givens": [
+                "canh_day",
+                "chieu_cao"
+              ]
+            }
+          }
+        },
+        "topology": {
+          "pass": true,
+          "details": {
+            "expected": {
+              "vertices": 5,
+              "edges": 8,
+              "faces": 5,
+              "euler": 2
+            },
+            "actual": {
+              "vertices": 5,
+              "edges": 8,
+              "faces": 5,
+              "euler": 2
+            }
+          }
+        },
+        "labels": {
+          "pass": true,
+          "details": {
+            "expected": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S"
+            ],
+            "actual": [
+              "S",
+              "A",
+              "B",
+              "C",
+              "D",
+              "O"
+            ]
+          }
+        },
+        "css_readiness": {
+          "pass": true,
+          "details": {
+            "scene_layout": true,
+            "canvas_layout": true,
+            "canvas_size": true,
+            "controls_styled": true,
+            "toolbar_styled": true,
+            "no_document_overflow": true
+          }
+        },
+        "neutral_has_no_emphasis": {
+          "pass": true,
+          "details": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:C-D",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C",
+              "khoi_chop::edge:S-D"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:A-D",
+              "khoi_chop::edge:S-A"
+            ],
+            "mixed_edge_ids": [],
+            "edge_spans": [
+              {
+                "edge_id": "khoi_chop::edge:A-B",
+                "t0": 0,
+                "t1": 1,
+                "visibility": "HIDDEN"
+              },
+              {
+                "edge_id": "khoi_chop::edge:A-D",
+                "t0": 0,
+                "t1": 1,
+                "visibility": "HIDDEN"
+              },
+              {
+                "edge_id": "khoi_chop::edge:B-C",
+                "t0": 0,
+                "t1": 1,
+                "visibility": "VISIBLE"
+              },
+              {
+                "edge_id": "khoi_chop::edge:C-D",
+                "t0": 0,
+                "t1": 1,
+                "visibility": "VISIBLE"
+              },
+              {
+                "edge_id": "khoi_chop::edge:S-A",
+                "t0": 0,
+                "t1": 1,
+                "visibility": "HIDDEN"
+              },
+              {
+                "edge_id": "khoi_chop::edge:S-B",
+                "t0": 0,
+                "t1": 1,
+                "visibility": "VISIBLE"
+              },
+              {
+                "edge_id": "khoi_chop::edge:S-C",
+                "t0": 0,
+                "t1": 1,
+                "visibility": "VISIBLE"
+              },
+              {
+                "edge_id": "khoi_chop::edge:S-D",
+                "t0": 0,
+                "t1": 1,
+                "visibility": "VISIBLE"
+              }
+            ],
+            "duplicate_visual_owner_ids": [],
+            "highlighted_render_owner_ids": [],
+            "selected_id": null,
+            "dash_signature": {
+              "khoi_chop::edge:A-B": [
+                "HIDDEN_DASHED"
+              ],
+              "khoi_chop::edge:A-D": [
+                "HIDDEN_DASHED"
+              ],
+              "khoi_chop::edge:B-C": [
+                "VISIBLE_SOLID"
+              ],
+              "khoi_chop::edge:C-D": [
+                "VISIBLE_SOLID"
+              ],
+              "khoi_chop::edge:S-A": [
+                "HIDDEN_DASHED"
+              ],
+              "khoi_chop::edge:S-B": [
+                "VISIBLE_SOLID"
+              ],
+              "khoi_chop::edge:S-C": [
+                "VISIBLE_SOLID"
+              ],
+              "khoi_chop::edge:S-D": [
+                "VISIBLE_SOLID"
+              ]
+            }
+          }
+        },
+        "vertex_marker_px": {
+          "pass": true,
+          "details": {
+            "token": {
+              "thuong": 6,
+              "hep": 7.5,
+              "chon": 9
+            },
+            "markers": [
+              {
+                "id": "S",
+                "state": "thuong",
+                "diameter_px": 5.999999999999773
+              },
+              {
+                "id": "A",
+                "state": "thuong",
+                "diameter_px": 6
+              },
+              {
+                "id": "B",
+                "state": "thuong",
+                "diameter_px": 6.000000000000114
+              },
+              {
+                "id": "C",
+                "state": "thuong",
+                "diameter_px": 6.000000000000227
+              },
+              {
+                "id": "D",
+                "state": "thuong",
+                "diameter_px": 6
+              },
+              {
+                "id": "O",
+                "state": "thuong",
+                "diameter_px": 6.000000000000227
+              }
+            ],
+            "mismatched": []
+          }
+        },
+        "solution_final": {
+          "pass": false,
+          "details": {
+            "rows": [
+              {
+                "id": "dien_tich_day_ABCD",
+                "sec": "Đại lượng trung gian",
+                "classes": [],
+                "text": "Diện tích ABCDS(ABCD) = 16",
+                "border": "rgba(0, 0, 0, 0)"
+              },
+              {
+                "id": "chieu_cao_SO",
+                "sec": "Đại lượng trung gian",
+                "classes": [],
+                "text": "Khoảng cách giữa S và (ABC)d(S, (ABC)) = 3",
+                "border": "rgba(0, 0, 0, 0)"
+              },
+              {
+                "id": "canh_day",
+                "sec": "Dữ kiện",
+                "classes": [],
+                "text": "Cạnh đáyCạnh đáy = 4",
+                "border": "rgba(0, 0, 0, 0)"
+              },
+              {
+                "id": "chieu_cao",
+                "sec": "Dữ kiện",
+                "classes": [],
+                "text": "Chiều caoChiều cao = 3",
+                "border": "rgba(0, 0, 0, 0)"
+              }
+            ],
+            "expected": {
+              "givens": [
+                "canh_day",
+                "chieu_cao"
+              ],
+              "steps": [
+                "dien_tich_day_ABCD",
+                "chieu_cao_SO"
+              ],
+              "results": [
+                "V"
+              ]
+            },
+            "observed": {
+              "givens": [
+                "canh_day",
+                "chieu_cao"
+              ],
+              "steps": [
+                "dien_tich_day_ABCD",
+                "chieu_cao_SO"
+              ],
+              "results": []
+            },
+            "answer_rows": [],
+            "neutral": {
+              "card": false,
+              "panel_open": false,
+              "legend": 0
+            },
+            "in_sync": false,
+            "answer_once": false
+          }
+        },
+        "annotations_final": {
+          "pass": true,
+          "details": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [],
+            "shown": [],
+            "anchors": {}
+          }
+        },
+        "annotations_show_all": {
+          "pass": true,
+          "details": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [
+              "V",
+              "chieu_cao_SO",
+              "dien_tich_day_ABCD"
+            ],
+            "shown": [
+              "chieu_cao_SO",
+              "dien_tich_day_ABCD"
+            ],
+            "anchors": {
+              "dien_tich_day_ABCD": {
+                "x": 705.4186125688228,
+                "y": 364.60481510604944,
+                "distance_px": 12
+              },
+              "chieu_cao_SO": {
+                "x": 706.708794320173,
+                "y": 243.53186004446576,
+                "distance_px": 6
+              }
+            }
+          }
+        },
+        "witness_show_all": {
+          "pass": true,
+          "details": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [],
+            "drawn": []
+          }
+        },
+        "show_all_toggle": {
+          "pass": false,
+          "details": [
+            "SHOW_ALL_ON_LABELS_NOT_ORACLE"
+          ]
+        },
+        "selection_per_quantity": {
+          "pass": true,
+          "details": []
+        },
+        "immutable_120_frames": {
+          "pass": true,
+          "details": {
+            "frame_count": 120,
+            "recompute_count": 0,
+            "recomputation_times_ms": [],
+            "edge_count": 8,
+            "triangle_count": 6,
+            "sample_count": 6656,
+            "span_count": 8,
+            "median_recomputation_ms": 0,
+            "p95_recomputation_ms": 0,
+            "max_recomputation_ms": 0,
+            "immutable_frame_recomputations": 0,
+            "immutable_window": {
+              "pass": true,
+              "code": "IMMUTABLE_WINDOW_PASS",
+              "frames": 120,
+              "recompute_count": 0,
+              "motion_since_settle": 0
+            }
+          }
+        },
+        "run_completed": {
+          "pass": false,
+          "details": "CAUSAL_TARGET_NOT_CLICKABLE:V"
+        }
+      },
+      "screenshots": {
+        "quantity_picker": null,
+        "neutral_final": {
+          "path": "docs/evaluation/geometry/runs/visual-hybrid-integration/visual/official-suite-complete/screenshots/regular-square-pyramid/desktop/neutral_final.png",
+          "bytes": 282995,
+          "sha256": "72e4cde921fe86f4801414e7da2c432db2ac90f9644beec743e473023f495518",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "show_all": null,
+        "selected_area": null,
+        "detail_area": null,
+        "selected_length": null,
+        "detail_length": null
+      },
+      "capture_order": [
+        "quantity_picker",
+        "neutral_final",
+        "show_all",
+        "selected_area",
+        "detail_area",
+        "selected_length",
+        "detail_length"
+      ],
+      "quantity_picker": {
+        "pass": false,
+        "reason_codes": [
+          "PICKER_NO_ANSWER",
+          "PICKER_RESULTS_MISMATCH"
+        ],
+        "expected": {
+          "givens": [
+            "canh_day",
+            "chieu_cao"
+          ],
+          "steps": [
+            "dien_tich_day_ABCD",
+            "chieu_cao_SO"
+          ],
+          "results": [
+            "V"
+          ]
+        },
+        "observed": {
+          "results": [],
+          "steps": [
+            "dien_tich_day_ABCD",
+            "chieu_cao_SO"
+          ],
+          "givens": [
+            "canh_day",
+            "chieu_cao"
+          ]
+        }
+      },
+      "topology": {
+        "vertices": 5,
+        "edges": 8,
+        "faces": 5,
+        "euler": 2
+      },
+      "labels": {
+        "S": {
+          "x": 725,
+          "y": 190,
+          "text": "S"
+        },
+        "A": {
+          "x": 656,
+          "y": 385,
+          "text": "A"
+        },
+        "B": {
+          "x": 457,
+          "y": 502,
+          "text": "B"
+        },
+        "C": {
+          "x": 830,
+          "y": 626,
+          "text": "C"
+        },
+        "D": {
+          "x": 950,
+          "y": 447,
+          "text": "D"
+        },
+        "O": {
+          "x": 731,
+          "y": 490,
+          "text": "O"
+        }
+      },
+      "css_readiness": {
+        "actual": {
+          "scene": {
+            "display": "flex",
+            "position": "static",
+            "fontFamily": "Inter, -apple-system, system-ui, \"Segoe UI\", Helvetica, Arial, sans-serif",
+            "fontSize": "16px",
+            "color": "rgb(0, 0, 0)",
+            "width": 1375,
+            "height": 623,
+            "left": 16,
+            "right": 1391
+          },
+          "box": {
+            "display": "block",
+            "position": "relative",
+            "fontFamily": "Inter, -apple-system, system-ui, \"Segoe UI\", Helvetica, Arial, sans-serif",
+            "fontSize": "16px",
+            "color": "rgb(0, 0, 0)",
+            "width": 1375,
+            "height": 623,
+            "left": 16,
+            "right": 1391
+          },
+          "canvas": {
+            "display": "block",
+            "position": "static",
+            "fontFamily": "Inter, -apple-system, system-ui, \"Segoe UI\", Helvetica, Arial, sans-serif",
+            "fontSize": "16px",
+            "color": "rgb(0, 0, 0)",
+            "width": 1373,
+            "height": 621,
+            "left": 17,
+            "right": 1390
+          },
+          "controls": {
+            "display": "flex",
+            "position": "static",
+            "fontFamily": "Inter, -apple-system, system-ui, \"Segoe UI\", Helvetica, Arial, sans-serif",
+            "fontSize": "16px",
+            "color": "rgb(0, 0, 0)",
+            "width": 1375,
+            "height": 35,
+            "left": 16,
+            "right": 1391
+          },
+          "controlButton": {
+            "display": "flex",
+            "position": "static",
+            "fontFamily": "Inter, -apple-system, system-ui, \"Segoe UI\", Helvetica, Arial, sans-serif",
+            "fontSize": "13.3333px",
+            "color": "rgb(0, 0, 0)",
+            "width": 120.359375,
+            "height": 35,
+            "left": 16,
+            "right": 136.359375
+          },
+          "controlText": {
+            "display": "block",
+            "position": "static",
+            "fontFamily": "Inter, -apple-system, system-ui, \"Segoe UI\", Helvetica, Arial, sans-serif",
+            "fontSize": "16px",
+            "color": "rgb(97, 93, 89)",
+            "width": 63.390625,
+            "height": 24,
+            "left": 380.8125,
+            "right": 444.203125
+          },
+          "toolbar": {
+            "display": "flex",
+            "position": "static",
+            "fontFamily": "Inter, -apple-system, system-ui, \"Segoe UI\", Helvetica, Arial, sans-serif",
+            "fontSize": "16px",
+            "color": "rgb(0, 0, 0)",
+            "width": 1375,
+            "height": 36,
+            "left": 16,
+            "right": 1391
+          },
+          "toolbarTitle": {
+            "display": "block",
+            "position": "static",
+            "fontFamily": "Inter, -apple-system, system-ui, \"Segoe UI\", Helvetica, Arial, sans-serif",
+            "fontSize": "16px",
+            "color": "rgb(0, 0, 0)",
+            "width": 709.28125,
+            "height": 22.390625,
+            "left": 138.4375,
+            "right": 847.71875
+          }
+        },
+        "baseline": {
+          "div": {
+            "display": "inline",
+            "position": "static",
+            "fontFamily": "\"Times New Roman\"",
+            "fontSize": "16px",
+            "color": "rgb(0, 0, 0)",
+            "width": 49.765625,
+            "height": 17,
+            "left": 0,
+            "right": 49.765625
+          },
+          "button": {
+            "display": "inline",
+            "position": "static",
+            "fontFamily": "\"Times New Roman\"",
+            "fontSize": "16px",
+            "color": "rgb(0, 0, 0)",
+            "width": 49.765625,
+            "height": 18,
+            "left": 0,
+            "right": 49.765625
+          },
+          "ul": {
+            "display": "inline",
+            "position": "static",
+            "fontFamily": "\"Times New Roman\"",
+            "fontSize": "16px",
+            "color": "rgb(0, 0, 0)",
+            "width": 49.765625,
+            "height": 17,
+            "left": 0,
+            "right": 49.765625
+          },
+          "span": {
+            "display": "inline",
+            "position": "static",
+            "fontFamily": "\"Times New Roman\"",
+            "fontSize": "16px",
+            "color": "rgb(0, 0, 0)",
+            "width": 49.765625,
+            "height": 17,
+            "left": 0,
+            "right": 49.765625
+          }
+        },
+        "stylesheets_auxiliary": {
+          "count": 1,
+          "readableRules": 507,
+          "unreadable": 0
+        },
+        "scrollWidth": 1407,
+        "viewportWidth": 1422,
+        "checks": {
+          "scene_layout": true,
+          "canvas_layout": true,
+          "canvas_size": true,
+          "controls_styled": true,
+          "toolbar_styled": true,
+          "no_document_overflow": true
+        },
+        "pass": true
+      },
+      "canvas_box": {
+        "x": 17,
+        "y": 105.1875,
+        "w": 1373,
+        "h": 621
+      },
+      "camera_settle": {
+        "neutral_final": {
+          "samples": 10,
+          "max_motion": 0
+        },
+        "show_all_before": {
+          "samples": 10,
+          "max_motion": 0
+        },
+        "show_all_on": {
+          "samples": 10,
+          "max_motion": 0
+        },
+        "show_all_off": {
+          "samples": 10,
+          "max_motion": 0
+        },
+        "show_all_back": {
+          "samples": 9,
+          "max_motion": 0
+        },
+        "select_dien_tich_day_ABCD": {
+          "samples": 11,
+          "max_motion": 0
+        },
+        "select_dien_tich_day_ABCD_scrolled": {
+          "samples": 10,
+          "max_motion": 0
+        },
+        "select_chieu_cao_SO": {
+          "samples": 10,
+          "max_motion": 0
+        },
+        "select_chieu_cao_SO_scrolled": {
+          "samples": 10,
+          "max_motion": 0
+        },
+        "select_canh_day": {
+          "samples": 9,
+          "max_motion": 0
+        },
+        "select_chieu_cao": {
+          "samples": 9,
+          "max_motion": 0
+        },
+        "selection_done": {
+          "samples": 10,
+          "max_motion": 0
+        },
+        "immutable_window": {
+          "samples": 9,
+          "max_motion": 0
+        }
+      },
+      "edge_semantics_neutral_final": {
+        "visible_edge_ids": [
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:C-D",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::edge:S-D"
+        ],
+        "hidden_edge_ids": [
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:A-D",
+          "khoi_chop::edge:S-A"
+        ],
+        "mixed_edge_ids": [],
+        "edge_spans": [
+          {
+            "edge_id": "khoi_chop::edge:A-B",
+            "t0": 0,
+            "t1": 1,
+            "visibility": "HIDDEN"
+          },
+          {
+            "edge_id": "khoi_chop::edge:A-D",
+            "t0": 0,
+            "t1": 1,
+            "visibility": "HIDDEN"
+          },
+          {
+            "edge_id": "khoi_chop::edge:B-C",
+            "t0": 0,
+            "t1": 1,
+            "visibility": "VISIBLE"
+          },
+          {
+            "edge_id": "khoi_chop::edge:C-D",
+            "t0": 0,
+            "t1": 1,
+            "visibility": "VISIBLE"
+          },
+          {
+            "edge_id": "khoi_chop::edge:S-A",
+            "t0": 0,
+            "t1": 1,
+            "visibility": "HIDDEN"
+          },
+          {
+            "edge_id": "khoi_chop::edge:S-B",
+            "t0": 0,
+            "t1": 1,
+            "visibility": "VISIBLE"
+          },
+          {
+            "edge_id": "khoi_chop::edge:S-C",
+            "t0": 0,
+            "t1": 1,
+            "visibility": "VISIBLE"
+          },
+          {
+            "edge_id": "khoi_chop::edge:S-D",
+            "t0": 0,
+            "t1": 1,
+            "visibility": "VISIBLE"
+          }
+        ],
+        "duplicate_visual_owner_ids": [],
+        "highlighted_render_owner_ids": [],
+        "selected_id": null,
+        "dash_signature": {
+          "khoi_chop::edge:A-B": [
+            "HIDDEN_DASHED"
+          ],
+          "khoi_chop::edge:A-D": [
+            "HIDDEN_DASHED"
+          ],
+          "khoi_chop::edge:B-C": [
+            "VISIBLE_SOLID"
+          ],
+          "khoi_chop::edge:C-D": [
+            "VISIBLE_SOLID"
+          ],
+          "khoi_chop::edge:S-A": [
+            "HIDDEN_DASHED"
+          ],
+          "khoi_chop::edge:S-B": [
+            "VISIBLE_SOLID"
+          ],
+          "khoi_chop::edge:S-C": [
+            "VISIBLE_SOLID"
+          ],
+          "khoi_chop::edge:S-D": [
+            "VISIBLE_SOLID"
+          ]
+        }
+      },
+      "camera_snapshots": {
+        "neutral_final": {
+          "snapshot": {
+            "position": [
+              8.460320340193615,
+              5.466233305779188,
+              3.3619979940509235
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999997,
+              -0.2961981327260236,
+              0.8137976813493737,
+              0,
+              0.8660254037844386,
+              -0.17101007166283427,
+              0.469846310392954,
+              0,
+              1.3877787807814452e-16,
+              0.9396926207859082,
+              0.34202014332566866,
+              0,
+              -0.5037367357205623,
+              0.28146733026973686,
+              -10.603149662575847,
+              1
+            ],
+            "projection_matrix_column_major": [
+              0.9699481410316357,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1373,
+            "viewport_height": 621,
+            "device_pixel_ratio": 1
+          },
+          "sha256": "0660c0226a2a1ab672685f9524ca716df64327684a2e3cfb3987146016cdb465"
+        }
+      },
+      "scene3d_envelope_sha256": "5597a3f9ce35887026740397e42d9190fef767064cc48968f151dbc9ee448951",
+      "raw_token_leakage": {
+        "leaked_tokens": [],
+        "pass": true
+      },
+      "formula_entity_coherence": {
+        "unresolved": [],
+        "pass": true
+      },
+      "solution_final": {
+        "rows": [
+          {
+            "id": "dien_tich_day_ABCD",
+            "sec": "Đại lượng trung gian",
+            "classes": [],
+            "text": "Diện tích ABCDS(ABCD) = 16",
+            "border": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": "chieu_cao_SO",
+            "sec": "Đại lượng trung gian",
+            "classes": [],
+            "text": "Khoảng cách giữa S và (ABC)d(S, (ABC)) = 3",
+            "border": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": "canh_day",
+            "sec": "Dữ kiện",
+            "classes": [],
+            "text": "Cạnh đáyCạnh đáy = 4",
+            "border": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": "chieu_cao",
+            "sec": "Dữ kiện",
+            "classes": [],
+            "text": "Chiều caoChiều cao = 3",
+            "border": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "expected": {
+          "givens": [
+            "canh_day",
+            "chieu_cao"
+          ],
+          "steps": [
+            "dien_tich_day_ABCD",
+            "chieu_cao_SO"
+          ],
+          "results": [
+            "V"
+          ]
+        },
+        "observed": {
+          "givens": [
+            "canh_day",
+            "chieu_cao"
+          ],
+          "steps": [
+            "dien_tich_day_ABCD",
+            "chieu_cao_SO"
+          ],
+          "results": []
+        },
+        "answer_rows": [],
+        "neutral": {
+          "card": false,
+          "panel_open": false,
+          "legend": 0
+        },
+        "in_sync": false,
+        "answer_once": false
+      },
+      "annotations": {
+        "final": {
+          "pass": true,
+          "reason_codes": [],
+          "expected": [],
+          "shown": [],
+          "anchors": {}
+        },
+        "show_all": {
+          "pass": true,
+          "reason_codes": [],
+          "expected": [
+            "V",
+            "chieu_cao_SO",
+            "dien_tich_day_ABCD"
+          ],
+          "shown": [
+            "chieu_cao_SO",
+            "dien_tich_day_ABCD"
+          ],
+          "anchors": {
+            "dien_tich_day_ABCD": {
+              "x": 705.4186125688228,
+              "y": 364.60481510604944,
+              "distance_px": 12
+            },
+            "chieu_cao_SO": {
+              "x": 706.708794320173,
+              "y": 243.53186004446576,
+              "distance_px": 6
+            }
+          }
+        }
+      },
+      "canvas_boxes": {
+        "neutral_final": {
+          "x": 17,
+          "y": 105.1875,
+          "w": 1373,
+          "h": 621
+        },
+        "selected_area": {
+          "x": 17,
+          "y": 105.1875,
+          "w": 1373,
+          "h": 621
+        },
+        "selected_length": {
+          "x": 17,
+          "y": 105.1875,
+          "w": 1373,
+          "h": 621
+        }
+      },
+      "witness_show_all": {
+        "pass": true,
+        "reason_codes": [],
+        "expected": [],
+        "drawn": []
+      },
+      "show_all_toggle": {
+        "chips": [
+          "Hiện tất cả số đo"
+        ],
+        "before": {
+          "dash_signature": {
+            "khoi_chop::edge:A-B": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:A-D": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:B-C": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:C-D": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-A": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:S-B": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-C": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-D": [
+              "VISIBLE_SOLID"
+            ]
+          },
+          "rendered_object_ids": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "O",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D",
+            "chieu_cao_SO_2",
+            "day_ABCD",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-D",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:C-D",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::edge:S-D",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3",
+            "khoi_chop::face:4"
+          ],
+          "camera": {
+            "position": [
+              8.460320340193615,
+              5.466233305779188,
+              3.3619979940509235
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999997,
+              -0.2961981327260236,
+              0.8137976813493737,
+              0,
+              0.8660254037844386,
+              -0.17101007166283427,
+              0.469846310392954,
+              0,
+              1.3877787807814452e-16,
+              0.9396926207859082,
+              0.34202014332566866,
+              0,
+              -0.5037367357205623,
+              0.28146733026973686,
+              -10.603149662575847,
+              1
+            ],
+            "projection_matrix_column_major": [
+              0.9699481410316357,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1373,
+            "viewport_height": 621,
+            "device_pixel_ratio": 1
+          },
+          "selected_id": null,
+          "step": {
+            "index": 7,
+            "count": 8,
+            "text": "Bước 8/8"
+          },
+          "annotation_ids": [],
+          "witness_ids": []
+        },
+        "on": {
+          "dash_signature": {
+            "khoi_chop::edge:A-B": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:A-D": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:B-C": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:C-D": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-A": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:S-B": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-C": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-D": [
+              "VISIBLE_SOLID"
+            ]
+          },
+          "rendered_object_ids": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "O",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D",
+            "chieu_cao_SO_2",
+            "day_ABCD",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-D",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:C-D",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::edge:S-D",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3",
+            "khoi_chop::face:4"
+          ],
+          "camera": {
+            "position": [
+              8.460320340193615,
+              5.466233305779188,
+              3.3619979940509235
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999997,
+              -0.2961981327260236,
+              0.8137976813493737,
+              0,
+              0.8660254037844386,
+              -0.17101007166283427,
+              0.469846310392954,
+              0,
+              1.3877787807814452e-16,
+              0.9396926207859082,
+              0.34202014332566866,
+              0,
+              -0.5037367357205623,
+              0.28146733026973686,
+              -10.603149662575847,
+              1
+            ],
+            "projection_matrix_column_major": [
+              0.9699481410316357,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1373,
+            "viewport_height": 621,
+            "device_pixel_ratio": 1
+          },
+          "selected_id": null,
+          "step": {
+            "index": 7,
+            "count": 8,
+            "text": "Bước 8/8"
+          },
+          "annotation_ids": [
+            "chieu_cao_SO",
+            "dien_tich_day_ABCD"
+          ],
+          "witness_ids": []
+        },
+        "off": {
+          "dash_signature": {
+            "khoi_chop::edge:A-B": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:A-D": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:B-C": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:C-D": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-A": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:S-B": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-C": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-D": [
+              "VISIBLE_SOLID"
+            ]
+          },
+          "rendered_object_ids": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "O",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D",
+            "chieu_cao_SO_2",
+            "day_ABCD",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-D",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:C-D",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::edge:S-D",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3",
+            "khoi_chop::face:4"
+          ],
+          "camera": {
+            "position": [
+              8.460320340193615,
+              5.466233305779188,
+              3.3619979940509235
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999997,
+              -0.2961981327260236,
+              0.8137976813493737,
+              0,
+              0.8660254037844386,
+              -0.17101007166283427,
+              0.469846310392954,
+              0,
+              1.3877787807814452e-16,
+              0.9396926207859082,
+              0.34202014332566866,
+              0,
+              -0.5037367357205623,
+              0.28146733026973686,
+              -10.603149662575847,
+              1
+            ],
+            "projection_matrix_column_major": [
+              0.9699481410316357,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1373,
+            "viewport_height": 621,
+            "device_pixel_ratio": 1
+          },
+          "selected_id": null,
+          "step": {
+            "index": 7,
+            "count": 8,
+            "text": "Bước 8/8"
+          },
+          "annotation_ids": [],
+          "witness_ids": []
+        },
+        "back": {
+          "dash_signature": {
+            "khoi_chop::edge:A-B": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:A-D": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:B-C": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:C-D": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-A": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:S-B": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-C": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-D": [
+              "VISIBLE_SOLID"
+            ]
+          },
+          "rendered_object_ids": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "O",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D",
+            "chieu_cao_SO_2",
+            "day_ABCD",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-D",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:C-D",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::edge:S-D",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3",
+            "khoi_chop::face:4"
+          ],
+          "camera": {
+            "position": [
+              8.460320340193615,
+              5.466233305779188,
+              3.3619979940509235
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999997,
+              -0.2961981327260236,
+              0.8137976813493737,
+              0,
+              0.8660254037844386,
+              -0.17101007166283427,
+              0.469846310392954,
+              0,
+              1.3877787807814452e-16,
+              0.9396926207859082,
+              0.34202014332566866,
+              0,
+              -0.5037367357205623,
+              0.28146733026973686,
+              -10.603149662575847,
+              1
+            ],
+            "projection_matrix_column_major": [
+              0.9699481410316357,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1373,
+            "viewport_height": 621,
+            "device_pixel_ratio": 1
+          },
+          "selected_id": null,
+          "step": {
+            "index": 7,
+            "count": 8,
+            "text": "Bước 8/8"
+          },
+          "annotation_ids": [
+            "chieu_cao_SO",
+            "dien_tich_day_ABCD"
+          ],
+          "witness_ids": []
+        },
+        "poll_timeouts": {
+          "on": "POLL_TIMEOUT:{\"boxes\":[{\"id\":\"dien_tich_day_ABCD\",\"box\":{\"x\":717.4186125688228,\"y\":354.60481510604944,\"w\":88,\"h\":20},\"anchor\":{\"x\":705.4186125688228,\"y\":364.604",
+          "off": null,
+          "back": "POLL_TIMEOUT:{\"boxes\":[{\"id\":\"dien_tich_day_ABCD\",\"box\":{\"x\":717.4186125688228,\"y\":354.60481510604944,\"w\":88,\"h\":20},\"anchor\":{\"x\":705.4186125688228,\"y\":364.604"
+        },
+        "pass": false,
+        "reason_codes": [
+          "SHOW_ALL_ON_LABELS_NOT_ORACLE"
+        ]
+      },
+      "selection_checks": [
+        {
+          "id": "dien_tich_day_ABCD",
+          "section": "Đại lượng trung gian",
+          "selected": true,
+          "dom": [
+            "dien_tich_day_ABCD"
+          ],
+          "expected": [
+            "dien_tich_day_ABCD"
+          ],
+          "dom_pass": true,
+          "boxes": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [
+              "dien_tich_day_ABCD"
+            ],
+            "shown": [
+              "dien_tich_day_ABCD"
+            ],
+            "anchors": {
+              "dien_tich_day_ABCD": {
+                "x": 705.4186125688228,
+                "y": 364.60481510604944,
+                "distance_px": 12
+              }
+            }
+          },
+          "detail_region": null,
+          "witness": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [],
+            "drawn": []
+          },
+          "pass": true
+        },
+        {
+          "id": "chieu_cao_SO",
+          "section": "Đại lượng trung gian",
+          "selected": true,
+          "dom": [
+            "chieu_cao_SO"
+          ],
+          "expected": [
+            "chieu_cao_SO"
+          ],
+          "dom_pass": true,
+          "boxes": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [
+              "chieu_cao_SO"
+            ],
+            "shown": [
+              "chieu_cao_SO"
+            ],
+            "anchors": {
+              "chieu_cao_SO": {
+                "x": 706.708794320173,
+                "y": 243.53186004446576,
+                "distance_px": 6
+              }
+            }
+          },
+          "detail_region": null,
+          "witness": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [],
+            "drawn": []
+          },
+          "pass": true
+        },
+        {
+          "id": "canh_day",
+          "section": "Dữ kiện",
+          "selected": true,
+          "dom": [],
+          "expected": [],
+          "dom_pass": true,
+          "boxes": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [],
+            "shown": [],
+            "anchors": {}
+          },
+          "detail_region": null,
+          "witness": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [],
+            "drawn": []
+          },
+          "pass": true
+        },
+        {
+          "id": "chieu_cao",
+          "section": "Dữ kiện",
+          "selected": true,
+          "dom": [],
+          "expected": [],
+          "dom_pass": true,
+          "boxes": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [],
+            "shown": [],
+            "anchors": {}
+          },
+          "detail_region": null,
+          "witness": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [],
+            "drawn": []
+          },
+          "pass": true
+        }
+      ],
+      "occlusion_performance": {
+        "frame_count": 120,
+        "recompute_count": 0,
+        "recomputation_times_ms": [],
+        "edge_count": 8,
+        "triangle_count": 6,
+        "sample_count": 6656,
+        "span_count": 8,
+        "median_recomputation_ms": 0,
+        "p95_recomputation_ms": 0,
+        "max_recomputation_ms": 0,
+        "immutable_frame_recomputations": 0,
+        "immutable_window": {
+          "pass": true,
+          "code": "IMMUTABLE_WINDOW_PASS",
+          "frames": 120,
+          "recompute_count": 0,
+          "motion_since_settle": 0
+        }
+      },
+      "run_error": "Error: CAUSAL_TARGET_NOT_CLICKABLE:V\n    at runPositive (file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-hybrid-integration/frontend/scripts/compiler-scene-suite.mjs:1263:25)\n    at async runSuite (file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-hybrid-integration/frontend/scripts/compiler-scene-suite.mjs:1782:40)\n    at async file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-hybrid-integration/frontend/scripts/compiler-scene-replay.mjs:45:18",
+      "pass": false,
+      "failure_class": "HARNESS",
+      "failure_screenshot": {
+        "path": "docs/evaluation/geometry/runs/visual-hybrid-integration/visual/official-suite-complete/screenshots/regular-square-pyramid/desktop/failure.png",
+        "bytes": 282995,
+        "sha256": "72e4cde921fe86f4801414e7da2c432db2ac90f9644beec743e473023f495518",
+        "scroll": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    "mobile": {
+      "viewport": {
+        "id": "mobile",
+        "width": 390,
+        "height": 844,
+        "formation": "representative",
+        "orbit": true
+      },
+      "assertions": {
+        "quantity_picker": {
+          "pass": false,
+          "details": {
+            "pass": false,
+            "reason_codes": [
+              "PICKER_NO_ANSWER",
+              "PICKER_RESULTS_MISMATCH"
+            ],
+            "expected": {
+              "givens": [
+                "canh_day",
+                "chieu_cao"
+              ],
+              "steps": [
+                "dien_tich_day_ABCD",
+                "chieu_cao_SO"
+              ],
+              "results": [
+                "V"
+              ]
+            },
+            "observed": {
+              "results": [],
+              "steps": [
+                "dien_tich_day_ABCD",
+                "chieu_cao_SO"
+              ],
+              "givens": [
+                "canh_day",
+                "chieu_cao"
+              ]
+            }
+          }
+        },
+        "topology": {
+          "pass": true,
+          "details": {
+            "expected": {
+              "vertices": 5,
+              "edges": 8,
+              "faces": 5,
+              "euler": 2
+            },
+            "actual": {
+              "vertices": 5,
+              "edges": 8,
+              "faces": 5,
+              "euler": 2
+            }
+          }
+        },
+        "labels": {
+          "pass": true,
+          "details": {
+            "expected": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S"
+            ],
+            "actual": [
+              "S",
+              "A",
+              "B",
+              "C",
+              "D",
+              "O"
+            ]
+          }
+        },
+        "css_readiness": {
+          "pass": true,
+          "details": {
+            "scene_layout": true,
+            "canvas_layout": true,
+            "canvas_size": true,
+            "controls_styled": true,
+            "toolbar_styled": true,
+            "no_document_overflow": true
+          }
+        },
+        "neutral_has_no_emphasis": {
+          "pass": true,
+          "details": {
+            "visible_edge_ids": [
+              "khoi_chop::edge:B-C",
+              "khoi_chop::edge:C-D",
+              "khoi_chop::edge:S-B",
+              "khoi_chop::edge:S-C",
+              "khoi_chop::edge:S-D"
+            ],
+            "hidden_edge_ids": [
+              "khoi_chop::edge:A-B",
+              "khoi_chop::edge:A-D",
+              "khoi_chop::edge:S-A"
+            ],
+            "mixed_edge_ids": [],
+            "edge_spans": [
+              {
+                "edge_id": "khoi_chop::edge:A-B",
+                "t0": 0,
+                "t1": 1,
+                "visibility": "HIDDEN"
+              },
+              {
+                "edge_id": "khoi_chop::edge:A-D",
+                "t0": 0,
+                "t1": 1,
+                "visibility": "HIDDEN"
+              },
+              {
+                "edge_id": "khoi_chop::edge:B-C",
+                "t0": 0,
+                "t1": 1,
+                "visibility": "VISIBLE"
+              },
+              {
+                "edge_id": "khoi_chop::edge:C-D",
+                "t0": 0,
+                "t1": 1,
+                "visibility": "VISIBLE"
+              },
+              {
+                "edge_id": "khoi_chop::edge:S-A",
+                "t0": 0,
+                "t1": 1,
+                "visibility": "HIDDEN"
+              },
+              {
+                "edge_id": "khoi_chop::edge:S-B",
+                "t0": 0,
+                "t1": 1,
+                "visibility": "VISIBLE"
+              },
+              {
+                "edge_id": "khoi_chop::edge:S-C",
+                "t0": 0,
+                "t1": 1,
+                "visibility": "VISIBLE"
+              },
+              {
+                "edge_id": "khoi_chop::edge:S-D",
+                "t0": 0,
+                "t1": 1,
+                "visibility": "VISIBLE"
+              }
+            ],
+            "duplicate_visual_owner_ids": [],
+            "highlighted_render_owner_ids": [],
+            "selected_id": null,
+            "dash_signature": {
+              "khoi_chop::edge:A-B": [
+                "HIDDEN_DASHED"
+              ],
+              "khoi_chop::edge:A-D": [
+                "HIDDEN_DASHED"
+              ],
+              "khoi_chop::edge:B-C": [
+                "VISIBLE_SOLID"
+              ],
+              "khoi_chop::edge:C-D": [
+                "VISIBLE_SOLID"
+              ],
+              "khoi_chop::edge:S-A": [
+                "HIDDEN_DASHED"
+              ],
+              "khoi_chop::edge:S-B": [
+                "VISIBLE_SOLID"
+              ],
+              "khoi_chop::edge:S-C": [
+                "VISIBLE_SOLID"
+              ],
+              "khoi_chop::edge:S-D": [
+                "VISIBLE_SOLID"
+              ]
+            }
+          }
+        },
+        "vertex_marker_px": {
+          "pass": true,
+          "details": {
+            "token": {
+              "thuong": 6,
+              "hep": 7.5,
+              "chon": 9
+            },
+            "markers": [
+              {
+                "id": "S",
+                "state": "thuong",
+                "diameter_px": 7.5
+              },
+              {
+                "id": "A",
+                "state": "thuong",
+                "diameter_px": 7.5
+              },
+              {
+                "id": "B",
+                "state": "thuong",
+                "diameter_px": 7.500000000000057
+              },
+              {
+                "id": "C",
+                "state": "thuong",
+                "diameter_px": 7.5
+              },
+              {
+                "id": "D",
+                "state": "thuong",
+                "diameter_px": 7.5
+              },
+              {
+                "id": "O",
+                "state": "thuong",
+                "diameter_px": 7.499999999999943
+              }
+            ],
+            "mismatched": []
+          }
+        },
+        "solution_final": {
+          "pass": false,
+          "details": {
+            "rows": [
+              {
+                "id": "dien_tich_day_ABCD",
+                "sec": "Đại lượng trung gian",
+                "classes": [],
+                "text": "Diện tích ABCDS(ABCD) = 16",
+                "border": "rgba(0, 0, 0, 0)"
+              },
+              {
+                "id": "chieu_cao_SO",
+                "sec": "Đại lượng trung gian",
+                "classes": [],
+                "text": "Khoảng cách giữa S và (ABC)d(S, (ABC)) = 3",
+                "border": "rgba(0, 0, 0, 0)"
+              },
+              {
+                "id": "canh_day",
+                "sec": "Dữ kiện",
+                "classes": [],
+                "text": "Cạnh đáyCạnh đáy = 4",
+                "border": "rgba(0, 0, 0, 0)"
+              },
+              {
+                "id": "chieu_cao",
+                "sec": "Dữ kiện",
+                "classes": [],
+                "text": "Chiều caoChiều cao = 3",
+                "border": "rgba(0, 0, 0, 0)"
+              }
+            ],
+            "expected": {
+              "givens": [
+                "canh_day",
+                "chieu_cao"
+              ],
+              "steps": [
+                "dien_tich_day_ABCD",
+                "chieu_cao_SO"
+              ],
+              "results": [
+                "V"
+              ]
+            },
+            "observed": {
+              "givens": [
+                "canh_day",
+                "chieu_cao"
+              ],
+              "steps": [
+                "dien_tich_day_ABCD",
+                "chieu_cao_SO"
+              ],
+              "results": []
+            },
+            "answer_rows": [],
+            "neutral": {
+              "card": false,
+              "panel_open": false,
+              "legend": 0
+            },
+            "in_sync": false,
+            "answer_once": false
+          }
+        },
+        "annotations_final": {
+          "pass": true,
+          "details": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [],
+            "shown": [],
+            "anchors": {}
+          }
+        },
+        "annotations_show_all": {
+          "pass": true,
+          "details": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [
+              "V",
+              "chieu_cao_SO",
+              "dien_tich_day_ABCD"
+            ],
+            "shown": [
+              "chieu_cao_SO",
+              "dien_tich_day_ABCD"
+            ],
+            "anchors": {
+              "dien_tich_day_ABCD": {
+                "x": 186.1344958124649,
+                "y": 184.94878416182365,
+                "distance_px": 12
+              },
+              "chieu_cao_SO": {
+                "x": 186.63950141845646,
+                "y": 128.39975352146521,
+                "distance_px": 6
+              }
+            }
+          }
+        },
+        "witness_show_all": {
+          "pass": true,
+          "details": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [],
+            "drawn": []
+          }
+        },
+        "show_all_toggle": {
+          "pass": false,
+          "details": [
+            "SHOW_ALL_ON_LABELS_NOT_ORACLE"
+          ]
+        },
+        "selection_per_quantity": {
+          "pass": true,
+          "details": []
+        },
+        "immutable_120_frames": {
+          "pass": true,
+          "details": {
+            "frame_count": 122,
+            "recompute_count": 0,
+            "recomputation_times_ms": [],
+            "edge_count": 8,
+            "triangle_count": 6,
+            "sample_count": 4096,
+            "span_count": 8,
+            "median_recomputation_ms": 0,
+            "p95_recomputation_ms": 0,
+            "max_recomputation_ms": 0,
+            "immutable_frame_recomputations": 0,
+            "immutable_window": {
+              "pass": true,
+              "code": "IMMUTABLE_WINDOW_PASS",
+              "frames": 122,
+              "recompute_count": 0,
+              "motion_since_settle": 0
+            }
+          }
+        },
+        "run_completed": {
+          "pass": false,
+          "details": "CAUSAL_TARGET_NOT_CLICKABLE:V"
+        }
+      },
+      "screenshots": {
+        "quantity_picker": null,
+        "neutral_final": {
+          "path": "docs/evaluation/geometry/runs/visual-hybrid-integration/visual/official-suite-complete/screenshots/regular-square-pyramid/mobile/neutral_final.png",
+          "bytes": 267456,
+          "sha256": "55207a39f55be77ad5680508938af128e8457e6f1cd244e464262121b0c852fe",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        "show_all": null,
+        "selected_area": null,
+        "detail_area": null,
+        "selected_length": null,
+        "detail_length": null
+      },
+      "capture_order": [
+        "quantity_picker",
+        "neutral_final",
+        "show_all",
+        "selected_area",
+        "detail_area",
+        "selected_length",
+        "detail_length"
+      ],
+      "quantity_picker": {
+        "pass": false,
+        "reason_codes": [
+          "PICKER_NO_ANSWER",
+          "PICKER_RESULTS_MISMATCH"
+        ],
+        "expected": {
+          "givens": [
+            "canh_day",
+            "chieu_cao"
+          ],
+          "steps": [
+            "dien_tich_day_ABCD",
+            "chieu_cao_SO"
+          ],
+          "results": [
+            "V"
+          ]
+        },
+        "observed": {
+          "results": [],
+          "steps": [
+            "dien_tich_day_ABCD",
+            "chieu_cao_SO"
+          ],
+          "givens": [
+            "canh_day",
+            "chieu_cao"
+          ]
+        }
+      },
+      "topology": {
+        "vertices": 5,
+        "edges": 8,
+        "faces": 5,
+        "euler": 2
+      },
+      "labels": {
+        "S": {
+          "x": 204,
+          "y": 399,
+          "text": "S"
+        },
+        "A": {
+          "x": 163,
+          "y": 493,
+          "text": "A"
+        },
+        "B": {
+          "x": 69,
+          "y": 556,
+          "text": "B"
+        },
+        "C": {
+          "x": 256,
+          "y": 618,
+          "text": "C"
+        },
+        "D": {
+          "x": 321,
+          "y": 529,
+          "text": "D"
+        },
+        "O": {
+          "x": 212,
+          "y": 559,
+          "text": "O"
+        }
+      },
+      "css_readiness": {
+        "actual": {
+          "scene": {
+            "display": "flex",
+            "position": "static",
+            "fontFamily": "Inter, -apple-system, system-ui, \"Segoe UI\", Helvetica, Arial, sans-serif",
+            "fontSize": "16px",
+            "color": "rgb(0, 0, 0)",
+            "width": 358,
+            "height": 320,
+            "left": 16,
+            "right": 374
+          },
+          "box": {
+            "display": "block",
+            "position": "relative",
+            "fontFamily": "Inter, -apple-system, system-ui, \"Segoe UI\", Helvetica, Arial, sans-serif",
+            "fontSize": "16px",
+            "color": "rgb(0, 0, 0)",
+            "width": 358,
+            "height": 320,
+            "left": 16,
+            "right": 374
+          },
+          "canvas": {
+            "display": "block",
+            "position": "static",
+            "fontFamily": "Inter, -apple-system, system-ui, \"Segoe UI\", Helvetica, Arial, sans-serif",
+            "fontSize": "16px",
+            "color": "rgb(0, 0, 0)",
+            "width": 356,
+            "height": 318,
+            "left": 17,
+            "right": 373
+          },
+          "controls": {
+            "display": "flex",
+            "position": "static",
+            "fontFamily": "Inter, -apple-system, system-ui, \"Segoe UI\", Helvetica, Arial, sans-serif",
+            "fontSize": "16px",
+            "color": "rgb(0, 0, 0)",
+            "width": 358,
+            "height": 82,
+            "left": 16,
+            "right": 374
+          },
+          "controlButton": {
+            "display": "flex",
+            "position": "static",
+            "fontFamily": "Inter, -apple-system, system-ui, \"Segoe UI\", Helvetica, Arial, sans-serif",
+            "fontSize": "13.3333px",
+            "color": "rgb(0, 0, 0)",
+            "width": 112.359375,
+            "height": 35,
+            "left": 16,
+            "right": 128.359375
+          },
+          "controlText": {
+            "display": "block",
+            "position": "static",
+            "fontFamily": "Inter, -apple-system, system-ui, \"Segoe UI\", Helvetica, Arial, sans-serif",
+            "fontSize": "16px",
+            "color": "rgb(97, 93, 89)",
+            "width": 63.390625,
+            "height": 24,
+            "left": 16,
+            "right": 79.390625
+          },
+          "toolbar": {
+            "display": "flex",
+            "position": "static",
+            "fontFamily": "Inter, -apple-system, system-ui, \"Segoe UI\", Helvetica, Arial, sans-serif",
+            "fontSize": "16px",
+            "color": "rgb(0, 0, 0)",
+            "width": 358,
+            "height": 204,
+            "left": 16,
+            "right": 374
+          },
+          "toolbarTitle": {
+            "display": "block",
+            "position": "static",
+            "fontFamily": "Inter, -apple-system, system-ui, \"Segoe UI\", Helvetica, Arial, sans-serif",
+            "fontSize": "16px",
+            "color": "rgb(0, 0, 0)",
+            "width": 235.5625,
+            "height": 22.390625,
+            "left": 138.4375,
+            "right": 374
+          }
+        },
+        "baseline": {
+          "div": {
+            "display": "inline",
+            "position": "static",
+            "fontFamily": "\"Times New Roman\"",
+            "fontSize": "16px",
+            "color": "rgb(0, 0, 0)",
+            "width": 49.765625,
+            "height": 17,
+            "left": 0,
+            "right": 49.765625
+          },
+          "button": {
+            "display": "inline",
+            "position": "static",
+            "fontFamily": "\"Times New Roman\"",
+            "fontSize": "16px",
+            "color": "rgb(0, 0, 0)",
+            "width": 49.765625,
+            "height": 18,
+            "left": 0,
+            "right": 49.765625
+          },
+          "ul": {
+            "display": "inline",
+            "position": "static",
+            "fontFamily": "\"Times New Roman\"",
+            "fontSize": "16px",
+            "color": "rgb(0, 0, 0)",
+            "width": 49.765625,
+            "height": 17,
+            "left": 0,
+            "right": 49.765625
+          },
+          "span": {
+            "display": "inline",
+            "position": "static",
+            "fontFamily": "\"Times New Roman\"",
+            "fontSize": "16px",
+            "color": "rgb(0, 0, 0)",
+            "width": 49.765625,
+            "height": 17,
+            "left": 0,
+            "right": 49.765625
+          }
+        },
+        "stylesheets_auxiliary": {
+          "count": 1,
+          "readableRules": 507,
+          "unreadable": 0
+        },
+        "scrollWidth": 390,
+        "viewportWidth": 390,
+        "checks": {
+          "scene_layout": true,
+          "canvas_layout": true,
+          "canvas_size": true,
+          "controls_styled": true,
+          "toolbar_styled": true,
+          "no_document_overflow": true
+        },
+        "pass": true
+      },
+      "canvas_box": {
+        "x": 17,
+        "y": 353.78125,
+        "w": 356,
+        "h": 318
+      },
+      "camera_settle": {
+        "neutral_final": {
+          "samples": 6,
+          "max_motion": 0
+        },
+        "show_all_before": {
+          "samples": 6,
+          "max_motion": 0
+        },
+        "show_all_on": {
+          "samples": 6,
+          "max_motion": 0
+        },
+        "show_all_off": {
+          "samples": 6,
+          "max_motion": 0
+        },
+        "show_all_back": {
+          "samples": 6,
+          "max_motion": 0
+        },
+        "select_dien_tich_day_ABCD": {
+          "samples": 6,
+          "max_motion": 0
+        },
+        "select_dien_tich_day_ABCD_scrolled": {
+          "samples": 6,
+          "max_motion": 0
+        },
+        "select_chieu_cao_SO": {
+          "samples": 6,
+          "max_motion": 0
+        },
+        "select_chieu_cao_SO_scrolled": {
+          "samples": 6,
+          "max_motion": 0
+        },
+        "select_canh_day": {
+          "samples": 6,
+          "max_motion": 0
+        },
+        "select_chieu_cao": {
+          "samples": 6,
+          "max_motion": 0
+        },
+        "selection_done": {
+          "samples": 6,
+          "max_motion": 0
+        },
+        "immutable_window": {
+          "samples": 6,
+          "max_motion": 0
+        }
+      },
+      "edge_semantics_neutral_final": {
+        "visible_edge_ids": [
+          "khoi_chop::edge:B-C",
+          "khoi_chop::edge:C-D",
+          "khoi_chop::edge:S-B",
+          "khoi_chop::edge:S-C",
+          "khoi_chop::edge:S-D"
+        ],
+        "hidden_edge_ids": [
+          "khoi_chop::edge:A-B",
+          "khoi_chop::edge:A-D",
+          "khoi_chop::edge:S-A"
+        ],
+        "mixed_edge_ids": [],
+        "edge_spans": [
+          {
+            "edge_id": "khoi_chop::edge:A-B",
+            "t0": 0,
+            "t1": 1,
+            "visibility": "HIDDEN"
+          },
+          {
+            "edge_id": "khoi_chop::edge:A-D",
+            "t0": 0,
+            "t1": 1,
+            "visibility": "HIDDEN"
+          },
+          {
+            "edge_id": "khoi_chop::edge:B-C",
+            "t0": 0,
+            "t1": 1,
+            "visibility": "VISIBLE"
+          },
+          {
+            "edge_id": "khoi_chop::edge:C-D",
+            "t0": 0,
+            "t1": 1,
+            "visibility": "VISIBLE"
+          },
+          {
+            "edge_id": "khoi_chop::edge:S-A",
+            "t0": 0,
+            "t1": 1,
+            "visibility": "HIDDEN"
+          },
+          {
+            "edge_id": "khoi_chop::edge:S-B",
+            "t0": 0,
+            "t1": 1,
+            "visibility": "VISIBLE"
+          },
+          {
+            "edge_id": "khoi_chop::edge:S-C",
+            "t0": 0,
+            "t1": 1,
+            "visibility": "VISIBLE"
+          },
+          {
+            "edge_id": "khoi_chop::edge:S-D",
+            "t0": 0,
+            "t1": 1,
+            "visibility": "VISIBLE"
+          }
+        ],
+        "duplicate_visual_owner_ids": [],
+        "highlighted_render_owner_ids": [],
+        "selected_id": null,
+        "dash_signature": {
+          "khoi_chop::edge:A-B": [
+            "HIDDEN_DASHED"
+          ],
+          "khoi_chop::edge:A-D": [
+            "HIDDEN_DASHED"
+          ],
+          "khoi_chop::edge:B-C": [
+            "VISIBLE_SOLID"
+          ],
+          "khoi_chop::edge:C-D": [
+            "VISIBLE_SOLID"
+          ],
+          "khoi_chop::edge:S-A": [
+            "HIDDEN_DASHED"
+          ],
+          "khoi_chop::edge:S-B": [
+            "VISIBLE_SOLID"
+          ],
+          "khoi_chop::edge:S-C": [
+            "VISIBLE_SOLID"
+          ],
+          "khoi_chop::edge:S-D": [
+            "VISIBLE_SOLID"
+          ]
+        }
+      },
+      "camera_snapshots": {
+        "neutral_final": {
+          "snapshot": {
+            "position": [
+              9.049380011570348,
+              5.828186745332566,
+              3.629481450720829
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999998,
+              -0.29619813272602374,
+              0.8137976813493739,
+              0,
+              0.8660254037844388,
+              -0.17101007166283413,
+              0.469846310392954,
+              0,
+              -2.7755575615628914e-17,
+              0.9396926207859085,
+              0.34202014332566866,
+              0,
+              -0.5226677736725781,
+              0.2664911582173457,
+              -11.344072275614339,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.9155988784326958,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 356,
+            "viewport_height": 318,
+            "device_pixel_ratio": 1
+          },
+          "sha256": "3d57d660f9439af706d09708547dd61353cb79ff495bc96a9c131f99a89e8a3e"
+        }
+      },
+      "scene3d_envelope_sha256": "5597a3f9ce35887026740397e42d9190fef767064cc48968f151dbc9ee448951",
+      "raw_token_leakage": {
+        "leaked_tokens": [],
+        "pass": true
+      },
+      "formula_entity_coherence": {
+        "unresolved": [],
+        "pass": true
+      },
+      "solution_final": {
+        "rows": [
+          {
+            "id": "dien_tich_day_ABCD",
+            "sec": "Đại lượng trung gian",
+            "classes": [],
+            "text": "Diện tích ABCDS(ABCD) = 16",
+            "border": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": "chieu_cao_SO",
+            "sec": "Đại lượng trung gian",
+            "classes": [],
+            "text": "Khoảng cách giữa S và (ABC)d(S, (ABC)) = 3",
+            "border": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": "canh_day",
+            "sec": "Dữ kiện",
+            "classes": [],
+            "text": "Cạnh đáyCạnh đáy = 4",
+            "border": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "id": "chieu_cao",
+            "sec": "Dữ kiện",
+            "classes": [],
+            "text": "Chiều caoChiều cao = 3",
+            "border": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "expected": {
+          "givens": [
+            "canh_day",
+            "chieu_cao"
+          ],
+          "steps": [
+            "dien_tich_day_ABCD",
+            "chieu_cao_SO"
+          ],
+          "results": [
+            "V"
+          ]
+        },
+        "observed": {
+          "givens": [
+            "canh_day",
+            "chieu_cao"
+          ],
+          "steps": [
+            "dien_tich_day_ABCD",
+            "chieu_cao_SO"
+          ],
+          "results": []
+        },
+        "answer_rows": [],
+        "neutral": {
+          "card": false,
+          "panel_open": false,
+          "legend": 0
+        },
+        "in_sync": false,
+        "answer_once": false
+      },
+      "annotations": {
+        "final": {
+          "pass": true,
+          "reason_codes": [],
+          "expected": [],
+          "shown": [],
+          "anchors": {}
+        },
+        "show_all": {
+          "pass": true,
+          "reason_codes": [],
+          "expected": [
+            "V",
+            "chieu_cao_SO",
+            "dien_tich_day_ABCD"
+          ],
+          "shown": [
+            "chieu_cao_SO",
+            "dien_tich_day_ABCD"
+          ],
+          "anchors": {
+            "dien_tich_day_ABCD": {
+              "x": 186.1344958124649,
+              "y": 184.94878416182365,
+              "distance_px": 12
+            },
+            "chieu_cao_SO": {
+              "x": 186.63950141845646,
+              "y": 128.39975352146521,
+              "distance_px": 6
+            }
+          }
+        }
+      },
+      "canvas_boxes": {
+        "neutral_final": {
+          "x": 17,
+          "y": 353.78125,
+          "w": 356,
+          "h": 318
+        },
+        "selected_area": {
+          "x": 17,
+          "y": 262.78125,
+          "w": 356,
+          "h": 318
+        },
+        "selected_length": {
+          "x": 17,
+          "y": 262.78125,
+          "w": 356,
+          "h": 318
+        }
+      },
+      "witness_show_all": {
+        "pass": true,
+        "reason_codes": [],
+        "expected": [],
+        "drawn": []
+      },
+      "show_all_toggle": {
+        "chips": [
+          "Hiện tất cả số đo"
+        ],
+        "before": {
+          "dash_signature": {
+            "khoi_chop::edge:A-B": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:A-D": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:B-C": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:C-D": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-A": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:S-B": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-C": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-D": [
+              "VISIBLE_SOLID"
+            ]
+          },
+          "rendered_object_ids": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "O",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D",
+            "chieu_cao_SO_2",
+            "day_ABCD",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-D",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:C-D",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::edge:S-D",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3",
+            "khoi_chop::face:4"
+          ],
+          "camera": {
+            "position": [
+              9.049380011570348,
+              5.828186745332566,
+              3.629481450720829
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999998,
+              -0.29619813272602374,
+              0.8137976813493739,
+              0,
+              0.8660254037844388,
+              -0.17101007166283413,
+              0.469846310392954,
+              0,
+              -2.7755575615628914e-17,
+              0.9396926207859085,
+              0.34202014332566866,
+              0,
+              -0.5226677736725781,
+              0.2664911582173457,
+              -11.344072275614339,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.9155988784326958,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 356,
+            "viewport_height": 318,
+            "device_pixel_ratio": 1
+          },
+          "selected_id": null,
+          "step": {
+            "index": 7,
+            "count": 8,
+            "text": "Bước 8/8"
+          },
+          "annotation_ids": [],
+          "witness_ids": []
+        },
+        "on": {
+          "dash_signature": {
+            "khoi_chop::edge:A-B": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:A-D": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:B-C": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:C-D": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-A": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:S-B": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-C": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-D": [
+              "VISIBLE_SOLID"
+            ]
+          },
+          "rendered_object_ids": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "O",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D",
+            "chieu_cao_SO_2",
+            "day_ABCD",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-D",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:C-D",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::edge:S-D",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3",
+            "khoi_chop::face:4"
+          ],
+          "camera": {
+            "position": [
+              9.049380011570348,
+              5.828186745332566,
+              3.629481450720829
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999998,
+              -0.29619813272602374,
+              0.8137976813493739,
+              0,
+              0.8660254037844388,
+              -0.17101007166283413,
+              0.469846310392954,
+              0,
+              -2.7755575615628914e-17,
+              0.9396926207859085,
+              0.34202014332566866,
+              0,
+              -0.5226677736725781,
+              0.2664911582173457,
+              -11.344072275614339,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.9155988784326958,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 356,
+            "viewport_height": 318,
+            "device_pixel_ratio": 1
+          },
+          "selected_id": null,
+          "step": {
+            "index": 7,
+            "count": 8,
+            "text": "Bước 8/8"
+          },
+          "annotation_ids": [
+            "chieu_cao_SO",
+            "dien_tich_day_ABCD"
+          ],
+          "witness_ids": []
+        },
+        "off": {
+          "dash_signature": {
+            "khoi_chop::edge:A-B": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:A-D": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:B-C": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:C-D": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-A": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:S-B": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-C": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-D": [
+              "VISIBLE_SOLID"
+            ]
+          },
+          "rendered_object_ids": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "O",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D",
+            "chieu_cao_SO_2",
+            "day_ABCD",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-D",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:C-D",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::edge:S-D",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3",
+            "khoi_chop::face:4"
+          ],
+          "camera": {
+            "position": [
+              9.049380011570348,
+              5.828186745332566,
+              3.629481450720829
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999998,
+              -0.29619813272602374,
+              0.8137976813493739,
+              0,
+              0.8660254037844388,
+              -0.17101007166283413,
+              0.469846310392954,
+              0,
+              -2.7755575615628914e-17,
+              0.9396926207859085,
+              0.34202014332566866,
+              0,
+              -0.5226677736725781,
+              0.2664911582173457,
+              -11.344072275614339,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.9155988784326958,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 356,
+            "viewport_height": 318,
+            "device_pixel_ratio": 1
+          },
+          "selected_id": null,
+          "step": {
+            "index": 7,
+            "count": 8,
+            "text": "Bước 8/8"
+          },
+          "annotation_ids": [],
+          "witness_ids": []
+        },
+        "back": {
+          "dash_signature": {
+            "khoi_chop::edge:A-B": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:A-D": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:B-C": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:C-D": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-A": [
+              "HIDDEN_DASHED"
+            ],
+            "khoi_chop::edge:S-B": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-C": [
+              "VISIBLE_SOLID"
+            ],
+            "khoi_chop::edge:S-D": [
+              "VISIBLE_SOLID"
+            ]
+          },
+          "rendered_object_ids": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "O",
+            "S",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D",
+            "chieu_cao_SO_2",
+            "day_ABCD",
+            "khoi_chop",
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-D",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:C-D",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::edge:S-D",
+            "khoi_chop::face:0",
+            "khoi_chop::face:1",
+            "khoi_chop::face:2",
+            "khoi_chop::face:3",
+            "khoi_chop::face:4"
+          ],
+          "camera": {
+            "position": [
+              9.049380011570348,
+              5.828186745332566,
+              3.629481450720829
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999998,
+              -0.29619813272602374,
+              0.8137976813493739,
+              0,
+              0.8660254037844388,
+              -0.17101007166283413,
+              0.469846310392954,
+              0,
+              -2.7755575615628914e-17,
+              0.9396926207859085,
+              0.34202014332566866,
+              0,
+              -0.5226677736725781,
+              0.2664911582173457,
+              -11.344072275614339,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.9155988784326958,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 356,
+            "viewport_height": 318,
+            "device_pixel_ratio": 1
+          },
+          "selected_id": null,
+          "step": {
+            "index": 7,
+            "count": 8,
+            "text": "Bước 8/8"
+          },
+          "annotation_ids": [
+            "chieu_cao_SO",
+            "dien_tich_day_ABCD"
+          ],
+          "witness_ids": []
+        },
+        "poll_timeouts": {
+          "on": "POLL_TIMEOUT:{\"boxes\":[{\"id\":\"dien_tich_day_ABCD\",\"box\":{\"x\":86.1344958124649,\"y\":174.94878416182365,\"w\":88,\"h\":20},\"anchor\":{\"x\":186.1344958124649,\"y\":184.9487",
+          "off": null,
+          "back": "POLL_TIMEOUT:{\"boxes\":[{\"id\":\"dien_tich_day_ABCD\",\"box\":{\"x\":86.1344958124649,\"y\":174.94878416182365,\"w\":88,\"h\":20},\"anchor\":{\"x\":186.1344958124649,\"y\":184.9487"
+        },
+        "pass": false,
+        "reason_codes": [
+          "SHOW_ALL_ON_LABELS_NOT_ORACLE"
+        ]
+      },
+      "selection_checks": [
+        {
+          "id": "dien_tich_day_ABCD",
+          "section": "Đại lượng trung gian",
+          "selected": true,
+          "dom": [
+            "dien_tich_day_ABCD"
+          ],
+          "expected": [
+            "dien_tich_day_ABCD"
+          ],
+          "dom_pass": true,
+          "boxes": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [
+              "dien_tich_day_ABCD"
+            ],
+            "shown": [
+              "dien_tich_day_ABCD"
+            ],
+            "anchors": {
+              "dien_tich_day_ABCD": {
+                "x": 186.1344958124649,
+                "y": 184.94878416182365,
+                "distance_px": 12
+              }
+            }
+          },
+          "detail_region": null,
+          "witness": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [],
+            "drawn": []
+          },
+          "pass": true
+        },
+        {
+          "id": "chieu_cao_SO",
+          "section": "Đại lượng trung gian",
+          "selected": true,
+          "dom": [
+            "chieu_cao_SO"
+          ],
+          "expected": [
+            "chieu_cao_SO"
+          ],
+          "dom_pass": true,
+          "boxes": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [
+              "chieu_cao_SO"
+            ],
+            "shown": [
+              "chieu_cao_SO"
+            ],
+            "anchors": {
+              "chieu_cao_SO": {
+                "x": 186.63950141845646,
+                "y": 128.39975352146521,
+                "distance_px": 6
+              }
+            }
+          },
+          "detail_region": null,
+          "witness": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [],
+            "drawn": []
+          },
+          "pass": true
+        },
+        {
+          "id": "canh_day",
+          "section": "Dữ kiện",
+          "selected": true,
+          "dom": [],
+          "expected": [],
+          "dom_pass": true,
+          "boxes": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [],
+            "shown": [],
+            "anchors": {}
+          },
+          "detail_region": null,
+          "witness": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [],
+            "drawn": []
+          },
+          "pass": true
+        },
+        {
+          "id": "chieu_cao",
+          "section": "Dữ kiện",
+          "selected": true,
+          "dom": [],
+          "expected": [],
+          "dom_pass": true,
+          "boxes": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [],
+            "shown": [],
+            "anchors": {}
+          },
+          "detail_region": null,
+          "witness": {
+            "pass": true,
+            "reason_codes": [],
+            "expected": [],
+            "drawn": []
+          },
+          "pass": true
+        }
+      ],
+      "occlusion_performance": {
+        "frame_count": 122,
+        "recompute_count": 0,
+        "recomputation_times_ms": [],
+        "edge_count": 8,
+        "triangle_count": 6,
+        "sample_count": 4096,
+        "span_count": 8,
+        "median_recomputation_ms": 0,
+        "p95_recomputation_ms": 0,
+        "max_recomputation_ms": 0,
+        "immutable_frame_recomputations": 0,
+        "immutable_window": {
+          "pass": true,
+          "code": "IMMUTABLE_WINDOW_PASS",
+          "frames": 122,
+          "recompute_count": 0,
+          "motion_since_settle": 0
+        }
+      },
+      "run_error": "Error: CAUSAL_TARGET_NOT_CLICKABLE:V\n    at runPositive (file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-hybrid-integration/frontend/scripts/compiler-scene-suite.mjs:1263:25)\n    at async runSuite (file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-hybrid-integration/frontend/scripts/compiler-scene-suite.mjs:1782:40)\n    at async file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-hybrid-integration/frontend/scripts/compiler-scene-replay.mjs:45:18",
+      "pass": false,
+      "failure_class": "HARNESS",
+      "failure_screenshot": {
+        "path": "docs/evaluation/geometry/runs/visual-hybrid-integration/visual/official-suite-complete/screenshots/regular-square-pyramid/mobile/failure.png",
+        "bytes": 267456,
+        "sha256": "55207a39f55be77ad5680508938af128e8457e6f1cd244e464262121b0c852fe",
+        "scroll": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    }
+  },
+  "negative": {
+    "ungrounded_source": {
+      "desktop": {
+        "viewport": {
+          "id": "desktop",
+          "width": 1440,
+          "height": 900,
+          "formation": "full",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "grounding",
+                "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "grounding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+                "reason_subjects": [],
+                "refusal_cause": "SOURCE",
+                "learner_reason": "Để dựng hình, chương trình cần một số liệu nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 1407,
+              "viewport_width": 1422
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "SOURCE",
+              "actual": "SOURCE"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "dữ kiện không truy được về đề bài"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "SOURCE",
+              "phrases": [
+                "kiểm tra lại đề"
+              ]
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "grounding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+            "reason_subjects": [],
+            "refusal_cause": "SOURCE",
+            "learner_reason": "Để dựng hình, chương trình cần một số liệu nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+          },
+          "canvas": false,
+          "stageLabel": "truy dữ kiện về đề bài",
+          "problemLabel": "dữ kiện không truy được về đề bài",
+          "active": false,
+          "scrollWidth": 1407,
+          "viewportWidth": 1422
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 418.5,
+          "y": 411,
+          "w": 570,
+          "h": 72
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      },
+      "mobile": {
+        "viewport": {
+          "id": "mobile",
+          "width": 390,
+          "height": 844,
+          "formation": "representative",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "grounding",
+                "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "grounding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+                "reason_subjects": [],
+                "refusal_cause": "SOURCE",
+                "learner_reason": "Để dựng hình, chương trình cần một số liệu nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 390,
+              "viewport_width": 390
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "SOURCE",
+              "actual": "SOURCE"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "dữ kiện không truy được về đề bài"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "SOURCE",
+              "phrases": [
+                "kiểm tra lại đề"
+              ]
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "grounding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+            "reason_subjects": [],
+            "refusal_cause": "SOURCE",
+            "learner_reason": "Để dựng hình, chương trình cần một số liệu nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+          },
+          "canvas": false,
+          "stageLabel": "truy dữ kiện về đề bài",
+          "problemLabel": "dữ kiện không truy được về đề bài",
+          "active": false,
+          "scrollWidth": 390,
+          "viewportWidth": 390
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 49,
+          "y": 459,
+          "w": 292,
+          "h": 144
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      }
+    },
+    "assumption": {
+      "desktop": {
+        "viewport": {
+          "id": "desktop",
+          "width": 1440,
+          "height": 900,
+          "formation": "full",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "assumption",
+                "reason_code": "ASSUMPTION_DETERMINES_ANSWER"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Đáp số phụ thuộc một kích thước đề bài không cho.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "assumption",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+                "reason_subjects": [
+                  "chiều cao"
+                ],
+                "refusal_cause": "SOURCE",
+                "learner_reason": "Đề bài chưa cho độ dài chiều cao, mà đáp số lại phụ thuộc vào số liệu này: hình vẫn khớp mọi điều đề nói khi số liệu ấy đổi, còn đáp số thì đổi theo. AlgoSim không tự chọn một giá trị thay em, nên không đưa ra đáp số cho đề này. Em kiểm tra lại đề xem có thiếu số liệu đó không rồi gửi lại nhé."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 1407,
+              "viewport_width": 1422
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "SOURCE",
+              "actual": "SOURCE"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "dữ kiện không truy được về đề bài"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "SOURCE",
+              "phrases": [
+                "kiểm tra lại đề"
+              ]
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Đáp số phụ thuộc một kích thước đề bài không cho.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "assumption",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+            "reason_subjects": [
+              "chiều cao"
+            ],
+            "refusal_cause": "SOURCE",
+            "learner_reason": "Đề bài chưa cho độ dài chiều cao, mà đáp số lại phụ thuộc vào số liệu này: hình vẫn khớp mọi điều đề nói khi số liệu ấy đổi, còn đáp số thì đổi theo. AlgoSim không tự chọn một giá trị thay em, nên không đưa ra đáp số cho đề này. Em kiểm tra lại đề xem có thiếu số liệu đó không rồi gửi lại nhé."
+          },
+          "canvas": false,
+          "stageLabel": "kiểm đáp số chỉ phụ thuộc dữ kiện đề cho",
+          "problemLabel": "dữ kiện không truy được về đề bài",
+          "active": false,
+          "scrollWidth": 1407,
+          "viewportWidth": 1422
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 418.5,
+          "y": 411,
+          "w": 570,
+          "h": 96
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      },
+      "mobile": {
+        "viewport": {
+          "id": "mobile",
+          "width": 390,
+          "height": 844,
+          "formation": "representative",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "assumption",
+                "reason_code": "ASSUMPTION_DETERMINES_ANSWER"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Đáp số phụ thuộc một kích thước đề bài không cho.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "assumption",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+                "reason_subjects": [
+                  "chiều cao"
+                ],
+                "refusal_cause": "SOURCE",
+                "learner_reason": "Đề bài chưa cho độ dài chiều cao, mà đáp số lại phụ thuộc vào số liệu này: hình vẫn khớp mọi điều đề nói khi số liệu ấy đổi, còn đáp số thì đổi theo. AlgoSim không tự chọn một giá trị thay em, nên không đưa ra đáp số cho đề này. Em kiểm tra lại đề xem có thiếu số liệu đó không rồi gửi lại nhé."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 390,
+              "viewport_width": 390
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "SOURCE",
+              "actual": "SOURCE"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "dữ kiện không truy được về đề bài"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "SOURCE",
+              "phrases": [
+                "kiểm tra lại đề"
+              ]
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Đáp số phụ thuộc một kích thước đề bài không cho.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "assumption",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "ASSUMPTION_DETERMINES_ANSWER",
+            "reason_subjects": [
+              "chiều cao"
+            ],
+            "refusal_cause": "SOURCE",
+            "learner_reason": "Đề bài chưa cho độ dài chiều cao, mà đáp số lại phụ thuộc vào số liệu này: hình vẫn khớp mọi điều đề nói khi số liệu ấy đổi, còn đáp số thì đổi theo. AlgoSim không tự chọn một giá trị thay em, nên không đưa ra đáp số cho đề này. Em kiểm tra lại đề xem có thiếu số liệu đó không rồi gửi lại nhé."
+          },
+          "canvas": false,
+          "stageLabel": "kiểm đáp số chỉ phụ thuộc dữ kiện đề cho",
+          "problemLabel": "dữ kiện không truy được về đề bài",
+          "active": false,
+          "scrollWidth": 390,
+          "viewportWidth": 390
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 49,
+          "y": 459,
+          "w": 292,
+          "h": 192
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      }
+    },
+    "topology_kernel": {
+      "desktop": {
+        "viewport": {
+          "id": "desktop",
+          "width": 1440,
+          "height": 900,
+          "formation": "full",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "semantic_program_invalid",
+                "stage_reached": "execution",
+                "reason_code": "NON_POSITIVE_LENGTH"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Interpreter không thực thi được chương trình: GEOMETRY_OPERAND_TYPE: đa giác 'Đáy ABCD': đỉnh 'A' và 'B' TRÙNG NHAU",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "semantic_program_invalid",
+                "stage_reached": "execution",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "NON_POSITIVE_LENGTH",
+                "reason_subjects": [
+                  "cạnh đáy"
+                ],
+                "refusal_cause": "SOURCE",
+                "learner_reason": "Đề bài cho độ dài cạnh đáy bằng 0 hoặc âm, nên hình suy biến: không có khối nào như vậy để dựng hay tính. Em kiểm tra lại số liệu này trong đề rồi gửi lại nhé."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 1407,
+              "viewport_width": 1422
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "SOURCE",
+              "actual": "SOURCE"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "chương trình dựng hình chưa hợp lệ"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "SOURCE",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Interpreter không thực thi được chương trình: GEOMETRY_OPERAND_TYPE: đa giác 'Đáy ABCD': đỉnh 'A' và 'B' TRÙNG NHAU",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "semantic_program_invalid",
+            "stage_reached": "execution",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "NON_POSITIVE_LENGTH",
+            "reason_subjects": [
+              "cạnh đáy"
+            ],
+            "refusal_cause": "SOURCE",
+            "learner_reason": "Đề bài cho độ dài cạnh đáy bằng 0 hoặc âm, nên hình suy biến: không có khối nào như vậy để dựng hay tính. Em kiểm tra lại số liệu này trong đề rồi gửi lại nhé."
+          },
+          "canvas": false,
+          "stageLabel": "chạy chương trình dựng hình",
+          "problemLabel": "chương trình dựng hình chưa hợp lệ",
+          "active": false,
+          "scrollWidth": 1407,
+          "viewportWidth": 1422
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 418.5,
+          "y": 411,
+          "w": 570,
+          "h": 72
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      },
+      "mobile": {
+        "viewport": {
+          "id": "mobile",
+          "width": 390,
+          "height": 844,
+          "formation": "representative",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "semantic_program_invalid",
+                "stage_reached": "execution",
+                "reason_code": "NON_POSITIVE_LENGTH"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Interpreter không thực thi được chương trình: GEOMETRY_OPERAND_TYPE: đa giác 'Đáy ABCD': đỉnh 'A' và 'B' TRÙNG NHAU",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "semantic_program_invalid",
+                "stage_reached": "execution",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "NON_POSITIVE_LENGTH",
+                "reason_subjects": [
+                  "cạnh đáy"
+                ],
+                "refusal_cause": "SOURCE",
+                "learner_reason": "Đề bài cho độ dài cạnh đáy bằng 0 hoặc âm, nên hình suy biến: không có khối nào như vậy để dựng hay tính. Em kiểm tra lại số liệu này trong đề rồi gửi lại nhé."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 390,
+              "viewport_width": 390
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "SOURCE",
+              "actual": "SOURCE"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "chương trình dựng hình chưa hợp lệ"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "SOURCE",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Interpreter không thực thi được chương trình: GEOMETRY_OPERAND_TYPE: đa giác 'Đáy ABCD': đỉnh 'A' và 'B' TRÙNG NHAU",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "semantic_program_invalid",
+            "stage_reached": "execution",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "NON_POSITIVE_LENGTH",
+            "reason_subjects": [
+              "cạnh đáy"
+            ],
+            "refusal_cause": "SOURCE",
+            "learner_reason": "Đề bài cho độ dài cạnh đáy bằng 0 hoặc âm, nên hình suy biến: không có khối nào như vậy để dựng hay tính. Em kiểm tra lại số liệu này trong đề rồi gửi lại nhé."
+          },
+          "canvas": false,
+          "stageLabel": "chạy chương trình dựng hình",
+          "problemLabel": "chương trình dựng hình chưa hợp lệ",
+          "active": false,
+          "scrollWidth": 390,
+          "viewportWidth": 390
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 49,
+          "y": 467,
+          "w": 292,
+          "h": 96
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      }
+    },
+    "point_construction_mismatch": {
+      "desktop": {
+        "viewport": {
+          "id": "desktop",
+          "width": 1440,
+          "height": 900,
+          "formation": "full",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Phép dựng điểm không dùng đúng thực thể đề nêu.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+                "reason_subjects": [
+                  "O là giao điểm của AC và BD",
+                  "O là trung điểm của AB"
+                ],
+                "refusal_cause": "CONSTRUCTION",
+                "learner_reason": "Đề bài nêu \"O là giao điểm của AC và BD\", nhưng phép dựng của AlgoSim lại dựng \"O là trung điểm của AB\". AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 1407,
+              "viewport_width": 1422
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "CONSTRUCTION",
+              "actual": "CONSTRUCTION"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "hệ dựng lệch với đề bài"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "CONSTRUCTION",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Phép dựng điểm không dùng đúng thực thể đề nêu.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "construction_binding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+            "reason_subjects": [
+              "O là giao điểm của AC và BD",
+              "O là trung điểm của AB"
+            ],
+            "refusal_cause": "CONSTRUCTION",
+            "learner_reason": "Đề bài nêu \"O là giao điểm của AC và BD\", nhưng phép dựng của AlgoSim lại dựng \"O là trung điểm của AB\". AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+          },
+          "canvas": false,
+          "stageLabel": "đối chiếu phép dựng điểm với câu của đề",
+          "problemLabel": "hệ dựng lệch với đề bài",
+          "active": false,
+          "scrollWidth": 1407,
+          "viewportWidth": 1422
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 418.5,
+          "y": 411,
+          "w": 570,
+          "h": 96
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      },
+      "mobile": {
+        "viewport": {
+          "id": "mobile",
+          "width": 390,
+          "height": 844,
+          "formation": "representative",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Phép dựng điểm không dùng đúng thực thể đề nêu.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+                "reason_subjects": [
+                  "O là giao điểm của AC và BD",
+                  "O là trung điểm của AB"
+                ],
+                "refusal_cause": "CONSTRUCTION",
+                "learner_reason": "Đề bài nêu \"O là giao điểm của AC và BD\", nhưng phép dựng của AlgoSim lại dựng \"O là trung điểm của AB\". AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 390,
+              "viewport_width": 390
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "CONSTRUCTION",
+              "actual": "CONSTRUCTION"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "hệ dựng lệch với đề bài"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "CONSTRUCTION",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Phép dựng điểm không dùng đúng thực thể đề nêu.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "construction_binding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+            "reason_subjects": [
+              "O là giao điểm của AC và BD",
+              "O là trung điểm của AB"
+            ],
+            "refusal_cause": "CONSTRUCTION",
+            "learner_reason": "Đề bài nêu \"O là giao điểm của AC và BD\", nhưng phép dựng của AlgoSim lại dựng \"O là trung điểm của AB\". AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+          },
+          "canvas": false,
+          "stageLabel": "đối chiếu phép dựng điểm với câu của đề",
+          "problemLabel": "hệ dựng lệch với đề bài",
+          "active": false,
+          "scrollWidth": 390,
+          "viewportWidth": 390
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 49,
+          "y": 467,
+          "w": 292,
+          "h": 168
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      }
+    }
+  },
+  "served": {},
+  "pass": false
+}

@@ -1,0 +1,2193 @@
+{
+  "positive": {
+    "desktop": {
+      "viewport": {
+        "id": "desktop",
+        "width": 1440,
+        "height": 900,
+        "formation": "full",
+        "orbit": true
+      },
+      "assertions": {
+        "run_completed": {
+          "pass": false,
+          "details": "POLL_TIMEOUT:false"
+        }
+      },
+      "screenshots": {},
+      "capture_order": [],
+      "run_error": "Error: POLL_TIMEOUT:false\n    at pollUntil (file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-hybrid-integration/frontend/scripts/compiler-scene-replay-lib.mjs:1307:9)\n    at async quantityDrawer (file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-hybrid-integration/frontend/scripts/compiler-scene-suite.mjs:805:3)\n    at async runPositive (file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-hybrid-integration/frontend/scripts/compiler-scene-suite.mjs:1006:18)\n    at async runSuite (file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-hybrid-integration/frontend/scripts/compiler-scene-suite.mjs:1782:40)\n    at async file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-hybrid-integration/frontend/scripts/compiler-scene-replay.mjs:45:18",
+      "pass": false,
+      "failure_class": "ENVIRONMENT",
+      "failure_screenshot": {
+        "path": "docs/evaluation/geometry/runs/visual-hybrid-integration/visual/official-suite-complete/screenshots/cross-section/desktop/failure.png",
+        "bytes": 290262,
+        "sha256": "16440b58a7d662af078e1f53d3b11a3c219127e856618fad2a3449672e06fbcf",
+        "scroll": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    "mobile": {
+      "viewport": {
+        "id": "mobile",
+        "width": 390,
+        "height": 844,
+        "formation": "representative",
+        "orbit": true
+      },
+      "assertions": {
+        "run_completed": {
+          "pass": false,
+          "details": "POLL_TIMEOUT:false"
+        }
+      },
+      "screenshots": {},
+      "capture_order": [],
+      "run_error": "Error: POLL_TIMEOUT:false\n    at pollUntil (file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-hybrid-integration/frontend/scripts/compiler-scene-replay-lib.mjs:1307:9)\n    at async quantityDrawer (file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-hybrid-integration/frontend/scripts/compiler-scene-suite.mjs:805:3)\n    at async runPositive (file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-hybrid-integration/frontend/scripts/compiler-scene-suite.mjs:1006:18)\n    at async runSuite (file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-hybrid-integration/frontend/scripts/compiler-scene-suite.mjs:1782:40)\n    at async file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-hybrid-integration/frontend/scripts/compiler-scene-replay.mjs:45:18",
+      "pass": false,
+      "failure_class": "ENVIRONMENT",
+      "failure_screenshot": {
+        "path": "docs/evaluation/geometry/runs/visual-hybrid-integration/visual/official-suite-complete/screenshots/cross-section/mobile/failure.png",
+        "bytes": 283560,
+        "sha256": "9a2a2460afd7767fae5df952c1c82a789854e20ba71cabc925ffa3c5cfb27e18",
+        "scroll": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    }
+  },
+  "negative": {
+    "ungrounded_source": {
+      "desktop": {
+        "viewport": {
+          "id": "desktop",
+          "width": 1440,
+          "height": 900,
+          "formation": "full",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "grounding",
+                "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "grounding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+                "reason_subjects": [
+                  "S"
+                ],
+                "refusal_cause": "SOURCE",
+                "learner_reason": "Để dựng hình, chương trình cần toạ độ điểm S nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 1407,
+              "viewport_width": 1422
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "SOURCE",
+              "actual": "SOURCE"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "dữ kiện không truy được về đề bài"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "SOURCE",
+              "phrases": [
+                "kiểm tra lại đề"
+              ]
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "grounding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+            "reason_subjects": [
+              "S"
+            ],
+            "refusal_cause": "SOURCE",
+            "learner_reason": "Để dựng hình, chương trình cần toạ độ điểm S nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+          },
+          "canvas": false,
+          "stageLabel": "truy dữ kiện về đề bài",
+          "problemLabel": "dữ kiện không truy được về đề bài",
+          "active": false,
+          "scrollWidth": 1407,
+          "viewportWidth": 1422
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 418.5,
+          "y": 441,
+          "w": 570,
+          "h": 72
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      },
+      "mobile": {
+        "viewport": {
+          "id": "mobile",
+          "width": 390,
+          "height": 844,
+          "formation": "representative",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "grounding",
+                "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "grounding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+                "reason_subjects": [
+                  "S"
+                ],
+                "refusal_cause": "SOURCE",
+                "learner_reason": "Để dựng hình, chương trình cần toạ độ điểm S nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 390,
+              "viewport_width": 390
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "SOURCE",
+              "actual": "SOURCE"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "dữ kiện không truy được về đề bài"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "SOURCE",
+              "phrases": [
+                "kiểm tra lại đề"
+              ]
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "grounding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "GIVEN_VALUE_NOT_IN_SOURCE",
+            "reason_subjects": [
+              "S"
+            ],
+            "refusal_cause": "SOURCE",
+            "learner_reason": "Để dựng hình, chương trình cần toạ độ điểm S nhưng đề bài không ghi số liệu này. AlgoSim không tự thêm dữ kiện thay em, nên không dựng hình cho đề này. Em kiểm tra lại đề đã ghi đủ các số liệu cần thiết chưa rồi gửi lại nhé."
+          },
+          "canvas": false,
+          "stageLabel": "truy dữ kiện về đề bài",
+          "problemLabel": "dữ kiện không truy được về đề bài",
+          "active": false,
+          "scrollWidth": 390,
+          "viewportWidth": 390
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 49,
+          "y": 534,
+          "w": 292,
+          "h": 144
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      }
+    },
+    "assumption": {
+      "desktop": {
+        "viewport": {
+          "id": "desktop",
+          "width": 1440,
+          "height": 900,
+          "formation": "full",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "assumption",
+                "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Chưa chứng minh được đáp số chỉ phụ thuộc dữ kiện đề cho.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "assumption",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+                "reason_subjects": [],
+                "refusal_cause": "UNKNOWN",
+                "learner_reason": "AlgoSim chưa chứng minh được đáp số chỉ phụ thuộc vào các dữ kiện đề bài cho: có thể hình dựng đã tự chọn một số liệu đề không nêu, hoặc đề nêu quan hệ theo cách hệ chưa đọc được. Hệ dừng lại thay vì đưa ra một đáp số chưa kiểm chứng. Em thử ghi rõ các quan hệ trong đề (ví dụ \"SA vuông góc với đáy\", \"đáy ABCD là hình chữ nhật\") và đủ các số liệu rồi gửi lại nhé."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 1407,
+              "viewport_width": 1422
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "UNKNOWN",
+              "actual": "UNKNOWN"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "dữ kiện không truy được về đề bài"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "UNKNOWN",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Chưa chứng minh được đáp số chỉ phụ thuộc dữ kiện đề cho.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "assumption",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+            "reason_subjects": [],
+            "refusal_cause": "UNKNOWN",
+            "learner_reason": "AlgoSim chưa chứng minh được đáp số chỉ phụ thuộc vào các dữ kiện đề bài cho: có thể hình dựng đã tự chọn một số liệu đề không nêu, hoặc đề nêu quan hệ theo cách hệ chưa đọc được. Hệ dừng lại thay vì đưa ra một đáp số chưa kiểm chứng. Em thử ghi rõ các quan hệ trong đề (ví dụ \"SA vuông góc với đáy\", \"đáy ABCD là hình chữ nhật\") và đủ các số liệu rồi gửi lại nhé."
+          },
+          "canvas": false,
+          "stageLabel": "kiểm đáp số chỉ phụ thuộc dữ kiện đề cho",
+          "problemLabel": "dữ kiện không truy được về đề bài",
+          "active": false,
+          "scrollWidth": 1407,
+          "viewportWidth": 1422
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 418.5,
+          "y": 441,
+          "w": 570,
+          "h": 120
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      },
+      "mobile": {
+        "viewport": {
+          "id": "mobile",
+          "width": 390,
+          "height": 844,
+          "formation": "representative",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "assumption",
+                "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Chưa chứng minh được đáp số chỉ phụ thuộc dữ kiện đề cho.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "assumption",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+                "reason_subjects": [],
+                "refusal_cause": "UNKNOWN",
+                "learner_reason": "AlgoSim chưa chứng minh được đáp số chỉ phụ thuộc vào các dữ kiện đề bài cho: có thể hình dựng đã tự chọn một số liệu đề không nêu, hoặc đề nêu quan hệ theo cách hệ chưa đọc được. Hệ dừng lại thay vì đưa ra một đáp số chưa kiểm chứng. Em thử ghi rõ các quan hệ trong đề (ví dụ \"SA vuông góc với đáy\", \"đáy ABCD là hình chữ nhật\") và đủ các số liệu rồi gửi lại nhé."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 390,
+              "viewport_width": 390
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "UNKNOWN",
+              "actual": "UNKNOWN"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "dữ kiện không truy được về đề bài"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "UNKNOWN",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Chưa chứng minh được đáp số chỉ phụ thuộc dữ kiện đề cho.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "assumption",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+            "reason_subjects": [],
+            "refusal_cause": "UNKNOWN",
+            "learner_reason": "AlgoSim chưa chứng minh được đáp số chỉ phụ thuộc vào các dữ kiện đề bài cho: có thể hình dựng đã tự chọn một số liệu đề không nêu, hoặc đề nêu quan hệ theo cách hệ chưa đọc được. Hệ dừng lại thay vì đưa ra một đáp số chưa kiểm chứng. Em thử ghi rõ các quan hệ trong đề (ví dụ \"SA vuông góc với đáy\", \"đáy ABCD là hình chữ nhật\") và đủ các số liệu rồi gửi lại nhé."
+          },
+          "canvas": false,
+          "stageLabel": "kiểm đáp số chỉ phụ thuộc dữ kiện đề cho",
+          "problemLabel": "dữ kiện không truy được về đề bài",
+          "active": false,
+          "scrollWidth": 390,
+          "viewportWidth": 390
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 49,
+          "y": 534,
+          "w": 292,
+          "h": 240
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      }
+    },
+    "topology_kernel": {
+      "desktop": {
+        "viewport": {
+          "id": "desktop",
+          "width": 1440,
+          "height": 900,
+          "formation": "full",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "semantic_program_invalid",
+                "stage_reached": "execution",
+                "reason_code": null
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Interpreter không thực thi được chương trình: PLANE_DOES_NOT_CUT: mặt phẳng KHÔNG cắt khối — toàn bộ khối nằm về một phía, không có điểm chung nào",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "semantic_program_invalid",
+                "stage_reached": "execution",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "PLANE_DOES_NOT_CUT",
+                "reason_subjects": [
+                  "(α)"
+                ],
+                "refusal_cause": "SOURCE",
+                "learner_reason": "Mặt phẳng (α) mà đề bài cho không cắt khối, nên không có thiết diện để dựng hay tính. Em kiểm tra lại phương trình của mặt phẳng này trong đề rồi gửi lại nhé."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 1407,
+              "viewport_width": 1422
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": {
+              "semantics": "requested_non_empty_section_must_fail_closed",
+              "kernel_error_code": "PLANE_DOES_NOT_CUT",
+              "product_error_code": "semantic_program_invalid",
+              "product_stage_reached": "execution"
+            }
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "SOURCE",
+              "actual": "SOURCE"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "chương trình dựng hình chưa hợp lệ"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "SOURCE",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Interpreter không thực thi được chương trình: PLANE_DOES_NOT_CUT: mặt phẳng KHÔNG cắt khối — toàn bộ khối nằm về một phía, không có điểm chung nào",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "semantic_program_invalid",
+            "stage_reached": "execution",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "PLANE_DOES_NOT_CUT",
+            "reason_subjects": [
+              "(α)"
+            ],
+            "refusal_cause": "SOURCE",
+            "learner_reason": "Mặt phẳng (α) mà đề bài cho không cắt khối, nên không có thiết diện để dựng hay tính. Em kiểm tra lại phương trình của mặt phẳng này trong đề rồi gửi lại nhé."
+          },
+          "canvas": false,
+          "stageLabel": "chạy chương trình dựng hình",
+          "problemLabel": "chương trình dựng hình chưa hợp lệ",
+          "active": false,
+          "scrollWidth": 1407,
+          "viewportWidth": 1422
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 418.5,
+          "y": 441,
+          "w": 570,
+          "h": 72
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      },
+      "mobile": {
+        "viewport": {
+          "id": "mobile",
+          "width": 390,
+          "height": 844,
+          "formation": "representative",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "semantic_program_invalid",
+                "stage_reached": "execution",
+                "reason_code": null
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Interpreter không thực thi được chương trình: PLANE_DOES_NOT_CUT: mặt phẳng KHÔNG cắt khối — toàn bộ khối nằm về một phía, không có điểm chung nào",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "semantic_program_invalid",
+                "stage_reached": "execution",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "PLANE_DOES_NOT_CUT",
+                "reason_subjects": [
+                  "(α)"
+                ],
+                "refusal_cause": "SOURCE",
+                "learner_reason": "Mặt phẳng (α) mà đề bài cho không cắt khối, nên không có thiết diện để dựng hay tính. Em kiểm tra lại phương trình của mặt phẳng này trong đề rồi gửi lại nhé."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 390,
+              "viewport_width": 390
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": {
+              "semantics": "requested_non_empty_section_must_fail_closed",
+              "kernel_error_code": "PLANE_DOES_NOT_CUT",
+              "product_error_code": "semantic_program_invalid",
+              "product_stage_reached": "execution"
+            }
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "SOURCE",
+              "actual": "SOURCE"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "chương trình dựng hình chưa hợp lệ"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "SOURCE",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Interpreter không thực thi được chương trình: PLANE_DOES_NOT_CUT: mặt phẳng KHÔNG cắt khối — toàn bộ khối nằm về một phía, không có điểm chung nào",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "semantic_program_invalid",
+            "stage_reached": "execution",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "PLANE_DOES_NOT_CUT",
+            "reason_subjects": [
+              "(α)"
+            ],
+            "refusal_cause": "SOURCE",
+            "learner_reason": "Mặt phẳng (α) mà đề bài cho không cắt khối, nên không có thiết diện để dựng hay tính. Em kiểm tra lại phương trình của mặt phẳng này trong đề rồi gửi lại nhé."
+          },
+          "canvas": false,
+          "stageLabel": "chạy chương trình dựng hình",
+          "problemLabel": "chương trình dựng hình chưa hợp lệ",
+          "active": false,
+          "scrollWidth": 390,
+          "viewportWidth": 390
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 49,
+          "y": 557,
+          "w": 292,
+          "h": 120
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      }
+    },
+    "construction_mismatch": {
+      "desktop": {
+        "viewport": {
+          "id": "desktop",
+          "width": 1440,
+          "height": 900,
+          "formation": "full",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "assumption",
+                "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Phép dựng thiết diện không dùng đúng thực thể đề nêu.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "assumption",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+                "reason_subjects": [
+                  "(β)",
+                  "(α)"
+                ],
+                "refusal_cause": "CONSTRUCTION",
+                "learner_reason": "Đề bài nêu mặt phẳng (β), nhưng phép dựng thiết diện của AlgoSim lại dùng mặt phẳng (α). AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 1407,
+              "viewport_width": 1422
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "CONSTRUCTION",
+              "actual": "CONSTRUCTION"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "hệ dựng lệch với đề bài"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "CONSTRUCTION",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Phép dựng thiết diện không dùng đúng thực thể đề nêu.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "assumption",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+            "reason_subjects": [
+              "(β)",
+              "(α)"
+            ],
+            "refusal_cause": "CONSTRUCTION",
+            "learner_reason": "Đề bài nêu mặt phẳng (β), nhưng phép dựng thiết diện của AlgoSim lại dùng mặt phẳng (α). AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+          },
+          "canvas": false,
+          "stageLabel": "kiểm đáp số chỉ phụ thuộc dữ kiện đề cho",
+          "problemLabel": "hệ dựng lệch với đề bài",
+          "active": false,
+          "scrollWidth": 1407,
+          "viewportWidth": 1422
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 418.5,
+          "y": 419,
+          "w": 570,
+          "h": 96
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      },
+      "mobile": {
+        "viewport": {
+          "id": "mobile",
+          "width": 390,
+          "height": 844,
+          "formation": "representative",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "assumption",
+                "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Phép dựng thiết diện không dùng đúng thực thể đề nêu.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "assumption",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+                "reason_subjects": [
+                  "(β)",
+                  "(α)"
+                ],
+                "refusal_cause": "CONSTRUCTION",
+                "learner_reason": "Đề bài nêu mặt phẳng (β), nhưng phép dựng thiết diện của AlgoSim lại dùng mặt phẳng (α). AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 390,
+              "viewport_width": 390
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "CONSTRUCTION",
+              "actual": "CONSTRUCTION"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "hệ dựng lệch với đề bài"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "CONSTRUCTION",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Phép dựng thiết diện không dùng đúng thực thể đề nêu.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "assumption",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+            "reason_subjects": [
+              "(β)",
+              "(α)"
+            ],
+            "refusal_cause": "CONSTRUCTION",
+            "learner_reason": "Đề bài nêu mặt phẳng (β), nhưng phép dựng thiết diện của AlgoSim lại dùng mặt phẳng (α). AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+          },
+          "canvas": false,
+          "stageLabel": "kiểm đáp số chỉ phụ thuộc dữ kiện đề cho",
+          "problemLabel": "hệ dựng lệch với đề bài",
+          "active": false,
+          "scrollWidth": 390,
+          "viewportWidth": 390
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 49,
+          "y": 534,
+          "w": 292,
+          "h": 168
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      }
+    },
+    "point_construction_mismatch": {
+      "desktop": {
+        "viewport": {
+          "id": "desktop",
+          "width": 1440,
+          "height": 900,
+          "formation": "full",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Phép dựng điểm không dùng đúng thực thể đề nêu.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+                "reason_subjects": [
+                  "M là trung điểm của SA",
+                  "M là trung điểm của SB"
+                ],
+                "refusal_cause": "CONSTRUCTION",
+                "learner_reason": "Đề bài nêu \"M là trung điểm của SA\", nhưng phép dựng của AlgoSim lại dựng \"M là trung điểm của SB\". AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 1407,
+              "viewport_width": 1422
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "CONSTRUCTION",
+              "actual": "CONSTRUCTION"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "hệ dựng lệch với đề bài"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "CONSTRUCTION",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Phép dựng điểm không dùng đúng thực thể đề nêu.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "construction_binding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+            "reason_subjects": [
+              "M là trung điểm của SA",
+              "M là trung điểm của SB"
+            ],
+            "refusal_cause": "CONSTRUCTION",
+            "learner_reason": "Đề bài nêu \"M là trung điểm của SA\", nhưng phép dựng của AlgoSim lại dựng \"M là trung điểm của SB\". AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+          },
+          "canvas": false,
+          "stageLabel": "đối chiếu phép dựng điểm với câu của đề",
+          "problemLabel": "hệ dựng lệch với đề bài",
+          "active": false,
+          "scrollWidth": 1407,
+          "viewportWidth": 1422
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 418.5,
+          "y": 419,
+          "w": 570,
+          "h": 96
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      },
+      "mobile": {
+        "viewport": {
+          "id": "mobile",
+          "width": 390,
+          "height": 844,
+          "formation": "representative",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Phép dựng điểm không dùng đúng thực thể đề nêu.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+                "reason_subjects": [
+                  "M là trung điểm của SA",
+                  "M là trung điểm của SB"
+                ],
+                "refusal_cause": "CONSTRUCTION",
+                "learner_reason": "Đề bài nêu \"M là trung điểm của SA\", nhưng phép dựng của AlgoSim lại dựng \"M là trung điểm của SB\". AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 390,
+              "viewport_width": 390
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "CONSTRUCTION",
+              "actual": "CONSTRUCTION"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "hệ dựng lệch với đề bài"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "CONSTRUCTION",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Phép dựng điểm không dùng đúng thực thể đề nêu.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "construction_binding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+            "reason_subjects": [
+              "M là trung điểm của SA",
+              "M là trung điểm của SB"
+            ],
+            "refusal_cause": "CONSTRUCTION",
+            "learner_reason": "Đề bài nêu \"M là trung điểm của SA\", nhưng phép dựng của AlgoSim lại dựng \"M là trung điểm của SB\". AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+          },
+          "canvas": false,
+          "stageLabel": "đối chiếu phép dựng điểm với câu của đề",
+          "problemLabel": "hệ dựng lệch với đề bài",
+          "active": false,
+          "scrollWidth": 390,
+          "viewportWidth": 390
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 49,
+          "y": 489,
+          "w": 292,
+          "h": 168
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      }
+    },
+    "projection_mismatch": {
+      "desktop": {
+        "viewport": {
+          "id": "desktop",
+          "width": 1440,
+          "height": 900,
+          "formation": "full",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Phép dựng điểm không dùng đúng thực thể đề nêu.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+                "reason_subjects": [
+                  "H là hình chiếu của S lên BD",
+                  "H là hình chiếu của S lên BC"
+                ],
+                "refusal_cause": "CONSTRUCTION",
+                "learner_reason": "Đề bài nêu \"H là hình chiếu của S lên BD\", nhưng phép dựng của AlgoSim lại dựng \"H là hình chiếu của S lên BC\". AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 1407,
+              "viewport_width": 1422
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "CONSTRUCTION",
+              "actual": "CONSTRUCTION"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "hệ dựng lệch với đề bài"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "CONSTRUCTION",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Phép dựng điểm không dùng đúng thực thể đề nêu.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "construction_binding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+            "reason_subjects": [
+              "H là hình chiếu của S lên BD",
+              "H là hình chiếu của S lên BC"
+            ],
+            "refusal_cause": "CONSTRUCTION",
+            "learner_reason": "Đề bài nêu \"H là hình chiếu của S lên BD\", nhưng phép dựng của AlgoSim lại dựng \"H là hình chiếu của S lên BC\". AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+          },
+          "canvas": false,
+          "stageLabel": "đối chiếu phép dựng điểm với câu của đề",
+          "problemLabel": "hệ dựng lệch với đề bài",
+          "active": false,
+          "scrollWidth": 1407,
+          "viewportWidth": 1422
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 418.5,
+          "y": 419,
+          "w": 570,
+          "h": 96
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      },
+      "mobile": {
+        "viewport": {
+          "id": "mobile",
+          "width": 390,
+          "height": 844,
+          "formation": "representative",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Phép dựng điểm không dùng đúng thực thể đề nêu.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+                "reason_subjects": [
+                  "H là hình chiếu của S lên BD",
+                  "H là hình chiếu của S lên BC"
+                ],
+                "refusal_cause": "CONSTRUCTION",
+                "learner_reason": "Đề bài nêu \"H là hình chiếu của S lên BD\", nhưng phép dựng của AlgoSim lại dựng \"H là hình chiếu của S lên BC\". AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 390,
+              "viewport_width": 390
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "CONSTRUCTION",
+              "actual": "CONSTRUCTION"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "hệ dựng lệch với đề bài"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "CONSTRUCTION",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Phép dựng điểm không dùng đúng thực thể đề nêu.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "construction_binding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+            "reason_subjects": [
+              "H là hình chiếu của S lên BD",
+              "H là hình chiếu của S lên BC"
+            ],
+            "refusal_cause": "CONSTRUCTION",
+            "learner_reason": "Đề bài nêu \"H là hình chiếu của S lên BD\", nhưng phép dựng của AlgoSim lại dựng \"H là hình chiếu của S lên BC\". AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+          },
+          "canvas": false,
+          "stageLabel": "đối chiếu phép dựng điểm với câu của đề",
+          "problemLabel": "hệ dựng lệch với đề bài",
+          "active": false,
+          "scrollWidth": 390,
+          "viewportWidth": 390
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 49,
+          "y": 512,
+          "w": 292,
+          "h": 192
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      }
+    },
+    "construction_unverified": {
+      "desktop": {
+        "viewport": {
+          "id": "desktop",
+          "width": 1440,
+          "height": 900,
+          "formation": "full",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "reason_code": "CONSTRUCTION_BINDING_UNVERIFIED"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Chưa đối chiếu được phép dựng điểm với câu của đề.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "CONSTRUCTION_BINDING_UNVERIFIED",
+                "reason_subjects": [
+                  "M"
+                ],
+                "refusal_cause": "UNKNOWN",
+                "learner_reason": "AlgoSim chưa đối chiếu được cách dựng điểm M với câu của đề bài: hệ mới đọc được một số cách viết như \"Gọi M là trung điểm của SA\" hay \"Gọi H là hình chiếu của S lên (ABCD)\". Đây là giới hạn của hệ, không phải lỗi của đề. AlgoSim dừng lại thay vì đưa ra một đáp số chưa kiểm chứng; nếu muốn, em có thể viết câu ấy theo một trong các cách trên rồi gửi lại."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 1407,
+              "viewport_width": 1422
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "UNKNOWN",
+              "actual": "UNKNOWN"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "hệ chưa đối chiếu được phép dựng với đề"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "UNKNOWN",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Chưa đối chiếu được phép dựng điểm với câu của đề.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "construction_binding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "CONSTRUCTION_BINDING_UNVERIFIED",
+            "reason_subjects": [
+              "M"
+            ],
+            "refusal_cause": "UNKNOWN",
+            "learner_reason": "AlgoSim chưa đối chiếu được cách dựng điểm M với câu của đề bài: hệ mới đọc được một số cách viết như \"Gọi M là trung điểm của SA\" hay \"Gọi H là hình chiếu của S lên (ABCD)\". Đây là giới hạn của hệ, không phải lỗi của đề. AlgoSim dừng lại thay vì đưa ra một đáp số chưa kiểm chứng; nếu muốn, em có thể viết câu ấy theo một trong các cách trên rồi gửi lại."
+          },
+          "canvas": false,
+          "stageLabel": "đối chiếu phép dựng điểm với câu của đề",
+          "problemLabel": "hệ chưa đối chiếu được phép dựng với đề",
+          "active": false,
+          "scrollWidth": 1407,
+          "viewportWidth": 1422
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 418.5,
+          "y": 419,
+          "w": 570,
+          "h": 120
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      },
+      "mobile": {
+        "viewport": {
+          "id": "mobile",
+          "width": 390,
+          "height": 844,
+          "formation": "representative",
+          "orbit": true
+        },
+        "assertions": {
+          "structured_refusal": {
+            "pass": true,
+            "details": {
+              "expected": {
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "reason_code": "CONSTRUCTION_BINDING_UNVERIFIED"
+              },
+              "actual": {
+                "status": "unsupported",
+                "reason": "Chưa đối chiếu được phép dựng điểm với câu của đề.",
+                "failure_category": "geometry_generation_failed",
+                "error_code": "input_not_grounded",
+                "stage_reached": "construction_binding",
+                "representation_plan": {},
+                "analysis": {},
+                "reason_code": "CONSTRUCTION_BINDING_UNVERIFIED",
+                "reason_subjects": [
+                  "M"
+                ],
+                "refusal_cause": "UNKNOWN",
+                "learner_reason": "AlgoSim chưa đối chiếu được cách dựng điểm M với câu của đề bài: hệ mới đọc được một số cách viết như \"Gọi M là trung điểm của SA\" hay \"Gọi H là hình chiếu của S lên (ABCD)\". Đây là giới hạn của hệ, không phải lỗi của đề. AlgoSim dừng lại thay vì đưa ra một đáp số chưa kiểm chứng; nếu muốn, em có thể viết câu ấy theo một trong các cách trên rồi gửi lại."
+              }
+            }
+          },
+          "learner_message": {
+            "pass": true
+          },
+          "canvas_absent": {
+            "pass": true
+          },
+          "answer_absent": {
+            "pass": true
+          },
+          "no_document_overflow": {
+            "pass": true,
+            "details": {
+              "scroll_width": 390,
+              "viewport_width": 390
+            }
+          },
+          "no_raw_token_leakage": {
+            "pass": true,
+            "details": {
+              "leaked_tokens": [],
+              "pass": true
+            }
+          },
+          "contract_gate": {
+            "pass": true,
+            "details": null
+          },
+          "refusal_cause": {
+            "pass": true,
+            "details": {
+              "expected": "UNKNOWN",
+              "actual": "UNKNOWN"
+            }
+          },
+          "problem_label": {
+            "pass": true,
+            "details": {
+              "expected": null,
+              "actual": "hệ chưa đối chiếu được phép dựng với đề"
+            }
+          },
+          "no_fix_text_advice_without_source_cause": {
+            "pass": true,
+            "details": {
+              "refusal_cause": "UNKNOWN",
+              "phrases": []
+            }
+          },
+          "single_analyze_call": {
+            "pass": true,
+            "details": 1
+          },
+          "no_uncaught_exception": {
+            "pass": true,
+            "details": []
+          },
+          "no_failed_api_call": {
+            "pass": true,
+            "details": []
+          },
+          "no_serious_console_error": {
+            "pass": true,
+            "details": []
+          }
+        },
+        "observed": {
+          "unsupported": {
+            "status": "unsupported",
+            "reason": "Chưa đối chiếu được phép dựng điểm với câu của đề.",
+            "failure_category": "geometry_generation_failed",
+            "error_code": "input_not_grounded",
+            "stage_reached": "construction_binding",
+            "representation_plan": {},
+            "analysis": {},
+            "reason_code": "CONSTRUCTION_BINDING_UNVERIFIED",
+            "reason_subjects": [
+              "M"
+            ],
+            "refusal_cause": "UNKNOWN",
+            "learner_reason": "AlgoSim chưa đối chiếu được cách dựng điểm M với câu của đề bài: hệ mới đọc được một số cách viết như \"Gọi M là trung điểm của SA\" hay \"Gọi H là hình chiếu của S lên (ABCD)\". Đây là giới hạn của hệ, không phải lỗi của đề. AlgoSim dừng lại thay vì đưa ra một đáp số chưa kiểm chứng; nếu muốn, em có thể viết câu ấy theo một trong các cách trên rồi gửi lại."
+          },
+          "canvas": false,
+          "stageLabel": "đối chiếu phép dựng điểm với câu của đề",
+          "problemLabel": "hệ chưa đối chiếu được phép dựng với đề",
+          "active": false,
+          "scrollWidth": 390,
+          "viewportWidth": 390
+        },
+        "screenshot": null,
+        "refusal_message_box": {
+          "x": 49,
+          "y": 512,
+          "w": 292,
+          "h": 240
+        },
+        "raw_token_leakage": {
+          "leaked_tokens": [],
+          "pass": true
+        },
+        "uncaught_exceptions": [],
+        "failed_api_calls": [],
+        "console_events": [],
+        "pass": true
+      }
+    }
+  },
+  "served": {
+    "correct_plane": {
+      "desktop": {
+        "viewport": {
+          "id": "desktop",
+          "width": 1440,
+          "height": 900,
+          "formation": "full",
+          "orbit": true
+        },
+        "assertions": {
+          "run_completed": {
+            "pass": false,
+            "details": "POLL_TIMEOUT:false"
+          }
+        },
+        "pass": false,
+        "failure_class": "ENVIRONMENT",
+        "failure_screenshot": {
+          "path": "docs/evaluation/geometry/runs/visual-hybrid-integration/visual/official-suite-complete/screenshots/cross-section/served/correct_plane/desktop/failure.png",
+          "bytes": 291228,
+          "sha256": "af01fc7c02ec0fd6c0f4d8c80d334e87f87ffc34a18d7618ae30fa02b103cf55",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      },
+      "mobile": {
+        "viewport": {
+          "id": "mobile",
+          "width": 390,
+          "height": 844,
+          "formation": "representative",
+          "orbit": true
+        },
+        "assertions": {
+          "run_completed": {
+            "pass": false,
+            "details": "POLL_TIMEOUT:false"
+          }
+        },
+        "pass": false,
+        "failure_class": "ENVIRONMENT",
+        "failure_screenshot": {
+          "path": "docs/evaluation/geometry/runs/visual-hybrid-integration/visual/official-suite-complete/screenshots/cross-section/served/correct_plane/mobile/failure.png",
+          "bytes": 292175,
+          "sha256": "ae2d36a878de87099d2a9fd3c181f14b812b27c230d4f6c49da69b33aefec345",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      }
+    },
+    "point_construction_witness": {
+      "desktop": {
+        "viewport": {
+          "id": "desktop",
+          "width": 1440,
+          "height": 900,
+          "formation": "full",
+          "orbit": true
+        },
+        "assertions": {
+          "run_completed": {
+            "pass": false,
+            "details": "POLL_TIMEOUT:false"
+          }
+        },
+        "pass": false,
+        "failure_class": "ENVIRONMENT",
+        "failure_screenshot": {
+          "path": "docs/evaluation/geometry/runs/visual-hybrid-integration/visual/official-suite-complete/screenshots/cross-section/served/point_construction_witness/desktop/failure.png",
+          "bytes": 292913,
+          "sha256": "01b67620b2adc2cb4a84d2f4aacdd4d8ebe8ece75f4b976fabd446f5f122fea7",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      },
+      "mobile": {
+        "viewport": {
+          "id": "mobile",
+          "width": 390,
+          "height": 844,
+          "formation": "representative",
+          "orbit": true
+        },
+        "assertions": {
+          "run_completed": {
+            "pass": false,
+            "details": "POLL_TIMEOUT:false"
+          }
+        },
+        "pass": false,
+        "failure_class": "ENVIRONMENT",
+        "failure_screenshot": {
+          "path": "docs/evaluation/geometry/runs/visual-hybrid-integration/visual/official-suite-complete/screenshots/cross-section/served/point_construction_witness/mobile/failure.png",
+          "bytes": 280725,
+          "sha256": "cb782a5af1041b5f4ade14de30f3951dab64e95f7e4167a818a62a4764329796",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      }
+    },
+    "projection_correct": {
+      "desktop": {
+        "viewport": {
+          "id": "desktop",
+          "width": 1440,
+          "height": 900,
+          "formation": "full",
+          "orbit": true
+        },
+        "assertions": {
+          "run_completed": {
+            "pass": false,
+            "details": "POLL_TIMEOUT:false"
+          }
+        },
+        "pass": false,
+        "failure_class": "ENVIRONMENT",
+        "failure_screenshot": {
+          "path": "docs/evaluation/geometry/runs/visual-hybrid-integration/visual/official-suite-complete/screenshots/cross-section/served/projection_correct/desktop/failure.png",
+          "bytes": 293818,
+          "sha256": "af32db2db4aa83d1b7f62269cf24c5f6bd7205dffe131bdf712699c91c14e6e0",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      },
+      "mobile": {
+        "viewport": {
+          "id": "mobile",
+          "width": 390,
+          "height": 844,
+          "formation": "representative",
+          "orbit": true
+        },
+        "assertions": {
+          "run_completed": {
+            "pass": false,
+            "details": "POLL_TIMEOUT:false"
+          }
+        },
+        "pass": false,
+        "failure_class": "ENVIRONMENT",
+        "failure_screenshot": {
+          "path": "docs/evaluation/geometry/runs/visual-hybrid-integration/visual/official-suite-complete/screenshots/cross-section/served/projection_correct/mobile/failure.png",
+          "bytes": 270978,
+          "sha256": "ee79d50a65b735fc608cf6184d387e05892c13713c60e39713cd74c82e939a93",
+          "scroll": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      }
+    }
+  },
+  "pass": false
+}

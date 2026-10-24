@@ -1,0 +1,27 @@
+ M frontend/src/components/SimulationWorkspace.tsx
+ M frontend/src/components/hybrid-preview-contract.test.tsx
+ M frontend/src/simulations/domains/geometry/Scene3DExplorer.test.tsx
+ M frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx
+ M frontend/src/simulations/domains/geometry/interaction-state.ts
+ M frontend/src/simulations/domains/geometry/pick-target.ts
+ M frontend/src/simulations/domains/geometry/scene3d-auxiliary.ts
+ M frontend/src/simulations/domains/geometry/scene3d-camera.ts
+ M frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts
+ M frontend/src/simulations/domains/geometry/scene3d-hidden-lines.test.tsx
+ M frontend/src/simulations/domains/geometry/scene3d-model.ts
+ M frontend/src/simulations/domains/geometry/scene3d-playback.tsx
+ M frontend/src/simulations/domains/geometry/scene3d-presentation.ts
+ M frontend/src/simulations/domains/geometry/scene3d-roles.ts
+ M frontend/src/simulations/domains/geometry/scene3d-section.test.ts
+ M frontend/src/simulations/domains/geometry/scene3d-view.tsx
+ M frontend/src/simulations/domains/geometry/scene3d.test.tsx
+ M frontend/src/styles/global.css
+ M frontend/src/styles/tokens.css
+?? docs/evaluation/geometry/runs/docs-final-go-main/
+?? docs/evaluation/geometry/runs/hybrid-go-main/
+?? docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/
+?? docs/evaluation/geometry/runs/hybrid-route-d-preview-go-main/
+?? docs/evaluation/geometry/runs/scene3d-go-main/
+?? docs/evaluation/geometry/runs/source-gate-hardening/verification/t3-fail-72d1595f.log
+?? frontend/public/
+?? frontend/src/simulations/domains/geometry/simulation-visual-consistency-session1.test.tsx

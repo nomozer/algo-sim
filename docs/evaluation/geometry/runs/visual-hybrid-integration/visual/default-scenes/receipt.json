@@ -1,0 +1,443 @@
+{
+  "schema": "algosim-visual-capture/1",
+  "label": "closure",
+  "commit": "13d28b844925ee0c9adb02698b54597c8f9d6eee",
+  "tracked_changes": "M frontend/scripts/compiler-scene-suite.mjs",
+  "fixtures_sha256": "1abad7c55cc31acd2c27123e347ebf6f125fd58a20544e55bc5680c5ea9b9df5",
+  "rows": [
+    {
+      "kind": "sample",
+      "id": "thiet-dien-chop",
+      "what": "S.ABCD + section (offline sample)",
+      "viewport": "1440x900",
+      "loaded": {
+        "active": true,
+        "error": null
+      },
+      "step": 10,
+      "camera": {
+        "position": [
+          7.3815,
+          4.6261,
+          5.211
+        ],
+        "fov": 50,
+        "up": [
+          0,
+          0,
+          1
+        ]
+      },
+      "fat_lines": {
+        "totalLines": 12,
+        "maxSectionBorderWidth": 4.48,
+        "maxVisibleEdgeWidth": 3.58,
+        "minHiddenEdgeWidth": 2.99
+      },
+      "canvas_css": [
+        1393,
+        719
+      ],
+      "file": "closure-thiet-dien-chop-1440.png",
+      "sha256": "3941f60628a3e53797287791ed6d52015eecf1399343decceb73e287cf9a22d9"
+    },
+    {
+      "kind": "sample",
+      "id": "mp-vuong-goc-duong",
+      "what": "S.ABCD + perpendicular plane (offline sample)",
+      "viewport": "1440x900",
+      "loaded": {
+        "active": true,
+        "error": null
+      },
+      "step": 5,
+      "camera": {
+        "position": [
+          7.3815,
+          4.6261,
+          5.211
+        ],
+        "fov": 50,
+        "up": [
+          0,
+          0,
+          1
+        ]
+      },
+      "fat_lines": {
+        "totalLines": 16,
+        "maxSectionBorderWidth": 0,
+        "maxVisibleEdgeWidth": 3.58,
+        "minHiddenEdgeWidth": 2.19
+      },
+      "canvas_css": [
+        1393,
+        719
+      ],
+      "file": "closure-mp-vuong-goc-duong-1440.png",
+      "sha256": "bf6875e53774de945c35d34f833fc53fab981d539e5c3ed42485726acf26e25d"
+    },
+    {
+      "kind": "fixture",
+      "id": "CORPUS-DEV01-construct",
+      "what": "S.ABCD quadrilateral section (B1/B2 service)",
+      "viewport": "1440x900",
+      "loaded": {
+        "active": true,
+        "error": null
+      },
+      "step": 21,
+      "camera": {
+        "position": [
+          2.6601,
+          1.673,
+          0.9891
+        ],
+        "fov": 50,
+        "up": [
+          0,
+          0,
+          1
+        ]
+      },
+      "fat_lines": {
+        "totalLines": 19,
+        "maxSectionBorderWidth": 4.48,
+        "maxVisibleEdgeWidth": 3.58,
+        "minHiddenEdgeWidth": 2.99
+      },
+      "canvas_css": [
+        1393,
+        719
+      ],
+      "file": "closure-CORPUS-DEV01-construct-1440.png",
+      "sha256": "fd2b228e0d6d5e69544bdb7880e0ea0776518b73ae42795c474ede3684fc3345"
+    },
+    {
+      "kind": "fixture",
+      "id": "CORPUS-DEV03-construct",
+      "what": "S.ABC triangular section, SA ⊥ base (B1/B2 service)",
+      "viewport": "1440x900",
+      "loaded": {
+        "active": true,
+        "error": null
+      },
+      "step": 19,
+      "camera": {
+        "position": [
+          2.515,
+          1.4531,
+          1.5794
+        ],
+        "fov": 50,
+        "up": [
+          0,
+          0,
+          1
+        ]
+      },
+      "fat_lines": {
+        "totalLines": 19,
+        "maxSectionBorderWidth": 4.48,
+        "maxVisibleEdgeWidth": 3.58,
+        "minHiddenEdgeWidth": 2.39
+      },
+      "canvas_css": [
+        1393,
+        719
+      ],
+      "file": "closure-CORPUS-DEV03-construct-1440.png",
+      "sha256": "eba203278ab55860ce3999976c38bcba51cabb0a4669eb08a60bedbcff0abdd5"
+    },
+    {
+      "kind": "fixture",
+      "id": "CORPUS-DEV10-prism-area",
+      "what": "right prism + section (B1/B2 service)",
+      "viewport": "1440x900",
+      "loaded": {
+        "active": true,
+        "error": null
+      },
+      "step": 16,
+      "camera": {
+        "position": [
+          3.56,
+          1.4461,
+          2.5336
+        ],
+        "fov": 50,
+        "up": [
+          0,
+          0,
+          1
+        ]
+      },
+      "fat_lines": {
+        "totalLines": 15,
+        "maxSectionBorderWidth": 4.48,
+        "maxVisibleEdgeWidth": 3.58,
+        "minHiddenEdgeWidth": 2.99
+      },
+      "canvas_css": [
+        1393,
+        719
+      ],
+      "file": "closure-CORPUS-DEV10-prism-area-1440.png",
+      "sha256": "82dc0bb098c2e02976a0d9b85e89491945c81d55ca8b8f7538215e592136198b"
+    },
+    {
+      "kind": "fixture",
+      "id": "PERP-square-third",
+      "what": "S.ABCD SA ⊥ base, right-angle marks (B1/B2 service)",
+      "viewport": "1440x900",
+      "loaded": {
+        "active": true,
+        "error": null
+      },
+      "step": 20,
+      "camera": {
+        "position": [
+          2.5004,
+          1.5591,
+          1.9546
+        ],
+        "fov": 50,
+        "up": [
+          0,
+          0,
+          1
+        ]
+      },
+      "fat_lines": {
+        "totalLines": 24,
+        "maxSectionBorderWidth": 4.48,
+        "maxVisibleEdgeWidth": 3.58,
+        "minHiddenEdgeWidth": 2.39
+      },
+      "canvas_css": [
+        1393,
+        719
+      ],
+      "file": "closure-PERP-square-third-1440.png",
+      "sha256": "4ec54bf6119efd114f657b0a1de9fecd3373e105c41c1ec59c0735894c49deb1"
+    },
+    {
+      "kind": "sample",
+      "id": "thiet-dien-chop",
+      "what": "S.ABCD + section (offline sample)",
+      "viewport": "390x844",
+      "loaded": {
+        "active": true,
+        "error": null
+      },
+      "step": 10,
+      "camera": {
+        "position": [
+          8.0283,
+          5.0044,
+          5.564
+        ],
+        "fov": 50,
+        "up": [
+          0,
+          0,
+          1
+        ]
+      },
+      "fat_lines": {
+        "totalLines": 12,
+        "maxSectionBorderWidth": 2.79,
+        "maxVisibleEdgeWidth": 2.23,
+        "minHiddenEdgeWidth": 1.86
+      },
+      "canvas_css": [
+        343,
+        367
+      ],
+      "file": "closure-thiet-dien-chop-390.png",
+      "sha256": "971c5f2e291ed2574da87c14615cacd3b96772d1aaeed7310c6fa64c7316e5cf"
+    },
+    {
+      "kind": "sample",
+      "id": "mp-vuong-goc-duong",
+      "what": "S.ABCD + perpendicular plane (offline sample)",
+      "viewport": "390x844",
+      "loaded": {
+        "active": true,
+        "error": null
+      },
+      "step": 5,
+      "camera": {
+        "position": [
+          8.0283,
+          5.0044,
+          5.564
+        ],
+        "fov": 50,
+        "up": [
+          0,
+          0,
+          1
+        ]
+      },
+      "fat_lines": {
+        "totalLines": 16,
+        "maxSectionBorderWidth": 0,
+        "maxVisibleEdgeWidth": 2.23,
+        "minHiddenEdgeWidth": 1.36
+      },
+      "canvas_css": [
+        343,
+        367
+      ],
+      "file": "closure-mp-vuong-goc-duong-390.png",
+      "sha256": "a9609e81a06d1c22532279262fffb31204fb8e66bc2d18a97f04cc5f3630568b"
+    },
+    {
+      "kind": "fixture",
+      "id": "CORPUS-DEV01-construct",
+      "what": "S.ABCD quadrilateral section (B1/B2 service)",
+      "viewport": "390x844",
+      "loaded": {
+        "active": true,
+        "error": null
+      },
+      "step": 21,
+      "camera": {
+        "position": [
+          2.6596,
+          1.6734,
+          0.9896
+        ],
+        "fov": 50,
+        "up": [
+          0,
+          0,
+          1
+        ]
+      },
+      "fat_lines": {
+        "totalLines": 19,
+        "maxSectionBorderWidth": 2.79,
+        "maxVisibleEdgeWidth": 2.23,
+        "minHiddenEdgeWidth": 1.86
+      },
+      "canvas_css": [
+        343,
+        331
+      ],
+      "file": "closure-CORPUS-DEV01-construct-390.png",
+      "sha256": "8aa3bf5836b5ad93394453bc7473b6db9f608ea830e62c9e92e58865806ed12d"
+    },
+    {
+      "kind": "fixture",
+      "id": "CORPUS-DEV03-construct",
+      "what": "S.ABC triangular section, SA ⊥ base (B1/B2 service)",
+      "viewport": "390x844",
+      "loaded": {
+        "active": true,
+        "error": null
+      },
+      "step": 19,
+      "camera": {
+        "position": [
+          2.515,
+          1.4531,
+          1.5794
+        ],
+        "fov": 50,
+        "up": [
+          0,
+          0,
+          1
+        ]
+      },
+      "fat_lines": {
+        "totalLines": 19,
+        "maxSectionBorderWidth": 2.79,
+        "maxVisibleEdgeWidth": 2.23,
+        "minHiddenEdgeWidth": 1.49
+      },
+      "canvas_css": [
+        343,
+        344
+      ],
+      "file": "closure-CORPUS-DEV03-construct-390.png",
+      "sha256": "a1c94c4cdbec6c3be66be6659a3a82d8aeeaee9d7c5b52324e1f034f9e7b3686"
+    },
+    {
+      "kind": "fixture",
+      "id": "CORPUS-DEV10-prism-area",
+      "what": "right prism + section (B1/B2 service)",
+      "viewport": "390x844",
+      "loaded": {
+        "active": true,
+        "error": null
+      },
+      "step": 16,
+      "camera": {
+        "position": [
+          3.8873,
+          1.5659,
+          2.6923
+        ],
+        "fov": 50,
+        "up": [
+          0,
+          0,
+          1
+        ]
+      },
+      "fat_lines": {
+        "totalLines": 15,
+        "maxSectionBorderWidth": 2.79,
+        "maxVisibleEdgeWidth": 2.23,
+        "minHiddenEdgeWidth": 1.86
+      },
+      "canvas_css": [
+        343,
+        344
+      ],
+      "file": "closure-CORPUS-DEV10-prism-area-390.png",
+      "sha256": "c5c0d5231ef97fcd0fb6103d73f0ef3db13054cb4dcc23823a18ccae725f9421"
+    },
+    {
+      "kind": "fixture",
+      "id": "PERP-square-third",
+      "what": "S.ABCD SA ⊥ base, right-angle marks (B1/B2 service)",
+      "viewport": "390x844",
+      "loaded": {
+        "active": true,
+        "error": null
+      },
+      "step": 20,
+      "camera": {
+        "position": [
+          2.691,
+          1.6778,
+          2.1178
+        ],
+        "fov": 50,
+        "up": [
+          0,
+          0,
+          1
+        ]
+      },
+      "fat_lines": {
+        "totalLines": 24,
+        "maxSectionBorderWidth": 2.79,
+        "maxVisibleEdgeWidth": 2.23,
+        "minHiddenEdgeWidth": 1.49
+      },
+      "canvas_css": [
+        343,
+        344
+      ],
+      "file": "closure-PERP-square-third-390.png",
+      "sha256": "0789bf797882381a686761e90de0406b2f56e1990d95bd35cbe58cc2388e434e"
+    }
+  ],
+  "errors": [],
+  "forbidden": []
+}
