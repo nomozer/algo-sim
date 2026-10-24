@@ -45,8 +45,7 @@ import type { SceneObject } from "./scene3d-model";
  */
 export function kyHieu(o: Pick<SceneObject, "notation">): string | null {
   const n = (o.notation ?? "").trim();
-  if (n === "" || /I\d/.test(n)) return null;
-  if (n === "(HUW)") return "(P)";
+  if (n === "") return null;
   return n;
 }
 

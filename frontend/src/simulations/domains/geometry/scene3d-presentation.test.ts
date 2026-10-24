@@ -20,6 +20,10 @@ describe("ký hiệu do BACKEND phát, phía này không tự chế", () => {
     expect(kyHieu({ notation: "d(H, (SBC))" })).toBe("d(H, (SBC))");
   });
 
+  it.each(["I1", "I12", "AI2", "(HUW)", "(α)"])("giữ nguyên ký hiệu backend %s", (notation) => {
+    expect(kyHieu({ notation })).toBe(notation);
+  });
+
   it("không có ký hiệu ⇒ KHÔNG in gì, không đoán tạm", () => {
     // `null` là câu trả lời hợp lệ của backend cho một vật không có ký hiệu
     // toán (`pyramid_S_ABCD`, `section_MNP`). Bịa một chữ cạnh một vật là một
