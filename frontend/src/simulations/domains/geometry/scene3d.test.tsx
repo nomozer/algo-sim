@@ -955,6 +955,20 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
     expect((x0 - chan.x * 360) * (x2 - chan.x * 360) + (y0 - chan.y * 360) * (y2 - chan.y * 360)).toBeCloseTo(0, 6);
     const s = 10.08 * 10 / (360 / Math.tan((25 * Math.PI) / 180));
     expect((a.userData.corner as number[]).map((x) => +x.toFixed(4))).toEqual([+s.toFixed(4), +s.toFixed(4), 0]);
+
+    // With the orbit target: a pure ORBIT (same target depth) keeps the world size — no coordinate rewrite, so no
+    // GPU buffer reallocation (scene3d-orbit-gate); a ZOOM (target depth changes) recomputes it.
+    // Target ≠ foot, so an orbit really changes the foot's depth (10 → 9.6).
+    const tam = new THREE.Vector3(0, 0, -2);
+    cam.lookAt(tam); cam.updateMatrixWorld(true);
+    datCoGocVuong([root], cam, 720, tam);
+    const coDau = goc.scale.x;
+    cam.position.set(7.2, 0, 7.6); cam.lookAt(tam); cam.updateMatrixWorld(true);   // |cam − target| = 12: orbit
+    datCoGocVuong([root], cam, 720, tam);
+    expect(goc.scale.x).toBe(coDau);
+    cam.position.set(0, 0, 4); cam.lookAt(tam); cam.updateMatrixWorld(true);       // zoom: foot depth 10 → 4
+    datCoGocVuong([root], cam, 720, tam);
+    expect(goc.scale.x).toBeCloseTo(coDau * 0.4, 6);
   });
 
   it("nhân chứng vuông góc trên khối đơn vị co giãn chu kỳ nét đứt và ô góc vuông theo đường kính cảnh, không phình quá khổ", () => {

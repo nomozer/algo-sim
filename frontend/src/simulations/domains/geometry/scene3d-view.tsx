@@ -2234,10 +2234,10 @@ function khoaGocVuong(d: GocVuongDonVi): string {
 /**
  * Cỡ ký hiệu vuông góc theo MÀN HÌNH: cạnh dấu ≈ `rightAngle.perCanvasHeight` × chiều cao khung, kẹp
  * [`minPx`, `maxPx`] (8–12 px). Co/giãn quanh chân, nhưng cỡ world không vượt `maxWorld` (một phần đoạn liên quan).
- * Cỡ điểm ảnh tỉ lệ nghịch với ĐỘ SÂU view-space — phép chiếu của camera, không phép hình học nào trên cảnh. Có
- * `tamNhin` (đích OrbitControls) thì đo độ sâu của TÂM NHÌN: không đổi khi chỉ XOAY, nên toạ độ dấu đứng yên và nét
- * dày không cấp phát lại buffer GPU mỗi khung (cổng `scene3d-orbit-gate`, `capPhat = 0`); chỉ thu phóng mới đổi cỡ.
- * Không có thì đo độ sâu của chính chân. Hai dấu cùng chân và cùng cặp phương ⇒ giữ dấu đầu, ẩn dấu lặp. Trả số dấu
+ * Cỡ điểm ảnh tỉ lệ nghịch với ĐỘ SÂU view-space của chân — phép chiếu của camera, không phép hình học nào trên
+ * cảnh. Có `tamNhin` (đích OrbitControls): chỉ tính lại khi độ sâu của TÂM NHÌN đổi (thu phóng, đặt khung) — lúc chỉ
+ * XOAY, cỡ world giữ nguyên nên toạ độ dấu đứng yên và nét dày không cấp phát lại buffer GPU mỗi khung (cổng
+ * `scene3d-orbit-gate`, `capPhat = 0`). Hai dấu cùng chân và cùng cặp phương ⇒ giữ dấu đầu, ẩn dấu lặp. Trả số dấu
  * đang hiện.
  */
 export function datCoGocVuong(
@@ -2263,9 +2263,13 @@ export function datCoGocVuong(
       daCo.add(khoa);
       if (!node.visible) return;
       hien += 1;
-      const doSau = doSauTam ?? (node.parent
+      // Chỉ XOAY (độ sâu tâm nhìn và cỡ khung không đổi) ⇒ giữ cỡ world đã đặt: không ghi toạ độ mới.
+      const khoaCo = doSauTam === null ? null : `${doSauTam.toFixed(6)}|${hCss}`;
+      if (khoaCo !== null && node.userData.khoaCoGocVuong === khoaCo) return;
+      node.userData.khoaCoGocVuong = khoaCo;
+      const doSau = node.parent
         ? -chan.set(...d.foot).applyMatrix4(node.parent.matrixWorld).applyMatrix4(pc.matrixWorldInverse).z
-        : -chan.set(...d.foot).applyMatrix4(pc.matrixWorldInverse).z);
+        : -chan.set(...d.foot).applyMatrix4(pc.matrixWorldInverse).z;
       const k = doSau > 0 ? Math.min(d.maxWorld, (px * doSau) / f) / d.s0 : 1;
       node.scale.setScalar(k);
       node.position.set(d.foot[0] * (1 - k), d.foot[1] * (1 - k), d.foot[2] * (1 - k));
@@ -2302,7 +2306,7 @@ export function vatNhanChung(
   const doan = new THREE.Line(new THREE.BufferGeometry().setFromPoints([chan, tu]),
     new THREE.LineDashedMaterial({ color: mauNet, dashSize: chuKy, gapSize: chuKy * PHONG_CACH_SCENE3D.dash.witnessGapRatio, depthTest: false, transparent: true, opacity: DO_DUC.witness }));
   doan.computeLineDistances();
-  // Ký hiệu vuông góc ở cỡ world trần `s`; `datCoGocVuong` thu nhỏ về pixel mỗi khung và cập nhật `corner` của nhóm.
+  // Ký hiệu vuông góc dựng ở cỡ `s`; `datCoGocVuong` co/giãn về pixel và cập nhật `corner` của nhóm.
   const daiNhanChung = Math.hypot(tu.x - chan.x, tu.y - chan.y, tu.z - chan.z);
   const goc = dauGocVuong([chan.x, chan.y, chan.z], [uDon.x, uDon.y, uDon.z], [vDon.x, vDon.y, vDon.z], s,
     PHONG_CACH_SCENE3D.rightAngle.maxLegRatio * daiNhanChung, mauNet, g);
