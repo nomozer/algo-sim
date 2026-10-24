@@ -2779,15 +2779,11 @@ html {
   min-height: 320px;
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-lg);
-  background: #f8fafc;
+  background: #f8f6f1;
   overflow: hidden;
-  /* Nền trắng sáng sách giáo khoa với chuyển sắc cực nhẹ hướng tâm: giữ mặt khối xanh xám trong trẻo,
-     không pha tông vàng ấm của trang vào mặt bán trong suốt. */
-  background-image: radial-gradient(
-    ellipse 75% 65% at 50% 45%,
-    #ffffff 0%,
-    #f8fafc 100%
-  );
+  /* Nền ngà của HTML tham chiếu SGK (`.academic-stage-light`), chỉ trong khung 3D — không đổi nền trang. Vỏ khối
+     không đèn (`voKhoiHaiLuot`) nên tông ấm của nền không còn bị nhân với ánh sáng lên mặt bán trong suốt. */
+  background-image: radial-gradient(circle at 50% 44%, #ffffff 0%, #f8f6f1 68%, #efece4 100%);
 }
 
 /* ── NHÃN ĐIỂM, nổi trên khung ────────────────────────────────────────── */
@@ -2798,21 +2794,45 @@ html {
   pointer-events: none;
 }
 
+/* Nhãn theo HTML tham chiếu SGK (`.vertex-label.*`): đỉnh chính không hộp, chữ đậm có quầng nền ngà; đỉnh thiết diện
+   hộp cam đất; điểm dựng phụ hộp xanh cổ vịt. Vai trò chỉ là kiểu trình bày (`vaiNhan`), không đổi danh tính điểm. */
 .geo3d-label {
   position: absolute;
   top: 0;
   left: 0;
-  padding: 1px 5px;
-  border: 1px solid rgba(25, 25, 24, 0.10);
+  padding: 1px 3px;
+  border: 1px solid transparent;
   border-radius: var(--rounded-sm);
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--ink);
-  font-size: 0.78125rem;
-  font-weight: 600;
-  line-height: 1.2;
+  background: transparent;
+  color: #141413;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: -1.5px -1.5px 0 #f8f6f1, 1.5px -1.5px 0 #f8f6f1, -1.5px 1.5px 0 #f8f6f1, 1.5px 1.5px 0 #f8f6f1,
+    0 0 6px #ffffff;
   white-space: nowrap;
   opacity: 0;
   transition: opacity 120ms ease-out;
+}
+
+.geo3d-label.vai-thiet-dien {
+  padding: 2px 6px;
+  border: 1.5px solid #c85a32;
+  border-radius: 6px;
+  background: rgba(255, 251, 247, 0.92);
+  color: #b4411a;
+  font-size: 0.78125rem;
+  text-shadow: none;
+}
+
+.geo3d-label.vai-phu {
+  padding: 1.5px 5.5px;
+  border: 1px solid rgba(15, 118, 110, 0.35);
+  border-radius: 5px;
+  background: rgba(248, 250, 252, 0.9);
+  color: #0f766e;
+  font-size: 0.78125rem;
+  text-shadow: none;
 }
 
 /* Vật đang chọn: nền đặc + chữ nghịch đảo. HAI kênh, không chỉ màu — luật
@@ -2826,6 +2846,7 @@ html {
 .geo3d-label.la-diu {
   color: var(--ink-quiet);
   background: transparent;
+  border-color: transparent;
 }
 
 /* ── NHÃN KÝ HIỆU MẶT PHẲNG (`.geo3d-nhan-mp`) ──────────────────────────────
@@ -2842,13 +2863,13 @@ html {
   position: absolute;
   top: 0;
   left: 0;
-  padding: 1px 5px;
-  border: 1px solid rgba(109, 40, 217, 0.22);
-  border-radius: 999px;
-  background: rgba(250, 245, 255, 0.88);
-  color: #5b21b6;
-  font-size: 0.71875rem;
-  font-weight: 600;
+  padding: 2px 8px;
+  border: 1px solid rgba(109, 40, 217, 0.38);
+  border-radius: 7px;
+  background: rgba(237, 233, 254, 0.92);
+  color: #6d28d9;
+  font-size: 0.8125rem;
+  font-weight: 700;
   font-style: italic;
   line-height: 1.2;
   white-space: nowrap;

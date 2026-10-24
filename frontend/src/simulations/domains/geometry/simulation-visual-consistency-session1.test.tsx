@@ -10,6 +10,7 @@ import {
 import { diemHuuHan, type Scene3D, type SceneObject } from "./scene3d-model";
 import { hangCuThe } from "./pick-target";
 import { semanticTree } from "./interaction-state";
+import { PHONG_CACH_SCENE3D } from "./scene3d-roles";
 
 describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid Presentation", () => {
   it("unifies curved_solid surface material with polyhedral mesh palette (DESIGN sky, common normal / selected opacity)", () => {
@@ -62,9 +63,9 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
       )!;
       const matDefault = meshDefault.material as THREE.MeshStandardMaterial;
       expect(matDefault.color.getHex()).toBe(polyMat.color.getHex());
-      expect(matDefault.color.getHex()).toBe(0x647a96);
+      expect(matDefault.color.getHex()).toBe(PHONG_CACH_SCENE3D.colors.mesh);
       expect(matDefault.opacity).toBeCloseTo(polyMat.opacity, 5);
-      expect(matDefault.opacity).toBeCloseTo(0.16, 5);
+      expect(matDefault.opacity).toBeCloseTo(PHONG_CACH_SCENE3D.opacity.solid, 5);
 
       const groupHighlighted = buildObject3D(curvedObj, true)!;
       const meshHighlighted = groupHighlighted.children.find(
@@ -72,7 +73,7 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
           c instanceof THREE.Mesh && (c.material as THREE.Material).colorWrite !== false,
       )!;
       const matHighlighted = meshHighlighted.material as THREE.MeshStandardMaterial;
-      expect(matHighlighted.opacity).toBeCloseTo(0.22, 5);
+      expect(matHighlighted.opacity).toBeCloseTo(PHONG_CACH_SCENE3D.opacity.selectedSolid, 5);
     }
   });
 
@@ -94,7 +95,7 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
     const baseFill = builtBase.getObjectByName("polygon_fill:duong_tron_day_cyl") as THREE.Mesh;
     expect(baseFill).toBeDefined();
     const baseFillMat = baseFill.material as THREE.MeshBasicMaterial;
-    expect(baseFillMat.color.getHex()).toBe(0x647a96);
+    expect(baseFillMat.color.getHex()).toBe(PHONG_CACH_SCENE3D.colors.mesh);
     expect(baseFillMat.opacity).toBeCloseTo(0.09, 5);
     const baseRim = builtBase.children.find(
       (c): c is THREE.Mesh => c instanceof THREE.Mesh && c !== baseFill,
@@ -119,14 +120,14 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
     expect(secFill).toBeDefined();
     expect(secFill.renderOrder).toBe(THU_TU_TO_THIET_DIEN);
     const secFillMat = secFill.material as THREE.MeshBasicMaterial;
-    expect(secFillMat.color.getHex()).toBe(0xf59e0b);
-    expect(secFillMat.opacity).toBeCloseTo(0.28, 5);
+    expect(secFillMat.color.getHex()).toBe(PHONG_CACH_SCENE3D.colors.polygon);
+    expect(secFillMat.opacity).toBeCloseTo(PHONG_CACH_SCENE3D.opacity.section, 5);
     expect(secFillMat.depthTest).toBe(true);
     expect(secFillMat.depthFunc).toBe(THREE.LessEqualDepth);
     const secRim = builtCut.children.find(
       (c): c is THREE.Mesh => c instanceof THREE.Mesh && c !== secFill,
     )!;
-    expect((secRim.material as THREE.MeshBasicMaterial).color.getHex()).toBe(0xd97706);
+    expect((secRim.material as THREE.MeshBasicMaterial).color.getHex()).toBe(PHONG_CACH_SCENE3D.colors.sectionOutline);
 
     const cutEllipse: SceneObject = {
       id: "td_sec_el",
@@ -149,8 +150,8 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
     expect(elFill).toBeDefined();
     expect(elFill.renderOrder).toBe(THU_TU_TO_THIET_DIEN);
     const elFillMat = elFill.material as THREE.MeshBasicMaterial;
-    expect(elFillMat.color.getHex()).toBe(0xf59e0b);
-    expect(elFillMat.opacity).toBeCloseTo(0.28, 5);
+    expect(elFillMat.color.getHex()).toBe(PHONG_CACH_SCENE3D.colors.polygon);
+    expect(elFillMat.opacity).toBeCloseTo(PHONG_CACH_SCENE3D.opacity.section, 5);
     expect(elFillMat.depthTest).toBe(true);
     expect(elFillMat.depthFunc).toBe(THREE.LessEqualDepth);
   });
@@ -252,12 +253,14 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
     const builtSelected = buildObject3D(cutCircle, true)!;
     const secFill = builtSelected.getObjectByName("section_fill:td_sec_sphere") as THREE.Mesh;
     const secFillMat = secFill.material as THREE.MeshBasicMaterial;
-    expect(secFillMat.color.getHex()).toBe(0xf59e0b);
-    expect(secFillMat.opacity).toBeCloseTo(0.34, 5);
+    // SGK reference: section fill and outline are both terracotta; base circles stay shell grey (above).
+    expect(secFillMat.color.getHex()).toBe(PHONG_CACH_SCENE3D.colors.polygon);
+    expect(secFillMat.color.getHex()).not.toBe(PHONG_CACH_SCENE3D.colors.mesh);
+    expect(secFillMat.opacity).toBeCloseTo(PHONG_CACH_SCENE3D.opacity.selectedSection, 5);
     const secRim = builtSelected.children.find(
       (c): c is THREE.Mesh => c instanceof THREE.Mesh && c !== secFill,
     )!;
-    expect((secRim.material as THREE.MeshBasicMaterial).color.getHex()).toBe(0xd97706);
+    expect((secRim.material as THREE.MeshBasicMaterial).color.getHex()).toBe(PHONG_CACH_SCENE3D.colors.sectionOutline);
   });
 
   it("pilots illustration-quality multi-pixel Line2 hierarchy, single-pass outward polyhedral shells, section-coincident base yielding, standalone plane visibility, and outward radial vertex labels", () => {
@@ -328,12 +331,16 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
     expect(yielded.has("day_MI1I2I3")).toBe(true);
     expect(yielded.has("td_ask9")).toBe(false);
 
-    // 2. Polyhedral shell uses FrontSide in normal mode to prevent double-sided compound alpha
+    // 2. SGK shell (reference addPolyhedronShell): unlit FrontSide pass at full shell opacity plus ONE BackSide pass at
+    //    shellBackRatio × opacity — bounded compound alpha, never a DoubleSide mesh at full opacity.
     const pyrGroup = buildObject3D(pyramid, false, undefined, diemHuuHan([pyramid]), undefined, undefined, undefined, false)!;
-    const shellMesh = pyrGroup.children.find(
+    const shellPasses = pyrGroup.children.filter(
       (c): c is THREE.Mesh => c instanceof THREE.Mesh && (c.material as THREE.Material).colorWrite !== false,
-    )!;
-    expect((shellMesh.material as THREE.MeshStandardMaterial).side).toBe(THREE.FrontSide);
+    );
+    expect(shellPasses.map((m) => (m.material as THREE.Material).side)).toEqual([THREE.FrontSide, THREE.BackSide]);
+    const [front, back] = shellPasses.map((m) => m.material as THREE.MeshBasicMaterial);
+    expect(front).toBeInstanceOf(THREE.MeshBasicMaterial);
+    expect(back.opacity).toBeCloseTo(front.opacity * PHONG_CACH_SCENE3D.opacity.shellBackRatio, 6);
 
     // 3. Multi-pixel Line2 fat-line synchronization enforces stroke hierarchy
     const secGroup = buildObject3D(section, false, undefined, diemHuuHan([pyramid]))!;
@@ -345,7 +352,8 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
     expect(summary.maxSectionBorderWidth).toBeGreaterThan(summary.maxVisibleEdgeWidth);
     expect(summary.maxVisibleEdgeWidth).toBeGreaterThan(summary.minHiddenEdgeWidth);
 
-    // 4. Standalone geometric plane (coThietDienDong = false) remains clearly visible with continuous border
+    // 4. SGK reference (addCuttingPlanePatch): the finite plane patch ALWAYS carries a dashed violet border — with or
+    //    without a closed section — so the patch edge is never read as a real (solid) edge.
     const planeObj: SceneObject = {
       id: "mp_P",
       label: "Mặt phẳng (P)",
@@ -360,14 +368,16 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
     const diemNen = diemHuuHan([pyramid]);
     const carrierPlane = buildObject3D(planeObj, false, undefined, diemNen)!;
     const carrierBorder = carrierPlane.getObjectByName("plane_border:mp_P") as THREE.Line;
-    expect((carrierBorder.material as THREE.LineBasicMaterial).colorWrite).toBe(false);
+    expect(carrierBorder.material).toBeInstanceOf(THREE.LineDashedMaterial);
+    expect((carrierBorder.material as THREE.LineDashedMaterial).colorWrite).toBe(true);
+    expect((carrierBorder.material as THREE.LineDashedMaterial).color.getHex()).toBe(PHONG_CACH_SCENE3D.colors.planeOutline);
 
     const standalonePlane = buildObject3D(
       planeObj, false, undefined, diemNen, undefined, undefined, undefined, false, "primary", false,
     )!;
     const standaloneBorder = standalonePlane.getObjectByName("plane_border:mp_P") as THREE.Line;
-    expect((standaloneBorder.material as THREE.LineBasicMaterial).colorWrite).toBe(true);
-    expect((standaloneBorder.material as THREE.LineBasicMaterial).opacity).toBeGreaterThanOrEqual(0.28);
+    expect(standaloneBorder.material).toBeInstanceOf(THREE.LineDashedMaterial);
+    expect((standaloneBorder.material as THREE.LineDashedMaterial).opacity).toBeGreaterThanOrEqual(0.28);
 
     // 5. Outward radial & right-angle-avoiding vertex label placement
     const placed = tinhViTriNhanDiem(

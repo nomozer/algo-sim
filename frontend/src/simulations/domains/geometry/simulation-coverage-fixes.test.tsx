@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import * as THREE from "three";
-import { THU_TU_TO_THIET_DIEN, buildObject3D, updateCanonicalEdgeVisibility } from "./scene3d-view";
+import { DO_DUC_TO_THIET_DIEN, THU_TU_TO_THIET_DIEN, buildObject3D, updateCanonicalEdgeVisibility } from "./scene3d-view";
 import { diemHuuHan, objectsAt, stepCount, type Scene3D, type SceneObject } from "./scene3d-model";
 import { veKhongGian } from "./scene3d-chart";
 import { TRANG_THAI_DAU, explode, isolate, select, semanticTree, visualTransformOf } from "./interaction-state";
@@ -294,7 +294,9 @@ describe("Session 1 P3 — Simulation Coverage & Visual Validation Fixes", () =>
     expect((xray.getObjectByName("polygon_fill:td_sec_axial") as THREE.Mesh<THREE.BufferGeometry, THREE.Material>).material.depthTest).toBe(false);
     expect(fillMat.depthWrite).toBe(false);
     expect(fillMat.polygonOffset).toBe(true);
-    expect(fillMat.opacity).toBeGreaterThanOrEqual(0.28);
+    // Section fill uses the single section opacity authority (SGK reference 0.27); legibility against shell and
+    // plane is measured by the browser gate SECTION_FILL_DISTINGUISHABLE, not by a literal here.
+    expect(fillMat.opacity).toBe(DO_DUC_TO_THIET_DIEN);
 
     // 2. Boundary lines in curved-solid scenes (occluders.length === 0) must retain both
     // LessEqualDepth visible solid pass (with polygonOffset) and GreaterDepth hidden dashed pass

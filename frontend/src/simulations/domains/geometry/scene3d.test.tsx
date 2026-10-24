@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import * as THREE from "three";
 import { renderToString } from "react-dom/server";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -30,6 +31,7 @@ import {
   dungLuoiNenSuPham,
   semanticIdOf,
   vatNhanChung,
+  datCoGocVuong,
 } from "./scene3d-view";
 
 /**
@@ -662,6 +664,9 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
          giác nhân đôi, và phép đo diện tích chiếu mất nghĩa — nó không thêm
          một tam giác nào của KHỐI. */
       if (con.userData?.chieuSau) return;
+      /* Cùng lý do với lượt MẶT SAU của vỏ SGK (`voKhoiHaiLuot`): một mesh dùng CHUNG hình học với mặt trước,
+         chỉ khác `side` — không thêm tam giác nào của khối. */
+      if (con.userData?.voKhoiMatSau) return;
       const a = p.array;
       for (let i = 0; i + 8 < a.length; i += 9) {
         ra.push([[a[i], a[i + 1], a[i + 2]],
@@ -914,6 +919,42 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
     expect(Math.hypot(uVec[0], uVec[1], uVec[2])).toBeCloseTo(s, 6);
     // Nét đứt đầu tiên từ H dài hơn s để đầu mút chan + v1 luôn chạm vào nét, không rơi vào khoảng trống
     expect(doan.material.dashSize).toBeGreaterThanOrEqual(s * 1.04);
+  });
+
+  it("SGK: ký hiệu vuông góc có cạnh ≈ 10 px trên khung 720 px, giữ trực giao quanh chân, dấu lặp cùng chân/phương bị ẩn", () => {
+    const w = {
+      id: "perpendicular:H", vai: "hinh_chieu" as const,
+      from: [0, 3, 0] as [number, number, number], foot: [0, 0, 0] as [number, number, number],
+      u: [1, 0, 0] as [number, number, number], v: [0, 3, 0] as [number, number, number],
+    };
+    const diem: [number, number, number][] = [[0, 0, 0], [4, 0, 0], [0, 4, 0], [0, 0, 4]];
+    const root = new THREE.Group();
+    const a = vatNhanChung(w, diem, 0x0f766e, false);
+    const b = vatNhanChung({ ...w, id: "perpendicular:H2" }, diem, 0x0f766e, false);
+    root.add(a, b);
+    const cam = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+    cam.position.set(0, 0, 10);
+    cam.lookAt(0, 0, 0);
+    cam.updateMatrixWorld(true);
+    expect(datCoGocVuong([root], cam, 720)).toBe(1);
+    const goc = a.children[1] as THREE.Line;
+    expect(goc.visible).toBe(true);
+    expect((b.children[1] as THREE.Line).visible).toBe(false);
+    goc.updateMatrixWorld(true);
+    const p = goc.geometry.getAttribute("position");
+    const diemManHinh = (i: number) => {
+      const q = new THREE.Vector3().fromBufferAttribute(p, i).applyMatrix4(goc.matrixWorld).project(cam);
+      return [q.x * 360, q.y * 360];
+    };
+    const chan = new THREE.Vector3(0, 0, 0).project(cam);
+    const [x0, y0] = diemManHinh(0);
+    const [x2, y2] = diemManHinh(2);
+    // Target leg = rightAngle.perCanvasHeight (0.014) × 720 = 10.08 px — inside the 8–12 px band.
+    expect(Math.hypot(x0 - chan.x * 360, y0 - chan.y * 360)).toBeCloseTo(10.08, 2);
+    expect(Math.hypot(x2 - chan.x * 360, y2 - chan.y * 360)).toBeCloseTo(10.08, 2);
+    expect((x0 - chan.x * 360) * (x2 - chan.x * 360) + (y0 - chan.y * 360) * (y2 - chan.y * 360)).toBeCloseTo(0, 6);
+    const s = 10.08 * 10 / (360 / Math.tan((25 * Math.PI) / 180));
+    expect((a.userData.corner as number[]).map((x) => +x.toFixed(4))).toEqual([+s.toFixed(4), +s.toFixed(4), 0]);
   });
 
   it("nhân chứng vuông góc trên khối đơn vị co giãn chu kỳ nét đứt và ô góc vuông theo đường kính cảnh, không phình quá khổ", () => {

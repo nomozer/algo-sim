@@ -5,6 +5,14 @@ import { LineGeometry } from "three/addons/lines/LineGeometry.js";
 import { LineMaterial } from "three/addons/lines/LineMaterial.js";
 import { chiaTamGiac } from "./polygon-triangulate";
 import { toVec3, type SceneObject } from "./scene3d-model";
+import { PHONG_CACH_SCENE3D } from "./scene3d-roles";
+
+/** Hệ số độ dày nét theo chiều cao khung (CSS px): hình luôn lấp ~78% khung, nên nét tỉ lệ với khung giữ đúng tỉ lệ
+ *  nét/hình như nét world-space của HTML tham chiếu; kẹp để nét không mất trên khung nhỏ, không thô trên khung lớn. */
+export function heSoNetTheoKhung(hCss: number): number {
+  const w = PHONG_CACH_SCENE3D.fatPx;
+  return Math.min(w.maxScale, Math.max(w.minScale, hCss / w.referenceCanvasHeight));
+}
 
 export interface CanonicalEdge {
   id: string;
@@ -495,6 +503,38 @@ export function taoGiuAmNetDay(): THREE.Object3D[] {
   return [solidHold, dashedHold];
 }
 
+/**
+ * Ghi toạ độ polyline mới VÀO CHÍNH các buffer instanced sẵn có của một `Line2` cùng số điểm (đoạn + khoảng cách nét
+ * đứt), thay vì `setPositions`/`computeLineDistances` — hai hàm ấy tạo `InstancedInterleavedBuffer` mới mỗi lần, tức
+ * một buffer GPU mới mỗi khi một span đổi lúc xoay (cổng `scene3d-orbit-gate`, `capPhat = 0`). `false` ⇒ chưa có
+ * buffer hợp cỡ, người gọi dựng lại như cũ.
+ */
+function capNhatLine2TaiCho(line2: Line2, coords: Float32Array): boolean {
+  const g = line2.geometry as LineGeometry;
+  const start = g.attributes.instanceStart as THREE.InterleavedBufferAttribute | undefined;
+  const dist = g.attributes.instanceDistanceStart as THREE.InterleavedBufferAttribute | undefined;
+  const doan = coords.length / 3 - 1;
+  if (!start || !dist || doan < 1 || start.data.array.length !== doan * 6 || dist.data.array.length !== doan * 2) {
+    return false;
+  }
+  const seg = start.data.array as Float32Array;
+  const d = dist.data.array as Float32Array;
+  let tong = 0;
+  for (let i = 0; i < doan; i += 1) {
+    for (let k = 0; k < 6; k += 1) seg[i * 6 + k] = coords[i * 3 + k];
+    const dai = Math.hypot(coords[i * 3 + 3] - coords[i * 3], coords[i * 3 + 4] - coords[i * 3 + 1],
+      coords[i * 3 + 5] - coords[i * 3 + 2]);
+    d[i * 2] = tong;
+    tong += dai;
+    d[i * 2 + 1] = tong;
+  }
+  start.data.needsUpdate = true;
+  dist.data.needsUpdate = true;
+  g.computeBoundingBox();
+  g.computeBoundingSphere();
+  return true;
+}
+
 export function dongBoNetDayManHinh(
   roots: readonly THREE.Object3D[],
   fatGroup: THREE.Group,
@@ -521,16 +561,20 @@ export function dongBoNetDayManHinh(
     });
   }
 
-  const pool: Line2[] = (fatGroup.userData.pool as Line2[] | undefined) ?? [];
-  fatGroup.userData.pool = pool;
+  // Pool THEO SỐ ĐIỂM: khi tập span đổi lúc xoay, một bản sao chỉ nhận nét cùng số điểm, nên buffer của nó được ghi
+  // tại chỗ (`capNhatLine2TaiCho`) thay vì dựng lại; chỉ khi một nhóm phải lớn thêm mới cấp phát.
+  const pools: Map<number, Line2[]> = (fatGroup.userData.pools as Map<number, Line2[]> | undefined) ?? new Map();
+  fatGroup.userData.pools = pools;
+  const daDung = new Map<number, number>();
   const tmp = new THREE.Vector3();
   const resW = Math.max(1, wCss);
   const resH = Math.max(1, hCss);
+  const heSoNet = heSoNetTheoKhung(hCss);
   let maxSectionBorderWidth = 0;
   let maxVisibleEdgeWidth = 0;
   let minHiddenEdgeWidth = Infinity;
 
-  activeLines.forEach((line, idx) => {
+  activeLines.forEach((line) => {
     const mat = line.material as THREE.LineBasicMaterial | THREE.LineDashedMaterial;
     const pos = line.geometry.getAttribute("position") as THREE.BufferAttribute;
     const isDashed =
@@ -551,16 +595,15 @@ export function dongBoNetDayManHinh(
       || (mat.linewidth && mat.linewidth >= 2.6),
     );
 
-    let widthPx = 1.8;
-    if (isPlaneBorder) {
-      widthPx = isHighlighted ? 1.75 : 1.15;
-    } else if (isSectionOrPolyBorder) {
-      widthPx = isHighlighted ? 2.85 : isDashed ? 1.65 : 2.45;
-    } else if (isPerpOrWitness) {
-      widthPx = isDashed ? 1.25 : 1.40;
-    } else {
-      widthPx = isHighlighted ? 2.65 : isDashed ? 1.25 : 1.80;
-    }
+    const w = PHONG_CACH_SCENE3D.fatPx;
+    const raw = isPlaneBorder
+      ? (isHighlighted ? w.selectedPlane : w.plane)
+      : isSectionOrPolyBorder
+        ? (isHighlighted ? w.selectedSection : isDashed ? w.hiddenSection : w.section)
+        : isPerpOrWitness
+          ? (isDashed ? w.hiddenPerpendicular : w.perpendicular)
+          : (isHighlighted ? w.selectedEdge : isDashed ? w.hiddenEdge : w.edge);
+    const widthPx = Number((raw * heSoNet).toFixed(2));
 
     if (isSectionOrPolyBorder && !isDashed) {
       maxSectionBorderWidth = Math.max(maxSectionBorderWidth, widthPx);
@@ -571,7 +614,11 @@ export function dongBoNetDayManHinh(
       minHiddenEdgeWidth = Math.min(minHiddenEdgeWidth, widthPx);
     }
 
-    let line2 = pool[idx];
+    const nhom = pools.get(pos.count) ?? [];
+    pools.set(pos.count, nhom);
+    const thu = daDung.get(pos.count) ?? 0;
+    daDung.set(pos.count, thu + 1);
+    let line2 = nhom[thu];
     if (!line2) {
       const g = new LineGeometry();
       g.setPositions([0, 0, 0, 1, 0, 0]);
@@ -589,7 +636,7 @@ export function dongBoNetDayManHinh(
       line2.raycast = () => {};
       line2.userData.voHan = true;
       line2.userData.fatLineCompanion = true;
-      pool.push(line2);
+      nhom.push(line2);
       fatGroup.add(line2);
     }
 
@@ -617,13 +664,13 @@ export function dongBoNetDayManHinh(
     }
 
     if (changed) {
-      if (line2.userData.pointCount !== pos.count) {
+      if (line2.userData.pointCount !== pos.count || !capNhatLine2TaiCho(line2, coords)) {
         line2.geometry?.dispose?.();
         line2.geometry = new LineGeometry();
         line2.userData.pointCount = pos.count;
+        line2.geometry.setPositions(coords);
+        line2.computeLineDistances();
       }
-      line2.geometry.setPositions(coords);
-      line2.computeLineDistances();
     }
 
     const lm = line2.material as LineMaterial;
@@ -653,8 +700,8 @@ export function dongBoNetDayManHinh(
     line2.visible = true;
   });
 
-  for (let k = activeLines.length; k < pool.length; k += 1) {
-    pool[k].visible = false;
+  for (const [n, nhom] of pools) {
+    for (let k = daDung.get(n) ?? 0; k < nhom.length; k += 1) nhom[k].visible = false;
   }
 
   return {
