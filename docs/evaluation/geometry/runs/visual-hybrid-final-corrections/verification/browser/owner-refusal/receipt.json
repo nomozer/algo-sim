@@ -1,0 +1,63 @@
+{
+  "schema": "owner-refusal-screens/1",
+  "commit": "4ec36db94f16688b0814d1d38ef789649a99b0e8",
+  "tracked_changes": "",
+  "url": "http://127.0.0.1:3115",
+  "rows": [
+    {
+      "id": "GEO-contradictory-length",
+      "viewport": "1440x900",
+      "file": "refusal-GEO-contradictory-length-1440.png",
+      "reason_code": "INCONSISTENT_FACTS",
+      "technical_codes_visible": [],
+      "details_drawer": false,
+      "canvas": 0
+    },
+    {
+      "id": "NEG-missing-height",
+      "viewport": "1440x900",
+      "file": "refusal-NEG-missing-height-1440.png",
+      "reason_code": "MISSING_DIMENSION",
+      "technical_codes_visible": [],
+      "details_drawer": false,
+      "canvas": 0
+    },
+    {
+      "id": "NEG-negated-plane",
+      "viewport": "1440x900",
+      "file": "refusal-NEG-negated-plane-1440.png",
+      "reason_code": "SOURCE_OBJECT_MISMATCH",
+      "technical_codes_visible": [],
+      "details_drawer": false,
+      "canvas": 0
+    },
+    {
+      "id": "GEO-contradictory-length",
+      "viewport": "390x844",
+      "file": "refusal-GEO-contradictory-length-390.png",
+      "reason_code": "INCONSISTENT_FACTS",
+      "technical_codes_visible": [],
+      "details_drawer": false,
+      "canvas": 0
+    },
+    {
+      "id": "NEG-missing-height",
+      "viewport": "390x844",
+      "file": "refusal-NEG-missing-height-390.png",
+      "reason_code": "MISSING_DIMENSION",
+      "technical_codes_visible": [],
+      "details_drawer": false,
+      "canvas": 0
+    },
+    {
+      "id": "NEG-negated-plane",
+      "viewport": "390x844",
+      "file": "refusal-NEG-negated-plane-390.png",
+      "reason_code": "SOURCE_OBJECT_MISMATCH",
+      "technical_codes_visible": [],
+      "details_drawer": false,
+      "canvas": 0
+    }
+  ],
+  "errors": []
+}

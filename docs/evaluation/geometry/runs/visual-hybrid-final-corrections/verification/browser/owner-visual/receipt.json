@@ -1,0 +1,397 @@
+{
+  "schema": "owner-visual-screens/1",
+  "commit": "4ec36db94f16688b0814d1d38ef789649a99b0e8",
+  "tracked_changes": "",
+  "url": "http://127.0.0.1:3115",
+  "rows": [
+    {
+      "case": "plane-name-P",
+      "source": "sample:cau-cat-mat-phang",
+      "mode": "A",
+      "what": "declared plane name (P) grounded in the problem; Hình phụ on (the plane is auxiliary at the last step)",
+      "viewport": "1440x900",
+      "file": "plane-name-P-1440.png",
+      "visible_point_and_plane_labels": [
+        "I",
+        "A",
+        "H",
+        "U",
+        "W",
+        "(P)"
+      ],
+      "analysis_open": false,
+      "final_label_ids_shown": [],
+      "plane_and_section_identity": [
+        {
+          "id": "P",
+          "type": "plane3",
+          "notation": "(P)",
+          "label": "(P)"
+        }
+      ]
+    },
+    {
+      "case": "section-named-cycle",
+      "source": "sample:thiet-dien-chop",
+      "mode": "A",
+      "what": "section through named midpoints",
+      "viewport": "1440x900",
+      "file": "section-named-cycle-1440.png",
+      "visible_point_and_plane_labels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "M",
+        "N",
+        "P",
+        "(MNP)"
+      ],
+      "analysis_open": false,
+      "final_label_ids_shown": [],
+      "plane_and_section_identity": [
+        {
+          "id": "mp",
+          "type": "plane3",
+          "notation": "(MNP)",
+          "label": "(MNP)"
+        },
+        {
+          "id": "thiet_dien",
+          "type": "section",
+          "notation": null,
+          "label": "Thiết diện của S.ABCD cắt bởi (MNP)"
+        }
+      ]
+    },
+    {
+      "case": "section-unnamed-vertices",
+      "source": "a4:CORPUS-DEV01-construct",
+      "mode": "A",
+      "what": "section through unnamed intersections: named by its plane",
+      "viewport": "1440x900",
+      "file": "section-unnamed-vertices-1440.png",
+      "visible_point_and_plane_labels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "M",
+        "(α)"
+      ],
+      "analysis_open": false,
+      "final_label_ids_shown": [],
+      "plane_and_section_identity": [
+        {
+          "id": "derived_I_plane",
+          "type": "plane3",
+          "notation": null,
+          "label": "(α)"
+        },
+        {
+          "id": "mp_td_sec",
+          "type": "plane3",
+          "notation": "(α)",
+          "label": "(α)"
+        },
+        {
+          "id": "td_sec",
+          "type": "section",
+          "notation": null,
+          "label": "Thiết diện bởi (α)"
+        }
+      ]
+    },
+    {
+      "case": "coincident-points",
+      "source": "a4:PERP-square-third",
+      "mode": "A",
+      "what": "coincident identity A ≡ H ≡ H1",
+      "viewport": "1440x900",
+      "file": "coincident-points-1440.png",
+      "visible_point_and_plane_labels": [
+        "A ≡ H ≡ H1",
+        "B",
+        "C",
+        "D",
+        "S",
+        "A ≡ H ≡ H1",
+        "A ≡ H ≡ H1",
+        "M",
+        "N",
+        "P",
+        "Q",
+        "(α)"
+      ],
+      "analysis_open": false,
+      "final_label_ids_shown": [],
+      "plane_and_section_identity": [
+        {
+          "id": "derived_N_plane",
+          "type": "plane3",
+          "notation": null,
+          "label": "(α)"
+        },
+        {
+          "id": "mp_td_sec",
+          "type": "plane3",
+          "notation": "(α)",
+          "label": "(α)"
+        },
+        {
+          "id": "td_sec",
+          "type": "section",
+          "notation": "MNPQ",
+          "label": "Thiết diện MNPQ"
+        }
+      ]
+    },
+    {
+      "case": "hidden-edges-mode-a",
+      "source": "sample:the-tich-chop",
+      "mode": "A",
+      "what": "hidden edges dashed; final answers not shown (Mode A)",
+      "viewport": "1440x900",
+      "file": "hidden-edges-mode-a-1440.png",
+      "visible_point_and_plane_labels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+      ],
+      "analysis_open": false,
+      "final_label_ids_shown": [],
+      "plane_and_section_identity": [
+        {
+          "id": "day",
+          "type": "plane3",
+          "notation": "(ABC)",
+          "label": "(ABCD)"
+        }
+      ]
+    },
+    {
+      "case": "mode-b-reveal",
+      "source": "sample:the-tich-chop",
+      "mode": "B",
+      "what": "learner opened «Phân tích toán học»: answers shown",
+      "viewport": "1440x900",
+      "file": "mode-b-reveal-1440.png",
+      "visible_point_and_plane_labels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+      ],
+      "analysis_open": true,
+      "final_label_ids_shown": [],
+      "plane_and_section_identity": [
+        {
+          "id": "day",
+          "type": "plane3",
+          "notation": "(ABC)",
+          "label": "(ABCD)"
+        }
+      ]
+    },
+    {
+      "case": "plane-name-P",
+      "source": "sample:cau-cat-mat-phang",
+      "mode": "A",
+      "what": "declared plane name (P) grounded in the problem; Hình phụ on (the plane is auxiliary at the last step)",
+      "viewport": "390x844",
+      "file": "plane-name-P-390.png",
+      "visible_point_and_plane_labels": [
+        "I",
+        "A",
+        "H",
+        "U",
+        "W",
+        "(P)"
+      ],
+      "analysis_open": false,
+      "final_label_ids_shown": [],
+      "plane_and_section_identity": [
+        {
+          "id": "P",
+          "type": "plane3",
+          "notation": "(P)",
+          "label": "(P)"
+        }
+      ]
+    },
+    {
+      "case": "section-named-cycle",
+      "source": "sample:thiet-dien-chop",
+      "mode": "A",
+      "what": "section through named midpoints",
+      "viewport": "390x844",
+      "file": "section-named-cycle-390.png",
+      "visible_point_and_plane_labels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "M",
+        "N",
+        "P",
+        "(MNP)"
+      ],
+      "analysis_open": false,
+      "final_label_ids_shown": [],
+      "plane_and_section_identity": [
+        {
+          "id": "mp",
+          "type": "plane3",
+          "notation": "(MNP)",
+          "label": "(MNP)"
+        },
+        {
+          "id": "thiet_dien",
+          "type": "section",
+          "notation": null,
+          "label": "Thiết diện của S.ABCD cắt bởi (MNP)"
+        }
+      ]
+    },
+    {
+      "case": "section-unnamed-vertices",
+      "source": "a4:CORPUS-DEV01-construct",
+      "mode": "A",
+      "what": "section through unnamed intersections: named by its plane",
+      "viewport": "390x844",
+      "file": "section-unnamed-vertices-390.png",
+      "visible_point_and_plane_labels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "M",
+        "(α)"
+      ],
+      "analysis_open": false,
+      "final_label_ids_shown": [],
+      "plane_and_section_identity": [
+        {
+          "id": "derived_I_plane",
+          "type": "plane3",
+          "notation": null,
+          "label": "(α)"
+        },
+        {
+          "id": "mp_td_sec",
+          "type": "plane3",
+          "notation": "(α)",
+          "label": "(α)"
+        },
+        {
+          "id": "td_sec",
+          "type": "section",
+          "notation": null,
+          "label": "Thiết diện bởi (α)"
+        }
+      ]
+    },
+    {
+      "case": "coincident-points",
+      "source": "a4:PERP-square-third",
+      "mode": "A",
+      "what": "coincident identity A ≡ H ≡ H1",
+      "viewport": "390x844",
+      "file": "coincident-points-390.png",
+      "visible_point_and_plane_labels": [
+        "A ≡ H ≡ H1",
+        "B",
+        "C",
+        "D",
+        "S",
+        "A ≡ H ≡ H1",
+        "A ≡ H ≡ H1",
+        "M",
+        "N",
+        "P",
+        "Q",
+        "(α)"
+      ],
+      "analysis_open": false,
+      "final_label_ids_shown": [],
+      "plane_and_section_identity": [
+        {
+          "id": "derived_N_plane",
+          "type": "plane3",
+          "notation": null,
+          "label": "(α)"
+        },
+        {
+          "id": "mp_td_sec",
+          "type": "plane3",
+          "notation": "(α)",
+          "label": "(α)"
+        },
+        {
+          "id": "td_sec",
+          "type": "section",
+          "notation": "MNPQ",
+          "label": "Thiết diện MNPQ"
+        }
+      ]
+    },
+    {
+      "case": "hidden-edges-mode-a",
+      "source": "sample:the-tich-chop",
+      "mode": "A",
+      "what": "hidden edges dashed; final answers not shown (Mode A)",
+      "viewport": "390x844",
+      "file": "hidden-edges-mode-a-390.png",
+      "visible_point_and_plane_labels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+      ],
+      "analysis_open": false,
+      "final_label_ids_shown": [],
+      "plane_and_section_identity": [
+        {
+          "id": "day",
+          "type": "plane3",
+          "notation": "(ABC)",
+          "label": "(ABCD)"
+        }
+      ]
+    },
+    {
+      "case": "mode-b-reveal",
+      "source": "sample:the-tich-chop",
+      "mode": "B",
+      "what": "learner opened «Phân tích toán học»: answers shown",
+      "viewport": "390x844",
+      "file": "mode-b-reveal-390.png",
+      "visible_point_and_plane_labels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+      ],
+      "analysis_open": true,
+      "final_label_ids_shown": [],
+      "plane_and_section_identity": [
+        {
+          "id": "day",
+          "type": "plane3",
+          "notation": "(ABC)",
+          "label": "(ABCD)"
+        }
+      ]
+    }
+  ],
+  "errors": []
+}
