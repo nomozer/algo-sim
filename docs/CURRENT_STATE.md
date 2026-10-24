@@ -1,5 +1,7 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+**LOCAL 2026-10-24 — Visual–Hybrid integration:** integration/hybrid-visual-candidate, merge 78e88470 of Hybrid B1/B2 (97d59bf9) with the Scene3D SGK visual port (7f90d9b3) + frontend label-authority fix; product a9d05dda, candidate aec7b183 (118 files, d22d27e7…), Full T3 PASS at b99afd32. Default LLM_ONLY, cache127, Hybrid NO-GO unchanged. No main merge/push/live. Owner gate: `evaluation/geometry/runs/visual-hybrid-integration/FINAL_OWNER_HANDOFF.md`.
+
 **LOCAL 2026-10-24 — Hybrid B1/B2 offline:** research/hybrid-primary-b1-b2-offline from C0; product c3c1eb80. Internal source-text/V2 orchestration and product Adapter /4 wrapper; default LLM_ONLY, flat, cache127, memory32 and Hybrid NO-GO unchanged. No main merge/push/live. New evidence and owner-review handoff: `evaluation/geometry/runs/hybrid-primary-b1-b2-offline/`; historical snapshots below retain their original scope.
 
 **LOCAL backend Session 2 (2026-10-22):** `research/hybrid-backend-session2-contract` from Session 1 `82d3d255`; product `3553e4d4`, candidate `5beb0e86` (115 files, `96962736…`). Backward-compatible safety + canonicalization only; contract decisions D1–D6 pending; status and T3 in `evaluation/geometry/runs/backend-hybrid-contract-unification/handoff.md`. Research only; no merge, push or production change.

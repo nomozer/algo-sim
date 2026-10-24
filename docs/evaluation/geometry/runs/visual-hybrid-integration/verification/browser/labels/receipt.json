@@ -1,0 +1,67 @@
+{
+  "schema": "label-authority-probe/1",
+  "commit": "b99afd32a70323b7cd8b458b39fe0c5e281060d1",
+  "tracked_changes": "",
+  "url": "http://127.0.0.1:3115",
+  "rows": [
+    {
+      "name": "sample cau-cat-mat-phang",
+      "served_source": {
+        "has_I_filter": false,
+        "has_HUW_rewrite": false
+      },
+      "visible_labels": [
+        {
+          "cls": "geo3d-label",
+          "text": "I"
+        },
+        {
+          "cls": "geo3d-label",
+          "text": "A"
+        },
+        {
+          "cls": "geo3d-label",
+          "text": "H"
+        },
+        {
+          "cls": "geo3d-nhan-mp",
+          "text": "(HUW)"
+        }
+      ],
+      "backend_notations": [
+        {
+          "id": "I",
+          "type": "point3",
+          "notation": "I"
+        },
+        {
+          "id": "A",
+          "type": "point3",
+          "notation": "A"
+        },
+        {
+          "id": "H",
+          "type": "point3",
+          "notation": "H"
+        },
+        {
+          "id": "U",
+          "type": "point3",
+          "notation": "U"
+        },
+        {
+          "id": "W",
+          "type": "point3",
+          "notation": "W"
+        },
+        {
+          "id": "P",
+          "type": "plane3",
+          "notation": "(HUW)"
+        }
+      ],
+      "file": "sample-cau-cat-mat-phang.png"
+    }
+  ],
+  "errors": []
+}

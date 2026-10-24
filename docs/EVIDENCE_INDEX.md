@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = VISUAL_HYBRID_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/visual-hybrid-integration/FINAL_OWNER_HANDOFF.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/visual-hybrid-integration/
+CLASSIFICATION = LOCAL integration on integration/hybrid-visual-candidate (NOT merged to main, not pushed): merge 78e88470 of disabled Hybrid B1/B2 (97d59bf9) with the Scene3D SGK visual port (7f90d9b3), Codex → Claude takeover; frontend label-authority fix (kyHieu shows backend notation verbatim; backend display-identity proposal NOT implemented); correction-chain join layer; Hybrid production NO-GO, LLM_ONLY default; official Visual suite FAIL inherited from aa458cc3 (owner decision); review is INTERNAL (fresh Claude subagent), not independent; human visual approval NOT_GRANTED
+CODE_COMMIT = a9d05dda4576e1968738760e382951e755ff8be4 (product, frontend only after the merge); candidate aec7b183a888e2ca18c53b624c458714234b93a5; measured_system d22d27e7d06228ccc440f25b18137c0fd835e068fca106ce61d828b3a87af9cc (118 files); NO_BUMP 127; Full T3 target b99afd32
+VERIFICATION = docs/evaluation/geometry/runs/visual-hybrid-integration/verification/full-t3-attempt2/execution.json (FULL_PRODUCT_GATE_PASS; attempt 1 FAIL kept at docs/evaluation/geometry/runs/visual-hybrid-integration/verification/full-t3-attempt1/execution.json); docs/evaluation/geometry/runs/visual-hybrid-integration/verification/browser/adapter4/receipt.json; docs/evaluation/geometry/runs/visual-hybrid-integration/verification/browser/orbit-gate/ORBIT_GATE.json; docs/evaluation/geometry/runs/visual-hybrid-integration/verification/browser/labels/receipt.json; docs/evaluation/geometry/runs/visual-hybrid-integration/candidate_divergence.json; docs/evaluation/geometry/runs/visual-hybrid-integration/INDEPENDENT_REVIEW.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_PRIMARY_B1_B2_OFFLINE (candidate identity only); SCENE3D_HTML_VISUAL_PORT (candidate identity; frontend kyHieu rewrite `/I\d/` → hidden and `(HUW)` → `(P)` from 3bfc8dd0 removed); historical artifact bytes of both unchanged
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_PRIMARY_B1_B2_OFFLINE
 
 REPORT = docs/evaluation/geometry/runs/hybrid-primary-b1-b2-offline/OFFLINE_E2E_ACCEPTANCE.md
@@ -9,7 +20,7 @@ CODE_COMMIT = c3c1eb803992e9a22b97ae1711d587a910f631ab; measured_system 71dd6aa6
 VERIFICATION = docs/evaluation/geometry/runs/hybrid-primary-b1-b2-offline/results/offline/acceptance.json; docs/evaluation/geometry/runs/hybrid-primary-b1-b2-offline/INDEPENDENT_REVIEW.md; docs/evaluation/geometry/runs/hybrid-primary-b1-b2-offline/candidate_divergence.json; docs/evaluation/geometry/runs/hybrid-primary-b1-b2-offline/run.json; docs/evaluation/geometry/runs/hybrid-primary-b1-b2-offline/verification/full-t3-attempt4/execution.json (FULL_PRODUCT_GATE_PASS at f72ccc82; attempts 1-3 FAIL for environment/harness causes, receipts kept, see CLAUDE_TAKEOVER_CHECKPOINT.md); docs/evaluation/geometry/runs/hybrid-primary-b1-b2-offline/verification/visual-reference/receipt.json (SCENE3D_VISUAL_SPEC_ONLY, runtime previews, no product change)
 MODEL_REQUEST_COUNT = 0
 CORRECTS = SCENE3D_SECTION_INSPECTOR_C0 (candidate identity for new offline product integration only; historical results unchanged)
-CORRECTED_BY = NONE
+CORRECTED_BY = VISUAL_HYBRID_INTEGRATION (docs/evaluation/geometry/runs/visual-hybrid-integration/candidate_divergence.json)
 
 ## WAVE_ID = SCENE3D_SECTION_INSPECTOR_C0
 
@@ -155,7 +166,7 @@ CODE_COMMIT = 852f650158635b6dc402d4cfc905cbdcbbaebe43 (product, frontend only);
 VERIFICATION = docs/evaluation/geometry/runs/scene3d-html-visual-port/verification/full-t3/execution.json + docs/evaluation/geometry/runs/scene3d-html-visual-port/verification/orbit-gate/ORBIT_GATE.json + docs/evaluation/geometry/runs/scene3d-html-visual-port/verification/section-fill/receipt.json + docs/evaluation/geometry/runs/scene3d-html-visual-port/verification/html-vs-algosim/receipt.json + docs/evaluation/geometry/runs/scene3d-html-visual-port/INDEPENDENT_REVIEW.md
 MODEL_REQUEST_COUNT = 0
 CORRECTS = SCENE3D_UNIFIED_VISUAL_LANGUAGE_W01 (palette/material policy superseded by SGK_REFERENCE in docs/architecture/SCENE3D_VISUAL_LANGUAGE.md; orbit-gate allocation regression of the uncommitted V6.2 session fixed; historical artifact bytes unchanged)
-CORRECTED_BY = NONE
+CORRECTED_BY = VISUAL_HYBRID_INTEGRATION (frontend label rewrite in kyHieu removed; docs/evaluation/geometry/runs/visual-hybrid-integration/GEOMETRY_LABEL_AUTHORITY_FIX.md)
 
 ## WAVE_ID = SCENE3D_UNIFIED_VISUAL_LANGUAGE_W01
 

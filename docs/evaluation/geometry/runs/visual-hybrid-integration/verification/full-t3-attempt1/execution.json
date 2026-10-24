@@ -1,0 +1,62 @@
+{
+  "schema": "authoritative-t3-receipt/2",
+  "run": "visual-hybrid-integration",
+  "attempt": 1,
+  "measurement_worktree": "clean detached .superpowers/worktrees/t3-b1b2",
+  "executor": "claude-outside-codex-sandbox",
+  "t3_target_commit": "aec7b183a888e2ca18c53b624c458714234b93a5",
+  "candidate_freeze_commit": "aec7b183a888e2ca18c53b624c458714234b93a5",
+  "product_commit": "a9d05dda4576e1968738760e382951e755ff8be4",
+  "measured_system": {
+    "paths": [
+      "backend/app",
+      "frontend/src/simulations/domains/semantic",
+      "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+    ],
+    "so_file": 118,
+    "tree_hash": "d22d27e7d06228ccc440f25b18137c0fd835e068fca106ce61d828b3a87af9cc",
+    "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
+  },
+  "detached_head": true,
+  "source_tree_before": "",
+  "source_tree_after": "",
+  "command": "ALLOW_LIVE_AI=0 PYTHONUTF8=1 ALGO_SIM_PYTHON=<existing Python3.12 venv> node frontend/scripts/full-gate.mjs",
+  "environment": {
+    "python": "3.12.10",
+    "node": "v24.13.0",
+    "pytest_temp_root": "D:/t3c (short root, Windows MAX_PATH)",
+    "platform": "win32"
+  },
+  "started_utc": "2026-10-24T12:58:09.165345+00:00",
+  "finished_utc": "2026-10-24T12:58:49.565298+00:00",
+  "seconds": 38.17,
+  "exit_code": 1,
+  "verdict": "FAIL",
+  "pytest_summary": [
+    " Test Files  79 passed (79)",
+    "      Tests  1337 passed (1337)"
+  ],
+  "vitest_summary": [
+    "Test Files  79 passed (79)",
+    "Tests  1337 passed (1337)"
+  ],
+  "failure_names": [],
+  "post_t3_freeze": {
+    "exit_code": 0,
+    "stdout": "Candidate khớp bản đã đóng băng (mã sản phẩm: 118 file, d22d27e7d06228cc…)."
+  },
+  "streams": {
+    "stdout": {
+      "bytes": 6729,
+      "sha256_as_written": "e6a08a7a19a5a8010f688308143e624aef869b70e466a095af3e91b9bb1aa97a",
+      "local_ignored_path": ".superpowers/claude/full-t3-visual-hybrid/stdout.log"
+    },
+    "stderr": {
+      "bytes": 342,
+      "sha256_as_written": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a",
+      "local_ignored_path": ".superpowers/claude/full-t3-visual-hybrid/stderr.log"
+    }
+  },
+  "provider_calls": 0,
+  "raw_logs": "Ignored local scratch only; no raw test traceback/provider output committed."
+}

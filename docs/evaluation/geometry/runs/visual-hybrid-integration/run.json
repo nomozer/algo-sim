@@ -1,0 +1,38 @@
+{
+  "schema_version": "algosim.eval.run.v1",
+  "run_id": "visual-hybrid-integration",
+  "wave": "visual-hybrid-integration",
+  "authorization": "GO_CLAUDE_TAKEOVER_VISUAL_HYBRID_INTEGRATION_LOCAL_ONLY",
+  "mode": "LOCAL_INTEGRATION_NO_GO_MAIN",
+  "branch": "integration/hybrid-visual-candidate",
+  "merge_commit": "78e8847017abf81d35087dfcc56bde5ff72a50a3",
+  "merge_parents": {
+    "hybrid_b1_b2": "97d59bf9",
+    "scene3d_visual_port": "7f90d9b3"
+  },
+  "product_commits": ["a9d05dda4576e1968738760e382951e755ff8be4"],
+  "harness_commits": ["1fcbe7e585d366005cd6b32a05f28bcb53e8499d"],
+  "candidate_freeze_commit": "aec7b183a888e2ca18c53b624c458714234b93a5",
+  "t3_target_commit": "b99afd32a70323b7cd8b458b39fe0c5e281060d1",
+  "measured_system_hash": "d22d27e7d06228ccc440f25b18137c0fd835e068fca106ce61d828b3a87af9cc",
+  "measured_file_count": 118,
+  "cache_version": 127,
+  "cache_decision": "NO_BUMP",
+  "model_request_count": 0,
+  "verification": {
+    "full_t3_attempt1": "FAIL (correction-chain fork after merge; docs/evaluation/geometry/runs/visual-hybrid-integration/verification/full-t3-attempt1/execution.json)",
+    "full_t3": "FULL_PRODUCT_GATE_PASS",
+    "authoritative_t3_path": "docs/evaluation/geometry/runs/visual-hybrid-integration/verification/full-t3-attempt2/execution.json",
+    "backend_pytest_passed": 11839,
+    "frontend_vitest_passed": 1337,
+    "post_t3_freeze_verify": "MATCH",
+    "node_harness": "112 tests: 110 pass, 2 skipped, 0 fail",
+    "adapter4_browser": "FRONTEND_CONSUMER_ACCEPTANCE_PASS, 94 rows desktop+mobile",
+    "scene3d_orbit_gate": "DAT p1/p6/p7, allocations 0",
+    "label_probe": "(HUW) shown verbatim; I-digit notation not loadable in the current product (unit test only)",
+    "official_visual_suite": "FAIL inherited (run on 13d28b84 by Codex; oracle vs aa458cc3 learner UX, owner decision)",
+    "review": "INTERNAL (fresh Claude subagent, read-only): PASS_WITH_FINDINGS, 0 blocker, 0 major, 2 minor"
+  },
+  "status": "VISUAL_HYBRID_INTEGRATION_READY_FOR_OWNER_REVIEW",
+  "human_visual_approval": "NOT_GRANTED"
+}
