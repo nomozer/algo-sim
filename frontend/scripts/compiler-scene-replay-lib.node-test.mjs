@@ -1422,6 +1422,24 @@ test("§0.1 evidence verdict: answer judged on the OPEN solution; leaked card, p
   }
 });
 
+test("learner policy evidence verdict: hidden in mode A, exactly once in mode B; each fault fails its own code", () => {
+  const moi = () => ({ ...passingFacts(),
+    solution_final: { answer_hidden: true }, mode_b_reveal: { answer_once: true },
+    quantity_picker: { pass: true, reason_codes: [] }, steps_panel: { pass: true, reason_codes: [] } });
+  assert.equal(evaluateEvidenceGates(moi()).pass, true);
+  for (const [mutate, code] of [
+    [(f) => { f.solution_final.answer_hidden = false; }, "ANSWER_SHOWN_IN_MODE_A"],
+    [(f) => { f.mode_b_reveal.answer_once = false; }, "ANSWER_NOT_SHOWN_ONCE"],
+    [(f) => { delete f.mode_b_reveal; }, "ANSWER_NOT_SHOWN_ONCE"],
+  ]) {
+    const f = moi();
+    mutate(f);
+    const g = evaluateEvidenceGates(f);
+    assert.equal(g.pass, false, code);
+    assert.ok(g.reason_codes.includes(code), `${code}:${g.reason_codes}`);
+  }
+});
+
 test("playback: the Đại lượng panel closed shows nothing; the final step must be observed with it open", () => {
   // Bảng đóng ở hai bước đầu (thiết diện: chưa có đại lượng lúc bắt đầu), mở ở bước cuối ⇒ đạt.
   const motPhan = () => genuine().map((s) => (s.step < 2 ? { ...s, dl_open: false, rows: [] } : { ...s, dl_open: true }));

@@ -516,7 +516,8 @@ export const DAI_SAC_VAI_TRO = { s: 0.45, l: [0.2, 0.85], cam: [10, 50], xanh: [
 /** Lớp phủ DOM nằm TRÊN canvas (nút nổi, ô soi, nhãn điểm, W17: nhãn số đo). Phép đo điểm ảnh của
  *  HÌNH (sắc vai trò, phần tô thiết diện) che chúng: nhãn số đo của vật đang chọn viền xanh "đang
  *  xét" như nhãn điểm đang chọn — là chữ, không phải vật vẽ của khung 3D (lượt trình duyệt T7). */
-export const LOP_PHU_KHUNG = ".geo3d-noi,.geo3d-soi,.geo3d-label,.geo3d-so-do";
+// `.geo3d-bang-noi`: mọi bảng nổi (DOM) đè lên khung — vd «Phân tích toán học» ở chế độ B, mục có vạch màu vai trò.
+export const LOP_PHU_KHUNG = ".geo3d-noi,.geo3d-soi,.geo3d-label,.geo3d-so-do,.geo3d-bang-noi";
 
 /** Một điểm ảnh sRGB 0–255 → `"cam"` | `"xanh"` | `null`. HÀM THUẦN, không dùng
  *  biến ngoài: bộ chạy tiêm chính mã nguồn của nó vào trang (`toString`). */
@@ -931,8 +932,10 @@ export function assessFormation(expected, scene, observedSteps, enforced, measur
  *  (b) đại lượng trọng tâm và `readout_ids` của khung neo ⊆ bảng lời giải ∪ ngăn «Đại lượng» (W1);
  *  (c) mọi `formula.references[*].entity_id` của đại lượng đang hiện được vẽ hoặc hiện;
  *  (d) tiến độ thiết diện của khung neo đúng số cạnh, khép, tô mà renderer báo. */
-export function assessStructuredReferences(scene, observed) {
+export function assessStructuredReferences(scene, observed, { revealFinal = true } = {}) {
   const byId = new Map((scene?.objects ?? []).map((o) => [o.id, o]));
+  // Chế độ A (`aa458cc3`): đáp số KHÔNG được ở ngăn — (b) không đòi chúng; vắng mặt của chúng kiểm ở `solution_final`.
+  const dapSo = revealFinal ? new Set() : finalResultIds(scene);
   const t = expectedGeometryTimeline(scene);
   const buoc = scene?.formation?.steps ?? [];
   const ve = (o) => o && o.render !== "readout" && o.render !== "non_visual";
@@ -962,13 +965,13 @@ export function assessStructuredReferences(scene, observed) {
         const o = byId.get(id);
         if (ve(o) && anPhu.has(id) && drawn.has(id)) fail.push({ index: s.index, check: "a_hidden_drawn", id, kind: o.type });
         if (ve(o) && !drawn.has(id) && !anPhu.has(id)) fail.push({ index: s.index, check: "a", id, kind: o.type });
-        if (o?.render === "readout" && !panel.has(id)) {
+        if (o?.render === "readout" && !panel.has(id) && !dapSo.has(id)) {
           fail.push({ index: s.index, check: "b", id, kind: o.type });
         }
       }
     }
     for (const id of buoc[g.anchor]?.readout_ids ?? []) {
-      if (!panel.has(id)) fail.push({ index: s.index, check: "b", id, kind: byId.get(id)?.type });
+      if (!panel.has(id) && !dapSo.has(id)) fail.push({ index: s.index, check: "b", id, kind: byId.get(id)?.type });
     }
     for (const id of dong) {
       for (const ref of byId.get(id)?.formula?.references ?? []) {
@@ -1192,7 +1195,12 @@ export function evaluateEvidenceGates(facts) {
   // regular-square-pyramid-w01 §0.1-1: card Kết quả chỉ có khi lời giải MỞ — "đáp số đúng một lần" phán ở đó
   // (`open`); bằng chứng cũ mang `answer_once` ở gốc. Thu gọn mà card vẫn hiện là lỗi riêng.
   const sf = facts.solution_final;
-  if (sf !== undefined && (sf?.open?.answer_once ?? sf?.answer_once) !== true) {
+  if (sf?.answer_hidden !== undefined) {
+    // `aa458cc3` (bằng chứng từ run `visual-hybrid-final-corrections`): chế độ A giấu đáp số; "đúng một lần" phán ở
+    // chế độ B («Phân tích toán học» người học tự mở).
+    if (sf.answer_hidden !== true) reasons.push("ANSWER_SHOWN_IN_MODE_A");
+    if (facts.mode_b_reveal?.answer_once !== true) reasons.push("ANSWER_NOT_SHOWN_ONCE");
+  } else if (sf !== undefined && (sf?.open?.answer_once ?? sf?.answer_once) !== true) {
     reasons.push("ANSWER_NOT_SHOWN_ONCE");
   }
   if (sf?.answer_hidden_collapsed === false) reasons.push("RESULT_CARD_SHOWN_COLLAPSED");
@@ -1734,14 +1742,17 @@ export function assessStepsPanel(scene, { steps, backward, jump, close }) {
 
 /** W18 §16.7 — nhân chứng vẽ ĐÚNG cho các nhãn khoảng cách đang hiện có `witness` trong payload:
  *  thiếu ⇒ lỗi; thừa (vẽ cho nhãn không hiện) ⇒ lỗi. */
-export function assessWitness({ scene, shownIds, witnessIds }) {
+export function assessWitness({ scene, shownIds, witnessIds, revealFinal = true }) {
   const byId = new Map((scene?.objects ?? []).map((o) => [o.id, o]));
   const mong = sortedUnique(shownIds.filter((id) => byId.get(id)?.annotation?.anchor === "witness"
     && byId.get(id)?.annotation?.witness));
   const ve = sortedUnique(witnessIds);
+  // Chế độ A (`aa458cc3`): nhãn đáp số ẩn nhưng sản phẩm CỐ Ý giữ đoạn nhân chứng 3D của nó (hình, không phải số) —
+  // vẽ nó khi nhãn ẩn không phải lỗi; thiếu nhân chứng của một nhãn ĐANG hiện vẫn là lỗi.
+  const dapSo = revealFinal ? new Set() : finalResultIds(scene);
   const r = [];
   const thieu = mong.filter((id) => !ve.includes(id));
-  const thua = ve.filter((id) => !mong.includes(id));
+  const thua = ve.filter((id) => !mong.includes(id) && !dapSo.has(id));
   if (thieu.length) r.push(`WITNESS_MISSING:${thieu.join(",")}`);
   if (thua.length) r.push(`WITNESS_NOT_SHOWN_LABEL:${thua.join(",")}`);
   return { pass: r.length === 0, reason_codes: r, expected: mong, drawn: ve };

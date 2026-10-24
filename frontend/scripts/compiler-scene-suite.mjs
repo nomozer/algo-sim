@@ -979,7 +979,8 @@ async function formationEvidence(session, scene, outDir, captureMode, scenario) 
     pass: JSON.stringify(s.rendered) === JSON.stringify(backwardRendered[s.index])
       && JSON.stringify(s.annotation_dom) === JSON.stringify(backwardAnnotations[s.index]) }));
   const structuredReferences = assessStructuredReferences(scene, {
-    steps: steps.map((s) => ({ index: s.index, rendered: s.rendered, solution: s.solution, picker: s.picker })) });
+    steps: steps.map((s) => ({ index: s.index, rendered: s.rendered, solution: s.solution, picker: s.picker })) },
+  LEARNER_A);
   const roleCoverage = assessFormation(scenario.expected_formation, scene,
     steps.map((s) => ({ index: s.index, renderedSets: renderedSets(scene, s.rendered) })),
     scenario.formation_coverage.enforce, scenario.formation_coverage.measure);
@@ -1135,7 +1136,8 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
         points: annOn.points, camera: annOn.camera, expected: expectedOn, mustShow: [] });
       result.assertions.annotations_show_all = assertion(result.annotations.show_all.pass,
         result.annotations.show_all);
-      result.witness_show_all = assessWitness({ scene, shownIds: annOn.boxes.map((b) => b.id), witnessIds: annOn.witness });
+      result.witness_show_all = assessWitness({ scene, shownIds: annOn.boxes.map((b) => b.id), witnessIds: annOn.witness,
+        ...LEARNER_A });
       result.assertions.witness_show_all = assertion(result.witness_show_all.pass, result.witness_show_all);
       result.screenshots.show_all = await capture(session, join(outDir, "show_all.png"));
       result.capture_order.push("show_all");
@@ -1160,10 +1162,11 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     // độc lập), nhãn của nó bắt buộc có mặt và ≤ 24 px quanh đúng chủ thể; đúng MỘT vùng mang công
     // thức (ô soi khi lời giải thu gọn — mục Kết quả; dòng lời giải khi mở — Dữ kiện/Các bước tính);
     // nhân chứng vẽ đúng cho nhãn khoảng cách đang hiện. Ảnh đại diện theo loại đo.
-    {
-      const hang = (await solutionState(session)).rows;
-      result.selection_checks = [];
-      const daChup = new Set();
+    // `aa458cc3`: chế độ A đo mọi dòng ngăn (không đáp số); đáp số được chọn rồi đo ở chế độ B (bên dưới) với cùng
+    // oracle mở đầy đủ — hợp hai lượt phủ lại mọi đại lượng như trước chính sách.
+    result.selection_checks = [];
+    const daChup = new Set();
+    const chonTungDaiLuong = async (hang, cheDo, mode) => {
       for (const row of hang) {
         const q = scene.objects.find((o) => o.id === row.id);
         if (!q) continue;
@@ -1172,15 +1175,16 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
         const daChon = await choHet((s) => s.selected === row.id);
         await settleOrRecord(session, result, `select_${row.id}`);
         const ann = await annotationState(session);
-        const expected = expectedAnnotationIds(scene, neoCuoi, { selectedId: row.id, ...LEARNER_A });
+        const expected = expectedAnnotationIds(scene, neoCuoi, { selectedId: row.id, ...cheDo });
         const coNhan = Boolean(q.annotation && !q.annotation.same_as && expected.includes(q.id));
         const hop = assessAnnotationBoxes({ scene, step: neoCuoi, boxes: ann.boxes, points: ann.points,
           camera: ann.camera, expected, mustShow: coNhan ? [q.id] : [] });
         const f = coherentFormulaText(scene, row.id);
         const vung = f ? assessDetailRegion({ formula_text: f, regions: await formulaRegions(session, f) }) : null;
-        const nhanChung = assessWitness({ scene, shownIds: ann.boxes.map((b) => b.id), witnessIds: ann.witness });
+        const nhanChung = assessWitness({ scene, shownIds: ann.boxes.map((b) => b.id), witnessIds: ann.witness,
+          ...cheDo });
         const domDung = JSON.stringify(ann.dom) === JSON.stringify(expected);
-        const kq = { id: row.id, section: row.sec, selected: daChon === null, dom: ann.dom, expected,
+        const kq = { id: row.id, section: row.sec, mode, selected: daChon === null, dom: ann.dom, expected,
           dom_pass: domDung, boxes: hop, detail_region: vung, witness: nhanChung,
           pass: daChon === null && domDung && hop.pass && (!vung || vung.pass) && nhanChung.pass };
         result.selection_checks.push(kq);
@@ -1201,11 +1205,9 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
         await deselect(session);
         await choHet((s) => s.selected === null);
       }
-      await settleOrRecord(session, result, "selection_done");
-      result.assertions.selection_per_quantity = assertion(
-        result.selection_checks.length > 0 && result.selection_checks.every((c) => c.pass),
-        result.selection_checks.filter((c) => !c.pass));
-    }
+      await settleOrRecord(session, result, `selection_done_${mode}`);
+    };
+    await chonTungDaiLuong((await solutionState(session)).rows, LEARNER_A, "A");
     // Chụp phần tử có thể đã cuộn trang: đưa canvas về giữa khung trước khi đo tiếp.
     await session.eval(`(()=>{document.querySelector('.geo3d-canvas canvas')?.scrollIntoView({block:"center"});return true})()`);
     // The window opens only after settling (the capture above may itself
@@ -1246,6 +1248,10 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
     }
     await pollUntil(() => session.eval("!!document.querySelector('[data-math-analysis-panel]')"), Boolean,
       { timeoutMs: 5_000 });
+    // Mở bảng nổi thu vùng an toàn ⇒ sản phẩm đặt lại khung camera (khung thích ứng), nên phân loại khuất có thể đổi
+    // (đo: chóp tam giác đều, 1440 px). Mốc nét của phép đo nhân quả là khung chế độ B ĐÃ LẮNG, chưa chọn gì.
+    await settleOrRecord(session, result, "mode_b_open");
+    const dashB = await jsonEval(session, "window.__geo3d_edge_dash_signature||{}");
     const solutionB = await solutionState(session);
     const phanTichB = await jsonEval(session, `[...document.querySelectorAll('[data-math-analysis-panel] section')]`
       + `.map((s)=>({sec:s.getAttribute('aria-label')||'',text:(s.textContent||'').replace(/\\s+/g,' ').trim()}))`);
@@ -1272,6 +1278,10 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       && result.mode_b_reveal.analysis_states_answer, result.mode_b_reveal);
     result.screenshots.mode_b_reveal = await capture(session, join(outDir, "mode_b_reveal.png"));
     result.capture_order.push("mode_b_reveal");
+    await chonTungDaiLuong(solutionB.rows.filter((row) => dapSo.has(row.id)), { revealFinal: true }, "B");
+    result.assertions.selection_per_quantity = assertion(
+      result.selection_checks.length > 0 && result.selection_checks.every((c) => c.pass),
+      result.selection_checks.filter((c) => !c.pass));
     await session.eval(`(()=>{document.querySelector('.geo3d-canvas canvas')?.scrollIntoView({block:"center"});return true})()`);
     await new Promise((done) => setTimeout(done, 200));
     const causalBeforeFrame = await khungOnDinh(session);
@@ -1356,8 +1366,10 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       canvas_role_hues: canvasRoleHues,
       canvas_changed: causalBeforeFrame.sha256 !== causalAfterFrame.sha256,
       pixel_delta: delta,
-      dash_signature_preserved:
-        JSON.stringify(edgeDefault.dash_signature) === JSON.stringify(causalState.dash_signature),
+      // Chọn không đổi nét: so với khung chế độ B chưa chọn (`dashB`), cùng camera với lúc chọn.
+      dash_signature_preserved: JSON.stringify(dashB) === JSON.stringify(causalState.dash_signature),
+      dash_signature_mode_b_baseline: dashB,
+      dash_signature_mode_a_neutral: edgeDefault.dash_signature,
     };
     causal.pass = causal.pass && causalState.selected_id === causalId
       && causal.visual.selected_changed && causal.visual.closure_changed
@@ -1594,6 +1606,7 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
       formation_coverage: viewport.formation ? result.formation.role_coverage : undefined,
       structured_references: viewport.formation ? result.formation.structured_references : undefined,
       solution_final: result.solution_final,
+      mode_b_reveal: result.mode_b_reveal,
       quantity_picker: result.quantity_picker,
       steps_panel: viewport.formation ? result.formation.steps_panel : undefined,
       role_colors: roleColors,
@@ -1623,7 +1636,8 @@ async function runPositive({ port, viewport, fixture, scenario, outDir }) {
   } catch (error) {
     // W18 (tiêm lỗi FW2 lượt 1 làm cả suite chết, không bằng chứng): một lượt ném lỗi là MỘT KẾT LUẬN —
     // FAIL kèm nguyên nhân, giữ phần đã đo; các họ/khổ khác vẫn chạy và bằng chứng vẫn được ghi.
-    result.run_error = String(error?.stack ?? error).slice(0, 2000);
+    // Chỉ dòng thông điệp, không stack: bằng chứng commit không chở traceback thô (AGENTS §4).
+    result.run_error = String(error?.message ?? error).split("\n")[0].slice(0, 300);
     result.assertions.run_completed = assertion(false, String(error?.message ?? error).slice(0, 300));
     result.pass = false;
     result.failure_class = phanLoaiLoi(result.run_error, false);
@@ -1722,7 +1736,17 @@ export async function runServed({ port, viewport, fixture, expected, outDir }) {
   try {
     await pollUntil(() => session.eval(`!!document.querySelector('.geo3d-canvas canvas')`), Boolean);
     await goToEnd(session);
-    // §0.1-2: đáp số đọc qua ngăn «Đại lượng» (card Kết quả ẩn khi lời giải thu gọn).
+    // `aa458cc3` chế độ A: ngăn «Đại lượng» (nếu có) không mang đáp số nào.
+    const dapSo = finalResultIds(fixture.envelope.scene3d);
+    const coNgan = (await menuItems(session, "kham-pha")).some((t) => t.includes("Đại lượng"));
+    const nganA = coNgan ? await quantityDrawer(session) : [];
+    await closeQuantityDrawer(session);
+    // Chế độ B: người học mở «Phân tích toán học» — đáp số đọc qua ngăn «Đại lượng» như trước chính sách.
+    if (!await trustedClick(session, `document.querySelector('[data-mo-bang="phan-tich"]')`)) {
+      throw new Error("MODE_B_TOGGLE_NOT_CLICKABLE");
+    }
+    await pollUntil(() => session.eval("!!document.querySelector('[data-math-analysis-panel]')"), Boolean,
+      { timeoutMs: 5_000 });
     const ngan = await pollUntil(() => quantityDrawer(session),
       (d) => d.some((x) => x.text.includes(expected.answer)), { timeoutMs: 8_000 });
     const ketQua = ngan.filter((x) => x.sec === "Kết quả").map((x) => x.text).join(" ");
@@ -1738,6 +1762,7 @@ export async function runServed({ port, viewport, fixture, expected, outDir }) {
     const uncaught = session.consoleEvents.filter((event) => event.loai === "exception");
     const failedApiCalls = apiEvents().filter((event) => event.status >= 400);
     const assertions = {
+      answer_hidden_mode_a: assertion(nganA.every((x) => !dapSo.has(x.id)), nganA.filter((x) => dapSo.has(x.id))),
       answer_shown: assertion(String(ketQua).includes(expected.answer), { answer: expected.answer }),
       annotation_present: assertion(!expected.annotation_id || ann.dom.includes(expected.annotation_id), ann.dom),
       witness_drawn: assertion(!expected.witness || ann.witness.includes(expected.annotation_id), ann.witness),
