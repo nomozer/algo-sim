@@ -1,0 +1,15 @@
+{
+  "schema": "geometry-run/1",
+  "task_slug": "visual-closure-hybrid-readiness",
+  "wave": 1,
+  "date": "2026-10-25",
+  "authorization": "GO_LOCAL_VISUAL_CLOSURE_AND_HYBRID_GEOMETRY_READINESS",
+  "base_commit": "1a4a0b93747143b2574d0196703aad9f454c4164",
+  "branch": "research/visual-closure-hybrid-readiness",
+  "ALLOW_LIVE_AI": 0,
+  "cache_version": 128,
+  "default": "LLM_ONLY",
+  "hybrid_production": "NO-GO",
+  "independent_review": "PENDING_OWNER_APPOINTED_REVIEWER",
+  "human_visual_approval": "PENDING"
+}

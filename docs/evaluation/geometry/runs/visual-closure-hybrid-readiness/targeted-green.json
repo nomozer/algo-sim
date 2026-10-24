@@ -1,0 +1,12 @@
+{
+  "baseline_red_receipt": "red-green.json",
+  "targeted_vitest": {"files": 3, "passed": 84, "failed": 0},
+  "whole_vitest": {"files": 80, "passed": 1353, "failed": 0},
+  "typecheck": {"command": "node node_modules/typescript/bin/tsc -b", "exit_code": 0},
+  "legacy_assertion_updates": [
+    "scene3d-focus-mode: inspector formula additionally requires no matching open analysis formula",
+    "simulation-visual-consistency-session1: selected circle section boundary cobalt; semantic fill remains terracotta"
+  ],
+  "locked_oracle_changes": 0,
+  "provider_calls": 0
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "visual-closure-red-green/1",
+  "baseline": "1a4a0b93747143b2574d0196703aad9f454c4164",
+  "command": "ALLOW_LIVE_AI=0 node node_modules/vitest/vitest.mjs run src/simulations/domains/geometry/visual-closure.test.tsx",
+  "red": {
+    "exit_code": 1,
+    "passed": 1,
+    "failed": 9,
+    "F1": "All seven official family final formulas duplicated in inspector and analysis",
+    "F2": "Selected section and SECTION_REGION polygon3 boundaries stay 0xc85a32 instead of 0x2563eb",
+    "control": "Mode A non-final formula retained: PASS"
+  },
+  "green": "NOT_RUN",
+  "provider_calls": 0
+}

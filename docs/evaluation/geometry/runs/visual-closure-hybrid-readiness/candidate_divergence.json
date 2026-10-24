@@ -1,0 +1,16 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "visual-closure-hybrid-readiness",
+  "corrects": "docs/evaluation/geometry/runs/visual-hybrid-final-corrections/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "8be632679307a94ce4525ad576a05a9eccffc8ba2bdbf02d4c7dc93c208b7c41",
+  "current_product_commit": "956b77f8",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Owner authorized F1 single analysis formula region and F2 cobalt selected section boundary, preserving semantic terracotta fill. Frontend-only; historical receipts untouched. No oracle changes.",
+  "cache_version": 128,
+  "cache_version_hien_tai": 128,
+  "cache_decision": "NO_BUMP: only frontend presentation changes; served backend envelope unchanged.",
+  "hieu_luc_len_ket_qua_da_do": {"historical_measurements": "UNCHANGED", "live_requests": 0}
+}
