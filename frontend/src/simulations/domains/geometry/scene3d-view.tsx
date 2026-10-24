@@ -1825,33 +1825,6 @@ export function buildObject3D(
     bongTruoc.quaternion.copy(mesh.quaternion);
     bongTruoc.position.copy(mesh.position);
     nhomCong.add(mesh, bong, bongTruoc);
-    if (o.curved_kind === "ball" && r > 0) {
-      const soNhip = 96;
-      const taoVongCau = (layDiem: (ang: number) => THREE.Vector3, doDuc: number) => {
-        const pts: THREE.Vector3[] = [];
-        for (let i = 0; i <= soNhip; i += 1) {
-          pts.push(layDiem((i / soNhip) * Math.PI * 2));
-        }
-        const vong = new THREE.Line(
-          new THREE.BufferGeometry().setFromPoints(pts),
-          new THREE.LineBasicMaterial({
-            color: net(MAU.canh),
-            transparent: true,
-            opacity: noiBat ? doDuc * 1.4 : doDuc,
-            depthWrite: false,
-          }),
-        );
-        vong.position.copy(tam);
-        vong.userData.voHan = true;
-        vong.raycast = () => {};
-        return vong;
-      };
-      nhomCong.add(
-        taoVongCau((ang) => new THREE.Vector3(r * Math.cos(ang), r * Math.sin(ang), 0), DO_DUC.sphereEquator),
-        taoVongCau((ang) => new THREE.Vector3(r * Math.cos(ang), 0, r * Math.sin(ang)), DO_DUC.sphereMeridian),
-        taoVongCau((ang) => new THREE.Vector3(0, r * Math.cos(ang), r * Math.sin(ang)), DO_DUC.sphereMeridian),
-      );
-    }
     nhomCong.userData.curvedSolidVolume = {
       id: o.id,
       kind: o.curved_kind as "cylinder" | "cone" | "ball",
@@ -2558,6 +2531,7 @@ export function Scene3DWorkspace({
   sceneRef.current = scene;
   const vaiKhoiTheoId = useMemo(() => vaiTroKhoi(scene), [scene]);
   const [webglFailed, setWebglFailed] = useState(false);
+  const [hoveredSection, setHoveredSection] = useState<string | null>(null);
   /* regular-triangular-pyramid-w01 — XOAY HIỂN THỊ: đáy chóp nghiêng (§18.2) về nằm ngang. Đồng nhất thức cho mọi cảnh
      có đáy ngang (mọi họ trước), nên các họ ấy không đổi một điểm ảnh. Áp lên nhóm gốc + nhóm nhân chứng; vị trí THẾ GIỚI
      của nhãn/khung nhìn/lưới đi qua cùng phép quay (`xoay`). Toạ độ cảnh không đổi. */
@@ -2724,12 +2698,9 @@ export function Scene3DWorkspace({
     const NGUONG_KEO = 4;
     const xuongTay = (e: PointerEvent) => {
       batDau = [e.clientX, e.clientY];
+      setHoveredSection(null);
     };
-    const nhacTay = (e: PointerEvent) => {
-      const d0 = batDau;
-      batDau = null;
-      if (!d0 || !chonRef.current) return;
-      if (Math.hypot(e.clientX - d0[0], e.clientY - d0[1]) > NGUONG_KEO) return;
+    const vatTaiConTro = (e: PointerEvent, chiThietDien = false) => {
       const r = renderer.domElement.getBoundingClientRect();
       const diem = new THREE.Vector2(
         ((e.clientX - r.left) / r.width) * 2 - 1,
@@ -2753,10 +2724,29 @@ export function Scene3DWorkspace({
         .filter((h) => !h.object.userData?.chieuSau)
         .map((h) => pickSemanticId(h.object))
         .filter((x): x is string => typeof x === "string" && x.length > 0);
-      chonRef.current(chonCuThe(ids, (id) => loaiRef.current.get(id)));
+      return chiThietDien ? ids.find((id) => {
+        const object = sceneRef.current.objects.find((o) => o.id === id);
+        return object && vaiTroMien(object) === "section";
+      }) ?? null : chonCuThe(ids, (id) => loaiRef.current.get(id));
+    };
+    const nhacTay = (e: PointerEvent) => {
+      const d0 = batDau;
+      batDau = null;
+      if (!d0 || !chonRef.current) return;
+      if (Math.hypot(e.clientX - d0[0], e.clientY - d0[1]) > NGUONG_KEO) return;
+      chonRef.current(vatTaiConTro(e));
+    };
+    const roiConTro = () => setHoveredSection(null);
+    const diConTro = (e: PointerEvent) => {
+      if (e.pointerType === "touch" || e.buttons || batDau) return;
+      const id = vatTaiConTro(e, true);
+      const object = sceneRef.current.objects.find((o) => o.id === id);
+      setHoveredSection(object && vaiTroMien(object) === "section" ? id : null);
     };
     renderer.domElement.addEventListener("pointerdown", xuongTay);
     renderer.domElement.addEventListener("pointerup", nhacTay);
+    renderer.domElement.addEventListener("pointermove", diConTro);
+    renderer.domElement.addEventListener("pointerleave", roiConTro);
 
     // ── NHÃN ĐIỂM, CHIẾU RA MÀN HÌNH MỖI KHUNG ──────────────────────────
     //
@@ -3232,6 +3222,8 @@ export function Scene3DWorkspace({
       song = false;
       renderer.domElement.removeEventListener("pointerdown", xuongTay);
       renderer.domElement.removeEventListener("pointerup", nhacTay);
+      renderer.domElement.removeEventListener("pointermove", diConTro);
+      renderer.domElement.removeEventListener("pointerleave", roiConTro);
       window.removeEventListener("resize", chinhCo);
       roKhung?.disconnect();
       moPanel?.disconnect();
@@ -3455,7 +3447,7 @@ export function Scene3DWorkspace({
         : o.render === "surface" && diemMp.length >= 3
           ? diemMp
           : diemNen;
-      const obj = buildObject3D(renderObject, tang ? tang.get(o.id) ?? false : sangBuoc,
+      const obj = buildObject3D(renderObject, o.id === hoveredSection ? "dich" : tang ? tang.get(o.id) ?? false : sangBuoc,
         banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemChoVat, undefined, canonicalHighlights, khucToSang, xray,
         vaiKhoiTheoId.get(o.id) ?? vaiKhoiTheoId.get(o.parent ?? "") ?? "primary",
         coThietDienDong);
@@ -3546,7 +3538,7 @@ export function Scene3DWorkspace({
       (window as any).__geo3d_causal_tiers = tang ? Object.fromEntries(tang) : null;
     }
     veRef.current?.();
-  }, [scene, buoc, tuongTac, tapNoiBat, tang, anPhu, xray, vaiKhoiTheoId]);
+  }, [scene, buoc, tuongTac, tapNoiBat, tang, anPhu, xray, vaiKhoiTheoId, hoveredSection]);
 
   // ── KHI NÀO ĐẶT LẠI KHUNG NHÌN ────────────────────────────────────────
   //

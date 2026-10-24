@@ -808,7 +808,7 @@ export function Scene3DExplorer({
                             <div className="geo3d-tree-item">{noiDung}</div>
                           )}
                           {m.formula && (
-                            <p className="geo3d-soi-cong-thuc" data-analysis-formula={m.id}>
+                            <p className="geo3d-phan-tich-cong-thuc" data-analysis-formula={m.id}>
                               <MathDisplay text={m.formula} />
                             </p>
                           )}

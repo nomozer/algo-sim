@@ -40,6 +40,7 @@ describe("Owner F1: one formula region per selected quantity", () => {
     const html = renderToString(<Scene3DExplorer scene={scene} />);
     expect(html).toContain("data-analysis-formula=");
     expect(html.includes(`data-formula-entity="${quantity.id}"`)).toBe(false);
+    expect(html.includes('class="geo3d-soi-cong-thuc"')).toBe(false);
     expect(html).toContain('href="#geo3d-bang-phan-tich"');
     expect(html).toContain('data-panel="soi"');
   });
@@ -79,4 +80,14 @@ describe("Owner F2: selected section preserves semantic fill and geometry", () =
     expect(JSON.stringify(input)).toBe(before);
     expect(borderColors(buildObject3D(input, false)!)).toEqual(borderColors(neutral));
   });
+});
+
+it("Owner P3: a sphere has no invented equator or meridian lines", () => {
+  const sphere: SceneObject = { id: "sphere", label: "Mặt cầu", type: "curved_solid", render: "curved_solid",
+    origin: "derived", producer: "construct_curved", depends: [], curved_kind: "ball",
+    anchor: ["0", "0", "0"], radius_sq: "25", height_sq: "0" };
+  const object = buildObject3D(sphere, false)!;
+  let lines = 0;
+  object.traverse(child => { if ((child as THREE.Line).isLine) lines++; });
+  expect(lines).toBe(0);
 });

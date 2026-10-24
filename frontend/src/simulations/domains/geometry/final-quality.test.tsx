@@ -175,7 +175,7 @@ describe('final visual quality', () => {
     const depthPrepasses = sphGroup.children.filter((c) => c.userData?.chieuSau || c.userData?.chieuSauMatTruoc);
     expect(depthPrepasses.map((c) => c.renderOrder).sort((a, b) => a - b)).toEqual([5, 7.5]);
     const sphereContours = sphGroup.children.filter((c) => (c as THREE.Line).isLine);
-    expect(sphereContours.length).toBe(3);
+    expect(sphereContours.length).toBe(0);
 
     const secNormal = buildObject3D(secObj, false, undefined, diemNen, undefined, undefined, undefined, false)!;
     const fillNormal = secNormal.children.find((c) => c.name.startsWith('section_fill:')) as THREE.Mesh;
