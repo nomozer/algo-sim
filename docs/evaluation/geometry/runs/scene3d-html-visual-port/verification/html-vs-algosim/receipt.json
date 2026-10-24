@@ -1,0 +1,666 @@
+{
+  "schema": "html-vs-algosim-pairs/1",
+  "label": "PAIR",
+  "algosim_commit": "13d28b844925ee0c9adb02698b54597c8f9d6eee",
+  "algosim_tracked_changes": "",
+  "html_sha256": "9f09b7f412d133712b6d4e2ce5fed9797955aa984a307d7504f1e31a9fd980c3",
+  "fixtures_sha256": "1abad7c55cc31acd2c27123e347ebf6f125fd58a20544e55bc5680c5ea9b9df5",
+  "html_radius": 15.5,
+  "rows": [
+    {
+      "pair": "S.ABCD, SA ⊥ (ABCD), section",
+      "viewport": "1440x900",
+      "html": {
+        "shape": "chop_sa_vuong_day_vuong",
+        "file": "PAIR-HTML-chop_sa_vuong_day_vuong-1440.png",
+        "sha256": "dee30019f936cd5a65687949f59e94031985a4c91b45a73baeb44145cf123b49",
+        "camera": [
+          7.612638260739985,
+          7.504334777686669,
+          12.142346130139654
+        ],
+        "target": [
+          0,
+          1.6,
+          0
+        ],
+        "spherical": {
+          "theta": 0.56,
+          "phi": 1.18,
+          "radius": 15.5
+        },
+        "fov": 40,
+        "shell_opacity": 0.12,
+        "step": 4,
+        "frame_local_view_dir": [
+          0.6529825534164843,
+          0.6546068003884076,
+          0.3809248243668819
+        ]
+      },
+      "algosim": {
+        "case": "PERP-square-third",
+        "auxiliary_shown": true,
+        "file": "PAIR-ALG-PERP-square-third-1440.png",
+        "sha256": "0f8f7742b65bf3e8f09e59946a879d6ec8b556153ba002cfac8f6701528b46c9",
+        "step": 20,
+        "camera": {
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "H",
+            "H1",
+            "M",
+            "H2",
+            "H3",
+            "N",
+            "P",
+            "Q"
+          ],
+          "before": [
+            2.500359239938624,
+            1.5591426005551932,
+            1.9546433406680968
+          ],
+          "after": [
+            2.282945010654551,
+            2.2108076718630576,
+            1.5069856207935883
+          ],
+          "centroid": [
+            0.3589743589230769,
+            0.282051282,
+            0.3846153847692308
+          ],
+          "dir": [
+            0.6529825534164843,
+            0.6546068003884076,
+            0.3809248243668819
+          ],
+          "elevation_deg": 22.39
+        },
+        "fat_lines": {
+          "totalLines": 27,
+          "maxSectionBorderWidth": 4.48,
+          "maxVisibleEdgeWidth": 3.58,
+          "minHiddenEdgeWidth": 2.19
+        }
+      },
+      "side_by_side": "SIDE-chop_sa_vuong_day_vuong-1440.png"
+    },
+    {
+      "pair": "S.ABC, SA ⊥ (ABC), section",
+      "viewport": "1440x900",
+      "html": {
+        "shape": "chop_sa_vuong_abc",
+        "file": "PAIR-HTML-chop_sa_vuong_abc-1440.png",
+        "sha256": "5793df634c1ad7dbae33ff83b1fabb74e8963e4d94f95aab9976410b36be2504",
+        "camera": [
+          7.612638260739985,
+          7.504334777686669,
+          12.142346130139654
+        ],
+        "target": [
+          0,
+          1.6,
+          0
+        ],
+        "spherical": {
+          "theta": 0.56,
+          "phi": 1.18,
+          "radius": 15.5
+        },
+        "fov": 40,
+        "shell_opacity": 0.12,
+        "step": 4,
+        "frame_local_view_dir": [
+          0.5776947398572598,
+          -0.7219176308432377,
+          0.3809248243668819
+        ]
+      },
+      "algosim": {
+        "case": "CORPUS-DEV03-construct",
+        "auxiliary_shown": true,
+        "file": "PAIR-ALG-CORPUS-DEV03-construct-1440.png",
+        "sha256": "5fc46283b375412d3ead3d0ae2d05eda3d61961564a6d0f3eacee2aa9c26e267",
+        "step": 19,
+        "camera": {
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "S",
+            "H",
+            "H1",
+            "M",
+            "H2",
+            "H3",
+            "GiaođiểmcủaSBvà(α)",
+            "GiaođiểmcủaSCvà(α)"
+          ],
+          "before": [
+            2.5150308568994215,
+            1.4531008482607706,
+            1.5794007003507398
+          ],
+          "after": [
+            1.96419123605437,
+            -1.8317145088267157,
+            1.3885541504453003
+          ],
+          "centroid": [
+            0.3409090909090909,
+            0.19682395545454545,
+            0.3181818181818182
+          ],
+          "dir": [
+            0.5776947398572598,
+            -0.7219176308432377,
+            0.3809248243668819
+          ],
+          "elevation_deg": 22.39
+        },
+        "fat_lines": {
+          "totalLines": 22,
+          "maxSectionBorderWidth": 4.48,
+          "maxVisibleEdgeWidth": 3.58,
+          "minHiddenEdgeWidth": 2.19
+        }
+      },
+      "side_by_side": "SIDE-chop_sa_vuong_abc-1440.png"
+    },
+    {
+      "pair": "right prism ABC.A′B′C′, section",
+      "viewport": "1440x900",
+      "html": {
+        "shape": "lang_tru_tam_giac_deu",
+        "file": "PAIR-HTML-lang_tru_tam_giac_deu-1440.png",
+        "sha256": "8f7f19245316c33c53a4b533bc9b0578b1228809197031059beaaad9e631711c",
+        "camera": [
+          7.612638260739985,
+          7.504334777686669,
+          12.142346130139654
+        ],
+        "target": [
+          0,
+          1.6,
+          0
+        ],
+        "spherical": {
+          "theta": 0.56,
+          "phi": 1.18,
+          "radius": 15.5
+        },
+        "fov": 40,
+        "shell_opacity": 0.12,
+        "step": 4,
+        "frame_local_view_dir": [
+          0.5666494698478003,
+          -0.7306193649926528,
+          0.3809248243668819
+        ]
+      },
+      "algosim": {
+        "case": "CORPUS-DEV10-prism-area",
+        "auxiliary_shown": true,
+        "file": "PAIR-ALG-CORPUS-DEV10-prism-area-1440.png",
+        "sha256": "92c6173f0fb5360c622796888f22c1933395869aae5d41ee1f575d5d9d2278f9",
+        "step": 16,
+        "camera": {
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "A′",
+            "B′",
+            "C′",
+            "M",
+            "H",
+            "H1",
+            "GiaođiểmcủaBB′và(α)",
+            "GiaođiểmcủaCC′và(α)"
+          ],
+          "before": [
+            3.559986846630184,
+            1.4461363877190585,
+            2.533627682470021
+          ],
+          "after": [
+            2.566342426381815,
+            -2.290748664451087,
+            2.358523041262435
+          ],
+          "centroid": [
+            0.5454545454545454,
+            0.31491832872727277,
+            1
+          ],
+          "dir": [
+            0.5666494698478003,
+            -0.7306193649926528,
+            0.3809248243668819
+          ],
+          "elevation_deg": 22.39
+        },
+        "fat_lines": {
+          "totalLines": 19,
+          "maxSectionBorderWidth": 4.48,
+          "maxVisibleEdgeWidth": 3.58,
+          "minHiddenEdgeWidth": 2.99
+        }
+      },
+      "side_by_side": "SIDE-lang_tru_tam_giac_deu-1440.png"
+    },
+    {
+      "pair": "S.ABCD, section MNPQ",
+      "viewport": "1440x900",
+      "html": {
+        "shape": "chop_tu_giac_deu",
+        "file": "PAIR-HTML-chop_tu_giac_deu-1440.png",
+        "sha256": "0f2c8afa9c66f222fe718fd6681a614fc3b4def7ee24f8e3198f9d23af4d52ea",
+        "camera": [
+          7.612638260739985,
+          7.504334777686669,
+          12.142346130139654
+        ],
+        "target": [
+          0,
+          1.6,
+          0
+        ],
+        "spherical": {
+          "theta": 0.56,
+          "phi": 1.18,
+          "radius": 15.5
+        },
+        "fov": 40,
+        "shell_opacity": 0.12,
+        "step": 4,
+        "frame_local_view_dir": [
+          0.6565416134310806,
+          0.6510371633127972,
+          0.3809248243668819
+        ]
+      },
+      "algosim": {
+        "case": "thiet-dien-chop",
+        "auxiliary_shown": false,
+        "file": "PAIR-ALG-thiet-dien-chop-1440.png",
+        "sha256": "de85067b28b3b8339132f6cb1d6d51cc9b2c1eea8c9531cadcfe321823366d11",
+        "step": 10,
+        "camera": {
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "M",
+            "N",
+            "P"
+          ],
+          "before": [
+            7.381500779072738,
+            4.626080719294652,
+            5.211013080865531
+          ],
+          "after": [
+            6.461348822100336,
+            6.288464828068221,
+            4.563719195325534
+          ],
+          "centroid": [
+            0.75,
+            0.625,
+            1.25
+          ],
+          "dir": [
+            0.6565416134310806,
+            0.6510371633127972,
+            0.3809248243668819
+          ],
+          "elevation_deg": 22.39
+        },
+        "fat_lines": {
+          "totalLines": 12,
+          "maxSectionBorderWidth": 4.48,
+          "maxVisibleEdgeWidth": 3.58,
+          "minHiddenEdgeWidth": 2.99
+        }
+      },
+      "side_by_side": "SIDE-chop_tu_giac_deu-1440.png"
+    },
+    {
+      "pair": "S.ABCD, SA ⊥ (ABCD), section",
+      "viewport": "390x844",
+      "html": {
+        "shape": "chop_sa_vuong_day_vuong",
+        "file": "PAIR-HTML-chop_sa_vuong_day_vuong-390.png",
+        "sha256": "359ecdc8a5c3f84fd82e46b5640d79e9883706c9c97a85ecfc8002ac56dcaf9c",
+        "camera": [
+          7.612638260739985,
+          7.504334777686669,
+          12.142346130139654
+        ],
+        "target": [
+          0,
+          1.6,
+          0
+        ],
+        "spherical": {
+          "theta": 0.56,
+          "phi": 1.18,
+          "radius": 15.5
+        },
+        "fov": 40,
+        "shell_opacity": 0.12,
+        "step": 4,
+        "frame_local_view_dir": [
+          0.6529825534164843,
+          0.6546068003884076,
+          0.3809248243668819
+        ]
+      },
+      "algosim": {
+        "case": "PERP-square-third",
+        "auxiliary_shown": true,
+        "file": "PAIR-ALG-PERP-square-third-390.png",
+        "sha256": "408f11261a31d7bb89f23b06fc366217c864c2bc094acfcb6803e3d11c20fc14",
+        "step": 20,
+        "camera": {
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "H",
+            "H1",
+            "M",
+            "H2",
+            "H3",
+            "N",
+            "P",
+            "Q"
+          ],
+          "before": [
+            2.691036706499096,
+            1.6777948881316485,
+            2.11778465920344
+          ],
+          "after": [
+            2.463816875522885,
+            2.3921294424406354,
+            1.6124992872727228
+          ],
+          "centroid": [
+            0.3589743589230769,
+            0.282051282,
+            0.3846153847692308
+          ],
+          "dir": [
+            0.6529825534164843,
+            0.6546068003884076,
+            0.3809248243668819
+          ],
+          "elevation_deg": 22.39
+        },
+        "fat_lines": {
+          "totalLines": 27,
+          "maxSectionBorderWidth": 2.79,
+          "maxVisibleEdgeWidth": 2.23,
+          "minHiddenEdgeWidth": 1.36
+        }
+      },
+      "side_by_side": "SIDE-chop_sa_vuong_day_vuong-390.png"
+    },
+    {
+      "pair": "S.ABC, SA ⊥ (ABC), section",
+      "viewport": "390x844",
+      "html": {
+        "shape": "chop_sa_vuong_abc",
+        "file": "PAIR-HTML-chop_sa_vuong_abc-390.png",
+        "sha256": "44ea16cfc380ca6c53ad225251ae3e22b881b42f540c2993c7d0150ac72ba2af",
+        "camera": [
+          7.612638260739985,
+          7.504334777686669,
+          12.142346130139654
+        ],
+        "target": [
+          0,
+          1.6,
+          0
+        ],
+        "spherical": {
+          "theta": 0.56,
+          "phi": 1.18,
+          "radius": 15.5
+        },
+        "fov": 40,
+        "shell_opacity": 0.12,
+        "step": 4,
+        "frame_local_view_dir": [
+          0.5776947398572598,
+          -0.7219176308432377,
+          0.3809248243668819
+        ]
+      },
+      "algosim": {
+        "case": "CORPUS-DEV03-construct",
+        "auxiliary_shown": true,
+        "file": "PAIR-ALG-CORPUS-DEV03-construct-390.png",
+        "sha256": "5dfbc364ae68e164fd215965128091f386571c81a9734077813fa8a67866a437",
+        "step": 19,
+        "camera": {
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "S",
+            "H",
+            "H1",
+            "M",
+            "H2",
+            "H3",
+            "GiaođiểmcủaSBvà(α)",
+            "GiaođiểmcủaSCvà(α)"
+          ],
+          "before": [
+            2.5150308568994215,
+            1.4531008482607706,
+            1.5794007003507398
+          ],
+          "after": [
+            1.96419123605437,
+            -1.8317145088267157,
+            1.3885541504453003
+          ],
+          "centroid": [
+            0.3409090909090909,
+            0.19682395545454548,
+            0.3181818181818182
+          ],
+          "dir": [
+            0.5776947398572598,
+            -0.7219176308432377,
+            0.3809248243668819
+          ],
+          "elevation_deg": 22.39
+        },
+        "fat_lines": {
+          "totalLines": 22,
+          "maxSectionBorderWidth": 2.79,
+          "maxVisibleEdgeWidth": 2.23,
+          "minHiddenEdgeWidth": 1.36
+        }
+      },
+      "side_by_side": "SIDE-chop_sa_vuong_abc-390.png"
+    },
+    {
+      "pair": "right prism ABC.A′B′C′, section",
+      "viewport": "390x844",
+      "html": {
+        "shape": "lang_tru_tam_giac_deu",
+        "file": "PAIR-HTML-lang_tru_tam_giac_deu-390.png",
+        "sha256": "e8cdba017857820ea6e9386233d4acd2fa401c8fd48d8097aa34442830adf7f3",
+        "camera": [
+          7.612638260739985,
+          7.504334777686669,
+          12.142346130139654
+        ],
+        "target": [
+          0,
+          1.6,
+          0
+        ],
+        "spherical": {
+          "theta": 0.56,
+          "phi": 1.18,
+          "radius": 15.5
+        },
+        "fov": 40,
+        "shell_opacity": 0.12,
+        "step": 4,
+        "frame_local_view_dir": [
+          0.5666494698478003,
+          -0.7306193649926528,
+          0.3809248243668819
+        ]
+      },
+      "algosim": {
+        "case": "CORPUS-DEV10-prism-area",
+        "auxiliary_shown": true,
+        "file": "PAIR-ALG-CORPUS-DEV10-prism-area-390.png",
+        "sha256": "bb21e59456962f955e7bb55c431d1fed2c98910da902df74f4e6cb419208cdaa",
+        "step": 16,
+        "camera": {
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "A′",
+            "B′",
+            "C′",
+            "M",
+            "H",
+            "H1",
+            "GiaođiểmcủaBB′và(α)",
+            "GiaođiểmcủaCC′và(α)"
+          ],
+          "before": [
+            3.8873187832356004,
+            1.5658882668977743,
+            2.692331258678755
+          ],
+          "after": [
+            2.783323079283855,
+            -2.570516449077375,
+            2.504386262699705
+          ],
+          "centroid": [
+            0.5454545454545454,
+            0.31491832872727277,
+            1
+          ],
+          "dir": [
+            0.5666494698478003,
+            -0.7306193649926528,
+            0.3809248243668819
+          ],
+          "elevation_deg": 22.39
+        },
+        "fat_lines": {
+          "totalLines": 19,
+          "maxSectionBorderWidth": 2.79,
+          "maxVisibleEdgeWidth": 2.23,
+          "minHiddenEdgeWidth": 1.86
+        }
+      },
+      "side_by_side": "SIDE-lang_tru_tam_giac_deu-390.png"
+    },
+    {
+      "pair": "S.ABCD, section MNPQ",
+      "viewport": "390x844",
+      "html": {
+        "shape": "chop_tu_giac_deu",
+        "file": "PAIR-HTML-chop_tu_giac_deu-390.png",
+        "sha256": "45a9bdc72c3c701e0132b3f016a6bd51c2edd745523a8d568fe7632661267365",
+        "camera": [
+          7.612638260739985,
+          7.504334777686669,
+          12.142346130139654
+        ],
+        "target": [
+          0,
+          1.6,
+          0
+        ],
+        "spherical": {
+          "theta": 0.56,
+          "phi": 1.18,
+          "radius": 15.5
+        },
+        "fov": 40,
+        "shell_opacity": 0.12,
+        "step": 4,
+        "frame_local_view_dir": [
+          0.6565416134310806,
+          0.6510371633127972,
+          0.3809248243668819
+        ]
+      },
+      "algosim": {
+        "case": "thiet-dien-chop",
+        "auxiliary_shown": false,
+        "file": "PAIR-ALG-thiet-dien-chop-390.png",
+        "sha256": "047605002fbbbe63742ba94044691ddd40ecc9a050e9c519ac7b1285aeaa5b84",
+        "step": 10,
+        "camera": {
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "M",
+            "N",
+            "P"
+          ],
+          "before": [
+            8.028332542180046,
+            5.004398005317939,
+            5.563968579639873
+          ],
+          "after": [
+            7.00486669267774,
+            6.827425840487993,
+            4.879067750778056
+          ],
+          "centroid": [
+            0.75,
+            0.625,
+            1.25
+          ],
+          "dir": [
+            0.6565416134310806,
+            0.6510371633127972,
+            0.3809248243668819
+          ],
+          "elevation_deg": 22.39
+        },
+        "fat_lines": {
+          "totalLines": 12,
+          "maxSectionBorderWidth": 2.79,
+          "maxVisibleEdgeWidth": 2.23,
+          "minHiddenEdgeWidth": 1.86
+        }
+      },
+      "side_by_side": "SIDE-chop_tu_giac_deu-390.png"
+    }
+  ],
+  "errors": []
+}

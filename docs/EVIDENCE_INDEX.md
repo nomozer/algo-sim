@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SCENE3D_HTML_VISUAL_PORT
+
+REPORT = docs/evaluation/geometry/runs/scene3d-html-visual-port/FINAL_OWNER_HANDOFF.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-html-visual-port/
+CLASSIFICATION = SCENE3D_HTML_VISUAL_FIDELITY_READY_FOR_OWNER_REVIEW (owner SGK reference matphanghinhchot.html ported as SGK_REFERENCE: unlit two-pass shells, terracotta section fill 0.32 by owner decision, dashed violet plane border, screen-sized right-angle marks, role-styled labels, ivory canvas; owner V6.2 WIP checkpointed verbatim at 3bfc8dd0; independent review PASS_WITH_LIMITS, findings fixed; human visual approval NOT_APPROVED)
+CODE_COMMIT = 852f650158635b6dc402d4cfc905cbdcbbaebe43 (product, frontend only); candidate 13d28b844925ee0c9adb02698b54597c8f9d6eee; unchanged 114-file measured tree 9bf35a1d6f4c3b3e90228964a3b5ee96288de29efcb3f580f22c6f126489bd9a; NO_BUMP
+VERIFICATION = docs/evaluation/geometry/runs/scene3d-html-visual-port/verification/full-t3/execution.json + docs/evaluation/geometry/runs/scene3d-html-visual-port/verification/orbit-gate/ORBIT_GATE.json + docs/evaluation/geometry/runs/scene3d-html-visual-port/verification/section-fill/receipt.json + docs/evaluation/geometry/runs/scene3d-html-visual-port/verification/html-vs-algosim/receipt.json + docs/evaluation/geometry/runs/scene3d-html-visual-port/INDEPENDENT_REVIEW.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = SCENE3D_UNIFIED_VISUAL_LANGUAGE_W01 (palette/material policy superseded by SGK_REFERENCE in docs/architecture/SCENE3D_VISUAL_LANGUAGE.md; orbit-gate allocation regression of the uncommitted V6.2 session fixed; historical artifact bytes unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = SCENE3D_UNIFIED_VISUAL_LANGUAGE_W01
 
 REPORT = docs/evaluation/geometry/runs/scene3d-unified-visual-language/report.md
@@ -9,7 +20,7 @@ CODE_COMMIT = 34a57d3540f82a78701b0f0caa8dbae746f266d1; candidate dd3bddd48dad7f
 VERIFICATION = docs/evaluation/geometry/runs/scene3d-unified-visual-language/validation.json + docs/evaluation/geometry/runs/scene3d-unified-visual-language/browser-metrics.json + docs/evaluation/geometry/runs/scene3d-unified-visual-language/survey-validity.json + docs/evaluation/geometry/runs/scene3d-unified-visual-language/t3-attempt2/execution.json + docs/evaluation/geometry/runs/scene3d-unified-visual-language/post-t3-freeze/execution.json + docs/evaluation/geometry/runs/scene3d-unified-visual-language/handoff.md
 MODEL_REQUEST_COUNT = 0
 CORRECTS = GEOMETRIC_VISUAL_CORRECTNESS_FRAMING_W01 (semantic material palette: stable full-scene primary/secondary solid roles replace the visible-index teal override; one unlit section fill across polygon/circle/ellipse; historical artifact bytes unchanged)
-CORRECTED_BY = NONE
+CORRECTED_BY = SCENE3D_HTML_VISUAL_PORT (docs/evaluation/geometry/runs/scene3d-html-visual-port/FINAL_OWNER_HANDOFF.md)
 
 ## WAVE_ID = GEOMETRIC_VISUAL_CORRECTNESS_FRAMING_W01
 

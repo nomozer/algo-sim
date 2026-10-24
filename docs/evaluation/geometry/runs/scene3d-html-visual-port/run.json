@@ -1,0 +1,48 @@
+{
+  "schema_version": "algosim.eval.run.v1",
+  "run_id": "scene3d-html-visual-port",
+  "wave": "scene3d-html-visual-port",
+  "authorization": "GO_SCENE3D_HTML_VISUAL_FIDELITY_PORT_LOCAL_ONLY",
+  "mode": "LOCAL_IMPLEMENTATION_VISUAL_VALIDATION_NO_GO_MAIN",
+  "branch": "research/scene3d-html-visual-port",
+  "base_branch": "research/scene3d-unified-visual-language",
+  "base_commit": "8618d84c",
+  "owner_wip_checkpoint": "3bfc8dd0c5102d08547e39e89411f845d73fe964",
+  "product_commits": ["60b556bc", "656759fc", "852f650158635b6dc402d4cfc905cbdcbbaebe43"],
+  "candidate_freeze_commit": "13d28b844925ee0c9adb02698b54597c8f9d6eee",
+  "t3_target_commit": "13d28b844925ee0c9adb02698b54597c8f9d6eee",
+  "measured_system_hash": "9bf35a1d6f4c3b3e90228964a3b5ee96288de29efcb3f580f22c6f126489bd9a",
+  "measured_file_count": 114,
+  "reference": {
+    "file": "C:/Users/Bunny/Downloads/matphanghinhchot.html",
+    "sha256_prefix": "9f09b7f412d13371",
+    "modified": false,
+    "role": "visual reference only"
+  },
+  "verification": {
+    "full_t3": "FULL_PRODUCT_GATE_PASS",
+    "authoritative_t3_path": "docs/evaluation/geometry/runs/scene3d-html-visual-port/verification/full-t3/execution.json",
+    "backend_pytest_passed": 11442,
+    "frontend_vitest_passed": 1195,
+    "post_t3_freeze_verify": "MATCH",
+    "scene3d_orbit_gate": "DAT p1/p6/p7, capPhat 0 (verification/orbit-gate/ORBIT_GATE.json)",
+    "section_fill_distinguishable_probe": "PASS 6/6, mean dE76 20.42-20.44 at fill 0.32 (official compiler-scene-suite not run)",
+    "right_angle_markers": "world size 0.998-1.007 of the 8-12 px target outside pure orbit",
+    "independent_review": "PASS_WITH_LIMITS (findings 1-5 fixed in 852f6501; fixes not re-reviewed)",
+    "captures": { "html_reference": 14, "html_vs_algosim_pairs": 8, "default_camera": 12, "right_angle": 24 }
+  },
+  "owner_decisions": [
+    "2026-10-24: uncommitted V6.2 visual session is the owner's; checkpoint and continue on a new branch",
+    "2026-10-24: section fill 0.32 (smallest value passing SECTION_FILL_DISTINGUISHABLE) instead of reference 0.27"
+  ],
+  "governance": {
+    "default_mode": "LLM_ONLY",
+    "hybrid_product_enablement": "NO-GO",
+    "cache_version_decision": "NO_BUMP (frontend-only)",
+    "live_provider_calls": 0,
+    "push": "NO",
+    "merge_main": "NO"
+  },
+  "human_visual_approval": "NOT_APPROVED",
+  "status": "SCENE3D_HTML_VISUAL_FIDELITY_READY_FOR_OWNER_REVIEW"
+}

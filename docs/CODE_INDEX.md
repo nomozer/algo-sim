@@ -12,6 +12,13 @@ CSS causal blue in `styles/tokens.css` stays locked by role tests. Behavior test
 `scene3d-unified-materials.test.ts`, existing material/hidden-line/role tests. A/B/C and browser measurements live
 only in the run; no product theme UI, backend authority or route/cache change.
 
+**SGK_REFERENCE port** (run `docs/evaluation/geometry/runs/scene3d-html-visual-port/`): `PHONG_CACH_SCENE3D` now
+carries the reference palette plus `fatPx` and `rightAngle`. `scene3d-view.tsx::voKhoiHaiLuot` (unlit back+front shell
+passes), `dauGocVuong` + exported `datCoGocVuong(roots, cam, hCss)` (per-frame screen-sized right-angle marks, dedupe);
+`scene3d-edge-visibility.ts::heSoNetTheoKhung(hCss)` (Line2 width scale); `scene3d-subentities.ts::diemTaiDinhThietDien`
+(points at a section vertex, exact coordinates — label style only); `scene3d-camera.ts::HUONG_SGK` (view-scorer pull).
+Tests: `scene3d.test.tsx` "SGK: ký hiệu vuông góc…", `simulation-visual-consistency-session1.test.tsx`.
+
 ## Final visual UX quality correction (`research/visual-ux-final-quality`)
 
 Run `docs/evaluation/geometry/runs/visual-ux-final-quality/`. Presentation-only corrections reuse `UnsupportedNotice` in `SimulationWorkspace.tsx` (structured refusal labels, exact code-token cleanup, collapsed diagnostics); `phanTichToanHocCuaCanh` in `scene3d-model.ts` (verified solid display mappings, safe fallback labels, declared length-unit context); `Scene3DExplorer.tsx` (superscripts, construction guidance, last-construction preview, explicit x-ray); `scene3d-playback.tsx` (x-ray prop forwarding); `scene3d-view.tsx::buildObject3D` (depth-correct fills by default, x-ray only by user choice); and `scene3d-model.ts::diemHuuHan` (enclosing radial corners for first-load framing). Tests: `frontend/src/simulations/domains/geometry/final-quality.test.tsx`, existing section/cone/refusal/Explorer regression tests, and the run's `check-browser.mjs`. Backend authority, route/cache/default mode are unchanged.

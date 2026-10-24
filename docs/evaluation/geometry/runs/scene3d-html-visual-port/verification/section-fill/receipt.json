@@ -1,0 +1,136 @@
+{
+  "thresholds": {
+    "T_ON": 20,
+    "T_ON_MIN": 12,
+    "T_OFF": 3,
+    "margin_px": 3
+  },
+  "rows": [
+    {
+      "case": "thiet-dien-chop",
+      "fill_mesh": "section_fill:thiet_dien",
+      "on_png": 410328,
+      "pixel_pair": {
+        "on": [
+          213,
+          178,
+          174
+        ],
+        "off": [
+          220,
+          219,
+          233
+        ]
+      },
+      "samples": 139,
+      "mean_dE": 20.42,
+      "min_dE": 20.41,
+      "verdict": "PASS"
+    },
+    {
+      "case": "CORPUS-DEV01-construct",
+      "fill_mesh": "section_fill:td_sec",
+      "on_png": 371032,
+      "pixel_pair": {
+        "on": [
+          214,
+          179,
+          174
+        ],
+        "off": [
+          221,
+          220,
+          233
+        ]
+      },
+      "samples": 140,
+      "mean_dE": 20.43,
+      "min_dE": 20.41,
+      "verdict": "PASS"
+    },
+    {
+      "case": "CORPUS-DEV03-construct",
+      "fill_mesh": "section_fill:td_sec",
+      "on_png": 386456,
+      "pixel_pair": {
+        "on": [
+          214,
+          179,
+          175
+        ],
+        "off": [
+          221,
+          220,
+          234
+        ]
+      },
+      "samples": 161,
+      "mean_dE": 20.42,
+      "min_dE": 20.41,
+      "verdict": "PASS"
+    },
+    {
+      "case": "CORPUS-DEV10-prism-area",
+      "fill_mesh": "section_fill:td_sp",
+      "on_png": 439132,
+      "pixel_pair": {
+        "on": [
+          213,
+          178,
+          174
+        ],
+        "off": [
+          220,
+          219,
+          233
+        ]
+      },
+      "samples": 619,
+      "mean_dE": 20.43,
+      "min_dE": 20.41,
+      "verdict": "PASS"
+    },
+    {
+      "case": "PERP-square-third",
+      "fill_mesh": "section_fill:td_sec",
+      "on_png": 409708,
+      "pixel_pair": {
+        "on": [
+          213,
+          178,
+          173
+        ],
+        "off": [
+          220,
+          219,
+          232
+        ]
+      },
+      "samples": 161,
+      "mean_dE": 20.44,
+      "min_dE": 20.43,
+      "verdict": "PASS"
+    },
+    {
+      "case": "PARA-0",
+      "fill_mesh": "section_fill:td_sec",
+      "on_png": 372812,
+      "pixel_pair": {
+        "on": [
+          214,
+          179,
+          174
+        ],
+        "off": [
+          221,
+          220,
+          233
+        ]
+      },
+      "samples": 140,
+      "mean_dE": 20.43,
+      "min_dE": 20.41,
+      "verdict": "PASS"
+    }
+  ]
+}

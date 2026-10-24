@@ -1,0 +1,669 @@
+{
+  "schema": "right-angle-marker-probe/1",
+  "rows": [
+    {
+      "id": "PERP-square-third",
+      "viewport": 1440,
+      "state": "default",
+      "file": "PERP-square-third-1440-default.png",
+      "canvas_h": 717,
+      "markers": [
+        {
+          "name": "perpendicular:H",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 8.43,
+          "leg_v_px": 7.16
+        },
+        {
+          "name": "perpendicular:H1",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 8.43,
+          "leg_v_px": 5.93
+        }
+      ]
+    },
+    {
+      "id": "PERP-square-third",
+      "viewport": 1440,
+      "state": "orbit",
+      "file": "PERP-square-third-1440-orbit.png",
+      "canvas_h": 717,
+      "markers": [
+        {
+          "name": "perpendicular:H",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1.464,
+          "leg_u_px": 14.39,
+          "leg_v_px": 13.52
+        },
+        {
+          "name": "perpendicular:H1",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1.464,
+          "leg_u_px": 14.39,
+          "leg_v_px": 14.64
+        }
+      ]
+    },
+    {
+      "id": "PERP-square-third",
+      "viewport": 1440,
+      "state": "zoom_in",
+      "file": "PERP-square-third-1440-zoom_in.png",
+      "canvas_h": 717,
+      "markers": [
+        {
+          "name": "perpendicular:H",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1.002,
+          "leg_u_px": 9.82,
+          "leg_v_px": 9.29
+        },
+        {
+          "name": "perpendicular:H1",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1.002,
+          "leg_u_px": 9.82,
+          "leg_v_px": 10.51
+        }
+      ]
+    },
+    {
+      "id": "PERP-square-third",
+      "viewport": 1440,
+      "state": "zoom_out",
+      "file": "PERP-square-third-1440-zoom_out.png",
+      "canvas_h": 717,
+      "markers": [
+        {
+          "name": "perpendicular:H",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 9.91,
+          "leg_v_px": 9.62
+        },
+        {
+          "name": "perpendicular:H1",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 9.91,
+          "leg_v_px": 9.19
+        }
+      ]
+    },
+    {
+      "id": "PERP-square-third",
+      "viewport": 390,
+      "state": "default",
+      "file": "PERP-square-third-390-default.png",
+      "canvas_h": 342,
+      "markers": [
+        {
+          "name": "perpendicular:H",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 6.74,
+          "leg_v_px": 5.76
+        },
+        {
+          "name": "perpendicular:H1",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 6.74,
+          "leg_v_px": 4.77
+        }
+      ]
+    },
+    {
+      "id": "PERP-square-third",
+      "viewport": 390,
+      "state": "orbit",
+      "file": "PERP-square-third-390-orbit.png",
+      "canvas_h": 342,
+      "markers": [
+        {
+          "name": "perpendicular:H",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1.57,
+          "leg_u_px": 11.48,
+          "leg_v_px": 8.32
+        },
+        {
+          "name": "perpendicular:H1",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1.57,
+          "leg_u_px": 11.48,
+          "leg_v_px": 12.66
+        }
+      ]
+    },
+    {
+      "id": "PERP-square-third",
+      "viewport": 390,
+      "state": "zoom_in",
+      "file": "PERP-square-third-390-zoom_in.png",
+      "canvas_h": 342,
+      "markers": [
+        {
+          "name": "perpendicular:H",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 7.51,
+          "leg_v_px": 5.89
+        },
+        {
+          "name": "perpendicular:H1",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 7.51,
+          "leg_v_px": 8.38
+        }
+      ]
+    },
+    {
+      "id": "PERP-square-third",
+      "viewport": 390,
+      "state": "zoom_out",
+      "file": "PERP-square-third-390-zoom_out.png",
+      "canvas_h": 342,
+      "markers": [
+        {
+          "name": "perpendicular:H",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 7.18,
+          "leg_v_px": 4.97
+        },
+        {
+          "name": "perpendicular:H1",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 7.18,
+          "leg_v_px": 7.82
+        }
+      ]
+    },
+    {
+      "id": "CORPUS-DEV03-construct",
+      "viewport": 1440,
+      "state": "default",
+      "file": "CORPUS-DEV03-construct-1440-default.png",
+      "canvas_h": 717,
+      "markers": [
+        {
+          "name": "perp_marker:canh_ben_S_A",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 6.59,
+          "leg_v_px": 8.88
+        },
+        {
+          "name": "perpendicular:H",
+          "visible": false,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 8.88,
+          "leg_v_px": 6.59
+        },
+        {
+          "name": "perpendicular:H1",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 8.88,
+          "leg_v_px": 6.59
+        }
+      ]
+    },
+    {
+      "id": "CORPUS-DEV03-construct",
+      "viewport": 1440,
+      "state": "orbit",
+      "file": "CORPUS-DEV03-construct-1440-orbit.png",
+      "canvas_h": 717,
+      "markers": [
+        {
+          "name": "perp_marker:canh_ben_S_A",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1.437,
+          "leg_u_px": 13.05,
+          "leg_v_px": 14.59
+        },
+        {
+          "name": "perpendicular:H",
+          "visible": false,
+          "world_leg_ratio_actual_over_expected": 1.437,
+          "leg_u_px": 14.59,
+          "leg_v_px": 13.05
+        },
+        {
+          "name": "perpendicular:H1",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1.437,
+          "leg_u_px": 14.59,
+          "leg_v_px": 12.81
+        }
+      ]
+    },
+    {
+      "id": "CORPUS-DEV03-construct",
+      "viewport": 1440,
+      "state": "zoom_in",
+      "file": "CORPUS-DEV03-construct-1440-zoom_in.png",
+      "canvas_h": 717,
+      "markers": [
+        {
+          "name": "perp_marker:canh_ben_S_A",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1.006,
+          "leg_u_px": 9.34,
+          "leg_v_px": 10.32
+        },
+        {
+          "name": "perpendicular:H",
+          "visible": false,
+          "world_leg_ratio_actual_over_expected": 1.974,
+          "leg_u_px": 20.22,
+          "leg_v_px": 18.36
+        },
+        {
+          "name": "perpendicular:H1",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1.006,
+          "leg_u_px": 10.32,
+          "leg_v_px": 9.32
+        }
+      ]
+    },
+    {
+      "id": "CORPUS-DEV03-construct",
+      "viewport": 1440,
+      "state": "zoom_out",
+      "file": "CORPUS-DEV03-construct-1440-zoom_out.png",
+      "canvas_h": 717,
+      "markers": [
+        {
+          "name": "perp_marker:canh_ben_S_A",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 9.62,
+          "leg_v_px": 10.11
+        },
+        {
+          "name": "perpendicular:H",
+          "visible": false,
+          "world_leg_ratio_actual_over_expected": 0.891,
+          "leg_u_px": 9.01,
+          "leg_v_px": 8.57
+        },
+        {
+          "name": "perpendicular:H1",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 10.11,
+          "leg_v_px": 7.64
+        }
+      ]
+    },
+    {
+      "id": "CORPUS-DEV03-construct",
+      "viewport": 390,
+      "state": "default",
+      "file": "CORPUS-DEV03-construct-390-default.png",
+      "canvas_h": 342,
+      "markers": [
+        {
+          "name": "perp_marker:canh_ben_S_A",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 5.29,
+          "leg_v_px": 7.11
+        },
+        {
+          "name": "perpendicular:H",
+          "visible": false,
+          "world_leg_ratio_actual_over_expected": 1.075,
+          "leg_u_px": 7.65,
+          "leg_v_px": 5.69
+        },
+        {
+          "name": "perpendicular:H1",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 7.11,
+          "leg_v_px": 5.28
+        }
+      ]
+    },
+    {
+      "id": "CORPUS-DEV03-construct",
+      "viewport": 390,
+      "state": "orbit",
+      "file": "CORPUS-DEV03-construct-390-orbit.png",
+      "canvas_h": 342,
+      "markers": [
+        {
+          "name": "perp_marker:canh_ben_S_A",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1.772,
+          "leg_u_px": 10.39,
+          "leg_v_px": 11.89
+        },
+        {
+          "name": "perpendicular:H",
+          "visible": false,
+          "world_leg_ratio_actual_over_expected": 1.906,
+          "leg_u_px": 12.76,
+          "leg_v_px": 11.15
+        },
+        {
+          "name": "perpendicular:H1",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1.772,
+          "leg_u_px": 11.89,
+          "leg_v_px": 14.45
+        }
+      ]
+    },
+    {
+      "id": "CORPUS-DEV03-construct",
+      "viewport": 390,
+      "state": "zoom_in",
+      "file": "CORPUS-DEV03-construct-390-zoom_in.png",
+      "canvas_h": 342,
+      "markers": [
+        {
+          "name": "perp_marker:canh_ben_S_A",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 6.31,
+          "leg_v_px": 7.09
+        },
+        {
+          "name": "perpendicular:H",
+          "visible": false,
+          "world_leg_ratio_actual_over_expected": 2.737,
+          "leg_u_px": 18.97,
+          "leg_v_px": 16.82
+        },
+        {
+          "name": "perpendicular:H1",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 7.09,
+          "leg_v_px": 8.28
+        }
+      ]
+    },
+    {
+      "id": "CORPUS-DEV03-construct",
+      "viewport": 390,
+      "state": "zoom_out",
+      "file": "CORPUS-DEV03-construct-390-zoom_out.png",
+      "canvas_h": 342,
+      "markers": [
+        {
+          "name": "perp_marker:canh_ben_S_A",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 5.62,
+          "leg_v_px": 6.5
+        },
+        {
+          "name": "perpendicular:H",
+          "visible": false,
+          "world_leg_ratio_actual_over_expected": 1.066,
+          "leg_u_px": 6.93,
+          "leg_v_px": 5.99
+        },
+        {
+          "name": "perpendicular:H1",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 6.5,
+          "leg_v_px": 8.06
+        }
+      ]
+    },
+    {
+      "id": "CORPUS-DEV10-prism-area",
+      "viewport": 1440,
+      "state": "default",
+      "file": "CORPUS-DEV10-prism-area-1440-default.png",
+      "canvas_h": 717,
+      "markers": [
+        {
+          "name": "perp_marker:canh_ben_A_A_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 6.5,
+          "leg_v_px": 8.52
+        },
+        {
+          "name": "perp_marker:canh_ben_B_B_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 10.14,
+          "leg_v_px": 7.93
+        },
+        {
+          "name": "perp_marker:canh_ben_C_C_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 8.85,
+          "leg_v_px": 8.06
+        }
+      ]
+    },
+    {
+      "id": "CORPUS-DEV10-prism-area",
+      "viewport": 1440,
+      "state": "orbit",
+      "file": "CORPUS-DEV10-prism-area-1440-orbit.png",
+      "canvas_h": 717,
+      "markers": [
+        {
+          "name": "perp_marker:canh_ben_A_A_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1.42,
+          "leg_u_px": 14.04,
+          "leg_v_px": 14.5
+        },
+        {
+          "name": "perp_marker:canh_ben_B_B_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1.184,
+          "leg_u_px": 7.08,
+          "leg_v_px": 12.09
+        },
+        {
+          "name": "perp_marker:canh_ben_C_C_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 0.958,
+          "leg_u_px": 5.7,
+          "leg_v_px": 9.75
+        }
+      ]
+    },
+    {
+      "id": "CORPUS-DEV10-prism-area",
+      "viewport": 1440,
+      "state": "zoom_in",
+      "file": "CORPUS-DEV10-prism-area-1440-zoom_in.png",
+      "canvas_h": 717,
+      "markers": [
+        {
+          "name": "perp_marker:canh_ben_A_A_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1.007,
+          "leg_u_px": 10.11,
+          "leg_v_px": 10.44
+        },
+        {
+          "name": "perp_marker:canh_ben_B_B_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 0.998,
+          "leg_u_px": 7.31,
+          "leg_v_px": 10.34
+        },
+        {
+          "name": "perp_marker:canh_ben_C_C_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1.002,
+          "leg_u_px": 5.57,
+          "leg_v_px": 10.3
+        }
+      ]
+    },
+    {
+      "id": "CORPUS-DEV10-prism-area",
+      "viewport": 1440,
+      "state": "zoom_out",
+      "file": "CORPUS-DEV10-prism-area-1440-zoom_out.png",
+      "canvas_h": 717,
+      "markers": [
+        {
+          "name": "perp_marker:canh_ben_A_A_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 10.04,
+          "leg_v_px": 10.15
+        },
+        {
+          "name": "perp_marker:canh_ben_B_B_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 5.82,
+          "leg_v_px": 10.15
+        },
+        {
+          "name": "perp_marker:canh_ben_C_C_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 5.15,
+          "leg_v_px": 10.14
+        }
+      ]
+    },
+    {
+      "id": "CORPUS-DEV10-prism-area",
+      "viewport": 390,
+      "state": "default",
+      "file": "CORPUS-DEV10-prism-area-390-default.png",
+      "canvas_h": 342,
+      "markers": [
+        {
+          "name": "perp_marker:canh_ben_A_A_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 5.14,
+          "leg_v_px": 6.86
+        },
+        {
+          "name": "perp_marker:canh_ben_B_B_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 8.05,
+          "leg_v_px": 6.44
+        },
+        {
+          "name": "perp_marker:canh_ben_C_C_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 6.88,
+          "leg_v_px": 6.53
+        }
+      ]
+    },
+    {
+      "id": "CORPUS-DEV10-prism-area",
+      "viewport": 390,
+      "state": "orbit",
+      "file": "CORPUS-DEV10-prism-area-390-orbit.png",
+      "canvas_h": 342,
+      "markers": [
+        {
+          "name": "perp_marker:canh_ben_A_A_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1.588,
+          "leg_u_px": 9.27,
+          "leg_v_px": 11.45
+        },
+        {
+          "name": "perp_marker:canh_ben_B_B_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1.079,
+          "leg_u_px": 5.06,
+          "leg_v_px": 8.32
+        },
+        {
+          "name": "perp_marker:canh_ben_C_C_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1.371,
+          "leg_u_px": 10.98,
+          "leg_v_px": 9.87
+        }
+      ]
+    },
+    {
+      "id": "CORPUS-DEV10-prism-area",
+      "viewport": 390,
+      "state": "zoom_in",
+      "file": "CORPUS-DEV10-prism-area-390-zoom_in.png",
+      "canvas_h": 342,
+      "markers": [
+        {
+          "name": "perp_marker:canh_ben_A_A_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 6.04,
+          "leg_v_px": 7.72
+        },
+        {
+          "name": "perp_marker:canh_ben_B_B_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 4.37,
+          "leg_v_px": 8.18
+        },
+        {
+          "name": "perp_marker:canh_ben_C_C_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 8.02,
+          "leg_v_px": 7.66
+        }
+      ]
+    },
+    {
+      "id": "CORPUS-DEV10-prism-area",
+      "viewport": 390,
+      "state": "zoom_out",
+      "file": "CORPUS-DEV10-prism-area-390-zoom_out.png",
+      "canvas_h": 342,
+      "markers": [
+        {
+          "name": "perp_marker:canh_ben_A_A_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 5.83,
+          "leg_v_px": 6.81
+        },
+        {
+          "name": "perp_marker:canh_ben_B_B_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 5.1,
+          "leg_v_px": 7.14
+        },
+        {
+          "name": "perp_marker:canh_ben_C_C_prime",
+          "visible": true,
+          "world_leg_ratio_actual_over_expected": 1,
+          "leg_u_px": 8.01,
+          "leg_v_px": 6.79
+        }
+      ]
+    }
+  ]
+}

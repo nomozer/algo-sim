@@ -1,0 +1,694 @@
+{
+  "schema": "html-reference-capture/1",
+  "html_sha256": "9f09b7f412d133712b6d4e2ce5fed9797955aa984a307d7504f1e31a9fd980c3",
+  "html_modified": false,
+  "rows": [
+    {
+      "id": "chop_sa_vuong_day_vuong",
+      "viewport": "1440x900",
+      "step": 4,
+      "file": "HTML-chop_sa_vuong_day_vuong-1440.png",
+      "sha256": "01fc5e4d85b5ac3feeee6f7789554edf765f644bdbbbc703f80f00cc31920b87",
+      "canvas": [
+        832,
+        900
+      ],
+      "fov": 40,
+      "cam_position": [
+        5.795,
+        6.095,
+        9.244
+      ],
+      "spherical": {
+        "theta": 0.56,
+        "phi": 1.18,
+        "radius": 11.8
+      },
+      "target": [
+        0,
+        1.6,
+        0
+      ],
+      "centroid_distance": 11.759,
+      "px_per_world_unit": 105.15,
+      "stroke_px_at_centroid": {
+        "visible_edge": 5.89,
+        "hidden_edge": 4.95,
+        "section_edge": 7.36,
+        "aux_fixed_edge": 5.47,
+        "right_angle_marker_stroke": 4.42,
+        "plane_border": 3.57
+      },
+      "right_angle_marker_px": {
+        "size_0_34": 35.75,
+        "size_0_36": 37.85
+      },
+      "params": {
+        "a": 4.2,
+        "h": 4.5,
+        "b": 3.8,
+        "opacity": 0.12,
+        "sectionRatio": 0.48,
+        "sectionTilt": -8
+      }
+    },
+    {
+      "id": "chop_tu_giac_deu",
+      "viewport": "1440x900",
+      "step": 4,
+      "file": "HTML-chop_tu_giac_deu-1440.png",
+      "sha256": "bf28e7e2d729c98356943e47c504a6649d065025bdb18d0653b789fd81e0c220",
+      "canvas": [
+        832,
+        900
+      ],
+      "fov": 40,
+      "cam_position": [
+        5.795,
+        6.095,
+        9.244
+      ],
+      "spherical": {
+        "theta": 0.56,
+        "phi": 1.18,
+        "radius": 11.8
+      },
+      "target": [
+        0,
+        1.6,
+        0
+      ],
+      "centroid_distance": 11.756,
+      "px_per_world_unit": 105.17,
+      "stroke_px_at_centroid": {
+        "visible_edge": 5.89,
+        "hidden_edge": 4.95,
+        "section_edge": 7.36,
+        "aux_fixed_edge": 5.47,
+        "right_angle_marker_stroke": 4.42,
+        "plane_border": 3.58
+      },
+      "right_angle_marker_px": {
+        "size_0_34": 35.76,
+        "size_0_36": 37.86
+      },
+      "params": {
+        "a": 4.2,
+        "h": 4.6,
+        "b": 3.8,
+        "opacity": 0.12,
+        "sectionRatio": 0.48,
+        "sectionTilt": -12
+      }
+    },
+    {
+      "id": "chop_tam_giac_deu",
+      "viewport": "1440x900",
+      "step": 4,
+      "file": "HTML-chop_tam_giac_deu-1440.png",
+      "sha256": "e338facab2f686d7b8d1427c2c6140962a923e77cc55971b9b2100ec513b04ef",
+      "canvas": [
+        832,
+        900
+      ],
+      "fov": 40,
+      "cam_position": [
+        5.795,
+        6.095,
+        9.244
+      ],
+      "spherical": {
+        "theta": 0.56,
+        "phi": 1.18,
+        "radius": 11.8
+      },
+      "target": [
+        0,
+        1.6,
+        0
+      ],
+      "centroid_distance": 11.789,
+      "px_per_world_unit": 104.88,
+      "stroke_px_at_centroid": {
+        "visible_edge": 5.87,
+        "hidden_edge": 4.93,
+        "section_edge": 7.34,
+        "aux_fixed_edge": 5.45,
+        "right_angle_marker_stroke": 4.4,
+        "plane_border": 3.57
+      },
+      "right_angle_marker_px": {
+        "size_0_34": 35.66,
+        "size_0_36": 37.76
+      },
+      "params": {
+        "a": 4.5,
+        "h": 4.4,
+        "b": 3.8,
+        "opacity": 0.12,
+        "sectionRatio": 0.48,
+        "sectionTilt": -10
+      }
+    },
+    {
+      "id": "chop_sa_vuong_abc",
+      "viewport": "1440x900",
+      "step": 4,
+      "file": "HTML-chop_sa_vuong_abc-1440.png",
+      "sha256": "23985a96935f9e4e7b8d3d511a04c67a9fe6b8d954fb510939549bce90ad6cd0",
+      "canvas": [
+        832,
+        900
+      ],
+      "fov": 40,
+      "cam_position": [
+        5.795,
+        6.095,
+        9.244
+      ],
+      "spherical": {
+        "theta": 0.56,
+        "phi": 1.18,
+        "radius": 11.8
+      },
+      "target": [
+        0,
+        1.6,
+        0
+      ],
+      "centroid_distance": 11.777,
+      "px_per_world_unit": 104.98,
+      "stroke_px_at_centroid": {
+        "visible_edge": 5.88,
+        "hidden_edge": 4.94,
+        "section_edge": 7.35,
+        "aux_fixed_edge": 5.46,
+        "right_angle_marker_stroke": 4.41,
+        "plane_border": 3.57
+      },
+      "right_angle_marker_px": {
+        "size_0_34": 35.69,
+        "size_0_36": 37.79
+      },
+      "params": {
+        "a": 4.4,
+        "h": 4.5,
+        "b": 3.8,
+        "opacity": 0.12,
+        "sectionRatio": 0.48,
+        "sectionTilt": -8
+      }
+    },
+    {
+      "id": "hinh_hop_chu_nhat",
+      "viewport": "1440x900",
+      "step": 4,
+      "file": "HTML-hinh_hop_chu_nhat-1440.png",
+      "sha256": "42d1b038d2fe04877b61347fbfa6f123ca39dbf0d4058d9d5dfe0beee80200c0",
+      "canvas": [
+        832,
+        900
+      ],
+      "fov": 40,
+      "cam_position": [
+        5.795,
+        6.095,
+        9.244
+      ],
+      "spherical": {
+        "theta": 0.56,
+        "phi": 1.18,
+        "radius": 11.8
+      },
+      "target": [
+        0,
+        1.6,
+        0
+      ],
+      "centroid_distance": 11.654,
+      "px_per_world_unit": 106.09,
+      "stroke_px_at_centroid": {
+        "visible_edge": 5.94,
+        "hidden_edge": 4.99,
+        "section_edge": 7.43,
+        "aux_fixed_edge": 5.52,
+        "right_angle_marker_stroke": 4.46,
+        "plane_border": 3.61
+      },
+      "right_angle_marker_px": {
+        "size_0_34": 36.07,
+        "size_0_36": 38.19
+      },
+      "params": {
+        "a": 4,
+        "h": 4,
+        "b": 4,
+        "opacity": 0.12,
+        "sectionRatio": 0.48,
+        "sectionTilt": -10
+      }
+    },
+    {
+      "id": "lang_tru_tam_giac_deu",
+      "viewport": "1440x900",
+      "step": 4,
+      "file": "HTML-lang_tru_tam_giac_deu-1440.png",
+      "sha256": "0a77ad4ac4da794637a42c2a9552e3e74230741573a69dbac2201243680c8c92",
+      "canvas": [
+        832,
+        900
+      ],
+      "fov": 40,
+      "cam_position": [
+        5.795,
+        6.095,
+        9.244
+      ],
+      "spherical": {
+        "theta": 0.56,
+        "phi": 1.18,
+        "radius": 11.8
+      },
+      "target": [
+        0,
+        1.6,
+        0
+      ],
+      "centroid_distance": 11.619,
+      "px_per_world_unit": 106.41,
+      "stroke_px_at_centroid": {
+        "visible_edge": 5.96,
+        "hidden_edge": 5.01,
+        "section_edge": 7.45,
+        "aux_fixed_edge": 5.53,
+        "right_angle_marker_stroke": 4.47,
+        "plane_border": 3.62
+      },
+      "right_angle_marker_px": {
+        "size_0_34": 36.18,
+        "size_0_36": 38.31
+      },
+      "params": {
+        "a": 4,
+        "h": 4.2,
+        "b": 4,
+        "opacity": 0.12,
+        "sectionRatio": 0.48,
+        "sectionTilt": -8
+      }
+    },
+    {
+      "id": "lang_tru_xien",
+      "viewport": "1440x900",
+      "step": 4,
+      "file": "HTML-lang_tru_xien-1440.png",
+      "sha256": "f5576e567ab61ad2311879cc74ad5b30f78a4111250c5acb49bb850895e0b6d3",
+      "canvas": [
+        832,
+        900
+      ],
+      "fov": 40,
+      "cam_position": [
+        5.795,
+        6.095,
+        9.244
+      ],
+      "spherical": {
+        "theta": 0.56,
+        "phi": 1.18,
+        "radius": 11.8
+      },
+      "target": [
+        0,
+        1.6,
+        0
+      ],
+      "centroid_distance": 11.336,
+      "px_per_world_unit": 109.07,
+      "stroke_px_at_centroid": {
+        "visible_edge": 6.11,
+        "hidden_edge": 5.13,
+        "section_edge": 7.63,
+        "aux_fixed_edge": 5.67,
+        "right_angle_marker_stroke": 4.58,
+        "plane_border": 3.71
+      },
+      "right_angle_marker_px": {
+        "size_0_34": 37.08,
+        "size_0_36": 39.26
+      },
+      "params": {
+        "a": 3.8,
+        "h": 3.8,
+        "b": 1.5,
+        "opacity": 0.12,
+        "sectionRatio": 0.48,
+        "sectionTilt": 0
+      }
+    },
+    {
+      "id": "chop_sa_vuong_day_vuong",
+      "viewport": "390x844",
+      "step": 4,
+      "file": "HTML-chop_sa_vuong_day_vuong-390.png",
+      "sha256": "8893f8107e9e877ac17528b91995bc07d6b04f8bcf8fd8629ef3e01c1830673c",
+      "canvas": [
+        390,
+        406
+      ],
+      "fov": 40,
+      "cam_position": [
+        5.795,
+        6.095,
+        9.244
+      ],
+      "spherical": {
+        "theta": 0.56,
+        "phi": 1.18,
+        "radius": 11.8
+      },
+      "target": [
+        0,
+        1.6,
+        0
+      ],
+      "centroid_distance": 11.759,
+      "px_per_world_unit": 47.43,
+      "stroke_px_at_centroid": {
+        "visible_edge": 2.66,
+        "hidden_edge": 2.23,
+        "section_edge": 3.32,
+        "aux_fixed_edge": 2.47,
+        "right_angle_marker_stroke": 1.99,
+        "plane_border": 1.61
+      },
+      "right_angle_marker_px": {
+        "size_0_34": 16.13,
+        "size_0_36": 17.08
+      },
+      "params": {
+        "a": 4.2,
+        "h": 4.5,
+        "b": 3.8,
+        "opacity": 0.12,
+        "sectionRatio": 0.48,
+        "sectionTilt": -8
+      }
+    },
+    {
+      "id": "chop_tu_giac_deu",
+      "viewport": "390x844",
+      "step": 4,
+      "file": "HTML-chop_tu_giac_deu-390.png",
+      "sha256": "2459475a8b3ceaeb326faafb15e2635dac30816ea5d9a4fa1294f8aa81e5457c",
+      "canvas": [
+        390,
+        406
+      ],
+      "fov": 40,
+      "cam_position": [
+        5.795,
+        6.095,
+        9.244
+      ],
+      "spherical": {
+        "theta": 0.56,
+        "phi": 1.18,
+        "radius": 11.8
+      },
+      "target": [
+        0,
+        1.6,
+        0
+      ],
+      "centroid_distance": 11.756,
+      "px_per_world_unit": 47.44,
+      "stroke_px_at_centroid": {
+        "visible_edge": 2.66,
+        "hidden_edge": 2.23,
+        "section_edge": 3.32,
+        "aux_fixed_edge": 2.47,
+        "right_angle_marker_stroke": 1.99,
+        "plane_border": 1.61
+      },
+      "right_angle_marker_px": {
+        "size_0_34": 16.13,
+        "size_0_36": 17.08
+      },
+      "params": {
+        "a": 4.2,
+        "h": 4.6,
+        "b": 3.8,
+        "opacity": 0.12,
+        "sectionRatio": 0.48,
+        "sectionTilt": -12
+      }
+    },
+    {
+      "id": "chop_tam_giac_deu",
+      "viewport": "390x844",
+      "step": 4,
+      "file": "HTML-chop_tam_giac_deu-390.png",
+      "sha256": "8dea4884f469903070b0cb19108e5fdfa76bb96be3aec5630fe1e90c86b85987",
+      "canvas": [
+        390,
+        406
+      ],
+      "fov": 40,
+      "cam_position": [
+        5.795,
+        6.095,
+        9.244
+      ],
+      "spherical": {
+        "theta": 0.56,
+        "phi": 1.18,
+        "radius": 11.8
+      },
+      "target": [
+        0,
+        1.6,
+        0
+      ],
+      "centroid_distance": 11.789,
+      "px_per_world_unit": 47.31,
+      "stroke_px_at_centroid": {
+        "visible_edge": 2.65,
+        "hidden_edge": 2.23,
+        "section_edge": 3.31,
+        "aux_fixed_edge": 2.46,
+        "right_angle_marker_stroke": 1.99,
+        "plane_border": 1.61
+      },
+      "right_angle_marker_px": {
+        "size_0_34": 16.09,
+        "size_0_36": 17.03
+      },
+      "params": {
+        "a": 4.5,
+        "h": 4.4,
+        "b": 3.8,
+        "opacity": 0.12,
+        "sectionRatio": 0.48,
+        "sectionTilt": -10
+      }
+    },
+    {
+      "id": "chop_sa_vuong_abc",
+      "viewport": "390x844",
+      "step": 4,
+      "file": "HTML-chop_sa_vuong_abc-390.png",
+      "sha256": "7031379b154bb75170d4f7b10a3a86a18029359a8c77f84dc7ac49c60af5bb3a",
+      "canvas": [
+        390,
+        406
+      ],
+      "fov": 40,
+      "cam_position": [
+        5.795,
+        6.095,
+        9.244
+      ],
+      "spherical": {
+        "theta": 0.56,
+        "phi": 1.18,
+        "radius": 11.8
+      },
+      "target": [
+        0,
+        1.6,
+        0
+      ],
+      "centroid_distance": 11.777,
+      "px_per_world_unit": 47.36,
+      "stroke_px_at_centroid": {
+        "visible_edge": 2.65,
+        "hidden_edge": 2.23,
+        "section_edge": 3.32,
+        "aux_fixed_edge": 2.46,
+        "right_angle_marker_stroke": 1.99,
+        "plane_border": 1.61
+      },
+      "right_angle_marker_px": {
+        "size_0_34": 16.1,
+        "size_0_36": 17.05
+      },
+      "params": {
+        "a": 4.4,
+        "h": 4.5,
+        "b": 3.8,
+        "opacity": 0.12,
+        "sectionRatio": 0.48,
+        "sectionTilt": -8
+      }
+    },
+    {
+      "id": "hinh_hop_chu_nhat",
+      "viewport": "390x844",
+      "step": 4,
+      "file": "HTML-hinh_hop_chu_nhat-390.png",
+      "sha256": "f9dbe251988f416d026b8471a4dd7b27e5e527813c2a5f29481c294d8e02eb1e",
+      "canvas": [
+        390,
+        406
+      ],
+      "fov": 40,
+      "cam_position": [
+        5.795,
+        6.095,
+        9.244
+      ],
+      "spherical": {
+        "theta": 0.56,
+        "phi": 1.18,
+        "radius": 11.8
+      },
+      "target": [
+        0,
+        1.6,
+        0
+      ],
+      "centroid_distance": 11.654,
+      "px_per_world_unit": 47.86,
+      "stroke_px_at_centroid": {
+        "visible_edge": 2.68,
+        "hidden_edge": 2.25,
+        "section_edge": 3.35,
+        "aux_fixed_edge": 2.49,
+        "right_angle_marker_stroke": 2.01,
+        "plane_border": 1.63
+      },
+      "right_angle_marker_px": {
+        "size_0_34": 16.27,
+        "size_0_36": 17.23
+      },
+      "params": {
+        "a": 4,
+        "h": 4,
+        "b": 4,
+        "opacity": 0.12,
+        "sectionRatio": 0.48,
+        "sectionTilt": -10
+      }
+    },
+    {
+      "id": "lang_tru_tam_giac_deu",
+      "viewport": "390x844",
+      "step": 4,
+      "file": "HTML-lang_tru_tam_giac_deu-390.png",
+      "sha256": "ec7759268b452d4da11379b16d12496ef19506a362bd64922b5e39d03a5e08e7",
+      "canvas": [
+        390,
+        406
+      ],
+      "fov": 40,
+      "cam_position": [
+        5.795,
+        6.095,
+        9.244
+      ],
+      "spherical": {
+        "theta": 0.56,
+        "phi": 1.18,
+        "radius": 11.8
+      },
+      "target": [
+        0,
+        1.6,
+        0
+      ],
+      "centroid_distance": 11.619,
+      "px_per_world_unit": 48,
+      "stroke_px_at_centroid": {
+        "visible_edge": 2.69,
+        "hidden_edge": 2.26,
+        "section_edge": 3.36,
+        "aux_fixed_edge": 2.5,
+        "right_angle_marker_stroke": 2.02,
+        "plane_border": 1.63
+      },
+      "right_angle_marker_px": {
+        "size_0_34": 16.32,
+        "size_0_36": 17.28
+      },
+      "params": {
+        "a": 4,
+        "h": 4.2,
+        "b": 4,
+        "opacity": 0.12,
+        "sectionRatio": 0.48,
+        "sectionTilt": -8
+      }
+    },
+    {
+      "id": "lang_tru_xien",
+      "viewport": "390x844",
+      "step": 4,
+      "file": "HTML-lang_tru_xien-390.png",
+      "sha256": "3f4117a182be3b30db6b5d377457175af88fe6c68daac4b9640eb018d4b3df1d",
+      "canvas": [
+        390,
+        406
+      ],
+      "fov": 40,
+      "cam_position": [
+        5.795,
+        6.095,
+        9.244
+      ],
+      "spherical": {
+        "theta": 0.56,
+        "phi": 1.18,
+        "radius": 11.8
+      },
+      "target": [
+        0,
+        1.6,
+        0
+      ],
+      "centroid_distance": 11.336,
+      "px_per_world_unit": 49.2,
+      "stroke_px_at_centroid": {
+        "visible_edge": 2.76,
+        "hidden_edge": 2.31,
+        "section_edge": 3.44,
+        "aux_fixed_edge": 2.56,
+        "right_angle_marker_stroke": 2.07,
+        "plane_border": 1.67
+      },
+      "right_angle_marker_px": {
+        "size_0_34": 16.73,
+        "size_0_36": 17.71
+      },
+      "params": {
+        "a": 3.8,
+        "h": 3.8,
+        "b": 1.5,
+        "opacity": 0.12,
+        "sectionRatio": 0.48,
+        "sectionTilt": 0
+      }
+    }
+  ],
+  "errors": []
+}
