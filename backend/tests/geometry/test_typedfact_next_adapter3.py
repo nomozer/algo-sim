@@ -577,7 +577,7 @@ def test_slice_b_multi_solid_qualified_identity_and_shared_geometry() -> None:
     assert "D" in objects_by_id
     assert "D1" in objects_by_id
     assert objects_by_id["D1"]["source"]["qualified_ref"] == "pyr2::D"
-    assert objects_by_id["D1"]["notation"] == "D(pyr2)"
+    assert objects_by_id["D1"]["notation"] == "D1"
 
     # Verify relations were certified
     rel_ids = {r["relation_id"] for r in res.verified_relations if r["verified"]}

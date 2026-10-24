@@ -1,0 +1,34 @@
+{
+  "command": [
+    "C:/Program Files/nodejs/node.exe",
+    "../frontend/scripts/full-gate.mjs"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-unified-visual\\backend",
+  "source_commit": "dd3bddd48dad7ff865d7c0442c50b6523d87d3c7",
+  "dirty_before": "",
+  "started_utc": "2026-10-22T09:24:32.053159+00:00",
+  "timeout_seconds": 2400,
+  "attempt_limit": 1,
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "PYTEST_DEBUG_TEMPROOT": "D:\\Documents\\projects\\algo-sim\\.superpowers\\pt-9552"
+  },
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 571.06,
+  "finished_utc": "2026-10-22T09:34:03.119998+00:00",
+  "dirty_after": "",
+  "streams": {
+    "stdout": {
+      "bytes": 18440,
+      "sha256": "e466f3e8d10dfdc4dc24a9aa0799f402dc9d07835a7f1c329423050ffa26a115"
+    },
+    "stderr": {
+      "bytes": 342,
+      "sha256": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a"
+    }
+  }
+}

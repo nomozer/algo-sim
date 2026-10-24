@@ -1,7 +1,18 @@
 /** Camera-relative edge visibility. Presentation-only; never feeds geometry state. */
 import * as THREE from "three";
+import { Line2 } from "three/addons/lines/Line2.js";
+import { LineGeometry } from "three/addons/lines/LineGeometry.js";
+import { LineMaterial } from "three/addons/lines/LineMaterial.js";
 import { chiaTamGiac } from "./polygon-triangulate";
 import { toVec3, type SceneObject } from "./scene3d-model";
+import { PHONG_CACH_SCENE3D } from "./scene3d-roles";
+
+/** Hệ số độ dày nét theo chiều cao khung (CSS px): hình luôn lấp ~78% khung, nên nét tỉ lệ với khung giữ đúng tỉ lệ
+ *  nét/hình như nét world-space của HTML tham chiếu; kẹp để nét không mất trên khung nhỏ, không thô trên khung lớn. */
+export function heSoNetTheoKhung(hCss: number): number {
+  const w = PHONG_CACH_SCENE3D.fatPx;
+  return Math.min(w.maxScale, Math.max(w.minScale, hCss / w.referenceCanvasHeight));
+}
 
 export interface CanonicalEdge {
   id: string;
@@ -198,6 +209,16 @@ export function classifySolidEdgeVisibility(
       : options.projected_edge_pixels ?? 256;
     const cells = sampleSegments(pixels);
     const excluded = new Set(edge.adjacentSurfaceIds);
+    if ((options.occluders?.length ?? 1) > 1) {
+      for (const tri of triangles) {
+        if (excluded.has(tri.surfaceId)) continue;
+        const da = Math.abs(tri.normal.dot(new THREE.Vector3().subVectors(edge.a, tri.a)));
+        const db = Math.abs(tri.normal.dot(new THREE.Vector3().subVectors(edge.b, tri.a)));
+        if (da <= 1e-4 && db <= 1e-4) {
+          excluded.add(tri.surfaceId);
+        }
+      }
+    }
     const states: boolean[] = [];
     for (let index = 0; index < cells; index += 1) {
       const t = (index + 0.5) / cells;
@@ -363,3 +384,331 @@ export function classifyWorldSegmentVisibility(
   return { spans, colinear_canonical_edge_ids: colinearIds };
 }
 
+export interface CurvedSolidVolumeMeta {
+  id: string;
+  kind: "cylinder" | "cone" | "ball";
+  anchor: THREE.Vector3;
+  top: THREE.Vector3 | null;
+  radius: number;
+  height: number;
+}
+
+export function diemVanhCongBiChe(
+  pt: THREE.Vector3,
+  worldCam: THREE.Vector3,
+  volumes: readonly CurvedSolidVolumeMeta[],
+): boolean {
+  const dir = new THREE.Vector3().subVectors(pt, worldCam);
+  const rayLen = dir.length();
+  if (rayLen < 1e-6) return false;
+  for (const vol of volumes) {
+    const r = vol.radius;
+    if (r <= 1e-6) continue;
+    if (vol.kind === "ball") {
+      const toPt = new THREE.Vector3().subVectors(pt, vol.anchor);
+      const distPt = toPt.length();
+      if (Math.abs(distPt - r) <= 0.08 * r) {
+        const viewVec = new THREE.Vector3().subVectors(worldCam, pt);
+        if (viewVec.dot(toPt) < -0.15 * r * rayLen) return true;
+        continue;
+      }
+      const oc = new THREE.Vector3().subVectors(vol.anchor, worldCam);
+      const tStar = Math.max(0.01, Math.min(0.985, oc.dot(dir) / (rayLen * rayLen)));
+      const closest = worldCam.clone().addScaledVector(dir, tStar);
+      if (closest.distanceTo(vol.anchor) < r * 0.995) return true;
+      continue;
+    }
+    const h = vol.height;
+    if (!vol.top || h <= 1e-6) continue;
+    const axis = new THREE.Vector3().subVectors(vol.top, vol.anchor).normalize();
+    const camRel = new THREE.Vector3().subVectors(worldCam, vol.anchor);
+    const ptRel = new THREE.Vector3().subVectors(pt, vol.anchor);
+    const zCam = camRel.dot(axis);
+    const zPt = ptRel.dot(axis);
+    const dz = zPt - zCam;
+    let tLo = 0.005;
+    let tHi = 0.992;
+    const zMin = 0.002 * h;
+    const zMax = 0.998 * h;
+    if (Math.abs(dz) < 1e-7) {
+      if (zCam <= zMin || zCam >= zMax) continue;
+    } else {
+      const t0 = (zMin - zCam) / dz;
+      const t1 = (zMax - zCam) / dz;
+      tLo = Math.max(tLo, Math.min(t0, t1));
+      tHi = Math.min(tHi, Math.max(t0, t1));
+    }
+    if (tLo > tHi) continue;
+    const camPerp = camRel.clone().addScaledVector(axis, -zCam);
+    const ptPerp = ptRel.clone().addScaledVector(axis, -zPt);
+    const dPerp = new THREE.Vector3().subVectors(ptPerp, camPerp);
+    const dPerpSq = dPerp.lengthSq();
+    const tCrit = dPerpSq > 1e-9
+      ? Math.max(tLo, Math.min(tHi, -camPerp.dot(dPerp) / dPerpSq))
+      : tHi;
+    const samples = [tLo, (tLo + tHi) * 0.5, tCrit, tHi];
+    for (const t of samples) {
+      const z = zCam + t * dz;
+      if (z <= zMin || z >= zMax) continue;
+      const rLimit = vol.kind === "cone" ? r * (1 - z / h) : r;
+      if (rLimit <= 1e-6) continue;
+      const pPerp = camPerp.clone().addScaledVector(dPerp, t);
+      if (pPerp.length() < rLimit * 0.996) return true;
+    }
+  }
+  return false;
+}
+
+export interface FatLineSyncSummary {
+  totalLines: number;
+  maxSectionBorderWidth: number;
+  maxVisibleEdgeWidth: number;
+  minHiddenEdgeWidth: number;
+  sourceLines: THREE.Line[];
+}
+
+export function taoGiuAmNetDay(): THREE.Object3D[] {
+  const geo = new LineGeometry();
+  geo.setPositions([0, 0, 0, 1, 0, 0]);
+  const solidMat = new LineMaterial({
+    color: 0x1e293b,
+    linewidth: 1.8,
+    dashed: false,
+    transparent: true,
+    opacity: 0,
+    depthTest: false,
+    depthWrite: false,
+  });
+  solidMat.colorWrite = false;
+  const dashedMat = new LineMaterial({
+    color: 0x475569,
+    linewidth: 1.25,
+    dashed: true,
+    dashSize: 0.1,
+    gapSize: 0.1,
+    transparent: true,
+    opacity: 0,
+    depthTest: false,
+    depthWrite: false,
+  });
+  dashedMat.colorWrite = false;
+  const solidHold = new Line2(geo, solidMat);
+  const dashedHold = new Line2(geo, dashedMat);
+  solidHold.computeLineDistances();
+  dashedHold.computeLineDistances();
+  solidHold.frustumCulled = false;
+  dashedHold.frustumCulled = false;
+  solidHold.raycast = () => {};
+  dashedHold.raycast = () => {};
+  return [solidHold, dashedHold];
+}
+
+/**
+ * Ghi toạ độ polyline mới VÀO CHÍNH các buffer instanced sẵn có của một `Line2` cùng số điểm (đoạn + khoảng cách nét
+ * đứt), thay vì `setPositions`/`computeLineDistances` — hai hàm ấy tạo `InstancedInterleavedBuffer` mới mỗi lần, tức
+ * một buffer GPU mới mỗi khi một span đổi lúc xoay (cổng `scene3d-orbit-gate`, `capPhat = 0`). `false` ⇒ chưa có
+ * buffer hợp cỡ, người gọi dựng lại như cũ.
+ */
+function capNhatLine2TaiCho(line2: Line2, coords: Float32Array): boolean {
+  const g = line2.geometry as LineGeometry;
+  const start = g.attributes.instanceStart as THREE.InterleavedBufferAttribute | undefined;
+  const dist = g.attributes.instanceDistanceStart as THREE.InterleavedBufferAttribute | undefined;
+  const doan = coords.length / 3 - 1;
+  if (!start || !dist || doan < 1 || start.data.array.length !== doan * 6 || dist.data.array.length !== doan * 2) {
+    return false;
+  }
+  const seg = start.data.array as Float32Array;
+  const d = dist.data.array as Float32Array;
+  let tong = 0;
+  for (let i = 0; i < doan; i += 1) {
+    for (let k = 0; k < 6; k += 1) seg[i * 6 + k] = coords[i * 3 + k];
+    const dai = Math.hypot(coords[i * 3 + 3] - coords[i * 3], coords[i * 3 + 4] - coords[i * 3 + 1],
+      coords[i * 3 + 5] - coords[i * 3 + 2]);
+    d[i * 2] = tong;
+    tong += dai;
+    d[i * 2 + 1] = tong;
+  }
+  start.data.needsUpdate = true;
+  dist.data.needsUpdate = true;
+  g.computeBoundingBox();
+  g.computeBoundingSphere();
+  return true;
+}
+
+export function dongBoNetDayManHinh(
+  roots: readonly THREE.Object3D[],
+  fatGroup: THREE.Group,
+  wCss: number,
+  hCss: number,
+): FatLineSyncSummary {
+  const activeLines: THREE.Line[] = [];
+  for (const r of roots) {
+    r.updateMatrixWorld(true);
+    r.traverse((node) => {
+      if (!(node as THREE.Line).isLine || (node as THREE.LineSegments).isLineSegments) return;
+      for (let p: THREE.Object3D | null = node; p; p = p.parent) {
+        if (!p.visible) return;
+        if (p === r) break;
+      }
+      const line = node as THREE.Line;
+      const mat = line.material as (THREE.LineBasicMaterial | THREE.LineDashedMaterial) | undefined;
+      if (!mat || mat.colorWrite === false || (mat.transparent && mat.opacity <= 0.01) || line.name.endsWith(":proxy")) {
+        return;
+      }
+      const pos = line.geometry?.getAttribute?.("position") as THREE.BufferAttribute | undefined;
+      if (!pos || pos.count < 2) return;
+      activeLines.push(line);
+    });
+  }
+
+  // Pool THEO SỐ ĐIỂM: khi tập span đổi lúc xoay, một bản sao chỉ nhận nét cùng số điểm, nên buffer của nó được ghi
+  // tại chỗ (`capNhatLine2TaiCho`) thay vì dựng lại; chỉ khi một nhóm phải lớn thêm mới cấp phát.
+  const pools: Map<number, Line2[]> = (fatGroup.userData.pools as Map<number, Line2[]> | undefined) ?? new Map();
+  fatGroup.userData.pools = pools;
+  const daDung = new Map<number, number>();
+  const tmp = new THREE.Vector3();
+  const resW = Math.max(1, wCss);
+  const resH = Math.max(1, hCss);
+  const heSoNet = heSoNetTheoKhung(hCss);
+  let maxSectionBorderWidth = 0;
+  let maxVisibleEdgeWidth = 0;
+  let minHiddenEdgeWidth = Infinity;
+
+  activeLines.forEach((line) => {
+    const mat = line.material as THREE.LineBasicMaterial | THREE.LineDashedMaterial;
+    const pos = line.geometry.getAttribute("position") as THREE.BufferAttribute;
+    const isDashed =
+      line.userData?.hidden === true
+      || (mat as THREE.LineDashedMaterial).isLineDashedMaterial === true
+      || line.name.endsWith(":khuat");
+    const isPlaneBorder =
+      Boolean(line.parent?.userData?.nonCanonicalLoop?.isPlaneBorder)
+      || line.name.startsWith("plane_border:");
+    const isSectionOrPolyBorder =
+      !isPlaneBorder
+      && (line.name.startsWith("section_border:") || line.name.startsWith("polygon_border:"));
+    const isPerpOrWitness =
+      line.name.startsWith("perp_marker:") || Boolean(line.parent?.userData?.nhanChung);
+    const isHighlighted = Boolean(
+      line.userData?.sang
+      || line.parent?.userData?.highlighted
+      || (mat.linewidth && mat.linewidth >= 2.6),
+    );
+
+    const w = PHONG_CACH_SCENE3D.fatPx;
+    const raw = isPlaneBorder
+      ? (isHighlighted ? w.selectedPlane : w.plane)
+      : isSectionOrPolyBorder
+        ? (isHighlighted ? w.selectedSection : isDashed ? w.hiddenSection : w.section)
+        : isPerpOrWitness
+          ? (isDashed ? w.hiddenPerpendicular : w.perpendicular)
+          : (isHighlighted ? w.selectedEdge : isDashed ? w.hiddenEdge : w.edge);
+    const widthPx = Number((raw * heSoNet).toFixed(2));
+
+    if (isSectionOrPolyBorder && !isDashed) {
+      maxSectionBorderWidth = Math.max(maxSectionBorderWidth, widthPx);
+    } else if (!isPlaneBorder && !isPerpOrWitness && !isDashed) {
+      maxVisibleEdgeWidth = Math.max(maxVisibleEdgeWidth, widthPx);
+    }
+    if (isDashed) {
+      minHiddenEdgeWidth = Math.min(minHiddenEdgeWidth, widthPx);
+    }
+
+    const nhom = pools.get(pos.count) ?? [];
+    pools.set(pos.count, nhom);
+    const thu = daDung.get(pos.count) ?? 0;
+    daDung.set(pos.count, thu + 1);
+    let line2 = nhom[thu];
+    if (!line2) {
+      const g = new LineGeometry();
+      g.setPositions([0, 0, 0, 1, 0, 0]);
+      const m = new LineMaterial({
+        color: 0x1e293b,
+        linewidth: widthPx,
+        dashed: false,
+        transparent: true,
+        opacity: 1,
+        depthTest: false,
+        depthWrite: false,
+      });
+      line2 = new Line2(g, m);
+      line2.frustumCulled = false;
+      line2.raycast = () => {};
+      line2.userData.voHan = true;
+      line2.userData.fatLineCompanion = true;
+      nhom.push(line2);
+      fatGroup.add(line2);
+    }
+
+    const nCoords = pos.count * 3;
+    let coords = line2.userData.coordsCache as Float32Array | undefined;
+    let changed = !coords || coords.length !== nCoords;
+    if (!coords || coords.length !== nCoords) {
+      coords = new Float32Array(nCoords);
+      line2.userData.coordsCache = coords;
+    }
+    for (let i = 0; i < pos.count; i += 1) {
+      tmp.fromBufferAttribute(pos, i).applyMatrix4(line.matrixWorld);
+      const base = i * 3;
+      if (
+        !changed
+        && (Math.abs(coords[base] - tmp.x) > 1e-6
+          || Math.abs(coords[base + 1] - tmp.y) > 1e-6
+          || Math.abs(coords[base + 2] - tmp.z) > 1e-6)
+      ) {
+        changed = true;
+      }
+      coords[base] = tmp.x;
+      coords[base + 1] = tmp.y;
+      coords[base + 2] = tmp.z;
+    }
+
+    if (changed) {
+      if (line2.userData.pointCount !== pos.count || !capNhatLine2TaiCho(line2, coords)) {
+        line2.geometry?.dispose?.();
+        line2.geometry = new LineGeometry();
+        line2.userData.pointCount = pos.count;
+        line2.geometry.setPositions(coords);
+        line2.computeLineDistances();
+      }
+    }
+
+    const lm = line2.material as LineMaterial;
+    lm.color.copy(mat.color);
+    lm.linewidth = widthPx;
+    lm.resolution.set(resW, resH);
+    lm.transparent = true;
+    lm.opacity = mat.opacity ?? 1;
+    lm.depthTest = mat.depthTest;
+    lm.depthWrite = false;
+    lm.depthFunc = mat.depthFunc;
+    lm.polygonOffset = mat.polygonOffset;
+    lm.polygonOffsetFactor = mat.polygonOffsetFactor;
+    lm.polygonOffsetUnits = mat.polygonOffsetUnits;
+    if (lm.dashed !== isDashed) {
+      lm.dashed = isDashed;
+      lm.needsUpdate = true;
+    }
+    if (isDashed) {
+      const dm = mat as THREE.LineDashedMaterial;
+      lm.dashSize = dm.dashSize || 0.14;
+      lm.gapSize = dm.gapSize || 0.10;
+      lm.dashScale = 1;
+    }
+    line2.renderOrder = line.renderOrder;
+    line2.name = `fat:${line.name}`;
+    line2.visible = true;
+  });
+
+  for (const [n, nhom] of pools) {
+    for (let k = daDung.get(n) ?? 0; k < nhom.length; k += 1) nhom[k].visible = false;
+  }
+
+  return {
+    totalLines: activeLines.length,
+    maxSectionBorderWidth,
+    maxVisibleEdgeWidth,
+    minHiddenEdgeWidth: Number.isFinite(minHiddenEdgeWidth) ? minHiddenEdgeWidth : 0,
+    sourceLines: activeLines,
+  };
+}

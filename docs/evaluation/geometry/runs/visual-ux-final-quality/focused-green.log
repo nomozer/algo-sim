@@ -1,0 +1,9 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-ux-final-quality/frontend
+
+
+ Test Files  41 passed (41)
+      Tests  792 passed (792)
+   Start at  01:36:15
+   Duration  5.95s (transform 8.92s, setup 1.82s, import 19.87s, tests 10.63s, environment 11ms)
+

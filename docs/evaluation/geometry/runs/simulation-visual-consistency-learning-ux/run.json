@@ -1,0 +1,40 @@
+{
+  "schema_version": "geometry-evaluation-run/1",
+  "run_id": "simulation-visual-consistency-learning-ux",
+  "wave_id": "SIMULATION_VISUAL_CONSISTENCY_LEARNING_UX_W01",
+  "date_utc": "2026-10-21",
+  "authorization": "GO_SIMULATION_VISUAL_CONSISTENCY_LEARNING_UX_LOCAL",
+  "branch": "research/simulation-visual-consistency-learning-ux",
+  "base_main_commit": "43247c9e9375a3dbf2b5223324a58e6f932ca596",
+  "session1_commit": "9341a85771dba79376b46e69ac531c413f507b55",
+  "session2_commit": "ec92c8ad81e52dcbf958f25184bea2958fd6be58",
+  "product_commit": "dbef50896c848b93433048b0469f9a78b6a3dbda",
+  "candidate_commit": "f5b6d152370bf91bde798a1b4c6c06c8d4aa2a58",
+  "measured_system_sha256": "91ac973ebc2d42041809d957c55e2829f875c05e649e35b7eee9ebeac1e5d26d",
+  "measured_file_count": 114,
+  "classification": "SIMULATION_VISUAL_CONSISTENCY_LEARNING_UX_READY_FOR_REVIEW",
+  "evaluation_classification": "SIMULATION_VISUAL_UX_DEVELOPMENT_EVALUATION_NOT_BLIND",
+  "live_provider_calls": 0,
+  "independent_review_verdict": "INDEPENDENT_REVIEW_PASS",
+  "full_t3_verdict": "FULL_PRODUCT_GATE_PASS",
+  "post_t3_freeze_status": "MATCH",
+  "governance": {
+    "default_mode": "LLM_ONLY",
+    "response_contract": "flat",
+    "hybrid_product_enablement": "NO-GO",
+    "allow_live_ai": 0,
+    "cache_version": "127"
+  },
+  "artifacts": {
+    "baseline_audit": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/SIMULATION_VISUAL_BASELINE_AUDIT.md",
+    "session1_handoff": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/SESSION1_HANDOFF.md",
+    "evaluation_report": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/SIMULATION_VISUAL_UX_EVALUATION_REPORT.md",
+    "corpus_dev": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/corpus-dev.json",
+    "eval_summary": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/eval-summary.json",
+    "browser_acceptance_receipt": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/browser-after/visual_ux_acceptance_receipt.json",
+    "independent_review": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/INDEPENDENT_REVIEW.md",
+    "t3_validation": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/validation.json",
+    "final_handoff": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/FINAL_HANDOFF.md",
+    "report": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/report.md"
+  }
+}

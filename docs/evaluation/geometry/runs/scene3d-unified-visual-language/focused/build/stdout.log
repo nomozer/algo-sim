@@ -1,0 +1,13 @@
+
+> algo-sim-frontend@0.1.0 build
+> tsc -b && vite build
+
+vite v6.4.3 building for production...
+transforming...
+✓ 95 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                     0.60 kB │ gzip:   0.41 kB
+dist/assets/index-AanANxPt.css     57.06 kB │ gzip:  10.29 kB
+dist/assets/index-wkaGgOyv.js   1,025.15 kB │ gzip: 274.97 kB
+✓ built in 2.32s

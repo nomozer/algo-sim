@@ -552,7 +552,18 @@ export interface QuantityAnnotation {
   same_as?: string;
   /** W18 §16.7 — nhân chứng khoảng cách điểm → đường/mặt phẳng: chân CHÍNH XÁC do backend tính, `u` dọc vật
    *  nhận, `v` từ chân tới điểm. Phía này chỉ vẽ — không bao giờ tự dựng chân đường vuông góc. */
-  witness?: { from: string; foot: ExactVec3; on: string; marker: { u: ExactVec3; v: ExactVec3 } };
+  witness?: {
+    from: string;
+    foot: ExactVec3;
+    on: string;
+    marker: { u: ExactVec3; v: ExactVec3 };
+    certificate?: string | null;
+    relation?: string;
+    status?: string;
+    rule?: string;
+    foot_id?: string;
+    can_present_as_proven?: boolean;
+  };
 }
 
 export interface SceneLengthUnit {
@@ -856,10 +867,36 @@ export function diemHuuHan(objects: SceneObject[]): Vec3[] {
       const phuong: Vec3[] = dai === 0
         ? [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
         : truc_vuong_goc([truc[0] / dai, truc[1] / dai, truc[2] / dai]);
-      for (const t of [c, dinh]) {
+      const tamNo = o.curved_kind === "cone" ? [c] : [c, dinh];
+      if (o.curved_kind === "cone") ra.push(dinh);
+      for (const t of tamNo) {
+        // True surface boundary points on axial directions (exact radius r from center/axis).
         for (const u of phuong) {
           ra.push([t[0] + u[0] * r, t[1] + u[1] * r, t[2] + u[2] * r]);
           ra.push([t[0] - u[0] * r, t[1] - u[1] * r, t[2] - u[2] * r]);
+        }
+        // Normalized diagonal surface points keep diagonal camera views on the true radius-r surface
+        // without inflating the bounding box to r*sqrt(2) or r*sqrt(3).
+        const rCheo = (r / Math.sqrt(Math.max(1, phuong.length))) * (1 + 1e-12);
+        for (let mask = 0; mask < 1 << phuong.length; mask++) {
+          const p: Vec3 = [...t];
+          phuong.forEach((u, i) => {
+            const sign = mask & (1 << i) ? 1 : -1;
+            for (let j = 0; j < 3; j++) p[j] += sign * u[j] * rCheo;
+          });
+          ra.push(p);
+        }
+      }
+    }
+    if (o.render === "circle" && o.center && o.normal && o.radius_sq) {
+      const r = Math.sqrt(Math.max(0, toNumber(o.radius_sq)));
+      const c = toVec3(o.center);
+      const n = toVec3(o.normal);
+      const dai = Math.hypot(...n);
+      if (dai > 0 && r > 0) {
+        for (const u of truc_vuong_goc([n[0] / dai, n[1] / dai, n[2] / dai])) {
+          ra.push([c[0] + u[0] * r, c[1] + u[1] * r, c[2] + u[2] * r]);
+          ra.push([c[0] - u[0] * r, c[1] - u[1] * r, c[2] - u[2] * r]);
         }
       }
     }
@@ -1772,6 +1809,7 @@ export function tapKetQuaCuoi(
       || o.annotation?.category === "result"
       || o.formation_roles?.includes("FINAL_RESULT")
       || o.display_group?.includes("target")
+      || o.id.startsWith("kq_vcert")
     ) {
       ra.add(o.id);
     }
@@ -1794,4 +1832,366 @@ export function tapKetQuaCuoi(
   }
   return ra;
 }
+
+/**
+ * P7 — Phân loại ngữ nghĩa của thông tin trong xưởng mô phỏng (8 vai trò chuẩn).
+ * Chỉ đọc cấu trúc có sẵn trong `Scene3D` / `hybrid` / `routeDSimulation`, không dò chuỗi văn xuôi.
+ */
+export type LoaiThongTin =
+  | "GIVEN_DIMENSION"
+  | "GIVEN_RELATION"
+  | "DERIVED_MEASUREMENT"
+  | "CONSTRUCTION_STEP"
+  | "GEOMETRY_IDENTITY"
+  | "REQUESTED_RESULT"
+  | "MATHEMATICAL_CERTIFICATE"
+  | "ERROR_OR_REFUSAL";
+
+export interface RouteDMathGoalView {
+  goal_id: string;
+  kind: string;
+  goal_type?: string | null;
+  call_id?: string | null;
+  value_display: string;
+  numerator_solid?: string | null;
+  denominator_solid?: string | null;
+  parent_solid?: string | null;
+  cut_solid?: string | null;
+  complement_ratio?: string | null;
+  exact?: { coef: string; dim: number; unit: string | null } | null;
+  certificate?: Record<string, unknown> | null;
+}
+
+export interface RouteDSimulationSummary {
+  length_unit?: string | null;
+  solids?: readonly { solid_id: string; scene_object_id?: string | null }[];
+  math_goals?: readonly RouteDMathGoalView[] | null;
+  answers?: Readonly<Record<string, string>> | null;
+  answer_exact?: Readonly<Record<string, { coef: string; dim: number; unit: string | null }>> | null;
+  verified_relations?: readonly {
+    relation_id: string;
+    kind: string;
+    verified: boolean;
+    details?: Record<string, unknown> | null;
+  }[] | null;
+}
+
+export interface MucPhanTichToan {
+  id: string;
+  category: LoaiThongTin;
+  label: string;
+  notation: string | null;
+  valueDisplay: string | null;
+  formula: string | null;
+  basisLabels: string[];
+  entityId: string | null;
+  certificateRule: string | null;
+}
+
+export interface BangPhanTichToan {
+  lengthUnit: string | null;
+  givenDimensions: MucPhanTichToan[];
+  givenRelations: MucPhanTichToan[];
+  derivedMeasurements: MucPhanTichToan[];
+  requestedResults: MucPhanTichToan[];
+  certificates: MucPhanTichToan[];
+}
+
+/** Phân loại một thực thể trong `Scene3D` theo đúng vai trò ngữ nghĩa P7. */
+export function phanLoaiVat(
+  scene: Scene3D,
+  object: SceneObject,
+  ketQuaCuoi?: ReadonlySet<string>,
+): LoaiThongTin {
+  const kq = ketQuaCuoi ?? tapKetQuaCuoi(scene);
+  if (object.type === "quantity" || object.value !== undefined) {
+    if (kq.has(object.id) && !object.id.startsWith("kq_vcert")) {
+      return "REQUESTED_RESULT";
+    }
+    if (object.origin === "free" || object.annotation?.role === "given") {
+      return "GIVEN_DIMENSION";
+    }
+    return "DERIVED_MEASUREMENT";
+  }
+  if (object.perpendicular_witness?.can_present_as_proven) {
+    return "MATHEMATICAL_CERTIFICATE";
+  }
+  if (object.source?.assumption) {
+    return "GIVEN_RELATION";
+  }
+  return "GEOMETRY_IDENTITY";
+}
+
+/**
+ * P6/P7 — Tổng hợp thông tin cho Chế độ B («Phân tích toán học») từ `Scene3D` đã kiểm chứng,
+ * `HybridPreviewView` (nếu có) và `RouteDSimulationSummary` (nếu có).
+ * Không tính lại hình học, không chế lời giải văn xuôi, không dùng heuristic chuỗi.
+ */
+export function phanTichToanHocCuaCanh(
+  scene: Scene3D,
+  hybrid?: {
+    answers?: readonly { quantity_id: string; symbolic: string; dim: number; unit: string | null }[];
+    observations?: readonly { check_id: string; group: "goal" | "negated"; relation: string; evidence_state: string }[];
+  } | null,
+  routeD?: RouteDSimulationSummary | null,
+): BangPhanTichToan {
+  const byId = new Map(scene.objects.map((o) => [o.id, o]));
+  const tenNgan = (id: string) => {
+    const linked = routeD?.solids?.find((s) => s.solid_id === id)?.scene_object_id;
+    const o = byId.get(linked ?? id);
+    return [o?.reference, o?.display_label, o?.label, o?.notation]
+      .find((s) => s?.trim() && learnerTextIsSafe(scene, s)) ?? "đối tượng hình học";
+  };
+  const ketQua = tapKetQuaCuoi(scene, hybrid);
+  const cuoi = Math.max(0, stepCount(scene) - 1);
+  const lg = solutionAt(scene, cuoi);
+
+  const hybridAnsById = new Map(
+    (hybrid?.answers ?? []).map((a) => [a.quantity_id, a.symbolic]),
+  );
+  const routeGoalByKernelVar = new Map<string, RouteDMathGoalView>();
+  for (const g of routeD?.math_goals ?? []) {
+    const kv = typeof g.certificate?.kernel_var === "string" ? g.certificate.kernel_var : null;
+    if (kv) routeGoalByKernelVar.set(kv, g);
+    routeGoalByKernelVar.set(`kq_${g.goal_id}`, g);
+    if (g.call_id) routeGoalByKernelVar.set(`kq_${g.call_id}`, g);
+  }
+
+  const hienGiaTri = (o: SceneObject): string => {
+    const rg = routeGoalByKernelVar.get(o.id);
+    if (rg?.value_display) return rg.value_display;
+    const ha = hybridAnsById.get(o.id);
+    if (ha) return ha.includes("=") ? ha.slice(ha.lastIndexOf("=") + 1).trim() : ha;
+    const dv = o.annotation?.unit ? ` ${o.annotation.unit}` : "";
+    return `${hienSo(o.exact, o.value)}${dv}${ghiChuGiaTriDung(scene)}`;
+  };
+
+  const givenDimensions: MucPhanTichToan[] = [];
+  const daGomGiven = new Set<string>();
+  for (const o of scene.objects) {
+    if (o.type !== "quantity" || o.value == null) continue;
+    if (o.origin !== "free" && o.annotation?.role !== "given") continue;
+    if (ketQua.has(o.id)) continue;
+    const goc = o.annotation?.same_as ?? o.alias_of ?? o.id;
+    if (daGomGiven.has(goc)) continue;
+    daGomGiven.add(goc);
+    givenDimensions.push({
+      id: o.id,
+      category: "GIVEN_DIMENSION",
+      label: o.label,
+      notation: o.notation ?? o.label,
+      valueDisplay: hienGiaTri(o),
+      formula: null,
+      basisLabels: [],
+      entityId: o.id,
+      certificateRule: null,
+    });
+  }
+  if (scene.length_unit?.display_scale && givenDimensions.length === 0) {
+    givenDimensions.push({
+      id: "length_unit",
+      category: "GIVEN_DIMENSION",
+      label: "Tỉ lệ dựng",
+      notation: scene.length_unit.symbol,
+      valueDisplay: scene.length_unit.display_scale,
+      formula: null,
+      basisLabels: [],
+      entityId: null,
+      certificateRule: null,
+    });
+  }
+
+  const derivedMeasurements: MucPhanTichToan[] = [];
+  const daGomStep = new Set<string>(daGomGiven);
+  const ungVienTrungGian = [
+    ...lg.steps.map((s) => byId.get(s.id)).filter((o): o is SceneObject => !!o),
+    ...scene.objects.filter(
+      (o) => o.type === "quantity" && o.value != null && o.origin === "derived"
+        && (!ketQua.has(o.id) || o.id.startsWith("kq_vcert")),
+    ),
+  ];
+  for (const o of ungVienTrungGian) {
+    const goc = o.annotation?.same_as ?? o.alias_of ?? o.id;
+    if (daGomStep.has(goc) || daGomStep.has(o.id)) continue;
+    if (ketQua.has(o.id) && !o.id.startsWith("kq_vcert")) continue;
+    daGomStep.add(goc);
+    daGomStep.add(o.id);
+    const cf = coherentFormula(scene, o);
+    derivedMeasurements.push({
+      id: o.id,
+      category: "DERIVED_MEASUREMENT",
+      label: o.label,
+      notation: o.notation ?? null,
+      valueDisplay: hienGiaTri(o),
+      formula: cf && cf.references.length > 0 ? cf.text : null,
+      basisLabels: numericalBasis(scene, o).map(tenNgan),
+      entityId: o.id,
+      certificateRule: null,
+    });
+  }
+
+  const requestedResults: MucPhanTichToan[] = [];
+  const daGomKq = new Set<string>();
+  const ungVienKq = [
+    ...lg.results.map((r) => byId.get(r.id)).filter((o): o is SceneObject => !!o),
+    ...scene.objects.filter((o) => o.type === "quantity" && o.value != null && ketQua.has(o.id)),
+  ];
+  for (const o of ungVienKq) {
+    if (o.id.startsWith("kq_vcert")) continue;
+    const goc = o.annotation?.same_as ?? o.alias_of ?? o.id;
+    if (daGomKq.has(goc) || daGomKq.has(o.id)) continue;
+    daGomKq.add(goc);
+    daGomKq.add(o.id);
+    const cf = coherentFormula(scene, o);
+    const rg = routeGoalByKernelVar.get(o.id);
+    requestedResults.push({
+      id: o.id,
+      category: "REQUESTED_RESULT",
+      label: o.label,
+      notation: o.notation ?? null,
+      valueDisplay: hienGiaTri(o),
+      formula: cf && cf.references.length > 0 ? cf.text : null,
+      basisLabels: numericalBasis(scene, o).map(tenNgan),
+      entityId: o.id,
+      certificateRule: typeof rg?.certificate?.rule === "string" ? rg.certificate.rule : null,
+    });
+  }
+
+  for (const g of routeD?.math_goals ?? []) {
+    const kv = typeof g.certificate?.kernel_var === "string" ? g.certificate.kernel_var : null;
+    if (kv && byId.has(kv)) continue;
+    if (byId.has(`kq_${g.goal_id}`) || (g.call_id && byId.has(`kq_${g.call_id}`))) continue;
+    if (g.kind === "volume_ratio") {
+      const num = g.numerator_solid ? tenNgan(g.numerator_solid) : "khối con";
+      const den = g.denominator_solid ? tenNgan(g.denominator_solid) : "khối gốc";
+      requestedResults.push({
+        id: `goal:${g.goal_id}`,
+        category: "REQUESTED_RESULT",
+        label: `Tỉ số thể tích ${num} và ${den}`,
+        notation: `V(${num}) / V(${den})`,
+        valueDisplay: g.value_display,
+        formula: null,
+        basisLabels: [num, den],
+        entityId: null,
+        certificateRule: typeof g.certificate?.rule === "string" ? g.certificate.rule : null,
+      });
+    } else if (g.kind === "residual_volume") {
+      const par = g.parent_solid ? tenNgan(g.parent_solid) : "khối gốc";
+      const cut = g.cut_solid ? tenNgan(g.cut_solid) : "khối cắt";
+      requestedResults.push({
+        id: `goal:${g.goal_id}`,
+        category: "REQUESTED_RESULT",
+        label: `Thể tích phần còn lại (${par} trừ ${cut})`,
+        notation: `V(${par}) − V(${cut})`,
+        valueDisplay: g.value_display,
+        formula: g.complement_ratio ? `Tỉ số phần còn lại = ${g.complement_ratio}` : null,
+        basisLabels: [par, cut],
+        entityId: null,
+        certificateRule: typeof g.certificate?.rule === "string" ? g.certificate.rule : null,
+      });
+    } else {
+      requestedResults.push({
+        id: `goal:${g.goal_id}`,
+        category: "REQUESTED_RESULT",
+        label: "Kết quả đã kiểm chứng",
+        notation: null,
+        valueDisplay: g.value_display,
+        formula: null,
+        basisLabels: [],
+        entityId: null,
+        certificateRule: typeof g.certificate?.rule === "string" ? g.certificate.rule : null,
+      });
+    }
+  }
+
+  const givenRelations: MucPhanTichToan[] = [];
+  const certificates: MucPhanTichToan[] = [];
+  for (const o of scene.objects) {
+    if (o.perpendicular_witness?.can_present_as_proven) {
+      certificates.push({
+        id: `cert:perp:${o.id}`,
+        category: "MATHEMATICAL_CERTIFICATE",
+        label: o.label,
+        notation: o.notation ?? null,
+        valueDisplay: o.role ?? "Quan hệ vuông góc đã kiểm chứng",
+        formula: null,
+        basisLabels: (o.depends ?? []).map(tenNgan),
+        entityId: o.id,
+        certificateRule: o.perpendicular_witness.certificate ?? null,
+      });
+    } else if (o.type === "section" || o.surface_role === "SECTION_REGION") {
+      certificates.push({
+        id: `cert:sec:${o.id}`,
+        category: "MATHEMATICAL_CERTIFICATE",
+        label: o.label,
+        notation: o.notation ?? null,
+        valueDisplay: o.role ?? "Thiết diện phẳng đã kiểm chứng",
+        formula: null,
+        basisLabels: (o.depends ?? []).map(tenNgan),
+        entityId: o.id,
+        certificateRule: "verified_plane_section",
+      });
+    } else if (o.source?.assumption) {
+      givenRelations.push({
+        id: `rel:assump:${o.id}`,
+        category: "GIVEN_RELATION",
+        label: o.label,
+        notation: o.notation ?? null,
+        valueDisplay: o.source.assumption,
+        formula: null,
+        basisLabels: [],
+        entityId: o.id,
+        certificateRule: null,
+      });
+    }
+  }
+  for (const rel of routeD?.verified_relations ?? []) {
+    if (!rel.verified) continue;
+    givenRelations.push({
+      id: `rel:${rel.relation_id}`,
+      category: "GIVEN_RELATION",
+      label: rel.kind === "shared_faces" ? "Chung mặt đa diện" : "Chung đỉnh đa diện",
+      notation: null,
+      valueDisplay: "Đã kiểm chứng khớp toạ độ giữa hai khối",
+      formula: null,
+      basisLabels: [],
+      entityId: null,
+      certificateRule: rel.kind,
+    });
+  }
+  for (const g of routeD?.math_goals ?? []) {
+    const rule = typeof g.certificate?.rule === "string" ? g.certificate.rule : null;
+    if (!rule) continue;
+    if (g.kind === "volume_ratio" || g.kind === "residual_volume") {
+      certificates.push({
+        id: `cert:goal:${g.goal_id}`,
+        category: "MATHEMATICAL_CERTIFICATE",
+        label: g.kind === "volume_ratio" ? "Chứng chỉ tỉ số thể tích" : "Chứng chỉ thể tích phần còn lại",
+        notation: g.value_display,
+        valueDisplay: g.complement_ratio ? `Tỉ số bù = ${g.complement_ratio}` : `Tỉ số = ${g.value_display}`,
+        formula: null,
+        basisLabels: [],
+        entityId: null,
+        certificateRule: rule,
+      });
+    }
+  }
+
+  // Unknown internal names remain available through entity ids, never as learner labels.
+  for (const item of [...givenDimensions, ...givenRelations, ...derivedMeasurements, ...requestedResults, ...certificates]) {
+    if (!learnerTextIsSafe(scene, item.label)) item.label = "Đại lượng hoặc quan hệ đã kiểm chứng";
+    if (item.notation && !learnerTextIsSafe(scene, item.notation)) item.notation = null;
+    if (item.formula && !learnerTextIsSafe(scene, item.formula)) item.formula = null;
+    item.basisLabels = item.basisLabels.map((s) => learnerTextIsSafe(scene, s) ? s : "đối tượng hình học");
+  }
+  return {
+    lengthUnit: routeD?.length_unit ?? scene.length_unit?.symbol ?? null,
+    givenDimensions,
+    givenRelations,
+    derivedMeasurements,
+    requestedResults,
+    certificates,
+  };
+}
+
 

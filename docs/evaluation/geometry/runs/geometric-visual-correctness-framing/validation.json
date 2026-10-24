@@ -1,0 +1,83 @@
+{
+  "verdict": "GEOMETRIC_VISUAL_CORRECTNESS_READY_FOR_HUMAN_REVIEW",
+  "candidate_commit": "7868db0aef3810e2089b5f8b8d6aecfb8b3e1400",
+  "product_commit": "ca84337e32c27c1116f5b1065ca45f2fcdf3e13c",
+  "full_t3_verdict": "FULL_PRODUCT_GATE_PASS",
+  "backend": {
+    "passed": 11442,
+    "skipped": 1,
+    "deselected": 2,
+    "xfailed": 9
+  },
+  "frontend": {
+    "files": 75,
+    "passed": 1183
+  },
+  "build": "PASS",
+  "demo_replay": "5/5",
+  "reduced_chain": "1/1",
+  "crash_surface": "6/6; 0 escaped 500s",
+  "independent_review": "INDEPENDENT_REVIEW_PASS",
+  "freeze": "MATCH",
+  "clean_before_after": true,
+  "raw_log_checks": [
+    {
+      "path": "t3/stdout.log",
+      "bytes": 29318,
+      "sha256": "1d055da75315adfe5d377f82e761a26064b9acbe06d07f0f2a4d753964adf185",
+      "match": true
+    },
+    {
+      "path": "t3/stderr.log",
+      "bytes": 144823,
+      "sha256": "f9fb4b90d04609956ae4477578ed296ccc1d1d9a6322aa3c6fb6b0abe05a82fe",
+      "match": true
+    },
+    {
+      "path": "post-t3-freeze/stdout.log",
+      "bytes": 93,
+      "sha256": "6c12d76fd31e4f780cf28cde36a52b49fd17330eb18fda30f704d5820c1e0933",
+      "match": true
+    },
+    {
+      "path": "post-t3-freeze/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    },
+    {
+      "path": "t3-attempt1-maxpath/stdout.log",
+      "bytes": 85880,
+      "sha256": "f7c3b8ba103ab759457044fb63a5edeef69664086dbeaf65ccd40b8bdb7893d0",
+      "match": true
+    },
+    {
+      "path": "t3-attempt1-maxpath/stderr.log",
+      "bytes": 144823,
+      "sha256": "04d9b44582f1d13b6fc09a3ae707233acd0996b1a11800bbb6098c0bcb0b7061",
+      "match": true
+    },
+    {
+      "path": "post-t3-freeze-attempt1-cwd/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    },
+    {
+      "path": "post-t3-freeze-attempt1-cwd/stderr.log",
+      "bytes": 268,
+      "sha256": "091f8b5bfdcafbe7b3c1b6656550e43284fe19aeef16348ef5600abe503a2c09",
+      "match": true
+    }
+  ],
+  "before_measurements_sha256": "a22d416f723a3aba8aa3237aa9d7a767ad2ad776551fe5c570dc3a435699b91e",
+  "after_measurements_sha256": "63cda4033f44f5fb289168e8a5a8d03985b923e3b25aa8062a6864a082095f5d",
+  "browser_scenes": 7,
+  "browser_before_screenshots": 17,
+  "browser_after_screenshots": 17,
+  "comparison_sheet": "comparison.png",
+  "live_provider_calls": 0,
+  "merge": false,
+  "push": false,
+  "human_approval": "NOT_GRANTED"
+}

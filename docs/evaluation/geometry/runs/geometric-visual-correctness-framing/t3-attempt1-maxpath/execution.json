@@ -1,0 +1,34 @@
+{
+  "command": [
+    "C:/Program Files/nodejs/node.exe",
+    "../frontend/scripts/full-gate.mjs"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-geometric-visual-correctness-framing\\backend",
+  "source_commit": "7868db0aef3810e2089b5f8b8d6aecfb8b3e1400",
+  "dirty_before": "",
+  "started_utc": "2026-10-22T03:28:37.508221+00:00",
+  "timeout_seconds": 2400,
+  "attempt_limit": 1,
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "PYTEST_DEBUG_TEMPROOT": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-geometric-visual-correctness-framing\\.superpowers\\pytest-temp-12304"
+  },
+  "exit_code": 1,
+  "timed_out": false,
+  "elapsed_seconds": 599.34,
+  "finished_utc": "2026-10-22T03:38:36.853799+00:00",
+  "dirty_after": "",
+  "streams": {
+    "stdout": {
+      "bytes": 85880,
+      "sha256": "f7c3b8ba103ab759457044fb63a5edeef69664086dbeaf65ccd40b8bdb7893d0"
+    },
+    "stderr": {
+      "bytes": 144823,
+      "sha256": "04d9b44582f1d13b6fc09a3ae707233acd0996b1a11800bbb6098c0bcb0b7061"
+    }
+  }
+}

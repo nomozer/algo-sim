@@ -1,0 +1,35 @@
+{
+  "command": [
+    "node",
+    "node_modules/vitest/vitest.mjs",
+    "run"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\scene3d-unified-visual-language\\frontend",
+  "source_commit": "f95596716912e5550ed079287221274b2d70f24c",
+  "dirty_before": "M frontend/src/simulations/domains/geometry/scene3d-hidden-lines.test.tsx\n M frontend/src/simulations/domains/geometry/scene3d-roles.ts\n M frontend/src/simulations/domains/geometry/scene3d-view.tsx\n M frontend/src/simulations/domains/geometry/scene3d.test.tsx\n M frontend/src/simulations/domains/geometry/simulation-visual-consistency-session1.test.tsx\n M frontend/src/styles/tokens.css\n?? debug.log\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/\n?? frontend/src/simulations/domains/geometry/scene3d-unified-materials.test.ts",
+  "started_utc": "2026-10-22T04:41:22.403992+00:00",
+  "timeout_seconds": 300,
+  "attempt_limit": 1,
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "PYTEST_DEBUG_TEMPROOT": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\scene3d-unified-visual-language\\.superpowers\\pytest-temp"
+  },
+  "timed_out": false,
+  "exit_code": 0,
+  "elapsed_seconds": 7.86,
+  "finished_utc": "2026-10-22T04:41:30.253423+00:00",
+  "dirty_after": "M frontend/src/simulations/domains/geometry/scene3d-hidden-lines.test.tsx\n M frontend/src/simulations/domains/geometry/scene3d-roles.ts\n M frontend/src/simulations/domains/geometry/scene3d-view.tsx\n M frontend/src/simulations/domains/geometry/scene3d.test.tsx\n M frontend/src/simulations/domains/geometry/simulation-visual-consistency-session1.test.tsx\n M frontend/src/styles/tokens.css\n?? debug.log\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/\n?? frontend/src/simulations/domains/geometry/scene3d-unified-materials.test.ts",
+  "streams": {
+    "stdout": {
+      "bytes": 293,
+      "sha256": "cedbb1ca010fc2c25ddeddd86f788c0e2a148f3284deaf28cdba5ed2c5a45b63"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

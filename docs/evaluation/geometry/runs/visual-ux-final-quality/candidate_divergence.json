@@ -1,0 +1,16 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "visual-ux-final-quality",
+  "corrects": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/candidate_divergence.json",
+  "previous_candidate_hash": "91ac973ebc2d42041809d957c55e2829f875c05e649e35b7eee9ebeac1e5d26d",
+  "current_candidate_hash": "91ac973ebc2d42041809d957c55e2829f875c05e649e35b7eee9ebeac1e5d26d",
+  "previous_product_commit": "dbef50896c848b93433048b0469f9a78b6a3dbda",
+  "current_product_commit": "56328b17462e9c4e903dc17687da07243d06846d",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "measured_tree_changed": false,
+  "product_identity_changed": true,
+  "cache_version": 127,
+  "cache_decision": "NO_BUMP: frontend presentation only; backend, response envelopes and mathematical authority unchanged",
+  "live_requests": 0,
+  "historical_measurements": "UNCHANGED"
+}

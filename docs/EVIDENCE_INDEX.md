@@ -146,6 +146,61 @@ CORRECTS = simulation-demo6b-renderer-fix (candidate divergence only; original b
 CORRECTED_BY = backend-hybrid-continuation
 
 
+## WAVE_ID = SCENE3D_HTML_VISUAL_PORT
+
+REPORT = docs/evaluation/geometry/runs/scene3d-html-visual-port/FINAL_OWNER_HANDOFF.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-html-visual-port/
+CLASSIFICATION = SCENE3D_HTML_VISUAL_FIDELITY_READY_FOR_OWNER_REVIEW (owner SGK reference matphanghinhchot.html ported as SGK_REFERENCE: unlit two-pass shells, terracotta section fill 0.32 by owner decision, dashed violet plane border, screen-sized right-angle marks, role-styled labels, ivory canvas; owner V6.2 WIP checkpointed verbatim at 3bfc8dd0; independent review PASS_WITH_LIMITS, findings fixed; human visual approval NOT_APPROVED)
+CODE_COMMIT = 852f650158635b6dc402d4cfc905cbdcbbaebe43 (product, frontend only); candidate 13d28b844925ee0c9adb02698b54597c8f9d6eee; unchanged 114-file measured tree 9bf35a1d6f4c3b3e90228964a3b5ee96288de29efcb3f580f22c6f126489bd9a; NO_BUMP
+VERIFICATION = docs/evaluation/geometry/runs/scene3d-html-visual-port/verification/full-t3/execution.json + docs/evaluation/geometry/runs/scene3d-html-visual-port/verification/orbit-gate/ORBIT_GATE.json + docs/evaluation/geometry/runs/scene3d-html-visual-port/verification/section-fill/receipt.json + docs/evaluation/geometry/runs/scene3d-html-visual-port/verification/html-vs-algosim/receipt.json + docs/evaluation/geometry/runs/scene3d-html-visual-port/INDEPENDENT_REVIEW.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = SCENE3D_UNIFIED_VISUAL_LANGUAGE_W01 (palette/material policy superseded by SGK_REFERENCE in docs/architecture/SCENE3D_VISUAL_LANGUAGE.md; orbit-gate allocation regression of the uncommitted V6.2 session fixed; historical artifact bytes unchanged)
+CORRECTED_BY = NONE
+
+## WAVE_ID = SCENE3D_UNIFIED_VISUAL_LANGUAGE_W01
+
+REPORT = docs/evaluation/geometry/runs/scene3d-unified-visual-language/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-unified-visual-language/
+CLASSIFICATION = SCENE3D_UNIFIED_VISUAL_LANGUAGE_READY_FOR_HUMAN_REVIEW (local-only semantic material tokens from DESIGN.md across every geometry family; A/B/C survey re-measured after the token-override defect with runtime probe + WebGL material checks; independent reviews rounds 3-5 with no open Critical/Important; authoritative Full T3 PASS; post-T3 freeze MATCH; human visual approval NOT_GRANTED)
+CODE_COMMIT = 34a57d3540f82a78701b0f0caa8dbae746f266d1; candidate dd3bddd48dad7ff865d7c0442c50b6523d87d3c7; unchanged 114-file measured tree 9bf35a1d6f4c3b3e90228964a3b5ee96288de29efcb3f580f22c6f126489bd9a; changed frontend renderer locked by product_commit_sha
+VERIFICATION = docs/evaluation/geometry/runs/scene3d-unified-visual-language/validation.json + docs/evaluation/geometry/runs/scene3d-unified-visual-language/browser-metrics.json + docs/evaluation/geometry/runs/scene3d-unified-visual-language/survey-validity.json + docs/evaluation/geometry/runs/scene3d-unified-visual-language/t3-attempt2/execution.json + docs/evaluation/geometry/runs/scene3d-unified-visual-language/post-t3-freeze/execution.json + docs/evaluation/geometry/runs/scene3d-unified-visual-language/handoff.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = GEOMETRIC_VISUAL_CORRECTNESS_FRAMING_W01 (semantic material palette: stable full-scene primary/secondary solid roles replace the visible-index teal override; one unlit section fill across polygon/circle/ellipse; historical artifact bytes unchanged)
+CORRECTED_BY = SCENE3D_HTML_VISUAL_PORT (docs/evaluation/geometry/runs/scene3d-html-visual-port/FINAL_OWNER_HANDOFF.md)
+
+## WAVE_ID = GEOMETRIC_VISUAL_CORRECTNESS_FRAMING_W01
+
+REPORT = docs/evaluation/geometry/runs/geometric-visual-correctness-framing/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/geometric-visual-correctness-framing/
+CLASSIFICATION = GEOMETRIC_VISUAL_CORRECTNESS_READY_FOR_HUMAN_REVIEW (local-only geometric visual correctness, adaptive safe-area framing, dynamic camera-dependent curved rim visibility, Normal vs X-ray section depth honesty, multi-solid occlusion & D1 subscript identity, and demo title reconciliation under GO_GEOMETRIC_VISUAL_CORRECTNESS_LOCAL_ONLY; independent review PASS, authoritative Full T3 PASS, post-T3 freeze MATCH; human visual approval NOT_GRANTED)
+CODE_COMMIT = ca84337e32c27c1116f5b1065ca45f2fcdf3e13c; candidate 7868db0aef3810e2089b5f8b8d6aecfb8b3e1400; 114-file measured tree 9bf35a1d6f4c3b3e90228964a3b5ee96288de29efcb3f580f22c6f126489bd9a; changed backend/frontend locked by product_commit_sha
+VERIFICATION = docs/evaluation/geometry/runs/geometric-visual-correctness-framing/validation.json + docs/evaluation/geometry/runs/geometric-visual-correctness-framing/after/measurements.json + docs/evaluation/geometry/runs/geometric-visual-correctness-framing/before/measurements.json + docs/evaluation/geometry/runs/geometric-visual-correctness-framing/OWNER_VISUAL_FINDINGS.md + docs/evaluation/geometry/runs/geometric-visual-correctness-framing/review.md + docs/evaluation/geometry/runs/geometric-visual-correctness-framing/t3/execution.json + docs/evaluation/geometry/runs/geometric-visual-correctness-framing/post-t3-freeze/execution.json + docs/evaluation/geometry/runs/geometric-visual-correctness-framing/handoff.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = VISUAL_UX_FINAL_QUALITY_W01 (adaptive safe-area camera framing, true radius-R curved surface bounds, restrained curved rim thickness, dynamic camera-dependent quadric rim occlusion, Normal vs X-ray section depth honesty, multi-solid occluder passing & D1 notation, and demo title reconciliation; historical artifact bytes unchanged)
+CORRECTED_BY = SCENE3D_UNIFIED_VISUAL_LANGUAGE_W01 (semantic material palette and stable solid roles; historical artifact bytes unchanged)
+
+## WAVE_ID = VISUAL_UX_FINAL_QUALITY_W01
+
+REPORT = docs/evaluation/geometry/runs/visual-ux-final-quality/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/visual-ux-final-quality/
+CLASSIFICATION = VISUAL_UX_FINAL_QUALITY_READY_FOR_GO_MAIN_REVIEW (local-only correctness-first presentation correction; original campaign not restarted; independent review PASS, authoritative Full T3 PASS, freeze MATCH)
+CODE_COMMIT = 56328b17462e9c4e903dc17687da07243d06846d; candidate 9343e8d0d4c4cdf5bf0865e0a550c13f238f28b5; unchanged 114-file measured tree 91ac973ebc2d42041809d957c55e2829f875c05e649e35b7eee9ebeac1e5d26d; changed frontend locked by product_commit_sha
+VERIFICATION = docs/evaluation/geometry/runs/visual-ux-final-quality/validation.json + docs/evaluation/geometry/runs/visual-ux-final-quality/verified/receipt.json + docs/evaluation/geometry/runs/visual-ux-final-quality/review.md + docs/evaluation/geometry/runs/visual-ux-final-quality/t3/execution.json + docs/evaluation/geometry/runs/visual-ux-final-quality/post-t3-freeze/execution.json + docs/evaluation/geometry/runs/visual-ux-final-quality/preservation-verification.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = SIMULATION_VISUAL_CONSISTENCY_LEARNING_UX_W01 (refusal/depth/analysis/actual-entry interpretation and candidate identity; historical artifact bytes unchanged)
+CORRECTED_BY = GEOMETRIC_VISUAL_CORRECTNESS_FRAMING_W01 (adaptive camera framing, curved rim thickness/occlusion, Normal vs X-ray section depth, multi-solid occlusion/D1 notation, and demo identity reconciliation; historical artifact bytes unchanged)
+
+## WAVE_ID = SIMULATION_VISUAL_CONSISTENCY_LEARNING_UX_W01
+
+REPORT = docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/
+CLASSIFICATION = SIMULATION_VISUAL_CONSISTENCY_LEARNING_UX_READY_FOR_REVIEW (two-session integrated development campaign on research/simulation-visual-consistency-learning-ux from verified main 43247c9e9375a3dbf2b5223324a58e6f932ca596 under GO_SIMULATION_VISUAL_CONSISTENCY_LEARNING_UX_LOCAL; SIMULATION_VISUAL_UX_DEVELOPMENT_EVALUATION_NOT_BLIND). Session 1 (9341a857) unifies Scene3D visual semantics across polyhedra and curved solids (muted slate curved surfaces 0x647a96, BASE_REGION vs SECTION_REGION on circle3/ellipse3 with translucent amber section disk section_fill:<id>, auto-framing via khungNhinSuPham + radial bounding extents in diemHuuHan, raycast specificity HANG_CU_THE in pick-target.ts, canonical A'/B'/O'/R/h/r notations in adapter3_simulation.py). Session 2 (ec92c8ad + dbef5089) implements Mode A Simulation default hiding all final requested answers (defaultPanelOpen=false, visibleReadoutBadgesDefault=[]) and Mode B Mathematical Analysis (#geo3d-bang-phan-tich) with 8-category semantic classification (phanLoaiVat, phanTichToanHocCuaCanh). Real-browser Chromium WebGL evaluation across 14 families (13 served + 1 refusal, 92 after/*.png screenshots): D1..D10 = 1.0, 0 label collisions, 0 console/page errors, resetDiffFromDefault = 0. Independent review INDEPENDENT_REVIEW_PASS (0 BLOCKER, 0 IMPORTANT, 0 MINOR). Authoritative Full T3 at f5b6d152 FULL_PRODUCT_GATE_PASS (pytest 11,442, vitest 1,166, build PASS, demo 5/5, crash 6/6; post-T3 freeze MATCH).
+CODE_COMMIT = 9341a85771dba79376b46e69ac531c413f507b55 (Session 1) · ec92c8ad81e52dcbf958f25184bea2958fd6be58 (Session 2) · dbef50896c848b93433048b0469f9a78b6a3dbda (final product commit); candidate freeze & Full T3 target f5b6d152370bf91bde798a1b4c6c06c8d4aa2a58 (measured_system tree_hash 91ac973ebc2d42041809d957c55e2829f875c05e649e35b7eee9ebeac1e5d26d across 114 files)
+VERIFICATION = docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/eval-summary.json + docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/browser-after/visual_ux_acceptance_receipt.json + docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/INDEPENDENT_REVIEW.md + docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/validation.json + docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/FINAL_HANDOFF.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = SIMULATION_DEMO6B_RENDERER_FIX_W01 (candidate_divergence.json identity layer only; historical measurements and receipts unchanged)
+CORRECTED_BY = VISUAL_UX_FINAL_QUALITY_W01 (correctness-first UX correction; no historical measurement rewrite)
+
 ## WAVE_ID = SIMULATION_DEMO6B_RENDERER_FIX_W01
 
 REPORT = docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/report.md
@@ -155,7 +210,7 @@ CODE_COMMIT = 1ca20f4f51457f3457802bca042af76accd13698 (new renderer-fixed produ
 VERIFICATION = docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/raw-log-size-reconciliation.json + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/candidate-and-browser-inventory-reconciliation.json + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/browser-original-runner/validation.json + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/browser/validation.json + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/t3/validation.json + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/independent-review.md + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/archive-integrity.json
 MODEL_REQUEST_COUNT = 0
 CORRECTS = SIMULATION_EVIDENCE_REPAIR_W01 (resolves open IMPORTANT finding on demo6b td_sec_axial visibility & camera reset diff, and additively corrects prose byte-size table in simulation-evidence-repair/report.md without mutating historical files)
-CORRECTED_BY = typedfactnext-planner-bridge
+CORRECTED_BY = typedfactnext-planner-bridge; SIMULATION_VISUAL_CONSISTENCY_LEARNING_UX_W01 (candidate identity layer; no historical measurement rewrite)
 
 ## WAVE_ID = SIMULATION_EVIDENCE_REPAIR_W01
 

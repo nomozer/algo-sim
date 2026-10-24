@@ -1,0 +1,47 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-ux-final-quality/frontend
+
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx (11 tests | 2 failed) 289ms
+     × keeps the authoritative nonintersection explanation for Mặt phẳng nằm ngoài chiều cao hình trụ. 15ms
+     × keeps the authoritative nonintersection explanation for Mặt phẳng chỉ đi qua đỉnh hình nón. 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/simulations/domains/geometry/final-quality.test.tsx > final visual quality > keeps the authoritative nonintersection explanation for Mặt phẳng nằm ngoài chiều cao hình trụ.
+AssertionError: expected '<section class="card"><span class="ey…' to contain 'Mặt phẳng nằm ngoài chiều cao hình tr…'
+
+Expected: "Mặt phẳng nằm ngoài chiều cao hình trụ."
+Received: "<section class="card"><span class="eyebrow">KHÔNG CÓ GIAO TUYẾN</span><p style="margin-top:var(--sp-sm)">Không thể dựng giao tuyến vì mặt phẳng cách tâm mặt cầu một khoảng lớn hơn bán kính. Mặt phẳng và mặt cầu không có điểm chung.</p><dl class="refusal-facts"><div><dt>Dừng ở bước</dt><dd>Không xác định được</dd></div><div><dt>Loại vấn đề</dt><dd>KHÔNG CÓ GIAO TUYẾN</dd></div></dl></section>"
+
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx:22:18
+     20|     const html=renderToString(<UnsupportedNotice unsupported={{reason,…
+     21|     const main=html.replace(/<details[\s\S]*?<\/details>/g,'');
+     22|     expect(main).toContain(reason);
+       |                  ^
+     23|     expect(main).not.toContain('mặt cầu');
+     24|     expect(main).not.toContain('CURVED_');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/simulations/domains/geometry/final-quality.test.tsx > final visual quality > keeps the authoritative nonintersection explanation for Mặt phẳng chỉ đi qua đỉnh hình nón.
+AssertionError: expected '<section class="card"><span class="ey…' to contain 'Mặt phẳng chỉ đi qua đỉnh hình nón.'
+
+Expected: "Mặt phẳng chỉ đi qua đỉnh hình nón."
+Received: "<section class="card"><span class="eyebrow">KHÔNG CÓ GIAO TUYẾN</span><p style="margin-top:var(--sp-sm)">Không thể dựng giao tuyến vì mặt phẳng cách tâm mặt cầu một khoảng lớn hơn bán kính. Mặt phẳng và mặt cầu không có điểm chung.</p><dl class="refusal-facts"><div><dt>Dừng ở bước</dt><dd>Không xác định được</dd></div><div><dt>Loại vấn đề</dt><dd>KHÔNG CÓ GIAO TUYẾN</dd></div></dl></section>"
+
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx:22:18
+     20|     const html=renderToString(<UnsupportedNotice unsupported={{reason,…
+     21|     const main=html.replace(/<details[\s\S]*?<\/details>/g,'');
+     22|     expect(main).toContain(reason);
+       |                  ^
+     23|     expect(main).not.toContain('mặt cầu');
+     24|     expect(main).not.toContain('CURVED_');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 9 passed (11)
+   Start at  01:41:08
+   Duration  2.86s (transform 1.12s, setup 84ms, import 1.36s, tests 289ms, environment 0ms)
+

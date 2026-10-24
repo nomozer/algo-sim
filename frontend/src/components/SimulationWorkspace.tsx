@@ -138,6 +138,17 @@ export const NHAN_LOAI_VAN_DE: Record<string, string> = {
  * là không biết, không đoán bằng chuỗi `reason`, và không gán cho "phản hồi cũ" một phản hồi mới (HFOI-F6). */
 const KHONG_XAC_DINH = "Không xác định được";
 
+// Presentation of structured verifier codes; the backend still owns every refusal decision.
+const GEOMETRY_REFUSAL_TEXT: Record<string, { title: string; reason: string }> = {
+  CURVED_PLANE_DOES_NOT_CUT: { title: "KHÔNG CÓ GIAO TUYẾN", reason: "Mặt phẳng không cắt khối đã cho." },
+  INCONSISTENT_FACTS: { title: "DỮ KIỆN MÂU THUẪN", reason: "Các dữ kiện đã cho không đồng thời tạo thành một hình hợp lệ. Em hãy kiểm tra lại các giả thiết và số liệu." },
+  MISSING_CURVED_DIMENSION: { title: "CHƯA ĐỦ DỮ KIỆN", reason: "Chưa đủ kích thước để xác định hình. Em hãy bổ sung các kích thước còn thiếu." },
+  UNDERDETERMINED_POINT: { title: "CHƯA ĐỦ DỮ KIỆN", reason: "Các giả thiết chưa xác định được vị trí điểm cần dựng." },
+  AMBIGUOUS_REFERENCE: { title: "CHƯA XÁC ĐỊNH DUY NHẤT", reason: "Một đối tượng trong đề có nhiều cách hiểu. Em hãy chỉ rõ điểm, cạnh, mặt hoặc khối được nhắc tới." },
+  AMBIGUOUS_FACT: { title: "CHƯA XÁC ĐỊNH DUY NHẤT", reason: "Giả thiết có nhiều cách hiểu nên hệ chưa chọn được một phép dựng duy nhất." },
+  CURVED_PRIMITIVE_BLOCKED_BY_KERNEL: { title: "NGOÀI PHẠM VI DỰNG HÌNH", reason: "Hệ chưa hỗ trợ phép dựng chính xác cho loại khối được yêu cầu." },
+};
+
 export function UnsupportedNotice({
   unsupported,
 }: {
@@ -159,6 +170,15 @@ export function UnsupportedNotice({
     reason_code?: string;
   };
 }) {
+  const geometricCode = unsupported.reason_code ?? unsupported.error_code;
+  const geometricRefusal = unsupported.failure_category === "verification_gap"
+    || (unsupported.failure_category === "insufficient_specification" && unsupported.refusal_cause !== "SOURCE")
+    ? undefined : geometricCode ? GEOMETRY_REFUSAL_TEXT[geometricCode] : undefined;
+  const failedVerification = unsupported.error_code === "postcondition_violated";
+  const cutExplanation = geometricCode === "CURVED_PLANE_DOES_NOT_CUT"
+    ? (unsupported.learner_reason ?? unsupported.reason).split(geometricCode).join("")
+      .replace(/^[\s:[\]()—-]+/u, "").trim()
+    : null;
   // (M17-VR1) Đề THIẾU DỮ KIỆN khác hẳn đề NGOÀI DANH MỤC: chủ đề vẫn được hỗ
   // trợ, chỉ là em chưa cho đủ dữ liệu. Nói "ngoài danh mục" ở đây làm học sinh
   // tưởng hệ không mô phỏng được dạng bài đó — sai và làm nản.
@@ -313,8 +333,10 @@ export function UnsupportedNotice({
     unsupported.learner_reason ?? unsupported.reason ?? MO_TA_TU_CHOI_CHUNG;
   return (
     <section className="card">
-      <span className="eyebrow">{eyebrow}</span>
-      <p style={{ marginTop: "var(--sp-sm)" }}>{loiKe}</p>
+      <span className="eyebrow">{geometricRefusal?.title ?? (failedVerification ? "CHƯA KIỂM CHỨNG ĐƯỢC MÔ PHỎNG" : eyebrow)}</span>
+      <p style={{ marginTop: "var(--sp-sm)" }}>{geometricRefusal
+        ? cutExplanation !== null ? `Không thể dựng giao tuyến. ${cutExplanation || geometricRefusal.reason}` : unsupported.learner_reason ?? geometricRefusal.reason
+        : loiKe}</p>
       <dl className="refusal-facts">
         <div>
           <dt>Dừng ở bước</dt>
@@ -322,10 +344,13 @@ export function UnsupportedNotice({
         </div>
         <div>
           <dt>Loại vấn đề</dt>
-          <dd>{nhanLoai}</dd>
+          <dd>{geometricRefusal?.title ?? nhanLoai}</dd>
         </div>
       </dl>
-      {hint && <p className="notes">{hint}</p>}
+      {!geometricRefusal && hint && <p className="notes">{hint}</p>}
+      {geometricRefusal && (
+        <details><summary>Chi tiết chẩn đoán</summary><code>{geometricCode}</code><p>{unsupported.reason}</p></details>
+      )}
     </section>
   );
 }

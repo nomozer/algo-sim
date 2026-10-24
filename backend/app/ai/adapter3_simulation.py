@@ -1867,11 +1867,12 @@ class _Adapter3Compiler:
                 continue
             local_n = meta["local_notation"]
             sid = meta["solid_id"]
-            obj["label"] = f"Điểm {local_n} (khối {sid})"
-            obj["display_label"] = obj["label"]
-            obj["reference"] = f"điểm {local_n} của khối {sid}"
-            obj["notation"] = f"{local_n}({sid})"
-            obj["source"] = {**(obj.get("source") or {}), **meta}
+            solid_not = self.solid_specs[sid].notation if sid in self.solid_specs else c_sym
+            obj["label"] = f"Đỉnh {c_sym} (đỉnh {local_n} của khối {solid_not})"
+            obj["display_label"] = f"Đỉnh {c_sym}"
+            obj["reference"] = f"đỉnh {c_sym} của khối {solid_not}"
+            obj["notation"] = c_sym
+            obj["source"] = {**(obj.get("source") or {}), **meta, "solid_notation": solid_not}
 
         # 5. Build resolved solid descriptors
         solid_descriptors: list[dict[str, Any]] = []
@@ -2329,6 +2330,7 @@ class _Adapter3Compiler:
 
             solid_meta[solid.solid_id] = {
                 "solid_var": solid_var,
+                "solid_label": solid_label,
                 "curved_kind": curved_kind,
                 "center_var": center_var,
                 "top_var": top_var,
@@ -2394,8 +2396,8 @@ class _Adapter3Compiler:
                         }
                     )
                 else:
-                    ap_var = f"A_prime_{ir_name(sec.section_id)}"
-                    bp_var = f"B_prime_{ir_name(sec.section_id)}"
+                    ap_var = "A_prime" if "A_prime" not in declared_names else f"A_prime_{ir_name(sec.section_id)}"
+                    bp_var = "B_prime" if "B_prime" not in declared_names else f"B_prime_{ir_name(sec.section_id)}"
                     add_decl(ap_var, "point3", [str(r_val), 0, str(h_val)])
                     add_decl(bp_var, "point3", [str(-r_val), 0, str(h_val)])
                     v_cycle = [a_var, b_var, bp_var, ap_var]
@@ -2531,8 +2533,8 @@ class _Adapter3Compiler:
                         f"{g.goal_id}: khối nón dẫn xuất yêu cầu mặt phẳng cắt song song đáy cắt phần trong của trục",
                         (g.goal_id,),
                     )
-                o_cut_var = f"O_cat_{ir_name(g.derived_solid_id)}"
-                r_cut_var = f"R_cat_{ir_name(g.derived_solid_id)}"
+                o_cut_var = "O_prime" if "O_prime" not in declared_names else f"O_cat_{ir_name(g.derived_solid_id)}"
+                r_cut_var = "r" if "r" not in declared_names else f"R_cat_{ir_name(g.derived_solid_id)}"
                 upper_var = f"khoi_{ir_name(g.derived_solid_id)}"
                 r_cut_val = times_rational(pmeta["r_val"], rk)
                 add_decl(o_cut_var, "point3", [0, 0, str(z_cut)])
@@ -2758,8 +2760,58 @@ class _Adapter3Compiler:
                 )
 
         state = build_simulation_state(vr.spec, ket, None)
+        primary_curved_label = next(
+            (m.get("solid_label") for m in solid_meta.values() if m.get("solid_label")),
+            None,
+        )
+
+        def _clean_curved_text(val: Any) -> Any:
+            if not isinstance(val, str):
+                return val
+            if primary_curved_label:
+                val = re.sub(r"«[^»]*qua đại lượng»", primary_curved_label, val)
+            val = re.sub(r",\s*(?:đi\s+)?qua đại lượng", "", val)
+            val = re.sub(r"\bđi qua đại lượng\b", "", val).strip()
+            return val
+
+        for o in (state.get("scene") or {}).get("objects", []):
+            oid = str(o.get("id") or "")
+            if o.get("type") == "quantity" and not o.get("notation") and re.fullmatch(r"[a-zA-Z][a-zA-Z0-9₀-₉'’]*", oid):
+                o["notation"] = oid
+                if o.get("label") in (None, "", "Đại lượng đo"):
+                    o["label"] = oid
+                if o.get("reference") in (None, "", "đại lượng"):
+                    o["reference"] = oid
+            for fld in ("label", "display_label", "reference", "role"):
+                if fld in o:
+                    o[fld] = _clean_curved_text(o[fld])
         state["targets"] = list(math_var_map.values())
         canh = build_scene3d(state)
+        for o in canh["objects"]:
+            okind = o.get("type")
+            oid = str(o.get("id") or "")
+            if okind in ("circle3", "ellipse3") and not o.get("surface_role"):
+                if "CONSTRUCT_BASE" in (o.get("formation_roles") or ()) or oid.startswith("duong_tron_day"):
+                    o["surface_role"] = "BASE_REGION"
+                else:
+                    o["surface_role"] = "SECTION_REGION"
+            elif okind == "quantity" and not o.get("notation") and re.fullmatch(r"[a-zA-Z][a-zA-Z0-9₀-₉'’]*", oid):
+                o["notation"] = oid
+                if o.get("label") in (None, "", "Đại lượng đo"):
+                    o["label"] = oid
+                if o.get("reference") in (None, "", "đại lượng"):
+                    o["reference"] = oid
+            for fld in ("label", "display_label", "reference", "role"):
+                if fld in o:
+                    o[fld] = _clean_curved_text(o[fld])
+        for ev in canh.get("events", []):
+            for fld in ("display_label", "learner_text"):
+                if fld in ev:
+                    ev[fld] = _clean_curved_text(ev[fld])
+        for stp in (canh.get("formation") or {}).get("steps") or []:
+            for fld in ("label", "learner_text"):
+                if fld in stp:
+                    stp[fld] = _clean_curved_text(stp[fld])
         by_id = {o["id"]: o for o in canh["objects"]}
 
         solid_descriptors = [

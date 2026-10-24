@@ -9,6 +9,8 @@
 | file | phạm vi |
 |---|---|
 | [`HYBRID_BACKEND_TARGET_ARCHITECTURE.md`](HYBRID_BACKEND_TARGET_ARCHITECTURE.md) | kiến trúc đích nghiên cứu: TypedFactNext → bridge → cổng nguồn → planner → engine → Scene3D; quyết định `BRIDGE_FEASIBLE` cho tập đa diện có mặt cắt theo quan hệ; không đổi bề mặt nhà cung cấp; Hybrid vẫn NO-GO |
+
+| [`SCENE3D_VISUAL_LANGUAGE.md`](SCENE3D_VISUAL_LANGUAGE.md) | mở rộng token Scene3D từ DESIGN.md; vật liệu chung, vai trò khối ổn định, depth và quyền phê duyệt người giữ riêng |
 | [`ASSUMPTION_CERTIFICATE_AMENDMENT.md`](ASSUMPTION_CERTIFICATE_AMENDMENT.md) | chứng chỉ giả định (W15), ràng buộc phép dựng với đề (W17 §15, W18 §16); mã sản phẩm trích đường dẫn này |
 | [`OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md`](OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md) | edge identity, visual owner, occlusion span, oracle độc lập |
 | [`HYBRID_B_TARGET_ARCHITECTURE_DECISION.md`](HYBRID_B_TARGET_ARCHITECTURE_DECISION.md) | **quyết định kiến trúc đích Hybrid (2026-10-11)**: AI trích xuất JSON Typed Facts → Semantic Grounding → Goal-Directed Construction Planner tất định tự phối hợp Geometry Functions → Compiler / Construction IR → Engine / Kernel → Scene3D; tuyến AI gọi hàm trực tiếp (A) là baseline đối chứng; `LLM_ONLY` vẫn là mặc định sản phẩm (`AS-IS`) |

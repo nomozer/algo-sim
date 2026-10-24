@@ -123,8 +123,8 @@ export function nguongBamCanh(khoangCam: number): number {
  * chóp là câu trả lời đúng về mặt hình học nhưng vô dụng với người đang học.
  */
 export const HANG_CU_THE: Record<string, number> = {
-  point3: 0, edge: 1, face: 2, polygon3: 3, line3: 3, plane3: 3,
-  quantity: 4, section: 3, solid: 5,
+  point3: 0, edge: 1, segment3: 1, face: 2, polygon3: 3, circle3: 3, ellipse3: 3, line3: 3, plane3: 3,
+  quantity: 4, section: 3, solid: 5, curved_solid: 5, cylinder: 5, cone: 5, sphere: 5,
 };
 
 export function hangCuThe(loai: string | undefined): number {

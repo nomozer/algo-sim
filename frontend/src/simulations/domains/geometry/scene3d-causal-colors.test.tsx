@@ -57,8 +57,9 @@ const mauCanh = (vai: Parameters<typeof buildObject3D>[1]) => {
 };
 /** Màu NỀN (mặt tô trong suốt) của khối. */
 const mauNen = (vai: Parameters<typeof buildObject3D>[1]) => {
+  // Vỏ SGK không đèn (`voKhoiHaiLuot`): mặt tô là MeshBasicMaterial trong suốt; bỏ lớp chiều sâu vô hình.
   const m = gom(buildObject3D(KHOI, vai)!).map((c) => (c as THREE.Mesh).material)
-    .find((x) => x instanceof THREE.MeshStandardMaterial && x.opacity < 1) as THREE.MeshStandardMaterial;
+    .find((x) => x instanceof THREE.MeshBasicMaterial && x.colorWrite !== false && x.opacity > 0 && x.opacity < 1) as THREE.MeshBasicMaterial;
   return hsl(m.color);
 };
 

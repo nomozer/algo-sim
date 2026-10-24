@@ -1,0 +1,5116 @@
+{
+  "stage": "after",
+  "environment": "Chromium SwiftShader WebGL; offline fixtures; 0 live provider calls",
+  "errors": [],
+  "depth": [
+    {
+      "family": "family04_derived_sub_pyramid",
+      "id": "td_ask9",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1089,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family07_multi_solid_composition",
+      "id": "day_ABC",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 0,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1128,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family08_unnamed_section_vertices",
+      "id": "td_ask9",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 484,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family09_cylinder_and_sections",
+      "id": "td_sec_parallel",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1704,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family09_cylinder_and_sections",
+      "id": "td_sec_axial",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 2067,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family10_cone_frustum_cut",
+      "id": "td_sec_cut",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1704,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family10_cone_frustum_cut",
+      "id": "td_sec_axial",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 990,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family11_sphere_plane_cut",
+      "id": "td_sec_sph",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1704,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family12_cylinder_ellipse_section",
+      "id": "td_sec_el",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1616,
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "xrayDepth": [
+    {
+      "family": "family04_derived_sub_pyramid",
+      "id": "td_ask9",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 1089,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1089,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family07_multi_solid_composition",
+      "id": "day_ABC",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 0,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1128,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family08_unnamed_section_vertices",
+      "id": "td_ask9",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 484,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 484,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family09_cylinder_and_sections",
+      "id": "td_sec_parallel",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 1708,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1704,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family09_cylinder_and_sections",
+      "id": "td_sec_axial",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 2067,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 2067,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family10_cone_frustum_cut",
+      "id": "td_sec_cut",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 1708,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1704,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family10_cone_frustum_cut",
+      "id": "td_sec_axial",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 990,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 990,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family11_sphere_plane_cut",
+      "id": "td_sec_sph",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 1708,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1704,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family12_cylinder_ellipse_section",
+      "id": "td_sec_el",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 1616,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1616,
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "family01_triangular_pyramid",
+      "defaultCamera": [
+        7.647819206262368,
+        5.4953656920903935,
+        9.320270128739004
+      ],
+      "orbitCamera": [
+        4.84930804264801,
+        -2.0553594139473677,
+        11.262282115508821
+      ],
+      "resetCamera": [
+        7.647819206262368,
+        5.4953656920903935,
+        9.320270128739004
+      ],
+      "entryBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 541.2,
+          "y": 151.4,
+          "w": 340.1,
+          "h": 407.9,
+          "maxX": 881.4,
+          "maxY": 559.3
+        },
+        "labelBounds": {
+          "x": 532.2,
+          "y": 126.2,
+          "w": 358.1,
+          "h": 425.9,
+          "maxX": 890.4,
+          "maxY": 552.1
+        },
+        "combinedBounds": {
+          "x": 532.2,
+          "y": 126.2,
+          "w": 358.1,
+          "h": 433.1,
+          "maxX": 890.4,
+          "maxY": 559.3
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.56,
+          "geometryHeightRatioSafe": 0.585,
+          "combinedHeightRatioCanvas": 0.594,
+          "combinedHeightRatioSafe": 0.621,
+          "geometryWidthRatioSafe": 0.245,
+          "combinedWidthRatioSafe": 0.257,
+          "topMarginPx": 126.2,
+          "bottomMarginPx": 169.7,
+          "leftMarginPx": 532.2,
+          "rightMarginSafePx": 516.6,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "titleText": "1. Hình chóp tam giác S.ABC",
+        "guidanceStepText": "Đang dựng (bước 1/3): Dữ kiện đề cho: AB = 3, AC = 4, SA = 5.",
+        "guidanceHintText": "Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hình"
+      },
+      "completeBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 541.2,
+          "y": 151.4,
+          "w": 340.1,
+          "h": 407.9,
+          "maxX": 881.4,
+          "maxY": 559.3
+        },
+        "labelBounds": {
+          "x": 532.2,
+          "y": 126.2,
+          "w": 358.1,
+          "h": 425.9,
+          "maxX": 890.4,
+          "maxY": 552.1
+        },
+        "combinedBounds": {
+          "x": 532.2,
+          "y": 126.2,
+          "w": 358.1,
+          "h": 433.1,
+          "maxX": 890.4,
+          "maxY": 559.3
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.56,
+          "geometryHeightRatioSafe": 0.585,
+          "combinedHeightRatioCanvas": 0.594,
+          "combinedHeightRatioSafe": 0.621,
+          "geometryWidthRatioSafe": 0.245,
+          "combinedWidthRatioSafe": 0.257,
+          "topMarginPx": 126.2,
+          "bottomMarginPx": 169.7,
+          "leftMarginPx": 532.2,
+          "rightMarginSafePx": 516.6,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "titleText": "1. Hình chóp tam giác S.ABC",
+        "guidanceStepText": "Đã dựng xong (bước 3/3): Hình chóp S.ABC",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "analysisBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1060,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 402.9,
+          "y": 166,
+          "w": 323.2,
+          "h": 378.9,
+          "maxX": 726.1,
+          "maxY": 544.9
+        },
+        "labelBounds": {
+          "x": 393.9,
+          "y": 140.8,
+          "w": 341.2,
+          "h": 396.9,
+          "maxX": 735.1,
+          "maxY": 537.7
+        },
+        "combinedBounds": {
+          "x": 393.9,
+          "y": 140.8,
+          "w": 341.2,
+          "h": 404.1,
+          "maxX": 735.1,
+          "maxY": 544.9
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 468
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 468
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.52,
+          "geometryHeightRatioSafe": 0.544,
+          "combinedHeightRatioCanvas": 0.554,
+          "combinedHeightRatioSafe": 0.58,
+          "geometryWidthRatioSafe": 0.305,
+          "combinedWidthRatioSafe": 0.322,
+          "topMarginPx": 140.8,
+          "bottomMarginPx": 184.1,
+          "leftMarginPx": 393.9,
+          "rightMarginSafePx": 340.9,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "titleText": "1. Hình chóp tam giác S.ABC",
+        "guidanceStepText": "Đã dựng xong (bước 3/3): Hình chóp S.ABC",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "selectedBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1060,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 402.9,
+          "y": 166,
+          "w": 323.2,
+          "h": 378.9,
+          "maxX": 726.1,
+          "maxY": 544.9
+        },
+        "labelBounds": {
+          "x": 393.9,
+          "y": 140.8,
+          "w": 341.2,
+          "h": 396.9,
+          "maxX": 735.1,
+          "maxY": 537.7
+        },
+        "combinedBounds": {
+          "x": 393.9,
+          "y": 140.8,
+          "w": 341.2,
+          "h": 404.1,
+          "maxX": 735.1,
+          "maxY": 544.9
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 468
+          },
+          {
+            "selector": ".geo3d-soi",
+            "x": 15,
+            "y": 89,
+            "w": 304,
+            "h": 284.2
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 468
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.52,
+          "geometryHeightRatioSafe": 0.544,
+          "combinedHeightRatioCanvas": 0.554,
+          "combinedHeightRatioSafe": 0.58,
+          "geometryWidthRatioSafe": 0.305,
+          "combinedWidthRatioSafe": 0.322,
+          "topMarginPx": 140.8,
+          "bottomMarginPx": 184.1,
+          "leftMarginPx": 393.9,
+          "rightMarginSafePx": 340.9,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "titleText": "1. Hình chóp tam giác S.ABC",
+        "guidanceStepText": "Đã dựng xong (bước 3/3): Hình chóp S.ABC",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "orbitBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 509.9,
+          "y": 295.6,
+          "w": 244.9,
+          "h": 337.8,
+          "maxX": 754.9,
+          "maxY": 633.3
+        },
+        "labelBounds": {
+          "x": 501.4,
+          "y": 270.4,
+          "w": 262.4,
+          "h": 355.8,
+          "maxX": 763.9,
+          "maxY": 626.1
+        },
+        "combinedBounds": {
+          "x": 501.4,
+          "y": 270.4,
+          "w": 262.4,
+          "h": 363,
+          "maxX": 763.9,
+          "maxY": 633.3
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.463,
+          "geometryHeightRatioSafe": 0.485,
+          "combinedHeightRatioCanvas": 0.498,
+          "combinedHeightRatioSafe": 0.521,
+          "geometryWidthRatioSafe": 0.176,
+          "combinedWidthRatioSafe": 0.189,
+          "topMarginPx": 270.4,
+          "bottomMarginPx": 95.7,
+          "leftMarginPx": 501.4,
+          "rightMarginSafePx": 643.1,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "titleText": "1. Hình chóp tam giác S.ABC",
+        "guidanceStepText": "Đã dựng xong (bước 3/3): Hình chóp S.ABC",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "xrayBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 541.2,
+          "y": 151.4,
+          "w": 340.1,
+          "h": 407.9,
+          "maxX": 881.4,
+          "maxY": 559.3
+        },
+        "labelBounds": {
+          "x": 532.2,
+          "y": 126.2,
+          "w": 358.1,
+          "h": 425.9,
+          "maxX": 890.4,
+          "maxY": 552.1
+        },
+        "combinedBounds": {
+          "x": 532.2,
+          "y": 126.2,
+          "w": 358.1,
+          "h": 433.1,
+          "maxX": 890.4,
+          "maxY": 559.3
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.56,
+          "geometryHeightRatioSafe": 0.585,
+          "combinedHeightRatioCanvas": 0.594,
+          "combinedHeightRatioSafe": 0.621,
+          "geometryWidthRatioSafe": 0.245,
+          "combinedWidthRatioSafe": 0.257,
+          "topMarginPx": 126.2,
+          "bottomMarginPx": 169.7,
+          "leftMarginPx": 532.2,
+          "rightMarginSafePx": 516.6,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "titleText": "1. Hình chóp tam giác S.ABC",
+        "guidanceStepText": "Đã dựng xong (bước 3/3): Hình chóp S.ABC",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      }
+    },
+    {
+      "id": "family05_prism",
+      "defaultCamera": [
+        8.802667478195046,
+        6.131078544944095,
+        7.821075028142057
+      ],
+      "orbitCamera": [
+        6.340312111534804,
+        -2.8191692278125,
+        10.07363315252601
+      ],
+      "resetCamera": [
+        8.802667478195046,
+        6.131078544944095,
+        7.821075028142057
+      ],
+      "entryBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 487.9,
+          "y": 151.9,
+          "w": 447.2,
+          "h": 407.9,
+          "maxX": 935.1,
+          "maxY": 559.8
+        },
+        "labelBounds": {
+          "x": 479.4,
+          "y": 126.7,
+          "w": 464.2,
+          "h": 425.9,
+          "maxX": 943.6,
+          "maxY": 552.6
+        },
+        "combinedBounds": {
+          "x": 479.4,
+          "y": 126.7,
+          "w": 464.2,
+          "h": 433.1,
+          "maxX": 943.6,
+          "maxY": 559.8
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.56,
+          "geometryHeightRatioSafe": 0.585,
+          "combinedHeightRatioCanvas": 0.594,
+          "combinedHeightRatioSafe": 0.621,
+          "geometryWidthRatioSafe": 0.321,
+          "combinedWidthRatioSafe": 0.334,
+          "topMarginPx": 126.7,
+          "bottomMarginPx": 169.2,
+          "leftMarginPx": 479.4,
+          "rightMarginSafePx": 463.4,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ],
+        "titleText": "5. Hình lăng trụ đứng ABC.DEF",
+        "guidanceStepText": "Đang dựng (bước 1/3): Dữ kiện đề cho: AB = 3, AC = 4, AD = 5.",
+        "guidanceHintText": "Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hình"
+      },
+      "completeBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 487.9,
+          "y": 151.9,
+          "w": 447.2,
+          "h": 407.9,
+          "maxX": 935.1,
+          "maxY": 559.8
+        },
+        "labelBounds": {
+          "x": 479.4,
+          "y": 126.7,
+          "w": 464.2,
+          "h": 425.9,
+          "maxX": 943.6,
+          "maxY": 552.6
+        },
+        "combinedBounds": {
+          "x": 479.4,
+          "y": 126.7,
+          "w": 464.2,
+          "h": 433.1,
+          "maxX": 943.6,
+          "maxY": 559.8
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.56,
+          "geometryHeightRatioSafe": 0.585,
+          "combinedHeightRatioCanvas": 0.594,
+          "combinedHeightRatioSafe": 0.621,
+          "geometryWidthRatioSafe": 0.321,
+          "combinedWidthRatioSafe": 0.334,
+          "topMarginPx": 126.7,
+          "bottomMarginPx": 169.2,
+          "leftMarginPx": 479.4,
+          "rightMarginSafePx": 463.4,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ],
+        "titleText": "5. Hình lăng trụ đứng ABC.DEF",
+        "guidanceStepText": "Đã dựng xong (bước 3/3): Lăng trụ đứng ABC.DEF",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "analysisBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1060,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 310.8,
+          "y": 166.4,
+          "w": 418.7,
+          "h": 378.8,
+          "maxX": 729.5,
+          "maxY": 545.3
+        },
+        "labelBounds": {
+          "x": 302.3,
+          "y": 141.2,
+          "w": 435.7,
+          "h": 396.8,
+          "maxX": 738,
+          "maxY": 538.1
+        },
+        "combinedBounds": {
+          "x": 302.3,
+          "y": 141.2,
+          "w": 435.7,
+          "h": 404,
+          "maxX": 738,
+          "maxY": 545.3
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 365.1
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 365.1
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.52,
+          "geometryHeightRatioSafe": 0.543,
+          "combinedHeightRatioCanvas": 0.554,
+          "combinedHeightRatioSafe": 0.58,
+          "geometryWidthRatioSafe": 0.395,
+          "combinedWidthRatioSafe": 0.411,
+          "topMarginPx": 141.2,
+          "bottomMarginPx": 183.7,
+          "leftMarginPx": 302.3,
+          "rightMarginSafePx": 338,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ],
+        "titleText": "5. Hình lăng trụ đứng ABC.DEF",
+        "guidanceStepText": "Đã dựng xong (bước 3/3): Lăng trụ đứng ABC.DEF",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "selectedBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1060,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 310.8,
+          "y": 166.4,
+          "w": 418.7,
+          "h": 378.8,
+          "maxX": 729.5,
+          "maxY": 545.3
+        },
+        "labelBounds": {
+          "x": 302.3,
+          "y": 141.2,
+          "w": 435.7,
+          "h": 396.8,
+          "maxX": 738,
+          "maxY": 538.1
+        },
+        "combinedBounds": {
+          "x": 302.3,
+          "y": 141.2,
+          "w": 435.7,
+          "h": 404,
+          "maxX": 738,
+          "maxY": 545.3
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 365.1
+          },
+          {
+            "selector": ".geo3d-soi",
+            "x": 1104,
+            "y": 388.1,
+            "w": 304,
+            "h": 284.2
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 365.1
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.52,
+          "geometryHeightRatioSafe": 0.543,
+          "combinedHeightRatioCanvas": 0.554,
+          "combinedHeightRatioSafe": 0.58,
+          "geometryWidthRatioSafe": 0.395,
+          "combinedWidthRatioSafe": 0.411,
+          "topMarginPx": 141.2,
+          "bottomMarginPx": 183.7,
+          "leftMarginPx": 302.3,
+          "rightMarginSafePx": 338,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ],
+        "titleText": "5. Hình lăng trụ đứng ABC.DEF",
+        "guidanceStepText": "Đã dựng xong (bước 3/3): Lăng trụ đứng ABC.DEF",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "orbitBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 495.2,
+          "y": 110.8,
+          "w": 267.3,
+          "h": 537.3,
+          "maxX": 762.5,
+          "maxY": 648.1
+        },
+        "labelBounds": {
+          "x": 485.7,
+          "y": 85.6,
+          "w": 285.3,
+          "h": 555.3,
+          "maxX": 771,
+          "maxY": 640.9
+        },
+        "combinedBounds": {
+          "x": 485.7,
+          "y": 85.6,
+          "w": 285.3,
+          "h": 562.5,
+          "maxX": 771,
+          "maxY": 648.1
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.737,
+          "geometryHeightRatioSafe": 0.771,
+          "combinedHeightRatioCanvas": 0.772,
+          "combinedHeightRatioSafe": 0.807,
+          "geometryWidthRatioSafe": 0.192,
+          "combinedWidthRatioSafe": 0.205,
+          "topMarginPx": 85.6,
+          "bottomMarginPx": 80.9,
+          "leftMarginPx": 485.7,
+          "rightMarginSafePx": 636,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ],
+        "titleText": "5. Hình lăng trụ đứng ABC.DEF",
+        "guidanceStepText": "Đã dựng xong (bước 3/3): Lăng trụ đứng ABC.DEF",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "xrayBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 487.9,
+          "y": 151.9,
+          "w": 447.2,
+          "h": 407.9,
+          "maxX": 935.1,
+          "maxY": 559.8
+        },
+        "labelBounds": {
+          "x": 479.4,
+          "y": 126.7,
+          "w": 464.2,
+          "h": 425.9,
+          "maxX": 943.6,
+          "maxY": 552.6
+        },
+        "combinedBounds": {
+          "x": 479.4,
+          "y": 126.7,
+          "w": 464.2,
+          "h": 433.1,
+          "maxX": 943.6,
+          "maxY": 559.8
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.56,
+          "geometryHeightRatioSafe": 0.585,
+          "combinedHeightRatioCanvas": 0.594,
+          "combinedHeightRatioSafe": 0.621,
+          "geometryWidthRatioSafe": 0.321,
+          "combinedWidthRatioSafe": 0.334,
+          "topMarginPx": 126.7,
+          "bottomMarginPx": 169.2,
+          "leftMarginPx": 479.4,
+          "rightMarginSafePx": 463.4,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ],
+        "titleText": "5. Hình lăng trụ đứng ABC.DEF",
+        "guidanceStepText": "Đã dựng xong (bước 3/3): Lăng trụ đứng ABC.DEF",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      }
+    },
+    {
+      "id": "family07_multi_solid_composition",
+      "defaultCamera": [
+        8.355079549932011,
+        7.156899439649095,
+        8.993819021600329
+      ],
+      "orbitCamera": [
+        6.296302370614468,
+        -4.200027611447529,
+        11.85834297983106
+      ],
+      "resetCamera": [
+        8.355079549932011,
+        7.156899439649095,
+        8.993819021600329
+      ],
+      "entryBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 625.5,
+          "y": 158.3,
+          "w": 172,
+          "h": 394.2,
+          "maxX": 797.5,
+          "maxY": 552.5
+        },
+        "labelBounds": {
+          "x": 616.5,
+          "y": 133.1,
+          "w": 190,
+          "h": 412.2,
+          "maxX": 806.5,
+          "maxY": 545.3
+        },
+        "combinedBounds": {
+          "x": 616.5,
+          "y": 133.1,
+          "w": 190,
+          "h": 419.4,
+          "maxX": 806.5,
+          "maxY": 552.5
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.541,
+          "geometryHeightRatioSafe": 0.566,
+          "combinedHeightRatioCanvas": 0.575,
+          "combinedHeightRatioSafe": 0.602,
+          "geometryWidthRatioSafe": 0.124,
+          "combinedWidthRatioSafe": 0.137,
+          "topMarginPx": 133.1,
+          "bottomMarginPx": 176.5,
+          "leftMarginPx": 616.5,
+          "rightMarginSafePx": 600.5,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "D1",
+          "S"
+        ],
+        "titleText": "7. Tổ hợp đa khối (Hai hình chóp S.ABC và D.ABC chung đáy ABC)",
+        "guidanceStepText": "Đang dựng (bước 1/7): Đặt các điểm đề cho vào không gian.",
+        "guidanceHintText": "Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hình"
+      },
+      "completeBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 625.5,
+          "y": 158.3,
+          "w": 172,
+          "h": 394.2,
+          "maxX": 797.5,
+          "maxY": 552.5
+        },
+        "labelBounds": {
+          "x": 616.5,
+          "y": 133.1,
+          "w": 190,
+          "h": 412.2,
+          "maxX": 806.5,
+          "maxY": 545.3
+        },
+        "combinedBounds": {
+          "x": 616.5,
+          "y": 133.1,
+          "w": 190,
+          "h": 419.4,
+          "maxX": 806.5,
+          "maxY": 552.5
+        },
+        "sectionBounds": {
+          "x": 625.5,
+          "y": 492.1,
+          "w": 172,
+          "h": 60.5,
+          "maxX": 797.5,
+          "maxY": 552.5
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.541,
+          "geometryHeightRatioSafe": 0.566,
+          "combinedHeightRatioCanvas": 0.575,
+          "combinedHeightRatioSafe": 0.602,
+          "geometryWidthRatioSafe": 0.124,
+          "combinedWidthRatioSafe": 0.137,
+          "topMarginPx": 133.1,
+          "bottomMarginPx": 176.5,
+          "leftMarginPx": 616.5,
+          "rightMarginSafePx": 600.5,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "D1",
+          "S",
+          "D"
+        ],
+        "titleText": "7. Tổ hợp đa khối (Hai hình chóp S.ABC và D.ABC chung đáy ABC)",
+        "guidanceStepText": "Đã dựng xong (bước 7/7): Dựng D là trung điểm của đoạn AS.",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "analysisBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1060,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 477.3,
+          "y": 165.6,
+          "w": 168.5,
+          "h": 379.7,
+          "maxX": 645.9,
+          "maxY": 545.3
+        },
+        "labelBounds": {
+          "x": 468.3,
+          "y": 140.4,
+          "w": 186.5,
+          "h": 397.7,
+          "maxX": 654.9,
+          "maxY": 538.1
+        },
+        "combinedBounds": {
+          "x": 468.3,
+          "y": 140.4,
+          "w": 186.5,
+          "h": 404.9,
+          "maxX": 654.9,
+          "maxY": 545.3
+        },
+        "sectionBounds": {
+          "x": 477.3,
+          "y": 487.4,
+          "w": 168.5,
+          "h": 57.9,
+          "maxX": 645.9,
+          "maxY": 545.3
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 468
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 468
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.521,
+          "geometryHeightRatioSafe": 0.545,
+          "combinedHeightRatioCanvas": 0.555,
+          "combinedHeightRatioSafe": 0.581,
+          "geometryWidthRatioSafe": 0.159,
+          "combinedWidthRatioSafe": 0.176,
+          "topMarginPx": 140.4,
+          "bottomMarginPx": 183.7,
+          "leftMarginPx": 468.3,
+          "rightMarginSafePx": 421.1,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "D1",
+          "S",
+          "D"
+        ],
+        "titleText": "7. Tổ hợp đa khối (Hai hình chóp S.ABC và D.ABC chung đáy ABC)",
+        "guidanceStepText": "Đã dựng xong (bước 7/7): Dựng D là trung điểm của đoạn AS.",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "selectedBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1060,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 477.3,
+          "y": 165.6,
+          "w": 168.5,
+          "h": 379.7,
+          "maxX": 645.9,
+          "maxY": 545.3
+        },
+        "labelBounds": {
+          "x": 468.3,
+          "y": 140.4,
+          "w": 186.5,
+          "h": 397.7,
+          "maxX": 654.9,
+          "maxY": 538.1
+        },
+        "combinedBounds": {
+          "x": 468.3,
+          "y": 140.4,
+          "w": 186.5,
+          "h": 404.9,
+          "maxX": 654.9,
+          "maxY": 545.3
+        },
+        "sectionBounds": {
+          "x": 477.3,
+          "y": 487.4,
+          "w": 168.5,
+          "h": 57.9,
+          "maxX": 645.9,
+          "maxY": 545.3
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 468
+          },
+          {
+            "selector": ".geo3d-soi",
+            "x": 15,
+            "y": 89,
+            "w": 304,
+            "h": 262.7
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 468
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.521,
+          "geometryHeightRatioSafe": 0.545,
+          "combinedHeightRatioCanvas": 0.555,
+          "combinedHeightRatioSafe": 0.581,
+          "geometryWidthRatioSafe": 0.159,
+          "combinedWidthRatioSafe": 0.176,
+          "topMarginPx": 140.4,
+          "bottomMarginPx": 183.7,
+          "leftMarginPx": 468.3,
+          "rightMarginSafePx": 421.1,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "D1",
+          "S",
+          "D"
+        ],
+        "titleText": "7. Tổ hợp đa khối (Hai hình chóp S.ABC và D.ABC chung đáy ABC)",
+        "guidanceStepText": "Đã dựng xong (bước 7/7): Dựng D là trung điểm của đoạn AS.",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "orbitBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 609.6,
+          "y": 215.6,
+          "w": 115.1,
+          "h": 347.4,
+          "maxX": 724.6,
+          "maxY": 563
+        },
+        "labelBounds": {
+          "x": 601.1,
+          "y": 190.4,
+          "w": 132.6,
+          "h": 365.4,
+          "maxX": 733.6,
+          "maxY": 555.8
+        },
+        "combinedBounds": {
+          "x": 601.1,
+          "y": 190.4,
+          "w": 132.6,
+          "h": 372.6,
+          "maxX": 733.6,
+          "maxY": 563
+        },
+        "sectionBounds": {
+          "x": 642.9,
+          "y": 425.1,
+          "w": 81.8,
+          "h": 137.9,
+          "maxX": 724.6,
+          "maxY": 563
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.477,
+          "geometryHeightRatioSafe": 0.498,
+          "combinedHeightRatioCanvas": 0.511,
+          "combinedHeightRatioSafe": 0.535,
+          "geometryWidthRatioSafe": 0.083,
+          "combinedWidthRatioSafe": 0.095,
+          "topMarginPx": 190.4,
+          "bottomMarginPx": 166,
+          "leftMarginPx": 601.1,
+          "rightMarginSafePx": 673.4,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "D1",
+          "S",
+          "D"
+        ],
+        "titleText": "7. Tổ hợp đa khối (Hai hình chóp S.ABC và D.ABC chung đáy ABC)",
+        "guidanceStepText": "Đã dựng xong (bước 7/7): Dựng D là trung điểm của đoạn AS.",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "xrayBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 625.5,
+          "y": 158.3,
+          "w": 172,
+          "h": 394.2,
+          "maxX": 797.5,
+          "maxY": 552.5
+        },
+        "labelBounds": {
+          "x": 616.5,
+          "y": 133.1,
+          "w": 190,
+          "h": 412.2,
+          "maxX": 806.5,
+          "maxY": 545.3
+        },
+        "combinedBounds": {
+          "x": 616.5,
+          "y": 133.1,
+          "w": 190,
+          "h": 419.4,
+          "maxX": 806.5,
+          "maxY": 552.5
+        },
+        "sectionBounds": {
+          "x": 625.5,
+          "y": 492.1,
+          "w": 172,
+          "h": 60.5,
+          "maxX": 797.5,
+          "maxY": 552.5
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.541,
+          "geometryHeightRatioSafe": 0.566,
+          "combinedHeightRatioCanvas": 0.575,
+          "combinedHeightRatioSafe": 0.602,
+          "geometryWidthRatioSafe": 0.124,
+          "combinedWidthRatioSafe": 0.137,
+          "topMarginPx": 133.1,
+          "bottomMarginPx": 176.5,
+          "leftMarginPx": 616.5,
+          "rightMarginSafePx": 600.5,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "D1",
+          "S",
+          "D"
+        ],
+        "titleText": "7. Tổ hợp đa khối (Hai hình chóp S.ABC và D.ABC chung đáy ABC)",
+        "guidanceStepText": "Đã dựng xong (bước 7/7): Dựng D là trung điểm của đoạn AS.",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      }
+    },
+    {
+      "id": "family09_cylinder_and_sections",
+      "defaultCamera": [
+        6.750073212403299,
+        4.144514930801638,
+        6.161735716558322
+      ],
+      "orbitCamera": [
+        4.964678727605826,
+        -3.7325531878705087,
+        8.10591748253043
+      ],
+      "resetCamera": [
+        6.750073212403299,
+        4.144514930801638,
+        6.161735716558322
+      ],
+      "entryBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 599.4,
+          "y": 165.9,
+          "w": 201.6,
+          "h": 368.4,
+          "maxX": 801,
+          "maxY": 534.3
+        },
+        "labelBounds": {
+          "x": 588.4,
+          "y": 140.7,
+          "w": 223.1,
+          "h": 386.4,
+          "maxX": 811.5,
+          "maxY": 527.1
+        },
+        "combinedBounds": {
+          "x": 588.4,
+          "y": 140.7,
+          "w": 223.1,
+          "h": 393.6,
+          "maxX": 811.5,
+          "maxY": 534.3
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.505,
+          "geometryHeightRatioSafe": 0.529,
+          "combinedHeightRatioCanvas": 0.54,
+          "combinedHeightRatioSafe": 0.565,
+          "geometryWidthRatioSafe": 0.145,
+          "combinedWidthRatioSafe": 0.16,
+          "topMarginPx": 140.7,
+          "bottomMarginPx": 194.7,
+          "leftMarginPx": 588.4,
+          "rightMarginSafePx": 595.5,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "O′",
+          "A",
+          "A′",
+          "B′"
+        ],
+        "titleText": "9. Hình trụ tròn xoay & Thiết diện qua trục / song song đáy",
+        "guidanceStepText": "Đang dựng (bước 1/12): Dữ kiện đề cho: Đại lượng đo = 2, Đại lượng đo = 3.",
+        "guidanceHintText": "Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hình"
+      },
+      "completeBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 527.3,
+          "y": 158.3,
+          "w": 380.8,
+          "h": 396.5,
+          "maxX": 908,
+          "maxY": 554.8
+        },
+        "labelBounds": {
+          "x": 588.4,
+          "y": 140.7,
+          "w": 223.1,
+          "h": 386.4,
+          "maxX": 811.5,
+          "maxY": 527.1
+        },
+        "combinedBounds": {
+          "x": 527.3,
+          "y": 140.7,
+          "w": 380.8,
+          "h": 414.1,
+          "maxX": 908,
+          "maxY": 554.8
+        },
+        "sectionBounds": {
+          "x": 549.1,
+          "y": 165.9,
+          "w": 335.7,
+          "h": 368.4,
+          "maxX": 884.8,
+          "maxY": 534.3
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.544,
+          "geometryHeightRatioSafe": 0.569,
+          "combinedHeightRatioCanvas": 0.568,
+          "combinedHeightRatioSafe": 0.594,
+          "geometryWidthRatioSafe": 0.274,
+          "combinedWidthRatioSafe": 0.274,
+          "topMarginPx": 140.7,
+          "bottomMarginPx": 174.2,
+          "leftMarginPx": 527.3,
+          "rightMarginSafePx": 499,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "O′",
+          "A",
+          "B",
+          "A′",
+          "B′"
+        ],
+        "titleText": "9. Hình trụ tròn xoay & Thiết diện qua trục / song song đáy",
+        "guidanceStepText": "Đã dựng xong (bước 12/12): Thiết diện qua trục hình trụ",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "analysisBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1060,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 340,
+          "y": 165.5,
+          "w": 371.8,
+          "h": 381.8,
+          "maxX": 711.8,
+          "maxY": 547.4
+        },
+        "labelBounds": {
+          "x": 373.4,
+          "y": 147.9,
+          "w": 285,
+          "h": 372.8,
+          "maxX": 658.4,
+          "maxY": 520.7
+        },
+        "combinedBounds": {
+          "x": 340,
+          "y": 147.9,
+          "w": 371.8,
+          "h": 399.5,
+          "maxX": 711.8,
+          "maxY": 547.4
+        },
+        "sectionBounds": {
+          "x": 383.5,
+          "y": 173.1,
+          "w": 328.3,
+          "h": 354.8,
+          "maxX": 711.7,
+          "maxY": 527.9
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 468
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 468
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.524,
+          "geometryHeightRatioSafe": 0.548,
+          "combinedHeightRatioCanvas": 0.548,
+          "combinedHeightRatioSafe": 0.573,
+          "geometryWidthRatioSafe": 0.351,
+          "combinedWidthRatioSafe": 0.351,
+          "topMarginPx": 147.9,
+          "bottomMarginPx": 181.6,
+          "leftMarginPx": 340,
+          "rightMarginSafePx": 364.2,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "O′",
+          "A",
+          "B",
+          "A′",
+          "B′"
+        ],
+        "titleText": "9. Hình trụ tròn xoay & Thiết diện qua trục / song song đáy",
+        "guidanceStepText": "Đã dựng xong (bước 12/12): Thiết diện qua trục hình trụ",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "selectedBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1060,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 340,
+          "y": 165.5,
+          "w": 371.8,
+          "h": 381.8,
+          "maxX": 711.8,
+          "maxY": 547.4
+        },
+        "labelBounds": {
+          "x": 373.4,
+          "y": 147.9,
+          "w": 285,
+          "h": 372.8,
+          "maxX": 658.4,
+          "maxY": 520.7
+        },
+        "combinedBounds": {
+          "x": 340,
+          "y": 147.9,
+          "w": 371.8,
+          "h": 399.5,
+          "maxX": 711.8,
+          "maxY": 547.4
+        },
+        "sectionBounds": {
+          "x": 383.5,
+          "y": 173.1,
+          "w": 328.3,
+          "h": 354.8,
+          "maxX": 711.7,
+          "maxY": 527.9
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 468
+          },
+          {
+            "selector": ".geo3d-soi",
+            "x": 15,
+            "y": 50,
+            "w": 304,
+            "h": 299.7
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 468
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.524,
+          "geometryHeightRatioSafe": 0.548,
+          "combinedHeightRatioCanvas": 0.548,
+          "combinedHeightRatioSafe": 0.573,
+          "geometryWidthRatioSafe": 0.351,
+          "combinedWidthRatioSafe": 0.351,
+          "topMarginPx": 147.9,
+          "bottomMarginPx": 181.6,
+          "leftMarginPx": 340,
+          "rightMarginSafePx": 364.2,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "O′",
+          "A",
+          "B",
+          "A′",
+          "B′"
+        ],
+        "titleText": "9. Hình trụ tròn xoay & Thiết diện qua trục / song song đáy",
+        "guidanceStepText": "Đã dựng xong (bước 12/12): Thiết diện qua trục hình trụ",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "orbitBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 497.8,
+          "y": 132,
+          "w": 399.2,
+          "h": 428.8,
+          "maxX": 897,
+          "maxY": 560.8
+        },
+        "labelBounds": {
+          "x": 581.2,
+          "y": 127.3,
+          "w": 265.7,
+          "h": 392.9,
+          "maxX": 847,
+          "maxY": 520.3
+        },
+        "combinedBounds": {
+          "x": 497.8,
+          "y": 127.3,
+          "w": 399.2,
+          "h": 433.4,
+          "maxX": 897,
+          "maxY": 560.8
+        },
+        "sectionBounds": {
+          "x": 532.4,
+          "y": 152.5,
+          "w": 334.7,
+          "h": 374.9,
+          "maxX": 867.1,
+          "maxY": 527.5
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.588,
+          "geometryHeightRatioSafe": 0.615,
+          "combinedHeightRatioCanvas": 0.595,
+          "combinedHeightRatioSafe": 0.622,
+          "geometryWidthRatioSafe": 0.287,
+          "combinedWidthRatioSafe": 0.287,
+          "topMarginPx": 127.3,
+          "bottomMarginPx": 168.2,
+          "leftMarginPx": 497.8,
+          "rightMarginSafePx": 510,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "O′",
+          "A",
+          "B",
+          "A′",
+          "B′"
+        ],
+        "titleText": "9. Hình trụ tròn xoay & Thiết diện qua trục / song song đáy",
+        "guidanceStepText": "Đã dựng xong (bước 12/12): Thiết diện qua trục hình trụ",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "xrayBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 527.3,
+          "y": 158.3,
+          "w": 380.8,
+          "h": 396.5,
+          "maxX": 908,
+          "maxY": 554.8
+        },
+        "labelBounds": {
+          "x": 588.4,
+          "y": 140.7,
+          "w": 223.1,
+          "h": 386.4,
+          "maxX": 811.5,
+          "maxY": 527.1
+        },
+        "combinedBounds": {
+          "x": 527.3,
+          "y": 140.7,
+          "w": 380.8,
+          "h": 414.1,
+          "maxX": 908,
+          "maxY": 554.8
+        },
+        "sectionBounds": {
+          "x": 549.1,
+          "y": 165.9,
+          "w": 335.7,
+          "h": 368.4,
+          "maxX": 884.8,
+          "maxY": 534.3
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.544,
+          "geometryHeightRatioSafe": 0.569,
+          "combinedHeightRatioCanvas": 0.568,
+          "combinedHeightRatioSafe": 0.594,
+          "geometryWidthRatioSafe": 0.274,
+          "combinedWidthRatioSafe": 0.274,
+          "topMarginPx": 140.7,
+          "bottomMarginPx": 174.2,
+          "leftMarginPx": 527.3,
+          "rightMarginSafePx": 499,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "O′",
+          "A",
+          "B",
+          "A′",
+          "B′"
+        ],
+        "titleText": "9. Hình trụ tròn xoay & Thiết diện qua trục / song song đáy",
+        "guidanceStepText": "Đã dựng xong (bước 12/12): Thiết diện qua trục hình trụ",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      }
+    },
+    {
+      "id": "family10_cone_frustum_cut",
+      "defaultCamera": [
+        8.28622352225286,
+        5.0658642751353575,
+        7.059186076658948
+      ],
+      "orbitCamera": [
+        5.869838008155264,
+        -4.503577441914774,
+        9.448781201394244
+      ],
+      "resetCamera": [
+        8.28622352225286,
+        5.0658642751353575,
+        7.059186076658948
+      ],
+      "entryBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 592.8,
+          "y": 155.5,
+          "w": 212,
+          "h": 376.7,
+          "maxX": 804.8,
+          "maxY": 532.2
+        },
+        "labelBounds": {
+          "x": 583.3,
+          "y": 130.3,
+          "w": 146.6,
+          "h": 394.7,
+          "maxX": 729.9,
+          "maxY": 525
+        },
+        "combinedBounds": {
+          "x": 583.3,
+          "y": 130.3,
+          "w": 221.5,
+          "h": 401.9,
+          "maxX": 804.8,
+          "maxY": 532.2
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.517,
+          "geometryHeightRatioSafe": 0.54,
+          "combinedHeightRatioCanvas": 0.551,
+          "combinedHeightRatioSafe": 0.577,
+          "geometryWidthRatioSafe": 0.152,
+          "combinedWidthRatioSafe": 0.159,
+          "topMarginPx": 130.3,
+          "bottomMarginPx": 196.8,
+          "leftMarginPx": 583.3,
+          "rightMarginSafePx": 602.2,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "S",
+          "A",
+          "O′"
+        ],
+        "titleText": "10. Hình nón tròn xoay & Thiết diện song song đáy / qua trục",
+        "guidanceStepText": "Đang dựng (bước 1/12): Dữ kiện đề cho: Đại lượng đo = 3, Đại lượng đo = 4, Đại lượng đo = 3/2.",
+        "guidanceHintText": "Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hình"
+      },
+      "completeBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 517.9,
+          "y": 155.5,
+          "w": 400.4,
+          "h": 403.7,
+          "maxX": 918.2,
+          "maxY": 559.2
+        },
+        "labelBounds": {
+          "x": 583.3,
+          "y": 130.3,
+          "w": 230.5,
+          "h": 394.7,
+          "maxX": 813.8,
+          "maxY": 525
+        },
+        "combinedBounds": {
+          "x": 517.9,
+          "y": 130.3,
+          "w": 400.4,
+          "h": 428.9,
+          "maxX": 918.2,
+          "maxY": 559.2
+        },
+        "sectionBounds": {
+          "x": 592.8,
+          "y": 155.5,
+          "w": 233.5,
+          "h": 376.7,
+          "maxX": 826.2,
+          "maxY": 532.2
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.554,
+          "geometryHeightRatioSafe": 0.579,
+          "combinedHeightRatioCanvas": 0.588,
+          "combinedHeightRatioSafe": 0.615,
+          "geometryWidthRatioSafe": 0.288,
+          "combinedWidthRatioSafe": 0.288,
+          "topMarginPx": 130.3,
+          "bottomMarginPx": 169.8,
+          "leftMarginPx": 517.9,
+          "rightMarginSafePx": 488.8,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "S",
+          "A",
+          "B",
+          "O′"
+        ],
+        "titleText": "10. Hình nón tròn xoay & Thiết diện song song đáy / qua trục",
+        "guidanceStepText": "Đã dựng xong (bước 12/12): Hình nón nhỏ đỉnh S cắt bởi (α)",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "analysisBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1060,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 363.4,
+          "y": 166.2,
+          "w": 387,
+          "h": 381.8,
+          "maxX": 750.4,
+          "maxY": 548
+        },
+        "labelBounds": {
+          "x": 403.5,
+          "y": 141,
+          "w": 275.1,
+          "h": 374.6,
+          "maxX": 678.5,
+          "maxY": 515.6
+        },
+        "combinedBounds": {
+          "x": 363.4,
+          "y": 141,
+          "w": 387,
+          "h": 407,
+          "maxX": 750.4,
+          "maxY": 548
+        },
+        "sectionBounds": {
+          "x": 413,
+          "y": 166.2,
+          "w": 256.6,
+          "h": 356.6,
+          "maxX": 669.5,
+          "maxY": 522.8
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 468
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 468
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.524,
+          "geometryHeightRatioSafe": 0.548,
+          "combinedHeightRatioCanvas": 0.558,
+          "combinedHeightRatioSafe": 0.584,
+          "geometryWidthRatioSafe": 0.365,
+          "combinedWidthRatioSafe": 0.365,
+          "topMarginPx": 141,
+          "bottomMarginPx": 181,
+          "leftMarginPx": 363.4,
+          "rightMarginSafePx": 325.6,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "S",
+          "A",
+          "B",
+          "O′"
+        ],
+        "titleText": "10. Hình nón tròn xoay & Thiết diện song song đáy / qua trục",
+        "guidanceStepText": "Đã dựng xong (bước 12/12): Hình nón nhỏ đỉnh S cắt bởi (α)",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "selectedBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1060,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 363.4,
+          "y": 166.2,
+          "w": 387,
+          "h": 381.8,
+          "maxX": 750.4,
+          "maxY": 548
+        },
+        "labelBounds": {
+          "x": 403.5,
+          "y": 141,
+          "w": 275.1,
+          "h": 374.6,
+          "maxX": 678.5,
+          "maxY": 515.6
+        },
+        "combinedBounds": {
+          "x": 363.4,
+          "y": 141,
+          "w": 387,
+          "h": 407,
+          "maxX": 750.4,
+          "maxY": 548
+        },
+        "sectionBounds": {
+          "x": 413,
+          "y": 166.2,
+          "w": 256.6,
+          "h": 356.6,
+          "maxX": 669.5,
+          "maxY": 522.8
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 468
+          },
+          {
+            "selector": ".geo3d-soi",
+            "x": 15,
+            "y": 50,
+            "w": 304,
+            "h": 280.2
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 468
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.524,
+          "geometryHeightRatioSafe": 0.548,
+          "combinedHeightRatioCanvas": 0.558,
+          "combinedHeightRatioSafe": 0.584,
+          "geometryWidthRatioSafe": 0.365,
+          "combinedWidthRatioSafe": 0.365,
+          "topMarginPx": 141,
+          "bottomMarginPx": 181,
+          "leftMarginPx": 363.4,
+          "rightMarginSafePx": 325.6,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "S",
+          "A",
+          "B",
+          "O′"
+        ],
+        "titleText": "10. Hình nón tròn xoay & Thiết diện song song đáy / qua trục",
+        "guidanceStepText": "Đã dựng xong (bước 12/12): Hình nón nhỏ đỉnh S cắt bởi (α)",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "orbitBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 483.3,
+          "y": 186.3,
+          "w": 396.9,
+          "h": 401,
+          "maxX": 880.2,
+          "maxY": 587.3
+        },
+        "labelBounds": {
+          "x": 569.8,
+          "y": 161.1,
+          "w": 257.1,
+          "h": 373.8,
+          "maxX": 826.9,
+          "maxY": 534.9
+        },
+        "combinedBounds": {
+          "x": 483.3,
+          "y": 161.1,
+          "w": 396.9,
+          "h": 426.2,
+          "maxX": 880.2,
+          "maxY": 587.3
+        },
+        "sectionBounds": {
+          "x": 565.8,
+          "y": 186.3,
+          "w": 251.6,
+          "h": 355.8,
+          "maxX": 817.4,
+          "maxY": 542.1
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.55,
+          "geometryHeightRatioSafe": 0.575,
+          "combinedHeightRatioCanvas": 0.585,
+          "combinedHeightRatioSafe": 0.611,
+          "geometryWidthRatioSafe": 0.285,
+          "combinedWidthRatioSafe": 0.285,
+          "topMarginPx": 161.1,
+          "bottomMarginPx": 141.7,
+          "leftMarginPx": 483.3,
+          "rightMarginSafePx": 526.8,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "S",
+          "A",
+          "B",
+          "O′"
+        ],
+        "titleText": "10. Hình nón tròn xoay & Thiết diện song song đáy / qua trục",
+        "guidanceStepText": "Đã dựng xong (bước 12/12): Hình nón nhỏ đỉnh S cắt bởi (α)",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "xrayBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 517.9,
+          "y": 155.5,
+          "w": 400.4,
+          "h": 403.7,
+          "maxX": 918.2,
+          "maxY": 559.2
+        },
+        "labelBounds": {
+          "x": 583.3,
+          "y": 130.3,
+          "w": 230.5,
+          "h": 394.7,
+          "maxX": 813.8,
+          "maxY": 525
+        },
+        "combinedBounds": {
+          "x": 517.9,
+          "y": 130.3,
+          "w": 400.4,
+          "h": 428.9,
+          "maxX": 918.2,
+          "maxY": 559.2
+        },
+        "sectionBounds": {
+          "x": 592.8,
+          "y": 155.5,
+          "w": 233.5,
+          "h": 376.7,
+          "maxX": 826.2,
+          "maxY": 532.2
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.554,
+          "geometryHeightRatioSafe": 0.579,
+          "combinedHeightRatioCanvas": 0.588,
+          "combinedHeightRatioSafe": 0.615,
+          "geometryWidthRatioSafe": 0.288,
+          "combinedWidthRatioSafe": 0.288,
+          "topMarginPx": 130.3,
+          "bottomMarginPx": 169.8,
+          "leftMarginPx": 517.9,
+          "rightMarginSafePx": 488.8,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "S",
+          "A",
+          "B",
+          "O′"
+        ],
+        "titleText": "10. Hình nón tròn xoay & Thiết diện song song đáy / qua trục",
+        "guidanceStepText": "Đã dựng xong (bước 12/12): Hình nón nhỏ đỉnh S cắt bởi (α)",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      }
+    },
+    {
+      "id": "family11_sphere_plane_cut",
+      "defaultCamera": [
+        13.9394439779141,
+        8.851760900155568,
+        10.159799309173561
+      ],
+      "orbitCamera": [
+        10.171397380232898,
+        -7.77266578929549,
+        14.26296393241146
+      ],
+      "resetCamera": [
+        13.9394439779141,
+        8.851760900155568,
+        10.159799309173561
+      ],
+      "entryBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 706.7,
+          "y": 352.9,
+          "w": 0,
+          "h": 0,
+          "maxX": 706.7,
+          "maxY": 352.9
+        },
+        "labelBounds": {
+          "x": 699.7,
+          "y": 327.7,
+          "w": 14,
+          "h": 18,
+          "maxX": 713.7,
+          "maxY": 345.7
+        },
+        "combinedBounds": {
+          "x": 699.7,
+          "y": 327.7,
+          "w": 14,
+          "h": 25.2,
+          "maxX": 713.7,
+          "maxY": 352.9
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0,
+          "geometryHeightRatioSafe": 0,
+          "combinedHeightRatioCanvas": 0.035,
+          "combinedHeightRatioSafe": 0.036,
+          "geometryWidthRatioSafe": 0,
+          "combinedWidthRatioSafe": 0.01,
+          "topMarginPx": 327.7,
+          "bottomMarginPx": 376.1,
+          "leftMarginPx": 699.7,
+          "rightMarginSafePx": 693.3,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "I"
+        ],
+        "titleText": "11. Mặt cầu & Thiết diện đường tròn cắt bởi mặt phẳng",
+        "guidanceStepText": "Đang dựng (bước 1/4): Dữ kiện đề cho: Đại lượng đo = 5.",
+        "guidanceHintText": "Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hình"
+      },
+      "completeBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 499.9,
+          "y": 144.7,
+          "w": 413.1,
+          "h": 405.2,
+          "maxX": 913,
+          "maxY": 549.8
+        },
+        "labelBounds": {
+          "x": 699.7,
+          "y": 327.7,
+          "w": 14,
+          "h": 18,
+          "maxX": 713.7,
+          "maxY": 345.7
+        },
+        "combinedBounds": {
+          "x": 499.9,
+          "y": 144.7,
+          "w": 413.1,
+          "h": 405.2,
+          "maxX": 913,
+          "maxY": 549.8
+        },
+        "sectionBounds": {
+          "x": 527,
+          "y": 181,
+          "w": 358,
+          "h": 146.9,
+          "maxX": 885.1,
+          "maxY": 327.9
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.556,
+          "geometryHeightRatioSafe": 0.581,
+          "combinedHeightRatioCanvas": 0.556,
+          "combinedHeightRatioSafe": 0.581,
+          "geometryWidthRatioSafe": 0.297,
+          "combinedWidthRatioSafe": 0.297,
+          "topMarginPx": 144.7,
+          "bottomMarginPx": 179.2,
+          "leftMarginPx": 499.9,
+          "rightMarginSafePx": 494,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "I"
+        ],
+        "titleText": "11. Mặt cầu & Thiết diện đường tròn cắt bởi mặt phẳng",
+        "guidanceStepText": "Đã dựng xong (bước 4/4): Đường tròn giao của Mặt cầu (S) tâm I và (α)",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "analysisBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1060,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 329.2,
+          "y": 155.2,
+          "w": 400.6,
+          "h": 383.7,
+          "maxX": 729.8,
+          "maxY": 538.9
+        },
+        "labelBounds": {
+          "x": 530.9,
+          "y": 327.6,
+          "w": 14,
+          "h": 18,
+          "maxX": 544.9,
+          "maxY": 345.6
+        },
+        "combinedBounds": {
+          "x": 329.2,
+          "y": 155.2,
+          "w": 400.6,
+          "h": 383.7,
+          "maxX": 729.8,
+          "maxY": 538.9
+        },
+        "sectionBounds": {
+          "x": 344.4,
+          "y": 188.5,
+          "w": 345.3,
+          "h": 140.8,
+          "maxX": 689.7,
+          "maxY": 329.4
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 442.5
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 442.5
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.526,
+          "geometryHeightRatioSafe": 0.551,
+          "combinedHeightRatioCanvas": 0.526,
+          "combinedHeightRatioSafe": 0.551,
+          "geometryWidthRatioSafe": 0.378,
+          "combinedWidthRatioSafe": 0.378,
+          "topMarginPx": 155.2,
+          "bottomMarginPx": 190.1,
+          "leftMarginPx": 329.2,
+          "rightMarginSafePx": 346.2,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "I"
+        ],
+        "titleText": "11. Mặt cầu & Thiết diện đường tròn cắt bởi mặt phẳng",
+        "guidanceStepText": "Đã dựng xong (bước 4/4): Đường tròn giao của Mặt cầu (S) tâm I và (α)",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "selectedBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1060,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 329.2,
+          "y": 155.2,
+          "w": 400.6,
+          "h": 383.7,
+          "maxX": 729.8,
+          "maxY": 538.9
+        },
+        "labelBounds": {
+          "x": 530.9,
+          "y": 327.6,
+          "w": 14,
+          "h": 18,
+          "maxX": 544.9,
+          "maxY": 345.6
+        },
+        "combinedBounds": {
+          "x": 329.2,
+          "y": 155.2,
+          "w": 400.6,
+          "h": 383.7,
+          "maxX": 729.8,
+          "maxY": 538.9
+        },
+        "sectionBounds": {
+          "x": 344.4,
+          "y": 188.5,
+          "w": 345.3,
+          "h": 140.8,
+          "maxX": 689.7,
+          "maxY": 329.4
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 442.5
+          },
+          {
+            "selector": ".geo3d-soi",
+            "x": 15,
+            "y": 50,
+            "w": 304,
+            "h": 262.7
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 442.5
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.526,
+          "geometryHeightRatioSafe": 0.551,
+          "combinedHeightRatioCanvas": 0.526,
+          "combinedHeightRatioSafe": 0.551,
+          "geometryWidthRatioSafe": 0.378,
+          "combinedWidthRatioSafe": 0.378,
+          "topMarginPx": 155.2,
+          "bottomMarginPx": 190.1,
+          "leftMarginPx": 329.2,
+          "rightMarginSafePx": 346.2,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "I"
+        ],
+        "titleText": "11. Mặt cầu & Thiết diện đường tròn cắt bởi mặt phẳng",
+        "guidanceStepText": "Đã dựng xong (bước 4/4): Đường tròn giao của Mặt cầu (S) tâm I và (α)",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "orbitBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 492.4,
+          "y": 160.9,
+          "w": 418.3,
+          "h": 402.3,
+          "maxX": 910.7,
+          "maxY": 563.2
+        },
+        "labelBounds": {
+          "x": 696.9,
+          "y": 334.5,
+          "w": 14,
+          "h": 18,
+          "maxX": 710.9,
+          "maxY": 352.5
+        },
+        "combinedBounds": {
+          "x": 492.4,
+          "y": 160.9,
+          "w": 418.3,
+          "h": 402.3,
+          "maxX": 910.7,
+          "maxY": 563.2
+        },
+        "sectionBounds": {
+          "x": 515.6,
+          "y": 160.9,
+          "w": 374.1,
+          "h": 251.9,
+          "maxX": 889.7,
+          "maxY": 412.8
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.552,
+          "geometryHeightRatioSafe": 0.577,
+          "combinedHeightRatioCanvas": 0.552,
+          "combinedHeightRatioSafe": 0.577,
+          "geometryWidthRatioSafe": 0.301,
+          "combinedWidthRatioSafe": 0.301,
+          "topMarginPx": 160.9,
+          "bottomMarginPx": 165.8,
+          "leftMarginPx": 492.4,
+          "rightMarginSafePx": 496.3,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "I"
+        ],
+        "titleText": "11. Mặt cầu & Thiết diện đường tròn cắt bởi mặt phẳng",
+        "guidanceStepText": "Đã dựng xong (bước 4/4): Đường tròn giao của Mặt cầu (S) tâm I và (α)",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "xrayBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 499.9,
+          "y": 144.7,
+          "w": 413.1,
+          "h": 405.2,
+          "maxX": 913,
+          "maxY": 549.8
+        },
+        "labelBounds": {
+          "x": 699.7,
+          "y": 327.7,
+          "w": 14,
+          "h": 18,
+          "maxX": 713.7,
+          "maxY": 345.7
+        },
+        "combinedBounds": {
+          "x": 499.9,
+          "y": 144.7,
+          "w": 413.1,
+          "h": 405.2,
+          "maxX": 913,
+          "maxY": 549.8
+        },
+        "sectionBounds": {
+          "x": 527,
+          "y": 181,
+          "w": 358,
+          "h": 146.9,
+          "maxX": 885.1,
+          "maxY": 327.9
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.556,
+          "geometryHeightRatioSafe": 0.581,
+          "combinedHeightRatioCanvas": 0.556,
+          "combinedHeightRatioSafe": 0.581,
+          "geometryWidthRatioSafe": 0.297,
+          "combinedWidthRatioSafe": 0.297,
+          "topMarginPx": 144.7,
+          "bottomMarginPx": 179.2,
+          "leftMarginPx": 499.9,
+          "rightMarginSafePx": 494,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "I"
+        ],
+        "titleText": "11. Mặt cầu & Thiết diện đường tròn cắt bởi mặt phẳng",
+        "guidanceStepText": "Đã dựng xong (bước 4/4): Đường tròn giao của Mặt cầu (S) tâm I và (α)",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      }
+    },
+    {
+      "id": "family12_cylinder_ellipse_section",
+      "defaultCamera": [
+        10.275112327598439,
+        6.3538324262518655,
+        10.476835132984332
+      ],
+      "orbitCamera": [
+        6.389609130681241,
+        -6.557470622185066,
+        13.778870314131622
+      ],
+      "resetCamera": [
+        10.275112327598439,
+        6.3538324262518655,
+        10.476835132984332
+      ],
+      "entryBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 714.4,
+          "y": 196.6,
+          "w": 0.7,
+          "h": 284.4,
+          "maxX": 715.1,
+          "maxY": 481
+        },
+        "labelBounds": {
+          "x": 703.6,
+          "y": 171.4,
+          "w": 23,
+          "h": 302.4,
+          "maxX": 726.6,
+          "maxY": 473.8
+        },
+        "combinedBounds": {
+          "x": 703.6,
+          "y": 171.4,
+          "w": 23,
+          "h": 309.6,
+          "maxX": 726.6,
+          "maxY": 481
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.39,
+          "geometryHeightRatioSafe": 0.408,
+          "combinedHeightRatioCanvas": 0.425,
+          "combinedHeightRatioSafe": 0.444,
+          "geometryWidthRatioSafe": 0.001,
+          "combinedWidthRatioSafe": 0.017,
+          "topMarginPx": 171.4,
+          "bottomMarginPx": 248,
+          "leftMarginPx": 703.6,
+          "rightMarginSafePx": 680.4,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "O′"
+        ],
+        "titleText": "12. Hình trụ & Thiết diện Elip (nghiêng 45°)",
+        "guidanceStepText": "Đang dựng (bước 1/9): Dữ kiện đề cho: Đại lượng đo = 2, Đại lượng đo = 6.",
+        "guidanceHintText": "Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hình"
+      },
+      "completeBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 590.5,
+          "y": 157.7,
+          "w": 249.8,
+          "h": 396.5,
+          "maxX": 840.3,
+          "maxY": 554.3
+        },
+        "labelBounds": {
+          "x": 703.6,
+          "y": 171.4,
+          "w": 23,
+          "h": 302.4,
+          "maxX": 726.6,
+          "maxY": 473.8
+        },
+        "combinedBounds": {
+          "x": 590.5,
+          "y": 157.7,
+          "w": 249.8,
+          "h": 396.5,
+          "maxX": 840.3,
+          "maxY": 554.3
+        },
+        "sectionBounds": {
+          "x": 596.3,
+          "y": 292.5,
+          "w": 227.8,
+          "h": 112.4,
+          "maxX": 824.1,
+          "maxY": 404.8
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.544,
+          "geometryHeightRatioSafe": 0.569,
+          "combinedHeightRatioCanvas": 0.544,
+          "combinedHeightRatioSafe": 0.569,
+          "geometryWidthRatioSafe": 0.18,
+          "combinedWidthRatioSafe": 0.18,
+          "topMarginPx": 157.7,
+          "bottomMarginPx": 174.7,
+          "leftMarginPx": 590.5,
+          "rightMarginSafePx": 566.7,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "O′"
+        ],
+        "titleText": "12. Hình trụ & Thiết diện Elip (nghiêng 45°)",
+        "guidanceStepText": "Đã dựng xong (bước 9/9): Elip giao của Hình trụ tròn xoay OO' tâm O và (P)",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "analysisBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1060,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 399.7,
+          "y": 165,
+          "w": 257.8,
+          "h": 381.9,
+          "maxX": 657.4,
+          "maxY": 546.9
+        },
+        "labelBounds": {
+          "x": 513.6,
+          "y": 178,
+          "w": 58.2,
+          "h": 291.6,
+          "maxX": 571.8,
+          "maxY": 469.6
+        },
+        "combinedBounds": {
+          "x": 399.7,
+          "y": 165,
+          "w": 257.8,
+          "h": 381.9,
+          "maxX": 657.4,
+          "maxY": 546.9
+        },
+        "sectionBounds": {
+          "x": 415.1,
+          "y": 295.1,
+          "w": 240.7,
+          "h": 108,
+          "maxX": 655.8,
+          "maxY": 403.1
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 431.4
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 431.4
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.524,
+          "geometryHeightRatioSafe": 0.548,
+          "combinedHeightRatioCanvas": 0.524,
+          "combinedHeightRatioSafe": 0.548,
+          "geometryWidthRatioSafe": 0.243,
+          "combinedWidthRatioSafe": 0.243,
+          "topMarginPx": 165,
+          "bottomMarginPx": 182.1,
+          "leftMarginPx": 399.7,
+          "rightMarginSafePx": 418.6,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "O′"
+        ],
+        "titleText": "12. Hình trụ & Thiết diện Elip (nghiêng 45°)",
+        "guidanceStepText": "Đã dựng xong (bước 9/9): Elip giao của Hình trụ tròn xoay OO' tâm O và (P)",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "selectedBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1060,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 399.7,
+          "y": 165,
+          "w": 257.8,
+          "h": 381.9,
+          "maxX": 657.4,
+          "maxY": 546.9
+        },
+        "labelBounds": {
+          "x": 513.6,
+          "y": 178,
+          "w": 58.2,
+          "h": 291.6,
+          "maxX": 571.8,
+          "maxY": 469.6
+        },
+        "combinedBounds": {
+          "x": 399.7,
+          "y": 165,
+          "w": 257.8,
+          "h": 381.9,
+          "maxX": 657.4,
+          "maxY": 546.9
+        },
+        "sectionBounds": {
+          "x": 415.1,
+          "y": 295.1,
+          "w": 240.7,
+          "h": 108,
+          "maxX": 655.8,
+          "maxY": 403.1
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 431.4
+          },
+          {
+            "selector": ".geo3d-soi",
+            "x": 15,
+            "y": 50,
+            "w": 304,
+            "h": 280.2
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 1088,
+            "y": 15,
+            "w": 320,
+            "h": 431.4
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.524,
+          "geometryHeightRatioSafe": 0.548,
+          "combinedHeightRatioCanvas": 0.524,
+          "combinedHeightRatioSafe": 0.548,
+          "geometryWidthRatioSafe": 0.243,
+          "combinedWidthRatioSafe": 0.243,
+          "topMarginPx": 165,
+          "bottomMarginPx": 182.1,
+          "leftMarginPx": 399.7,
+          "rightMarginSafePx": 418.6,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "O′"
+        ],
+        "titleText": "12. Hình trụ & Thiết diện Elip (nghiêng 45°)",
+        "guidanceStepText": "Đã dựng xong (bước 9/9): Elip giao của Hình trụ tròn xoay OO' tâm O và (P)",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "orbitBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 574.5,
+          "y": 149.1,
+          "w": 264.5,
+          "h": 387,
+          "maxX": 839,
+          "maxY": 536.2
+        },
+        "labelBounds": {
+          "x": 695.2,
+          "y": 199.6,
+          "w": 23,
+          "h": 243.7,
+          "maxX": 718.2,
+          "maxY": 443.3
+        },
+        "combinedBounds": {
+          "x": 574.5,
+          "y": 149.1,
+          "w": 264.5,
+          "h": 387,
+          "maxX": 839,
+          "maxY": 536.2
+        },
+        "sectionBounds": {
+          "x": 601.2,
+          "y": 299.8,
+          "w": 228.6,
+          "h": 114.8,
+          "maxX": 829.8,
+          "maxY": 414.6
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.531,
+          "geometryHeightRatioSafe": 0.555,
+          "combinedHeightRatioCanvas": 0.531,
+          "combinedHeightRatioSafe": 0.555,
+          "geometryWidthRatioSafe": 0.19,
+          "combinedWidthRatioSafe": 0.19,
+          "topMarginPx": 149.1,
+          "bottomMarginPx": 192.8,
+          "leftMarginPx": 574.5,
+          "rightMarginSafePx": 568,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "O′"
+        ],
+        "titleText": "12. Hình trụ & Thiết diện Elip (nghiêng 45°)",
+        "guidanceStepText": "Đã dựng xong (bước 9/9): Elip giao của Hình trụ tròn xoay OO' tâm O và (P)",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "xrayBounds": {
+        "canvas": {
+          "w": 1423,
+          "h": 729
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 1391,
+          "h": 697
+        },
+        "geometryBounds": {
+          "x": 590.5,
+          "y": 157.7,
+          "w": 249.8,
+          "h": 396.5,
+          "maxX": 840.3,
+          "maxY": 554.3
+        },
+        "labelBounds": {
+          "x": 703.6,
+          "y": 171.4,
+          "w": 23,
+          "h": 302.4,
+          "maxX": 726.6,
+          "maxY": 473.8
+        },
+        "combinedBounds": {
+          "x": 590.5,
+          "y": 157.7,
+          "w": 249.8,
+          "h": 396.5,
+          "maxX": 840.3,
+          "maxY": 554.3
+        },
+        "sectionBounds": {
+          "x": 596.3,
+          "y": 292.5,
+          "w": 227.8,
+          "h": 112.4,
+          "maxX": 824.1,
+          "maxY": 404.8
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.544,
+          "geometryHeightRatioSafe": 0.569,
+          "combinedHeightRatioCanvas": 0.544,
+          "combinedHeightRatioSafe": 0.569,
+          "geometryWidthRatioSafe": 0.18,
+          "combinedWidthRatioSafe": 0.18,
+          "topMarginPx": 157.7,
+          "bottomMarginPx": 174.7,
+          "leftMarginPx": 590.5,
+          "rightMarginSafePx": 566.7,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "O′"
+        ],
+        "titleText": "12. Hình trụ & Thiết diện Elip (nghiêng 45°)",
+        "guidanceStepText": "Đã dựng xong (bước 9/9): Elip giao của Hình trụ tròn xoay OO' tâm O và (P)",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      }
+    },
+    {
+      "id": "family13_invalid_geometry_refusal",
+      "refusalText": "KHÔNG CÓ GIAO TUYẾN\n\nKhông thể dựng giao tuyến. mặt phẳng không cắt khối cầu — nó nằm xa tâm hơn bán kính\n\nDừng ở bước\nkiểm chứng kết quả bằng phép độc lập\nLoại vấn đề\nKHÔNG CÓ GIAO TUYẾN\nChi tiết chẩn đoán"
+    }
+  ],
+  "multiViewport": [
+    {
+      "id": "family01_triangular_pyramid",
+      "viewport": "1024x768",
+      "boundsClosed": {
+        "canvas": {
+          "w": 1007,
+          "h": 597
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 975,
+          "h": 565
+        },
+        "geometryBounds": {
+          "x": 364.1,
+          "y": 124,
+          "w": 278.5,
+          "h": 334.1,
+          "maxX": 642.6,
+          "maxY": 458
+        },
+        "labelBounds": {
+          "x": 355.1,
+          "y": 98.8,
+          "w": 296.5,
+          "h": 352.1,
+          "maxX": 651.6,
+          "maxY": 450.8
+        },
+        "combinedBounds": {
+          "x": 355.1,
+          "y": 98.8,
+          "w": 296.5,
+          "h": 359.3,
+          "maxX": 651.6,
+          "maxY": 458
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.56,
+          "geometryHeightRatioSafe": 0.591,
+          "combinedHeightRatioCanvas": 0.602,
+          "combinedHeightRatioSafe": 0.636,
+          "geometryWidthRatioSafe": 0.286,
+          "combinedWidthRatioSafe": 0.304,
+          "topMarginPx": 98.8,
+          "bottomMarginPx": 139,
+          "leftMarginPx": 355.1,
+          "rightMarginSafePx": 339.4,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "titleText": "1. Hình chóp tam giác S.ABC",
+        "guidanceStepText": "Đã dựng xong (bước 3/3): Hình chóp S.ABC",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "boundsOpen": {
+        "canvas": {
+          "w": 1007,
+          "h": 597
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 644,
+          "h": 565
+        },
+        "geometryBounds": {
+          "x": 223.7,
+          "y": 135.9,
+          "w": 265.6,
+          "h": 310.3,
+          "maxX": 489.4,
+          "maxY": 446.3
+        },
+        "labelBounds": {
+          "x": 214.7,
+          "y": 110.7,
+          "w": 283.6,
+          "h": 328.3,
+          "maxX": 498.4,
+          "maxY": 439.1
+        },
+        "combinedBounds": {
+          "x": 214.7,
+          "y": 110.7,
+          "w": 283.6,
+          "h": 335.5,
+          "maxX": 498.4,
+          "maxY": 446.3
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 672,
+            "y": 15,
+            "w": 320,
+            "h": 399.4
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 672,
+            "y": 15,
+            "w": 320,
+            "h": 399.4
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.52,
+          "geometryHeightRatioSafe": 0.549,
+          "combinedHeightRatioCanvas": 0.562,
+          "combinedHeightRatioSafe": 0.594,
+          "geometryWidthRatioSafe": 0.412,
+          "combinedWidthRatioSafe": 0.44,
+          "topMarginPx": 110.7,
+          "bottomMarginPx": 150.7,
+          "leftMarginPx": 214.7,
+          "rightMarginSafePx": 161.6,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "titleText": "1. Hình chóp tam giác S.ABC",
+        "guidanceStepText": "Đã dựng xong (bước 3/3): Hình chóp S.ABC",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      }
+    },
+    {
+      "id": "family05_prism",
+      "viewport": "1024x768",
+      "boundsClosed": {
+        "canvas": {
+          "w": 1007,
+          "h": 597
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 975,
+          "h": 565
+        },
+        "geometryBounds": {
+          "x": 320.3,
+          "y": 124.4,
+          "w": 366.2,
+          "h": 334.1,
+          "maxX": 686.6,
+          "maxY": 458.4
+        },
+        "labelBounds": {
+          "x": 311.8,
+          "y": 99.2,
+          "w": 383.2,
+          "h": 352.1,
+          "maxX": 695.1,
+          "maxY": 451.2
+        },
+        "combinedBounds": {
+          "x": 311.8,
+          "y": 99.2,
+          "w": 383.2,
+          "h": 359.3,
+          "maxX": 695.1,
+          "maxY": 458.4
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.56,
+          "geometryHeightRatioSafe": 0.591,
+          "combinedHeightRatioCanvas": 0.602,
+          "combinedHeightRatioSafe": 0.636,
+          "geometryWidthRatioSafe": 0.376,
+          "combinedWidthRatioSafe": 0.393,
+          "topMarginPx": 99.2,
+          "bottomMarginPx": 138.6,
+          "leftMarginPx": 311.8,
+          "rightMarginSafePx": 295.9,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ],
+        "titleText": "5. Hình lăng trụ đứng ABC.DEF",
+        "guidanceStepText": "Đã dựng xong (bước 3/3): Lăng trụ đứng ABC.DEF",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "boundsOpen": {
+        "canvas": {
+          "w": 1007,
+          "h": 597
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 644,
+          "h": 565
+        },
+        "geometryBounds": {
+          "x": 139.7,
+          "y": 136.3,
+          "w": 348.6,
+          "h": 310.2,
+          "maxX": 488.4,
+          "maxY": 446.5
+        },
+        "labelBounds": {
+          "x": 131.2,
+          "y": 111.1,
+          "w": 366.1,
+          "h": 328.2,
+          "maxX": 497.4,
+          "maxY": 439.3
+        },
+        "combinedBounds": {
+          "x": 131.2,
+          "y": 111.1,
+          "w": 366.1,
+          "h": 335.4,
+          "maxX": 497.4,
+          "maxY": 446.5
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 672,
+            "y": 15,
+            "w": 320,
+            "h": 365.1
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 672,
+            "y": 15,
+            "w": 320,
+            "h": 365.1
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.52,
+          "geometryHeightRatioSafe": 0.549,
+          "combinedHeightRatioCanvas": 0.562,
+          "combinedHeightRatioSafe": 0.594,
+          "geometryWidthRatioSafe": 0.541,
+          "combinedWidthRatioSafe": 0.568,
+          "topMarginPx": 111.1,
+          "bottomMarginPx": 150.5,
+          "leftMarginPx": 131.2,
+          "rightMarginSafePx": 162.6,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ],
+        "titleText": "5. Hình lăng trụ đứng ABC.DEF",
+        "guidanceStepText": "Đã dựng xong (bước 3/3): Lăng trụ đứng ABC.DEF",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      }
+    },
+    {
+      "id": "family09_cylinder_and_sections",
+      "viewport": "1024x768",
+      "boundsClosed": {
+        "canvas": {
+          "w": 1007,
+          "h": 597
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 975,
+          "h": 565
+        },
+        "geometryBounds": {
+          "x": 352.6,
+          "y": 129.6,
+          "w": 311.8,
+          "h": 324.7,
+          "maxX": 664.4,
+          "maxY": 454.3
+        },
+        "labelBounds": {
+          "x": 400.7,
+          "y": 110.6,
+          "w": 186.6,
+          "h": 319.7,
+          "maxX": 587.3,
+          "maxY": 430.3
+        },
+        "combinedBounds": {
+          "x": 352.6,
+          "y": 110.6,
+          "w": 311.8,
+          "h": 343.7,
+          "maxX": 664.4,
+          "maxY": 454.3
+        },
+        "sectionBounds": {
+          "x": 370.5,
+          "y": 135.8,
+          "w": 274.9,
+          "h": 301.7,
+          "maxX": 645.4,
+          "maxY": 437.5
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.544,
+          "geometryHeightRatioSafe": 0.575,
+          "combinedHeightRatioCanvas": 0.576,
+          "combinedHeightRatioSafe": 0.608,
+          "geometryWidthRatioSafe": 0.32,
+          "combinedWidthRatioSafe": 0.32,
+          "topMarginPx": 110.6,
+          "bottomMarginPx": 142.7,
+          "leftMarginPx": 352.6,
+          "rightMarginSafePx": 326.6,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "O′",
+          "A",
+          "B",
+          "A′",
+          "B′"
+        ],
+        "titleText": "9. Hình trụ tròn xoay & Thiết diện qua trục / song song đáy",
+        "guidanceStepText": "Đã dựng xong (bước 12/12): Thiết diện qua trục hình trụ",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "boundsOpen": {
+        "canvas": {
+          "w": 1007,
+          "h": 597
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 644,
+          "h": 565
+        },
+        "geometryBounds": {
+          "x": 163.4,
+          "y": 135.6,
+          "w": 312.2,
+          "h": 312.7,
+          "maxX": 475.6,
+          "maxY": 448.3
+        },
+        "labelBounds": {
+          "x": 184.6,
+          "y": 116.5,
+          "w": 252.2,
+          "h": 308.6,
+          "maxX": 436.8,
+          "maxY": 425.1
+        },
+        "combinedBounds": {
+          "x": 163.4,
+          "y": 116.5,
+          "w": 312.2,
+          "h": 331.7,
+          "maxX": 475.6,
+          "maxY": 448.3
+        },
+        "sectionBounds": {
+          "x": 195.6,
+          "y": 141.7,
+          "w": 278.5,
+          "h": 290.6,
+          "maxX": 474.1,
+          "maxY": 432.3
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 672,
+            "y": 15,
+            "w": 320,
+            "h": 399.4
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 672,
+            "y": 15,
+            "w": 320,
+            "h": 399.4
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.524,
+          "geometryHeightRatioSafe": 0.553,
+          "combinedHeightRatioCanvas": 0.556,
+          "combinedHeightRatioSafe": 0.587,
+          "geometryWidthRatioSafe": 0.485,
+          "combinedWidthRatioSafe": 0.485,
+          "topMarginPx": 116.5,
+          "bottomMarginPx": 148.7,
+          "leftMarginPx": 163.4,
+          "rightMarginSafePx": 184.4,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "O′",
+          "A",
+          "B",
+          "A′",
+          "B′"
+        ],
+        "titleText": "9. Hình trụ tròn xoay & Thiết diện qua trục / song song đáy",
+        "guidanceStepText": "Đã dựng xong (bước 12/12): Thiết diện qua trục hình trụ",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      }
+    },
+    {
+      "id": "family11_sphere_plane_cut",
+      "viewport": "1024x768",
+      "boundsClosed": {
+        "canvas": {
+          "w": 1007,
+          "h": 597
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 975,
+          "h": 565
+        },
+        "geometryBounds": {
+          "x": 330.2,
+          "y": 118.5,
+          "w": 338.3,
+          "h": 331.8,
+          "maxX": 668.5,
+          "maxY": 450.3
+        },
+        "labelBounds": {
+          "x": 492.6,
+          "y": 263.8,
+          "w": 14,
+          "h": 18,
+          "maxX": 506.6,
+          "maxY": 281.8
+        },
+        "combinedBounds": {
+          "x": 330.2,
+          "y": 118.5,
+          "w": 338.3,
+          "h": 331.8,
+          "maxX": 668.5,
+          "maxY": 450.3
+        },
+        "sectionBounds": {
+          "x": 352.4,
+          "y": 148.2,
+          "w": 293.2,
+          "h": 120.3,
+          "maxX": 645.6,
+          "maxY": 268.5
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.556,
+          "geometryHeightRatioSafe": 0.587,
+          "combinedHeightRatioCanvas": 0.556,
+          "combinedHeightRatioSafe": 0.587,
+          "geometryWidthRatioSafe": 0.347,
+          "combinedWidthRatioSafe": 0.347,
+          "topMarginPx": 118.5,
+          "bottomMarginPx": 146.7,
+          "leftMarginPx": 330.2,
+          "rightMarginSafePx": 322.5,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "I"
+        ],
+        "titleText": "11. Mặt cầu & Thiết diện đường tròn cắt bởi mặt phẳng",
+        "guidanceStepText": "Đã dựng xong (bước 4/4): Đường tròn giao của Mặt cầu (S) tâm I và (α)",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "boundsOpen": {
+        "canvas": {
+          "w": 1007,
+          "h": 597
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 644,
+          "h": 565
+        },
+        "geometryBounds": {
+          "x": 154.9,
+          "y": 127.1,
+          "w": 333,
+          "h": 314.3,
+          "maxX": 487.9,
+          "maxY": 441.3
+        },
+        "labelBounds": {
+          "x": 323.8,
+          "y": 263.7,
+          "w": 14,
+          "h": 18,
+          "maxX": 337.8,
+          "maxY": 281.7
+        },
+        "combinedBounds": {
+          "x": 154.9,
+          "y": 127.1,
+          "w": 333,
+          "h": 314.3,
+          "maxX": 487.9,
+          "maxY": 441.3
+        },
+        "sectionBounds": {
+          "x": 167,
+          "y": 154.4,
+          "w": 285.6,
+          "h": 115.3,
+          "maxX": 452.6,
+          "maxY": 269.7
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 672,
+            "y": 15,
+            "w": 320,
+            "h": 399.4
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 672,
+            "y": 15,
+            "w": 320,
+            "h": 399.4
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.526,
+          "geometryHeightRatioSafe": 0.556,
+          "combinedHeightRatioCanvas": 0.526,
+          "combinedHeightRatioSafe": 0.556,
+          "geometryWidthRatioSafe": 0.517,
+          "combinedWidthRatioSafe": 0.517,
+          "topMarginPx": 127.1,
+          "bottomMarginPx": 155.7,
+          "leftMarginPx": 154.9,
+          "rightMarginSafePx": 172.1,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "I"
+        ],
+        "titleText": "11. Mặt cầu & Thiết diện đường tròn cắt bởi mặt phẳng",
+        "guidanceStepText": "Đã dựng xong (bước 4/4): Đường tròn giao của Mặt cầu (S) tâm I và (α)",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      }
+    },
+    {
+      "id": "family01_triangular_pyramid",
+      "viewport": "820x640",
+      "boundsClosed": {
+        "canvas": {
+          "w": 803,
+          "h": 447
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 771,
+          "h": 415
+        },
+        "geometryBounds": {
+          "x": 304,
+          "y": 101.8,
+          "w": 194.8,
+          "h": 232.4,
+          "maxX": 498.8,
+          "maxY": 334.1
+        },
+        "labelBounds": {
+          "x": 295,
+          "y": 76.6,
+          "w": 212.8,
+          "h": 250.4,
+          "maxX": 507.8,
+          "maxY": 326.9
+        },
+        "combinedBounds": {
+          "x": 295,
+          "y": 76.6,
+          "w": 212.8,
+          "h": 257.6,
+          "maxX": 507.8,
+          "maxY": 334.1
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.52,
+          "geometryHeightRatioSafe": 0.56,
+          "combinedHeightRatioCanvas": 0.576,
+          "combinedHeightRatioSafe": 0.621,
+          "geometryWidthRatioSafe": 0.253,
+          "combinedWidthRatioSafe": 0.276,
+          "topMarginPx": 76.6,
+          "bottomMarginPx": 112.9,
+          "leftMarginPx": 295,
+          "rightMarginSafePx": 279.2,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "titleText": "1. Hình chóp tam giác S.ABC",
+        "guidanceStepText": "Đã dựng xong (bước 3/3): Hình chóp S.ABC",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "boundsOpen": {
+        "canvas": {
+          "w": 803,
+          "h": 447
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 440,
+          "h": 415
+        },
+        "geometryBounds": {
+          "x": 154.4,
+          "y": 101.8,
+          "w": 200.3,
+          "h": 232.4,
+          "maxX": 354.7,
+          "maxY": 334.1
+        },
+        "labelBounds": {
+          "x": 145.4,
+          "y": 76.6,
+          "w": 218.3,
+          "h": 250.4,
+          "maxX": 363.7,
+          "maxY": 326.9
+        },
+        "combinedBounds": {
+          "x": 145.4,
+          "y": 76.6,
+          "w": 218.3,
+          "h": 257.6,
+          "maxX": 363.7,
+          "maxY": 334.1
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 468,
+            "y": 15,
+            "w": 320,
+            "h": 332.8
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 468,
+            "y": 15,
+            "w": 320,
+            "h": 332.8
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.52,
+          "geometryHeightRatioSafe": 0.56,
+          "combinedHeightRatioCanvas": 0.576,
+          "combinedHeightRatioSafe": 0.621,
+          "geometryWidthRatioSafe": 0.455,
+          "combinedWidthRatioSafe": 0.496,
+          "topMarginPx": 76.6,
+          "bottomMarginPx": 112.9,
+          "leftMarginPx": 145.4,
+          "rightMarginSafePx": 92.3,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ],
+        "titleText": "1. Hình chóp tam giác S.ABC",
+        "guidanceStepText": "Đã dựng xong (bước 3/3): Hình chóp S.ABC",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      }
+    },
+    {
+      "id": "family05_prism",
+      "viewport": "820x640",
+      "boundsClosed": {
+        "canvas": {
+          "w": 803,
+          "h": 447
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 771,
+          "h": 415
+        },
+        "geometryBounds": {
+          "x": 276.3,
+          "y": 102.1,
+          "w": 250.3,
+          "h": 232.3,
+          "maxX": 526.7,
+          "maxY": 334.3
+        },
+        "labelBounds": {
+          "x": 267.8,
+          "y": 76.9,
+          "w": 267.3,
+          "h": 250.3,
+          "maxX": 535.2,
+          "maxY": 327.1
+        },
+        "combinedBounds": {
+          "x": 267.8,
+          "y": 76.9,
+          "w": 267.3,
+          "h": 257.5,
+          "maxX": 535.2,
+          "maxY": 334.3
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.52,
+          "geometryHeightRatioSafe": 0.56,
+          "combinedHeightRatioCanvas": 0.576,
+          "combinedHeightRatioSafe": 0.62,
+          "geometryWidthRatioSafe": 0.325,
+          "combinedWidthRatioSafe": 0.347,
+          "topMarginPx": 76.9,
+          "bottomMarginPx": 112.7,
+          "leftMarginPx": 267.8,
+          "rightMarginSafePx": 251.8,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ],
+        "titleText": "5. Hình lăng trụ đứng ABC.DEF",
+        "guidanceStepText": "Đã dựng xong (bước 3/3): Lăng trụ đứng ABC.DEF",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "boundsOpen": {
+        "canvas": {
+          "w": 803,
+          "h": 447
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 440,
+          "h": 415
+        },
+        "geometryBounds": {
+          "x": 79.7,
+          "y": 102.1,
+          "w": 273.2,
+          "h": 232.3,
+          "maxX": 352.9,
+          "maxY": 334.3
+        },
+        "labelBounds": {
+          "x": 71.2,
+          "y": 76.9,
+          "w": 290.7,
+          "h": 250.3,
+          "maxX": 361.9,
+          "maxY": 327.1
+        },
+        "combinedBounds": {
+          "x": 71.2,
+          "y": 76.9,
+          "w": 290.7,
+          "h": 257.5,
+          "maxX": 361.9,
+          "maxY": 334.3
+        },
+        "sectionBounds": null,
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 70
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 468,
+            "y": 15,
+            "w": 320,
+            "h": 332.8
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 468,
+            "y": 15,
+            "w": 320,
+            "h": 332.8
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.52,
+          "geometryHeightRatioSafe": 0.56,
+          "combinedHeightRatioCanvas": 0.576,
+          "combinedHeightRatioSafe": 0.62,
+          "geometryWidthRatioSafe": 0.621,
+          "combinedWidthRatioSafe": 0.661,
+          "topMarginPx": 76.9,
+          "bottomMarginPx": 112.7,
+          "leftMarginPx": 71.2,
+          "rightMarginSafePx": 94.1,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ],
+        "titleText": "5. Hình lăng trụ đứng ABC.DEF",
+        "guidanceStepText": "Đã dựng xong (bước 3/3): Lăng trụ đứng ABC.DEF",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      }
+    },
+    {
+      "id": "family09_cylinder_and_sections",
+      "viewport": "820x640",
+      "boundsClosed": {
+        "canvas": {
+          "w": 803,
+          "h": 447
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 771,
+          "h": 415
+        },
+        "geometryBounds": {
+          "x": 293.5,
+          "y": 101.5,
+          "w": 223.6,
+          "h": 234.1,
+          "maxX": 517.1,
+          "maxY": 335.6
+        },
+        "labelBounds": {
+          "x": 325.3,
+          "y": 80.9,
+          "w": 139.8,
+          "h": 235.6,
+          "maxX": 465.1,
+          "maxY": 316.5
+        },
+        "combinedBounds": {
+          "x": 293.5,
+          "y": 80.9,
+          "w": 223.6,
+          "h": 254.7,
+          "maxX": 517.1,
+          "maxY": 335.6
+        },
+        "sectionBounds": {
+          "x": 305.8,
+          "y": 106.1,
+          "w": 198.1,
+          "h": 217.6,
+          "maxX": 503.9,
+          "maxY": 323.7
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.524,
+          "geometryHeightRatioSafe": 0.564,
+          "combinedHeightRatioCanvas": 0.57,
+          "combinedHeightRatioSafe": 0.614,
+          "geometryWidthRatioSafe": 0.29,
+          "combinedWidthRatioSafe": 0.29,
+          "topMarginPx": 80.9,
+          "bottomMarginPx": 111.4,
+          "leftMarginPx": 293.5,
+          "rightMarginSafePx": 269.9,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "O′",
+          "A",
+          "B",
+          "A′",
+          "B′"
+        ],
+        "titleText": "9. Hình trụ tròn xoay & Thiết diện qua trục / song song đáy",
+        "guidanceStepText": "Đã dựng xong (bước 12/12): Thiết diện qua trục hình trụ",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "boundsOpen": {
+        "canvas": {
+          "w": 803,
+          "h": 447
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 440,
+          "h": 415
+        },
+        "geometryBounds": {
+          "x": 95.9,
+          "y": 101.5,
+          "w": 246,
+          "h": 234.1,
+          "maxX": 341.9,
+          "maxY": 335.6
+        },
+        "labelBounds": {
+          "x": 104.5,
+          "y": 80.9,
+          "w": 214.9,
+          "h": 235.6,
+          "maxX": 319.4,
+          "maxY": 316.5
+        },
+        "combinedBounds": {
+          "x": 95.9,
+          "y": 80.9,
+          "w": 246,
+          "h": 254.7,
+          "maxX": 341.9,
+          "maxY": 335.6
+        },
+        "sectionBounds": {
+          "x": 115.5,
+          "y": 106.1,
+          "w": 222.9,
+          "h": 217.6,
+          "maxX": 338.4,
+          "maxY": 323.7
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 468,
+            "y": 15,
+            "w": 320,
+            "h": 332.8
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 468,
+            "y": 15,
+            "w": 320,
+            "h": 332.8
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.524,
+          "geometryHeightRatioSafe": 0.564,
+          "combinedHeightRatioCanvas": 0.57,
+          "combinedHeightRatioSafe": 0.614,
+          "geometryWidthRatioSafe": 0.559,
+          "combinedWidthRatioSafe": 0.559,
+          "topMarginPx": 80.9,
+          "bottomMarginPx": 111.4,
+          "leftMarginPx": 95.9,
+          "rightMarginSafePx": 114.1,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "O",
+          "O′",
+          "A",
+          "B",
+          "A′",
+          "B′"
+        ],
+        "titleText": "9. Hình trụ tròn xoay & Thiết diện qua trục / song song đáy",
+        "guidanceStepText": "Đã dựng xong (bước 12/12): Thiết diện qua trục hình trụ",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      }
+    },
+    {
+      "id": "family11_sphere_plane_cut",
+      "viewport": "820x640",
+      "boundsClosed": {
+        "canvas": {
+          "w": 803,
+          "h": 447
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 771,
+          "h": 415
+        },
+        "geometryBounds": {
+          "x": 278.3,
+          "y": 95.2,
+          "w": 240.4,
+          "h": 235.3,
+          "maxX": 518.8,
+          "maxY": 330.5
+        },
+        "labelBounds": {
+          "x": 391.7,
+          "y": 191.1,
+          "w": 14,
+          "h": 18,
+          "maxX": 405.7,
+          "maxY": 209.1
+        },
+        "combinedBounds": {
+          "x": 278.3,
+          "y": 95.2,
+          "w": 240.4,
+          "h": 235.3,
+          "maxX": 518.8,
+          "maxY": 330.5
+        },
+        "sectionBounds": {
+          "x": 294.6,
+          "y": 115.6,
+          "w": 207.5,
+          "h": 86.3,
+          "maxX": 502.1,
+          "maxY": 202
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.526,
+          "geometryHeightRatioSafe": 0.567,
+          "combinedHeightRatioCanvas": 0.526,
+          "combinedHeightRatioSafe": 0.567,
+          "geometryWidthRatioSafe": 0.312,
+          "combinedWidthRatioSafe": 0.312,
+          "topMarginPx": 95.2,
+          "bottomMarginPx": 116.5,
+          "leftMarginPx": 278.3,
+          "rightMarginSafePx": 268.2,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "I"
+        ],
+        "titleText": "11. Mặt cầu & Thiết diện đường tròn cắt bởi mặt phẳng",
+        "guidanceStepText": "Đã dựng xong (bước 4/4): Đường tròn giao của Mặt cầu (S) tâm I và (α)",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      },
+      "boundsOpen": {
+        "canvas": {
+          "w": 803,
+          "h": 447
+        },
+        "safeViewport": {
+          "x": 16,
+          "y": 16,
+          "w": 440,
+          "h": 415
+        },
+        "geometryBounds": {
+          "x": 90.2,
+          "y": 95.2,
+          "w": 257.6,
+          "h": 235.3,
+          "maxX": 347.8,
+          "maxY": 330.5
+        },
+        "labelBounds": {
+          "x": 222.7,
+          "y": 191.1,
+          "w": 14,
+          "h": 18,
+          "maxX": 236.7,
+          "maxY": 209.1
+        },
+        "combinedBounds": {
+          "x": 90.2,
+          "y": 95.2,
+          "w": 257.6,
+          "h": 235.3,
+          "maxX": 347.8,
+          "maxY": 330.5
+        },
+        "sectionBounds": {
+          "x": 99.2,
+          "y": 115.6,
+          "w": 218.7,
+          "h": 86.3,
+          "maxX": 317.9,
+          "maxY": 202
+        },
+        "overlays": [
+          {
+            "selector": ".geo3d-noi",
+            "x": 11,
+            "y": 11,
+            "w": 156.2,
+            "h": 31
+          },
+          {
+            "selector": "#geo3d-bang-phan-tich",
+            "x": 468,
+            "y": 15,
+            "w": 320,
+            "h": 332.8
+          },
+          {
+            "selector": ".geo3d-ngan",
+            "x": 468,
+            "y": 15,
+            "w": 320,
+            "h": 332.8
+          }
+        ],
+        "metrics": {
+          "geometryHeightRatioCanvas": 0.526,
+          "geometryHeightRatioSafe": 0.567,
+          "combinedHeightRatioCanvas": 0.526,
+          "combinedHeightRatioSafe": 0.567,
+          "geometryWidthRatioSafe": 0.585,
+          "combinedWidthRatioSafe": 0.585,
+          "topMarginPx": 95.2,
+          "bottomMarginPx": 116.5,
+          "leftMarginPx": 90.2,
+          "rightMarginSafePx": 108.2,
+          "panelOverlapPx": 0
+        },
+        "pointLabelsText": [
+          "I"
+        ],
+        "titleText": "11. Mặt cầu & Thiết diện đường tròn cắt bởi mặt phẳng",
+        "guidanceStepText": "Đã dựng xong (bước 4/4): Đường tròn giao của Mặt cầu (S) tâm I và (α)",
+        "guidanceHintText": "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+      }
+    }
+  ]
+}

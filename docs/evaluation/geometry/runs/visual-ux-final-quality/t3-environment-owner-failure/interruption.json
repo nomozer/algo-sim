@@ -1,0 +1,15 @@
+{
+  "status": "INTERRUPTED_NOT_AUTHORITATIVE",
+  "exit_code": "UNKNOWN",
+  "reason": "Interrupted after background owner could not reuse sandbox-owned private pytest directory; switched to fresh per-process directory",
+  "raw_streams": {
+    "stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout.log": {
+      "bytes": 779,
+      "sha256": "00156ea9057eed4f87e2651cd1da4ae0dfd59d9833d21cad72770d636ba03247"
+    }
+  }
+}

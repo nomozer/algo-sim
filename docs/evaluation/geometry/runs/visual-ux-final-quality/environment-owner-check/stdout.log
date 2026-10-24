@@ -1,0 +1,8 @@
+.                                                                        [100%]
+============================== warnings summary ===============================
+..\..\..\..\backend\.venv\Lib\site-packages\_pytest\cacheprovider.py:469
+  D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\_pytest\cacheprovider.py:469: PytestCacheWarning: could not create cache path D:\Documents\projects\algo-sim\.superpowers\worktrees\verify-visual-ux-final-quality\backend\.pytest_cache\v\cache\nodeids: [WinError 5] Access is denied: 'D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-visual-ux-final-quality\\backend\\.pytest_cache\\v\\cache'
+    config.cache.set("cache/nodeids", sorted(self.cached_nodeids))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+1 passed, 1 warning in 3.10s

@@ -1,0 +1,852 @@
+{
+  "stage": "after",
+  "environment": "Chromium SwiftShader WebGL; offline fixtures; no provider calls",
+  "errors": [],
+  "depth": [
+    {
+      "family": "family04_derived_sub_pyramid",
+      "id": "td_ask9",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1089,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family07_multi_solid_composition",
+      "id": "day_ABC",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 0,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1081,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family08_unnamed_section_vertices",
+      "id": "td_ask9",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 484,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family09_cylinder_and_sections",
+      "id": "td_sec_parallel",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "opaque_wall",
+          "changed": 1698,
+          "pass": false
+        }
+      ]
+    },
+    {
+      "family": "family09_cylinder_and_sections",
+      "id": "td_sec_axial",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 2080,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family10_cone_frustum_cut",
+      "id": "td_sec_cut",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "opaque_wall",
+          "changed": 1698,
+          "pass": false
+        }
+      ]
+    },
+    {
+      "family": "family10_cone_frustum_cut",
+      "id": "td_sec_axial",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 990,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family11_sphere_plane_cut",
+      "id": "td_sec_sph",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "opaque_wall",
+          "changed": 1698,
+          "pass": false
+        }
+      ]
+    },
+    {
+      "family": "family12_cylinder_ellipse_section",
+      "id": "td_sec_el",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1616,
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "family01_triangular_pyramid",
+      "firstGuidance": "Đang dựng (bước 1/3): Dữ kiện đề cho: AB = 3, AC = 4, SA = 5.Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hìnhXem mô hình đầy đủ",
+      "analysisClosed": true,
+      "firstRendered": [
+        "A",
+        "B",
+        "C",
+        "S"
+      ],
+      "firstBadges": [],
+      "finalRendered": [
+        "A",
+        "B",
+        "C",
+        "S",
+        "day_ABC",
+        "khoi_chop",
+        "khoi_chop::face:0",
+        "khoi_chop::edge:A-B",
+        "khoi_chop::edge:B-C",
+        "khoi_chop::edge:A-C",
+        "khoi_chop::face:1",
+        "khoi_chop::edge:S-A",
+        "khoi_chop::edge:S-B",
+        "khoi_chop::face:2",
+        "khoi_chop::edge:S-C",
+        "khoi_chop::face:3"
+      ],
+      "answerBadges": [],
+      "analysis": "Kết quả toán học\nThể tích S.ABC\nV(S.ABC) = 10\n\nV = 1/3 × S(ABC) × SA = 10\n\nSố đo trung gian\nDiện tích ABC\nS(ABC) = 6\nKích thước đã cho\nAB = 3\nAC = 4\nSA = 5\nQuan hệ & Chứng chỉ kiểm chứng\nĐiểm A\nA = đặt đỉnh vuông của tam giác đáy tại gốc toạ độ\nĐiểm B\nB = đặt cạnh góc vuông thứ nhất dọc trục thứ nhất\nĐiểm C\nC = đặt cạnh góc vuông thứ hai dọc trục thứ hai\nĐiểm S\nS = đặt đỉnh chóp trên pháp tuyến của mặt phẳng đáy tại đỉnh vuông",
+      "selected": "the_tich_khoi_chop",
+      "highlighted": [
+        "A",
+        "AB_length",
+        "AC_length",
+        "B",
+        "C",
+        "S",
+        "SA_length",
+        "day_ABC",
+        "dien_tich_day_ABC",
+        "khoi_chop",
+        "the_tich_khoi_chop"
+      ],
+      "isolated": [
+        "khoi_chop"
+      ],
+      "resetSelected": null,
+      "orbitCamera": [
+        3.7293348844491847,
+        -1.2688824797796079,
+        10.014990346578786
+      ],
+      "xrayAvailable": true,
+      "xrayStatus": [
+        "Đang nhìn xuyên khối: vùng tô thiết diện có thể nằm sau mặt khối."
+      ],
+      "actualEntryGuidance": "Đang dựng (bước 1/3): Dữ kiện đề cho: AB = 3, AC = 4, SA = 5.Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hìnhXem mô hình đầy đủ",
+      "actualEntryRendered": [
+        "A",
+        "B",
+        "C",
+        "S"
+      ],
+      "actualAnalysisClosed": true
+    },
+    {
+      "id": "family05_prism",
+      "firstGuidance": "Đang dựng (bước 1/3): Dữ kiện đề cho: AB = 3, AC = 4, AD = 5.Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hìnhXem mô hình đầy đủ",
+      "analysisClosed": true,
+      "firstRendered": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "firstBadges": [],
+      "finalRendered": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "day_ABC",
+        "solid_ABCDEF",
+        "solid_ABCDEF::face:0",
+        "solid_ABCDEF::edge:A-B",
+        "solid_ABCDEF::edge:B-C",
+        "solid_ABCDEF::edge:A-C",
+        "solid_ABCDEF::face:1",
+        "solid_ABCDEF::edge:D-E",
+        "solid_ABCDEF::edge:E-F",
+        "solid_ABCDEF::edge:D-F",
+        "solid_ABCDEF::face:2",
+        "solid_ABCDEF::edge:B-E",
+        "solid_ABCDEF::edge:A-D",
+        "solid_ABCDEF::face:3",
+        "solid_ABCDEF::edge:C-F",
+        "solid_ABCDEF::face:4"
+      ],
+      "answerBadges": [],
+      "analysis": "Kết quả toán học\nThể tích ABC.DEF\nV(ABC.DEF) = 30\n\nV = S(ABC) × AD = 30\n\nSố đo trung gian\nDiện tích ABC\nS(ABC) = 6\nKích thước đã cho\nAB = 3\nAC = 4\nAD = 5",
+      "selected": "the_tich_solid_ABCDEF",
+      "highlighted": [
+        "A",
+        "AB_length",
+        "AC_length",
+        "AD_length",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "day_ABC",
+        "dien_tich_day_ABC",
+        "solid_ABCDEF",
+        "the_tich_solid_ABCDEF"
+      ],
+      "isolated": [
+        "solid_ABCDEF"
+      ],
+      "resetSelected": null,
+      "orbitCamera": [
+        5.332650991381337,
+        -1.7403556616958669,
+        8.95207178272889
+      ],
+      "xrayAvailable": true,
+      "xrayStatus": [
+        "Đang nhìn xuyên khối: vùng tô thiết diện có thể nằm sau mặt khối."
+      ],
+      "actualEntryGuidance": "Đang dựng (bước 1/3): Dữ kiện đề cho: AB = 3, AC = 4, AD = 5.Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hìnhXem mô hình đầy đủ",
+      "actualEntryRendered": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "actualAnalysisClosed": true
+    },
+    {
+      "id": "family07_multi_solid_composition",
+      "firstGuidance": "Đang dựng (bước 1/7): Đặt các điểm đề cho vào không gian.Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hìnhXem mô hình đầy đủ",
+      "analysisClosed": true,
+      "firstRendered": [
+        "A",
+        "B",
+        "C",
+        "D1",
+        "S"
+      ],
+      "firstBadges": [],
+      "finalRendered": [
+        "A",
+        "B",
+        "C",
+        "D1",
+        "khoi_D1_ABC",
+        "S",
+        "khoi_S_ABC",
+        "D",
+        "day_ABC",
+        "canh_ben_D1_A",
+        "canh_ben_D1_B",
+        "canh_ben_D1_C",
+        "canh_ben_S_A",
+        "canh_ben_S_B",
+        "canh_ben_S_C",
+        "khoi_D1_ABC::face:0",
+        "khoi_D1_ABC::edge:A-B",
+        "khoi_D1_ABC::edge:B-C",
+        "khoi_D1_ABC::edge:A-C",
+        "khoi_D1_ABC::face:1",
+        "khoi_D1_ABC::edge:D1-A",
+        "khoi_D1_ABC::edge:D1-B",
+        "khoi_D1_ABC::face:2",
+        "khoi_D1_ABC::edge:D1-C",
+        "khoi_D1_ABC::face:3",
+        "khoi_S_ABC::face:0",
+        "khoi_S_ABC::edge:A-B",
+        "khoi_S_ABC::edge:B-C",
+        "khoi_S_ABC::edge:A-C",
+        "khoi_S_ABC::face:1",
+        "khoi_S_ABC::edge:S-A",
+        "khoi_S_ABC::edge:S-B",
+        "khoi_S_ABC::face:2",
+        "khoi_S_ABC::edge:S-C",
+        "khoi_S_ABC::face:3"
+      ],
+      "answerBadges": [],
+      "analysis": "Kết quả toán học\nThể tích D1.ABC\nV(D1.ABC) = 4/3\nThể tích S.ABC\nV(S.ABC) = 4\nTỉ số thể tích đối tượng hình học và đối tượng hình học\nV(đối tượng hình học) / V(đối tượng hình học) = 1/3\nQuan hệ & Chứng chỉ kiểm chứng\nChung đỉnh đa diện\nĐã kiểm chứng khớp toạ độ giữa hai khối\nChung mặt đa diện\nĐã kiểm chứng khớp toạ độ giữa hai khối\nChung đỉnh đa diện\nĐã kiểm chứng khớp toạ độ giữa hai khối\nChung đỉnh đa diện\nĐã kiểm chứng khớp toạ độ giữa hai khối\nChứng chỉ tỉ số thể tích\n1/3 = Tỉ số = 1/3",
+      "selected": "kq_ask4",
+      "highlighted": [
+        "A",
+        "B",
+        "C",
+        "D1",
+        "khoi_D1_ABC",
+        "kq_ask4"
+      ],
+      "isolated": [
+        "khoi_D1_ABC"
+      ],
+      "resetSelected": null,
+      "orbitCamera": [
+        5.011579649837264,
+        -2.8876444013320537,
+        10.375208445824304
+      ],
+      "xrayAvailable": true,
+      "xrayStatus": [
+        "Đang nhìn xuyên khối: vùng tô thiết diện có thể nằm sau mặt khối."
+      ],
+      "actualEntryGuidance": "Đang dựng (bước 1/7): Đặt các điểm đề cho vào không gian.Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hìnhXem mô hình đầy đủ",
+      "actualEntryRendered": [
+        "A",
+        "B",
+        "C",
+        "D1",
+        "S"
+      ],
+      "actualAnalysisClosed": true
+    },
+    {
+      "id": "family09_cylinder_and_sections",
+      "firstGuidance": "Đang dựng (bước 1/12): Dữ kiện đề cho: R = 2, h = 3.Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hìnhXem mô hình đầy đủ",
+      "analysisClosed": true,
+      "firstRendered": [
+        "O",
+        "O_prime",
+        "A",
+        "A_prime",
+        "B_prime"
+      ],
+      "firstBadges": [],
+      "finalRendered": [
+        "O",
+        "O_prime",
+        "A",
+        "khoi_cyl",
+        "duong_tron_day_cyl",
+        "duong_tron_day_tren_cyl",
+        "truc_O_O_prime",
+        "ban_kinh_O_A",
+        "td_sec_parallel",
+        "B",
+        "td_sec_axial",
+        "A_prime",
+        "B_prime"
+      ],
+      "answerBadges": [],
+      "analysis": "Kết quả toán học\nThể tích «Hình trụ đáy tâm O, tâm đáy trên O′, qua A»\n12π\nDiện tích mặt cong của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A»\n12π\nDiện tích «Đường tròn giao của khối cong và (α)»\n4π\nDiện tích ABB′A′\nS(ABB′A′) = 12\nKích thước đã cho\nR = 2\nh = 3\nQuan hệ & Chứng chỉ kiểm chứng\nĐường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (α)\nĐường tròn",
+      "selected": "kq_m_vol",
+      "highlighted": [
+        "A",
+        "O",
+        "O_prime",
+        "khoi_cyl",
+        "kq_m_vol"
+      ],
+      "isolated": [
+        "khoi_cyl"
+      ],
+      "resetSelected": null,
+      "orbitCamera": [
+        3.535030368263776,
+        -3.0620425515389913,
+        7.103084262365261
+      ],
+      "xrayAvailable": true,
+      "xrayStatus": [
+        "Đang nhìn xuyên khối: vùng tô thiết diện có thể nằm sau mặt khối."
+      ],
+      "actualEntryGuidance": "Đang dựng (bước 1/12): Dữ kiện đề cho: R = 2, h = 3.Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hìnhXem mô hình đầy đủ",
+      "actualEntryRendered": [
+        "O",
+        "O_prime",
+        "A",
+        "A_prime",
+        "B_prime"
+      ],
+      "actualAnalysisClosed": true
+    },
+    {
+      "id": "family10_cone_frustum_cut",
+      "firstGuidance": "Đang dựng (bước 1/12): Dữ kiện đề cho: R = 3, h = 4, r = 3/2.Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hìnhXem mô hình đầy đủ",
+      "analysisClosed": true,
+      "firstRendered": [
+        "O",
+        "S",
+        "A",
+        "O_prime"
+      ],
+      "firstBadges": [],
+      "finalRendered": [
+        "O",
+        "S",
+        "A",
+        "khoi_cone_main",
+        "duong_tron_day_cone_main",
+        "truc_O_S",
+        "ban_kinh_O_A",
+        "duong_sinh_S_A",
+        "td_sec_cut",
+        "B",
+        "td_sec_axial",
+        "O_prime",
+        "khoi_cone_upper"
+      ],
+      "answerBadges": [],
+      "analysis": "Kết quả toán học\nThể tích «Hình nón đáy tâm O, đỉnh S, qua A»\n12π\nDiện tích mặt cong của «Hình nón đáy tâm O, đỉnh S, qua A»\n15π\nDiện tích SAB\nS(SAB) = 12\nTỉ số thể tích Hình nón đáy tâm O′, đỉnh S, qua r và Hình nón đáy tâm O, đỉnh S, qua A\nV(Hình nón đáy tâm O′, đỉnh S, qua r) / V(Hình nón đáy tâm O, đỉnh S, qua A) = 1/8\nThể tích phần còn lại (Hình nón đáy tâm O, đỉnh S, qua A trừ Hình nón đáy tâm O′, đỉnh S, qua r)\nV(Hình nón đáy tâm O, đỉnh S, qua A) − V(Hình nón đáy tâm O′, đỉnh S, qua r) = 21π/2\n\nTỉ số phần còn lại = 7/8\n\nKích thước đã cho\nR = 3\nh = 4\nr = 3/2\nQuan hệ & Chứng chỉ kiểm chứng\nĐường tròn giao của «Hình nón đáy tâm O, đỉnh S, qua A» và (α)\nĐường tròn\nChứng chỉ tỉ số thể tích\n1/8 = Tỉ số = 1/8\nChứng chỉ thể tích phần còn lại\n21π/2 = Tỉ số bù = 7/8",
+      "selected": "kq_m_vol",
+      "highlighted": [
+        "A",
+        "O",
+        "S",
+        "khoi_cone_main",
+        "kq_m_vol"
+      ],
+      "isolated": [
+        "khoi_cone_main"
+      ],
+      "resetSelected": null,
+      "orbitCamera": [
+        4.624063737901316,
+        -3.655160749106773,
+        8.518366519992142
+      ],
+      "xrayAvailable": true,
+      "xrayStatus": [
+        "Đang nhìn xuyên khối: vùng tô thiết diện có thể nằm sau mặt khối."
+      ],
+      "actualEntryGuidance": "Đang dựng (bước 1/12): Dữ kiện đề cho: R = 3, h = 4, r = 3/2.Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hìnhXem mô hình đầy đủ",
+      "actualEntryRendered": [
+        "O",
+        "S",
+        "A",
+        "O_prime"
+      ],
+      "actualAnalysisClosed": true
+    },
+    {
+      "id": "family11_sphere_plane_cut",
+      "firstGuidance": "Đang dựng (bước 1/4): Dữ kiện đề cho: R = 5.Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hìnhXem mô hình đầy đủ",
+      "analysisClosed": true,
+      "firstRendered": [
+        "I"
+      ],
+      "firstBadges": [],
+      "finalRendered": [
+        "I",
+        "khoi_sph",
+        "td_sec_sph"
+      ],
+      "answerBadges": [],
+      "analysis": "Kết quả toán học\nThể tích «Khối cầu tâm I, đi qua R»\n500π/3\nDiện tích mặt cong của «Khối cầu tâm I, đi qua R»\n100π\nBán kính «Đường tròn giao của khối cong và (α)»\n4\nDiện tích «Đường tròn giao của khối cong và (α)»\n16π\nKích thước đã cho\nR = 5\nQuan hệ & Chứng chỉ kiểm chứng\nĐường tròn giao của «Khối cầu tâm I, đi qua R» và (α)\nĐường tròn",
+      "selected": "kq_m_vol",
+      "highlighted": [
+        "I",
+        "R",
+        "khoi_sph",
+        "kq_m_vol"
+      ],
+      "isolated": [
+        "khoi_sph"
+      ],
+      "resetSelected": null,
+      "orbitCamera": [
+        5.993366940999297,
+        -7.659805629509285,
+        13.368103337107168
+      ],
+      "xrayAvailable": true,
+      "xrayStatus": [
+        "Đang nhìn xuyên khối: vùng tô thiết diện có thể nằm sau mặt khối."
+      ],
+      "actualEntryGuidance": "Đang dựng (bước 1/4): Dữ kiện đề cho: R = 5.Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hìnhXem mô hình đầy đủ",
+      "actualEntryRendered": [
+        "I"
+      ],
+      "actualAnalysisClosed": true
+    },
+    {
+      "id": "family12_cylinder_ellipse_section",
+      "firstGuidance": "Đang dựng (bước 1/9): Dữ kiện đề cho: R = 2, h = 6.Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hìnhXem mô hình đầy đủ",
+      "analysisClosed": true,
+      "firstRendered": [
+        "O",
+        "O_prime"
+      ],
+      "firstBadges": [],
+      "finalRendered": [
+        "O",
+        "O_prime",
+        "khoi_cyl_1",
+        "duong_tron_day_cyl_1",
+        "duong_tron_day_tren_cyl_1",
+        "truc_O_O_prime",
+        "td_sec_el"
+      ],
+      "answerBadges": [],
+      "analysis": "Đơn vị độ dài: a. Các kích thước đã cho bên dưới là hệ số theo đơn vị này.\n\nKết quả toán học\nDiện tích «Elip giao của khối cong và (P)»\n4π√2a2\nThể tích «Hình trụ đáy tâm O, tâm đáy trên O′, qua R»\n24πa3\nKích thước đã cho\nR = 2\nh = 6\nQuan hệ & Chứng chỉ kiểm chứng\nElip giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua R» và (P)\nElip",
+      "selected": "kq_area_el",
+      "highlighted": [
+        "O",
+        "O_prime",
+        "R",
+        "khoi_cyl_1",
+        "kq_area_el",
+        "mp_sec_el",
+        "td_sec_el"
+      ],
+      "isolated": [
+        "td_sec_el"
+      ],
+      "resetSelected": null,
+      "orbitCamera": [
+        4.2610536103840255,
+        -5.269332282276845,
+        12.21419033016226
+      ],
+      "xrayAvailable": true,
+      "xrayStatus": [
+        "Đang nhìn xuyên khối: vùng tô thiết diện có thể nằm sau mặt khối."
+      ],
+      "actualEntryGuidance": "Đang dựng (bước 1/9): Dữ kiện đề cho: R = 2, h = 6.Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hìnhXem mô hình đầy đủ",
+      "actualEntryRendered": [
+        "O",
+        "O_prime"
+      ],
+      "actualAnalysisClosed": true
+    },
+    {
+      "id": "family13_invalid_geometry_refusal",
+      "firstGuidance": null,
+      "analysisClosed": true,
+      "refusal": "KHÔNG CÓ GIAO TUYẾN\n\nKhông thể dựng giao tuyến vì mặt phẳng cách tâm mặt cầu một khoảng lớn hơn bán kính. Mặt phẳng và mặt cầu không có điểm chung.\n\nDừng ở bước\nkiểm chứng kết quả bằng phép độc lập\nLoại vấn đề\nKHÔNG CÓ GIAO TUYẾN\nChi tiết chẩn đoán",
+      "mainRefusal": "KHÔNG CÓ GIAO TUYẾNKhông thể dựng giao tuyến vì mặt phẳng cách tâm mặt cầu một khoảng lớn hơn bán kính. Mặt phẳng và mặt cầu không có điểm chung.Dừng ở bướckiểm chứng kết quả bằng phép độc lậpLoại vấn đềKHÔNG CÓ GIAO TUYẾN"
+    }
+  ],
+  "xrayDepth": [
+    {
+      "family": "family04_derived_sub_pyramid",
+      "id": "td_ask9",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 1089,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1089,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family07_multi_solid_composition",
+      "id": "day_ABC",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 0,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": false
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1081,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family08_unnamed_section_vertices",
+      "id": "td_ask9",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 484,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 484,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family09_cylinder_and_sections",
+      "id": "td_sec_parallel",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 1698,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "opaque_wall",
+          "changed": 1698,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family09_cylinder_and_sections",
+      "id": "td_sec_axial",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 2080,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 2080,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family10_cone_frustum_cut",
+      "id": "td_sec_cut",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 1698,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "opaque_wall",
+          "changed": 1698,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family10_cone_frustum_cut",
+      "id": "td_sec_axial",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 990,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 990,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family11_sphere_plane_cut",
+      "id": "td_sec_sph",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 1698,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "opaque_wall",
+          "changed": 1698,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family12_cylinder_ellipse_section",
+      "id": "td_sec_el",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 1616,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1616,
+          "pass": true
+        }
+      ]
+    }
+  ]
+}

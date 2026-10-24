@@ -206,6 +206,21 @@ function _banDoDiem(scene: Scene3D): Map<string, SceneObject | null> {
   return m;
 }
 
+/** Id các điểm ngữ nghĩa nằm ĐÚNG một đỉnh thiết diện (toạ độ chính xác, như `_banDoDiem`) — kể cả khi nhiều điểm
+ *  trùng nhau. Chỉ để chọn kiểu NHÃN (vai trò trình bày); không đổi danh tính hay provenance của điểm nào. Người gọi
+ *  truyền các vật CÓ MẶT ở bước đang xem, để một điểm không mang trước vai trò của thiết diện chưa dựng (#31). */
+export function diemTaiDinhThietDien(scene: Pick<Scene3D, "objects">): Set<string> {
+  const dinh = new Set<string>();
+  for (const o of scene.objects) {
+    if (o.type === "section" && o.polygon) for (const v of o.polygon) dinh.add(_khoaToa(v));
+  }
+  const ra = new Set<string>();
+  for (const o of scene.objects) {
+    if (!isSubEntity(o.id) && o.type === "point3" && o.xyz && dinh.has(_khoaToa(o.xyz))) ra.add(o.id);
+  }
+  return ra;
+}
+
 /**
  * Điểm ngữ nghĩa của từng đỉnh thiết diện.
  *

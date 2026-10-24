@@ -1,0 +1,45 @@
+{
+  "schema_version": "scene3d-visual-run/1",
+  "run_id": "scene3d-unified-visual-language",
+  "wave_id": "SCENE3D_UNIFIED_VISUAL_LANGUAGE_W01",
+  "date_local": "2026-10-22",
+  "timezone": "Asia/Bangkok",
+  "branch": "research/scene3d-unified-visual-language",
+  "refs_verified": {
+    "main": "43247c9e9375a3dbf2b5223324a58e6f932ca596",
+    "origin_main": "43247c9e9375a3dbf2b5223324a58e6f932ca596",
+    "source_head": "f95596716912e5550ed079287221274b2d70f24c",
+    "baseline_product": "ca84337e32c27c1116f5b1065ca45f2fcdf3e13c",
+    "baseline_frozen_candidate": "7868db0aef3810e2089b5f8b8d6aecfb8b3e1400",
+    "root_head": "fe9f555437498432427ae6bbd54402cdd59c7eb7"
+  },
+  "supplied_sha_mismatches": [],
+  "product_commits": [
+    "36dfccef9bb3f5bff3e802aece7083a0e747df72",
+    "24e1a9dbe24a5abf965ae268ce89097b67060a53",
+    "34a57d3540f82a78701b0f0caa8dbae746f266d1"
+  ],
+  "product_commit": "34a57d3540f82a78701b0f0caa8dbae746f266d1",
+  "evidence_commit": "672e8fc60465becd666e8450af55d2ea852d277c",
+  "frozen_candidate": "dd3bddd48dad7ff865d7c0442c50b6523d87d3c7",
+  "measured_system_tree_hash": "9bf35a1d6f4c3b3e90228964a3b5ee96288de29efcb3f580f22c6f126489bd9a",
+  "authoritative_arms": ["before", "survey-A-r2", "survey-B-r2", "survey-C-r2", "final-r2"],
+  "default_proposal": "B",
+  "browser_validation": "AUTOMATED_TECHNICAL_PASS 1542/1542",
+  "full_t3": {"directory": "t3-attempt2", "result": "FULL_PRODUCT_GATE_PASS", "interrupted_attempt": "t3"},
+  "post_t3_freeze": "MATCH",
+  "identity_validation": "validation.json PASS 15/15",
+  "independent_reviews": ["review-round1.md", "review-round2.md", "review-round3.md", "review-round4.md", "review-round5.md"],
+  "verdict": "SCENE3D_UNIFIED_VISUAL_LANGUAGE_READY_FOR_HUMAN_REVIEW",
+  "baseline_campaign_worktree_clean": true,
+  "human_visual_approval": "NOT_GRANTED",
+  "go_main": "NOT_GRANTED",
+  "live_provider_calls": 0,
+  "governance": {
+    "default_mode": "LLM_ONLY",
+    "response_contract": "flat",
+    "hybrid_product_enablement": "NO-GO",
+    "allow_live_ai": 0,
+    "cache_version": 127
+  }
+}

@@ -93,6 +93,33 @@ Run `docs/evaluation/geometry/runs/typedfactnext-planner-bridge/`; architecture 
 | `backend/app/simulation/geometry_functions/engine.py` | `_Dung.kiem_dinh_cat` (vertex on edge, 0 < t ≤ 1); typed `IR_MEMORY_BUDGET_EXCEEDED`; teaching expansion skipped (traced) when over the IR budget; `geometry-function-engine/10` | same |
 | `backend/app/ai/hybrid_preview.py` · `backend/app/ai/fact_extraction.py` | preview births read from group-event `objects`; provider facts with bridge-only fields refused (`INTERNAL_FIELD_FROM_PROVIDER`) | same; `backend/tests/test_hybrid_preview_fixtures.py` |
 
+## Local Scene3D unified visual language
+
+Run `docs/evaluation/geometry/runs/scene3d-unified-visual-language/`; contract `docs/architecture/SCENE3D_VISUAL_LANGUAGE.md`.
+`frontend/src/simulations/domains/geometry/scene3d-roles.ts` extends the existing shared role authority with typed
+`PHONG_CACH_SCENE3D`, `vaiTroMien` (surface/formation metadata) and `vaiTroKhoi` (complete construction history,
+stable through visibility/array-order changes). `scene3d-view.tsx::buildObject3D` consumes these for every mesh
+technique; unlit single-pass flat fills and common lit shells preserve existing depth/occlusion/camera rules.
+Per-owner `spanMaterial` reuses encountered line styles; `disposeScene3DObject` releases attached/inactive resources.
+CSS causal blue in `styles/tokens.css` stays locked by role tests. Behavior tests:
+`scene3d-unified-materials.test.ts`, existing material/hidden-line/role tests. A/B/C and browser measurements live
+only in the run; no product theme UI, backend authority or route/cache change.
+
+**SGK_REFERENCE port** (run `docs/evaluation/geometry/runs/scene3d-html-visual-port/`): `PHONG_CACH_SCENE3D` now
+carries the reference palette plus `fatPx` and `rightAngle`. `scene3d-view.tsx::voKhoiHaiLuot` (unlit back+front shell
+passes), `dauGocVuong` + exported `datCoGocVuong(roots, cam, hCss)` (per-frame screen-sized right-angle marks, dedupe);
+`scene3d-edge-visibility.ts::heSoNetTheoKhung(hCss)` (Line2 width scale); `scene3d-subentities.ts::diemTaiDinhThietDien`
+(points at a section vertex, exact coordinates — label style only); `scene3d-camera.ts::HUONG_SGK` (view-scorer pull).
+Tests: `scene3d.test.tsx` "SGK: ký hiệu vuông góc…", `simulation-visual-consistency-session1.test.tsx`.
+
+## Final visual UX quality correction (`research/visual-ux-final-quality`)
+
+Run `docs/evaluation/geometry/runs/visual-ux-final-quality/`. Presentation-only corrections reuse `UnsupportedNotice` in `SimulationWorkspace.tsx` (structured refusal labels, exact code-token cleanup, collapsed diagnostics); `phanTichToanHocCuaCanh` in `scene3d-model.ts` (verified solid display mappings, safe fallback labels, declared length-unit context); `Scene3DExplorer.tsx` (superscripts, construction guidance, last-construction preview, explicit x-ray); `scene3d-playback.tsx` (x-ray prop forwarding); `scene3d-view.tsx::buildObject3D` (depth-correct fills by default, x-ray only by user choice); and `scene3d-model.ts::diemHuuHan` (enclosing radial corners for first-load framing). Tests: `frontend/src/simulations/domains/geometry/final-quality.test.tsx`, existing section/cone/refusal/Explorer regression tests, and the run's `check-browser.mjs`. Backend authority, route/cache/default mode are unchanged.
+
+## Simulation Visual Consistency & Learning UX (`research/simulation-visual-consistency-learning-ux`)
+
+Run `docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/`. Two-session integrated campaign (`GO_SIMULATION_VISUAL_CONSISTENCY_LEARNING_UX_LOCAL`): Session 1 unifies `Scene3D` visual semantics across polyhedra and curved solids in `frontend/src/simulations/domains/geometry/scene3d-view.tsx` (muted slate `nen(MAU.mesh)` `0x647a96` on `curved_solid`, `BASE_REGION` dark slate ring + cap fill vs. `SECTION_REGION` warm amber ring + `section_fill:<id>` translucent disk on `circle3`/`ellipse3`, auto-framing on load via `khungNhinSuPham`), `frontend/src/simulations/domains/geometry/scene3d-model.ts` (`diemHuuHan` full 3D radial bounding extents for `curved_solid`/`circle3`/`ellipse3`), `frontend/src/simulations/domains/geometry/interaction-state.ts` (`HANG_MUC` base vs. section grouping), `frontend/src/simulations/domains/geometry/pick-target.ts` (`HANG_CU_THE` raycast specificity ranks), and `backend/app/ai/adapter3_simulation.py` (`_run_curved_route` canonical `A'`/`B'`/`O'`/`R`/`h`/`r` notations and `surface_role`). Session 2 separates Mode A (Simulation default hiding all final requested answers via `tapKetQuaCuoi`) and Mode B (Mathematical Analysis panel `#geo3d-bang-phan-tich` via `phanTichToanHocCuaCanh` + 8-category `phanLoaiVat` in `scene3d-model.ts` and `Scene3DExplorer.tsx`). Tested in `backend/tests/geometry/test_simulation_visual_ux_campaign.py`, `frontend/src/simulations/domains/geometry/simulation-visual-consistency-session1.test.tsx`, `frontend/src/simulations/domains/geometry/simulation-learning-ux-session2.test.tsx`, and `docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/ux_eval.py`.
+
 ## Simulation evidence repair (`research/simulation-evidence-repair`)
 
 Current capability authority: `docs/evaluation/geometry/runs/simulation-evidence-repair/capability-matrix.md`; supersedes unsupported residual-mesh claims in the historical campaign matrix. New evidence-only capture tooling lives in that run (`capture.py`, binary subprocess streams; `probe-browser.mjs`, separate environment probe). Existing `run_browser_audit.mjs`, `full-gate.mjs`, product and test code are reused unchanged. Dedicated residual mesh NOT_IMPLEMENTED; standalone cone_frustum BLOCKED_BY_KERNEL; ellipse browser scope BACKEND_ONLY.

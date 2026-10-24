@@ -1,0 +1,35 @@
+{
+  "command": [
+    "npm.cmd",
+    "run",
+    "build"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\scene3d-unified-visual-language\\frontend",
+  "source_commit": "f95596716912e5550ed079287221274b2d70f24c",
+  "dirty_before": "M docs/CODE_INDEX.md\n M docs/architecture/README.md\n M frontend/src/simulations/domains/geometry/scene3d-hidden-lines.test.tsx\n M frontend/src/simulations/domains/geometry/scene3d-roles.ts\n M frontend/src/simulations/domains/geometry/scene3d-view.tsx\n M frontend/src/simulations/domains/geometry/scene3d.test.tsx\n M frontend/src/simulations/domains/geometry/simulation-visual-consistency-session1.test.tsx\n M frontend/src/styles/tokens.css\n?? debug.log\n?? docs/architecture/SCENE3D_VISUAL_LANGUAGE.md\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/\n?? frontend/src/simulations/domains/geometry/scene3d-unified-materials.test.ts",
+  "started_utc": "2026-10-22T04:43:24.488028+00:00",
+  "timeout_seconds": 300,
+  "attempt_limit": 1,
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "PYTEST_DEBUG_TEMPROOT": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\scene3d-unified-visual-language\\.superpowers\\pytest-temp"
+  },
+  "timed_out": false,
+  "exit_code": 0,
+  "elapsed_seconds": 4.906,
+  "finished_utc": "2026-10-22T04:43:29.399407+00:00",
+  "dirty_after": "M docs/CODE_INDEX.md\n M docs/architecture/README.md\n M frontend/src/simulations/domains/geometry/scene3d-hidden-lines.test.tsx\n M frontend/src/simulations/domains/geometry/scene3d-roles.ts\n M frontend/src/simulations/domains/geometry/scene3d-view.tsx\n M frontend/src/simulations/domains/geometry/scene3d.test.tsx\n M frontend/src/simulations/domains/geometry/simulation-visual-consistency-session1.test.tsx\n M frontend/src/styles/tokens.css\n?? debug.log\n?? docs/architecture/SCENE3D_VISUAL_LANGUAGE.md\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/\n?? frontend/src/simulations/domains/geometry/scene3d-unified-materials.test.ts",
+  "streams": {
+    "stdout": {
+      "bytes": 394,
+      "sha256": "873b8fa510513cff5958dbecee639938ce2995f31b3a7e0054d29570e6806b73"
+    },
+    "stderr": {
+      "bytes": 332,
+      "sha256": "ccb6bf354a0674eeb1e49df9a880a000b75240079fdb849282bb899d81eeb58c"
+    }
+  }
+}

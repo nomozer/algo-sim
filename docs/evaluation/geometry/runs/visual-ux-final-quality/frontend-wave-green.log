@@ -1,0 +1,34 @@
+
+> algo-sim-frontend@0.1.0 test:wave
+> vitest run && tsc -b && vite build
+
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-ux-final-quality/frontend
+
+ ❯ src/components/hybrid-preview-contract.test.tsx (41 tests | 1 failed) 1921ms
+       × toàn bộ 25 fixture refusal-* không lộ mã kỹ thuật và tuân thủ luật refusal_cause 25ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/hybrid-preview-contract.test.tsx > Hybrid Preview Contract v2 — 41 fixtures & F1–F6 > F5 & F6 — 25 fixture refusal-* và 4 fixture gate-* > toàn bộ 25 fixture refusal-* không lộ mã kỹ thuật và tuân thủ luật refusal_cause
+AssertionError: refusal-invalid-contradiction: expected '<section class="card"><span class="ey…' not to contain 'INCONSISTENT_FACTS'
+
+Expected: "INCONSISTENT_FACTS"
+Received: "<section class="card"><span class="eyebrow">DỮ KIỆN MÂU THUẪN</span><p style="margin-top:var(--sp-sm)">Các dữ kiện dùng để dựng hình mâu thuẫn nhau hoặc làm hình suy biến, nên không có hình nào thoả tất cả. AlgoSim dừng lại thay vì dựng một hình sai.</p><dl class="refusal-facts"><div><dt>Dừng ở bước</dt><dd>Không xác định được</dd></div><div><dt>Loại vấn đề</dt><dd>DỮ KIỆN MÂU THUẪN</dd></div></dl><details><summary>Chi tiết chẩn đoán</summary><code>INCONSISTENT_FACTS</code><p>Các dữ kiện dùng để dựng hình mâu thuẫn nhau hoặc làm hình suy biến, nên không có hình nào thoả tất cả. AlgoSim dừng lại thay vì dựng một hình sai.</p></details></section>"
+
+ ❯ src/components/hybrid-preview-contract.test.tsx:546:33
+    544|         ).replace(/<!--.*?-->/g, "");
+    545|         expect(out, row.id).toContain(env.learner_reason);
+    546|         expect(out, row.id).not.toContain(env.reason_code);
+       |                                 ^
+    547|         expect(out, row.id).not.toContain(env.failure_category);
+    548|         expect(out, row.id).not.toContain("hybrid-route-d-preview");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 74 passed (75)
+      Tests  1 failed | 1174 passed (1175)
+   Start at  01:38:23
+   Duration  6.83s (transform 9.85s, setup 2.51s, import 20.83s, tests 15.31s, environment 17ms)
+

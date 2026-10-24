@@ -1,0 +1,1436 @@
+{
+  "source_head": "f6a8e30fb70d377c5a8a97db476ebd4d7c090336",
+  "policy": "Original source worktree and frozen candidate untouched; every historical campaign artifact hashed",
+  "files": [
+    {
+      "path": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+      "bytes": 3603,
+      "sha256": "daac98f1dd041a05c2a7c10a9f063dff3c53773e97e99d97a7acbd67240c6070"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/.gitattributes",
+      "bytes": 33,
+      "sha256": "ca17b5050b52c2ea170df979f6d357a01bbf5137a4fe06a7720f56fe3b74abb4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/browser-after/visual_ux_acceptance_receipt.json",
+      "bytes": 117313,
+      "sha256": "486837f325cc4324d60eefbf0a650105e615fc3a516548d5286d39c7c04569fb"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/browser-baseline/baseline_audit_receipt.json",
+      "bytes": 109436,
+      "sha256": "c2e0a4d7ea1a3cc84114cc0b33bef457e7c4b42d35dcb0d80790389e605156a8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/browser-session1/session1_audit_receipt.json",
+      "bytes": 109379,
+      "sha256": "1a4e275b0cc3da1968306fd55eb21a3b9633f64d0d879820e39beb4d6bd0c1a0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/build_audit_scenes.py",
+      "bytes": 13020,
+      "sha256": "958ff5daac93623dc0679c0fdbedc36b6bbc34605dae5dfc11ff48b0ae7d13af"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/candidate_divergence.json",
+      "bytes": 2974,
+      "sha256": "79f91290909912011577bfca1742bbeefd22954faf7df09a548fee388ae91956"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/corpus-dev.json",
+      "bytes": 9444,
+      "sha256": "b52d9fb488aa4be2be187f13ddf695d944e986acb59a91e1f0a5e47595a18721"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/demos/audit_scenes.json",
+      "bytes": 1659481,
+      "sha256": "449bffe184af28c333b74c03193a605ec2e2f6af2240290bf76430d0bb85b8f8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/demos/demo6d-curved-cylinder-ellipse-cut.json",
+      "bytes": 92562,
+      "sha256": "d30588e94d32ac30065d99e973190e15178ca294afcd58f65aa6a8ceece0ee25"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/eval-summary.json",
+      "bytes": 32854,
+      "sha256": "65f9e480b0198de11752756f93ea81e0707027580221e48901280c3eaef610f2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/FINAL_HANDOFF.md",
+      "bytes": 13443,
+      "sha256": "fd5ae8d447616fc47e955e0d507e8afcf32abde33091084ee6420485ff3d209e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/INDEPENDENT_REVIEW.md",
+      "bytes": 9120,
+      "sha256": "32ae3f33bc3169733556fca3f2d8643740ddc54b018663eb444b71b0d14ccb64"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/report.md",
+      "bytes": 2502,
+      "sha256": "92c77b9e96d84f709d7c8f5ccc2f5524ed9d86ea50fdc16775834235bb2b34d4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/run.json",
+      "bytes": 2555,
+      "sha256": "a80e934bc997e9b63ae30921360f7d617cf30fe7a9d212ffa7c7b5eb74b706f2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/run_visual_ux_audit.mjs",
+      "bytes": 25897,
+      "sha256": "c9ca23dceafd5bd73480de131933cd8fe42d9f47e7308fdb736086886c53631c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family01_triangular_pyramid_default.png",
+      "bytes": 91756,
+      "sha256": "d19efa22fa348c028b2f7e47205b196aa48d2bd929600085a3596d8a7ca47798"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family01_triangular_pyramid_exploded.png",
+      "bytes": 100725,
+      "sha256": "93420d83ea64abc51a1b969ec5cf01a95062528b2ece46dbe5d1becb731da533"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family01_triangular_pyramid_explorer.png",
+      "bytes": 143002,
+      "sha256": "c28ca168f1dfdad2c32a90c4ddea9e867865e73063e82a5cc2d5f7d4c938a5bb"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family01_triangular_pyramid_explorer_mode_b.png",
+      "bytes": 182756,
+      "sha256": "ee333c3913fb2a11dd664898d25e205e15e68f2a201215dda375ace95b1d8719"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family01_triangular_pyramid_orbit.png",
+      "bytes": 69156,
+      "sha256": "f5164eb5834749a91fa0a64eecf9fd9422386e5b0671febfcd7c724d0d4304c6"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family01_triangular_pyramid_selected.png",
+      "bytes": 89914,
+      "sha256": "ea645ac891f593c26f022798332ea0b197357f9f7e0f037fe06bddcd78eadb27"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family01_triangular_pyramid_step0.png",
+      "bytes": 65256,
+      "sha256": "eb1d4598eeae0ad7d9d64bf6871fb70223fffb95a4834c0988a48bbe8ac1bcc2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family02_quadrilateral_pyramid_default.png",
+      "bytes": 96892,
+      "sha256": "211245aa38fd4dcaecabbb960665a42280e2a0dc71f50a79b252500bc6e0d085"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family02_quadrilateral_pyramid_exploded.png",
+      "bytes": 107431,
+      "sha256": "a3bab16dfc3b11c026786e51c466a9c65ae90131d5112506c9126847800d0145"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family02_quadrilateral_pyramid_explorer.png",
+      "bytes": 141372,
+      "sha256": "66f319dcd972475091e68e1fa58ff6c98becb0221dbca6c1e0437a61358cc2ae"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family02_quadrilateral_pyramid_explorer_mode_b.png",
+      "bytes": 171084,
+      "sha256": "2a293927f10038caffb5b857849da847478df8d3b01e230144e5596c007547fc"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family02_quadrilateral_pyramid_orbit.png",
+      "bytes": 74799,
+      "sha256": "3744c948fe6306627cd43c5f1a008f7f62c1a220b94bce2669d7dcc3b00a7ff0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family02_quadrilateral_pyramid_selected.png",
+      "bytes": 96325,
+      "sha256": "082382230e642173c5913c0784782c8989c4fb145cdadbb16098abbaa7492daf"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family02_quadrilateral_pyramid_step0.png",
+      "bytes": 67679,
+      "sha256": "30ac38ab10eecb4d418f2159fb9ff3213ec719799cf59bbde706a877d98f1e38"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family03_regular_pyramid_default.png",
+      "bytes": 100250,
+      "sha256": "14225641753100ecf5bbe9252ec48718e816542c5f757f95d8b26530c8646c0d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family03_regular_pyramid_exploded.png",
+      "bytes": 108297,
+      "sha256": "5444b732d68311367f254f04e98987083fac4c0cdffc950e51617c348ffa4648"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family03_regular_pyramid_explorer.png",
+      "bytes": 166923,
+      "sha256": "3558616a6f3962101af0136a121fa43ea00b4e64cf106cdbfc7cf9f3f1a72875"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family03_regular_pyramid_explorer_mode_b.png",
+      "bytes": 198966,
+      "sha256": "d5bb74fd7ac20c7ab4d9d2203dce83caf37b97822eddb9c0f83cfd8d63c25e4e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family03_regular_pyramid_orbit.png",
+      "bytes": 97711,
+      "sha256": "3045139cccb1633a2f68984c4eb49b3c7de834c2bfea8001fadc53519430797e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family03_regular_pyramid_selected.png",
+      "bytes": 98449,
+      "sha256": "4337b4fb2053de49e90af2a78519f249836c62dce8c0c1bd748ccf9aca9431db"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family03_regular_pyramid_step0.png",
+      "bytes": 67413,
+      "sha256": "bff993a04ee3ebec0650802f4580c98257adc77a0643b10661256d71b6749ada"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family04_derived_sub_pyramid_default.png",
+      "bytes": 95481,
+      "sha256": "fa78944d0681fdb43474086808b0b2b622f1b1b5e85f630c1b4713cf8122f199"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family04_derived_sub_pyramid_exploded.png",
+      "bytes": 102553,
+      "sha256": "304682f79835e0a6370177a073c98731892538b257eb32e49b09ca041a74714b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family04_derived_sub_pyramid_explorer.png",
+      "bytes": 144777,
+      "sha256": "896d99faad1388d910cd9fcf437cfc3aa69a87f6b4f736b7c24955de8a22f030"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family04_derived_sub_pyramid_explorer_mode_b.png",
+      "bytes": 186417,
+      "sha256": "e6e8d1fda4954240946677955dcaad2d5e95f7d29782ff108d77e4b23e96e9ac"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family04_derived_sub_pyramid_orbit.png",
+      "bytes": 84755,
+      "sha256": "863a093da5f4f4d4adbea09165c4265bafa6d59492348d5eef8420ed60b16d0f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family04_derived_sub_pyramid_selected.png",
+      "bytes": 97617,
+      "sha256": "cf84a983cbc7df1b0b693284570b0939e162bd731eb4e5a4b751975fb8cf15ce"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family04_derived_sub_pyramid_step0.png",
+      "bytes": 68136,
+      "sha256": "0ba905fcdb02b952396d8deb3d3d7829bf0b3292af4e3e73712bfc255c45bc55"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family05_prism_default.png",
+      "bytes": 103264,
+      "sha256": "83bc6333cf0d066ec8edc89478937530bfc3b6c2334c628303752b7ac9d57342"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family05_prism_exploded.png",
+      "bytes": 105812,
+      "sha256": "6e55de864ce05a4978999d52391e6fa45527c4817f9b005e859986334318ee7f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family05_prism_explorer.png",
+      "bytes": 143768,
+      "sha256": "e84830e129cba37708288a46d99030846238bbaa130883ac673e878722ec3a98"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family05_prism_explorer_mode_b.png",
+      "bytes": 171488,
+      "sha256": "04c00fdd8989f538b8aaa20718f9dad8b4fc8794d7460bab1ae4fa9127d1dc84"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family05_prism_orbit.png",
+      "bytes": 87380,
+      "sha256": "a941cb31eaaecb396b570d28a3e753b54c496d53537c2f41c7b75cae70cd3ea3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family05_prism_selected.png",
+      "bytes": 103285,
+      "sha256": "1aec781f5bd97e32d729d27b9b33bb0ca6d67933ad179cebf26271b803e8b6f0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family05_prism_step0.png",
+      "bytes": 67869,
+      "sha256": "52d64f98a4968dc544d7e6324b513b2767ae09a88e2b14936d0ac2208044f6d6"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family06a_cube_default.png",
+      "bytes": 107021,
+      "sha256": "206c4a58db344c68edf152005e9d4c8a166574c91f863b2d9d0b2aec8cc46444"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family06a_cube_exploded.png",
+      "bytes": 116436,
+      "sha256": "f09c917c6fa074fea62f9441f1cd6c0b022369e177cc09c570c35e9b66a043ce"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family06a_cube_explorer.png",
+      "bytes": 148098,
+      "sha256": "7da2ad9e1c19b90737cd19d2b12d92f10c1d915509fcb4d7cc315958c03ffeee"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family06a_cube_explorer_mode_b.png",
+      "bytes": 176086,
+      "sha256": "acdc8633fc35dad421303ac0a941e134ac1802e964c15c4636377eeb7c573223"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family06a_cube_orbit.png",
+      "bytes": 93857,
+      "sha256": "7cf01068d2f0a4cdc946c2c94ad2d4e84e623e2dc000aa6021ab408bd7258558"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family06a_cube_selected.png",
+      "bytes": 105907,
+      "sha256": "49071d5ef79128a2682f1f77dbd09d6059a4072a2254a07c313b54bcea3f539b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family06a_cube_step0.png",
+      "bytes": 72486,
+      "sha256": "0b279074e926571986dcf423c1d137059a308e70867a171aa51314a900152f01"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family06b_cuboid_default.png",
+      "bytes": 107313,
+      "sha256": "3fd210220b32ed39764eb53912bf81de42118358d54870385d66c3cf8c049844"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family06b_cuboid_exploded.png",
+      "bytes": 115315,
+      "sha256": "fec9b5599a78947ce316b9ce7340def97ef4f9dd054e0bf28434c221c94deafb"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family06b_cuboid_explorer.png",
+      "bytes": 146882,
+      "sha256": "37b7a13adc1f9ed2368823e1506e873a1edc219a3965326a804475110c9860f0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family06b_cuboid_explorer_mode_b.png",
+      "bytes": 178748,
+      "sha256": "5b4593f8d5695c0db8033308ee7a8a5ff7fbbd4f54ea2f2decdbdf71428923e4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family06b_cuboid_orbit.png",
+      "bytes": 88725,
+      "sha256": "ffd280e2ca70118ff042f1a0804337721711d96028f50032a7e9b56c2571403a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family06b_cuboid_selected.png",
+      "bytes": 106094,
+      "sha256": "4b989af3cb6b6be2f6f7276697c17796e51c6620ab7f980c729d1c21fe0948b2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family06b_cuboid_step0.png",
+      "bytes": 73146,
+      "sha256": "3c6ff56b5d17ffa6e1e6e2198006cf957546ef54ac6731c212607ce500117681"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family07_multi_solid_composition_default.png",
+      "bytes": 104766,
+      "sha256": "11c8dddc2c9e3ba41690e939345206a7bbc3d537f9a7078dc9eebe9cb2a44836"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family07_multi_solid_composition_exploded.png",
+      "bytes": 111089,
+      "sha256": "596660e9e7f533369341521d2558c0b9740c5631e0a41e3e6396bbaa1c21aeee"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family07_multi_solid_composition_explorer.png",
+      "bytes": 135348,
+      "sha256": "d9693117e2062a773f20eb744c4be3770a5f3d039bf6bd8a63ca2d52e72f3461"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family07_multi_solid_composition_explorer_mode_b.png",
+      "bytes": 177426,
+      "sha256": "57f64cc13922255687d4cb84a3be064b7bf3a0bb49b8a56a59921616f3978456"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family07_multi_solid_composition_orbit.png",
+      "bytes": 85340,
+      "sha256": "07a32f17db85a48c632048c489cb3c92fcedf196a433e88d426d4df09aeea010"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family07_multi_solid_composition_selected.png",
+      "bytes": 104028,
+      "sha256": "c1bc4e2baca436d381d5a362374f7bcd5bbb0503bfc948fa0f2f88346c17339a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family07_multi_solid_composition_step0.png",
+      "bytes": 68393,
+      "sha256": "b2697ea43b85bf84a7acd697e0b82ad14ab1e02d6271832d1c3e6191b22d3245"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family08_unnamed_section_vertices_default.png",
+      "bytes": 91829,
+      "sha256": "e9b1715b6d3dd1e85710d725da863dde554c4d43c15ae125afd21dcbc56f9f6c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family08_unnamed_section_vertices_exploded.png",
+      "bytes": 101368,
+      "sha256": "87f1ae19890c049e3fe000fe028ed7db7a75a23b660344e0c239d350bf7cf4e4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family08_unnamed_section_vertices_explorer.png",
+      "bytes": 151098,
+      "sha256": "bf3a46e7736c13dfd8169d402f12da8678cee3b67beb55b5750912353f379d86"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family08_unnamed_section_vertices_explorer_mode_b.png",
+      "bytes": 193066,
+      "sha256": "b544a205e5cd2c24cd83b4b9bda8302c7baed8403885c1b47dcd2b74744089a6"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family08_unnamed_section_vertices_orbit.png",
+      "bytes": 81860,
+      "sha256": "acdfa1f04b53cda32e82bef655f328a85b543df6afe5847052d86835acf93c3f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family08_unnamed_section_vertices_selected.png",
+      "bytes": 92233,
+      "sha256": "39cb8d6a8a5364dc1cb7728fde160ec616d2415384c4311b6912cb234e69f5e4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family08_unnamed_section_vertices_step0.png",
+      "bytes": 67536,
+      "sha256": "0b0c19cbc8dc6717aadd199e4d06b2ab4153192223618cbacebb42cba77a9d78"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family09_cylinder_and_sections_default.png",
+      "bytes": 113978,
+      "sha256": "60de3aa7236b45b32a0ae333745e0fe2189d52ec05c3a41dfbdaf24a3bf7310d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family09_cylinder_and_sections_exploded.png",
+      "bytes": 109358,
+      "sha256": "28480071709129edadcfd49f4a3504b4d4dac9d93991f0dbe2b1a48b4e291b34"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family09_cylinder_and_sections_explorer.png",
+      "bytes": 151068,
+      "sha256": "dd1c92c2877af58218ef256777a6dfc57b9eec2bfd4cabdb1efac275d62ab569"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family09_cylinder_and_sections_explorer_mode_b.png",
+      "bytes": 190048,
+      "sha256": "56d90e34fc1ec624d15ef93834249405fa1befe49b9c0c9d1959738a72b4c4e8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family09_cylinder_and_sections_orbit.png",
+      "bytes": 113067,
+      "sha256": "7ed903457e9d3ab664301334f663c3c4609e7514fb9090c06f1e0e80c0037c48"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family09_cylinder_and_sections_selected.png",
+      "bytes": 118932,
+      "sha256": "cfa44ae4c454503385aa38c909c8c4edb1be772cd08f47c628720297a7f1895c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family09_cylinder_and_sections_step0.png",
+      "bytes": 68146,
+      "sha256": "2673d66da52274da51f9d589cf6ae1d9bcd78dd9293518530cea84bd52cfca4b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family10_cone_frustum_cut_default.png",
+      "bytes": 108088,
+      "sha256": "113f7093dceee17a98b1a9d668a66d08a2a4f7a1057e2267c2d04f5dc4d3f867"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family10_cone_frustum_cut_exploded.png",
+      "bytes": 110364,
+      "sha256": "fb32b886e04853b9d4732562406de4421373d4169f08bb39c62d9e14145e0029"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family10_cone_frustum_cut_explorer.png",
+      "bytes": 153826,
+      "sha256": "47850cd8b0a9304893ba32f6649b980ce433eb38ae73629bf3c74fc222ce132c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family10_cone_frustum_cut_explorer_mode_b.png",
+      "bytes": 192790,
+      "sha256": "32729d3b09fd84cc4ef0b061d6e15c41366abe2a4fe31db55b3d6f7c74dc1b39"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family10_cone_frustum_cut_orbit.png",
+      "bytes": 110471,
+      "sha256": "37a44b463732929554c1a6b570a971bf12f3cea5b060ea81de3647e5f277b47b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family10_cone_frustum_cut_selected.png",
+      "bytes": 102796,
+      "sha256": "46d5d78311b2d757b4a2f3273abb9b129c711c7e01bb8af71496bad09eab71c3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family10_cone_frustum_cut_step0.png",
+      "bytes": 65902,
+      "sha256": "e3b4a2591f28e36bd66e0b1fbd0aae3db254e1d7e1f80927ff74c697bf5c4386"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family11_sphere_plane_cut_default.png",
+      "bytes": 87834,
+      "sha256": "b12365d49bb7e9991134f826fc099e2fb0a28f1f045bfdd130956a2af3654507"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family11_sphere_plane_cut_exploded.png",
+      "bytes": 87834,
+      "sha256": "b12365d49bb7e9991134f826fc099e2fb0a28f1f045bfdd130956a2af3654507"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family11_sphere_plane_cut_explorer.png",
+      "bytes": 139779,
+      "sha256": "38bef56a677aa9100ca04c97e5deb84ea476e523f9b59a6b7b4ddcd6f5e01d33"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family11_sphere_plane_cut_explorer_mode_b.png",
+      "bytes": 184087,
+      "sha256": "4f552dc605f9bb78d835d8dbfcbcc90ee560634e1f7f35b19e5a137514033e07"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family11_sphere_plane_cut_orbit.png",
+      "bytes": 92843,
+      "sha256": "cb04bc4d754294833bb964fb09abeb48780fb2f15d8a43551aec244022d5b4e4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family11_sphere_plane_cut_selected.png",
+      "bytes": 94258,
+      "sha256": "f19ad4eaabb74f79f11959938c23ee3d485dc9c7c5dc9f72c85ec060f1e7bc5d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family11_sphere_plane_cut_step0.png",
+      "bytes": 62349,
+      "sha256": "d19b55e9ecda40fdb658361f9e10cb11aa8b60e9cdc722592b94769b7290022a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family12_cylinder_ellipse_section_default.png",
+      "bytes": 96890,
+      "sha256": "404994650aa701ff409e85fd1e1ccc6f817dd8ef699c44d5ef97e392c6db3049"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family12_cylinder_ellipse_section_exploded.png",
+      "bytes": 96890,
+      "sha256": "404994650aa701ff409e85fd1e1ccc6f817dd8ef699c44d5ef97e392c6db3049"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family12_cylinder_ellipse_section_explorer.png",
+      "bytes": 135187,
+      "sha256": "59ec11557d15b0cd9e5f2f28843e43ea4c3e4c471e8e13d2c0392f67c3f962fc"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family12_cylinder_ellipse_section_explorer_mode_b.png",
+      "bytes": 172048,
+      "sha256": "5b95eaf83590b1f77b6a85a221e86ec7d35567cd4fd6c042f4937e91cc901fe7"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family12_cylinder_ellipse_section_orbit.png",
+      "bytes": 100828,
+      "sha256": "0ae560445217d60dfd4b144610cb91905e5bb50ed43aa4cd7d54728d9cf2563b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family12_cylinder_ellipse_section_selected.png",
+      "bytes": 106105,
+      "sha256": "5915f7315e73fba8da7f5c5de59dda11ffa6e7c9be37b18c0401d44750c4e129"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family12_cylinder_ellipse_section_step0.png",
+      "bytes": 63270,
+      "sha256": "74fa50299e4aa9201ce052dcd3db9895215886f09466c47c454c9555f17e7ed8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/after/family13_invalid_geometry_refusal_refused.png",
+      "bytes": 34313,
+      "sha256": "b2fe791eabddc386243be1e8da4b883ede89c25e23d63efdda81a3a4abc3f443"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family01_triangular_pyramid_default.png",
+      "bytes": 91756,
+      "sha256": "d19efa22fa348c028b2f7e47205b196aa48d2bd929600085a3596d8a7ca47798"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family01_triangular_pyramid_exploded.png",
+      "bytes": 100725,
+      "sha256": "93420d83ea64abc51a1b969ec5cf01a95062528b2ece46dbe5d1becb731da533"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family01_triangular_pyramid_explorer.png",
+      "bytes": 141696,
+      "sha256": "7ba013433fff4ecab7f0bfaadee2ac7134d3f276b055bb3ec8430528127f703e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family01_triangular_pyramid_orbit.png",
+      "bytes": 69047,
+      "sha256": "03259667760f2a48eb1ec2e47970cb3d651fecbbc06b9216ab50475b34018c6b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family01_triangular_pyramid_selected.png",
+      "bytes": 89914,
+      "sha256": "ea645ac891f593c26f022798332ea0b197357f9f7e0f037fe06bddcd78eadb27"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family01_triangular_pyramid_step0.png",
+      "bytes": 65256,
+      "sha256": "eb1d4598eeae0ad7d9d64bf6871fb70223fffb95a4834c0988a48bbe8ac1bcc2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family02_quadrilateral_pyramid_default.png",
+      "bytes": 96892,
+      "sha256": "211245aa38fd4dcaecabbb960665a42280e2a0dc71f50a79b252500bc6e0d085"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family02_quadrilateral_pyramid_exploded.png",
+      "bytes": 107431,
+      "sha256": "a3bab16dfc3b11c026786e51c466a9c65ae90131d5112506c9126847800d0145"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family02_quadrilateral_pyramid_explorer.png",
+      "bytes": 140090,
+      "sha256": "d79c9fccf2598e39cb8ba4cd7e92629198cefaf3a075e313a9947cb4160c852d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family02_quadrilateral_pyramid_orbit.png",
+      "bytes": 74570,
+      "sha256": "1ada46b5edeb555cd356059c5e60991d224572f46de4cc4ab4d68b640e9f9d3d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family02_quadrilateral_pyramid_selected.png",
+      "bytes": 96325,
+      "sha256": "082382230e642173c5913c0784782c8989c4fb145cdadbb16098abbaa7492daf"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family02_quadrilateral_pyramid_step0.png",
+      "bytes": 67679,
+      "sha256": "30ac38ab10eecb4d418f2159fb9ff3213ec719799cf59bbde706a877d98f1e38"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family03_regular_pyramid_default.png",
+      "bytes": 100250,
+      "sha256": "14225641753100ecf5bbe9252ec48718e816542c5f757f95d8b26530c8646c0d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family03_regular_pyramid_exploded.png",
+      "bytes": 108297,
+      "sha256": "5444b732d68311367f254f04e98987083fac4c0cdffc950e51617c348ffa4648"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family03_regular_pyramid_explorer.png",
+      "bytes": 165552,
+      "sha256": "4684390b50c84f9ed38c926a66d7dc00f217815dd0d620c8d2e1d63892d0823d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family03_regular_pyramid_orbit.png",
+      "bytes": 97646,
+      "sha256": "d19ba89e36486db9b477301b743d63faa3bb2e7165970607b067c5f835ff7acc"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family03_regular_pyramid_selected.png",
+      "bytes": 98449,
+      "sha256": "7480536066b810a1137edfdb92200f10f6c450e53f1fca410ed3652dbd71a7d7"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family03_regular_pyramid_step0.png",
+      "bytes": 67413,
+      "sha256": "bff993a04ee3ebec0650802f4580c98257adc77a0643b10661256d71b6749ada"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family04_derived_sub_pyramid_default.png",
+      "bytes": 95481,
+      "sha256": "fa78944d0681fdb43474086808b0b2b622f1b1b5e85f630c1b4713cf8122f199"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family04_derived_sub_pyramid_exploded.png",
+      "bytes": 102553,
+      "sha256": "304682f79835e0a6370177a073c98731892538b257eb32e49b09ca041a74714b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family04_derived_sub_pyramid_explorer.png",
+      "bytes": 143609,
+      "sha256": "367e4518b3f918099df46d5d14074a040b20de6238d71893119670bb0208f24a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family04_derived_sub_pyramid_orbit.png",
+      "bytes": 85326,
+      "sha256": "916bf82f35007d53da58f7f80200aef0c8237766c8bcf45ab01768b6c75296e0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family04_derived_sub_pyramid_selected.png",
+      "bytes": 97617,
+      "sha256": "cf84a983cbc7df1b0b693284570b0939e162bd731eb4e5a4b751975fb8cf15ce"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family04_derived_sub_pyramid_step0.png",
+      "bytes": 68136,
+      "sha256": "0ba905fcdb02b952396d8deb3d3d7829bf0b3292af4e3e73712bfc255c45bc55"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family05_prism_default.png",
+      "bytes": 103264,
+      "sha256": "83bc6333cf0d066ec8edc89478937530bfc3b6c2334c628303752b7ac9d57342"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family05_prism_exploded.png",
+      "bytes": 105812,
+      "sha256": "6e55de864ce05a4978999d52391e6fa45527c4817f9b005e859986334318ee7f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family05_prism_explorer.png",
+      "bytes": 142609,
+      "sha256": "da698f15734f5d78d7c4aff01969609515b8be8405e745c93c6ac25b876ea597"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family05_prism_orbit.png",
+      "bytes": 87530,
+      "sha256": "045148771c2a57e1a0a373ea00cf2b982b38d2838714f9ac93986a54863d23e9"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family05_prism_selected.png",
+      "bytes": 103285,
+      "sha256": "1aec781f5bd97e32d729d27b9b33bb0ca6d67933ad179cebf26271b803e8b6f0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family05_prism_step0.png",
+      "bytes": 67869,
+      "sha256": "52d64f98a4968dc544d7e6324b513b2767ae09a88e2b14936d0ac2208044f6d6"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family06a_cube_default.png",
+      "bytes": 107022,
+      "sha256": "31bbe9cfddb275a19fd3dabcbbedd6026e624edfd54fed48bbb2b11bc8203476"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family06a_cube_exploded.png",
+      "bytes": 116433,
+      "sha256": "cf93c5a7b66dce0e5a1836de7431965f18e577a7e390f7a808bf0f6a5cbf9fcc"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family06a_cube_explorer.png",
+      "bytes": 146641,
+      "sha256": "c069d5331b307292feaca847ded358299d67053c15666958d9c40413cdefe85f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family06a_cube_orbit.png",
+      "bytes": 94021,
+      "sha256": "a14dc95a7e4cf6dd82ece29c835a459bb5b7144c5a90acf128ebef4d6ed2b27c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family06a_cube_selected.png",
+      "bytes": 105907,
+      "sha256": "49071d5ef79128a2682f1f77dbd09d6059a4072a2254a07c313b54bcea3f539b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family06a_cube_step0.png",
+      "bytes": 72486,
+      "sha256": "0b279074e926571986dcf423c1d137059a308e70867a171aa51314a900152f01"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family06b_cuboid_default.png",
+      "bytes": 107313,
+      "sha256": "3fd210220b32ed39764eb53912bf81de42118358d54870385d66c3cf8c049844"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family06b_cuboid_exploded.png",
+      "bytes": 115312,
+      "sha256": "55f1dd38b145d056cef367bb0ec4e8f469b8f73849f0bbaa291660eecf86be1d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family06b_cuboid_explorer.png",
+      "bytes": 145569,
+      "sha256": "ab1c186724de94d21933579427fbd99a985ea519b647f92330bb4634889630f8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family06b_cuboid_orbit.png",
+      "bytes": 88450,
+      "sha256": "eef05927a84f7338631de9fa6f517aee75993c47340e549f1922efba03b4bd02"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family06b_cuboid_selected.png",
+      "bytes": 106094,
+      "sha256": "4b989af3cb6b6be2f6f7276697c17796e51c6620ab7f980c729d1c21fe0948b2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family06b_cuboid_step0.png",
+      "bytes": 73146,
+      "sha256": "3c6ff56b5d17ffa6e1e6e2198006cf957546ef54ac6731c212607ce500117681"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family07_multi_solid_composition_default.png",
+      "bytes": 104766,
+      "sha256": "11c8dddc2c9e3ba41690e939345206a7bbc3d537f9a7078dc9eebe9cb2a44836"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family07_multi_solid_composition_exploded.png",
+      "bytes": 111089,
+      "sha256": "596660e9e7f533369341521d2558c0b9740c5631e0a41e3e6396bbaa1c21aeee"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family07_multi_solid_composition_explorer.png",
+      "bytes": 134016,
+      "sha256": "e27aa65037f056f2419695e949c20794fee6cac92c1ffab7b98d314100bd65c9"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family07_multi_solid_composition_orbit.png",
+      "bytes": 85544,
+      "sha256": "c83d577a481d1374511182bb8177518c994935b9e642f091204ed5babaf2ed17"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family07_multi_solid_composition_selected.png",
+      "bytes": 104028,
+      "sha256": "c1bc4e2baca436d381d5a362374f7bcd5bbb0503bfc948fa0f2f88346c17339a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family07_multi_solid_composition_step0.png",
+      "bytes": 68393,
+      "sha256": "b2697ea43b85bf84a7acd697e0b82ad14ab1e02d6271832d1c3e6191b22d3245"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family08_unnamed_section_vertices_default.png",
+      "bytes": 91829,
+      "sha256": "e9b1715b6d3dd1e85710d725da863dde554c4d43c15ae125afd21dcbc56f9f6c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family08_unnamed_section_vertices_exploded.png",
+      "bytes": 101368,
+      "sha256": "87f1ae19890c049e3fe000fe028ed7db7a75a23b660344e0c239d350bf7cf4e4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family08_unnamed_section_vertices_explorer.png",
+      "bytes": 149791,
+      "sha256": "1e343f57b5263389eb5aea7001b5247ab2df60867c2005e5e77cb7e9c995d167"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family08_unnamed_section_vertices_orbit.png",
+      "bytes": 81865,
+      "sha256": "4a168222e2024d7beac9cc6f385c491bb7798c7e0606cb48db282f8417b69135"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family08_unnamed_section_vertices_selected.png",
+      "bytes": 92233,
+      "sha256": "39cb8d6a8a5364dc1cb7728fde160ec616d2415384c4311b6912cb234e69f5e4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family08_unnamed_section_vertices_step0.png",
+      "bytes": 67536,
+      "sha256": "0b0c19cbc8dc6717aadd199e4d06b2ab4153192223618cbacebb42cba77a9d78"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family09_cylinder_and_sections_default.png",
+      "bytes": 97702,
+      "sha256": "d4762a33db58309585df426c995df778198ab7cf620ddfa8311d8e5c3845734f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family09_cylinder_and_sections_exploded.png",
+      "bytes": 97389,
+      "sha256": "52715ad64eacf7847101a46ea3e5c463fa711253447e474394c939ca592ddf39"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family09_cylinder_and_sections_explorer.png",
+      "bytes": 139050,
+      "sha256": "7dfc6529054415e2781e65df01e6dd3fa9494ad212389d13f227dd028a6897d7"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family09_cylinder_and_sections_orbit.png",
+      "bytes": 98019,
+      "sha256": "561e149e790c1203cc8e760ecb951a37515dfab35e22166eef1300c8318beea0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family09_cylinder_and_sections_selected.png",
+      "bytes": 97260,
+      "sha256": "15a4cff57e21c4abf29343ce4c007f447119773720ea623f15bd4a65620cb9dc"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family09_cylinder_and_sections_step0.png",
+      "bytes": 65924,
+      "sha256": "112f591f2f97ee13a97f5ef6682241afa2509074a41ae9cc20037285f5a32df7"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family10_cone_frustum_cut_default.png",
+      "bytes": 89754,
+      "sha256": "9e85bb4b44b78c00bb640ac79d18a61b192f4b8887d65221be6e4dd76469e43c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family10_cone_frustum_cut_exploded.png",
+      "bytes": 91821,
+      "sha256": "4c0e54090fab3d1175c8f6163ab6777ac64cba973a3b0b14e3aeea6bab88e3b7"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family10_cone_frustum_cut_explorer.png",
+      "bytes": 139380,
+      "sha256": "5754ef0fc8e544f9d7eb031069abe7de798ae7639cdfe63020f895051f19a7da"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family10_cone_frustum_cut_orbit.png",
+      "bytes": 90276,
+      "sha256": "463771725ae856e568e03b8f2a57fb614b4608720e4a4d090cc25a25c4c61dd3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family10_cone_frustum_cut_selected.png",
+      "bytes": 88137,
+      "sha256": "8727fda0351a74f4bf9485d460338bbbee6aa862a69951df0eb1984391c19dfa"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family10_cone_frustum_cut_step0.png",
+      "bytes": 65079,
+      "sha256": "f8ab11517716d73559983049d9eb74da20cd63003a53da895a36121314aec163"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family11_sphere_plane_cut_default.png",
+      "bytes": 81288,
+      "sha256": "cdc89713593a909c5b2f687617e0110a3b73f1fc9a4766724dd46e77f3d49c73"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family11_sphere_plane_cut_exploded.png",
+      "bytes": 81288,
+      "sha256": "cdc89713593a909c5b2f687617e0110a3b73f1fc9a4766724dd46e77f3d49c73"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family11_sphere_plane_cut_explorer.png",
+      "bytes": 133316,
+      "sha256": "faf4e27c8ab86e0a18a590cb694915f2037d4612ace09e1c744baa78e272e523"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family11_sphere_plane_cut_orbit.png",
+      "bytes": 82936,
+      "sha256": "e5a006bacc1779263f762859204a2fe9e01c790581ff93e7dadbc6310bc53cfd"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family11_sphere_plane_cut_selected.png",
+      "bytes": 82361,
+      "sha256": "3894882bcd5ca4358c833d7ad492840748a899347291d3b83b967c3f197e6b03"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family11_sphere_plane_cut_step0.png",
+      "bytes": 62433,
+      "sha256": "f0a9ea929997409c7574dab43fc6b7d24a72e32b477af622ec7978c225f52d21"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family12_cylinder_ellipse_section_default.png",
+      "bytes": 91717,
+      "sha256": "67d1dfd6fd5a8044fd263b6bd14152029d769ffaa99cf6f6332eb1d8fdeb7904"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family12_cylinder_ellipse_section_exploded.png",
+      "bytes": 91713,
+      "sha256": "3518d150b972248877e73cc6c06ae69820599b9b2b829e617d127bd018af0f49"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family12_cylinder_ellipse_section_explorer.png",
+      "bytes": 129232,
+      "sha256": "a3b4cd008419fea95aa8bb48faf668a8a5d1a6241e9fd26eac21a05adead09e3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family12_cylinder_ellipse_section_orbit.png",
+      "bytes": 92763,
+      "sha256": "6822e56cb34344fc53bb41fbd60a507daebfa0aa36e4df13031c8a30440efbed"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family12_cylinder_ellipse_section_selected.png",
+      "bytes": 98026,
+      "sha256": "fbc9381c9e4ea007478fa44587c1187ff97fd58a43d1259267409ec977086c6c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family12_cylinder_ellipse_section_step0.png",
+      "bytes": 63867,
+      "sha256": "316e44f2d16300c2186b5af4e3c64c63bf1aedbe0607b76c5e8cc58f97afe901"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/before/family13_invalid_geometry_refusal_refused.png",
+      "bytes": 17049,
+      "sha256": "7fd58269320ddb8d629e09749512b72be01d60e57accf0d5d1e778d6a84c7769"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family01_triangular_pyramid_default.png",
+      "bytes": 91756,
+      "sha256": "d19efa22fa348c028b2f7e47205b196aa48d2bd929600085a3596d8a7ca47798"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family01_triangular_pyramid_exploded.png",
+      "bytes": 100725,
+      "sha256": "93420d83ea64abc51a1b969ec5cf01a95062528b2ece46dbe5d1becb731da533"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family01_triangular_pyramid_explorer.png",
+      "bytes": 141696,
+      "sha256": "7ba013433fff4ecab7f0bfaadee2ac7134d3f276b055bb3ec8430528127f703e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family01_triangular_pyramid_orbit.png",
+      "bytes": 69156,
+      "sha256": "f5164eb5834749a91fa0a64eecf9fd9422386e5b0671febfcd7c724d0d4304c6"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family01_triangular_pyramid_selected.png",
+      "bytes": 89914,
+      "sha256": "ea645ac891f593c26f022798332ea0b197357f9f7e0f037fe06bddcd78eadb27"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family01_triangular_pyramid_step0.png",
+      "bytes": 65256,
+      "sha256": "eb1d4598eeae0ad7d9d64bf6871fb70223fffb95a4834c0988a48bbe8ac1bcc2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family02_quadrilateral_pyramid_default.png",
+      "bytes": 96892,
+      "sha256": "211245aa38fd4dcaecabbb960665a42280e2a0dc71f50a79b252500bc6e0d085"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family02_quadrilateral_pyramid_exploded.png",
+      "bytes": 107431,
+      "sha256": "a3bab16dfc3b11c026786e51c466a9c65ae90131d5112506c9126847800d0145"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family02_quadrilateral_pyramid_explorer.png",
+      "bytes": 140090,
+      "sha256": "d79c9fccf2598e39cb8ba4cd7e92629198cefaf3a075e313a9947cb4160c852d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family02_quadrilateral_pyramid_orbit.png",
+      "bytes": 74718,
+      "sha256": "997805ba247889e122b4836c985903a0356a5c7153b0175f7a74497898c8b25b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family02_quadrilateral_pyramid_selected.png",
+      "bytes": 96325,
+      "sha256": "082382230e642173c5913c0784782c8989c4fb145cdadbb16098abbaa7492daf"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family02_quadrilateral_pyramid_step0.png",
+      "bytes": 67679,
+      "sha256": "30ac38ab10eecb4d418f2159fb9ff3213ec719799cf59bbde706a877d98f1e38"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family03_regular_pyramid_default.png",
+      "bytes": 100250,
+      "sha256": "14225641753100ecf5bbe9252ec48718e816542c5f757f95d8b26530c8646c0d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family03_regular_pyramid_exploded.png",
+      "bytes": 108297,
+      "sha256": "5444b732d68311367f254f04e98987083fac4c0cdffc950e51617c348ffa4648"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family03_regular_pyramid_explorer.png",
+      "bytes": 165552,
+      "sha256": "4684390b50c84f9ed38c926a66d7dc00f217815dd0d620c8d2e1d63892d0823d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family03_regular_pyramid_orbit.png",
+      "bytes": 97709,
+      "sha256": "779124c17f7245102cfeb318c0f75a07df1e6cf38062f84b2ca0ef959929b7c6"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family03_regular_pyramid_selected.png",
+      "bytes": 98449,
+      "sha256": "7480536066b810a1137edfdb92200f10f6c450e53f1fca410ed3652dbd71a7d7"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family03_regular_pyramid_step0.png",
+      "bytes": 67413,
+      "sha256": "bff993a04ee3ebec0650802f4580c98257adc77a0643b10661256d71b6749ada"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family04_derived_sub_pyramid_default.png",
+      "bytes": 95481,
+      "sha256": "fa78944d0681fdb43474086808b0b2b622f1b1b5e85f630c1b4713cf8122f199"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family04_derived_sub_pyramid_exploded.png",
+      "bytes": 102553,
+      "sha256": "304682f79835e0a6370177a073c98731892538b257eb32e49b09ca041a74714b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family04_derived_sub_pyramid_explorer.png",
+      "bytes": 143609,
+      "sha256": "367e4518b3f918099df46d5d14074a040b20de6238d71893119670bb0208f24a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family04_derived_sub_pyramid_orbit.png",
+      "bytes": 85750,
+      "sha256": "f118f9c722c8c2aeb507d13150a6a0d25d2a9c6c21e041c86380b0739f807aab"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family04_derived_sub_pyramid_selected.png",
+      "bytes": 97617,
+      "sha256": "cf84a983cbc7df1b0b693284570b0939e162bd731eb4e5a4b751975fb8cf15ce"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family04_derived_sub_pyramid_step0.png",
+      "bytes": 68136,
+      "sha256": "0ba905fcdb02b952396d8deb3d3d7829bf0b3292af4e3e73712bfc255c45bc55"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family05_prism_default.png",
+      "bytes": 103264,
+      "sha256": "83bc6333cf0d066ec8edc89478937530bfc3b6c2334c628303752b7ac9d57342"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family05_prism_exploded.png",
+      "bytes": 105812,
+      "sha256": "6e55de864ce05a4978999d52391e6fa45527c4817f9b005e859986334318ee7f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family05_prism_explorer.png",
+      "bytes": 142609,
+      "sha256": "da698f15734f5d78d7c4aff01969609515b8be8405e745c93c6ac25b876ea597"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family05_prism_orbit.png",
+      "bytes": 87841,
+      "sha256": "a67345f263fc2d769642ab48d17fafec0a396e2b45858c6c22c8313aa893033b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family05_prism_selected.png",
+      "bytes": 103285,
+      "sha256": "1aec781f5bd97e32d729d27b9b33bb0ca6d67933ad179cebf26271b803e8b6f0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family05_prism_step0.png",
+      "bytes": 67869,
+      "sha256": "52d64f98a4968dc544d7e6324b513b2767ae09a88e2b14936d0ac2208044f6d6"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family06a_cube_default.png",
+      "bytes": 107021,
+      "sha256": "206c4a58db344c68edf152005e9d4c8a166574c91f863b2d9d0b2aec8cc46444"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family06a_cube_exploded.png",
+      "bytes": 116433,
+      "sha256": "cf93c5a7b66dce0e5a1836de7431965f18e577a7e390f7a808bf0f6a5cbf9fcc"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family06a_cube_explorer.png",
+      "bytes": 146641,
+      "sha256": "c069d5331b307292feaca847ded358299d67053c15666958d9c40413cdefe85f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family06a_cube_orbit.png",
+      "bytes": 94016,
+      "sha256": "7fe0d6d108f6bc6e8a6deab407fb3af576754a2eaa42bc56e02ef531c0c02ff2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family06a_cube_selected.png",
+      "bytes": 105907,
+      "sha256": "49071d5ef79128a2682f1f77dbd09d6059a4072a2254a07c313b54bcea3f539b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family06a_cube_step0.png",
+      "bytes": 72486,
+      "sha256": "0b279074e926571986dcf423c1d137059a308e70867a171aa51314a900152f01"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family06b_cuboid_default.png",
+      "bytes": 107313,
+      "sha256": "e5ec4e7b7497bd85438dacb2c2fec599314166c90b4a7068e7f08634adc4728f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family06b_cuboid_exploded.png",
+      "bytes": 115315,
+      "sha256": "fec9b5599a78947ce316b9ce7340def97ef4f9dd054e0bf28434c221c94deafb"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family06b_cuboid_explorer.png",
+      "bytes": 145569,
+      "sha256": "ab1c186724de94d21933579427fbd99a985ea519b647f92330bb4634889630f8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family06b_cuboid_orbit.png",
+      "bytes": 88674,
+      "sha256": "672abaa10c1dbb38c44a870cbcaa788527b34de9752231bbf7484db562a8376f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family06b_cuboid_selected.png",
+      "bytes": 106094,
+      "sha256": "4b989af3cb6b6be2f6f7276697c17796e51c6620ab7f980c729d1c21fe0948b2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family06b_cuboid_step0.png",
+      "bytes": 73146,
+      "sha256": "3c6ff56b5d17ffa6e1e6e2198006cf957546ef54ac6731c212607ce500117681"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family07_multi_solid_composition_default.png",
+      "bytes": 104766,
+      "sha256": "11c8dddc2c9e3ba41690e939345206a7bbc3d537f9a7078dc9eebe9cb2a44836"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family07_multi_solid_composition_exploded.png",
+      "bytes": 111089,
+      "sha256": "596660e9e7f533369341521d2558c0b9740c5631e0a41e3e6396bbaa1c21aeee"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family07_multi_solid_composition_explorer.png",
+      "bytes": 134016,
+      "sha256": "e27aa65037f056f2419695e949c20794fee6cac92c1ffab7b98d314100bd65c9"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family07_multi_solid_composition_orbit.png",
+      "bytes": 85401,
+      "sha256": "19e3aa98c356574e0ac8b57ddf97b8cc8061f60f752dfe6e7446db5ed7b76b75"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family07_multi_solid_composition_selected.png",
+      "bytes": 104028,
+      "sha256": "c1bc4e2baca436d381d5a362374f7bcd5bbb0503bfc948fa0f2f88346c17339a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family07_multi_solid_composition_step0.png",
+      "bytes": 68393,
+      "sha256": "b2697ea43b85bf84a7acd697e0b82ad14ab1e02d6271832d1c3e6191b22d3245"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family08_unnamed_section_vertices_default.png",
+      "bytes": 91829,
+      "sha256": "e9b1715b6d3dd1e85710d725da863dde554c4d43c15ae125afd21dcbc56f9f6c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family08_unnamed_section_vertices_exploded.png",
+      "bytes": 101368,
+      "sha256": "87f1ae19890c049e3fe000fe028ed7db7a75a23b660344e0c239d350bf7cf4e4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family08_unnamed_section_vertices_explorer.png",
+      "bytes": 149791,
+      "sha256": "1e343f57b5263389eb5aea7001b5247ab2df60867c2005e5e77cb7e9c995d167"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family08_unnamed_section_vertices_orbit.png",
+      "bytes": 82196,
+      "sha256": "5ce582a2595932c24c48eec09ca7063062f5beefc44d823615c046b13b5cb5c8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family08_unnamed_section_vertices_selected.png",
+      "bytes": 92233,
+      "sha256": "39cb8d6a8a5364dc1cb7728fde160ec616d2415384c4311b6912cb234e69f5e4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family08_unnamed_section_vertices_step0.png",
+      "bytes": 67536,
+      "sha256": "0b0c19cbc8dc6717aadd199e4d06b2ab4153192223618cbacebb42cba77a9d78"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family09_cylinder_and_sections_default.png",
+      "bytes": 113978,
+      "sha256": "60de3aa7236b45b32a0ae333745e0fe2189d52ec05c3a41dfbdaf24a3bf7310d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family09_cylinder_and_sections_exploded.png",
+      "bytes": 109358,
+      "sha256": "28480071709129edadcfd49f4a3504b4d4dac9d93991f0dbe2b1a48b4e291b34"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family09_cylinder_and_sections_explorer.png",
+      "bytes": 149773,
+      "sha256": "14f44efb40aadf848631984bc530373f0348ac3b93564699c603e42f6c23aacd"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family09_cylinder_and_sections_orbit.png",
+      "bytes": 111676,
+      "sha256": "0cf9352b45b17872d4e3c55c3cfba603e85310c073302eb3c555a1d2e0082dac"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family09_cylinder_and_sections_selected.png",
+      "bytes": 118228,
+      "sha256": "a1ca13f490aa8e8589bf5d6ebeca832814b9888addc33924ea3694189e880ee5"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family09_cylinder_and_sections_step0.png",
+      "bytes": 68146,
+      "sha256": "2673d66da52274da51f9d589cf6ae1d9bcd78dd9293518530cea84bd52cfca4b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family10_cone_frustum_cut_default.png",
+      "bytes": 108627,
+      "sha256": "f6675d96f99ee140b94ced94960b321d51495b63b2e645ede4f962ad1ee0c9c5"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family10_cone_frustum_cut_exploded.png",
+      "bytes": 110364,
+      "sha256": "fb32b886e04853b9d4732562406de4421373d4169f08bb39c62d9e14145e0029"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family10_cone_frustum_cut_explorer.png",
+      "bytes": 152568,
+      "sha256": "d17c153ddc9462965c18e34ad6b030c71bfe870c91e2234c1ac82e455b3150f9"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family10_cone_frustum_cut_orbit.png",
+      "bytes": 110600,
+      "sha256": "46434a33af2f38a5235070b134f9085d0d810b09518f92eb62a0a1994d8a083b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family10_cone_frustum_cut_selected.png",
+      "bytes": 103866,
+      "sha256": "9c72e1ab5b98e386e54e016b3a37fb4ccf69c38f7ae3c2a52ade37600647fb77"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family10_cone_frustum_cut_step0.png",
+      "bytes": 65902,
+      "sha256": "e3b4a2591f28e36bd66e0b1fbd0aae3db254e1d7e1f80927ff74c697bf5c4386"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family11_sphere_plane_cut_default.png",
+      "bytes": 87834,
+      "sha256": "b12365d49bb7e9991134f826fc099e2fb0a28f1f045bfdd130956a2af3654507"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family11_sphere_plane_cut_exploded.png",
+      "bytes": 87834,
+      "sha256": "b12365d49bb7e9991134f826fc099e2fb0a28f1f045bfdd130956a2af3654507"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family11_sphere_plane_cut_explorer.png",
+      "bytes": 138522,
+      "sha256": "636e7f1108aa61f88f8d4f52358c767af065960a71741ed42e88f124ab62d6b4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family11_sphere_plane_cut_orbit.png",
+      "bytes": 92767,
+      "sha256": "07f4dc4d560ae86aea33c628a37fb4251a362841b55afc9c6b133145d6a6fd8e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family11_sphere_plane_cut_selected.png",
+      "bytes": 94258,
+      "sha256": "f19ad4eaabb74f79f11959938c23ee3d485dc9c7c5dc9f72c85ec060f1e7bc5d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family11_sphere_plane_cut_step0.png",
+      "bytes": 62349,
+      "sha256": "d19b55e9ecda40fdb658361f9e10cb11aa8b60e9cdc722592b94769b7290022a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family12_cylinder_ellipse_section_default.png",
+      "bytes": 96890,
+      "sha256": "404994650aa701ff409e85fd1e1ccc6f817dd8ef699c44d5ef97e392c6db3049"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family12_cylinder_ellipse_section_exploded.png",
+      "bytes": 96890,
+      "sha256": "404994650aa701ff409e85fd1e1ccc6f817dd8ef699c44d5ef97e392c6db3049"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family12_cylinder_ellipse_section_explorer.png",
+      "bytes": 133855,
+      "sha256": "1eada4e7dedfca4fa880260ffe2df9bf034b1622af66e2f43555fdc2ba3efb15"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family12_cylinder_ellipse_section_orbit.png",
+      "bytes": 101279,
+      "sha256": "63fe3a457a0907fb7675486733c83ed7ba3aed6cf455284b53a83ebf6d6ab5c1"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family12_cylinder_ellipse_section_selected.png",
+      "bytes": 106105,
+      "sha256": "5915f7315e73fba8da7f5c5de59dda11ffa6e7c9be37b18c0401d44750c4e129"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family12_cylinder_ellipse_section_step0.png",
+      "bytes": 63270,
+      "sha256": "74fa50299e4aa9201ce052dcd3db9895215886f09466c47c454c9555f17e7ed8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/screenshots/session1-after/family13_invalid_geometry_refusal_refused.png",
+      "bytes": 17049,
+      "sha256": "7fd58269320ddb8d629e09749512b72be01d60e57accf0d5d1e778d6a84c7769"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/SESSION1_HANDOFF.md",
+      "bytes": 8042,
+      "sha256": "b4ac424c493d4981193bc7f012fd198c6671d05b84f17d9acf7f60045a91bc9f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/SIMULATION_VISUAL_BASELINE_AUDIT.md",
+      "bytes": 15048,
+      "sha256": "3cb7caaa7edf6a1a3864b541c6eed0ca591df0abdc57d10e8375c4b8ba10639c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/SIMULATION_VISUAL_UX_EVALUATION_REPORT.md",
+      "bytes": 8076,
+      "sha256": "7a4da7de98fba825378d3cb375e52b69cbca8f116aac1a424487e3db3cc67fa8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/attempt1-fail/execution.json",
+      "bytes": 2674,
+      "sha256": "c762c93ba5f28383a73c747043dec5a9aecf75684c14b9fc829d3e8304fac9be"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/attempt1-fail/invocation.json",
+      "bytes": 1192,
+      "sha256": "0d750345fb3d826bc43d732bd85135712bc2a685fce24a582a575336b4a4fe77"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/attempt1-fail/started.json",
+      "bytes": 1794,
+      "sha256": "27b39d6ec8297de55e44bcae426a7b9bc2994175ef5e3bdaca6ec1c9b2d72994"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/attempt1-fail/stderr.log",
+      "bytes": 137953,
+      "sha256": "9c355a0051fed1375b76813e7da4999520fca52f4ddcaf661c5c18060459e3b7"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/attempt1-fail/stdout.log",
+      "bytes": 29428,
+      "sha256": "bbda62e3de18782f9e07923f39c28651a0c90725583214e2c1fd77078acd2772"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/execution.json",
+      "bytes": 2674,
+      "sha256": "248d74be12e4308a9a210442de9ab6df965b30e9234f1d86fda41eec692c586b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/freeze/execution.json",
+      "bytes": 2482,
+      "sha256": "43eda6ddbd79182fcc9569ea568acb365cadbae434f55de059cfc948bfb4ecfe"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/freeze/invocation.json",
+      "bytes": 1095,
+      "sha256": "fa7de02b12c16f7d2dc87aff5a05c3f9bf0a3ff003a43c61ef649150ecad050a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/freeze/started.json",
+      "bytes": 1594,
+      "sha256": "a392a5ecf726299048ce5d4a2548aadba0d27b61a86af48ac7b0200d97a5b0af"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/freeze/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/freeze/stdout.log",
+      "bytes": 93,
+      "sha256": "7e9d54f56d4e937829eaf50bcda6397feb6b7a57e67f3f64d6802f4f9caa8a79"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/invocation.json",
+      "bytes": 1192,
+      "sha256": "01b142d59bb87ed89fba70e3a117441dca3e59e1b2946b44e790117b41338c0b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/started.json",
+      "bytes": 1794,
+      "sha256": "6e53f650ef1b06579ea711b6c3868b1607fe13a36d0c5db30d7d74e894d4870a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/stderr.log",
+      "bytes": 138295,
+      "sha256": "bccc41d24a26ca575552ae5d65c3f89025768cf86e1ad93d8eaebca26a3f874d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/stdout.log",
+      "bytes": 29439,
+      "sha256": "004f2025d361f2a9e131326132ccf3614b8c20b174297a8261c370f88154732b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/validation.json",
+      "bytes": 3250,
+      "sha256": "6c02dbf91835ec6bf2d8e306da38b959b912a022df8d7cec251bb752f1ff714a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/ux_eval.py",
+      "bytes": 27039,
+      "sha256": "0b2d5a48a016f5836b5e21876c64aa944c63db0e8119bc32d9a895edc98f765e"
+    }
+  ]
+}

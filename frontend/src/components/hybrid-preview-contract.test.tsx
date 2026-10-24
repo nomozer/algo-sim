@@ -535,7 +535,7 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
       expect(maVG.size).toBe(9);
     });
 
-    it("toàn bộ 25 fixture refusal-* không lộ mã kỹ thuật và tuân thủ luật refusal_cause", () => {
+    it("all 25 refusal fixtures keep technical codes out of the main explanation and preserve refusal_cause", () => {
       for (const row of REFUSAL_ROWS) {
         const fx = loadFixture(row.file);
         const env = fx.response.envelope;
@@ -543,7 +543,8 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
           <UnsupportedNotice unsupported={env} />,
         ).replace(/<!--.*?-->/g, "");
         expect(out, row.id).toContain(env.learner_reason);
-        expect(out, row.id).not.toContain(env.reason_code);
+        const main = out.replace(/<details[\s\S]*?<\/details>/g, "");
+        expect(main, row.id).not.toContain(env.reason_code);
         expect(out, row.id).not.toContain(env.failure_category);
         expect(out, row.id).not.toContain("hybrid-route-d-preview");
         expect(out, row.id).not.toContain("OFFLINE_FIXTURE_ONLY");

@@ -1,0 +1,23 @@
+{
+  "schema_version": "authoritative-t3-invocation/1",
+  "run_kind": "AUTHORITATIVE_FULL_T3_SIMULATION_VISUAL_UX",
+  "source_commit": "cb2ab8120e62b6bda542972ce8e0d7a973d39a5e",
+  "product_commit": "ec92c8ad81e52dcbf958f25184bea2958fd6be58",
+  "candidate_commit": "59d417a84b755d553b6dcf2085d66bb52fb100df",
+  "measured_system_sha256": "91ac973ebc2d42041809d957c55e2829f875c05e649e35b7eee9ebeac1e5d26d",
+  "measured_file_count": 114,
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-simulation-visual-ux",
+  "argv": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-simulation-visual-ux\\frontend\\scripts\\full-gate.mjs"
+  ],
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe"
+  },
+  "output_directory": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-visual-consistency-learning-ux\\docs\\evaluation\\geometry\\runs\\simulation-visual-consistency-learning-ux\\t3",
+  "timeout_seconds": 2400,
+  "attempt_limit": 1
+}

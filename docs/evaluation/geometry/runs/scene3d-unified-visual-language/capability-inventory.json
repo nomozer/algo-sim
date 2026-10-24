@@ -1,0 +1,78 @@
+{
+  "source": "backend/app/simulation/product_capability.py",
+  "registry": {
+    "polyhedron": {
+      "name": "Hình chóp · lăng trụ · hộp",
+      "status": "supported",
+      "evidence": "PHASE_7B + 5 bài mẫu offline + tám phép đo trình duyệt"
+    },
+    "section": {
+      "name": "Thiết diện",
+      "status": "supported",
+      "evidence": "SECTION_COPLANAR_EDGE_RUNTIME_FIX · certify-section-coplanar-edge 7/7"
+    },
+    "regular_triangular_pyramid": {
+      "name": "Chóp tam giác đều · tứ diện đều (cạnh dạng k√2, k√6)",
+      "status": "foundation_only",
+      "evidence": "hệ: T8 + bộ đọc §18.1 + độ dài căn §18.3 + binding trọng tâm §18.4, corpus 24 hàng ghi trước (regular-triangular-pyramid-w01) · MÔ HÌNH: chưa đo"
+    },
+    "oblique_prism": {
+      "name": "Lăng trụ xiên (chân đường cao tại một đỉnh đáy)",
+      "status": "foundation_only",
+      "evidence": "hệ: khuôn T9 §19 + họ compiler `oblique_prism_volume`, 16 hàng ghi trước (oblique-prism/labels.json, oracle độc lập) · MÔ HÌNH: chưa đo"
+    },
+    "right_angle_chain_base": {
+      "name": "Chóp · lăng trụ đứng đáy hình thang vuông / đa giác có các góc vuông liên tiếp",
+      "status": "foundation_only",
+      "evidence": "hệ: bộ đọc §20.1 + khuôn T10 + họ compiler `polygon_base_*`, 15 hàng ghi trước (general-polygon-base/labels.json, oracle độc lập) · MÔ HÌNH: chưa đo"
+    },
+    "regular_hexagonal_pyramid": {
+      "name": "Chóp lục giác đều",
+      "status": "foundation_only",
+      "evidence": "hệ: bộ đọc + khuôn T11 + metric khung (do_luong_cua), 17 hàng ghi trước (regular-hexagonal-pyramid/labels.json, oracle độc lập) · MÔ HÌNH: chưa đo"
+    },
+    "regular_prism": {
+      "name": "Lăng trụ tam giác đều · lăng trụ lục giác đều",
+      "status": "foundation_only",
+      "evidence": "hệ: bộ đọc + khuôn T12 + metric khung (do_luong_cua), 25 hàng ghi trước (regular-prisms/labels.json, oracle độc lập) · MÔ HÌNH: chưa đo"
+    },
+    "nonconvex_polyhedron": {
+      "name": "Khối đa diện lõm",
+      "status": "foundation_only",
+      "evidence": "hệ: thể tích CHÍNH XÁC bằng tổng có dấu trên mặt biên (3 oracle độc lập) · fail-closed 5 MÃ MỚI cho topology và hình dạng · checker dùng chung thẩm quyền · trace bày các bước dựng · Scene3D giữ nguyên ngũ giác lõm và renderer cắt tai (không quạt) · MÔ HÌNH: chưa đo"
+    },
+    "ball": {
+      "name": "Hình cầu",
+      "status": "foundation_only",
+      "evidence": "hệ: Phase 2 CLOSED · offline: 2 bài mẫu · MÔ HÌNH: chưa đo"
+    },
+    "cylinder": {
+      "name": "Hình trụ",
+      "status": "foundation_only",
+      "evidence": "hệ: Phase 2 CLOSED · offline: 2 bài mẫu · MÔ HÌNH: chưa đo"
+    },
+    "cone": {
+      "name": "Hình nón",
+      "status": "foundation_only",
+      "evidence": "hệ: Phase 2 CLOSED · offline: 2 bài mẫu · MÔ HÌNH: chưa đo"
+    },
+    "solid_of_revolution": {
+      "name": "Khối tròn xoay",
+      "status": "unsupported",
+      "evidence": "thể tích cần tích phân — ngoài miền số ℚ(√, π)"
+    },
+    "composite_subtractive": {
+      "name": "Khối ghép · khối bù",
+      "status": "unsupported",
+      "evidence": "biên CSG cần phức hợp ô hỗn hợp; ngoài phạm vi khoá luận"
+    },
+    "curved_oblique_section": {
+      "name": "Thiết diện xiên của hình trụ và hình nón",
+      "status": "foundation_only",
+      "evidence": "hệ: elip đầy đủ của TRỤ CLOSED (ca chuẩn 9√2π) và của NÓN CLOSED (ca chuẩn 12√6π/5, ba oracle độc lập, 48 test, 8 phép tiêm) · phân xử conic CHÍNH XÁC bằng phép so hữu tỉ · parabol/hyperbol fail-closed 2 mã riêng · MÔ HÌNH: chưa đo"
+    }
+  },
+  "render_kinds_source": "frontend/src/simulations/domains/geometry/scene3d-model.ts::RENDER_KINDS",
+  "sample_count": 34,
+  "scope": "All existing render techniques and supported/foundation geometry families, sampled. Unsupported generic solids of revolution/CSG are excluded, not claimed as implemented. No live NLU capability upgrade."
+}

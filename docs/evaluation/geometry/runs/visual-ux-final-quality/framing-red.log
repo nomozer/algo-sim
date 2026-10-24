@@ -1,0 +1,26 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-ux-final-quality/frontend
+
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx (12 tests | 1 failed) 133ms
+     × encloses curved surfaces in diagonal camera directions before their geometry is constructed 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/simulations/domains/geometry/final-quality.test.tsx > final visual quality > encloses curved surfaces in diagonal camera directions before their geometry is constructed
+AssertionError: expected 5 to be greater than or equal to 8.660254037844386
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx:14:21
+     12|     const center=sphere.anchor.map(Number), r=Math.sqrt(Number(sphere.…
+     13|     const support=Math.max(...diemHuuHan([sphere]).map(p=>p.reduce((su…
+     14|     expect(support).toBeGreaterThanOrEqual(r*Math.sqrt(3));
+       |                     ^
+     15|     const cylinder=rows.find((r:any)=>r.id==='family09_cylinder_and_se…
+     16|     const c=cylinder.anchor.map(Number), radius=Math.sqrt(Number(cylin…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 11 passed (12)
+   Start at  01:42:57
+   Duration  889ms (transform 411ms, setup 36ms, import 539ms, tests 133ms, environment 0ms)
+

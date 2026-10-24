@@ -34,7 +34,7 @@ import {
   type ClassroomSession,
   type SeenMarks,
 } from "../../../state/classroom-sync";
-import type { Scene3D } from "./scene3d-model";
+import type { MucPhanTichToan, RouteDSimulationSummary, Scene3D } from "./scene3d-model";
 import { veKhongGian } from "./scene3d-chart";
 import {
   coherentFormula,
@@ -45,6 +45,7 @@ import {
   ghiChuGiaTriDung,
   objectsAt,
   hienSo,
+  phanTichToanHocCuaCanh,
   quantityChoices,
   tapKetQuaCuoi,
 } from "./scene3d-model";
@@ -119,6 +120,11 @@ const CHU_GIAI_VAI_TRO: { lop: string; chu: string }[] = [
  * Nay dòng ấy đọc thẳng `o.role` — backend quyết, phía này chỉ bày ra.
  */
 
+function MathDisplay({ text }: { text: string }) {
+  return <>{text.split(/(\^-?\d+)/).map((part, i) => /^\^-?\d+$/.test(part)
+    ? <sup key={i}>{part.slice(1)}</sup> : part)}</>;
+}
+
 function NutCay({
   nut, chon, onChon, tapNguon, duong, moNhom, onDoiNhom,
 }: {
@@ -172,14 +178,18 @@ function NutCay({
 }
 
 /** Bảng thông tin mở từ hàng trên của xưởng (ô soi mở theo lựa chọn, «Các bước dựng» ở trình phát). */
-type BangThongTin = "de" | "thanh-phan" | "dai-luong";
-/** Nút đã mở bảng — nơi trả tiêu điểm khi đóng bằng Escape: «Đề bài» là nút riêng, hai bảng kia mở từ menu «Khám phá». */
+type BangThongTin = "de" | "thanh-phan" | "dai-luong" | "phan-tich";
+/** Nút đã mở bảng — nơi trả tiêu điểm khi đóng bằng Escape: «Đề bài» và «Phân tích toán học» là nút riêng, hai bảng kia mở từ menu «Khám phá». */
 const nutMoBang = (id: BangThongTin) =>
   typeof document === "undefined" ? null
-    : document.querySelector<HTMLElement>(id === "de" ? '[data-mo-bang="de"]' : '[data-mo-nhom="kham-pha"]');
+    : document.querySelector<HTMLElement>(
+      id === "de" ? '[data-mo-bang="de"]'
+        : id === "phan-tich" ? '[data-mo-bang="phan-tich"]'
+          : '[data-mo-nhom="kham-pha"]',
+    );
 
 export function Scene3DExplorer({
-  scene: sceneKhung, de, tieuDe, quayLai, phien, onFocus, daiLop, daiLopTomTat, hybrid,
+  scene: sceneKhung, de, tieuDe, quayLai, phien, onFocus, daiLop, daiLopTomTat, hybrid, routeDSimulation,
 }: {
   scene: Scene3D;
   /** Đề bài nguyên văn. Vắng ⇒ không dựng nút «Đề bài». */
@@ -210,6 +220,8 @@ export function Scene3DExplorer({
   daiLopTomTat?: React.ReactNode;
   /** HYBRID_PREVIEW_FRONTEND_CONTRACT §3/§5: thông tin kiểm mục tiêu trên cấu hình của Route D (quan sát trên một hình, không phải chứng minh). */
   hybrid?: HybridPreviewView | null;
+  /** P6/P7 — Tóm tắt kết quả và chứng chỉ kiểm chứng của Adapter /3 (offline research preview) cho Chế độ B («Phân tích toán học»). */
+  routeDSimulation?: RouteDSimulationSummary | null;
 }) {
   // exact-dimensions: toạ độ KHUNG → không gian Euclid MỘT lần (đồng nhất ⇒ chính cảnh cũ) — `scene3d-chart`.
   const scene = useMemo(() => veKhongGian(sceneKhung), [sceneKhung]);
@@ -218,13 +230,26 @@ export function Scene3DExplorer({
   const day = useMemo(() => withSubEntities(scene), [scene]);
   const cay = useMemo(() => semanticTree(day), [day]);
   const [tt, setTt] = useState<InteractionState>(taoTrangThai);
-  // SIMULATION-FIRST UX (P1): Mọi đại lượng kết quả cuối của bài toán luôn nằm trong `dapAnAn` ở chế độ học sinh.
-  const dapAnAn = useMemo(() => tapKetQuaCuoi(day, hybrid), [day, hybrid]);
+  const [xray, setXray] = useState(false);
+  // SIMULATION-FIRST UX (P1 & P6): Mặc định (Chế độ A — Mô phỏng), mọi đại lượng kết quả cuối luôn nằm trong `dapAnAn`.
+  const tapKetQua = useMemo(() => tapKetQuaCuoi(day, hybrid), [day, hybrid]);
+  const phanTich = useMemo(
+    () => phanTichToanHocCuaCanh(day, hybrid, routeDSimulation),
+    [day, hybrid, routeDSimulation],
+  );
+  const coPhanTichToan = phanTich.requestedResults.length
+    + phanTich.derivedMeasurements.length
+    + phanTich.givenDimensions.length
+    + phanTich.certificates.length > 0;
   const [moc, setMoc] = useState<SeenMarks>(CHUA_THAY);
   const [baoDongBo, setBaoDongBo] = useState(false);
   /* W4 (H-W2-3): các BẢNG THÔNG TIN đang mở — mỗi bảng độc lập (mở cái này không đóng cái kia); chỉ giữ TÊN bảng,
      không giữ một bản chọn riêng. Vị trí và thứ tự lớp do `BangNoiHost` giữ. */
   const [moBang, setMoBang] = useState<ReadonlySet<BangThongTin>>(new Set());
+  const dapAnAn = useMemo(
+    () => (moBang.has("phan-tich") ? new Set<string>() : tapKetQua),
+    [moBang, tapKetQua],
+  );
   const doiBang = (id: BangThongTin) => setMoBang((s) => batTatBang(s, id));
   const dongBang = (id: BangThongTin) => setMoBang((s) => (s.has(id) ? batTatBang(s, id) : s));
   /* ROADMAP §0.1-3: danh sách «Các bước dựng» — SỞ THÍCH trình bày như `chiTiet`, không gắn với cảnh; đóng/mở
@@ -289,6 +314,7 @@ export function Scene3DExplorer({
 
   useEffect(() => {
     setTt(taoTrangThai());
+    setXray(false);
     setMoBang(new Set());
     setMoNhom(new Set());
   }, [scene]);
@@ -394,9 +420,12 @@ export function Scene3DExplorer({
   // SIMULATION-FIRST UX (P2 #3): Hướng dẫn quan sát ngắn gọn theo bước dựng hiện tại khi có dữ liệu timeline tin cậy.
   const dsBuoc = useMemo(() => geometryStepList(day), [day]);
   const chiSoBuoc = dsBuoc.length > 0 ? geometryStepOf(day, buocHien) : 0;
+  const daXongBuoc = dsBuoc.length <= 1 || chiSoBuoc >= dsBuoc.length - 1;
   const mucBuocHienTai = useMemo(() => {
     if (day.events.length === 0) return "";
-    const goc = dsBuoc[chiSoBuoc]?.label || geometryNarrationAt(day, buocHien) || "Dữ kiện đề cho";
+    const tenBuoc = dsBuoc[chiSoBuoc]?.label;
+    const loiKe = geometryNarrationAt(day, buocHien);
+    const goc = (tenBuoc && tenBuoc.trim().length > 3 ? tenBuoc : loiKe || tenBuoc) || "Dữ kiện đề cho";
     return goc.replace(/Số đo/g, "Độ lớn").replace(/Kết quả/g, "Mục dựng");
   }, [day, dsBuoc, chiSoBuoc, buocHien]);
   /* W05 · E: vai trò trong chuỗi nhân quả quanh vật đang chọn (W10) tô ở mục bảng «Đại lượng» — trước ở dòng thẻ
@@ -447,13 +476,28 @@ export function Scene3DExplorer({
               data-mo-bang="de"
             >Đề bài</button>
           )}
+          {coPhanTichToan && (
+            <button
+              type="button"
+              className={`geo3d-menu-nut${moBang.has("phan-tich") ? " la-mo" : ""}`}
+              onClick={() => doiBang("phan-tich")}
+              aria-expanded={moBang.has("phan-tich")}
+              aria-controls={moBang.has("phan-tich") ? "geo3d-bang-phan-tich" : undefined}
+              data-mo-bang="phan-tich"
+              data-mode-b-toggle=""
+            >Phân tích toán học</button>
+          )}
           <MenuCongCu nhan="Khám phá" khoa="kham-pha" muc={[
             { nhan: "Thành phần", chon: moBang.has("thanh-phan"), onChon: () => doiBang("thanh-phan"),
               title: "Cây các thành phần đã dựng ở bước này" },
             ...(coDaiLuong ? [{ nhan: "Đại lượng", chon: moBang.has("dai-luong"), onChon: () => doiBang("dai-luong"),
               title: "Chọn một đại lượng để xem giá trị, công thức và dữ kiện nó dựa vào" }] : []),
+            ...(coPhanTichToan ? [{ nhan: "Phân tích toán học", chon: moBang.has("phan-tich"), onChon: () => doiBang("phan-tich"),
+              title: "Xem kết quả toán học, công thức, đại lượng trung gian và chứng chỉ kiểm chứng" }] : []),
           ]} />
           <MenuCongCu nhan="Hiển thị" khoa="hien-thi" muc={[
+            { nhan: "Nhìn xuyên khối", chon: xray, giuMo: true, onChon: () => setXray((s) => !s),
+              title: "Chế độ quan sát: hiện vùng tô thiết diện xuyên qua các mặt khối; nét khuất vẫn là nét đứt" },
             ...(coAn ? [{ nhan: "Hiện tất cả số đo", chon: xem.showAll, giuMo: true,
               onChon: () => setXem((s) => ({ showAll: !s.showAll })),
               title: "Hiện các số đo dựng hình và đại lượng trung gian đã có ở bước này ngay cạnh vật chúng đo" }] : []),
@@ -485,11 +529,19 @@ export function Scene3DExplorer({
       {day.events.length > 0 && (
         <div className="geo3d-huong-dan" data-learner-guidance="" aria-label="Hướng dẫn quan sát">
           <span className="geo3d-huong-dan-buoc" data-guidance-step="">
-            Đang dựng (bước {chiSoBuoc + 1}/{Math.max(1, dsBuoc.length)}): {mucBuocHienTai}
+            {daXongBuoc ? "Đã dựng xong" : "Đang dựng"} (bước {chiSoBuoc + 1}/{Math.max(1, dsBuoc.length)}): {mucBuocHienTai}
           </span>
           <span className="geo3d-huong-dan-goi-y" data-guidance-hint="">
-            Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ
+            {daXongBuoc
+              ? "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+              : "Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hình"}
           </span>
+          {!daXongBuoc && (
+            <button type="button" className="geo3d-menu-nut" onClick={() => setTt((s) => ({ ...s, current_step: dsBuoc[dsBuoc.length - 1]?.anchor ?? 0 }))}>
+              Xem mô hình đầy đủ
+            </button>
+          )}
+          {xray && <span role="status" data-xray-indicator="">Đang nhìn xuyên khối (X-quang): vùng tô thiết diện hiện xuyên qua mặt khối, không phải che khuất vật lý thông thường.</span>}
         </div>
       )}
 
@@ -506,6 +558,7 @@ export function Scene3DExplorer({
           onStepsOpenChange={setMoBuoc}
           auxiliaryShown={hinhPhu}
           gridShown={luoi}
+          xray={xray}
         />
 
         {/* Nút nổi — góc trái, KHÔNG che hình vì hình luôn ở giữa khung. */}
@@ -707,6 +760,58 @@ export function Scene3DExplorer({
           <BangNoi panel="de" className="geo3d-ngan" tieuDe="Đề bài" onDong={() => dongBang("de")}
                    traTieuDiem={() => nutMoBang("de")}>
             <div className="geo3d-ngan-than"><p className="geo3d-de">{de}</p></div>
+          </BangNoi>
+        )}
+        {moBang.has("phan-tich") && (
+          <BangNoi panel="phan-tich" id="geo3d-bang-phan-tich" className="geo3d-ngan" tieuDe="Phân tích toán học"
+                   onDong={() => dongBang("phan-tich")} traTieuDiem={() => nutMoBang("phan-tich")}>
+            <div className="geo3d-ngan-than geo3d-dai-luong" data-math-analysis-panel="">
+              {phanTich.lengthUnit && <p>Đơn vị độ dài: {phanTich.lengthUnit}. Các kích thước đã cho bên dưới là hệ số theo đơn vị này.</p>}
+              {([
+                ["Kết quả toán học", phanTich.requestedResults],
+                ["Số đo trung gian", phanTich.derivedMeasurements],
+                ["Kích thước đã cho", phanTich.givenDimensions],
+                ["Quan hệ & Chứng chỉ kiểm chứng", [...phanTich.givenRelations, ...phanTich.certificates]],
+              ] as const).filter(([, mucs]) => mucs.length > 0).map(([nhom, mucs]) => (
+                <section key={nhom} aria-label={nhom}>
+                  <h5 className="geo3d-dai-luong-muc">{nhom}</h5>
+                  <ul className="geo3d-dai-luong-ds">
+                    {mucs.map((m: MucPhanTichToan) => {
+                      const chuSo = m.notation && m.valueDisplay && m.notation !== m.valueDisplay
+                        ? `${m.notation} = ${m.valueDisplay}`
+                        : (m.valueDisplay ?? m.notation ?? m.label);
+                      const noiDung = (
+                        <>
+                          {m.label && m.label !== m.notation && <span className="geo3d-dai-luong-ten">{m.label}</span>}
+                          <span className="geo3d-dai-luong-so"><MathDisplay text={chuSo} /></span>
+                        </>
+                      );
+                      return (
+                        <li key={m.id} data-analysis-item={m.id} data-semantic-role={m.category}>
+                          {m.entityId ? (
+                            <button
+                              type="button"
+                              className={`geo3d-tree-item${lopDaiLuong(m.entityId)}`}
+                              aria-pressed={tt.selected_id === m.entityId}
+                              onClick={() => chon(m.entityId)}
+                            >
+                              {noiDung}
+                            </button>
+                          ) : (
+                            <div className="geo3d-tree-item">{noiDung}</div>
+                          )}
+                          {m.formula && (
+                            <p className="geo3d-soi-cong-thuc" data-analysis-formula={m.id}>
+                              <MathDisplay text={m.formula} />
+                            </p>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </section>
+              ))}
+            </div>
           </BangNoi>
         )}
         {moBang.has("thanh-phan") && (

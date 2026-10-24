@@ -1,0 +1,995 @@
+{
+  "source_commit": "f95596716912e5550ed079287221274b2d70f24c",
+  "entries": [
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 135,
+      "source": "derived: 0xdc2626,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 136,
+      "source": "line: 0x0f766e,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 137,
+      "source": "surface: 0x7c3aed,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 138,
+      "source": "mesh: 0x647a96,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 140,
+      "source": "canh: 0x1e293b,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 141,
+      "source": "polygon: 0xf59e0b,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 143,
+      "source": "*  w11 l\u00e0 cam `0xea580c`, tr\u00f9ng h\u1ecd v\u1edbi cam c\u1ee7a d\u1eef ki\u1ec7n s\u1ed1. */"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 163,
+      "source": "m.transparent = true;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 164,
+      "source": "m.opacity *= k;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 226,
+      "source": "/* \u26a0\ufe0f `VAT_LIEU_THIET_DIEN = { depthTest: false }` \u0110\u00c3 G\u1ee0 (2026-09-09)."
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 246,
+      "source": "* `renderOrder` ch\u1ec9 x\u1ebfp TRONG m\u1ed9t h\u00e0ng \u0111\u1ee3i: c\u1ea1nh kh\u1ed1i chu\u1ea9n \u1edf h\u00e0ng \u0111\u1ee3i trong su\u1ed1t"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 265,
+      "source": "* **M\u1ecdi** kh\u1ed1i trong renderer n\u00e0y khai `depthWrite: false` \u2014 kh\u1ed1i \u0111a di\u1ec7n,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 275,
+      "source": "*      sao v\u00f4 h\u00ecnh ch\u1ec9 ghi chi\u1ec1u s\u00e2u (`colorWrite:false, depthWrite:true`)."
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 299,
+      "source": "* v\u00e0 thi\u1ebft di\u1ec7n l\u1ea1i v\u1ebd li\u1ec1n to\u00e0n b\u1ed9 y nh\u01b0 th\u1eddi `depthTest: false`. Tri\u1ec7u ch\u1ee9ng"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 320,
+      "source": "colorWrite: false, depthWrite: true, depthTest: true,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 322,
+      "source": "transparent: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 325,
+      "source": "m.renderOrder = THU_TU_CHIEU_SAU;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 334,
+      "source": "colorWrite: false, depthWrite: true, depthTest: true,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 336,
+      "source": "transparent: true, opacity: 0,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 339,
+      "source": "m.renderOrder = THU_TU_TO_THIET_DIEN + 0.5;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 358,
+      "source": "color: mau, polygonOffset: true,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 366,
+      "source": "thay.renderOrder = THU_TU_DUONG;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 371,
+      "source": "...chung, depthFunc: THREE.GreaterDepth, depthWrite: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 372,
+      "source": "dashSize: chuKy, gapSize: chuKy, transparent: true, opacity: 0.75,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 375,
+      "source": "khuat.renderOrder = THU_TU_DUONG;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 383,
+      "source": "*  \u26a0\ufe0f C\u1ea2 HAI l\u1edbp t\u1eaft `depthTest` \u2014 ph\u00e2n lo\u1ea1i CPU (th\u1ee9 oracle \u0111o) l\u00e0 th\u1ea9m quy\u1ec1n."
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 390,
+      "source": "color: number = MAU.canh,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 391,
+      "source": "dashSize = 0.16,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 395,
+      "source": "color: highlighted ? highlightColor : color,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 396,
+      "source": "linewidth: highlighted ? 3 : 1,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 400,
+      "source": "// H\u00e0ng \u0111\u1ee3i trong su\u1ed1t (opacity 1): `renderOrder` x\u1ebfp n\u00e9t SAU m\u1eb7t t\u00f4, n\u1ebfu"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 402,
+      "source": "transparent: true,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 406,
+      "source": "...common, dashSize, gapSize: dashSize * 0.75, transparent: true, opacity: 0.9,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 407,
+      "source": "depthTest: false, depthWrite: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 411,
+      "source": ": new THREE.LineBasicMaterial({ ...common, depthTest: false });"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 520,
+      "source": "new THREE.LineBasicMaterial({ colorWrite: false, depthWrite: false, depthTest: false, transparent: true, opacity: 0 }),"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 525,
+      "source": "colorWrite: false, depthWrite: false, depthTest: false, transparent: true, opacity: 0, dashSize: 0.1, gapSize: 0.1,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 538,
+      "source": "colorWrite: false, depthWrite: false, depthTest: false, transparent: true, opacity: 0, dashSize: 0.1, gapSize: 0.1,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 580,
+      "source": "owner.userData.dashSize as number,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 591,
+      "source": "line.renderOrder = THU_TU_DUONG;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 601,
+      "source": "color: number;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 602,
+      "source": "dashSize: number;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 605,
+      "source": "renderOrder: number;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 613,
+      "source": "color: number;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 614,
+      "source": "dashSize: number;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 616,
+      "source": "renderOrder: number;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 660,
+      "source": "mat.depthTest = !useCpuDepthOverride;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 728,
+      "source": "const mat = canonicalEdgeMaterial(isHidden, seg.highlighted, seg.color, seg.dashSize, seg.color);"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 735,
+      "source": "line.renderOrder = seg.renderOrder;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 743,
+      "source": "colorWrite: false, depthWrite: false, transparent: true, opacity: 0, linewidth: 6,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 795,
+      "source": "const mat = canonicalEdgeMaterial(isHidden, loop.highlighted, loop.color, loop.dashSize, loop.color);"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 797,
+      "source": "mat.linewidth = 1;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 798,
+      "source": "mat.opacity = isHidden ? (loop.highlighted ? 0.30 : 0.20) : (loop.highlighted ? 0.48 : 0.32);"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 800,
+      "source": "mat.linewidth = loop.highlighted ? 3 : 2;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 808,
+      "source": "line.renderOrder = loop.renderOrder;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1185,
+      "source": "// `depthWrite: false`."
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1188,
+      "source": "color: o.origin === \"free\" ? mau ?? MAU.free : net(MAU.derived),"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1197,
+      "source": "colorWrite: false, depthWrite: false, transparent: true, opacity: 0,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1231,
+      "source": "color: mauDuong,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1232,
+      "source": "dashSize: coNetDut,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1235,
+      "source": "renderOrder: THU_TU_DUONG,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1255,
+      "source": "colorWrite: false, depthWrite: false, transparent: true, opacity: 0, linewidth: 6,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1272,
+      "source": "color: mauDoan,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1273,
+      "source": "dashSize: coNetDut,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1276,
+      "source": "renderOrder: THU_TU_DUONG,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1304,
+      "source": "color: net(MAU.line),"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1305,
+      "source": "linewidth: 1.5,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1341,
+      "source": "color: mauMp,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1342,
+      "source": "linewidth: 1,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1343,
+      "source": "transparent: true,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1344,
+      "source": "opacity: noiBat ? 0.48 : 0.32,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1345,
+      "source": "depthTest: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1350,
+      "source": "vienBanDau.renderOrder = THU_TU_DUONG;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1357,
+      "source": "color: mauMp,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1358,
+      "source": "dashSize: coNetDut,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1360,
+      "source": "renderOrder: THU_TU_DUONG,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1376,
+      "source": "color: mauMp,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1377,
+      "source": "transparent: true,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1378,
+      "source": "opacity: coMoRong ? 0 : (noiBat ? 0.22 : 0.11),"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1381,
+      "source": "depthWrite: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1382,
+      "source": "depthTest: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1385,
+      "source": "mesh.renderOrder = 1;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1397,
+      "source": "color: mauMp,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1398,
+      "source": "transparent: true,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1399,
+      "source": "opacity: noiBat ? 0.16 : 0.055,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1401,
+      "source": "depthWrite: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1402,
+      "source": "depthTest: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1406,
+      "source": "mienMoRong.renderOrder = 1;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1427,
+      "source": "color: mauMp,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1428,
+      "source": "transparent: true,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1429,
+      "source": "opacity: noiBat ? 0.16 : 0.055,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1431,
+      "source": "depthWrite: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1432,
+      "source": "depthTest: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1435,
+      "source": "mesh.renderOrder = 1;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1445,
+      "source": "color: mauMp,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1446,
+      "source": "transparent: true,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1447,
+      "source": "opacity: noiBat ? 0.28 : 0.07,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1449,
+      "source": "depthWrite: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1473,
+      "source": "color: mauVanh, side: THREE.DoubleSide,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1484,
+      "source": "color: nen(MAU.mesh),"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1485,
+      "source": "transparent: true,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1486,
+      "source": "opacity: noiBat ? 0.24 : 0.12,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1488,
+      "source": "depthWrite: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1491,
+      "source": "color: nen(MAU.polygon),"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1492,
+      "source": "transparent: true,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1493,
+      "source": "opacity: noiBat ? 0.42 : 0.28,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1495,
+      "source": "depthWrite: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1496,
+      "source": "depthTest: !xray,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1503,
+      "source": "if (!duongTronDay) to.renderOrder = THU_TU_TO_THIET_DIEN;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1524,
+      "source": "thay.renderOrder = THU_TU_VE_THIET_DIEN;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1528,
+      "source": "...chungVanh, depthFunc: THREE.GreaterDepth, depthWrite: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1529,
+      "source": "transparent: true, opacity: 0.65,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1532,
+      "source": "khuat.renderOrder = THU_TU_VE_THIET_DIEN;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1600,
+      "source": "color: net(MAU.polygon), side: THREE.DoubleSide,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1610,
+      "source": "color: nen(MAU.polygon),"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1611,
+      "source": "transparent: true,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1612,
+      "source": "opacity: noiBat ? 0.42 : 0.28,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1614,
+      "source": "depthWrite: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1615,
+      "source": "depthTest: !xray,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1621,
+      "source": "to.renderOrder = THU_TU_TO_THIET_DIEN;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1627,
+      "source": "thay.renderOrder = THU_TU_VE_THIET_DIEN;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1629,
+      "source": "...chungVanh, depthFunc: THREE.GreaterDepth, depthWrite: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1630,
+      "source": "transparent: true, opacity: 0.65,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1632,
+      "source": "khuat.renderOrder = THU_TU_VE_THIET_DIEN;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1658,
+      "source": "color: nen(MAU.mesh),"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1659,
+      "source": "transparent: true,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1660,
+      "source": "opacity: noiBat ? 0.36 : 0.22,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1662,
+      "source": "depthWrite: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1698,
+      "source": "color: net(MAU.canh),"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1699,
+      "source": "transparent: true,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1700,
+      "source": "opacity: noiBat ? doDuc * 1.4 : doDuc,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1701,
+      "source": "depthWrite: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1740,
+      "source": "color: nen(MAU.mesh),"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1741,
+      "source": "transparent: true,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1742,
+      "source": "opacity: 0.22,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1744,
+      "source": "depthWrite: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1747,
+      "source": "// m\u1eb7t tr\u00ean khai `depthWrite: false`."
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1752,
+      "source": "const dashSize = beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1763,
+      "source": "owner.userData.dashSize = dashSize;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1794,
+      "source": "depthWrite: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1795,
+      "source": "transparent: true,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1796,
+      "source": "opacity: 0,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1799,
+      "source": "color: nen(MAU.polygon),"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1800,
+      "source": "transparent: true,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1801,
+      "source": "opacity: noiBat ? 0.55 : 0.14,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1803,
+      "source": "depthWrite: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1812,
+      "source": "colorWrite: false, depthWrite: false, transparent: true, opacity: 0,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1813,
+      "source": "linewidth: 6,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1815,
+      "source": "color: net(MAU.line), linewidth: 2,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1832,
+      "source": "color: mauVien,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1838,
+      "source": "...chungVien, linewidth: 2, depthFunc: THREE.LessEqualDepth,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1842,
+      "source": "line.renderOrder = thuTuVien;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1844,
+      "source": "...chungVien, linewidth: 2, depthFunc: THREE.GreaterDepth, depthWrite: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1845,
+      "source": "dashSize: coNetDut, gapSize: coNetDut, transparent: true, opacity: 0.75,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1851,
+      "source": "lineKhuat.renderOrder = thuTuVien;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1865,
+      "source": "color: mauVien,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1866,
+      "source": "dashSize: coNetDut,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1868,
+      "source": "renderOrder: thuTuVien,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1891,
+      "source": "color: nen(MAU.polygon),"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1892,
+      "source": "transparent: true,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1893,
+      "source": "opacity: thietDien ? DO_DUC_TO_THIET_DIEN : daGiacPhu ? (noiBat ? 0.42 : 0.28) : (noiBat ? 0.35 : 0.16),"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1895,
+      "source": "depthWrite: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1896,
+      "source": "...(toXuyenKhoi ? { ...LECH_THIET_DIEN, depthTest: !xray } : {}),"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 1899,
+      "source": "if (toXuyenKhoi) mesh.renderOrder = THU_TU_TO_THIET_DIEN;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2061,
+      "source": "new THREE.LineDashedMaterial({ color: mauNet, dashSize: chuKy, gapSize: chuKy * 0.65, depthTest: false, transparent: true, opacity: 0.92 }));"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2065,
+      "source": "new THREE.LineBasicMaterial({ color: mauNet, depthTest: false, transparent: true, opacity: 0.92 }));"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2069,
+      "source": "new THREE.MeshBasicMaterial({ color: mauChan, depthTest: false, transparent: true, opacity: 0.96 }),"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2074,
+      "source": "x.renderOrder = x === chamChan ? 11 : 10;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2145,
+      "source": "color: mau,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2146,
+      "source": "transparent: true,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2147,
+      "source": "opacity: Number((doDucGoc * heSoDiu).toFixed(4)),"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2148,
+      "source": "depthWrite: false,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2152,
+      "source": "l.renderOrder = -2;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2156,
+      "source": "taoVanh(\"luoi:trong\", vanh0, 0x94a3b8, 0.24);"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2157,
+      "source": "taoVanh(\"luoi:giua\", vanh1, 0x94a3b8, 0.14);"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2158,
+      "source": "taoVanh(\"luoi:ngoai\", vanh2, 0xb0bec5, 0.06);"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2298,
+      "source": "scene3.add(new THREE.AmbientLight(0xffffff, 0.75));"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2299,
+      "source": "const den = new THREE.DirectionalLight(0xffffff, 0.6);"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2414,
+      "source": "// t\u00ednh l\u1ea1i b\u1ed1 c\u1ee5c cho t\u1eebng nh\u00e3n \u1edf m\u1ed7i khung (transform/opacity kh\u00f4ng \u0111\u1ed5i offsetWidth/Height)."
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2419,
+      "source": "if (!v || !id) { el.style.opacity = \"0\"; continue; }"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2424,
+      "source": "if (!hien) { el.style.opacity = \"0\"; continue; }"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2433,
+      "source": "for (const d of dat) d.el.style.opacity = giu.has(d.id) ? \"1\" : \"0\";"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2468,
+      "source": "if (!id || !p3 || !(p3.z < 1)) { el.style.opacity = \"0\"; continue; }"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2487,
+      "source": "el.style.opacity = r ? \"1\" : \"0\";"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2509,
+      "source": "el.style.opacity = \"0\";"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 2533,
+      "source": "el.style.opacity = r ? \"1\" : \"0\";"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 3004,
+      "source": "mat.color.setHex(0x0d9488);"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 3005,
+      "source": "mat.opacity = 0.18;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "line": 3039,
+      "source": "child.userData.edgeColor = 0x0f766e;"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-model.ts",
+      "line": 783,
+      "source": "* \u26a0\ufe0f V\u00ec sao kh\u00f4ng \u0111\u1ec3 `THREE.Line` m\u1eb7c \u0111\u1ecbnh: WebGL b\u1ecf qua `linewidth`, n\u00ean m\u1ecdi"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-roles.ts",
+      "line": 22,
+      "source": "dich: 0x2563eb,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-roles.ts",
+      "line": 24,
+      "source": "moi_dung: 0x2563eb,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-roles.ts",
+      "line": 26,
+      "source": "du_kien_so: 0xc2410c,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-roles.ts",
+      "line": 28,
+      "source": "trung_gian: 0xfb923c,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-roles.ts",
+      "line": 30,
+      "source": "boi_canh: 0x6b7280,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-roles.ts",
+      "line": 32,
+      "source": "nen_boi_canh: 0xcfd6df,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-roles.ts",
+      "line": 34,
+      "source": "diem_de_cho: 0x374151,"
+    },
+    {
+      "file": "frontend/src/simulations/domains/geometry/scene3d-roles.ts",
+      "line": 45,
+      "source": "/** `0x2563eb` \u2192 `#2563eb` \u2014 \u0111\u1ec3 test \u0111\u1ed3ng b\u1ed9 so v\u1edbi CSS. */"
+    }
+  ]
+}

@@ -150,6 +150,14 @@ export function huongTuGoc(phuongViDo: number, caoDo: number): Diem3 {
   return [Math.cos(e) * Math.cos(a), Math.cos(e) * Math.sin(a), Math.sin(e)];
 }
 
+/** Hướng QUEN kiểu SGK mà `chonHuongNhin` kéo về: phương vị của `HUONG`, góc ngẩng 22.4° — góc "Góc SGK" của HTML
+ *  tham chiếu (φ = 1.18 rad ⇒ 90° − 67.6°). Chỉ đổi lực kéo trong điểm chấm; ngưỡng vẫn đo theo `HUONG`. */
+export const HUONG_SGK: Diem3 = huongTuGoc((Math.atan2(HUONG[1], HUONG[0]) * 180) / Math.PI, 22.4);
+
+/** Trọng số kéo về `HUONG_SGK` trong điểm chấm (bản trước 0.85 — đo trên các cảnh B1/B2: quá yếu để đổi lựa chọn
+ *  giữa các hướng ĐÃ đạt ngưỡng). Ngưỡng vẫn xét TRƯỚC, nên hướng suy biến không thắng nhờ lực kéo. */
+const LUC_KEO_SGK = 2;
+
 function chieu(diem: Diem3[], huong: Diem3) {
   const d = chuan(huong);
   const phai = chuan(Math.abs(d[2]) > 0.999 ? cheo([0, 1, 0], d) : cheo([0, 0, 1], d));
@@ -292,14 +300,14 @@ export function doLuoiGocNhin(diem: Diem3[], canh: [number, number][], mat: numb
  *  tích, khoảng hở và độ sâu, trừ một chút cho việc xa hướng quen thuộc cũ để
  *  hình giữ tư thế sách giáo khoa. Không hướng nào đạt ⇒ hướng điểm cao nhất. */
 export function chonHuongNhin(diem: Diem3[], canh: [number, number][], mat: number[][]): Diem3 {
-  const quen = chuan([...HUONG]);
+  const quen = HUONG_SGK;
   const { cac, tran } = doLuoiGocNhin(diem, canh, mat);
   let tot: { huong: Diem3; diem: number; dat: boolean } | null = null;
   for (const { huong, q } of cac) {
     const dat = datNguong(q, tran);
     const diemSo = q.dienTichBao / (tran.dienTichBao || 1) + 2 * Math.min(q.khoangDinhCanhMin, 0.2)
       + Math.min(q.khoangDinhMin, 0.38) + 0.5 * q.doSau / (tran.doSau || 1)
-      - 0.85 * (1 - tich(huong, quen));
+      - LUC_KEO_SGK * (1 - tich(huong, quen));
     if (!tot || (dat && !tot.dat) || (dat === tot.dat && diemSo > tot.diem)) {
       tot = { huong, diem: diemSo, dat };
     }
@@ -320,11 +328,23 @@ export function tiLeHinhChieu(diem: Diem3[], huong: Diem3): number | null {
   return rong > 1e-9 && Number.isFinite(cao) ? cao / rong : null;
 }
 
+export interface TuyChonKhungNhinSuPham {
+  /** Tỉ lệ lấp khung dọc mục tiêu (mặc định TI_LE_LAP_KHUNG = 0.78). */
+  tiLeDoc?: number;
+  /** Tỉ lệ lấp khung ngang mục tiêu (mặc định TI_LE_LAP_KHUNG = 0.78). */
+  tiLeNgang?: number;
+  /** Độ dịch tâm vùng an toàn theo phương ngang (tỉ lệ nửa chiều rộng khung, âm = dịch hình sang trái khi mở panel phải). */
+  dichTamNgang?: number;
+  /** Độ dịch tâm vùng an toàn theo phương dọc (tỉ lệ nửa chiều cao khung). */
+  dichTamDoc?: number;
+}
+
 /** Khung nhìn: hướng sư phạm + khoảng cách vừa khít theo HÌNH CHIẾU THẬT của
  *  các điểm (không theo mặt cầu bao, vốn làm hình cao/hẹp chỉ choán một dải). */
 export function khungNhinSuPham(
   diem: Diem3[], canh: [number, number][], mat: number[][], fovDo: number, tiLeKhung: number,
   huongCo?: Diem3,
+  tuyChon?: TuyChonKhungNhinSuPham,
 ): KhungNhin | null {
   const hop = hopBaoCuaDiem(diem);
   const coBan = khungNhinVua(hop, fovDo, tiLeKhung);
@@ -335,12 +355,14 @@ export function khungNhinSuPham(
   const len = cheo(d, phai);
   const tanDoc = Math.tan((fovDo * Math.PI) / 360);
   const tanNgang = tanDoc * tiLeKhung;
-  // Khoảng cách k nhỏ nhất để MỌI điểm lọt vào TI_LE_LAP_KHUNG của khung.
+  const tiLeDoc = Math.max(0.25, Math.min(0.9, tuyChon?.tiLeDoc ?? TI_LE_LAP_KHUNG));
+  const tiLeNgang = Math.max(0.25, Math.min(0.9, tuyChon?.tiLeNgang ?? TI_LE_LAP_KHUNG));
+  // Khoảng cách k nhỏ nhất để MỌI điểm lọt vào tiLeDoc/tiLeNgang của khung.
   const khoangVua = (tam: Diem3) => Math.max(KHOANG_TOI_THIEU, ...diem.map((p) => {
     const q = tru(p, tam);
     const s = tich(q, d);
-    return Math.max(s + Math.abs(tich(q, phai)) / (tanNgang * TI_LE_LAP_KHUNG),
-      s + Math.abs(tich(q, len)) / (tanDoc * TI_LE_LAP_KHUNG));
+    return Math.max(s + Math.abs(tich(q, phai)) / (tanNgang * tiLeNgang),
+      s + Math.abs(tich(q, len)) / (tanDoc * tiLeDoc));
   }));
   // Rồi dời tâm nhìn về giữa hình chiếu thật: tâm hộp bao lệch khỏi tâm hình
   // chiếu, và phía lệch ấy phí mất một dải khung. Hai vòng là đủ hội tụ.
@@ -354,7 +376,14 @@ export function khungNhinSuPham(
       tam[2] + phai[2] * dx + len[2] * dy];
   }
   const k = khoangVua(tam);
-  return { viTri: [tam[0] + d[0] * k, tam[1] + d[1] * k, tam[2] + d[2] * k], nhinVao: tam };
+  const dichNgang = (tuyChon?.dichTamNgang ?? 0) * tanNgang * k;
+  const dichDoc = (tuyChon?.dichTamDoc ?? 0) * tanDoc * k;
+  const tamCuoi: Diem3 = [
+    tam[0] - phai[0] * dichNgang - len[0] * dichDoc,
+    tam[1] - phai[1] * dichNgang - len[1] * dichDoc,
+    tam[2] - phai[2] * dichNgang - len[2] * dichDoc,
+  ];
+  return { viTri: [tamCuoi[0] + d[0] * k, tamCuoi[1] + d[1] * k, tamCuoi[2] + d[2] * k], nhinVao: tamCuoi };
 }
 
 /**

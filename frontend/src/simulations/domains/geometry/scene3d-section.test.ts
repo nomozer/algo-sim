@@ -396,7 +396,7 @@ describe("tô thiết diện khép kín đọc tách khỏi mặt cắt và kh�
     expect(obj.getObjectByName("polygon_fill:td")).toBeUndefined();
   });
 
-  it("tô KHÔNG qua phép kiểm chiều sâu: lớp chiều sâu ĐỤC của khối chạy trước, mà thiết diện nằm TRONG khối", () => {
+  it("section fill respects solid depth by default and bypasses it only in explicit x-ray mode", () => {
     // Đo ở trình duyệt (W15 Task 10, BROWSER-1 tại c1638891): bật/tắt phần tô ở bước khép
     // cho ΔE = 0 tại MỌI mẫu, desktop lẫn mobile — vật tô có mặt nhưng không điểm ảnh nào
     // được vẽ. Lớp chiều sâu của khối (đục, ghi chiều sâu) chạy trước toàn bộ hàng đợi trong
@@ -411,7 +411,9 @@ describe("tô thiết diện khép kín đọc tách khỏi mặt cắt và kh�
       expect((l.material as THREE.Material).depthWrite).toBe(true);
     }
     const to = vatTo(VIEW.buildObject3D({ ...td(CANH), closed: true, fill_visible: true }, false)!);
-    expect((to[0].material as THREE.Material).depthTest).toBe(false);
+    expect((to[0].material as THREE.Material).depthTest).toBe(true);
+    const xray = vatTo(VIEW.buildObject3D({ ...td(CANH), closed: true, fill_visible: true }, false, undefined, undefined, undefined, undefined, undefined, true)!);
+    expect((xray[0].material as THREE.Material).depthTest).toBe(false);
   });
 
   it("chưa khép hoặc chưa tới bước tô ⇒ không có vật tô", () => {

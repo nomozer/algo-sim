@@ -1,0 +1,15 @@
+{
+  "status": "INTERRUPTED_NOT_AUTHORITATIVE",
+  "exit_code": "UNKNOWN",
+  "reason": "Session interruption at 41%; no process completion record available",
+  "raw_streams": {
+    "stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout.log": {
+      "bytes": 5457,
+      "sha256": "24cb65ce921b3f588e26da98bb1dfc988f3b308ebf35d7eb6ca48d3ad067e02f"
+    }
+  }
+}

@@ -79,7 +79,7 @@
      khung 3D lẫn bảng lời giải. Bản gốc ở `scene3d-roles.ts` (`MAU_VAI_TRO`,
      three.js đọc số hex); đây là bản sao cho CSS, khoá bằng
      `scene3d-roles.test.ts`. Đổi một bên mà quên bên kia là test đỏ. */
-  --geo3d-vai-tro-dich: #2563eb;
+  --geo3d-vai-tro-dich: #0075de;
   --geo3d-vai-tro-du-kien-so: #c2410c;
   --geo3d-vai-tro-trung-gian: #fb923c;
   --geo3d-vai-tro-boi-canh: #6b7280;
