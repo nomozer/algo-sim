@@ -1,5 +1,8 @@
 /** Camera-relative edge visibility. Presentation-only; never feeds geometry state. */
 import * as THREE from "three";
+import { Line2 } from "three/addons/lines/Line2.js";
+import { LineGeometry } from "three/addons/lines/LineGeometry.js";
+import { LineMaterial } from "three/addons/lines/LineMaterial.js";
 import { chiaTamGiac } from "./polygon-triangulate";
 import { toVec3, type SceneObject } from "./scene3d-model";
 
@@ -398,7 +401,7 @@ export function diemVanhCongBiChe(
       const distPt = toPt.length();
       if (Math.abs(distPt - r) <= 0.08 * r) {
         const viewVec = new THREE.Vector3().subVectors(worldCam, pt);
-        if (viewVec.dot(toPt) < -1e-3 * r * rayLen) return true;
+        if (viewVec.dot(toPt) < -0.15 * r * rayLen) return true;
         continue;
       }
       const oc = new THREE.Vector3().subVectors(vol.anchor, worldCam);
@@ -448,4 +451,217 @@ export function diemVanhCongBiChe(
   return false;
 }
 
+export interface FatLineSyncSummary {
+  totalLines: number;
+  maxSectionBorderWidth: number;
+  maxVisibleEdgeWidth: number;
+  minHiddenEdgeWidth: number;
+  sourceLines: THREE.Line[];
+}
 
+export function taoGiuAmNetDay(): THREE.Object3D[] {
+  const geo = new LineGeometry();
+  geo.setPositions([0, 0, 0, 1, 0, 0]);
+  const solidMat = new LineMaterial({
+    color: 0x1e293b,
+    linewidth: 1.8,
+    dashed: false,
+    transparent: true,
+    opacity: 0,
+    depthTest: false,
+    depthWrite: false,
+  });
+  solidMat.colorWrite = false;
+  const dashedMat = new LineMaterial({
+    color: 0x475569,
+    linewidth: 1.25,
+    dashed: true,
+    dashSize: 0.1,
+    gapSize: 0.1,
+    transparent: true,
+    opacity: 0,
+    depthTest: false,
+    depthWrite: false,
+  });
+  dashedMat.colorWrite = false;
+  const solidHold = new Line2(geo, solidMat);
+  const dashedHold = new Line2(geo, dashedMat);
+  solidHold.computeLineDistances();
+  dashedHold.computeLineDistances();
+  solidHold.frustumCulled = false;
+  dashedHold.frustumCulled = false;
+  solidHold.raycast = () => {};
+  dashedHold.raycast = () => {};
+  return [solidHold, dashedHold];
+}
+
+export function dongBoNetDayManHinh(
+  roots: readonly THREE.Object3D[],
+  fatGroup: THREE.Group,
+  wCss: number,
+  hCss: number,
+): FatLineSyncSummary {
+  const activeLines: THREE.Line[] = [];
+  for (const r of roots) {
+    r.updateMatrixWorld(true);
+    r.traverse((node) => {
+      if (!(node as THREE.Line).isLine || (node as THREE.LineSegments).isLineSegments) return;
+      for (let p: THREE.Object3D | null = node; p; p = p.parent) {
+        if (!p.visible) return;
+        if (p === r) break;
+      }
+      const line = node as THREE.Line;
+      const mat = line.material as (THREE.LineBasicMaterial | THREE.LineDashedMaterial) | undefined;
+      if (!mat || mat.colorWrite === false || (mat.transparent && mat.opacity <= 0.01) || line.name.endsWith(":proxy")) {
+        return;
+      }
+      const pos = line.geometry?.getAttribute?.("position") as THREE.BufferAttribute | undefined;
+      if (!pos || pos.count < 2) return;
+      activeLines.push(line);
+    });
+  }
+
+  const pool: Line2[] = (fatGroup.userData.pool as Line2[] | undefined) ?? [];
+  fatGroup.userData.pool = pool;
+  const tmp = new THREE.Vector3();
+  const resW = Math.max(1, wCss);
+  const resH = Math.max(1, hCss);
+  let maxSectionBorderWidth = 0;
+  let maxVisibleEdgeWidth = 0;
+  let minHiddenEdgeWidth = Infinity;
+
+  activeLines.forEach((line, idx) => {
+    const mat = line.material as THREE.LineBasicMaterial | THREE.LineDashedMaterial;
+    const pos = line.geometry.getAttribute("position") as THREE.BufferAttribute;
+    const isDashed =
+      line.userData?.hidden === true
+      || (mat as THREE.LineDashedMaterial).isLineDashedMaterial === true
+      || line.name.endsWith(":khuat");
+    const isPlaneBorder =
+      Boolean(line.parent?.userData?.nonCanonicalLoop?.isPlaneBorder)
+      || line.name.startsWith("plane_border:");
+    const isSectionOrPolyBorder =
+      !isPlaneBorder
+      && (line.name.startsWith("section_border:") || line.name.startsWith("polygon_border:"));
+    const isPerpOrWitness =
+      line.name.startsWith("perp_marker:") || Boolean(line.parent?.userData?.nhanChung);
+    const isHighlighted = Boolean(
+      line.userData?.sang
+      || line.parent?.userData?.highlighted
+      || (mat.linewidth && mat.linewidth >= 2.6),
+    );
+
+    let widthPx = 1.8;
+    if (isPlaneBorder) {
+      widthPx = isHighlighted ? 1.75 : 1.15;
+    } else if (isSectionOrPolyBorder) {
+      widthPx = isHighlighted ? 2.85 : isDashed ? 1.65 : 2.45;
+    } else if (isPerpOrWitness) {
+      widthPx = isDashed ? 1.25 : 1.40;
+    } else {
+      widthPx = isHighlighted ? 2.65 : isDashed ? 1.25 : 1.80;
+    }
+
+    if (isSectionOrPolyBorder && !isDashed) {
+      maxSectionBorderWidth = Math.max(maxSectionBorderWidth, widthPx);
+    } else if (!isPlaneBorder && !isPerpOrWitness && !isDashed) {
+      maxVisibleEdgeWidth = Math.max(maxVisibleEdgeWidth, widthPx);
+    }
+    if (isDashed) {
+      minHiddenEdgeWidth = Math.min(minHiddenEdgeWidth, widthPx);
+    }
+
+    let line2 = pool[idx];
+    if (!line2) {
+      const g = new LineGeometry();
+      g.setPositions([0, 0, 0, 1, 0, 0]);
+      const m = new LineMaterial({
+        color: 0x1e293b,
+        linewidth: widthPx,
+        dashed: false,
+        transparent: true,
+        opacity: 1,
+        depthTest: false,
+        depthWrite: false,
+      });
+      line2 = new Line2(g, m);
+      line2.frustumCulled = false;
+      line2.raycast = () => {};
+      line2.userData.voHan = true;
+      line2.userData.fatLineCompanion = true;
+      pool.push(line2);
+      fatGroup.add(line2);
+    }
+
+    const nCoords = pos.count * 3;
+    let coords = line2.userData.coordsCache as Float32Array | undefined;
+    let changed = !coords || coords.length !== nCoords;
+    if (!coords || coords.length !== nCoords) {
+      coords = new Float32Array(nCoords);
+      line2.userData.coordsCache = coords;
+    }
+    for (let i = 0; i < pos.count; i += 1) {
+      tmp.fromBufferAttribute(pos, i).applyMatrix4(line.matrixWorld);
+      const base = i * 3;
+      if (
+        !changed
+        && (Math.abs(coords[base] - tmp.x) > 1e-6
+          || Math.abs(coords[base + 1] - tmp.y) > 1e-6
+          || Math.abs(coords[base + 2] - tmp.z) > 1e-6)
+      ) {
+        changed = true;
+      }
+      coords[base] = tmp.x;
+      coords[base + 1] = tmp.y;
+      coords[base + 2] = tmp.z;
+    }
+
+    if (changed) {
+      if (line2.userData.pointCount !== pos.count) {
+        line2.geometry?.dispose?.();
+        line2.geometry = new LineGeometry();
+        line2.userData.pointCount = pos.count;
+      }
+      line2.geometry.setPositions(coords);
+      line2.computeLineDistances();
+    }
+
+    const lm = line2.material as LineMaterial;
+    lm.color.copy(mat.color);
+    lm.linewidth = widthPx;
+    lm.resolution.set(resW, resH);
+    lm.transparent = true;
+    lm.opacity = mat.opacity ?? 1;
+    lm.depthTest = mat.depthTest;
+    lm.depthWrite = false;
+    lm.depthFunc = mat.depthFunc;
+    lm.polygonOffset = mat.polygonOffset;
+    lm.polygonOffsetFactor = mat.polygonOffsetFactor;
+    lm.polygonOffsetUnits = mat.polygonOffsetUnits;
+    if (lm.dashed !== isDashed) {
+      lm.dashed = isDashed;
+      lm.needsUpdate = true;
+    }
+    if (isDashed) {
+      const dm = mat as THREE.LineDashedMaterial;
+      lm.dashSize = dm.dashSize || 0.14;
+      lm.gapSize = dm.gapSize || 0.10;
+      lm.dashScale = 1;
+    }
+    line2.renderOrder = line.renderOrder;
+    line2.name = `fat:${line.name}`;
+    line2.visible = true;
+  });
+
+  for (let k = activeLines.length; k < pool.length; k += 1) {
+    pool[k].visible = false;
+  }
+
+  return {
+    totalLines: activeLines.length,
+    maxSectionBorderWidth,
+    maxVisibleEdgeWidth,
+    minHiddenEdgeWidth: Number.isFinite(minHiddenEdgeWidth) ? minHiddenEdgeWidth : 0,
+    sourceLines: activeLines,
+  };
+}

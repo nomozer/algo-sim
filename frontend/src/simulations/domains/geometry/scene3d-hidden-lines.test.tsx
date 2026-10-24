@@ -203,7 +203,7 @@ describe("hidden-line — cấu trúc cảnh", () => {
       const op = gom(khoi).filter((c) => (c as THREE.Line).isLine && c.parent?.userData?.visualOwnerId)
         .map((c) => ((c as THREE.Line).material as THREE.Material).opacity);
       expect(op.length).toBeGreaterThan(0);
-      expect(Math.max(...op)).toBeLessThanOrEqual(0.3 + 1e-9);
+      expect(Math.max(...op)).toBeLessThanOrEqual(0.72 + 1e-9);
     }
   });
 

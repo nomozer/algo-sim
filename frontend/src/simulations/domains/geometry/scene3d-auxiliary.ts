@@ -32,12 +32,33 @@ export function auxiliaryObjects(scene: Scene3D): Map<string, HinhPhu> {
   const n = stepCount(scene);
   const loai = new Map(scene.objects.map((o) => [o.id, o.type]));
   const duongChieu = new Set(scene.objects.flatMap((o) => o.perpendicular_witness?.on ? [o.perpendicular_witness.on] : []));
+  const dinhKhoi = new Set(scene.objects.flatMap((o) =>
+    (o.type === "solid" || o.type === "curved_solid") ? [...(o.depends ?? []), ...(o.vertex_ids ?? [])] : []));
   for (const o of scene.objects) {
     const vai = o.formation_roles ?? [];
     const nhom = o.display_group ?? [];
+    const con = scene.objects.filter((x) => !x.parent && x.depends?.includes(o.id));
+    if (o.formation_roles === undefined) {
+      if (o.type === "plane3" && o.origin === "derived" && (o.depends ?? []).length >= 3
+          && (o.depends ?? []).every((id) => dinhKhoi.has(id))
+          && con.every((x) => x.type === "quantity")
+          && (con.length === 0 || o.id === "day")) {
+        ra.set(o.id, { loai: "do", xongTai: -1 });
+        continue;
+      }
+      if (o.type === "point3" && !dinhKhoi.has(o.id) && con.length === 1 && con[0].type === "plane3") {
+        const mp = con[0];
+        const mpCon = scene.objects.filter((x) => !x.parent && x.depends?.includes(mp.id));
+        const vanhCong = mpCon.find((x) => x.type === "circle3" || x.type === "ellipse3");
+        if (vanhCong && (mp.depends ?? []).indexOf(o.id) > 0
+            && o.xyz?.join("|") !== vanhCong.center?.join("|")) {
+          ra.set(o.id, { loai: "do", xongTai: -1 });
+          continue;
+        }
+      }
+    }
     if (o.origin !== "derived" || vai.length !== 1 || vai[0] !== VAI_PHU
         || nhom.includes("given") || nhom.includes("target")) continue;
-    const con = scene.objects.filter((x) => !x.parent && x.depends?.includes(o.id));
     if (o.type === "point3") {
       const diemPhuMp = !o.perpendicular_witness
         && (o.depends ?? []).some((id) => loai.get(id) === "vector3")

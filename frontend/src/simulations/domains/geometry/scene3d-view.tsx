@@ -46,11 +46,13 @@ import {
   classifySolidEdgeVisibility,
   classifyWorldSegmentVisibility,
   diemVanhCongBiChe,
+  dongBoNetDayManHinh,
+  taoGiuAmNetDay,
   type CurvedSolidVolumeMeta,
   type EdgeVisibilityAudit,
   type WorldSolidOccluder,
 } from "./scene3d-edge-visibility";
-export { classifySolidEdgeVisibility } from "./scene3d-edge-visibility";
+export { classifySolidEdgeVisibility, dongBoNetDayManHinh } from "./scene3d-edge-visibility";
 import {
   BAN_KINH_NHIN,
   KHOANG_CAM_MAC_DINH,
@@ -350,7 +352,7 @@ function lopChieuSau(g: THREE.BufferGeometry): THREE.Mesh {
  *  để các đường/nét nằm sau mặt trước của khối bị phân loại là khuất bởi phép kiểm chiều sâu GPU. */
 function lopChieuSauMatTruoc(g: THREE.BufferGeometry): THREE.Mesh {
   const m = new THREE.Mesh(g, new THREE.MeshBasicMaterial({
-    colorWrite: false, depthWrite: true, depthTest: true,
+    colorWrite: false, depthWrite: false, depthTest: true,
     side: THREE.FrontSide,
     transparent: true, opacity: 0,
     polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1,
@@ -380,7 +382,7 @@ function duongHaiLuot(
   const Lop = duongThang ? THREE.Line : THREE.LineSegments;
 
   const thay = new Lop(g, new THREE.LineBasicMaterial({
-    ...chung, depthFunc: THREE.LessEqualDepth,
+    ...chung, depthFunc: THREE.LessEqualDepth, depthWrite: false,
   }));
   thay.renderOrder = THU_TU_DUONG;
   thay.name = `${ten}:thay`;
@@ -546,7 +548,7 @@ function warmSpanPools(
     dashedHold.frustumCulled = false;
     solidHold.raycast = () => {};
     dashedHold.raycast = () => {};
-    hold.add(solidHold, dashedHold);
+    hold.add(solidHold, dashedHold, ...taoGiuAmNetDay());
     scene3.add(hold);
     scene3.userData.warmHoldGroup = hold;
   }
@@ -635,6 +637,7 @@ interface NonCanonicalLoopMeta {
   renderOrder: number;
   yieldColinear?: boolean;
   isPlaneBorder?: boolean;
+  hasClosedSection?: boolean;
 }
 
 interface CurvedRimLoopMeta {
@@ -778,6 +781,18 @@ function updateNonCanonicalVisibility(
 
     const loop = node.userData?.nonCanonicalLoop as NonCanonicalLoopMeta | undefined;
     if (loop) {
+      if (loop.isPlaneBorder && loop.hasClosedSection && !loop.highlighted) {
+        for (const child of [...node.children]) {
+          if (child.userData?.nonCanonicalBorderLine) {
+            node.remove(child);
+            if (!child.userData?.fromSpanPool) (child as THREE.Line).geometry?.dispose();
+            const material = (child as THREE.Line).material as THREE.Material | undefined;
+            if (!material?.userData.spanPooled) material?.dispose();
+          }
+        }
+        node.userData.nonCanonicalSig = worldSignature;
+        return;
+      }
       if (node.userData.nonCanonicalSig === worldSignature) return;
       if (occluders.length === 0 && !(loop.yieldColinear && prioritySegments.length > 0)) return;
       node.updateWorldMatrix(true, false);
@@ -815,14 +830,13 @@ function updateNonCanonicalVisibility(
         res.spans.forEach((span, idx) => {
           const p0 = localA.clone().lerp(localB, span.t0);
           const p1 = localA.clone().lerp(localB, span.t1);
-          const isHidden = span.visibility === "HIDDEN";
+          const isHidden = loop.isPlaneBorder ? false : span.visibility === "HIDDEN";
           const mat = spanMaterial(node,
             [isHidden, loop.highlighted, loop.color, loop.dashSize, loop.isPlaneBorder, node.userData.lamDiu].join("|"), () => {
               const m = canonicalEdgeMaterial(isHidden, loop.highlighted, loop.color, loop.dashSize, loop.color);
               if (loop.isPlaneBorder) {
                 m.linewidth = NET.plane;
-                m.opacity = isHidden ? (loop.highlighted ? DO_DUC.selectedHiddenPlaneEdge : DO_DUC.hiddenPlaneEdge)
-                  : (loop.highlighted ? DO_DUC.selectedPlaneEdge : DO_DUC.planeEdge);
+                m.opacity = loop.highlighted ? DO_DUC.selectedPlaneEdge : DO_DUC.standalonePlaneEdge;
               } else if (!isHidden) {
                 m.linewidth = loop.highlighted ? NET.selected : NET.border;
               }
@@ -830,7 +844,7 @@ function updateNonCanonicalVisibility(
               return m;
             });
           const line = new THREE.Line(acquireSpanGeometry(node, slotIdx++, p0, p1), mat);
-          line.name = `section_border:${loop.objectId}:${i}:${idx}`;
+          line.name = loop.isPlaneBorder ? `plane_border:${loop.objectId}:${i}:${idx}` : `section_border:${loop.objectId}:${i}:${idx}`;
           line.userData.fromSpanPool = true;
           line.userData.nonCanonicalBorderLine = true;
           line.userData.hidden = isHidden;
@@ -1132,8 +1146,56 @@ export function doanNhuongCanh(
     if (o.type !== "solid") continue;
     for (const e of o.edge_ownership ?? []) chu.set(e.edge_id, bienDoi(o.id));
   }
-  return new Set(dung.filter((o) => o.type === "segment3" && o.boundary_edge_ids?.length
+  const ra = new Set(dung.filter((o) => o.type === "segment3" && o.boundary_edge_ids?.length
     && o.boundary_edge_ids.every((id) => chu.get(id) === bienDoi(o.id))).map((o) => o.id));
+  const canhMien: { a: Vec3; b: Vec3; dich: string }[] = [];
+  for (const o of dung) {
+    if ((o.type !== "section" && !(o.type === "polygon3" && vaiTroMien(o) === "section")) || o.closed === false) continue;
+    const pts = (o.polygon ?? o.vertices ?? []).map(toVec3);
+    if (pts.length < 3) continue;
+    const dich = bienDoi(o.id);
+    for (let i = 0; i < pts.length; i += 1) {
+      canhMien.push({ a: pts[i], b: pts[(i + 1) % pts.length], dich });
+    }
+  }
+  if (canhMien.length > 0) {
+    const trenDoan = (p: Vec3, a: Vec3, b: Vec3) => {
+      const abx = b[0] - a[0], aby = b[1] - a[1], abz = b[2] - a[2];
+      const lenSq = abx * abx + aby * aby + abz * abz;
+      if (lenSq < 1e-12) return false;
+      const apx = p[0] - a[0], apy = p[1] - a[1], apz = p[2] - a[2];
+      const t = (apx * abx + apy * aby + apz * abz) / lenSq;
+      if (t < -1e-4 || t > 1 + 1e-4) return false;
+      return Math.hypot(a[0] + abx * t - p[0], a[1] + aby * t - p[1], a[2] + abz * t - p[2]) <= 1e-4;
+    };
+    for (const o of dung) {
+      if (ra.has(o.id)) continue;
+      if (o.type === "polygon3" && vaiTroMien(o) !== "section" && o.closed !== false) {
+        const pts = (o.polygon ?? o.vertices ?? []).map(toVec3);
+        const dich = bienDoi(o.id);
+        if (
+          pts.length >= 3
+          && pts.every((p, idx) => {
+            const q = pts[(idx + 1) % pts.length];
+            return canhMien.some((c) => c.dich === dich && trenDoan(p, c.a, c.b) && trenDoan(q, c.a, c.b));
+          })
+        ) {
+          ra.add(o.id);
+        }
+        continue;
+      }
+      if (o.type !== "segment3" || o.perpendicular_witness || o.annotation?.witness) continue;
+      const ptA = o.point_a ?? o.endpoints?.[0];
+      const ptB = o.point_b ?? o.endpoints?.[1];
+      if (!ptA || !ptB) continue;
+      const a = toVec3(ptA), b = toVec3(ptB);
+      const dich = bienDoi(o.id);
+      if (canhMien.some((c) => c.dich === dich && trenDoan(a, c.a, c.b) && trenDoan(b, c.a, c.b))) {
+        ra.add(o.id);
+      }
+    }
+  }
+  return ra;
 }
 
 /**
@@ -1191,6 +1253,7 @@ export function buildObject3D(
   khucToSang: ReadonlyMap<string, KhucToSang> = new Map(),
   xray = false,
   vaiKhoi: VaiTroKhoi = "primary",
+  coThietDienDong = true,
 ): THREE.Object3D | null {
   // Ngữ cảnh cấu trúc: KHÔNG phải nhấn mạnh — nền xám nhạt, nét xám trung tính.
   // Cạnh khối vốn đã là mực trung tính nên giữ nguyên; còn MÀU KIỂU (hổ phách
@@ -1201,8 +1264,9 @@ export function buildObject3D(
   if (boiCanh) noiBat = false;
   const mau = noiBat === true ? MAU.highlight
     : noiBat ? MAU_TANG[noiBat as Exclude<TangNhanManh, "boi_canh">] : undefined;
-  const nen = (macDinh: number) => mau ?? (boiCanh ? MAU_NEN_BOI_CANH : macDinh);
+  const nen = (macDinh: number) => boiCanh ? MAU_NEN_BOI_CANH : macDinh;
   const net = (macDinh: number) => mau ?? (boiCanh ? MAU_VAI_TRO.boi_canh : macDinh);
+  const netMien = (macDinh: number) => boiCanh ? MAU_VAI_TRO.boi_canh : macDinh;
   const mauKhoi = vaiKhoi === "secondary" ? MAU.secondaryMesh : MAU.mesh;
   const doDucKhoi = noiBat ? DO_DUC.selectedSolid : vaiKhoi === "secondary" ? DO_DUC.secondarySolid : DO_DUC.solid;
   const vaiMien = vaiTroMien(o);
@@ -1345,6 +1409,11 @@ export function buildObject3D(
           }),
         );
         lineMarker.name = `perp_marker:${o.id}`;
+        lineMarker.userData = {
+          perpMarker: true,
+          foot: [cx, cy, cz] as Vec3,
+          corner: [cx + ux * su + vx * sv, cy + uy * su + vy * sv, cz + uz * su + vz * sv] as Vec3,
+        };
 
         const nhom = new THREE.Group();
         nhom.add(duong);
@@ -1371,6 +1440,19 @@ export function buildObject3D(
     const daGiacMoRong = moRongDaGiacMatPhang(diemMp, phapTuyen, diemNen, daGiac);
     const mauMp = nen(MAU.surface);
     const mauVienMp = net(MAU.planeOutline);
+    const laMatPhangDocLap = !coThietDienDong;
+    const laChonTrucTiepMp = noiBat === true || noiBat === "dich";
+    const doDucTamMp = laChonTrucTiepMp
+      ? DO_DUC.selectedPlane
+      : laMatPhangDocLap
+        ? DO_DUC.standalonePlane
+        : DO_DUC.plane;
+    const doDucVienMp = laChonTrucTiepMp
+      ? DO_DUC.selectedPlaneEdge
+      : laMatPhangDocLap
+        ? DO_DUC.standalonePlaneEdge
+        : DO_DUC.planeEdge;
+    const hienVienMp = laChonTrucTiepMp || laMatPhangDocLap;
     const coNetDut = (beDayNet(diemNen, 1) / SECTION_STROKE_RATIO) * NET_DUT_TI_LE;
     const ganVienMatPhang = (target: THREE.Mesh, daGiacVien: Vec3[]) => {
       const ptsVien = daGiacVien.map((p) => new THREE.Vector3(...p));
@@ -1381,7 +1463,8 @@ export function buildObject3D(
           color: mauVienMp,
           linewidth: NET.plane,
           transparent: true,
-          opacity: noiBat ? DO_DUC.selectedPlaneEdge : DO_DUC.planeEdge,
+          opacity: doDucVienMp,
+          colorWrite: hienVienMp,
           depthTest: false,
         }),
       );
@@ -1396,10 +1479,11 @@ export function buildObject3D(
         closed: true,
         color: mauVienMp,
         dashSize: coNetDut,
-        highlighted: Boolean(noiBat),
+        highlighted: laChonTrucTiepMp,
         renderOrder: THU_TU_DUONG,
         yieldColinear: true,
         isPlaneBorder: true,
+        hasClosedSection: Boolean(coThietDienDong),
       } satisfies NonCanonicalLoopMeta;
     };
     if (daGiac && daGiac.length >= 3) {
@@ -1415,7 +1499,7 @@ export function buildObject3D(
         const m = new THREE.MeshBasicMaterial({
           color: mauMp,
           transparent: true,
-          opacity: coMoRong ? 0 : (noiBat ? DO_DUC.selectedPlaneCore : DO_DUC.planeCore),
+          opacity: coMoRong ? 0 : (noiBat ? DO_DUC.selectedPlaneCore : laMatPhangDocLap ? DO_DUC.standalonePlane : DO_DUC.planeCore),
           forceSinglePass: true,
           colorWrite: !coMoRong,
           side: THREE.DoubleSide,
@@ -1437,7 +1521,7 @@ export function buildObject3D(
             const mMoRong = new THREE.MeshBasicMaterial({
               color: mauMp,
               transparent: true,
-              opacity: noiBat ? DO_DUC.selectedPlane : DO_DUC.plane,
+              opacity: doDucTamMp,
               forceSinglePass: true,
               side: THREE.DoubleSide,
               depthWrite: false,
@@ -1468,7 +1552,7 @@ export function buildObject3D(
         const mMoRong = new THREE.MeshBasicMaterial({
           color: mauMp,
           transparent: true,
-          opacity: noiBat ? DO_DUC.selectedPlane : DO_DUC.plane,
+          opacity: doDucTamMp,
           forceSinglePass: true,
           side: THREE.DoubleSide,
           depthWrite: false,
@@ -1509,7 +1593,7 @@ export function buildObject3D(
     const day = beDayNet(diemNen, r) * heSoDay;
     const ngoaiR = r;
     const trongR = Math.max(0, r - day);
-    const mauVanh = net(mauVienMien);
+    const mauVanh = netMien(mauVienMien);
     const chungVanh = {
       color: mauVanh, side: THREE.DoubleSide,
       forceSinglePass: true,
@@ -1641,7 +1725,7 @@ export function buildObject3D(
       return bg;
     };
     const chungVanh = {
-      color: net(mauVienMien), side: THREE.DoubleSide,
+      color: netMien(mauVienMien), side: THREE.DoubleSide,
       forceSinglePass: true,
       ...LECH_THIET_DIEN,
     } as const;
@@ -1773,11 +1857,26 @@ export function buildObject3D(
 
   if (o.render === "mesh" && o.vertices && o.faces) {
     const dinh = o.vertices.map(toVec3);
+    const tamKhoi: Vec3 = dinh.length > 0
+      ? [
+          dinh.reduce((s, p) => s + p[0], 0) / dinh.length,
+          dinh.reduce((s, p) => s + p[1], 0) / dinh.length,
+          dinh.reduce((s, p) => s + p[2], 0) / dinh.length,
+        ]
+      : [0, 0, 0];
     const pos: number[] = [];
     for (const f of o.faces) {
       const mat = f.map((j) => dinh[j]);
       for (const [a, b, c] of chiaTamGiac(mat)) {
-        for (const k of [a, b, c]) pos.push(...mat[k]);
+        const pA = mat[a], pB = mat[b], pC = mat[c];
+        const ux = pB[0] - pA[0], uy = pB[1] - pA[1], uz = pB[2] - pA[2];
+        const vx = pC[0] - pA[0], vy = pC[1] - pA[1], vz = pC[2] - pA[2];
+        const nx = uy * vz - uz * vy;
+        const ny = uz * vx - ux * vz;
+        const nz = ux * vy - uy * vx;
+        const ox = pA[0] - tamKhoi[0], oy = pA[1] - tamKhoi[1], oz = pA[2] - tamKhoi[2];
+        const tri = nx * ox + ny * oy + nz * oz < 0 ? [a, c, b] : [a, b, c];
+        for (const k of tri) pos.push(...mat[k]);
       }
     }
     const g = new THREE.BufferGeometry();
@@ -1790,7 +1889,8 @@ export function buildObject3D(
       opacity: doDucKhoi,
       roughness: PHONG_CACH_SCENE3D.light.roughness,
       metalness: PHONG_CACH_SCENE3D.light.metalness,
-      side: THREE.DoubleSide,
+      side: xray ? THREE.DoubleSide : THREE.FrontSide,
+      forceSinglePass: true,
       depthWrite: false,
     })));
     // Lớp chiều sâu riêng: mọi đường sau khối thấy được khối này dù vật liệu
@@ -1870,16 +1970,32 @@ export function buildObject3D(
   if (o.render === "polygon" && (o.polygon || o.vertices)) {
     const rawPts = (o.polygon ?? o.vertices ?? []).map(toVec3);
     if (rawPts.length < 2) return null;
+    if (o.display_role === "hit_proxy" && !noiBat) {
+      const nhomProxy = new THREE.Group();
+      if (rawPts.length >= 3) {
+        const posProxy: number[] = [];
+        for (const [a, b, c] of chiaTamGiac(rawPts)) {
+          for (const j of [a, b, c]) posProxy.push(...rawPts[j]);
+        }
+        const gProxy = new THREE.BufferGeometry();
+        gProxy.setAttribute("position", new THREE.Float32BufferAttribute(posProxy, 3));
+        nhomProxy.add(new THREE.Mesh(gProxy, new THREE.MeshBasicMaterial({
+          colorWrite: false, depthWrite: false, transparent: true, opacity: 0, side: THREE.DoubleSide,
+        })));
+      }
+      return v(nhomProxy, `polygon:${o.id}`);
+    }
     const pts = rawPts.map((p) => new THREE.Vector3(...p));
     const vong = o.closed === false ? pts : [...pts, pts[0]];
     const gLine = new THREE.BufferGeometry().setFromPoints(vong);
-    const mauVien = net(mauVienMien);
+    const mauVien = netMien(mauVienMien);
     const coNetDut = (beDayNet(diemNen, 1) / SECTION_STROKE_RATIO) * NET_DUT_TI_LE;
     const thietDien = o.type === "section";
     // Same role as the fill color: a section-role polygon3 (tagged or metadata-free) gets section depth/X-ray order.
     const daGiacPhu = o.type === "polygon3" && laThietDien;
     const toXuyenKhoi = thietDien || daGiacPhu;
-    const thuTuVien = thietDien ? THU_TU_VE_THIET_DIEN : THU_TU_DUONG;
+    const thuTuVien = toXuyenKhoi ? THU_TU_VE_THIET_DIEN : THU_TU_DUONG;
+    const doDayVien = noiBat ? NET.selected : NET.border;
     const chungVien = {
       color: mauVien,
       polygonOffset: true,
@@ -1887,13 +2003,13 @@ export function buildObject3D(
       polygonOffsetUnits: -2,
     } as const;
     const line = new THREE.Line(gLine, new THREE.LineBasicMaterial({
-      ...chungVien, linewidth: NET.border, depthFunc: THREE.LessEqualDepth,
+      ...chungVien, linewidth: doDayVien, depthFunc: THREE.LessEqualDepth, depthWrite: false,
     }));
     line.name = `polygon_border:${o.id}:thay`;
     line.userData.nonCanonicalBorderLine = true;
     line.renderOrder = thuTuVien;
     const lineKhuat = new THREE.Line(gLine.clone(), new THREE.LineDashedMaterial({
-      ...chungVien, linewidth: NET.border, depthFunc: THREE.GreaterDepth, depthWrite: false,
+      ...chungVien, linewidth: doDayVien, depthFunc: THREE.GreaterDepth, depthWrite: false,
       dashSize: coNetDut, gapSize: coNetDut, transparent: true, opacity: DO_DUC.hiddenEdge,
     }));
     lineKhuat.computeLineDistances();
@@ -2217,6 +2333,115 @@ export function dungLuoiNenSuPham(diem: Vec3[], heSoDiu = 1): THREE.Group {
   return nhom;
 }
 
+/**
+ * Đặt vị trí nhãn điểm hướng ra ngoài tâm hình chiếu, đồng thời tránh các cạnh đi qua đỉnh
+ * và ký hiệu góc vuông tại chân đường cao (như đỉnh A trong family04_derived_sub_pyramid).
+ */
+export function tinhViTriNhanDiem(
+  diem: readonly { id: string; x: number; y: number; w: number; h: number }[],
+  canh2d: readonly { ax: number; ay: number; bx: number; by: number }[],
+  gocVuong: readonly { fx: number; fy: number; cx: number; cy: number; tx?: number; ty?: number }[],
+): Map<string, { x: number; y: number; duoi: boolean }> {
+  const ra = new Map<string, { x: number; y: number; duoi: boolean }>();
+  if (diem.length === 0) return ra;
+  const cx = diem.reduce((s, p) => s + p.x, 0) / diem.length;
+  const cy = diem.reduce((s, p) => s + p.y, 0) / diem.length;
+
+  const kcDiemDoan = (px: number, py: number, ax: number, ay: number, bx: number, by: number) => {
+    const abx = bx - ax, aby = by - ay;
+    const lenSq = abx * abx + aby * aby;
+    if (lenSq < 1e-6) return Math.hypot(px - ax, py - ay);
+    const t = Math.max(0, Math.min(1, ((px - ax) * abx + (py - ay) * aby) / lenSq));
+    return Math.hypot(ax + abx * t - px, ay + aby * t - py);
+  };
+
+  const deltas = [0, -0.36, 0.36, -0.74, 0.74, -1.14, 1.14, -1.57, 1.57, -2.05, 2.05, Math.PI];
+
+  for (const p of diem) {
+    const cw = Math.max(14, p.w || 18);
+    const ch = Math.max(14, p.h || 18);
+    let rx = p.x - cx;
+    let ry = p.y - cy;
+    const rLen = Math.hypot(rx, ry);
+    if (rLen < 1e-3) {
+      rx = 0;
+      ry = -1;
+    } else {
+      rx /= rLen;
+      ry /= rLen;
+    }
+    for (const g of gocVuong) {
+      if (Math.hypot(g.fx - p.x, g.fy - p.y) < 10) {
+        const gx = g.cx - p.x;
+        const gy = g.cy - p.y;
+        const gLen = Math.hypot(gx, gy) || 1;
+        rx -= (gx / gLen) * 1.45;
+        ry -= (gy / gLen) * 1.45;
+      }
+    }
+    const norm = Math.hypot(rx, ry) || 1;
+    rx /= norm;
+    ry /= norm;
+
+    const theta0 = Math.atan2(ry, rx);
+    const dist = Math.hypot(cw * 0.5, ch * 0.5) + 7.5;
+    let bestLx = p.x - cw / 2;
+    let bestLy = p.y - 1.4 * ch;
+    let bestScore = -Infinity;
+
+    for (const dTheta of deltas) {
+      const theta = theta0 + dTheta;
+      const ux = Math.cos(theta);
+      const uy = Math.sin(theta);
+      const mx = p.x + ux * dist;
+      const my = p.y + uy * dist;
+      const lx = mx - cw / 2;
+      const ly = my - ch / 2;
+
+      let score = (ux * rx + uy * ry) * 16;
+
+      for (const s of canh2d) {
+        const dSeg = kcDiemDoan(mx, my, s.ax, s.ay, s.bx, s.by);
+        if (dSeg < 16) {
+          score -= (16 - dSeg) * 4.8;
+        }
+      }
+
+      for (const g of gocVuong) {
+        const dCorner = Math.hypot(mx - g.cx, my - g.cy);
+        const dMid = Math.hypot(mx - (g.fx + g.cx) * 0.5, my - (g.fy + g.cy) * 0.5);
+        const dMin = Math.min(dCorner, dMid);
+        if (dMin < 20) {
+          score -= (20 - dMin) * 7.5;
+        }
+        if (Math.hypot(g.fx - p.x, g.fy - p.y) < 10) {
+          const gx = g.cx - p.x;
+          const gy = g.cy - p.y;
+          const gLen = Math.hypot(gx, gy) || 1;
+          score -= (ux * (gx / gLen) + uy * (gy / gLen)) * 22;
+        }
+      }
+
+      for (const q of diem) {
+        if (q.id === p.id) continue;
+        const dq = Math.hypot(mx - q.x, my - q.y);
+        if (dq < 24) {
+          score -= (24 - dq) * 4.0;
+        }
+      }
+
+      if (score > bestScore) {
+        bestScore = score;
+        bestLx = lx;
+        bestLy = ly;
+      }
+    }
+
+    ra.set(p.id, { x: bestLx, y: bestLy, duoi: bestLy > p.y });
+  }
+  return ra;
+}
+
 export function Scene3DWorkspace({
   scene, step, interaction, onSelect, fitToken = 0, annotationView = DEFAULT_ANNOTATION_VIEW,
   auxiliaryShown = false, gridShown = false, xray = false,
@@ -2362,6 +2587,9 @@ export function Scene3DWorkspace({
     const luoi = new THREE.Group();
     scene3.add(luoi);
     luoiRef.current = luoi;
+    const netDay = new THREE.Group();
+    netDay.name = "net_day_man_hinh";
+    scene3.add(netDay);
 
     const dieuKhien = new OrbitControls(cam, renderer.domElement);
     dieuKhien.enableDamping = true;
@@ -2450,7 +2678,11 @@ export function Scene3DWorkspace({
       // cho thấy bốn câu mô tả đè lên nhau ngay giữa hình. Lọc ở đây chứ
       // không ở lúc dựng cảnh, vì hai nhãn có chồng nhau hay không phụ thuộc
       // GÓC NHÌN — thứ chỉ biết được sau phép chiếu.
-      const gocVuongPts = (nhanChungRef.current?.children ?? []).flatMap((child) => {
+      const gocVuongNodes: THREE.Object3D[] = [...(nhanChungRef.current?.children ?? [])];
+      goc.traverse((node) => {
+        if (node.userData?.perpMarker) gocVuongNodes.push(node);
+      });
+      const gocVuongPts = gocVuongNodes.flatMap((child) => {
         const ud = child.userData as { foot?: Vec3; corner?: Vec3; from?: Vec3 } | undefined;
         if (!ud?.foot || !ud?.corner) return [];
         const f3 = new THREE.Vector3(...ud.foot).applyQuaternion(qRef.current).project(cam);
@@ -2463,10 +2695,46 @@ export function Scene3DWorkspace({
           ...(t3 && t3.z < 1 ? { tx: ((t3.x + 1) / 2) * w, ty: ((1 - t3.y) / 2) * h } : {}),
         }];
       });
-      const dat: { el: HTMLElement; id: string; x: number; y: number; duoi?: boolean; uuTien: number; w: number; h: number }[] = [];
+      const canh2d: { ax: number; ay: number; bx: number; by: number }[] = [];
+      const chieuDoan3 = (a3: THREE.Vector3, b3: THREE.Vector3, matW: THREE.Matrix4) => {
+        const pa = a3.clone().applyMatrix4(matW).project(cam);
+        const pb = b3.clone().applyMatrix4(matW).project(cam);
+        if (pa.z < 1 && pb.z < 1) {
+          canh2d.push({
+            ax: ((pa.x + 1) / 2) * w,
+            ay: ((1 - pa.y) / 2) * h,
+            bx: ((pb.x + 1) / 2) * w,
+            by: ((1 - pb.y) / 2) * h,
+          });
+        }
+      };
+      goc.updateMatrixWorld(true);
+      goc.traverse((node) => {
+        if (!node.visible) return;
+        const ce = node.userData?.canonicalEdge as { a: THREE.Vector3; b: THREE.Vector3 } | undefined;
+        if (ce) {
+          chieuDoan3(ce.a, ce.b, node.matrixWorld);
+          return;
+        }
+        const seg = node.userData?.nonCanonicalSegment as { a: THREE.Vector3; b: THREE.Vector3 } | undefined;
+        if (seg) {
+          chieuDoan3(seg.a, seg.b, node.matrixWorld);
+          return;
+        }
+        const loop = node.userData?.nonCanonicalLoop as { pts: THREE.Vector3[]; closed: boolean; isPlaneBorder?: boolean } | undefined;
+        if (loop && !loop.isPlaneBorder && loop.pts.length >= 2) {
+          const n = loop.closed ? loop.pts.length : loop.pts.length - 1;
+          for (let i = 0; i < n; i += 1) {
+            chieuDoan3(loop.pts[i], loop.pts[(i + 1) % loop.pts.length], node.matrixWorld);
+          }
+        }
+      });
+
+      const dat: { el: HTMLElement; id: string; x: number; y: number; lx: number; ly: number; duoi?: boolean; uuTien: number; w: number; h: number }[] = [];
       // Cỡ hộp nhãn cho phép lọc chồng: ĐỌC hết trước khi GHI style nào — đọc xen giữa các lần ghi ép trình duyệt
       // tính lại bố cục cho từng nhãn ở mỗi khung (transform/opacity không đổi offsetWidth/Height).
       const co = new Map((Array.from(lop.children) as HTMLElement[]).map((el) => [el, [el.offsetWidth, el.offsetHeight]]));
+      const ungVienDiem2d: { el: HTMLElement; id: string; x: number; y: number; w: number; h: number; uuTien: number }[] = [];
       for (const el of Array.from(lop.children) as HTMLElement[]) {
         const id = el.dataset.id;
         const v = id ? viTriNhan.current.get(id) : undefined;
@@ -2478,10 +2746,25 @@ export function Scene3DWorkspace({
         if (!hien) { el.style.opacity = "0"; continue; }
         const x = ((p3.x + 1) / 2) * w;
         const y = ((1 - p3.y) / 2) * h;
-        const duoi = gocVuongPts.some((g) => Math.hypot(g.fx - x, g.fy - y) < 6 && g.cy < y - 3);
-        el.style.transform = `translate(-50%,${duoi ? "40%" : "-140%"}) translate(${x}px,${y}px)`;
         const [cw, ch] = co.get(el)!;
-        dat.push({ el, id, x, y, duoi, uuTien: Number(el.dataset.uuTien ?? "1"), w: cw, h: ch });
+        ungVienDiem2d.push({ el, id, x, y, w: cw, h: ch, uuTien: Number(el.dataset.uuTien ?? "1") });
+      }
+      const viTriToiUu = tinhViTriNhanDiem(ungVienDiem2d, canh2d, gocVuongPts);
+      for (const u of ungVienDiem2d) {
+        const pos = viTriToiUu.get(u.id) ?? { x: u.x - (u.w || 18) / 2, y: u.y - 1.4 * (u.h || 18), duoi: false };
+        u.el.style.transform = `translate(${Math.round(pos.x)}px,${Math.round(pos.y)}px)`;
+        dat.push({
+          el: u.el,
+          id: u.id,
+          x: u.x,
+          y: u.y,
+          lx: pos.x,
+          ly: pos.y,
+          duoi: pos.duoi,
+          uuTien: u.uuTien,
+          w: u.w,
+          h: u.h,
+        });
       }
       const giu = locNhanChongNhau(dat);
       for (const d of dat) d.el.style.opacity = giu.has(d.id) ? "1" : "0";
@@ -2491,8 +2774,8 @@ export function Scene3DWorkspace({
       const lopSo = soDoRef.current;
       if (!lopSo) return;
       const hopDiem = dat.filter((d) => giu.has(d.id)).map((d) => ({
-        id: d.id, x: d.x - d.el.offsetWidth / 2,
-        y: d.duoi ? d.y + 0.4 * d.el.offsetHeight : d.y - 1.4 * d.el.offsetHeight,
+        id: d.id, x: d.lx,
+        y: d.ly,
         w: d.el.offsetWidth, h: d.el.offsetHeight,
       }));
       const chamDiem: LabelRect[] = dat.filter((d) => giu.has(d.id)).map((d) => ({
@@ -2696,7 +2979,18 @@ export function Scene3DWorkspace({
         };
       }
       warmSpanPools(goc, scene3, cam, renderer);
+      const fatSummary = dongBoNetDayManHinh([goc, nhanChung], netDay, wCss, hCss);
+      if (typeof window !== "undefined") {
+        (window as any).__geo3d_fat_line_summary = {
+          totalLines: fatSummary.totalLines,
+          maxSectionBorderWidth: fatSummary.maxSectionBorderWidth,
+          maxVisibleEdgeWidth: fatSummary.maxVisibleEdgeWidth,
+          minHiddenEdgeWidth: fatSummary.minHiddenEdgeWidth,
+        };
+      }
+      for (const l of fatSummary.sourceLines) l.visible = false;
       renderer.render(scene3, cam);
+      for (const l of fatSummary.sourceLines) l.visible = true;
       chieuNhan();
       requestAnimationFrame(vong);
     };
@@ -2713,14 +3007,22 @@ export function Scene3DWorkspace({
           + `@${renderer.getPixelRatio()}`,
       );
       warmSpanPools(goc, scene3, cam, renderer);
+      const fatSummary = dongBoNetDayManHinh([goc, nhanChung], netDay, wCss, hCss);
+      for (const l of fatSummary.sourceLines) l.visible = false;
       renderer.render(scene3, cam);
+      for (const l of fatSummary.sourceLines) l.visible = true;
     };
     // Móc ĐO của cổng ảnh `SECTION_FILL_DISTINGUISHABLE` — chỉ harness gọi, người học không
     // thấy (mặc định bật). Tắt/bật phần tô rồi vẽ lại ĐÚNG khung hình này; trả tên các vật
     // đã chạm — rỗng thì không có gì để đo, cổng phải tự đỏ.
     (window as any).__geo3d_set_section_fill_visible = (on: boolean) => {
       const ten = datHienToThietDien(goc, on);
+      const wCss = renderer.domElement.clientWidth || 1;
+      const hCss = renderer.domElement.clientHeight || 1;
+      const fatSummary = dongBoNetDayManHinh([goc, nhanChung], netDay, wCss, hCss);
+      for (const l of fatSummary.sourceLines) l.visible = false;
       renderer.render(scene3, cam);
+      for (const l of fatSummary.sourceLines) l.visible = true;
       return ten;
     };
 
@@ -2745,19 +3047,19 @@ export function Scene3DWorkspace({
       const dichTamNgang = coPanelPhai && cRect.width > 0
         ? (safeCenterX - (cRect.left + w / 2)) / Math.max(1, w / 2)
         : 0;
-      let tiLeDoc = 0.56;
-      if (tiLeCR > 1.15) tiLeDoc = 0.54;
-      if (coMatCat) tiLeDoc = Math.min(tiLeDoc, 0.55);
-      if (w < 900) tiLeDoc = Math.min(tiLeDoc, 0.52);
-      if (coPanelPhai) tiLeDoc = Math.min(tiLeDoc, 0.52);
+      let tiLeDoc = 0.67;
+      if (tiLeCR > 1.15) tiLeDoc = 0.64;
+      if (coMatCat) tiLeDoc = Math.min(tiLeDoc, 0.65);
+      if (w < 900) tiLeDoc = Math.min(tiLeDoc, 0.58);
+      if (coPanelPhai) tiLeDoc = Math.min(tiLeDoc, 0.62);
       const tiLeNgang = coPanelPhai
-        ? Math.min(0.50, safeWidthRatio * 0.72)
-        : Math.min(0.62, tiLeDoc * 1.15);
+        ? Math.min(0.58, safeWidthRatio * 0.78)
+        : Math.min(0.72, tiLeDoc * 1.12);
       return {
         tiLeDoc,
         tiLeNgang,
         dichTamNgang,
-        dichTamDoc: 0.025,
+        dichTamDoc: 0.02,
       };
     };
 
@@ -2835,7 +3137,7 @@ export function Scene3DWorkspace({
         l.geometry?.dispose?.();
         (l.material as THREE.Material | undefined)?.dispose?.();
       });
-      for (const group of [goc, nhanChung, luoi]) disposeScene3DObject(group);
+      for (const group of [goc, nhanChung, luoi, netDay]) disposeScene3DObject(group);
       renderer.dispose();
       container.removeChild(renderer.domElement);
       rootRef.current = null;
@@ -2999,18 +3301,30 @@ export function Scene3DWorkspace({
     const nhuong = doanNhuongCanh(seDung, khoaDich);
     const dsKhoiId = seDung.filter((x) => x.type === "solid" || x.type === "curved_solid").map((x) => x.id);
     const canhKhoiDaDung: { a: THREE.Vector3; b: THREE.Vector3; dich: string }[] = [];
+    const canhThietDienDaDung: { a: THREE.Vector3; b: THREE.Vector3; dich: string }[] = [];
+    for (const secObj of seDung) {
+      if (secObj.type !== "section" || secObj.closed === false) continue;
+      const progSec = progressById.get(secObj.id);
+      if (progSec && !progSec.closed) continue;
+      const ptsSec = (secObj.polygon ?? secObj.vertices ?? []).map((p) => new THREE.Vector3(...toVec3(p)));
+      if (ptsSec.length < 3) continue;
+      const dichSec = khoaDich(secObj.id);
+      for (let i = 0; i < ptsSec.length; i += 1) {
+        canhThietDienDaDung.push({ a: ptsSec[i], b: ptsSec[(i + 1) % ptsSec.length], dich: dichSec });
+      }
+    }
     for (const o of seDung) {
       const progress = progressById.get(o.id);
       const progressCha = o.parent ? progressById.get(o.parent) : undefined;
       if (o.type === "face" && progressCha && (!progressCha.closed || !progressCha.fill_visible)) continue;
       if (o.type === "edge" && progressCha && !progressCha.visible_edge_ids.includes(o.id)) continue;
-      if (o.type === "point3" && o.parent) {
+      if (o.type === "point3" && o.parent && o.id.includes("::vertex:")) {
         if (progressCha && !progressCha.closed && Number(o.id.split(":vertex:")[1]) > progressCha.visible_edge_ids.length) {
           continue;
         }
         if ((o.depends ?? []).some((d) => idSeDung.has(d)) && !noiBat.has(o.id)) continue;
       }
-      let renderObject = nhuong.has(o.id) ? { ...o, display_role: "hit_proxy" } as SceneObject : o;
+      let renderObject = (nhuong.has(o.id) && !noiBat.has(o.id)) ? { ...o, display_role: "hit_proxy" } as SceneObject : o;
       if (o.type === "face" && o.parent && idSeDung.has(o.parent) && khoaDich(o.id) === khoaDich(o.parent)) {
         renderObject = { ...renderObject, display_role: "hit_proxy" };
       }
@@ -3021,8 +3335,9 @@ export function Scene3DWorkspace({
       }
       const sangBuoc = noiBat.has(o.id)
         || (o.type === "point3" && Boolean(o.parent && noiBat.has(o.parent) && progressCha && !progressCha.closed));
-      const coThietDienDong = o.render === "surface" && !sangBuoc && seDung.some((x) =>
-        x.type === "section" && x.depends.includes(o.id)
+      const coThietDienDong = o.render === "surface" && tuongTac.selected_id !== o.id && seDung.some((x) =>
+        (x.type === "section" || x.type === "circle3" || x.type === "ellipse3")
+        && x.depends.includes(o.id)
         && x.closed !== false && (progressById.get(x.id)?.closed ?? true),
       );
       const diemMp = o.render === "surface"
@@ -3037,7 +3352,8 @@ export function Scene3DWorkspace({
           : diemNen;
       const obj = buildObject3D(renderObject, tang ? tang.get(o.id) ?? false : sangBuoc,
         banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemChoVat, undefined, canonicalHighlights, khucToSang, xray,
-        vaiKhoiTheoId.get(o.id) ?? vaiKhoiTheoId.get(o.parent ?? "") ?? "primary");
+        vaiKhoiTheoId.get(o.id) ?? vaiKhoiTheoId.get(o.parent ?? "") ?? "primary",
+        coThietDienDong);
       if (!obj) continue;
       const chiSoKhoi = dsKhoiId.indexOf(o.id);
       const dichVat = khoaDich(o.id);
@@ -3061,6 +3377,23 @@ export function Scene3DWorkspace({
             if (t < -1e-4 || t > 1 + 1e-4) return false;
             return Math.hypot(a.x + abx * t - p.x, a.y + aby * t - p.y, a.z + abz * t - p.z) <= 1e-4;
           };
+          if (laKhoiPhu && dichVat === khoaDich(dsKhoiId[0]) && !sangBuoc && (o.vertices?.length ?? 0) > 0) {
+            const namTrongKhoiChinh = (o.vertices ?? []).every((vRaw) => {
+              const vp = new THREE.Vector3(...toVec3(vRaw));
+              return canhKhoiDaDung.some((c) => c.dich === dichVat && diemTrenDoan(vp, c.a, c.b));
+            });
+            if (namTrongKhoiChinh) {
+              for (const c of [...obj.children]) {
+                if (c.userData?.chieuSau) {
+                  obj.remove(c);
+                } else if ((c as THREE.Mesh).isMesh) {
+                  const mat = (c as THREE.Mesh).material as THREE.MeshStandardMaterial;
+                  mat.colorWrite = false;
+                  mat.opacity = 0;
+                }
+              }
+            }
+          }
           obj.traverse((child) => {
             const edge = child.userData?.canonicalEdge as ReturnType<typeof canonicalEdgesOf>[number] | undefined;
             if (!edge || !(child as THREE.Group).isGroup) return;
@@ -3071,7 +3404,10 @@ export function Scene3DWorkspace({
             const trungCanhChinh = canhKhoiDaDung.some(
               (c) => c.dich === dichVat && diemTrenDoan(edge.a, c.a, c.b) && diemTrenDoan(edge.b, c.a, c.b),
             );
-            if (trungCanhChinh && !child.userData.highlighted && !child.userData.khuc) {
+            const trungCanhThietDien = canhThietDienDaDung.some(
+              (c) => c.dich === dichVat && diemTrenDoan(edge.a, c.a, c.b) && diemTrenDoan(edge.b, c.a, c.b),
+            );
+            if ((trungCanhChinh || trungCanhThietDien) && !child.userData.highlighted && !child.userData.khuc) {
               child.visible = false;
             }
           });

@@ -53,8 +53,8 @@ export interface PhongCachScene3D {
   colors: Record<"free" | "derived" | "line" | "surface" | "planeOutline" | "mesh" | "secondaryMesh" |
     "canh" | "hiddenEdge" | "polygon" | "sectionOutline" | "grid" | "gridOuter" | "light", number>;
   opacity: Record<"solid" | "secondarySolid" | "selectedSolid" | "base" | "selectedBase" | "section" |
-    "selectedSection" | "face" | "selectedFace" | "plane" | "selectedPlane" | "planeCore" |
-    "selectedPlaneCore" | "hiddenEdge" | "hiddenRim" | "planeEdge" | "selectedPlaneEdge" |
+    "selectedSection" | "face" | "selectedFace" | "plane" | "standalonePlane" | "selectedPlane" | "planeCore" |
+    "selectedPlaneCore" | "hiddenEdge" | "hiddenRim" | "planeEdge" | "standalonePlaneEdge" | "selectedPlaneEdge" |
     "hiddenPlaneEdge" | "selectedHiddenPlaneEdge" | "fade" | "auxiliary" | "witness" | "foot" |
     "sphereEquator" | "sphereMeridian" | "gridInner" | "gridMiddle" | "gridOuter", number>;
   width: Record<"edge" | "selected" | "border" | "plane" | "perpendicular" | "pick", number>;
@@ -62,26 +62,26 @@ export interface PhongCachScene3D {
   light: { ambient: number; directional: number; roughness: number; metalness: number };
 }
 
-/** Scene3D extension of DESIGN.md, survey B. All colors are sRGB hex, never unresolved CSS variables.
+/** Scene3D extension of DESIGN.md, aligned with V6.2 / Refined Original (M1+).
  * Flat semantic regions are unlit; shells retain lighting and the existing depth/occlusion passes. */
 export const PHONG_CACH_SCENE3D = {
   colors: {
-    free: MAU_VAI_TRO.diem_de_cho, derived: 0x391c57, line: 0x197773, surface: 0xd6b6f6, planeOutline: 0x391c57,
-    mesh: 0x62aef0, secondaryMesh: 0x2a9d99, canh: 0x31302e, hiddenEdge: 0x716d69,
-    polygon: 0xffc857, sectionOutline: 0xdd5b00, grid: 0xa39e98, gridOuter: 0xe6e6e6, light: 0xffffff,
+    free: MAU_VAI_TRO.diem_de_cho, derived: 0xc85a32, line: 0x0f766e, surface: 0xc4b5fd, planeOutline: 0x6d28d9,
+    mesh: 0x647a96, secondaryMesh: 0x3d7a8a, canh: 0x1e293b, hiddenEdge: 0x475569,
+    polygon: 0xf59e0b, sectionOutline: 0xd97706, grid: 0xa39e98, gridOuter: 0xe6e6e6, light: 0xffffff,
   },
   opacity: {
-    solid: 0.18, secondarySolid: 0.16, selectedSolid: 0.30, base: 0.10, selectedBase: 0.20,
-    section: 0.38, selectedSection: 0.48, face: 0.12, selectedFace: 0.24,
-    plane: 0.055, selectedPlane: 0.16, planeCore: 0.11, selectedPlaneCore: 0.22,
-    hiddenEdge: 0.58, hiddenRim: 0.50, planeEdge: 0.32, selectedPlaneEdge: 0.48,
-    hiddenPlaneEdge: 0.20, selectedHiddenPlaneEdge: 0.30, fade: 0.30, auxiliary: 0.45,
-    witness: 0.92, foot: 0.96, sphereEquator: 0.18, sphereMeridian: 0.13,
-    gridInner: 0.24, gridMiddle: 0.14, gridOuter: 0.06,
+    solid: 0.16, secondarySolid: 0.14, selectedSolid: 0.22, base: 0.09, selectedBase: 0.16,
+    section: 0.28, selectedSection: 0.34, face: 0.10, selectedFace: 0.18,
+    plane: 0.045, standalonePlane: 0.13, selectedPlane: 0.16, planeCore: 0.055, selectedPlaneCore: 0.16,
+    hiddenEdge: 0.56, hiddenRim: 0.48, planeEdge: 0, standalonePlaneEdge: 0.36, selectedPlaneEdge: 0.46,
+    hiddenPlaneEdge: 0, selectedHiddenPlaneEdge: 0.28, fade: 0.72, auxiliary: 0.42,
+    witness: 0.85, foot: 0.92, sphereEquator: 0.09, sphereMeridian: 0.035,
+    gridInner: 0.16, gridMiddle: 0.10, gridOuter: 0.04,
   },
-  width: { edge: 1, selected: 3, border: 2, plane: 1, perpendicular: 1.5, pick: 6 },
-  dash: { relative: 0.022, fallback: 0.16, gapRatio: 0.75, witnessGapRatio: 0.65 },
-  light: { ambient: 0.75, directional: 0.6, roughness: 0.9, metalness: 0 },
+  width: { edge: 1.75, selected: 2.8, border: 2.4, plane: 1.15, perpendicular: 1.4, pick: 6 },
+  dash: { relative: 0.022, fallback: 0.16, gapRatio: 0.72, witnessGapRatio: 0.65 },
+  light: { ambient: 1.45, directional: 0.28, roughness: 0.90, metalness: 0 },
 } satisfies PhongCachScene3D;
 
 export type VaiTroKhoi = "primary" | "secondary";

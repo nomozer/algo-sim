@@ -204,7 +204,7 @@ export function tangNhanManh(scene: Scene3D, id: string): Map<string, TangNhanMa
   const nhan = chon?.annotation;
   const chuThe = nhan?.subject_ids?.length
     ? nhan.subject_ids
-    : (chon && (chon.render === "readout" || chon.render === "non_visual") && !(chon.dependency_edges?.length))
+    : (chon && (chon.render === "readout" || chon.render === "non_visual") && !(chon.dependency_edges?.some((e) => e.relation === "numerical")))
       ? (chon.depends ?? []).filter((x) => {
           const t = theoId.get(x)?.type;
           return t !== "quantity" && t !== "solid";
