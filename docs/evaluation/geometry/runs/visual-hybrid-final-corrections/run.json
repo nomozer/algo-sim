@@ -1,0 +1,43 @@
+{
+  "schema_version": "algosim.eval.run.v1",
+  "run_id": "visual-hybrid-final-corrections",
+  "wave": "visual-hybrid-final-corrections",
+  "authorization": "GO_LOCAL_VISUAL_HYBRID_FINAL_CORRECTIONS_ONLY",
+  "date": "2026-10-24",
+  "mode": "LOCAL_CORRECTIONS_NO_GO_MAIN",
+  "branch": "integration/hybrid-visual-candidate",
+  "base_commit": "2c82c4fb",
+  "product_commits": ["0645de46", "af670aa6ba02b7c04da4fe7f863e015d0f4e6e60"],
+  "harness_commits": ["e3e77a0f", "4ec36db9"],
+  "candidate_freeze_commit": "a636a0e5",
+  "correction_layer_commit": "7c296be1",
+  "suite_inputs_commit": "63948c05",
+  "t3_target_commit": "a084c180019a2c1867289b29c59a9d956d11465f",
+  "measured_system_hash": "8be632679307a94ce4525ad576a05a9eccffc8ba2bdbf02d4c7dc93c208b7c41",
+  "measured_file_count": 118,
+  "cache_version": 128,
+  "cache_decision": "BUMP 127 -> 128 (cache/decision.json)",
+  "model_surface_changed": false,
+  "model_request_count": 0,
+  "owner_decisions_this_run": {
+    "independent_review": "owner runs it from REVIEW_PACKET.md; status PENDING until recorded",
+    "plane_name_rule": "grounded in the problem text + exactly one plane declares it",
+    "offline_samples": "builder passes each sample's problem text and asked obligations (RequestContract)"
+  },
+  "verification": {
+    "full_t3": "FULL_PRODUCT_GATE_PASS",
+    "authoritative_t3_path": "docs/evaluation/geometry/runs/visual-hybrid-final-corrections/verification/full-t3/execution.json",
+    "backend_pytest_passed": 11856,
+    "frontend_vitest_passed": 1343,
+    "post_t3_freeze_verify": "MATCH",
+    "official_visual_suite": "FAIL: 8/8 scenarios, product findings only (F1 Mode B formula twice; F2 section hue in data role band); 0 harness, 0 environment",
+    "adapter4_browser": "FRONTEND_CONSUMER_ACCEPTANCE_PASS, 94 rows",
+    "adapter4_export": "byte-identical (1abad7c5...)",
+    "refusal_surface": "21/21",
+    "orbit_gate": "DAT, allocations 0",
+    "node_harness": "115 tests: 113 pass, 2 skipped, 0 fail",
+    "independent_review": "PENDING (owner-appointed reviewer)"
+  },
+  "human_visual_approval": "NOT_GRANTED",
+  "status": "VISUAL_HYBRID_FINAL_CORRECTIONS_PARTIAL"
+}

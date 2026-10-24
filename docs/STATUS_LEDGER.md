@@ -1,5 +1,7 @@
 # STATUS_LEDGER.md — SỔ TRẠNG THÁI SẢN PHẨM
 
+**LOCAL 2026-10-24 — Visual–Hybrid final corrections (latest):** integration/hybrid-visual-candidate; product af670aa6 (backend display identity, diagnostics UI, samples), candidate a636a0e5 (118 files, 8be63267…), CACHE_VERSION 128, Full T3 PASS at a084c180. Official Visual suite FAIL with 2 product findings (owner decision); independent review PENDING; human visual approval NOT_GRANTED; local main unchanged and NOT ready for GO. Handoff: `evaluation/geometry/runs/visual-hybrid-final-corrections/FINAL_OWNER_HANDOFF.md`.
+
 **LOCAL 2026-10-24 — Visual–Hybrid integration:** integration/hybrid-visual-candidate, merge 78e88470 of Hybrid B1/B2 (97d59bf9) with the Scene3D SGK visual port (7f90d9b3) + frontend label-authority fix; product a9d05dda, candidate aec7b183 (118 files, d22d27e7…), Full T3 PASS at b99afd32. Default LLM_ONLY, cache127, Hybrid NO-GO unchanged. No main merge/push/live. Owner gate: `evaluation/geometry/runs/visual-hybrid-integration/FINAL_OWNER_HANDOFF.md`.
 
 **LOCAL 2026-10-24 — Hybrid B1/B2 offline:** research/hybrid-primary-b1-b2-offline from C0; product c3c1eb80. Internal source-text/V2 orchestration and product Adapter /4 wrapper; default LLM_ONLY, flat, cache127, memory32 and Hybrid NO-GO unchanged. No main merge/push/live. New evidence and owner-review handoff: `evaluation/geometry/runs/hybrid-primary-b1-b2-offline/`; historical snapshots below retain their original scope.

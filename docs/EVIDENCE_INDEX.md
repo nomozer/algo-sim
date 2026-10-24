@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = VISUAL_HYBRID_FINAL_CORRECTIONS
+
+REPORT = docs/evaluation/geometry/runs/visual-hybrid-final-corrections/FINAL_OWNER_HANDOFF.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/visual-hybrid-final-corrections/
+CLASSIFICATION = LOCAL corrections on integration/hybrid-visual-candidate (NOT merged, not pushed; local main 9978e512 unchanged): backend display identity (section cycle from shown vertex notation; declared plane name only when the problem writes it and one plane declares it), learner diagnostics without technical codes, offline samples regenerated with asked obligations, official Visual suite split into learner Mode A / Mode B; official suite FAIL with 2 product findings only (F1 Mode B formula twice, F2 section hue in data role band), owner decision; independent review PENDING (owner-run); human visual approval NOT_GRANTED; main NOT ready for GO
+CODE_COMMIT = 0645de46 + af670aa6ba02b7c04da4fe7f863e015d0f4e6e60 (product); candidate a636a0e5; measured_system 8be632679307a94ce4525ad576a05a9eccffc8ba2bdbf02d4c7dc93c208b7c41 (118 files); BUMP 127 -> 128; Full T3 target a084c180
+VERIFICATION = docs/evaluation/geometry/runs/visual-hybrid-final-corrections/verification/full-t3/execution.json (FULL_PRODUCT_GATE_PASS); docs/evaluation/geometry/runs/visual-hybrid-final-corrections/cache/decision.json; docs/evaluation/geometry/runs/visual-hybrid-final-corrections/visual/official-suite-run2/BROWSER_EVIDENCE.json; docs/evaluation/geometry/runs/visual-hybrid-final-corrections/verification/browser/adapter4/receipt.json; docs/evaluation/geometry/runs/visual-hybrid-final-corrections/verification/browser/refusal/refusal-surface.json; docs/evaluation/geometry/runs/visual-hybrid-final-corrections/verification/browser/orbit-gate/ORBIT_GATE.json; docs/evaluation/geometry/runs/visual-hybrid-final-corrections/candidate_divergence.json; docs/evaluation/geometry/runs/visual-hybrid-final-corrections/REVIEW_PACKET.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = VISUAL_HYBRID_INTEGRATION (backend display-identity proposal implemented; diagnostics drawer removed; official-suite harness failures resolved; candidate identity); historical artifact bytes unchanged
+CORRECTED_BY = NONE
+
 ## WAVE_ID = VISUAL_HYBRID_INTEGRATION
 
 REPORT = docs/evaluation/geometry/runs/visual-hybrid-integration/FINAL_OWNER_HANDOFF.md
@@ -9,7 +20,7 @@ CODE_COMMIT = a9d05dda4576e1968738760e382951e755ff8be4 (product, frontend only a
 VERIFICATION = docs/evaluation/geometry/runs/visual-hybrid-integration/verification/full-t3-attempt2/execution.json (FULL_PRODUCT_GATE_PASS; attempt 1 FAIL kept at docs/evaluation/geometry/runs/visual-hybrid-integration/verification/full-t3-attempt1/execution.json); docs/evaluation/geometry/runs/visual-hybrid-integration/verification/browser/adapter4/receipt.json; docs/evaluation/geometry/runs/visual-hybrid-integration/verification/browser/orbit-gate/ORBIT_GATE.json; docs/evaluation/geometry/runs/visual-hybrid-integration/verification/browser/labels/receipt.json; docs/evaluation/geometry/runs/visual-hybrid-integration/candidate_divergence.json; docs/evaluation/geometry/runs/visual-hybrid-integration/INDEPENDENT_REVIEW.md
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_PRIMARY_B1_B2_OFFLINE (candidate identity only); SCENE3D_HTML_VISUAL_PORT (candidate identity; frontend kyHieu rewrite `/I\d/` → hidden and `(HUW)` → `(P)` from 3bfc8dd0 removed); historical artifact bytes of both unchanged
-CORRECTED_BY = NONE
+CORRECTED_BY = VISUAL_HYBRID_FINAL_CORRECTIONS (docs/evaluation/geometry/runs/visual-hybrid-final-corrections/candidate_divergence.json)
 
 ## WAVE_ID = HYBRID_PRIMARY_B1_B2_OFFLINE
 
