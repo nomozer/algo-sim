@@ -465,12 +465,29 @@ BAI_MAU = [
     ("non-thiet-dien-truc", _CONG, chuong_trinh_non_thiet_dien_truc),
 ]
 
+#: NGHĨA VỤ ĐỀ HỎI, viết tay từ câu chữ của từng đề (không suy từ chương trình): `(kind, chủ thể, đại lượng)`.
+#: Sản phẩm nhận chúng từ `analyze` qua `RequestContract`; thiếu chúng thì chỉ phép đo CUỐI được coi là đáp số, và
+#: đề hỏi hai đại lượng sẽ lộ đại lượng kia ở chế độ học sinh. Đại lượng phụ (`h` của trụ xiên) không có ở đây.
+DE_HOI: dict[str, tuple[tuple[str, str, str], ...]] = {
+    "vuong-goc-chop": (("angle", "bc", "goc"),),
+    "mp-vuong-goc-duong": (("distance", "S", "kc"),),
+    "the-tich-chop": (("volume", "chop", "V"), ("distance", "S", "d")),
+    "cau-the-tich": (("radius", "cau", "R"), ("volume", "cau", "V")),
+    "cau-cat-mat-phang": (("radius", "C", "r"), ("area", "C", "S")),
+    "tru-truc-xien": (("volume", "tru", "V"), ("lateral_area", "tru", "Sxq")),
+    "tru-thiet-dien-tron": (("radius", "C", "r"),),
+    "non-duong-sinh": (("distance", "S", "l"), ("volume", "non", "V"), ("lateral_area", "non", "Sxq")),
+    "non-thiet-dien-truc": (("area", "td", "Std"),),
+}
+
 
 def main() -> int:
     from app.simulation.semantic_program.contract import SemanticProgramSpec
     from app.simulation.semantic_program.interpreter import (
         SemanticProgramInterpreter,
     )
+    from app.simulation.semantic_program.obligations import Obligation
+    from app.simulation.semantic_program.request_contract import RequestContract
     from app.simulation.semantic_program.pipeline_adapter import (
         compile_semantic_program_to_envelope,
     )
@@ -492,7 +509,11 @@ def main() -> int:
         if ket.status != "completed":
             print(f"DỪNG: {ma} không chạy trọn — {ket.status}", file=sys.stderr)
             return 2
-        canh = build_scene3d(build_simulation_state(spec, ket))
+        # Hợp đồng như sản phẩm có: đề nguyên văn (`problemText` ghi ra bên dưới — neo tên mặt phẳng khai) và nghĩa
+        # vụ đề hỏi (`DE_HOI` — đáp số nào ẩn ở chế độ học sinh).
+        hop_dong = RequestContract(problem_text=spec.description or spec.title, obligations=tuple(
+            Obligation(kind=k, container=c, params={"witness": w}) for k, c, w in DE_HOI.get(ma, ())))
+        canh = build_scene3d(build_simulation_state(spec, ket, hop_dong))
         if not canh["objects"]:
             print(f"DỪNG: {ma} không dựng ra cảnh 3D nào", file=sys.stderr)
             return 2

@@ -100,7 +100,8 @@ def stub_llm(monkeypatch):
 def test_cache_version_is_127():
     # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): served Path A scenes gain
     # segment3.perpendicular_witness; v126 rows were written without it and a hit returns them as is.
-    assert main_module.CACHE_VERSION == "127"
+    # 127 -> 128 (visual-hybrid-final-corrections, display names): a v126 row still misses; the fresh row is v128.
+    assert main_module.CACHE_VERSION == "128"
     assert LEGACY["written_by_cache_version"] == "126"
 
 
@@ -123,7 +124,7 @@ def test_legacy_v126_row_misses_and_v127_row_keeps_the_witness(ca, stub_llm):
                               policy_version=legacy["policy_version"]))
         s.commit()
         assert _cache_lookup(s, key, ident) is None  # A: the genuine v126 row is not a valid hit
-    assert ident == "127"  # default LLM_ONLY identity
+    assert ident == main_module.CACHE_VERSION  # default LLM_ONLY identity
 
     calls = stub_llm(contract, W.spec_cua(prog))
     client = TestClient(app)
@@ -150,7 +151,7 @@ def test_legacy_v126_row_misses_and_v127_row_keeps_the_witness(ca, stub_llm):
 
     with SessionLocal() as s:
         rows = s.query(SimulationCache).filter_by(key=key).all()
-        assert [r.policy_version for r in rows] == ["127"]  # overwritten in place, no duplicate
+        assert [r.policy_version for r in rows] == [main_module.CACHE_VERSION]  # overwritten in place, no duplicate
         assert _seg_witnesses(json.loads(rows[0].envelope_json))
 
     hit = client.post("/api/analyze", json={"input": {"type": "text", "content": text}}).json()

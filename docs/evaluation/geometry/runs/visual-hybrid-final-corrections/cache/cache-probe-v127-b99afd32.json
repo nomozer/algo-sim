@@ -1,0 +1,226 @@
+{
+ "cache_version": "127",
+ "cases": {
+  "REFUSED_oblique_prism": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "30afc1f00a5b78bee15afdbe693b77be41aba3e7343db8ae8d5b4f88c9aec41c",
+   "http": [
+    200,
+    200
+   ],
+   "plane_and_section_notation": {},
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "request1": {
+    "cached": false,
+    "source": null
+   },
+   "request2": {
+    "cached": false,
+    "source": null
+   },
+   "row_policy_version": null,
+   "rows_for_key": 0,
+   "status": "unsupported"
+  },
+  "S1_side_height_volume": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "d620f3ca0614c91aeffac52cefaa63daa26ff55a4b4611e81b567c66a3a47bd3",
+   "http": [
+    200,
+    200
+   ],
+   "plane_and_section_notation": {
+    "mp_day": "(ABC)"
+   },
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "127",
+   "rows_for_key": 1,
+   "status": "ok"
+  },
+  "S7_named_centre": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "ba34db2f651d6ee58ad2c709f7901ca4a6527f78057527d746c0c272cfda2e80",
+   "http": [
+    200,
+    200
+   ],
+   "plane_and_section_notation": {
+    "mp_day": "(ABC)"
+   },
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "127",
+   "rows_for_key": 1,
+   "status": "ok"
+  },
+  "SA_given_rectangular_pyramid": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "c1a316874b2e82a984b920473a07c832447a0ced787096364af23dadf77af371",
+   "http": [
+    200,
+    200
+   ],
+   "plane_and_section_notation": {},
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "127",
+   "rows_for_key": 1,
+   "status": "ok"
+  },
+  "SA_given_right_triangle_pyramid": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "67ffb082aa1e4f4efd87069bf382d4d0161f976e70f0b5d64f425e721a4f45a0",
+   "http": [
+    200,
+    200
+   ],
+   "plane_and_section_notation": {},
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "127",
+   "rows_for_key": 1,
+   "status": "ok"
+  },
+  "cube": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "c2f270575b30dec745f1868fa730829b6a836cf3b356f8c53b8b9152971f538b",
+   "http": [
+    200,
+    200
+   ],
+   "plane_and_section_notation": {},
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "127",
+   "rows_for_key": 1,
+   "status": "ok"
+  },
+  "cube_named_plane_P": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "47b01ffcca53dd23f71372b888507713aaf3176262ea28135e1560a77d420cac",
+   "http": [
+    200,
+    200
+   ],
+   "plane_and_section_notation": {
+    "P": "(AB′D′)"
+   },
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "127",
+   "rows_for_key": 1,
+   "status": "ok"
+  },
+  "cuboid": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "acc34e351a3d0c1707abc8167260676bca79e41b4f0d5965d721620760e5e0b8",
+   "http": [
+    200,
+    200
+   ],
+   "plane_and_section_notation": {},
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "127",
+   "rows_for_key": 1,
+   "status": "ok"
+  },
+  "declared_plane_P": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "6d839aa9b5259df10918e40d7156e48b5f7b403ce0eb7cd3e4af7aaccd650ef9",
+   "http": [
+    200,
+    200
+   ],
+   "plane_and_section_notation": {},
+   "reason_code": "UNANCHORED_DERIVED_ASSUMPTION",
+   "request1": {
+    "cached": false,
+    "source": null
+   },
+   "request2": {
+    "cached": false,
+    "source": null
+   },
+   "row_policy_version": null,
+   "rows_for_key": 0,
+   "status": "unsupported"
+  },
+  "right_triangular_prism": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "b7ef5ac166310bc8d7708f609b8ea660d49c948f8c797fc3864dc797318863f0",
+   "http": [
+    200,
+    200
+   ],
+   "plane_and_section_notation": {},
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "127",
+   "rows_for_key": 1,
+   "status": "ok"
+  }
+ },
+ "llm_stage_stub_calls": {
+  "analyze": 12,
+  "program": 12
+ },
+ "provider_requests": 0
+}

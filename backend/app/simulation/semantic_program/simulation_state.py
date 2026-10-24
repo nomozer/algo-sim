@@ -52,7 +52,7 @@ from .geometry_exec import la_dai_luong_do, la_doi_tuong_hinh_hoc
 from .hoisting import TIEN_TO_TAM
 from .quantity_annotations import chieu_cao_the_tich, doan_tren_canh, gan_so_do
 from .shape_constraint import doc_quan_he_cat
-from .source_entities import ky_hieu_toan
+from .source_entities import ky_hieu_toan, ten_mat_phang_nguon
 from .transport import TransportTypeError, is_json_native
 
 #: Câu lệnh dựng → tên các trường mang TÊN đối tượng nó ĐỌC.
@@ -583,6 +583,7 @@ def _than_hinh_hoc(gt: Any) -> tuple[str, dict[str, Any]] | None:
 
 def build_scene(
     spec: SemanticProgramSpec, memory: dict[str, Any], *, prefer_declared_plane_names: bool = False,
+    source_text: str | None = None,
 ) -> dict[str, Any]:
     """Bộ nhớ + chương trình → cảnh hình học JSON.
 
@@ -648,7 +649,8 @@ def build_scene(
               "sources": prov.get(ten, {}).get("sources", []),
               "label": prov.get(ten, {}).get("label"), **_hinh(ten, loai)}
         for ten, loai, _ in tho
-    }, prefer_declared_plane_names=prefer_declared_plane_names)
+    }, prefer_declared_plane_names=prefer_declared_plane_names,
+        source_plane_names=ten_mat_phang_nguon(source_text))
 
     objects: list[dict[str, Any]] = []
     for ten, loai, noi_dung in tho:
@@ -791,7 +793,10 @@ def build_simulation_state(
     từ chối vì M sinh ra từ A, B"* rơi ra từ dữ liệu, không phải từ một danh
     sách ai đó phải nhớ cập nhật.
     """
-    scene = build_scene(spec, exec_result.final_memory, prefer_declared_plane_names=prefer_declared_plane_names)
+    # Đề nguyên văn (`RequestContract.problem_text`) là nguồn DUY NHẤT để một tên mặt phẳng khai được coi là của đề.
+    de = getattr(contract, "problem_text", None)
+    scene = build_scene(spec, exec_result.final_memory, prefer_declared_plane_names=prefer_declared_plane_names,
+                        source_text=de if isinstance(de, str) else None)
     _nhan_du_kien_tu_fact(scene["objects"], spec, contract)
     # Vai trò dựng hình gắn ở PRODUCER (W14): tô-pô + quan hệ có kiểu, một thẩm
     # quyền với bước bổ sung. `scene3d` chỉ chở và hợp theo bước.

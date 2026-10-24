@@ -4049,6 +4049,11 @@ trong đề. Đề rỗng ⇒ `la_ten_nguon` trả `True` ("chưa kiểm đượ
 `provenance="unchecked"`), KHÔNG phải `False`. Giới hạn: khớp mẫu chữ, không
 phân tích cú pháp.
 
+`ten_mat_phang_nguon(de)` (run `visual-hybrid-final-corrections`) trả tên mặt phẳng một chữ ĐỀ viết trong ngoặc
+(`(P)`, `(Q′)`, `(α)` → `{P, Q', α}`). Khác `la_ten_nguon`: chữ hoa trần (`điểm P`) không neo được `(P)`, và đề rỗng
+là tập rỗng. Người dùng duy nhất: `simulation_state.build_scene` → `display_names.ten_hien_thi(source_plane_names=…)`
+— tên mặt phẳng khai thắng tên ghép từ điểm chỉ khi đề viết nó và đúng một mặt khai nó.
+
 Cùng wave, `co_so` hỏi `la_so_huu_ti` thay cho `isinstance(int|float)`: sau chuẩn
 hoá thang mục giữ `'4/5'` — một CON SỐ viết chính xác — và hỏi bằng `isinstance`
 thì nó đọc ra "fact quan hệ" rồi cho qua mọi toạ độ ghim vào đó.

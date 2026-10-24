@@ -1,0 +1,24 @@
+{
+ "schema": "cache-version-decision/1",
+ "run": "visual-hybrid-final-corrections",
+ "decision": "BUMP",
+ "from": "127",
+ "to": "128",
+ "model_surface_changed": false,
+ "reason": "The default LLM_ONLY route's SERVED envelope changes learner-visible names: (1) a declared one-letter plane name the problem writes, declared by exactly one plane, replaces the name composed from the points; (2) a section vertex cycle is spelled from the notation each vertex shows and is never built through a vertex id. /api/analyze returns a cache hit's envelope_json as is, so a genuine v127 row keeps serving the old name.",
+ "evidence": {
+  "probe": "docs/evaluation/geometry/runs/visual-hybrid-final-corrections/cache/cache_probe.py",
+  "before": "docs/evaluation/geometry/runs/visual-hybrid-final-corrections/cache/cache-probe-v127-b99afd32.json",
+  "after": "docs/evaluation/geometry/runs/visual-hybrid-final-corrections/cache/cache-probe-new-uncommitted.json",
+  "legacy_rows": "docs/evaluation/geometry/runs/visual-hybrid-final-corrections/cache/legacy-v127-rows.json",
+  "before_tree": "t3-b1b2 detached b99afd32 (CACHE_VERSION 127, clean)",
+  "after_tree": "hybrid-visual-candidate working tree with the P2 change, before the bump (CACHE_VERSION still 127)",
+  "changed_served_case": {"cube_named_plane_P": {"plane P notation": ["(AB′D′)", "(P)"]}},
+  "byte_identical_controls": ["S1_side_height_volume", "S7_named_centre", "SA_given_right_triangle_pyramid",
+   "SA_given_rectangular_pyramid", "right_triangular_prism", "cuboid", "cube"],
+  "refusal_controls_never_cached": ["declared_plane_P (ASSUMPTION_INVARIANCE_UNPROVEN)", "REFUSED_oblique_prism (UNANCHORED_DERIVED_ASSUMPTION)"],
+  "adapter4": "Hybrid offline /4 export byte-identical to visual-hybrid-integration/integrated/offline/fixtures.json (sha256 1abad7c5…); Hybrid is not cached by the product",
+  "provider_requests": 0
+ },
+ "migration_test": "backend/tests/test_cache_display_identity_invalidation.py"
+}

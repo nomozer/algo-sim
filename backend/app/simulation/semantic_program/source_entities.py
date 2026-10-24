@@ -210,6 +210,19 @@ def ky_hieu_toan(ten: str) -> str | None:
     return min(sorted(hop), key=len)
 
 
+#: Tên một chữ của mặt phẳng viết trong ngoặc: `(P)`, `(Q′)`, `(α)`. `(ABC)` là mặt gọi qua điểm, không phải tên.
+_TEN_MP_NGOAC = re.compile(r"\(\s*((?:[A-Z][0-9₀-₉]*|[α-ω])['’′]?)\s*\)")
+
+
+def ten_mat_phang_nguon(de: str | None) -> frozenset[str]:
+    """Tên mặt phẳng một chữ mà ĐỀ viết trong ngoặc, dấu phẩy trên chuẩn về `'`: *"Mặt phẳng (P′) …"* → `{P'}`.
+
+    Khác `la_ten_nguon`: chữ hoa trần (`điểm P`) không neo được `(P)`, và đề rỗng là KHÔNG có tên nào — ở đây
+    câu hỏi là *"đề có gọi mặt phẳng này bằng tên ấy không"*, nên "chưa kiểm được" không được tính là có.
+    """
+    return frozenset(m.group(1).replace("’", "'").replace("′", "'") for m in _TEN_MP_NGOAC.finditer(de or ""))
+
+
 def la_ten_nguon(ten: str, de: str) -> bool:
     """Tên này có neo được vào đề không?
 

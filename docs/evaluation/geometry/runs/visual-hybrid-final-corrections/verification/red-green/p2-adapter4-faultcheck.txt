@@ -1,0 +1,11 @@
+INJECTED /3 demo1 flagged: [('td_sec2', 'MI1I2I3'), ('kq_ask9', 'S(MI1I2I3)'), ('kq_vcert11', 'V(S.MI1I2I3)')]
+SERVED /4 scenes with unnamed points: 9
+   ('CORPUS-DEV01-construct', 3, [])
+   ('CORPUS-DEV03-construct', 2, [])
+   ('CORPUS-DEV06-construct', 2, [])
+   ('CORPUS-DEV09-construct', 3, [])
+   ('CORPUS-DEV10-prism-area', 2, [])
+   ('PARTIAL-1of2-construct', 1, [])
+   ('PARTIAL-2of3-construct', 1, [])
+   ('PLANE-ONLY-construct', 2, [])
+   ('PLANE-ONLY-ratio-described', 2, [])

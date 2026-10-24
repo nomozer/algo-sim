@@ -422,7 +422,8 @@ def test_17_danh_tinh_on_dinh_trong_wave():
     # 124 -> 125 (regular-prisms): lăng trụ tam/lục giác đều đọc + T12 (served -> refused C0).
     # 125 -> 126 (hybrid-offline-readiness-finalization): độ dài nguồn không đọc từ biểu thức/vectơ/giả định (served -> refused).
     # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): segment3 đường cao mang perpendicular_witness (envelope phục vụ đổi).
-    assert CACHE_VERSION == "127"
+    # 127 -> 128 (visual-hybrid-final-corrections): tên hiển thị backend — mặt phẳng tên đề viết, chu trình thiết diện (envelope phục vụ đổi).
+    assert CACHE_VERSION == "128"
     fp = semantic_environment_fingerprint()
     # ⚠️ 55ac1ca6 → c50c8c6b (`PHOTO_PROBLEM_TO_SCENE_END_TO_END`, 2026-09-13):
     # prompt ĐỌC ẢNH `transcribe.md` được viết lại, và `prompts` băm gộp mọi

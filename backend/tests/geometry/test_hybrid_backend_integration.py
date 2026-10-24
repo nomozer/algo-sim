@@ -16,7 +16,8 @@ Covers all 11 mandatory P4 integration requirements:
 7. Tampered facts, wrong source ownership, wrong target binding, lying contracts, and regex tail guard.
 8. Version, surface fingerprint, and candidate identity separation (historical `6ba9033b...` vs combined `afab0a3c...`).
 9. Backward compatibility with `DEFAULT_MODE = "LLM_ONLY"` and `CACHE_VERSION` ("125" at this run; "126" since
-   hybrid-offline-readiness-finalization; "127" since hybrid-architecture-wave1-exact-certificates-planner).
+   hybrid-offline-readiness-finalization; "127" since hybrid-architecture-wave1-exact-certificates-planner; "128" since
+   visual-hybrid-final-corrections).
 10. Registry permutation invariance.
 11. Strict oracle metric error handling (singular/degenerate, indefinite, asymmetric, or malformed `chart_metric`
     must fail closed as `INVALID` and NEVER fall back to Euclidean `IDENTITY_METRIC`).
@@ -467,7 +468,8 @@ def test_version_constants_surface_fingerprints_and_historical_receipt_preservat
     assert ENGINE_VERSION == "geometry-function-engine/11"
     # 125 -> 126 (hybrid-offline-readiness-finalization): độ dài nguồn không đọc từ biểu thức/vectơ/giả định.
     # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): segment3 đường cao mang perpendicular_witness.
-    assert main_module.CACHE_VERSION == "127"
+    # 127 -> 128 (visual-hybrid-final-corrections): tên hiển thị backend (mặt phẳng tên đề viết, chu trình thiết diện).
+    assert main_module.CACHE_VERSION == "128"
     assert main_module.semantic_route_mode() == "off"
     assert RESPONSE_CONTRACT == "flat"
     # Verify default production pipeline (`main.py` / `pipeline.py`) remains LLM_ONLY and does not wire Hybrid route

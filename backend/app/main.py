@@ -821,7 +821,11 @@ MISSING_KEY_MSG = (
 #       Scene3D vẽ ký hiệu góc vuông. Row v126 THẬT do `main` f0560449 ghi cho cùng đề không có witness nào và vẫn HIT
 #       (`runs/segment-witness-cache-invalidation/cache/decision.json`, 9 đề chóp/lăng trụ/hộp/lập phương); ngoài
 #       witness, envelope trùng byte. Quyết định "không bump" trước đó của Wave 1 bị thay thế.
-CACHE_VERSION = "127"
+# 128 — 2026-10-24 (visual-hybrid-final-corrections): BỀ MẶT MÔ HÌNH KHÔNG ĐỔI. Tên hiển thị của envelope PHỤC VỤ đổi
+#       (`display_names.ten_hien_thi`): mặt phẳng khai tên một chữ mà ĐỀ viết và chỉ một mặt khai (`(P)`) thay tên ghép
+#       từ điểm (`(AB′D′)`); chu trình thiết diện ghép từ ký hiệu đỉnh HIỆN, không bao giờ từ `id`. Row v127 THẬT ghi
+#       `(AB′D′)` và vẫn HIT (`runs/visual-hybrid-final-corrections/cache/decision.json`); 7 đề đối chứng trùng byte.
+CACHE_VERSION = "128"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

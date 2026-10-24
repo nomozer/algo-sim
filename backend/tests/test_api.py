@@ -740,7 +740,10 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # doi noi dung (segment3 duong cao mang perpendicular_witness -> ky hieu goc vuong). Row v126 THAT do main f0560449
     # ghi khong co witness va van HIT: runs/segment-witness-cache-invalidation/cache/decision.json
     # (khoa bang tests/test_cache_segment_witness_invalidation.py).
-    assert main_module.CACHE_VERSION == "127"
+    # 127 -> 128 (visual-hybrid-final-corrections): be mat mo hinh KHONG doi; ten hien thi cua envelope phuc vu doi
+    # (mat phang ten de viet "(P)" thay "(AB'D')", chu trinh thiet dien tu ky hieu dinh). Row v127 THAT van HIT:
+    # runs/visual-hybrid-final-corrections/cache/decision.json (khoa bang tests/test_cache_display_identity_invalidation.py).
+    assert main_module.CACHE_VERSION == "128"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

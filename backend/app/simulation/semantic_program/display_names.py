@@ -354,8 +354,19 @@ def _la_ten_that(nhan: Any, ten: str) -> bool:
     return nhan != ten or ky_hieu_toan(ten) is not None
 
 
+#: Nhãn mô hình khai cho một mặt phẳng, khi nó là TÊN một chữ: `(P)`, `(Q′)`, `(α)`.
+_TEN_MP_KHAI = re.compile(r"\(((?:[A-Z][0-9]*|[α-ω])['’′]?)\)")
+
+
+def _ten_mp_khai(nhan: Any) -> Optional[str]:
+    """`"(P′)"` → `"P'"`; không phải tên mặt phẳng một chữ ⇒ `None`."""
+    m = _TEN_MP_KHAI.fullmatch(nhan.strip()) if isinstance(nhan, str) else None
+    return m.group(1).replace("’", "'").replace("′", "'") if m else None
+
+
 def ten_hien_thi(
     thong_tin: dict[str, dict[str, Any]], *, prefer_declared_plane_names: bool = False,
+    source_plane_names: frozenset[str] = frozenset(),
 ) -> dict[str, dict[str, Optional[str]]]:
     """`{tên: {type, producer, sources, label}}` → bốn trường hiển thị mỗi vật.
 
@@ -390,6 +401,11 @@ def ten_hien_thi(
     goi_ngan: dict[str, str] = {}
     vai: dict[str, str] = {}
     dang_giai: set[str] = set()
+    # Một tên khai cho HAI mặt phẳng thì không chỉ được mặt nào — không tên nào thắng tên ghép.
+    so_mp_khai: dict[str, int] = {}
+    for o in thong_tin.values():
+        if o.get("type") == "plane3" and (t := _ten_mp_khai(o.get("label"))):
+            so_mp_khai[t] = so_mp_khai.get(t, 0) + 1
 
     def giai(ten: str) -> None:
         if ten in ky_hieu or ten in dang_giai:
@@ -417,8 +433,11 @@ def ten_hien_thi(
             kh = ky_hieu_toan(nhan_khai.strip())
             # A declared one-letter plane name cannot be reconstructed from its three construction points.
             # Keep that explicit alias in references too; (ABC) still follows ordinary operand notation.
-            if prefer_declared_plane_names and kh is None and loai == 'plane3' and re.fullmatch(r"\([A-Z][0-9]*'?\)|\([α-ω]\)",nhan_khai.strip()):
-                kh=nhan_khai.strip()
+            # Default route: only a name the PROBLEM writes for a plane, and only when one plane declares it.
+            ten_mp = _ten_mp_khai(nhan_khai) if kh is None and loai == "plane3" else None
+            if ten_mp and (prefer_declared_plane_names
+                           or (ten_mp in source_plane_names and so_mp_khai.get(ten_mp) == 1)):
+                kh = nhan_khai.strip()
         # ② Tên vật, cho những kiểu mà ký hiệu CHÍNH LÀ tên.
         if kh is None and loai in _KIEU_KY_HIEU_LA_TEN:
             kh = ky_hieu_toan(ten)
@@ -460,10 +479,16 @@ def ten_hien_thi(
             m = re.search(r"\((\w{1,6}′*)\)", nhan_khai)
             if m:
                 kh = f"({m.group(1)})"
-        # ⑧ Thiết diện mà MỌI đỉnh trùng một điểm có tên ⇒ ký hiệu là chu trình.
+        # ⑧ Thiết diện mà MỌI đỉnh trùng một điểm có tên ⇒ ký hiệu là chu trình, ghép từ đúng ký hiệu mỗi
+        #    đỉnh HIỆN. Một đỉnh không có ký hiệu ⇒ không có chu trình (không bao giờ rơi về `id` của nó).
         chu_trinh = o.get("section_vertex_names") if loai == "section" else None
         if kh is None and chu_trinh:
-            kh = "".join(ky_hieu_toan(s) or s for s in chu_trinh)
+            for s in chu_trinh:
+                if s in thong_tin:
+                    giai(s)
+            ten_dinh = [ky_hieu.get(s) for s in chu_trinh]
+            if all(ten_dinh):
+                kh = "".join(ten_dinh)
 
         if kh:
             kh = kh.replace("'", "′")

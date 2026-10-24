@@ -9,6 +9,8 @@ import { useAppStore } from "../state/store";
 import { registerAllSimulations } from "../simulations";
 import {
   geometryNarrationAt,
+  geometryStepList,
+  geometryTimeline,
   ghiChuGiaTriDung,
   hopLeScene3D,
   narrationAt,
@@ -535,7 +537,7 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
       expect(maVG.size).toBe(9);
     });
 
-    it("all 25 refusal fixtures keep technical codes out of the main explanation and preserve refusal_cause", () => {
+    it("all 25 refusal fixtures keep technical codes out of the whole learner notice and preserve refusal_cause", () => {
       for (const row of REFUSAL_ROWS) {
         const fx = loadFixture(row.file);
         const env = fx.response.envelope;
@@ -543,8 +545,7 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
           <UnsupportedNotice unsupported={env} />,
         ).replace(/<!--.*?-->/g, "");
         expect(out, row.id).toContain(env.learner_reason);
-        const main = out.replace(/<details[\s\S]*?<\/details>/g, "");
-        expect(main, row.id).not.toContain(env.reason_code);
+        expect(out, row.id).not.toContain(env.reason_code);
         expect(out, row.id).not.toContain(env.failure_category);
         expect(out, row.id).not.toContain("hybrid-route-d-preview");
         expect(out, row.id).not.toContain("OFFLINE_FIXTURE_ONLY");
@@ -604,11 +605,16 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
       expect(anChop.has("V")).toBe(true);
       expect(anChop.has("d")).toBe(true);
       for (const e of chop.events) {
-        const nar = narrationAt(chop, e.step_index);
-        expect(nar).not.toContain("16/3");
-        expect(nar).not.toMatch(/^Gán\s+/);
+        expect(narrationAt(chop, e.step_index)).not.toMatch(/^Gán\s+/);
       }
-      expect(geometryNarrationAt(chop, chop.events.length - 1)).not.toContain("16/3");
+      // What the learner reads per construction step (label + narration) never states a final value: a FINAL_RESULT
+      // event only ever closes a step as its result, it never opens one (regenerated typed sample, run
+      // `visual-hybrid-final-corrections`; the stale untyped sample made every event its own step).
+      for (const g of geometryTimeline(chop)) {
+        expect(g.construction.every((k) => chop.events[k]?.semantic_kind !== "FINAL_RESULT"), `step ${g.index}`).toBe(true);
+        expect(geometryNarrationAt(chop, g.anchor), `step ${g.index}`).not.toContain("16/3");
+      }
+      expect(geometryStepList(chop).map((b) => b.label).join(" | ")).not.toContain("16/3");
 
       // Path A — cảnh có cả dữ kiện, trung gian và kết quả cuối (w11 rectangular_pyramid):
       const w11Pyr: Scene3D = JSON.parse(

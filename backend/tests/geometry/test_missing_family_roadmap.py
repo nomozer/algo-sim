@@ -128,7 +128,8 @@ def test_06_danh_tinh_khop_he_hien_tai(mt):
     # 124 -> 125 (regular-prisms): lăng trụ tam/lục giác đều đọc + T12 (served -> refused C0).
     # 125 -> 126 (hybrid-offline-readiness-finalization): độ dài nguồn không đọc từ biểu thức/vectơ/giả định (served -> refused).
     # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): segment3 đường cao mang perpendicular_witness (envelope phục vụ đổi).
-    assert CACHE_VERSION == "127"
+    # 127 -> 128 (visual-hybrid-final-corrections): tên hiển thị backend — mặt phẳng tên đề viết, chu trình thiết diện (envelope phục vụ đổi).
+    assert CACHE_VERSION == "128"
 
 
 # ══ C · THỨ ma trận nói ĐÃ SẴN SÀNG thì phải CÓ MẶT ════════════════════
