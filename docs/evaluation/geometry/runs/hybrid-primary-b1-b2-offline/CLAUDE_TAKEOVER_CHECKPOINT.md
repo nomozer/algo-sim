@@ -21,6 +21,12 @@ Both failures are `tests/geometry/test_schema_contract_offline.py` watchdog test
 
 Re-run outside the sandbox on the same candidate tree: `pytest tests/geometry/test_schema_contract_offline.py` gives **14 passed** (both watchdog tests included). Classification: environmental (sandbox process-tree ACL), not a product or B1/B2 defect. No test or harness was edited.
 
+## Full T3 attempt 2 (Claude): invalid, harness error by Claude
+
+Target `29f4d93a` (this checkpoint commit; measured system unchanged, post-T3 `--verify` MATCH). Receipt `verification/full-t3-rerun/execution.json`: pytest 11826 passed / **10 errors** / 15 xfailed; vitest 1293/1293; build, demo and crash surface PASS; verdict FAIL. The two watchdog tests passed this time.
+
+All 10 errors are setup errors in `tests/semantic_program/test_evaluation_candidate.py` (`test_I2_*`). Those tests build a temporary Git repository with deep `frontend/src/...` paths. Claude's launcher copy set `PYTEST_DEBUG_TEMPROOT` to a 138-character path, so `git add -A` there exceeded the Windows MAX_PATH limit. With the same file: long root gives 16 passed / 10 errors; a 6-character root (`D:/t3c`) gives 26 passed. Codex's original 37-character-shorter root did not hit the limit (attempt 1 passed these tests). Attempt 3 uses the short root, with nothing else changed.
+
 ## What Claude takes over
 
 1. Re-run authoritative Full T3 once, outside the sandbox. It runs on a clean detached checkout of this docs-only commit, which changes no `MEASURED_SYSTEM_PATHS` (the candidate hash must still match). The receipt goes to `verification/full-t3-rerun/`, because attempt 1's directory cannot be reused (Codex ACL).
