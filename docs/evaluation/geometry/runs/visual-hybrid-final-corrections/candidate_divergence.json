@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "visual-hybrid-final-corrections",
+  "corrects": "docs/evaluation/geometry/runs/visual-hybrid-integration/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "8be632679307a94ce4525ad576a05a9eccffc8ba2bdbf02d4c7dc93c208b7c41",
+  "current_product_commit": "af670aa6ba02b7c04da4fe7f863e015d0f4e6e60",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Owner-authorized local final corrections (GO_LOCAL_VISUAL_HYBRID_FINAL_CORRECTIONS_ONLY) on integration/hybrid-visual-candidate: backend display identity (section vertex cycle from shown vertex notation; a declared one-letter plane name the problem writes and only one plane declares), learner diagnostics without technical codes, regenerated offline samples. Historical receipts preserved byte-for-byte.",
+  "cache_version": 128,
+  "cache_version_hien_tai": 128,
+  "cache_decision": "BUMP 127 -> 128: the default route's served envelope changes learner-visible plane names; a genuine v127 row keeps serving the old name (runs/visual-hybrid-final-corrections/cache/decision.json). Model surface unchanged.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements and every earlier candidate layer are preserved byte-for-byte; no earlier result is re-scored against the corrected code."
+  }
+}
