@@ -1,0 +1,61 @@
+{
+  "schema": "authoritative-t3-receipt/2",
+  "run": "hybrid-primary-b1-b2-offline",
+  "attempt": 3,
+  "executor": "claude-outside-codex-sandbox",
+  "t3_target_commit": "f72ccc82d7ee145c2f021106265e474c27526ec1",
+  "candidate_freeze_commit": "f72ccc82d7ee145c2f021106265e474c27526ec1",
+  "product_commit": "c3c1eb803992e9a22b97ae1711d587a910f631ab",
+  "measured_system": {
+    "paths": [
+      "backend/app",
+      "frontend/src/simulations/domains/semantic",
+      "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+    ],
+    "so_file": 118,
+    "tree_hash": "71dd6aa6e277cd1feab0ab0cb89d4489a30fe881a7c7ab4bc889a0999510596b",
+    "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
+  },
+  "detached_head": true,
+  "source_tree_before": "",
+  "source_tree_after": "",
+  "command": "ALLOW_LIVE_AI=0 PYTHONUTF8=1 ALGO_SIM_PYTHON=<existing Python3.12 venv> node frontend/scripts/full-gate.mjs",
+  "environment": {
+    "python": "3.12.10",
+    "node": "v24.13.0",
+    "pytest_temp_root": "D:/t3c (short root, Windows MAX_PATH)",
+    "platform": "win32"
+  },
+  "started_utc": "2026-10-24T06:13:07.331899+00:00",
+  "finished_utc": "2026-10-24T06:19:54.232425+00:00",
+  "seconds": 405.376,
+  "exit_code": 1,
+  "verdict": "FAIL",
+  "pytest_summary": [
+    "11836 passed, 1 skipped, 2 deselected, 15 xfailed, 2 warnings in 390.21s (0:06:30)",
+    " Test Files  75 passed (75)"
+  ],
+  "vitest_summary": [
+    "Test Files  75 passed (75)",
+    "Tests  1293 passed (1293)"
+  ],
+  "failure_names": [],
+  "post_t3_freeze": {
+    "exit_code": 0,
+    "stdout": "Candidate khớp bản đã đóng băng (mã sản phẩm: 118 file, 71dd6aa6e277cd1f…)."
+  },
+  "streams": {
+    "stdout": {
+      "bytes": 19061,
+      "sha256_as_written": "05885a8ddc7dba02055c466f1210ea966a2d9738b7dc47c56cc9170ea2303bc6",
+      "local_ignored_path": ".superpowers/hybrid-primary-b1-b2-offline-claude/full-t3-attempt3/stdout.log"
+    },
+    "stderr": {
+      "bytes": 1026,
+      "sha256_as_written": "ec6325d01e97d600c03d20e001401c528d64cda8ea083efa5ea90144a71b6a6b",
+      "local_ignored_path": ".superpowers/hybrid-primary-b1-b2-offline-claude/full-t3-attempt3/stderr.log"
+    }
+  },
+  "provider_calls": 0,
+  "raw_logs": "Ignored local scratch only; no raw test traceback/provider output committed."
+}

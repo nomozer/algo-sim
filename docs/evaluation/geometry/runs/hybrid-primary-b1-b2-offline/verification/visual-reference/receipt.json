@@ -1,0 +1,2279 @@
+{
+  "schema": "scene3d-visual-reference-capture/1",
+  "commit": "f72ccc82d7ee145c2f021106265e474c27526ec1",
+  "tree_clean": false,
+  "fixtures_file": "docs/evaluation/geometry/runs/hybrid-primary-b1-b2-offline/results/offline/fixtures.json",
+  "fixtures_sha256": "1abad7c55cc31acd2c27123e347ebf6f125fd58a20544e55bc5680c5ea9b9df5",
+  "product_code_modified": false,
+  "override_mode": "RUNTIME_MATERIAL_OVERRIDE_ONLY",
+  "rows": [
+    {
+      "id": "CORPUS-DEV01-construct",
+      "what": "pyramid S.ABCD, quadrilateral section",
+      "viewport": "1440x900",
+      "variant": "before",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 21,
+      "overrides": {
+        "shell": 0,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV01-construct-1440-before-canvas.png",
+      "canvas_sha256": "4695d9ddacefdb983dd55bb098af6951f05f57c404bb5e74e12f92e7da532f2b",
+      "page_png": "CORPUS-DEV01-construct-1440-before-page.png"
+    },
+    {
+      "id": "CORPUS-DEV01-construct",
+      "what": "pyramid S.ABCD, quadrilateral section",
+      "viewport": "1440x900",
+      "variant": "after",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 21,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 1,
+        "sectionLine": 6,
+        "plane": 1,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV01-construct-1440-after-canvas.png",
+      "canvas_sha256": "0fa33da8d8c913d013cbc980db3881fba0f9a834790738e3b79220de68a822a8",
+      "page_png": "CORPUS-DEV01-construct-1440-after-page.png"
+    },
+    {
+      "id": "CORPUS-DEV01-construct",
+      "what": "pyramid S.ABCD, quadrilateral section",
+      "viewport": "1440x900",
+      "variant": "shell-0.04",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 21,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV01-construct-1440-shell-0.04-canvas.png",
+      "canvas_sha256": "5020a51f81eaf56ac94098d43122690d82cac4f266254e6a3956fba49454fc1c"
+    },
+    {
+      "id": "CORPUS-DEV01-construct",
+      "what": "pyramid S.ABCD, quadrilateral section",
+      "viewport": "1440x900",
+      "variant": "shell-0.12",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 21,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV01-construct-1440-shell-0.12-canvas.png",
+      "canvas_sha256": "df89e51cf21b5519b733f2527b38e76cbab740af423c36c1cf79cb3bfd84f323"
+    },
+    {
+      "id": "CORPUS-DEV01-construct",
+      "what": "pyramid S.ABCD, quadrilateral section",
+      "viewport": "1440x900",
+      "variant": "shell-0.20",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 21,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV01-construct-1440-shell-0.20-canvas.png",
+      "canvas_sha256": "4cce35d8f0f2c4adc77e6ad3c32664e92b5fbe27b582ba150959fd96dace251b"
+    },
+    {
+      "id": "CORPUS-DEV01-construct",
+      "what": "pyramid S.ABCD, quadrilateral section",
+      "viewport": "1440x900",
+      "variant": "shell-0.30",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 21,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV01-construct-1440-shell-0.30-canvas.png",
+      "canvas_sha256": "b5c20f7d50d69d5a0a011e27db23e69866c27a82daa507fefb4f419033e0a577"
+    },
+    {
+      "id": "CORPUS-DEV03-construct",
+      "what": "pyramid S.ABC, triangular section",
+      "viewport": "1440x900",
+      "variant": "before",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 19,
+      "overrides": {
+        "shell": 0,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.4035,
+          1.3886,
+          1.8173
+        ],
+        "quaternion": [
+          0.25,
+          0.433,
+          0.75,
+          0.433
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV03-construct-1440-before-canvas.png",
+      "canvas_sha256": "8260f94c3511d47f67427cbafa25860192bef584b4a456e7422ae9f5209552e1",
+      "page_png": "CORPUS-DEV03-construct-1440-before-page.png"
+    },
+    {
+      "id": "CORPUS-DEV03-construct",
+      "what": "pyramid S.ABC, triangular section",
+      "viewport": "1440x900",
+      "variant": "after",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 19,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 1,
+        "sectionLine": 4,
+        "plane": 1,
+        "derived": 4
+      },
+      "camera": {
+        "position": [
+          2.4035,
+          1.3886,
+          1.8173
+        ],
+        "quaternion": [
+          0.25,
+          0.433,
+          0.75,
+          0.433
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV03-construct-1440-after-canvas.png",
+      "canvas_sha256": "279c4e80b6fbeb0671fde1c30929ec3db79146f774987805f487510f8a80ac51",
+      "page_png": "CORPUS-DEV03-construct-1440-after-page.png"
+    },
+    {
+      "id": "CORPUS-DEV03-construct",
+      "what": "pyramid S.ABC, triangular section",
+      "viewport": "1440x900",
+      "variant": "shell-0.04",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 19,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.4035,
+          1.3886,
+          1.8173
+        ],
+        "quaternion": [
+          0.25,
+          0.433,
+          0.75,
+          0.433
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV03-construct-1440-shell-0.04-canvas.png",
+      "canvas_sha256": "c3be2499abe4fc90e3abc5b90a93432e49ddc04e2aa1035141c9ad186c9a52a8"
+    },
+    {
+      "id": "CORPUS-DEV03-construct",
+      "what": "pyramid S.ABC, triangular section",
+      "viewport": "1440x900",
+      "variant": "shell-0.12",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 19,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.4035,
+          1.3886,
+          1.8173
+        ],
+        "quaternion": [
+          0.25,
+          0.433,
+          0.75,
+          0.433
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV03-construct-1440-shell-0.12-canvas.png",
+      "canvas_sha256": "692281bb7e7f4e609f41df543f48a8fbf4ed4a91017c5d54cb42521037ccb876"
+    },
+    {
+      "id": "CORPUS-DEV03-construct",
+      "what": "pyramid S.ABC, triangular section",
+      "viewport": "1440x900",
+      "variant": "shell-0.20",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 19,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.4035,
+          1.3886,
+          1.8173
+        ],
+        "quaternion": [
+          0.25,
+          0.433,
+          0.75,
+          0.433
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV03-construct-1440-shell-0.20-canvas.png",
+      "canvas_sha256": "c724c83697f65c4393901ba4dbb205dc9181cf58b0ab41f18b39e8cb372114bb"
+    },
+    {
+      "id": "CORPUS-DEV03-construct",
+      "what": "pyramid S.ABC, triangular section",
+      "viewport": "1440x900",
+      "variant": "shell-0.30",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 19,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.4035,
+          1.3886,
+          1.8173
+        ],
+        "quaternion": [
+          0.25,
+          0.433,
+          0.75,
+          0.433
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV03-construct-1440-shell-0.30-canvas.png",
+      "canvas_sha256": "89a6076c72bfc0ed829e26dec3042c9ae27e488378060d2dec871fbe323cce09"
+    },
+    {
+      "id": "CORPUS-DEV10-prism-area",
+      "what": "right prism with section",
+      "viewport": "1440x900",
+      "variant": "before",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 16,
+      "overrides": {
+        "shell": 0,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          3.2056,
+          1.3182,
+          2.7618
+        ],
+        "quaternion": [
+          0.2868,
+          0.4096,
+          0.7094,
+          0.4967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV10-prism-area-1440-before-canvas.png",
+      "canvas_sha256": "4a3eeade88f106995f829491a0f713e8f53363ea88b9142ccaf3c5d2993caf2d",
+      "page_png": "CORPUS-DEV10-prism-area-1440-before-page.png"
+    },
+    {
+      "id": "CORPUS-DEV10-prism-area",
+      "what": "right prism with section",
+      "viewport": "1440x900",
+      "variant": "after",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 16,
+      "overrides": {
+        "shell": 1,
+        "sectionFill": 1,
+        "sectionLine": 5,
+        "plane": 1,
+        "derived": 3
+      },
+      "camera": {
+        "position": [
+          3.2056,
+          1.3182,
+          2.7618
+        ],
+        "quaternion": [
+          0.2868,
+          0.4096,
+          0.7094,
+          0.4967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV10-prism-area-1440-after-canvas.png",
+      "canvas_sha256": "d6cb8dc2df4e8f2e8ba827056bd0df1404289ff949f96848d872739eeafdd47d",
+      "page_png": "CORPUS-DEV10-prism-area-1440-after-page.png"
+    },
+    {
+      "id": "CORPUS-DEV10-prism-area",
+      "what": "right prism with section",
+      "viewport": "1440x900",
+      "variant": "shell-0.04",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 16,
+      "overrides": {
+        "shell": 1,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          3.2056,
+          1.3182,
+          2.7618
+        ],
+        "quaternion": [
+          0.2868,
+          0.4096,
+          0.7094,
+          0.4967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV10-prism-area-1440-shell-0.04-canvas.png",
+      "canvas_sha256": "ef7bda603685c2a10ec206415b11b175450312cbcc19673c72b89075e2b321b3"
+    },
+    {
+      "id": "CORPUS-DEV10-prism-area",
+      "what": "right prism with section",
+      "viewport": "1440x900",
+      "variant": "shell-0.12",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 16,
+      "overrides": {
+        "shell": 1,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          3.2056,
+          1.3182,
+          2.7618
+        ],
+        "quaternion": [
+          0.2868,
+          0.4096,
+          0.7094,
+          0.4967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV10-prism-area-1440-shell-0.12-canvas.png",
+      "canvas_sha256": "313abb4fb0d68b42cc0ae80d8259316d3f4b7ab675f5678a7c90837f210b61ac"
+    },
+    {
+      "id": "CORPUS-DEV10-prism-area",
+      "what": "right prism with section",
+      "viewport": "1440x900",
+      "variant": "shell-0.20",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 16,
+      "overrides": {
+        "shell": 1,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          3.2056,
+          1.3182,
+          2.7618
+        ],
+        "quaternion": [
+          0.2868,
+          0.4096,
+          0.7094,
+          0.4967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV10-prism-area-1440-shell-0.20-canvas.png",
+      "canvas_sha256": "2d88c153c0e208132ac79b6b10dae319e01708b4129867c5b98c2fde47a160c6"
+    },
+    {
+      "id": "CORPUS-DEV10-prism-area",
+      "what": "right prism with section",
+      "viewport": "1440x900",
+      "variant": "shell-0.30",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 16,
+      "overrides": {
+        "shell": 1,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          3.2056,
+          1.3182,
+          2.7618
+        ],
+        "quaternion": [
+          0.2868,
+          0.4096,
+          0.7094,
+          0.4967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV10-prism-area-1440-shell-0.30-canvas.png",
+      "canvas_sha256": "251b43d1845d2b8411526d77e6d670f99a3ae3c5b78d05414110a3bf3955cf67"
+    },
+    {
+      "id": "PARA-0",
+      "what": "section with DERIVED_FRESH vertices + derived pyramid",
+      "viewport": "1440x900",
+      "variant": "before",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 17,
+      "overrides": {
+        "shell": 0,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PARA-0-1440-before-canvas.png",
+      "canvas_sha256": "87333deae1cc38e0a43abcf4a51f50fcdfb66389905b03f5844305a49372d728",
+      "page_png": "PARA-0-1440-before-page.png"
+    },
+    {
+      "id": "PARA-0",
+      "what": "section with DERIVED_FRESH vertices + derived pyramid",
+      "viewport": "1440x900",
+      "variant": "after",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 17,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 1,
+        "sectionLine": 4,
+        "plane": 1,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PARA-0-1440-after-canvas.png",
+      "canvas_sha256": "59ca0750f32679d22fe5e2e1ff47c4cd87d2573185a89bbd2ae16de65d84de60",
+      "page_png": "PARA-0-1440-after-page.png"
+    },
+    {
+      "id": "PARA-0",
+      "what": "section with DERIVED_FRESH vertices + derived pyramid",
+      "viewport": "1440x900",
+      "variant": "shell-0.04",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 17,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PARA-0-1440-shell-0.04-canvas.png",
+      "canvas_sha256": "5315c95fe95e224230cc033e24bdf996f6cf1ec4b29badc42b661bf74b44cf99"
+    },
+    {
+      "id": "PARA-0",
+      "what": "section with DERIVED_FRESH vertices + derived pyramid",
+      "viewport": "1440x900",
+      "variant": "shell-0.12",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 17,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PARA-0-1440-shell-0.12-canvas.png",
+      "canvas_sha256": "7553aa0d57b01b3eac7f0a0d669eacc2ff5d0f185eafed2570d206616fb3fe2d"
+    },
+    {
+      "id": "PARA-0",
+      "what": "section with DERIVED_FRESH vertices + derived pyramid",
+      "viewport": "1440x900",
+      "variant": "shell-0.20",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 17,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PARA-0-1440-shell-0.20-canvas.png",
+      "canvas_sha256": "c946ede1981eb2312183a46c6c10ba0b278c17f506e50d085831e4cc3b7c8af6"
+    },
+    {
+      "id": "PARA-0",
+      "what": "section with DERIVED_FRESH vertices + derived pyramid",
+      "viewport": "1440x900",
+      "variant": "shell-0.30",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 17,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PARA-0-1440-shell-0.30-canvas.png",
+      "canvas_sha256": "e19a1a38ec42a5934976fa6701a01536cab44d79f28c4ef3dc76746977e606ee"
+    },
+    {
+      "id": "PERP-square-third",
+      "what": "perpendicular/altitude with hidden edges",
+      "viewport": "1440x900",
+      "variant": "before",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 20,
+      "overrides": {
+        "shell": 0,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.3005,
+          1.4367,
+          2.1183
+        ],
+        "quaternion": [
+          0.2113,
+          0.366,
+          0.7849,
+          0.4532
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PERP-square-third-1440-before-canvas.png",
+      "canvas_sha256": "97165991514f9bda31d27a34a3b5c5fc54dacfd2f608a6197d8b0c2259751195",
+      "page_png": "PERP-square-third-1440-before-page.png"
+    },
+    {
+      "id": "PERP-square-third",
+      "what": "perpendicular/altitude with hidden edges",
+      "viewport": "1440x900",
+      "variant": "after",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 20,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 1,
+        "sectionLine": 4,
+        "plane": 1,
+        "derived": 4
+      },
+      "camera": {
+        "position": [
+          2.3005,
+          1.4367,
+          2.1183
+        ],
+        "quaternion": [
+          0.2113,
+          0.366,
+          0.7849,
+          0.4532
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PERP-square-third-1440-after-canvas.png",
+      "canvas_sha256": "12117238267d47a23bc1e12a4efefca0678d3f07b857cea5f05a108ecdd7109d",
+      "page_png": "PERP-square-third-1440-after-page.png"
+    },
+    {
+      "id": "PERP-square-third",
+      "what": "perpendicular/altitude with hidden edges",
+      "viewport": "1440x900",
+      "variant": "shell-0.04",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 20,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.3005,
+          1.4367,
+          2.1183
+        ],
+        "quaternion": [
+          0.2113,
+          0.366,
+          0.7849,
+          0.4532
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PERP-square-third-1440-shell-0.04-canvas.png",
+      "canvas_sha256": "007143b0049c4c3f34977aec3026e5f3e686f21a09cd9defdb99a900da5f7fa8"
+    },
+    {
+      "id": "PERP-square-third",
+      "what": "perpendicular/altitude with hidden edges",
+      "viewport": "1440x900",
+      "variant": "shell-0.12",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 20,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.3005,
+          1.4367,
+          2.1183
+        ],
+        "quaternion": [
+          0.2113,
+          0.366,
+          0.7849,
+          0.4532
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PERP-square-third-1440-shell-0.12-canvas.png",
+      "canvas_sha256": "e84e9ec76e8b4af50d1969a7a16e48beed368a66cef869b6b9dc707efdf3fea6"
+    },
+    {
+      "id": "PERP-square-third",
+      "what": "perpendicular/altitude with hidden edges",
+      "viewport": "1440x900",
+      "variant": "shell-0.20",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 20,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.3005,
+          1.4367,
+          2.1183
+        ],
+        "quaternion": [
+          0.2113,
+          0.366,
+          0.7849,
+          0.4532
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PERP-square-third-1440-shell-0.20-canvas.png",
+      "canvas_sha256": "b8f19c4d1f99cb16ecb319ef5d4f70b021bc22e116ae8fbc42fd7df28494c652"
+    },
+    {
+      "id": "PERP-square-third",
+      "what": "perpendicular/altitude with hidden edges",
+      "viewport": "1440x900",
+      "variant": "shell-0.30",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 20,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.3005,
+          1.4367,
+          2.1183
+        ],
+        "quaternion": [
+          0.2113,
+          0.366,
+          0.7849,
+          0.4532
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PERP-square-third-1440-shell-0.30-canvas.png",
+      "canvas_sha256": "fb7a796bdbb81e0872f2a77080ef997c9e1259041a3c65d971f0505282f86734"
+    },
+    {
+      "id": "NEG-missing-height",
+      "what": "refusal",
+      "viewport": "1440x900",
+      "variant": "before",
+      "status": "REFUSED",
+      "loaded": {
+        "ok": true,
+        "active": false
+      },
+      "refusal_visible": true,
+      "page_png": "NEG-missing-height-1440-before-page.png"
+    },
+    {
+      "id": "CORPUS-DEV01-construct",
+      "what": "pyramid S.ABCD, quadrilateral section",
+      "viewport": "390x844",
+      "variant": "before",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 21,
+      "overrides": {
+        "shell": 0,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV01-construct-390-before-canvas.png",
+      "canvas_sha256": "fd98388f52c84c32dbb5f287e755501c3e2443ae4f49351f33992f3bb8417bcc",
+      "page_png": "CORPUS-DEV01-construct-390-before-page.png"
+    },
+    {
+      "id": "CORPUS-DEV01-construct",
+      "what": "pyramid S.ABCD, quadrilateral section",
+      "viewport": "390x844",
+      "variant": "after",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 21,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 1,
+        "sectionLine": 6,
+        "plane": 1,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV01-construct-390-after-canvas.png",
+      "canvas_sha256": "f55d8a940aab3c3f5344fe3ecfa80d87c8f17f615f233033999460eeac6b9145",
+      "page_png": "CORPUS-DEV01-construct-390-after-page.png"
+    },
+    {
+      "id": "CORPUS-DEV01-construct",
+      "what": "pyramid S.ABCD, quadrilateral section",
+      "viewport": "390x844",
+      "variant": "shell-0.04",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 21,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV01-construct-390-shell-0.04-canvas.png",
+      "canvas_sha256": "947f2c167cfd9b46aaabcbc4616cd62d392360b457eb8fc38ce3964cc52ff266"
+    },
+    {
+      "id": "CORPUS-DEV01-construct",
+      "what": "pyramid S.ABCD, quadrilateral section",
+      "viewport": "390x844",
+      "variant": "shell-0.12",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 21,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV01-construct-390-shell-0.12-canvas.png",
+      "canvas_sha256": "420f1ca1ef8e4e3c14d9004bc880d26e2adaa970d15373097375f4765e886b77"
+    },
+    {
+      "id": "CORPUS-DEV01-construct",
+      "what": "pyramid S.ABCD, quadrilateral section",
+      "viewport": "390x844",
+      "variant": "shell-0.20",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 21,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV01-construct-390-shell-0.20-canvas.png",
+      "canvas_sha256": "82ff191478cb8bf056ee2cccb64325e05bf2cc9272bf387d031e5b3271af6868"
+    },
+    {
+      "id": "CORPUS-DEV01-construct",
+      "what": "pyramid S.ABCD, quadrilateral section",
+      "viewport": "390x844",
+      "variant": "shell-0.30",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 21,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV01-construct-390-shell-0.30-canvas.png",
+      "canvas_sha256": "5bcfb554d95357864818d0235bbda3d4ee5bcc6ca38e30a896d05b8cf56903b3"
+    },
+    {
+      "id": "CORPUS-DEV03-construct",
+      "what": "pyramid S.ABC, triangular section",
+      "viewport": "390x844",
+      "variant": "before",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 19,
+      "overrides": {
+        "shell": 0,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.4035,
+          1.3886,
+          1.8173
+        ],
+        "quaternion": [
+          0.25,
+          0.433,
+          0.75,
+          0.433
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV03-construct-390-before-canvas.png",
+      "canvas_sha256": "3799ac572f067832af2bf72963c8af2040c5249057d2e787c390bbd42364c8f3",
+      "page_png": "CORPUS-DEV03-construct-390-before-page.png"
+    },
+    {
+      "id": "CORPUS-DEV03-construct",
+      "what": "pyramid S.ABC, triangular section",
+      "viewport": "390x844",
+      "variant": "after",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 19,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 1,
+        "sectionLine": 4,
+        "plane": 1,
+        "derived": 4
+      },
+      "camera": {
+        "position": [
+          2.4035,
+          1.3886,
+          1.8173
+        ],
+        "quaternion": [
+          0.25,
+          0.433,
+          0.75,
+          0.433
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV03-construct-390-after-canvas.png",
+      "canvas_sha256": "8991face934836a76d1460f7e9d1500f6283966110bb8c54ff0a78154742409f",
+      "page_png": "CORPUS-DEV03-construct-390-after-page.png"
+    },
+    {
+      "id": "CORPUS-DEV03-construct",
+      "what": "pyramid S.ABC, triangular section",
+      "viewport": "390x844",
+      "variant": "shell-0.04",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 19,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.4035,
+          1.3886,
+          1.8173
+        ],
+        "quaternion": [
+          0.25,
+          0.433,
+          0.75,
+          0.433
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV03-construct-390-shell-0.04-canvas.png",
+      "canvas_sha256": "990716155e482ac73e2ca4839adc42f4f1067444c5eb12901a429d2c7d337592"
+    },
+    {
+      "id": "CORPUS-DEV03-construct",
+      "what": "pyramid S.ABC, triangular section",
+      "viewport": "390x844",
+      "variant": "shell-0.12",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 19,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.4035,
+          1.3886,
+          1.8173
+        ],
+        "quaternion": [
+          0.25,
+          0.433,
+          0.75,
+          0.433
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV03-construct-390-shell-0.12-canvas.png",
+      "canvas_sha256": "6482da3a4c10b83dfadd7faba9a4b745db61a96855cef6a70b531ddf37a2d032"
+    },
+    {
+      "id": "CORPUS-DEV03-construct",
+      "what": "pyramid S.ABC, triangular section",
+      "viewport": "390x844",
+      "variant": "shell-0.20",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 19,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.4035,
+          1.3886,
+          1.8173
+        ],
+        "quaternion": [
+          0.25,
+          0.433,
+          0.75,
+          0.433
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV03-construct-390-shell-0.20-canvas.png",
+      "canvas_sha256": "f8743de890b5b403473f88285ee0927dd3b7dd7dee0d82b4aa1613d4aedbff11"
+    },
+    {
+      "id": "CORPUS-DEV03-construct",
+      "what": "pyramid S.ABC, triangular section",
+      "viewport": "390x844",
+      "variant": "shell-0.30",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 19,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.4035,
+          1.3886,
+          1.8173
+        ],
+        "quaternion": [
+          0.25,
+          0.433,
+          0.75,
+          0.433
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV03-construct-390-shell-0.30-canvas.png",
+      "canvas_sha256": "60532a6a3d61c2e105e42c2f2fc94ea816dfdd4937dff0e8a783f5d5727ca39b"
+    },
+    {
+      "id": "CORPUS-DEV10-prism-area",
+      "what": "right prism with section",
+      "viewport": "390x844",
+      "variant": "before",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 16,
+      "overrides": {
+        "shell": 0,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          3.2056,
+          1.3182,
+          2.7618
+        ],
+        "quaternion": [
+          0.2868,
+          0.4096,
+          0.7094,
+          0.4967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV10-prism-area-390-before-canvas.png",
+      "canvas_sha256": "62ac42b51a7184e3660b7273e52109dee9f9e71521acaef6f2e8b5f68db307ed",
+      "page_png": "CORPUS-DEV10-prism-area-390-before-page.png"
+    },
+    {
+      "id": "CORPUS-DEV10-prism-area",
+      "what": "right prism with section",
+      "viewport": "390x844",
+      "variant": "after",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 16,
+      "overrides": {
+        "shell": 1,
+        "sectionFill": 1,
+        "sectionLine": 5,
+        "plane": 1,
+        "derived": 3
+      },
+      "camera": {
+        "position": [
+          3.2056,
+          1.3182,
+          2.7618
+        ],
+        "quaternion": [
+          0.2868,
+          0.4096,
+          0.7094,
+          0.4967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV10-prism-area-390-after-canvas.png",
+      "canvas_sha256": "7d8a908d2533b0ede41ec377398de416f8446e5e5a4c5c93729dac897fe9ade6",
+      "page_png": "CORPUS-DEV10-prism-area-390-after-page.png"
+    },
+    {
+      "id": "CORPUS-DEV10-prism-area",
+      "what": "right prism with section",
+      "viewport": "390x844",
+      "variant": "shell-0.04",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 16,
+      "overrides": {
+        "shell": 1,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          3.2056,
+          1.3182,
+          2.7618
+        ],
+        "quaternion": [
+          0.2868,
+          0.4096,
+          0.7094,
+          0.4967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV10-prism-area-390-shell-0.04-canvas.png",
+      "canvas_sha256": "276f51f888aa0b747ee23d541db2c07fa15457c7b221780288cc8d7985c71d05"
+    },
+    {
+      "id": "CORPUS-DEV10-prism-area",
+      "what": "right prism with section",
+      "viewport": "390x844",
+      "variant": "shell-0.12",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 16,
+      "overrides": {
+        "shell": 1,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          3.2056,
+          1.3182,
+          2.7618
+        ],
+        "quaternion": [
+          0.2868,
+          0.4096,
+          0.7094,
+          0.4967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV10-prism-area-390-shell-0.12-canvas.png",
+      "canvas_sha256": "c34831b2c09a531bf7980afd8ee849f3364bba34733213fc7eebc6f8132988d8"
+    },
+    {
+      "id": "CORPUS-DEV10-prism-area",
+      "what": "right prism with section",
+      "viewport": "390x844",
+      "variant": "shell-0.20",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 16,
+      "overrides": {
+        "shell": 1,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          3.2056,
+          1.3182,
+          2.7618
+        ],
+        "quaternion": [
+          0.2868,
+          0.4096,
+          0.7094,
+          0.4967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV10-prism-area-390-shell-0.20-canvas.png",
+      "canvas_sha256": "551dfaf79e07176bd3142fd42bc22b9367a13b9c5cf4ca74c065d9a4716c0c4f"
+    },
+    {
+      "id": "CORPUS-DEV10-prism-area",
+      "what": "right prism with section",
+      "viewport": "390x844",
+      "variant": "shell-0.30",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 16,
+      "overrides": {
+        "shell": 1,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          3.2056,
+          1.3182,
+          2.7618
+        ],
+        "quaternion": [
+          0.2868,
+          0.4096,
+          0.7094,
+          0.4967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "CORPUS-DEV10-prism-area-390-shell-0.30-canvas.png",
+      "canvas_sha256": "4389c12a142981294e7cb80879c11d616bd189d9025bd27d2971a71edfaecfd0"
+    },
+    {
+      "id": "PARA-0",
+      "what": "section with DERIVED_FRESH vertices + derived pyramid",
+      "viewport": "390x844",
+      "variant": "before",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 17,
+      "overrides": {
+        "shell": 0,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PARA-0-390-before-canvas.png",
+      "canvas_sha256": "9ce59708d11a69c070d87bce9912bcc69b9c2d20e0db2b223a985f000eedb6ba",
+      "page_png": "PARA-0-390-before-page.png"
+    },
+    {
+      "id": "PARA-0",
+      "what": "section with DERIVED_FRESH vertices + derived pyramid",
+      "viewport": "390x844",
+      "variant": "after",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 17,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 1,
+        "sectionLine": 4,
+        "plane": 1,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PARA-0-390-after-canvas.png",
+      "canvas_sha256": "fdfa6d456f3cbde3899e10999f436a28e67f5344c02f0d072c3eeca457cdb6c4",
+      "page_png": "PARA-0-390-after-page.png"
+    },
+    {
+      "id": "PARA-0",
+      "what": "section with DERIVED_FRESH vertices + derived pyramid",
+      "viewport": "390x844",
+      "variant": "shell-0.04",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 17,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PARA-0-390-shell-0.04-canvas.png",
+      "canvas_sha256": "f43b6b903ff8148149b7ff122094a2dd0b23d52ceb2265f71a37b77cfc356a39"
+    },
+    {
+      "id": "PARA-0",
+      "what": "section with DERIVED_FRESH vertices + derived pyramid",
+      "viewport": "390x844",
+      "variant": "shell-0.12",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 17,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PARA-0-390-shell-0.12-canvas.png",
+      "canvas_sha256": "cc234449878b540e942111e25680fece875f31dd10131d33006d9316a23590f7"
+    },
+    {
+      "id": "PARA-0",
+      "what": "section with DERIVED_FRESH vertices + derived pyramid",
+      "viewport": "390x844",
+      "variant": "shell-0.20",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 17,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PARA-0-390-shell-0.20-canvas.png",
+      "canvas_sha256": "3b8643c41555c64be9853f3eaa4a36808a4c80666cf1dc08bb7057adcf62dfa7"
+    },
+    {
+      "id": "PARA-0",
+      "what": "section with DERIVED_FRESH vertices + derived pyramid",
+      "viewport": "390x844",
+      "variant": "shell-0.30",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 17,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.6548,
+          1.6699,
+          1.0119
+        ],
+        "quaternion": [
+          0.3044,
+          0.5272,
+          0.6871,
+          0.3967
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PARA-0-390-shell-0.30-canvas.png",
+      "canvas_sha256": "e090cbd702d3cf5cfede9cba5cc555ac594e73cf4c4aca2fdf9f2d9234e696e1"
+    },
+    {
+      "id": "PERP-square-third",
+      "what": "perpendicular/altitude with hidden edges",
+      "viewport": "390x844",
+      "variant": "before",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 20,
+      "overrides": {
+        "shell": 0,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.3005,
+          1.4367,
+          2.1183
+        ],
+        "quaternion": [
+          0.2113,
+          0.366,
+          0.7849,
+          0.4532
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PERP-square-third-390-before-canvas.png",
+      "canvas_sha256": "64d171e913c5225b2cbd8b60d0799a73edd590e35b3e4018d86cb389c9cf19f8",
+      "page_png": "PERP-square-third-390-before-page.png"
+    },
+    {
+      "id": "PERP-square-third",
+      "what": "perpendicular/altitude with hidden edges",
+      "viewport": "390x844",
+      "variant": "after",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 20,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 1,
+        "sectionLine": 4,
+        "plane": 1,
+        "derived": 4
+      },
+      "camera": {
+        "position": [
+          2.3005,
+          1.4367,
+          2.1183
+        ],
+        "quaternion": [
+          0.2113,
+          0.366,
+          0.7849,
+          0.4532
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PERP-square-third-390-after-canvas.png",
+      "canvas_sha256": "5215cbf1c0de2ef5bedad3a57323627c7592d13a6ac1ef31818e00967dc04a9d",
+      "page_png": "PERP-square-third-390-after-page.png"
+    },
+    {
+      "id": "PERP-square-third",
+      "what": "perpendicular/altitude with hidden edges",
+      "viewport": "390x844",
+      "variant": "shell-0.04",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 20,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.3005,
+          1.4367,
+          2.1183
+        ],
+        "quaternion": [
+          0.2113,
+          0.366,
+          0.7849,
+          0.4532
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PERP-square-third-390-shell-0.04-canvas.png",
+      "canvas_sha256": "987a48de6df88004b3c77b91832eb47cd54d2f5d8bacefc32455fe73544b2467"
+    },
+    {
+      "id": "PERP-square-third",
+      "what": "perpendicular/altitude with hidden edges",
+      "viewport": "390x844",
+      "variant": "shell-0.12",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 20,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.3005,
+          1.4367,
+          2.1183
+        ],
+        "quaternion": [
+          0.2113,
+          0.366,
+          0.7849,
+          0.4532
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PERP-square-third-390-shell-0.12-canvas.png",
+      "canvas_sha256": "1fe0d528a4296be6ae2256c7a49811c76f97cd956b24e375c1cf846dc7f39d4c"
+    },
+    {
+      "id": "PERP-square-third",
+      "what": "perpendicular/altitude with hidden edges",
+      "viewport": "390x844",
+      "variant": "shell-0.20",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 20,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.3005,
+          1.4367,
+          2.1183
+        ],
+        "quaternion": [
+          0.2113,
+          0.366,
+          0.7849,
+          0.4532
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PERP-square-third-390-shell-0.20-canvas.png",
+      "canvas_sha256": "10a26a5e7e79a861453ece03cae2da1e0826895f12b2e8659cebb29570d8f1e9"
+    },
+    {
+      "id": "PERP-square-third",
+      "what": "perpendicular/altitude with hidden edges",
+      "viewport": "390x844",
+      "variant": "shell-0.30",
+      "status": "SERVED",
+      "loaded": {
+        "ok": true,
+        "active": true
+      },
+      "step": 20,
+      "overrides": {
+        "shell": 2,
+        "sectionFill": 0,
+        "sectionLine": 0,
+        "plane": 0,
+        "derived": 0
+      },
+      "camera": {
+        "position": [
+          2.3005,
+          1.4367,
+          2.1183
+        ],
+        "quaternion": [
+          0.2113,
+          0.366,
+          0.7849,
+          0.4532
+        ],
+        "fov": 50,
+        "zoom": 1,
+        "type": "PerspectiveCamera"
+      },
+      "canvas_png": "PERP-square-third-390-shell-0.30-canvas.png",
+      "canvas_sha256": "83b75ec5a763e365e04b2e379206bd64565a4ced38793b7b5896055a8a767819"
+    },
+    {
+      "id": "NEG-missing-height",
+      "what": "refusal",
+      "viewport": "390x844",
+      "variant": "before",
+      "status": "REFUSED",
+      "loaded": {
+        "ok": true,
+        "active": false
+      },
+      "refusal_visible": true,
+      "page_png": "NEG-missing-height-390-before-page.png"
+    }
+  ],
+  "errors": [],
+  "forbidden": []
+}

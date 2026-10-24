@@ -1,0 +1,62 @@
+{
+  "schema_version": "algosim.eval.run.v1",
+  "run_id": "hybrid-primary-b1-b2-offline",
+  "wave": "hybrid-primary-b1-b2-offline",
+  "authorization": [
+    "GO_AUTONOMOUS_HYBRID_B1_B2_LOCAL_DEVELOPMENT",
+    "GO_HYBRID_B1_B2_TAKEOVER_AND_SCENE3D_VISUAL_RESEARCH_LOCAL"
+  ],
+  "mode": "LOCAL_IMPLEMENTATION_OFFLINE_VALIDATION_NO_GO_MAIN",
+  "branch": "research/hybrid-primary-b1-b2-offline",
+  "baseline_c0": "5ee973406b75e19503158549a22bb3b24c5d9bf5",
+  "baseline_main": "9978e512a8a2a087475d792c0bd9db639c36acaa",
+  "product_commit": "c3c1eb803992e9a22b97ae1711d587a910f631ab",
+  "candidate_freeze_commit": "d8a22dbeda5c05f90bba877871f81f976f7a4465",
+  "t3_target_commit": "f72ccc82d7ee145c2f021106265e474c27526ec1",
+  "measured_system_hash": "71dd6aa6e277cd1feab0ab0cb89d4489a30fe881a7c7ab4bc889a0999510596b",
+  "measured_file_count": 118,
+  "versions": {
+    "registry": "geometry-functions/13",
+    "planner": "geometry-fact-planner/13",
+    "engine": "geometry-function-engine/11",
+    "typed_fact_next": "typed-fact-next/2",
+    "route_d_simulation": "hybrid-route-d-simulation/4"
+  },
+  "verification": {
+    "full_t3": "FULL_PRODUCT_GATE_PASS",
+    "authoritative_t3_path": "docs/evaluation/geometry/runs/hybrid-primary-b1-b2-offline/verification/full-t3-attempt4/execution.json",
+    "t3_attempts": [
+      {"attempt": 1, "target": "d8a22dbe", "verdict": "FAIL", "cause": "Codex sandbox denied taskkill /T (2 watchdog tests)", "path": "verification/full-t3/execution.json"},
+      {"attempt": 2, "target": "29f4d93a", "verdict": "FAIL", "cause": "over-long pytest temp root (MAX_PATH) + Codex-ACL frontend/dist", "path": "verification/full-t3-rerun/execution.json"},
+      {"attempt": 3, "target": "f72ccc82", "verdict": "FAIL", "cause": "Codex-ACL frontend/dist (vite build EPERM)", "path": "verification/full-t3-attempt3/execution.json"},
+      {"attempt": 4, "target": "f72ccc82", "verdict": "FULL_PRODUCT_GATE_PASS", "worktree": "fresh detached .superpowers/worktrees/t3-b1b2", "path": "verification/full-t3-attempt4/execution.json"}
+    ],
+    "backend_pytest_passed": 11836,
+    "frontend_vitest_passed": 1293,
+    "post_t3_freeze_verify": "MATCH",
+    "offline_corpus": "47 cases: 22 served, 25 refused, 0 wrong-served, 0 false-refused, 0 oracle mismatch, 1 pre-existing category mismatch",
+    "browser_acceptance": "FRONTEND_CONSUMER_ACCEPTANCE_PASS 94/94 (source 97072a72)",
+    "independent_review": "PASS_WITH_LIMITS (fix diff not independently re-reviewed)",
+    "independent_holdout": "NOT_EXECUTED",
+    "live_extraction_quality": "UNKNOWN"
+  },
+  "visual": {
+    "status": "SCENE3D_VISUAL_SPEC_ONLY",
+    "product_code_changed": false,
+    "captures": 62,
+    "captures_path": "docs/evaluation/geometry/runs/hybrid-primary-b1-b2-offline/verification/visual-reference/receipt.json",
+    "human_visual_approval": "NOT_APPROVED"
+  },
+  "governance": {
+    "default_mode": "LLM_ONLY",
+    "response_contract": "flat",
+    "hybrid_product_enablement": "NO-GO",
+    "cache_version": 127,
+    "cache_decision": "NO_BUMP",
+    "max_memory_declarations": 32,
+    "live_provider_calls": 0,
+    "remote": "REMOTE_SECURITY_BLOCKED",
+    "publication_exceptions": "27/27 PENDING"
+  },
+  "status": "HYBRID_B1_B2_OFFLINE_E2E_COMPLETE"
+}

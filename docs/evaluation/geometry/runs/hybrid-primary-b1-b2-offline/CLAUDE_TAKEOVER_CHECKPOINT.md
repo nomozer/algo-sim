@@ -27,6 +27,16 @@ Target `29f4d93a` (this checkpoint commit; measured system unchanged, post-T3 `-
 
 All 10 errors are setup errors in `tests/semantic_program/test_evaluation_candidate.py` (`test_I2_*`). Those tests build a temporary Git repository with deep `frontend/src/...` paths. Claude's launcher copy set `PYTEST_DEBUG_TEMPROOT` to a 138-character path, so `git add -A` there exceeded the Windows MAX_PATH limit. With the same file: long root gives 16 passed / 10 errors; a 6-character root (`D:/t3c`) gives 26 passed. Codex's original 37-character-shorter root did not hit the limit (attempt 1 passed these tests). Attempt 3 uses the short root, with nothing else changed.
 
+Attempt 2 also failed the build gate for the reason found in attempt 3 (below). The first reading above missed it.
+
+## Full T3 attempt 3: invalid, ACL on build output
+
+Target `f72ccc82`, short temp root: pytest **11836 passed / 0 failed**, vitest 1293/1293, demo/crash PASS, `--verify` MATCH. `vite build` failed with `EPERM` removing `frontend/dist/assets`. That directory was created by the Codex sandbox at 12:41 in attempt 1, and its ACL cannot be removed (no ACL change is permitted). Receipt `verification/full-t3-attempt3/execution.json`.
+
+## Full T3 attempt 4: authoritative PASS
+
+The task worktree cannot safely run the build gate, so a fresh **detached clean** worktree `.superpowers/worktrees/t3-b1b2` was created at `f72ccc82`. `frontend/node_modules` is a junction to the existing install, as in the Codex worktree. Launcher is unchanged except attempt number and output paths. Result: **`FULL_PRODUCT_GATE_PASS`**, exit 0, 472.8 s. pytest 11836 passed, 1 skipped, 15 xfailed, 0 failed/errors; vitest 75 files / 1293 tests; typecheck+build, demo replay 5/5, crash surface 6/6 PASS. Tree clean before and after; post-T3 `--verify` MATCH (118 files, `71dd6aa6…`). Receipt `verification/full-t3-attempt4/execution.json`.
+
 ## What Claude takes over
 
 1. Re-run authoritative Full T3 once, outside the sandbox. It runs on a clean detached checkout of this docs-only commit, which changes no `MEASURED_SYSTEM_PATHS` (the candidate hash must still match). The receipt goes to `verification/full-t3-rerun/`, because attempt 1's directory cannot be reused (Codex ACL).
@@ -46,7 +56,7 @@ All 10 errors are setup errors in `tests/semantic_program/test_evaluation_candid
 
 ## Open at takeover
 
-- Authoritative T3 PASS: pending the re-run.
+- Authoritative T3: PASS at attempt 4 (above).
 - Independent holdout: NOT_EXECUTED. Live extraction quality: UNKNOWN.
 - Pre-existing category mismatch `NEG-per-edge-same-name` preserved (OFFLINE_E2E_ACCEPTANCE.md).
 - Governance unchanged: LLM_ONLY, flat, Hybrid NO-GO, live 0, cache 127, memory 32, REMOTE_SECURITY_BLOCKED, 27 publication exceptions PENDING.
