@@ -7,12 +7,14 @@ every fixture envelope, every scenario, the viewports and every suite field exce
 """
 import hashlib
 import json
+import sys
 from pathlib import Path
 
 RUN = Path(__file__).resolve().parent
 ROOT = RUN.parents[4]
 SRC = ROOT / "docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/final-inputs"
-OUT = RUN / "visual" / "official-inputs"
+NAME = sys.argv[1] if len(sys.argv) > 1 else "official-inputs"   # one fresh folder per candidate
+OUT = RUN / "visual" / NAME
 assert not OUT.exists(), "fresh inputs only"
 cand = json.loads((ROOT / "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json").read_text(encoding="utf-8"))
 product, tree = cand["product_commit_sha"], cand["measured_system"]["tree_hash"]
@@ -42,7 +44,7 @@ assert {k: v for k, v in new_suite.items() if k not in IDENTITY} == {k: v for k,
 manifest.update(product_commit_sha=product, product_tree_sha=tree)
 write(OUT / "FIXTURE_MANIFEST.json", manifest)
 write(OUT / "suite.json", new_suite)
-write(RUN / "official-inputs-rebinding.json", {
+write(RUN / f"{NAME}-rebinding.json", {
     "source": str(SRC.relative_to(ROOT)).replace("\\", "/"), "product_commit_sha": product, "product_tree_sha": tree,
     "geometry_envelopes_changed": 0, "oracle_expectations_changed": 0, "suite_fields_changed": sorted(IDENTITY),
     "fixtures": records})
