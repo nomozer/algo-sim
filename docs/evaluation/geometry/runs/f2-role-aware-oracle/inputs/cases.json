@@ -1,0 +1,5 @@
+[
+ {"id": "polygon-cross-section", "shape": "polygon", "envelope_file": "../docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/final-inputs/fixtures/cross_section_positive.json", "pick": "envelope", "item": "area_T", "section": "T", "wrong_point": "C"},
+ {"id": "circle-sphere-sample", "shape": "circle", "envelope_file": "src/data/geometry-samples.json", "pick": "samples.6.envelope", "item": "S", "section": "C", "wrong_point": "I"},
+ {"id": "ellipse-cylinder-p6", "shape": "ellipse", "envelope_file": "../docs/evaluation/geometry/runs/f2-role-aware-oracle/inputs/p6-ellipse-envelope.json", "item": "dien_tich_elip_e", "section": "E", "wrong_point": "O"}
+]

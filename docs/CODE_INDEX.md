@@ -1,5 +1,18 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## F2 role-aware oracle proposal + B3 distance browser acceptance — local, 2026-10-25
+
+Runs `docs/evaluation/geometry/runs/f2-role-aware-oracle/` and `docs/evaluation/geometry/runs/b3-distance-browser-e2e/`.
+
+| Path | Owns | Locked by |
+|---|---|---|
+| `frontend/scripts/section-role-oracle.mjs` | PROPOSED per-object section check for Owner policy F2 (cobalt boundary of the selected section per projected edge, terracotta fill in the shrunk interior, cobalt pixels owned by that boundary); `sectionBoundaryWorld` (polygon / circle / ellipse boundary with front/behind-shell flag), `project`. Reuses the locked `phanLoaiSac` + `DAI_SAC_VAI_TRO`; NOT wired into the official suite | `frontend/scripts/section-role-oracle.node-test.mjs` (synthetic frames) |
+| `frontend/scripts/section-role-oracle.node-test.mjs` | synthetic pass / fault frames for the oracle above (missing / wrong-colour boundary, fill recoloured, cobalt on another object, overlays, hidden-edge threshold) | `node --test` |
+| `frontend/scripts/section-role-browser-probe.mjs` | real-Chrome probe: selects the target from «Phân tích toán học», scores baseline and faults injected at page start (line/mesh uniform swaps, fill hook, wrong click) | run receipt |
+| `frontend/scripts/b3-distance-browser-e2e.mjs` | /4 distance acceptance through `docPhanHoiHybrid`: answer-tied witness drawn when provided, Mode A hidden, Mode B once, value² = fixture oracle, inspector adds no number, refusals without scene | run receipt |
+
+`scene3d-view.tsx` ellipse branch: the rim band normal is `major_dir × minor_dir` (was the envelope `normal`; a left-handed frame put the band outside the curve). Locked by `scene3d-unified-materials.test.ts` › "ellipse rim band orientation".
+
 ## Visual closure / Hybrid readiness — local, 2026-10-25
 
 Run `docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/`. Reused `Scene3DExplorer` (analysis formula shown once; the analysis paragraph has its own class `geo3d-phan-tich-cong-thuc`), `buildObject3D` (selected section/SECTION_REGION boundary cobalt, fill stays terracotta), existing picking for transient hover, existing Registry/Planner/Engine. New regression `frontend/src/simulations/domains/geometry/visual-closure.test.tsx` owns F1/F2/hover/sphere-loop checks. No new Geometry Function, no parallel engine.
