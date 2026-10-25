@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_B3_V2_DISTANCE_BRIDGE
+
+REPORT = docs/evaluation/geometry/runs/hybrid-b3-v2-distance-bridge/FINAL_OWNER_HANDOFF.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-b3-v2-distance-bridge/
+CLASSIFICATION = LOCAL research on research/hybrid-b3-v2-distance-bridge (NOT merged, not pushed; main 9978e512 unchanged): typed-fact-next/2 bridge maps measurement/distance goals ({point, plane}, {segment}, {line1, line2} — the /3 adapter's keys) to existing planner questions; route D only; OFFLINE_AUTHORED_DEVELOPMENT_NOT_HOLDOUT; no browser row for /4 distance scenes; Hybrid production NO-GO
+CODE_COMMIT = 3524bec8945c451655e92d77aba3016a9c6065cc (product, backend geometry_functions only); candidate dd5e6748; measured_system 7fbe45b24b41acbc73f8aacd6b8bf163e10172fc8b8d2c08ac8006a6d2dbd284 (118 files); NO_BUMP 128; Full T3 target dd5e6748
+VERIFICATION = docs/evaluation/geometry/runs/hybrid-b3-v2-distance-bridge/verification/full-t3/receipt.json (FULL_PRODUCT_GATE_PASS); backend/tests/geometry/test_typed_fact_next_v2_distance_bridge.py
+MODEL_REQUEST_COUNT = 0
+CORRECTS = VISUAL_CLOSURE_HYBRID_READINESS (candidate identity; B3 status SPECIFIED → slice implemented); historical artifact bytes unchanged
+CORRECTED_BY = NONE
+
 ## WAVE_ID = VISUAL_CLOSURE_HYBRID_READINESS
 
 REPORT = docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/FINAL_VISUAL_CLOSURE_REPORT.md
@@ -9,7 +20,7 @@ CODE_COMMIT = 53fe3d25243fe1e99410dfc52546e16225f19e75 (product, frontend only);
 VERIFICATION = docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/verification/full-t3/receipt.json (FULL_PRODUCT_GATE_PASS; failed Codex attempt kept at docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/verification/full-t3/codex-t3-owner-diagnostic-receipt.json, root cause docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/T3_FAILURE_ROOT_CAUSE_AND_RECOVERY.md); docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/official/AGGREGATE_SUITE_RECEIPT.json; docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/verification/adapter4/receipt.json; docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/verification/refusal/refusal-surface.json; docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/verification/orbit/ORBIT_GATE.json
 MODEL_REQUEST_COUNT = 0
 CORRECTS = VISUAL_HYBRID_FINAL_CORRECTIONS (F1/F2 findings addressed in product; candidate identity); historical artifact bytes unchanged
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_B3_V2_DISTANCE_BRIDGE (docs/evaluation/geometry/runs/hybrid-b3-v2-distance-bridge/inputs/candidate_divergence.json)
 
 ## WAVE_ID = VISUAL_HYBRID_FINAL_CORRECTIONS
 
