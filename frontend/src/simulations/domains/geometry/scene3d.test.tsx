@@ -33,6 +33,7 @@ import {
   semanticIdOf,
   vatNhanChung,
   datCoGocVuong,
+  DO_MO_TOI_THIEU,
   updateCanonicalEdgeVisibility,
 } from "./scene3d-view";
 
@@ -1062,7 +1063,16 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
       }
       expect(daThayAn).toBe(true);                                // some lateral edge really was hidden on the sweep
     }
+    // Looking straight down, every lateral mark lies in a vertical plane seen edge-on: its square collapses into a line.
+    // Nothing is drawn by default (never a fake screen square); the emphasised edge still shows its own mark.
+    cam.position.set(1.5, 2.2, 22); cam.lookAt(1.5, 2, 2.5); cam.updateMatrixWorld(true);
+    expect(Math.max(...ben.map(mo))).toBeLessThan(DO_MO_TOI_THIEU);
+    expect(datCoGocVuong([dung(null)], cam, 720)).toBe(0);
+    const nhanTren = dung("canh_ben_B_B_prime");
+    datCoGocVuong([nhanTren], cam, 720);
+    expect(hienTai(nhanTren)).toEqual(["canh_ben_B_B_prime"]);
     // The edge being taught (emphasised) always shows its own mark, wherever the camera is.
+    nhin(-0.6);
     const nhanA = dung("canh_ben_A_A_prime");
     datCoGocVuong([nhanA], cam, 720);
     expect(hienTai(nhanA)).toEqual(["canh_ben_A_A_prime"]);
@@ -1071,7 +1081,8 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
     const ma = khac.getObjectByName("perp_marker:canh_ben_D_D_prime")!;
     (ma.userData.gocVuongDonVi as { nhomQuanHe?: string }).nhomQuanHe = "line_perpendicular_plane|other_rule|other_plane";
     datCoGocVuong([khac], cam, 720);
-    expect(hienTai(khac)).toEqual(["canh_ben_C_C_prime", "canh_ben_D_D_prime"]);
+    const totABC = ben.filter((o) => o.id !== "canh_ben_D_D_prime").sort((a, b) => mo(b) - mo(a))[0].id;
+    expect(hienTai(khac)).toEqual([totABC, "canh_ben_D_D_prime"].sort());
   });
 
   it("nhân chứng vuông góc trên khối đơn vị co giãn chu kỳ nét đứt và ô góc vuông theo đường kính cảnh, không phình quá khổ", () => {

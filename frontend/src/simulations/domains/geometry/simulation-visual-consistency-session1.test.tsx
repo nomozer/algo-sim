@@ -5,6 +5,7 @@ import {
   buildObject3D,
   doanNhuongCanh,
   dongBoNetDayManHinh,
+  lamMuotLechNhan,
   tinhViTriNhanDiem,
   updateCanonicalEdgeVisibility,
 } from "./scene3d-view";
@@ -440,6 +441,22 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
     const xuyen = [{ ax: 100, ay: 100, bx: 100 + 3 * (tamNhan.x - 100), by: 100 + 3 * (tamNhan.y - 100) }];
     const doi = tinhViTriNhanDiem(chamA, [...canhLen(-0.5), ...xuyen], [], new Map(truocDo));
     expect(Math.hypot(doi.get("A")!.x - coNho.get("A")!.x, doi.get("A")!.y - coNho.get("A")!.y)).toBeGreaterThan(5);
+
+    // 4c. A real collision still moves the label, but it GLIDES (offset only; the anchor follows the point exactly).
+    expect(lamMuotLechNhan(undefined, { dx: 12, dy: -30 })).toEqual({ dx: 12, dy: -30 });   // first appearance: in place
+    let lech = { dx: 12, dy: -30 };
+    const dich = { dx: -28, dy: -30 };                                                       // forced 40 px move
+    const buoc: number[] = [];
+    for (let k = 0; k < 20 && (lech.dx !== dich.dx || lech.dy !== dich.dy); k++) {
+      const moi = lamMuotLechNhan(lech, dich);
+      buoc.push(Math.hypot(moi.dx - lech.dx, moi.dy - lech.dy));
+      expect(moi.dx).toBeGreaterThanOrEqual(dich.dx);                                       // no overshoot
+      lech = moi;
+    }
+    expect(lech).toEqual(dich);                                                              // reaches the target exactly
+    expect(buoc.length).toBeGreaterThan(3);                                                  // several frames, not one jump
+    expect(buoc[0]).toBeLessThanOrEqual(20);
+    expect(lamMuotLechNhan(dich, dich)).toEqual(dich);                                       // settled: stays exactly put
 
     // 5. Outward radial & right-angle-avoiding vertex label placement
     const placed = tinhViTriNhanDiem(

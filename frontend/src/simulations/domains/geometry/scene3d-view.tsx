@@ -2342,6 +2342,8 @@ function khoaGocVuong(d: GocVuongDonVi, cha: THREE.Matrix4): string {
  */
 /** Đại diện đang hiện của mỗi nhóm quan hệ (theo gốc cảnh) — chỉ để giữ ổn định giữa các khung. */
 const _daiDienGocVuong = new WeakMap<THREE.Object3D, Map<string, string>>();
+/** Độ "mở" tối thiểu (diện tích chiếu / diện tích không co) để dấu đại diện còn đọc được: 0.15 ≈ cos 81°. */
+export const DO_MO_TOI_THIEU = 0.15;
 
 export function datCoGocVuong(
   roots: readonly THREE.Object3D[], cam: THREE.Camera, hCss: number, tamNhin?: THREE.Vector3,
@@ -2438,7 +2440,9 @@ export function datCoGocVuong(
       const giuCu = cu !== undefined && hang.get(cu)!.thay === hang.get(tot)!.thay && hang.get(tot)!.mo <= hang.get(cu)!.mo * 1.25;
       const chon = giuCu ? cu! : tot;
       truoc.set(k, chon.node.uuid);
-      giu = [chon];
+      // Ngay cả dấu dễ đọc nhất cũng gần như nằm dọc tia nhìn (mặt phẳng dấu lệch < ~9° so với tia) ⇒ ô vuông bẹp thành
+      // một vạch, không còn đọc được là góc vuông: mặc định không vẽ (không bao giờ thay bằng góc vuông màn hình giả).
+      giu = hang.get(chon)!.mo >= DO_MO_TOI_THIEU ? [chon] : [];
     }
     for (const c of ds) if (!giu.includes(c)) anTheoNhom.add(c);
   }
@@ -2605,6 +2609,18 @@ export function dungLuoiNenSuPham(diem: Vec3[], heSoDiu = 1): THREE.Group {
  */
 const THUONG_GIU_HUONG = 10;
 
+/**
+ * Owner 2026-10-26 (P5): khi va chạm THẬT buộc nhãn đổi chỗ, nhãn TRƯỢT tới chỗ mới thay vì nhảy — mỗi khung đi
+ * `k` phần quãng còn lại của ĐỘ LỆCH so với điểm neo (điểm neo vẫn bám đúng điểm 3D), khớp hẳn khi còn < 0.5 px.
+ * Nhãn mới xuất hiện (chưa có lệch cũ) đặt thẳng vào chỗ.
+ */
+export function lamMuotLechNhan(
+  truoc: { dx: number; dy: number } | undefined, dich: { dx: number; dy: number }, k = 0.5,
+): { dx: number; dy: number } {
+  if (!truoc || Math.hypot(dich.dx - truoc.dx, dich.dy - truoc.dy) < 0.5) return dich;
+  return { dx: truoc.dx + (dich.dx - truoc.dx) * k, dy: truoc.dy + (dich.dy - truoc.dy) * k };
+}
+
 export function tinhViTriNhanDiem(
   diem: readonly { id: string; x: number; y: number; w: number; h: number }[],
   canh2d: readonly { ax: number; ay: number; bx: number; by: number }[],
@@ -2736,7 +2752,9 @@ export function Scene3DWorkspace({
   sceneRef.current = scene;
   //: Hướng nhãn điểm của khung trước (`tinhViTriNhanDiem`), để nhãn không nhảy qua lại khi xoay; xoá khi đổi cảnh.
   const huongNhanRef = useRef(new Map<string, number>());
-  useEffect(() => { huongNhanRef.current.clear(); }, [scene]);
+  //: Độ lệch nhãn ĐANG vẽ so với điểm neo (`lamMuotLechNhan`): nhãn trượt thay vì nhảy; xoá khi đổi cảnh.
+  const lechNhanRef = useRef(new Map<string, { dx: number; dy: number }>());
+  useEffect(() => { huongNhanRef.current.clear(); lechNhanRef.current.clear(); }, [scene]);
   const vaiKhoiTheoId = useMemo(() => vaiTroKhoi(scene), [scene]);
   const [webglFailed, setWebglFailed] = useState(false);
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
@@ -3052,7 +3070,10 @@ export function Scene3DWorkspace({
       }
       const viTriToiUu = tinhViTriNhanDiem(ungVienDiem2d, canh2d, gocVuongPts, huongNhanRef.current);
       for (const u of ungVienDiem2d) {
-        const pos = viTriToiUu.get(u.id) ?? { x: u.x - (u.w || 18) / 2, y: u.y - 1.4 * (u.h || 18), duoi: false };
+        const dich = viTriToiUu.get(u.id) ?? { x: u.x - (u.w || 18) / 2, y: u.y - 1.4 * (u.h || 18), duoi: false };
+        const lech = lamMuotLechNhan(lechNhanRef.current.get(u.id), { dx: dich.x - u.x, dy: dich.y - u.y });
+        lechNhanRef.current.set(u.id, lech);
+        const pos = { x: u.x + lech.dx, y: u.y + lech.dy, duoi: dich.duoi };
         u.el.style.transform = `translate(${Math.round(pos.x)}px,${Math.round(pos.y)}px)`;
         dat.push({
           el: u.el,
