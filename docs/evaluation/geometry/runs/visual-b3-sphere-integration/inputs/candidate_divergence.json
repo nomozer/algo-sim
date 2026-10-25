@@ -1,0 +1,21 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "visual-b3-sphere-integration",
+  "corrects": ["docs/evaluation/geometry/runs/hybrid-b3-v2-distance-bridge/inputs/candidate_divergence.json",
+               "docs/evaluation/geometry/runs/sphere-sample-source-authority/inputs/candidate_divergence.json"],
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "665886e4976317d6add4854508a4b848c168e8d88f770b65873c887817fdfe8f",
+  "current_product_commit": "028e82822eb6a7fdf50a9080f4e8bb4ebca38d2b",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Join of the two lines that each correct visual-closure-hybrid-readiness: B3 distance bridge (+ f2-role-aware-oracle: exact operands, ellipse rim) and sphere-sample-source-authority (curved cutting plane role, source-only samples, CACHE 129).",
+  "cache_version": 129,
+  "cache_version_hien_tai": 129,
+  "cache_decision": "Inherited BUMP 128 -> 129 from sphere-sample-source-authority/cache/decision.json; the B3/F2 line changes no /api/analyze envelope.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}

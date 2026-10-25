@@ -1,0 +1,15 @@
+{
+  "schema": "geometry-run/1",
+  "task_slug": "visual-b3-sphere-integration",
+  "wave": 1,
+  "date": "2026-10-25",
+  "authorization": "GO_LOCAL_F2_POLICY_REVIEW_B3_VERIFICATION_SPHERE_SOURCE_FIX",
+  "branch": "integration/visual-b3-sphere-candidate",
+  "merges": ["research/f2-oracle-b3-e2e@8ef86b65", "research/sphere-sample-source-authority@98d52e90"],
+  "product_commit": "028e82822eb6a7fdf50a9080f4e8bb4ebca38d2b",
+  "ALLOW_LIVE_AI": 0,
+  "cache_version": 129,
+  "default": "LLM_ONLY",
+  "hybrid_production": "NO-GO",
+  "independent_review": "PENDING_OWNER_APPOINTED_REVIEWER"
+}
