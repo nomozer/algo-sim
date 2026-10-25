@@ -377,10 +377,10 @@ export function Scene3DExplorer({
   };
   const ctThietDien = dangChon ? sectionDetails(day, dangChon.id) : null;
   const formula = dangChon ? coherentFormula(day, dangChon) : null;
-  const formulaInAnalysis = moBang.has("phan-tich") && formula && dangChon
+  const formulaInAnalysis = moBang.has("phan-tich") && dangChon
     ? [...phanTich.requestedResults, ...phanTich.derivedMeasurements].find((m) =>
-      m.formula === formula.text && (m.entityId === dangChon.id
-        || m.entityId === dangChon.annotation?.same_as || m.entityId === dangChon.alias_of))
+      m.entityId === dangChon.id
+        || m.entityId === dangChon.annotation?.same_as || m.entityId === dangChon.alias_of)
     : null;
   // Ô soi của một ĐẠI LƯỢNG: dữ kiện số trong chuỗi và đầu vào trực tiếp — backend phát, không tính.
   const nguon = dangChon ? quantitySources(day, dangChon.id) : null;
@@ -394,7 +394,7 @@ export function Scene3DExplorer({
   const giaTri = (id: string) => {
     const o = day.objects.find((x) => x.id === id);
     if (!o) return ten(id);
-    if (dapAnAn.has(id)) return o.notation || ten(id);
+    if (tapKetQua.has(id)) return o.notation || ten(id);
     const soDung = `${hienSo(o.exact, o.value)}${ghiChuGiaTriDung(day)}`;
     return `${o.notation || ten(id)} = ${soDung}`;
   };
@@ -558,7 +558,7 @@ export function Scene3DExplorer({
           onInteraction={setTt}
           onSelect={chon}
           fitToken={fitToken}
-          annotationView={{ ...xem, hiddenIds: dapAnAn }}
+          annotationView={{ ...xem, hiddenIds: tapKetQua }}
           stepsOpen={moBuoc}
           onStepsOpenChange={setMoBuoc}
           auxiliaryShown={hinhPhu}
@@ -632,14 +632,14 @@ export function Scene3DExplorer({
 
             {/* Công thức có một nơi trình bày; khi mở phân tích, ô soi giữ danh tính và nguồn. */}
             {formulaInAnalysis && (
-              <p><a href="#geo3d-bang-phan-tich">Xem công thức trong Phân tích toán học</a></p>
+              <p><a href="#geo3d-bang-phan-tich">Xem {formulaInAnalysis.formula ? "công thức" : "giá trị"} trong Phân tích toán học</a></p>
             )}
             {formula && !formulaInAnalysis && !dapAnAn.has(dangChon.id) && (
               <p className="geo3d-soi-cong-thuc" data-formula-entity={dangChon.id}>
                 {formula.text}
               </p>
             )}
-            {!formula && laDaiLuong && !dapAnAn.has(dangChon.id) && (
+            {!formula && !formulaInAnalysis && laDaiLuong && !dapAnAn.has(dangChon.id) && (
               <p className="geo3d-soi-cong-thuc" data-value-entity={dangChon.id}>
                 {giaTri(dangChon.id)}
               </p>

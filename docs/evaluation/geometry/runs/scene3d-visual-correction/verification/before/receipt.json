@@ -1,0 +1,3291 @@
+{
+  "phase": "before",
+  "url": "http://127.0.0.1:3157",
+  "source_head": "fe5f40b79d4f0ca46b08ef3b06536952a582fc74",
+  "baseline_source": "fe5f40b7 original product modules via Vite load plugin",
+  "provider_calls": 0,
+  "human_visual_review": "NOT_APPROVED",
+  "rows": [
+    {
+      "id": "cau-cat-mat-phang",
+      "width": 1440,
+      "source": "frontend/src/data/geometry-samples.json",
+      "scope": "LEGACY_OFFLINE_SAMPLE_NOT_CANONICAL_HYBRID",
+      "frames": [
+        {
+          "state": "default-unselected-mode-a",
+          "file": "cau-cat-mat-phang-1440-default-unselected-mode-a.png",
+          "sha256": "8de2f3070bca396740e173d32ceb832449d3cc69a4fd93e8aa70c8ec0bd55be8",
+          "camera": {
+            "position": [
+              12.012927496516692,
+              7.644473198809738,
+              8.820682555299038
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031798,
+              -0.4550836446143777,
+              0.7155417527999327,
+              0,
+              0.8479983040050877,
+              -0.28442727788398603,
+              0.447213595499958,
+              0,
+              0,
+              0.8438009243891595,
+              0.5366563145999493,
+              0,
+              -0.11566146811410676,
+              0.19828343649296687,
+              -16.748138534441676,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.02893509344619645,
+            0.15447794689067829,
+            -0.1673117470038272
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "I",
+              "id": "I"
+            },
+            {
+              "text": "(P)",
+              "id": "P"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "default-unselected",
+          "file": "cau-cat-mat-phang-1440-default-unselected.png",
+          "sha256": "8de2f3070bca396740e173d32ceb832449d3cc69a4fd93e8aa70c8ec0bd55be8",
+          "camera": {
+            "position": [
+              12.012927496516692,
+              7.644473198809738,
+              8.820682555299038
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031798,
+              -0.4550836446143777,
+              0.7155417527999327,
+              0,
+              0.8479983040050877,
+              -0.28442727788398603,
+              0.447213595499958,
+              0,
+              0,
+              0.8438009243891595,
+              0.5366563145999493,
+              0,
+              -0.11566146811410676,
+              0.19828343649296687,
+              -16.748138534441676,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.02893509344619645,
+            0.15447794689067829,
+            -0.1673117470038272
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "I",
+              "id": "I"
+            },
+            {
+              "text": "(P)",
+              "id": "P"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "quarter-unselected",
+          "file": "cau-cat-mat-phang-1440-quarter-unselected.png",
+          "sha256": "2ef96cc4dbbdf3bad0f90a2d7d81410e0c8b318c98e1b37c9f967b9d884d0f6a",
+          "camera": {
+            "position": [
+              7.53559539236864,
+              -11.819082674210675,
+              8.820682555298532
+            ],
+            "view_matrix_column_major": [
+              0.8472601415363801,
+              -0.2850601212698093,
+              0.44820863426020124,
+              0,
+              0.531178174028031,
+              0.45468750506433825,
+              -0.7149188906264922,
+              0,
+              5.551115123125783e-17,
+              0.8438009243891648,
+              0.5366563145999411,
+              0,
+              -0.10657086512558323,
+              0.0791868557705379,
+              -16.560879385203005,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.02893509344619645,
+            0.15447794689067829,
+            -0.1673117470038272
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "I",
+              "id": "I"
+            },
+            {
+              "text": "(P)",
+              "id": "P"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "half-unselected",
+          "file": "cau-cat-mat-phang-1440-half-unselected.png",
+          "sha256": "f894fa59ca291118db9824525fbb310d5a09acb125feab03b31e092099df6a31",
+          "camera": {
+            "position": [
+              -11.936517466192253,
+              -7.36509968976115,
+              8.820682555298005
+            ],
+            "view_matrix_column_major": [
+              0.532092216704177,
+              0.45437960715877596,
+              -0.7144347734545622,
+              0,
+              -0.8466864076639207,
+              0.2855506480437722,
+              -0.44897990431526713,
+              0,
+              -1.1102230246251563e-16,
+              0.8438009243891701,
+              0.5366563145999326,
+              0,
+              0.11539823990383721,
+              0.08391901254670188,
+              -16.568319898158993,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.02893509344619645,
+            0.15447794689067829,
+            -0.1673117470038272
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "I",
+              "id": "I"
+            },
+            {
+              "text": "(P)",
+              "id": "P"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "high-unselected",
+          "file": "cau-cat-mat-phang-1440-high-unselected.png",
+          "sha256": "22ab8ea04d2e58366da9e3707e479b7466e9bed0853799701c3b790c3bb232c3",
+          "camera": {
+            "position": [
+              0.9228638150117743,
+              0.7131833978691362,
+              16.547618226783904
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031612,
+              -0.8463168751672424,
+              0.05337481056341319,
+              0,
+              0.8479983040051001,
+              -0.5289480469795002,
+              0.03335925660213157,
+              0,
+              1.7347234759768074e-17,
+              0.06294211947279106,
+              0.9980171790085947,
+              0,
+              -0.11566146811410866,
+              0.11673002214640094,
+              -16.587856211282052,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.02893509344619645,
+            0.15447794689067829,
+            -0.1673117470038272
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "I",
+              "id": "I"
+            },
+            {
+              "text": "(P)",
+              "id": "P"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "low-unselected",
+          "file": "cau-cat-mat-phang-1440-low-unselected.png",
+          "sha256": "e32da426db343e0d29c873dc44b51946ec3d78559cbdc982e5520e6e8738688e",
+          "camera": {
+            "position": [
+              13.245232400038647,
+              8.4146637635108,
+              -6.299110842498104
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031725,
+              0.31046765124292364,
+              0.7891203717603643,
+              0,
+              0.8479983040050925,
+              0.19404228202682341,
+              0.49320023235021815,
+              0,
+              -2.7755575615628907e-17,
+              0.9305683372635913,
+              -0.3661182454924569,
+              0,
+              -0.11566146811410874,
+              0.11673635037579397,
+              -16.908416248701325,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.02893509344619645,
+            0.15447794689067829,
+            -0.1673117470038272
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "I",
+              "id": "I"
+            },
+            {
+              "text": "(P)",
+              "id": "P"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "default-selected-mode-b",
+          "file": "cau-cat-mat-phang-1440-default-selected-mode-b.png",
+          "sha256": "d5423fe9ff4927a2caf33881c8d499c126ff1d1be85185d95a5a9b3c7ee129ce",
+          "camera": {
+            "position": [
+              10.487442490105732,
+              11.2154864374335,
+              9.186686976129588
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031796,
+              -0.45508364461437806,
+              0.7155417527999332,
+              0,
+              0.8479983040050885,
+              -0.2844272778839857,
+              0.44721359549995787,
+              0,
+              -3.053113317719181e-16,
+              0.84380092438916,
+              0.5366563145999491,
+              0,
+              -3.952380074435332,
+              0.21091886609297258,
+              -17.450014572717457,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            -1.9987715236408883,
+            3.411602678841864,
+            -0.17797353418036882
+          ],
+          "selected": "r",
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "I",
+              "id": "I"
+            },
+            {
+              "text": "(P)",
+              "id": "P"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        }
+      ],
+      "checks": {
+        "mode_a_hidden": true,
+        "geometry_unchanged": true,
+        "no_duplicate_edge_owners": true,
+        "no_overflow": true,
+        "multiple_cameras": true
+      },
+      "pass": true
+    },
+    {
+      "id": "tru-truc-xien",
+      "width": 1440,
+      "source": "frontend/src/data/geometry-samples.json",
+      "scope": "LEGACY_OFFLINE_SAMPLE_NOT_CANONICAL_HYBRID",
+      "frames": [
+        {
+          "state": "default-unselected-mode-a",
+          "file": "tru-truc-xien-1440-default-unselected-mode-a.png",
+          "sha256": "37c07a9dacba1ee5d95c96686707aab7374cbf13ccf1e9a8e9b9bf19bb9609db",
+          "camera": {
+            "position": [
+              6.269803659485212,
+              4.807866292122197,
+              5.470681275289796
+            ],
+            "view_matrix_column_major": [
+              -0.52999894000318,
+              -0.455083644614378,
+              0.715541752799933,
+              0,
+              0.8479983040050881,
+              -0.2844272778839862,
+              0.4472135954999581,
+              0,
+              -5.551115123125784e-17,
+              0.8438009243891598,
+              0.5366563145999492,
+              0,
+              -0.7540731680476334,
+              -0.395392494854412,
+              -9.572325122950476,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.3804053626383981,
+            1.1269923565929383,
+            1.0536325526546877
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "O′",
+              "id": "O_prime"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "default-unselected",
+          "file": "tru-truc-xien-1440-default-unselected.png",
+          "sha256": "37c07a9dacba1ee5d95c96686707aab7374cbf13ccf1e9a8e9b9bf19bb9609db",
+          "camera": {
+            "position": [
+              6.269803659485212,
+              4.807866292122197,
+              5.470681275289796
+            ],
+            "view_matrix_column_major": [
+              -0.52999894000318,
+              -0.455083644614378,
+              0.715541752799933,
+              0,
+              0.8479983040050881,
+              -0.2844272778839862,
+              0.4472135954999581,
+              0,
+              -5.551115123125784e-17,
+              0.8438009243891598,
+              0.5366563145999492,
+              0,
+              -0.7540731680476334,
+              -0.395392494854412,
+              -9.572325122950476,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.3804053626383981,
+            1.1269923565929383,
+            1.0536325526546877
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "O′",
+              "id": "O_prime"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "quarter-unselected",
+          "file": "tru-truc-xien-1440-quarter-unselected.png",
+          "sha256": "c0480b0c9fd091fb36c23a8cd60688981d6461e79f3515fc22c24db630597dcb",
+          "camera": {
+            "position": [
+              4.078213389558501,
+              -4.751788216298207,
+              5.470681275289556
+            ],
+            "view_matrix_column_major": [
+              0.8464694870610159,
+              -0.28573580341409865,
+              0.4492710296936141,
+              0,
+              0.532437233366207,
+              0.4542631953474693,
+              -0.7142517356493061,
+              0,
+              0,
+              0.8438009243891633,
+              0.5366563145999435,
+              0,
+              -0.9220542245569902,
+              -1.2923118390181063,
+              -8.162071761313959,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.3804053626383981,
+            1.1269923565929383,
+            1.0536325526546877
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "O′",
+              "id": "O_prime"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "half-unselected",
+          "file": "tru-truc-xien-1440-half-unselected.png",
+          "sha256": "0f5adf4dfdb7b367ce3b2bab39795e7f33962db71257c3bcb9cac46c00d67dbd",
+          "camera": {
+            "position": [
+              -5.491650528362622,
+              -2.5814850723681744,
+              5.470681275289331
+            ],
+            "view_matrix_column_major": [
+              0.5339734912960663,
+              0.4537435679442741,
+              -0.7134347097964112,
+              0,
+              -0.8455012185639296,
+              0.28656024593300844,
+              -0.45056732555493195,
+              0,
+              5.551115123125783e-17,
+              0.8438009243891675,
+              0.5366563145999368,
+              0,
+              0.7497470312157914,
+              -1.3846138152751184,
+              -8.016942577570259,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.3804053626383981,
+            1.1269923565929383,
+            1.0536325526546877
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "O′",
+              "id": "O_prime"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "high-unselected",
+          "file": "tru-truc-xien-1440-high-unselected.png",
+          "sha256": "6ae0ff035a1e75cc0c0260160b3b0a247af7da2da7139813db0c2ce0dbea9a7a",
+          "camera": {
+            "position": [
+              0.8281760820304938,
+              1.4068490562129932,
+              9.267361684834583
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031732,
+              -0.8462514280616587,
+              0.05440261114244239,
+              0,
+              0.847998304005092,
+              -0.5289071425385273,
+              0.034001631964025905,
+              0,
+              0,
+              0.06415415088155142,
+              0.9979400006637007,
+              0,
+              -0.75407316804764,
+              0.8503979866066667,
+              -9.341161031101047,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.3804053626383981,
+            1.1269923565929383,
+            1.0536325526546877
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "O′",
+              "id": "O_prime"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "low-unselected",
+          "file": "tru-truc-xien-1440-low-unselected.png",
+          "sha256": "a49e873a6c673a31d714ca2794c4a51fe384454cfdc942b69e264d7cc3a5d89e",
+          "camera": {
+            "position": [
+              6.878404121356653,
+              5.188241580791811,
+              -1.9507694705325909
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031765,
+              0.30954021756482325,
+              0.7894846276561888,
+              0,
+              0.8479983040050901,
+              0.19346263597801264,
+              0.49342789228511363,
+              0,
+              1.9428902930940235e-16,
+              0.9309978851696501,
+              -0.36502457151490386,
+              0,
+              -0.7540731680476365,
+              -1.3167113490148705,
+              -8.702496214599657,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.3804053626383981,
+            1.1269923565929383,
+            1.0536325526546877
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "O′",
+              "id": "O_prime"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "default-selected-mode-b",
+          "file": "tru-truc-xien-1440-default-selected-mode-b.png",
+          "sha256": "7875a0b6084a7c426582ab7baea10ea373b0005163673a0407e952fc72d0f5a2",
+          "camera": {
+            "position": [
+              5.64436668083182,
+              6.681526201564491,
+              5.7758670790033175
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031796,
+              -0.45508364461437806,
+              0.7155417527999329,
+              0,
+              0.8479983040050881,
+              -0.2844272778839859,
+              0.44721359549995776,
+              0,
+              -8.326672684688672e-17,
+              0.8438009243891595,
+              0.5366563145999493,
+              0,
+              -2.674414529262117,
+              -0.40461471013749223,
+              -10.126504924513867,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            -0.6415704025919845,
+            2.7528155244246153,
+            1.0614142664354664
+          ],
+          "selected": "V",
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "O′",
+              "id": "O_prime"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        }
+      ],
+      "checks": {
+        "mode_a_hidden": true,
+        "geometry_unchanged": true,
+        "no_duplicate_edge_owners": true,
+        "no_overflow": true,
+        "multiple_cameras": true
+      },
+      "pass": true
+    },
+    {
+      "id": "non-duong-sinh",
+      "width": 1440,
+      "source": "frontend/src/data/geometry-samples.json",
+      "scope": "LEGACY_OFFLINE_SAMPLE_NOT_CANONICAL_HYBRID",
+      "frames": [
+        {
+          "state": "default-unselected-mode-a",
+          "file": "non-duong-sinh-1440-default-unselected-mode-a.png",
+          "sha256": "7e4531e3f77ea267eb2783c991709bb3095a80fd5b51bdcaa744cd03653ed7d8",
+          "camera": {
+            "position": [
+              7.031145835415031,
+              4.301258995270059,
+              6.1687126744997745
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031799,
+              -0.4550836446143779,
+              0.7155417527999329,
+              0,
+              0.8479983040050881,
+              -0.28442727788398614,
+              0.447213595499958,
+              0,
+              -8.326672684688674e-17,
+              0.8438009243891598,
+              0.5366563145999492,
+              0,
+              0.07903950670210025,
+              -0.7820105969394859,
+              -10.265138525439125,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.4540106221882007,
+            0.19054948700329205,
+            1.2358612645796554
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "default-unselected",
+          "file": "non-duong-sinh-1440-default-unselected.png",
+          "sha256": "7e4531e3f77ea267eb2783c991709bb3095a80fd5b51bdcaa744cd03653ed7d8",
+          "camera": {
+            "position": [
+              7.031145835415031,
+              4.301258995270059,
+              6.1687126744997745
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031799,
+              -0.4550836446143779,
+              0.7155417527999329,
+              0,
+              0.8479983040050881,
+              -0.28442727788398614,
+              0.447213595499958,
+              0,
+              -8.326672684688674e-17,
+              0.8438009243891598,
+              0.5366563145999492,
+              0,
+              0.07903950670210025,
+              -0.7820105969394859,
+              -10.265138525439125,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.4540106221882007,
+            0.19054948700329205,
+            1.2358612645796554
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "quarter-unselected",
+          "file": "non-duong-sinh-1440-quarter-unselected.png",
+          "sha256": "100add70a81ad9285559c4cf48180e5f5a3249d0221b2e656cd6f593c52b675b",
+          "camera": {
+            "position": [
+              4.580936531330323,
+              -6.376422632236344,
+              6.168712674499501
+            ],
+            "view_matrix_column_major": [
+              0.846687963532374,
+              -0.28554931940718215,
+              0.4489778152598374,
+              0,
+              0.5320897409360582,
+              0.4543804421254126,
+              -0.7144360862977969,
+              0,
+              5.551115123125783e-17,
+              0.8438009243891651,
+              0.5366563145999406,
+              0,
+              -0.4857947562976743,
+              -0.9997604134509293,
+              -9.922763915359141,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.4540106221882007,
+            0.19054948700329205,
+            1.2358612645796554
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "half-unselected",
+          "file": "non-duong-sinh-1440-half-unselected.png",
+          "sha256": "97cdf9ecf4cb872055813f1e0ac28d38a8f29c34075ba48ee51f087b98ea992c",
+          "camera": {
+            "position": [
+              -6.106813366334132,
+              -3.946143499676451,
+              6.168712674499174
+            ],
+            "view_matrix_column_major": [
+              0.5333490225105715,
+              0.4539550420623655,
+              -0.7137672169364281,
+              0,
+              -0.84589527731689,
+              0.28622512081599677,
+              -0.4500403982164824,
+              0,
+              -1.942890293094024e-16,
+              0.8438009243891738,
+              0.5366563145999271,
+              0,
+              -0.08096121040225188,
+              -1.3034613385002367,
+              -9.445245782574853,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.4540106221882007,
+            0.19054948700329205,
+            1.2358612645796554
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "high-unselected",
+          "file": "non-duong-sinh-1440-high-unselected.png",
+          "sha256": "fc6e5d7461704f336e1e30d2b3eb709f21fd418102bd3adf4849330e160a4500",
+          "camera": {
+            "position": [
+              0.9522883904654225,
+              0.5019730921765506,
+              10.408886823823844
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031737,
+              -0.8462638658133664,
+              0.054208790930332325,
+              0,
+              0.8479983040050917,
+              -0.5289149161333453,
+              0.033880494331457144,
+              0,
+              -3.4694469519536134e-18,
+              0.06392558885354424,
+              0.9979546678530681,
+              0,
+              0.0790395067020958,
+              0.4059940911113763,
+              -10.456226691757456,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.4540106221882007,
+            0.19054948700329205,
+            1.2358612645796554
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "low-unselected",
+          "file": "non-duong-sinh-1440-low-unselected.png",
+          "sha256": "fc5f5024e51868b388df2fc881c1193fc585e1ab381b64c4fbfc690d5be25886",
+          "camera": {
+            "position": [
+              7.710085511459396,
+              4.725596292797763,
+              -2.1215768923060243
+            ],
+            "view_matrix_column_major": [
+              -0.529998940003178,
+              0.30974279702207597,
+              0.7894051705483367,
+              0,
+              0.8479983040050891,
+              0.19358924813879666,
+              0.493378231592708,
+              0,
+              -1.1102230246251565e-16,
+              0.9309041855626154,
+              -0.3652634628620875,
+              0,
+              0.0790395067021001,
+              -1.3279832758884158,
+              -9.192822232689366,
+              0.9999999999999999
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.4540106221882007,
+            0.19054948700329205,
+            1.2358612645796554
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "default-selected-mode-b",
+          "file": "non-duong-sinh-1440-default-selected-mode-b.png",
+          "sha256": "a6416d427c47acc9279f9f9fa43a53347374acd6882fb64294c393768763fc41",
+          "camera": {
+            "position": [
+              6.34599863410135,
+              6.412116191464296,
+              6.5056429476547635
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031793,
+              -0.4550836446143779,
+              0.715541752799933,
+              0,
+              0.8479983040050881,
+              -0.2844272778839857,
+              0.4472135954999575,
+              0,
+              -8.32667268468867e-17,
+              0.8438009243891595,
+              0.5366563145999491,
+              0,
+              -2.0740911061099485,
+              -0.7777265920381806,
+              -10.899706891050657,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            -0.6851967397265497,
+            2.0176190828218648,
+            1.2322464172838457
+          ],
+          "selected": "l",
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        }
+      ],
+      "checks": {
+        "mode_a_hidden": true,
+        "geometry_unchanged": true,
+        "no_duplicate_edge_owners": true,
+        "no_overflow": true,
+        "multiple_cameras": true
+      },
+      "pass": true
+    },
+    {
+      "id": "cau-cat-mat-phang",
+      "width": 390,
+      "source": "frontend/src/data/geometry-samples.json",
+      "scope": "LEGACY_OFFLINE_SAMPLE_NOT_CANONICAL_HYBRID",
+      "frames": [
+        {
+          "state": "default-unselected-mode-a",
+          "file": "cau-cat-mat-phang-390-default-unselected-mode-a.png",
+          "sha256": "4d8a901807add3672530a676b052eb97ed6a49fe54c4ca04bad611cfa4632597",
+          "camera": {
+            "position": [
+              13.278405845841853,
+              8.437663005163877,
+              9.734331458898408
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031798,
+              -0.45508364461437806,
+              0.7155417527999328,
+              0,
+              0.8479983040050878,
+              -0.2844272778839862,
+              0.4472135954999578,
+              0,
+              2.7755575615628907e-17,
+              0.8438009243891593,
+              0.5366563145999494,
+              0,
+              -0.1175828949172335,
+              0.22884896392679743,
+              -18.498681849305637,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.2954399589031933,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 365,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.041826610901392794,
+            0.16480098332609072,
+            -0.1931029673069327
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "I",
+              "id": "I"
+            },
+            {
+              "text": "(P)",
+              "id": "P"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "default-unselected",
+          "file": "cau-cat-mat-phang-390-default-unselected.png",
+          "sha256": "4d8a901807add3672530a676b052eb97ed6a49fe54c4ca04bad611cfa4632597",
+          "camera": {
+            "position": [
+              13.278405845841853,
+              8.437663005163877,
+              9.734331458898408
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031798,
+              -0.45508364461437806,
+              0.7155417527999328,
+              0,
+              0.8479983040050878,
+              -0.2844272778839862,
+              0.4472135954999578,
+              0,
+              2.7755575615628907e-17,
+              0.8438009243891593,
+              0.5366563145999494,
+              0,
+              -0.1175828949172335,
+              0.22884896392679743,
+              -18.498681849305637,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.2954399589031933,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 365,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.041826610901392794,
+            0.16480098332609072,
+            -0.1931029673069327
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "I",
+              "id": "I"
+            },
+            {
+              "text": "(P)",
+              "id": "P"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "quarter-unselected",
+          "file": "cau-cat-mat-phang-390-quarter-unselected.png",
+          "sha256": "857112cb63ebde6390284e5b013026eecba45fc6b821327c1837fdbd9e29c443",
+          "camera": {
+            "position": [
+              8.33090730304339,
+              -13.061627754408184,
+              9.734331458897863
+            ],
+            "view_matrix_column_major": [
+              0.8473480148131112,
+              -0.2849848880838675,
+              0.44809034285075233,
+              0,
+              0.5310379852630877,
+              0.45473466281318203,
+              -0.7149930381786259,
+              0,
+              1.3877787807814454e-16,
+              0.8438009243891635,
+              0.5366563145999429,
+              0,
+              -0.12295727786851732,
+              0.09991969475846924,
+              -18.295962467187532,
+              0.9999999999999998
+            ],
+            "projection_matrix_column_major": [
+              2.2954399589031933,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 365,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.041826610901392794,
+            0.16480098332609072,
+            -0.1931029673069327
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "I",
+              "id": "I"
+            },
+            {
+              "text": "(P)",
+              "id": "P"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "half-unselected",
+          "file": "cau-cat-mat-phang-390-half-unselected.png",
+          "sha256": "1662099837e04856993ea81469b56fdc1af1815f440943694a414a797030d23e",
+          "camera": {
+            "position": [
+              -13.178345780788653,
+              -8.134254252614054,
+              9.734331458897344
+            ],
+            "view_matrix_column_major": [
+              0.5316770020418295,
+              0.4545195648857534,
+              -0.7146548332138234,
+              0,
+              -0.8469472034901657,
+              0.28532782047331023,
+              -0.44862954579935777,
+              0,
+              0,
+              0.8438009243891688,
+              0.5366563145999349,
+              0,
+              0.11733948487084189,
+              0.09690714394404121,
+              -18.291225742596403,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.2954399589031933,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 365,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.041826610901392794,
+            0.16480098332609072,
+            -0.1931029673069327
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "I",
+              "id": "I"
+            },
+            {
+              "text": "(P)",
+              "id": "P"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "high-unselected",
+          "file": "cau-cat-mat-phang-390-high-unselected.png",
+          "sha256": "0e4bee9aba17d1c967167493bce302f2e1a90f8532e8e701dd9569b6ea96e88e",
+          "camera": {
+            "position": [
+              1.0275157423385717,
+              0.7808566904742967,
+              18.26902373748109
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031605,
+              -0.8463225791720974,
+              0.05328429017088235,
+              0,
+              0.8479983040050998,
+              -0.5289516119825343,
+              0.033302681356799806,
+              0,
+              -1.040834085586084e-17,
+              0.06283537351339076,
+              0.9980239054428669,
+              0,
+              -0.11758289491723493,
+              0.134704248080012,
+              -18.313677487627427,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.2954399589031933,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 365,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.041826610901392794,
+            0.16480098332609072,
+            -0.1931029673069327
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "I",
+              "id": "I"
+            },
+            {
+              "text": "(P)",
+              "id": "P"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "low-unselected",
+          "file": "cau-cat-mat-phang-390-low-unselected.png",
+          "sha256": "ad46c2c0cba16503ea40611a06c58d2e469340cf3972299fe050039647ab260d",
+          "camera": {
+            "position": [
+              14.638747368878121,
+              9.28787645706151,
+              -6.968103221749077
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031783,
+              0.3105728706619578,
+              0.7890789666467469,
+              0,
+              0.8479983040050888,
+              0.19410804416372274,
+              0.49317435415421496,
+              0,
+              1.665334536937734e-16,
+              0.9305195103810155,
+              -0.36624232524419514,
+              0,
+              -0.11758289491723206,
+              0.13470667142417364,
+              -18.68368444648753,
+              1.0000000000000002
+            ],
+            "projection_matrix_column_major": [
+              2.2954399589031933,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 365,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.041826610901392794,
+            0.16480098332609072,
+            -0.1931029673069327
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "I",
+              "id": "I"
+            },
+            {
+              "text": "(P)",
+              "id": "P"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "default-selected-mode-b",
+          "file": "cau-cat-mat-phang-390-default-selected-mode-b.png",
+          "sha256": "1dd462c1f4eb9bafa7e77b6a453281908deb7d45ab925e64b4f3ba990c93ae4a",
+          "camera": {
+            "position": [
+              13.278405845841855,
+              8.437663005163877,
+              9.734331458898405
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031799,
+              -0.4550836446143779,
+              0.7155417527999329,
+              0,
+              0.8479983040050881,
+              -0.28442727788398614,
+              0.447213595499958,
+              0,
+              -8.326672684688674e-17,
+              0.8438009243891598,
+              0.5366563145999492,
+              0,
+              -0.11758289491723165,
+              0.22884896392679702,
+              -18.49868184930564,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.2954399589031933,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 365,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.04182661090139252,
+            0.16480098332609053,
+            -0.19310296730693224
+          ],
+          "selected": "r",
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "I",
+              "id": "I"
+            },
+            {
+              "text": "(P)",
+              "id": "P"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        }
+      ],
+      "checks": {
+        "mode_a_hidden": true,
+        "geometry_unchanged": true,
+        "no_duplicate_edge_owners": true,
+        "no_overflow": true,
+        "multiple_cameras": true
+      },
+      "pass": true
+    },
+    {
+      "id": "tru-truc-xien",
+      "width": 390,
+      "source": "frontend/src/data/geometry-samples.json",
+      "scope": "LEGACY_OFFLINE_SAMPLE_NOT_CANONICAL_HYBRID",
+      "frames": [
+        {
+          "state": "default-unselected-mode-a",
+          "file": "tru-truc-xien-390-default-unselected-mode-a.png",
+          "sha256": "4582f6e8932f36a63bf97eca0056ac54639b625b3aa9ca476bd0bdac2dfc2de5",
+          "camera": {
+            "position": [
+              7.029400039047826,
+              5.2611061973490525,
+              6.054324083627585
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031798,
+              -0.45508364461437784,
+              0.7155417527999327,
+              0,
+              0.8479983040050878,
+              -0.28442727788398603,
+              0.44721359549995776,
+              0,
+              -2.77555756156289e-17,
+              0.8438009243891592,
+              0.5366563145999493,
+              0,
+              -0.7358345629889942,
+              -0.4132771547236111,
+              -10.631758694009072,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.38193278779064854,
+            1.106439165313317,
+            1.0687236451847044
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "O′",
+              "id": "O_prime"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "default-unselected",
+          "file": "tru-truc-xien-390-default-unselected.png",
+          "sha256": "4582f6e8932f36a63bf97eca0056ac54639b625b3aa9ca476bd0bdac2dfc2de5",
+          "camera": {
+            "position": [
+              7.029400039047826,
+              5.2611061973490525,
+              6.054324083627585
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031798,
+              -0.45508364461437784,
+              0.7155417527999327,
+              0,
+              0.8479983040050878,
+              -0.28442727788398603,
+              0.44721359549995776,
+              0,
+              -2.77555756156289e-17,
+              0.8438009243891592,
+              0.5366563145999493,
+              0,
+              -0.7358345629889942,
+              -0.4132771547236111,
+              -10.631758694009072,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.38193278779064854,
+            1.106439165313317,
+            1.0687236451847044
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "O′",
+              "id": "O_prime"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "quarter-unselected",
+          "file": "tru-truc-xien-390-quarter-unselected.png",
+          "sha256": "8650fc6c14288834da2df469d0f4daf25f344ac832a2134ba5ef7ab1428fa4a5",
+          "camera": {
+            "position": [
+              4.553272822801649,
+              -5.5305783362405325,
+              6.054324083627384
+            ],
+            "view_matrix_column_major": [
+              0.8466652594498314,
+              -0.2855687067431138,
+              0.4490082985533956,
+              0,
+              0.5321258671035921,
+              0.45436825783615264,
+              -0.7144169285719579,
+              0,
+              8.326672684688677e-17,
+              0.8438009243891625,
+              0.5366563145999449,
+              0,
+              -0.9121341231068897,
+              -1.2954527833963438,
+              -9.244687321332316,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.38193278779064854,
+            1.106439165313317,
+            1.0687236451847044
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "O′",
+              "id": "O_prime"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "half-unselected",
+          "file": "tru-truc-xien-390-half-unselected.png",
+          "sha256": "e65bb670b64c7983769493e8f7f3a1da6f92c2fafed2dbb371ae7aea16dfc6ba",
+          "camera": {
+            "position": [
+              -6.24982053508384,
+              -3.073264995049737,
+              6.054324083627148
+            ],
+            "view_matrix_column_major": [
+              0.5331928545508516,
+              0.45400787371861406,
+              -0.7138502857444388,
+              0,
+              -0.8459937232958139,
+              0.2861413122942828,
+              -0.44990862354770583,
+              0,
+              1.110223024625156e-16,
+              0.8438009243891644,
+              0.5366563145999415,
+              0,
+              0.7323967556950653,
+              -1.3917884473482098,
+              -9.093215848654248,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.38193278779064854,
+            1.106439165313317,
+            1.0687236451847044
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "O′",
+              "id": "O_prime"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "high-unselected",
+          "file": "tru-truc-xien-390-high-unselected.png",
+          "sha256": "e8f1661228d1917aaa7491f2f71e2e428cd44a6b1471f0d13ca1838a7a4dbe65",
+          "camera": {
+            "position": [
+              0.9118408654836758,
+              1.4292132864137543,
+              10.834474228723613
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031689,
+              -0.8462695247902918,
+              0.05412037515326991,
+              0,
+              0.8479983040050948,
+              -0.5289184529939172,
+              0.03382523447079272,
+              0,
+              3.4694469519536134e-18,
+              0.06382132475697115,
+              0.9979613411882573,
+              0,
+              -0.7286957507824913,
+              0.8361299180431496,
+              -10.910079076608403,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.38255316335326534,
+            1.0984084725822574,
+            1.074588721710432
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "O′",
+              "id": "O_prime"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "low-unselected",
+          "file": "tru-truc-xien-390-low-unselected.png",
+          "sha256": "d87552e2b4fbd82708fb86c8083a74e4ee23595b078e83a565f9c8fc7908e02a",
+          "camera": {
+            "position": [
+              8.102526734256607,
+              5.923391954396825,
+              -2.4984330906021697
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031783,
+              0.3098130064126538,
+              0.7893776185407465,
+              0,
+              0.847998304005089,
+              0.19363312900790783,
+              0.49336101158796436,
+              0,
+              5.55111512312578e-17,
+              0.9308716949226459,
+              -0.3653462571203377,
+              0,
+              -0.7286957507824816,
+              -1.3315124398493976,
+              -10.231117082620539,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.38255316335326534,
+            1.0984084725822574,
+            1.074588721710432
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "O′",
+              "id": "O_prime"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "default-selected-mode-b",
+          "file": "tru-truc-xien-390-default-selected-mode-b.png",
+          "sha256": "d105470eefa4224222249c5adb389bd2403e05e653301557df13f90d31631d2a",
+          "camera": {
+            "position": [
+              7.380425019291011,
+              5.472078382543344,
+              6.322992613663735
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031797,
+              -0.45508364461437795,
+              0.7155417527999333,
+              0,
+              0.8479983040050885,
+              -0.2844272778839859,
+              0.44721359549995776,
+              0,
+              0,
+              0.8438009243891601,
+              0.536656314599949,
+              0,
+              -0.7286957507824804,
+              -0.4202279370185893,
+              -11.121464016318253,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.3825531633532649,
+            1.0984084725822574,
+            1.0745887217104324
+          ],
+          "selected": "V",
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "O′",
+              "id": "O_prime"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        }
+      ],
+      "checks": {
+        "mode_a_hidden": true,
+        "geometry_unchanged": true,
+        "no_duplicate_edge_owners": true,
+        "no_overflow": true,
+        "multiple_cameras": true
+      },
+      "pass": true
+    },
+    {
+      "id": "non-duong-sinh",
+      "width": 390,
+      "source": "frontend/src/data/geometry-samples.json",
+      "scope": "LEGACY_OFFLINE_SAMPLE_NOT_CANONICAL_HYBRID",
+      "frames": [
+        {
+          "state": "default-unselected-mode-a",
+          "file": "non-duong-sinh-390-default-unselected-mode-a.png",
+          "sha256": "a2203d084051e660ba4f48c2098f83d0c55942350a13199e32e042674ffcde10",
+          "camera": {
+            "position": [
+              7.915577057694135,
+              4.83923205947098,
+              6.817175704604326
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031802,
+              -0.4550836446143781,
+              0.7155417527999328,
+              0,
+              0.8479983040050879,
+              -0.28442727788398625,
+              0.4472135954999579,
+              0,
+              -1.1102230246251565e-16,
+              0.8438009243891595,
+              0.5366563145999494,
+              0,
+              0.09158687097294273,
+              -0.7736799029028005,
+              -11.48657664067335,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.4644518745559619,
+            0.18227882000962198,
+            1.228831817250699
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "default-unselected",
+          "file": "non-duong-sinh-390-default-unselected.png",
+          "sha256": "a2203d084051e660ba4f48c2098f83d0c55942350a13199e32e042674ffcde10",
+          "camera": {
+            "position": [
+              7.915577057694135,
+              4.83923205947098,
+              6.817175704604326
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031802,
+              -0.4550836446143781,
+              0.7155417527999328,
+              0,
+              0.8479983040050879,
+              -0.28442727788398625,
+              0.4472135954999579,
+              0,
+              -1.1102230246251565e-16,
+              0.8438009243891595,
+              0.5366563145999494,
+              0,
+              0.09158687097294273,
+              -0.7736799029028005,
+              -11.48657664067335,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.4644518745559619,
+            0.18227882000962198,
+            1.228831817250699
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "quarter-unselected",
+          "file": "non-duong-sinh-390-quarter-unselected.png",
+          "sha256": "953bf2df9ee8c1b542f4116fe7359745bc95e13379a637588c07655af4743dba",
+          "camera": {
+            "position": [
+              5.137912772224461,
+              -7.258503612455665,
+              6.817175704604083
+            ],
+            "view_matrix_column_major": [
+              0.8468212153354469,
+              -0.28543549678735486,
+              0.44879884851852336,
+              0,
+              0.5318776450066279,
+              0.4544519525469675,
+              -0.7145485242924038,
+              0,
+              -1.1102230246251563e-16,
+              0.8438009243891621,
+              0.5366563145999452,
+              0,
+              -0.4902577303976119,
+              -0.987155337428584,
+              -11.150922770427343,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.4644518745559619,
+            0.18227882000962198,
+            1.228831817250699
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "half-unselected",
+          "file": "non-duong-sinh-390-half-unselected.png",
+          "sha256": "9bb02deebad559629ab381af72600b565fd2663cb96b31c0c9a187c3a638344f",
+          "camera": {
+            "position": [
+              -6.970778921003143,
+              -4.500009401158039,
+              6.817175704603875
+            ],
+            "view_matrix_column_major": [
+              0.5328822658084972,
+              0.45411288172280845,
+              -0.7140153929994849,
+              0,
+              -0.8461893941587795,
+              0.2859746328844548,
+              -0.4496465484798021,
+              0,
+              -1.6653345369377348e-16,
+              0.8438009243891641,
+              0.5366563145999422,
+              0,
+              -0.09325576300046551,
+              -1.299930121125988,
+              -10.659137535762937,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.4644518745559619,
+            0.18227882000962198,
+            1.228831817250699
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "high-unselected",
+          "file": "non-duong-sinh-390-high-unselected.png",
+          "sha256": "8f355f0a9b1c5b8c2c6e94d4401230a4bdcf76e67e21d0e0cdde69f93096cedb",
+          "camera": {
+            "position": [
+              1.026894949839128,
+              0.5338057420615889,
+              11.620951619426629
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031673,
+              -0.8462764372010204,
+              0.054012178569897505,
+              0,
+              0.847998304005096,
+              -0.5289227732506201,
+              0.033757611606184804,
+              0,
+              1.3877787807814457e-17,
+              0.06369373419121005,
+              0.9979694926323046,
+              0,
+              0.09158687097293412,
+              0.411197209501227,
+              -11.670840031860655,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.4644518745559619,
+            0.18227882000962198,
+            1.228831817250699
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "low-unselected",
+          "file": "non-duong-sinh-390-low-unselected.png",
+          "sha256": "f68cb1c031e3c39f44e5f933e9fda3a9fcc6dfb8ed1fc57ab1c1c97c5ce4b655",
+          "camera": {
+            "position": [
+              8.683919851421559,
+              5.319446305550598,
+              -2.577205988056213
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031785,
+              0.3099425502247389,
+              0.7893267632328785,
+              0,
+              0.847998304005089,
+              0.19371409389046093,
+              0.49332922702054693,
+              0,
+              1.1102230246251565e-16,
+              0.9308117239207847,
+              -0.3654990213552112,
+              0,
+              0.09158687097294162,
+              -1.3230744371339551,
+              -10.420654949056235,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.4644518745559619,
+            0.18227882000962198,
+            1.228831817250699
+          ],
+          "selected": null,
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        },
+        {
+          "state": "default-selected-mode-b",
+          "file": "non-duong-sinh-390-default-selected-mode-b.png",
+          "sha256": "5089d4fe96d685103caa965b958d3e2cb71c46ffc5d4300a9ad47a3ea77fe688",
+          "camera": {
+            "position": [
+              7.915577057694139,
+              4.839232059470983,
+              6.817175704604327
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031799,
+              -0.45508364461437756,
+              0.7155417527999328,
+              0,
+              0.8479983040050879,
+              -0.28442727788398603,
+              0.4472135954999581,
+              0,
+              2.77555756156289e-17,
+              0.8438009243891597,
+              0.5366563145999492,
+              0,
+              0.09158687097294226,
+              -0.7736799029028045,
+              -11.486576640673354,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.464451874555962,
+            0.18227882000962226,
+            1.2288318172506987
+          ],
+          "selected": "l",
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "O",
+              "id": "O"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            },
+            {
+              "text": "A",
+              "id": "A"
+            }
+          ],
+          "final_canvas_labels": [],
+          "overflow": false
+        }
+      ],
+      "checks": {
+        "mode_a_hidden": true,
+        "geometry_unchanged": true,
+        "no_duplicate_edge_owners": true,
+        "no_overflow": true,
+        "multiple_cameras": true
+      },
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "forbidden": [],
+  "summary": {
+    "rows": 6,
+    "passed": 6,
+    "images": 42
+  }
+}

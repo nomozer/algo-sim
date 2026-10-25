@@ -45,7 +45,7 @@ import {
   canonicalEdgesOf,
   classifySolidEdgeVisibility,
   classifyWorldSegmentVisibility,
-  diemVanhCongBiChe,
+  updateCurvedSolidSilhouette,
   dongBoNetDayManHinh,
   taoGiuAmNetDay,
   type CurvedSolidVolumeMeta,
@@ -718,6 +718,7 @@ function updateNonCanonicalVisibility(
   camera: THREE.Camera,
   occluders: readonly WorldSolidOccluder[],
   worldSignature: string,
+  curvedVolumes: readonly CurvedSolidVolumeMeta[],
 ): void {
   const worldCam = camera.position.clone();
   const prioritySegments: { id: string; a: THREE.Vector3; b: THREE.Vector3 }[] = [];
@@ -749,12 +750,13 @@ function updateNonCanonicalVisibility(
     const seg = node.userData?.nonCanonicalSegment as NonCanonicalSegmentMeta | undefined;
     if (seg && (node as THREE.Group).isGroup) {
       if (node.userData.nonCanonicalSig === worldSignature) return;
-      if (occluders.length === 0) return;
+      if (occluders.length === 0 && curvedVolumes.length === 0) return;
       node.updateWorldMatrix(true, false);
       const worldA = seg.a.clone().applyMatrix4(node.matrixWorld);
       const worldB = seg.b.clone().applyMatrix4(node.matrixWorld);
       const res = classifyWorldSegmentVisibility(worldA, worldB, worldCam, occluders, {
         edge_id: seg.objectId,
+        curved_occluders: curvedVolumes,
         yield_colinear_canonical_edges: seg.yieldColinear,
       });
       const spanSig = `${res.spans.map((s) => `${s.visibility}:${s.t0}:${s.t1}`).join("|")}|${res.colinear_canonical_edge_ids.join(",")}`;
@@ -810,7 +812,7 @@ function updateNonCanonicalVisibility(
     const loop = node.userData?.nonCanonicalLoop as NonCanonicalLoopMeta | undefined;
     if (loop) {
       if (node.userData.nonCanonicalSig === worldSignature) return;
-      if (occluders.length === 0 && !(loop.yieldColinear && prioritySegments.length > 0)) return;
+      if (occluders.length === 0 && curvedVolumes.length === 0 && !(loop.yieldColinear && prioritySegments.length > 0)) return;
       node.updateWorldMatrix(true, false);
       const edgeCount = loop.closed ? loop.pts.length : Math.max(0, loop.pts.length - 1);
       const edgeResults = [];
@@ -821,6 +823,7 @@ function updateNonCanonicalVisibility(
         const worldB = localB.clone().applyMatrix4(node.matrixWorld);
         const res = classifyWorldSegmentVisibility(worldA, worldB, worldCam, occluders, {
           edge_id: `${loop.objectId}::border:${i}`,
+          curved_occluders: curvedVolumes,
           yield_colinear_canonical_edges: Boolean(loop.yieldColinear),
           priority_segments: loop.yieldColinear ? prioritySegments : undefined,
         });
@@ -911,9 +914,9 @@ export function updateCanonicalEdgeVisibility(
       candidate.updateWorldMatrix(true, false);
       curvedVolumes.push({
         ...curvedMeta,
-        anchor: curvedMeta.anchor.clone().applyMatrix4(candidate.matrixWorld),
-        top: curvedMeta.top ? curvedMeta.top.clone().applyMatrix4(candidate.matrixWorld) : null,
+        worldToLocal: candidate.matrixWorld.clone().invert(),
       });
+      updateCurvedSolidSilhouette(candidate, camera);
     }
   });
   for (const { candidate, source } of solidCandidates) {
@@ -954,6 +957,8 @@ export function updateCanonicalEdgeVisibility(
         : [source];
       audit = classifySolidEdgeVisibility(source, localCamera, {
         occluders: localOccluders,
+        curved_occluders: curvedVolumes.map(volume => ({ ...volume,
+          worldToLocal: volume.worldToLocal!.clone().multiply(candidate.matrixWorld) })),
         projected_edge_pixels: viewport
           ? (edge) => {
               const a = candidate.localToWorld(edge.a.clone()).project(camera);
@@ -1001,7 +1006,7 @@ export function updateCanonicalEdgeVisibility(
     ].map(khoa),
     renderSignature,
   ].join("|");
-  updateNonCanonicalVisibility(root, camera, occluders, worldSignature);
+  updateNonCanonicalVisibility(root, camera, occluders, worldSignature, curvedVolumes);
   if (curvedVolumes.length > 0) {
     const worldCam = camera.position.clone();
     root.traverse((node) => {
@@ -1011,7 +1016,8 @@ export function updateCanonicalEdgeVisibility(
       node.updateWorldMatrix(true, false);
       const flags = rim.midpoints.map((mp) => {
         const wPt = mp.clone().applyMatrix4(node.matrixWorld);
-        return diemVanhCongBiChe(wPt, worldCam, curvedVolumes);
+        return classifyWorldSegmentVisibility(wPt, wPt, worldCam, occluders,
+          { curved_occluders: curvedVolumes }).spans[0].visibility === "HIDDEN";
       });
       const flagSig = flags.map((f) => (f ? "1" : "0")).join("");
       if (node.userData.curvedRimFlagSig !== flagSig) {
@@ -1255,7 +1261,7 @@ export function datHienToThietDien(goc: THREE.Object3D, on: boolean): string[] {
 export function buildObject3D(
   o: SceneObject,
   /** `true` = tô sáng theo bước; một tầng = chuỗi nhân quả quanh vật đang chọn. */
-  noiBat: boolean | TangNhanManh,
+  noiBat: boolean | TangNhanManh | "hover",
   banKinhBam = banKinhBamDiem(KHOANG_CAM_MAC_DINH),
   /**
    * Điểm CÓ BIÊN của cả cảnh — chỉ mặt phẳng dùng tới, để cắt phần đáng vẽ ra
@@ -1289,10 +1295,11 @@ export function buildObject3D(
   const laThietDien = vaiMien === "section";
   // Giữ màu ngữ nghĩa của vùng tô; chỉ viền thiết diện đang xét chuyển sang xanh.
   const netMien = (macDinh: number) => boiCanh ? MAU_VAI_TRO.boi_canh
+    : laThietDien && noiBat === "hover" ? MAU.line
     : laThietDien && (noiBat === "dich" || noiBat === true) ? 0x2563eb : macDinh;
   const mauToMien = laThietDien ? MAU.polygon : vaiMien === "base" ? MAU.mesh : MAU.surface;
   const mauVienMien = laThietDien ? MAU.sectionOutline : vaiMien === "base" ? MAU.canh : MAU.planeOutline;
-  const doDucMien = laThietDien ? (noiBat ? DO_DUC.selectedSection : DO_DUC.section)
+  const doDucMien = laThietDien ? (noiBat && noiBat !== "hover" ? DO_DUC.selectedSection : DO_DUC.section)
     : vaiMien === "base" ? (noiBat ? DO_DUC.selectedBase : DO_DUC.base)
     : (noiBat ? DO_DUC.selectedPlane : DO_DUC.plane);
 
@@ -1835,6 +1842,39 @@ export function buildObject3D(
       radius: r,
       height: h,
     } satisfies CurvedSolidVolumeMeta;
+    if (o.curved_kind === "ball") {
+      // The perspective silhouette is presentation geometry, never an equator or a new scene entity.
+      const outline = new THREE.Mesh(new THREE.RingGeometry(0.994, 1, 128), new THREE.MeshBasicMaterial({
+        color: net(MAU.canh), side: THREE.DoubleSide, transparent: true, opacity: 0.9, depthWrite: false,
+        polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1,
+      }));
+      outline.name = `sphere_silhouette:${o.id}`;
+      outline.renderOrder = THU_TU_DUONG;
+      outline.raycast = () => {};
+      nhomCong.add(outline);
+    } else if (dinh) {
+      // Reuse the existing circle rim primitive for physical boundaries; no synthetic points/names enter the scene.
+      const normal = dinh.clone().sub(tam).toArray().map(String) as [string, string, string];
+      for (const center of o.curved_kind === "cylinder" ? [o.anchor, dinh.toArray().map(String) as [string, string, string]] : [o.anchor]) {
+        const rim = buildObject3D({ ...o, type: "circle3", render: "circle", center, normal,
+          surface_role: "BASE_REGION", formation_roles: [], fill_visible: false }, noiBat,
+          banKinhBam, diemNen, cameraPosition)!;
+        rim.raycast = () => {};
+        nhomCong.add(rim);
+      }
+      const outline = new THREE.Group();
+      outline.name = `curved_silhouette:${o.id}`;
+      for (let i = 0; i < 2; i++) {
+        const line = new THREE.Line(createSpanPoolGeometry(), new THREE.LineBasicMaterial({
+          color: net(MAU.canh), transparent: true, opacity: 1, depthWrite: false,
+        }));
+        line.name = `curved_generator:${o.id}:${i}`;
+        line.renderOrder = THU_TU_DUONG;
+        line.raycast = () => {};
+        outline.add(line);
+      }
+      nhomCong.add(outline);
+    }
     return v(nhomCong, `curved:${o.id}:${o.curved_kind}`);
   }
 
@@ -2534,6 +2574,7 @@ export function Scene3DWorkspace({
   const vaiKhoiTheoId = useMemo(() => vaiTroKhoi(scene), [scene]);
   const [webglFailed, setWebglFailed] = useState(false);
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
+  useEffect(() => { setHoveredSection(null); }, [scene]);
   /* regular-triangular-pyramid-w01 — XOAY HIỂN THỊ: đáy chóp nghiêng (§18.2) về nằm ngang. Đồng nhất thức cho mọi cảnh
      có đáy ngang (mọi họ trước), nên các họ ấy không đổi một điểm ảnh. Áp lên nhóm gốc + nhóm nhân chứng; vị trí THẾ GIỚI
      của nhãn/khung nhìn/lưới đi qua cùng phép quay (`xoay`). Toạ độ cảnh không đổi. */
@@ -3449,7 +3490,9 @@ export function Scene3DWorkspace({
         : o.render === "surface" && diemMp.length >= 3
           ? diemMp
           : diemNen;
-      const obj = buildObject3D(renderObject, o.id === hoveredSection ? "dich" : tang ? tang.get(o.id) ?? false : sangBuoc,
+      const emphasis = tang ? tang.get(o.id) ?? false : sangBuoc;
+      const obj = buildObject3D(renderObject,
+        o.id === hoveredSection && o.id !== tuongTac.selected_id && emphasis !== "dich" ? "hover" : emphasis,
         banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemChoVat, undefined, canonicalHighlights, khucToSang, xray,
         vaiKhoiTheoId.get(o.id) ?? vaiKhoiTheoId.get(o.parent ?? "") ?? "primary",
         coThietDienDong);

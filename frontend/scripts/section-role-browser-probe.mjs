@@ -24,6 +24,7 @@ const URL_ = arg("--url", "http://127.0.0.1:3142");
 const OUT = arg("--out");
 const CASES = JSON.parse(readFileSync(arg("--cases"), "utf8"));
 const FAULTS = (arg("--faults", "none,boundary_terracotta,boundary_magenta,fill_grey,fill_hidden,wrong_object")).split(",");
+const CAMERAS = arg("--cameras", "default").split(",");
 mkdirSync(OUT, { recursive: true });
 
 function initFault(fault) {
@@ -41,7 +42,9 @@ function initFault(fault) {
       const cobalt = b > 0.5 && g < 0.3 && r < 0.1, terracotta = r > 0.45 && g < 0.2 && b < 0.08;
       if (fault === "boundary_terracotta" && cobalt) return [0.578, 0.102, 0.032];
       if (fault === "boundary_magenta" && cobalt) return [1, 0, 1];
+      if (fault === "boundary_wrong_blue" && cobalt) return [0, 0.177888, 0.730461];
       if (fault === "fill_grey" && !line && terracotta) return [0.3, 0.3, 0.3];
+      if (fault === "fill_wrong_orange" && !line && terracotta) return [0.964686, 0.287441, 0.045186];
       return null;
     };
     const u3f = P.uniform3f, u3fv = P.uniform3fv;
@@ -55,12 +58,13 @@ function initFault(fault) {
 
 const browser = await chromium.launch({ channel: "chrome", headless: true, args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"] });
 const rows = [];
+const failures = [];
 try {
   for (const c of CASES) {
     const env = JSON.parse(readFileSync(c.envelope_file, "utf8"));
     const envelope = c.pick ? c.pick.split(".").reduce((o, k) => (/^\d+$/.test(k) ? o[Number(k)] : o[k]), env) : env;
     for (const width of [1440, 390]) {
-      for (const fault of FAULTS) {
+      for (const cameraName of CAMERAS) for (const fault of FAULTS) {
         const ctx = await browser.newContext({ viewport: { width, height: width < 600 ? 844 : 900 }, deviceScaleFactor: width < 600 ? 2 : 1 });
         await ctx.route("**/*", (r) => {
           const u = new URL(r.request().url());
@@ -85,6 +89,16 @@ try {
         await p.waitForTimeout(700);
         const scene = await p.evaluate(() => window.__ALGO_SIM_STORE__.getState().active.envelope.scene3d);
         const box = await p.locator(".geo3d-canvas canvas").boundingBox();
+        if (cameraName !== "default") {
+          const dx = cameraName === "quarter" ? 0.25 : cameraName === "half" ? 0.5 : 0;
+          const dy = cameraName === "high" ? 0.16 : cameraName === "low" ? -0.16 : 0;
+          await p.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.5);
+          await p.mouse.down();
+          await p.mouse.move(box.x + box.width * 0.5 + box.height * dx, box.y + box.height * (0.5 + dy), { steps: 16 });
+          await p.mouse.up();
+          await p.mouse.move(0, 0);
+          await p.waitForTimeout(700);
+        }
         if (fault === "wrong_object") {
           const cam0 = await p.evaluate(() => window.__geo3d_camera_snapshot);
           const pt = scene.objects.find((o) => o.id === c.wrong_point);
@@ -96,31 +110,44 @@ try {
           await p.evaluate(() => window.__geo3d_set_section_fill_visible(false));
           await p.waitForTimeout(200);
         }
+        await p.waitForFunction(() => {
+          const value = JSON.stringify(window.__geo3d_camera_snapshot);
+          window.__roleStableCount = window.__roleLastCamera === value ? (window.__roleStableCount ?? 0) + 1 : 0;
+          window.__roleLastCamera = value;
+          return window.__roleStableCount >= 4;
+        }, null, { polling: 'raf', timeout: 15000 });
         const selected = await p.evaluate(() => window.__geo3d_selected_id ?? null);
         const overlays = await p.evaluate(([sel, b]) => [...document.querySelectorAll(sel)].filter((e) => e.offsetParent !== null)
           .map((e) => { const r = e.getBoundingClientRect(); return { x: r.x - b.x, y: r.y - b.y, w: r.width, h: r.height }; }), [LOP_PHU_KHUNG, box]);
+        const cameraBefore = await p.evaluate(() => window.__geo3d_camera_snapshot);
         const png = await p.locator(".geo3d-canvas canvas").screenshot();
-        const file = `${c.id}-${width}-${fault}.png`;
+        const file = `${c.id}-${width}-${cameraName}-${fault}.png`;
         writeFileSync(join(OUT, file), png);
         const img = docPNG(png);
         const cam = await p.evaluate(() => window.__geo3d_camera_snapshot);
-        const world = sectionBoundaryWorld(scene, c.section, cam.position);
+        if (JSON.stringify(cameraBefore) !== JSON.stringify(cam)) throw Error('CAMERA_CHANGED_DURING_CAPTURE');
+        const world = sectionBoundaryWorld(scene, c.section, cam);
         const edges = (world ?? []).map((s) => ({ a: project(s.a, cam, { w: box.width, h: box.height }), b: project(s.b, cam, { w: box.width, h: box.height }), hidden: s.hidden }));
-        const res = world ? assessSectionRole(img, { scale: img.w / box.width, box: { w: box.width, h: box.height }, overlays, edges })
+        const otherBoundaries = scene.objects.filter(o => o.id !== c.section && ["section", "circle3", "ellipse3"].includes(o.type))
+          .map(o => sectionBoundaryWorld(scene, o.id, cam)).filter(Boolean)
+          .map(boundary => boundary.map(s => ({ a: project(s.a, cam, { w: box.width, h: box.height }), b: project(s.b, cam, { w: box.width, h: box.height }), hidden: s.hidden })));
+        const res = world ? assessSectionRole(img, { scale: img.w / box.width, box: { w: box.width, h: box.height }, overlays, edges, otherBoundaries })
           : { pass: false, reasons: ["BOUNDARY_SHAPE_UNSUPPORTED"] };
         const identity_ok = selected === c.item;
-        rows.push({ case: c.id, shape: c.shape, width, fault, file, sha256: createHash("sha256").update(png).digest("hex"),
+        rows.push({ case: c.id, shape: c.shape, width, cameraName, camera: cam, fault, file, sha256: createHash("sha256").update(png).digest("hex"),
           selected, identity_ok, pixel_pass: res.pass, reasons: res.reasons, edges: res.edges?.map(({ edge, hidden, visible, blue, coverage, pass }) => ({ edge, hidden, visible, blue, coverage, pass })),
           fill: res.fill, blue: res.blue, verdict: identity_ok && res.pass, errors });
-        console.log(`${c.id} ${width} ${fault}: identity=${identity_ok} pixel=${res.pass} ${res.reasons.join(",")}`);
+        console.log(`${c.id} ${width} ${cameraName} ${fault}: identity=${identity_ok} pixel=${res.pass} ${res.reasons.join(",")}`);
         await ctx.close();
       }
     }
   }
-} finally { await browser.close(); }
+} catch (e) { failures.push(e.message.split('\n')[0]); }
+finally { await browser.close(); }
 const baseline = rows.filter((r) => r.fault === "none"), faulted = rows.filter((r) => r.fault !== "none");
 const summary = { baseline_pass: baseline.filter((r) => r.verdict).length, baseline_total: baseline.length,
-  faults_detected: faulted.filter((r) => !r.verdict).length, faults_total: faulted.length };
-writeFileSync(join(OUT, "receipt.json"), JSON.stringify({ classification: "PROPOSED_ROLE_AWARE_ORACLE_EVIDENCE_NOT_OFFICIAL_SUITE", provider_calls: 0, url: URL_, summary, rows }, null, 2));
+  faults_detected: faulted.filter((r) => !r.verdict).length, faults_total: faulted.length,
+  expected_rows: CASES.length * 2 * CAMERAS.length * FAULTS.length, completed_rows: rows.length };
+writeFileSync(join(OUT, "receipt.json"), JSON.stringify({ classification: "PROPOSED_ROLE_AWARE_ORACLE_EVIDENCE_NOT_OFFICIAL_SUITE", provider_calls: 0, url: URL_, summary, failures, rows }, null, 2));
 console.log(JSON.stringify(summary));
-process.exitCode = summary.baseline_pass === summary.baseline_total && summary.faults_detected === summary.faults_total ? 0 : 1;
+process.exitCode = !failures.length && rows.length === summary.expected_rows && summary.baseline_pass === summary.baseline_total && summary.faults_detected === summary.faults_total ? 0 : 1;

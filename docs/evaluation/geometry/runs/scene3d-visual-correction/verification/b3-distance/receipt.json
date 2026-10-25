@@ -1,0 +1,346 @@
+{
+  "status": "B3_DISTANCE_BROWSER_PASS",
+  "fixtures_sha256": "c5b4c4a844051e8d47053b0ad6d8196abc461b3d32fc2ba64fbee1aaf780ae8b",
+  "harness_sha256": "f4653fddb07a9251d7fe29c0b0ba371bcfe5b4123c43e4d16eb302a9d543aba2",
+  "classification": "OFFLINE_AUTHORED_TYPEDFACTS_NOT_HOLDOUT",
+  "provider_calls": 0,
+  "browser": "Chrome headless / SwiftShader",
+  "url": "http://127.0.0.1:3156",
+  "human_visual_review": "NOT_APPROVED",
+  "rows": [
+    {
+      "id": "B3-D1-point-plane-right",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": true,
+        "tied_segments": [
+          "canh_ben_A_A_prime"
+        ]
+      },
+      "shown": "d(A′,(ABC))=12",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "89116a4e2da31145ea2a74f9205b7b61994038259578d3beb8ce1619c93095a0",
+        "mode_b": "96b534b280f78528a54f077faaf4d5a308348df33220fe04a1662425c20a6430"
+      },
+      "pass": true
+    },
+    {
+      "id": "B3-D2-skew-lines",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(AA′,BC)=24/5",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "a76371f4d8ddc2f8b33ce3ba6389b7fa81051eaed45a7f3880bf9dd3ee878473",
+        "mode_b": "a655e68e189d9fd04e85f826320cf2924dd5c76e3fe83ef1b799112fe739f307"
+      },
+      "pass": true
+    },
+    {
+      "id": "B3-D3-point-plane-oblique",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [],
+        "on_answer": {
+          "from": "D_prime",
+          "foot": [
+            "1/2",
+            "1/2",
+            "0"
+          ],
+          "on": "mp_q"
+        },
+        "rendered_ids": [
+          "kq_q"
+        ],
+        "provided_for_answer": true,
+        "tied_segments": []
+      },
+      "shown": "d(D′,(DEF))=24",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "5f402b382b6ced835f65abc6bd7448d27f9e69dedd55d230c40c484c154ebfe2",
+        "mode_b": "8a3c56657e5771acc522d2389569adc74ae98a9756d59f503e9834f1ea7418dc"
+      },
+      "pass": true
+    },
+    {
+      "id": "B3-R1-malformed-target",
+      "viewport": 1440,
+      "expected": "REFUSE",
+      "checks": {
+        "consumed": true,
+        "no_scene": true,
+        "reason_shown": true,
+        "code_hidden": true,
+        "no_answer": true
+      },
+      "pass": true
+    },
+    {
+      "id": "B3-R2-missing-height",
+      "viewport": 1440,
+      "expected": "REFUSE",
+      "checks": {
+        "consumed": true,
+        "no_scene": true,
+        "reason_shown": true,
+        "code_hidden": true,
+        "no_answer": true
+      },
+      "pass": true
+    },
+    {
+      "id": "B3-D1-point-plane-right",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": true,
+        "tied_segments": [
+          "canh_ben_A_A_prime"
+        ]
+      },
+      "shown": "d(A′,(ABC))=12",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "c6a040d22d7f8d42870cca2dcd01707444c6c540dcb0869712d886631a9c85d6",
+        "mode_b": "3c31019f5f20c5f4b495f6926cfaa964640949a419c63b3633f95400448ea3e0"
+      },
+      "pass": true
+    },
+    {
+      "id": "B3-D2-skew-lines",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(AA′,BC)=24/5",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "d386a728ea8d687e67890c8ddaaa2dac6c1cdde52da2714c79dc84632566c056",
+        "mode_b": "e2d0ffc61c91abdf9b54b2198a4de9fe0d13f1e65156e97211000e6af74d8fb3"
+      },
+      "pass": true
+    },
+    {
+      "id": "B3-D3-point-plane-oblique",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [],
+        "on_answer": {
+          "from": "D_prime",
+          "foot": [
+            "1/2",
+            "1/2",
+            "0"
+          ],
+          "on": "mp_q"
+        },
+        "rendered_ids": [
+          "kq_q"
+        ],
+        "provided_for_answer": true,
+        "tied_segments": []
+      },
+      "shown": "d(D′,(DEF))=24",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "537a227e5a4cf4b53861b8028ff8cef9a435dcfbca783f8c7d41144feeeedf81",
+        "mode_b": "fb897148cc396431df3dbea4ea18dea7a7c7c152a4a5fe68b7a1d94b2ac661fd"
+      },
+      "pass": true
+    },
+    {
+      "id": "B3-R1-malformed-target",
+      "viewport": 390,
+      "expected": "REFUSE",
+      "checks": {
+        "consumed": true,
+        "no_scene": true,
+        "reason_shown": true,
+        "code_hidden": true,
+        "no_answer": true
+      },
+      "pass": true
+    },
+    {
+      "id": "B3-R2-missing-height",
+      "viewport": 390,
+      "expected": "REFUSE",
+      "checks": {
+        "consumed": true,
+        "no_scene": true,
+        "reason_shown": true,
+        "code_hidden": true,
+        "no_answer": true
+      },
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "forbidden": []
+}

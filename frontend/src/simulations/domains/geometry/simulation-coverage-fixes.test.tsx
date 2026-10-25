@@ -248,7 +248,7 @@ describe("Session 1 P3 — Simulation Coverage & Visual Validation Fixes", () =>
     expect(evalSummary.metrics.negative_refused).toBe(5);
   });
 
-  it("preserves cone axial fill geometry with depth by default, explicit x-ray, and two-pass GPU boundary lines", () => {
+  it("preserves cone axial fill geometry with depth by default, explicit x-ray, and camera-classified boundary spans", () => {
     const rawScene = demo6b.route_b.scene3d as unknown as Scene3D;
     const charted = veKhongGian(rawScene);
     const enriched = withSubEntities(charted);
@@ -299,8 +299,7 @@ describe("Session 1 P3 — Simulation Coverage & Visual Validation Fixes", () =>
     expect(fillMat.opacity).toBe(DO_DUC_TO_THIET_DIEN);
     expect(fillMat.opacity).toBeGreaterThanOrEqual(0.32);
 
-    // 2. Boundary lines in curved-solid scenes (occluders.length === 0) must retain both
-    // LessEqualDepth visible solid pass (with polygonOffset) and GreaterDepth hidden dashed pass
+    // 2. Curved volumes participate in the shared classifier; solid and dashed spans have one owner each.
     const borderLines = axialGroup!.children.filter((c): c is THREE.Line => (c as THREE.Line).isLine);
     expect(borderLines.length).toBeGreaterThanOrEqual(2);
     const lineMats = borderLines.map((l) => l.material as THREE.Material);
@@ -315,7 +314,15 @@ describe("Session 1 P3 — Simulation Coverage & Visual Validation Fixes", () =>
     expect(visiblePass!.depthFunc).toBe(THREE.LessEqualDepth);
     expect(visiblePass!.polygonOffset).toBe(true);
     expect(hiddenPass).toBeDefined();
-    expect(hiddenPass!.depthFunc).toBe(THREE.GreaterDepth);
+    expect(hiddenPass!.depthTest).toBe(false);
+    expect(visiblePass!.depthTest).toBe(false);
+    const hiddenGeometry = () => axialGroup!.children.filter(c => c.userData.hidden)
+      .map(c => Array.from(((c as THREE.Line).geometry.getAttribute("position") as THREE.BufferAttribute).array));
+    const beforeOrbit = hiddenGeometry();
+    expect(beforeOrbit.length).toBeGreaterThan(0);
+    cam.position.set(-8, -3, 6); cam.lookAt(0, 0, 2); cam.updateMatrixWorld(true);
+    updateCanonicalEdgeVisibility(root, cam, "800x600@1");
+    expect(hiddenGeometry()).not.toEqual(beforeOrbit);
   });
 
   it("preserves BASE_REGION and CONSTRUCT_BASE polygon fill behavior and polyhedral CPU border classification", () => {

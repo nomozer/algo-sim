@@ -44,6 +44,7 @@ export interface VisibilityOptions {
   projected_edge_pixels?: number | ((edge: CanonicalEdge) => number);
   /** Additional objects may occlude this owner when classifying a whole scene. */
   occluders?: SceneObject[];
+  curved_occluders?: readonly CurvedSolidVolumeMeta[];
 }
 
 export function canonicalEdgesOf(o: SceneObject): CanonicalEdge[] {
@@ -222,7 +223,9 @@ export function classifySolidEdgeVisibility(
     const states: boolean[] = [];
     for (let index = 0; index < cells; index += 1) {
       const t = (index + 0.5) / cells;
-      states.push(pointIsHidden(edge.a.clone().lerp(edge.b, t), camera, triangles, excluded));
+      const point = edge.a.clone().lerp(edge.b, t);
+      states.push(pointIsHidden(point, camera, triangles, excluded)
+        || diemVanhCongBiChe(point, camera, options.curved_occluders ?? []));
       sampleCount += 1;
     }
     const hiddenCount = states.filter(Boolean).length;
@@ -267,16 +270,23 @@ export function classifyWorldSegmentVisibility(
     yield_colinear_canonical_edges?: boolean;
     priority_segments?: readonly { id: string; a: THREE.Vector3; b: THREE.Vector3 }[];
     projected_edge_pixels?: number;
+    curved_occluders?: readonly CurvedSolidVolumeMeta[];
   } = {},
 ): WorldSegmentVisibilityResult {
   const edgeId = options.edge_id ?? "segment";
   const ab = b.clone().sub(a);
   const len = ab.length();
-  if (len <= 1e-9 || (occluders.length === 0 && !options.priority_segments?.length)) {
+  const curved = options.curved_occluders ?? [];
+  if (occluders.length === 0 && curved.length === 0 && !options.priority_segments?.length) {
     return {
       spans: [{ edge_id: edgeId, t0: 0, t1: 1, visibility: "VISIBLE" }],
       colinear_canonical_edge_ids: [],
     };
+  }
+  if (len <= 1e-9) {
+    const triangles = occludingTriangles(occluders.map(o => o.solid), occluders.map(o => o.matrixWorld));
+    const hidden = pointIsHidden(a, camera, triangles, new Set()) || diemVanhCongBiChe(a, camera, curved);
+    return { spans: [{ edge_id: edgeId, t0: 0, t1: 1, visibility: hidden ? "HIDDEN" : "VISIBLE" }], colinear_canonical_edge_ids: [] };
   }
   const dir = ab.clone().divideScalar(len);
   const colinearTol = 1e-4 * Math.max(1, len);
@@ -324,7 +334,7 @@ export function classifyWorldSegmentVisibility(
   if (intervals.length === 0) {
     return { spans: [], colinear_canonical_edge_ids: colinearIds };
   }
-  if (occluders.length === 0) {
+  if (occluders.length === 0 && curved.length === 0) {
     return {
       spans: intervals.map(([t0, t1]) => ({ edge_id: edgeId, t0, t1, visibility: "VISIBLE" as const })),
       colinear_canonical_edge_ids: colinearIds,
@@ -340,6 +350,7 @@ export function classifyWorldSegmentVisibility(
 
   const sampleHidden = (t: number): boolean => {
     const point = a.clone().lerp(b, t);
+    if (diemVanhCongBiChe(point, camera, curved)) return true;
     const containingSurfaces = new Set<string>();
     const containingNormals: THREE.Vector3[] = [];
     for (const triangle of triangles) {
@@ -391,6 +402,8 @@ export interface CurvedSolidVolumeMeta {
   top: THREE.Vector3 | null;
   radius: number;
   height: number;
+  /** Inverse presentation transform; intersections stay in the primitive's original local frame. */
+  worldToLocal?: THREE.Matrix4;
 }
 
 export function diemVanhCongBiChe(
@@ -398,65 +411,89 @@ export function diemVanhCongBiChe(
   worldCam: THREE.Vector3,
   volumes: readonly CurvedSolidVolumeMeta[],
 ): boolean {
-  const dir = new THREE.Vector3().subVectors(pt, worldCam);
-  const rayLen = dir.length();
-  if (rayLen < 1e-6) return false;
+  // Parameterise from the boundary toward the eye; no fixed fraction of the ray may be discarded.
   for (const vol of volumes) {
+    const point = vol.worldToLocal ? pt.clone().applyMatrix4(vol.worldToLocal) : pt;
+    const eye = vol.worldToLocal ? worldCam.clone().applyMatrix4(vol.worldToLocal) : worldCam;
+    const dir = eye.clone().sub(point);
+    if (dir.lengthSq() < 1e-12) continue;
     const r = vol.radius;
     if (r <= 1e-6) continue;
     if (vol.kind === "ball") {
-      const toPt = new THREE.Vector3().subVectors(pt, vol.anchor);
-      const distPt = toPt.length();
-      if (Math.abs(distPt - r) <= 0.08 * r) {
-        const viewVec = new THREE.Vector3().subVectors(worldCam, pt);
-        if (viewVec.dot(toPt) < -0.15 * r * rayLen) return true;
-        continue;
-      }
-      const oc = new THREE.Vector3().subVectors(vol.anchor, worldCam);
-      const tStar = Math.max(0.01, Math.min(0.985, oc.dot(dir) / (rayLen * rayLen)));
-      const closest = worldCam.clone().addScaledVector(dir, tStar);
-      if (closest.distanceTo(vol.anchor) < r * 0.995) return true;
+      const rel = point.clone().sub(vol.anchor);
+      const t = Math.max(0, Math.min(1, -rel.dot(dir) / dir.lengthSq()));
+      if (rel.addScaledVector(dir, t).lengthSq() < r * r * (1 - 1e-10)) return true;
       continue;
     }
     const h = vol.height;
     if (!vol.top || h <= 1e-6) continue;
     const axis = new THREE.Vector3().subVectors(vol.top, vol.anchor).normalize();
-    const camRel = new THREE.Vector3().subVectors(worldCam, vol.anchor);
-    const ptRel = new THREE.Vector3().subVectors(pt, vol.anchor);
-    const zCam = camRel.dot(axis);
+    const ptRel = new THREE.Vector3().subVectors(point, vol.anchor);
     const zPt = ptRel.dot(axis);
-    const dz = zPt - zCam;
-    let tLo = 0.005;
-    let tHi = 0.992;
-    const zMin = 0.002 * h;
-    const zMax = 0.998 * h;
-    if (Math.abs(dz) < 1e-7) {
-      if (zCam <= zMin || zCam >= zMax) continue;
+    const dz = dir.dot(axis);
+    let tLo = 0;
+    let tHi = 1;
+    if (Math.abs(dz) < h * 1e-12) {
+      if (zPt <= 0 || zPt >= h) continue;
     } else {
-      const t0 = (zMin - zCam) / dz;
-      const t1 = (zMax - zCam) / dz;
+      const t0 = -zPt / dz;
+      const t1 = (h - zPt) / dz;
       tLo = Math.max(tLo, Math.min(t0, t1));
       tHi = Math.min(tHi, Math.max(t0, t1));
     }
-    if (tLo > tHi) continue;
-    const camPerp = camRel.clone().addScaledVector(axis, -zCam);
+    if (tLo >= tHi) continue;
     const ptPerp = ptRel.clone().addScaledVector(axis, -zPt);
-    const dPerp = new THREE.Vector3().subVectors(ptPerp, camPerp);
-    const dPerpSq = dPerp.lengthSq();
-    const tCrit = dPerpSq > 1e-9
-      ? Math.max(tLo, Math.min(tHi, -camPerp.dot(dPerp) / dPerpSq))
-      : tHi;
-    const samples = [tLo, (tLo + tHi) * 0.5, tCrit, tHi];
-    for (const t of samples) {
-      const z = zCam + t * dz;
-      if (z <= zMin || z >= zMax) continue;
-      const rLimit = vol.kind === "cone" ? r * (1 - z / h) : r;
-      if (rLimit <= 1e-6) continue;
-      const pPerp = camPerp.clone().addScaledVector(dPerp, t);
-      if (pPerp.length() < rLimit * 0.996) return true;
-    }
+    const dPerp = dir.clone().addScaledVector(axis, -dz);
+    const r0 = vol.kind === "cone" ? r * (1 - zPt / h) : r;
+    const dr = vol.kind === "cone" ? -r * dz / h : 0;
+    // Minimise the radial quadratic on the axial interval; a cone's radius changes along the ray.
+    const qa = dPerp.lengthSq() - dr * dr;
+    const qb = 2 * (ptPerp.dot(dPerp) - r0 * dr);
+    const at = (t: number) => ptPerp.clone().addScaledVector(dPerp, t).lengthSq() - (r0 + dr * t) ** 2;
+    let minimum = Math.min(at(tLo), at(tHi));
+    if (qa > 0) minimum = Math.min(minimum, at(Math.max(tLo, Math.min(tHi, -qb / (2 * qa)))));
+    if (minimum < -r * r * 1e-10) return true;
   }
   return false;
+}
+
+/** Camera tangent contours of certified primitives. Presentation only; never creates backend facts or entities. */
+export function updateCurvedSolidSilhouette(candidate: THREE.Object3D, camera: THREE.Camera): void {
+  const meta = candidate.userData.curvedSolidVolume as CurvedSolidVolumeMeta | undefined;
+  if (!meta) return;
+  const eye = candidate.worldToLocal(camera.position.clone());
+  const { anchor, top, radius: r, height: h, kind } = meta;
+  if (kind === "ball") {
+    const outline = candidate.getObjectByName(`sphere_silhouette:${meta.id}`);
+    if (!outline) return;
+    const towardEye = eye.clone().sub(anchor), distance = towardEye.length();
+    outline.visible = distance > r;
+    if (outline.visible) {
+      towardEye.divideScalar(distance);
+      outline.position.copy(anchor).addScaledVector(towardEye, r * r / distance);
+      outline.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), towardEye);
+      outline.scale.setScalar(r * Math.sqrt(1 - r * r / (distance * distance)));
+    }
+  } else if (top && h > 0) {
+    const outline = candidate.getObjectByName(`curved_silhouette:${meta.id}`);
+    if (!outline) return;
+    const axis = top.clone().sub(anchor).normalize(), relative = eye.clone().sub(anchor);
+    const axial = relative.dot(axis), radial = relative.addScaledVector(axis, -axial);
+    const distance = radial.length(), cosine = distance > 0 ? r * (kind === "cone" ? 1 - axial / h : 1) / distance : Infinity;
+    outline.visible = Math.abs(cosine) < 1;
+    if (outline.visible) {
+      radial.divideScalar(distance);
+      const across = new THREE.Vector3().crossVectors(axis, radial);
+      outline.children.forEach((child, i) => {
+        const u = radial.clone().multiplyScalar(cosine).addScaledVector(across, (i ? -1 : 1) * Math.sqrt(1 - cosine * cosine));
+        const a = anchor.clone().addScaledVector(u, r);
+        const b = kind === "cone" ? top : top.clone().addScaledVector(u, r);
+        const pos = (child as THREE.Line).geometry.getAttribute("position") as THREE.BufferAttribute;
+        pos.setXYZ(0, a.x, a.y, a.z); pos.setXYZ(1, b.x, b.y, b.z); pos.needsUpdate = true;
+        (child as THREE.Line).geometry.computeBoundingSphere();
+      });
+    }
+  }
 }
 
 export interface FatLineSyncSummary {

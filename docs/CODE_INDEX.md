@@ -1,5 +1,22 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Scene3D visual correction (local candidate, 2026-10-25)
+
+`frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts` reuses `diemVanhCongBiChe` for bounded ray/ball,
+cylinder and cone intersections, including axial caps and cone slope. `classifyWorldSegmentVisibility` and
+`classifySolidEdgeVisibility` accept `curved_occluders`; inverse presentation matrices preserve local primitive geometry.
+`updateCurvedSolidSilhouette` updates camera-tangent sphere contours and cylinder/cone generators only; no facts enter
+the backend. `scene3d-view.tsx` reuses its existing circle rim and span pools for physical base rims, distinguishes
+hover from selection, and resets hover on scene replacement. `Scene3DExplorer.tsx` keeps final answers in the analysis
+panel, with identity-based inspector links and no duplicate final canvas labels.
+
+`frontend/scripts/section-role-oracle.mjs` remains a supplemental proposal: per-edge checks, CIE76 against declared
+palette alpha composites, per-other-section ownership, cone normals and inverse camera-model transforms.
+`section-role-browser-probe.mjs` records stable camera frames and explicit incomplete-run failures.
+Regressions extend `scene3d-unified-materials.test.ts`, `visual-closure.test.tsx`, `simulation-coverage-fixes.test.tsx`,
+`scene3d-focus-mode.test.tsx` and `section-role-oracle.node-test.mjs`. No new product module or dependency.
+Run: `docs/evaluation/geometry/runs/scene3d-visual-correction/plan.md`.
+
 ## Sphere source authority + integration — local, 2026-10-25
 
 Runs `docs/evaluation/geometry/runs/sphere-sample-source-authority/` and `docs/evaluation/geometry/runs/visual-b3-sphere-integration/`.

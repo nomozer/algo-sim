@@ -3,6 +3,7 @@ import * as THREE from "three";
 import { buildObject3D, canonicalEdgeMaterial, disposeScene3DObject, updateCanonicalEdgeVisibility } from "./scene3d-view";
 import * as roles from "./scene3d-roles";
 import type { Scene3D, SceneObject } from "./scene3d-model";
+import { diemVanhCongBiChe, classifyWorldSegmentVisibility, type CurvedSolidVolumeMeta } from "./scene3d-edge-visibility";
 
 const common = { label: "Miền", origin: "derived", producer: null, depends: [] } as const;
 const polygon: SceneObject = { ...common, depends: [], id: "polygon", type: "section", render: "polygon", closed: true,
@@ -24,7 +25,118 @@ const shell = (o: SceneObject, selected = false) => {
   return built.children.find(n => n instanceof THREE.Mesh && (n.material as THREE.Material).colorWrite !== false) as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
 };
 
+describe("curved visibility follows the ray and finite solid", () => {
+  const v = (x: number, y: number, z: number) => new THREE.Vector3(x, y, z);
+  const volume = (kind: CurvedSolidVolumeMeta["kind"]): CurvedSolidVolumeMeta => ({
+    id: "volume", kind, anchor: v(0, 0, 0), top: kind === "ball" ? null : v(0, 0, 2), radius: 1, height: 2,
+  });
+
+  it("hides a sphere point just beyond the perspective silhouette", () => {
+    expect(diemVanhCongBiChe(v(1, 0, 0), v(0.9, 10, 0), [volume("ball")])).toBe(true);
+    expect(diemVanhCongBiChe(v(1, 0, 0), v(1.1, 10, 0), [volume("ball")])).toBe(false);
+    expect(diemVanhCongBiChe(v(1, 0, 0), v(1, 10, 0), [volume("ball")])).toBe(false);
+  });
+
+  it("detects a small sphere far along the eye ray without clipping off its end", () => {
+    expect(diemVanhCongBiChe(v(-1, 0, 0), v(10000, 0, 0), [volume("ball")])).toBe(true);
+    expect(diemVanhCongBiChe(v(-2, 0, 0), v(10000, 0, 0), [volume("ball")])).toBe(true);
+    expect(diemVanhCongBiChe(v(1, 0, 0), v(10000, 0, 0), [volume("ball")])).toBe(false);
+  });
+
+  it.each(["cylinder", "cone"] as const)("%s side classification matches the independent outward normal across camera rotations", kind => {
+    const solid = volume(kind);
+    const p = v(kind === "cone" ? 0.5 : 1, 0, 1);
+    const normal = v(1, 0, kind === "cone" ? 0.5 : 0);
+    for (const z of [-4, 1, 6]) for (let i = 0; i < 48; i += 1) {
+      const eye = v(8 * Math.cos(i * Math.PI / 24), 8 * Math.sin(i * Math.PI / 24), z);
+      const facing = normal.dot(eye.clone().sub(p));
+      if (Math.abs(facing) < 1e-8) continue;
+      expect(diemVanhCongBiChe(p, eye, [solid]), `${kind}, camera=${eye.toArray()}`).toBe(facing < 0);
+    }
+  });
+
+  it("respects cylinder caps, including axial rays and bottom views", () => {
+    const solid = volume("cylinder");
+    expect(diemVanhCongBiChe(v(0, 0, 0), v(0, 0, 5), [solid])).toBe(true);
+    expect(diemVanhCongBiChe(v(0, 0, 2), v(0, 0, 5), [solid])).toBe(false);
+    expect(diemVanhCongBiChe(v(0, 0, 0), v(0, 0, -5), [solid])).toBe(false);
+    expect(diemVanhCongBiChe(v(1, 0, 2), v(-5, 0, 5), [solid])).toBe(false);
+    expect(diemVanhCongBiChe(v(1, 0, 0), v(-5, 0, -5), [solid])).toBe(false);
+  });
+
+  it("splits a line partly covered by a curved solid and changes visibility with camera", () => {
+    const ball = { ...volume("ball"), anchor: v(0, 0, 3) };
+    const spans = classifyWorldSegmentVisibility(v(-3, 0, 0), v(3, 0, 0), v(0, 0, 10), [], { curved_occluders: [ball] }).spans;
+    expect(spans.map(s => s.visibility)).toEqual(["VISIBLE", "HIDDEN", "VISIBLE"]);
+    const reverse = classifyWorldSegmentVisibility(v(-3, 0, 0), v(3, 0, 0), v(0, 0, -10), [], { curved_occluders: [ball] }).spans;
+    expect(reverse.map(s => s.visibility)).toEqual(["VISIBLE"]);
+  });
+
+  it("uses the same curved occluder for a degenerate sampled rim segment", () => {
+    const ball = { ...volume("ball"), anchor: v(0, 0, 3) };
+    expect(classifyWorldSegmentVisibility(v(0, 0, 0), v(0, 0, 0), v(0, 0, 10), [], { curved_occluders: [ball] }).spans[0].visibility).toBe("HIDDEN");
+  });
+});
+
 describe("shared semantic material behavior", () => {
+  it("sphere outline is the camera tangent circle rather than an equator", () => {
+    const input: SceneObject = { ...common, depends: [], id: "sphere", type: "curved_solid", render: "curved_solid",
+      curved_kind: "ball", anchor: ["1", "2", "3"], radius_sq: "4", height_sq: "0" };
+    const root = new THREE.Group(), built = buildObject3D(input, false)!;
+    root.add(built);
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    for (const eye of [[9, 4, 5], [-7, -4, 5], [7, 4, -5]]) {
+      camera.position.set(...eye as [number, number, number]); camera.lookAt(1, 2, 3); camera.updateMatrixWorld();
+      updateCanonicalEdgeVisibility(root, camera);
+      const outline = built.getObjectByName("sphere_silhouette:sphere") as THREE.Mesh;
+      expect(outline).toBeDefined();
+      built.updateMatrixWorld(true);
+      const point = new THREE.Vector3(1, 0, 0).applyMatrix4(outline.matrixWorld);
+      const radial = point.clone().sub(new THREE.Vector3(1, 2, 3));
+      expect(radial.length()).toBeCloseTo(2, 5);
+      expect(radial.dot(camera.position.clone().sub(point))).toBeCloseTo(0, 5);
+    }
+  });
+  it.each(["cylinder", "cone"] as const)("%s renders its physical rims and camera-tangent generators without inventing scene entities", kind => {
+    const input: SceneObject = { ...common, depends: [], id: kind, type: "curved_solid", render: "curved_solid",
+      curved_kind: kind, anchor: ["0", "0", "0"], apex_or_top: ["0", "0", "3"], radius_sq: "4", height_sq: "9" };
+    const before = JSON.stringify(input), root = new THREE.Group();
+    const built = buildObject3D(input, false)!;
+    root.add(built);
+    const rims: THREE.Object3D[] = [];
+    built.traverse(n => { if (n.userData.curvedRimLoop) rims.push(n); });
+    expect(rims).toHaveLength(kind === "cylinder" ? 2 : 1);
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    for (const eye of [[7, 4, 5], [-7, -4, 5], [7, 4, -5]]) {
+      camera.position.set(...eye as [number, number, number]); camera.lookAt(0, 0, 1); camera.updateMatrixWorld();
+      updateCanonicalEdgeVisibility(root, camera);
+      const silhouette = built.getObjectByName(`curved_silhouette:${kind}`)!;
+      expect(silhouette).toBeDefined();
+      expect(silhouette.visible).toBe(true);
+      for (const line of silhouette.children as THREE.Line[]) {
+        const p = new THREE.Vector3().fromBufferAttribute(line.geometry.getAttribute("position"), 0);
+        expect(Math.hypot(p.x, p.y)).toBeCloseTo(2, 5);
+        const normal = new THREE.Vector3(p.x / 2, p.y / 2, kind === "cone" ? 2 / 3 : 0);
+        expect(normal.dot(camera.position.clone().sub(p))).toBeCloseTo(0, 5);
+      }
+    }
+    expect(JSON.stringify(input)).toBe(before);
+  });
+  it("hover is distinct from selection and preserves the neutral section fill", () => {
+    for (const o of [polygon, circle, ellipse]) {
+      const hovered = buildObject3D(o, "hover")!;
+      const material = (hovered.getObjectByName(`section_fill:${o.id}`) as THREE.Mesh).material as THREE.MeshBasicMaterial;
+      expect(material.color.getHex()).toBe(0xc85a32);
+      expect(material.opacity).toBe(fill(o).material.opacity);
+      const colors: number[] = [];
+      hovered.traverse(n => {
+        const m = (n as THREE.Mesh).material as THREE.MeshBasicMaterial | undefined;
+        if (m?.color && m.colorWrite !== false && !n.name.startsWith("section_fill:")) colors.push(m.color.getHex());
+      });
+      expect(colors).toContain(0x0f766e);
+      expect(colors).not.toContain(0x2563eb);
+    }
+  });
   it("uses one section language for polygon, circle and ellipse, including selection and explicit X-ray", () => {
     for (const selected of [false, true]) {
       const materials = [polygon, circle, ellipse].map(o => fill(o, selected).material);

@@ -30,6 +30,22 @@ const officialScene = (family: string): Scene3D => JSON.parse(readFileSync(new U
   `../../../../../docs/evaluation/geometry/runs/visual-hybrid-final-corrections/visual/inputs/fixtures/${family}_positive.json`, import.meta.url), "utf8")).envelope.scene3d;
 
 describe("Owner F1: one formula region per selected quantity", () => {
+  it("a final distance without a formula appears only in analysis after selection", () => {
+    const data = JSON.parse(readFileSync(new URL(
+      "../../../../../docs/evaluation/geometry/runs/b3-distance-browser-e2e/fixtures.json", import.meta.url), "utf8"));
+    const scene = data.fixtures.find((f: { expected: string }) => f.expected === "SERVE").envelope.scene3d as Scene3D;
+    const result = scene.objects.find(o => tapKetQuaCuoi(scene).has(o.id) && o.value != null)!;
+    expect(result).toBeDefined();
+    expect(result.formula?.references).toEqual([]);
+    learner.analysis = true;
+    learner.selected = result.id;
+    const html = renderToString(<Scene3DExplorer scene={scene} />);
+    expect(html).toContain(`data-analysis-item="${result.id}"`);
+    expect(html).not.toContain(`data-value-entity="${result.id}"`);
+    expect(html).not.toContain(`data-formula-entity="${result.id}"`);
+    expect(html).not.toContain(`data-ann-id="${result.id}"`);
+    expect(html).toContain('href="#geo3d-bang-phan-tich"');
+  });
   it.each(families)("%s keeps the explanation in analysis and links the inspector to it", family => {
     const scene = officialScene(family);
     learner.analysis = true;

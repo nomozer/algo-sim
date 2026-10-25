@@ -169,7 +169,7 @@ describe("E · không còn thẻ lời giải lặp dưới mô phỏng", () => 
   it("đại lượng KHÔNG có công thức vẫn hiện giá trị; không nguồn số thì nêu vật"
     + " nó đo ('Đo trên', từ `depends` backend) — không bịa công thức", () => {
     const ma = SRC("./Scene3DExplorer.tsx");
-    expect(ma).toMatch(/\{!formula && laDaiLuong && !dapAnAn\.has\(dangChon\.id\) && \(\s*<p className="geo3d-soi-cong-thuc" data-value-entity/);
+    expect(ma).toMatch(/\{!formula && !formulaInAnalysis && laDaiLuong && !dapAnAn\.has\(dangChon\.id\) && \(\s*<p className="geo3d-soi-cong-thuc" data-value-entity/);
     expect(ma).toContain("<dt>Đo trên</dt>");
     expect(ma).toMatch(/const doTren = laDaiLuong && nguon && nguon\.givens\.length \+ nguon\.inputs\.length === 0/);
   });

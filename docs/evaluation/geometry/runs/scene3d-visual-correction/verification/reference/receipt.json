@@ -1,0 +1,273 @@
+{
+  "source": "docs\\evaluation\\geometry\\runs\\visual-closure-hybrid-readiness\\reference\\matphang.html",
+  "bytes": 211386,
+  "sha256": "1cc6e74c9c69afc795c2f8fa7d17117d6eb33f22e7f3dcd462e287e3924d5491",
+  "normalized_lf_sha256": "279216192b09d6e12c8b8d444dcb0bf943419e6c52078fe04107684f0d9e8af1",
+  "provider_calls": 0,
+  "execution": "ORIGINAL_HTML_UNMODIFIED",
+  "cdn_failures": [],
+  "errors": [],
+  "rows": [
+    {
+      "id": "quan_he_dt_mp",
+      "canvas": 1,
+      "opacity": 0.12,
+      "arcs": 64,
+      "edges": 0,
+      "labels": 9,
+      "image": "quan_he_dt_mp.png",
+      "sha256": "26c824bd09b460edad001caa9800b2b180421ce038d0af4ab156dee6783d861e"
+    },
+    {
+      "id": "hai_dt_cheo_nhau",
+      "canvas": 1,
+      "opacity": 0.12,
+      "arcs": 0,
+      "edges": 0,
+      "labels": 8,
+      "image": "hai_dt_cheo_nhau.png",
+      "sha256": "eb91c3f2a0c6c2e4c5c382df46535e67d19cf67c990e93ce02cfd85a80e02eef"
+    },
+    {
+      "id": "chop_sa_vuong_day_vuong",
+      "canvas": 1,
+      "opacity": 0.12,
+      "arcs": 128,
+      "edges": 26,
+      "labels": 16,
+      "image": "chop_sa_vuong_day_vuong.png",
+      "sha256": "ce6ec4a911c566eca1683f45593f538904af818a0ee0d03d42dce9bd661700a3"
+    },
+    {
+      "id": "chop_tu_giac_deu",
+      "canvas": 1,
+      "opacity": 0.12,
+      "arcs": 128,
+      "edges": 26,
+      "labels": 16,
+      "image": "chop_tu_giac_deu.png",
+      "sha256": "bc5e77e76038ba9eafa377d8bb67d94c078cdae5923a168543062912698af01b"
+    },
+    {
+      "id": "chop_tam_giac_deu",
+      "canvas": 1,
+      "opacity": 0.12,
+      "arcs": 128,
+      "edges": 21,
+      "labels": 14,
+      "image": "chop_tam_giac_deu.png",
+      "sha256": "e9a015d3cf8dbc84be2ea4012f491f36da5db0be33600263c1156821091280e2"
+    },
+    {
+      "id": "chop_sa_vuong_abc",
+      "canvas": 1,
+      "opacity": 0.12,
+      "arcs": 128,
+      "edges": 22,
+      "labels": 14,
+      "image": "chop_sa_vuong_abc.png",
+      "sha256": "04b54ab3acbbd9320b2d969cdf72ce06de39fe50ad2f350e3cec79e006095405"
+    },
+    {
+      "id": "to_hop_chop_non",
+      "canvas": 1,
+      "opacity": 0.12,
+      "arcs": 128,
+      "edges": 12,
+      "labels": 9,
+      "image": "to_hop_chop_non.png",
+      "sha256": "1a468ff39488ebf5cf72c5ee396a2bd8a0bb64b20b0e166859128d0a8bac054a"
+    },
+    {
+      "id": "to_hop_lang_tru_tru_cau",
+      "canvas": 1,
+      "opacity": 0.12,
+      "arcs": 320,
+      "edges": 12,
+      "labels": 11,
+      "image": "to_hop_lang_tru_tru_cau.png",
+      "sha256": "3d136bfa94401e03424a51d20aa2393ccc5253d03ee548b42013d7b8633decfe"
+    },
+    {
+      "id": "to_hop_non_cau",
+      "canvas": 1,
+      "opacity": 0.12,
+      "arcs": 256,
+      "edges": 6,
+      "labels": 7,
+      "image": "to_hop_non_cau.png",
+      "sha256": "dc1f13c808b707c57f59b3fd5b3b59d05d5abab66979d05e06f99c0653dc3f76"
+    },
+    {
+      "id": "chop_cut_deu",
+      "canvas": 1,
+      "opacity": 0.12,
+      "arcs": 256,
+      "edges": 24,
+      "labels": 17,
+      "image": "chop_cut_deu.png",
+      "sha256": "843ee9b4591d86e9d96bb0643022691d7cbbe491dd964ad69bd367911e4971f4"
+    },
+    {
+      "id": "hinh_hop_chu_nhat",
+      "canvas": 1,
+      "opacity": 0.12,
+      "arcs": 128,
+      "edges": 24,
+      "labels": 16,
+      "image": "hinh_hop_chu_nhat.png",
+      "sha256": "c76063fbc00f0a883b820d2aa058cd9485ae7a876f129bfec16992f2d02c22cb"
+    },
+    {
+      "id": "lang_tru_tam_giac_deu",
+      "canvas": 1,
+      "opacity": 0.12,
+      "arcs": 128,
+      "edges": 15,
+      "labels": 13,
+      "image": "lang_tru_tam_giac_deu.png",
+      "sha256": "250ed8f4b18ac75ffde354642d7cae4dceef329e2d2013a13090bce9c199d3db"
+    },
+    {
+      "id": "lang_tru_xien",
+      "canvas": 1,
+      "opacity": 0.12,
+      "arcs": 128,
+      "edges": 18,
+      "labels": 14,
+      "image": "lang_tru_xien.png",
+      "sha256": "ff1dd1958949f9f7da307b21894db6b6a53dd1179c68bde59d908730c46d3754"
+    },
+    {
+      "id": "mat_cau",
+      "canvas": 1,
+      "opacity": 0.12,
+      "arcs": 128,
+      "edges": 5,
+      "labels": 8,
+      "image": "mat_cau.png",
+      "sha256": "a92a0b3415efbf28b17e52480107592debb10e8077d23ab97d5bbb2baeb5b115"
+    },
+    {
+      "id": "hinh_non",
+      "canvas": 1,
+      "opacity": 0.12,
+      "arcs": 124,
+      "edges": 6,
+      "labels": 7,
+      "image": "hinh_non.png",
+      "sha256": "9f56827aef3788c888780bfdcf4efbc80efdfa55c7b97cf0441307060416a73d"
+    },
+    {
+      "id": "hinh_tru",
+      "canvas": 1,
+      "opacity": 0.12,
+      "arcs": 188,
+      "edges": 8,
+      "labels": 8,
+      "image": "hinh_tru.png",
+      "sha256": "0faad30e131f61bf6ce5b70a05136fe5d27e2daea0a6526987aaeb426252aace"
+    },
+    {
+      "id": "he_truc_oxyz",
+      "canvas": 1,
+      "opacity": 0.12,
+      "arcs": 0,
+      "edges": 69,
+      "labels": 9,
+      "image": "he_truc_oxyz.png",
+      "sha256": "656408f3ac11d256fd19715423e0bc03dfe8d7b19729c87e30da5ed30cfa8757"
+    },
+    {
+      "id": "oxyz_dt_mp_cau",
+      "canvas": 1,
+      "opacity": 0.12,
+      "arcs": 64,
+      "edges": 0,
+      "labels": 11,
+      "image": "oxyz_dt_mp_cau.png",
+      "sha256": "666995784914a72e9992413c4145c02d2f19c0836326205284ccae4fd1b92ad1"
+    }
+  ],
+  "runtime": {
+    "title": "Mô Phỏng Hình Học Không Gian 3D - Lớp 11 & 12 (Chuẩn Sư Phạm Gate B1/B2)",
+    "three": "128",
+    "canvas": 1,
+    "select": "function"
+  },
+  "catalog": [
+    {
+      "id": "quan_he_dt_mp",
+      "name": "Đường Thẳng – Mặt Phẳng & ĐL 3 Đường ⊥"
+    },
+    {
+      "id": "hai_dt_cheo_nhau",
+      "name": "Hai Đường Thẳng Chéo Nhau & Đoạn ⊥ Chung"
+    },
+    {
+      "id": "chop_sa_vuong_day_vuong",
+      "name": "Chóp S.ABCD có SA ⊥ (ABCD)"
+    },
+    {
+      "id": "chop_tu_giac_deu",
+      "name": "Chóp tứ giác đều S.ABCD (Nội/Ngoại tiếp)"
+    },
+    {
+      "id": "chop_tam_giac_deu",
+      "name": "Chóp tam giác đều S.ABC (Nội/Ngoại tiếp)"
+    },
+    {
+      "id": "chop_sa_vuong_abc",
+      "name": "Chóp S.ABC có SA ⊥ (ABC)"
+    },
+    {
+      "id": "to_hop_chop_non",
+      "name": "Tổ Hợp Chóp Đều – Nón Nội & Ngoại Tiếp"
+    },
+    {
+      "id": "to_hop_lang_tru_tru_cau",
+      "name": "Tổ Hợp Lăng Trụ – Hình Trụ – Mặt Cầu"
+    },
+    {
+      "id": "to_hop_non_cau",
+      "name": "Tổ Hợp Hình Nón – Mặt Cầu Nội & Ngoại Tiếp"
+    },
+    {
+      "id": "chop_cut_deu",
+      "name": "Hình Chóp Cụt Tứ Giác Đều"
+    },
+    {
+      "id": "hinh_hop_chu_nhat",
+      "name": "Hình Hộp Chữ Nhật / Lập Phương"
+    },
+    {
+      "id": "lang_tru_tam_giac_deu",
+      "name": "Lăng Trụ Đứng ABC.A′B′C′"
+    },
+    {
+      "id": "lang_tru_xien",
+      "name": "Lăng Trụ Xiên ABC.A′B′C′"
+    },
+    {
+      "id": "mat_cau",
+      "name": "Mặt Cầu Giao Mặt Phẳng & Tiếp Tuyến"
+    },
+    {
+      "id": "hinh_non",
+      "name": "Hình Nón, Thiết Diện & Đường Sinh"
+    },
+    {
+      "id": "hinh_tru",
+      "name": "Hình Trụ Tròn Xoay & Thiết Diện Song Song Trục"
+    },
+    {
+      "id": "he_truc_oxyz",
+      "name": "Hệ Tọa Độ Oxyz & Mặt Phẳng Đoạn Chắn"
+    },
+    {
+      "id": "oxyz_dt_mp_cau",
+      "name": "Tổ Hợp Oxyz: Đường Thẳng Δ, MP (P) & Mặt Cầu"
+    }
+  ],
+  "status": "REFERENCE_EXECUTED"
+}

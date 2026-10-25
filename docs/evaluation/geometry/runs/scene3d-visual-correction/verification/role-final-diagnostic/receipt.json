@@ -1,0 +1,7727 @@
+{
+  "classification": "PROPOSED_ROLE_AWARE_ORACLE_EVIDENCE_NOT_OFFICIAL_SUITE",
+  "provider_calls": 0,
+  "url": "http://127.0.0.1:3156",
+  "summary": {
+    "baseline_pass": 21,
+    "baseline_total": 30,
+    "faults_detected": 0,
+    "faults_total": 0,
+    "expected_rows": 30,
+    "completed_rows": 30
+  },
+  "failures": [],
+  "rows": [
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "default",
+      "camera": {
+        "position": [
+          13.727596324489816,
+          12.613495035443613,
+          7.135530096133097
+        ],
+        "view_matrix_column_major": [
+          -0.5,
+          -0.29619813272602363,
+          0.8137976813493739,
+          0,
+          0.8660254037844387,
+          -0.1710100716628343,
+          0.4698463103929543,
+          0,
+          -2.775557561562892e-17,
+          0.9396926207859085,
+          0.3420201433256685,
+          0,
+          -4.059808968958158,
+          -0.4820818886715106,
+          -19.53838518911709,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "polygon-cross-section-1440-default-none.png",
+      "sha256": "0f0283ffbbae84de78860f06c68f5f59ca1e27a3b9c76f2630f8904411de889e",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 102,
+          "blue": 90,
+          "coverage": 0.8823529411764706,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 113,
+          "blue": 113,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 96,
+          "blue": 96,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 104,
+          "blue": 86,
+          "coverage": 0.8269230769230769,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 69,
+        "cam": 64,
+        "xanh": 0,
+        "policy_color": 64,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 1747,
+        "in_band": 1747,
+        "share": 1
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "quarter",
+      "camera": {
+        "position": [
+          8.70150741741655,
+          -6.196846390753995,
+          7.135530096132883
+        ],
+        "view_matrix_column_major": [
+          0.8653237133382418,
+          -0.17142507849359243,
+          0.4709865322893873,
+          0,
+          0.5012133987978736,
+          0.2959581404590421,
+          -0.8131383080150077,
+          0,
+          2.7755575615628914e-17,
+          0.9396926207859096,
+          0.34202014332566505,
+          0,
+          -4.423678268740996,
+          -3.3795412501707554,
+          -11.57768101960998,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "polygon-cross-section-1440-quarter-none.png",
+      "sha256": "5943f32b8e4449d2ecfbf5f1f058976f062619e3c2f69f2f3afabbccab08f948",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 176,
+          "blue": 176,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 154,
+          "blue": 154,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "visible": 155,
+          "blue": 122,
+          "coverage": 0.7870967741935484,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 162,
+          "blue": 129,
+          "coverage": 0.7962962962962963,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 107,
+        "cam": 101,
+        "xanh": 0,
+        "policy_color": 101,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 2762,
+        "in_band": 2762,
+        "share": 1
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "half",
+      "camera": {
+        "position": [
+          -10.125358122135472,
+          -1.1807582312267462,
+          7.135530096132835
+        ],
+        "view_matrix_column_major": [
+          0.5012375993637405,
+          0.29595334604788487,
+          -0.813125135478627,
+          0,
+          -0.8653096954178165,
+          0.17143335557459613,
+          -0.47100927338255205,
+          0,
+          -1.6653345369377348e-16,
+          0.9396926207859115,
+          0.34202014332566,
+          0,
+          4.053488652412441,
+          -3.5061500148511637,
+          -11.229826297545511,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "polygon-cross-section-1440-half-none.png",
+      "sha256": "626c1583bff3d295245811de6d2cfecfcc0c4a4a4ecc869ebf05501ab401c10e",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 72,
+          "blue": 72,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "visible": 179,
+          "blue": 136,
+          "coverage": 0.7597765363128491,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "visible": 83,
+          "blue": 65,
+          "coverage": 0.7831325301204819,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 213,
+          "blue": 213,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 123,
+        "cam": 123,
+        "xanh": 0,
+        "policy_color": 123,
+        "max_delta_e": 2.9358210805299443
+      },
+      "blue": {
+        "all": 2374,
+        "in_band": 2374,
+        "share": 1
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "high",
+      "camera": {
+        "position": [
+          4.539288924621465,
+          7.308623284732633,
+          16.436192683484183
+        ],
+        "view_matrix_column_major": [
+          -0.5000000000000095,
+          -0.8455736382722433,
+          0.18709682589245452,
+          0,
+          0.8660254037844329,
+          -0.4881921676761436,
+          0.10802040279353596,
+          0,
+          -2.7755575615628907e-17,
+          0.2160408055870677,
+          0.9763843353522683,
+          0,
+          -4.05980896895811,
+          3.8554273871388407,
+          -17.686808049674003,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "polygon-cross-section-1440-high-none.png",
+      "sha256": "f036e9800454e39903bfc6e0594166ea3dd40a76fd4af87364af2bd78c59d0c9",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 157,
+          "blue": 126,
+          "coverage": 0.802547770700637,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 158,
+          "blue": 158,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 160,
+          "blue": 160,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 153,
+          "blue": 123,
+          "coverage": 0.803921568627451,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 276,
+        "cam": 253,
+        "xanh": 0,
+        "policy_color": 253,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 2712,
+        "in_band": 2712,
+        "share": 1
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "low",
+      "camera": {
+        "position": [
+          11.866242198203173,
+          11.538841729574663,
+          -6.809161620587509
+        ],
+        "view_matrix_column_major": [
+          -0.499999999999991,
+          0.5274928666634344,
+          0.686841521472895,
+          0,
+          0.8660254037844438,
+          0.3045481485637339,
+          0.39654813731297867,
+          0,
+          1.1102230246251565e-16,
+          0.7930962746259715,
+          -0.6090962971274788,
+          0,
+          -4.059808968958208,
+          -4.373170284350626,
+          -16.873369169834234,
+          1.0000000000000002
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "polygon-cross-section-1440-low-none.png",
+      "sha256": "9b3ddf0e17ae584d8d7d6572bae40d9f1567c90ce1b96b00ef185758be3e0088",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 110,
+          "blue": 95,
+          "coverage": 0.8636363636363636,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "visible": 119,
+          "blue": 100,
+          "coverage": 0.8403361344537815,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "visible": 87,
+          "blue": 80,
+          "coverage": 0.9195402298850575,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 109,
+          "blue": 94,
+          "coverage": 0.8623853211009175,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 164,
+        "cam": 20,
+        "xanh": 0,
+        "policy_color": 158,
+        "max_delta_e": 38.51481513288979
+      },
+      "blue": {
+        "all": 1363,
+        "in_band": 1363,
+        "share": 1
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "default",
+      "camera": {
+        "position": [
+          16.133967614573546,
+          10.298568473040978,
+          7.515901918933541
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999967,
+          -0.2961981327260234,
+          0.8137976813493739,
+          0,
+          0.8660254037844386,
+          -0.171010071662834,
+          0.469846310392954,
+          0,
+          1.9428902930940235e-16,
+          0.9396926207859084,
+          0.34202014332566827,
+          0,
+          -0.8518381129802376,
+          -0.5226275582743388,
+          -20.539119686628663,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "polygon-cross-section-390-default-none.png",
+      "sha256": "88cd458fd93753da6c242b55b15727b37828fc4ebc116f2afb93917be1158292",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 38,
+          "blue": 38,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 59,
+          "blue": 59,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 35,
+          "blue": 35,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 54,
+          "blue": 48,
+          "coverage": 0.8888888888888888,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 39,
+        "cam": 30,
+        "xanh": 0,
+        "policy_color": 31,
+        "max_delta_e": 72.59143418763897
+      },
+      "blue": {
+        "all": 1937,
+        "in_band": 1937,
+        "share": 1
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "quarter",
+      "camera": {
+        "position": [
+          10.763665396562006,
+          -9.796366168105903,
+          7.515901918933207
+        ],
+        "view_matrix_column_major": [
+          0.8653689821450568,
+          -0.1713983452355871,
+          0.47091308326667997,
+          0,
+          0.5011352359804973,
+          0.29597362330283083,
+          -0.8131808467787255,
+          0,
+          1.6653345369377343e-16,
+          0.9396926207859123,
+          0.34202014332565794,
+          0,
+          -4.405237896967721,
+          -2.3182971441563627,
+          -15.605558046615824,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "polygon-cross-section-390-quarter-none.png",
+      "sha256": "c0feeebf5ea0286c7e63177ae4dfcda1d7256847f6d0bdeed03bd5cc613c1ce1",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 64,
+          "blue": 64,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 38,
+          "blue": 38,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "visible": 58,
+          "blue": 53,
+          "coverage": 0.9137931034482759,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 53,
+          "blue": 53,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 65,
+        "cam": 49,
+        "xanh": 0,
+        "policy_color": 54,
+        "max_delta_e": 75.97634701827307
+      },
+      "blue": {
+        "all": 2322,
+        "in_band": 2322,
+        "share": 1
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "half",
+      "camera": {
+        "position": [
+          -9.348025251680056,
+          -4.435641875035142,
+          7.515901918933078
+        ],
+        "view_matrix_column_major": [
+          0.501129595339444,
+          0.2959747405017316,
+          -0.8131839162574832,
+          0,
+          -0.865372248616123,
+          0.17139641602272485,
+          -0.4709077827979062,
+          0,
+          1.3877787807814454e-16,
+          0.9396926207859129,
+          0.3420201433256561,
+          0,
+          0.8460907281423331,
+          -3.5356051035611147,
+          -12.261031915628443,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "polygon-cross-section-390-half-none.png",
+      "sha256": "8e134a5987033ee00d42c81f44cc5e6ea8635c7d726f3d0d9f6dc6f53395f083",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 47,
+          "blue": 47,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "visible": 72,
+          "blue": 62,
+          "coverage": 0.8611111111111112,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "visible": 52,
+          "blue": 52,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 83,
+          "blue": 83,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 100,
+        "cam": 89,
+        "xanh": 0,
+        "policy_color": 92,
+        "max_delta_e": 62.74674092316025
+      },
+      "blue": {
+        "all": 2702,
+        "in_band": 2702,
+        "share": 1
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "high",
+      "camera": {
+        "position": [
+          6.317673101808504,
+          4.631128193651223,
+          17.45160563236608
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999995204,
+          -0.8455853050876756,
+          0.18704409057714236,
+          0,
+          0.8660254037844662,
+          -0.48819890351509887,
+          0.10798995604502806,
+          0,
+          1.3877787807814454e-17,
+          0.21597991209007683,
+          0.9763978070302916,
+          0,
+          -0.8518381129804772,
+          3.833846993106218,
+          -18.721508218562455,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "polygon-cross-section-390-high-none.png",
+      "sha256": "0721004c12134990aa5fe3e47641c987bf7d7a5c8e08d5ee9e08684fdd7e9890",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 70,
+          "blue": 66,
+          "coverage": 0.9428571428571428,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 74,
+          "blue": 74,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 72,
+          "blue": 72,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 55,
+          "blue": 50,
+          "coverage": 0.9090909090909091,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 258,
+        "cam": 169,
+        "xanh": 0,
+        "policy_color": 212,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 3044,
+        "in_band": 3044,
+        "share": 1
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "low",
+      "camera": {
+        "position": [
+          14.14485884338218,
+          9.150155988546082,
+          -7.38166507398956
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999928,
+          0.5275514919979217,
+          0.6867964933594041,
+          0,
+          0.8660254037844428,
+          0.304581995916383,
+          0.39652214031953537,
+          0,
+          5.551115123125783e-17,
+          0.793044280639082,
+          -0.6091639918327748,
+          0,
+          -0.8518381129802709,
+          -4.395126892343189,
+          -17.8395234523786,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "polygon-cross-section-390-low-none.png",
+      "sha256": "69f3a86a22f2b9ba033f07ed3f60638389b0ef0e33dc1fae2879ad642c081f8d",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 45,
+          "blue": 45,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 60,
+          "blue": 60,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "visible": 45,
+          "blue": 45,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 55,
+          "blue": 53,
+          "coverage": 0.9636363636363636,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 176,
+        "cam": 52,
+        "xanh": 0,
+        "policy_color": 157,
+        "max_delta_e": 71.9788489976227
+      },
+      "blue": {
+        "all": 1930,
+        "in_band": 1930,
+        "share": 1
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 1440,
+      "cameraName": "default",
+      "camera": {
+        "position": [
+          10.487442490105732,
+          11.2154864374335,
+          9.186686976129588
+        ],
+        "view_matrix_column_major": [
+          -0.5299989400031796,
+          -0.45508364461437806,
+          0.7155417527999332,
+          0,
+          0.8479983040050885,
+          -0.2844272778839857,
+          0.44721359549995787,
+          0,
+          -3.053113317719181e-16,
+          0.84380092438916,
+          0.5366563145999491,
+          0,
+          -3.952380074435332,
+          0.21091886609297258,
+          -17.450014572717457,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "circle-sphere-sample-1440-default-none.png",
+      "sha256": "345c663292ce82c29d0bfd1e81c8438209ef282fb52a1c0f2f655a459c9af0cc",
+      "selected": "S",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 26,
+          "blue": 26,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 20,
+          "blue": 20,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 16,
+          "blue": 16,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 15,
+          "blue": 15,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 17,
+          "blue": 16,
+          "coverage": 0.9411764705882353,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 20,
+          "blue": 16,
+          "coverage": 0.8,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 23,
+          "blue": 18,
+          "coverage": 0.782608695652174,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 26,
+          "blue": 17,
+          "coverage": 0.6538461538461539,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 28,
+          "blue": 25,
+          "coverage": 0.8928571428571429,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 30,
+          "blue": 23,
+          "coverage": 0.7666666666666667,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 32,
+          "blue": 17,
+          "coverage": 0.53125,
+          "pass": true
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 33,
+          "blue": 17,
+          "coverage": 0.5151515151515151,
+          "pass": true
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 33,
+          "blue": 26,
+          "coverage": 0.7878787878787878,
+          "pass": true
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 33,
+          "blue": 26,
+          "coverage": 0.7878787878787878,
+          "pass": true
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 33,
+          "blue": 18,
+          "coverage": 0.5454545454545454,
+          "pass": true
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 31,
+          "blue": 19,
+          "coverage": 0.6129032258064516,
+          "pass": true
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 30,
+          "blue": 24,
+          "coverage": 0.8,
+          "pass": true
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 27,
+          "blue": 26,
+          "coverage": 0.9629629629629629,
+          "pass": true
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 24,
+          "blue": 17,
+          "coverage": 0.7083333333333334,
+          "pass": true
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 20,
+          "blue": 15,
+          "coverage": 0.75,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 17,
+          "blue": 17,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 17,
+          "blue": 17,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 22,
+          "blue": 22,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 29,
+          "blue": 29,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 36,
+          "blue": 36,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 48,
+          "blue": 48,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 50,
+          "blue": 50,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 48,
+          "blue": 48,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 45,
+          "blue": 45,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 40,
+          "blue": 40,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 33,
+          "blue": 33,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 170,
+        "cam": 170,
+        "xanh": 0,
+        "policy_color": 170,
+        "max_delta_e": 3.045089836331053
+      },
+      "blue": {
+        "all": 3104,
+        "in_band": 3051,
+        "share": 0.9829252577319587
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 1440,
+      "cameraName": "quarter",
+      "camera": {
+        "position": [
+          5.821334793192953,
+          -9.064457569012436,
+          9.186686976129106
+        ],
+        "view_matrix_column_major": [
+          0.8473087133696852,
+          -0.2850185396485069,
+          0.4481432542217285,
+          0,
+          0.531100691251488,
+          0.45471357144539665,
+          -0.7149598755843318,
+          0,
+          -8.32667268468867e-17,
+          0.8438009243891618,
+          0.5366563145999452,
+          0,
+          -0.1183280129922158,
+          -1.9708147465498107,
+          -14.01960894990901,
+          0.9999999999999998
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "circle-sphere-sample-1440-quarter-none.png",
+      "sha256": "45f67ad1fcc83be2657b342f6f92cd2887c16033bdaee7d41995ee008c3fac08",
+      "selected": "S",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 38,
+          "blue": 32,
+          "coverage": 0.8421052631578947,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "visible": 38,
+          "blue": 28,
+          "coverage": 0.7368421052631579,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "visible": 39,
+          "blue": 18,
+          "coverage": 0.46153846153846156,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 39,
+          "blue": 19,
+          "coverage": 0.48717948717948717,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 38,
+          "blue": 30,
+          "coverage": 0.7894736842105263,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 38,
+          "blue": 31,
+          "coverage": 0.8157894736842105,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 37,
+          "blue": 20,
+          "coverage": 0.5405405405405406,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 35,
+          "blue": 21,
+          "coverage": 0.6,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 33,
+          "blue": 27,
+          "coverage": 0.8181818181818182,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 31,
+          "blue": 28,
+          "coverage": 0.9032258064516129,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 29,
+          "blue": 17,
+          "coverage": 0.5862068965517241,
+          "pass": true
+        },
+        {
+          "edge": 11,
+          "hidden": false,
+          "visible": 27,
+          "blue": 27,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 12,
+          "hidden": false,
+          "visible": 28,
+          "blue": 28,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 13,
+          "hidden": false,
+          "visible": 32,
+          "blue": 32,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 14,
+          "hidden": false,
+          "visible": 39,
+          "blue": 39,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 15,
+          "hidden": false,
+          "visible": 48,
+          "blue": 48,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 16,
+          "hidden": false,
+          "visible": 56,
+          "blue": 56,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 17,
+          "hidden": false,
+          "visible": 63,
+          "blue": 63,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 18,
+          "hidden": false,
+          "visible": 67,
+          "blue": 67,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 19,
+          "hidden": false,
+          "visible": 66,
+          "blue": 66,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 62,
+          "blue": 62,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 54,
+          "blue": 54,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 46,
+          "blue": 46,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 37,
+          "blue": 37,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 31,
+          "blue": 31,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 28,
+          "blue": 28,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 27,
+          "blue": 27,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": true,
+          "visible": 29,
+          "blue": 16,
+          "coverage": 0.5517241379310345,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": true,
+          "visible": 31,
+          "blue": 28,
+          "coverage": 0.9032258064516129,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": true,
+          "visible": 34,
+          "blue": 27,
+          "coverage": 0.7941176470588235,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": true,
+          "visible": 35,
+          "blue": 20,
+          "coverage": 0.5714285714285714,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": true,
+          "visible": 37,
+          "blue": 20,
+          "coverage": 0.5405405405405406,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 229,
+        "cam": 229,
+        "xanh": 0,
+        "policy_color": 229,
+        "max_delta_e": 3.045089836331053
+      },
+      "blue": {
+        "all": 7185,
+        "in_band": 5751,
+        "share": 0.8004175365344468
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 1440,
+      "cameraName": "half",
+      "camera": {
+        "position": [
+          -14.474878616095246,
+          -4.40842890244282,
+          9.18668697612904
+        ],
+        "view_matrix_column_major": [
+          0.531095615604143,
+          0.45471527878528073,
+          -0.7149625600863871,
+          0,
+          -0.8473118948097307,
+          0.28501581577030494,
+          -0.4481389713858093,
+          0,
+          -1.1102230246251563e-16,
+          0.8438009243891665,
+          0.5366563145999383,
+          0,
+          3.9522303229475444,
+          0.0866854626643763,
+          -17.254678642064018,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "circle-sphere-sample-1440-half-none.png",
+      "sha256": "8069b3ea3ec2778ee09577d18e645c93ecf6218fcae58888f64d20cf3f0595d7",
+      "selected": "S",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_FULLY_OBSERVABLE"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 19,
+          "blue": 17,
+          "coverage": 0.8947368421052632,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 17,
+          "blue": 16,
+          "coverage": 0.9411764705882353,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 16,
+          "blue": 16,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 17,
+          "blue": 17,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": false,
+          "visible": 22,
+          "blue": 22,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": false,
+          "visible": 29,
+          "blue": 29,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "visible": 36,
+          "blue": 36,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "visible": 42,
+          "blue": 42,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "visible": 47,
+          "blue": 47,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "visible": 45,
+          "blue": 45,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": false,
+          "visible": 50,
+          "blue": 50,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 11,
+          "hidden": false,
+          "visible": 47,
+          "blue": 47,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 12,
+          "hidden": false,
+          "visible": 42,
+          "blue": 42,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 13,
+          "hidden": false,
+          "visible": 16,
+          "blue": 16,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 14,
+          "hidden": false,
+          "visible": 0,
+          "blue": 0,
+          "coverage": null,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": false,
+          "visible": 0,
+          "blue": 0,
+          "coverage": null,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": false,
+          "visible": 0,
+          "blue": 0,
+          "coverage": null,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": false,
+          "visible": 0,
+          "blue": 0,
+          "coverage": null,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 0,
+          "blue": 0,
+          "coverage": null,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 0,
+          "blue": 0,
+          "coverage": null,
+          "pass": null
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 16,
+          "blue": 15,
+          "coverage": 0.9375,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 31,
+          "blue": 24,
+          "coverage": 0.7741935483870968,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 32,
+          "blue": 19,
+          "coverage": 0.59375,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": true,
+          "visible": 33,
+          "blue": 17,
+          "coverage": 0.5151515151515151,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": true,
+          "visible": 34,
+          "blue": 27,
+          "coverage": 0.7941176470588235,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": true,
+          "visible": 33,
+          "blue": 25,
+          "coverage": 0.7575757575757576,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 33,
+          "blue": 16,
+          "coverage": 0.48484848484848486,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": true,
+          "visible": 31,
+          "blue": 17,
+          "coverage": 0.5483870967741935,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": true,
+          "visible": 30,
+          "blue": 23,
+          "coverage": 0.7666666666666667,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": true,
+          "visible": 28,
+          "blue": 24,
+          "coverage": 0.8571428571428571,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": true,
+          "visible": 25,
+          "blue": 15,
+          "coverage": 0.6,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": true,
+          "visible": 22,
+          "blue": 18,
+          "coverage": 0.8181818181818182,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 171,
+        "cam": 167,
+        "xanh": 0,
+        "policy_color": 171,
+        "max_delta_e": 3.4810553387876575
+      },
+      "blue": {
+        "all": 2496,
+        "in_band": 2491,
+        "share": 0.9979967948717948
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 1440,
+      "cameraName": "high",
+      "camera": {
+        "position": [
+          -1.9247839181108377,
+          3.4578449322981486,
+          17.271822913808624
+        ],
+        "view_matrix_column_major": [
+          -0.5299989400032059,
+          -0.8479877040483551,
+          0.0042399738534162,
+          0,
+          0.8479983040050719,
+          -0.5299923150302577,
+          0.002649983658385304,
+          0,
+          0,
+          0.004999979166692816,
+          0.9999875000260418,
+          0,
+          -3.9523800744353244,
+          0.11407939043648319,
+          -17.272609215549544,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "circle-sphere-sample-1440-high-none.png",
+      "sha256": "ae45915d8ade5de24379fa1323c654f093e874982676151f2f4afb0291187759",
+      "selected": "S",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 11,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 12,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 13,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 14,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 15,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 16,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 17,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 18,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 19,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 435,
+        "cam": 434,
+        "xanh": 0,
+        "policy_color": 434,
+        "max_delta_e": 40.62307752334521
+      },
+      "blue": {
+        "all": 10179,
+        "in_band": 9042,
+        "share": 0.888299440023578
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 1440,
+      "cameraName": "low",
+      "camera": {
+        "position": [
+          11.403682207843364,
+          11.788136261019368,
+          -7.574657095758212
+        ],
+        "view_matrix_column_major": [
+          -0.529998940003173,
+          0.3594481305068445,
+          0.7680482830334611,
+          0,
+          0.8479983040050924,
+          0.22465508156677372,
+          0.48003017689590444,
+          0,
+          0,
+          0.9057191263307631,
+          -0.42387836014432173,
+          0,
+          -3.9523800744353283,
+          0.11321484328223175,
+          -17.62797290304902,
+          1.0000000000000002
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "circle-sphere-sample-1440-low-none.png",
+      "sha256": "1fe1b70b79e8e18fe5a6982beed2daa97d917a88416dcb64039c1779d336864d",
+      "selected": "S",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 25,
+          "blue": 21,
+          "coverage": 0.84,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "visible": 22,
+          "blue": 19,
+          "coverage": 0.8636363636363636,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "visible": 19,
+          "blue": 12,
+          "coverage": 0.631578947368421,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 18,
+          "blue": 12,
+          "coverage": 0.6666666666666666,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 18,
+          "blue": 15,
+          "coverage": 0.8333333333333334,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 20,
+          "blue": 17,
+          "coverage": 0.85,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 21,
+          "blue": 15,
+          "coverage": 0.7142857142857143,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 23,
+          "blue": 15,
+          "coverage": 0.6521739130434783,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 25,
+          "blue": 23,
+          "coverage": 0.92,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 26,
+          "blue": 21,
+          "coverage": 0.8076923076923077,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 27,
+          "blue": 15,
+          "coverage": 0.5555555555555556,
+          "pass": true
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 28,
+          "blue": 15,
+          "coverage": 0.5357142857142857,
+          "pass": true
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 28,
+          "blue": 23,
+          "coverage": 0.8214285714285714,
+          "pass": true
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 28,
+          "blue": 23,
+          "coverage": 0.8214285714285714,
+          "pass": true
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 28,
+          "blue": 17,
+          "coverage": 0.6071428571428571,
+          "pass": true
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 27,
+          "blue": 17,
+          "coverage": 0.6296296296296297,
+          "pass": true
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 26,
+          "blue": 22,
+          "coverage": 0.8461538461538461,
+          "pass": true
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 25,
+          "blue": 22,
+          "coverage": 0.88,
+          "pass": true
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 23,
+          "blue": 16,
+          "coverage": 0.6956521739130435,
+          "pass": true
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 21,
+          "blue": 15,
+          "coverage": 0.7142857142857143,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 20,
+          "blue": 18,
+          "coverage": 0.9,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 20,
+          "blue": 17,
+          "coverage": 0.85,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 23,
+          "blue": 16,
+          "coverage": 0.6956521739130435,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": true,
+          "visible": 27,
+          "blue": 16,
+          "coverage": 0.5925925925925926,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 32,
+          "blue": 32,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 36,
+          "blue": 36,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 39,
+          "blue": 39,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 41,
+          "blue": 41,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 40,
+          "blue": 40,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 38,
+          "blue": 38,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 34,
+          "blue": 34,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 30,
+          "blue": 30,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 245,
+        "cam": 245,
+        "xanh": 0,
+        "policy_color": 245,
+        "max_delta_e": 3.045089836331053
+      },
+      "blue": {
+        "all": 2409,
+        "in_band": 2406,
+        "share": 0.9987546699875467
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 390,
+      "cameraName": "default",
+      "camera": {
+        "position": [
+          13.278405845841855,
+          8.437663005163877,
+          9.734331458898405
+        ],
+        "view_matrix_column_major": [
+          -0.5299989400031799,
+          -0.4550836446143779,
+          0.7155417527999329,
+          0,
+          0.8479983040050881,
+          -0.28442727788398614,
+          0.447213595499958,
+          0,
+          -8.326672684688674e-17,
+          0.8438009243891598,
+          0.5366563145999492,
+          0,
+          -0.11758289491723165,
+          0.22884896392679702,
+          -18.49868184930564,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2954399589031933,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 365,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "circle-sphere-sample-390-default-none.png",
+      "sha256": "f7cf6c7f920ebe579702b4a60f080f4890b1eb881deb9f512e2bf0df8b0961fc",
+      "selected": "S",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 13,
+          "blue": 10,
+          "coverage": 0.7692307692307693,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 14,
+          "blue": 9,
+          "coverage": 0.6428571428571429,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 15,
+          "blue": 13,
+          "coverage": 0.8666666666666667,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 15,
+          "blue": 12,
+          "coverage": 0.8,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 16,
+          "blue": 10,
+          "coverage": 0.625,
+          "pass": true
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 16,
+          "blue": 10,
+          "coverage": 0.625,
+          "pass": true
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 15,
+          "blue": 13,
+          "coverage": 0.8666666666666667,
+          "pass": true
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 15,
+          "blue": 13,
+          "coverage": 0.8666666666666667,
+          "pass": true
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 14,
+          "blue": 10,
+          "coverage": 0.7142857142857143,
+          "pass": true
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 13,
+          "blue": 11,
+          "coverage": 0.8461538461538461,
+          "pass": true
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 19,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 14,
+          "blue": 14,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 17,
+          "blue": 17,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 20,
+          "blue": 20,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 22,
+          "blue": 22,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 10,
+          "blue": 10,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 17,
+          "blue": 17,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 22,
+          "blue": 22,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 19,
+          "blue": 19,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 16,
+          "blue": 16,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 13,
+          "blue": 13,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 176,
+        "cam": 176,
+        "xanh": 0,
+        "policy_color": 176,
+        "max_delta_e": 3.045089836331053
+      },
+      "blue": {
+        "all": 2751,
+        "in_band": 2751,
+        "share": 1
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 390,
+      "cameraName": "quarter",
+      "camera": {
+        "position": [
+          8.331487631385661,
+          -13.061264041490267,
+          9.734331458897834
+        ],
+        "view_matrix_column_major": [
+          0.8473247136314298,
+          -0.28500484021291445,
+          0.4481217141855849,
+          0,
+          0.5310751638604614,
+          0.4547221580868924,
+          -0.7149733766199857,
+          0,
+          1.110223024625157e-16,
+          0.843800924389166,
+          0.5366563145999399,
+          0,
+          -0.12296243032846085,
+          0.09992259007959178,
+          -18.295967019588407,
+          1.0000000000000002
+        ],
+        "projection_matrix_column_major": [
+          2.2954399589031933,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 365,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "circle-sphere-sample-390-quarter-none.png",
+      "sha256": "4e8b38014b8060e6c673294bdfe51846e50bb6748caa1c2c57ddd07f0aebab7f",
+      "selected": "S",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 15,
+          "blue": 13,
+          "coverage": 0.8666666666666667,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "visible": 16,
+          "blue": 13,
+          "coverage": 0.8125,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "visible": 16,
+          "blue": 10,
+          "coverage": 0.625,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 16,
+          "blue": 11,
+          "coverage": 0.6875,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 16,
+          "blue": 13,
+          "coverage": 0.8125,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 15,
+          "blue": 13,
+          "coverage": 0.8666666666666667,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 14,
+          "blue": 10,
+          "coverage": 0.7142857142857143,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 13,
+          "blue": 10,
+          "coverage": 0.7692307692307693,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 11,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 12,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 13,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 14,
+          "hidden": false,
+          "visible": 14,
+          "blue": 14,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 15,
+          "hidden": false,
+          "visible": 17,
+          "blue": 17,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 16,
+          "hidden": false,
+          "visible": 20,
+          "blue": 20,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 17,
+          "hidden": false,
+          "visible": 22,
+          "blue": 22,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 18,
+          "hidden": false,
+          "visible": 11,
+          "blue": 11,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 19,
+          "hidden": false,
+          "visible": 17,
+          "blue": 17,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 22,
+          "blue": 22,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 19,
+          "blue": 19,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 16,
+          "blue": 16,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 13,
+          "blue": 13,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": true,
+          "visible": 14,
+          "blue": 10,
+          "coverage": 0.7142857142857143,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": true,
+          "visible": 14,
+          "blue": 10,
+          "coverage": 0.7142857142857143,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 175,
+        "cam": 175,
+        "xanh": 0,
+        "policy_color": 175,
+        "max_delta_e": 3.045089836331053
+      },
+      "blue": {
+        "all": 2855,
+        "in_band": 2855,
+        "share": 1
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 390,
+      "cameraName": "half",
+      "camera": {
+        "position": [
+          -13.18453609990678,
+          -8.124385063406718,
+          9.734331458897891
+        ],
+        "view_matrix_column_major": [
+          0.5310447347799157,
+          0.45473239275732574,
+          -0.7149894689012746,
+          0,
+          -0.8473437848137728,
+          0.2849885102546929,
+          -0.4480960380992913,
+          0,
+          -2.498001805406602e-16,
+          0.8438009243891643,
+          0.536656314599942,
+          0,
+          0.1174312874596887,
+          0.09695416073314535,
+          -18.29129966851406,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2954399589031933,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 365,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "circle-sphere-sample-390-half-none.png",
+      "sha256": "3cdfe1200f6d147cfc3c0ebdcd188c9faa06019e174ab83b795d656084757bcc",
+      "selected": "S",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "visible": 14,
+          "blue": 14,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "visible": 17,
+          "blue": 17,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "visible": 20,
+          "blue": 20,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "visible": 22,
+          "blue": 22,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": false,
+          "visible": 8,
+          "blue": 8,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 11,
+          "hidden": false,
+          "visible": 19,
+          "blue": 19,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 12,
+          "hidden": false,
+          "visible": 22,
+          "blue": 21,
+          "coverage": 0.9545454545454546,
+          "pass": true
+        },
+        {
+          "edge": 13,
+          "hidden": false,
+          "visible": 19,
+          "blue": 19,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 14,
+          "hidden": false,
+          "visible": 16,
+          "blue": 16,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 15,
+          "hidden": false,
+          "visible": 13,
+          "blue": 13,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 16,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 17,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 18,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 14,
+          "blue": 10,
+          "coverage": 0.7142857142857143,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": true,
+          "visible": 15,
+          "blue": 10,
+          "coverage": 0.6666666666666666,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": true,
+          "visible": 15,
+          "blue": 14,
+          "coverage": 0.9333333333333333,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": true,
+          "visible": 16,
+          "blue": 12,
+          "coverage": 0.75,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 16,
+          "blue": 10,
+          "coverage": 0.625,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": true,
+          "visible": 16,
+          "blue": 8,
+          "coverage": 0.5,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": true,
+          "visible": 15,
+          "blue": 12,
+          "coverage": 0.8,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": true,
+          "visible": 15,
+          "blue": 12,
+          "coverage": 0.8,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": true,
+          "visible": 14,
+          "blue": 10,
+          "coverage": 0.7142857142857143,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": true,
+          "visible": 13,
+          "blue": 10,
+          "coverage": 0.7692307692307693,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 175,
+        "cam": 175,
+        "xanh": 0,
+        "policy_color": 175,
+        "max_delta_e": 3.045089836331053
+      },
+      "blue": {
+        "all": 2787,
+        "in_band": 2787,
+        "share": 1
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 390,
+      "cameraName": "high",
+      "camera": {
+        "position": [
+          0.12026053826511104,
+          0.21382218792841648,
+          18.305347648956594
+        ],
+        "view_matrix_column_major": [
+          -0.529998940003195,
+          -0.8479877040483619,
+          0.004239973853416246,
+          0,
+          0.8479983040050787,
+          -0.5299923150302468,
+          0.0026499836583852555,
+          0,
+          1.734723475976807e-18,
+          0.004999979166692829,
+          0.9999875000260416,
+          0,
+          -0.11758289491722988,
+          0.12377721723221312,
+          -18.306195359429335,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2954399589031933,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 365,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "circle-sphere-sample-390-high-none.png",
+      "sha256": "eb1144095463b740ef8c85da13a5f403559f9def1accf000f9bd91e59123cd27",
+      "selected": "S",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 11,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 12,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 13,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 14,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 15,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 16,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 17,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 18,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 19,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 425,
+        "cam": 423,
+        "xanh": 0,
+        "policy_color": 424,
+        "max_delta_e": 40.25474259626117
+      },
+      "blue": {
+        "all": 9479,
+        "in_band": 9479,
+        "share": 1
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 390,
+      "cameraName": "low",
+      "camera": {
+        "position": [
+          14.249338903787661,
+          9.044496166379663,
+          -8.035222455388775
+        ],
+        "view_matrix_column_major": [
+          -0.529998940003165,
+          0.35949069668164035,
+          0.7680283605407222,
+          0,
+          0.847998304005097,
+          0.22468168542601663,
+          0.480017725337933,
+          0,
+          0,
+          0.9056956327781828,
+          -0.42392855620555503,
+          0,
+          -0.11758289491723252,
+          0.12282847398004346,
+          -18.691775127981806,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2954399589031933,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 365,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "circle-sphere-sample-390-low-none.png",
+      "sha256": "56e6bb6282c32031e6c0acaf059ddc21fc3b4687bd1c9fc82413e20740209a75",
+      "selected": "S",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 13,
+          "blue": 11,
+          "coverage": 0.8461538461538461,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 13,
+          "blue": 11,
+          "coverage": 0.8461538461538461,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 13,
+          "blue": 11,
+          "coverage": 0.8461538461538461,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 3,
+          "blue": 3,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 4,
+          "blue": 2,
+          "coverage": 0.5,
+          "pass": true
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 13,
+          "blue": 11,
+          "coverage": 0.8461538461538461,
+          "pass": true
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 13,
+          "blue": 11,
+          "coverage": 0.8461538461538461,
+          "pass": true
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": true
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 13,
+          "blue": 10,
+          "coverage": 0.7692307692307693,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 15,
+          "blue": 15,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 17,
+          "blue": 17,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 18,
+          "blue": 18,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 19,
+          "blue": 19,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 19,
+          "blue": 19,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 18,
+          "blue": 18,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 17,
+          "blue": 17,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 15,
+          "blue": 15,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 245,
+        "cam": 245,
+        "xanh": 0,
+        "policy_color": 245,
+        "max_delta_e": 3.045089836331053
+      },
+      "blue": {
+        "all": 2104,
+        "in_band": 2104,
+        "share": 1
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 1440,
+      "cameraName": "default",
+      "camera": {
+        "position": [
+          26.346146262993923,
+          27.748931010306315,
+          35.87166196767158
+        ],
+        "view_matrix_column_major": [
+          -0.5299989400031795,
+          -0.45508364461437745,
+          0.715541752799933,
+          0,
+          0.847998304005088,
+          -0.2844272778839857,
+          0.44721359549995776,
+          0,
+          2.77555756156289e-17,
+          0.8438009243891597,
+          0.5366563145999488,
+          0,
+          -9.567616842138442,
+          -10.386288353338061,
+          -50.51222079509122,
+          0.9999999999999998
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "ellipse-cylinder-p6-1440-default-none.png",
+      "sha256": "2a62321466d9fc0f2be9574909edcc08c86567401e2d900a7668a6d31f4783dc",
+      "selected": "dien_tich_elip_e",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 19,
+          "blue": 19,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 26,
+          "blue": 26,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 31,
+          "blue": 31,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 34,
+          "blue": 34,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": false,
+          "visible": 35,
+          "blue": 35,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": false,
+          "visible": 34,
+          "blue": 34,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "visible": 32,
+          "blue": 32,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "visible": 28,
+          "blue": 28,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "visible": 23,
+          "blue": 23,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "visible": 18,
+          "blue": 18,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": false,
+          "visible": 14,
+          "blue": 14,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 8,
+          "coverage": 0.6666666666666666,
+          "pass": true
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": true
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 14,
+          "blue": 14,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 17,
+          "blue": 15,
+          "coverage": 0.8823529411764706,
+          "pass": true
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 19,
+          "blue": 14,
+          "coverage": 0.7368421052631579,
+          "pass": true
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 22,
+          "blue": 15,
+          "coverage": 0.6818181818181818,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 24,
+          "blue": 21,
+          "coverage": 0.875,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 26,
+          "blue": 22,
+          "coverage": 0.8461538461538461,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 27,
+          "blue": 15,
+          "coverage": 0.5555555555555556,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": true,
+          "visible": 27,
+          "blue": 17,
+          "coverage": 0.6296296296296297,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": true,
+          "visible": 27,
+          "blue": 23,
+          "coverage": 0.8518518518518519,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": true,
+          "visible": 26,
+          "blue": 22,
+          "coverage": 0.8461538461538461,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 24,
+          "blue": 14,
+          "coverage": 0.5833333333333334,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": true,
+          "visible": 21,
+          "blue": 15,
+          "coverage": 0.7142857142857143,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": true,
+          "visible": 16,
+          "blue": 16,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 13,
+          "blue": 13,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 208,
+        "cam": 208,
+        "xanh": 0,
+        "policy_color": 208,
+        "max_delta_e": 3.045089836331053
+      },
+      "blue": {
+        "all": 845,
+        "in_band": 845,
+        "share": 1
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 1440,
+      "cameraName": "quarter",
+      "camera": {
+        "position": [
+          14.536855598103813,
+          -23.48606753606233,
+          35.87166196766984
+        ],
+        "view_matrix_column_major": [
+          0.8477198201358452,
+          -0.2846662584256591,
+          0.4475893518201546,
+          0,
+          0.5304442539502622,
+          0.45493419448742156,
+          -0.7153067678536467,
+          0,
+          -8.326672684688674e-17,
+          0.8438009243891694,
+          0.5366563145999339,
+          0,
+          0.13486895942673843,
+          -15.445774019113612,
+          -42.557038743615976,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "ellipse-cylinder-p6-1440-quarter-none.png",
+      "sha256": "9bbb250b1ceee14a1c7ed30bb0d6e2ca70aa9c1eb5e961e0e29f729f2d7ba2ff",
+      "selected": "dien_tich_elip_e",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 17,
+          "blue": 10,
+          "coverage": 0.5882352941176471,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 23,
+          "blue": 19,
+          "coverage": 0.8260869565217391,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 27,
+          "blue": 17,
+          "coverage": 0.6296296296296297,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 29,
+          "blue": 16,
+          "coverage": 0.5517241379310345,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 31,
+          "blue": 10,
+          "coverage": 0.3225806451612903,
+          "pass": false
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 31,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 31,
+          "blue": 16,
+          "coverage": 0.5161290322580645,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 29,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 28,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 26,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 23,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 21,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 18,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 14,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 13,
+          "blue": 13,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 20,
+          "blue": 20,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 27,
+          "blue": 27,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 33,
+          "blue": 33,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 39,
+          "blue": 39,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 44,
+          "blue": 44,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 43,
+          "blue": 43,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 38,
+          "blue": 38,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 30,
+          "blue": 30,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 21,
+          "blue": 14,
+          "coverage": 0.6666666666666666,
+          "pass": false
+        }
+      ],
+      "fill": {
+        "samples": 35,
+        "cam": 35,
+        "xanh": 0,
+        "policy_color": 35,
+        "max_delta_e": 3.045089836331053
+      },
+      "blue": {
+        "all": 255,
+        "in_band": 255,
+        "share": 1
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 1440,
+      "cameraName": "half",
+      "camera": {
+        "position": [
+          -36.71449165240626,
+          -11.687471622023343,
+          35.87166196766987
+        ],
+        "view_matrix_column_major": [
+          0.5304533539455437,
+          0.4549311386516729,
+          -0.7153019630708533,
+          0,
+          -0.8477141259221319,
+          0.28467114199558813,
+          -0.44759703040458604,
+          0,
+          -5.551115123125783e-17,
+          0.8438009243891715,
+          0.5366563145999308,
+          0,
+          9.56769044512133,
+          -10.238890141566795,
+          -50.743979453214386,
+          1.0000000000000002
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "ellipse-cylinder-p6-1440-half-none.png",
+      "sha256": "45c60479aca7b4c5317c8d12f67fafb43f18e7fa967f2d75b4287426d566ce12",
+      "selected": "dien_tich_elip_e",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_FULLY_OBSERVABLE",
+        "BOUNDARY_NOT_COBALT"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 19,
+          "blue": 17,
+          "coverage": 0.8947368421052632,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "visible": 21,
+          "blue": 18,
+          "coverage": 0.8571428571428571,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "visible": 25,
+          "blue": 15,
+          "coverage": 0.6,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 29,
+          "blue": 17,
+          "coverage": 0.5862068965517241,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 32,
+          "blue": 26,
+          "coverage": 0.8125,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 35,
+          "blue": 28,
+          "coverage": 0.8,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 36,
+          "blue": 18,
+          "coverage": 0.5,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 37,
+          "blue": 18,
+          "coverage": 0.4864864864864865,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 36,
+          "blue": 28,
+          "coverage": 0.7777777777777778,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 35,
+          "blue": 27,
+          "coverage": 0.7714285714285715,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": false,
+          "visible": 33,
+          "blue": 26,
+          "coverage": 0.7878787878787878,
+          "pass": false
+        },
+        {
+          "edge": 11,
+          "hidden": false,
+          "visible": 30,
+          "blue": 30,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 12,
+          "hidden": false,
+          "visible": 27,
+          "blue": 27,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 13,
+          "hidden": false,
+          "visible": 23,
+          "blue": 23,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 14,
+          "hidden": false,
+          "visible": 20,
+          "blue": 20,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 15,
+          "hidden": false,
+          "visible": 17,
+          "blue": 17,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 16,
+          "hidden": false,
+          "visible": 14,
+          "blue": 14,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 17,
+          "hidden": false,
+          "visible": 0,
+          "blue": 0,
+          "coverage": null,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": false,
+          "visible": 17,
+          "blue": 17,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 19,
+          "hidden": false,
+          "visible": 26,
+          "blue": 26,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 31,
+          "blue": 31,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 35,
+          "blue": 35,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 38,
+          "blue": 38,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 40,
+          "blue": 40,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 41,
+          "blue": 41,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": true,
+          "visible": 40,
+          "blue": 32,
+          "coverage": 0.8,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 37,
+          "blue": 16,
+          "coverage": 0.43243243243243246,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": true,
+          "visible": 34,
+          "blue": 18,
+          "coverage": 0.5294117647058824,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": true,
+          "visible": 30,
+          "blue": 25,
+          "coverage": 0.8333333333333334,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": true,
+          "visible": 25,
+          "blue": 20,
+          "coverage": 0.8,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": true,
+          "visible": 21,
+          "blue": 14,
+          "coverage": 0.6666666666666666,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": true,
+          "visible": 18,
+          "blue": 13,
+          "coverage": 0.7222222222222222,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 775,
+        "cam": 772,
+        "xanh": 0,
+        "policy_color": 772,
+        "max_delta_e": 52.922821069381406
+      },
+      "blue": {
+        "all": 2256,
+        "in_band": 2256,
+        "share": 1
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 1440,
+      "cameraName": "high",
+      "camera": {
+        "position": [
+          -5.002591151999828,
+          8.155970125935253,
+          56.29175383024402
+        ],
+        "view_matrix_column_major": [
+          -0.5299989400032062,
+          -0.8479877040483547,
+          0.004239973853416198,
+          0,
+          0.8479983040050715,
+          -0.529992315030258,
+          0.0026499836583853058,
+          0,
+          4.336808689942017e-19,
+          0.004999979166692815,
+          0.9999875000260416,
+          0,
+          -9.56761684213845,
+          -0.2009918933227181,
+          -56.29145251665526,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "ellipse-cylinder-p6-1440-high-none.png",
+      "sha256": "3f14385fca91988141e8ef187a5c42c4e240fad7835c799a4e9f7403796b64d7",
+      "selected": "dien_tich_elip_e",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 24,
+          "blue": 20,
+          "coverage": 0.8333333333333334,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "visible": 26,
+          "blue": 22,
+          "coverage": 0.8461538461538461,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "visible": 27,
+          "blue": 16,
+          "coverage": 0.5925925925925926,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 28,
+          "blue": 16,
+          "coverage": 0.5714285714285714,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 28,
+          "blue": 20,
+          "coverage": 0.7142857142857143,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 27,
+          "blue": 22,
+          "coverage": 0.8148148148148148,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "visible": 25,
+          "blue": 25,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "visible": 23,
+          "blue": 23,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "visible": 20,
+          "blue": 20,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "visible": 18,
+          "blue": 18,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": false,
+          "visible": 16,
+          "blue": 16,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 11,
+          "hidden": false,
+          "visible": 15,
+          "blue": 15,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 12,
+          "hidden": false,
+          "visible": 14,
+          "blue": 14,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 13,
+          "hidden": false,
+          "visible": 13,
+          "blue": 13,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 14,
+          "hidden": false,
+          "visible": 14,
+          "blue": 8,
+          "coverage": 0.5714285714285714,
+          "pass": false
+        },
+        {
+          "edge": 15,
+          "hidden": false,
+          "visible": 14,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 15,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 16,
+          "blue": 14,
+          "coverage": 0.875,
+          "pass": true
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 17,
+          "blue": 11,
+          "coverage": 0.6470588235294118,
+          "pass": true
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 18,
+          "blue": 13,
+          "coverage": 0.7222222222222222,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 20,
+          "blue": 17,
+          "coverage": 0.85,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 21,
+          "blue": 18,
+          "coverage": 0.8571428571428571,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 22,
+          "blue": 16,
+          "coverage": 0.7272727272727273,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": true,
+          "visible": 23,
+          "blue": 16,
+          "coverage": 0.6956521739130435,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": true,
+          "visible": 24,
+          "blue": 21,
+          "coverage": 0.875,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": true,
+          "visible": 24,
+          "blue": 21,
+          "coverage": 0.875,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 24,
+          "blue": 16,
+          "coverage": 0.6666666666666666,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": true,
+          "visible": 23,
+          "blue": 14,
+          "coverage": 0.6086956521739131,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": true,
+          "visible": 21,
+          "blue": 18,
+          "coverage": 0.8571428571428571,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": true,
+          "visible": 20,
+          "blue": 17,
+          "coverage": 0.85,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": true,
+          "visible": 20,
+          "blue": 14,
+          "coverage": 0.7,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": true,
+          "visible": 22,
+          "blue": 16,
+          "coverage": 0.7272727272727273,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 312,
+        "cam": 302,
+        "xanh": 0,
+        "policy_color": 302,
+        "max_delta_e": 68.37776800984824
+      },
+      "blue": {
+        "all": 1242,
+        "in_band": 1242,
+        "share": 1
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 1440,
+      "cameraName": "low",
+      "camera": {
+        "position": [
+          28.6495337213068,
+          29.188548171750455,
+          -6.488287375764427
+        ],
+        "view_matrix_column_major": [
+          -0.5299989400031542,
+          0.3599663642917314,
+          0.767805535389089,
+          0,
+          0.8479983040051041,
+          0.22497897768231684,
+          0.4798784596181481,
+          0,
+          5.551115123125783e-17,
+          0.9054328667436433,
+          -0.42448948611289283,
+          0,
+          -9.567616842138445,
+          -11.004969581128668,
+          -38.75843588657646,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "ellipse-cylinder-p6-1440-low-none.png",
+      "sha256": "596575565effd8405b988d70627180ca635cceb1c1c0cd70600d8ad9d70e580e",
+      "selected": "dien_tich_elip_e",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 14,
+          "blue": 14,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 16,
+          "blue": 16,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 21,
+          "blue": 21,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 26,
+          "blue": 26,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": false,
+          "visible": 31,
+          "blue": 31,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": false,
+          "visible": 35,
+          "blue": 35,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "visible": 39,
+          "blue": 39,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "visible": 41,
+          "blue": 41,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "visible": 41,
+          "blue": 41,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "visible": 40,
+          "blue": 40,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": false,
+          "visible": 37,
+          "blue": 37,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 33,
+          "blue": 16,
+          "coverage": 0.48484848484848486,
+          "pass": true
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 28,
+          "blue": 23,
+          "coverage": 0.8214285714285714,
+          "pass": true
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 22,
+          "blue": 19,
+          "coverage": 0.8636363636363636,
+          "pass": true
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 17,
+          "blue": 11,
+          "coverage": 0.6470588235294118,
+          "pass": true
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 14,
+          "blue": 12,
+          "coverage": 0.8571428571428571,
+          "pass": true
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 15,
+          "blue": 14,
+          "coverage": 0.9333333333333333,
+          "pass": true
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 18,
+          "blue": 15,
+          "coverage": 0.8333333333333334,
+          "pass": true
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 22,
+          "blue": 16,
+          "coverage": 0.7272727272727273,
+          "pass": true
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 27,
+          "blue": 17,
+          "coverage": 0.6296296296296297,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 31,
+          "blue": 27,
+          "coverage": 0.8709677419354839,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 34,
+          "blue": 26,
+          "coverage": 0.7647058823529411,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 36,
+          "blue": 19,
+          "coverage": 0.5277777777777778,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": true,
+          "visible": 37,
+          "blue": 19,
+          "coverage": 0.5135135135135135,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": true,
+          "visible": 37,
+          "blue": 30,
+          "coverage": 0.8108108108108109,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": true,
+          "visible": 36,
+          "blue": 27,
+          "coverage": 0.75,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 34,
+          "blue": 17,
+          "coverage": 0.5,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": true,
+          "visible": 31,
+          "blue": 17,
+          "coverage": 0.5483870967741935,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": true,
+          "visible": 27,
+          "blue": 27,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 23,
+          "blue": 23,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 19,
+          "blue": 19,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 15,
+          "blue": 15,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 949,
+        "cam": 949,
+        "xanh": 0,
+        "policy_color": 949,
+        "max_delta_e": 3.045089836331053
+      },
+      "blue": {
+        "all": 1929,
+        "in_band": 1929,
+        "share": 1
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 390,
+      "cameraName": "default",
+      "camera": {
+        "position": [
+          33.68285775607847,
+          20.92002736021036,
+          37.44193010704106
+        ],
+        "view_matrix_column_major": [
+          -0.5299989400031797,
+          -0.45508364461437806,
+          0.7155417527999327,
+          0,
+          0.8479983040050879,
+          -0.28442727788398603,
+          0.44721359549995776,
+          0,
+          -1.110223024625156e-16,
+          0.8438009243891593,
+          0.5366563145999497,
+          0,
+          0.11173118580105258,
+          -10.314791131248535,
+          -53.55065995456592,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.1822401801079674,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 347,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "ellipse-cylinder-p6-390-default-none.png",
+      "sha256": "437a8884695d8f359919cf798a442f7f0d76a96319637379d95aa450b23dc12c",
+      "selected": "dien_tich_elip_e",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 13,
+          "blue": 13,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 14,
+          "blue": 14,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": false,
+          "visible": 14,
+          "blue": 14,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": false,
+          "visible": 14,
+          "blue": 14,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "visible": 13,
+          "blue": 13,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "visible": 12,
+          "blue": 2,
+          "coverage": 0.16666666666666666,
+          "pass": false
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 6,
+          "coverage": 0.5,
+          "pass": true
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": true
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "pass": true
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 3,
+          "coverage": 0.25,
+          "pass": false
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 12,
+          "blue": 2,
+          "coverage": 0.16666666666666666,
+          "pass": false
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": false
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 406,
+        "cam": 406,
+        "xanh": 0,
+        "policy_color": 406,
+        "max_delta_e": 3.043637763928204
+      },
+      "blue": {
+        "all": 822,
+        "in_band": 822,
+        "share": 1
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 390,
+      "cameraName": "quarter",
+      "camera": {
+        "position": [
+          21.057882907735397,
+          -33.8481740966099,
+          37.441930107037884
+        ],
+        "view_matrix_column_major": [
+          0.8477438569588949,
+          -0.2846456422653746,
+          0.44755693640897737,
+          0,
+          0.530405838003747,
+          0.45494709400028477,
+          -0.7153270501471611,
+          0,
+          2.7755575615628914e-17,
+          0.8438009243891763,
+          0.536656314599923,
+          0,
+          0.10157827101669692,
+          -10.200372187743715,
+          -53.73056431359139,
+          1.0000000000000002
+        ],
+        "projection_matrix_column_major": [
+          2.1822401801079674,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 347,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "ellipse-cylinder-p6-390-quarter-none.png",
+      "sha256": "0effad2bedcc72525f5a3d4df22cd9af97bc11bf812298208625d3d0a273750f",
+      "selected": "dien_tich_elip_e",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "visible": 12,
+          "blue": 5,
+          "coverage": 0.4166666666666667,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 13,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 13,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 13,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 6,
+          "coverage": 0.5,
+          "pass": true
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 19,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 12,
+          "blue": 4,
+          "coverage": 0.3333333333333333,
+          "pass": false
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 12,
+          "blue": 3,
+          "coverage": 0.25,
+          "pass": false
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": false
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 14,
+          "blue": 14,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 16,
+          "blue": 13,
+          "coverage": 0.8125,
+          "pass": false
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 17,
+          "blue": 1,
+          "coverage": 0.058823529411764705,
+          "pass": false
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 16,
+          "blue": 5,
+          "coverage": 0.3125,
+          "pass": false
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 15,
+          "blue": 7,
+          "coverage": 0.4666666666666667,
+          "pass": false
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 13,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 8,
+          "coverage": 0.6666666666666666,
+          "pass": false
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 46,
+        "cam": 46,
+        "xanh": 0,
+        "policy_color": 46,
+        "max_delta_e": 3.043637763928204
+      },
+      "blue": {
+        "all": 79,
+        "in_band": 79,
+        "share": 1
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 390,
+      "cameraName": "half",
+      "camera": {
+        "position": [
+          -33.72643659893616,
+          -21.233405176386967,
+          37.441930107038466
+        ],
+        "view_matrix_column_major": [
+          0.5304081301525152,
+          0.45494632436673865,
+          -0.7153258400290784,
+          0,
+          -0.8477424228314354,
+          0.28464687236149194,
+          -0.4475588705262224,
+          0,
+          5.5511151231257815e-17,
+          0.843800924389168,
+          0.5366563145999358,
+          0,
+          -0.11168217604275155,
+          -10.20579449751696,
+          -53.722038652242496,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.1822401801079674,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 347,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "ellipse-cylinder-p6-390-half-none.png",
+      "sha256": "1574d4acace0311e5b38f75c817f300b2cd184b4741a2cf58e640d390e480128",
+      "selected": "dien_tich_elip_e",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_FULLY_OBSERVABLE",
+        "BOUNDARY_NOT_COBALT"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 13,
+          "blue": 11,
+          "coverage": 0.8461538461538461,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 14,
+          "blue": 12,
+          "coverage": 0.8571428571428571,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 16,
+          "blue": 14,
+          "coverage": 0.875,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 16,
+          "blue": 10,
+          "coverage": 0.625,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 17,
+          "blue": 10,
+          "coverage": 0.5882352941176471,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 17,
+          "blue": 14,
+          "coverage": 0.8235294117647058,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 16,
+          "blue": 13,
+          "coverage": 0.8125,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 15,
+          "blue": 2,
+          "coverage": 0.13333333333333333,
+          "pass": false
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 14,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 12,
+          "hidden": false,
+          "visible": 12,
+          "blue": 6,
+          "coverage": 0.5,
+          "pass": false
+        },
+        {
+          "edge": 13,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 14,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 15,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 16,
+          "hidden": false,
+          "visible": 10,
+          "blue": 10,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 17,
+          "hidden": false,
+          "visible": 0,
+          "blue": 0,
+          "coverage": null,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": false,
+          "visible": 7,
+          "blue": 7,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 19,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 14,
+          "blue": 14,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 15,
+          "blue": 15,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 17,
+          "blue": 17,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 18,
+          "blue": 18,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 18,
+          "blue": 18,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 18,
+          "blue": 5,
+          "coverage": 0.2777777777777778,
+          "pass": false
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 17,
+          "blue": 1,
+          "coverage": 0.058823529411764705,
+          "pass": false
+        },
+        {
+          "edge": 27,
+          "hidden": true,
+          "visible": 16,
+          "blue": 12,
+          "coverage": 0.75,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": true,
+          "visible": 14,
+          "blue": 13,
+          "coverage": 0.9285714285714286,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 876,
+        "cam": 867,
+        "xanh": 0,
+        "policy_color": 872,
+        "max_delta_e": 21.2352242784637
+      },
+      "blue": {
+        "all": 1577,
+        "in_band": 1577,
+        "share": 1
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 390,
+      "cameraName": "high",
+      "camera": {
+        "position": [
+          0.17287316172963496,
+          -0.02371301125763184,
+          59.26982558721631
+        ],
+        "view_matrix_column_major": [
+          -0.5299989400032714,
+          -0.8479877040483141,
+          0.004239973853416029,
+          0,
+          0.847998304005031,
+          -0.5299923150303232,
+          0.0026499836583856536,
+          0,
+          -8.673617379884035e-19,
+          0.004999979166692855,
+          0.9999875000260416,
+          0,
+          0.1117311858010447,
+          -0.16232129137568702,
+          -59.26975485453332,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.1822401801079674,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 347,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "ellipse-cylinder-p6-390-high-none.png",
+      "sha256": "c3f9e7e1ed3a656f3da4602a3d276503fb31d9ff3c9368959bb2f23bb27b9dcb",
+      "selected": "dien_tich_elip_e",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_FULLY_OBSERVABLE",
+        "BOUNDARY_NOT_COBALT"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 0,
+          "blue": 0,
+          "coverage": null,
+          "pass": null
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "visible": 10,
+          "blue": 10,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": true
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 9,
+          "blue": 6,
+          "coverage": 0.6666666666666666,
+          "pass": true
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 0,
+          "blue": 0,
+          "coverage": null,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 4,
+          "blue": 1,
+          "coverage": 0.25,
+          "pass": false
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 8,
+          "coverage": 0.6666666666666666,
+          "pass": true
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": true,
+          "visible": 5,
+          "blue": 5,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": true,
+          "visible": 0,
+          "blue": 0,
+          "coverage": null,
+          "pass": null
+        }
+      ],
+      "fill": {
+        "samples": 395,
+        "cam": 355,
+        "xanh": 0,
+        "policy_color": 364,
+        "max_delta_e": 68.42769123658691
+      },
+      "blue": {
+        "all": 577,
+        "in_band": 577,
+        "share": 1
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 390,
+      "cameraName": "low",
+      "camera": {
+        "position": [
+          36.14443617141907,
+          22.45851386979727,
+          -7.839934959475396
+        ],
+        "view_matrix_column_major": [
+          -0.5299989400031638,
+          0.3599939527441431,
+          0.7677926006306459,
+          0,
+          0.8479983040050982,
+          0.22499622046507986,
+          0.4798703753941334,
+          0,
+          8.326672684688674e-17,
+          0.9054176134602624,
+          -0.42452201973033515,
+          0,
+          0.11173118580106464,
+          -10.9664439843326,
+          -41.85683115142716,
+          1.0000000000000002
+        ],
+        "projection_matrix_column_major": [
+          2.1822401801079674,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 347,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "ellipse-cylinder-p6-390-low-none.png",
+      "sha256": "53c670dd4d574e4291c08e0909bc64b459bb7aef52aa2de4b41d4a5aa32b1f3d",
+      "selected": "dien_tich_elip_e",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": false,
+          "visible": 15,
+          "blue": 15,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": false,
+          "visible": 17,
+          "blue": 17,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "visible": 18,
+          "blue": 18,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "visible": 19,
+          "blue": 19,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "visible": 19,
+          "blue": 19,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "visible": 18,
+          "blue": 9,
+          "coverage": 0.5,
+          "pass": false
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 17,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 15,
+          "blue": 11,
+          "coverage": 0.7333333333333333,
+          "pass": true
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 13,
+          "blue": 11,
+          "coverage": 0.8461538461538461,
+          "pass": true
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": true
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 13,
+          "blue": 11,
+          "coverage": 0.8461538461538461,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 14,
+          "blue": 13,
+          "coverage": 0.9285714285714286,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 16,
+          "blue": 14,
+          "coverage": 0.875,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 17,
+          "blue": 10,
+          "coverage": 0.5882352941176471,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": true,
+          "visible": 17,
+          "blue": 10,
+          "coverage": 0.5882352941176471,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": true,
+          "visible": 17,
+          "blue": 14,
+          "coverage": 0.8235294117647058,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": true,
+          "visible": 16,
+          "blue": 13,
+          "coverage": 0.8125,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 16,
+          "blue": 2,
+          "coverage": 0.125,
+          "pass": false
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 14,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 13,
+          "blue": 5,
+          "coverage": 0.38461538461538464,
+          "pass": false
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 873,
+        "cam": 872,
+        "xanh": 0,
+        "policy_color": 873,
+        "max_delta_e": 5.238779649940012
+      },
+      "blue": {
+        "all": 1613,
+        "in_band": 1613,
+        "share": 1
+      },
+      "verdict": false,
+      "errors": []
+    }
+  ]
+}

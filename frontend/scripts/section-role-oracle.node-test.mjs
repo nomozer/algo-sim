@@ -39,6 +39,57 @@ test("wrong boundary colour (magenta) fails", () => {
   assert.equal(run(frame({ line: MAGENTA })).pass, false);
 });
 
+test("rejects an incorrect cobalt palette even within the locked blue hue band", () => {
+  assert.equal(run(frame({ line: [0, 117, 222] })).pass, false);
+});
+
+test("rejects an incorrect terracotta palette even within the orange hue band", () => {
+  assert.equal(run(frame({ fill: [251, 146, 60] })).pass, false);
+});
+
+test("detects a missing quarter of one visible edge", () => {
+  const img = frame();
+  for (let y = 38; y <= 42; y++) for (let x = 70; x <= 100; x++) img.rgba.set([...BG, 255], (y * W + x) * 4);
+  assert.equal(run(img).pass, false);
+});
+
+test("does not aggregate away a missing hidden edge", () => {
+  const img = frame({ skipEdges: [1] });
+  const hiddenEdges = edges.map((e, i) => ({ ...e, hidden: i === 1 || i === 2 }));
+  assert.equal(run(img, { edges: hiddenEdges }).pass, false);
+});
+
+test("detects a small second section that incorrectly has a cobalt boundary", () => {
+  const img = frame();
+  const points = [{ x: 8, y: 10 }, { x: 22, y: 10 }, { x: 22, y: 22 }, { x: 8, y: 22 }];
+  const other = points.map((a, i) => ({ a, b: points[(i + 1) % 4], hidden: false }));
+  for (const e of other) for (let t = 0; t <= 1; t += 0.01) {
+    const x = Math.round(e.a.x + t * (e.b.x - e.a.x)), y = Math.round(e.a.y + t * (e.b.y - e.a.y));
+    img.rgba.set([...COBALT, 255], (y * W + x) * 4);
+  }
+  assert.equal(run(img, { otherBoundaries: [other] }).pass, false);
+});
+
+test("cone visibility uses the sloped normal, not only the radial direction", () => {
+  const scene = { objects: [
+    { id: "cone", type: "curved_solid", curved_kind: "cone", anchor: ["0", "0", "0"], apex_or_top: ["0", "0", "2"], radius_sq: "4" },
+    { id: "cut", type: "circle3", center: ["0", "0", "1"], normal: ["0", "0", "1"], radius_sq: "1", depends: ["cone"] },
+  ] };
+  const segments = sectionBoundaryWorld(scene, "cut", [0, 0, 10]);
+  assert.ok(segments.every(e => !e.hidden));
+});
+
+test("camera model transform is inverted before visibility classification", () => {
+  const scene = { objects: [
+    { id: "ball", type: "curved_solid", curved_kind: "ball", anchor: ["0", "0", "0"], radius_sq: "1" },
+    { id: "cut", type: "circle3", center: ["0", "0", "0"], normal: ["0", "0", "1"], radius_sq: "1", depends: ["ball"] },
+  ] };
+  const model = [-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1];
+  const expected = sectionBoundaryWorld(scene, "cut", [-10, 0, -5]);
+  const actual = sectionBoundaryWorld(scene, "cut", { position: [10, 0, 5], model_matrix_column_major: model });
+  assert.deepEqual(actual, expected);
+});
+
 test("one edge without cobalt fails", () => {
   assert.ok(run(frame({ skipEdges: [2] })).reasons.includes("BOUNDARY_NOT_COBALT"));
 });
@@ -52,13 +103,14 @@ test("cobalt drawn on another object (wrong selection) fails", () => {
   assert.ok(run(frame({ extraBlue: true })).reasons.includes("COBALT_NOT_ON_SELECTED_BOUNDARY"));
 });
 
-test("an overlay covering an edge removes it from scoring instead of failing it", () => {
+test("an overlay covering a whole edge prevents full certification", () => {
   const r = run(frame({ skipEdges: [2] }), { overlays: [{ x: 30, y: 110, w: 140, h: 20 }] });
   assert.equal(r.edges[2].scored, false);
-  assert.equal(r.pass, true, JSON.stringify(r.reasons));
+  assert.equal(r.pass, false);
+  assert.ok(r.reasons.includes("BOUNDARY_NOT_FULLY_OBSERVABLE"));
 });
 
-test("hidden edges are scored in aggregate with the lower threshold", () => {
+test("a hidden edge keeps the dashed-ink threshold without borrowing coverage from another edge", () => {
   const img = frame({ skipEdges: [1] });
   const half = edges.map((e, i) => (i === 1 ? { ...e, hidden: true } : e));
   // Sparse dash on edge 1 (3 on / 11 off): partial coverage passes as hidden (≥0.4), fails as front (≥0.75).
