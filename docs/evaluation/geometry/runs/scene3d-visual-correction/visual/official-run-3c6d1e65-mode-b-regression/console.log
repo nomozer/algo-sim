@@ -1,0 +1,26 @@
+▶ triangular_pyramid/desktop 13:55:47
+▶ triangular_pyramid/mobile 13:56:49
+triangular_pyramid: FAIL
+▶ triangular_prism/desktop 13:57:42
+▶ triangular_prism/mobile 13:58:44
+triangular_prism: FAIL
+▶ rectangular_pyramid/desktop 13:59:39
+▶ rectangular_pyramid/mobile 14:00:33
+rectangular_pyramid: FAIL
+▶ cuboid/desktop 14:01:20
+▶ cuboid/mobile 14:02:13
+cuboid: FAIL
+▶ cube/desktop 14:03:01
+▶ cube/mobile 14:03:56
+cube: FAIL
+▶ cross_section/desktop 14:04:47
+▶ cross_section/mobile 14:05:57
+cross_section: FAIL
+▶ regular_square_pyramid/desktop 14:08:32
+▶ regular_square_pyramid/mobile 14:09:34
+regular_square_pyramid: FAIL
+▶ regular_triangular_pyramid/desktop 14:10:30
+▶ regular_triangular_pyramid/mobile 14:11:35
+regular_triangular_pyramid: FAIL
+Wrote D:\Documents\projects\algo-sim\.superpowers\worktrees\svc-cand\.superpowers\official-3c6d1e65\BROWSER_EVIDENCE.json: FAIL
+official exit=1
