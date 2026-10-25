@@ -73,6 +73,24 @@ def _check_qualified_refs(value: Any, solids: dict[str, Any]) -> None:
             raise TuChoi("UNKNOWN_VERTEX_REF", f"{value!r} không phải đỉnh của khối đã khai")
 
 
+def _distance_question(g) -> dict[str, Any]:
+    """`/2` distance target → the planner's existing question. Keys are exactly those the `/3` adapter already reads
+    (`{point, plane}`, `{segment}`, `{line1, line2}`); anything else is refused, never guessed."""
+    t = g.target
+
+    def pts(key: str, n: int) -> list[str] | None:
+        v = t.get(key)
+        return _refs(v) if isinstance(v, (list, tuple)) and len(v) >= n and (n != 2 or len(v) == 2) else None
+
+    if set(t) == {"point", "plane"} and isinstance(t["point"], str) and (pl := pts("plane", 3)):
+        return {"quantity": "distance", "points_a": [_ref(t["point"])], "points_b": pl}
+    if set(t) == {"segment"} and (seg := pts("segment", 2)):
+        return {"quantity": "length", "points": seg}
+    if set(t) == {"line1", "line2"} and (l1 := pts("line1", 2)) and (l2 := pts("line2", 2)):
+        return {"quantity": "distance", "points_a": l1, "points_b": l2}
+    raise TuChoi("INVALID_MATH_GOAL", f"{g.goal_id}: mục tiêu distance thiếu toán hạng hợp lệ", (g.goal_id,))
+
+
 def _mat_fact(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2, solids: dict[str, Any],
               asked: list[str]) -> dict[str, Any]:
     """The section fact's PLANE (shared by `/1` and `/2`)."""
@@ -273,6 +291,8 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
             f = _mat_fact(sec, solids, [])
             facts.append({**q, "quantity": "area", **{k: f[k] for k in ("solid", "point", "plane_relation", "points_b",
                                                                          "points_a", "plane_name") if k in f}})
+        elif v2 and g.goal_type == "distance":
+            facts.append({**q, **_distance_question(g)})
         else:
             raise TuChoi("BRIDGE_UNSUPPORTED_MEASUREMENT", f"{g.goal_id}: mục tiêu {g.kind}/{g.goal_type} chưa có ánh xạ",
                          (g.goal_id,))
