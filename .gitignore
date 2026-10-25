@@ -1,5 +1,7 @@
 node_modules/
 dist/
+# Vite/vitest cache của từng checkout (`frontend/vite.config.ts` › cacheDir) — trạng thái máy, không commit.
+.vite-cache/
 __pycache__/
 .venv/
 backend/.env

@@ -3,6 +3,12 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
+  /* Cache tối ưu dependency (và kết quả vitest) của RIÊNG checkout này, không phải `node_modules/.vite` mặc định.
+   * Worktree và clone của các agent dùng chung `node_modules` của root qua junction/symlink, nên cache mặc định là
+   * MỘT thư mục ghi được bởi nhiều user Windows: bản do sandbox Codex tạo (owner `CodexSandboxOffline`, Bunny chỉ có
+   * Write+Read) làm `npm run dev` chết với `EPERM … unlink node_modules/.vite/deps/chunk-*.js` mỗi lần Vite cần tối ưu
+   * lại. Mỗi checkout có `frontend/` riêng ⇒ cache riêng, đúng chủ. Gitignore: `.vite-cache/`. */
+  cacheDir: ".vite-cache",
   server: {
     port: 3000,
     /* W4B-2D §0 — MỘT CỔNG DUY NHẤT, HỎNG THÌ KÊU TO.
