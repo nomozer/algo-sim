@@ -565,6 +565,10 @@ def gan_vai_tro_dung(objects: list[dict[str, Any]], spec: SemanticProgramSpec,
             o["shape_class"] = LOP_THIET_DIEN
             o["formation_requirements"] = list(TOI_THIEU[LOP_THIET_DIEN])
             mat_cat |= set(o.get("sources") or ())
+        # Giao của mặt phẳng với KHỐI CONG (đường tròn / elip) không phải `section`, nhưng mặt phẳng sinh ra nó cũng là
+        # mặt CẮT như của thiết diện đa diện — thiếu dòng này nó rơi về hình phụ và bị ẩn khi giao vừa dựng xong.
+        elif str(o.get("producer") or "").startswith("intersect_plane_curved"):
+            mat_cat |= set(o.get("sources") or ())
     for o in objects:
         o["formation_roles"] = sorted(_vai_cua(o, khoi, mat_cat))
 

@@ -825,7 +825,13 @@ MISSING_KEY_MSG = (
 #       (`display_names.ten_hien_thi`): mặt phẳng khai tên một chữ mà ĐỀ viết và chỉ một mặt khai (`(P)`) thay tên ghép
 #       từ điểm (`(AB′D′)`); chu trình thiết diện ghép từ ký hiệu đỉnh HIỆN, không bao giờ từ `id`. Row v127 THẬT ghi
 #       `(AB′D′)` và vẫn HIT (`runs/visual-hybrid-final-corrections/cache/decision.json`); 7 đề đối chứng trùng byte.
-CACHE_VERSION = "128"
+# 129 — 2026-10-25 (sphere-sample-source-authority): BỀ MẶT MÔ HÌNH KHÔNG ĐỔI. Envelope PHỤC VỤ của tuyến mặc định
+#       đổi nội dung (tiền lệ 127/128): mặt phẳng sinh đường tròn/elip giao với khối cong nay mang vai
+#       `CONSTRUCT_CUTTING_OBJECT` như mặt cắt của thiết diện đa diện (`formation._vai_cua`), không còn
+#       `CONSTRUCT_AUXILIARY_GEOMETRY` ⇒ Scene3D không ẩn nó sau khi giao đã dựng. Row v128 THẬT của ca phát lại
+#       `p6_thiet_dien_elip_cua_hinh_tru` vẫn HIT (`runs/sphere-sample-source-authority/cache/decision.json`);
+#       3 ca đối chứng trùng byte, ca từ chối không cache.
+CACHE_VERSION = "129"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

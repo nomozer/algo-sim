@@ -1,0 +1,15 @@
+{
+  "schema": "geometry-run/1",
+  "task_slug": "sphere-sample-source-authority",
+  "wave": 1,
+  "date": "2026-10-25",
+  "authorization": "GO_LOCAL_F2_POLICY_REVIEW_B3_VERIFICATION_SPHERE_SOURCE_FIX",
+  "base_commit": "de49c592",
+  "branch": "research/sphere-sample-source-authority",
+  "product_commit": "54f15e92a5d04d997a9fa1cff3a89971c1e17751",
+  "ALLOW_LIVE_AI": 0,
+  "cache_version": 129,
+  "default": "LLM_ONLY",
+  "hybrid_production": "NO-GO",
+  "independent_review": "PENDING_OWNER_APPOINTED_REVIEWER"
+}

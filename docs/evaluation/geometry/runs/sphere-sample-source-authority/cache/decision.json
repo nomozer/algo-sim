@@ -1,0 +1,25 @@
+{
+ "schema": "cache-version-decision/1",
+ "run": "sphere-sample-source-authority",
+ "decision": "BUMP",
+ "from": "128",
+ "to": "129",
+ "model_surface_changed": false,
+ "reason": "The default LLM_ONLY route's SERVED envelope changes content: the plane whose intersection with a curved solid is the asked circle/ellipse now carries formation role CONSTRUCT_CUTTING_OBJECT (as the cutting plane of a polyhedral section already did) instead of CONSTRUCT_AUXILIARY_GEOMETRY, so Scene3D no longer hides it once the intersection is built. /api/analyze returns a cache hit's envelope_json as is, so a genuine v128 row keeps serving the hidden plane.",
+ "evidence": {
+  "probe": "docs/evaluation/geometry/runs/sphere-sample-source-authority/cache/cache_probe.py",
+  "before": "docs/evaluation/geometry/runs/sphere-sample-source-authority/cache/cache-probe-v128-de49c592.json",
+  "after": "docs/evaluation/geometry/runs/sphere-sample-source-authority/cache/cache-probe-new-uncommitted.json",
+  "legacy_rows": "docs/evaluation/geometry/runs/sphere-sample-source-authority/cache/legacy-v128-rows.json",
+  "before_tree": ".superpowers/verify-visual-closure clean at de49c592 (CACHE_VERSION 128)",
+  "after_tree": "sphere-src working tree with the formation change, before the bump (CACHE_VERSION still 128)",
+  "changed_served_case": {
+   "p6_ellipse_section_of_cylinder": {"mat_phang_alpha formation_roles": [["CONSTRUCT_AUXILIARY_GEOMETRY"], ["CONSTRUCT_CUTTING_OBJECT"]]}
+  },
+  "byte_identical_controls": ["S1_side_height_volume", "right_triangular_prism", "cube"],
+  "refusal_controls_never_cached": ["REFUSED_oblique_prism"],
+  "scene_diff_of_changed_case": "exactly two entries: the plane object's formation_roles and the formation step that builds it",
+  "provider_requests": 0
+ },
+ "migration_test": "backend/tests/test_cache_curved_cutting_plane_invalidation.py"
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "sphere-sample-source-authority",
+  "corrects": "docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "5e353be2889fb1fe152042b2941ace6e17f44a34d74a3fb45e98d21ca0ef1b9e",
+  "current_product_commit": "54f15e92a5d04d997a9fa1cff3a89971c1e17751",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Curved-solid cutting plane formation role (CONSTRUCT_CUTTING_OBJECT) in formation.py; offline sphere/cylinder samples declare only source-given data. Served default-route envelopes change for curved sections.",
+  "cache_version": 129,
+  "cache_version_hien_tai": 129,
+  "cache_decision": "BUMP 128 -> 129: runs/sphere-sample-source-authority/cache/decision.json",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}
