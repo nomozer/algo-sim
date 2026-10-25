@@ -215,6 +215,9 @@ test("a hidden arc with 40% of its dashes missing fails (internal review I3: 0.4
   }
   const r = assessSectionRole(img, { scale: 1, box: { w: W, h: H }, edges: segs });
   assert.equal(r.verdict, "FAIL", JSON.stringify(r.hidden_arcs));
+  // the failure must come from the arc, not from front chords touched by the erasure
+  assert.ok(r.hidden_arcs.some((a) => a.pass === false), JSON.stringify(r.hidden_arcs));
+  assert.ok(r.edges.filter((e) => !e.hidden && e.pass !== null).every((e) => e.pass), "front chords still pass");
 });
 
 test("a curve whose hidden arc is not drawn at all still fails", () => {

@@ -11,7 +11,8 @@ only (hidden until first placed); no facts enter the backend. `scene3d-view.tsx`
 pools for physical base rims, distinguishes hover from selection, and resets hover on scene replacement.
 `datKhoiCongKhongChe` keeps a secondary curved solid's silhouette while removing it from occluders;
 `boVanhDayTrung` drops a curved solid's own cap rim when the scene already has a backend `circle3` with the same
-centre, radius and axis (one visual owner per boundary; the circle's own step decides). `themNetVanh` adds a 1px stroke,
+centre, radius and axis, comparing unrounded numbers (one visual owner per boundary; the circle's own step decides; the
+workspace passes only circles the user has not hidden or isolated away, at the solid's display translation). `themNetVanh` adds a 1px stroke,
 sharing the ribbon material, to every circle/ellipse rim so it cannot vanish edge-on; the front rim material is in the
 transparent queue so `renderOrder` draws it over solid outlines. `Scene3DExplorer.tsx` keeps final answers in the
 analysis panel, with identity-based inspector links and no duplicate final canvas labels.

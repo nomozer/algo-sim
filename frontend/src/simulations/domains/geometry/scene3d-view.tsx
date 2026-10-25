@@ -678,7 +678,7 @@ export function datKhoiCongKhongChe(obj: THREE.Object3D): void {
 
 /**
  * Một biên logic một chủ hình (OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT): khi cảnh đã có đường tròn backend trùng tâm,
- * bán kính và trục với một vành đáy mà khối cong tự vẽ, bỏ vành của khối — đường tròn backend hiện theo bước của chính
+ * bán kính và trục với một vành đáy mà khối cong tự vẽ (`objects`: do nơi gọi lọc — vật người dùng thấy, cùng phép dời), bỏ vành của khối — đường tròn backend hiện theo bước của chính
  * nó (#31) và một thiết diện đang chọn không bị vành xanh đậm của khối đè lên. So sánh số của dữ kiện backend, không suy.
  */
 export function boVanhDayTrung(obj: THREE.Object3D, khoi: SceneObject, objects: readonly SceneObject[]): void {
@@ -688,9 +688,9 @@ export function boVanhDayTrung(obj: THREE.Object3D, khoi: SceneObject, objects: 
   const vanh: THREE.Object3D[] = [];
   obj.traverse((n) => { if (n.userData.vanhDayCua) vanh.push(n); });
   for (const n of vanh) {
-    type Ba = [string, string, string];
-    const { center, normal, radius_sq } = n.userData.vanhDayCua as { center: Ba; normal: Ba; radius_sq: string };
-    const c = toVec3(center), d = new THREE.Vector3(...toVec3(normal)).normalize().toArray();
+    type Ba = [number, number, number];
+    const { center: c, axis, radius_sq } = n.userData.vanhDayCua as { center: Ba; axis: Ba; radius_sq: string };
+    const d = new THREE.Vector3(...axis).normalize().toArray();
     const cungTruc = (e: number[]) => e.every((v, i) => gan(v, d[i])) || e.every((v, i) => gan(v, -d[i]));
     const trung = tron.some((x) => gan(toNumber(x.radius_sq!), toNumber(radius_sq))
       && toVec3(x.center!).every((v, i) => gan(v, c[i]))
@@ -1912,16 +1912,20 @@ export function buildObject3D(
       nhomCong.add(outline);
     } else if (dinh) {
       // Reuse the existing circle rim primitive for physical boundaries; no synthetic points/names enter the scene.
-      // Tâm: chuỗi chính xác của backend. Pháp tuyến chỉ mang HƯỚNG ⇒ phân số 1e-6; `String(1.5)` không phải phân số hợp
-      // lệ và làm `toVec3` ném lỗi với mọi trục có toạ độ không nguyên.
-      const normal = dinh.clone().sub(tam).toArray().map((v) => `${Math.round(v * 1e6)}/1000000`) as [string, string, string];
-      for (const center of o.curved_kind === "cylinder" ? [o.anchor, o.apex_or_top!] : [o.anchor]) {
-        const rim = buildObject3D({ ...o, type: "circle3", render: "circle", center, normal,
+      // Toạ độ dựng vành phải là phân số hợp lệ cho `toVec3` (`String(1.5)` thì không): chuỗi chính xác của backend khi
+      // có, còn lại (đỉnh trên suy từ `height_sq`, pháp tuyến chỉ mang HƯỚNG) là phân số 1e-6. So trùng (`boVanhDayTrung`)
+      // dùng số CHƯA làm tròn.
+      const phanSo = (v: THREE.Vector3) => v.toArray().map((x) => `${Math.round(x * 1e6)}/1000000`) as [string, string, string];
+      const truc = dinh.clone().sub(tam);
+      const tamVanh: [[string, string, string], THREE.Vector3][] = [[o.anchor, tam]];
+      if (o.curved_kind === "cylinder") tamVanh.push([o.apex_or_top ?? phanSo(dinh), dinh]);
+      for (const [center, tamSo] of tamVanh) {
+        const rim = buildObject3D({ ...o, type: "circle3", render: "circle", center, normal: phanSo(truc),
           surface_role: "BASE_REGION", formation_roles: [], fill_visible: false }, noiBat,
           banKinhBam, diemNen, cameraPosition);
         if (!rim) continue;
         rim.raycast = () => {};
-        rim.userData.vanhDayCua = { center, normal, radius_sq: o.radius_sq }; // see `boVanhDayTrung`
+        rim.userData.vanhDayCua = { center: tamSo.toArray(), axis: truc.toArray(), radius_sq: o.radius_sq };
         nhomCong.add(rim);
       }
       const outline = new THREE.Group();
@@ -3560,7 +3564,10 @@ export function Scene3DWorkspace({
         vaiKhoiTheoId.get(o.id) ?? vaiKhoiTheoId.get(o.parent ?? "") ?? "primary",
         coThietDienDong);
       if (!obj) continue;
-      if (o.type === "curved_solid") boVanhDayTrung(obj, o, scene.objects); // whole scene: the circle's own step decides
+      // All steps (the circle's own step decides, #31), but only circles the user has not hidden or isolated away and
+      // drawn at the same display translation: otherwise the solid would lose a cap nobody draws.
+      if (o.type === "curved_solid") boVanhDayTrung(obj, o, scene.objects.filter((x) => !tuongTac.hidden_ids.includes(x.id)
+        && (!tuongTac.isolated_ids.length || tuongTac.isolated_ids.includes(x.id)) && khoaDich(x.id) === khoaDich(o.id)));
       const chiSoKhoi = dsKhoiId.indexOf(o.id);
       const dichVat = khoaDich(o.id);
       if (dsKhoiId.length > 1 && chiSoKhoi >= 0) {

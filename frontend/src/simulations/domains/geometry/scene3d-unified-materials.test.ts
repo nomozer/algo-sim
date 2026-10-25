@@ -294,6 +294,23 @@ describe("shared semantic material behavior", () => {
     expect(rims([{ ...cap(["0", "0", "0"]), type: "ellipse3" }])).toBe(2);
   });
 
+  it("keeps both cap rims of a cylinder given by height, and matches caps on a tilted fractional axis (review round 2)", () => {
+    const count = (o: SceneObject, others: SceneObject[]) => {
+      const built = buildObject3D(o, false)!;
+      boVanhDayTrung(built, o, others);
+      let n = 0;
+      built.traverse(x => { if (x.userData.curvedRimLoop) n += 1; });
+      return n;
+    };
+    const byHeight: SceneObject = { ...common, depends: [], id: "h", type: "curved_solid", render: "curved_solid",
+      curved_kind: "cylinder", anchor: ["0", "0", "0"], apex_or_top: null, radius_sq: "1", height_sq: "9/4" } as SceneObject;
+    expect(count(byHeight, [])).toBe(2);
+    expect(count(byHeight, [{ ...circle, id: "top", center: ["0", "0", "3/2"], radius_sq: "1" }])).toBe(1);
+    const tilted: SceneObject = { ...byHeight, id: "t", apex_or_top: ["1/3", "2/3", "2/3"], radius_sq: "1/4", height_sq: "1" };
+    const capOn = (center: [string, string, string]): SceneObject => ({ ...circle, id: `c${center[0]}`, center, normal: ["1", "2", "2"], radius_sq: "1/4" });
+    expect(count(tilted, [capOn(["0", "0", "0"]), capOn(["1/3", "2/3", "2/3"])])).toBe(0);
+  });
+
   it("shares selected shell emphasis across polyhedra and every curved solid", () => {
     const expected = shell(solid, true).material;
     expect(expected.opacity).toBeGreaterThan(shell(solid).material.opacity);

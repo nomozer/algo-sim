@@ -111,7 +111,9 @@ export function assessSectionRole(img, { scale, box, overlays = [], edges, other
     const scored = visible >= N.minVisibleSamples;
     const coverage = visible ? blue / visible : null;
     return { edge: i, hidden: Boolean(e.hidden), visible, blue, coverage, scored, max_delta_e: worstDistance,
-      length: Math.hypot(e.b.x - e.a.x, e.b.y - e.a.y), pass: scored ? coverage >= (e.hidden ? N.hiddenCoverage : N.frontCoverage) : null };
+      length: Math.hypot(e.b.x - e.a.x, e.b.y - e.a.y),
+      // a hidden curve chord has no verdict of its own: it is judged inside its arc (`hidden_arcs`)
+      pass: !scored || (e.hidden && e.curve) ? null : coverage >= (e.hidden ? N.hiddenCoverage : N.frontCoverage) };
   });
   const scoredShare = edgeRows.filter((e) => e.scored).reduce((s, e) => s + e.length, 0) / totalLen;
 
