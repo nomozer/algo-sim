@@ -1044,17 +1044,24 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
     voi.add(buildObject3D(sc.objects.find((o) => o.type === "solid")!, false)!);
     for (const o of ben) voi.add(buildObject3D(o, false)!);
     const canhCua = (o: (typeof ben)[number]) => (id: string) => o.depends.every((v) => id.split("::edge:")[1]?.split("-").includes(v));
-    let daThayAn = false;
-    for (let g = -0.6; g < 5.6; g += 0.4) {
-      nhin(g);
-      const audit = updateCanonicalEdgeVisibility(voi, cam);
-      datCoGocVuong([voi], cam, 720);
-      const [hienVoi] = hienTai(voi as unknown as THREE.Group);
-      const an = (o: (typeof ben)[number]) => audit.hidden_edge_ids.some(canhCua(o));
-      daThayAn ||= ben.some(an);
-      expect([g, hienVoi, an(ben.find((o) => o.id === hienVoi)!)]).toEqual([g, hienVoi, false]);
+    // The workspace turns a segment that coincides with a solid edge into a hit proxy (`doanNhuongCanh`), which is
+    // never classified itself — found in the browser: the representative sat on hidden DD′. Both paths are checked.
+    const voiProxy = new THREE.Group();
+    voiProxy.add(buildObject3D(sc.objects.find((o) => o.type === "solid")!, false)!);
+    for (const o of ben) voiProxy.add(buildObject3D({ ...o, display_role: "hit_proxy" }, false)!);
+    for (const goc of [voi, voiProxy]) {
+      let daThayAn = false;
+      for (let g = -0.6; g < 5.6; g += 0.4) {
+        nhin(g);
+        const audit = updateCanonicalEdgeVisibility(goc, cam);
+        datCoGocVuong([goc], cam, 720);
+        const [hienVoi] = hienTai(goc as unknown as THREE.Group);
+        const an = (o: (typeof ben)[number]) => audit.hidden_edge_ids.some(canhCua(o));
+        daThayAn ||= ben.some(an);
+        expect([g, hienVoi, an(ben.find((o) => o.id === hienVoi)!)]).toEqual([g, hienVoi, false]);
+      }
+      expect(daThayAn).toBe(true);                                // some lateral edge really was hidden on the sweep
     }
-    expect(daThayAn).toBe(true);                                  // some lateral edge really was hidden on the sweep
     // The edge being taught (emphasised) always shows its own mark, wherever the camera is.
     const nhanA = dung("canh_ben_A_A_prime");
     datCoGocVuong([nhanA], cam, 720);

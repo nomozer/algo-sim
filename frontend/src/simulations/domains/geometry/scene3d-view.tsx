@@ -1089,6 +1089,7 @@ export function updateCanonicalEdgeVisibility(
     .map(([id]) => id).sort();
   const hidden = [...status].filter(([, values]) => values.size === 1 && values.has("hidden"))
     .map(([id]) => id).sort();
+  root.userData.hiddenCanonicalEdgeIds = new Set(hidden);   // đọc bởi `datCoGocVuong` (chọn dấu đại diện không khuất)
   const mixed = [...status].filter(([, values]) => values.size > 1)
     .map(([id]) => id).sort();
   const duplicates = [...counts].filter(([, count]) => count > 1)
@@ -1488,6 +1489,7 @@ export function buildObject3D(
         if (pw?.relation && pw.on) {
           (lineMarker.userData.gocVuongDonVi as GocVuongDonVi).nhomQuanHe = [pw.relation, pw.rule ?? "", pw.on].join("|");
         }
+        if (pw?.from && pw.foot_id) (lineMarker.userData.gocVuongDonVi as GocVuongDonVi).dauMut = [pw.from, pw.foot_id];
 
         const nhom = new THREE.Group();
         nhom.add(duong);
@@ -2294,6 +2296,8 @@ interface GocVuongDonVi {
   foot: Vec3; u: Vec3; v: Vec3; s0: number; maxWorld: number; cornerOwner: THREE.Object3D;
   /** Một quan hệ backend (`relation|rule|on`, vd mọi cạnh bên ⊥ đáy): mặc định chỉ một dấu đại diện (`datCoGocVuong`). */
   nhomQuanHe?: string;
+  /** Id thực thể hai đầu mút của đoạn mang chứng chỉ (`from`, `foot_id`) — để đọc độ thấy của cạnh khối trùng nó. */
+  dauMut?: [string, string];
 }
 
 /** Ký hiệu góc vuông dạng ô vuông HAI đoạn (`addRightAngleMarker` của HTML tham chiếu): `foot + s0·u`,
@@ -2379,24 +2383,23 @@ export function datCoGocVuong(
   // diện cũ trừ khi ứng viên khác mở hơn rõ (25 %), để dấu không nhảy góc khi xoay.
   const laNhanManh = (n: THREE.Object3D) =>
     Boolean(n.parent?.children.some((x) => (x.userData?.nonCanonicalSegment as { highlighted?: boolean } | undefined)?.highlighted));
-  // Khúc thấy của cạnh chuẩn (cạnh khối) theo id — đoạn trùng cạnh khối nhường nét cho nó (`colinearCanonicalIds`).
-  let khucChuan: Map<string, boolean> | null = null;
-  const khucCanhChuan = () => {
-    if (khucChuan) return khucChuan;
-    khucChuan = new Map();
-    for (const r of roots) r.traverse((x) => {
-      const id = x.userData?.logicalEdgeId as string | undefined;
-      if (id && (x as THREE.Line).isLine) khucChuan!.set(id, (khucChuan!.get(id) ?? false) || x.userData.hidden !== true);
-    });
-    return khucChuan;
-  };
-  const khuatHet = (n: THREE.Object3D) => {
-    const duong = n.parent?.children.find((x) => x.userData?.nonCanonicalSegment);
+  // Cạnh chuẩn KHUẤT HẲN theo phân loại của chính lượt thấy/khuất (`updateCanonicalEdgeVisibility` ghi lên gốc) — đoạn
+  // trùng cạnh khối nhường nét cho cạnh ấy (`colinearCanonicalIds`), nên độ thấy của nó là của cạnh chuẩn.
+  const canhKhuat = new Set(roots.flatMap((r) => [...((r.userData.hiddenCanonicalEdgeIds as Set<string> | undefined) ?? [])]));
+  const capDinhKhuat = [...canhKhuat].flatMap((id) => {
+    const cap = id.split("::edge:")[1]?.split("-");
+    return cap?.length === 2 ? [cap.slice().sort().join("|")] : [];
+  });
+  const khuatHet = (c: (typeof ungVien)[number]) => {
+    const duong = c.node.parent?.children.find((x) => x.userData?.nonCanonicalSegment);
     const khuc = duong?.children.filter((x) => x.userData?.nonCanonicalSpanLine && !x.name.endsWith(":proxy")) ?? [];
     if (khuc.length > 0) return khuc.every((x) => x.userData.hidden === true);
     const trung = (duong?.userData.colinearCanonicalIds as string[] | undefined) ?? [];
-    const thay = khucCanhChuan();
-    return trung.length > 0 && trung.every((id) => thay.has(id) && thay.get(id) === false);
+    if (trung.length > 0) return trung.every((id) => canhKhuat.has(id));
+    // Đoạn đã nhường hẳn nét cho cạnh khối (vùng bấm, không tự phân loại): đọc cạnh khối có CÙNG hai đầu mút (id thực
+    // thể backend `from`/`foot_id` của chứng chỉ) trong phân loại của lượt thấy/khuất.
+    const dau = c.d.dauMut;
+    return dau !== undefined && capDinhKhuat.includes(dau.slice().sort().join("|"));
   };
   const wCss = hCss * (pc.aspect || 1);
   const doMo = (c: (typeof ungVien)[number]) => {
@@ -2425,7 +2428,7 @@ export function datCoGocVuong(
     let giu: (typeof ungVien)[number][];
     if (nhan.length > 0) giu = nhan;
     else {
-      const hang = new Map(ds.map((c) => [c, { thay: khuatHet(c.node) ? 0 : 1, mo: doMo(c) }]));
+      const hang = new Map(ds.map((c) => [c, { thay: khuatHet(c) ? 0 : 1, mo: doMo(c) }]));
       const hon = (a: (typeof ds)[number], b: (typeof ds)[number]) => {
         const x = hang.get(a)!, y = hang.get(b)!;
         return x.thay !== y.thay ? x.thay > y.thay : x.mo > y.mo;
