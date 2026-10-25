@@ -6687,7 +6687,7 @@
        "label": "(S)",
        "notation": null,
        "reference": "(S)",
-       "role": "Khối cầu tâm I, đi qua đại lượng",
+       "role": "Khối cầu tâm I",
        "display_label": "(S)",
        "type": "curved_solid",
        "render": "curved_solid",
@@ -8078,8 +8078,8 @@
        "id": "tru",
        "label": "hình trụ",
        "notation": null,
-       "reference": "Hình trụ đáy tâm O, tâm đáy trên O′, qua đại lượng",
-       "role": "Hình trụ đáy tâm O, tâm đáy trên O′, qua đại lượng",
+       "reference": "Hình trụ đáy tâm O, tâm đáy trên O′",
+       "role": "Hình trụ đáy tâm O, tâm đáy trên O′",
        "display_label": "hình trụ",
        "type": "curved_solid",
        "render": "curved_solid",
@@ -8306,11 +8306,11 @@
       },
       {
        "id": "C",
-       "label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua đại lượng» và «Mặt phẳng qua M và vuông góc với OO′»",
+       "label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′» và «Mặt phẳng qua M và vuông góc với OO′»",
        "notation": null,
        "reference": "Đường tròn giao của khối cong và mặt phẳng",
        "role": "Đường tròn",
-       "display_label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua đại lượng» và «Mặt phẳng qua M và vuông góc với OO′»",
+       "display_label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′» và «Mặt phẳng qua M và vuông góc với OO′»",
        "type": "circle3",
        "render": "circle",
        "display_role": "visual_owner",
@@ -8526,7 +8526,7 @@
         "P"
        ],
        "explanation": "Ghi nhận C = Circle3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(2, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(4, 1)), radius_sq=Fraction(4, 1)).",
-       "display_label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua đại lượng» và «Mặt phẳng qua M và vuông góc với OO′»",
+       "display_label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′» và «Mặt phẳng qua M và vuông góc với OO′»",
        "semantic_kind": "GEOMETRY_CONSTRUCTION",
        "details": {
         "value": {
@@ -8544,7 +8544,7 @@
          "radius_sq": "4"
         }
        },
-       "learner_text": "Dựng đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua đại lượng» và «Mặt phẳng qua M và vuông góc với OO′»."
+       "learner_text": "Dựng đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′» và «Mặt phẳng qua M và vuông góc với OO′»."
       },
       {
        "step_index": 6,
@@ -8688,7 +8688,7 @@
         "readout_ids": [
          "R"
         ],
-        "learner_text": "Dựng đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua đại lượng» và «Mặt phẳng qua M và vuông góc với OO′».",
+        "learner_text": "Dựng đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′» và «Mặt phẳng qua M và vuông góc với OO′».",
         "semantic_kind": "GEOMETRY_CONSTRUCTION",
         "geometry_progress": [],
         "formation_roles": [

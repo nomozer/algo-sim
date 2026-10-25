@@ -1,0 +1,10 @@
+{
+ "schema": "cache-version-decision-addendum/1",
+ "run": "visual-b3-sphere-integration",
+ "base_decision": "docs/evaluation/geometry/runs/sphere-sample-source-authority/cache/decision.json",
+ "cache_version": "129",
+ "additional_served_change": "display_names: a curved solid declared by a radius/height QUANTITY is named by its point sources only ('Khối cầu tâm I', 'Hình trụ đáy tâm O, tâm đáy trên O′') instead of '…, qua đại lượng'. Rim-point declarations are unchanged (all six offline samples checked).",
+ "decision": "COVERED_BY_BUMP_128_TO_129",
+ "reason": "129 has not been released from this local candidate; every v128 row is already a miss after the bump, so this second served-envelope change needs no further version. Found in the integrated browser capture: learners saw 'Hình trụ đáy tâm O, tâm đáy trên O′, qua đại lượng' in the cylinder sample's step text.",
+ "provider_requests": 0
+}

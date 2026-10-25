@@ -270,6 +270,8 @@ _CACH_GOI: dict[str, tuple[Callable[[list[str]], str],
     "intersect_plane_curved_ellipse": (
         lambda s: f"Elip giao của {s[0]} và {s[1]}", None),
 }
+#: Khối cong khai bằng ĐẠI LƯỢNG (`construct_curved_solid.radius` / `height`): cùng khoá producer, nhận chỉ các nguồn ĐIỂM.
+_CACH_GOI_DAI_LUONG: dict[str, tuple[Callable[[list[str]], str], Optional[Callable[[list[Optional[str]]], Optional[str]]]]] = {}
 
 # Ba cách gọi khối cong, **DẪN XUẤT** từ `curved.KHOI_CONG` chứ không viết tay:
 # danh từ của mỗi hình thuộc về thẩm quyền của LOẠI, và chép nó sang đây là
@@ -289,6 +291,13 @@ def _nap_ten_khoi_cong() -> None:
             def cau(s: list[str], _n: str = kc.danh_tu) -> str:  # noqa: F811
                 return f"{_n} tâm {s[0]}, đi qua {s[-1]}"
         _CACH_GOI[f"construct_curved_solid.{kc.kind}"] = (cau, None)
+
+        # Khai bằng ĐẠI LƯỢNG (`radius` / `height`): không có điểm vành để "qua" — gọi tên bằng các ĐIỂM nguồn thôi.
+        def cau_dl(s: list[str], _n: str = kc.danh_tu, _v: str = kc.vai_dinh, _truc: bool = kc.co_truc) -> str:
+            if _truc and len(s) >= 2:
+                return f"{_n} đáy tâm {s[0]}, {_v} {s[1]}"
+            return f"{_n} {'đáy tâm' if _truc else 'tâm'} {s[0]}"
+        _CACH_GOI_DAI_LUONG[f"construct_curved_solid.{kc.kind}"] = (cau_dl, None)
 
 
 _nap_ten_khoi_cong()
@@ -420,6 +429,9 @@ def ten_hien_thi(
                 giai(s)
 
         cong_thuc = _CACH_GOI.get(prod or "")
+        if prod in _CACH_GOI_DAI_LUONG and any((thong_tin.get(s) or {}).get("type") == "quantity" for s in nguon):
+            cong_thuc = _CACH_GOI_DAI_LUONG[prod]
+            nguon = [s for s in nguon if (thong_tin.get(s) or {}).get("type") != "quantity"]
         du_nguon = cong_thuc is not None and all(s in thong_tin for s in nguon)
 
         # ── KÝ HIỆU ────────────────────────────────────────────────────────

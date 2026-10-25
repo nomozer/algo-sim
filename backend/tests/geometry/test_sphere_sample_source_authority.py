@@ -136,3 +136,18 @@ def test_tangent_and_missing_intersection_never_become_a_circle(d, code):
     with pytest.raises(GeometryError) as e:
         _run(d)
     assert str(e.value).startswith(code)
+
+
+@pytest.mark.parametrize("sample_id", [ID, "tru-thiet-dien-tron"])
+def test_scalar_radius_solid_is_never_named_through_a_quantity(sample_id):
+    """A solid declared by its radius has no rim point: its name must not read "qua đại lượng" (learners saw it in the
+    step text of the cylinder sample once the invented rim point was removed)."""
+    sc = _scene(sample_id)
+    texts = [str(o.get(k) or "") for o in sc["objects"] for k in ("label", "role", "reference", "display_label")]
+    texts += [st.get("learner_text") or "" for st in sc["formation"]["steps"]]
+    assert [t for t in texts if "đại lượng" in t and "qua" in t] == []
+
+
+def test_cylinder_sample_is_named_by_its_two_centres():
+    tru = _obj(_scene("tru-thiet-dien-tron"), "tru")
+    assert tru["role"].startswith("Hình trụ đáy tâm O, tâm đáy trên O′"), tru["role"]
