@@ -56,16 +56,22 @@ function initFault(fault) {
   }
 }
 
-const browser = await chromium.launch({ channel: "chrome", headless: true, args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"] });
+const launch = () => chromium.launch({ channel: "chrome", headless: true, args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"] });
+let browser = await launch();
 const rows = [];
 const failures = [];
+// Long runs (100+ WebGL contexts in one Chrome) occasionally never show the canvas; it did not reproduce in 15 fresh
+// loads. Every attempt that throws is recorded here, the browser is relaunched and the row retried ONCE; a row that
+// fails twice is an ERROR row and fails the run. A retry never turns a measured FAIL into a PASS: only throws retry.
+const attempts = [];
 try {
   for (const c of CASES) {
     const env = JSON.parse(readFileSync(c.envelope_file, "utf8"));
     const envelope = c.pick ? c.pick.split(".").reduce((o, k) => (/^\d+$/.test(k) ? o[Number(k)] : o[k]), env) : env;
     for (const width of [1440, 390]) {
-      for (const cameraName of CAMERAS) for (const fault of FAULTS) {
+      for (const cameraName of CAMERAS) for (const fault of FAULTS) for (let attempt = 1; attempt <= 2; attempt += 1) {
         const ctx = await browser.newContext({ viewport: { width, height: width < 600 ? 844 : 900 }, deviceScaleFactor: width < 600 ? 2 : 1 });
+        try {
         await ctx.route("**/*", (r) => {
           const u = new URL(r.request().url());
           if (u.hostname !== "127.0.0.1") return r.abort();
@@ -141,6 +147,15 @@ try {
           fill: res.fill, blue: res.blue, verdict, errors });
         console.log(`${c.id} ${width} ${cameraName} ${fault}: identity=${identity_ok} ${verdict} ${res.reasons.join(",")}`);
         await ctx.close();
+        break;
+        } catch (e) {
+          const error = e.message.split("\n")[0];
+          attempts.push({ case: c.id, width, cameraName, fault, attempt, error });
+          console.log(`${c.id} ${width} ${cameraName} ${fault}: attempt ${attempt} threw ${error}`);
+          await browser.close().catch(() => {});
+          browser = await launch();
+          if (attempt === 2) rows.push({ case: c.id, shape: c.shape, width, cameraName, fault, verdict: "ERROR", error });
+        }
       }
     }
   }
@@ -157,8 +172,9 @@ const summary = { baseline_total: baseline.length, baseline_pass: count(baseline
   certified_views_per_case: Object.fromEntries(CASES.map((c) => [c.id, baseline.filter((r) => r.case === c.id && r.verdict === "PASS").length])),
   faults_on_certified_views: faulted.length, faults_detected: count(faulted, "FAIL"),
   faults_on_uncertifiable_views: rows.filter((r) => r.fault !== "none" && !certified.has(view(r))).length,
-  expected_rows: CASES.length * 2 * CAMERAS.length * FAULTS.length, completed_rows: rows.length };
-writeFileSync(join(OUT, "receipt.json"), JSON.stringify({ classification: "PROPOSED_ROLE_AWARE_ORACLE_EVIDENCE_NOT_OFFICIAL_SUITE", provider_calls: 0, url: URL_, summary, failures, rows }, null, 2));
+  expected_rows: CASES.length * 2 * CAMERAS.length * FAULTS.length, completed_rows: rows.length,
+  error_rows: count(rows, "ERROR"), retried_attempts: attempts.length };
+writeFileSync(join(OUT, "receipt.json"), JSON.stringify({ classification: "PROPOSED_ROLE_AWARE_ORACLE_EVIDENCE_NOT_OFFICIAL_SUITE", provider_calls: 0, url: URL_, summary, failures, attempts, rows }, null, 2));
 console.log(JSON.stringify(summary));
-process.exitCode = !failures.length && rows.length === summary.expected_rows && summary.baseline_fail === 0
+process.exitCode = !failures.length && rows.length === summary.expected_rows && summary.error_rows === 0 && summary.baseline_fail === 0
   && Object.values(summary.certified_views_per_case).every((k) => k > 0) && summary.faults_detected === summary.faults_on_certified_views ? 0 : 1;
