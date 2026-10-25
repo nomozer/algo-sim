@@ -43,7 +43,9 @@ describe("Owner F1: one formula region per selected quantity", () => {
     expect(html).toContain(`data-analysis-item="${result.id}"`);
     expect(html).not.toContain(`data-value-entity="${result.id}"`);
     expect(html).not.toContain(`data-formula-entity="${result.id}"`);
-    expect(html).not.toContain(`data-ann-id="${result.id}"`);
+    // Mode B reveals the selected result's annotation on the canvas: the locked suite's `selection_per_quantity`
+    // fails with ANNOTATION_MISSING otherwise (measured at 3c6d1e65, where this line asserted the opposite).
+    expect(html).toContain(`data-ann-id="${result.id}"`);
     expect(html).toContain('href="#geo3d-bang-phan-tich"');
   });
   it.each(families)("%s keeps the explanation in analysis and links the inspector to it", family => {

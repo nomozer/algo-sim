@@ -100,8 +100,10 @@ try {
         if (await item.count()) {
           await item.click(); await capture('default-selected-mode-b');
           const b = row.frames.at(-1);
-          // Mode B: each result listed once in the panel; never on the canvas; the inspector links instead of repeating it.
-          row.checks.mode_b_once = !b.final_canvas_labels.length && new Set(b.analysis_results).size === b.analysis_results.length
+          // Mode B (locked contract `aa458cc3` / suite `mode_b_reveal`): each result listed once in the panel, and the
+          // inspector links to it instead of repeating it. The selected result's canvas annotation is EXPECTED in Mode B
+          // (suite `selection_per_quantity`); an earlier version of this check forbade it and so encoded a regression.
+          row.checks.mode_b_once = new Set(b.analysis_results).size === b.analysis_results.length
             && (!b.selected_result_items.length || !b.inspector_values.includes(b.selected));
           row.mode_b_selected_is_result = b.selected_result_items.length > 0;
         }

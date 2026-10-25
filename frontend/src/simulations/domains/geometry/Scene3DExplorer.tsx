@@ -394,7 +394,8 @@ export function Scene3DExplorer({
   const giaTri = (id: string) => {
     const o = day.objects.find((x) => x.id === id);
     if (!o) return ten(id);
-    if (tapKetQua.has(id)) return o.notation || ten(id);
+    // Chỉ chế độ A giấu đáp số. Chế độ B (`aa458cc3`, cổng khoá `mode_b_reveal`): đúng một mục «Kết quả» mang đáp số.
+    if (dapAnAn.has(id)) return o.notation || ten(id);
     const soDung = `${hienSo(o.exact, o.value)}${ghiChuGiaTriDung(day)}`;
     return `${o.notation || ten(id)} = ${soDung}`;
   };
@@ -558,7 +559,7 @@ export function Scene3DExplorer({
           onInteraction={setTt}
           onSelect={chon}
           fitToken={fitToken}
-          annotationView={{ ...xem, hiddenIds: tapKetQua }}
+          annotationView={{ ...xem, hiddenIds: dapAnAn }}
           stepsOpen={moBuoc}
           onStepsOpenChange={setMoBuoc}
           auxiliaryShown={hinhPhu}
