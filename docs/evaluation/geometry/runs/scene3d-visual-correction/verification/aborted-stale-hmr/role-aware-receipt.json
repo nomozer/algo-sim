@@ -1,0 +1,8163 @@
+{
+  "classification": "PROPOSED_ROLE_AWARE_ORACLE_EVIDENCE_NOT_OFFICIAL_SUITE",
+  "provider_calls": 0,
+  "url": "http://127.0.0.1:3161",
+  "summary": {
+    "baseline_total": 11,
+    "baseline_pass": 11,
+    "baseline_fail": 0,
+    "baseline_uncertifiable": 0,
+    "certified_views_per_case": {
+      "polygon-cross-section": 10,
+      "circle-sphere-sample": 1,
+      "ellipse-cylinder-p6": 0
+    },
+    "faults_on_certified_views": 50,
+    "faults_detected": 50,
+    "faults_on_uncertifiable_views": 0,
+    "expected_rows": 180,
+    "completed_rows": 61
+  },
+  "failures": [
+    "locator.waitFor: Timeout 30000ms exceeded."
+  ],
+  "rows": [
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "default",
+      "camera": {
+        "position": [
+          13.727596324489816,
+          12.613495035443613,
+          7.135530096133097
+        ],
+        "view_matrix_column_major": [
+          -0.5,
+          -0.29619813272602363,
+          0.8137976813493739,
+          0,
+          0.8660254037844387,
+          -0.1710100716628343,
+          0.4698463103929543,
+          0,
+          -2.775557561562892e-17,
+          0.9396926207859085,
+          0.3420201433256685,
+          0,
+          -4.059808968958158,
+          -0.4820818886715106,
+          -19.53838518911709,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "polygon-cross-section-1440-default-none.png",
+      "sha256": "0f0283ffbbae84de78860f06c68f5f59ca1e27a3b9c76f2630f8904411de889e",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 102,
+          "blue": 90,
+          "coverage": 0.8823529411764706,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 113,
+          "blue": 113,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 96,
+          "blue": 96,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 104,
+          "blue": 86,
+          "coverage": 0.8269230769230769,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 69,
+        "cam": 64,
+        "xanh": 0,
+        "policy_color": 64,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 1747,
+        "in_band": 1747,
+        "share": 1
+      },
+      "verdict": "PASS",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "default",
+      "camera": {
+        "position": [
+          13.727596324489816,
+          12.613495035443613,
+          7.135530096133097
+        ],
+        "view_matrix_column_major": [
+          -0.5,
+          -0.29619813272602363,
+          0.8137976813493739,
+          0,
+          0.8660254037844387,
+          -0.1710100716628343,
+          0.4698463103929543,
+          0,
+          -2.775557561562892e-17,
+          0.9396926207859085,
+          0.3420201433256685,
+          0,
+          -4.059808968958158,
+          -0.4820818886715106,
+          -19.53838518911709,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "boundary_terracotta",
+      "file": "polygon-cross-section-1440-default-boundary_terracotta.png",
+      "sha256": "1e38c8d1ebdeba341c0487c865afbe92540d5e7928d9c94c8789a920198dfb46",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 102,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 113,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 96,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 104,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 69,
+        "cam": 64,
+        "xanh": 0,
+        "policy_color": 64,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "default",
+      "camera": {
+        "position": [
+          13.727596324489816,
+          12.613495035443613,
+          7.135530096133097
+        ],
+        "view_matrix_column_major": [
+          -0.5,
+          -0.29619813272602363,
+          0.8137976813493739,
+          0,
+          0.8660254037844387,
+          -0.1710100716628343,
+          0.4698463103929543,
+          0,
+          -2.775557561562892e-17,
+          0.9396926207859085,
+          0.3420201433256685,
+          0,
+          -4.059808968958158,
+          -0.4820818886715106,
+          -19.53838518911709,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "boundary_magenta",
+      "file": "polygon-cross-section-1440-default-boundary_magenta.png",
+      "sha256": "82c4d1145207e3328451acf0915648f98c7694c17486788f96bb821d9b558ccd",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 102,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 113,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 96,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 104,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 69,
+        "cam": 64,
+        "xanh": 0,
+        "policy_color": 64,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "default",
+      "camera": {
+        "position": [
+          13.727596324489816,
+          12.613495035443613,
+          7.135530096133097
+        ],
+        "view_matrix_column_major": [
+          -0.5,
+          -0.29619813272602363,
+          0.8137976813493739,
+          0,
+          0.8660254037844387,
+          -0.1710100716628343,
+          0.4698463103929543,
+          0,
+          -2.775557561562892e-17,
+          0.9396926207859085,
+          0.3420201433256685,
+          0,
+          -4.059808968958158,
+          -0.4820818886715106,
+          -19.53838518911709,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "fill_grey",
+      "file": "polygon-cross-section-1440-default-fill_grey.png",
+      "sha256": "f6f283394e89e7b2ee28036f9fff30bc2a5f852366a4f842840acea93daaba78",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 102,
+          "blue": 90,
+          "coverage": 0.8823529411764706,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 113,
+          "blue": 113,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 96,
+          "blue": 96,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 104,
+          "blue": 86,
+          "coverage": 0.8269230769230769,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 69,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 0,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 1832,
+        "in_band": 1832,
+        "share": 1
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "default",
+      "camera": {
+        "position": [
+          13.727596324489816,
+          12.613495035443613,
+          7.135530096133097
+        ],
+        "view_matrix_column_major": [
+          -0.5,
+          -0.29619813272602363,
+          0.8137976813493739,
+          0,
+          0.8660254037844387,
+          -0.1710100716628343,
+          0.4698463103929543,
+          0,
+          -2.775557561562892e-17,
+          0.9396926207859085,
+          0.3420201433256685,
+          0,
+          -4.059808968958158,
+          -0.4820818886715106,
+          -19.53838518911709,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "fill_hidden",
+      "file": "polygon-cross-section-1440-default-fill_hidden.png",
+      "sha256": "c97fdaf07225f36ab2f596f42f5e9bdbf5a62641fb4b6589aa0fe706156aea51",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 102,
+          "blue": 91,
+          "coverage": 0.8921568627450981,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 113,
+          "blue": 113,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 96,
+          "blue": 96,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 104,
+          "blue": 86,
+          "coverage": 0.8269230769230769,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 69,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 0,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 1865,
+        "in_band": 1865,
+        "share": 1
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "default",
+      "camera": {
+        "position": [
+          13.727596324489816,
+          12.613495035443613,
+          7.135530096133097
+        ],
+        "view_matrix_column_major": [
+          -0.5,
+          -0.29619813272602363,
+          0.8137976813493739,
+          0,
+          0.8660254037844387,
+          -0.1710100716628343,
+          0.4698463103929543,
+          0,
+          -2.775557561562892e-17,
+          0.9396926207859085,
+          0.3420201433256685,
+          0,
+          -4.059808968958158,
+          -0.4820818886715106,
+          -19.53838518911709,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "wrong_object",
+      "file": "polygon-cross-section-1440-default-wrong_object.png",
+      "sha256": "dfce91523848abb6967ff7482655e058fedfc338298de9e33e1c7556e0be0690",
+      "selected": "C",
+      "identity_ok": false,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 102,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 113,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 96,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 104,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 69,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 64,
+        "max_delta_e": 59.705412519593736
+      },
+      "blue": {
+        "all": 48,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "quarter",
+      "camera": {
+        "position": [
+          8.70210054840416,
+          -6.196502817308305,
+          7.135530096132892
+        ],
+        "view_matrix_column_major": [
+          0.8652987755148358,
+          -0.17143980301722334,
+          0.4710269875855752,
+          0,
+          0.5012564504248559,
+          0.2959496112211068,
+          -0.8131148741263747,
+          0,
+          -1.1102230246251568e-16,
+          0.9396926207859098,
+          0.34202014332566527,
+          0,
+          -4.42387994168952,
+          -3.3794659731644856,
+          -11.57788784148493,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "polygon-cross-section-1440-quarter-none.png",
+      "sha256": "9d8b27ac2dee570ae4bd320cbd6572692355e62692f24659220fdfc7e52f2cf1",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 176,
+          "blue": 176,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 154,
+          "blue": 154,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 155,
+          "blue": 122,
+          "coverage": 0.7870967741935484,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 162,
+          "blue": 129,
+          "coverage": 0.7962962962962963,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 107,
+        "cam": 101,
+        "xanh": 0,
+        "policy_color": 101,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 2765,
+        "in_band": 2765,
+        "share": 1
+      },
+      "verdict": "PASS",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "quarter",
+      "camera": {
+        "position": [
+          8.701529131651595,
+          -6.196833813393395,
+          7.135530096132865
+        ],
+        "view_matrix_column_major": [
+          0.8653228004271829,
+          -0.17142561755119184,
+          0.47098801333797236,
+          0,
+          0.5012149748968575,
+          0.2959578282250688,
+          -0.8131374501592228,
+          0,
+          3.053113317719179e-16,
+          0.9396926207859103,
+          0.34202014332566266,
+          0,
+          -4.423685651979504,
+          -3.3795384944151903,
+          -11.577688590986176,
+          0.9999999999999998
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "boundary_terracotta",
+      "file": "polygon-cross-section-1440-quarter-boundary_terracotta.png",
+      "sha256": "8d85c0c1ad07b9af2328a99a4a4764664f2d7428fc8c9178f28f107c72b4022a",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 176,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 154,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 155,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 162,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 107,
+        "cam": 101,
+        "xanh": 0,
+        "policy_color": 101,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "quarter",
+      "camera": {
+        "position": [
+          8.70131797526553,
+          -6.196956117557415,
+          7.135530096132844
+        ],
+        "view_matrix_column_major": [
+          0.8653316777129064,
+          -0.1714203755772241,
+          0.4709736111328638,
+          0,
+          0.5011996483903061,
+          0.29596086443560404,
+          -0.8131457920791102,
+          0,
+          2.7755575615628914e-17,
+          0.9396926207859108,
+          0.3420201433256622,
+          0,
+          -4.42361385464006,
+          -3.379565291973149,
+          -11.577614965300748,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "boundary_magenta",
+      "file": "polygon-cross-section-1440-quarter-boundary_magenta.png",
+      "sha256": "e249308ba10ab7490e9efeeff4f2c034bd20c3a617f8d5c9200409b27f60757f",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 176,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 154,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 155,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 162,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 107,
+        "cam": 101,
+        "xanh": 0,
+        "policy_color": 101,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "quarter",
+      "camera": {
+        "position": [
+          8.701635622286924,
+          -6.19677213091977,
+          7.135530096132844
+        ],
+        "view_matrix_column_major": [
+          0.865318323286553,
+          -0.17142826118962876,
+          0.4709952766748823,
+          0,
+          0.5012227043785512,
+          0.2959562969527899,
+          -0.8131332430232103,
+          0,
+          -5.5511151231257815e-17,
+          0.9396926207859102,
+          0.34202014332566366,
+          0,
+          -4.423721860650619,
+          -3.3795249795701645,
+          -11.577725722717627,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "fill_grey",
+      "file": "polygon-cross-section-1440-quarter-fill_grey.png",
+      "sha256": "887f6cf3cf4b92ba4895784c0830e670fcc84573094c19cbb080d4fec403f347",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 176,
+          "blue": 176,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 154,
+          "blue": 154,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 155,
+          "blue": 122,
+          "coverage": 0.7870967741935484,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 162,
+          "blue": 129,
+          "coverage": 0.7962962962962963,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 107,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 0,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 2897,
+        "in_band": 2897,
+        "share": 1
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "quarter",
+      "camera": {
+        "position": [
+          8.70133753167325,
+          -6.196944790475014,
+          7.1355300961328725
+        ],
+        "view_matrix_column_major": [
+          0.8653308555516368,
+          -0.17142086106659196,
+          0.4709749450039363,
+          0,
+          0.5012010678662533,
+          0.2959605832398906,
+          -0.8131450195002311,
+          0,
+          0,
+          0.93969262078591,
+          0.34202014332566444,
+          0,
+          -4.423620504232089,
+          -3.3795628101269664,
+          -11.577621784117113,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "fill_hidden",
+      "file": "polygon-cross-section-1440-quarter-fill_hidden.png",
+      "sha256": "453731d4480b2f1f199a3207a5890b45a068d5a92d1e95a4da07f513d1c54205",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 176,
+          "blue": 176,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 154,
+          "blue": 154,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 155,
+          "blue": 122,
+          "coverage": 0.7870967741935484,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 162,
+          "blue": 130,
+          "coverage": 0.8024691358024691,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 107,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 0,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 2954,
+        "in_band": 2954,
+        "share": 1
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "quarter",
+      "camera": {
+        "position": [
+          8.701254165999883,
+          -6.19699307562213,
+          7.135530096132876
+        ],
+        "view_matrix_column_major": [
+          0.865334360265075,
+          -0.17141879150716427,
+          0.4709692589361396,
+          0,
+          0.5011950168792914,
+          0.29596178192248357,
+          -0.8131483128535869,
+          0,
+          2.7755575615628907e-17,
+          0.9396926207859096,
+          0.34202014332566494,
+          0,
+          -4.423592158102044,
+          -3.379573389777041,
+          -11.57759271676742,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "wrong_object",
+      "file": "polygon-cross-section-1440-quarter-wrong_object.png",
+      "sha256": "117f684b093b04d607bc4f1b86cf6c82db6eccbc06d091207f6cc7a88eeb487e",
+      "selected": "C",
+      "identity_ok": false,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 176,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 154,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 155,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 162,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 107,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 101,
+        "max_delta_e": 60.31144576358155
+      },
+      "blue": {
+        "all": 44,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "half",
+      "camera": {
+        "position": [
+          -10.125592275165378,
+          -1.1803539861987584,
+          7.13553009613284
+        ],
+        "view_matrix_column_major": [
+          0.5012082577739092,
+          0.2959591589153533,
+          -0.8131411062007375,
+          0,
+          -0.8653266911052971,
+          0.17142332015983677,
+          -0.4709817013071053,
+          0,
+          -3.330669073875468e-16,
+          0.9396926207859112,
+          0.34202014332566033,
+          0,
+          4.053638653954275,
+          -3.5061030041759804,
+          -11.22995545831405,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "polygon-cross-section-1440-half-none.png",
+      "sha256": "9695ef8dd2b3cd335fe32512d808f1c4479876fecfd44b1548abe40ff57a46cf",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 72,
+          "blue": 72,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "curve": false,
+          "visible": 178,
+          "blue": 134,
+          "coverage": 0.7528089887640449,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 83,
+          "blue": 65,
+          "coverage": 0.7831325301204819,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "curve": false,
+          "visible": 213,
+          "blue": 213,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 123,
+        "cam": 123,
+        "xanh": 0,
+        "policy_color": 123,
+        "max_delta_e": 2.9358210805299443
+      },
+      "blue": {
+        "all": 2379,
+        "in_band": 2379,
+        "share": 1
+      },
+      "verdict": "PASS",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "half",
+      "camera": {
+        "position": [
+          -10.125307273135324,
+          -1.1808460134669279,
+          7.135530096132847
+        ],
+        "view_matrix_column_major": [
+          0.5012439709213543,
+          0.29595208371743925,
+          -0.8131216672542296,
+          0,
+          -0.8653060046105033,
+          0.17143553477564505,
+          -0.4710152606882244,
+          0,
+          5.5511151231257815e-17,
+          0.9396926207859111,
+          0.34202014332566094,
+          0,
+          4.053456078411911,
+          -3.5061602231616855,
+          -11.229798250442874,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "boundary_terracotta",
+      "file": "polygon-cross-section-1440-half-boundary_terracotta.png",
+      "sha256": "23942920ef0b673330060d7cf9f9fb7cb05e70853dee9cd122ae00458724b549",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 72,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "curve": false,
+          "visible": 179,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 83,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "curve": false,
+          "visible": 213,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 123,
+        "cam": 123,
+        "xanh": 0,
+        "policy_color": 123,
+        "max_delta_e": 2.9358210805299443
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "half",
+      "camera": {
+        "position": [
+          -10.125459596652648,
+          -1.1805830480977697,
+          7.135530096132806
+        ],
+        "view_matrix_column_major": [
+          0.5012248839283984,
+          0.2959558651607896,
+          -0.8131320566844551,
+          0,
+          -0.8653170608112171,
+          0.17142900663957708,
+          -0.47099732478179107,
+          0,
+          -2.77555756156289e-17,
+          0.939692620785912,
+          0.342020143325658,
+          0,
+          4.053553657830401,
+          -3.5061296424629083,
+          -11.22988227022219,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "boundary_magenta",
+      "file": "polygon-cross-section-1440-half-boundary_magenta.png",
+      "sha256": "e55269d4131ca7a9058e93fcca0368b7f24553be8d89b7918eb9a40af7ca2cc3",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 72,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "curve": false,
+          "visible": 178,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 83,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "curve": false,
+          "visible": 213,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 123,
+        "cam": 123,
+        "xanh": 0,
+        "policy_color": 123,
+        "max_delta_e": 2.9358210805299443
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "half",
+      "camera": {
+        "position": [
+          -10.125530709655228,
+          -1.1804602768091286,
+          7.135530096132824
+        ],
+        "view_matrix_column_major": [
+          0.5012159727370532,
+          0.29595763054669755,
+          -0.8131369070423712,
+          0,
+          -0.8653222224543002,
+          0.1714259588326365,
+          -0.4709889510010416,
+          0,
+          -2.7755575615628907e-17,
+          0.939692620785912,
+          0.34202014332565905,
+          0,
+          4.053599213871257,
+          -3.5061153650585757,
+          -11.229921497068231,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "fill_grey",
+      "file": "polygon-cross-section-1440-half-fill_grey.png",
+      "sha256": "0fe6b26f8509bd26c8ca406a0db126192b4f4c92590dd776073338b46db4147b",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 72,
+          "blue": 72,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "curve": false,
+          "visible": 178,
+          "blue": 134,
+          "coverage": 0.7528089887640449,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 83,
+          "blue": 72,
+          "coverage": 0.8674698795180723,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "curve": false,
+          "visible": 213,
+          "blue": 213,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 123,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 0,
+        "max_delta_e": 11.564026253323341
+      },
+      "blue": {
+        "all": 2439,
+        "in_band": 2439,
+        "share": 1
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "half",
+      "camera": {
+        "position": [
+          -10.125307918223623,
+          -1.1808448998399221,
+          7.135530096132818
+        ],
+        "view_matrix_column_major": [
+          0.5012438900902126,
+          0.2959520997318048,
+          -0.8131217112533439,
+          0,
+          -0.8653060514333818,
+          0.17143550712976502,
+          -0.47101518473179754,
+          0,
+          -1.665334536937734e-16,
+          0.9396926207859118,
+          0.3420201433256585,
+          0,
+          4.053456491655913,
+          -3.506160093656793,
+          -11.229798606254622,
+          0.9999999999999998
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "fill_hidden",
+      "file": "polygon-cross-section-1440-half-fill_hidden.png",
+      "sha256": "63263aa796d590e2e7f06d323c4b677135440b4a1edbc5ed06fa013a62735776",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 72,
+          "blue": 72,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "curve": false,
+          "visible": 179,
+          "blue": 136,
+          "coverage": 0.7597765363128491,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 83,
+          "blue": 74,
+          "coverage": 0.891566265060241,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "curve": false,
+          "visible": 213,
+          "blue": 213,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 123,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 0,
+        "max_delta_e": 14.47131492444311
+      },
+      "blue": {
+        "all": 2524,
+        "in_band": 2524,
+        "share": 1
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "half",
+      "camera": {
+        "position": [
+          -10.125323623599762,
+          -1.1808177873046652,
+          7.135530096132792
+        ],
+        "view_matrix_column_major": [
+          0.5012419221627581,
+          0.29595248961900733,
+          -0.8131227824596324,
+          0,
+          -0.8653071913873034,
+          0.17143483405893395,
+          -0.47101333548489066,
+          0,
+          -3.608224830031758e-16,
+          0.9396926207859125,
+          0.3420201433256569,
+          0,
+          4.05346655254036,
+          -3.5061569407088666,
+          -11.229807268907821,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "wrong_object",
+      "file": "polygon-cross-section-1440-half-wrong_object.png",
+      "sha256": "193c7112d9b63a838601fceb1e497fe330602e99dfdecd11fb3821832f51bf0a",
+      "selected": "C",
+      "identity_ok": false,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 72,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "curve": false,
+          "visible": 179,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 83,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "curve": false,
+          "visible": 213,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 123,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 123,
+        "max_delta_e": 2.0298279985826104
+      },
+      "blue": {
+        "all": 37,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "high",
+      "camera": {
+        "position": [
+          4.539543452682763,
+          7.308770236577317,
+          16.436127649380747
+        ],
+        "view_matrix_column_major": [
+          -0.5000000000000041,
+          -0.8455697968100792,
+          0.18711418632096544,
+          0,
+          0.866025403784436,
+          -0.4881899498069218,
+          0.1080304258416084,
+          0,
+          -1.3877787807814454e-17,
+          0.21606085168321493,
+          0.9763798996138355,
+          0,
+          -4.059808968958139,
+          3.8553652715412516,
+          -17.686887204795884,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "polygon-cross-section-1440-high-none.png",
+      "sha256": "be2a0a20879958c7931396282596e28c98d69b3eeae0c1fd84f0bc35a41159f0",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 157,
+          "blue": 125,
+          "coverage": 0.7961783439490446,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 158,
+          "blue": 158,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 160,
+          "blue": 160,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 153,
+          "blue": 123,
+          "coverage": 0.803921568627451,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 276,
+        "cam": 253,
+        "xanh": 0,
+        "policy_color": 253,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 2715,
+        "in_band": 2715,
+        "share": 1
+      },
+      "verdict": "PASS",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "high",
+      "camera": {
+        "position": [
+          4.5395040621347755,
+          7.30874749443382,
+          16.43613771441765
+        ],
+        "view_matrix_column_major": [
+          -0.5000000000000011,
+          -0.8455703913359777,
+          0.18711149963569898,
+          0,
+          0.8660254037844379,
+          -0.4881902930566054,
+          0.10802887468314573,
+          0,
+          -2.7755575615628907e-17,
+          0.2160577493662909,
+          0.9763805861132087,
+          0,
+          -4.059808968958155,
+          3.8553748846234495,
+          -17.68687495487585,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "boundary_terracotta",
+      "file": "polygon-cross-section-1440-high-boundary_terracotta.png",
+      "sha256": "658459be0f90370675a0ef95bef7aa6be4d3910ea671c7dc1daaf5f407128334",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 157,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 158,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 160,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 153,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 276,
+        "cam": 253,
+        "xanh": 0,
+        "policy_color": 253,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "high",
+      "camera": {
+        "position": [
+          4.53900575209205,
+          7.308459794996496,
+          16.436265029056862
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999976,
+          -0.8455779116114033,
+          0.18707751172949733,
+          0,
+          0.86602540378444,
+          -0.4881946348896421,
+          0.10800925175634989,
+          0,
+          5.551115123125783e-17,
+          0.2160185035127009,
+          0.9763892697792891,
+          0,
+          -4.059808968958173,
+          3.8554964909550833,
+          -17.68671998539589,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "boundary_magenta",
+      "file": "polygon-cross-section-1440-high-boundary_magenta.png",
+      "sha256": "09e97c7f1b7692a9cc20ce89011830f56428dfb2da1590dc14e9b93783ca7512",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 157,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 158,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 160,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 153,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 276,
+        "cam": 254,
+        "xanh": 0,
+        "policy_color": 254,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "high",
+      "camera": {
+        "position": [
+          4.539627476434361,
+          7.308818747712921,
+          16.43610617920165
+        ],
+        "view_matrix_column_major": [
+          -0.5000000000000043,
+          -0.8455685286003816,
+          0.1871199172738728,
+          0,
+          0.8660254037844359,
+          -0.4881892176057118,
+          0.10803373460881228,
+          0,
+          -4.163336342344336e-17,
+          0.2160674692176226,
+          0.9763784352114151,
+          0,
+          -4.059808968958138,
+          3.8553447657781668,
+          -17.686913334956508,
+          0.9999999999999998
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "fill_grey",
+      "file": "polygon-cross-section-1440-high-fill_grey.png",
+      "sha256": "eb48621f2eb59564b12ebd0bec1b7abde8b42893887570114967a6f99287059b",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 157,
+          "blue": 125,
+          "coverage": 0.7961783439490446,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 158,
+          "blue": 158,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 160,
+          "blue": 160,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 153,
+          "blue": 123,
+          "coverage": 0.803921568627451,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 276,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 0,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 2803,
+        "in_band": 2803,
+        "share": 1
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "high",
+      "camera": {
+        "position": [
+          4.538891540203015,
+          7.308393854731646,
+          16.436294205957324
+        ],
+        "view_matrix_column_major": [
+          -0.5000000000000042,
+          -0.8455796350450013,
+          0.18706972175410239,
+          0,
+          0.8660254037844358,
+          -0.4881956299145029,
+          0.1080047542119607,
+          0,
+          4.1633363423443346e-17,
+          0.21600950842391947,
+          0.9763912598289974,
+          0,
+          -4.059808968958137,
+          3.8555243619079502,
+          -17.68668446613705,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "fill_hidden",
+      "file": "polygon-cross-section-1440-high-fill_hidden.png",
+      "sha256": "7c4413324ae3746cf0c80d851ee75778a047f2df1ed46a3bd1dfa7447571a2ef",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 157,
+          "blue": 126,
+          "coverage": 0.802547770700637,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 158,
+          "blue": 158,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 160,
+          "blue": 160,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 153,
+          "blue": 123,
+          "coverage": 0.803921568627451,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 276,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 0,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 2885,
+        "in_band": 2885,
+        "share": 1
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "high",
+      "camera": {
+        "position": [
+          4.53934823622182,
+          7.308657528301021,
+          16.43617752942704
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999956,
+          -0.845572743145937,
+          0.1871008713198726,
+          0,
+          0.8660254037844388,
+          -0.4881916508747164,
+          0.1080227384221418,
+          0,
+          1.3877787807814454e-17,
+          0.21604547684428382,
+          0.9763833017494339,
+          0,
+          -4.059808968958162,
+          3.8554129127735877,
+          -17.686826494939936,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "wrong_object",
+      "file": "polygon-cross-section-1440-high-wrong_object.png",
+      "sha256": "6978079ec0a618edbba53a451ab3c57d0ea0b3f29ed4fa439f0347f4741bd9f9",
+      "selected": "C",
+      "identity_ok": false,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 157,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 158,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 160,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 153,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 276,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 253,
+        "max_delta_e": 60.47077748928001
+      },
+      "blue": {
+        "all": 43,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "low",
+      "camera": {
+        "position": [
+          11.866480197517312,
+          11.53897913854269,
+          -6.808803772370193
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999998734,
+          0.5274717291322711,
+          0.6868577545359917,
+          0,
+          0.8660254037844457,
+          0.3045359448044238,
+          0.39655750947632323,
+          0,
+          2.7755575615628907e-17,
+          0.7931150189526667,
+          -0.609071889608863,
+          0,
+          -4.059808968958223,
+          -4.373102209564572,
+          -16.87350375140576,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "polygon-cross-section-1440-low-none.png",
+      "sha256": "39a163fcd51b7de73bf68ee6a1467112eee02b8c06958a82286232875b27e14c",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 110,
+          "blue": 95,
+          "coverage": 0.8636363636363636,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "curve": false,
+          "visible": 119,
+          "blue": 100,
+          "coverage": 0.8403361344537815,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 87,
+          "blue": 80,
+          "coverage": 0.9195402298850575,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 109,
+          "blue": 94,
+          "coverage": 0.8623853211009175,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 164,
+        "cam": 20,
+        "xanh": 0,
+        "policy_color": 158,
+        "max_delta_e": 38.51481513288979
+      },
+      "blue": {
+        "all": 1371,
+        "in_band": 1371,
+        "share": 1
+      },
+      "verdict": "PASS",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "low",
+      "camera": {
+        "position": [
+          11.866266423651313,
+          11.538855716143615,
+          -6.809125197014484
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999998757,
+          0.5274907151802856,
+          0.686843173802145,
+          0,
+          0.8660254037844459,
+          0.3045469064043557,
+          0.3965490912857123,
+          0,
+          2.220446049250313e-16,
+          0.7930981825714442,
+          -0.6090938128087269,
+          0,
+          -4.059808968958227,
+          -4.37316335547578,
+          -16.873382868457718,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "boundary_terracotta",
+      "file": "polygon-cross-section-1440-low-boundary_terracotta.png",
+      "sha256": "e2fda00b95cac13f7517f678a533b940aeb6f1b6db3d634602a23ffb68d1bb2c",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 110,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "curve": false,
+          "visible": 119,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 87,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 109,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 164,
+        "cam": 20,
+        "xanh": 0,
+        "policy_color": 158,
+        "max_delta_e": 38.51481513288979
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "low",
+      "camera": {
+        "position": [
+          11.866480197517312,
+          11.53897913854269,
+          -6.808803772370193
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999998734,
+          0.5274717291322711,
+          0.6868577545359917,
+          0,
+          0.8660254037844457,
+          0.3045359448044238,
+          0.39655750947632323,
+          0,
+          2.7755575615628907e-17,
+          0.7931150189526667,
+          -0.609071889608863,
+          0,
+          -4.059808968958223,
+          -4.373102209564572,
+          -16.87350375140576,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "boundary_magenta",
+      "file": "polygon-cross-section-1440-low-boundary_magenta.png",
+      "sha256": "f7faa1897bdb58a3f7a579551740c99f380a4e2dda1f5a3c47341a90f245ba8e",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 110,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "curve": false,
+          "visible": 119,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 87,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 109,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 164,
+        "cam": 20,
+        "xanh": 0,
+        "policy_color": 158,
+        "max_delta_e": 38.51481513288979
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "low",
+      "camera": {
+        "position": [
+          11.86614373504575,
+          11.538784881844173,
+          -6.8093096600004595
+        ],
+        "view_matrix_column_major": [
+          -0.499999999999988,
+          0.5275016111186361,
+          0.6868348056609065,
+          0,
+          0.8660254037844457,
+          0.30455319717729606,
+          0.39654425993711606,
+          0,
+          1.3877787807814457e-16,
+          0.7930885198742509,
+          -0.6091063943546067,
+          0,
+          -4.059808968958222,
+          -4.373198445693431,
+          -16.873313492795884,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "fill_grey",
+      "file": "polygon-cross-section-1440-low-fill_grey.png",
+      "sha256": "5453be9b4701c52c0556ab3e0f27b1001faa7ab4ce4e0d7d2c13cafca64a2142",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 110,
+          "blue": 99,
+          "coverage": 0.9,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "curve": false,
+          "visible": 119,
+          "blue": 103,
+          "coverage": 0.865546218487395,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 87,
+          "blue": 80,
+          "coverage": 0.9195402298850575,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 109,
+          "blue": 94,
+          "coverage": 0.8623853211009175,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 164,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 0,
+        "max_delta_e": 39.572073800627095
+      },
+      "blue": {
+        "all": 1457,
+        "in_band": 1457,
+        "share": 1
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "low",
+      "camera": {
+        "position": [
+          11.866267974422021,
+          11.538856611481508,
+          -6.809122865383473
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999998823,
+          0.5274905774545108,
+          0.6868432795745465,
+          0,
+          0.8660254037844455,
+          0.30454682688834345,
+          0.3965491523534373,
+          0,
+          -1.3877787807814457e-16,
+          0.7930983047068934,
+          -0.6090936537767011,
+          0,
+          -4.059808968958221,
+          -4.373162911927539,
+          -16.87338374536418,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "fill_hidden",
+      "file": "polygon-cross-section-1440-low-fill_hidden.png",
+      "sha256": "ec152b50a987060de9397d179c1662d285bb1b499c1408e678f5b64c7744013f",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 110,
+          "blue": 99,
+          "coverage": 0.9,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "curve": false,
+          "visible": 119,
+          "blue": 103,
+          "coverage": 0.865546218487395,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 87,
+          "blue": 80,
+          "coverage": 0.9195402298850575,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 109,
+          "blue": 94,
+          "coverage": 0.8623853211009175,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 164,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 0,
+        "max_delta_e": 36.16206495068721
+      },
+      "blue": {
+        "all": 1476,
+        "in_band": 1476,
+        "share": 1
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "cameraName": "low",
+      "camera": {
+        "position": [
+          11.866368687872821,
+          11.538914758419395,
+          -6.808971437571979
+        ],
+        "view_matrix_column_major": [
+          -0.499999999999985,
+          0.5274816328519402,
+          0.6868501488708185,
+          0,
+          0.8660254037844471,
+          0.304541662719639,
+          0.3965531183434861,
+          0,
+          1.110223024625156e-16,
+          0.7931062366869954,
+          -0.6090833254392959,
+          0,
+          -4.0598089689582375,
+          -4.3731341054495605,
+          -16.873440695589878,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "wrong_object",
+      "file": "polygon-cross-section-1440-low-wrong_object.png",
+      "sha256": "5be34ad375d539a74e11412f9d569240a6a75facfe0f5d3fb1be9a0ff9bed46a",
+      "selected": "C",
+      "identity_ok": false,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 110,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "curve": false,
+          "visible": 119,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 87,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 109,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 164,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 158,
+        "max_delta_e": 28.34638152856565
+      },
+      "blue": {
+        "all": 52,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "default",
+      "camera": {
+        "position": [
+          16.133967614573546,
+          10.298568473040978,
+          7.515901918933541
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999967,
+          -0.2961981327260234,
+          0.8137976813493739,
+          0,
+          0.8660254037844386,
+          -0.171010071662834,
+          0.469846310392954,
+          0,
+          1.9428902930940235e-16,
+          0.9396926207859084,
+          0.34202014332566827,
+          0,
+          -0.8518381129802376,
+          -0.5226275582743388,
+          -20.539119686628663,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "polygon-cross-section-390-default-none.png",
+      "sha256": "88cd458fd93753da6c242b55b15727b37828fc4ebc116f2afb93917be1158292",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 38,
+          "blue": 38,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 59,
+          "blue": 59,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 35,
+          "blue": 35,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 54,
+          "blue": 48,
+          "coverage": 0.8888888888888888,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 39,
+        "cam": 30,
+        "xanh": 0,
+        "policy_color": 31,
+        "max_delta_e": 72.59143418763897
+      },
+      "blue": {
+        "all": 1937,
+        "in_band": 1937,
+        "share": 1
+      },
+      "verdict": "PASS",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "default",
+      "camera": {
+        "position": [
+          16.133967614573546,
+          10.298568473040978,
+          7.515901918933541
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999967,
+          -0.2961981327260234,
+          0.8137976813493739,
+          0,
+          0.8660254037844386,
+          -0.171010071662834,
+          0.469846310392954,
+          0,
+          1.9428902930940235e-16,
+          0.9396926207859084,
+          0.34202014332566827,
+          0,
+          -0.8518381129802376,
+          -0.5226275582743388,
+          -20.539119686628663,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "boundary_terracotta",
+      "file": "polygon-cross-section-390-default-boundary_terracotta.png",
+      "sha256": "a57319ee7b454a1ced7ee7b6633e8e17cb7d7ec0b9d92c00d6eb80645cfaab9e",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 38,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 59,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 35,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 54,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 39,
+        "cam": 30,
+        "xanh": 0,
+        "policy_color": 31,
+        "max_delta_e": 72.59143418763897
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "default",
+      "camera": {
+        "position": [
+          16.133967614573546,
+          10.298568473040978,
+          7.515901918933541
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999967,
+          -0.2961981327260234,
+          0.8137976813493739,
+          0,
+          0.8660254037844386,
+          -0.171010071662834,
+          0.469846310392954,
+          0,
+          1.9428902930940235e-16,
+          0.9396926207859084,
+          0.34202014332566827,
+          0,
+          -0.8518381129802376,
+          -0.5226275582743388,
+          -20.539119686628663,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "boundary_magenta",
+      "file": "polygon-cross-section-390-default-boundary_magenta.png",
+      "sha256": "8f196e44cd2dff25a02801bafc9dd918e559b09710204771424af955f9a878c3",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 38,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 59,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 35,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 54,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 39,
+        "cam": 30,
+        "xanh": 0,
+        "policy_color": 31,
+        "max_delta_e": 72.59143418763897
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "default",
+      "camera": {
+        "position": [
+          16.133967614573546,
+          10.298568473040978,
+          7.515901918933541
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999967,
+          -0.2961981327260234,
+          0.8137976813493739,
+          0,
+          0.8660254037844386,
+          -0.171010071662834,
+          0.469846310392954,
+          0,
+          1.9428902930940235e-16,
+          0.9396926207859084,
+          0.34202014332566827,
+          0,
+          -0.8518381129802376,
+          -0.5226275582743388,
+          -20.539119686628663,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "fill_grey",
+      "file": "polygon-cross-section-390-default-fill_grey.png",
+      "sha256": "9a8fd27dfec56c18fb7d9033d8d35d3746cf1dbc73104081c7ce5886f6c221fc",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 38,
+          "blue": 38,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 59,
+          "blue": 59,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 35,
+          "blue": 35,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 54,
+          "blue": 48,
+          "coverage": 0.8888888888888888,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 39,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 0,
+        "max_delta_e": 73.66433846037201
+      },
+      "blue": {
+        "all": 2121,
+        "in_band": 2121,
+        "share": 1
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "default",
+      "camera": {
+        "position": [
+          16.133967614573546,
+          10.298568473040978,
+          7.515901918933541
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999967,
+          -0.2961981327260234,
+          0.8137976813493739,
+          0,
+          0.8660254037844386,
+          -0.171010071662834,
+          0.469846310392954,
+          0,
+          1.9428902930940235e-16,
+          0.9396926207859084,
+          0.34202014332566827,
+          0,
+          -0.8518381129802376,
+          -0.5226275582743388,
+          -20.539119686628663,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "fill_hidden",
+      "file": "polygon-cross-section-390-default-fill_hidden.png",
+      "sha256": "299d2455746fe5a9e52d0384b001ff3de0c2bb39f85929935a1fe88d8b92b3a4",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 38,
+          "blue": 38,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 59,
+          "blue": 59,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 35,
+          "blue": 35,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 54,
+          "blue": 48,
+          "coverage": 0.8888888888888888,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 39,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 0,
+        "max_delta_e": 73.39257898375236
+      },
+      "blue": {
+        "all": 2128,
+        "in_band": 2128,
+        "share": 1
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "default",
+      "camera": {
+        "position": [
+          16.133967614573546,
+          10.298568473040978,
+          7.515901918933541
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999967,
+          -0.2961981327260234,
+          0.8137976813493739,
+          0,
+          0.8660254037844386,
+          -0.171010071662834,
+          0.469846310392954,
+          0,
+          1.9428902930940235e-16,
+          0.9396926207859084,
+          0.34202014332566827,
+          0,
+          -0.8518381129802376,
+          -0.5226275582743388,
+          -20.539119686628663,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "wrong_object",
+      "file": "polygon-cross-section-390-default-wrong_object.png",
+      "sha256": "9afe449e32854aa5bb6ae066bd11c10c4b747afe3b69981573dfa2ce6648d5f4",
+      "selected": "C",
+      "identity_ok": false,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 38,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 59,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 35,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 54,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 39,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 31,
+        "max_delta_e": 53.234661405892844
+      },
+      "blue": {
+        "all": 249,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "quarter",
+      "camera": {
+        "position": [
+          10.763847518261073,
+          -9.796260699678905,
+          7.515901918933248
+        ],
+        "view_matrix_column_major": [
+          0.8653618159949076,
+          -0.17140257753917432,
+          0.47092471142521597,
+          0,
+          0.5011476104083462,
+          0.2959711723351311,
+          -0.8131741128003106,
+          0,
+          1.1102230246251563e-16,
+          0.9396926207859118,
+          0.3420201433256594,
+          0,
+          -4.405249994913405,
+          -2.318275599119117,
+          -15.605617241119214,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "polygon-cross-section-390-quarter-none.png",
+      "sha256": "2ec89393fcf003d9078724b7013af0f5ddc6f94be6bf21bc369aa3d3636cbd04",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 64,
+          "blue": 64,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 38,
+          "blue": 38,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 58,
+          "blue": 53,
+          "coverage": 0.9137931034482759,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 53,
+          "blue": 53,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 65,
+        "cam": 49,
+        "xanh": 0,
+        "policy_color": 54,
+        "max_delta_e": 75.97634701827307
+      },
+      "blue": {
+        "all": 2322,
+        "in_band": 2322,
+        "share": 1
+      },
+      "verdict": "PASS",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "quarter",
+      "camera": {
+        "position": [
+          10.763776846174643,
+          -9.796301626976591,
+          7.515901918933207
+        ],
+        "view_matrix_column_major": [
+          0.8653645968381292,
+          -0.17140093519931793,
+          0.47092019913354866,
+          0,
+          0.5011428085278506,
+          0.29597212343952695,
+          -0.813176725938166,
+          0,
+          -8.326672684688672e-17,
+          0.9396926207859122,
+          0.34202014332565756,
+          0,
+          -4.40524530041651,
+          -2.31828395967076,
+          -15.605594270692318,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "boundary_terracotta",
+      "file": "polygon-cross-section-390-quarter-boundary_terracotta.png",
+      "sha256": "a01b9158579c02b8c0bebab2074785557d2994742ff9e17df5eb39608471fe32",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 64,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 38,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 58,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 53,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 65,
+        "cam": 49,
+        "xanh": 0,
+        "policy_color": 54,
+        "max_delta_e": 75.97634701827307
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "quarter",
+      "camera": {
+        "position": [
+          10.763958247878092,
+          -9.796196573392985,
+          7.515901918933232
+        ],
+        "view_matrix_column_major": [
+          0.8653574588749033,
+          -0.17140515077101742,
+          0.47093178132159985,
+          0,
+          0.5011551340349316,
+          0.2959696821123226,
+          -0.8131700184467948,
+          0,
+          1.1102230246251568e-16,
+          0.9396926207859121,
+          0.3420201433256592,
+          0,
+          -4.405257350048042,
+          -2.3182624996648067,
+          -15.6056532315741,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "boundary_magenta",
+      "file": "polygon-cross-section-390-quarter-boundary_magenta.png",
+      "sha256": "86bc00f116598ab7f4b7ca403b060cf8bf167f50b9fae38ddbc0afd2057b1713",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 64,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 38,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 58,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 53,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 65,
+        "cam": 49,
+        "xanh": 0,
+        "policy_color": 54,
+        "max_delta_e": 75.97634701827307
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "quarter",
+      "camera": {
+        "position": [
+          10.763825379330621,
+          -9.796273520732031,
+          7.515901918933239
+        ],
+        "view_matrix_column_major": [
+          0.8653626871332626,
+          -0.1714020630553147,
+          0.4709232978924284,
+          0,
+          0.5011461061581732,
+          0.29597147028199666,
+          -0.8131749314025943,
+          0,
+          0,
+          0.9396926207859113,
+          0.34202014332565983,
+          0,
+          -4.40524852431548,
+          -2.3182782181721624,
+          -15.605610045330064,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "fill_grey",
+      "file": "polygon-cross-section-390-quarter-fill_grey.png",
+      "sha256": "e36246e6b1493ed726f596ec675be19e35e9dab6a086aa87ac6e04b898e03d2e",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 64,
+          "blue": 64,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 38,
+          "blue": 38,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 58,
+          "blue": 53,
+          "coverage": 0.9137931034482759,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 53,
+          "blue": 53,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 65,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 0,
+        "max_delta_e": 76.32137974758336
+      },
+      "blue": {
+        "all": 2562,
+        "in_band": 2562,
+        "share": 1
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "quarter",
+      "camera": {
+        "position": [
+          10.763657361534285,
+          -9.796370821187638,
+          7.515901918933193
+        ],
+        "view_matrix_column_major": [
+          0.8653692983030119,
+          -0.17139815851057322,
+          0.4709125702439223,
+          0,
+          0.5011346900330814,
+          0.2959737314352193,
+          -0.8131811438700235,
+          0,
+          8.326672684688672e-17,
+          0.9396926207859125,
+          0.34202014332565694,
+          0,
+          -4.405237363199984,
+          -2.3182980946964413,
+          -15.605555435028421,
+          1.0000000000000002
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "fill_hidden",
+      "file": "polygon-cross-section-390-quarter-fill_hidden.png",
+      "sha256": "6a483e525e59d41305399d0834ff0345b1b0f54db43eaf93e62a896fe891bc45",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 64,
+          "blue": 64,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 38,
+          "blue": 38,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 58,
+          "blue": 53,
+          "coverage": 0.9137931034482759,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 53,
+          "blue": 53,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 65,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 0,
+        "max_delta_e": 76.11338146974464
+      },
+      "blue": {
+        "all": 2600,
+        "in_band": 2600,
+        "share": 1
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "quarter",
+      "camera": {
+        "position": [
+          10.763551097283209,
+          -9.796432358141123,
+          7.51590191893323
+        ],
+        "view_matrix_column_major": [
+          0.865373479488422,
+          -0.17139568904881694,
+          0.4709057854535057,
+          0,
+          0.5011274698099297,
+          0.2959751614848541,
+          -0.813185072899099,
+          0,
+          8.326672684688677e-17,
+          0.9396926207859122,
+          0.34202014332565883,
+          0,
+          -4.40523030390801,
+          -2.318310665664959,
+          -15.605520896576312,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "wrong_object",
+      "file": "polygon-cross-section-390-quarter-wrong_object.png",
+      "sha256": "0efbc9cfce2592affd64abe2a1abcbe6484478ed70b89486873c831c5e2454aa",
+      "selected": "C",
+      "identity_ok": false,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 64,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 38,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 58,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 53,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 65,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 54,
+        "max_delta_e": 57.70735637021775
+      },
+      "blue": {
+        "all": 247,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "half",
+      "camera": {
+        "position": [
+          -9.348055546813047,
+          -4.43558955984266,
+          7.515901918933286
+        ],
+        "view_matrix_column_major": [
+          0.501126040735133,
+          0.29597544452657126,
+          -0.8131858505498163,
+          0,
+          -0.8653743070470312,
+          0.17139520027645175,
+          -0.47090444256246416,
+          0,
+          0,
+          0.9396926207859105,
+          0.34202014332566216,
+          0,
+          0.8461088230526322,
+          -3.535603914891831,
+          -12.26103518147087,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "polygon-cross-section-390-half-none.png",
+      "sha256": "8e134a5987033ee00d42c81f44cc5e6ea8635c7d726f3d0d9f6dc6f53395f083",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 47,
+          "blue": 47,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "curve": false,
+          "visible": 72,
+          "blue": 62,
+          "coverage": 0.8611111111111112,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 52,
+          "blue": 52,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "curve": false,
+          "visible": 83,
+          "blue": 83,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 100,
+        "cam": 89,
+        "xanh": 0,
+        "policy_color": 92,
+        "max_delta_e": 62.74674092316025
+      },
+      "blue": {
+        "all": 2702,
+        "in_band": 2702,
+        "share": 1
+      },
+      "verdict": "PASS",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "half",
+      "camera": {
+        "position": [
+          -9.347682057696721,
+          -4.43623448544942,
+          7.515901918933281
+        ],
+        "view_matrix_column_major": [
+          0.50116986080397,
+          0.2959667650592968,
+          -0.8131620039094698,
+          0,
+          -0.8653489299824261,
+          0.17141018762267562,
+          -0.4709456199577926,
+          0,
+          8.326672684688674e-17,
+          0.9396926207859112,
+          0.34202014332566133,
+          0,
+          0.8458857505608384,
+          -3.5356185668638744,
+          -12.260994925508552,
+          1.0000000000000002
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "boundary_terracotta",
+      "file": "polygon-cross-section-390-half-boundary_terracotta.png",
+      "sha256": "02325104b015377fffe34157e7d950dca255b908b3c01a0bc1160166cddc6f8f",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 47,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "curve": false,
+          "visible": 72,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 52,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "curve": false,
+          "visible": 83,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 100,
+        "cam": 89,
+        "xanh": 0,
+        "policy_color": 92,
+        "max_delta_e": 62.74674092316025
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "half",
+      "camera": {
+        "position": [
+          -9.348047827814083,
+          -4.435602889454028,
+          7.515901918933255
+        ],
+        "view_matrix_column_major": [
+          0.5011269464279453,
+          0.2959752651457074,
+          -0.8131853577049523,
+          0,
+          -0.8653737825724808,
+          0.171395510041635,
+          -0.4709052936353172,
+          0,
+          -5.551115123125781e-16,
+          0.9396926207859119,
+          0.3420201433256586,
+          0,
+          0.846104212578605,
+          -3.5356042177601044,
+          -12.261034349347153,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "boundary_magenta",
+      "file": "polygon-cross-section-390-half-boundary_magenta.png",
+      "sha256": "c6af23cdead12f449bae45a64b627e7b56ce0176a98a0aedc3ea24a307766238",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 47,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "curve": false,
+          "visible": 72,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 52,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "curve": false,
+          "visible": 83,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 100,
+        "cam": 89,
+        "xanh": 0,
+        "policy_color": 92,
+        "max_delta_e": 62.74674092316025
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "half",
+      "camera": {
+        "position": [
+          -9.3480233070119,
+          -4.435645233171735,
+          7.5159019189333
+        ],
+        "view_matrix_column_major": [
+          0.5011298235111412,
+          0.29597469530982934,
+          -0.8131837920937347,
+          0,
+          -0.8653721164838237,
+          0.17139649406204446,
+          -0.47090799720916504,
+          0,
+          -1.1102230246251565e-16,
+          0.9396926207859108,
+          0.34202014332566255,
+          0,
+          0.8460895666196997,
+          -3.5356051798616024,
+          -12.261031705995022,
+          1.0000000000000002
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "fill_grey",
+      "file": "polygon-cross-section-390-half-fill_grey.png",
+      "sha256": "053fb38b6426f5bc5cbfdc913de081f85798199b1309c98c3783abdd4a53e6f6",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 47,
+          "blue": 47,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "curve": false,
+          "visible": 72,
+          "blue": 62,
+          "coverage": 0.8611111111111112,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 52,
+          "blue": 52,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "curve": false,
+          "visible": 83,
+          "blue": 83,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 100,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 0,
+        "max_delta_e": 64.07445991382609
+      },
+      "blue": {
+        "all": 2970,
+        "in_band": 2970,
+        "share": 1
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "half",
+      "camera": {
+        "position": [
+          -9.34807609083289,
+          -4.435554083091272,
+          7.515901918933222
+        ],
+        "view_matrix_column_major": [
+          0.5011236302343356,
+          0.29597592194649575,
+          -0.8131871622502922,
+          0,
+          -0.8653757029295202,
+          0.17139437583662098,
+          -0.4709021774326532,
+          0,
+          -1.3877787807814457e-16,
+          0.9396926207859126,
+          0.3420201433256572,
+          0,
+          0.8461210938079622,
+          -3.5356031088009665,
+          -12.261037396187302,
+          1.0000000000000002
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "fill_hidden",
+      "file": "polygon-cross-section-390-half-fill_hidden.png",
+      "sha256": "5407580479ddd7fcf71b60405f8174a8f33893fba8cd906e65cf8e921d41b71d",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 47,
+          "blue": 47,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "curve": false,
+          "visible": 72,
+          "blue": 64,
+          "coverage": 0.8888888888888888,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 52,
+          "blue": 52,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "curve": false,
+          "visible": 83,
+          "blue": 83,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 100,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 0,
+        "max_delta_e": 59.209052074270105
+      },
+      "blue": {
+        "all": 3029,
+        "in_band": 3029,
+        "share": 1
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "half",
+      "camera": {
+        "position": [
+          -9.348014894723281,
+          -4.435659759847578,
+          7.515901918933269
+        ],
+        "view_matrix_column_major": [
+          0.5011308105396096,
+          0.2959744998176932,
+          -0.8131832549835124,
+          0,
+          -0.8653715449030628,
+          0.17139683164566136,
+          -0.470908924712534,
+          0,
+          -5.5511151231257815e-17,
+          0.9396926207859115,
+          0.3420201433256598,
+          0,
+          0.8460845420853752,
+          -3.535605509922167,
+          -12.261030799161071,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "wrong_object",
+      "file": "polygon-cross-section-390-half-wrong_object.png",
+      "sha256": "197df69995e847c86377693cba6b1815fd2dcaa029607d96935ab61274e21b9f",
+      "selected": "C",
+      "identity_ok": false,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": false,
+          "visible": 47,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": true,
+          "curve": false,
+          "visible": 72,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 52,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "curve": false,
+          "visible": 83,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 100,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 92,
+        "max_delta_e": 42.84961285532203
+      },
+      "blue": {
+        "all": 126,
+        "in_band": 71,
+        "share": 0.5634920634920635
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "high",
+      "camera": {
+        "position": [
+          6.317453893110999,
+          4.631001633450817,
+          17.451661620588606
+        ],
+        "view_matrix_column_major": [
+          -0.499999999999976,
+          -0.8455884009137362,
+          0.18703009447726462,
+          0,
+          0.8660254037844526,
+          -0.48820069089113954,
+          0.1079818753930029,
+          0,
+          5.551115123125783e-17,
+          0.21596375078601623,
+          0.976401381782326,
+          0,
+          -0.8518381129803562,
+          3.8338976312599895,
+          -18.721444760552693,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "polygon-cross-section-390-high-none.png",
+      "sha256": "6c94a3d680a698b048bacb5368fca164e32ec34e587e7ffc80a23bf41ec70a4e",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 70,
+          "blue": 66,
+          "coverage": 0.9428571428571428,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 74,
+          "blue": 74,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 72,
+          "blue": 72,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 55,
+          "blue": 50,
+          "coverage": 0.9090909090909091,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 258,
+        "cam": 169,
+        "xanh": 0,
+        "policy_color": 212,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 3044,
+        "in_band": 3044,
+        "share": 1
+      },
+      "verdict": "PASS",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "high",
+      "camera": {
+        "position": [
+          6.317158949422412,
+          4.63083134763281,
+          17.451736945393808
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999997446,
+          -0.8455925659414957,
+          0.18701126282794422,
+          0,
+          0.8660254037844533,
+          -0.4882030955710359,
+          0.10797100293519817,
+          0,
+          -1.3877787807814454e-17,
+          0.2159420058704072,
+          0.9764061911421215,
+          0,
+          -0.8518381129803632,
+          3.8339657625730785,
+          -18.721359377310215,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "boundary_terracotta",
+      "file": "polygon-cross-section-390-high-boundary_terracotta.png",
+      "sha256": "8f3419b6ed9f71be2c319e8c7060befe3903da7f7db48fc1415b34b5085708fd",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 70,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 74,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 72,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 55,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 258,
+        "cam": 169,
+        "xanh": 0,
+        "policy_color": 212,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "high",
+      "camera": {
+        "position": [
+          6.3171706755825525,
+          4.630838117734523,
+          17.451733950835987
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999997463,
+          -0.8455924003596994,
+          0.18701201152318359,
+          0,
+          0.8660254037844534,
+          -0.488202999972341,
+          0.10797143519459607,
+          0,
+          4.163336342344337e-17,
+          0.2159428703892032,
+          0.976405999944732,
+          0,
+          -0.8518381129803627,
+          3.8339630538997844,
+          -18.721362771937038,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "boundary_magenta",
+      "file": "polygon-cross-section-390-high-boundary_magenta.png",
+      "sha256": "e066cf39fdf4ad27b3a2e681be770b9064108b99fd7219fedc2012868ae05daf",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 70,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 74,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 72,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 55,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 258,
+        "cam": 169,
+        "xanh": 0,
+        "policy_color": 212,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "high",
+      "camera": {
+        "position": [
+          6.3174835615667195,
+          4.631018762541698,
+          17.451654043208194
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999997247,
+          -0.8455879819282556,
+          0.1870319887573444,
+          0,
+          0.8660254037844543,
+          -0.4882004489897551,
+          0.10798296905611593,
+          0,
+          1.3877787807814454e-17,
+          0.2159659381122437,
+          0.9764008979795638,
+          0,
+          -0.8518381129803725,
+          3.833890777791179,
+          -18.721453349212652,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "fill_grey",
+      "file": "polygon-cross-section-390-high-fill_grey.png",
+      "sha256": "51c448f171f997939b8bb94a654e10e237e27e9b53d6c4d1981cab3f67c456a7",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 70,
+          "blue": 67,
+          "coverage": 0.9571428571428572,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 74,
+          "blue": 74,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 72,
+          "blue": 72,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 55,
+          "blue": 51,
+          "coverage": 0.9272727272727272,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 258,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 0,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 3361,
+        "in_band": 3361,
+        "share": 1
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "high",
+      "camera": {
+        "position": [
+          6.316876954614631,
+          4.630668537854662,
+          17.451808955782973
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999821,
+          -0.8455965477011327,
+          0.18699325794248228,
+          0,
+          0.8660254037844489,
+          -0.488205394441044,
+          0.1079606078097322,
+          0,
+          1.3877787807814454e-17,
+          0.215921215619472,
+          0.9764107888821228,
+          0,
+          -0.8518381129803245,
+          3.8340309006325954,
+          -18.721277741613516,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "fill_hidden",
+      "file": "polygon-cross-section-390-high-fill_hidden.png",
+      "sha256": "6c755567f547c8bf2f61e769dfbfc304b3b503a301c7526b3f8afe267e9ed348",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 70,
+          "blue": 68,
+          "coverage": 0.9714285714285714,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 74,
+          "blue": 74,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 72,
+          "blue": 72,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 55,
+          "blue": 53,
+          "coverage": 0.9636363636363636,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 258,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 0,
+        "max_delta_e": 77.69484194622203
+      },
+      "blue": {
+        "all": 3464,
+        "in_band": 3464,
+        "share": 1
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "high",
+      "camera": {
+        "position": [
+          6.31737463417322,
+          4.630955873281753,
+          17.451681863078345
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999997524,
+          -0.8455895202067987,
+          0.18702503392984707,
+          0,
+          0.8660254037844527,
+          -0.48820133711528946,
+          0.107978953684589,
+          0,
+          4.163336342344335e-17,
+          0.21595790736918866,
+          0.9764026742306273,
+          0,
+          -0.8518381129803602,
+          3.8339159401119645,
+          -18.7214218159921,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "wrong_object",
+      "file": "polygon-cross-section-390-high-wrong_object.png",
+      "sha256": "05df8a78c6d496a7089f03e15ea5f5b9e5474553ed8e4f19e2a90a07532bb97d",
+      "selected": "C",
+      "identity_ok": false,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 70,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 74,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": false,
+          "visible": 72,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 55,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 258,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 212,
+        "max_delta_e": 60.31144576358155
+      },
+      "blue": {
+        "all": 264,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "low",
+      "camera": {
+        "position": [
+          14.144944216978049,
+          9.150205279014683,
+          -7.381536734354428
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999545,
+          0.5275443955555068,
+          0.686801944317268,
+          0,
+          0.8660254037844413,
+          0.30457789878344665,
+          0.3965252874315283,
+          0,
+          2.7755575615628914e-17,
+          0.7930505748630637,
+          -0.6091557975668984,
+          0,
+          -0.8518381129802562,
+          -4.395104393878938,
+          -17.839568865483635,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "polygon-cross-section-390-low-none.png",
+      "sha256": "bd6146d701620158c27a7822937f419558e04b1855000599da97fc0d40326323",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 45,
+          "blue": 45,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 60,
+          "blue": 60,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 45,
+          "blue": 45,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 55,
+          "blue": 53,
+          "coverage": 0.9636363636363636,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 176,
+        "cam": 52,
+        "xanh": 0,
+        "policy_color": 157,
+        "max_delta_e": 71.9788489976227
+      },
+      "blue": {
+        "all": 1930,
+        "in_band": 1930,
+        "share": 1
+      },
+      "verdict": "PASS",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "low",
+      "camera": {
+        "position": [
+          14.144892617965148,
+          9.150175488310708,
+          -7.3816143019728715
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999656,
+          0.5275486845979113,
+          0.6867986498086738,
+          0,
+          0.8660254037844406,
+          0.3045803750632343,
+          0.39652338534610565,
+          0,
+          -1.1102230246251565e-16,
+          0.7930467706922166,
+          -0.6091607501264725,
+          0,
+          -0.851838112980248,
+          -4.3951179918352405,
+          -17.83954141817715,
+          1.0000000000000002
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "boundary_terracotta",
+      "file": "polygon-cross-section-390-low-boundary_terracotta.png",
+      "sha256": "4be1ddbd0798bd638fdabeb59c0e182fadbbc76fcf7e33552ae624884cf4b0ff",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 45,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 60,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 45,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 55,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 176,
+        "cam": 52,
+        "xanh": 0,
+        "policy_color": 157,
+        "max_delta_e": 71.9788489976227
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "low",
+      "camera": {
+        "position": [
+          14.14495308345282,
+          9.150210398076267,
+          -7.381523405484402
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999946,
+          0.5275436585457852,
+          0.6868025104264932,
+          0,
+          0.8660254037844415,
+          0.30457747327068474,
+          0.39652561427484095,
+          0,
+          2.7755575615628907e-17,
+          0.7930512285496902,
+          -0.609154946541376,
+          0,
+          -0.8518381129802598,
+          -4.395102057256704,
+          -17.839573581883357,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "boundary_magenta",
+      "file": "polygon-cross-section-390-low-boundary_magenta.png",
+      "sha256": "bb82d1ce8064fcaf7a62a1cce2d09e26fac51b5b6ef5a2129d1f252e9e30fa18",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 45,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 60,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 45,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 55,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 176,
+        "cam": 52,
+        "xanh": 0,
+        "policy_color": 157,
+        "max_delta_e": 71.9788489976227
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "low",
+      "camera": {
+        "position": [
+          14.145131885583915,
+          9.150313629534828,
+          -7.381254607966842
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999734,
+          0.5275287955916977,
+          0.686813926636302,
+          0,
+          0.8660254037844404,
+          0.3045688921401435,
+          0.39653220542664985,
+          0,
+          0,
+          0.7930644108533043,
+          -0.6091377842802905,
+          0,
+          -0.8518381129802469,
+          -4.39505493494462,
+          -17.839668694096833,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "fill_grey",
+      "file": "polygon-cross-section-390-low-fill_grey.png",
+      "sha256": "79e0f459490db3c55464ae30061875e83f54e22e56cc26e30c57188fdcf4c6c5",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 45,
+          "blue": 45,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 60,
+          "blue": 60,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 45,
+          "blue": 45,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 55,
+          "blue": 54,
+          "coverage": 0.9818181818181818,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 176,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 0,
+        "max_delta_e": 72.8804961127219
+      },
+      "blue": {
+        "all": 2181,
+        "in_band": 2181,
+        "share": 1
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "low",
+      "camera": {
+        "position": [
+          14.14489761207355,
+          9.150178371660466,
+          -7.381606794487582
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999919,
+          0.5275482694772292,
+          0.6867989686739409,
+          0,
+          0.8660254037844433,
+          0.30458013539319295,
+          0.3965235694430486,
+          0,
+          5.5511151231257815e-17,
+          0.7930471388861098,
+          -0.6091602707863957,
+          0,
+          -0.8518381129802726,
+          -4.395116675743559,
+          -17.839544074710748,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "fill_hidden",
+      "file": "polygon-cross-section-390-low-fill_hidden.png",
+      "sha256": "5dd48bff770372c90df03439c72ce9421fe496fde248b3c790727804e3c4ad87",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 45,
+          "blue": 45,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 60,
+          "blue": 60,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 45,
+          "blue": 45,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 55,
+          "blue": 55,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 176,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 0,
+        "max_delta_e": 72.4170736448827
+      },
+      "blue": {
+        "all": 2246,
+        "in_band": 2246,
+        "share": 1
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "cameraName": "low",
+      "camera": {
+        "position": [
+          14.145178499216541,
+          9.15034054192813,
+          -7.381184530599893
+        ],
+        "view_matrix_column_major": [
+          -0.49999999999999467,
+          0.5275249207170472,
+          0.6868169028369047,
+          0,
+          0.8660254037844417,
+          0.304566654980219,
+          0.39653392373686647,
+          0,
+          5.5511151231257815e-17,
+          0.793067847473741,
+          -0.6091333099604443,
+          0,
+          -0.8518381129802596,
+          -4.395042649623289,
+          -17.839693490079508,
+          1
+        ],
+        "projection_matrix_column_major": [
+          2.2073956865069064,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 341,
+        "viewport_height": 351,
+        "device_pixel_ratio": 1
+      },
+      "fault": "wrong_object",
+      "file": "polygon-cross-section-390-low-wrong_object.png",
+      "sha256": "7573ac037b17d7239b077835f26946c3641bab06adea346950c01f787005f6e6",
+      "selected": "C",
+      "identity_ok": false,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "curve": false,
+          "visible": 45,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": false,
+          "visible": 60,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": true,
+          "curve": false,
+          "visible": 45,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "curve": false,
+          "visible": 55,
+          "blue": 0,
+          "coverage": 0,
+          "scored": true,
+          "pass": false
+        }
+      ],
+      "hidden_arcs": [],
+      "fill": {
+        "samples": 176,
+        "cam": 0,
+        "xanh": 0,
+        "policy_color": 153,
+        "max_delta_e": 54.96932845242705
+      },
+      "blue": {
+        "all": 265,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": "FAIL",
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 1440,
+      "cameraName": "default",
+      "camera": {
+        "position": [
+          10.487442490105732,
+          11.2154864374335,
+          9.186686976129588
+        ],
+        "view_matrix_column_major": [
+          -0.5299989400031796,
+          -0.45508364461437806,
+          0.7155417527999332,
+          0,
+          0.8479983040050885,
+          -0.2844272778839857,
+          0.44721359549995787,
+          0,
+          -3.053113317719181e-16,
+          0.84380092438916,
+          0.5366563145999491,
+          0,
+          -3.952380074435332,
+          0.21091886609297258,
+          -17.450014572717457,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.105400044576099,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1391,
+        "viewport_height": 717,
+        "device_pixel_ratio": 1
+      },
+      "fault": "none",
+      "file": "circle-sphere-sample-1440-default-none.png",
+      "sha256": "b6c1bb2a82fcf00abc26662206e03d4dba24aad3405060cd61d27c452a55f48f",
+      "selected": "S",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "curve": true,
+          "visible": 13,
+          "blue": 13,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "curve": true,
+          "visible": 14,
+          "blue": 14,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": false,
+          "curve": true,
+          "visible": 15,
+          "blue": 15,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": false,
+          "curve": true,
+          "visible": 15,
+          "blue": 15,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "curve": true,
+          "visible": 16,
+          "blue": 16,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "curve": true,
+          "visible": 16,
+          "blue": 16,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "curve": true,
+          "visible": 17,
+          "blue": 17,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "curve": true,
+          "visible": 17,
+          "blue": 17,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": false,
+          "curve": true,
+          "visible": 17,
+          "blue": 17,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 11,
+          "hidden": false,
+          "curve": true,
+          "visible": 17,
+          "blue": 17,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 12,
+          "hidden": false,
+          "curve": true,
+          "visible": 14,
+          "blue": 14,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 13,
+          "hidden": false,
+          "curve": true,
+          "visible": 17,
+          "blue": 17,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 14,
+          "hidden": false,
+          "curve": true,
+          "visible": 16,
+          "blue": 16,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 15,
+          "hidden": false,
+          "curve": true,
+          "visible": 16,
+          "blue": 16,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 16,
+          "hidden": false,
+          "curve": true,
+          "visible": 15,
+          "blue": 15,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 17,
+          "hidden": false,
+          "curve": true,
+          "visible": 15,
+          "blue": 15,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 18,
+          "hidden": false,
+          "curve": true,
+          "visible": 14,
+          "blue": 14,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 19,
+          "hidden": false,
+          "curve": true,
+          "visible": 14,
+          "blue": 14,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "curve": true,
+          "visible": 13,
+          "blue": 13,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 32,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 33,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 34,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 35,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 36,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 37,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 38,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 39,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 6,
+          "coverage": 0.5,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 40,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 41,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 42,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 43,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 4,
+          "coverage": 0.3333333333333333,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 44,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 45,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 46,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 47,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 3,
+          "coverage": 0.25,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 48,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 49,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 50,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 51,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 3,
+          "coverage": 0.25,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 52,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 53,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 54,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 6,
+          "coverage": 0.5,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 55,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 3,
+          "coverage": 0.25,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 56,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 57,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 58,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 5,
+          "coverage": 0.4166666666666667,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 59,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 3,
+          "coverage": 0.25,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 60,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 61,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 62,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 4,
+          "coverage": 0.3333333333333333,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 63,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 3,
+          "coverage": 0.25,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 64,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 65,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 66,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 4,
+          "coverage": 0.3333333333333333,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 67,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 5,
+          "coverage": 0.4166666666666667,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 68,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 69,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 70,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 4,
+          "coverage": 0.3333333333333333,
+          "scored": true,
+          "pass": false
+        },
+        {
+          "edge": 71,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 72,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 73,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 74,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 5,
+          "coverage": 0.4166666666666667,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 75,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 76,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 77,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 78,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 6,
+          "coverage": 0.5,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 79,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 8,
+          "coverage": 0.6666666666666666,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 80,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 81,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 82,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 6,
+          "coverage": 0.5,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 83,
+          "hidden": true,
+          "curve": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 84,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 85,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 86,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 87,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 88,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 89,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 90,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 91,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 92,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 93,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 94,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        },
+        {
+          "edge": 95,
+          "hidden": false,
+          "curve": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "scored": true,
+          "pass": true
+        }
+      ],
+      "hidden_arcs": [
+        {
+          "edges": [
+            37,
+            83
+          ],
+          "visible": 564,
+          "blue": 416,
+          "coverage": 0.7375886524822695,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 171,
+        "cam": 171,
+        "xanh": 0,
+        "policy_color": 171,
+        "max_delta_e": 3.045089836331053
+      },
+      "blue": {
+        "all": 3621,
+        "in_band": 3506,
+        "share": 0.968240817453742
+      },
+      "verdict": "PASS",
+      "errors": []
+    }
+  ]
+}

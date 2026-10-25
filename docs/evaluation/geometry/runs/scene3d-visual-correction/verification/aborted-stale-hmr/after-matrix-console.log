@@ -1,0 +1,55 @@
+triangular_pyramid 1440: PASS {"mode_a_hidden":true,"mode_b_once":true,"geometry_unchanged":true,"no_duplicate_edge_owners":true,"no_overflow":true,"multiple_cameras":true}
+triangular_prism 1440: PASS {"mode_a_hidden":true,"mode_b_once":true,"geometry_unchanged":true,"no_duplicate_edge_owners":true,"no_overflow":true,"multiple_cameras":true}
+rectangular_pyramid 1440: PASS {"mode_a_hidden":true,"mode_b_once":true,"geometry_unchanged":true,"no_duplicate_edge_owners":true,"no_overflow":true,"multiple_cameras":true}
+cuboid 1440: PASS {"mode_a_hidden":true,"mode_b_once":true,"geometry_unchanged":true,"no_duplicate_edge_owners":true,"no_overflow":true,"multiple_cameras":true}
+regular_square_pyramid 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+regular_triangular_pyramid 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+cross_section 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+cau-cat-mat-phang 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+tru-truc-xien 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+tru-thiet-dien-tron 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+non-duong-sinh 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+non-thiet-dien-truc 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family01_triangular_pyramid 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family02_quadrilateral_pyramid 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family03_regular_pyramid 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family04_derived_sub_pyramid 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family05_prism 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family06a_cube 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family06b_cuboid 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family07_multi_solid_composition 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family08_unnamed_section_vertices 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family09_cylinder_and_sections 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family10_cone_frustum_cut 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family11_sphere_plane_cut 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family12_cylinder_ellipse_section 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family13_invalid_geometry_refusal 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+scene3d-circumsphere-fixture 1440: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+triangular_pyramid 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+triangular_prism 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+rectangular_pyramid 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+cuboid 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+regular_square_pyramid 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+regular_triangular_pyramid 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+cross_section 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+cau-cat-mat-phang 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+tru-truc-xien 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+tru-thiet-dien-tron 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+non-duong-sinh 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+non-thiet-dien-truc 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family01_triangular_pyramid 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family02_quadrilateral_pyramid 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family03_regular_pyramid 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family04_derived_sub_pyramid 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family05_prism 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family06a_cube 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family06b_cuboid 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family07_multi_solid_composition 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family08_unnamed_section_vertices 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family09_cylinder_and_sections 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family10_cone_frustum_cut 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family11_sphere_plane_cut 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family12_cylinder_ellipse_section 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+family13_invalid_geometry_refusal 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+scene3d-circumsphere-fixture 390: GAP page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/
+{"rows":54,"passed":4,"images":28}

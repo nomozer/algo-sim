@@ -1,0 +1,3454 @@
+{
+  "phase": "after",
+  "url": "http://127.0.0.1:3161",
+  "source_head": "093c0b4c3f580621956b1f89e2cc403bc49ae800",
+  "baseline_source": null,
+  "provider_calls": 0,
+  "human_visual_review": "NOT_APPROVED",
+  "rows": [
+    {
+      "id": "triangular_pyramid",
+      "width": 1440,
+      "source": "docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/final-inputs/fixtures/triangular_pyramid_positive.json",
+      "scope": "OFFLINE_BACKEND_ENVELOPE_NOT_LIVE_EXTRACTION",
+      "frames": [
+        {
+          "state": "default-unselected-mode-a",
+          "file": "triangular_pyramid-1440-default-unselected-mode-a.png",
+          "sha256": "ff264ba0c40b8ac357b6dbdc9c3e120452a24fa6123a4094ba42678cc5330508",
+          "camera": {
+            "position": [
+              6.472523394556051,
+              4.808049644791279,
+              8.264231717544384
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999998,
+              -0.5566703992264189,
+              0.6634139481689382,
+              0,
+              0.8660254037844383,
+              -0.3213938048432694,
+              0.383022221559489,
+              0,
+              1.6653345369377333e-16,
+              0.7660444431189779,
+              0.6427876096865391,
+              0,
+              -0.9276314377679701,
+              -1.1824292326078298,
+              -11.44769790773055,
+              0.9999999999999998
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.1124282615038652,
+            1.713397276841598,
+            3.070788396407438
+          ],
+          "selected": null,
+          "visible": [
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C"
+          ],
+          "hidden": [
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:S-A"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "default-unselected",
+          "file": "triangular_pyramid-1440-default-unselected.png",
+          "sha256": "ff264ba0c40b8ac357b6dbdc9c3e120452a24fa6123a4094ba42678cc5330508",
+          "camera": {
+            "position": [
+              6.472523394556051,
+              4.808049644791279,
+              8.264231717544384
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999998,
+              -0.5566703992264189,
+              0.6634139481689382,
+              0,
+              0.8660254037844383,
+              -0.3213938048432694,
+              0.383022221559489,
+              0,
+              1.6653345369377333e-16,
+              0.7660444431189779,
+              0.6427876096865391,
+              0,
+              -0.9276314377679701,
+              -1.1824292326078298,
+              -11.44769790773055,
+              0.9999999999999998
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.1124282615038652,
+            1.713397276841598,
+            3.070788396407438
+          ],
+          "selected": null,
+          "visible": [
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C"
+          ],
+          "hidden": [
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:S-A"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "quarter-unselected",
+          "file": "triangular_pyramid-1440-quarter-unselected.png",
+          "sha256": "91de9385ece69364de1ad9c90e64a5aee13c72bd71f18ad7aefe43474936d88d",
+          "camera": {
+            "position": [
+              4.223598745133122,
+              -3.6371271213476906,
+              8.264231717544128
+            ],
+            "view_matrix_column_major": [
+              0.8644790693783659,
+              -0.32310928671841804,
+              0.38506665324723893,
+              0,
+              0.5026688160277244,
+              0.5556764346297539,
+              -0.662229387289971,
+              0,
+              1.1102230246251565e-16,
+              0.7660444431189877,
+              0.6427876096865277,
+              0,
+              -1.8229423287901476,
+              -2.945018974861933,
+              -9.347125250129244,
+              0.9999999999999999
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.1124282615038652,
+            1.713397276841598,
+            3.070788396407438
+          ],
+          "selected": null,
+          "visible": [
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C"
+          ],
+          "hidden": [
+            "khoi_chop::edge:A-C"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "half-unselected",
+          "file": "triangular_pyramid-1440-half-unselected.png",
+          "sha256": "6b0f72ca8ab26355c829736c147899ec7ce68747cf82f0d343896d93bf1e34af",
+          "camera": {
+            "position": [
+              -4.2310625585782935,
+              -1.409838060035917,
+              8.264231717543904
+            ],
+            "view_matrix_column_major": [
+              0.5046181227371457,
+              0.5549459653683615,
+              -0.6613588479234374,
+              0,
+              -0.8633426609436365,
+              0.3243622769187099,
+              -0.3865599088199281,
+              0,
+              2.7755575615628907e-17,
+              0.7660444431189924,
+              0.642787609686522,
+              0,
+              0.9178975032421797,
+              -3.525459404528167,
+              -8.655383282787266,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.1124282615038652,
+            1.713397276841598,
+            3.070788396407438
+          ],
+          "selected": null,
+          "visible": [
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C"
+          ],
+          "hidden": [
+            "khoi_chop::edge:B-C"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "high-unselected",
+          "file": "triangular_pyramid-1440-high-unselected.png",
+          "sha256": "7c8eedc3ec0816aa9ce6f1216399854ba27dc7e1e58401c0a8eed2aa8a79afdc",
+          "camera": {
+            "position": [
+              1.1474136520219829,
+              1.733596101474938,
+              11.15025092021553
+            ],
+            "view_matrix_column_major": [
+              -0.5000000000000109,
+              -0.8660145784894375,
+              0.004330108976748839,
+              0,
+              0.8660254037844322,
+              -0.4999937500130318,
+              0.0024999895833464304,
+              0,
+              4.336808689942017e-19,
+              0.004999979166692752,
+              0.9999875000260415,
+              0,
+              -0.9276314377679463,
+              1.804713143688796,
+              -11.15941394071948,
+              0.9999999999999998
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.1124282615038652,
+            1.713397276841598,
+            3.070788396407438
+          ],
+          "selected": null,
+          "visible": [
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C"
+          ],
+          "hidden": [
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:S-A"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "low-unselected",
+          "file": "triangular_pyramid-1440-low-unselected.png",
+          "sha256": "414026efdbc965e2095a9004c7e99a9892929bc99373c1b0dee572478efcf694",
+          "camera": {
+            "position": [
+              7.90570430073742,
+              5.635497026772447,
+              1.134843962790355
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999928,
+              0.20750837047854584,
+              0.8407974049563579,
+              0,
+              0.8660254037844429,
+              0.11980501355488687,
+              0.48543460808548283,
+              0,
+              -1.1102230246251565e-16,
+              0.9708692161709795,
+              -0.23961002710977694,
+              0,
+              -0.9276314377679833,
+              -3.4174456832428914,
+              -9.110840958280965,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.1124282615038652,
+            1.713397276841598,
+            3.070788396407438
+          ],
+          "selected": null,
+          "visible": [
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C"
+          ],
+          "hidden": [
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:S-A"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "default-selected-mode-b",
+          "file": "triangular_pyramid-1440-default-selected-mode-b.png",
+          "sha256": "8eea21bbd0c9df919c4fdcd3cb55098bee075ed976b5bce30dd2626d03649543",
+          "camera": {
+            "position": [
+              5.984400124274968,
+              6.7603056161357244,
+              8.703929781907174
+            ],
+            "view_matrix_column_major": [
+              -0.49999999999999956,
+              -0.5566703992264191,
+              0.6634139481689387,
+              0,
+              0.8660254037844386,
+              -0.3213938048432693,
+              0.38302222155948884,
+              0,
+              2.7755575615628907e-17,
+              0.7660444431189781,
+              0.6427876096865391,
+              0,
+              -2.8623963387826676,
+              -1.1635382925438096,
+              -12.15426000877293,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.1555618381437188,
+            3.3950242625750553,
+            3.0563170967461004
+          ],
+          "selected": "the_tich_khoi_chop",
+          "visible": [
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C"
+          ],
+          "hidden": [
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-C",
+            "khoi_chop::edge:S-A"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [
+            "the_tich_khoi_chop"
+          ],
+          "selected_result_items": [
+            "the_tich_khoi_chop"
+          ],
+          "inspector_values": [],
+          "overflow": false
+        }
+      ],
+      "checks": {
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "geometry_unchanged": true,
+        "no_duplicate_edge_owners": true,
+        "no_overflow": true,
+        "multiple_cameras": true
+      },
+      "mode_b_selected_is_result": true,
+      "pass": true
+    },
+    {
+      "id": "triangular_prism",
+      "width": 1440,
+      "source": "docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/final-inputs/fixtures/triangular_prism_positive.json",
+      "scope": "OFFLINE_BACKEND_ENVELOPE_NOT_LIVE_EXTRACTION",
+      "frames": [
+        {
+          "state": "default-unselected-mode-a",
+          "file": "triangular_prism-1440-default-unselected-mode-a.png",
+          "sha256": "88ab2e368c5bbf4bdaab4a68e2485f05a3bf849f5ccdd63fa005fdfe04c7376e",
+          "camera": {
+            "position": [
+              9.15102959523978,
+              4.5749801908236485,
+              6.41676037333538
+            ],
+            "view_matrix_column_major": [
+              -0.34202014332566844,
+              -0.3971312619671029,
+              0.8516507396391467,
+              0,
+              0.9396926207859084,
+              -0.1445439584525987,
+              0.3099755192194445,
+              0,
+              -1.6653345369377348e-16,
+              0.90630778703665,
+              0.4226182617406994,
+              0,
+              -1.1692386718173458,
+              -1.5201142158223,
+              -11.923453098300515,
+              1.0000000000000002
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.5121650669290618,
+            1.7946608789266143,
+            2.626094201900788
+          ],
+          "selected": null,
+          "visible": [
+            "solid_ABCDEF::edge:B-C",
+            "solid_ABCDEF::edge:B-E",
+            "solid_ABCDEF::edge:C-F",
+            "solid_ABCDEF::edge:D-E",
+            "solid_ABCDEF::edge:D-F",
+            "solid_ABCDEF::edge:E-F"
+          ],
+          "hidden": [
+            "solid_ABCDEF::edge:A-B",
+            "solid_ABCDEF::edge:A-C",
+            "solid_ABCDEF::edge:A-D"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "D",
+              "id": "D"
+            },
+            {
+              "text": "E",
+              "id": "E"
+            },
+            {
+              "text": "F",
+              "id": "F"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "default-unselected",
+          "file": "triangular_prism-1440-default-unselected.png",
+          "sha256": "88ab2e368c5bbf4bdaab4a68e2485f05a3bf849f5ccdd63fa005fdfe04c7376e",
+          "camera": {
+            "position": [
+              9.15102959523978,
+              4.5749801908236485,
+              6.41676037333538
+            ],
+            "view_matrix_column_major": [
+              -0.34202014332566844,
+              -0.3971312619671029,
+              0.8516507396391467,
+              0,
+              0.9396926207859084,
+              -0.1445439584525987,
+              0.3099755192194445,
+              0,
+              -1.6653345369377348e-16,
+              0.90630778703665,
+              0.4226182617406994,
+              0,
+              -1.1692386718173458,
+              -1.5201142158223,
+              -11.923453098300515,
+              1.0000000000000002
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.5121650669290618,
+            1.7946608789266143,
+            2.626094201900788
+          ],
+          "selected": null,
+          "visible": [
+            "solid_ABCDEF::edge:B-C",
+            "solid_ABCDEF::edge:B-E",
+            "solid_ABCDEF::edge:C-F",
+            "solid_ABCDEF::edge:D-E",
+            "solid_ABCDEF::edge:D-F",
+            "solid_ABCDEF::edge:E-F"
+          ],
+          "hidden": [
+            "solid_ABCDEF::edge:A-B",
+            "solid_ABCDEF::edge:A-C",
+            "solid_ABCDEF::edge:A-D"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "D",
+              "id": "D"
+            },
+            {
+              "text": "E",
+              "id": "E"
+            },
+            {
+              "text": "F",
+              "id": "F"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "quarter-unselected",
+          "file": "triangular_prism-1440-quarter-unselected.png",
+          "sha256": "99aa9acd57a4b07baf69638d79f30972ebdc460425b4ce26ccd213a782673070",
+          "camera": {
+            "position": [
+              4.3107194980968,
+              -5.837541938987631,
+              6.416760373335201
+            ],
+            "view_matrix_column_major": [
+              0.9388731324865771,
+              -0.14549197054278384,
+              0.31200853770757647,
+              0,
+              0.34426333103431517,
+              0.39678493124651887,
+              -0.8509080310120789,
+              0,
+              -1.1102230246251568e-16,
+              0.906307787036652,
+              0.42261826174069556,
+              0,
+              -2.03756708548071,
+              -2.8721361427567254,
+              -9.024032719308618,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.5121650669290618,
+            1.7946608789266143,
+            2.626094201900788
+          ],
+          "selected": null,
+          "visible": [
+            "solid_ABCDEF::edge:A-B",
+            "solid_ABCDEF::edge:A-D",
+            "solid_ABCDEF::edge:B-E",
+            "solid_ABCDEF::edge:D-E",
+            "solid_ABCDEF::edge:D-F",
+            "solid_ABCDEF::edge:E-F"
+          ],
+          "hidden": [
+            "solid_ABCDEF::edge:A-C",
+            "solid_ABCDEF::edge:B-C",
+            "solid_ABCDEF::edge:C-F"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "D",
+              "id": "D"
+            },
+            {
+              "text": "E",
+              "id": "E"
+            },
+            {
+              "text": "F",
+              "id": "F"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "half-unselected",
+          "file": "triangular_prism-1440-half-unselected.png",
+          "sha256": "ec11506f2fd8cbb6c22ea2d539be3196777cd7eeefd782b2bd7f1e8ece03434a",
+          "camera": {
+            "position": [
+              -6.11514700364555,
+              -1.0171956849917387,
+              6.41676037333502
+            ],
+            "view_matrix_column_major": [
+              0.34589968889093087,
+              0.3965306698107049,
+              -0.8503627656033809,
+              0,
+              -0.938271498674641,
+              0.146183525255729,
+              -0.31349158157540746,
+              0,
+              -1.8041124150158786e-16,
+              0.906307787036656,
+              0.4226182617406857,
+              0,
+              1.1608217262807283,
+              -3.2420193054482658,
+              -8.230815717136357,
+              0.9999999999999998
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.5121650669290618,
+            1.7946608789266143,
+            2.626094201900788
+          ],
+          "selected": null,
+          "visible": [
+            "solid_ABCDEF::edge:A-B",
+            "solid_ABCDEF::edge:A-C",
+            "solid_ABCDEF::edge:A-D",
+            "solid_ABCDEF::edge:B-E",
+            "solid_ABCDEF::edge:C-F",
+            "solid_ABCDEF::edge:D-E",
+            "solid_ABCDEF::edge:D-F",
+            "solid_ABCDEF::edge:E-F"
+          ],
+          "hidden": [
+            "solid_ABCDEF::edge:B-C"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "D",
+              "id": "D"
+            },
+            {
+              "text": "E",
+              "id": "E"
+            },
+            {
+              "text": "F",
+              "id": "F"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "high-unselected",
+          "file": "triangular_prism-1440-high-unselected.png",
+          "sha256": "4e00583a15c0a9497e8fd59f43e0248efc4ab0d5dcbd62e46e64f1b0876b82ce",
+          "camera": {
+            "position": [
+              3.138426282197285,
+              2.3865715544258146,
+              11.427031253896283
+            ],
+            "view_matrix_column_major": [
+              -0.3420201433256619,
+              -0.9220350935385649,
+              0.18131052876990683,
+              0,
+              0.9396926207859108,
+              -0.33559332899688377,
+              0.0659916356313105,
+              0,
+              4.163336342344336e-17,
+              0.19294663463278872,
+              0.9812092519864869,
+              0,
+              -1.1692386718173597,
+              1.4898494392257076,
+              -11.938832278220062,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.5121650669290618,
+            1.7946608789266143,
+            2.626094201900788
+          ],
+          "selected": null,
+          "visible": [
+            "solid_ABCDEF::edge:B-C",
+            "solid_ABCDEF::edge:B-E",
+            "solid_ABCDEF::edge:C-F",
+            "solid_ABCDEF::edge:D-E",
+            "solid_ABCDEF::edge:D-F",
+            "solid_ABCDEF::edge:E-F"
+          ],
+          "hidden": [
+            "solid_ABCDEF::edge:A-B",
+            "solid_ABCDEF::edge:A-C",
+            "solid_ABCDEF::edge:A-D"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "D",
+              "id": "D"
+            },
+            {
+              "text": "E",
+              "id": "E"
+            },
+            {
+              "text": "F",
+              "id": "F"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "low-unselected",
+          "file": "triangular_prism-1440-low-unselected.png",
+          "sha256": "999adbbe2ea3c6083e454a72b7d9a95f2660efb0a094f5001f605446c775f173",
+          "camera": {
+            "position": [
+              8.892591653149921,
+              4.480916472497747,
+              -1.7057542572053084
+            ],
+            "view_matrix_column_major": [
+              -0.342020143325648,
+              0.4538285270749736,
+              0.8228377054878215,
+              0,
+              0.9396926207859158,
+              0.16518007531615236,
+              0.2994884324294465,
+              0,
+              3.053113317719179e-16,
+              0.8756455965352136,
+              -0.4829542310286654,
+              0,
+              -1.169238671817391,
+              -3.282233688147777,
+              -9.482943597526132,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.5121650669290618,
+            1.7946608789266143,
+            2.626094201900788
+          ],
+          "selected": null,
+          "visible": [
+            "solid_ABCDEF::edge:A-B",
+            "solid_ABCDEF::edge:A-C",
+            "solid_ABCDEF::edge:B-C",
+            "solid_ABCDEF::edge:B-E",
+            "solid_ABCDEF::edge:C-F",
+            "solid_ABCDEF::edge:E-F"
+          ],
+          "hidden": [
+            "solid_ABCDEF::edge:A-D",
+            "solid_ABCDEF::edge:D-E",
+            "solid_ABCDEF::edge:D-F"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "D",
+              "id": "D"
+            },
+            {
+              "text": "E",
+              "id": "E"
+            },
+            {
+              "text": "F",
+              "id": "F"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "default-selected-mode-b",
+          "file": "triangular_prism-1440-default-selected-mode-b.png",
+          "sha256": "8f56166a80b097ccdb8a95934fc0fe6c3c228a50b58067e97ccb99b334676258",
+          "camera": {
+            "position": [
+              8.714655678344089,
+              6.59441314827127,
+              6.546733609995604
+            ],
+            "view_matrix_column_major": [
+              -0.3420201433256683,
+              -0.39713126196710263,
+              0.8516507396391468,
+              0,
+              0.9396926207859084,
+              -0.14454395845259854,
+              0.30997551921944455,
+              0,
+              -2.7755575615628914e-17,
+              0.9063077870366503,
+              0.42261826174069916,
+              0,
+              -3.216133589702989,
+              -1.5193108631210193,
+              -12.232718772080908,
+              1.0000000000000002
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.8124048102132977,
+            3.7182290485674088,
+            2.6253661170918776
+          ],
+          "selected": "the_tich_solid_ABCDEF",
+          "visible": [
+            "solid_ABCDEF::edge:B-C",
+            "solid_ABCDEF::edge:B-E",
+            "solid_ABCDEF::edge:C-F",
+            "solid_ABCDEF::edge:D-E",
+            "solid_ABCDEF::edge:D-F",
+            "solid_ABCDEF::edge:E-F"
+          ],
+          "hidden": [
+            "solid_ABCDEF::edge:A-B",
+            "solid_ABCDEF::edge:A-C",
+            "solid_ABCDEF::edge:A-D"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "D",
+              "id": "D"
+            },
+            {
+              "text": "E",
+              "id": "E"
+            },
+            {
+              "text": "F",
+              "id": "F"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [
+            "the_tich_solid_ABCDEF"
+          ],
+          "selected_result_items": [
+            "the_tich_solid_ABCDEF"
+          ],
+          "inspector_values": [],
+          "overflow": false
+        }
+      ],
+      "checks": {
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "geometry_unchanged": true,
+        "no_duplicate_edge_owners": true,
+        "no_overflow": true,
+        "multiple_cameras": true
+      },
+      "mode_b_selected_is_result": true,
+      "pass": true
+    },
+    {
+      "id": "rectangular_pyramid",
+      "width": 1440,
+      "source": "docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/final-inputs/fixtures/rectangular_pyramid_positive.json",
+      "scope": "OFFLINE_BACKEND_ENVELOPE_NOT_LIVE_EXTRACTION",
+      "frames": [
+        {
+          "state": "default-unselected-mode-a",
+          "file": "rectangular_pyramid-1440-default-unselected-mode-a.png",
+          "sha256": "188b0f6040bce9e236a7e0fdc998d5c979bcde73d2f294953b6db2be3c9bc68e",
+          "camera": {
+            "position": [
+              11.05515606651316,
+              7.464678699825584,
+              9.050878669430057
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999998,
+              -0.43301270189221885,
+              0.7500000000000001,
+              0,
+              0.8660254037844383,
+              -0.24999999999999972,
+              0.4330127018922193,
+              0,
+              1.942890293094023e-16,
+              0.8660254037844387,
+              0.4999999999999996,
+              0,
+              -0.9370233518809725,
+              -1.185098181139717,
+              -16.04910707716867,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.6365948114749802,
+            2.0268698238503156,
+            2.7718378327379436
+          ],
+          "selected": null,
+          "visible": [
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:C-D",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::edge:S-D"
+          ],
+          "hidden": [
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-D",
+            "khoi_chop::edge:S-A"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "D",
+              "id": "D"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "default-unselected",
+          "file": "rectangular_pyramid-1440-default-unselected.png",
+          "sha256": "188b0f6040bce9e236a7e0fdc998d5c979bcde73d2f294953b6db2be3c9bc68e",
+          "camera": {
+            "position": [
+              11.05515606651316,
+              7.464678699825584,
+              9.050878669430057
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999998,
+              -0.43301270189221885,
+              0.7500000000000001,
+              0,
+              0.8660254037844383,
+              -0.24999999999999972,
+              0.4330127018922193,
+              0,
+              1.942890293094023e-16,
+              0.8660254037844387,
+              0.4999999999999996,
+              0,
+              -0.9370233518809725,
+              -1.185098181139717,
+              -16.04910707716867,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.6365948114749802,
+            2.0268698238503156,
+            2.7718378327379436
+          ],
+          "selected": null,
+          "visible": [
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:C-D",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::edge:S-D"
+          ],
+          "hidden": [
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-D",
+            "khoi_chop::edge:S-A"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "D",
+              "id": "D"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "quarter-unselected",
+          "file": "rectangular_pyramid-1440-quarter-unselected.png",
+          "sha256": "8c7a77151173bef5be5bd74c0644514489d1b8489113933ba7dfbd775302fc6a",
+          "camera": {
+            "position": [
+              7.09094390759721,
+              -7.382122546439179,
+              9.050878669429643
+            ],
+            "view_matrix_column_major": [
+              0.8651455563158468,
+              -0.25076042669594467,
+              0.4343297995650444,
+              0,
+              0.5015208533919042,
+              0.4325727781579105,
+              -0.7492380297407515,
+              0,
+              5.551115123125783e-17,
+              0.8660254037844471,
+              0.4999999999999851,
+              0,
+              -2.43241021240886,
+              -2.866857475735417,
+              -13.136214532827225,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.6365948114749802,
+            2.0268698238503156,
+            2.7718378327379436
+          ],
+          "selected": null,
+          "visible": [
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C"
+          ],
+          "hidden": [
+            "khoi_chop::edge:A-D",
+            "khoi_chop::edge:C-D",
+            "khoi_chop::edge:S-D"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "D",
+              "id": "D"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "half-unselected",
+          "file": "rectangular_pyramid-1440-half-unselected.png",
+          "sha256": "27e41be221cc53e95d456f342e71d8a0d366c6ea10ba5b0083322d7a07d9c955",
+          "camera": {
+            "position": [
+              -7.765057042553815,
+              -3.4401223932801948,
+              9.050878669429254
+            ],
+            "view_matrix_column_major": [
+              0.5026833731950822,
+              0.4322353023276592,
+              -0.7486535044564547,
+              0,
+              -0.8644706046553658,
+              0.25134168659752726,
+              -0.43533657124700254,
+              0,
+              -8.326672684688674e-17,
+              0.8660254037844545,
+              0.4999999999999726,
+              0,
+              0.9294803817957868,
+              -3.6173129114878426,
+              -11.836387589287199,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.6365948114749802,
+            2.0268698238503156,
+            2.7718378327379436
+          ],
+          "selected": null,
+          "visible": [
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-D",
+            "khoi_chop::edge:S-A",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-D"
+          ],
+          "hidden": [
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:C-D",
+            "khoi_chop::edge:S-C"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "D",
+              "id": "D"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "high-unselected",
+          "file": "rectangular_pyramid-1440-high-unselected.png",
+          "sha256": "69e9be530e97509132811d4747d5520ad33798fad5e6ff0a6a1f64d62f1cbf3c",
+          "camera": {
+            "position": [
+              2.790433957862331,
+              2.6930391656185915,
+              15.25904284217559
+            ],
+            "view_matrix_column_major": [
+              -0.500000000000006,
+              -0.86113763564364,
+              0.09188020721611276,
+              0,
+              0.8660254037844354,
+              -0.49717804574818114,
+              0.05304706236942214,
+              0,
+              -2.081668171172169e-17,
+              0.106094124738843,
+              0.9943560914963507,
+              0,
+              -0.9370233518809572,
+              2.1229728556857292,
+              -15.572165667374222,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.6365948114749802,
+            2.0268698238503156,
+            2.7718378327379436
+          ],
+          "selected": null,
+          "visible": [
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:C-D",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::edge:S-D"
+          ],
+          "hidden": [
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-D",
+            "khoi_chop::edge:S-A"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "D",
+              "id": "D"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "low-unselected",
+          "file": "rectangular_pyramid-1440-low-unselected.png",
+          "sha256": "49056ed3f5ff1b7a19210a27c70096fbacce75af2188db0acaba0794ee5629d7",
+          "camera": {
+            "position": [
+              11.578779383749591,
+              7.766992762985855,
+              -2.318286909330308
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999898,
+              0.3510231458683464,
+              0.7916961229314562,
+              0,
+              0.8660254037844445,
+              0.20266330775887367,
+              0.45708596969084697,
+              0,
+              5.55111512312578e-17,
+              0.9141719393817125,
+              -0.40532661551775534,
+              0,
+              -0.937023351881005,
+              -3.519191169339557,
+              -13.656721551802377,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.6365948114749802,
+            2.0268698238503156,
+            2.7718378327379436
+          ],
+          "selected": null,
+          "visible": [
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-D",
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:C-D",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::edge:S-D"
+          ],
+          "hidden": [
+            "khoi_chop::edge:S-A"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "D",
+              "id": "D"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "default-selected-mode-b",
+          "file": "rectangular_pyramid-1440-default-selected-mode-b.png",
+          "sha256": "025cd481866f2db8d4726f5de79c1b3c0ba7760b081e3b81a609a423dfcc84f1",
+          "camera": {
+            "position": [
+              9.933197059110473,
+              10.108732181927415,
+              9.2540774313199
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999998,
+              -0.4330127018922188,
+              0.7500000000000001,
+              0,
+              0.8660254037844385,
+              -0.2499999999999998,
+              0.43301270189221924,
+              0,
+              2.7755575615628904e-16,
+              0.8660254037844387,
+              0.49999999999999956,
+              0,
+              -3.787820340047206,
+              -1.1858826016361594,
+              -16.45414594479402,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.21085665335328088,
+            4.495536331510326,
+            2.772517160815112
+          ],
+          "selected": "the_tich_khoi_chop",
+          "visible": [
+            "khoi_chop::edge:B-C",
+            "khoi_chop::edge:C-D",
+            "khoi_chop::edge:S-B",
+            "khoi_chop::edge:S-C",
+            "khoi_chop::edge:S-D"
+          ],
+          "hidden": [
+            "khoi_chop::edge:A-B",
+            "khoi_chop::edge:A-D",
+            "khoi_chop::edge:S-A"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "D",
+              "id": "D"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "S",
+              "id": "S"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [
+            "the_tich_khoi_chop"
+          ],
+          "selected_result_items": [
+            "the_tich_khoi_chop"
+          ],
+          "inspector_values": [],
+          "overflow": false
+        }
+      ],
+      "checks": {
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "geometry_unchanged": true,
+        "no_duplicate_edge_owners": true,
+        "no_overflow": true,
+        "multiple_cameras": true
+      },
+      "mode_b_selected_is_result": true,
+      "pass": true
+    },
+    {
+      "id": "cuboid",
+      "width": 1440,
+      "source": "docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/final-inputs/fixtures/cuboid_positive.json",
+      "scope": "OFFLINE_BACKEND_ENVELOPE_NOT_LIVE_EXTRACTION",
+      "frames": [
+        {
+          "state": "default-unselected-mode-a",
+          "file": "cuboid-1440-default-unselected-mode-a.png",
+          "sha256": "12bf3958c9af19889ac79c2a3679e23c3431f133e145cf0ab5d309b93b09d255",
+          "camera": {
+            "position": [
+              10.20232614344558,
+              6.945636327949936,
+              6.7197960361110916
+            ],
+            "view_matrix_column_major": [
+              -0.5,
+              -0.3659981507706667,
+              0.7848855672213959,
+              0,
+              0.8660254037844387,
+              -0.21130913087034958,
+              0.453153893518325,
+              0,
+              -5.551115123125783e-17,
+              0.9063077870366502,
+              0.4226182617406994,
+              0,
+              -0.9139344337299191,
+              -0.8884945969645595,
+              -13.995009207082107,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.6825287708415642,
+            2.026729021435943,
+            2.132347742546985
+          ],
+          "selected": null,
+          "visible": [
+            "khoi_hop::edge:A_prime-B_prime",
+            "khoi_hop::edge:A_prime-D_prime",
+            "khoi_hop::edge:B-B_prime",
+            "khoi_hop::edge:B-C",
+            "khoi_hop::edge:B_prime-C_prime",
+            "khoi_hop::edge:C-C_prime",
+            "khoi_hop::edge:C-D",
+            "khoi_hop::edge:C_prime-D_prime",
+            "khoi_hop::edge:D-D_prime"
+          ],
+          "hidden": [
+            "khoi_hop::edge:A-A_prime",
+            "khoi_hop::edge:A-B",
+            "khoi_hop::edge:A-D"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "D",
+              "id": "D"
+            },
+            {
+              "text": "A′",
+              "id": "A_prime"
+            },
+            {
+              "text": "B′",
+              "id": "B_prime"
+            },
+            {
+              "text": "C′",
+              "id": "C_prime"
+            },
+            {
+              "text": "D′",
+              "id": "D_prime"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "default-unselected",
+          "file": "cuboid-1440-default-unselected.png",
+          "sha256": "12bf3958c9af19889ac79c2a3679e23c3431f133e145cf0ab5d309b93b09d255",
+          "camera": {
+            "position": [
+              10.20232614344558,
+              6.945636327949936,
+              6.7197960361110916
+            ],
+            "view_matrix_column_major": [
+              -0.5,
+              -0.3659981507706667,
+              0.7848855672213959,
+              0,
+              0.8660254037844387,
+              -0.21130913087034958,
+              0.453153893518325,
+              0,
+              -5.551115123125783e-17,
+              0.9063077870366502,
+              0.4226182617406994,
+              0,
+              -0.9139344337299191,
+              -0.8884945969645595,
+              -13.995009207082107,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.6825287708415642,
+            2.026729021435943,
+            2.132347742546985
+          ],
+          "selected": null,
+          "visible": [
+            "khoi_hop::edge:A_prime-B_prime",
+            "khoi_hop::edge:A_prime-D_prime",
+            "khoi_hop::edge:B-B_prime",
+            "khoi_hop::edge:B-C",
+            "khoi_hop::edge:B_prime-C_prime",
+            "khoi_hop::edge:C-C_prime",
+            "khoi_hop::edge:C-D",
+            "khoi_hop::edge:C_prime-D_prime",
+            "khoi_hop::edge:D-D_prime"
+          ],
+          "hidden": [
+            "khoi_hop::edge:A-A_prime",
+            "khoi_hop::edge:A-B",
+            "khoi_hop::edge:A-D"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "D",
+              "id": "D"
+            },
+            {
+              "text": "A′",
+              "id": "A_prime"
+            },
+            {
+              "text": "B′",
+              "id": "B_prime"
+            },
+            {
+              "text": "C′",
+              "id": "C_prime"
+            },
+            {
+              "text": "D′",
+              "id": "D_prime"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "quarter-unselected",
+          "file": "cuboid-1440-quarter-unselected.png",
+          "sha256": "713ad6920a07fc9a58d17017b06ebe557c7ac6d186c9c260387721ecd538d25b",
+          "camera": {
+            "position": [
+              6.618086391747032,
+              -6.483433569902937,
+              6.719796036110825
+            ],
+            "view_matrix_column_major": [
+              0.865046041838327,
+              -0.21202440425192448,
+              0.4546878022351822,
+              0,
+              0.5016924810078816,
+              0.3655842545273769,
+              -0.7839979638633117,
+              0,
+              0,
+              0.9063077870366549,
+              0.4226182617406889,
+              0,
+              -2.472259564590474,
+              -2.3167664218966193,
+              -10.932070394146098,
+              1.0000000000000002
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.6825287708415642,
+            2.026729021435943,
+            2.132347742546985
+          ],
+          "selected": null,
+          "visible": [
+            "khoi_hop::edge:A-A_prime",
+            "khoi_hop::edge:A-B",
+            "khoi_hop::edge:A_prime-B_prime",
+            "khoi_hop::edge:A_prime-D_prime",
+            "khoi_hop::edge:B-B_prime",
+            "khoi_hop::edge:B-C",
+            "khoi_hop::edge:B_prime-C_prime",
+            "khoi_hop::edge:C-C_prime",
+            "khoi_hop::edge:C_prime-D_prime"
+          ],
+          "hidden": [
+            "khoi_hop::edge:A-D",
+            "khoi_hop::edge:C-D",
+            "khoi_hop::edge:D-D_prime"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "D",
+              "id": "D"
+            },
+            {
+              "text": "A′",
+              "id": "A_prime"
+            },
+            {
+              "text": "B′",
+              "id": "B_prime"
+            },
+            {
+              "text": "C′",
+              "id": "C_prime"
+            },
+            {
+              "text": "D′",
+              "id": "D_prime"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "half-unselected",
+          "file": "cuboid-1440-half-unselected.png",
+          "sha256": "6f3192d0963e4c4a51a7f2605abc742c5ece13afbe9f0ad28758aaa5f51df406",
+          "camera": {
+            "position": [
+              -6.8206837366775375,
+              -2.920792925182124,
+              6.719796036110569
+            ],
+            "view_matrix_column_major": [
+              0.502908637866223,
+              0.36528568899647396,
+              -0.7833576880160884,
+              0,
+              -0.864339575606451,
+              0.21253837434939538,
+              -0.4557900146661573,
+              0,
+              -1.665334536937734e-16,
+              0.9063077870366596,
+              0.42261826174067835,
+              0,
+              0.9056238499425596,
+              -2.9779247365163637,
+              -9.514211812891169,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.6825287708415642,
+            2.026729021435943,
+            2.132347742546985
+          ],
+          "selected": null,
+          "visible": [
+            "khoi_hop::edge:A-A_prime",
+            "khoi_hop::edge:A-B",
+            "khoi_hop::edge:A-D",
+            "khoi_hop::edge:A_prime-B_prime",
+            "khoi_hop::edge:A_prime-D_prime",
+            "khoi_hop::edge:B-B_prime",
+            "khoi_hop::edge:B_prime-C_prime",
+            "khoi_hop::edge:C_prime-D_prime",
+            "khoi_hop::edge:D-D_prime"
+          ],
+          "hidden": [
+            "khoi_hop::edge:B-C",
+            "khoi_hop::edge:C-C_prime",
+            "khoi_hop::edge:C-D"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "D",
+              "id": "D"
+            },
+            {
+              "text": "A′",
+              "id": "A_prime"
+            },
+            {
+              "text": "B′",
+              "id": "B_prime"
+            },
+            {
+              "text": "C′",
+              "id": "C_prime"
+            },
+            {
+              "text": "D′",
+              "id": "D_prime"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "high-unselected",
+          "file": "cuboid-1440-high-unselected.png",
+          "sha256": "58cf66dd7612c08c52dcad875d0f9afef067073ad379547284c36b83bc2444d7",
+          "camera": {
+            "position": [
+              3.4925669357285356,
+              3.071755043176911,
+              12.784059373170313
+            ],
+            "view_matrix_column_major": [
+              -0.49999999999999223,
+              -0.8498203161919254,
+              0.16674960326028715,
+              0,
+              0.8660254037844428,
+              -0.49064398831621103,
+              0.09627292832958818,
+              0,
+              -1.387778780781445e-17,
+              0.19254585665917923,
+              0.9812879766324373,
+              0,
+              -0.9139344337299418,
+              2.0136748195681555,
+              -13.422954759457793,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.6825287708415642,
+            2.026729021435943,
+            2.132347742546985
+          ],
+          "selected": null,
+          "visible": [
+            "khoi_hop::edge:A_prime-B_prime",
+            "khoi_hop::edge:A_prime-D_prime",
+            "khoi_hop::edge:B-B_prime",
+            "khoi_hop::edge:B-C",
+            "khoi_hop::edge:B_prime-C_prime",
+            "khoi_hop::edge:C-C_prime",
+            "khoi_hop::edge:C_prime-D_prime"
+          ],
+          "hidden": [
+            "khoi_hop::edge:A-A_prime",
+            "khoi_hop::edge:A-B",
+            "khoi_hop::edge:A-D",
+            "khoi_hop::edge:C-D",
+            "khoi_hop::edge:D-D_prime"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "D",
+              "id": "D"
+            },
+            {
+              "text": "A′",
+              "id": "A_prime"
+            },
+            {
+              "text": "B′",
+              "id": "B_prime"
+            },
+            {
+              "text": "C′",
+              "id": "C_prime"
+            },
+            {
+              "text": "D′",
+              "id": "D_prime"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "low-unselected",
+          "file": "cuboid-1440-low-unselected.png",
+          "sha256": "2485080b612b00c1d5eb3e00399b3f9a9036e837191a9d90c6bc0e09415008fe",
+          "camera": {
+            "position": [
+              9.912517447019166,
+              6.778315199054639,
+              -3.1133165045314675
+            ],
+            "view_matrix_column_major": [
+              -0.49999999999999856,
+              0.4185122733019276,
+              0.7581869671101275,
+              0,
+              0.8660254037844392,
+              0.2416281736500295,
+              0.43773944955709676,
+              0,
+              1.1102230246251556e-16,
+              0.8754788991141955,
+              -0.48325634730005956,
+              0,
+              -0.9139344337299259,
+              -3.0606992268875546,
+              -11.987207465709231,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            1.6825287708415642,
+            2.026729021435943,
+            2.132347742546985
+          ],
+          "selected": null,
+          "visible": [
+            "khoi_hop::edge:A-B",
+            "khoi_hop::edge:A-D",
+            "khoi_hop::edge:B-B_prime",
+            "khoi_hop::edge:B-C",
+            "khoi_hop::edge:B_prime-C_prime",
+            "khoi_hop::edge:C-C_prime",
+            "khoi_hop::edge:C-D",
+            "khoi_hop::edge:C_prime-D_prime",
+            "khoi_hop::edge:D-D_prime"
+          ],
+          "hidden": [
+            "khoi_hop::edge:A-A_prime",
+            "khoi_hop::edge:A_prime-B_prime",
+            "khoi_hop::edge:A_prime-D_prime"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "D",
+              "id": "D"
+            },
+            {
+              "text": "A′",
+              "id": "A_prime"
+            },
+            {
+              "text": "B′",
+              "id": "B_prime"
+            },
+            {
+              "text": "C′",
+              "id": "C_prime"
+            },
+            {
+              "text": "D′",
+              "id": "D_prime"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [],
+          "selected_result_items": [],
+          "inspector_values": [],
+          "overflow": false
+        },
+        {
+          "state": "default-selected-mode-b",
+          "file": "cuboid-1440-default-selected-mode-b.png",
+          "sha256": "2e40e8bd010eff211a262fbb066e08050771311714be3c2e072307f5d964b7b2",
+          "camera": {
+            "position": [
+              9.241794819622596,
+              9.237732916056537,
+              6.873090638740015
+            ],
+            "view_matrix_column_major": [
+              -0.49999999999999956,
+              -0.3659981507706668,
+              0.7848855672213962,
+              0,
+              0.866025403784439,
+              -0.2113091308703493,
+              0.45315389351832475,
+              0,
+              -2.220446049250313e-16,
+              0.9063077870366502,
+              0.42261826174069916,
+              0,
+              -3.3792139688693696,
+              -0.894638439410657,
+              -14.344559625867227,
+              1.0000000000000002
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "target": [
+            0.4476403682979437,
+            4.160425476289106,
+            2.1379159547982094
+          ],
+          "selected": "the_tich_khoi_hop",
+          "visible": [
+            "khoi_hop::edge:A_prime-B_prime",
+            "khoi_hop::edge:A_prime-D_prime",
+            "khoi_hop::edge:B-B_prime",
+            "khoi_hop::edge:B-C",
+            "khoi_hop::edge:B_prime-C_prime",
+            "khoi_hop::edge:C-C_prime",
+            "khoi_hop::edge:C-D",
+            "khoi_hop::edge:C_prime-D_prime",
+            "khoi_hop::edge:D-D_prime"
+          ],
+          "hidden": [
+            "khoi_hop::edge:A-A_prime",
+            "khoi_hop::edge:A-B",
+            "khoi_hop::edge:A-D"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "labels": [
+            {
+              "text": "A",
+              "id": "A"
+            },
+            {
+              "text": "B",
+              "id": "B"
+            },
+            {
+              "text": "C",
+              "id": "C"
+            },
+            {
+              "text": "D",
+              "id": "D"
+            },
+            {
+              "text": "A′",
+              "id": "A_prime"
+            },
+            {
+              "text": "B′",
+              "id": "B_prime"
+            },
+            {
+              "text": "C′",
+              "id": "C_prime"
+            },
+            {
+              "text": "D′",
+              "id": "D_prime"
+            }
+          ],
+          "final_canvas_labels": [],
+          "analysis_results": [
+            "the_tich_khoi_hop"
+          ],
+          "selected_result_items": [
+            "the_tich_khoi_hop"
+          ],
+          "inspector_values": [],
+          "overflow": false
+        }
+      ],
+      "checks": {
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "geometry_unchanged": true,
+        "no_duplicate_edge_owners": true,
+        "no_overflow": true,
+        "multiple_cameras": true
+      },
+      "mode_b_selected_is_result": true,
+      "pass": true
+    },
+    {
+      "id": "regular_square_pyramid",
+      "width": 1440,
+      "source": "docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/final-inputs/fixtures/regular_square_pyramid_positive.json",
+      "scope": "OFFLINE_BACKEND_ENVELOPE_NOT_LIVE_EXTRACTION",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "regular_triangular_pyramid",
+      "width": 1440,
+      "source": "docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/final-inputs/fixtures/regular_triangular_pyramid_positive.json",
+      "scope": "OFFLINE_BACKEND_ENVELOPE_NOT_LIVE_EXTRACTION",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "cross_section",
+      "width": 1440,
+      "source": "docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/final-inputs/fixtures/cross_section_positive.json",
+      "scope": "OFFLINE_BACKEND_ENVELOPE_NOT_LIVE_EXTRACTION",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "cau-cat-mat-phang",
+      "width": 1440,
+      "source": "frontend/src/data/geometry-samples.json",
+      "scope": "LEGACY_OFFLINE_SAMPLE_NOT_CANONICAL_HYBRID",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "tru-truc-xien",
+      "width": 1440,
+      "source": "frontend/src/data/geometry-samples.json",
+      "scope": "LEGACY_OFFLINE_SAMPLE_NOT_CANONICAL_HYBRID",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "tru-thiet-dien-tron",
+      "width": 1440,
+      "source": "frontend/src/data/geometry-samples.json",
+      "scope": "LEGACY_OFFLINE_SAMPLE_NOT_CANONICAL_HYBRID",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "non-duong-sinh",
+      "width": 1440,
+      "source": "frontend/src/data/geometry-samples.json",
+      "scope": "LEGACY_OFFLINE_SAMPLE_NOT_CANONICAL_HYBRID",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "non-thiet-dien-truc",
+      "width": 1440,
+      "source": "frontend/src/data/geometry-samples.json",
+      "scope": "LEGACY_OFFLINE_SAMPLE_NOT_CANONICAL_HYBRID",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family01_triangular_pyramid",
+      "width": 1440,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family02_quadrilateral_pyramid",
+      "width": 1440,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family03_regular_pyramid",
+      "width": 1440,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family04_derived_sub_pyramid",
+      "width": 1440,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family05_prism",
+      "width": 1440,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family06a_cube",
+      "width": 1440,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family06b_cuboid",
+      "width": 1440,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family07_multi_solid_composition",
+      "width": 1440,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family08_unnamed_section_vertices",
+      "width": 1440,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family09_cylinder_and_sections",
+      "width": 1440,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family10_cone_frustum_cut",
+      "width": 1440,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family11_sphere_plane_cut",
+      "width": 1440,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family12_cylinder_ellipse_section",
+      "width": 1440,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family13_invalid_geometry_refusal",
+      "width": 1440,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "scene3d-circumsphere-fixture",
+      "width": 1440,
+      "source": "frontend/src/simulations/domains/geometry/scene3d-circumsphere-fixture.json",
+      "scope": "DISPLAY_ONLY_TEST_FIXTURE_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "triangular_pyramid",
+      "width": 390,
+      "source": "docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/final-inputs/fixtures/triangular_pyramid_positive.json",
+      "scope": "OFFLINE_BACKEND_ENVELOPE_NOT_LIVE_EXTRACTION",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "triangular_prism",
+      "width": 390,
+      "source": "docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/final-inputs/fixtures/triangular_prism_positive.json",
+      "scope": "OFFLINE_BACKEND_ENVELOPE_NOT_LIVE_EXTRACTION",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "rectangular_pyramid",
+      "width": 390,
+      "source": "docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/final-inputs/fixtures/rectangular_pyramid_positive.json",
+      "scope": "OFFLINE_BACKEND_ENVELOPE_NOT_LIVE_EXTRACTION",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "cuboid",
+      "width": 390,
+      "source": "docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/final-inputs/fixtures/cuboid_positive.json",
+      "scope": "OFFLINE_BACKEND_ENVELOPE_NOT_LIVE_EXTRACTION",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "regular_square_pyramid",
+      "width": 390,
+      "source": "docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/final-inputs/fixtures/regular_square_pyramid_positive.json",
+      "scope": "OFFLINE_BACKEND_ENVELOPE_NOT_LIVE_EXTRACTION",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "regular_triangular_pyramid",
+      "width": 390,
+      "source": "docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/final-inputs/fixtures/regular_triangular_pyramid_positive.json",
+      "scope": "OFFLINE_BACKEND_ENVELOPE_NOT_LIVE_EXTRACTION",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "cross_section",
+      "width": 390,
+      "source": "docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/final-inputs/fixtures/cross_section_positive.json",
+      "scope": "OFFLINE_BACKEND_ENVELOPE_NOT_LIVE_EXTRACTION",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "cau-cat-mat-phang",
+      "width": 390,
+      "source": "frontend/src/data/geometry-samples.json",
+      "scope": "LEGACY_OFFLINE_SAMPLE_NOT_CANONICAL_HYBRID",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "tru-truc-xien",
+      "width": 390,
+      "source": "frontend/src/data/geometry-samples.json",
+      "scope": "LEGACY_OFFLINE_SAMPLE_NOT_CANONICAL_HYBRID",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "tru-thiet-dien-tron",
+      "width": 390,
+      "source": "frontend/src/data/geometry-samples.json",
+      "scope": "LEGACY_OFFLINE_SAMPLE_NOT_CANONICAL_HYBRID",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "non-duong-sinh",
+      "width": 390,
+      "source": "frontend/src/data/geometry-samples.json",
+      "scope": "LEGACY_OFFLINE_SAMPLE_NOT_CANONICAL_HYBRID",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "non-thiet-dien-truc",
+      "width": 390,
+      "source": "frontend/src/data/geometry-samples.json",
+      "scope": "LEGACY_OFFLINE_SAMPLE_NOT_CANONICAL_HYBRID",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family01_triangular_pyramid",
+      "width": 390,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family02_quadrilateral_pyramid",
+      "width": 390,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family03_regular_pyramid",
+      "width": 390,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family04_derived_sub_pyramid",
+      "width": 390,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family05_prism",
+      "width": 390,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family06a_cube",
+      "width": 390,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family06b_cuboid",
+      "width": 390,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family07_multi_solid_composition",
+      "width": 390,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family08_unnamed_section_vertices",
+      "width": 390,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family09_cylinder_and_sections",
+      "width": 390,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family10_cone_frustum_cut",
+      "width": 390,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family11_sphere_plane_cut",
+      "width": 390,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family12_cylinder_ellipse_section",
+      "width": 390,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "family13_invalid_geometry_refusal",
+      "width": 390,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "scope": "DISPLAY_ONLY_AUTHORED_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    },
+    {
+      "id": "scene3d-circumsphere-fixture",
+      "width": 390,
+      "source": "frontend/src/simulations/domains/geometry/scene3d-circumsphere-fixture.json",
+      "scope": "DISPLAY_ONLY_TEST_FIXTURE_SCENE",
+      "frames": [],
+      "checks": {},
+      "failure": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3161/",
+      "pass": false
+    }
+  ],
+  "errors": [],
+  "forbidden": [],
+  "summary": {
+    "rows": 54,
+    "passed": 4,
+    "images": 28
+  }
+}

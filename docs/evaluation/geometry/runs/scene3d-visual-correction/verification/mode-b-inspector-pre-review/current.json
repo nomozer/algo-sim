@@ -1,0 +1,106 @@
+{
+ "url": "http://127.0.0.1:3161",
+ "out": [
+  {
+   "id": "cross_section",
+   "rows": [
+    {
+     "selected": "the_volume_sabcd",
+     "inspector_open": true,
+     "inspector_repeats": 0,
+     "link": [
+      "Xem giá trị trong Phân tích toán học"
+     ],
+     "canvas_results": 0
+    },
+    {
+     "selected": "area_T",
+     "inspector_open": true,
+     "inspector_repeats": 0,
+     "link": [
+      "Xem giá trị trong Phân tích toán học"
+     ],
+     "canvas_results": 0
+    },
+    {
+     "selected": "dist_S_BD",
+     "inspector_open": true,
+     "inspector_repeats": 0,
+     "link": [
+      "Xem giá trị trong Phân tích toán học"
+     ],
+     "canvas_results": 0
+    }
+   ]
+  },
+  {
+   "id": "cuboid",
+   "rows": [
+    {
+     "selected": "the_tich_khoi_hop",
+     "inspector_open": true,
+     "inspector_repeats": 0,
+     "link": [
+      "Xem công thức trong Phân tích toán học"
+     ],
+     "canvas_results": 0
+    }
+   ]
+  },
+  {
+   "id": "cau-cat-mat-phang",
+   "rows": [
+    {
+     "selected": "r",
+     "inspector_open": true,
+     "inspector_repeats": 0,
+     "link": [
+      "Xem giá trị trong Phân tích toán học"
+     ],
+     "canvas_results": 0
+    },
+    {
+     "selected": "S",
+     "inspector_open": true,
+     "inspector_repeats": 0,
+     "link": [
+      "Xem giá trị trong Phân tích toán học"
+     ],
+     "canvas_results": 0
+    }
+   ]
+  },
+  {
+   "id": "non-duong-sinh",
+   "rows": [
+    {
+     "selected": "l",
+     "inspector_open": true,
+     "inspector_repeats": 0,
+     "link": [
+      "Xem giá trị trong Phân tích toán học"
+     ],
+     "canvas_results": 0
+    },
+    {
+     "selected": "V",
+     "inspector_open": true,
+     "inspector_repeats": 0,
+     "link": [
+      "Xem giá trị trong Phân tích toán học"
+     ],
+     "canvas_results": 0
+    },
+    {
+     "selected": "Sxq",
+     "inspector_open": true,
+     "inspector_repeats": 0,
+     "link": [
+      "Xem giá trị trong Phân tích toán học"
+     ],
+     "canvas_results": 0
+    }
+   ]
+  }
+ ]
+}
