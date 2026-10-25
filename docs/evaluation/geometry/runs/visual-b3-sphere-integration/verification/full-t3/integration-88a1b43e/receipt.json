@@ -1,0 +1,35 @@
+{
+  "schema": "closure-t3/1",
+  "target": "88a1b43e53c0accdabdb2ceba088e22ce2fd79b2",
+  "source_tree_before": "",
+  "source_tree_after": "",
+  "started_utc": "2026-10-25T09:49:05.598550+00:00",
+  "finished_utc": "2026-10-25T09:56:46.587775+00:00",
+  "seconds": 460.985,
+  "exit_code": 0,
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "summaries": [
+    "= 11923 passed, 1 skipped, 2 deselected, 15 xfailed, 1 warning in 440.25s (0:07:20) =",
+    " Test Files  80 passed (80)",
+    "      Tests  1359 passed (1359)",
+    "FULL_PRODUCT_GATE_PASS"
+  ],
+  "post_freeze": {
+    "exit_code": 0,
+    "stdout": "Candidate khá»›p báº£n Ä‘Ã£ Ä‘Ã³ng bÄƒng (mÃ£ sáº£n pháº©m: 118 file, ee474c819688426fâ€¦)."
+  },
+  "streams": {
+    "stdout.log": {
+      "bytes": 1566584,
+      "sha256": "8cc63a732685e5f356791a5698dafd2c7f024a2f85746c2399cab30fe7749c40"
+    },
+    "stderr.log": {
+      "bytes": 342,
+      "sha256": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a"
+    }
+  },
+  "provider_calls": 0,
+  "executor": "Claude takeover runner (copy of Codex run-t3.py, basetemp/executor changed); machine verification, not independent review",
+  "execution_context": "Claude; Bunny user, clean detached linked worktree at 88a1b43e (integration + Vite cacheDir fix), node_modules junction to root install, no ACL changes, ALLOW_LIVE_AI=0",
+  "detached_head": true
+}

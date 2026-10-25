@@ -1,0 +1,66 @@
+{
+  "pass": true,
+  "css_restored_byte_identical": true,
+  "rows": [
+    {
+      "name": "start-1",
+      "args": [],
+      "ready": true,
+      "ready_ms": 877,
+      "app_rendered": true,
+      "hot_update": "[vite] hot updated: /src/styles/global.css",
+      "exit_code": 1,
+      "eperm": false,
+      "log": [
+        "> algo-sim-frontend@0.1.0 dev",
+        "> vite",
+        "  VITE v6.4.3  ready in 322 ms",
+        "  ➜  Local:   http://localhost:3000/",
+        "  ➜  Network: use --host to expose",
+        "4:57:06 PM [vite] (client) hmr update /src/styles/global.css",
+        "4:57:06 PM [vite] (client) hmr update /src/styles/global.css"
+      ]
+    },
+    {
+      "name": "start-2",
+      "args": [],
+      "ready": true,
+      "ready_ms": 878,
+      "app_rendered": true,
+      "hot_update": "[vite] hot updated: /src/styles/global.css",
+      "exit_code": 1,
+      "eperm": false,
+      "log": [
+        "> algo-sim-frontend@0.1.0 dev",
+        "> vite",
+        "  VITE v6.4.3  ready in 338 ms",
+        "  ➜  Local:   http://localhost:3000/",
+        "  ➜  Network: use --host to expose",
+        "4:57:10 PM [vite] (client) hmr update /src/styles/global.css",
+        "4:57:10 PM [vite] (client) hmr update /src/styles/global.css"
+      ]
+    },
+    {
+      "name": "force-reoptimise",
+      "args": [
+        "--force"
+      ],
+      "ready": true,
+      "ready_ms": 880,
+      "app_rendered": true,
+      "hot_update": "[vite] hot updated: /src/styles/global.css",
+      "exit_code": 1,
+      "eperm": false,
+      "log": [
+        "> algo-sim-frontend@0.1.0 dev",
+        "> vite --force",
+        "4:57:11 PM [vite] (client) Forced re-optimization of dependencies",
+        "  VITE v6.4.3  ready in 374 ms",
+        "  ➜  Local:   http://localhost:3000/",
+        "  ➜  Network: use --host to expose",
+        "4:57:14 PM [vite] (client) hmr update /src/styles/global.css",
+        "4:57:14 PM [vite] (client) hmr update /src/styles/global.css"
+      ]
+    }
+  ]
+}

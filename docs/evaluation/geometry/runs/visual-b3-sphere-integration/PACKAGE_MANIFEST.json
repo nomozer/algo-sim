@@ -28,8 +28,8 @@
   },
   {
    "file": "FINAL_OWNER_HANDOFF.md",
-   "bytes": 8584,
-   "sha256": "ab3286c597662bcd96eed1c9f1177bce5f85e951eaf2b9c3e3b49c439113bccf"
+   "bytes": 10763,
+   "sha256": "6b831a0bb74b2ed42df18709b9d3b0b560e6e2f43928ba9eade88b205e4117c3"
   },
   {
    "file": "INDEPENDENT_REVIEW_RESULT.md",
@@ -198,6 +198,16 @@
   },
   {
    "file": "verification/full-t3/f2-cb8d7c4a/stderr.log",
+   "bytes": 342,
+   "sha256": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a"
+  },
+  {
+   "file": "verification/full-t3/integration-88a1b43e/receipt.json",
+   "bytes": 1429,
+   "sha256": "10513b2c851f73b9774eade46550a011772adaea1929f666b80ca9ccd9a3750d"
+  },
+  {
+   "file": "verification/full-t3/integration-88a1b43e/stderr.log",
    "bytes": 342,
    "sha256": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a"
   },
@@ -520,6 +530,26 @@
    "file": "verification/sphere-capture/tru-thiet-dien-tron-390-final-mode-a.png",
    "bytes": 253808,
    "sha256": "42b00ac41971022df45ab5bd21e99570389ee7463b9ef8b6df8c2b37b00e5923"
+  },
+  {
+   "file": "verification/vite-dev-server/acceptance-88a1b43e.json",
+   "bytes": 2001,
+   "sha256": "e3560d36ec3bd8f35f6d16eb3138d819b39fb1c96a8c41bbc3d9d0abb639317b"
+  },
+  {
+   "file": "verification/vite-dev-server/acceptance-with-second-vite-server.json",
+   "bytes": 2001,
+   "sha256": "8e40d61069afede775e3374a349d159bcb9acd006b4f2d72dcb84bb2f5d984af"
+  },
+  {
+   "file": "verification/vite-dev-server/dev-server-acceptance.mjs.txt",
+   "bytes": 3821,
+   "sha256": "44d7f12a7ab04efc89f796cb77ee0e93d63843fe3beb6c0461bb9de0250c9f58"
+  },
+  {
+   "file": "verification/vite-dev-server/red-npm-run-dev.log",
+   "bytes": 382,
+   "sha256": "f100d2975dd3585ba3912309315d079410220fb77ab979298feac02fae2b948f"
   },
   {
    "file": "visual/official-inputs/FIXTURE_MANIFEST.json",
@@ -3155,6 +3185,11 @@
    "file": "visual/official-run-96a81e08-json/triangular_pyramid.json",
    "bytes": 320664,
    "sha256": "ca42b3bf07e212c657c1f82f63e0e1fd5b7b553e4c7a4f915b3bb183bbf8a511"
+  },
+  {
+   "file": "VITE_DEV_SERVER_EPERM_FIX.md",
+   "bytes": 5163,
+   "sha256": "58021192c02c4228eea0fb13c60981c58636c40abc1993413b93e62aad2719f4"
   }
  ]
 }

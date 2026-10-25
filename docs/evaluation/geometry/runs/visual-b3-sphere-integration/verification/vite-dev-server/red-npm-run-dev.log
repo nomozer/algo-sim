@@ -1,0 +1,8 @@
+
+> algo-sim-frontend@0.1.0 dev
+> vite
+
+[2m4:43:42 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m Re-optimizing dependencies because vite config has changed
+[31merror when starting dev server:
+Error: EPERM: operation not permitted, unlink 'D:\Documents\projects\algo-sim\.superpowers\worktrees\b3-dist\frontend\node_modules\.vite\deps\chunk-5WRI5ZAA.js'[39m
+exit=1

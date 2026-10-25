@@ -103,3 +103,20 @@ Both worktrees created here (`b3-dist`, `sphere-src`) have `frontend/node_module
 
 - Merging `research/sphere-sample-source-authority` without the integration commits would ship the radius-solid name "…, qua đại lượng". Merge the integrated branch, or nothing.
 - The integrated branch carries a join divergence layer (`visual-b3-sphere-integration/inputs/candidate_divergence.json`, `corrects` = both predecessor layers) and a follow-up layer for the display-name fix; the correction chain test resolves to the latter.
+
+## Addendum — `npm run dev` Vite EPERM (Owner requirement, same campaign)
+
+Full report: `VITE_DEV_SERVER_EPERM_FIX.md`.
+
+| Question | Answer |
+|---|---|
+| Cause | ACL conflict on ONE shared cache: `frontend/node_modules/.vite` of the root install is reached by every worktree/clone through junctions/symlinks; its files were created by the Codex sandbox (owner `CodexSandboxOffline`); `Bunny` may write but not delete there, and Vite deletes old chunks whenever it re-optimises. No process held the files. |
+| Fix | `frontend/vite.config.ts` `cacheDir: ".vite-cache"` (one cache per checkout, owned by whoever runs it) + `.gitignore` `.vite-cache/`; commit `88a1b43e`. Old cache untouched; no ACL change, no deletion, no process killed, backend `CACHE_VERSION` untouched. |
+| vite.config changed? | **Yes**, one option plus its comment. |
+| Two starts | RED before: exit 1, EPERM. After: start 1 and start 2 ready (~0.3 s Vite, ~0.75 s from spawn), plus a `--force` re-optimisation round — no EPERM (`verification/vite-dev-server/`). |
+| Hot reload | Works in all three rounds: browser console "[vite] hot updated: /src/styles/global.css"; probe edit restored byte-identical. |
+| Other Vite servers | Passed with a second Vite server running on 3142; port 3000 keeps `strictPort`. |
+| Still ACL-locked | root `frontend/node_modules/.vite` (Codex-owned, now unused by the fixed config); Codex clone `frontend/dist`; root `.superpowers/t3-closure-final`, `t3-closure-temp`. **The root checkout (old branch, old `vite.config.ts`) keeps failing until `88a1b43e` reaches it** — run the dev server from the candidate worktree meanwhile. |
+| Effect on Full T3 / candidate | Config is outside `PRODUCT_PATHS` and the evidence `SOURCE_PATHS`: product `9ced3d27`, measured `ee474c81…`, freeze `ddb1a4be` unchanged; browser evidence not stale. Full T3 re-run: **PASS at `88a1b43e`** (11923 / 1359). Default route `LLM_ONLY` and Hybrid NO-GO unchanged. |
+
+Status: **`VITE_DEV_SERVER_FIXED`** for any checkout that contains `88a1b43e` (verified twice plus a forced re-optimisation, with hot reload, on a clean committed tree); NOT yet in the root checkout's branch.
