@@ -414,6 +414,49 @@ export function createWorldPointOcclusionTest(
   return point => pointIsHidden(point, camera, triangles, excluded) || diemVanhCongBiChe(point, camera, curved);
 }
 
+/** Host-quadric tangencies seed even arbitrarily short front arcs between uniform probes. */
+export function curvedSurfaceTangentTurns(
+  sampleWorld: (turn: number) => THREE.Vector3,
+  camera: THREE.Vector3,
+  volumes: readonly CurvedSolidVolumeMeta[],
+): number[] {
+  const turns: number[] = [];
+  for (const volume of volumes) {
+    const points = Array.from({ length: 8 }, (_, i) => {
+      const point = sampleWorld(i / 8);
+      return volume.worldToLocal ? point.applyMatrix4(volume.worldToLocal) : point;
+    });
+    const eye = volume.worldToLocal ? camera.clone().applyMatrix4(volume.worldToLocal) : camera;
+    const axis = volume.top?.clone().sub(volume.anchor).normalize();
+    const values: number[] = [];
+    for (const point of points) {
+      const relative = point.clone().sub(volume.anchor), direction = eye.clone().sub(point);
+      const normal = relative.clone();
+      let residual: number;
+      if (volume.kind === "ball") {
+        residual = relative.lengthSq() - volume.radius ** 2;
+      } else {
+        if (!axis || volume.height <= 0) break;
+        const z = relative.dot(axis);
+        if (z < -1e-8 || z > volume.height + 1e-8) break;
+        normal.addScaledVector(axis, -z);
+        const fraction = volume.kind === "cone" ? 1 - z / volume.height : 1;
+        residual = normal.lengthSq() - (volume.radius * fraction) ** 2;
+        if (volume.kind === "cone") normal.addScaledVector(axis, volume.radius ** 2 * fraction / volume.height);
+      }
+      if (Math.abs(residual) > 1e-8 * Math.max(1, volume.radius ** 2)) break;
+      values.push(normal.dot(direction));
+    }
+    if (values.length !== 8) continue; // not a curve on this solid's side surface
+    const a = (values[0] - values[4]) / 2, b = (values[2] - values[6]) / 2;
+    const c = (values[0] + values[4]) / 2, radius = Math.hypot(a, b);
+    if (radius <= 1e-14 || Math.abs(c) > radius) continue;
+    const phi = Math.atan2(b, a), alpha = Math.acos(Math.max(-1, Math.min(1, -c / radius)));
+    for (const angle of [phi - alpha, phi + alpha]) turns.push(((angle / (2 * Math.PI)) % 1 + 1) % 1);
+  }
+  return turns;
+}
+
 export function diemVanhCongBiChe(
   pt: THREE.Vector3,
   worldCam: THREE.Vector3,

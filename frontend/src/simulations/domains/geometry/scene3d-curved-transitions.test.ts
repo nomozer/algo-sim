@@ -66,6 +66,27 @@ describe("curved-rim visibility at the true curve transition", () => {
 });
 
 describe("standalone sphere presentation reference", () => {
+  it("retains a tiny visible arc between regular probes near a tangent view", () => {
+    const sphere: SceneObject = { ...cylinder, id: "sphere", curved_kind: "ball", height_sq: "0", apex_or_top: undefined };
+    const root = buildObject3D(sphere, false)!;
+    const angle = Math.PI / 384, radial = 2.00001;
+    updateCanonicalEdgeVisibility(root, cameraAt(new THREE.Vector3(radial * Math.cos(angle), radial * Math.sin(angle), 4)));
+    const rim = root.getObjectByName("sphere_reference:sphere")!.userData.curvedRimLoop;
+    expect(rim.thayNet.geometry.drawRange.count).toBeGreaterThan(0);
+  });
+
+  it("invalidates reference visibility when its transform changes with a fixed camera", () => {
+    const sphere: SceneObject = { ...cylinder, id: "sphere", curved_kind: "ball", height_sq: "0", apex_or_top: undefined };
+    const root = buildObject3D(sphere, false)!;
+    const camera = cameraAt(new THREE.Vector3(8, 3, 6));
+    const reference = root.getObjectByName("sphere_reference:sphere")!;
+    updateCanonicalEdgeVisibility(root, camera);
+    const before = reference.userData.curvedRimFlagSig;
+    root.rotation.z = Math.PI;
+    updateCanonicalEdgeVisibility(root, camera);
+    expect(reference.userData.curvedRimFlagSig).not.toBe(before);
+  });
+
   it("shows one 3D reference circle without changing scene data and updates front/back under orbit", () => {
     const sphere: SceneObject = { ...cylinder, id: "sphere", curved_kind: "ball", height_sq: "0", apex_or_top: undefined };
     const source = JSON.stringify(sphere);

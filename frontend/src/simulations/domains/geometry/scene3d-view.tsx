@@ -46,6 +46,7 @@ import {
   classifySolidEdgeVisibility,
   classifyWorldSegmentVisibility,
   createWorldPointOcclusionTest,
+  curvedSurfaceTangentTurns,
   updateCurvedSolidSilhouette,
   dongBoNetDayManHinh,
   taoGiuAmNetDay,
@@ -662,6 +663,7 @@ interface CurvedRimLoopMeta {
   ngoai: THREE.Vector3[];
   midpoints: THREE.Vector3[];
   sample: (turn: number) => { inner: THREE.Vector3; outer: THREE.Vector3 };
+  spanCapacity?: number;
   thayMesh: THREE.Mesh;
   khuatMesh: THREE.Mesh;
   thayNet: THREE.LineSegments;
@@ -753,8 +755,8 @@ function capNhatHinhHocVanhCong(
   // `BufferGeometry` mới mỗi lần đổi góc nhìn là một buffer GPU mới mỗi khung khi xoay (cổng
   // `scene3d-orbit-gate`, `capPhat = 0`, ca p6/p7 thiết diện elip).
   const setPos = (mesh: THREE.Mesh | THREE.LineSegments, arr: number[]) => {
-    // Four probes per chord plus at most four refined transitions; capacity is camera-independent.
-    const cap = segCount * 8 * (mesh instanceof THREE.LineSegments ? 6 : 18);
+    // Eight probe intervals/chord plus analytic tangent seeds; reserve independently of camera orientation.
+    const cap = (rim.spanCapacity ?? segCount * 16) * (mesh instanceof THREE.LineSegments ? 6 : 18);
     let attr = mesh.geometry?.getAttribute?.("position") as THREE.BufferAttribute | undefined;
     if (!attr || attr.array.length !== cap) {
       const g = new THREE.BufferGeometry();
@@ -1061,6 +1063,8 @@ export function updateCanonicalEdgeVisibility(
     });
   }
 
+  const occluderSignature = [...occluders.flatMap(o => o.matrixWorld?.elements ?? []),
+    ...curvedVolumes.flatMap(o => o.worldToLocal?.elements ?? [])].map(khoa).join(",");
   const worldSignature = [
     ...[
       camera.position.x, camera.position.y, camera.position.z,
@@ -1068,27 +1072,37 @@ export function updateCanonicalEdgeVisibility(
       ...camera.projectionMatrix.elements,
     ].map(khoa),
     renderSignature,
+    occluderSignature,
   ].join("|");
   updateNonCanonicalVisibility(root, camera, occluders, worldSignature, curvedVolumes);
   if (curvedVolumes.length > 0 || occluders.length > 0) {
     const worldCam = camera.position.clone();
-    const hiddenAt = createWorldPointOcclusionTest(worldCam, occluders, curvedVolumes);
+    let hiddenAt: ((point: THREE.Vector3) => boolean) | undefined;
     root.traverse((node) => {
       const rim = node.userData?.curvedRimLoop as CurvedRimLoopMeta | undefined;
       if (!rim) return;
-      if (node.userData.curvedRimSig === worldSignature) return;
       node.updateWorldMatrix(true, false);
+      const rimSignature = `${worldSignature}|${node.matrixWorld.elements.map(khoa).join(",")}`;
+      if (node.userData.curvedRimSig === rimSignature) return;
+      hiddenAt ??= createWorldPointOcclusionTest(worldCam, occluders, curvedVolumes);
       const count = rim.midpoints.length;
-      const hidden = (t: number) => hiddenAt(rim.sample(t / count).outer.applyMatrix4(node.matrixWorld));
+      rim.spanCapacity = Math.max(count * 16, count * 9 + 4 * curvedVolumes.length);
+      const sampleWorld = (turn: number) => rim.sample(turn).outer.applyMatrix4(node.matrixWorld);
+      const hidden = (t: number) => hiddenAt!(sampleWorld(t / count));
+      const tangencies = curvedSurfaceTangentTurns(sampleWorld, worldCam, curvedVolumes).map(t => t * count);
       const spans: { t0: number; t1: number; hidden: boolean }[] = [];
       // Probe the curve itself: chord interiors lie inside curved solids even on their visible side.
       // Angular probe spacing <= 2π/384; transition bracket refined to < 2π/(96*2^20).
       for (let i = 0; i < count; i++) {
         let start = i, state = hidden(i);
-        for (let j = 1; j <= 4; j++) {
-          const end = i + j / 4, next = hidden(end);
+        const cuts = [i, i + 0.25, i + 0.5, i + 0.75, i + 1,
+          ...tangencies.filter(t => t > i && t < i + 1)].sort((a, b) => a - b);
+        // Midpoints between analytic tangencies catch a tiny visible interval even if its endpoints are tangencies.
+        const probes = cuts.flatMap((t, j) => j ? [(cuts[j - 1] + t) / 2, t] : [t]);
+        for (let j = 1; j < probes.length; j++) {
+          const end = probes[j], next = hidden(end);
           if (next === state) continue;
-          let lo = end - 0.25, hi = end;
+          let lo = probes[j - 1], hi = end;
           for (let k = 0; k < 20; k++) {
             const mid = (lo + hi) / 2;
             if (hidden(mid) === state) lo = mid; else hi = mid;
@@ -1104,7 +1118,7 @@ export function updateCanonicalEdgeVisibility(
         capNhatHinhHocVanhCong(rim, spans, true);
         node.userData.curvedRimFlagSig = flagSig;
       }
-      node.userData.curvedRimSig = worldSignature;
+      node.userData.curvedRimSig = rimSignature;
     });
   }
 
