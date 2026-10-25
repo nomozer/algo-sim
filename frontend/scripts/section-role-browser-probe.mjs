@@ -12,12 +12,13 @@
  * Usage: node scripts/section-role-browser-probe.mjs --url http://127.0.0.1:3142 --cases cases.json --out <dir>
  */
 import { chromium } from "playwright";
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { join } from "node:path";
 import { docPNG } from "./png-pixels.mjs";
-import { LOP_PHU_KHUNG } from "./compiler-scene-replay-lib.mjs";
+import { LOP_PHU_KHUNG, assessCausalCanvasHues, phanLoaiSac, DAI_SAC_VAI_TRO } from "./compiler-scene-replay-lib.mjs";
 import { assessSectionRole, project, sectionBoundaryWorld } from "./section-role-oracle.mjs";
+import { assessSectionRoleV2, sectionBoundaryWorldV2, otherSectionBoundariesWorldV2 } from "./section-role-oracle-v2.mjs";
 
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const URL_ = arg("--url", "http://127.0.0.1:3142");
@@ -25,6 +26,8 @@ const OUT = arg("--out");
 const CASES = JSON.parse(readFileSync(arg("--cases"), "utf8"));
 const FAULTS = (arg("--faults", "none,boundary_terracotta,boundary_magenta,fill_grey,fill_hidden,wrong_object")).split(",");
 const CAMERAS = arg("--cameras", "default").split(",");
+const V2 = process.argv.includes('--v2');
+if (existsSync(OUT)) throw Error('Fresh output required');
 mkdirSync(OUT, { recursive: true });
 
 function initFault(fault) {
@@ -140,11 +143,32 @@ try {
         const res = world ? assessSectionRole(img, { scale: img.w / box.width, box: { w: box.width, h: box.height }, overlays, edges, otherBoundaries })
           : { pass: false, verdict: "FAIL", reasons: ["BOUNDARY_SHAPE_UNSUPPORTED"] };
         const identity_ok = selected === c.item;
-        const verdict = !identity_ok ? "FAIL" : res.verdict;
+        let comparison;
+        if (V2) {
+          const projectEdges = boundary => boundary.map(s => ({ ...s, a: project(s.a, cam, {w:box.width,h:box.height}), b: project(s.b,cam,{w:box.width,h:box.height}) }));
+          const independentWorld = sectionBoundaryWorldV2(scene,c.section,cam);
+          const independentEdges = independentWorld ? projectEdges(independentWorld) : null;
+          const other = otherSectionBoundariesWorldV2(scene,c.section,cam);
+          const independentOther = other.boundaries.map(b=>projectEdges(b.edges));
+          const v2 = independentEdges ? assessSectionRoleV2(img,{scale:img.w/box.width,box:{w:box.width,h:box.height},overlays,edges:independentEdges,otherBoundaries:independentOther,unsupportedOtherBoundaries:other.unsupported})
+            : {verdict:'UNCERTIFIABLE',reasons:['SOURCE_GEOMETRY_UNSUPPORTED']};
+          const census={total:0,cam:0,xanh:0};
+          for(let py=0;py<img.h;py++) for(let px=0;px<img.w;px++) {
+            const x=px*box.width/img.w,y=py*box.height/img.h;
+            if(overlays.some(b=>x>=b.x&&x<=b.x+b.w&&y>=b.y&&y<=b.y+b.h)) continue;
+            census.total++;
+            const q=(py*img.w+px)*4, hue=phanLoaiSac(img.rgba[q],img.rgba[q+1],img.rgba[q+2],DAI_SAC_VAI_TRO);
+            if(hue==='cam'||hue==='xanh') census[hue]++;
+          }
+          const tiers=await p.evaluate(()=>window.__geo3d_causal_tiers);
+          comparison={v1:{verdict:res.verdict,reasons:res.reasons},v2,locked_hue_predicate:assessCausalCanvasHues(scene,tiers,census),
+            note:'Same capture; locked predicate replay is not a new official-suite result',tiers,overlays,independentEdges};
+        }
+        const verdict = !identity_ok ? "FAIL" : comparison?.v2.verdict ?? res.verdict;
         rows.push({ case: c.id, shape: c.shape, width, cameraName, camera: cam, fault, file, sha256: createHash("sha256").update(png).digest("hex"),
           selected, identity_ok, pixel_pass: res.pass, reasons: res.reasons, edges: res.edges?.map(({ edge, hidden, visible, blue, coverage, scored, pass }) => ({ edge, hidden, curve: Boolean(edges[edge]?.curve), visible, blue, coverage, scored, pass })),
           hidden_arcs: res.hidden_arcs,
-          fill: res.fill, blue: res.blue, verdict, errors });
+          fill: res.fill, blue: res.blue, verdict, errors, ...(comparison?{comparison}:{}) });
         console.log(`${c.id} ${width} ${cameraName} ${fault}: identity=${identity_ok} ${verdict} ${res.reasons.join(",")}`);
         await ctx.close();
         break;

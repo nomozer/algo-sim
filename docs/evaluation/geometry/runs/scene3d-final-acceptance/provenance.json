@@ -1,0 +1,68 @@
+{
+  "schema": "scene3d-acceptance-provenance/1",
+  "source_head": "16b46d3880d0646fb3eae711fbf07556a40645c5",
+  "main": "9978e512a8a2a087475d792c0bd9db639c36acaa",
+  "candidate": "c84e8620318a74de6e9b1e9c12893cffd4722758",
+  "product": "b8b3311b7f15dd8c13d0477f67cab765986f9c42",
+  "provider_calls": 0,
+  "errors": [
+    {
+      "source": "src/simulations/domains/geometry/scene3d-view.tsx",
+      "kind": "JSONDecodeError"
+    },
+    {
+      "source": "src/simulations/domains/geometry/scene3d-edge-visibility.ts",
+      "kind": "JSONDecodeError"
+    },
+    {
+      "source": "src/simulations/domains/geometry/Scene3DExplorer.tsx",
+      "kind": "JSONDecodeError"
+    }
+  ],
+  "product_diff_from_freeze": "",
+  "product_trees": {
+    "frontend/src": {
+      "candidate": "8ca98137a312f27fd9283d78041af1adc03ef6cb",
+      "head": "8ca98137a312f27fd9283d78041af1adc03ef6cb"
+    },
+    "backend/app": {
+      "candidate": "f4f58d100e51cf42048c8ca7e1347f6730ca1c5b",
+      "head": "f4f58d100e51cf42048c8ca7e1347f6730ca1c5b"
+    }
+  },
+  "locked_gate_diff": "",
+  "prior_t3_receipt": {
+    "sha256": "e8c2c046ed1b03a09831056b424dc2f85a98fc464d1a9ecf583b2518f970a0a6",
+    "verdict": "FULL_PRODUCT_GATE_PASS",
+    "target": "c84e8620318a74de6e9b1e9c12893cffd4722758",
+    "summaries": [
+      "= 11923 passed, 1 skipped, 2 deselected, 15 xfailed, 1 warning in 525.32s (0:08:45) =",
+      " Test Files  80 passed (80)",
+      "      Tests  1378 passed (1378)",
+      "FULL_PRODUCT_GATE_PASS"
+    ]
+  },
+  "t3_streams": {
+    "stdout.log": {
+      "sha256": "f7b742456e88e6b8136246f9047d6a50c2ec5670c9b0a4295677a162cb37b44c",
+      "matches": true
+    },
+    "stderr.log": {
+      "sha256": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a",
+      "matches": true
+    }
+  },
+  "freeze_verify": {
+    "exit_code": 0,
+    "stdout": "Candidate khớp bản đã đóng băng (mã sản phẩm: 118 file, ee474c819688426f…)."
+  },
+  "detached_status": "",
+  "detached_head": "c84e8620318a74de6e9b1e9c12893cffd4722758",
+  "official_receipt": {
+    "path": "docs\\evaluation\\geometry\\runs\\scene3d-visual-correction\\visual\\official-run-c84e8620\\BROWSER_EVIDENCE.json",
+    "sha256": "ea56da68309ad9b5a071c215718ebfea19232e013c4612c3b73eacc6d84b7658",
+    "unchanged_since_handoff": true
+  },
+  "server_sources": [],
+  "pass": false
+}

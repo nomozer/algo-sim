@@ -1,0 +1,3862 @@
+{
+  "schema": "scene3d-motion-observation/1",
+  "controls_only": true,
+  "provider_calls": 0,
+  "forbidden": [],
+  "errors": [],
+  "rows": [
+    {
+      "id": "cross_section",
+      "width": 1440,
+      "frames": [
+        {
+          "state": "default-mode-a",
+          "file": "cross_section-1440-default-mode-a.png",
+          "sha256": "8d1eb9f6973d325cb4695825b8838b7764cd7fa6b2cb8750de164703a2837725",
+          "camera": {
+            "position": [
+              14.809168076725424,
+              9.503755088183468,
+              6.877536492190492
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999998,
+              -0.2961981327260234,
+              0.8137976813493738,
+              0,
+              0.8660254037844386,
+              -0.17101007166283408,
+              0.4698463103929541,
+              0,
+              2.77555756156289e-17,
+              0.9396926207859084,
+              0.3420201433256684,
+              0,
+              -0.8259092993497911,
+              -0.45108452064902144,
+              -18.86922692340009,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "visible": [
+            "S.ABCD::edge:B-C",
+            "S.ABCD::edge:C-D",
+            "S.ABCD::edge:S-B",
+            "S.ABCD::edge:S-C",
+            "S.ABCD::edge:S-D"
+          ],
+          "hidden": [
+            "S.ABCD::edge:A-B",
+            "S.ABCD::edge:A-D",
+            "S.ABCD::edge:S-A"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [
+            "perpendicular:dist_S_BD"
+          ],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "A",
+              "text": "A"
+            },
+            {
+              "id": "B",
+              "text": "B"
+            },
+            {
+              "id": "C",
+              "text": "C"
+            },
+            {
+              "id": "D",
+              "text": "D"
+            },
+            {
+              "id": "S",
+              "text": "S"
+            }
+          ]
+        },
+        {
+          "state": "selected-mode-b",
+          "file": "cross_section-1440-selected-mode-b.png",
+          "sha256": "5fa64e5ea96360fdcf32855ccc6ffa0029598e7614c9ab96ece317bfdd59c509",
+          "camera": {
+            "position": [
+              13.727596324489816,
+              12.613495035443613,
+              7.135530096133097
+            ],
+            "view_matrix_column_major": [
+              -0.5,
+              -0.29619813272602363,
+              0.8137976813493739,
+              0,
+              0.8660254037844387,
+              -0.1710100716628343,
+              0.4698463103929543,
+              0,
+              -2.775557561562892e-17,
+              0.9396926207859085,
+              0.3420201433256685,
+              0,
+              -4.059808968958158,
+              -0.4820818886715106,
+              -19.53838518911709,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "visible": [
+            "S.ABCD::edge:B-C",
+            "S.ABCD::edge:C-D",
+            "S.ABCD::edge:S-B",
+            "S.ABCD::edge:S-C",
+            "S.ABCD::edge:S-D"
+          ],
+          "hidden": [
+            "S.ABCD::edge:A-B",
+            "S.ABCD::edge:A-D",
+            "S.ABCD::edge:S-A"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [
+            "V(S.ABCD) = 72"
+          ],
+          "labels": [
+            {
+              "id": "A",
+              "text": "A"
+            },
+            {
+              "id": "B",
+              "text": "B"
+            },
+            {
+              "id": "C",
+              "text": "C"
+            },
+            {
+              "id": "D",
+              "text": "D"
+            },
+            {
+              "id": "S",
+              "text": "S"
+            }
+          ]
+        }
+      ],
+      "motion": {
+        "active": false,
+        "cpu": [],
+        "intervals": [],
+        "snapshots": [],
+        "gpu": {},
+        "last": null,
+        "occlusion": {
+          "frame_count": 46,
+          "recompute_count": 0,
+          "recomputation_times_ms": [],
+          "edge_count": 8,
+          "triangle_count": 6,
+          "sample_count": 6144,
+          "span_count": 8
+        }
+      },
+      "first_selected": "the_volume_sabcd",
+      "next_selected": "area_T",
+      "selection_changed": true,
+      "label_source_errors": [],
+      "wrong_label_control_detected": true,
+      "geometry_unchanged": true,
+      "cpu_frame_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "frame_interval_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "no_duplicate_owners": true,
+      "mode_a_no_final_canvas_labels": true,
+      "pass": true
+    },
+    {
+      "id": "triangular_prism",
+      "width": 1440,
+      "frames": [
+        {
+          "state": "default-mode-a",
+          "file": "triangular_prism-1440-default-mode-a.png",
+          "sha256": "de485198421989992d683be23e6bd9d2971c46ad1936900de8343f8d90d904b8",
+          "camera": {
+            "position": [
+              9.15102959523978,
+              4.5749801908236485,
+              6.41676037333538
+            ],
+            "view_matrix_column_major": [
+              -0.34202014332566844,
+              -0.3971312619671029,
+              0.8516507396391467,
+              0,
+              0.9396926207859084,
+              -0.1445439584525987,
+              0.3099755192194445,
+              0,
+              -1.6653345369377348e-16,
+              0.90630778703665,
+              0.4226182617406994,
+              0,
+              -1.1692386718173458,
+              -1.5201142158223,
+              -11.923453098300515,
+              1.0000000000000002
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "visible": [
+            "solid_ABCDEF::edge:B-C",
+            "solid_ABCDEF::edge:B-E",
+            "solid_ABCDEF::edge:C-F",
+            "solid_ABCDEF::edge:D-E",
+            "solid_ABCDEF::edge:D-F",
+            "solid_ABCDEF::edge:E-F"
+          ],
+          "hidden": [
+            "solid_ABCDEF::edge:A-B",
+            "solid_ABCDEF::edge:A-C",
+            "solid_ABCDEF::edge:A-D"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "A",
+              "text": "A"
+            },
+            {
+              "id": "B",
+              "text": "B"
+            },
+            {
+              "id": "C",
+              "text": "C"
+            },
+            {
+              "id": "D",
+              "text": "D"
+            },
+            {
+              "id": "E",
+              "text": "E"
+            },
+            {
+              "id": "F",
+              "text": "F"
+            }
+          ]
+        },
+        {
+          "state": "selected-mode-b",
+          "file": "triangular_prism-1440-selected-mode-b.png",
+          "sha256": "c14b471e948745eb7021fd660141e0a909889d61a662db8ba0524e5e0bed075a",
+          "camera": {
+            "position": [
+              8.714655678344089,
+              6.59441314827127,
+              6.546733609995604
+            ],
+            "view_matrix_column_major": [
+              -0.3420201433256683,
+              -0.39713126196710263,
+              0.8516507396391468,
+              0,
+              0.9396926207859084,
+              -0.14454395845259854,
+              0.30997551921944455,
+              0,
+              -2.7755575615628914e-17,
+              0.9063077870366503,
+              0.42261826174069916,
+              0,
+              -3.216133589702989,
+              -1.5193108631210193,
+              -12.232718772080908,
+              1.0000000000000002
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "visible": [
+            "solid_ABCDEF::edge:B-C",
+            "solid_ABCDEF::edge:B-E",
+            "solid_ABCDEF::edge:C-F",
+            "solid_ABCDEF::edge:D-E",
+            "solid_ABCDEF::edge:D-F",
+            "solid_ABCDEF::edge:E-F"
+          ],
+          "hidden": [
+            "solid_ABCDEF::edge:A-B",
+            "solid_ABCDEF::edge:A-C",
+            "solid_ABCDEF::edge:A-D"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [
+            "V(ABC.DEF) = 30"
+          ],
+          "labels": [
+            {
+              "id": "A",
+              "text": "A"
+            },
+            {
+              "id": "B",
+              "text": "B"
+            },
+            {
+              "id": "C",
+              "text": "C"
+            },
+            {
+              "id": "D",
+              "text": "D"
+            },
+            {
+              "id": "E",
+              "text": "E"
+            },
+            {
+              "id": "F",
+              "text": "F"
+            }
+          ]
+        }
+      ],
+      "motion": {
+        "active": false,
+        "cpu": [],
+        "intervals": [],
+        "snapshots": [],
+        "gpu": {},
+        "last": null,
+        "occlusion": {
+          "frame_count": 42,
+          "recompute_count": 0,
+          "recomputation_times_ms": [],
+          "edge_count": 9,
+          "triangle_count": 8,
+          "sample_count": 8192,
+          "span_count": 9
+        }
+      },
+      "first_selected": "the_tich_solid_ABCDEF",
+      "next_selected": "dien_tich_day_ABC",
+      "selection_changed": true,
+      "label_source_errors": [],
+      "wrong_label_control_detected": true,
+      "geometry_unchanged": true,
+      "cpu_frame_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "frame_interval_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "no_duplicate_owners": true,
+      "mode_a_no_final_canvas_labels": true,
+      "pass": true
+    },
+    {
+      "id": "cuboid",
+      "width": 1440,
+      "frames": [
+        {
+          "state": "default-mode-a",
+          "file": "cuboid-1440-default-mode-a.png",
+          "sha256": "aea8804b67e4326f0cd09ecc9e76d8eb8ce09e12efa60e8d70e0d89cd9a3d577",
+          "camera": {
+            "position": [
+              10.20232614344558,
+              6.945636327949936,
+              6.7197960361110916
+            ],
+            "view_matrix_column_major": [
+              -0.5,
+              -0.3659981507706667,
+              0.7848855672213959,
+              0,
+              0.8660254037844387,
+              -0.21130913087034958,
+              0.453153893518325,
+              0,
+              -5.551115123125783e-17,
+              0.9063077870366502,
+              0.4226182617406994,
+              0,
+              -0.9139344337299191,
+              -0.8884945969645595,
+              -13.995009207082107,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "visible": [
+            "khoi_hop::edge:A_prime-B_prime",
+            "khoi_hop::edge:A_prime-D_prime",
+            "khoi_hop::edge:B-B_prime",
+            "khoi_hop::edge:B-C",
+            "khoi_hop::edge:B_prime-C_prime",
+            "khoi_hop::edge:C-C_prime",
+            "khoi_hop::edge:C-D",
+            "khoi_hop::edge:C_prime-D_prime",
+            "khoi_hop::edge:D-D_prime"
+          ],
+          "hidden": [
+            "khoi_hop::edge:A-A_prime",
+            "khoi_hop::edge:A-B",
+            "khoi_hop::edge:A-D"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "A",
+              "text": "A"
+            },
+            {
+              "id": "B",
+              "text": "B"
+            },
+            {
+              "id": "C",
+              "text": "C"
+            },
+            {
+              "id": "D",
+              "text": "D"
+            },
+            {
+              "id": "A_prime",
+              "text": "A′"
+            },
+            {
+              "id": "B_prime",
+              "text": "B′"
+            },
+            {
+              "id": "C_prime",
+              "text": "C′"
+            },
+            {
+              "id": "D_prime",
+              "text": "D′"
+            }
+          ]
+        },
+        {
+          "state": "selected-mode-b",
+          "file": "cuboid-1440-selected-mode-b.png",
+          "sha256": "da5e20b7a037ea9d25624e55ea92ec054deb904f4ea6023d57d8f10467cd44ba",
+          "camera": {
+            "position": [
+              9.241794819622596,
+              9.237732916056537,
+              6.873090638740015
+            ],
+            "view_matrix_column_major": [
+              -0.49999999999999956,
+              -0.3659981507706668,
+              0.7848855672213962,
+              0,
+              0.866025403784439,
+              -0.2113091308703493,
+              0.45315389351832475,
+              0,
+              -2.220446049250313e-16,
+              0.9063077870366502,
+              0.42261826174069916,
+              0,
+              -3.3792139688693696,
+              -0.894638439410657,
+              -14.344559625867227,
+              1.0000000000000002
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "visible": [
+            "khoi_hop::edge:A_prime-B_prime",
+            "khoi_hop::edge:A_prime-D_prime",
+            "khoi_hop::edge:B-B_prime",
+            "khoi_hop::edge:B-C",
+            "khoi_hop::edge:B_prime-C_prime",
+            "khoi_hop::edge:C-C_prime",
+            "khoi_hop::edge:C-D",
+            "khoi_hop::edge:C_prime-D_prime",
+            "khoi_hop::edge:D-D_prime"
+          ],
+          "hidden": [
+            "khoi_hop::edge:A-A_prime",
+            "khoi_hop::edge:A-B",
+            "khoi_hop::edge:A-D"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [
+            "V(ABCD.A′B′C′D′) = 60"
+          ],
+          "labels": [
+            {
+              "id": "A",
+              "text": "A"
+            },
+            {
+              "id": "B",
+              "text": "B"
+            },
+            {
+              "id": "C",
+              "text": "C"
+            },
+            {
+              "id": "D",
+              "text": "D"
+            },
+            {
+              "id": "A_prime",
+              "text": "A′"
+            },
+            {
+              "id": "B_prime",
+              "text": "B′"
+            },
+            {
+              "id": "C_prime",
+              "text": "C′"
+            },
+            {
+              "id": "D_prime",
+              "text": "D′"
+            }
+          ]
+        }
+      ],
+      "motion": {
+        "active": false,
+        "cpu": [],
+        "intervals": [],
+        "snapshots": [],
+        "gpu": {},
+        "last": null,
+        "occlusion": {
+          "frame_count": 42,
+          "recompute_count": 0,
+          "recomputation_times_ms": [],
+          "edge_count": 12,
+          "triangle_count": 12,
+          "sample_count": 9216,
+          "span_count": 12
+        }
+      },
+      "first_selected": "the_tich_khoi_hop",
+      "next_selected": "dien_tich_day_ABCD",
+      "selection_changed": true,
+      "label_source_errors": [],
+      "wrong_label_control_detected": true,
+      "geometry_unchanged": true,
+      "cpu_frame_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "frame_interval_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "no_duplicate_owners": true,
+      "mode_a_no_final_canvas_labels": true,
+      "pass": true
+    },
+    {
+      "id": "cau-cat-mat-phang",
+      "width": 1440,
+      "frames": [
+        {
+          "state": "default-mode-a",
+          "file": "cau-cat-mat-phang-1440-default-mode-a.png",
+          "sha256": "c130d705170ae388e8607b40227ad7ecff5bad82b58497195445a50d61a4b1a8",
+          "camera": {
+            "position": [
+              12.012927496516692,
+              7.644473198809738,
+              8.820682555299038
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031798,
+              -0.4550836446143777,
+              0.7155417527999327,
+              0,
+              0.8479983040050877,
+              -0.28442727788398603,
+              0.447213595499958,
+              0,
+              0,
+              0.8438009243891595,
+              0.5366563145999493,
+              0,
+              -0.11566146811410676,
+              0.19828343649296687,
+              -16.748138534441676,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "I",
+              "text": "I"
+            },
+            {
+              "id": "P",
+              "text": "(P)"
+            }
+          ]
+        },
+        {
+          "state": "selected-mode-b",
+          "file": "cau-cat-mat-phang-1440-selected-mode-b.png",
+          "sha256": "9627bef2e3b1ff1982f29ec987577a74b559d2ad857c5ca3f1bc672db295e76d",
+          "camera": {
+            "position": [
+              10.487442490105732,
+              11.2154864374335,
+              9.186686976129588
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031796,
+              -0.45508364461437806,
+              0.7155417527999332,
+              0,
+              0.8479983040050885,
+              -0.2844272778839857,
+              0.44721359549995787,
+              0,
+              -3.053113317719181e-16,
+              0.84380092438916,
+              0.5366563145999491,
+              0,
+              -3.952380074435332,
+              0.21091886609297258,
+              -17.450014572717457,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "I",
+              "text": "I"
+            },
+            {
+              "id": "P",
+              "text": "(P)"
+            }
+          ]
+        }
+      ],
+      "motion": {
+        "active": false,
+        "cpu": [],
+        "intervals": [],
+        "snapshots": [],
+        "gpu": {},
+        "last": null,
+        "occlusion": {
+          "frame_count": 37,
+          "recompute_count": 0,
+          "recomputation_times_ms": [],
+          "edge_count": 0,
+          "triangle_count": 0,
+          "sample_count": 0,
+          "span_count": 0
+        }
+      },
+      "first_selected": "r",
+      "next_selected": "S",
+      "selection_changed": true,
+      "label_source_errors": [],
+      "wrong_label_control_detected": true,
+      "geometry_unchanged": true,
+      "cpu_frame_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "frame_interval_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "no_duplicate_owners": true,
+      "mode_a_no_final_canvas_labels": true,
+      "pass": true
+    },
+    {
+      "id": "tru-truc-xien",
+      "width": 1440,
+      "frames": [
+        {
+          "state": "default-mode-a",
+          "file": "tru-truc-xien-1440-default-mode-a.png",
+          "sha256": "316b90dc43a0a0b54b526e3f5de309a21eabc18ad4a45148a60fd25150de58e1",
+          "camera": {
+            "position": [
+              6.269803659485212,
+              4.807866292122197,
+              5.470681275289796
+            ],
+            "view_matrix_column_major": [
+              -0.52999894000318,
+              -0.455083644614378,
+              0.715541752799933,
+              0,
+              0.8479983040050881,
+              -0.2844272778839862,
+              0.4472135954999581,
+              0,
+              -5.551115123125784e-17,
+              0.8438009243891598,
+              0.5366563145999492,
+              0,
+              -0.7540731680476334,
+              -0.395392494854412,
+              -9.572325122950476,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "O",
+              "text": "O"
+            },
+            {
+              "id": "O_prime",
+              "text": "O′"
+            },
+            {
+              "id": "A",
+              "text": "A"
+            }
+          ]
+        },
+        {
+          "state": "selected-mode-b",
+          "file": "tru-truc-xien-1440-selected-mode-b.png",
+          "sha256": "f4f9f34a212b36f7bdb047d7a9692d8d68fbdef1225e90ba7e1d4baf3d8eb86f",
+          "camera": {
+            "position": [
+              5.64436668083182,
+              6.681526201564491,
+              5.7758670790033175
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031796,
+              -0.45508364461437806,
+              0.7155417527999329,
+              0,
+              0.8479983040050881,
+              -0.2844272778839859,
+              0.44721359549995776,
+              0,
+              -8.326672684688672e-17,
+              0.8438009243891595,
+              0.5366563145999493,
+              0,
+              -2.674414529262117,
+              -0.40461471013749223,
+              -10.126504924513867,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "O",
+              "text": "O"
+            },
+            {
+              "id": "O_prime",
+              "text": "O′"
+            },
+            {
+              "id": "A",
+              "text": "A"
+            }
+          ]
+        }
+      ],
+      "motion": {
+        "active": false,
+        "cpu": [],
+        "intervals": [],
+        "snapshots": [],
+        "gpu": {},
+        "last": null,
+        "occlusion": {
+          "frame_count": 48,
+          "recompute_count": 0,
+          "recomputation_times_ms": [],
+          "edge_count": 0,
+          "triangle_count": 0,
+          "sample_count": 0,
+          "span_count": 0
+        }
+      },
+      "first_selected": "V",
+      "next_selected": "Sxq",
+      "selection_changed": true,
+      "label_source_errors": [],
+      "wrong_label_control_detected": true,
+      "geometry_unchanged": true,
+      "cpu_frame_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "frame_interval_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "no_duplicate_owners": true,
+      "mode_a_no_final_canvas_labels": true,
+      "pass": true
+    },
+    {
+      "id": "non-duong-sinh",
+      "width": 1440,
+      "frames": [
+        {
+          "state": "default-mode-a",
+          "file": "non-duong-sinh-1440-default-mode-a.png",
+          "sha256": "1ca21b60c322791f8bbc4a4c9cc7e0b23d6eeb7a1ee4a2849881d542435b478d",
+          "camera": {
+            "position": [
+              7.031145835415031,
+              4.301258995270059,
+              6.1687126744997745
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031799,
+              -0.4550836446143779,
+              0.7155417527999329,
+              0,
+              0.8479983040050881,
+              -0.28442727788398614,
+              0.447213595499958,
+              0,
+              -8.326672684688674e-17,
+              0.8438009243891598,
+              0.5366563145999492,
+              0,
+              0.07903950670210025,
+              -0.7820105969394859,
+              -10.265138525439125,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "O",
+              "text": "O"
+            },
+            {
+              "id": "S",
+              "text": "S"
+            },
+            {
+              "id": "A",
+              "text": "A"
+            }
+          ]
+        },
+        {
+          "state": "selected-mode-b",
+          "file": "non-duong-sinh-1440-selected-mode-b.png",
+          "sha256": "2ba7f9b12419ca565e2ef4bd66d4c2abf849d5f40a4f59da06d3cf4dc7c682ee",
+          "camera": {
+            "position": [
+              6.34599863410135,
+              6.412116191464296,
+              6.5056429476547635
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031793,
+              -0.4550836446143779,
+              0.715541752799933,
+              0,
+              0.8479983040050881,
+              -0.2844272778839857,
+              0.4472135954999575,
+              0,
+              -8.32667268468867e-17,
+              0.8438009243891595,
+              0.5366563145999491,
+              0,
+              -2.0740911061099485,
+              -0.7777265920381806,
+              -10.899706891050657,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "O",
+              "text": "O"
+            },
+            {
+              "id": "S",
+              "text": "S"
+            },
+            {
+              "id": "A",
+              "text": "A"
+            }
+          ]
+        }
+      ],
+      "motion": {
+        "active": false,
+        "cpu": [],
+        "intervals": [],
+        "snapshots": [],
+        "gpu": {},
+        "last": null,
+        "occlusion": {
+          "frame_count": 52,
+          "recompute_count": 0,
+          "recomputation_times_ms": [],
+          "edge_count": 0,
+          "triangle_count": 0,
+          "sample_count": 0,
+          "span_count": 0
+        }
+      },
+      "first_selected": "l",
+      "next_selected": "V",
+      "selection_changed": true,
+      "label_source_errors": [],
+      "wrong_label_control_detected": true,
+      "geometry_unchanged": true,
+      "cpu_frame_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "frame_interval_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "no_duplicate_owners": true,
+      "mode_a_no_final_canvas_labels": true,
+      "pass": true
+    },
+    {
+      "id": "non-thiet-dien-truc",
+      "width": 1440,
+      "frames": [
+        {
+          "state": "default-mode-a",
+          "file": "non-thiet-dien-truc-1440-default-mode-a.png",
+          "sha256": "3c65297bc8ccf62c67c0852be82dc91a561c999acf1404c56278e42f1ffd4dae",
+          "camera": {
+            "position": [
+              7.031145835415031,
+              4.301258995270059,
+              6.1687126744997745
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031799,
+              -0.4550836446143779,
+              0.7155417527999329,
+              0,
+              0.8479983040050881,
+              -0.28442727788398614,
+              0.447213595499958,
+              0,
+              -8.326672684688674e-17,
+              0.8438009243891598,
+              0.5366563145999492,
+              0,
+              0.07903950670210025,
+              -0.7820105969394859,
+              -10.265138525439125,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "O",
+              "text": "O"
+            },
+            {
+              "id": "S",
+              "text": "S"
+            },
+            {
+              "id": "A",
+              "text": "A"
+            },
+            {
+              "id": "B",
+              "text": "B"
+            }
+          ]
+        },
+        {
+          "state": "selected-mode-b",
+          "file": "non-thiet-dien-truc-1440-selected-mode-b.png",
+          "sha256": "f653f85489ed8884734261cdf978b006c3f2f221f00a4fcfaff7d8174f435063",
+          "camera": {
+            "position": [
+              6.34599863410135,
+              6.412116191464296,
+              6.5056429476547635
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031793,
+              -0.4550836446143779,
+              0.715541752799933,
+              0,
+              0.8479983040050881,
+              -0.2844272778839857,
+              0.4472135954999575,
+              0,
+              -8.32667268468867e-17,
+              0.8438009243891595,
+              0.5366563145999491,
+              0,
+              -2.0740911061099485,
+              -0.7777265920381806,
+              -10.899706891050657,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [
+            "S(SAB) = 12"
+          ],
+          "labels": [
+            {
+              "id": "O",
+              "text": "O"
+            },
+            {
+              "id": "S",
+              "text": "S"
+            },
+            {
+              "id": "A",
+              "text": "A"
+            },
+            {
+              "id": "B",
+              "text": "B"
+            }
+          ]
+        }
+      ],
+      "motion": {
+        "active": false,
+        "cpu": [],
+        "intervals": [],
+        "snapshots": [],
+        "gpu": {},
+        "last": null,
+        "occlusion": {
+          "frame_count": 34,
+          "recompute_count": 0,
+          "recomputation_times_ms": [],
+          "edge_count": 0,
+          "triangle_count": 0,
+          "sample_count": 0,
+          "span_count": 0
+        }
+      },
+      "first_selected": "Std",
+      "next_selected": "O",
+      "selection_changed": true,
+      "label_source_errors": [],
+      "wrong_label_control_detected": true,
+      "geometry_unchanged": true,
+      "cpu_frame_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "frame_interval_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "no_duplicate_owners": true,
+      "mode_a_no_final_canvas_labels": true,
+      "pass": true
+    },
+    {
+      "id": "family07_multi_solid_composition",
+      "width": 1440,
+      "frames": [
+        {
+          "state": "default-mode-a",
+          "file": "family07_multi_solid_composition-1440-default-mode-a.png",
+          "sha256": "e3dabf631e77c3f2bfd71016e02ba3ad5abecf22a6e032f4a8006f82ef24e39b",
+          "camera": {
+            "position": [
+              7.58029495873322,
+              6.503310018701366,
+              7.384761381626679
+            ],
+            "view_matrix_column_major": [
+              -1.2855752193730785,
+              -0.6474887419341291,
+              1.388544088029768,
+              0,
+              1.5320888862379562,
+              -0.5433075645483685,
+              1.1651268321391708,
+              0,
+              -1.1102230246251565e-16,
+              1.8126155740733,
+              0.8452365234813985,
+              0,
+              -0.10930482446310795,
+              -2.4721401585340708,
+              -12.172312393962573,
+              1
+            ],
+            "model_matrix_column_major": [
+              2,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "visible": [
+            "khoi_D1_ABC::edge:B-C",
+            "khoi_S_ABC::edge:B-C",
+            "khoi_S_ABC::edge:S-B",
+            "khoi_S_ABC::edge:S-C"
+          ],
+          "hidden": [
+            "khoi_D1_ABC::edge:A-B",
+            "khoi_D1_ABC::edge:A-C",
+            "khoi_D1_ABC::edge:D1-A",
+            "khoi_D1_ABC::edge:D1-B",
+            "khoi_D1_ABC::edge:D1-C",
+            "khoi_S_ABC::edge:A-B",
+            "khoi_S_ABC::edge:A-C",
+            "khoi_S_ABC::edge:S-A"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "A",
+              "text": "A"
+            },
+            {
+              "id": "B",
+              "text": "B"
+            },
+            {
+              "id": "C",
+              "text": "C"
+            },
+            {
+              "id": "D1",
+              "text": "D1"
+            },
+            {
+              "id": "S",
+              "text": "S"
+            },
+            {
+              "id": "D",
+              "text": "D"
+            }
+          ]
+        },
+        {
+          "state": "selected-mode-b",
+          "file": "family07_multi_solid_composition-1440-selected-mode-b.png",
+          "sha256": "fe91bb3f629d210f4e11bd780ed47fc1af27eed30077d635d4cb7dce87466953",
+          "camera": {
+            "position": [
+              6.403852626977447,
+              8.373586995612495,
+              7.5161645047308845
+            ],
+            "view_matrix_column_major": [
+              -1.285575219373078,
+              -0.6474887419341284,
+              1.3885440880297677,
+              0,
+              1.532088886237956,
+              -0.5433075645483681,
+              1.165126832139171,
+              0,
+              1.110223024625156e-16,
+              1.8126155740732997,
+              0.8452365234813982,
+              0,
+              -2.2982226640825933,
+              -2.464030600239415,
+              -12.500629675768097,
+              1
+            ],
+            "model_matrix_column_major": [
+              2,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "visible": [
+            "khoi_D1_ABC::edge:B-C",
+            "khoi_S_ABC::edge:B-C",
+            "khoi_S_ABC::edge:S-B",
+            "khoi_S_ABC::edge:S-C"
+          ],
+          "hidden": [
+            "khoi_D1_ABC::edge:A-B",
+            "khoi_D1_ABC::edge:A-C",
+            "khoi_D1_ABC::edge:D1-A",
+            "khoi_D1_ABC::edge:D1-B",
+            "khoi_D1_ABC::edge:D1-C",
+            "khoi_S_ABC::edge:A-B",
+            "khoi_S_ABC::edge:A-C",
+            "khoi_S_ABC::edge:S-A"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [
+            "V(D1.ABC) = 4/3"
+          ],
+          "labels": [
+            {
+              "id": "A",
+              "text": "A"
+            },
+            {
+              "id": "B",
+              "text": "B"
+            },
+            {
+              "id": "C",
+              "text": "C"
+            },
+            {
+              "id": "D1",
+              "text": "D1"
+            },
+            {
+              "id": "S",
+              "text": "S"
+            },
+            {
+              "id": "D",
+              "text": "D"
+            }
+          ]
+        }
+      ],
+      "motion": {
+        "active": false,
+        "cpu": [],
+        "intervals": [],
+        "snapshots": [],
+        "gpu": {},
+        "last": null,
+        "occlusion": {
+          "frame_count": 41,
+          "recompute_count": 0,
+          "recomputation_times_ms": [],
+          "edge_count": 12,
+          "triangle_count": 16,
+          "sample_count": 7680,
+          "span_count": 12
+        }
+      },
+      "first_selected": "kq_ask4",
+      "next_selected": "kq_ask3",
+      "selection_changed": true,
+      "label_source_errors": [],
+      "wrong_label_control_detected": true,
+      "geometry_unchanged": true,
+      "cpu_frame_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "frame_interval_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "no_duplicate_owners": true,
+      "mode_a_no_final_canvas_labels": true,
+      "pass": true
+    },
+    {
+      "id": "family12_cylinder_ellipse_section",
+      "width": 1440,
+      "frames": [
+        {
+          "state": "default-mode-a",
+          "file": "family12_cylinder_ellipse_section-1440-default-mode-a.png",
+          "sha256": "99aeb753da32e0281f2c35a0aa2c3e57259dc0909e214a99298514296f60125d",
+          "camera": {
+            "position": [
+              8.66929449192612,
+              5.336274603347443,
+              9.329664820228828
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031799,
+              -0.4550836446143781,
+              0.7155417527999328,
+              0,
+              0.8479983040050881,
+              -0.2844272778839862,
+              0.4472135954999579,
+              0,
+              -5.551115123125783e-17,
+              0.8438009243891595,
+              0.5366563145999496,
+              0,
+              0.06956507795219455,
+              -2.409343606457454,
+              -13.596520267106543,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "O",
+              "text": "O"
+            },
+            {
+              "id": "O_prime",
+              "text": "O′"
+            }
+          ]
+        },
+        {
+          "state": "selected-mode-b",
+          "file": "family12_cylinder_ellipse_section-1440-selected-mode-b.png",
+          "sha256": "d467d483b41b4e1f9830eea4fbe8257615d6f4904e027da4a1f9a74cc1dac073",
+          "camera": {
+            "position": [
+              7.504657194569232,
+              7.81861912114862,
+              9.534397929050337
+            ],
+            "view_matrix_column_major": [
+              -0.52999894000318,
+              -0.455083644614378,
+              0.7155417527999328,
+              0,
+              0.847998304005088,
+              -0.28442727788398625,
+              0.4472135954999579,
+              0,
+              0,
+              0.8438009243891597,
+              0.5366563145999493,
+              0,
+              -2.6527153961868497,
+              -2.406058484900698,
+              -13.983183186711834,
+              1
+            ],
+            "projection_matrix_column_major": [
+              1.105400044576099,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 1391,
+            "viewport_height": 717,
+            "device_pixel_ratio": 1
+          },
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "O",
+              "text": "O"
+            },
+            {
+              "id": "O_prime",
+              "text": "O′"
+            },
+            {
+              "id": "mp_sec_el",
+              "text": "(P)"
+            }
+          ]
+        }
+      ],
+      "motion": {
+        "active": false,
+        "cpu": [],
+        "intervals": [],
+        "snapshots": [],
+        "gpu": {},
+        "last": null,
+        "occlusion": {
+          "frame_count": 40,
+          "recompute_count": 0,
+          "recomputation_times_ms": [],
+          "edge_count": 0,
+          "triangle_count": 0,
+          "sample_count": 0,
+          "span_count": 0
+        }
+      },
+      "first_selected": "kq_area_el",
+      "next_selected": "kq_vol_cyl",
+      "selection_changed": true,
+      "label_source_errors": [],
+      "wrong_label_control_detected": true,
+      "geometry_unchanged": true,
+      "cpu_frame_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "frame_interval_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "no_duplicate_owners": true,
+      "mode_a_no_final_canvas_labels": true,
+      "pass": true
+    },
+    {
+      "id": "cross_section",
+      "width": 390,
+      "frames": [
+        {
+          "state": "default-mode-a",
+          "file": "cross_section-390-default-mode-a.png",
+          "sha256": "020c9c5fa1df6874c38f47dae9590c8b080b38f7342dc56cc04b3750256f72ab",
+          "camera": {
+            "position": [
+              16.133967614573546,
+              10.298568473040978,
+              7.515901918933546
+            ],
+            "view_matrix_column_major": [
+              -0.49999999999999967,
+              -0.29619813272602363,
+              0.8137976813493739,
+              0,
+              0.8660254037844388,
+              -0.17101007166283383,
+              0.46984631039295405,
+              0,
+              -2.2204460492503126e-16,
+              0.9396926207859083,
+              0.3420201433256685,
+              0,
+              -0.8518381129802345,
+              -0.5226275582743408,
+              -20.539119686628663,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.2073956865069064,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 351,
+            "device_pixel_ratio": 1
+          },
+          "visible": [
+            "S.ABCD::edge:B-C",
+            "S.ABCD::edge:C-D",
+            "S.ABCD::edge:S-B",
+            "S.ABCD::edge:S-C",
+            "S.ABCD::edge:S-D"
+          ],
+          "hidden": [
+            "S.ABCD::edge:A-B",
+            "S.ABCD::edge:A-D",
+            "S.ABCD::edge:S-A"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [
+            "perpendicular:dist_S_BD"
+          ],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "A",
+              "text": "A"
+            },
+            {
+              "id": "B",
+              "text": "B"
+            },
+            {
+              "id": "C",
+              "text": "C"
+            },
+            {
+              "id": "D",
+              "text": "D"
+            },
+            {
+              "id": "S",
+              "text": "S"
+            }
+          ]
+        },
+        {
+          "state": "selected-mode-b",
+          "file": "cross_section-390-selected-mode-b.png",
+          "sha256": "620536fad8c6cc0d30a25864c22417c81a502a1453d2fe5f67f8246da34a0bd2",
+          "camera": {
+            "position": [
+              16.133967614573546,
+              10.298568473040978,
+              7.515901918933541
+            ],
+            "view_matrix_column_major": [
+              -0.49999999999999967,
+              -0.2961981327260234,
+              0.8137976813493739,
+              0,
+              0.8660254037844386,
+              -0.171010071662834,
+              0.469846310392954,
+              0,
+              1.9428902930940235e-16,
+              0.9396926207859084,
+              0.34202014332566827,
+              0,
+              -0.8518381129802376,
+              -0.5226275582743388,
+              -20.539119686628663,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.2073956865069064,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 351,
+            "device_pixel_ratio": 1
+          },
+          "visible": [
+            "S.ABCD::edge:B-C",
+            "S.ABCD::edge:C-D",
+            "S.ABCD::edge:S-B",
+            "S.ABCD::edge:S-C",
+            "S.ABCD::edge:S-D"
+          ],
+          "hidden": [
+            "S.ABCD::edge:A-B",
+            "S.ABCD::edge:A-D",
+            "S.ABCD::edge:S-A"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [
+            "V(S.ABCD) = 72"
+          ],
+          "labels": [
+            {
+              "id": "A",
+              "text": "A"
+            },
+            {
+              "id": "B",
+              "text": "B"
+            },
+            {
+              "id": "C",
+              "text": "C"
+            },
+            {
+              "id": "D",
+              "text": "D"
+            },
+            {
+              "id": "S",
+              "text": "S"
+            }
+          ]
+        }
+      ],
+      "motion": {
+        "active": false,
+        "cpu": [],
+        "intervals": [],
+        "snapshots": [],
+        "gpu": {},
+        "last": null,
+        "occlusion": {
+          "frame_count": 72,
+          "recompute_count": 1,
+          "recomputation_times_ms": [
+            2.599999997764826
+          ],
+          "edge_count": 8,
+          "triangle_count": 6,
+          "sample_count": 4096,
+          "span_count": 8
+        }
+      },
+      "first_selected": "the_volume_sabcd",
+      "next_selected": "area_T",
+      "selection_changed": true,
+      "label_source_errors": [],
+      "wrong_label_control_detected": true,
+      "geometry_unchanged": true,
+      "cpu_frame_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "frame_interval_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "no_duplicate_owners": true,
+      "mode_a_no_final_canvas_labels": true,
+      "pass": true
+    },
+    {
+      "id": "triangular_prism",
+      "width": 390,
+      "frames": [
+        {
+          "state": "default-mode-a",
+          "file": "triangular_prism-390-default-mode-a.png",
+          "sha256": "35de6927c5741ced82d82449b42826cec1f6aa5b9fe4dd57b3c15e4a4cf854c5",
+          "camera": {
+            "position": [
+              9.989536525742702,
+              4.903022991580763,
+              6.833181664441616
+            ],
+            "view_matrix_column_major": [
+              -0.34202014332566855,
+              -0.3971312619671025,
+              0.8516507396391464,
+              0,
+              0.9396926207859081,
+              -0.14454395845259893,
+              0.30997551921944466,
+              0,
+              2.2204460492503116e-16,
+              0.9063077870366499,
+              0.42261826174069933,
+              0,
+              -1.1907118104405732,
+              -1.5171061541976414,
+              -12.915240625545897,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "visible": [
+            "solid_ABCDEF::edge:B-C",
+            "solid_ABCDEF::edge:B-E",
+            "solid_ABCDEF::edge:C-F",
+            "solid_ABCDEF::edge:D-E",
+            "solid_ABCDEF::edge:D-F",
+            "solid_ABCDEF::edge:E-F"
+          ],
+          "hidden": [
+            "solid_ABCDEF::edge:A-B",
+            "solid_ABCDEF::edge:A-C",
+            "solid_ABCDEF::edge:A-D"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "A",
+              "text": "A"
+            },
+            {
+              "id": "B",
+              "text": "B"
+            },
+            {
+              "id": "C",
+              "text": "C"
+            },
+            {
+              "id": "D",
+              "text": "D"
+            },
+            {
+              "id": "E",
+              "text": "E"
+            },
+            {
+              "id": "F",
+              "text": "F"
+            }
+          ]
+        },
+        {
+          "state": "selected-mode-b",
+          "file": "triangular_prism-390-selected-mode-b.png",
+          "sha256": "08c98fce5760f766c323aa5dd2eb3e43def14c457352b12925a8547d84628466",
+          "camera": {
+            "position": [
+              9.989536525742702,
+              4.9030229915807615,
+              6.833181664441614
+            ],
+            "view_matrix_column_major": [
+              -0.34202014332566855,
+              -0.3971312619671027,
+              0.8516507396391465,
+              0,
+              0.9396926207859084,
+              -0.14454395845259901,
+              0.30997551921944455,
+              0,
+              2.359223927328457e-16,
+              0.9063077870366499,
+              0.4226182617406995,
+              0,
+              -1.190711810440573,
+              -1.5171061541976378,
+              -12.915240625545898,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "visible": [
+            "solid_ABCDEF::edge:B-C",
+            "solid_ABCDEF::edge:B-E",
+            "solid_ABCDEF::edge:C-F",
+            "solid_ABCDEF::edge:D-E",
+            "solid_ABCDEF::edge:D-F",
+            "solid_ABCDEF::edge:E-F"
+          ],
+          "hidden": [
+            "solid_ABCDEF::edge:A-B",
+            "solid_ABCDEF::edge:A-C",
+            "solid_ABCDEF::edge:A-D"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [
+            "V(ABC.DEF) = 30"
+          ],
+          "labels": [
+            {
+              "id": "A",
+              "text": "A"
+            },
+            {
+              "id": "B",
+              "text": "B"
+            },
+            {
+              "id": "C",
+              "text": "C"
+            },
+            {
+              "id": "D",
+              "text": "D"
+            },
+            {
+              "id": "E",
+              "text": "E"
+            },
+            {
+              "id": "F",
+              "text": "F"
+            }
+          ]
+        }
+      ],
+      "motion": {
+        "active": false,
+        "cpu": [],
+        "intervals": [],
+        "snapshots": [],
+        "gpu": {},
+        "last": null,
+        "occlusion": {
+          "frame_count": 70,
+          "recompute_count": 1,
+          "recomputation_times_ms": [
+            2.899999998509884
+          ],
+          "edge_count": 9,
+          "triangle_count": 8,
+          "sample_count": 4608,
+          "span_count": 9
+        }
+      },
+      "first_selected": "the_tich_solid_ABCDEF",
+      "next_selected": "dien_tich_day_ABC",
+      "selection_changed": true,
+      "label_source_errors": [],
+      "wrong_label_control_detected": true,
+      "geometry_unchanged": true,
+      "cpu_frame_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "frame_interval_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "no_duplicate_owners": true,
+      "mode_a_no_final_canvas_labels": true,
+      "pass": true
+    },
+    {
+      "id": "cuboid",
+      "width": 390,
+      "frames": [
+        {
+          "state": "default-mode-a",
+          "file": "cuboid-390-default-mode-a.png",
+          "sha256": "ac3b36b146885400b97db93f7185ce1cb27253f13399521f9dbdb3d4d65cdb7b",
+          "camera": {
+            "position": [
+              11.07227496965159,
+              7.455884150258596,
+              7.209699294117392
+            ],
+            "view_matrix_column_major": [
+              -0.49999999999999944,
+              -0.3659981507706665,
+              0.7848855672213961,
+              0,
+              0.8660254037844387,
+              -0.21130913087034914,
+              0.45315389351832475,
+              0,
+              -2.220446049250312e-16,
+              0.90630778703665,
+              0.422618261740699,
+              0,
+              -0.920847596971907,
+              -0.9062780490732574,
+              -15.116082335650539,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.2954399589031933,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 365,
+            "device_pixel_ratio": 1
+          },
+          "visible": [
+            "khoi_hop::edge:A_prime-B_prime",
+            "khoi_hop::edge:A_prime-D_prime",
+            "khoi_hop::edge:B-B_prime",
+            "khoi_hop::edge:B-C",
+            "khoi_hop::edge:B_prime-C_prime",
+            "khoi_hop::edge:C-C_prime",
+            "khoi_hop::edge:C-D",
+            "khoi_hop::edge:C_prime-D_prime",
+            "khoi_hop::edge:D-D_prime"
+          ],
+          "hidden": [
+            "khoi_hop::edge:A-A_prime",
+            "khoi_hop::edge:A-B",
+            "khoi_hop::edge:A-D"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "A",
+              "text": "A"
+            },
+            {
+              "id": "B",
+              "text": "B"
+            },
+            {
+              "id": "C",
+              "text": "C"
+            },
+            {
+              "id": "D",
+              "text": "D"
+            },
+            {
+              "id": "A_prime",
+              "text": "A′"
+            },
+            {
+              "id": "B_prime",
+              "text": "B′"
+            },
+            {
+              "id": "C_prime",
+              "text": "C′"
+            },
+            {
+              "id": "D_prime",
+              "text": "D′"
+            }
+          ]
+        },
+        {
+          "state": "selected-mode-b",
+          "file": "cuboid-390-selected-mode-b.png",
+          "sha256": "5f2e180d0839bda287e87c8e85a73ffa388201f147eef02f742442061bd4da98",
+          "camera": {
+            "position": [
+              11.07227496965159,
+              7.455884150258595,
+              7.209699294117388
+            ],
+            "view_matrix_column_major": [
+              -0.4999999999999997,
+              -0.3659981507706665,
+              0.7848855672213962,
+              0,
+              0.8660254037844388,
+              -0.21130913087034925,
+              0.45315389351832497,
+              0,
+              -1.942890293094024e-16,
+              0.9063077870366502,
+              0.422618261740699,
+              0,
+              -0.9208475969719054,
+              -0.9062780490732529,
+              -15.116082335650542,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.2954399589031933,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 365,
+            "device_pixel_ratio": 1
+          },
+          "visible": [
+            "khoi_hop::edge:A_prime-B_prime",
+            "khoi_hop::edge:A_prime-D_prime",
+            "khoi_hop::edge:B-B_prime",
+            "khoi_hop::edge:B-C",
+            "khoi_hop::edge:B_prime-C_prime",
+            "khoi_hop::edge:C-C_prime",
+            "khoi_hop::edge:C-D",
+            "khoi_hop::edge:C_prime-D_prime",
+            "khoi_hop::edge:D-D_prime"
+          ],
+          "hidden": [
+            "khoi_hop::edge:A-A_prime",
+            "khoi_hop::edge:A-B",
+            "khoi_hop::edge:A-D"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [
+            "V(ABCD.A′B′C′D′) = 60"
+          ],
+          "labels": [
+            {
+              "id": "A",
+              "text": "A"
+            },
+            {
+              "id": "B",
+              "text": "B"
+            },
+            {
+              "id": "C",
+              "text": "C"
+            },
+            {
+              "id": "D",
+              "text": "D"
+            },
+            {
+              "id": "A_prime",
+              "text": "A′"
+            },
+            {
+              "id": "B_prime",
+              "text": "B′"
+            },
+            {
+              "id": "C_prime",
+              "text": "C′"
+            },
+            {
+              "id": "D_prime",
+              "text": "D′"
+            }
+          ]
+        }
+      ],
+      "motion": {
+        "active": false,
+        "cpu": [],
+        "intervals": [],
+        "snapshots": [],
+        "gpu": {},
+        "last": null,
+        "occlusion": {
+          "frame_count": 49,
+          "recompute_count": 1,
+          "recomputation_times_ms": [
+            7
+          ],
+          "edge_count": 12,
+          "triangle_count": 12,
+          "sample_count": 6144,
+          "span_count": 12
+        }
+      },
+      "first_selected": "the_tich_khoi_hop",
+      "next_selected": "dien_tich_day_ABCD",
+      "selection_changed": true,
+      "label_source_errors": [],
+      "wrong_label_control_detected": true,
+      "geometry_unchanged": true,
+      "cpu_frame_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "frame_interval_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "no_duplicate_owners": true,
+      "mode_a_no_final_canvas_labels": true,
+      "pass": true
+    },
+    {
+      "id": "cau-cat-mat-phang",
+      "width": 390,
+      "frames": [
+        {
+          "state": "default-mode-a",
+          "file": "cau-cat-mat-phang-390-default-mode-a.png",
+          "sha256": "188d0a23921ff01284535f3c8ba0c97a4be973a775cc21ed2fc96c351261c0e2",
+          "camera": {
+            "position": [
+              13.278405845841853,
+              8.437663005163877,
+              9.734331458898408
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031798,
+              -0.45508364461437806,
+              0.7155417527999328,
+              0,
+              0.8479983040050878,
+              -0.2844272778839862,
+              0.4472135954999578,
+              0,
+              2.7755575615628907e-17,
+              0.8438009243891593,
+              0.5366563145999494,
+              0,
+              -0.1175828949172335,
+              0.22884896392679743,
+              -18.498681849305637,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.2954399589031933,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 365,
+            "device_pixel_ratio": 1
+          },
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "I",
+              "text": "I"
+            },
+            {
+              "id": "P",
+              "text": "(P)"
+            }
+          ]
+        },
+        {
+          "state": "selected-mode-b",
+          "file": "cau-cat-mat-phang-390-selected-mode-b.png",
+          "sha256": "b6d868d396972661a9500ef1aeb0f6693f013b1617591e28c311a8c5dce0dcd3",
+          "camera": {
+            "position": [
+              13.278405845841855,
+              8.437663005163877,
+              9.734331458898405
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031799,
+              -0.4550836446143779,
+              0.7155417527999329,
+              0,
+              0.8479983040050881,
+              -0.28442727788398614,
+              0.447213595499958,
+              0,
+              -8.326672684688674e-17,
+              0.8438009243891598,
+              0.5366563145999492,
+              0,
+              -0.11758289491723165,
+              0.22884896392679702,
+              -18.49868184930564,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.2954399589031933,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 365,
+            "device_pixel_ratio": 1
+          },
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "I",
+              "text": "I"
+            },
+            {
+              "id": "P",
+              "text": "(P)"
+            }
+          ]
+        }
+      ],
+      "motion": {
+        "active": false,
+        "cpu": [],
+        "intervals": [],
+        "snapshots": [],
+        "gpu": {},
+        "last": null,
+        "occlusion": {
+          "frame_count": 62,
+          "recompute_count": 0,
+          "recomputation_times_ms": [],
+          "edge_count": 0,
+          "triangle_count": 0,
+          "sample_count": 0,
+          "span_count": 0
+        }
+      },
+      "first_selected": "r",
+      "next_selected": "S",
+      "selection_changed": true,
+      "label_source_errors": [],
+      "wrong_label_control_detected": true,
+      "geometry_unchanged": true,
+      "cpu_frame_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "frame_interval_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "no_duplicate_owners": true,
+      "mode_a_no_final_canvas_labels": true,
+      "pass": true
+    },
+    {
+      "id": "tru-truc-xien",
+      "width": 390,
+      "frames": [
+        {
+          "state": "default-mode-a",
+          "file": "tru-truc-xien-390-default-mode-a.png",
+          "sha256": "4314655e2f14f09975c85b8d55514bd67b8740cc8b852354103d54f983347c71",
+          "camera": {
+            "position": [
+              7.029400039047826,
+              5.2611061973490525,
+              6.054324083627585
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031798,
+              -0.45508364461437784,
+              0.7155417527999327,
+              0,
+              0.8479983040050878,
+              -0.28442727788398603,
+              0.44721359549995776,
+              0,
+              -2.77555756156289e-17,
+              0.8438009243891592,
+              0.5366563145999493,
+              0,
+              -0.7358345629889942,
+              -0.4132771547236111,
+              -10.631758694009072,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "O",
+              "text": "O"
+            },
+            {
+              "id": "O_prime",
+              "text": "O′"
+            },
+            {
+              "id": "A",
+              "text": "A"
+            }
+          ]
+        },
+        {
+          "state": "selected-mode-b",
+          "file": "tru-truc-xien-390-selected-mode-b.png",
+          "sha256": "ce075dd5b72076c8aaabe0c0c8f9d2f30ef44929aba531221d830d998b4fbe84",
+          "camera": {
+            "position": [
+              7.380425019291011,
+              5.472078382543344,
+              6.322992613663735
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031797,
+              -0.45508364461437795,
+              0.7155417527999333,
+              0,
+              0.8479983040050885,
+              -0.2844272778839859,
+              0.44721359549995776,
+              0,
+              0,
+              0.8438009243891601,
+              0.536656314599949,
+              0,
+              -0.7286957507824804,
+              -0.4202279370185893,
+              -11.121464016318253,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "O",
+              "text": "O"
+            },
+            {
+              "id": "O_prime",
+              "text": "O′"
+            },
+            {
+              "id": "A",
+              "text": "A"
+            }
+          ]
+        }
+      ],
+      "motion": {
+        "active": false,
+        "cpu": [],
+        "intervals": [],
+        "snapshots": [],
+        "gpu": {},
+        "last": null,
+        "occlusion": {
+          "frame_count": 74,
+          "recompute_count": 0,
+          "recomputation_times_ms": [],
+          "edge_count": 0,
+          "triangle_count": 0,
+          "sample_count": 0,
+          "span_count": 0
+        }
+      },
+      "first_selected": "V",
+      "next_selected": "Sxq",
+      "selection_changed": true,
+      "label_source_errors": [],
+      "wrong_label_control_detected": true,
+      "geometry_unchanged": true,
+      "cpu_frame_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "frame_interval_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "no_duplicate_owners": true,
+      "mode_a_no_final_canvas_labels": true,
+      "pass": true
+    },
+    {
+      "id": "non-duong-sinh",
+      "width": 390,
+      "frames": [
+        {
+          "state": "default-mode-a",
+          "file": "non-duong-sinh-390-default-mode-a.png",
+          "sha256": "cf59c8ceec9ddcc57910493bb044492cb2b263a0c76cd1bba4b3f30e0a287b98",
+          "camera": {
+            "position": [
+              7.915577057694135,
+              4.83923205947098,
+              6.817175704604326
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031802,
+              -0.4550836446143781,
+              0.7155417527999328,
+              0,
+              0.8479983040050879,
+              -0.28442727788398625,
+              0.4472135954999579,
+              0,
+              -1.1102230246251565e-16,
+              0.8438009243891595,
+              0.5366563145999494,
+              0,
+              0.09158687097294273,
+              -0.7736799029028005,
+              -11.48657664067335,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "O",
+              "text": "O"
+            },
+            {
+              "id": "S",
+              "text": "S"
+            },
+            {
+              "id": "A",
+              "text": "A"
+            }
+          ]
+        },
+        {
+          "state": "selected-mode-b",
+          "file": "non-duong-sinh-390-selected-mode-b.png",
+          "sha256": "6ac71b0bde5a6c9129f147518aeb762e5a01770f9de379f40523dc68165f0694",
+          "camera": {
+            "position": [
+              7.915577057694139,
+              4.839232059470983,
+              6.817175704604327
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031799,
+              -0.45508364461437756,
+              0.7155417527999328,
+              0,
+              0.8479983040050879,
+              -0.28442727788398603,
+              0.4472135954999581,
+              0,
+              2.77555756156289e-17,
+              0.8438009243891597,
+              0.5366563145999492,
+              0,
+              0.09158687097294226,
+              -0.7736799029028045,
+              -11.486576640673354,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "O",
+              "text": "O"
+            },
+            {
+              "id": "S",
+              "text": "S"
+            },
+            {
+              "id": "A",
+              "text": "A"
+            }
+          ]
+        }
+      ],
+      "motion": {
+        "active": false,
+        "cpu": [],
+        "intervals": [],
+        "snapshots": [],
+        "gpu": {},
+        "last": null,
+        "occlusion": {
+          "frame_count": 67,
+          "recompute_count": 0,
+          "recomputation_times_ms": [],
+          "edge_count": 0,
+          "triangle_count": 0,
+          "sample_count": 0,
+          "span_count": 0
+        }
+      },
+      "first_selected": "l",
+      "next_selected": "V",
+      "selection_changed": true,
+      "label_source_errors": [],
+      "wrong_label_control_detected": true,
+      "geometry_unchanged": true,
+      "cpu_frame_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "frame_interval_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "no_duplicate_owners": true,
+      "mode_a_no_final_canvas_labels": true,
+      "pass": true
+    },
+    {
+      "id": "non-thiet-dien-truc",
+      "width": 390,
+      "frames": [
+        {
+          "state": "default-mode-a",
+          "file": "non-thiet-dien-truc-390-default-mode-a.png",
+          "sha256": "9b7f36426e29bcf422ae5df9331bedf1af279427691c5342ea408887a3fdab08",
+          "camera": {
+            "position": [
+              7.915577057694135,
+              4.83923205947098,
+              6.817175704604326
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031802,
+              -0.4550836446143781,
+              0.7155417527999328,
+              0,
+              0.8479983040050879,
+              -0.28442727788398625,
+              0.4472135954999579,
+              0,
+              -1.1102230246251565e-16,
+              0.8438009243891595,
+              0.5366563145999494,
+              0,
+              0.09158687097294273,
+              -0.7736799029028005,
+              -11.48657664067335,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "O",
+              "text": "O"
+            },
+            {
+              "id": "S",
+              "text": "S"
+            },
+            {
+              "id": "A",
+              "text": "A"
+            },
+            {
+              "id": "B",
+              "text": "B"
+            }
+          ]
+        },
+        {
+          "state": "selected-mode-b",
+          "file": "non-thiet-dien-truc-390-selected-mode-b.png",
+          "sha256": "a1b07d64f0f7c184615779cb6178ae875654aff4c95688ad20183ca64000e070",
+          "camera": {
+            "position": [
+              7.915577057694139,
+              4.839232059470983,
+              6.817175704604327
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031799,
+              -0.45508364461437756,
+              0.7155417527999328,
+              0,
+              0.8479983040050879,
+              -0.28442727788398603,
+              0.4472135954999581,
+              0,
+              2.77555756156289e-17,
+              0.8438009243891597,
+              0.5366563145999492,
+              0,
+              0.09158687097294226,
+              -0.7736799029028045,
+              -11.486576640673354,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.408639737698419,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 383,
+            "device_pixel_ratio": 1
+          },
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [
+            "S(SAB) = 12"
+          ],
+          "labels": [
+            {
+              "id": "O",
+              "text": "O"
+            },
+            {
+              "id": "S",
+              "text": "S"
+            },
+            {
+              "id": "A",
+              "text": "A"
+            },
+            {
+              "id": "B",
+              "text": "B"
+            }
+          ]
+        }
+      ],
+      "motion": {
+        "active": false,
+        "cpu": [],
+        "intervals": [],
+        "snapshots": [],
+        "gpu": {},
+        "last": null,
+        "occlusion": {
+          "frame_count": 64,
+          "recompute_count": 0,
+          "recomputation_times_ms": [],
+          "edge_count": 0,
+          "triangle_count": 0,
+          "sample_count": 0,
+          "span_count": 0
+        }
+      },
+      "first_selected": "Std",
+      "next_selected": "O",
+      "selection_changed": true,
+      "label_source_errors": [],
+      "wrong_label_control_detected": true,
+      "geometry_unchanged": true,
+      "cpu_frame_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "frame_interval_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "no_duplicate_owners": true,
+      "mode_a_no_final_canvas_labels": true,
+      "pass": true
+    },
+    {
+      "id": "family07_multi_solid_composition",
+      "width": 390,
+      "frames": [
+        {
+          "state": "default-mode-a",
+          "file": "family07_multi_solid_composition-390-default-mode-a.png",
+          "sha256": "d33127781a2a5d8e56820209d7752f218ed93dff144006eaa6cfe9c8e1c0a5cb",
+          "camera": {
+            "position": [
+              8.318709851340923,
+              7.124448001555628,
+              7.807126534267995
+            ],
+            "view_matrix_column_major": [
+              -1.2855752193730787,
+              -0.6474887419341293,
+              1.3885440880297677,
+              0,
+              1.5320888862379562,
+              -0.5433075645483699,
+              1.1651268321391708,
+              0,
+              7.216449660063519e-16,
+              1.8126155740732999,
+              0.8452365234813997,
+              0,
+              -0.11048018086249964,
+              -2.4471408380693016,
+              -13.225324702555625,
+              1.0000000000000002
+            ],
+            "model_matrix_column_major": [
+              2,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.2954399589031933,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 365,
+            "device_pixel_ratio": 1
+          },
+          "visible": [
+            "khoi_D1_ABC::edge:B-C",
+            "khoi_S_ABC::edge:B-C",
+            "khoi_S_ABC::edge:S-B",
+            "khoi_S_ABC::edge:S-C"
+          ],
+          "hidden": [
+            "khoi_D1_ABC::edge:A-B",
+            "khoi_D1_ABC::edge:A-C",
+            "khoi_D1_ABC::edge:D1-A",
+            "khoi_D1_ABC::edge:D1-B",
+            "khoi_D1_ABC::edge:D1-C",
+            "khoi_S_ABC::edge:A-B",
+            "khoi_S_ABC::edge:A-C",
+            "khoi_S_ABC::edge:S-A"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "A",
+              "text": "A"
+            },
+            {
+              "id": "B",
+              "text": "B"
+            },
+            {
+              "id": "C",
+              "text": "C"
+            },
+            {
+              "id": "D1",
+              "text": "D1"
+            },
+            {
+              "id": "S",
+              "text": "S"
+            },
+            {
+              "id": "D",
+              "text": "D"
+            }
+          ]
+        },
+        {
+          "state": "selected-mode-b",
+          "file": "family07_multi_solid_composition-390-selected-mode-b.png",
+          "sha256": "cfadc6199881f782b43ebed948fa86bb398c300515d501378ce86ec005908dfe",
+          "camera": {
+            "position": [
+              8.318709851340927,
+              7.124448001555629,
+              7.807126534267994
+            ],
+            "view_matrix_column_major": [
+              -1.2855752193730778,
+              -0.6474887419341296,
+              1.3885440880297686,
+              0,
+              1.532088886237957,
+              -0.5433075645483684,
+              1.1651268321391703,
+              0,
+              0,
+              1.8126155740733,
+              0.845236523481399,
+              0,
+              -0.11048018086250253,
+              -2.4471408380693043,
+              -13.225324702555627,
+              1.0000000000000002
+            ],
+            "model_matrix_column_major": [
+              2,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.2954399589031933,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 365,
+            "device_pixel_ratio": 1
+          },
+          "visible": [
+            "khoi_D1_ABC::edge:B-C",
+            "khoi_S_ABC::edge:B-C",
+            "khoi_S_ABC::edge:S-B",
+            "khoi_S_ABC::edge:S-C"
+          ],
+          "hidden": [
+            "khoi_D1_ABC::edge:A-B",
+            "khoi_D1_ABC::edge:A-C",
+            "khoi_D1_ABC::edge:D1-A",
+            "khoi_D1_ABC::edge:D1-B",
+            "khoi_D1_ABC::edge:D1-C",
+            "khoi_S_ABC::edge:A-B",
+            "khoi_S_ABC::edge:A-C",
+            "khoi_S_ABC::edge:S-A"
+          ],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [
+            "V(D1.ABC) = 4/3"
+          ],
+          "labels": [
+            {
+              "id": "A",
+              "text": "A"
+            },
+            {
+              "id": "B",
+              "text": "B"
+            },
+            {
+              "id": "C",
+              "text": "C"
+            },
+            {
+              "id": "D1",
+              "text": "D1"
+            },
+            {
+              "id": "S",
+              "text": "S"
+            },
+            {
+              "id": "D",
+              "text": "D"
+            }
+          ]
+        }
+      ],
+      "motion": {
+        "active": false,
+        "cpu": [],
+        "intervals": [],
+        "snapshots": [],
+        "gpu": {},
+        "last": null,
+        "occlusion": {
+          "frame_count": 57,
+          "recompute_count": 2,
+          "recomputation_times_ms": [
+            2.699999999254942
+          ],
+          "edge_count": 12,
+          "triangle_count": 16,
+          "sample_count": 6144,
+          "span_count": 12
+        }
+      },
+      "first_selected": "kq_ask4",
+      "next_selected": "kq_ask3",
+      "selection_changed": true,
+      "label_source_errors": [],
+      "wrong_label_control_detected": true,
+      "geometry_unchanged": true,
+      "cpu_frame_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "frame_interval_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "no_duplicate_owners": true,
+      "mode_a_no_final_canvas_labels": true,
+      "pass": true
+    },
+    {
+      "id": "family12_cylinder_ellipse_section",
+      "width": 390,
+      "frames": [
+        {
+          "state": "default-mode-a",
+          "file": "family12_cylinder_ellipse_section-390-default-mode-a.png",
+          "sha256": "ffcd594bebe4825be4781830ff048dc2cdd85235a5b6e1bd272b68fdc9c0f410",
+          "camera": {
+            "position": [
+              9.55761059440703,
+              5.899864026765499,
+              9.986166692511194
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031797,
+              -0.4550836446143781,
+              0.7155417527999326,
+              0,
+              0.8479983040050879,
+              -0.284427277883986,
+              0.4472135954999578,
+              0,
+              -1.110223024625156e-16,
+              0.8438009243891593,
+              0.5366563145999497,
+              0,
+              0.062448795441116145,
+              -2.3987421581188713,
+              -14.836508255855698,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.2954399589031933,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 365,
+            "device_pixel_ratio": 1
+          },
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "O",
+              "text": "O"
+            },
+            {
+              "id": "O_prime",
+              "text": "O′"
+            }
+          ]
+        },
+        {
+          "state": "selected-mode-b",
+          "file": "family12_cylinder_ellipse_section-390-selected-mode-b.png",
+          "sha256": "a2b2523feac397f6a9705f2b406b15cd289b5a1725319e33579992f188424633",
+          "camera": {
+            "position": [
+              9.55761059440703,
+              5.899864026765498,
+              9.986166692511198
+            ],
+            "view_matrix_column_major": [
+              -0.5299989400031797,
+              -0.4550836446143781,
+              0.7155417527999326,
+              0,
+              0.8479983040050879,
+              -0.284427277883986,
+              0.4472135954999578,
+              0,
+              -1.110223024625156e-16,
+              0.8438009243891593,
+              0.5366563145999497,
+              0,
+              0.06244879544111723,
+              -2.398742158118875,
+              -14.836508255855698,
+              1
+            ],
+            "projection_matrix_column_major": [
+              2.2954399589031933,
+              0,
+              0,
+              0,
+              0,
+              2.1445069205095586,
+              0,
+              0,
+              0,
+              0,
+              -1.001000500250125,
+              -1,
+              0,
+              0,
+              -0.2001000500250125,
+              0
+            ],
+            "viewport_width": 341,
+            "viewport_height": 365,
+            "device_pixel_ratio": 1
+          },
+          "visible": [],
+          "hidden": [],
+          "mixed": [],
+          "duplicates": [],
+          "witness_ids": [],
+          "final_canvas_labels": [],
+          "labels": [
+            {
+              "id": "O",
+              "text": "O"
+            },
+            {
+              "id": "O_prime",
+              "text": "O′"
+            },
+            {
+              "id": "mp_sec_el",
+              "text": "(P)"
+            }
+          ]
+        }
+      ],
+      "motion": {
+        "active": false,
+        "cpu": [],
+        "intervals": [],
+        "snapshots": [],
+        "gpu": {},
+        "last": null,
+        "occlusion": {
+          "frame_count": 55,
+          "recompute_count": 0,
+          "recomputation_times_ms": [],
+          "edge_count": 0,
+          "triangle_count": 0,
+          "sample_count": 0,
+          "span_count": 0
+        }
+      },
+      "first_selected": "kq_area_el",
+      "next_selected": "kq_vol_cyl",
+      "selection_changed": true,
+      "label_source_errors": [],
+      "wrong_label_control_detected": true,
+      "geometry_unchanged": true,
+      "cpu_frame_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "frame_interval_ms": {
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "no_duplicate_owners": true,
+      "mode_a_no_final_canvas_labels": true,
+      "pass": true
+    }
+  ],
+  "human_visual_approved": "PENDING",
+  "summary": {
+    "rows": 18,
+    "passed": 18
+  }
+}

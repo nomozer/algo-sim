@@ -1,0 +1,1125 @@
+{
+  "schema": "scene3d-artifact-manifest/1",
+  "basis": "worktree raw bytes; text LF hash supplied for Git normalization; binary PNG bytes unchanged",
+  "product": "b8b3311b",
+  "candidate": "c84e8620",
+  "human_visual_approved": "PENDING",
+  "files": [
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/circle-sphere-sample-1440-default-none.png",
+      "bytes": 307662,
+      "sha256_worktree_bytes": "b6c1bb2a82fcf00abc26662206e03d4dba24aad3405060cd61d27c452a55f48f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/circle-sphere-sample-1440-half-none.png",
+      "bytes": 294761,
+      "sha256_worktree_bytes": "dc1c490376a6ecc33f3b2376337687700c3ebb8882c658b8e30cc1312f6b8525"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/circle-sphere-sample-1440-high-none.png",
+      "bytes": 305734,
+      "sha256_worktree_bytes": "666873e11203a613350ca9250755699f3586dc54ab116b44452b1e522dccbc60"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/circle-sphere-sample-1440-low-none.png",
+      "bytes": 308395,
+      "sha256_worktree_bytes": "5e9c9f2e9b6edd80571c36bc28d1d0f24e5ef4b0a31f104e179625996b162e72"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/circle-sphere-sample-1440-quarter-none.png",
+      "bytes": 306968,
+      "sha256_worktree_bytes": "8ef69fbbadd18d989fc5dff1e06ed44c9be60609ff40e301fe155f371abd3718"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/circle-sphere-sample-390-default-none.png",
+      "bytes": 179734,
+      "sha256_worktree_bytes": "b6d868d396972661a9500ef1aeb0f6693f013b1617591e28c311a8c5dce0dcd3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/circle-sphere-sample-390-half-none.png",
+      "bytes": 177199,
+      "sha256_worktree_bytes": "4e94991b320d8a175ca7adda8f0a6d1050443750a70a3fca210383183e2e987a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/circle-sphere-sample-390-high-none.png",
+      "bytes": 190537,
+      "sha256_worktree_bytes": "6610cdce3a1f58092c03551c039b821813de26d913f507a19bd7882600969e2d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/circle-sphere-sample-390-low-none.png",
+      "bytes": 177765,
+      "sha256_worktree_bytes": "a03db90cf34665f155bc64d53339f16ef5a2914e07023ff239cd44ec05ec7291"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/circle-sphere-sample-390-quarter-none.png",
+      "bytes": 175694,
+      "sha256_worktree_bytes": "0ef080d711cc4c344ef46c36bdc730675a08393e027d8f678d79329b9dc3843e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/ellipse-cylinder-p6-1440-default-none.png",
+      "bytes": 310298,
+      "sha256_worktree_bytes": "07fac175ea381a848b997a2ec8b3442914fb0b8982a5dd9510af8565064173cb"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/ellipse-cylinder-p6-1440-half-none.png",
+      "bytes": 312813,
+      "sha256_worktree_bytes": "bbe45a0c5d9e5ccc88a87f36c87da80b18a328f1e7fb8a5efdddd2ed591cb21e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/ellipse-cylinder-p6-1440-high-none.png",
+      "bytes": 272097,
+      "sha256_worktree_bytes": "62504bc3e77a50216f913e399b6df1f2fb903e35e52f869e380e3bfb2bb0d26a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/ellipse-cylinder-p6-1440-low-none.png",
+      "bytes": 321842,
+      "sha256_worktree_bytes": "6438ffa9e13baa33cad4638d195f3ebc61167b2dfe988d2936756dcf04eceba4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/ellipse-cylinder-p6-1440-quarter-none.png",
+      "bytes": 342602,
+      "sha256_worktree_bytes": "fb97ac91d88200208a62ced3a28dead422dcd4754783098594a17f04a9b2dd41"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/ellipse-cylinder-p6-390-default-none.png",
+      "bytes": 180710,
+      "sha256_worktree_bytes": "270ee25fddc9ea1bd36ceb07a094e7bb969be10646620fbe2bc3c8e2c391d536"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/ellipse-cylinder-p6-390-half-none.png",
+      "bytes": 183097,
+      "sha256_worktree_bytes": "86ad10d385f3b0a437c9793ae9990b7d654a888e8152ec7602a34987c909a13a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/ellipse-cylinder-p6-390-high-none.png",
+      "bytes": 147182,
+      "sha256_worktree_bytes": "c8e9b5b3c15efc10e3e852e2e239e02a825e11d0dab57eef5e87036a33d23e6b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/ellipse-cylinder-p6-390-low-none.png",
+      "bytes": 183846,
+      "sha256_worktree_bytes": "46f324feeaf281d8b818413ef2156daff3c231d8a63a307bc76ca500484554d5"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/ellipse-cylinder-p6-390-quarter-none.png",
+      "bytes": 181426,
+      "sha256_worktree_bytes": "ac0ab9b0c9d3468130ebf3f50bb1d18d24c7fe4be0349c5aeb3a5b81ae051026"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/polygon-cross-section-1440-default-none.png",
+      "bytes": 309245,
+      "sha256_worktree_bytes": "a0f26cc056671ad6b2063a28d4afe2fa8f706f03ace6030ce0fd6579f00dd9f0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/polygon-cross-section-1440-half-none.png",
+      "bytes": 316802,
+      "sha256_worktree_bytes": "36ee3922538fd0d27659148930a93864094cbf4a4c438ecc8c427f38a545a560"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/polygon-cross-section-1440-high-none.png",
+      "bytes": 320199,
+      "sha256_worktree_bytes": "8f68e641bc2dda7596255a1c3522abe1feff87386a0c143cf7aa2a998f55fad3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/polygon-cross-section-1440-low-none.png",
+      "bytes": 296119,
+      "sha256_worktree_bytes": "253da996ac3a665a66c57139006e4164eb2968a136237b6ac59fd74516957225"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/polygon-cross-section-1440-quarter-none.png",
+      "bytes": 302885,
+      "sha256_worktree_bytes": "6e0f0e0e057209950f88b14d3e6dc2b91876700540f3b76510bca09c06c520e8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/polygon-cross-section-390-default-none.png",
+      "bytes": 186763,
+      "sha256_worktree_bytes": "d9270ff0adbb8cf0c41fd80d9360056b385be60a7608c5e9b9878aaa1e3f99e1"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/polygon-cross-section-390-half-none.png",
+      "bytes": 180986,
+      "sha256_worktree_bytes": "f78447bbc747201cb9ef4c76a157fb26a08eb62d033570489440b4266f8cda51"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/polygon-cross-section-390-high-none.png",
+      "bytes": 205461,
+      "sha256_worktree_bytes": "67fa70d554f01d14c6f82de002faa1166cc98bba3182766de6e6eee50ed5acb4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/polygon-cross-section-390-low-none.png",
+      "bytes": 169799,
+      "sha256_worktree_bytes": "ccd36d5b53b401831909a3c91142583139383873285887ecab799a9244ab98ae"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/polygon-cross-section-390-quarter-none.png",
+      "bytes": 181455,
+      "sha256_worktree_bytes": "47876b70d5cf3b1e607784b8cbb7461f36e1ae7bb518d656243cea5408eef9b4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline/receipt.json",
+      "bytes": 3732984,
+      "sha256_worktree_bytes": "ecb0ff1f4075bcac4cc9d5b907b8508c158b5eb9060f3df59d6e92139931f731",
+      "sha256_lf_normalized": "ecb0ff1f4075bcac4cc9d5b907b8508c158b5eb9060f3df59d6e92139931f731"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline-final.json",
+      "bytes": 1561680,
+      "sha256_worktree_bytes": "c694b6ea8e2c3c24dcf04e1d373577240c62e981290297334b652cbe101361e2",
+      "sha256_lf_normalized": "c694b6ea8e2c3c24dcf04e1d373577240c62e981290297334b652cbe101361e2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/baseline-reassessment.json",
+      "bytes": 1561680,
+      "sha256_worktree_bytes": "05688b87d0903a8311a34e02400ae9790f9e13cd7ed0c2c6046076a4de22faac",
+      "sha256_lf_normalized": "05688b87d0903a8311a34e02400ae9790f9e13cd7ed0c2c6046076a4de22faac"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/faults/circle-sphere-sample-1440-high-boundary_terracotta.png",
+      "bytes": 305998,
+      "sha256_worktree_bytes": "8d2a7591da60f6863b2c52383dbaeb660f8f1f3cad95345963d5b9aa4383a262"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/faults/circle-sphere-sample-1440-high-boundary_wrong_blue.png",
+      "bytes": 305371,
+      "sha256_worktree_bytes": "8c8e6475589945bf7539411c18dc5bb6447d4d9665858ecd24dc915faacca414"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/faults/circle-sphere-sample-1440-high-fill_hidden.png",
+      "bytes": 313566,
+      "sha256_worktree_bytes": "9cf26b2b357e3a974d1f79d303a10798a3c3e86a005bfc7359c738eda26e13e4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/faults/circle-sphere-sample-1440-high-fill_wrong_orange.png",
+      "bytes": 305323,
+      "sha256_worktree_bytes": "f55fafaa9b6a0e486965233e27e56f2f9de0a5c7ad3100004d5aaf7df70c4251"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/faults/circle-sphere-sample-1440-high-none.png",
+      "bytes": 305715,
+      "sha256_worktree_bytes": "c0c7468771a634c7719fe4df16006c2c33544f59a89ac18487d3343225000745"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/faults/circle-sphere-sample-1440-high-wrong_object.png",
+      "bytes": 304482,
+      "sha256_worktree_bytes": "fb0f61c1a176d107e358e66f33d1f0bdc0d621559fc68c922d271a2da219a3c5"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/faults/circle-sphere-sample-390-high-boundary_terracotta.png",
+      "bytes": 190050,
+      "sha256_worktree_bytes": "cc83e5b66f1cb7dc35960640017d0330b7e577c7039082c7c4b2e600638b6853"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/faults/circle-sphere-sample-390-high-boundary_wrong_blue.png",
+      "bytes": 190713,
+      "sha256_worktree_bytes": "49bf759ff811b6063d0ef89a8c10aff4eb144283eb94b458b275feeac78d4421"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/faults/circle-sphere-sample-390-high-fill_hidden.png",
+      "bytes": 193724,
+      "sha256_worktree_bytes": "e505f271328283a35e47c20ef4941d66751adecc29531deff75fbce7494602a2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/faults/circle-sphere-sample-390-high-fill_wrong_orange.png",
+      "bytes": 189931,
+      "sha256_worktree_bytes": "8d45683945d65a3cb294013a56a24a5163a5b9b1c7b7fcc136970d458fcdcd6f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/faults/circle-sphere-sample-390-high-none.png",
+      "bytes": 190653,
+      "sha256_worktree_bytes": "46bdf2ddc41c292c337eb8b274fc595d2cf50dec3c635141dfd13f4eb3e2ca58"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/faults/circle-sphere-sample-390-high-wrong_object.png",
+      "bytes": 194587,
+      "sha256_worktree_bytes": "954679c2f191c763a2d088e44d062fd484b0305e2c53a73c53af1c7ee2e3b8f5"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/faults/receipt.json",
+      "bytes": 2410954,
+      "sha256_worktree_bytes": "3a1d84250d99b633e583d32b6ea0b6ef6c91f520ebcb8c6a035d8dcba4f0854b",
+      "sha256_lf_normalized": "3a1d84250d99b633e583d32b6ea0b6ef6c91f520ebcb8c6a035d8dcba4f0854b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/faults-final.json",
+      "bytes": 1124925,
+      "sha256_worktree_bytes": "d349971ab73769834b30cfe76b815f43612e8088d2949102bbf58e06256efdd8",
+      "sha256_lf_normalized": "d349971ab73769834b30cfe76b815f43612e8088d2949102bbf58e06256efdd8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/faults-reassessment.json",
+      "bytes": 1124925,
+      "sha256_worktree_bytes": "333581f81243ea221927e3255bba877cfcbe907aca813eb782a776e29db06464",
+      "sha256_lf_normalized": "333581f81243ea221927e3255bba877cfcbe907aca813eb782a776e29db06464"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/handoff.md",
+      "bytes": 5265,
+      "sha256_worktree_bytes": "bd7b181d73bb5e37c4bfea49973a3099e2b0f42ca948ca762719228b16788e38",
+      "sha256_lf_normalized": "bd7b181d73bb5e37c4bfea49973a3099e2b0f42ca948ca762719228b16788e38"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/hybrid-plan.md",
+      "bytes": 7565,
+      "sha256_worktree_bytes": "87080eccc76d56f466b692836f4d683961be9c100c773f326e9b1dfe9a88cafc",
+      "sha256_lf_normalized": "87080eccc76d56f466b692836f4d683961be9c100c773f326e9b1dfe9a88cafc"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/independent-review-packet.md",
+      "bytes": 4096,
+      "sha256_worktree_bytes": "bd6241fdbab6cc91d8a97a76d41517108dbbc74ad71668edfedbc8b5c7665df1",
+      "sha256_lf_normalized": "bd6241fdbab6cc91d8a97a76d41517108dbbc74ad71668edfedbc8b5c7665df1"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/inputs/cases-circle.json",
+      "bytes": 172,
+      "sha256_worktree_bytes": "3ffee6a6f8f990951003c7d08ce2784797c0e274148ee1839fb72dfb65088f81",
+      "sha256_lf_normalized": "3ffee6a6f8f990951003c7d08ce2784797c0e274148ee1839fb72dfb65088f81"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/cau-cat-mat-phang-1440-default-mode-a.png",
+      "bytes": 270740,
+      "sha256_worktree_bytes": "c130d705170ae388e8607b40227ad7ecff5bad82b58497195445a50d61a4b1a8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/cau-cat-mat-phang-1440-selected-mode-b.png",
+      "bytes": 307703,
+      "sha256_worktree_bytes": "9627bef2e3b1ff1982f29ec987577a74b559d2ad857c5ca3f1bc672db295e76d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/cau-cat-mat-phang-390-default-mode-a.png",
+      "bytes": 183651,
+      "sha256_worktree_bytes": "188d0a23921ff01284535f3c8ba0c97a4be973a775cc21ed2fc96c351261c0e2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/cau-cat-mat-phang-390-selected-mode-b.png",
+      "bytes": 179734,
+      "sha256_worktree_bytes": "b6d868d396972661a9500ef1aeb0f6693f013b1617591e28c311a8c5dce0dcd3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/cross_section-1440-default-mode-a.png",
+      "bytes": 286514,
+      "sha256_worktree_bytes": "8d1eb9f6973d325cb4695825b8838b7764cd7fa6b2cb8750de164703a2837725"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/cross_section-1440-selected-mode-b.png",
+      "bytes": 306629,
+      "sha256_worktree_bytes": "5fa64e5ea96360fdcf32855ccc6ffa0029598e7614c9ab96ece317bfdd59c509"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/cross_section-390-default-mode-a.png",
+      "bytes": 191727,
+      "sha256_worktree_bytes": "020c9c5fa1df6874c38f47dae9590c8b080b38f7342dc56cc04b3750256f72ab"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/cross_section-390-selected-mode-b.png",
+      "bytes": 183441,
+      "sha256_worktree_bytes": "620536fad8c6cc0d30a25864c22417c81a502a1453d2fe5f67f8246da34a0bd2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/cuboid-1440-default-mode-a.png",
+      "bytes": 313175,
+      "sha256_worktree_bytes": "aea8804b67e4326f0cd09ecc9e76d8eb8ce09e12efa60e8d70e0d89cd9a3d577"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/cuboid-1440-selected-mode-b.png",
+      "bytes": 285747,
+      "sha256_worktree_bytes": "da5e20b7a037ea9d25624e55ea92ec054deb904f4ea6023d57d8f10467cd44ba"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/cuboid-390-default-mode-a.png",
+      "bytes": 192822,
+      "sha256_worktree_bytes": "ac3b36b146885400b97db93f7185ce1cb27253f13399521f9dbdb3d4d65cdb7b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/cuboid-390-selected-mode-b.png",
+      "bytes": 192869,
+      "sha256_worktree_bytes": "5f2e180d0839bda287e87c8e85a73ffa388201f147eef02f742442061bd4da98"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/family07_multi_solid_composition-1440-default-mode-a.png",
+      "bytes": 326161,
+      "sha256_worktree_bytes": "e3dabf631e77c3f2bfd71016e02ba3ad5abecf22a6e032f4a8006f82ef24e39b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/family07_multi_solid_composition-1440-selected-mode-b.png",
+      "bytes": 324161,
+      "sha256_worktree_bytes": "fe91bb3f629d210f4e11bd780ed47fc1af27eed30077d635d4cb7dce87466953"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/family07_multi_solid_composition-390-default-mode-a.png",
+      "bytes": 188072,
+      "sha256_worktree_bytes": "d33127781a2a5d8e56820209d7752f218ed93dff144006eaa6cfe9c8e1c0a5cb"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/family07_multi_solid_composition-390-selected-mode-b.png",
+      "bytes": 189837,
+      "sha256_worktree_bytes": "cfadc6199881f782b43ebed948fa86bb398c300515d501378ce86ec005908dfe"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/family12_cylinder_ellipse_section-1440-default-mode-a.png",
+      "bytes": 308192,
+      "sha256_worktree_bytes": "99aeb753da32e0281f2c35a0aa2c3e57259dc0909e214a99298514296f60125d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/family12_cylinder_ellipse_section-1440-selected-mode-b.png",
+      "bytes": 323398,
+      "sha256_worktree_bytes": "d467d483b41b4e1f9830eea4fbe8257615d6f4904e027da4a1f9a74cc1dac073"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/family12_cylinder_ellipse_section-390-default-mode-a.png",
+      "bytes": 179213,
+      "sha256_worktree_bytes": "ffcd594bebe4825be4781830ff048dc2cdd85235a5b6e1bd272b68fdc9c0f410"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/family12_cylinder_ellipse_section-390-selected-mode-b.png",
+      "bytes": 188600,
+      "sha256_worktree_bytes": "a2b2523feac397f6a9705f2b406b15cd289b5a1725319e33579992f188424633"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/non-duong-sinh-1440-default-mode-a.png",
+      "bytes": 241279,
+      "sha256_worktree_bytes": "1ca21b60c322791f8bbc4a4c9cc7e0b23d6eeb7a1ee4a2849881d542435b478d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/non-duong-sinh-1440-selected-mode-b.png",
+      "bytes": 316375,
+      "sha256_worktree_bytes": "2ba7f9b12419ca565e2ef4bd66d4c2abf849d5f40a4f59da06d3cf4dc7c682ee"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/non-duong-sinh-390-default-mode-a.png",
+      "bytes": 183150,
+      "sha256_worktree_bytes": "cf59c8ceec9ddcc57910493bb044492cb2b263a0c76cd1bba4b3f30e0a287b98"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/non-duong-sinh-390-selected-mode-b.png",
+      "bytes": 192026,
+      "sha256_worktree_bytes": "6ac71b0bde5a6c9129f147518aeb762e5a01770f9de379f40523dc68165f0694"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/non-thiet-dien-truc-1440-default-mode-a.png",
+      "bytes": 273776,
+      "sha256_worktree_bytes": "3c65297bc8ccf62c67c0852be82dc91a561c999acf1404c56278e42f1ffd4dae"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/non-thiet-dien-truc-1440-selected-mode-b.png",
+      "bytes": 317897,
+      "sha256_worktree_bytes": "f653f85489ed8884734261cdf978b006c3f2f221f00a4fcfaff7d8174f435063"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/non-thiet-dien-truc-390-default-mode-a.png",
+      "bytes": 200503,
+      "sha256_worktree_bytes": "9b7f36426e29bcf422ae5df9331bedf1af279427691c5342ea408887a3fdab08"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/non-thiet-dien-truc-390-selected-mode-b.png",
+      "bytes": 209274,
+      "sha256_worktree_bytes": "a1b07d64f0f7c184615779cb6178ae875654aff4c95688ad20183ca64000e070"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/receipt.json",
+      "bytes": 99207,
+      "sha256_worktree_bytes": "1fe25944101287d386862a4d2a392dc98900dc4ed7776ab1badc4a099ecfbc3f",
+      "sha256_lf_normalized": "1fe25944101287d386862a4d2a392dc98900dc4ed7776ab1badc4a099ecfbc3f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/triangular_prism-1440-default-mode-a.png",
+      "bytes": 329690,
+      "sha256_worktree_bytes": "de485198421989992d683be23e6bd9d2971c46ad1936900de8343f8d90d904b8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/triangular_prism-1440-selected-mode-b.png",
+      "bytes": 290383,
+      "sha256_worktree_bytes": "c14b471e948745eb7021fd660141e0a909889d61a662db8ba0524e5e0bed075a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/triangular_prism-390-default-mode-a.png",
+      "bytes": 195295,
+      "sha256_worktree_bytes": "35de6927c5741ced82d82449b42826cec1f6aa5b9fe4dd57b3c15e4a4cf854c5"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/triangular_prism-390-selected-mode-b.png",
+      "bytes": 194114,
+      "sha256_worktree_bytes": "08c98fce5760f766c323aa5dd2eb3e43def14c457352b12925a8547d84628466"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/tru-truc-xien-1440-default-mode-a.png",
+      "bytes": 275162,
+      "sha256_worktree_bytes": "316b90dc43a0a0b54b526e3f5de309a21eabc18ad4a45148a60fd25150de58e1"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/tru-truc-xien-1440-selected-mode-b.png",
+      "bytes": 280193,
+      "sha256_worktree_bytes": "f4f9f34a212b36f7bdb047d7a9692d8d68fbdef1225e90ba7e1d4baf3d8eb86f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/tru-truc-xien-390-default-mode-a.png",
+      "bytes": 183057,
+      "sha256_worktree_bytes": "4314655e2f14f09975c85b8d55514bd67b8740cc8b852354103d54f983347c71"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/label-controls/tru-truc-xien-390-selected-mode-b.png",
+      "bytes": 178691,
+      "sha256_worktree_bytes": "ce075dd5b72076c8aaabe0c0c8f9d2f30ef44929aba531221d830d998b4fbe84"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cau-cat-mat-phang-1440-back.png",
+      "bytes": 263091,
+      "sha256_worktree_bytes": "24f8fa6235ac6587bacaf0d4288262cc1353bf1c2e7d8b806004350e266e2180"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cau-cat-mat-phang-1440-default-mode-a.png",
+      "bytes": 270740,
+      "sha256_worktree_bytes": "c130d705170ae388e8607b40227ad7ecff5bad82b58497195445a50d61a4b1a8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cau-cat-mat-phang-1440-high.png",
+      "bytes": 281478,
+      "sha256_worktree_bytes": "3a4974836ade4df4fba1c90b1c296cbb86d3d49906df976320954a9006a9d9a2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cau-cat-mat-phang-1440-low.png",
+      "bytes": 257941,
+      "sha256_worktree_bytes": "667af351936447b19f7e83ba8457099a2ad227502bc89978ee725c8204884486"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cau-cat-mat-phang-1440-quarter.png",
+      "bytes": 266524,
+      "sha256_worktree_bytes": "00e6f35b3c82b73f580d10425c196ba20d000b9d1620ef0877395026879f4943"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cau-cat-mat-phang-1440-selected-mode-b.png",
+      "bytes": 307703,
+      "sha256_worktree_bytes": "9627bef2e3b1ff1982f29ec987577a74b559d2ad857c5ca3f1bc672db295e76d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cau-cat-mat-phang-390-back.png",
+      "bytes": 178274,
+      "sha256_worktree_bytes": "eb9186395b0ddd204d4c6d0c8a8e9b364b265f13099886bb4a09a6ddca9ee257"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cau-cat-mat-phang-390-default-mode-a.png",
+      "bytes": 183651,
+      "sha256_worktree_bytes": "188d0a23921ff01284535f3c8ba0c97a4be973a775cc21ed2fc96c351261c0e2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cau-cat-mat-phang-390-high.png",
+      "bytes": 189534,
+      "sha256_worktree_bytes": "5441541ffd832d249e84ef202e8e429b924397016a1051621987f09895ba0199"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cau-cat-mat-phang-390-low.png",
+      "bytes": 173432,
+      "sha256_worktree_bytes": "f4038f14a5f33c375d35fde336f720861dd1ccdbdb76dcab533aa7b64aa97822"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cau-cat-mat-phang-390-quarter.png",
+      "bytes": 179418,
+      "sha256_worktree_bytes": "47347125c51c21cd521d145aca0a18c8c1452149e97cc78c4130e7f82560afad"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cau-cat-mat-phang-390-selected-mode-b.png",
+      "bytes": 179734,
+      "sha256_worktree_bytes": "b6d868d396972661a9500ef1aeb0f6693f013b1617591e28c311a8c5dce0dcd3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cross_section-1440-back.png",
+      "bytes": 277755,
+      "sha256_worktree_bytes": "92e708d457ce9609fff87dc303f2b49e391a470a4380063413b1b9fd59c00a0b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cross_section-1440-default-mode-a.png",
+      "bytes": 286514,
+      "sha256_worktree_bytes": "8d1eb9f6973d325cb4695825b8838b7764cd7fa6b2cb8750de164703a2837725"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cross_section-1440-high.png",
+      "bytes": 318340,
+      "sha256_worktree_bytes": "8aa901c3f255dc6015cf44ca8bcb943d939b190f042c31a20d7f5d856a8a338c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cross_section-1440-low.png",
+      "bytes": 230386,
+      "sha256_worktree_bytes": "c8d1befc92378f0dabd7af3c707ebd03b98564fd3face3ce8cfd4711dbc5714c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cross_section-1440-quarter.png",
+      "bytes": 257576,
+      "sha256_worktree_bytes": "2a1612357f33d89876a2c2d8b04b9873ecd51bb26df833dabd0425a5b4dcac5d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cross_section-1440-selected-mode-b.png",
+      "bytes": 306629,
+      "sha256_worktree_bytes": "5fa64e5ea96360fdcf32855ccc6ffa0029598e7614c9ab96ece317bfdd59c509"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cross_section-390-back.png",
+      "bytes": 187268,
+      "sha256_worktree_bytes": "d9170f8e1e588fb700028ec9d91fb275f2f400c40ed7435f0f1aeef2aced99f0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cross_section-390-default-mode-a.png",
+      "bytes": 191727,
+      "sha256_worktree_bytes": "020c9c5fa1df6874c38f47dae9590c8b080b38f7342dc56cc04b3750256f72ab"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cross_section-390-high.png",
+      "bytes": 206780,
+      "sha256_worktree_bytes": "bebdfe28925e79c466e464af612d0a3b787b04115d8d88928e02be3e15824b4e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cross_section-390-low.png",
+      "bytes": 169301,
+      "sha256_worktree_bytes": "368b05ae081976a316a91c3b78f4bdbbd857f1173e96baeb6fa58c1098c20b84"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cross_section-390-quarter.png",
+      "bytes": 186697,
+      "sha256_worktree_bytes": "e0e67b3abfeeb2840559e82e307abf74bff7dd0049ea540beb30e4255cab5433"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cross_section-390-selected-mode-b.png",
+      "bytes": 183441,
+      "sha256_worktree_bytes": "620536fad8c6cc0d30a25864c22417c81a502a1453d2fe5f67f8246da34a0bd2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cuboid-1440-back.png",
+      "bytes": 316699,
+      "sha256_worktree_bytes": "1a70498f99f442555ddb309a254a8ae2a00446831b1a42b82b0a538abe2d72c2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cuboid-1440-default-mode-a.png",
+      "bytes": 313175,
+      "sha256_worktree_bytes": "aea8804b67e4326f0cd09ecc9e76d8eb8ce09e12efa60e8d70e0d89cd9a3d577"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cuboid-1440-high.png",
+      "bytes": 251618,
+      "sha256_worktree_bytes": "a125f8f6a3f22cd6ef1894f2b6965b27d9433a9d4b9162f78cfbf768500c4471"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cuboid-1440-low.png",
+      "bytes": 322611,
+      "sha256_worktree_bytes": "874f7bf802b955a0461e0eb32aa05511a3e4d2ba813be555491ed5d5bce25817"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cuboid-1440-quarter.png",
+      "bytes": 320152,
+      "sha256_worktree_bytes": "a160763934cdd59b89f4990684b70929474a556e990bb1d3c111ff2121d4c1a2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cuboid-1440-selected-mode-b.png",
+      "bytes": 285747,
+      "sha256_worktree_bytes": "da5e20b7a037ea9d25624e55ea92ec054deb904f4ea6023d57d8f10467cd44ba"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cuboid-390-back.png",
+      "bytes": 193849,
+      "sha256_worktree_bytes": "ae8132244f84027684934afc535e051f6cc11b868d5c0d364767d6c77129b11a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cuboid-390-default-mode-a.png",
+      "bytes": 192822,
+      "sha256_worktree_bytes": "ac3b36b146885400b97db93f7185ce1cb27253f13399521f9dbdb3d4d65cdb7b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cuboid-390-high.png",
+      "bytes": 183348,
+      "sha256_worktree_bytes": "96915e9b63ad04010bf66773c8c055492c0864945b7760f5dd5c09e67fb908ef"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cuboid-390-low.png",
+      "bytes": 202166,
+      "sha256_worktree_bytes": "057681e87405cf0d1faab85aabe8b350f63d8a6805c0521b0a8737ef25ebeddb"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cuboid-390-quarter.png",
+      "bytes": 193724,
+      "sha256_worktree_bytes": "e19b3769520b894cbfb2599e019cda0cefa31e3cbe16c189283aae0e615b7f55"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/cuboid-390-selected-mode-b.png",
+      "bytes": 192869,
+      "sha256_worktree_bytes": "5f2e180d0839bda287e87c8e85a73ffa388201f147eef02f742442061bd4da98"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family07_multi_solid_composition-1440-back.png",
+      "bytes": 318088,
+      "sha256_worktree_bytes": "5a59dda0b4479176cd3a30b722461358181bfb428355c9a7408e0fe4212c2a88"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family07_multi_solid_composition-1440-default-mode-a.png",
+      "bytes": 326161,
+      "sha256_worktree_bytes": "e3dabf631e77c3f2bfd71016e02ba3ad5abecf22a6e032f4a8006f82ef24e39b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family07_multi_solid_composition-1440-high.png",
+      "bytes": 263312,
+      "sha256_worktree_bytes": "b228e765ece8c8824a150635c8e2ef8bd1ac6e65cadeba8d73e719af9b9ebd3a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family07_multi_solid_composition-1440-low.png",
+      "bytes": 289761,
+      "sha256_worktree_bytes": "85fa3639d8cf0d2c017d6b28ba6e0ba74d5e9965de1de7477905e12eb73cea79"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family07_multi_solid_composition-1440-quarter.png",
+      "bytes": 327634,
+      "sha256_worktree_bytes": "66a066261a6da00908044b9170a6e744ee4e51e0faaca227e51c1b203feda0be"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family07_multi_solid_composition-1440-selected-mode-b.png",
+      "bytes": 324161,
+      "sha256_worktree_bytes": "fe91bb3f629d210f4e11bd780ed47fc1af27eed30077d635d4cb7dce87466953"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family07_multi_solid_composition-390-back.png",
+      "bytes": 177875,
+      "sha256_worktree_bytes": "0c1ce97172e8e446bdc2dbd70f3e2f7eda39d2e0f9704710300c7ab7c4432f31"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family07_multi_solid_composition-390-default-mode-a.png",
+      "bytes": 188072,
+      "sha256_worktree_bytes": "d33127781a2a5d8e56820209d7752f218ed93dff144006eaa6cfe9c8e1c0a5cb"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family07_multi_solid_composition-390-high.png",
+      "bytes": 157400,
+      "sha256_worktree_bytes": "e3fa1ec553bc27a422e3efe39f322c9c321398f8c08ebe152dedd8b39b0a959b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family07_multi_solid_composition-390-low.png",
+      "bytes": 176867,
+      "sha256_worktree_bytes": "38c147df364af6e41a852c16c0b5dcd4201e5039490266ad83265cbe68abe9b9"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family07_multi_solid_composition-390-quarter.png",
+      "bytes": 186486,
+      "sha256_worktree_bytes": "979e3d4ec75dd11ae70e307b2bf435d605014b0145a2b6e6090fe0542c55c5d8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family07_multi_solid_composition-390-selected-mode-b.png",
+      "bytes": 189837,
+      "sha256_worktree_bytes": "cfadc6199881f782b43ebed948fa86bb398c300515d501378ce86ec005908dfe"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family12_cylinder_ellipse_section-1440-back.png",
+      "bytes": 307325,
+      "sha256_worktree_bytes": "bb8a74b7cdf7550583e6a0fb1997461c3baead80fc09dd128815cf62f7f83ed1"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family12_cylinder_ellipse_section-1440-default-mode-a.png",
+      "bytes": 308192,
+      "sha256_worktree_bytes": "99aeb753da32e0281f2c35a0aa2c3e57259dc0909e214a99298514296f60125d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family12_cylinder_ellipse_section-1440-high.png",
+      "bytes": 251423,
+      "sha256_worktree_bytes": "4043f272786b23d505d9b03fe98fc47246132898407969efb183569a9ac6e38b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family12_cylinder_ellipse_section-1440-low.png",
+      "bytes": 304512,
+      "sha256_worktree_bytes": "77c0e93eaa535423e194577008b3b26758ecddb1bb43a3e9d217ec7fd749263c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family12_cylinder_ellipse_section-1440-quarter.png",
+      "bytes": 307887,
+      "sha256_worktree_bytes": "fcd451c5f88e9f6301cc84217a8e4b4fee3b778f50027403afa66288170a3f8a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family12_cylinder_ellipse_section-1440-selected-mode-b.png",
+      "bytes": 323398,
+      "sha256_worktree_bytes": "d467d483b41b4e1f9830eea4fbe8257615d6f4904e027da4a1f9a74cc1dac073"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family12_cylinder_ellipse_section-390-back.png",
+      "bytes": 178898,
+      "sha256_worktree_bytes": "9c68f99fdf94dd6e95bb7dfe4d57bbaad0bb996840c5297de6dd51ac69572792"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family12_cylinder_ellipse_section-390-default-mode-a.png",
+      "bytes": 179213,
+      "sha256_worktree_bytes": "ffcd594bebe4825be4781830ff048dc2cdd85235a5b6e1bd272b68fdc9c0f410"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family12_cylinder_ellipse_section-390-high.png",
+      "bytes": 156576,
+      "sha256_worktree_bytes": "cf8c2b2a72fef0d1e29be2bc05062eecc5ad71f13eb0410538a8f8e186cd3cad"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family12_cylinder_ellipse_section-390-low.png",
+      "bytes": 174345,
+      "sha256_worktree_bytes": "9dc74fc447e9542d7783bbfa4c57758845125b1e62393013af3d35838e682221"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family12_cylinder_ellipse_section-390-quarter.png",
+      "bytes": 176935,
+      "sha256_worktree_bytes": "fa0e9065384c81b26a3c50cff8ab95748553784fb377b29f4f5b2307f5980552"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/family12_cylinder_ellipse_section-390-selected-mode-b.png",
+      "bytes": 188600,
+      "sha256_worktree_bytes": "a2b2523feac397f6a9705f2b406b15cd289b5a1725319e33579992f188424633"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-duong-sinh-1440-back.png",
+      "bytes": 247209,
+      "sha256_worktree_bytes": "e4c07bfb04498c6e0bd8ae723b970dde21f33897ae892f23da9cd22b91b27136"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-duong-sinh-1440-default-mode-a.png",
+      "bytes": 241279,
+      "sha256_worktree_bytes": "1ca21b60c322791f8bbc4a4c9cc7e0b23d6eeb7a1ee4a2849881d542435b478d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-duong-sinh-1440-high.png",
+      "bytes": 270252,
+      "sha256_worktree_bytes": "534dc7f6d1a8fc454bf13bdd9f8a50a0a0011a6bdc62910b065da1ff9b89383d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-duong-sinh-1440-low.png",
+      "bytes": 221231,
+      "sha256_worktree_bytes": "2332b60d48da16486b236f6eb0773f8ccb323fedf49cb149313137f04d683baf"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-duong-sinh-1440-quarter.png",
+      "bytes": 246949,
+      "sha256_worktree_bytes": "a4002ac75fda55876b75b089cc816265b3a1c52f8706ad3fe467ef59d330132d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-duong-sinh-1440-selected-mode-b.png",
+      "bytes": 316375,
+      "sha256_worktree_bytes": "2ba7f9b12419ca565e2ef4bd66d4c2abf849d5f40a4f59da06d3cf4dc7c682ee"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-duong-sinh-390-back.png",
+      "bytes": 181521,
+      "sha256_worktree_bytes": "ec93ed3e1f4efcca312377e4228644f0d2d5e9ef2b268004ae6dd81489313ab8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-duong-sinh-390-default-mode-a.png",
+      "bytes": 183150,
+      "sha256_worktree_bytes": "cf59c8ceec9ddcc57910493bb044492cb2b263a0c76cd1bba4b3f30e0a287b98"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-duong-sinh-390-high.png",
+      "bytes": 178676,
+      "sha256_worktree_bytes": "620c67afef5befbec3b75fc7f25014875bc52f7d386e1700292ac4c8c3f1b034"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-duong-sinh-390-low.png",
+      "bytes": 162013,
+      "sha256_worktree_bytes": "59597e96936c8d7f38fd0ea71beabe039c9b4df041c6c1818f2e42438b18b139"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-duong-sinh-390-quarter.png",
+      "bytes": 179395,
+      "sha256_worktree_bytes": "224c80e19a9859de9605672248f825caa5b6dd44482838e29e8a2856dd9ec0cb"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-duong-sinh-390-selected-mode-b.png",
+      "bytes": 192026,
+      "sha256_worktree_bytes": "6ac71b0bde5a6c9129f147518aeb762e5a01770f9de379f40523dc68165f0694"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-thiet-dien-truc-1440-back.png",
+      "bytes": 271673,
+      "sha256_worktree_bytes": "4dc2e0d0ac3f974c0dc99c566f52401d62c42339be5ad0ff7acb9dbbc7b97931"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-thiet-dien-truc-1440-default-mode-a.png",
+      "bytes": 273776,
+      "sha256_worktree_bytes": "3c65297bc8ccf62c67c0852be82dc91a561c999acf1404c56278e42f1ffd4dae"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-thiet-dien-truc-1440-high.png",
+      "bytes": 289247,
+      "sha256_worktree_bytes": "4633b8ba437d2af11de4d88591776cf288088b1f0151a1fd981dc6ef71293714"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-thiet-dien-truc-1440-low.png",
+      "bytes": 237925,
+      "sha256_worktree_bytes": "04f1d05fcaf7c1895bcda4ea3390a8e4ff64545924280544888b3566b88eb2f0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-thiet-dien-truc-1440-quarter.png",
+      "bytes": 268750,
+      "sha256_worktree_bytes": "90edd9f36e5df3c6a717ccd01aabe8f9b528e64a52ce8437b72792e5947701c4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-thiet-dien-truc-1440-selected-mode-b.png",
+      "bytes": 317897,
+      "sha256_worktree_bytes": "f653f85489ed8884734261cdf978b006c3f2f221f00a4fcfaff7d8174f435063"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-thiet-dien-truc-390-back.png",
+      "bytes": 204050,
+      "sha256_worktree_bytes": "c1b8c990af993d5a1e0a2e0ea97f1ab2bed38b411e32d60aeac2bf1fe45ae37c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-thiet-dien-truc-390-default-mode-a.png",
+      "bytes": 200503,
+      "sha256_worktree_bytes": "9b7f36426e29bcf422ae5df9331bedf1af279427691c5342ea408887a3fdab08"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-thiet-dien-truc-390-high.png",
+      "bytes": 198030,
+      "sha256_worktree_bytes": "46945fdad7472da29c8e0f120a22c2bca38f9675b0a135be3b97896e25ed71ca"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-thiet-dien-truc-390-low.png",
+      "bytes": 178035,
+      "sha256_worktree_bytes": "f1b9104f3ff5955ba30c28dbd35f2fc376bf002d2695b7da0329fc6dbbf55127"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-thiet-dien-truc-390-quarter.png",
+      "bytes": 190935,
+      "sha256_worktree_bytes": "f3d9dae954c6af5e58c82934ad606c8859294824fdc0dd15ad6415f835acc5a1"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/non-thiet-dien-truc-390-selected-mode-b.png",
+      "bytes": 209274,
+      "sha256_worktree_bytes": "a1b07d64f0f7c184615779cb6178ae875654aff4c95688ad20183ca64000e070"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/receipt.json",
+      "bytes": 11412250,
+      "sha256_worktree_bytes": "40bbe191419ae09439193965fa5e03b18c2a4b5f3f2bef89c74b4763dc460495",
+      "sha256_lf_normalized": "40bbe191419ae09439193965fa5e03b18c2a4b5f3f2bef89c74b4763dc460495"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/triangular_prism-1440-back.png",
+      "bytes": 325319,
+      "sha256_worktree_bytes": "7096cc983386086d4e68d5f19129f100c088c7c954501d81c0be7271d115103a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/triangular_prism-1440-default-mode-a.png",
+      "bytes": 329690,
+      "sha256_worktree_bytes": "de485198421989992d683be23e6bd9d2971c46ad1936900de8343f8d90d904b8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/triangular_prism-1440-high.png",
+      "bytes": 263482,
+      "sha256_worktree_bytes": "e03d6e1547c5efcf5bd18e2fd4906ca13c71f7c0915a6dff294d1a070aa116d7"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/triangular_prism-1440-low.png",
+      "bytes": 313575,
+      "sha256_worktree_bytes": "851ebad3f601922dadee8ff39dcb885569acae0c0776f7b202127b7f3cd7a182"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/triangular_prism-1440-quarter.png",
+      "bytes": 342868,
+      "sha256_worktree_bytes": "dbd81cc57be4aed271b241a372a1a8a87db38d791d3feefe54c8bb2c8d2cacc1"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/triangular_prism-1440-selected-mode-b.png",
+      "bytes": 290383,
+      "sha256_worktree_bytes": "c14b471e948745eb7021fd660141e0a909889d61a662db8ba0524e5e0bed075a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/triangular_prism-390-back.png",
+      "bytes": 205612,
+      "sha256_worktree_bytes": "0124aeda4d0b82797666824f50ad918454b2e28a532dade3859f8af71e79d349"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/triangular_prism-390-default-mode-a.png",
+      "bytes": 195295,
+      "sha256_worktree_bytes": "35de6927c5741ced82d82449b42826cec1f6aa5b9fe4dd57b3c15e4a4cf854c5"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/triangular_prism-390-high.png",
+      "bytes": 189535,
+      "sha256_worktree_bytes": "327f534e1fd14589d1d4331d897c5360635a366a88df51578757055c92faa308"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/triangular_prism-390-low.png",
+      "bytes": 199586,
+      "sha256_worktree_bytes": "8606b50c4080a1379cdf25152d420ffa8e79103c7fdbb8fbd8ee26688f530320"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/triangular_prism-390-quarter.png",
+      "bytes": 210682,
+      "sha256_worktree_bytes": "125f65a55fa0f1adf63f69eb25297839c345006c9b90252a76de9c4773b9faca"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/triangular_prism-390-selected-mode-b.png",
+      "bytes": 194191,
+      "sha256_worktree_bytes": "b444af85335556fce9d6bc410a412e4636c7119d74a39503454eec121afdf007"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/tru-truc-xien-1440-back.png",
+      "bytes": 266512,
+      "sha256_worktree_bytes": "577d7d0753dc2659d73e9c94bcd524afc9edcc4ef97308ce91b44faa984b9544"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/tru-truc-xien-1440-default-mode-a.png",
+      "bytes": 275162,
+      "sha256_worktree_bytes": "316b90dc43a0a0b54b526e3f5de309a21eabc18ad4a45148a60fd25150de58e1"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/tru-truc-xien-1440-high.png",
+      "bytes": 281654,
+      "sha256_worktree_bytes": "bbe19ea3aa7da02753c387457e667920876e0cdf179a056576836597be3f664b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/tru-truc-xien-1440-low.png",
+      "bytes": 241867,
+      "sha256_worktree_bytes": "f8c15ae68d9c0bc95d5e627216d7c36864277b3d4171bb03789b905daa80c1b9"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/tru-truc-xien-1440-quarter.png",
+      "bytes": 231388,
+      "sha256_worktree_bytes": "b3d0e2d0b4ebc48b21e2a9168563baa7dc35ce8154bfe5f354d7ae1e7af0ae69"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/tru-truc-xien-1440-selected-mode-b.png",
+      "bytes": 280193,
+      "sha256_worktree_bytes": "f4f9f34a212b36f7bdb047d7a9692d8d68fbdef1225e90ba7e1d4baf3d8eb86f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/tru-truc-xien-390-back.png",
+      "bytes": 187140,
+      "sha256_worktree_bytes": "1e32f608f295e6527b5b3d1e7354f574d3d32e4fb6f356309a126ea9cbb13c11"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/tru-truc-xien-390-default-mode-a.png",
+      "bytes": 183057,
+      "sha256_worktree_bytes": "4314655e2f14f09975c85b8d55514bd67b8740cc8b852354103d54f983347c71"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/tru-truc-xien-390-high.png",
+      "bytes": 186748,
+      "sha256_worktree_bytes": "6c9b609fef66ffc452bd48232c806bd8b625e09eb74a8dea1444a0bd04dd1dd1"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/tru-truc-xien-390-low.png",
+      "bytes": 174353,
+      "sha256_worktree_bytes": "86b05cd8899788af382136d7aac5b80419c8b2aff2688b56d49a705d9f9dd0d5"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/tru-truc-xien-390-quarter.png",
+      "bytes": 185729,
+      "sha256_worktree_bytes": "7f0308e8d558a4cd8b13fb02f9ce5606ebf85a07ea8c975dfc8be7e9f16c6144"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion/tru-truc-xien-390-selected-mode-b.png",
+      "bytes": 178691,
+      "sha256_worktree_bytes": "ce075dd5b72076c8aaabe0c0c8f9d2f30ef44929aba531221d830d998b4fbe84"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/motion-summary.json",
+      "bytes": 32039,
+      "sha256_worktree_bytes": "2f5702a34726223af3bc08ed884261cfefd49684f4e629ce55da64bb43fd6fa7",
+      "sha256_lf_normalized": "2f5702a34726223af3bc08ed884261cfefd49684f4e629ce55da64bb43fd6fa7"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/oracle-tests.log",
+      "bytes": 3414,
+      "sha256_worktree_bytes": "a3df1502cf4176a9f77495d8fdbf2002493fb0ac014cc30cc586748ece53aa3f",
+      "sha256_lf_normalized": "afef3704fbc6658032823a4908e522aace7f3ccffec55dcd488a69da0ee3367c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/plan.md",
+      "bytes": 5270,
+      "sha256_worktree_bytes": "d244c9af18950f27df07eafb21d25b4d7d3b773592c460f240c9d83827fbff32",
+      "sha256_lf_normalized": "d244c9af18950f27df07eafb21d25b4d7d3b773592c460f240c9d83827fbff32"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/provenance-verified.json",
+      "bytes": 2923,
+      "sha256_worktree_bytes": "bf1733643449836cbab200773117bbf9a0debfaefcf9fcbe3b01d5b036080074",
+      "sha256_lf_normalized": "b7bbca19a6553cea471f34df9230cc276dbdea1fb609c3ef108e1d9a23e036c1"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/provenance.json",
+      "bytes": 2411,
+      "sha256_worktree_bytes": "8406817d02996e399bc8e714a018d3e81720c54ca4d5541ef0dfb7380f33c065",
+      "sha256_lf_normalized": "7e4e06f21d31544c088753a3a78177acee7c1180429180baa5d2c5e0cbc732d8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/report.md",
+      "bytes": 11376,
+      "sha256_worktree_bytes": "78fd329cb0550b2f3b0c811d793e6d56d5911e7e41bd08edd79e1784c531df88",
+      "sha256_lf_normalized": "78fd329cb0550b2f3b0c811d793e6d56d5911e7e41bd08edd79e1784c531df88"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/run.json",
+      "bytes": 2354,
+      "sha256_worktree_bytes": "1ce5321216284cd31b33c283b2c6e15ca957ab4cea3f099b843c9c843a7efcc9",
+      "sha256_lf_normalized": "1ce5321216284cd31b33c283b2c6e15ca957ab4cea3f099b843c9c843a7efcc9"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/tools/check_provenance.py",
+      "bytes": 5183,
+      "sha256_worktree_bytes": "5fc94600717b7d8b59017d8490b8c44aece5b93d3444e36f790684e3761b47e7",
+      "sha256_lf_normalized": "5fc94600717b7d8b59017d8490b8c44aece5b93d3444e36f790684e3761b47e7"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/tools/package_artifacts.py",
+      "bytes": 1529,
+      "sha256_worktree_bytes": "09be9c0cd48a08f11d2c214705ca46fe84186a490000e0ecdd7fbefd4c778f9f",
+      "sha256_lf_normalized": "09be9c0cd48a08f11d2c214705ca46fe84186a490000e0ecdd7fbefd4c778f9f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/tools/summarize-motion.mjs",
+      "bytes": 3735,
+      "sha256_worktree_bytes": "4b8c7442296da02562f557492ac0ce13ea214b25655e094a4c1fac916fa28256",
+      "sha256_lf_normalized": "4b8c7442296da02562f557492ac0ce13ea214b25655e094a4c1fac916fa28256"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-final-acceptance/visual-review.md",
+      "bytes": 2863,
+      "sha256_worktree_bytes": "a90d61f1658f83086738403ab1c31d55254a147a882a114730b5776642aa2c05",
+      "sha256_lf_normalized": "a90d61f1658f83086738403ab1c31d55254a147a882a114730b5776642aa2c05"
+    },
+    {
+      "path": "frontend/scripts/section-role-oracle.mjs",
+      "bytes": 18073,
+      "sha256_worktree_bytes": "93c2350c755c489e34ed48cb8290e09a42cbf9dfd7303477a42926c35e75fbd9",
+      "sha256_lf_normalized": "7daecbc7a0859755f051883a25eb2bf9be07e7ac4c0aa4aba2b605f87aaba4b2"
+    },
+    {
+      "path": "frontend/scripts/section-role-oracle-v2.mjs",
+      "bytes": 8759,
+      "sha256_worktree_bytes": "48f7a2cd3d675e5625edca51688310ba04efc7e6c8c24eb7bdc112fe82bcd594",
+      "sha256_lf_normalized": "48f7a2cd3d675e5625edca51688310ba04efc7e6c8c24eb7bdc112fe82bcd594"
+    },
+    {
+      "path": "frontend/scripts/section-role-oracle-v2.node-test.mjs",
+      "bytes": 6934,
+      "sha256_worktree_bytes": "0a254dbb4b04b332c1c1dbc8cb724fa65d33f38a4e2a255b08dc91107bd6a161",
+      "sha256_lf_normalized": "0a254dbb4b04b332c1c1dbc8cb724fa65d33f38a4e2a255b08dc91107bd6a161"
+    },
+    {
+      "path": "frontend/scripts/section-role-browser-probe.mjs",
+      "bytes": 14874,
+      "sha256_worktree_bytes": "4cce6c6308a5cf2b57ce1a3e70328f7e7c10324179b824fef25f86b1500806fb",
+      "sha256_lf_normalized": "aa2474744dbc2e7232ba8ca34271e88677557e2b60fea3e2597c81b931e9702d"
+    },
+    {
+      "path": "frontend/scripts/rescore-section-roles.mjs",
+      "bytes": 3146,
+      "sha256_worktree_bytes": "db24c80f742d191baa70815b597a7dc525a8fc6cde61844cc7b32737edb58617",
+      "sha256_lf_normalized": "db24c80f742d191baa70815b597a7dc525a8fc6cde61844cc7b32737edb58617"
+    },
+    {
+      "path": "frontend/scripts/scene3d-motion-probe.mjs",
+      "bytes": 9455,
+      "sha256_worktree_bytes": "2df28baeaabf549bab8e6cfa764d92250c71cf4681875b0a8b07ad9b7548da58",
+      "sha256_lf_normalized": "2df28baeaabf549bab8e6cfa764d92250c71cf4681875b0a8b07ad9b7548da58"
+    },
+    {
+      "path": "docs/CODE_INDEX.md",
+      "bytes": 711451,
+      "sha256_worktree_bytes": "12a0146a8c6aa1289ce1dbe96055d457f96b5c2b38c714863970b3f6933b3612",
+      "sha256_lf_normalized": "9a75aba5d00896b6a7416de1378f32ff9a55f8525de7b6ec3a1093194b133773"
+    },
+    {
+      "path": "docs/EVIDENCE_INDEX.md",
+      "bytes": 246259,
+      "sha256_worktree_bytes": "603d232de1b49994f658734ce09c91dfdcd8e42bad1af4297801afb03089d914",
+      "sha256_lf_normalized": "ce87ff4f8bf1541963c0b025595fd48a66edd601ab7760a5b0b5ffec6d066f0b"
+    }
+  ]
+}

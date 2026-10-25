@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SCENE3D_FINAL_ACCEPTANCE
+
+REPORT = docs/evaluation/geometry/runs/scene3d-final-acceptance/handoff.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-final-acceptance/
+CLASSIFICATION = SCENE3D_VISUAL_PARTIAL_WITH_GAPS; NO-GO MERGE; F2 design explicitly resolved by Owner request, official gate unchanged 7/8; independent and human review PENDING
+CODE_COMMIT = product b8b3311b unchanged; frozen candidate c84e8620; evaluation-only continuation from 16b46d38 on research/scene3d-visual-correction; no main merge/push
+VERIFICATION = provenance-verified.json (clean detached freeze match, prior T3 streams hash match, served product source match); oracle-tests.log (40/40); baseline-final.json (V2 4 PASS / 1 FAIL / 25 UNCERTIFIABLE, same frames V1 19/0/11); faults-final.json (10/10 on certified views); label-controls/receipt.json (18/18); motion-summary.json (112 heuristic flags, no continuity/performance certification); artifact-manifest.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = SCENE3D_VISUAL_CORRECTION (F2 policy no longer unspecified; proposed V1 completeness limits reproduced, strict V2 uncertainty and unresolved ellipse transition; old evidence unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = SCENE3D_VISUAL_CORRECTION
 
 REPORT = docs/evaluation/geometry/runs/scene3d-visual-correction/FINAL_OWNER_HANDOFF.md
@@ -9,7 +20,7 @@ CODE_COMMIT = b8b3311b7f15dd8c13d0477f67cab765986f9c42 (product, frontend/src on
 VERIFICATION = docs/evaluation/geometry/runs/scene3d-visual-correction/verification/full-t3/t3-c84e8620/receipt.json (FULL_PRODUCT_GATE_PASS); docs/evaluation/geometry/runs/scene3d-visual-correction/visual/official-run-c84e8620/BROWSER_EVIDENCE.json (7/8, cross_section only locked role-hue gate); docs/evaluation/geometry/runs/scene3d-visual-correction/visual/official-run-3c6d1e65-mode-b-regression/ (0/8, superseded); docs/evaluation/geometry/runs/scene3d-visual-correction/verification/after-b8b3311b/receipt.json (52/52 rendered rows); docs/evaluation/geometry/runs/scene3d-visual-correction/verification/role-aware-b8b3311b/receipt.json (19 PASS, 0 FAIL, 11 UNCERTIFIABLE; 95/95 faults); docs/evaluation/geometry/runs/scene3d-visual-correction/verification/vite-dev-server/dev-acceptance-c84e8620.json (PASS)
 MODEL_REQUEST_COUNT = 0
 CORRECTS = VISUAL_B3_SPHERE_INTEGRATION (candidate identity; role-aware proposal verdicts and thresholds); historical artifact bytes unchanged
-CORRECTED_BY = NONE
+CORRECTED_BY = SCENE3D_FINAL_ACCEPTANCE (F2 policy resolved; stricter proposed evaluation, unchanged official score/product)
 
 ## WAVE_ID = VISUAL_B3_SPHERE_INTEGRATION
 

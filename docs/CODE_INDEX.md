@@ -1,5 +1,19 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Final Scene3D acceptance (local proposal, 2026-10-25)
+
+`frontend/scripts/section-role-oracle-v2.mjs` extends the proposed pixel evaluator with source-conic sampling independent
+of renderer tessellation/frame, local ink-gap checks and strict observability/source eligibility. It reuses V1
+`assessSectionRole`, `distanceToComposite`, `project` and validated polygon visibility; it does not replace the locked gate.
+`otherSectionBoundariesWorldV2` includes polygon3 and propagates unsupported regions. Hidden polygons without a dash-gap
+bound are UNCERTIFIABLE. `section-role-oracle-v2.node-test.mjs`: 18 added regressions; existing V1 22 unchanged.
+`frontend/scripts/section-role-browser-probe.mjs --v2` compares locked hue predicate / V1 / V2 on the same hashed captures;
+`frontend/scripts/rescore-section-roles.mjs` replays captured pixels with revised proposed rules in a fresh receipt.
+`frontend/scripts/scene3d-motion-probe.mjs` records existing OrbitControls, source labels, CPU per frame and mixed-sequence
+WebGL creations; `--controls-only` verifies exact label negative controls and selection transitions. Timing and jump flags
+are observations, not performance/continuity certificates. Run `docs/evaluation/geometry/runs/scene3d-final-acceptance/`.
+No new product module, dependency, backend or Hybrid implementation. Official Suite stays 7/8; product b8b3311b unchanged.
+
 ## Scene3D visual correction (local candidate, 2026-10-25)
 
 `frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts` reuses `diemVanhCongBiChe` for bounded ray/ball,

@@ -38,7 +38,7 @@ export const NGUONG_VAI_THIET_DIEN = Object.freeze({
 const OBSERVABILITY_REASONS = new Set(["BOUNDARY_NOT_OBSERVABLE", "BOUNDARY_NOT_FULLY_OBSERVABLE", "FILL_NOT_OBSERVABLE"]);
 
 // Compare the policy RGB to its alpha composites over the declared light scene backgrounds, in CIE76.
-function distanceToComposite(rgb, ink, minimumAlpha) {
+export function distanceToComposite(rgb, ink, minimumAlpha) {
   return Math.min(...[[255, 255, 255], [248, 246, 241], [229, 226, 239]].map(bg => {
     const direction = ink.map((c, i) => c - bg[i]);
     const alpha = Math.max(minimumAlpha, Math.min(1,

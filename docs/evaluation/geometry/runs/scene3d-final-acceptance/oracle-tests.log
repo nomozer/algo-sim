@@ -1,0 +1,48 @@
+✔ intact independent synthetic conic passes (193.2409ms)
+✔ local loss of 20% of the hidden arc cannot pass through aggregate coverage (325.483ms)
+✔ a label covering only part of a boundary makes the frame uncertifiable (73.9144ms)
+✔ conic sampling is independent of the 96-chord renderer and lies on the source plane (1.6744ms)
+✔ unknown polygon parent cannot certify visibility (0.174ms)
+✔ malformed polygon face 0,1,99 cannot crash or invent visibility (0.187ms)
+✔ malformed polygon face 0,0,0 cannot crash or invent visibility (0.2213ms)
+✔ other polygon3 regions and unsupported conics are never silently omitted (0.703ms)
+✔ all pixels masked is uncertifiable rather than proof of missing cobalt (14.6094ms)
+✔ hidden polygon completeness without a dash bound cannot be certified (137.6199ms)
+✔ a hidden polygon with a declared dash bound detects local missing ink (69.2593ms)
+✔ camera tilt preserves independent source visibility under inverse model rotation (1.6988ms)
+✔ edge-on front and hidden arcs sharing the same pixels are uncertifiable (86.93ms)
+✔ V2 rejects wrong boundary even when the other role remains correct: 0,117,222 (168.8296ms)
+✔ V2 rejects wrong boundary even when the other role remains correct: 200,90,50 (82.7524ms)
+✔ V2 rejects wrong fill even when the other role remains correct: 251,146,60 (126.6914ms)
+✔ V2 rejects wrong fill even when the other role remains correct: 37,99,235 (265.7255ms)
+✔ V2 rejects a tiny second selected boundary without relying on global blue area (120.0321ms)
+✔ policy frame passes: cobalt boundary, terracotta fill (48.1126ms)
+✔ missing cobalt boundary (terracotta outline) fails (18.836ms)
+✔ wrong boundary colour (magenta) fails (15.0385ms)
+✔ rejects an incorrect cobalt palette even within the locked blue hue band (37.8101ms)
+✔ rejects an incorrect terracotta palette even within the orange hue band (28.8575ms)
+✔ detects a missing quarter of one visible edge (30.6809ms)
+✔ does not aggregate away a missing hidden edge (34.8316ms)
+✔ detects a small second section that incorrectly has a cobalt boundary (31.5117ms)
+✔ cone visibility uses the sloped normal, not only the radial direction (1.4975ms)
+✔ camera model transform is inverted before visibility classification (1.5067ms)
+✔ one edge without cobalt fails (30.2541ms)
+✔ fill recoloured cobalt or grey fails (74.8856ms)
+✔ cobalt drawn on another object (wrong selection) fails (30.109ms)
+✔ an overlay covering a whole edge prevents full certification (28.5711ms)
+✔ verdict separates a wrong frame from an unobservable one (68.0009ms)
+✔ an edge-on curve is uncertifiable, not passed, when its arcs cannot be separated (127.4968ms)
+✔ an edge-on curve with no cobalt at all still fails (7.2911ms)
+✔ a hidden edge keeps the dashed-ink threshold without borrowing coverage from another edge (64.0751ms)
+✔ project + sectionBoundaryWorld place a circle on a sphere (0.6536ms)
+✔ a dashed hidden arc of a curve passes as one arc even where a short chord falls in a dash gap (56.9065ms)
+✔ a hidden arc with 40% of its dashes missing fails (internal review I3: 0.4 let ~55% go missing) (53.7ms)
+✔ a curve whose hidden arc is not drawn at all still fails (47.9648ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1881.8826
