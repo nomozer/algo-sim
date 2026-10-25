@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "visual-b3-sphere-integration (display-name fix)",
+  "corrects": "docs/evaluation/geometry/runs/visual-b3-sphere-integration/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "ee474c819688426f8959daf2129f0273eb3217f039909b8ad9cade0ed740ae9d",
+  "current_product_commit": "9ced3d2737e7782995d0ad0411b9c332683e4985",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "display_names: curved solids declared by a radius/height quantity are named by their point sources only (found in the integrated browser capture).",
+  "cache_version": 129,
+  "cache_version_hien_tai": 129,
+  "cache_decision": "Covered by the pending 128 -> 129 bump: visual-b3-sphere-integration/cache/decision-addendum.json",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}
