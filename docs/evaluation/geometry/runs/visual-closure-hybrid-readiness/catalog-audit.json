@@ -1,0 +1,394 @@
+{
+  "schema": "html-geometry-capability-audit/1",
+  "reference": {
+    "path": "C:\\Users\\Bunny\\Downloads\\matphang.html",
+    "sha256": "279216192b09d6e12c8b8d444dcb0bf943419e6c52078fe04107684f0d9e8af1",
+    "bytes": 207567,
+    "catalog_entries": 18
+  },
+  "scope": "All 18 full HTML configurations, including optional composite/inscription goals; authored numerical subsets are narrower.",
+  "provider_calls": 0,
+  "independent_holdout": "NOT_RUN",
+  "nl_extraction_quality": "UNKNOWN",
+  "counts": {
+    "PARTIAL": 9,
+    "RENDER_ONLY": 7,
+    "UNSUPPORTED": 2
+  },
+  "full_e2e_verified": 0,
+  "registry_declarations": [
+    "regular_polygon",
+    "rectangle",
+    "right_angle",
+    "segment_length",
+    "perpendicular_line_plane",
+    "altitude",
+    "orthogonal_projection",
+    "orthogonal_projection_line",
+    "intersect_line_line",
+    "intersect_line_plane",
+    "perpendicular_lines",
+    "equal_length",
+    "height",
+    "face_perpendicular_base",
+    "midpoint",
+    "centroid",
+    "divide_segment",
+    "pyramid",
+    "regular_pyramid",
+    "prism",
+    "ask_volume",
+    "ask_length",
+    "ask_distance_point_plane",
+    "ask_distance_lines",
+    "ask_angle_line_plane",
+    "ask_angle_plane_plane",
+    "ask_angle_lines",
+    "ask_area",
+    "section",
+    "intersection_line",
+    "ask_section_area",
+    "ask_volume_ratio",
+    "ask_residual_volume",
+    "unsupported",
+    "translate_point"
+  ],
+  "inspected_source_sha256_lf": {
+    "backend/app/simulation/geometry_functions/typed_fact_next.py": "e6484d7fded9d8e4190fd170027b523cbce053aff0d875beb859afac21a581d5",
+    "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py": "ab0985ebcaba07a49ccd4c8f78fcc4fe7be278e4dd2419396c7d06b7f3453123",
+    "backend/app/simulation/geometry_functions/registry.py": "5d92dd6894074ff9ab899d4fbbe46a11cb1bb31075f2f9349f1ecc811dd97ff4",
+    "backend/app/simulation/geometry_functions/planner.py": "2603c8ccf7ce4d834cefde80e870d50953dd2a542621011cc41014413e7bd248",
+    "backend/app/simulation/geometry_functions/engine.py": "2dd04ad87c7a5de3d53a84b6285fbdabd9ac0efdbbca96d64a89e722b68ea3b7",
+    "backend/app/simulation/geometry/curved.py": "ddeb3d341b463d540737528f639ae28266a799fd329389946226019d6f79e6cb",
+    "backend/app/ai/adapter4_route.py": "f72693bc50529867b884e1511844cca9128e5c43fd338a9b67aa01b4c1bde6ee",
+    "backend/app/ai/hybrid_offline.py": "c333ffa0b9b75b0ed40d5ba1dac89d7c72fe1db8160f97a003b3bf938a2222e9",
+    "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx": "73fdff2a79f288701cae55aeaaa935595561dcf8aedc4b1505d1a9b88f2dd0da",
+    "frontend/src/simulations/domains/geometry/scene3d-view.tsx": "179d2e150fec8efa0b7b7271cb4675dd31c4d6f92adbc5509a74c7e4aee32713"
+  },
+  "families": [
+    {
+      "id": "quan_he_dt_mp",
+      "name": "Đường Thẳng – Mặt Phẳng & ĐL 3 Đường ⊥",
+      "html_line": 404,
+      "overall": "PARTIAL",
+      "layers": {
+        "typedfacts_v2": "PARTIAL",
+        "source_gate": "PARTIAL",
+        "registry": "OFFLINE_GEOMETRY_VERIFIED",
+        "planner": "PARTIAL",
+        "exact_engine": "OFFLINE_GEOMETRY_VERIFIED",
+        "adapter4": "PARTIAL",
+        "frontend": "RENDER_ONLY",
+        "browser": "PARTIAL",
+        "new_authored_problem": "UNKNOWN"
+      },
+      "limitation": "Named/polyhedral instances only; three-perpendicular theorem discovery and full standalone source family not certified."
+    },
+    {
+      "id": "hai_dt_cheo_nhau",
+      "name": "Hai Đường Thẳng Chéo Nhau & Đoạn ⊥ Chung",
+      "html_line": 429,
+      "overall": "PARTIAL",
+      "layers": {
+        "typedfacts_v2": "PARTIAL",
+        "source_gate": "PARTIAL",
+        "registry": "OFFLINE_GEOMETRY_VERIFIED",
+        "planner": "PARTIAL",
+        "exact_engine": "OFFLINE_GEOMETRY_VERIFIED",
+        "adapter4": "PARTIAL",
+        "frontend": "RENDER_ONLY",
+        "browser": "PARTIAL",
+        "new_authored_problem": "UNKNOWN"
+      },
+      "limitation": "Exact line relations exist on Route B/kernel; canonical V2 measurement bridge does not expose general distance/angle goals."
+    },
+    {
+      "id": "chop_sa_vuong_day_vuong",
+      "name": "Chóp S.ABCD có SA ⊥ (ABCD)",
+      "html_line": 453,
+      "overall": "PARTIAL",
+      "layers": {
+        "typedfacts_v2": "PARTIAL",
+        "source_gate": "OFFLINE_GEOMETRY_VERIFIED",
+        "registry": "OFFLINE_GEOMETRY_VERIFIED",
+        "planner": "OFFLINE_GEOMETRY_VERIFIED",
+        "exact_engine": "OFFLINE_GEOMETRY_VERIFIED",
+        "adapter4": "OFFLINE_GEOMETRY_VERIFIED",
+        "frontend": "RENDER_ONLY",
+        "browser": "PARTIAL",
+        "new_authored_problem": "UNKNOWN"
+      },
+      "limitation": "Pyramid construction/volume/sections have offline paths; requested circumsphere combination is not canonical Hybrid."
+    },
+    {
+      "id": "chop_tu_giac_deu",
+      "name": "Chóp tứ giác đều S.ABCD (Nội/Ngoại tiếp)",
+      "html_line": 478,
+      "overall": "PARTIAL",
+      "layers": {
+        "typedfacts_v2": "PARTIAL",
+        "source_gate": "OFFLINE_GEOMETRY_VERIFIED",
+        "registry": "OFFLINE_GEOMETRY_VERIFIED",
+        "planner": "OFFLINE_GEOMETRY_VERIFIED",
+        "exact_engine": "OFFLINE_GEOMETRY_VERIFIED",
+        "adapter4": "OFFLINE_GEOMETRY_VERIFIED",
+        "frontend": "RENDER_ONLY",
+        "browser": "PARTIAL",
+        "new_authored_problem": "UNKNOWN"
+      },
+      "limitation": "Regular-square-pyramid subset; inscribed/circumscribed spheres are absent from the canonical bridge."
+    },
+    {
+      "id": "chop_tam_giac_deu",
+      "name": "Chóp tam giác đều S.ABC (Nội/Ngoại tiếp)",
+      "html_line": 503,
+      "overall": "PARTIAL",
+      "layers": {
+        "typedfacts_v2": "PARTIAL",
+        "source_gate": "OFFLINE_GEOMETRY_VERIFIED",
+        "registry": "OFFLINE_GEOMETRY_VERIFIED",
+        "planner": "OFFLINE_GEOMETRY_VERIFIED",
+        "exact_engine": "OFFLINE_GEOMETRY_VERIFIED",
+        "adapter4": "OFFLINE_GEOMETRY_VERIFIED",
+        "frontend": "RENDER_ONLY",
+        "browser": "PARTIAL",
+        "new_authored_problem": "UNKNOWN"
+      },
+      "limitation": "Regular-triangular-pyramid subset; full incircle/circumsphere program not certified."
+    },
+    {
+      "id": "chop_sa_vuong_abc",
+      "name": "Chóp S.ABC có SA ⊥ (ABC)",
+      "html_line": 527,
+      "overall": "PARTIAL",
+      "layers": {
+        "typedfacts_v2": "PARTIAL",
+        "source_gate": "OFFLINE_GEOMETRY_VERIFIED",
+        "registry": "OFFLINE_GEOMETRY_VERIFIED",
+        "planner": "OFFLINE_GEOMETRY_VERIFIED",
+        "exact_engine": "OFFLINE_GEOMETRY_VERIFIED",
+        "adapter4": "OFFLINE_GEOMETRY_VERIFIED",
+        "frontend": "RENDER_ONLY",
+        "browser": "PARTIAL",
+        "new_authored_problem": "UNKNOWN"
+      },
+      "limitation": "Determined triangular bases only; no blanket arbitrary-triangle/in- or circumsphere claim."
+    },
+    {
+      "id": "to_hop_chop_non",
+      "name": "Tổ Hợp Chóp Đều – Nón Nội & Ngoại Tiếp",
+      "html_line": 551,
+      "overall": "RENDER_ONLY",
+      "layers": {
+        "typedfacts_v2": "PARTIAL",
+        "source_gate": "UNSUPPORTED",
+        "registry": "UNSUPPORTED",
+        "planner": "UNSUPPORTED",
+        "exact_engine": "PARTIAL",
+        "adapter4": "UNSUPPORTED",
+        "frontend": "RENDER_ONLY",
+        "browser": "UNKNOWN",
+        "new_authored_problem": "UNKNOWN"
+      },
+      "limitation": "Curved solid declaration parses; bridge rejects cone before Source Gate/Planner."
+    },
+    {
+      "id": "to_hop_lang_tru_tru_cau",
+      "name": "Tổ Hợp Lăng Trụ – Hình Trụ – Mặt Cầu",
+      "html_line": 576,
+      "overall": "RENDER_ONLY",
+      "layers": {
+        "typedfacts_v2": "PARTIAL",
+        "source_gate": "UNSUPPORTED",
+        "registry": "UNSUPPORTED",
+        "planner": "UNSUPPORTED",
+        "exact_engine": "PARTIAL",
+        "adapter4": "UNSUPPORTED",
+        "frontend": "RENDER_ONLY",
+        "browser": "UNKNOWN",
+        "new_authored_problem": "UNKNOWN"
+      },
+      "limitation": "Renderer can compose supplied meshes; canonical cylinder/sphere bridge is refused."
+    },
+    {
+      "id": "to_hop_non_cau",
+      "name": "Tổ Hợp Hình Nón – Mặt Cầu Nội & Ngoại Tiếp",
+      "html_line": 601,
+      "overall": "RENDER_ONLY",
+      "layers": {
+        "typedfacts_v2": "PARTIAL",
+        "source_gate": "UNSUPPORTED",
+        "registry": "UNSUPPORTED",
+        "planner": "UNSUPPORTED",
+        "exact_engine": "PARTIAL",
+        "adapter4": "UNSUPPORTED",
+        "frontend": "RENDER_ONLY",
+        "browser": "UNKNOWN",
+        "new_authored_problem": "UNKNOWN"
+      },
+      "limitation": "Curved primitives in legacy kernel do not establish canonical inscribed/circumscribed composite solving."
+    },
+    {
+      "id": "chop_cut_deu",
+      "name": "Hình Chóp Cụt Tứ Giác Đều",
+      "html_line": 626,
+      "overall": "UNSUPPORTED",
+      "layers": {
+        "typedfacts_v2": "UNSUPPORTED",
+        "source_gate": "UNSUPPORTED",
+        "registry": "UNSUPPORTED",
+        "planner": "UNSUPPORTED",
+        "exact_engine": "PARTIAL",
+        "adapter4": "UNSUPPORTED",
+        "frontend": "UNKNOWN",
+        "browser": "UNKNOWN",
+        "new_authored_problem": "UNKNOWN"
+      },
+      "limitation": "Square-pyramid frustum is not the cone_frustum schema enum; no canonical frustum topology/goal contract."
+    },
+    {
+      "id": "hinh_hop_chu_nhat",
+      "name": "Hình Hộp Chữ Nhật / Lập Phương",
+      "html_line": 650,
+      "overall": "PARTIAL",
+      "layers": {
+        "typedfacts_v2": "PARTIAL",
+        "source_gate": "OFFLINE_GEOMETRY_VERIFIED",
+        "registry": "OFFLINE_GEOMETRY_VERIFIED",
+        "planner": "OFFLINE_GEOMETRY_VERIFIED",
+        "exact_engine": "OFFLINE_GEOMETRY_VERIFIED",
+        "adapter4": "OFFLINE_GEOMETRY_VERIFIED",
+        "frontend": "RENDER_ONLY",
+        "browser": "PARTIAL",
+        "new_authored_problem": "UNKNOWN"
+      },
+      "limitation": "Cuboid/cube metric subset served; optional sphere combination is not canonical Hybrid."
+    },
+    {
+      "id": "lang_tru_tam_giac_deu",
+      "name": "Lăng Trụ Đứng ABC.A′B′C′",
+      "html_line": 674,
+      "overall": "PARTIAL",
+      "layers": {
+        "typedfacts_v2": "PARTIAL",
+        "source_gate": "OFFLINE_GEOMETRY_VERIFIED",
+        "registry": "OFFLINE_GEOMETRY_VERIFIED",
+        "planner": "OFFLINE_GEOMETRY_VERIFIED",
+        "exact_engine": "OFFLINE_GEOMETRY_VERIFIED",
+        "adapter4": "OFFLINE_GEOMETRY_VERIFIED",
+        "frontend": "RENDER_ONLY",
+        "browser": "PARTIAL",
+        "new_authored_problem": "OFFLINE_GEOMETRY_VERIFIED"
+      },
+      "limitation": "New right-triangular-prism volume probes pass; full arbitrary-base/circumsphere catalog behavior not certified."
+    },
+    {
+      "id": "lang_tru_xien",
+      "name": "Lăng Trụ Xiên ABC.A′B′C′",
+      "html_line": 698,
+      "overall": "PARTIAL",
+      "layers": {
+        "typedfacts_v2": "PARTIAL",
+        "source_gate": "OFFLINE_GEOMETRY_VERIFIED",
+        "registry": "OFFLINE_GEOMETRY_VERIFIED",
+        "planner": "OFFLINE_GEOMETRY_VERIFIED",
+        "exact_engine": "OFFLINE_GEOMETRY_VERIFIED",
+        "adapter4": "OFFLINE_GEOMETRY_VERIFIED",
+        "frontend": "RENDER_ONLY",
+        "browser": "PARTIAL",
+        "new_authored_problem": "OFFLINE_GEOMETRY_VERIFIED"
+      },
+      "limitation": "New oblique-prism volume probes pass with one lateral vector; general perpendicular sections and arbitrary bases remain bounded."
+    },
+    {
+      "id": "mat_cau",
+      "name": "Mặt Cầu Giao Mặt Phẳng & Tiếp Tuyến",
+      "html_line": 722,
+      "overall": "RENDER_ONLY",
+      "layers": {
+        "typedfacts_v2": "PARTIAL",
+        "source_gate": "UNSUPPORTED",
+        "registry": "UNSUPPORTED",
+        "planner": "UNSUPPORTED",
+        "exact_engine": "OFFLINE_GEOMETRY_VERIFIED",
+        "adapter4": "UNSUPPORTED",
+        "frontend": "RENDER_ONLY",
+        "browser": "PARTIAL",
+        "new_authored_problem": "UNKNOWN"
+      },
+      "limitation": "Kernel distinguishes proper circle/tangent/no cut exactly; canonical bridge rejects sphere. Legacy screenshots are render evidence."
+    },
+    {
+      "id": "hinh_non",
+      "name": "Hình Nón, Thiết Diện & Đường Sinh",
+      "html_line": 746,
+      "overall": "RENDER_ONLY",
+      "layers": {
+        "typedfacts_v2": "PARTIAL",
+        "source_gate": "UNSUPPORTED",
+        "registry": "UNSUPPORTED",
+        "planner": "UNSUPPORTED",
+        "exact_engine": "PARTIAL",
+        "adapter4": "UNSUPPORTED",
+        "frontend": "RENDER_ONLY",
+        "browser": "PARTIAL",
+        "new_authored_problem": "UNKNOWN"
+      },
+      "limitation": "Legacy cone/generator/axial cuts exist; canonical bridge has no cone function or goal contracts."
+    },
+    {
+      "id": "hinh_tru",
+      "name": "Hình Trụ Tròn Xoay & Thiết Diện Song Song Trục",
+      "html_line": 770,
+      "overall": "RENDER_ONLY",
+      "layers": {
+        "typedfacts_v2": "PARTIAL",
+        "source_gate": "UNSUPPORTED",
+        "registry": "UNSUPPORTED",
+        "planner": "UNSUPPORTED",
+        "exact_engine": "PARTIAL",
+        "adapter4": "UNSUPPORTED",
+        "frontend": "RENDER_ONLY",
+        "browser": "PARTIAL",
+        "new_authored_problem": "UNKNOWN"
+      },
+      "limitation": "Legacy cylinder sections are bounded; arbitrary axis-parallel sections and canonical routing are not certified here."
+    },
+    {
+      "id": "he_truc_oxyz",
+      "name": "Hệ Tọa Độ Oxyz & Mặt Phẳng Đoạn Chắn",
+      "html_line": 794,
+      "overall": "UNSUPPORTED",
+      "layers": {
+        "typedfacts_v2": "PARTIAL",
+        "source_gate": "UNSUPPORTED",
+        "registry": "UNSUPPORTED",
+        "planner": "UNSUPPORTED",
+        "exact_engine": "PARTIAL",
+        "adapter4": "UNSUPPORTED",
+        "frontend": "RENDER_ONLY",
+        "browser": "UNKNOWN",
+        "new_authored_problem": "UNKNOWN"
+      },
+      "limitation": "A root frame marker is not source-grounded arbitrary point coordinates; bridge lacks general coordinate inputs/goals."
+    },
+    {
+      "id": "oxyz_dt_mp_cau",
+      "name": "Tổ Hợp Oxyz: Đường Thẳng Δ, MP (P) & Mặt Cầu",
+      "html_line": 818,
+      "overall": "RENDER_ONLY",
+      "layers": {
+        "typedfacts_v2": "PARTIAL",
+        "source_gate": "UNSUPPORTED",
+        "registry": "UNSUPPORTED",
+        "planner": "UNSUPPORTED",
+        "exact_engine": "PARTIAL",
+        "adapter4": "UNSUPPORTED",
+        "frontend": "RENDER_ONLY",
+        "browser": "UNKNOWN",
+        "new_authored_problem": "UNKNOWN"
+      },
+      "limitation": "Legacy coordinates/plane/sphere rendering is not source-gated canonical Hybrid solving."
+    }
+  ]
+}

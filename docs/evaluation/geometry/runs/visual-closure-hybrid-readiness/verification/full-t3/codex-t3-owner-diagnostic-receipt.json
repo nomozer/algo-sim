@@ -1,0 +1,36 @@
+{
+  "schema": "closure-t3/1",
+  "target": "c84392c15dbd08e4a59a6083ace17b577b8b2cb7",
+  "source_tree_before": "",
+  "source_tree_after": "",
+  "started_utc": "2026-10-25T01:24:03.728770+00:00",
+  "finished_utc": "2026-10-25T01:32:03.746187+00:00",
+  "seconds": 480.016,
+  "exit_code": 1,
+  "verdict": "FULL_PRODUCT_GATE_FAIL",
+  "summaries": [
+    "FAILED tests/semantic_program/test_evaluation_candidate.py::test_candidate_ghi_dung_commit_va_cay_sach",
+    "= 1 failed, 11855 passed, 1 skipped, 2 deselected, 15 xfailed, 1 warning in 443.88s (0:07:23) =",
+    " Test Files  80 passed (80)",
+    "      Tests  1354 passed (1354)",
+    "FULL_PRODUCT_GATE_FAIL — không cổng con nào được bỏ qua."
+  ],
+  "post_freeze": {
+    "exit_code": 0,
+    "stdout": "Candidate khớp bản đã đóng băng (mã sản phẩm: 118 file, 8be632679307a94c…)."
+  },
+  "streams": {
+    "stdout.log": {
+      "bytes": 1558558,
+      "sha256": "451d04360d2b0214fe1b198b576017d2044898f6f9c4180532bf4b720b20e7f7"
+    },
+    "stderr.log": {
+      "bytes": 1004,
+      "sha256": "d6bf0c25f9e05bd31e3b9a9f0c91ecb3153c6247b8dd41406200a931e0e38f57"
+    }
+  },
+  "provider_calls": 0,
+  "executor": "Codex author; this is machine verification, not independent review",
+  "execution_context": "Approved offline process outside sandbox, diagnostic stack timeout only; no ACL changes",
+  "detached_head": true
+}

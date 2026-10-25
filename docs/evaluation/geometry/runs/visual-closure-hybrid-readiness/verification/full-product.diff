@@ -1,0 +1,343 @@
+diff --git a/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx b/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx
+index 36d016e4..b837b073 100644
+--- a/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx
++++ b/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx
+@@ -377,6 +377,11 @@ export function Scene3DExplorer({
+   };
+   const ctThietDien = dangChon ? sectionDetails(day, dangChon.id) : null;
+   const formula = dangChon ? coherentFormula(day, dangChon) : null;
++  const formulaInAnalysis = moBang.has("phan-tich") && formula && dangChon
++    ? [...phanTich.requestedResults, ...phanTich.derivedMeasurements].find((m) =>
++      m.formula === formula.text && (m.entityId === dangChon.id
++        || m.entityId === dangChon.annotation?.same_as || m.entityId === dangChon.alias_of))
++    : null;
+   // Ô soi của một ĐẠI LƯỢNG: dữ kiện số trong chuỗi và đầu vào trực tiếp — backend phát, không tính.
+   const nguon = dangChon ? quantitySources(day, dangChon.id) : null;
+   // Vật đang chọn là một ĐẠI LƯỢNG (mang giá trị backend phát) — ô soi luôn hiện giá trị của nó.
+@@ -625,9 +630,11 @@ export function Scene3DExplorer({
+               </p>
+             )}
+ 
+-            {/* §16.6 → W05: ô soi là nơi DUY NHẤT mang công thức (thẻ lời giải dưới mô phỏng đã gỡ). Đại lượng
+-                không có công thức nhất quán (thể tích đo thẳng trên khối) vẫn mang GIÁ TRỊ — W05 để trống ô ấy. */}
+-            {formula && !dapAnAn.has(dangChon.id) && (
++            {/* Công thức có một nơi trình bày; khi mở phân tích, ô soi giữ danh tính và nguồn. */}
++            {formulaInAnalysis && (
++              <p><a href="#geo3d-bang-phan-tich">Xem công thức trong Phân tích toán học</a></p>
++            )}
++            {formula && !formulaInAnalysis && !dapAnAn.has(dangChon.id) && (
+               <p className="geo3d-soi-cong-thuc" data-formula-entity={dangChon.id}>
+                 {formula.text}
+               </p>
+@@ -801,7 +808,7 @@ export function Scene3DExplorer({
+                             <div className="geo3d-tree-item">{noiDung}</div>
+                           )}
+                           {m.formula && (
+-                            <p className="geo3d-soi-cong-thuc" data-analysis-formula={m.id}>
++                            <p className="geo3d-phan-tich-cong-thuc" data-analysis-formula={m.id}>
+                               <MathDisplay text={m.formula} />
+                             </p>
+                           )}
+diff --git a/frontend/src/simulations/domains/geometry/final-quality.test.tsx b/frontend/src/simulations/domains/geometry/final-quality.test.tsx
+index 02000bd4..b9c207bb 100644
+--- a/frontend/src/simulations/domains/geometry/final-quality.test.tsx
++++ b/frontend/src/simulations/domains/geometry/final-quality.test.tsx
+@@ -175,7 +175,7 @@ describe('final visual quality', () => {
+     const depthPrepasses = sphGroup.children.filter((c) => c.userData?.chieuSau || c.userData?.chieuSauMatTruoc);
+     expect(depthPrepasses.map((c) => c.renderOrder).sort((a, b) => a - b)).toEqual([5, 7.5]);
+     const sphereContours = sphGroup.children.filter((c) => (c as THREE.Line).isLine);
+-    expect(sphereContours.length).toBe(3);
++    expect(sphereContours.length).toBe(0);
+ 
+     const secNormal = buildObject3D(secObj, false, undefined, diemNen, undefined, undefined, undefined, false)!;
+     const fillNormal = secNormal.children.find((c) => c.name.startsWith('section_fill:')) as THREE.Mesh;
+diff --git a/frontend/src/simulations/domains/geometry/scene3d-focus-mode.test.tsx b/frontend/src/simulations/domains/geometry/scene3d-focus-mode.test.tsx
+index e7431240..4f3e4dec 100644
+--- a/frontend/src/simulations/domains/geometry/scene3d-focus-mode.test.tsx
++++ b/frontend/src/simulations/domains/geometry/scene3d-focus-mode.test.tsx
+@@ -163,7 +163,7 @@ describe("E · không còn thẻ lời giải lặp dưới mô phỏng", () =>
+   it("ô soi mang công thức trừ đáp án chưa được người học mở", () => {
+     const ma = SRC("./Scene3DExplorer.tsx");
+     expect(ma).not.toContain("moLoiGiai");
+-    expect(ma).toMatch(/\{formula && !dapAnAn\.has\(dangChon\.id\) && \(\s*<p className="geo3d-soi-cong-thuc"/);
++    expect(ma).toMatch(/\{formula && !formulaInAnalysis && !dapAnAn\.has\(dangChon\.id\) && \(\s*<p className="geo3d-soi-cong-thuc"/);
+   });
+ 
+   it("đại lượng KHÔNG có công thức vẫn hiện giá trị; không nguồn số thì nêu vật"
+diff --git a/frontend/src/simulations/domains/geometry/scene3d-view.tsx b/frontend/src/simulations/domains/geometry/scene3d-view.tsx
+index fab37feb..63007e06 100644
+--- a/frontend/src/simulations/domains/geometry/scene3d-view.tsx
++++ b/frontend/src/simulations/domains/geometry/scene3d-view.tsx
+@@ -1283,11 +1283,13 @@ export function buildObject3D(
+     : noiBat ? MAU_TANG[noiBat as Exclude<TangNhanManh, "boi_canh">] : undefined;
+   const nen = (macDinh: number) => boiCanh ? MAU_NEN_BOI_CANH : macDinh;
+   const net = (macDinh: number) => mau ?? (boiCanh ? MAU_VAI_TRO.boi_canh : macDinh);
+-  const netMien = (macDinh: number) => boiCanh ? MAU_VAI_TRO.boi_canh : macDinh;
+   const mauKhoi = vaiKhoi === "secondary" ? MAU.secondaryMesh : MAU.mesh;
+   const doDucKhoi = noiBat ? DO_DUC.selectedSolid : vaiKhoi === "secondary" ? DO_DUC.secondarySolid : DO_DUC.solid;
+   const vaiMien = vaiTroMien(o);
+   const laThietDien = vaiMien === "section";
++  // Giữ màu ngữ nghĩa của vùng tô; chỉ viền thiết diện đang xét chuyển sang xanh.
++  const netMien = (macDinh: number) => boiCanh ? MAU_VAI_TRO.boi_canh
++    : laThietDien && (noiBat === "dich" || noiBat === true) ? 0x2563eb : macDinh;
+   const mauToMien = laThietDien ? MAU.polygon : vaiMien === "base" ? MAU.mesh : MAU.surface;
+   const mauVienMien = laThietDien ? MAU.sectionOutline : vaiMien === "base" ? MAU.canh : MAU.planeOutline;
+   const doDucMien = laThietDien ? (noiBat ? DO_DUC.selectedSection : DO_DUC.section)
+@@ -1823,33 +1825,6 @@ export function buildObject3D(
+     bongTruoc.quaternion.copy(mesh.quaternion);
+     bongTruoc.position.copy(mesh.position);
+     nhomCong.add(mesh, bong, bongTruoc);
+-    if (o.curved_kind === "ball" && r > 0) {
+-      const soNhip = 96;
+-      const taoVongCau = (layDiem: (ang: number) => THREE.Vector3, doDuc: number) => {
+-        const pts: THREE.Vector3[] = [];
+-        for (let i = 0; i <= soNhip; i += 1) {
+-          pts.push(layDiem((i / soNhip) * Math.PI * 2));
+-        }
+-        const vong = new THREE.Line(
+-          new THREE.BufferGeometry().setFromPoints(pts),
+-          new THREE.LineBasicMaterial({
+-            color: net(MAU.canh),
+-            transparent: true,
+-            opacity: noiBat ? doDuc * 1.4 : doDuc,
+-            depthWrite: false,
+-          }),
+-        );
+-        vong.position.copy(tam);
+-        vong.userData.voHan = true;
+-        vong.raycast = () => {};
+-        return vong;
+-      };
+-      nhomCong.add(
+-        taoVongCau((ang) => new THREE.Vector3(r * Math.cos(ang), r * Math.sin(ang), 0), DO_DUC.sphereEquator),
+-        taoVongCau((ang) => new THREE.Vector3(r * Math.cos(ang), 0, r * Math.sin(ang)), DO_DUC.sphereMeridian),
+-        taoVongCau((ang) => new THREE.Vector3(0, r * Math.cos(ang), r * Math.sin(ang)), DO_DUC.sphereMeridian),
+-      );
+-    }
+     nhomCong.userData.curvedSolidVolume = {
+       id: o.id,
+       kind: o.curved_kind as "cylinder" | "cone" | "ball",
+@@ -2556,6 +2531,7 @@ export function Scene3DWorkspace({
+   sceneRef.current = scene;
+   const vaiKhoiTheoId = useMemo(() => vaiTroKhoi(scene), [scene]);
+   const [webglFailed, setWebglFailed] = useState(false);
++  const [hoveredSection, setHoveredSection] = useState<string | null>(null);
+   /* regular-triangular-pyramid-w01 — XOAY HIỂN THỊ: đáy chóp nghiêng (§18.2) về nằm ngang. Đồng nhất thức cho mọi cảnh
+      có đáy ngang (mọi họ trước), nên các họ ấy không đổi một điểm ảnh. Áp lên nhóm gốc + nhóm nhân chứng; vị trí THẾ GIỚI
+      của nhãn/khung nhìn/lưới đi qua cùng phép quay (`xoay`). Toạ độ cảnh không đổi. */
+@@ -2722,12 +2698,9 @@ export function Scene3DWorkspace({
+     const NGUONG_KEO = 4;
+     const xuongTay = (e: PointerEvent) => {
+       batDau = [e.clientX, e.clientY];
++      setHoveredSection(null);
+     };
+-    const nhacTay = (e: PointerEvent) => {
+-      const d0 = batDau;
+-      batDau = null;
+-      if (!d0 || !chonRef.current) return;
+-      if (Math.hypot(e.clientX - d0[0], e.clientY - d0[1]) > NGUONG_KEO) return;
++    const vatTaiConTro = (e: PointerEvent, chiThietDien = false) => {
+       const r = renderer.domElement.getBoundingClientRect();
+       const diem = new THREE.Vector2(
+         ((e.clientX - r.left) / r.width) * 2 - 1,
+@@ -2751,10 +2724,29 @@ export function Scene3DWorkspace({
+         .filter((h) => !h.object.userData?.chieuSau)
+         .map((h) => pickSemanticId(h.object))
+         .filter((x): x is string => typeof x === "string" && x.length > 0);
+-      chonRef.current(chonCuThe(ids, (id) => loaiRef.current.get(id)));
++      return chiThietDien ? ids.find((id) => {
++        const object = sceneRef.current.objects.find((o) => o.id === id);
++        return object && vaiTroMien(object) === "section";
++      }) ?? null : chonCuThe(ids, (id) => loaiRef.current.get(id));
++    };
++    const nhacTay = (e: PointerEvent) => {
++      const d0 = batDau;
++      batDau = null;
++      if (!d0 || !chonRef.current) return;
++      if (Math.hypot(e.clientX - d0[0], e.clientY - d0[1]) > NGUONG_KEO) return;
++      chonRef.current(vatTaiConTro(e));
++    };
++    const roiConTro = () => setHoveredSection(null);
++    const diConTro = (e: PointerEvent) => {
++      if (e.pointerType === "touch" || e.buttons || batDau) return;
++      const id = vatTaiConTro(e, true);
++      const object = sceneRef.current.objects.find((o) => o.id === id);
++      setHoveredSection(object && vaiTroMien(object) === "section" ? id : null);
+     };
+     renderer.domElement.addEventListener("pointerdown", xuongTay);
+     renderer.domElement.addEventListener("pointerup", nhacTay);
++    renderer.domElement.addEventListener("pointermove", diConTro);
++    renderer.domElement.addEventListener("pointerleave", roiConTro);
+ 
+     // ── NHÃN ĐIỂM, CHIẾU RA MÀN HÌNH MỖI KHUNG ──────────────────────────
+     //
+@@ -3230,6 +3222,8 @@ export function Scene3DWorkspace({
+       song = false;
+       renderer.domElement.removeEventListener("pointerdown", xuongTay);
+       renderer.domElement.removeEventListener("pointerup", nhacTay);
++      renderer.domElement.removeEventListener("pointermove", diConTro);
++      renderer.domElement.removeEventListener("pointerleave", roiConTro);
+       window.removeEventListener("resize", chinhCo);
+       roKhung?.disconnect();
+       moPanel?.disconnect();
+@@ -3453,7 +3447,7 @@ export function Scene3DWorkspace({
+         : o.render === "surface" && diemMp.length >= 3
+           ? diemMp
+           : diemNen;
+-      const obj = buildObject3D(renderObject, tang ? tang.get(o.id) ?? false : sangBuoc,
++      const obj = buildObject3D(renderObject, o.id === hoveredSection ? "dich" : tang ? tang.get(o.id) ?? false : sangBuoc,
+         banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemChoVat, undefined, canonicalHighlights, khucToSang, xray,
+         vaiKhoiTheoId.get(o.id) ?? vaiKhoiTheoId.get(o.parent ?? "") ?? "primary",
+         coThietDienDong);
+@@ -3544,7 +3538,7 @@ export function Scene3DWorkspace({
+       (window as any).__geo3d_causal_tiers = tang ? Object.fromEntries(tang) : null;
+     }
+     veRef.current?.();
+-  }, [scene, buoc, tuongTac, tapNoiBat, tang, anPhu, xray, vaiKhoiTheoId]);
++  }, [scene, buoc, tuongTac, tapNoiBat, tang, anPhu, xray, vaiKhoiTheoId, hoveredSection]);
+ 
+   // ── KHI NÀO ĐẶT LẠI KHUNG NHÌN ────────────────────────────────────────
+   //
+diff --git a/frontend/src/simulations/domains/geometry/simulation-visual-consistency-session1.test.tsx b/frontend/src/simulations/domains/geometry/simulation-visual-consistency-session1.test.tsx
+index 9642bdf6..174522e8 100644
+--- a/frontend/src/simulations/domains/geometry/simulation-visual-consistency-session1.test.tsx
++++ b/frontend/src/simulations/domains/geometry/simulation-visual-consistency-session1.test.tsx
+@@ -237,7 +237,7 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid
+     expect(polyCat?.children.some((c) => c.id === "duong_tron_day_1")).toBe(true);
+     expect(secCat?.children.some((c) => c.id === "td_cat")).toBe(true);
+   });
+-  it("aligns Scene3D V6.2 S1 selection semantics (preserving semantic section color #F59E0B/#D97706 and 0.72 context attenuation)", () => {
++  it("preserves terracotta section fill with a cobalt selected boundary", () => {
+     const cutCircle: SceneObject = {
+       id: "td_sec_sphere",
+       label: "Thiết diện tròn",
+@@ -254,14 +254,14 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid
+     const builtSelected = buildObject3D(cutCircle, true)!;
+     const secFill = builtSelected.getObjectByName("section_fill:td_sec_sphere") as THREE.Mesh;
+     const secFillMat = secFill.material as THREE.MeshBasicMaterial;
+-    // SGK reference: section fill and outline are both terracotta; base circles stay shell grey (above).
++    // Owner P2: semantic fill stays terracotta, selected boundary is cobalt.
+     expect(secFillMat.color.getHex()).toBe(PHONG_CACH_SCENE3D.colors.polygon);
+     expect(secFillMat.color.getHex()).not.toBe(PHONG_CACH_SCENE3D.colors.mesh);
+     expect(secFillMat.opacity).toBeCloseTo(PHONG_CACH_SCENE3D.opacity.selectedSection, 5);
+     const secRim = builtSelected.children.find(
+       (c): c is THREE.Mesh => c instanceof THREE.Mesh && c !== secFill,
+     )!;
+-    expect((secRim.material as THREE.MeshBasicMaterial).color.getHex()).toBe(PHONG_CACH_SCENE3D.colors.sectionOutline);
++    expect((secRim.material as THREE.MeshBasicMaterial).color.getHex()).toBe(0x2563eb);
+   });
+ 
+   it("pilots illustration-quality multi-pixel Line2 hierarchy, single-pass outward polyhedral shells, section-coincident base yielding, standalone plane visibility, and outward radial vertex labels", () => {
+diff --git a/frontend/src/simulations/domains/geometry/visual-closure.test.tsx b/frontend/src/simulations/domains/geometry/visual-closure.test.tsx
+new file mode 100644
+index 00000000..5302128e
+--- /dev/null
++++ b/frontend/src/simulations/domains/geometry/visual-closure.test.tsx
+@@ -0,0 +1,93 @@
++import { afterEach, describe, expect, it, vi } from "vitest";
++import { renderToString } from "react-dom/server";
++import { readFileSync } from "node:fs";
++import * as THREE from "three";
++import { Scene3DExplorer } from "./Scene3DExplorer";
++import { buildObject3D } from "./scene3d-view";
++import { PHONG_CACH_SCENE3D } from "./scene3d-roles";
++import type { Scene3D, SceneObject } from "./scene3d-model";
++import { tapKetQuaCuoi } from "./scene3d-model";
++import fixture from "./scene3d-section-fixture.json";
++
++// Seed the learner's actual open panels/selection; render the real component without WebGL.
++const learner = vi.hoisted(() => ({ analysis: false, selected: null as string | null }));
++vi.mock("react", async (importOriginal) => {
++  const react = await importOriginal<typeof import("react")>();
++  return { ...react, useLayoutEffect: react.useEffect, useState: (initial: unknown) => react.useState(() => {
++    const value = typeof initial === "function" ? initial() : initial;
++    if (value && typeof value === "object" && "selected_id" in value)
++      return { ...value, selected_id: learner.selected, current_step: 999 };
++    if (value instanceof Set) return new Set(learner.analysis ? ["phan-tich"] : []);
++    return value;
++  }) };
++});
++afterEach(() => { learner.analysis = false; learner.selected = null; });
++
++const scene = fixture as unknown as Scene3D;
++const section = scene.objects.find(o => o.type === "section")!;
++const families = ["triangular_pyramid", "triangular_prism", "rectangular_pyramid", "cuboid", "cube", "regular_square_pyramid", "regular_triangular_pyramid"];
++const officialScene = (family: string): Scene3D => JSON.parse(readFileSync(new URL(
++  `../../../../../docs/evaluation/geometry/runs/visual-hybrid-final-corrections/visual/inputs/fixtures/${family}_positive.json`, import.meta.url), "utf8")).envelope.scene3d;
++
++describe("Owner F1: one formula region per selected quantity", () => {
++  it.each(families)("%s keeps the explanation in analysis and links the inspector to it", family => {
++    const scene = officialScene(family);
++    learner.analysis = true;
++    // Use a real backend measurement with a coherent formula.
++    const quantity = scene.objects.find(o => o.formula && o.value != null && tapKetQuaCuoi(scene).has(o.id))!;
++    expect(quantity).toBeDefined();
++    learner.selected = quantity.id;
++    const html = renderToString(<Scene3DExplorer scene={scene} />);
++    expect(html).toContain("data-analysis-formula=");
++    expect(html.includes(`data-formula-entity="${quantity.id}"`)).toBe(false);
++    expect(html.includes('class="geo3d-soi-cong-thuc"')).toBe(false);
++    expect(html).toContain('href="#geo3d-bang-phan-tich"');
++    expect(html).toContain('data-panel="soi"');
++  });
++
++  it("preserves the inspector formula in Mode A for a non-final measurement", () => {
++    const scene = officialScene("triangular_pyramid");
++    const quantity = scene.objects.find(o => o.formula && o.value != null && !tapKetQuaCuoi(scene).has(o.id))!;
++    learner.selected = quantity.id;
++    const html = renderToString(<Scene3DExplorer scene={scene} />);
++    expect(html).toContain(`data-formula-entity="${quantity.id}"`);
++    expect(html).not.toContain("data-math-analysis-panel");
++  });
++});
++
++function borderColors(object: THREE.Object3D): number[] {
++  const colors: number[] = [];
++  object.traverse(child => {
++    if (!child.name.startsWith("polygon_border:")) return;
++    const material = (child as THREE.Line).material as THREE.LineBasicMaterial;
++    if (material?.color) colors.push(material.color.getHex());
++  });
++  return colors;
++}
++
++describe("Owner F2: selected section preserves semantic fill and geometry", () => {
++  it.each(["section", "polygon3"] as const)("highlights only the selected %s boundary in cobalt", type => {
++    const input: SceneObject = { ...section, type, surface_role: "SECTION_REGION" };
++    const before = JSON.stringify(input);
++    const neutral = buildObject3D(input, false)!;
++    const selected = buildObject3D(input, "dich")!;
++    expect(borderColors(neutral)).toContain(0xc85a32);
++    expect(borderColors(selected)).toContain(0x2563eb);
++    const fills: THREE.Mesh[] = [];
++    selected.traverse(child => { if (child.name.startsWith("section_fill:") || child.name.startsWith("polygon_fill:")) fills.push(child as THREE.Mesh); });
++    expect(fills.length).toBeGreaterThan(0);
++    expect((fills[0].material as THREE.MeshBasicMaterial).color.getHex()).toBe(PHONG_CACH_SCENE3D.colors.polygon);
++    expect(JSON.stringify(input)).toBe(before);
++    expect(borderColors(buildObject3D(input, false)!)).toEqual(borderColors(neutral));
++  });
++});
++
++it("Owner P3: a sphere has no invented equator or meridian lines", () => {
++  const sphere: SceneObject = { id: "sphere", label: "Mặt cầu", type: "curved_solid", render: "curved_solid",
++    origin: "derived", producer: "construct_curved", depends: [], curved_kind: "ball",
++    anchor: ["0", "0", "0"], radius_sq: "25", height_sq: "0" };
++  const object = buildObject3D(sphere, false)!;
++  let lines = 0;
++  object.traverse(child => { if ((child as THREE.Line).isLine) lines++; });
++  expect(lines).toBe(0);
++});
+diff --git a/frontend/src/styles/global.css b/frontend/src/styles/global.css
+index 0f2d1e38..09cf5e64 100644
+--- a/frontend/src/styles/global.css
++++ b/frontend/src/styles/global.css
+@@ -3174,7 +3174,8 @@ html {
+   margin: 0;
+ }
+ 
+-.geo3d-soi-cong-thuc {
++.geo3d-soi-cong-thuc,
++.geo3d-phan-tich-cong-thuc {
+   margin: 0;
+   padding: var(--sp-xs) var(--sp-sm);
+   border-radius: var(--rounded-sm);

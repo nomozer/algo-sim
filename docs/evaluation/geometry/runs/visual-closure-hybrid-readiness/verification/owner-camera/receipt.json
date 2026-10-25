@@ -1,0 +1,294 @@
+{
+  "source_commit": "53fe3d25243fe1e99410dfc52546e16225f19e75",
+  "provider_calls": 0,
+  "human_visual_approval": "PENDING_OWNER",
+  "rows": [
+    {
+      "id": "cau-cat-mat-phang",
+      "width": 1440,
+      "scope": "LEGACY_OFFLINE_RENDER_SAMPLE_NOT_CANONICAL_HYBRID",
+      "images": [
+        {
+          "state": "sgk-mode-a",
+          "file": "cau-cat-mat-phang-1440-sgk-mode-a.png",
+          "sha256": "2c49bf4208bb1ebc164e03d148968f76d8e5d252fe2cdd39bcf28e4036b071c1"
+        },
+        {
+          "state": "auxiliary-on",
+          "file": "cau-cat-mat-phang-1440-auxiliary-on.png",
+          "sha256": "bebb232c1cea59765f2ee4820eadc4bbb721d8acaddd7426b35034c33d58a87f"
+        },
+        {
+          "state": "free-orbit",
+          "file": "cau-cat-mat-phang-1440-free-orbit.png",
+          "sha256": "403b032283adfa5261f71c56f35058a6d4065bbfe7ec16cee8051554962b1dc6"
+        },
+        {
+          "state": "top-or-polar-view",
+          "file": "cau-cat-mat-phang-1440-top-or-polar-view.png",
+          "sha256": "391e557d71b1461359661f962c5c90f99fbb473e48e76cb2452146e6f35f2fb3"
+        }
+      ],
+      "labels": [
+        "I",
+        "A",
+        "H",
+        "U",
+        "W"
+      ],
+      "camera": {
+        "position": [
+          0.08305804934015068,
+          0.09057840998166222,
+          16.580617436141786
+        ],
+        "target": [
+          0.02893509344619645,
+          0.15447794689067829,
+          -0.1673117470038272
+        ]
+      },
+      "absolute_polar_cos": 0.9999875000260416,
+      "geometry_unchanged": true
+    },
+    {
+      "id": "thiet-dien-chop",
+      "width": 1440,
+      "scope": "LEGACY_OFFLINE_RENDER_SAMPLE_NOT_CANONICAL_HYBRID",
+      "images": [
+        {
+          "state": "sgk-mode-a",
+          "file": "thiet-dien-chop-1440-sgk-mode-a.png",
+          "sha256": "ebdf68b1d456f13481779bf469fcd7fc0e4b377eb55f6a0dce3e015809c8f5fa"
+        },
+        {
+          "state": "free-orbit",
+          "file": "thiet-dien-chop-1440-free-orbit.png",
+          "sha256": "cf204a02541ba1f718e87ffcc3fc1b3b0c478222ade018b5bfd16c43ee18127b"
+        },
+        {
+          "state": "top-or-polar-view",
+          "file": "thiet-dien-chop-1440-top-or-polar-view.png",
+          "sha256": "ec6a25dca7f3e589d253fd24ec0c0f645a069a5c34bd5f4eb6dee40760ea9515"
+        }
+      ],
+      "labels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "M",
+        "N",
+        "P"
+      ],
+      "camera": {
+        "position": [
+          1.1204850927369752,
+          0.9655873298192903,
+          9.835136301842002
+        ],
+        "target": [
+          1.0953889869437743,
+          0.9967923839529167,
+          1.8262831920206146
+        ]
+      },
+      "absolute_polar_cos": 0.9999875000260418,
+      "geometry_unchanged": true
+    },
+    {
+      "id": "coincident-points",
+      "width": 1440,
+      "scope": "ADAPTER4_OFFLINE_AUTHORED",
+      "images": [
+        {
+          "state": "sgk-mode-a",
+          "file": "coincident-points-1440-sgk-mode-a.png",
+          "sha256": "6c28dd118572e0d86aa65db55e49eb7aae69b69438ecf312a062e0f6068f8d48"
+        },
+        {
+          "state": "free-orbit",
+          "file": "coincident-points-1440-free-orbit.png",
+          "sha256": "8b9f5257ba951bb2a4da23bfbb289e9482b0791e91c5d8b7490acd55bdbe4bc3"
+        },
+        {
+          "state": "top-or-polar-view",
+          "file": "coincident-points-1440-top-or-polar-view.png",
+          "sha256": "f44ad920862598b68ef97a0c499035de5e1d421ec96c405084d50b402f032248"
+        }
+      ],
+      "labels": [
+        "A ≡ H ≡ H1",
+        "B",
+        "C",
+        "D",
+        "S",
+        "A ≡ H ≡ H1",
+        "A ≡ H ≡ H1",
+        "M",
+        "N",
+        "P",
+        "Q"
+      ],
+      "camera": {
+        "position": [
+          0.6023954689311606,
+          0.44800871069731285,
+          3.1005021286356382
+        ],
+        "target": [
+          0.5940305385971136,
+          0.4585232116717629,
+          0.4133193550762127
+        ]
+      },
+      "absolute_polar_cos": 0.9999875000260418,
+      "geometry_unchanged": true
+    },
+    {
+      "id": "cau-cat-mat-phang",
+      "width": 390,
+      "scope": "LEGACY_OFFLINE_RENDER_SAMPLE_NOT_CANONICAL_HYBRID",
+      "images": [
+        {
+          "state": "sgk-mode-a",
+          "file": "cau-cat-mat-phang-390-sgk-mode-a.png",
+          "sha256": "6c261623fb05cd325b1eae4ef8d37df9debb247ab02a3b37e135956c09ae4919"
+        },
+        {
+          "state": "auxiliary-on",
+          "file": "cau-cat-mat-phang-390-auxiliary-on.png",
+          "sha256": "9847ec9009f90816d0abc4ec1884946d16fb28122e45b9b785875333b3062193"
+        },
+        {
+          "state": "free-orbit",
+          "file": "cau-cat-mat-phang-390-free-orbit.png",
+          "sha256": "e58ebee69c481c9b252d2bbab1e6e848243f2390c65ddb2ae449a6bcf7756937"
+        },
+        {
+          "state": "top-or-polar-view",
+          "file": "cau-cat-mat-phang-390-top-or-polar-view.png",
+          "sha256": "6a1388f84957d8a968a73444963ec7038b720e6d1f3bef2c9905c3d6973355c1"
+        }
+      ],
+      "labels": [
+        "I",
+        "A",
+        "H",
+        "U",
+        "W"
+      ],
+      "camera": {
+        "position": [
+          -0.04808455596752437,
+          0.18650217072747421,
+          18.305347648956857
+        ],
+        "target": [
+          0.041826610901392794,
+          0.16480098332609072,
+          -0.1931029673069327
+        ]
+      },
+      "absolute_polar_cos": 0.9999875000260416,
+      "geometry_unchanged": true
+    },
+    {
+      "id": "thiet-dien-chop",
+      "width": 390,
+      "scope": "LEGACY_OFFLINE_RENDER_SAMPLE_NOT_CANONICAL_HYBRID",
+      "images": [
+        {
+          "state": "sgk-mode-a",
+          "file": "thiet-dien-chop-390-sgk-mode-a.png",
+          "sha256": "5c036d8d4da53b360ab9325be417b60412a9de5f4d8b09265b3a60ec09266342"
+        },
+        {
+          "state": "free-orbit",
+          "file": "thiet-dien-chop-390-free-orbit.png",
+          "sha256": "b5d5222b89caebcf6b16bba2740ffa4e1971271ab8d95e69c0f1ef508f2bc9b8"
+        },
+        {
+          "state": "top-or-polar-view",
+          "file": "thiet-dien-chop-390-top-or-polar-view.png",
+          "sha256": "c448bab753c85cb0d64d01217a2689b7f640cb8a4c8c4e53471568d0c65d02ff"
+        }
+      ],
+      "labels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "M",
+        "N",
+        "P"
+      ],
+      "camera": {
+        "position": [
+          1.0495263004503324,
+          1.0115664716491142,
+          10.666321143551647
+        ],
+        "target": [
+          1.09210764356408,
+          0.9997666929422286,
+          1.8291880815436785
+        ]
+      },
+      "absolute_polar_cos": 0.9999875000260418,
+      "geometry_unchanged": true
+    },
+    {
+      "id": "coincident-points",
+      "width": 390,
+      "scope": "ADAPTER4_OFFLINE_AUTHORED",
+      "images": [
+        {
+          "state": "sgk-mode-a",
+          "file": "coincident-points-390-sgk-mode-a.png",
+          "sha256": "fb7097931c2d3092e54bb8f25698b96d4deda2971a207e51512c56e2577ab066"
+        },
+        {
+          "state": "free-orbit",
+          "file": "coincident-points-390-free-orbit.png",
+          "sha256": "adff17c241d9e4f1cd22eba5b72258c122c74052ac90917f42bee33d7e656a2f"
+        },
+        {
+          "state": "top-or-polar-view",
+          "file": "coincident-points-390-top-or-polar-view.png",
+          "sha256": "aa0e4c51db6d66e6ce5c4657d01ca82004dfcabc23c09545cd1c44e47ca18241"
+        }
+      ],
+      "labels": [
+        "A ≡ H ≡ H1",
+        "B",
+        "C",
+        "D",
+        "S",
+        "A ≡ H ≡ H1",
+        "A ≡ H ≡ H1",
+        "M",
+        "N",
+        "P",
+        "Q"
+      ],
+      "camera": {
+        "position": [
+          0.5731638832505858,
+          0.4652283312273668,
+          3.3819464970652557
+        ],
+        "target": [
+          0.5878909960829504,
+          0.46354314607788155,
+          0.41732821306280005
+        ]
+      },
+      "absolute_polar_cos": 0.9999875000260418,
+      "geometry_unchanged": true
+    }
+  ],
+  "errors": []
+}

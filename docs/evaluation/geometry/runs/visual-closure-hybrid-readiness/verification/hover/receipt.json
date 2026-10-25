@@ -1,0 +1,33 @@
+{
+  "results": [
+    {
+      "width": 1440,
+      "point": {
+        "x": 699.1274553684581,
+        "y": 383.1646673235345
+      },
+      "section": "T",
+      "before": "8d1eb9f6973d325cb4695825b8838b7764cd7fa6b2cb8750de164703a2837725",
+      "hovered": "de7bd3f4d1499a7cba36f5cbb65fcfff1af76c8dbe82ff5ad9b55a0587829218",
+      "after": "8d1eb9f6973d325cb4695825b8838b7764cd7fa6b2cb8750de164703a2837725",
+      "hover_changes_canvas": true,
+      "hover_restores_canvas": true,
+      "selectedDuringHover": null
+    },
+    {
+      "width": 390,
+      "point": {
+        "x": 181.02031280965707,
+        "y": 495.1358244932561
+      },
+      "section": "T",
+      "before": "dc6c18a51e988a7999704c8a0b17a003bbd5b64a1776f7ee8c6be753cc04bbc2",
+      "hovered": "98c9daf7905e1442ce4514b63b6f73b6d9ed19e49ffb76e37eb82e9bd610f48f",
+      "after": "dc6c18a51e988a7999704c8a0b17a003bbd5b64a1776f7ee8c6be753cc04bbc2",
+      "hover_changes_canvas": true,
+      "hover_restores_canvas": true,
+      "selectedDuringHover": null
+    }
+  ],
+  "provider_calls": 0
+}

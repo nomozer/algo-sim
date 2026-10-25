@@ -1,0 +1,37 @@
+// Preserve the official suite and every oracle; replace only Chrome/CDP transport.
+import { chromium } from '../frontend/node_modules/playwright/index.mjs';
+import { BrowserSession } from '../frontend/scripts/browser-runner.mjs';
+import { runSuite } from '../frontend/scripts/compiler-scene-suite.mjs';
+import { datChinhSach } from '../frontend/scripts/capture-policy.mjs';
+BrowserSession.prototype.open = async function () {
+  const t0 = Date.now();
+  const browser = await chromium.launch({channel:'chrome', headless:true,
+    args:['--use-angle=swiftshader','--enable-unsafe-swiftshader','--hide-scrollbars']});
+  this._pwBrowser = browser;
+  const context = await browser.newContext({viewport:{width:this.viewport,height:this.height},deviceScaleFactor:1});
+  await context.route('**/*', route => {
+    const host = new URL(route.request().url()).hostname;
+    return host === '127.0.0.1' || host === 'localhost' ? route.continue() : route.abort();
+  });
+  const page = await context.newPage();
+  const cdp = await context.newCDPSession(page);
+  this._send = async (method, params={}) => ({result:await cdp.send(method, params)});
+  cdp.on('Fetch.requestPaused', p => { for (const fn of this._subs.get('Fetch.requestPaused') ?? []) fn(p); });
+  cdp.on('Runtime.exceptionThrown', p => this.consoleEvents.push({loai:'exception', text:String(p.exceptionDetails?.exception?.description ?? p.exceptionDetails?.text ?? '?').split('\n')[0]}));
+  cdp.on('Runtime.consoleAPICalled', p => {
+    if (['error','warning','assert'].includes(p.type)) this.consoleEvents.push({loai:p.type,text:(p.args??[]).map(a=>String(a.value??a.description??'')).join(' ').slice(0,300)});
+  });
+  await cdp.send('Page.enable');
+  await cdp.send('Runtime.enable');
+  await page.goto(this.url);
+  await page.locator('.app-main,.nav-bar').first().waitFor({state:'attached',timeout:40000});
+  this.serverStarts++;
+  this.timings.startup = Date.now()-t0;
+  return this;
+};
+BrowserSession.prototype._donDep = async function () { await this._pwBrowser?.close(); this._pwBrowser=null; };
+datChinhSach({mode:'day-du'});
+const root = 'docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/final-inputs';
+const only = process.argv[2]?.split(',') ?? null;
+const result = await runSuite({suitePath:`${root}/suite.json`,fixtureRoot:root,outDir:process.argv[3]??'.superpowers/closure/official-final-playwright',skipBuild:true,only});
+process.exitCode = result.pass ? 0 : 1;

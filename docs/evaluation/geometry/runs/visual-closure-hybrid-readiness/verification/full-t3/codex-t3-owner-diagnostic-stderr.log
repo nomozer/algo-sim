@@ -1,0 +1,9 @@
+✗ Build failed in 2.49s
+error during build:
+EPERM, Permission denied: \\?\D:\Documents\projects\algo-sim\.superpowers\workspaces\visual-closure-hybrid-readiness\frontend\dist\assets '\\?\D:\Documents\projects\algo-sim\.superpowers\workspaces\visual-closure-hybrid-readiness\frontend\dist\assets'
+    at Object.rmSync (node:fs:1235:18)
+    at emptyDir (file:///D:/Documents/projects/algo-sim/frontend/node_modules/vite/dist/node/chunks/dep-Dm0c1Wj2.js:6855:19)
+    at prepareOutDir (file:///D:/Documents/projects/algo-sim/frontend/node_modules/vite/dist/node/chunks/dep-Dm0c1Wj2.js:46403:7)
+    at buildEnvironment (file:///D:/Documents/projects/algo-sim/frontend/node_modules/vite/dist/node/chunks/dep-Dm0c1Wj2.js:46367:7)
+    at async Object.defaultBuildApp [as buildApp] (file:///D:/Documents/projects/algo-sim/frontend/node_modules/vite/dist/node/chunks/dep-Dm0c1Wj2.js:46843:5)
+    at async CAC.<anonymous> (file:///D:/Documents/projects/algo-sim/frontend/node_modules/vite/dist/node/cli.js:863:7)

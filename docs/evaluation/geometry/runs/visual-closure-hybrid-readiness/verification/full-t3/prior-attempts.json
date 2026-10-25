@@ -1,0 +1,118 @@
+{
+  "attempts": [
+    {
+      "attempt": "t3",
+      "target": "c84392c1",
+      "status": "INCOMPLETE_INTERRUPTED",
+      "observed_failed_tests": [],
+      "streams": {
+        "stdout.log": {
+          "bytes": 4096,
+          "sha256": "dc1bf237f06ccb515441a5bda31d1526bffdcdd49d5d9b35e943dc26d8747ef9",
+          "ignored_path": ".superpowers/closure/t3/stdout.log"
+        },
+        "stderr.log": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "ignored_path": ".superpowers/closure/t3/stderr.log"
+        }
+      },
+      "counted_as_certification": false
+    },
+    {
+      "attempt": "t3-final",
+      "target": "c84392c1",
+      "status": "INCOMPLETE_INTERRUPTED",
+      "observed_failed_tests": [
+        "tests/geometry/test_analyze_failure_cluster_diagnosis.py::test_tien_kiem_kho",
+        "tests/geometry/test_branch_independent_harness.py::test_audit_second_family_precheck_independent_of_branch[custom-branch-name]",
+        "tests/geometry/test_branch_independent_harness.py::test_audit_second_family_precheck_independent_of_branch[feat/rectangular-base-pyramid-compiler]",
+        "tests/geometry/test_branch_independent_harness.py::test_audit_second_family_precheck_independent_of_branch[main]",
+        "tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[arbitrary-feature-branch-xyz]",
+        "tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[feat/rectangular-base-pyramid-compiler]",
+        "tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[hotfix/test-isolation-123]",
+        "tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[main]",
+        "tests/geometry/test_branch_independent_harness.py::test_precheck_accepts_detached_head[precheck]",
+        "tests/geometry/test_branch_independent_harness.py::test_precheck_accepts_detached_head[run_precheck]",
+        "tests/geometry/test_schema_contract_offline.py::test_watchdog_is_incomplete_runtime_failure_not_geometry_refusal",
+        "tests/geometry/test_schema_contract_offline.py::test_windows_watchdog_terminates_the_invocation_child_tree"
+      ],
+      "streams": {
+        "stdout.log": {
+          "bytes": 838816,
+          "sha256": "3f0b6400a5c71f7df8148c0c5df5af53f4c95c100190e498092c294122f13ba2",
+          "ignored_path": ".superpowers/closure/t3-final/stdout.log"
+        },
+        "stderr.log": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "ignored_path": ".superpowers/closure/t3-final/stderr.log"
+        }
+      },
+      "counted_as_certification": false
+    },
+    {
+      "attempt": "t3-final-complete",
+      "target": "c84392c1",
+      "status": "INCOMPLETE_INTERRUPTED",
+      "observed_failed_tests": [
+        "tests/geometry/test_schema_contract_offline.py::test_watchdog_is_incomplete_runtime_failure_not_geometry_refusal",
+        "tests/geometry/test_schema_contract_offline.py::test_windows_watchdog_terminates_the_invocation_child_tree",
+        "tests/semantic_program/test_evaluation_candidate.py::test_candidate_ghi_dung_commit_va_cay_sach"
+      ],
+      "streams": {
+        "stdout.log": {
+          "bytes": 1497702,
+          "sha256": "d579062f4cc96af10e68859b6e4275899d853312ecbb38a56899e0f56e08dfe7",
+          "ignored_path": ".superpowers/closure/t3-final-complete/stdout.log"
+        },
+        "stderr.log": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "ignored_path": ".superpowers/closure/t3-final-complete/stderr.log"
+        }
+      },
+      "counted_as_certification": false
+    },
+    {
+      "attempt": "t3-owner-complete",
+      "target": "c84392c1",
+      "status": "INCOMPLETE_INTERRUPTED",
+      "observed_failed_tests": [],
+      "streams": {
+        "stdout.log": {
+          "bytes": 876,
+          "sha256": "72339ab4d82964da65fd38d12e6ab69eea324ab914c4f61cf5cd616fac54d2e5",
+          "ignored_path": ".superpowers/closure/t3-owner-complete/stdout.log"
+        },
+        "stderr.log": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "ignored_path": ".superpowers/closure/t3-owner-complete/stderr.log"
+        }
+      },
+      "counted_as_certification": false
+    },
+    {
+      "attempt": "t3-owner-diagnostic",
+      "target": "c84392c1",
+      "status": "FAIL_A_MANIFEST_B_DIST_EPERM",
+      "observed_failed_tests": [
+        "tests/semantic_program/test_evaluation_candidate.py::test_candidate_ghi_dung_commit_va_cay_sach"
+      ],
+      "streams": {
+        "stdout.log": {
+          "bytes": 1558558,
+          "sha256": "451d04360d2b0214fe1b198b576017d2044898f6f9c4180532bf4b720b20e7f7",
+          "ignored_path": ".superpowers/closure/t3-owner-diagnostic/stdout.log"
+        },
+        "stderr.log": {
+          "bytes": 1004,
+          "sha256": "d6bf0c25f9e05bd31e3b9a9f0c91ecb3153c6247b8dd41406200a931e0e38f57",
+          "ignored_path": ".superpowers/closure/t3-owner-diagnostic/stderr.log"
+        }
+      },
+      "counted_as_certification": false
+    }
+  ]
+}

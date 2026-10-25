@@ -1,0 +1,63 @@
+{
+  "schema": "official-suite-aggregate/1",
+  "scope": "Unmodified official assertions; Playwright Chrome/CDP transport",
+  "product": "53fe3d25243fe1e99410dfc52546e16225f19e75",
+  "measurement_commit": "c84392c15dbd08e4a59a6083ace17b577b8b2cb7",
+  "suite_sha256": "b80d5540181a18a84d2ea059f8c1f7a8439578c4dfb7b592fd59bca75732aa78",
+  "scenarios": [
+    {
+      "scenario": "triangular_pyramid",
+      "pass": true,
+      "source": ".superpowers\\closure\\official-final-playwright\\triangular_pyramid.json",
+      "sha256": "3090b00c115067dbcc22b4e7b33587c8d73a597051fb10aedcc528fc905ac650"
+    },
+    {
+      "scenario": "triangular_prism",
+      "pass": true,
+      "source": ".superpowers\\closure\\official-final-playwright\\triangular_prism.json",
+      "sha256": "ab1bae83f9268145292eacf5df1c696f279dddf7b5508938a8d69b7cd242077e"
+    },
+    {
+      "scenario": "rectangular_pyramid",
+      "pass": true,
+      "source": ".superpowers\\closure\\official-final-playwright\\rectangular_pyramid.json",
+      "sha256": "d387b6f96539c499e48f4de4d277883d3a942e3fe1209d628ad74687114d2f93"
+    },
+    {
+      "scenario": "cuboid",
+      "pass": true,
+      "source": ".superpowers\\closure\\official-final-remaining\\cuboid.json",
+      "sha256": "9464b3fdcde60f7f75c764bc8c7520704daee41fe0049c76aa0fe720b7d660ac"
+    },
+    {
+      "scenario": "cube",
+      "pass": true,
+      "source": ".superpowers\\closure\\official-final-remaining\\cube.json",
+      "sha256": "074781ccc54335357d59040edc92f844781aa8707b08b547fa346821c8528c53"
+    },
+    {
+      "scenario": "cross_section",
+      "pass": false,
+      "source": ".superpowers\\closure\\official-final-remaining\\cross_section.json",
+      "sha256": "fee8b854c82b98a34e63357228cb2f86b17d8f490f4b2e35cf1db7f806d00ecc"
+    },
+    {
+      "scenario": "regular_square_pyramid",
+      "pass": true,
+      "source": ".superpowers\\closure\\official-final-remaining\\regular_square_pyramid.json",
+      "sha256": "52c7753cedda9d87346292d622ccb557fcf4bb10c4f121f6b25b859cc07f0cb9"
+    },
+    {
+      "scenario": "regular_triangular_pyramid",
+      "pass": true,
+      "source": ".superpowers\\closure\\official-final-remaining\\regular_triangular_pyramid.json",
+      "sha256": "2382f2cb9518a812c6eb69f48408669ef2ee2d4619856cb4658461b1ac5b5d5b"
+    }
+  ],
+  "passed": 7,
+  "total": 8,
+  "pass": false,
+  "provider_calls": 0,
+  "oracle_changes": 0,
+  "split_run": "Three fully completed scenarios were retained from a run interrupted before completion; five completed with --ho on the identical candidate. No incomplete scenario is counted."
+}

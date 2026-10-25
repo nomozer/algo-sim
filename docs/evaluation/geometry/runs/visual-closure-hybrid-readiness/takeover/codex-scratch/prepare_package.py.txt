@@ -1,0 +1,110 @@
+"""Prepare fresh handoff artifacts in ignored staging, without changing the measured tree."""
+import hashlib,json,re,shutil,subprocess,sys
+from collections import Counter
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[2]
+SCRATCH=ROOT/'.superpowers/closure'
+STAGE=SCRATCH/'package'
+RUN=ROOT/'docs/evaluation/geometry/runs/visual-closure-hybrid-readiness'
+STAGE.mkdir(exist_ok=True)
+def sha(data):return hashlib.sha256(data).hexdigest()
+def js(path):return json.loads(path.read_text(encoding='utf-8'))
+def write(path,data):
+    path.parent.mkdir(parents=True,exist_ok=True)
+    path.write_text(data if isinstance(data,str) else json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+def copy(src,dest):
+    data=src.read_bytes();dest.parent.mkdir(parents=True,exist_ok=True)
+    if dest.exists():assert dest.read_bytes()==data,f'Artifact changed: {dest}'
+    else:dest.write_bytes(data)
+    return {'source':str(src.relative_to(ROOT)) if src.is_relative_to(ROOT) else str(src),
+            'file':dest.relative_to(STAGE).as_posix(),'bytes':len(data),'sha256':sha(data)}
+for p in (SCRATCH/'reports').glob('*.md'):write(STAGE/p.name,p.read_text(encoding='utf-8'))
+catalog=js(SCRATCH/'catalog-audit.json')
+copy(SCRATCH/'catalog-audit.json',STAGE/'catalog-audit.json')
+copy(SCRATCH/'capability-probe-final.json',STAGE/'capability-probe.json')
+copy(Path('C:/Users/Bunny/Downloads/matphang.html'),STAGE/'reference/matphang.html')
+assert sha((STAGE/'reference/matphang.html').read_bytes())==catalog['reference']['sha256']
+legend={'PARTIAL':'P','OFFLINE_GEOMETRY_VERIFIED':'O','RENDER_ONLY':'R','UNSUPPORTED':'U','UNKNOWN':'?','FULL_E2E_VERIFIED':'F'}
+matrix=['# HTML 18-family capability matrix','',
+ 'Reference SHA-256 `'+catalog['reference']['sha256']+'`, '+str(catalog['reference']['bytes'])+' bytes; all 18 catalog entries inspected. A byte-identical reference is preserved under `reference/`; its scripts/CDNs were not executed as an oracle.','',
+ '**Scope:** complete HTML configurations including their section, inscription and composite goals. A served volume subset does not certify the complete catalog entry. No provider extraction or independent holdout was run.','',
+ 'Legend: F=`FULL_E2E_VERIFIED`, O=`OFFLINE_GEOMETRY_VERIFIED`, R=`RENDER_ONLY`, P=`PARTIAL`, U=`UNSUPPORTED`, ?=`UNKNOWN`. Browser P means related views exist, not full-family acceptance. New O means new authored offline cases, never a blind holdout.','',
+ '| # / actual HTML family | V2 facts | Source gate | Registry | Planner | Exact engine | Adapter /4 | Frontend | Browser | New problem | Overall |',
+ '|---|---|---|---|---|---|---|---|---|---|---|']
+for i,r in enumerate(catalog['families'],1):
+    vals=' | '.join(legend[s] for s in r['layers'].values())
+    matrix.append(f"| {i}. {r['name']} (`{r['id']}`) | {vals} | {r['overall']} |")
+matrix+=['','Full E2E supported configurations: **0/18**. Overall classifications: **9 PARTIAL, 7 RENDER_ONLY, 2 UNSUPPORTED**. This does not mean there is no Hybrid solver: bounded pyramid/prism/polyhedral goals work offline, and seven new canonical V2 prism cases pass exact volume and /4 checks.','',
+ '## Per-entry limits / evidence scope','']
+for r in catalog['families']:matrix.append(f"- `{r['id']}` (HTML line {r['html_line']}): {r['limitation']}")
+matrix+=['','## Evidence and restrictions','',
+ '`catalog-audit.json` binds all inspected source files; `capability-probe.json` records seven new prism positives, five negatives and three curved refusals. Existing B1/B2 offline corpus/browser receipts retain their historical scope. Current Visual/Adapter/browser results are in the adjacent reports.','',
+ 'V2 schema acceptance of sphere/cone/cylinder is independently verified, but `typed_fact_next_bridge.py` rejects them with `BRIDGE_UNSUPPORTED_CURVED` before canonical Registry/planning. Kernel and legacy renderer capabilities therefore cannot be promoted to Hybrid support. General canonical V2 distance/angle targets are also not bridged despite Route B planner/kernel functions.','',
+ 'No complete HTML configuration or NL-extraction quality is upgraded from its name, a plausible picture, an authored fixture, or an old model run. Locked independent holdout was not used for development.']
+write(STAGE/'HTML_18_FAMILY_CAPABILITY_MATRIX.md','\n'.join(matrix)+'\n')
+
+artifacts=[]
+for srcname,destname in [('adapter4-final','adapter4'),('refusal-final','refusal'),('orbit-final','orbit'),
+                         ('hover','hover'),('owner-camera','owner-camera'),('section-role-v2','section-role')]:
+    src=SCRATCH/srcname
+    for p in src.rglob('*'):
+        if p.is_file():artifacts.append(copy(p,STAGE/'verification'/destname/p.relative_to(src)))
+copy(SCRATCH/'hover-receipt.json',STAGE/'verification/hover/receipt.json')
+# Preserve the unsuccessful broad boundary-pixel detector, rather than hiding its false acceptance.
+copy(SCRATCH/'section-role/receipt.json',STAGE/'verification/section-role/initial-broad-mask-receipt.json')
+copy(SCRATCH/'section-role-start-fault/receipt.json',STAGE/'verification/section-role/initial-startup-fault-receipt.json')
+
+first={'triangular_pyramid','triangular_prism','rectangular_pyramid'}
+all_ids=[s['id'] for s in js(RUN/'visual/final-inputs/suite.json')['scenarios']]
+records={};components=[]
+for name in all_ids:
+    src=SCRATCH/('official-final-playwright' if name in first else 'official-final-remaining')
+    record=js(src/f'{name}.json');records[name]=record
+    info=copy(src/f'{name}.json',STAGE/'visual/official'/f'{name}.json')
+    folder=src/'screenshots'/name.replace('_','-');assert folder.is_dir(),folder
+    for p in folder.rglob('*'):
+        if p.is_file():artifacts.append(copy(p,STAGE/'visual/official/screenshots'/name.replace('_','-')/p.relative_to(folder)))
+    components.append({'scenario':name,'pass':record['pass'],'source':info['source'],'sha256':info['sha256']})
+assert len(records)==8
+passed=sum(bool(r['pass']) for r in records.values())
+aggregate={'schema':'official-suite-aggregate/1','scope':'Unmodified official assertions; Playwright Chrome/CDP transport',
+ 'product':'53fe3d25243fe1e99410dfc52546e16225f19e75','measurement_commit':'c84392c15dbd08e4a59a6083ace17b577b8b2cb7',
+ 'suite_sha256':sha((RUN/'visual/final-inputs/suite.json').read_bytes()),'scenarios':components,'passed':passed,'total':8,
+ 'pass':passed==8,'provider_calls':0,'oracle_changes':0,
+ 'split_run':'Three fully completed scenarios were retained from a run interrupted before completion; five completed with --ho on the identical candidate. No incomplete scenario is counted.'}
+write(STAGE/'visual/official/AGGREGATE_SUITE_RECEIPT.json',aggregate)
+write(STAGE/'verification/artifact-paths.json',artifacts)
+
+report=['# Official Visual suite F1 / F2','',f'**{passed}/8 scenarios PASS; overall FAIL.** Desktop 1440×900 and mobile 390×844. F1 passes every affected family; F2 UX works but the locked hue policy fails the section scenario.','',
+ '| Scenario | Desktop | Mobile | Residual |','|---|---|---|---|']
+for name,r in records.items():
+    fail=[]
+    for vp in ('desktop','mobile'):
+        for key,v in r['positive'][vp]['assertions'].items():
+            if not v['pass']:fail.append(f'{vp}:{key}')
+    report.append(f"| {name} | {'PASS' if r['positive']['desktop']['pass'] else 'FAIL'} | {'PASS' if r['positive']['mobile']['pass'] else 'FAIL'} | {', '.join(fail) or 'none'} |")
+cross=records['cross_section']
+report+=['','## F1 — VERIFIED closed','',
+ 'Seven-family RED tests reproduced duplicate formulas before product edits. Inspector formula suppression and a distinct analysis CSS class pass the locked `selection_per_quantity` region count on both viewports. Inspector retains identity, dependencies/provenance, selection and an analysis link. Formula/value disclosure stays behind learner-opened Mode B; Mode A assertions remain in the official suite.','',
+ '## F2 — product UX fixed, policy decision required','',
+ '`F2_ORACLE_POLICY_OWNER_DECISION_REQUIRED`. The target section is cobalt at its boundary, default fill stays terracotta. Oracle/event/browser causal closures, tiers, witnesses, geometry and dash signatures agree. Only the global role-hue rule and its dependent evidence gate fail.','',
+ '| Viewport | Orange pixels / tolerance | Target-blue pixels | Closure identities |','|---|---|---|---|']
+for vp in ('desktop','mobile'):
+    c=cross['positive'][vp]['causal_closure']['visual']['canvas_role_hues']
+    report.append(f"| {vp} | {c['census']['cam']} / {c['tolerance_pixels']} | {c['census']['xanh']} | oracle = event = browser |")
+report+=['','No locked hue band, pixel tolerance, geometry witness, causal-closure requirement or refusal oracle was edited. Correct UX does not imply official PASS.','',
+ '## Role-aware proposal and actual fault injection','',
+ 'The supplemental probe retains the locked hue classifier but samples the projected interior of each unmasked selected-section edge, using backend polygon vertices and the recorded camera. The source/scene is unchanged. A shader-uniform fault turns blue target rendering magenta; the per-edge proposal rejects it at both viewports while baseline edges pass. The first broad pixel-count proposal falsely accepted residual blue pixels; its failed receipt is preserved. This proposal is an executable research check, not an Owner-approved replacement oracle.','',
+ 'Preregister an object-identity-aware selection mask and visibility/overlay handling before adopting any new gate. Preserve independent math/source/witness/refusal checks, test wrong target, wrong role, missing boundary, occluded edges, hover leave and selection persistence. Do not solve the policy conflict by recoloring all planes or raising an orange tolerance.','',
+ '## Execution provenance / limitations','',
+ 'The native random-debug-port driver encountered EPERM/1909/startup timeouts. No startup failure is scored as product correctness. Playwright transports Chrome/CDP while the original suite/oracles/expectations remain unchanged. The full results are an explicit 3+5 aggregate on the same frozen code; the original family receipts are byte-preserved. The remaining-five `BROWSER_EVIDENCE.json` is retained separately.','',
+ 'The 49 fixture envelopes and all scenario expectations are unchanged from final-corrections inputs; only candidate metadata is rebound (`final-inputs-rebinding.json`). The aggregate is not a live extraction evaluation or human approval.']
+write(STAGE/'OFFICIAL_SUITE_F1_F2_REPORT.md','\n'.join(report)+'\n')
+copy(SCRATCH/'official-final-remaining/BROWSER_EVIDENCE.json',STAGE/'visual/official/remaining-five-original-receipt.json')
+
+git_env={**__import__('os').environ,'GIT_CONFIG_COUNT':'1','GIT_CONFIG_KEY_0':'safe.directory','GIT_CONFIG_VALUE_0':str(ROOT).replace('\\','/')}
+diff=subprocess.check_output(['git','diff','1a4a0b93..53fe3d25','--','backend','frontend'],cwd=ROOT,env=git_env)
+dest=STAGE/'verification/full-product.diff';dest.parent.mkdir(exist_ok=True);dest.write_bytes(diff)
+write(STAGE/'verification/product-diff-receipt.json',{'base':'1a4a0b93','product':'53fe3d25','bytes':len(diff),'sha256':sha(diff),
+ 'backend_app_changed':bool(subprocess.check_output(['git','diff','--name-only','1a4a0b93..53fe3d25','--','backend/app'],cwd=ROOT,env=git_env).strip())})
+print(json.dumps({'stage':str(STAGE),'suite':f'{passed}/8','artifact_files':len(artifacts),'reports_so_far':len(list(STAGE.glob('*.md')))}))

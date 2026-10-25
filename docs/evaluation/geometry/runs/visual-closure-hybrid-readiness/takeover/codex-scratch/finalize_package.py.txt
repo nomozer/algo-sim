@@ -1,0 +1,86 @@
+"""Finish the review package only after the final gate has an explicit receipt."""
+import hashlib,json,os,re,shutil,subprocess,sys
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[2]
+SCRATCH=ROOT/'.superpowers/closure';STAGE=SCRATCH/'package'
+RUN=ROOT/'docs/evaluation/geometry/runs/visual-closure-hybrid-readiness'
+receipt_path=SCRATCH/'t3-owner-diagnostic/receipt.json'
+if not receipt_path.exists():raise SystemExit('FINAL_GATE_STILL_RUNNING: no source changes made')
+r=json.loads(receipt_path.read_text(encoding='utf-8'))
+assert r['target']=='c84392c15dbd08e4a59a6083ace17b577b8b2cb7'
+assert r['source_tree_before']==r['source_tree_after']==''
+assert r['detached_head'] is True
+subprocess.run([sys.executable,str(SCRATCH/'prepare_package.py')],cwd=ROOT,check=True)
+def write(p,value):
+    p.parent.mkdir(parents=True,exist_ok=True)
+    p.write_text(value if isinstance(value,str) else json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+def copy(src,dst):
+    data=src.read_bytes();dst.parent.mkdir(parents=True,exist_ok=True)
+    if dst.exists():assert dst.read_bytes()==data,dst
+    else:dst.write_bytes(data)
+copy(receipt_path,STAGE/'verification/full-t3/receipt.json')
+status=r['verdict']+f" (exit {r['exit_code']}; target c84392c1)"
+verify='MATCH / PASS' if r['post_freeze']['exit_code']==0 else 'FAIL'
+p=STAGE/'FINAL_OWNER_HANDOFF.md'
+write(p,p.read_text(encoding='utf-8').replace('{{T3_STATUS}}',status).replace('{{FREEZE_VERIFY}}',verify))
+for name in ['hover-check.mjs','section-role-probe.mjs','owner-camera-capture.mjs','official-playwright.mjs','refusal-output-shim.mjs']:
+    copy(ROOT/'.superpowers'/name,STAGE/'verification/reproduction-source'/(name+'.txt'))
+copy(ROOT/'.superpowers/run-t3.py',STAGE/'verification/reproduction-source/run-t3.py.txt')
+write(STAGE/'verification/reproduction-source/README.md',
+      '# Executed helper source snapshots\n\nThese byte-preserved snapshots ran from the repository `.superpowers/` directory. They are source for audit, not product modules. Restore them to that ignored location in a fresh checkout to reproduce their relative imports; outputs remain ignored scratch. The run-root capability/catalog/transport reproducers are portable and write replay results into fresh temporary paths. No helper is authority to change a locked oracle or make a live request.\n')
+attempts=[]
+for folder in ['t3','t3-final','t3-final-complete','t3-owner-complete']:
+    base=SCRATCH/folder;streams={};failed=[]
+    for name in ['stdout.log','stderr.log']:
+        path=base/name
+        if path.exists():
+            data=path.read_bytes();streams[name]={'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest(),'ignored_path':path.relative_to(ROOT).as_posix()}
+            if name=='stdout.log':failed=re.findall(r'^([^\r\n]*?::[^\r\n]+?)\s+FAILED\b',data.decode('utf-8',errors='replace'),re.M)
+    attempts.append({'attempt':folder,'status':'INCOMPLETE_INTERRUPTED_NOT_CERTIFICATION','observed_failed_test_names':failed,'streams':streams})
+write(STAGE/'verification/full-t3/prior-attempts.json',{'attempts':attempts,'watchdog_outside_sandbox':{'passed':2,'failed':0},
+ 'reason':'Root Git ref writes denied; recovered own clone. Main ref added locally for harness ancestry. Restricted watchdog failures reproduced PASS outside sandbox. Stalled/incomplete runs preserved and superseded, never counted as PASS. Final authoritative result is the separate receipt.json.'})
+write(STAGE/'verification/reproducer-checks.json',{'capability_probe':'15-case replay semantic MATCH','catalog':'18 entries, reference SHA-256 MATCH',
+ 'portable_transport':'Chrome/CDP evaluation and product fingerprint PASS','provider_calls':0})
+write(STAGE/'verification/environment-attempts.json',{'native_driver':'INCOMPLETE_ENVIRONMENT_FAILURE',
+ 'failures':['EPERM at default browser temp root; switched to task-owned root','CDP/WS startup timeouts; completed original assertions with Playwright transport','CreateProcessWithLogonW 1909; approved local execution outside failing sandbox logon'],
+ 'acl_changes':0,'global_git_trust_changes':0,'oracle_changes':0,'live_calls':0})
+env={**os.environ,'GIT_CONFIG_COUNT':'1','GIT_CONFIG_KEY_0':'safe.directory','GIT_CONFIG_VALUE_0':str(ROOT).replace('\\','/')}
+def git(cwd,*args):return subprocess.check_output(['git',*args],cwd=cwd,env=env,text=True).strip()
+original=Path('D:/Documents/projects/algo-sim')
+candidate=original/'.superpowers/worktrees/hybrid-visual-candidate'
+write(STAGE/'verification/workspace-pre-package.json',{'own_head':git(ROOT,'rev-parse','HEAD'),'own_status_before_package':git(ROOT,'status','--porcelain'),
+ 'original_root_head':git(original,'rev-parse','HEAD'),'original_root_branch':git(original,'branch','--show-current'),
+ 'original_main':git(original,'rev-parse','main'),'original_root_status':git(original,'status','--porcelain').splitlines(),
+ 'original_candidate_head':git(candidate,'rev-parse','HEAD'),'original_candidate_status':git(candidate,'status','--porcelain'),
+ 'root_source_modified_by_this_task':False,'original_worktrees_modified_by_this_task':False,'independent_review':'PENDING_OWNER_APPOINTED_REVIEWER','human_visual_approval':'PENDING'})
+expected=['FINAL_VISUAL_CLOSURE_REPORT.md','OFFICIAL_SUITE_F1_F2_REPORT.md','INDEPENDENT_REVIEW_PACKET.md','OWNER_VISUAL_ACCEPTANCE_REPORT.md',
+ 'HTML_18_FAMILY_CAPABILITY_MATRIX.md','GEOMETRY_FUNCTION_COVERAGE_GAPS.md','B3_VERTICAL_SLICE_REPORT.md','HYBRID_DEFAULT_MIGRATION_READINESS.md','FINAL_OWNER_HANDOFF.md']
+assert all((STAGE/name).is_file() for name in expected)
+assert not any('{{' in (STAGE/name).read_text(encoding='utf-8') for name in expected)
+# Product/scientific measurements are copied unchanged; inventory itself is a new packaging receipt.
+inventory=[]
+for path in sorted(STAGE.rglob('*')):
+    if path.is_file():
+        data=path.read_bytes();inventory.append({'file':path.relative_to(STAGE).as_posix(),'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()})
+write(STAGE/'PACKAGE_MANIFEST.json',{'schema':'visual-closure-package/1','product':'53fe3d25243fe1e99410dfc52546e16225f19e75',
+ 'freeze':r['target'],'t3_verdict':r['verdict'],'files':inventory,'reports':expected,'provider_calls':0})
+assert git(ROOT,'status','--porcelain')==''
+for src in sorted(STAGE.rglob('*')):
+    if src.is_file():copy(src,RUN/src.relative_to(STAGE))
+# Current indexes are mutable navigation, not historical measurement artifacts.
+notes={
+ 'CURRENT_STATE.md':f'**LOCAL 2026-10-25 — Visual closure / Hybrid readiness (latest, not integrated):** own isolated branch `research/visual-closure-hybrid-readiness`, product `53fe3d25`, freeze `c84392c1`; {r["verdict"]}; official Visual 7/8 (F1 closed, F2 UX fixed / locked hue policy OWNER_DECISION_REQUIRED). P3 sphere source/plane presentation OPEN. Independent review and human approval PENDING. 18 HTML configurations: 0 FULL_E2E, 9 PARTIAL / 7 RENDER_ONLY / 2 UNSUPPORTED. LLM_ONLY / cache128 / live0 / Hybrid NO-GO; main unchanged. Handoff: `evaluation/geometry/runs/visual-closure-hybrid-readiness/FINAL_OWNER_HANDOFF.md`.',
+ 'EVIDENCE_INDEX.md':'## WAVE_ID = VISUAL_CLOSURE_HYBRID_READINESS\n\n`visual-hybrid-final-corrections` **CORRECTED_BY** `visual-closure-hybrid-readiness` (current product/acceptance status; historical measurements unchanged). [Owner handoff](evaluation/geometry/runs/visual-closure-hybrid-readiness/FINAL_OWNER_HANDOFF.md) · [Official F1/F2 7/8](evaluation/geometry/runs/visual-closure-hybrid-readiness/OFFICIAL_SUITE_F1_F2_REPORT.md) · [18-family matrix](evaluation/geometry/runs/visual-closure-hybrid-readiness/HTML_18_FAMILY_CAPABILITY_MATRIX.md). Product53fe3d25 / freezec84392c1, cache128, live0. Independent/human gates pending; no default/production GO.',
+ 'CODE_INDEX.md':'## Visual closure / Hybrid readiness — local, 2026-10-25\n\nReused `Scene3DExplorer`, `coherentFormula`, `phanTichToanHocCuaCanh`, `buildObject3D`, existing picking/role/occlusion and Registry/Planner/Engine. New regression `frontend/src/simulations/domains/geometry/visual-closure.test.tsx`; no new public Geometry Function or parallel engine. Offline audit/reproducers and exact scope: [run handoff](evaluation/geometry/runs/visual-closure-hybrid-readiness/FINAL_OWNER_HANDOFF.md), [function gaps](evaluation/geometry/runs/visual-closure-hybrid-readiness/GEOMETRY_FUNCTION_COVERAGE_GAPS.md).'
+}
+for filename,note in notes.items():
+    path=ROOT/'docs'/filename;old=path.read_text(encoding='utf-8');first,rest=old.split('\n',1)
+    assert 'VISUAL_CLOSURE_HYBRID_READINESS' not in old if filename=='EVIDENCE_INDEX.md' else True
+    path.write_text(first+'\n\n'+note+'\n'+rest,encoding='utf-8')
+plan=RUN/'plan.md'
+with plan.open('a',encoding='utf-8') as out:
+    out.write('\n## Final checkpoint\n\nF1/F2 product changes and offline/browser checks executed; official Visual 7/8 with locked-policy Owner gate. P3 sphere source/presentation remains PARTIAL. B3 specification/oracle/blockers delivered, implementation deferred. Nine reports and immutable receipts packaged. No independent/human approval inferred. Reused modules above; created test/evaluation modules only; duplicate engine check negative.\n')
+allow=[p.relative_to(ROOT).as_posix() for p in RUN.rglob('*') if p.is_file()]
+allow += ['docs/CURRENT_STATE.md','docs/EVIDENCE_INDEX.md','docs/CODE_INDEX.md']
+write(SCRATCH/'staging-allowlist.json',{'paths':sorted(allow)})
+print(json.dumps({'packaged_files':len(inventory),'reports':len(expected),'t3':r['verdict'],'source_product_unchanged':True}))

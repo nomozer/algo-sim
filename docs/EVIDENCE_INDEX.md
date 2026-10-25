@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = VISUAL_CLOSURE_HYBRID_READINESS
+
+REPORT = docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/FINAL_VISUAL_CLOSURE_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/
+CLASSIFICATION = LOCAL visual closure on research/visual-closure-hybrid-readiness (Codex, finished by a Claude takeover; NOT merged, not pushed; local main 9978e512 unchanged): F1 analysis formula shown once (inspector keeps identity/link), F2 selected section cobalt boundary over terracotta fill + transient hover, decorative sphere loops removed. Official Visual suite 7/8 (cross_section fails only the locked role-hue gate: OWNER_DECISION_REQUIRED). P3 sphere sample helper points/plane OPEN. 18 HTML configurations 0 FULL_E2E / 9 PARTIAL / 7 RENDER_ONLY / 2 UNSUPPORTED. Independent review and human visual approval PENDING. Hybrid production NO-GO
+CODE_COMMIT = 53fe3d25243fe1e99410dfc52546e16225f19e75 (product, frontend only); candidate c6bdfbcb3a685e356ee5091a53c75a3dad8dc01a (re-freeze on a clean tree; c84392c1 manifest recorded a dirty tree); measured_system 8be632679307a94ce4525ad576a05a9eccffc8ba2bdbf02d4c7dc93c208b7c41 (118 files); NO_BUMP 128; Full T3 target c6bdfbcb
+VERIFICATION = docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/verification/full-t3/receipt.json (FULL_PRODUCT_GATE_PASS; failed Codex attempt kept at docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/verification/full-t3/codex-t3-owner-diagnostic-receipt.json, root cause docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/T3_FAILURE_ROOT_CAUSE_AND_RECOVERY.md); docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/official/AGGREGATE_SUITE_RECEIPT.json; docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/verification/adapter4/receipt.json; docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/verification/refusal/refusal-surface.json; docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/verification/orbit/ORBIT_GATE.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = VISUAL_HYBRID_FINAL_CORRECTIONS (F1/F2 findings addressed in product; candidate identity); historical artifact bytes unchanged
+CORRECTED_BY = NONE
+
 ## WAVE_ID = VISUAL_HYBRID_FINAL_CORRECTIONS
 
 REPORT = docs/evaluation/geometry/runs/visual-hybrid-final-corrections/FINAL_OWNER_HANDOFF.md
@@ -9,7 +20,7 @@ CODE_COMMIT = 0645de46 + af670aa6ba02b7c04da4fe7f863e015d0f4e6e60 (product); can
 VERIFICATION = docs/evaluation/geometry/runs/visual-hybrid-final-corrections/verification/full-t3/execution.json (FULL_PRODUCT_GATE_PASS); docs/evaluation/geometry/runs/visual-hybrid-final-corrections/cache/decision.json; docs/evaluation/geometry/runs/visual-hybrid-final-corrections/visual/official-suite-run2/BROWSER_EVIDENCE.json; docs/evaluation/geometry/runs/visual-hybrid-final-corrections/verification/browser/adapter4/receipt.json; docs/evaluation/geometry/runs/visual-hybrid-final-corrections/verification/browser/refusal/refusal-surface.json; docs/evaluation/geometry/runs/visual-hybrid-final-corrections/verification/browser/orbit-gate/ORBIT_GATE.json; docs/evaluation/geometry/runs/visual-hybrid-final-corrections/candidate_divergence.json; docs/evaluation/geometry/runs/visual-hybrid-final-corrections/REVIEW_PACKET.md
 MODEL_REQUEST_COUNT = 0
 CORRECTS = VISUAL_HYBRID_INTEGRATION (backend display-identity proposal implemented; diagnostics drawer removed; official-suite harness failures resolved; candidate identity); historical artifact bytes unchanged
-CORRECTED_BY = NONE
+CORRECTED_BY = VISUAL_CLOSURE_HYBRID_READINESS (docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/inputs/candidate_divergence.json)
 
 ## WAVE_ID = VISUAL_HYBRID_INTEGRATION
 

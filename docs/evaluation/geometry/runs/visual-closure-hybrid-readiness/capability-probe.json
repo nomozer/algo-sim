@@ -1,0 +1,166 @@
+{
+  "classification": "OFFLINE_AUTHORED_NEW_PROBES_NOT_HOLDOUT_NOT_NLU",
+  "provider_calls": 0,
+  "rows": [
+    {
+      "kind": "right",
+      "labels": "ABC",
+      "dimensions": [
+        6,
+        8,
+        12
+      ],
+      "expected_volume": "288",
+      "source_sha256": "2daa6945c9162b4defa6ecdbbf2902bfbc084e8795332555a4963e4704bddd98",
+      "status": "SERVED",
+      "code": null,
+      "exact_oracle_match": true,
+      "one_lateral_vector": true,
+      "adapter4_status": "SERVED"
+    },
+    {
+      "kind": "right",
+      "labels": "DEF",
+      "dimensions": [
+        6,
+        8,
+        12
+      ],
+      "expected_volume": "288",
+      "source_sha256": "191763af6a651e0e385eba9c478a2538061a090469f640f6fe6f315f0c182198",
+      "status": "SERVED",
+      "code": null,
+      "exact_oracle_match": true,
+      "one_lateral_vector": true,
+      "adapter4_status": "SERVED"
+    },
+    {
+      "kind": "right",
+      "labels": "KLM",
+      "dimensions": [
+        10,
+        24,
+        84
+      ],
+      "expected_volume": "10080",
+      "source_sha256": "713ffb5cc2b1e86afdd488c0974620af8c6bade6a39236eecc1326e94764894f",
+      "status": "SERVED",
+      "code": null,
+      "exact_oracle_match": true,
+      "one_lateral_vector": true,
+      "adapter4_status": "SERVED"
+    },
+    {
+      "kind": "right",
+      "labels": "RST",
+      "dimensions": [
+        12,
+        16,
+        24
+      ],
+      "expected_volume": "2304",
+      "source_sha256": "52c09b770ff37a6e6c6f693abaa0a2f19bd4e72ccbfba3a3e1d7dd51fc705f26",
+      "status": "SERVED",
+      "code": null,
+      "exact_oracle_match": true,
+      "one_lateral_vector": true,
+      "adapter4_status": "SERVED"
+    },
+    {
+      "kind": "oblique",
+      "labels": "ABC",
+      "dimensions": [
+        6,
+        8,
+        12
+      ],
+      "expected_volume": "288",
+      "source_sha256": "86acc8d77ecd78f4500cc3175af677d5aca4a96cbf7855a532c78bd0162edcf6",
+      "status": "SERVED",
+      "code": null,
+      "exact_oracle_match": true,
+      "one_lateral_vector": true,
+      "adapter4_status": "SERVED"
+    },
+    {
+      "kind": "oblique",
+      "labels": "DEF",
+      "dimensions": [
+        6,
+        8,
+        12
+      ],
+      "expected_volume": "288",
+      "source_sha256": "c85dd1ab54d7da2e5c1fad4fb6fbb5b2a73976a7e4b86c5e461c960b1cba6ea9",
+      "status": "SERVED",
+      "code": null,
+      "exact_oracle_match": true,
+      "one_lateral_vector": true,
+      "adapter4_status": "SERVED"
+    },
+    {
+      "kind": "oblique",
+      "labels": "KLM",
+      "dimensions": [
+        12,
+        16,
+        24
+      ],
+      "expected_volume": "2304",
+      "source_sha256": "3a9065c683cbe58da79c2488d0b3a186a263aadde6085738998d76ed8c08e032",
+      "status": "SERVED",
+      "code": null,
+      "exact_oracle_match": true,
+      "one_lateral_vector": true,
+      "adapter4_status": "SERVED"
+    },
+    {
+      "kind": "missing_height",
+      "status": "REFUSED",
+      "code": "MISSING_DIMENSION",
+      "source_sha256": "3fbab413021896fdedfc6397efe607ff2732d0fa89155e434bd2164ee2f72362"
+    },
+    {
+      "kind": "missing_base_angle",
+      "status": "REFUSED",
+      "code": "MISSING_DIMENSION",
+      "source_sha256": "3c6b7c6514905c51f37ca159b4d8351018f5f4d4dec84faa4030acc7cfe3c4e5"
+    },
+    {
+      "kind": "zero_height",
+      "status": "REFUSED",
+      "code": "NON_POSITIVE_LENGTH",
+      "source_sha256": "7f4bbfd4cdaca6308cf9fb4ebd333040d92fa805e4f370ddf517cf22a73dca8d"
+    },
+    {
+      "kind": "contradictory_height",
+      "status": "REFUSED",
+      "code": "INCONSISTENT_FACTS",
+      "source_sha256": "824cbb584396ea1e7a4628fb7cc1752549c883855f9b1f2415b7644135063de6"
+    },
+    {
+      "kind": "invented_rightness",
+      "status": "REFUSED",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "source_sha256": "4bbfa2072996ac5a99b2eacf740a47f0468b3ebe597844d152f7b59296573002"
+    },
+    {
+      "kind": "sphere",
+      "schema": "VALID",
+      "status": "REFUSED",
+      "code": "BRIDGE_UNSUPPORTED_CURVED"
+    },
+    {
+      "kind": "cone",
+      "schema": "VALID",
+      "status": "REFUSED",
+      "code": "BRIDGE_UNSUPPORTED_CURVED"
+    },
+    {
+      "kind": "cylinder",
+      "schema": "VALID",
+      "status": "REFUSED",
+      "code": "BRIDGE_UNSUPPORTED_CURVED"
+    }
+  ]
+}

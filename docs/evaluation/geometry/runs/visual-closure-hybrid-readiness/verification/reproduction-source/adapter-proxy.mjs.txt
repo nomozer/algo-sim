@@ -1,0 +1,6 @@
+import http from 'node:http';
+const server=http.createServer((req,res)=>{
+  const upstream=http.request({host:'127.0.0.1',port:3129,path:req.url,method:req.method,headers:{...req.headers,host:'127.0.0.1:3129'}},r=>{res.writeHead(r.statusCode,r.headers);r.pipe(res);});
+  upstream.on('error',()=>{res.writeHead(502);res.end();});req.pipe(upstream);
+});
+server.listen(3115,'127.0.0.1',()=>console.log('Own Adapter /4 test proxy 3115 -> own Vite 3129'));

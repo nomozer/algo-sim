@@ -1,0 +1,47 @@
+import {chromium} from '../frontend/node_modules/playwright/index.mjs';
+import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+const OUT='.superpowers/closure/owner-camera';mkdirSync(OUT,{recursive:true});
+const samples=JSON.parse(readFileSync('frontend/src/data/geometry-samples.json','utf8')).samples;
+const exportData=JSON.parse(readFileSync('docs/evaluation/geometry/runs/visual-hybrid-integration/integrated/offline/fixtures.json','utf8'));
+const coincident=exportData.fixtures.find(x=>x.id==='PERP-square-third');
+if(coincident.reference)coincident.envelope=JSON.parse(readFileSync(coincident.reference.file,'utf8')).fixtures[coincident.reference.index].envelope;
+const cases=[...['cau-cat-mat-phang','thiet-dien-chop'].map(id=>({id,envelope:samples.find(s=>s.id===id).envelope,scope:'LEGACY_OFFLINE_RENDER_SAMPLE_NOT_CANONICAL_HYBRID'})),{id:'coincident-points',response:coincident,scope:'ADAPTER4_OFFLINE_AUTHORED'}];
+const b=await chromium.launch({channel:'chrome',headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+const rows=[],errors=[];
+try{for(const width of [1440,390]){
+ const ctx=await b.newContext({viewport:{width,height:width<600?844:900},deviceScaleFactor:width<600?2:1});
+ await ctx.route('**/*',r=>{const u=new URL(r.request().url());if(u.hostname!=='127.0.0.1')return r.abort();if(u.pathname.startsWith('/api/'))return r.fulfill({json:u.pathname==='/api/health'?{ok:true,hasKey:false}:{user:null}});return r.continue();});
+ const p=await ctx.newPage();p.on('pageerror',e=>errors.push(e.message.split('\n')[0]));
+ for(const c of cases){
+  await p.goto('http://127.0.0.1:3129');
+  await p.evaluate(async c=>{const {useAppStore}=await import('/src/state/store.ts');let env=c.envelope;if(c.response){const a=await import('/src/simulations/domains/geometry/hybrid-preview-adapter.ts');const r=a.docPhanHoiHybrid(c.response);if(!r.ok)throw Error('Invalid /4');env=r.envelope;}useAppStore.getState().loadEnvelope(env);},c);
+  await p.locator('.geo3d-canvas canvas').waitFor();
+  await p.locator('.geo3d-scrub input').evaluate(el=>{const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(el,el.max);el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));});
+  await p.waitForTimeout(900);
+  const geometry=await p.evaluate(()=>JSON.stringify(window.__ALGO_SIM_STORE__.getState().active.envelope.scene3d));
+  const row={id:c.id,width,scope:c.scope,images:[],labels:await p.locator('.geo3d-label').allTextContents()};
+  const capture=async state=>{const bytes=await p.screenshot({fullPage:true}),file=`${c.id}-${width}-${state}.png`;writeFileSync(`${OUT}/${file}`,bytes);row.images.push({state,file,sha256:createHash('sha256').update(bytes).digest('hex')});};
+  await capture('sgk-mode-a');
+  if(c.id==='cau-cat-mat-phang'){
+    await p.getByRole('button',{name:'Hiển thị',exact:true}).click();
+    const aux=p.getByRole('menuitemcheckbox').filter({hasText:'Hình phụ'});
+    if(await aux.count())await aux.click();
+    await p.waitForTimeout(400);await capture('auxiliary-on');
+  }
+  const box=await p.locator('.geo3d-canvas canvas').boundingBox();
+  await p.mouse.move(box.x+box.width*.7,box.y+box.height*.35);await p.mouse.down();
+  await p.mouse.move(box.x+box.width*.3,box.y+box.height*.35,{steps:16});await p.mouse.up();await p.waitForTimeout(650);
+  await capture('free-orbit');
+  await p.mouse.move(box.x+box.width*.7,box.y+box.height*.15);await p.mouse.down();
+  await p.mouse.move(box.x+box.width*.7,box.y+box.height*.95,{steps:20});await p.mouse.up();await p.waitForTimeout(650);
+  await capture('top-or-polar-view');
+  row.camera=await p.evaluate(()=>({position:window.__geo3d_camera_snapshot.position,target:window.__geo3d_camera_target}));
+  const v=row.camera.position.map((x,i)=>x-row.camera.target[i]);row.absolute_polar_cos=Math.abs(v[2])/Math.hypot(...v);
+  row.geometry_unchanged=geometry===await p.evaluate(()=>JSON.stringify(window.__ALGO_SIM_STORE__.getState().active.envelope.scene3d));
+  rows.push(row);
+ }
+ await ctx.close();
+}}finally{await b.close();}
+const receipt={source_commit:'53fe3d25243fe1e99410dfc52546e16225f19e75',provider_calls:0,human_visual_approval:'PENDING_OWNER',rows,errors};
+writeFileSync(`${OUT}/receipt.json`,JSON.stringify(receipt,null,2));console.log(JSON.stringify({rows:rows.length,images:rows.reduce((n,r)=>n+r.images.length,0),geometry_unchanged:rows.every(r=>r.geometry_unchanged),errors}));

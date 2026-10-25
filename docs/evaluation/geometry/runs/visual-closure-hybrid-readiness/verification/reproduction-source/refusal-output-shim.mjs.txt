@@ -1,0 +1,12 @@
+// Keep the established refusal checks; redirect only its hardcoded artifact directory to fresh scratch.
+import fs from 'node:fs';
+import {resolve,join} from 'node:path';
+import {syncBuiltinESMExports} from 'node:module';
+const root=resolve(import.meta.dirname,'..');
+const source=join(root,'docs/evaluation/integration');
+const target=join(root,'.superpowers/closure/refusal-final');
+const map=p=>typeof p==='string'&&p.startsWith(source)?target+p.slice(source.length):p;
+const mkdir=fs.mkdirSync,write=fs.writeFileSync;
+fs.mkdirSync=(p,...args)=>mkdir(map(p),...args);
+fs.writeFileSync=(p,...args)=>write(map(p),...args);
+syncBuiltinESMExports();

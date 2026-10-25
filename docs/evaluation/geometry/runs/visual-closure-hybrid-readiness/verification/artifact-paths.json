@@ -1,0 +1,2636 @@
+[
+  {
+    "source": ".superpowers\\closure\\adapter4-final\\CORPUS-DEV10-prism-area-1440.png",
+    "file": "verification/adapter4/CORPUS-DEV10-prism-area-1440.png",
+    "bytes": 329955,
+    "sha256": "2ac20b353c75cea42bcc27a39c6dd611380844fed3893844a42c68952d4b8737"
+  },
+  {
+    "source": ".superpowers\\closure\\adapter4-final\\CORPUS-DEV10-prism-area-390.png",
+    "file": "verification/adapter4/CORPUS-DEV10-prism-area-390.png",
+    "bytes": 88052,
+    "sha256": "a21d6dc0700bc151e942c5fbe77b9000ba00ce187a48da9e235fe728a8d36a1b"
+  },
+  {
+    "source": ".superpowers\\closure\\adapter4-final\\PARA-0-1440.png",
+    "file": "verification/adapter4/PARA-0-1440.png",
+    "bytes": 314498,
+    "sha256": "6e17f104f8083fd9818a86d6fda902bdc5d4a4e7116c4afa2471770d74b3e8c4"
+  },
+  {
+    "source": ".superpowers\\closure\\adapter4-final\\PARA-0-390.png",
+    "file": "verification/adapter4/PARA-0-390.png",
+    "bytes": 89166,
+    "sha256": "8dfb830a95ccf611dce6a172574398c73c2713051ccdceab6072e3083ccc044a"
+  },
+  {
+    "source": ".superpowers\\closure\\adapter4-final\\PARTIAL-1of2-construct-1440.png",
+    "file": "verification/adapter4/PARTIAL-1of2-construct-1440.png",
+    "bytes": 357660,
+    "sha256": "9c46ac3c613d052b178deee0289c2086bc545a3f377bb107f10765ed22eba02d"
+  },
+  {
+    "source": ".superpowers\\closure\\adapter4-final\\PARTIAL-1of2-construct-390.png",
+    "file": "verification/adapter4/PARTIAL-1of2-construct-390.png",
+    "bytes": 90353,
+    "sha256": "61493c1da938437712bba2adb72ae2c669375c9c6f28391c4aedbd2ff3f6bf72"
+  },
+  {
+    "source": ".superpowers\\closure\\adapter4-final\\receipt.json",
+    "file": "verification/adapter4/receipt.json",
+    "bytes": 1526514,
+    "sha256": "a106f3d4761f7d9d16e387ca52a2018c08442a29fafd15e0af499437c885ec5f"
+  },
+  {
+    "source": ".superpowers\\closure\\refusal-final\\refusal-surface.json",
+    "file": "verification/refusal/refusal-surface.json",
+    "bytes": 2987,
+    "sha256": "c60566806d72bc4235b290eaf1c0efc137264799468fc232ec75aeb3f18fca1b"
+  },
+  {
+    "source": ".superpowers\\closure\\orbit-final\\ORBIT_GATE.json",
+    "file": "verification/orbit/ORBIT_GATE.json",
+    "bytes": 2856,
+    "sha256": "410c6c2e05b3b5ba391f9e9a1d0fd6e13d3ee3be47ea8089f8f54e4d300fc571"
+  },
+  {
+    "source": ".superpowers\\closure\\hover\\1440-after.png",
+    "file": "verification/hover/1440-after.png",
+    "bytes": 286514,
+    "sha256": "8d1eb9f6973d325cb4695825b8838b7764cd7fa6b2cb8750de164703a2837725"
+  },
+  {
+    "source": ".superpowers\\closure\\hover\\1440-before.png",
+    "file": "verification/hover/1440-before.png",
+    "bytes": 286514,
+    "sha256": "8d1eb9f6973d325cb4695825b8838b7764cd7fa6b2cb8750de164703a2837725"
+  },
+  {
+    "source": ".superpowers\\closure\\hover\\1440-hover.png",
+    "file": "verification/hover/1440-hover.png",
+    "bytes": 286529,
+    "sha256": "de7bd3f4d1499a7cba36f5cbb65fcfff1af76c8dbe82ff5ad9b55a0587829218"
+  },
+  {
+    "source": ".superpowers\\closure\\hover\\390-after.png",
+    "file": "verification/hover/390-after.png",
+    "bytes": 54837,
+    "sha256": "dc6c18a51e988a7999704c8a0b17a003bbd5b64a1776f7ee8c6be753cc04bbc2"
+  },
+  {
+    "source": ".superpowers\\closure\\hover\\390-before.png",
+    "file": "verification/hover/390-before.png",
+    "bytes": 54837,
+    "sha256": "dc6c18a51e988a7999704c8a0b17a003bbd5b64a1776f7ee8c6be753cc04bbc2"
+  },
+  {
+    "source": ".superpowers\\closure\\hover\\390-hover.png",
+    "file": "verification/hover/390-hover.png",
+    "bytes": 54805,
+    "sha256": "98c9daf7905e1442ce4514b63b6f73b6d9ed19e49ffb76e37eb82e9bd610f48f"
+  },
+  {
+    "source": ".superpowers\\closure\\owner-camera\\cau-cat-mat-phang-1440-auxiliary-on.png",
+    "file": "verification/owner-camera/cau-cat-mat-phang-1440-auxiliary-on.png",
+    "bytes": 285306,
+    "sha256": "bebb232c1cea59765f2ee4820eadc4bbb721d8acaddd7426b35034c33d58a87f"
+  },
+  {
+    "source": ".superpowers\\closure\\owner-camera\\cau-cat-mat-phang-1440-free-orbit.png",
+    "file": "verification/owner-camera/cau-cat-mat-phang-1440-free-orbit.png",
+    "bytes": 255794,
+    "sha256": "403b032283adfa5261f71c56f35058a6d4065bbfe7ec16cee8051554962b1dc6"
+  },
+  {
+    "source": ".superpowers\\closure\\owner-camera\\cau-cat-mat-phang-1440-sgk-mode-a.png",
+    "file": "verification/owner-camera/cau-cat-mat-phang-1440-sgk-mode-a.png",
+    "bytes": 258897,
+    "sha256": "2c49bf4208bb1ebc164e03d148968f76d8e5d252fe2cdd39bcf28e4036b071c1"
+  },
+  {
+    "source": ".superpowers\\closure\\owner-camera\\cau-cat-mat-phang-1440-top-or-polar-view.png",
+    "file": "verification/owner-camera/cau-cat-mat-phang-1440-top-or-polar-view.png",
+    "bytes": 288706,
+    "sha256": "391e557d71b1461359661f962c5c90f99fbb473e48e76cb2452146e6f35f2fb3"
+  },
+  {
+    "source": ".superpowers\\closure\\owner-camera\\cau-cat-mat-phang-390-auxiliary-on.png",
+    "file": "verification/owner-camera/cau-cat-mat-phang-390-auxiliary-on.png",
+    "bytes": 217890,
+    "sha256": "9847ec9009f90816d0abc4ec1884946d16fb28122e45b9b785875333b3062193"
+  },
+  {
+    "source": ".superpowers\\closure\\owner-camera\\cau-cat-mat-phang-390-free-orbit.png",
+    "file": "verification/owner-camera/cau-cat-mat-phang-390-free-orbit.png",
+    "bytes": 247230,
+    "sha256": "e58ebee69c481c9b252d2bbab1e6e848243f2390c65ddb2ae449a6bcf7756937"
+  },
+  {
+    "source": ".superpowers\\closure\\owner-camera\\cau-cat-mat-phang-390-sgk-mode-a.png",
+    "file": "verification/owner-camera/cau-cat-mat-phang-390-sgk-mode-a.png",
+    "bytes": 258467,
+    "sha256": "6c261623fb05cd325b1eae4ef8d37df9debb247ab02a3b37e135956c09ae4919"
+  },
+  {
+    "source": ".superpowers\\closure\\owner-camera\\cau-cat-mat-phang-390-top-or-polar-view.png",
+    "file": "verification/owner-camera/cau-cat-mat-phang-390-top-or-polar-view.png",
+    "bytes": 245675,
+    "sha256": "6a1388f84957d8a968a73444963ec7038b720e6d1f3bef2c9905c3d6973355c1"
+  },
+  {
+    "source": ".superpowers\\closure\\owner-camera\\coincident-points-1440-free-orbit.png",
+    "file": "verification/owner-camera/coincident-points-1440-free-orbit.png",
+    "bytes": 289369,
+    "sha256": "8b9f5257ba951bb2a4da23bfbb289e9482b0791e91c5d8b7490acd55bdbe4bc3"
+  },
+  {
+    "source": ".superpowers\\closure\\owner-camera\\coincident-points-1440-sgk-mode-a.png",
+    "file": "verification/owner-camera/coincident-points-1440-sgk-mode-a.png",
+    "bytes": 341430,
+    "sha256": "6c28dd118572e0d86aa65db55e49eb7aae69b69438ecf312a062e0f6068f8d48"
+  },
+  {
+    "source": ".superpowers\\closure\\owner-camera\\coincident-points-1440-top-or-polar-view.png",
+    "file": "verification/owner-camera/coincident-points-1440-top-or-polar-view.png",
+    "bytes": 278433,
+    "sha256": "f44ad920862598b68ef97a0c499035de5e1d421ec96c405084d50b402f032248"
+  },
+  {
+    "source": ".superpowers\\closure\\owner-camera\\coincident-points-390-free-orbit.png",
+    "file": "verification/owner-camera/coincident-points-390-free-orbit.png",
+    "bytes": 258230,
+    "sha256": "adff17c241d9e4f1cd22eba5b72258c122c74052ac90917f42bee33d7e656a2f"
+  },
+  {
+    "source": ".superpowers\\closure\\owner-camera\\coincident-points-390-sgk-mode-a.png",
+    "file": "verification/owner-camera/coincident-points-390-sgk-mode-a.png",
+    "bytes": 288055,
+    "sha256": "fb7097931c2d3092e54bb8f25698b96d4deda2971a207e51512c56e2577ab066"
+  },
+  {
+    "source": ".superpowers\\closure\\owner-camera\\coincident-points-390-top-or-polar-view.png",
+    "file": "verification/owner-camera/coincident-points-390-top-or-polar-view.png",
+    "bytes": 258928,
+    "sha256": "aa0e4c51db6d66e6ce5c4657d01ca82004dfcabc23c09545cd1c44e47ca18241"
+  },
+  {
+    "source": ".superpowers\\closure\\owner-camera\\receipt.json",
+    "file": "verification/owner-camera/receipt.json",
+    "bytes": 8109,
+    "sha256": "c32a12b5475767af857735762816dc70acfc0f4d87624bd3914ceb0ddfebae51"
+  },
+  {
+    "source": ".superpowers\\closure\\owner-camera\\thiet-dien-chop-1440-free-orbit.png",
+    "file": "verification/owner-camera/thiet-dien-chop-1440-free-orbit.png",
+    "bytes": 311715,
+    "sha256": "cf204a02541ba1f718e87ffcc3fc1b3b0c478222ade018b5bfd16c43ee18127b"
+  },
+  {
+    "source": ".superpowers\\closure\\owner-camera\\thiet-dien-chop-1440-sgk-mode-a.png",
+    "file": "verification/owner-camera/thiet-dien-chop-1440-sgk-mode-a.png",
+    "bytes": 340872,
+    "sha256": "ebdf68b1d456f13481779bf469fcd7fc0e4b377eb55f6a0dce3e015809c8f5fa"
+  },
+  {
+    "source": ".superpowers\\closure\\owner-camera\\thiet-dien-chop-1440-top-or-polar-view.png",
+    "file": "verification/owner-camera/thiet-dien-chop-1440-top-or-polar-view.png",
+    "bytes": 261947,
+    "sha256": "ec6a25dca7f3e589d253fd24ec0c0f645a069a5c34bd5f4eb6dee40760ea9515"
+  },
+  {
+    "source": ".superpowers\\closure\\owner-camera\\thiet-dien-chop-390-free-orbit.png",
+    "file": "verification/owner-camera/thiet-dien-chop-390-free-orbit.png",
+    "bytes": 264137,
+    "sha256": "b5d5222b89caebcf6b16bba2740ffa4e1971271ab8d95e69c0f1ef508f2bc9b8"
+  },
+  {
+    "source": ".superpowers\\closure\\owner-camera\\thiet-dien-chop-390-sgk-mode-a.png",
+    "file": "verification/owner-camera/thiet-dien-chop-390-sgk-mode-a.png",
+    "bytes": 269621,
+    "sha256": "5c036d8d4da53b360ab9325be417b60412a9de5f4d8b09265b3a60ec09266342"
+  },
+  {
+    "source": ".superpowers\\closure\\owner-camera\\thiet-dien-chop-390-top-or-polar-view.png",
+    "file": "verification/owner-camera/thiet-dien-chop-390-top-or-polar-view.png",
+    "bytes": 237454,
+    "sha256": "c448bab753c85cb0d64d01217a2689b7f640cb8a4c8c4e53471568d0c65d02ff"
+  },
+  {
+    "source": ".superpowers\\closure\\section-role-v2\\1440-selected.png",
+    "file": "verification/section-role/1440-selected.png",
+    "bytes": 307843,
+    "sha256": "0134b007863a658cfed85dfd3d00a5720b8d2c2fc0983973632b5a7514569b2d"
+  },
+  {
+    "source": ".superpowers\\closure\\section-role-v2\\1440-wrong-target-color.png",
+    "file": "verification/section-role/1440-wrong-target-color.png",
+    "bytes": 317124,
+    "sha256": "2d3e47bcbf5b3514337f8b89a21c25a1bda44dc764f9655066dbce2e0f6c617d"
+  },
+  {
+    "source": ".superpowers\\closure\\section-role-v2\\390-selected.png",
+    "file": "verification/section-role/390-selected.png",
+    "bytes": 186763,
+    "sha256": "d9270ff0adbb8cf0c41fd80d9360056b385be60a7608c5e9b9878aaa1e3f99e1"
+  },
+  {
+    "source": ".superpowers\\closure\\section-role-v2\\390-wrong-target-color.png",
+    "file": "verification/section-role/390-wrong-target-color.png",
+    "bytes": 186904,
+    "sha256": "579228d4e7b67585a93eb606d58f605b86c3652495b9fd6ee6b503d98b394e0e"
+  },
+  {
+    "source": ".superpowers\\closure\\section-role-v2\\receipt.json",
+    "file": "verification/section-role/receipt.json",
+    "bytes": 5834,
+    "sha256": "31f9b8927569c71a2912b17dbcaa0ad55f1c4a92fee6c3d9b8549d937793f443"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\annotations_resized.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/annotations_resized.png",
+    "bytes": 885254,
+    "sha256": "2c8c59684f52635f8e7bf8e54d3ca3feb10f82a7a9c80bec5d64d763c1aebba3"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\causal_restored.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/causal_restored.png",
+    "bytes": 346509,
+    "sha256": "277702e52c5a94426ae284063f7a320b7202b80980073b6448773afda0b76159"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\causal_selected.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/causal_selected.png",
+    "bytes": 340794,
+    "sha256": "598f3e8e30c077f54e9e0028d15b38156238bc6fb77245199c1b9ee5dcdbe095"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\detail_area.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/detail_area.png",
+    "bytes": 11065,
+    "sha256": "408baf5bd052b0b4db9e4bfdb84c462bf356a89be22457b0d37d57ff368e2fcb"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\detail_length.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/detail_length.png",
+    "bytes": 6246,
+    "sha256": "a852362ab7016770169750cc6f5c2698be4b9a887bde8571166c50ae04884836"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\detail_volume.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/detail_volume.png",
+    "bytes": 12758,
+    "sha256": "8b1f27991783c962c8aa563f12b6f8ba21e07a91e728400e7ba5a2dcd4bbd82e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\mode_b_reveal.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/mode_b_reveal.png",
+    "bytes": 346509,
+    "sha256": "277702e52c5a94426ae284063f7a320b7202b80980073b6448773afda0b76159"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\neutral_final.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/neutral_final.png",
+    "bytes": 337754,
+    "sha256": "ff264ba0c40b8ac357b6dbdc9c3e120452a24fa6123a4094ba42678cc5330508"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\quantity_picker.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/quantity_picker.png",
+    "bytes": 343529,
+    "sha256": "2f5ab3bd656e98d1bd292d63024793a2be62cff7d59e6ac97b480b1fdeb7e805"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\rotated_neutral.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/rotated_neutral.png",
+    "bytes": 318388,
+    "sha256": "9414f55f03d1c8d7062b558e37df100272a1d91d253a4000105aa5b79405f5b0"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\selected_area.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/selected_area.png",
+    "bytes": 358328,
+    "sha256": "ad221ad86c9162902b1ce8ead7a844c3a8e003ec3ad39b2ac51dcbe2171998d0"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\selected_length.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/selected_length.png",
+    "bytes": 356052,
+    "sha256": "b4c136a63511a5a93769d36c9f26ff20001a88b75f396e8719bfcb15b1832188"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\selected_volume.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/selected_volume.png",
+    "bytes": 340399,
+    "sha256": "fb0b229b215ca80ce23778da9c874f94da287a3f6a720ba94a0f87e50d6c669d"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\show_all.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/show_all.png",
+    "bytes": 341401,
+    "sha256": "14eeddebdc32c3a31b19d49267c142268d37edb0204035e01b88220226ac8746"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\solution_causal_selected.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/solution_causal_selected.png",
+    "bytes": 11940,
+    "sha256": "350d26972b1a111c91c3be90420460bbce14983c206826b40ba126f519489729"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\mobile\\causal_restored.png",
+    "file": "visual/official/screenshots/triangular-pyramid/mobile/causal_restored.png",
+    "bytes": 294329,
+    "sha256": "c045ca9aaff3507a0eb0c87906948d455ffa0a05ed8e6ab773cb0d41c4fd534e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\mobile\\causal_selected.png",
+    "file": "visual/official/screenshots/triangular-pyramid/mobile/causal_selected.png",
+    "bytes": 294372,
+    "sha256": "ce761d4c079cc5ae013ab2273b55af29dfd34827b98733a846006cf59b8d319a"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\mobile\\detail_area.png",
+    "file": "visual/official/screenshots/triangular-pyramid/mobile/detail_area.png",
+    "bytes": 33058,
+    "sha256": "fdafcc71ed815d6116c93815bad367d104c994f8bd33b3739f7e4c513ed69564"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\mobile\\detail_length.png",
+    "file": "visual/official/screenshots/triangular-pyramid/mobile/detail_length.png",
+    "bytes": 18392,
+    "sha256": "2f8266dd77bb1643659265dcf9bafb202931445ce6f6fb9c2ab696ad89d4d1c2"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\mobile\\detail_volume.png",
+    "file": "visual/official/screenshots/triangular-pyramid/mobile/detail_volume.png",
+    "bytes": 39160,
+    "sha256": "f2622a71964cd1639b648d2f962fb9920e1485b1df7b68955efd1a6dab21dd7e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\mobile\\mode_b_reveal.png",
+    "file": "visual/official/screenshots/triangular-pyramid/mobile/mode_b_reveal.png",
+    "bytes": 297087,
+    "sha256": "3d1de5192106df91355497c46c4f1bc0bb609f632ea05d8bdcc7da77ec6d57b7"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\mobile\\neutral_final.png",
+    "file": "visual/official/screenshots/triangular-pyramid/mobile/neutral_final.png",
+    "bytes": 295921,
+    "sha256": "4430d7c285aaf0f4cfce74f7a572e18edf6c4ce8d53e1380aa79352b28c67dd0"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\mobile\\quantity_picker.png",
+    "file": "visual/official/screenshots/triangular-pyramid/mobile/quantity_picker.png",
+    "bytes": 272106,
+    "sha256": "8432c1508d4839495d1d7510331b58ac023b2c359e6ccb87bce1a87c601d0d5f"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\mobile\\rotated_neutral.png",
+    "file": "visual/official/screenshots/triangular-pyramid/mobile/rotated_neutral.png",
+    "bytes": 279193,
+    "sha256": "291286e015412629029fe0d3f30135dce106d19afa6b08ab2921996654de4453"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\mobile\\selected_area.png",
+    "file": "visual/official/screenshots/triangular-pyramid/mobile/selected_area.png",
+    "bytes": 295760,
+    "sha256": "c60da3513e4503da4f508b13437c8e12008c3a03a1dc5a55ce9a5e4388082a2f"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\mobile\\selected_length.png",
+    "file": "visual/official/screenshots/triangular-pyramid/mobile/selected_length.png",
+    "bytes": 293741,
+    "sha256": "cf77454c0cca51a3c13fb7d4a4aa83bcf32921f0e63d4752eeaac5da373472ed"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\mobile\\selected_volume.png",
+    "file": "visual/official/screenshots/triangular-pyramid/mobile/selected_volume.png",
+    "bytes": 294372,
+    "sha256": "ce761d4c079cc5ae013ab2273b55af29dfd34827b98733a846006cf59b8d319a"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\mobile\\show_all.png",
+    "file": "visual/official/screenshots/triangular-pyramid/mobile/show_all.png",
+    "bytes": 298595,
+    "sha256": "698a999617060af98b69fbdf6c4e4da48c0638b3d441177a87b2c559084828ca"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\mobile\\solution_causal_selected.png",
+    "file": "visual/official/screenshots/triangular-pyramid/mobile/solution_causal_selected.png",
+    "bytes": 31731,
+    "sha256": "ebb2e1f428296dfa108fbc9ff8ca1bb34d824b7d92fc060aa0910c6129f0c72e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\formation\\formation_step_0.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/formation/formation_step_0.png",
+    "bytes": 260262,
+    "sha256": "9cb32d4451dc4fa9d8eee11d7da6e848faf4b557bbaa4e36712b7a5b5738aa77"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\formation\\formation_step_1.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/formation/formation_step_1.png",
+    "bytes": 269381,
+    "sha256": "03f449a8646a8bd8bd0adf06a00a952a7e58a8aef81238038eb8ce270d408838"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\formation\\formation_step_2.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/formation/formation_step_2.png",
+    "bytes": 304449,
+    "sha256": "15e157e7e8e787e6a1cbae9304c91bcda9814f50cc28fa5afb7dddeb6c4bc457"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\formation\\formation_step_3.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/formation/formation_step_3.png",
+    "bytes": 323889,
+    "sha256": "3405fd25645be2aa169bfd19f9bb5700be36ab9c42fd4b837760cd30ce7c48f9"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\formation\\formation_step_4.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/formation/formation_step_4.png",
+    "bytes": 312044,
+    "sha256": "beb46acf4347323b45b0e5b3c034e553919f569ec8a1370314bb112bf7b57294"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\formation\\steps_panel_closed.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/formation/steps_panel_closed.png",
+    "bytes": 294299,
+    "sha256": "a6a556121f32f3b11eb1b7c309c603a1f55e781391183b74e9bdf9580380d5dc"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\desktop\\formation\\steps_panel_open.png",
+    "file": "visual/official/screenshots/triangular-pyramid/desktop/formation/steps_panel_open.png",
+    "bytes": 304449,
+    "sha256": "15e157e7e8e787e6a1cbae9304c91bcda9814f50cc28fa5afb7dddeb6c4bc457"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\mobile\\formation\\formation_current_step.png",
+    "file": "visual/official/screenshots/triangular-pyramid/mobile/formation/formation_current_step.png",
+    "bytes": 274665,
+    "sha256": "2aab1c5d4cd3e6000c239c5204a3bbbd0fe3c547267aa738d72b4fc7666ee559"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\mobile\\formation\\steps_panel_closed.png",
+    "file": "visual/official/screenshots/triangular-pyramid/mobile/formation/steps_panel_closed.png",
+    "bytes": 273863,
+    "sha256": "ec68308abf3e3eb56ebc1408749fce8e128c3c285c82a49ccd1dd639d8a382f2"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\mobile\\formation\\steps_panel_open.png",
+    "file": "visual/official/screenshots/triangular-pyramid/mobile/formation/steps_panel_open.png",
+    "bytes": 277985,
+    "sha256": "e7f8db2416c4713cfb5d71b823eed97dc939b1da476fe55776b039d70134010c"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\negative\\assumption\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/triangular-pyramid/negative/assumption/desktop/refusal.png",
+    "bytes": 64774,
+    "sha256": "6eaf26adc4be79021a34d77a6ada4cc6c2ce5f577a78fb3485659ff59b93d8fd"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\negative\\assumption\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/triangular-pyramid/negative/assumption/mobile/refusal.png",
+    "bytes": 134339,
+    "sha256": "115091ae41b488ed28fe6f07f3833d21d91a270292d89d427a984c022389b4e5"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\negative\\topology_kernel\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/triangular-pyramid/negative/topology_kernel/desktop/refusal.png",
+    "bytes": 58341,
+    "sha256": "9fc69a8f8b8ecba22a7daff63ab63e1e6759ceadc407e0c2faba7e0c924dbab8"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\negative\\topology_kernel\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/triangular-pyramid/negative/topology_kernel/mobile/refusal.png",
+    "bytes": 124233,
+    "sha256": "a04290451aeb8c3266c534664c0919d5cb3811e88ea080cb6f220c5b1784b33c"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\negative\\ungrounded_source\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/triangular-pyramid/negative/ungrounded_source/desktop/refusal.png",
+    "bytes": 60473,
+    "sha256": "e078c9cd1ea9d3455a8a6e89ef55d3a3a44d329b8b62a80c1a05b10d514d1ce8"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-pyramid\\negative\\ungrounded_source\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/triangular-pyramid/negative/ungrounded_source/mobile/refusal.png",
+    "bytes": 128193,
+    "sha256": "2a92737816c4a95aad54ee0e666170bdbcc6e4fbe214ac7a90195188ad25bef0"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\annotations_resized.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/annotations_resized.png",
+    "bytes": 888319,
+    "sha256": "892e50ed93af5a48f94d329882f65764ae6fb0007ea87da37595ea056fe32ef2"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\causal_restored.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/causal_restored.png",
+    "bytes": 347110,
+    "sha256": "f3532eff4485539b51005f1004d609a76636319f7088d78ec3d77de457bd64ad"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\causal_selected.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/causal_selected.png",
+    "bytes": 332855,
+    "sha256": "c66ea93351111bad86e3382af63f18062700a9f2cb2db056e2811be6c051ef58"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\detail_area.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/detail_area.png",
+    "bytes": 11065,
+    "sha256": "408baf5bd052b0b4db9e4bfdb84c462bf356a89be22457b0d37d57ff368e2fcb"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\detail_length.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/detail_length.png",
+    "bytes": 6246,
+    "sha256": "a852362ab7016770169750cc6f5c2698be4b9a887bde8571166c50ae04884836"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\detail_volume.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/detail_volume.png",
+    "bytes": 12757,
+    "sha256": "91242d00b1eb680fae63f94e6030627b0d1437be476815feefae1bb9b5741142"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\mode_b_reveal.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/mode_b_reveal.png",
+    "bytes": 347110,
+    "sha256": "f3532eff4485539b51005f1004d609a76636319f7088d78ec3d77de457bd64ad"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\neutral_final.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/neutral_final.png",
+    "bytes": 359079,
+    "sha256": "88ab2e368c5bbf4bdaab4a68e2485f05a3bf849f5ccdd63fa005fdfe04c7376e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\quantity_picker.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/quantity_picker.png",
+    "bytes": 359376,
+    "sha256": "e23611dbf5b81eb4421c0f114b9ed631b8e2d57c7209df6111173460c228f350"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\rotated_neutral.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/rotated_neutral.png",
+    "bytes": 351703,
+    "sha256": "8a1a7b7b54658041748669715866f37bae94c6fd0537f98078940d6b3b796e3e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\selected_area.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/selected_area.png",
+    "bytes": 352678,
+    "sha256": "238dedc49852ff751df1f7b0c28d8e88ae5f337749b180a52ad6e91465718bb7"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\selected_length.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/selected_length.png",
+    "bytes": 356938,
+    "sha256": "f98977a1691da45a7aefd9dcee470c29e18d07155fdfd74c125dcf3627dfe127"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\selected_volume.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/selected_volume.png",
+    "bytes": 332436,
+    "sha256": "ad9d2b1a560f71bf5189d5dcff91a5de7303c6f1e815ad7618f53e13986d1d66"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\show_all.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/show_all.png",
+    "bytes": 361136,
+    "sha256": "f70a21de0b941ff5006691ddd4cf843e36823c1b0a19c223c7982577303e4734"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\solution_causal_selected.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/solution_causal_selected.png",
+    "bytes": 12001,
+    "sha256": "1a5d0d7539a77520ea3d042cce8d7da48a65dcd45390379e1b3b89d3c3bfd0ea"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\mobile\\causal_restored.png",
+    "file": "visual/official/screenshots/triangular-prism/mobile/causal_restored.png",
+    "bytes": 286290,
+    "sha256": "5000d82cc394d42d7823c4ccfc94d54014210c59d2cd609130d457fe130e533b"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\mobile\\causal_selected.png",
+    "file": "visual/official/screenshots/triangular-prism/mobile/causal_selected.png",
+    "bytes": 285475,
+    "sha256": "99b0fa83bc200c1166d97c2d5bd8d2401108c91ebb752f23e3d39badfa07eda2"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\mobile\\detail_area.png",
+    "file": "visual/official/screenshots/triangular-prism/mobile/detail_area.png",
+    "bytes": 33058,
+    "sha256": "fdafcc71ed815d6116c93815bad367d104c994f8bd33b3739f7e4c513ed69564"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\mobile\\detail_length.png",
+    "file": "visual/official/screenshots/triangular-prism/mobile/detail_length.png",
+    "bytes": 18392,
+    "sha256": "2f8266dd77bb1643659265dcf9bafb202931445ce6f6fb9c2ab696ad89d4d1c2"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\mobile\\detail_volume.png",
+    "file": "visual/official/screenshots/triangular-prism/mobile/detail_volume.png",
+    "bytes": 39111,
+    "sha256": "b4148aee300f5dec8c807d8f37b9c08b597204dc30c48abeb572000958c4753a"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\mobile\\mode_b_reveal.png",
+    "file": "visual/official/screenshots/triangular-prism/mobile/mode_b_reveal.png",
+    "bytes": 290096,
+    "sha256": "bd84f7d8dc324aab0e175570d5fc4b9c5943600e1b863d08f234c82a60ca2f56"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\mobile\\neutral_final.png",
+    "file": "visual/official/screenshots/triangular-prism/mobile/neutral_final.png",
+    "bytes": 288869,
+    "sha256": "0a7aa7eecc12de1a0bf500e06cc4d580da1bf44009daf2e3b7fb1138a740b124"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\mobile\\quantity_picker.png",
+    "file": "visual/official/screenshots/triangular-prism/mobile/quantity_picker.png",
+    "bytes": 264953,
+    "sha256": "f9b596ba5bace1e6638be6f828bf27a75f0b32dfc2ce14a006ed0dcaac84382a"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\mobile\\rotated_neutral.png",
+    "file": "visual/official/screenshots/triangular-prism/mobile/rotated_neutral.png",
+    "bytes": 287385,
+    "sha256": "14e7d3c709ed2a05a9fbb7d619d968fa38d7d7354978c8a1587c25009b17b724"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\mobile\\selected_area.png",
+    "file": "visual/official/screenshots/triangular-prism/mobile/selected_area.png",
+    "bytes": 288261,
+    "sha256": "fc745256656d831e887f3de3910701648dffb09c1cb8761841380bcedb332302"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\mobile\\selected_length.png",
+    "file": "visual/official/screenshots/triangular-prism/mobile/selected_length.png",
+    "bytes": 285913,
+    "sha256": "aa3c6fc1d9659b6e1fd0b46ac2b32715abf8864eceb5210bb7885b41a6c4bb67"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\mobile\\selected_volume.png",
+    "file": "visual/official/screenshots/triangular-prism/mobile/selected_volume.png",
+    "bytes": 285475,
+    "sha256": "99b0fa83bc200c1166d97c2d5bd8d2401108c91ebb752f23e3d39badfa07eda2"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\mobile\\show_all.png",
+    "file": "visual/official/screenshots/triangular-prism/mobile/show_all.png",
+    "bytes": 292246,
+    "sha256": "4a77b7c3cb8c5fb5e2ea29e4911cd544589acce178480dcaa929d17b9e3960a3"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\mobile\\solution_causal_selected.png",
+    "file": "visual/official/screenshots/triangular-prism/mobile/solution_causal_selected.png",
+    "bytes": 31977,
+    "sha256": "79ea26af5f4c3ce8f1aa652ec3609470d9e1f2818912931d757c11b29b0ae0e4"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\formation\\formation_step_0.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/formation/formation_step_0.png",
+    "bytes": 262250,
+    "sha256": "f71c5a5c0f2c2775b04472ba9300c94f04a9c07a91c8c5e8413797502dc65721"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\formation\\formation_step_1.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/formation/formation_step_1.png",
+    "bytes": 272473,
+    "sha256": "220497d30bf74211d4645b807741de41bc4253b3e77285cc0391104b91dd8114"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\formation\\formation_step_2.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/formation/formation_step_2.png",
+    "bytes": 273542,
+    "sha256": "872849a8bd331aff9790d15169569b5b8003969218f27277b4ccc5f579918090"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\formation\\formation_step_3.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/formation/formation_step_3.png",
+    "bytes": 338854,
+    "sha256": "49ffcb674dd49fd1b5de2f4161a510e9d2450e2465e588e6c965e42793ad34bf"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\formation\\formation_step_4.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/formation/formation_step_4.png",
+    "bytes": 320532,
+    "sha256": "4c6329629922c32e0644fa80d563cf177799a5fb0ce606bfbefe1b09aa7a724c"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\formation\\steps_panel_closed.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/formation/steps_panel_closed.png",
+    "bytes": 244634,
+    "sha256": "683ab0d23603f4be017a24cca45c522cc8ba1fa1d23c4fff25faba59ede6b601"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\desktop\\formation\\steps_panel_open.png",
+    "file": "visual/official/screenshots/triangular-prism/desktop/formation/steps_panel_open.png",
+    "bytes": 273542,
+    "sha256": "872849a8bd331aff9790d15169569b5b8003969218f27277b4ccc5f579918090"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\mobile\\formation\\formation_current_step.png",
+    "file": "visual/official/screenshots/triangular-prism/mobile/formation/formation_current_step.png",
+    "bytes": 243831,
+    "sha256": "5b53f1f028b4daed160114fc13835279f1e320b6fcc944f46fb77a921157c0a5"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\mobile\\formation\\steps_panel_closed.png",
+    "file": "visual/official/screenshots/triangular-prism/mobile/formation/steps_panel_closed.png",
+    "bytes": 243189,
+    "sha256": "753f3dbc2b6ad9db6ba3a8dbcc2ca39f35746874711350bb9a7340e8a0c24b25"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\mobile\\formation\\steps_panel_open.png",
+    "file": "visual/official/screenshots/triangular-prism/mobile/formation/steps_panel_open.png",
+    "bytes": 247579,
+    "sha256": "9d993277ab5c8ce22107c35d25b4505b1193cc9f6364898c7e2c6a3c44c34be2"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\negative\\assumption\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/triangular-prism/negative/assumption/desktop/refusal.png",
+    "bytes": 64067,
+    "sha256": "30cdf7cdbc0954c9886692b6e1dafc7f85bee543e7eec15c4de8cdb89ea8405e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\negative\\assumption\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/triangular-prism/negative/assumption/mobile/refusal.png",
+    "bytes": 129769,
+    "sha256": "07e3f9b43c38c8e71a95129005d9f82023e128a54679c796dfcdd92debdf4562"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\negative\\topology_kernel\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/triangular-prism/negative/topology_kernel/desktop/refusal.png",
+    "bytes": 57560,
+    "sha256": "fa8f401b51bc9138c364197d2069b53cea544072d6a9df900fbd663342ea2d86"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\negative\\topology_kernel\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/triangular-prism/negative/topology_kernel/mobile/refusal.png",
+    "bytes": 120516,
+    "sha256": "19ebb658c2c45b37be7a334fa0d6b10a4b6fcf06cf4e036b13d32cc3db0d221e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\negative\\ungrounded_source\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/triangular-prism/negative/ungrounded_source/desktop/refusal.png",
+    "bytes": 59573,
+    "sha256": "24db2fa05ae685ef930b2bee6dcccb20c499be3a0846ea70c25213d357709a45"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\triangular-prism\\negative\\ungrounded_source\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/triangular-prism/negative/ungrounded_source/mobile/refusal.png",
+    "bytes": 124251,
+    "sha256": "3c2d21a037cbff32c72448c4d9a4c85b7a724213e47669adf7e09ddc5e0a9074"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\annotations_resized.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/annotations_resized.png",
+    "bytes": 889712,
+    "sha256": "db527e94f5d040c14ad758a21cb9322771f3303bd705ed6d8fc2e033b7771de0"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\causal_restored.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/causal_restored.png",
+    "bytes": 332158,
+    "sha256": "19f7f17c8f349455be82094d2f5d0e9ee06f7ba93225525dcf5f0a1019084ab0"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\causal_selected.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/causal_selected.png",
+    "bytes": 329483,
+    "sha256": "8794386818b67e39c36b5fcd0a166b8d9054938e574095633450cab7a1469ea8"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\detail_area.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/detail_area.png",
+    "bytes": 11104,
+    "sha256": "6983aa54267424bd25bc36d4bfe4cacef67a9708987145e0e0194e98d2eebd97"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\detail_length.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/detail_length.png",
+    "bytes": 6246,
+    "sha256": "a852362ab7016770169750cc6f5c2698be4b9a887bde8571166c50ae04884836"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\detail_volume.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/detail_volume.png",
+    "bytes": 12753,
+    "sha256": "5d85031a770667f323b04131610a069f8487c57fd38a3cf8c2493835368ee42d"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\mode_b_reveal.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/mode_b_reveal.png",
+    "bytes": 332158,
+    "sha256": "19f7f17c8f349455be82094d2f5d0e9ee06f7ba93225525dcf5f0a1019084ab0"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\neutral_final.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/neutral_final.png",
+    "bytes": 328366,
+    "sha256": "188b0f6040bce9e236a7e0fdc998d5c979bcde73d2f294953b6db2be3c9bc68e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\quantity_picker.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/quantity_picker.png",
+    "bytes": 333397,
+    "sha256": "ccc7f05f1554f9a34fa3ba06b11754e3a91e1282a76d16498c8e41710fb0c536"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\rotated_neutral.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/rotated_neutral.png",
+    "bytes": 299628,
+    "sha256": "7038c5e26ae0990f3a5ee9c70455aefad0027b7ef7d0ad05546b1eb0b452721c"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\selected_area.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/selected_area.png",
+    "bytes": 342171,
+    "sha256": "8834a8d61da967a07205836295cf5f75dc944ce37be698a4e9ec5720edad5b22"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\selected_length.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/selected_length.png",
+    "bytes": 336760,
+    "sha256": "b2d45269021eba31701d32825fa4e8db3fcbe706d6fe9b8b00dbc0ac97988302"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\selected_volume.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/selected_volume.png",
+    "bytes": 329137,
+    "sha256": "fcd45be86f5da53523c6531192b50a8b43cca5b3abf53564470df90b25412b31"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\show_all.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/show_all.png",
+    "bytes": 331314,
+    "sha256": "27daeca1f09517c15672a5b4553ee38c614478a82653fe2f7365b134c76ca56b"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\solution_causal_selected.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/solution_causal_selected.png",
+    "bytes": 12224,
+    "sha256": "ac793655cd8a9af372a228e3335e6b076a14bb59b9588b19472d5ffa36894467"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\mobile\\causal_restored.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/mobile/causal_restored.png",
+    "bytes": 281126,
+    "sha256": "f444f88d965f63ad1bff6eaad026fa6e776c3e20377d05d7a12f491ce94acdd9"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\mobile\\causal_selected.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/mobile/causal_selected.png",
+    "bytes": 278405,
+    "sha256": "3fc894a8a91b0686ded880d3e2e29e92cde10464fe381d967b8fe04aa941082a"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\mobile\\detail_area.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/mobile/detail_area.png",
+    "bytes": 33507,
+    "sha256": "bd7ac5b2a65f3ca0d8ef3932374c53111d40b7ac95a5e15e5cc86642f7d57d6a"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\mobile\\detail_length.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/mobile/detail_length.png",
+    "bytes": 18392,
+    "sha256": "2f8266dd77bb1643659265dcf9bafb202931445ce6f6fb9c2ab696ad89d4d1c2"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\mobile\\detail_volume.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/mobile/detail_volume.png",
+    "bytes": 39832,
+    "sha256": "65c5fe9a49ae3f05a8867d2922879f77ece29a9941f4f34ddf31ede7feb51749"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\mobile\\mode_b_reveal.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/mobile/mode_b_reveal.png",
+    "bytes": 284899,
+    "sha256": "b26e12ec79cff8cb756e3b6038f086dd21f16de6d8aa53837463d5965ad7eb24"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\mobile\\neutral_final.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/mobile/neutral_final.png",
+    "bytes": 283686,
+    "sha256": "c741e135239cb1bc22d537ca2011bce31b4809e8e264066fb25b3865cba259a2"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\mobile\\quantity_picker.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/mobile/quantity_picker.png",
+    "bytes": 260406,
+    "sha256": "dc0164480308a0e5ed1ef83ed28c2779b0b4230a981d31ece7bfe0e6ba56d8ea"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\mobile\\rotated_neutral.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/mobile/rotated_neutral.png",
+    "bytes": 262425,
+    "sha256": "6366614dc91b841886463adf78bcc327637a750341ac95d989a7e14fb13ead6d"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\mobile\\selected_area.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/mobile/selected_area.png",
+    "bytes": 282018,
+    "sha256": "4e5a10420190ed67d30b7a30051457e88e927d388002b19564826d8b68a81ef6"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\mobile\\selected_length.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/mobile/selected_length.png",
+    "bytes": 279958,
+    "sha256": "f8a23a2119b4e8f49157578523912efa5dcb88d2dc1949e2703afbe4abff02c8"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\mobile\\selected_volume.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/mobile/selected_volume.png",
+    "bytes": 278405,
+    "sha256": "3fc894a8a91b0686ded880d3e2e29e92cde10464fe381d967b8fe04aa941082a"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\mobile\\show_all.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/mobile/show_all.png",
+    "bytes": 287445,
+    "sha256": "6e3e4da387ecf7695d12db26c609f4e758e9e8576a55952d6606aac7cd84e1be"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\mobile\\solution_causal_selected.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/mobile/solution_causal_selected.png",
+    "bytes": 32846,
+    "sha256": "8e8fb439244a888ebad7a2f605e79ec1e63da5c599ef096e7a32f4a5d7881896"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\formation\\formation_step_0.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/formation/formation_step_0.png",
+    "bytes": 257774,
+    "sha256": "5ba7b83941531829376f6657c9f40f4d27fa388282c17077229524d32355ffee"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\formation\\formation_step_1.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/formation/formation_step_1.png",
+    "bytes": 266921,
+    "sha256": "05276cb50217d4b2faf3d431ce1f3928ed420119aabef6d5c7f0bf1273eb72cc"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\formation\\formation_step_2.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/formation/formation_step_2.png",
+    "bytes": 297415,
+    "sha256": "1b7472eeaf95125fcc2f1f3fd4f9acf459c91ddfa6be5727271139b85a52d211"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\formation\\formation_step_3.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/formation/formation_step_3.png",
+    "bytes": 317840,
+    "sha256": "8f11095ac35241c328f449078a148d8209e714ac43c6b9d48beda5956978d9f7"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\formation\\formation_step_4.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/formation/formation_step_4.png",
+    "bytes": 301877,
+    "sha256": "edc82e87cd2318bc08374f1455eed1a358782b236600e1e300744122d6f84989"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\formation\\steps_panel_closed.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/formation/steps_panel_closed.png",
+    "bytes": 288057,
+    "sha256": "cea186ff7c5a444cb69d57fed7336d1a6c1dc2595b804fca0208f1dd3079ce36"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\desktop\\formation\\steps_panel_open.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/desktop/formation/steps_panel_open.png",
+    "bytes": 297415,
+    "sha256": "1b7472eeaf95125fcc2f1f3fd4f9acf459c91ddfa6be5727271139b85a52d211"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\mobile\\formation\\formation_current_step.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/mobile/formation/formation_current_step.png",
+    "bytes": 257039,
+    "sha256": "4c6a7ff169a7717197008a4d889f0d91f86acd0059510e7755dacb949ffb76aa"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\mobile\\formation\\steps_panel_closed.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/mobile/formation/steps_panel_closed.png",
+    "bytes": 256270,
+    "sha256": "fad06e1902d1cac928ead6c5cce9b6f11c26146de3778f134b027a5308c7c404"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\mobile\\formation\\steps_panel_open.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/mobile/formation/steps_panel_open.png",
+    "bytes": 262999,
+    "sha256": "786697b41546016e6fdb1d002e1521b59c995f667f2cbeefc876df1ec52c1a67"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\negative\\assumption\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/negative/assumption/desktop/refusal.png",
+    "bytes": 65184,
+    "sha256": "f2b9a4e9d3c49abde63426d00a2d0c4a8a6b2c7836cc2c811aa231069aa3b76a"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\negative\\assumption\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/negative/assumption/mobile/refusal.png",
+    "bytes": 136542,
+    "sha256": "f198b67251689a1f4b13180129406908d5521c883cc9f13a3f26eed8e43e414c"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\negative\\topology_kernel\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/negative/topology_kernel/desktop/refusal.png",
+    "bytes": 58499,
+    "sha256": "4e24f59f47e95e073616fd8ed74bde1c1003d9b853e6b306df89f43da8f0fc35"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\negative\\topology_kernel\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/negative/topology_kernel/mobile/refusal.png",
+    "bytes": 125057,
+    "sha256": "ebf06a7524ddc649d14c7be9b93eee70a894c5c504595bac748a7501c5a7af02"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\negative\\ungrounded_source\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/negative/ungrounded_source/desktop/refusal.png",
+    "bytes": 61139,
+    "sha256": "7b683e811c07d1d5ce026d6322888fa7ecf929f30535d25f25206a627876ea8e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-playwright\\screenshots\\rectangular-pyramid\\negative\\ungrounded_source\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/rectangular-pyramid/negative/ungrounded_source/mobile/refusal.png",
+    "bytes": 130497,
+    "sha256": "e8c100ceea7cb01005add015644688a6c755f3180693a86f3b693d73c689f3c2"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\annotations_resized.png",
+    "file": "visual/official/screenshots/cuboid/desktop/annotations_resized.png",
+    "bytes": 893623,
+    "sha256": "a5126a45fee484182354a6ad9417db5db0f07d2038f59c0b98534a710a28ce13"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\causal_restored.png",
+    "file": "visual/official/screenshots/cuboid/desktop/causal_restored.png",
+    "bytes": 335074,
+    "sha256": "a5a37f2003578fa33795573485d6f4c60b82230671a31fd63f8e31a6037fd84e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\causal_selected.png",
+    "file": "visual/official/screenshots/cuboid/desktop/causal_selected.png",
+    "bytes": 325220,
+    "sha256": "7c1f876b63482f8b8c24412236cd0f94a30b02e670fe97ea4154dc414397aaff"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\detail_area.png",
+    "file": "visual/official/screenshots/cuboid/desktop/detail_area.png",
+    "bytes": 11093,
+    "sha256": "7f09b32ff917768c155f53158de5401f8cb21a0044554ac73f2e8e204c65b539"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\detail_length.png",
+    "file": "visual/official/screenshots/cuboid/desktop/detail_length.png",
+    "bytes": 6246,
+    "sha256": "a852362ab7016770169750cc6f5c2698be4b9a887bde8571166c50ae04884836"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\detail_volume.png",
+    "file": "visual/official/screenshots/cuboid/desktop/detail_volume.png",
+    "bytes": 12996,
+    "sha256": "0ea3a4bb1d86dec0ae33b13879f26f8a448a7b01dd9cb85c182469a17d71cce0"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\mode_b_reveal.png",
+    "file": "visual/official/screenshots/cuboid/desktop/mode_b_reveal.png",
+    "bytes": 335074,
+    "sha256": "a5a37f2003578fa33795573485d6f4c60b82230671a31fd63f8e31a6037fd84e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\neutral_final.png",
+    "file": "visual/official/screenshots/cuboid/desktop/neutral_final.png",
+    "bytes": 342543,
+    "sha256": "12bf3958c9af19889ac79c2a3679e23c3431f133e145cf0ab5d309b93b09d255"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\quantity_picker.png",
+    "file": "visual/official/screenshots/cuboid/desktop/quantity_picker.png",
+    "bytes": 343581,
+    "sha256": "b35bf0e248ae48b4e4637cf536ebae4054d8f6401e19ac54d55d393fceb59ae5"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\rotated_neutral.png",
+    "file": "visual/official/screenshots/cuboid/desktop/rotated_neutral.png",
+    "bytes": 336586,
+    "sha256": "91fd32590939ac16613371ab2c4e4c95efc988d040ed62a7d2961b1e32586acb"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\selected_area.png",
+    "file": "visual/official/screenshots/cuboid/desktop/selected_area.png",
+    "bytes": 347135,
+    "sha256": "373f70e8b317aa8b9b98a54226f841e6c12106f16e82d92a364454c998aa51e7"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\selected_length.png",
+    "file": "visual/official/screenshots/cuboid/desktop/selected_length.png",
+    "bytes": 341453,
+    "sha256": "45733d88b98e6cde2119d43cf16fff4b617cfa78d24fbb9c3d9251141c3c0d20"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\selected_volume.png",
+    "file": "visual/official/screenshots/cuboid/desktop/selected_volume.png",
+    "bytes": 324859,
+    "sha256": "a93656f5dde6159e17631adc334d1852e373daba345e4a48191ed59f77c0a407"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\show_all.png",
+    "file": "visual/official/screenshots/cuboid/desktop/show_all.png",
+    "bytes": 344692,
+    "sha256": "c21bc93de38ef8fc2c09d03e51a76a8b1b8e2c97bcfa8d57b7350b27ca860b7a"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\solution_causal_selected.png",
+    "file": "visual/official/screenshots/cuboid/desktop/solution_causal_selected.png",
+    "bytes": 12718,
+    "sha256": "c0b0d299f6c3ad4e6ce2ea84e0468a09873c9a26c0e5bc775b00a992eadf1026"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\mobile\\causal_restored.png",
+    "file": "visual/official/screenshots/cuboid/mobile/causal_restored.png",
+    "bytes": 278201,
+    "sha256": "0dc1e7cacafee61a3d7cb6dc2647b33858a77b9aef48eb050a84ab0fb128d8e0"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\mobile\\causal_selected.png",
+    "file": "visual/official/screenshots/cuboid/mobile/causal_selected.png",
+    "bytes": 279571,
+    "sha256": "521992944c2440e55ddd1ec18841f6cce5023dcc6fdc8f98f3a52596195ec011"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\mobile\\detail_area.png",
+    "file": "visual/official/screenshots/cuboid/mobile/detail_area.png",
+    "bytes": 33526,
+    "sha256": "b9f54684a2266eeb636651a55856cfbb463f0001ee8b085304945d6c786b1d35"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\mobile\\detail_length.png",
+    "file": "visual/official/screenshots/cuboid/mobile/detail_length.png",
+    "bytes": 18455,
+    "sha256": "2a6334456ef04b759979ac53a8ce5dfa4955b412f86b394dc7b4396ea978a58b"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\mobile\\detail_volume.png",
+    "file": "visual/official/screenshots/cuboid/mobile/detail_volume.png",
+    "bytes": 40214,
+    "sha256": "54b725b4fd34ae9e9020d84ecf17ce7c2c66154c53b799b6b378457f34024b5d"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\mobile\\mode_b_reveal.png",
+    "file": "visual/official/screenshots/cuboid/mobile/mode_b_reveal.png",
+    "bytes": 279630,
+    "sha256": "c411e12fed6b80d0f42a2bc42cd16c73b6e6de3d2b904018c1f38a7cc3aa9504"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\mobile\\neutral_final.png",
+    "file": "visual/official/screenshots/cuboid/mobile/neutral_final.png",
+    "bytes": 278295,
+    "sha256": "b87b915962d3b7a7c69dc5f3251ab0f5451eb3059cfd2305e240eadaf695d75d"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\mobile\\quantity_picker.png",
+    "file": "visual/official/screenshots/cuboid/mobile/quantity_picker.png",
+    "bytes": 254087,
+    "sha256": "138621edf6490e756387b70cf4246015b37d026c200f10f41fd20f8dce4ef7f7"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\mobile\\rotated_neutral.png",
+    "file": "visual/official/screenshots/cuboid/mobile/rotated_neutral.png",
+    "bytes": 268687,
+    "sha256": "c168e0bd9b348f2b8a5d2b6b34b3983b60ae2b4205921d623e5c9e822aca314b"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\mobile\\selected_area.png",
+    "file": "visual/official/screenshots/cuboid/mobile/selected_area.png",
+    "bytes": 279561,
+    "sha256": "8ba0273d55501f3bc369f3ebb44890a18f83ffa8a475cf02f98316afe5362424"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\mobile\\selected_length.png",
+    "file": "visual/official/screenshots/cuboid/mobile/selected_length.png",
+    "bytes": 275676,
+    "sha256": "298d24cb75482a9c863fc7cf72c0dadca31a8e090851e53bea75fd4a7b9813dc"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\mobile\\selected_volume.png",
+    "file": "visual/official/screenshots/cuboid/mobile/selected_volume.png",
+    "bytes": 279571,
+    "sha256": "521992944c2440e55ddd1ec18841f6cce5023dcc6fdc8f98f3a52596195ec011"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\mobile\\show_all.png",
+    "file": "visual/official/screenshots/cuboid/mobile/show_all.png",
+    "bytes": 281673,
+    "sha256": "9436249c6bdbe99da9395ef239cc455e8288c767c4350a1b0e16b99ff906bf49"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\mobile\\solution_causal_selected.png",
+    "file": "visual/official/screenshots/cuboid/mobile/solution_causal_selected.png",
+    "bytes": 35281,
+    "sha256": "28a34ffa41aa9812834652ef431c277c7ccead736166615fb099ba919c05add0"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\formation\\formation_step_0.png",
+    "file": "visual/official/screenshots/cuboid/desktop/formation/formation_step_0.png",
+    "bytes": 260861,
+    "sha256": "e369e9feaa19e60ec95a6bbc675a9797d9f7fb2468823daefd8ee1168a295be1"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\formation\\formation_step_1.png",
+    "file": "visual/official/screenshots/cuboid/desktop/formation/formation_step_1.png",
+    "bytes": 271490,
+    "sha256": "3ae228354dfce1c40db22e3019d5984a604678983f38c1adf9154e8480b1ed8c"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\formation\\formation_step_2.png",
+    "file": "visual/official/screenshots/cuboid/desktop/formation/formation_step_2.png",
+    "bytes": 274735,
+    "sha256": "bdafd2c8f554562cd8f6f3cfc540007e499c27638bbfe40c429b9e4e26f1b4e1"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\formation\\formation_step_3.png",
+    "file": "visual/official/screenshots/cuboid/desktop/formation/formation_step_3.png",
+    "bytes": 336682,
+    "sha256": "a92d9e96316a7d247918ad9f1f9d5c868da864c2b440490b790b520b71e4ca50"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\formation\\formation_step_4.png",
+    "file": "visual/official/screenshots/cuboid/desktop/formation/formation_step_4.png",
+    "bytes": 311837,
+    "sha256": "f86f5273cc86c876fe277e40f242e565627e66b5d866fe87bcaae12d870fdc98"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\formation\\steps_panel_closed.png",
+    "file": "visual/official/screenshots/cuboid/desktop/formation/steps_panel_closed.png",
+    "bytes": 244707,
+    "sha256": "89bb5a60d17c6e7bd2382b2817bb12ddd8ecb28553cdc7c8794908ea33f7213c"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\desktop\\formation\\steps_panel_open.png",
+    "file": "visual/official/screenshots/cuboid/desktop/formation/steps_panel_open.png",
+    "bytes": 274735,
+    "sha256": "bdafd2c8f554562cd8f6f3cfc540007e499c27638bbfe40c429b9e4e26f1b4e1"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\mobile\\formation\\formation_current_step.png",
+    "file": "visual/official/screenshots/cuboid/mobile/formation/formation_current_step.png",
+    "bytes": 242585,
+    "sha256": "911eb7463b0ac18a20a93673345b51a4b0768cf30935d6bbf5862c86c37cfa0f"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\mobile\\formation\\steps_panel_closed.png",
+    "file": "visual/official/screenshots/cuboid/mobile/formation/steps_panel_closed.png",
+    "bytes": 241848,
+    "sha256": "be2e58f6e0a2e1a6471bff7c6905f1fa24d1db181f3b951c790dd016050d0f23"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\mobile\\formation\\steps_panel_open.png",
+    "file": "visual/official/screenshots/cuboid/mobile/formation/steps_panel_open.png",
+    "bytes": 250869,
+    "sha256": "2027486299366e64acf4c1f6a5930aca3cac6479a4931a998945c936f3bc7ad6"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\negative\\assumption\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/cuboid/negative/assumption/desktop/refusal.png",
+    "bytes": 64411,
+    "sha256": "87840ff214c60df9db7a4e6ba912bd8202c5f1f3f0f6c5696c10130a81a16724"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\negative\\assumption\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/cuboid/negative/assumption/mobile/refusal.png",
+    "bytes": 128086,
+    "sha256": "261a240b7a11035173ae7307351c77a40671ffcb82eb47317ec8756cc1dc3f20"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\negative\\topology_kernel\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/cuboid/negative/topology_kernel/desktop/refusal.png",
+    "bytes": 56767,
+    "sha256": "74dd043da533f5d4e27a666d3b6771ba9a5af2d3fb7ea61d72e5c3ffdbae18bf"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\negative\\topology_kernel\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/cuboid/negative/topology_kernel/mobile/refusal.png",
+    "bytes": 124720,
+    "sha256": "be563af11cd84356fc4f544ca4001f34a4251cc88a3488f5afac0d136b2ed36a"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\negative\\ungrounded_source\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/cuboid/negative/ungrounded_source/desktop/refusal.png",
+    "bytes": 59456,
+    "sha256": "109ba9e5c3098b2632cb3d280b4d97ca83b06e358c473a2b3ff732c2fbf721d2"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cuboid\\negative\\ungrounded_source\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/cuboid/negative/ungrounded_source/mobile/refusal.png",
+    "bytes": 122289,
+    "sha256": "5869be7328126095249bbbdc7c45c3a1fe9faeaa60ac17469e621f17a9a97536"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\annotations_resized.png",
+    "file": "visual/official/screenshots/cube/desktop/annotations_resized.png",
+    "bytes": 907666,
+    "sha256": "d36f1d38f5efbcd671a6b422a89b15fcc7472eacefb4df19af36ecfaaf2c8bb9"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\causal_restored.png",
+    "file": "visual/official/screenshots/cube/desktop/causal_restored.png",
+    "bytes": 329420,
+    "sha256": "3f7872aae9c3cc8d4f8fff1b2412b0cb157af95afd2ca4160cf9facd8bd659a1"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\causal_selected.png",
+    "file": "visual/official/screenshots/cube/desktop/causal_selected.png",
+    "bytes": 318319,
+    "sha256": "2f11330e446edf0ca63759cee1e3da94c118b85a2ac2219bcc0d7b7041a88b72"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\detail_area.png",
+    "file": "visual/official/screenshots/cube/desktop/detail_area.png",
+    "bytes": 11004,
+    "sha256": "f86c661d36309acb4551a4027adc50c8d154286095493a55205e9414e89fa97a"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\detail_length.png",
+    "file": "visual/official/screenshots/cube/desktop/detail_length.png",
+    "bytes": 10132,
+    "sha256": "80c77fcdf5ed9503152aba1cf36ebef5d59f6dfe2b61937aaa3a3aedd9e29546"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\detail_volume.png",
+    "file": "visual/official/screenshots/cube/desktop/detail_volume.png",
+    "bytes": 12762,
+    "sha256": "38225aa8872ff345bd7878788426f11e5797c90a035a5e378e744118ae8affdd"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\mode_b_reveal.png",
+    "file": "visual/official/screenshots/cube/desktop/mode_b_reveal.png",
+    "bytes": 329420,
+    "sha256": "3f7872aae9c3cc8d4f8fff1b2412b0cb157af95afd2ca4160cf9facd8bd659a1"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\neutral_final.png",
+    "file": "visual/official/screenshots/cube/desktop/neutral_final.png",
+    "bytes": 336772,
+    "sha256": "127d35218084e285d6f9bafd046c0a023f35b365a56407dc74142b5231fbb96a"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\quantity_picker.png",
+    "file": "visual/official/screenshots/cube/desktop/quantity_picker.png",
+    "bytes": 336500,
+    "sha256": "693c81653218b7708ee855322737870cd474e31c62796147926b3a1cdf61a908"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\rotated_neutral.png",
+    "file": "visual/official/screenshots/cube/desktop/rotated_neutral.png",
+    "bytes": 325868,
+    "sha256": "7dda2740ea7d0efbbe8ac1e25219a43f262c7255694bf417c7be730f7456279d"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\selected_area.png",
+    "file": "visual/official/screenshots/cube/desktop/selected_area.png",
+    "bytes": 353026,
+    "sha256": "7f136fcef63000ee35c1c633f22448b1ad06a4ff764656170b4a6824212b8286"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\selected_length.png",
+    "file": "visual/official/screenshots/cube/desktop/selected_length.png",
+    "bytes": 350178,
+    "sha256": "bbd76d674d5742e3bc8820864f770839085720acbf68c7985c4a8f61100b49aa"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\selected_volume.png",
+    "file": "visual/official/screenshots/cube/desktop/selected_volume.png",
+    "bytes": 317929,
+    "sha256": "157374c6913f86b8fff97f00c4878335bd8b695301f3023e9461b1828f5fc540"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\show_all.png",
+    "file": "visual/official/screenshots/cube/desktop/show_all.png",
+    "bytes": 340768,
+    "sha256": "23ba1ab43364b86d2310e8aa283ce589b81e5449e4802e8e639718e22d99ef6b"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\solution_causal_selected.png",
+    "file": "visual/official/screenshots/cube/desktop/solution_causal_selected.png",
+    "bytes": 15222,
+    "sha256": "1ecc4a91f832501f199d25ecba3d52787304ef4a043f653a069834223e2a30fa"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\mobile\\causal_restored.png",
+    "file": "visual/official/screenshots/cube/mobile/causal_restored.png",
+    "bytes": 277388,
+    "sha256": "66a8e4210f5e4c05e8784e445d0751fe4852f889b21252ff0baeebd445d7d543"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\mobile\\causal_selected.png",
+    "file": "visual/official/screenshots/cube/mobile/causal_selected.png",
+    "bytes": 274945,
+    "sha256": "eafd72f994373e72cc809d8e15a396fb7cf5d65719722d0ea8537e4da85ef4cd"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\mobile\\detail_area.png",
+    "file": "visual/official/screenshots/cube/mobile/detail_area.png",
+    "bytes": 32537,
+    "sha256": "8d79eb9f557e19e86f675a6308664260443985d9b526f182bb6933eb217a0e3e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\mobile\\detail_length.png",
+    "file": "visual/official/screenshots/cube/mobile/detail_length.png",
+    "bytes": 28607,
+    "sha256": "d57fe38f1cae8718ebbbf800661f8dcf70e6582e9c8600f03d63d19f5dd793f5"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\mobile\\detail_volume.png",
+    "file": "visual/official/screenshots/cube/mobile/detail_volume.png",
+    "bytes": 38414,
+    "sha256": "84dc249651152978a33089a7e8fd616f82ffc872ea46c2fba74483dfd47c6b1e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\mobile\\mode_b_reveal.png",
+    "file": "visual/official/screenshots/cube/mobile/mode_b_reveal.png",
+    "bytes": 279153,
+    "sha256": "92ab2650d118b7d2b90c1a1ea5101fbcbee6716dcdd231d20460cfb50cb38435"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\mobile\\neutral_final.png",
+    "file": "visual/official/screenshots/cube/mobile/neutral_final.png",
+    "bytes": 277804,
+    "sha256": "6a65cece64575ba148e24b7b7b01abf59d6c7122542ebadd9913198729ad61b8"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\mobile\\quantity_picker.png",
+    "file": "visual/official/screenshots/cube/mobile/quantity_picker.png",
+    "bytes": 260081,
+    "sha256": "079a2eabfde63238821188cf452303b65e17375165c1b113685857079404378e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\mobile\\rotated_neutral.png",
+    "file": "visual/official/screenshots/cube/mobile/rotated_neutral.png",
+    "bytes": 266901,
+    "sha256": "9ff5a21576215f48a0a8d5f5b46ee260370f192ff282d2d3e567240b0160b31d"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\mobile\\selected_area.png",
+    "file": "visual/official/screenshots/cube/mobile/selected_area.png",
+    "bytes": 277666,
+    "sha256": "f82e1b395aeccaaa02dcafb627f2dcb7b4f8d0370aafad835dd25ca94270a50f"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\mobile\\selected_length.png",
+    "file": "visual/official/screenshots/cube/mobile/selected_length.png",
+    "bytes": 279132,
+    "sha256": "5fb03d9dc085d6a6b9bbf5188717dff6f0c9854f37649464a827b67f02d10f36"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\mobile\\selected_volume.png",
+    "file": "visual/official/screenshots/cube/mobile/selected_volume.png",
+    "bytes": 274945,
+    "sha256": "eafd72f994373e72cc809d8e15a396fb7cf5d65719722d0ea8537e4da85ef4cd"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\mobile\\show_all.png",
+    "file": "visual/official/screenshots/cube/mobile/show_all.png",
+    "bytes": 282936,
+    "sha256": "e54a7783dd40b8afbce7122c9b840e91583da800a8281bffc1a0e0cb45da0f13"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\mobile\\solution_causal_selected.png",
+    "file": "visual/official/screenshots/cube/mobile/solution_causal_selected.png",
+    "bytes": 36799,
+    "sha256": "62778aea93d74a81a4a7d2462fdadad75ef2e7af8b49f07b69bdb72b60fc9bb1"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\formation\\formation_step_0.png",
+    "file": "visual/official/screenshots/cube/desktop/formation/formation_step_0.png",
+    "bytes": 261733,
+    "sha256": "7a808fdde8e3e7be253ca49db3cdad50b34dedfb90133007572bfe8af4c41791"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\formation\\formation_step_1.png",
+    "file": "visual/official/screenshots/cube/desktop/formation/formation_step_1.png",
+    "bytes": 266705,
+    "sha256": "b1b1df86824dd0a30a37130d7ab6db732f002be880efb1fcf12a1cd95c233983"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\formation\\formation_step_2.png",
+    "file": "visual/official/screenshots/cube/desktop/formation/formation_step_2.png",
+    "bytes": 267544,
+    "sha256": "574ab1fb3f411207fb4f2f4b4feff2dc0000b5c65658b6271493ab7125872405"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\formation\\formation_step_3.png",
+    "file": "visual/official/screenshots/cube/desktop/formation/formation_step_3.png",
+    "bytes": 341121,
+    "sha256": "586a1ff8b2c555ea7ad22cff89d349bfc240c4d817efea535f5a234be464881b"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\formation\\formation_step_4.png",
+    "file": "visual/official/screenshots/cube/desktop/formation/formation_step_4.png",
+    "bytes": 304969,
+    "sha256": "65004dd6201af3895e1607691a5c54ab68d8b724bec33d51e74224660284b10b"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\formation\\steps_panel_closed.png",
+    "file": "visual/official/screenshots/cube/desktop/formation/steps_panel_closed.png",
+    "bytes": 246300,
+    "sha256": "6673491f5be7089c78202860ad2d40d2e9f1764634fe48738076d91ab59a0535"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\desktop\\formation\\steps_panel_open.png",
+    "file": "visual/official/screenshots/cube/desktop/formation/steps_panel_open.png",
+    "bytes": 267544,
+    "sha256": "574ab1fb3f411207fb4f2f4b4feff2dc0000b5c65658b6271493ab7125872405"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\mobile\\formation\\formation_current_step.png",
+    "file": "visual/official/screenshots/cube/mobile/formation/formation_current_step.png",
+    "bytes": 249818,
+    "sha256": "a4a54a3ade87b1290023711578b23e269916c4c1f376d87ce3dae915d93d8837"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\mobile\\formation\\steps_panel_closed.png",
+    "file": "visual/official/screenshots/cube/mobile/formation/steps_panel_closed.png",
+    "bytes": 249172,
+    "sha256": "8aac2635e73d7bc1e98ada17d31900865eace9a57f078dee7e846f1bf85a7572"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\mobile\\formation\\steps_panel_open.png",
+    "file": "visual/official/screenshots/cube/mobile/formation/steps_panel_open.png",
+    "bytes": 257984,
+    "sha256": "8929219afd3f180506dde6e7fa699920c8e29307939fb773a08fb1ac18929a98"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\negative\\assumption\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/cube/negative/assumption/desktop/refusal.png",
+    "bytes": 62448,
+    "sha256": "6296cd565f73a06282aa91441a39767ec4bf53d413ac4bf34409d77723b0d30a"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\negative\\assumption\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/cube/negative/assumption/mobile/refusal.png",
+    "bytes": 122668,
+    "sha256": "7c2283471a86259f84a114966c650213ef59b591aee1224a896eabed80dd24b1"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\negative\\system_cause\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/cube/negative/system_cause/desktop/refusal.png",
+    "bytes": 57517,
+    "sha256": "089a4e3ffd1fa89f751ae75e68a01aba56a42e04af7f8761e5aeff95d66ad13b"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\negative\\system_cause\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/cube/negative/system_cause/mobile/refusal.png",
+    "bytes": 121842,
+    "sha256": "6f7f88eefdea17cef41631922ce5086fda32fa0f6bf86995738351ff4716e26d"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\negative\\topology_kernel\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/cube/negative/topology_kernel/desktop/refusal.png",
+    "bytes": 56545,
+    "sha256": "15f0b6951f3b5eeeb9633c32aafa08362f431b2d5e7a18fca1b8b9c117a04fe1"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\negative\\topology_kernel\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/cube/negative/topology_kernel/mobile/refusal.png",
+    "bytes": 121146,
+    "sha256": "ffa671ff8f2278c0fbca4be981f5c29e82a12207c87c875e8c085e42ddfea7a5"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\negative\\ungrounded_source\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/cube/negative/ungrounded_source/desktop/refusal.png",
+    "bytes": 57407,
+    "sha256": "57eecc6b6b0c84e1fba8896f0e9b10427679ff9f6a8f6c0322b78f9429adac55"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cube\\negative\\ungrounded_source\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/cube/negative/ungrounded_source/mobile/refusal.png",
+    "bytes": 117547,
+    "sha256": "260dc877b7c8c8e28b3b8b0a3761c70a71f7ddaaf5c2bf74ca47350342a3ab4c"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\annotations_resized.png",
+    "file": "visual/official/screenshots/cross-section/desktop/annotations_resized.png",
+    "bytes": 893825,
+    "sha256": "6d076363705e01185e76818a04e4fae78095b3b6573a0ca40dbf65edf0a40635"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\causal_restored.png",
+    "file": "visual/official/screenshots/cross-section/desktop/causal_restored.png",
+    "bytes": 341946,
+    "sha256": "b0297648726e8f1a92be429facdd1127cb1eb9c534b2942d2df657d481c79b0e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\causal_selected.png",
+    "file": "visual/official/screenshots/cross-section/desktop/causal_selected.png",
+    "bytes": 324017,
+    "sha256": "3aefbb2d785bce8044f3d5b66209ea2e0bee76075bf4be2301c1d93d714e2b29"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\detail_area.png",
+    "file": "visual/official/screenshots/cross-section/desktop/detail_area.png",
+    "bytes": 9321,
+    "sha256": "ed9cf5db826f231628bef58fb3e6538a0e2d772719232381d9cb312a8149acaf"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\detail_distance.png",
+    "file": "visual/official/screenshots/cross-section/desktop/detail_distance.png",
+    "bytes": 10326,
+    "sha256": "bc2be49cbbb237297fe11edbdc987de5d32bed2bb30d034d87972ff919ffbde7"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\detail_volume.png",
+    "file": "visual/official/screenshots/cross-section/desktop/detail_volume.png",
+    "bytes": 9957,
+    "sha256": "e6f44ac44790a0a754367d6a7698bc56e0ee4ae1d7f8ae21498ae9781afe4f79"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\failure.png",
+    "file": "visual/official/screenshots/cross-section/desktop/failure.png",
+    "bytes": 289794,
+    "sha256": "46b4c931498e2b7fb7ced8946d1f429b3b06cb46433b2147b896ebb414a0927d"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\mode_b_reveal.png",
+    "file": "visual/official/screenshots/cross-section/desktop/mode_b_reveal.png",
+    "bytes": 341946,
+    "sha256": "b0297648726e8f1a92be429facdd1127cb1eb9c534b2942d2df657d481c79b0e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\neutral_final.png",
+    "file": "visual/official/screenshots/cross-section/desktop/neutral_final.png",
+    "bytes": 322360,
+    "sha256": "cfd5f76768ded77e9d7a761850311d3a85934e37360b7d1e98509cb57a771fc6"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\quantity_picker.png",
+    "file": "visual/official/screenshots/cross-section/desktop/quantity_picker.png",
+    "bytes": 322360,
+    "sha256": "cfd5f76768ded77e9d7a761850311d3a85934e37360b7d1e98509cb57a771fc6"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\rotated_neutral.png",
+    "file": "visual/official/screenshots/cross-section/desktop/rotated_neutral.png",
+    "bytes": 288288,
+    "sha256": "d2ab17bfe8d0c0321587aa22750b22960a287e366909763743790f70834bf66a"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\selected_area.png",
+    "file": "visual/official/screenshots/cross-section/desktop/selected_area.png",
+    "bytes": 323613,
+    "sha256": "ebce7029e9167d8229dddf33489177a48e0024bceb74b8a210333c0ba8aaf619"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\selected_distance.png",
+    "file": "visual/official/screenshots/cross-section/desktop/selected_distance.png",
+    "bytes": 335141,
+    "sha256": "05c030c26a4a708ea7401bfeb0f0d0f85ed0fb69e4423d0b83095db018ece6a0"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\selected_volume.png",
+    "file": "visual/official/screenshots/cross-section/desktop/selected_volume.png",
+    "bytes": 319114,
+    "sha256": "8c8d8e02cfb7067927f8d89f7ef459054faaa839ab400b6ac391e6869079ab24"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\show_all.png",
+    "file": "visual/official/screenshots/cross-section/desktop/show_all.png",
+    "bytes": 322385,
+    "sha256": "8a08d0914b0b68fe2092d7ad7d9071c14e93e0466997997ec99bdeb5a5df1bc2"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\solution_causal_selected.png",
+    "file": "visual/official/screenshots/cross-section/desktop/solution_causal_selected.png",
+    "bytes": 9997,
+    "sha256": "386eb8c8913d5c09429b9de27eb1dd447d1b2c8bd3d812724ac1c262c8a9c7e0"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\mobile\\causal_restored.png",
+    "file": "visual/official/screenshots/cross-section/mobile/causal_restored.png",
+    "bytes": 281896,
+    "sha256": "52b5703b62219bf4822a6984a84722dea6dc5f951a27195d08578179c4177034"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\mobile\\causal_selected.png",
+    "file": "visual/official/screenshots/cross-section/mobile/causal_selected.png",
+    "bytes": 272743,
+    "sha256": "bb48283070ce239c0e1c60cc8a26f84bbf95f4c1eb91d39c370d7f2f112e3de5"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\mobile\\detail_area.png",
+    "file": "visual/official/screenshots/cross-section/mobile/detail_area.png",
+    "bytes": 25479,
+    "sha256": "8297cc270fc125016224d175a86d2003cfb43641ec305ead45654aef18246a6d"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\mobile\\detail_distance.png",
+    "file": "visual/official/screenshots/cross-section/mobile/detail_distance.png",
+    "bytes": 29645,
+    "sha256": "f999e0978958828d69b9429a64bc95e438bdadefd39611bc6c8c00ff223e2057"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\mobile\\detail_volume.png",
+    "file": "visual/official/screenshots/cross-section/mobile/detail_volume.png",
+    "bytes": 28476,
+    "sha256": "c76929a650c07981e516d778eefc3a4df9e1bbe7981d6318ddbabeef0bb9eb11"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\mobile\\failure.png",
+    "file": "visual/official/screenshots/cross-section/mobile/failure.png",
+    "bytes": 282768,
+    "sha256": "bd405af694032e16db482fc6e6bddc68c66d2703f27012adf0811b3833b9efab"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\mobile\\mode_b_reveal.png",
+    "file": "visual/official/screenshots/cross-section/mobile/mode_b_reveal.png",
+    "bytes": 284412,
+    "sha256": "852cd933d76fc90b3558ce2e450318014ad656afbd5fd7c221f2a2dff71c67ac"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\mobile\\neutral_final.png",
+    "file": "visual/official/screenshots/cross-section/mobile/neutral_final.png",
+    "bytes": 283560,
+    "sha256": "9a2a2460afd7767fae5df952c1c82a789854e20ba71cabc925ffa3c5cfb27e18"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\mobile\\quantity_picker.png",
+    "file": "visual/official/screenshots/cross-section/mobile/quantity_picker.png",
+    "bytes": 283560,
+    "sha256": "9a2a2460afd7767fae5df952c1c82a789854e20ba71cabc925ffa3c5cfb27e18"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\mobile\\rotated_neutral.png",
+    "file": "visual/official/screenshots/cross-section/mobile/rotated_neutral.png",
+    "bytes": 262370,
+    "sha256": "361f09065ca498d9228342b1e0c3b5a9ea137138f4e4defeb08e59f165f10240"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\mobile\\selected_area.png",
+    "file": "visual/official/screenshots/cross-section/mobile/selected_area.png",
+    "bytes": 272743,
+    "sha256": "bb48283070ce239c0e1c60cc8a26f84bbf95f4c1eb91d39c370d7f2f112e3de5"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\mobile\\selected_distance.png",
+    "file": "visual/official/screenshots/cross-section/mobile/selected_distance.png",
+    "bytes": 286894,
+    "sha256": "c63bca8bd15540cd9cbc75f0277bd53b6baf1bc9a4ee639df1ca1ae0c5d44381"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\mobile\\selected_volume.png",
+    "file": "visual/official/screenshots/cross-section/mobile/selected_volume.png",
+    "bytes": 270622,
+    "sha256": "ca5ce843a43d60c5c85977b903f45cbc5d8c359acf7fe50d6f0c2ba80b907d98"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\mobile\\show_all.png",
+    "file": "visual/official/screenshots/cross-section/mobile/show_all.png",
+    "bytes": 283493,
+    "sha256": "afc055a4169d914986361cecd45df8b1a232ae2759318eecba8c95216ee3fc2e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\mobile\\solution_causal_selected.png",
+    "file": "visual/official/screenshots/cross-section/mobile/solution_causal_selected.png",
+    "bytes": 30781,
+    "sha256": "6e7bafef051e8b4452738ac30b018cf60a068f833799cdcef9161f40ef249698"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\formation\\formation_step_0.png",
+    "file": "visual/official/screenshots/cross-section/desktop/formation/formation_step_0.png",
+    "bytes": 284893,
+    "sha256": "555558434aca2793c444cc932fb714fc5efbec4607ee4e7bcca37682dcdb9ec7"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\formation\\formation_step_1.png",
+    "file": "visual/official/screenshots/cross-section/desktop/formation/formation_step_1.png",
+    "bytes": 283790,
+    "sha256": "0434241c2e259eafa3628ed7392f81bbac4644fde6146530236f4a118c89127e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\formation\\formation_step_10.png",
+    "file": "visual/official/screenshots/cross-section/desktop/formation/formation_step_10.png",
+    "bytes": 302544,
+    "sha256": "85dec8ffff58668f016814d910f4eebd0324441184b539851d51249c2901ac53"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\formation\\formation_step_2.png",
+    "file": "visual/official/screenshots/cross-section/desktop/formation/formation_step_2.png",
+    "bytes": 315366,
+    "sha256": "adb3a957ea2f7a97e912e4a5ebed6e925d82b48935aa3f3854df6fb859174e32"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\formation\\formation_step_3.png",
+    "file": "visual/official/screenshots/cross-section/desktop/formation/formation_step_3.png",
+    "bytes": 293951,
+    "sha256": "55e1b9e28ee909712d6e9620ba1ef1ae07668c1ea27d0ea59b47a49e8f55ccae"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\formation\\formation_step_4.png",
+    "file": "visual/official/screenshots/cross-section/desktop/formation/formation_step_4.png",
+    "bytes": 302088,
+    "sha256": "954cc1f8682ae7833fbf468191ec1c0ea06740e680d3f4da59bf80f9db54cb35"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\formation\\formation_step_5.png",
+    "file": "visual/official/screenshots/cross-section/desktop/formation/formation_step_5.png",
+    "bytes": 302661,
+    "sha256": "5c34b32037f4262dbeb5425f5fe1095ccaad37aeaf0ffbbb383e085226089f8a"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\formation\\formation_step_6.png",
+    "file": "visual/official/screenshots/cross-section/desktop/formation/formation_step_6.png",
+    "bytes": 300498,
+    "sha256": "bbbf1c6fc20a30c769eae6fc21851aaadb04f62270cc9a1bc38d41e4b5925cd8"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\formation\\formation_step_7.png",
+    "file": "visual/official/screenshots/cross-section/desktop/formation/formation_step_7.png",
+    "bytes": 301671,
+    "sha256": "70f63aef512167da28befac7b3156efc3a4707577787f1aa3b0740522cbeb3a6"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\formation\\formation_step_8.png",
+    "file": "visual/official/screenshots/cross-section/desktop/formation/formation_step_8.png",
+    "bytes": 299200,
+    "sha256": "0a63dd1aeb392ab60fda6fd36372a81d5c7d7a55657287e98b1c34144ca4537b"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\formation\\formation_step_9.png",
+    "file": "visual/official/screenshots/cross-section/desktop/formation/formation_step_9.png",
+    "bytes": 301044,
+    "sha256": "b80b0c495a255d3123880ff9d9add0f5abda370cf6cce23c8a29796c0f32d03d"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\formation\\steps_panel_closed.png",
+    "file": "visual/official/screenshots/cross-section/desktop/formation/steps_panel_closed.png",
+    "bytes": 284752,
+    "sha256": "b3eb43d96d873d08b6a1867ecc75e950f3b78332331e2c75ec868d654da8c702"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\desktop\\formation\\steps_panel_open.png",
+    "file": "visual/official/screenshots/cross-section/desktop/formation/steps_panel_open.png",
+    "bytes": 302519,
+    "sha256": "b432bdef339fefa35c30284ccd393ade3e69842e2a7d5b45b094c07058702dbf"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\mobile\\formation\\formation_current_step.png",
+    "file": "visual/official/screenshots/cross-section/mobile/formation/formation_current_step.png",
+    "bytes": 273187,
+    "sha256": "56be0d483dc03c8d3f5766a8843307dfb78485d6176e0a08cf38cee0f1f858be"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\mobile\\formation\\steps_panel_closed.png",
+    "file": "visual/official/screenshots/cross-section/mobile/formation/steps_panel_closed.png",
+    "bytes": 271934,
+    "sha256": "b18905173166aaf84b9bc40be2f2353ceb19d4bea7c496c7e402746193beb7e6"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\mobile\\formation\\steps_panel_open.png",
+    "file": "visual/official/screenshots/cross-section/mobile/formation/steps_panel_open.png",
+    "bytes": 288520,
+    "sha256": "cb1d604b8380e8c33c3748cf2c2869c2faed45f67b5cf3ed6b8eb1ab5928db69"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\negative\\assumption\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/cross-section/negative/assumption/desktop/refusal.png",
+    "bytes": 74251,
+    "sha256": "9e1b625af7598a3c4a24f8a1f3140915899c7c24d435110b87bf380adfc9d06e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\negative\\assumption\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/cross-section/negative/assumption/mobile/refusal.png",
+    "bytes": 162414,
+    "sha256": "94082c93bf8bbb066fb7a1469a63392d889a4fb2e4efa1b4ac93fc1cb4688337"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\negative\\construction_mismatch\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/cross-section/negative/construction_mismatch/desktop/refusal.png",
+    "bytes": 68726,
+    "sha256": "38ab3191fc3934ca5db4f4b8b87e5f482544b9e777056305fe2cf25eaa01f719"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\negative\\construction_mismatch\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/cross-section/negative/construction_mismatch/mobile/refusal.png",
+    "bytes": 147800,
+    "sha256": "387a48265d13a1c06909feee83713ce7e877f1895bc97c42116a241a02082db6"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\negative\\construction_unverified\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/cross-section/negative/construction_unverified/desktop/refusal.png",
+    "bytes": 71805,
+    "sha256": "55a17529ce3d4aae7a605458bf5cc00ec834ce81ab111328416cc2dee6fee2fd"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\negative\\construction_unverified\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/cross-section/negative/construction_unverified/mobile/refusal.png",
+    "bytes": 152931,
+    "sha256": "20c523611eed00cef75bd5e58fbec1ec30d7d69d8ab172501259a37383001b80"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\negative\\point_construction_mismatch\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/cross-section/negative/point_construction_mismatch/desktop/refusal.png",
+    "bytes": 65522,
+    "sha256": "798b71f4cbf0abbb9ca0f8754830b76a54367804b135de481ed04d83f12caefe"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\negative\\point_construction_mismatch\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/cross-section/negative/point_construction_mismatch/mobile/refusal.png",
+    "bytes": 139134,
+    "sha256": "6fbbe1e3061bed283bd1c979ece2b45966d5fe5d0335cf530a6fb88dd0acb132"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\negative\\projection_mismatch\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/cross-section/negative/projection_mismatch/desktop/refusal.png",
+    "bytes": 66453,
+    "sha256": "ad2edbe117547ee786be26484ba70924682538ae9e2ff17389de0bcf9290d304"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\negative\\projection_mismatch\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/cross-section/negative/projection_mismatch/mobile/refusal.png",
+    "bytes": 143038,
+    "sha256": "22f2ce1b9a03efc5d3e2ee71477972ed0a77ed4dbb773cdf1671efcfa48eed94"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\negative\\topology_kernel\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/cross-section/negative/topology_kernel/desktop/refusal.png",
+    "bytes": 64854,
+    "sha256": "6c091bc8c178658ca41c54dd20d56b80af08515e5ccb52a95b516605db8ef1ff"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\negative\\topology_kernel\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/cross-section/negative/topology_kernel/mobile/refusal.png",
+    "bytes": 136362,
+    "sha256": "e77aca15fd6d2720b306ff1d9da63b235d90ca53521f4bfe3f956d33ef4747d8"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\negative\\ungrounded_source\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/cross-section/negative/ungrounded_source/desktop/refusal.png",
+    "bytes": 66510,
+    "sha256": "5dd0fca9fcd92ecff932a0e476b1586bbf8b2855ba4989d94a123147eb12c63d"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\negative\\ungrounded_source\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/cross-section/negative/ungrounded_source/mobile/refusal.png",
+    "bytes": 145750,
+    "sha256": "12eea681a76d56333bcbff5c7f596e4079cce7c666db4a24963d2c6e0fd7385f"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\served\\correct_plane\\desktop\\served.png",
+    "file": "visual/official/screenshots/cross-section/served/correct_plane/desktop/served.png",
+    "bytes": 363052,
+    "sha256": "9f889bb78a3e020ee91c8b166a9319900278a2daec3617d3f867b24a98ebed46"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\served\\correct_plane\\mobile\\served.png",
+    "file": "visual/official/screenshots/cross-section/served/correct_plane/mobile/served.png",
+    "bytes": 296129,
+    "sha256": "dd5425bdb59e1e59c9cde2573227e1fdb927644cda1da43a183f2bcb5cc475a2"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\served\\point_construction_witness\\desktop\\served.png",
+    "file": "visual/official/screenshots/cross-section/served/point_construction_witness/desktop/served.png",
+    "bytes": 365869,
+    "sha256": "fc3c14028765bf09dd43e216720dd4f8b2e637098d097fb5d3fc45e85b214936"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\served\\point_construction_witness\\mobile\\served.png",
+    "file": "visual/official/screenshots/cross-section/served/point_construction_witness/mobile/served.png",
+    "bytes": 293723,
+    "sha256": "0b0b5bf22a7c5919b8b90e31beddd72a7d561363216a2afd43aeeca5f96301cf"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\served\\projection_correct\\desktop\\served.png",
+    "file": "visual/official/screenshots/cross-section/served/projection_correct/desktop/served.png",
+    "bytes": 362317,
+    "sha256": "2bdb75667e867f3a5b107c5ebe6916105a37079d498f8319b118f04386a45b96"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\cross-section\\served\\projection_correct\\mobile\\served.png",
+    "file": "visual/official/screenshots/cross-section/served/projection_correct/mobile/served.png",
+    "bytes": 288059,
+    "sha256": "253ae00692257742521855fd302693e7bd62855ffb2717bc3e6dfdc674b83bb6"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\annotations_resized.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/annotations_resized.png",
+    "bytes": 894749,
+    "sha256": "18a3be7094945d78b69a4b943d446a1c1cce8e8baafb0944ca6c5bdb46eab7a7"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\causal_restored.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/causal_restored.png",
+    "bytes": 325150,
+    "sha256": "bf8a7878aedf80e8320d5e33fcbe89f74d14f940dfd73faebcee3fe713c2219f"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\causal_selected.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/causal_selected.png",
+    "bytes": 323047,
+    "sha256": "4e4a3c5d6040d0fc00efa05021b50424db347d4005ba0add78ba7ba5c57775ab"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\detail_area.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/detail_area.png",
+    "bytes": 9572,
+    "sha256": "67c2225f555f051427849f568405645467fdbe5f8852ffdbed4e50fd6f8c5319"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\detail_length.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/detail_length.png",
+    "bytes": 10998,
+    "sha256": "633fee89c7669f0ae8975e4c1786566c700e0049d45071e5337492e3ba523215"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\detail_volume.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/detail_volume.png",
+    "bytes": 11480,
+    "sha256": "712b224331742abd6e08b97d391cce329d4f8a1fd9e99a14bc16a8a75cb73e5c"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\mode_b_reveal.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/mode_b_reveal.png",
+    "bytes": 325150,
+    "sha256": "bf8a7878aedf80e8320d5e33fcbe89f74d14f940dfd73faebcee3fe713c2219f"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\neutral_final.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/neutral_final.png",
+    "bytes": 319846,
+    "sha256": "f0cf5b45a4fd6942fbd57563b322b128d25e17b2b3d7366e25566dc03b202605"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\quantity_picker.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/quantity_picker.png",
+    "bytes": 326222,
+    "sha256": "7ca6554f309923f487b5eb47dcfefbe931061037c1f5b1eab296847a6163e8ab"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\rotated_neutral.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/rotated_neutral.png",
+    "bytes": 325532,
+    "sha256": "13ffb11910c87f11593cabc80de3f1876a1deb27275f52bd713f19fc4ea6c44a"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\selected_area.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/selected_area.png",
+    "bytes": 339985,
+    "sha256": "3d19e42fb9122a7c8ee74375d28941ff3b005216f5b3535ec86219eee5f66366"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\selected_length.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/selected_length.png",
+    "bytes": 345989,
+    "sha256": "74031aa0bd92fae397281b335404b635f3aef643867dc5c45ebf08d1044266b0"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\selected_volume.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/selected_volume.png",
+    "bytes": 322657,
+    "sha256": "6ec1c57a66d8122a40989f72019b095205ce5250c99a74b2c5307cfecb11ea27"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\show_all.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/show_all.png",
+    "bytes": 323805,
+    "sha256": "3b755a26aa36f8b3fb782d1755592756760d8a5132c83d732480fbf81ce45ad6"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\solution_causal_selected.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/solution_causal_selected.png",
+    "bytes": 16821,
+    "sha256": "7f4185c0b1d6ba7712561958e5b16a4fcc34d340ba4723017b75a3e8183b13c8"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\mobile\\causal_restored.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/mobile/causal_restored.png",
+    "bytes": 271630,
+    "sha256": "0545c2e8e64dc2529945403dad2d9c933192046182b8478930e566bb2310d074"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\mobile\\causal_selected.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/mobile/causal_selected.png",
+    "bytes": 275421,
+    "sha256": "f3e0c7f1f6867910a5e885f7cab1d7c4b00a6400006064fc6393882327a45d0d"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\mobile\\detail_area.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/mobile/detail_area.png",
+    "bytes": 26741,
+    "sha256": "a5ed9bda559b445c656d9577118adcc75b6fdd1bfc5ca3f693e8b95fd00fd15c"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\mobile\\detail_length.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/mobile/detail_length.png",
+    "bytes": 32610,
+    "sha256": "530a5c03440a755c7a9d6b80c7dcf355a43e5a12c3a2d7d390a99c7d1713c911"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\mobile\\detail_volume.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/mobile/detail_volume.png",
+    "bytes": 34075,
+    "sha256": "418fbdc9f87aa6c71e5b526f3aa3c5f3da15b7b2cc1d45a0d6448e7c3793adbd"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\mobile\\mode_b_reveal.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/mobile/mode_b_reveal.png",
+    "bytes": 272878,
+    "sha256": "16d0d085f2e0eb030a29f893ee059101036dafa7d1dd21e69422b1efd8f84bf0"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\mobile\\neutral_final.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/mobile/neutral_final.png",
+    "bytes": 267456,
+    "sha256": "55207a39f55be77ad5680508938af128e8457e6f1cd244e464262121b0c852fe"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\mobile\\quantity_picker.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/mobile/quantity_picker.png",
+    "bytes": 267456,
+    "sha256": "f2e6daecb6719f44945bcbd8ad17c48696e539b24553e82b72c692ffa97e9e17"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\mobile\\rotated_neutral.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/mobile/rotated_neutral.png",
+    "bytes": 255232,
+    "sha256": "8d5b66960960b4b957b20131bf9a8d0329ce53f20e170b32847217c812229d42"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\mobile\\selected_area.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/mobile/selected_area.png",
+    "bytes": 268761,
+    "sha256": "9b102d958682ff25f2bb0b0c41b0ab60f6039bd4cedfdf88f912cee2e4b71bd6"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\mobile\\selected_length.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/mobile/selected_length.png",
+    "bytes": 282944,
+    "sha256": "509ad51c6cc0280cdbc74a21d193da4c8c0b38acce3cb38a81a42e2da4e9fc31"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\mobile\\selected_volume.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/mobile/selected_volume.png",
+    "bytes": 275421,
+    "sha256": "f3e0c7f1f6867910a5e885f7cab1d7c4b00a6400006064fc6393882327a45d0d"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\mobile\\show_all.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/mobile/show_all.png",
+    "bytes": 272409,
+    "sha256": "fc4e36e8d63201270203998fd941e56217d02d84461533419a66f659dbb7d5d7"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\mobile\\solution_causal_selected.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/mobile/solution_causal_selected.png",
+    "bytes": 42680,
+    "sha256": "dc4f0581fb3f3c545f095a068201bcef3506fc113e5c7f7f30a86a9180e92a9f"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\formation\\formation_step_0.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/formation/formation_step_0.png",
+    "bytes": 279930,
+    "sha256": "efdfa5cbb2b6aa8df94d541045e2e64d584f7a5fb8442be0fe06b85117bc92ed"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\formation\\formation_step_1.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/formation/formation_step_1.png",
+    "bytes": 279905,
+    "sha256": "7ae5fdf8c9ff8ba0c2d752a9b2188a1f2106e578609d857c15f61375df0b6d43"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\formation\\formation_step_2.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/formation/formation_step_2.png",
+    "bytes": 287920,
+    "sha256": "ceaab7f871986192d77b47edbc0b41f54d388de46e124ba79fc05c4f0b9423aa"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\formation\\formation_step_3.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/formation/formation_step_3.png",
+    "bytes": 287076,
+    "sha256": "67042ccdf050ef1efe63618d16db010901e72f01b7e45b5e19ba6ec41030a77d"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\formation\\formation_step_4.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/formation/formation_step_4.png",
+    "bytes": 289263,
+    "sha256": "503994c0f288f76e80cedf14d2af4c1163cb7a4665c392ff14df4c8c2e325ecd"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\formation\\formation_step_5.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/formation/formation_step_5.png",
+    "bytes": 303431,
+    "sha256": "5bcd861ceaf0ef7c489e803cdcfdbf7b4629b036f25e1053b4e9e084ebbd4891"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\formation\\formation_step_6.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/formation/formation_step_6.png",
+    "bytes": 323857,
+    "sha256": "02aa7a6d36806ecb0b4b8daeac038abaf59e13a6fc43a430601cedf5fb908488"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\formation\\formation_step_7.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/formation/formation_step_7.png",
+    "bytes": 297011,
+    "sha256": "13db5690f241374b297f5bdfc63219af8616c6dbd40b8f3e44d22e63164e0dca"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\formation\\steps_panel_closed.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/formation/steps_panel_closed.png",
+    "bytes": 240457,
+    "sha256": "16561debe82e9c821877462643825f7bfeff902d66052d7d15a0b918e0885568"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\desktop\\formation\\steps_panel_open.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/desktop/formation/steps_panel_open.png",
+    "bytes": 287076,
+    "sha256": "67042ccdf050ef1efe63618d16db010901e72f01b7e45b5e19ba6ec41030a77d"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\mobile\\formation\\formation_current_step.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/mobile/formation/formation_current_step.png",
+    "bytes": 250338,
+    "sha256": "9800f08e2928c958fbbbaf2ff70500cf2aa27b41757a1ab747fb339b8943af2d"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\mobile\\formation\\steps_panel_closed.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/mobile/formation/steps_panel_closed.png",
+    "bytes": 246872,
+    "sha256": "7556cfd65908d2c29971fc5bdfd33a84cf58a7f56bee5de4ef2efd8e98e4d250"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\mobile\\formation\\steps_panel_open.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/mobile/formation/steps_panel_open.png",
+    "bytes": 255524,
+    "sha256": "fc4acf2470a37da69823897d561b265501be50ee99dadc496c1f0f484a967e67"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\negative\\assumption\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/negative/assumption/desktop/refusal.png",
+    "bytes": 62806,
+    "sha256": "5b7b9d6bdf15c004dfbbc83c84933dc3f451b2421b3ac98328178e69694bd9d0"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\negative\\assumption\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/negative/assumption/mobile/refusal.png",
+    "bytes": 127465,
+    "sha256": "995d2d908ef3b5c8a33c10833f94ffe0825c29470997209c302b6a755a5d8b18"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\negative\\point_construction_mismatch\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/negative/point_construction_mismatch/desktop/refusal.png",
+    "bytes": 63188,
+    "sha256": "1167fcec0a38ca135238eb49cc44efbfed6fce52ae86af5126314d685cca5275"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\negative\\point_construction_mismatch\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/negative/point_construction_mismatch/mobile/refusal.png",
+    "bytes": 134238,
+    "sha256": "49c1bd3761754e5518686e48a6053a676d78c7feef2f27d228b8ceb693e27c45"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\negative\\topology_kernel\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/negative/topology_kernel/desktop/refusal.png",
+    "bytes": 57853,
+    "sha256": "5faff2a38f67656006935fca56a4f07e0c6bca2009f04c02ac2b5745b44d366c"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\negative\\topology_kernel\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/negative/topology_kernel/mobile/refusal.png",
+    "bytes": 125080,
+    "sha256": "9b23fb87abab48c3397d64f3ea43ea7554bbc31d55b37d7dd978f6044f02f0eb"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\negative\\ungrounded_source\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/negative/ungrounded_source/desktop/refusal.png",
+    "bytes": 57963,
+    "sha256": "ef9f039ad251861338043e44554ebf66b1640769101094e31278f58c4f56d06c"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-square-pyramid\\negative\\ungrounded_source\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/regular-square-pyramid/negative/ungrounded_source/mobile/refusal.png",
+    "bytes": 121010,
+    "sha256": "7ef709c8f69c53bc06026c907b531a3d56b5fd87571f3de01e7448bb1406251d"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\annotations_resized.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/annotations_resized.png",
+    "bytes": 913848,
+    "sha256": "0fea914526250762a0273dd4c346a094fe889abd0d2bfe3fb40c7b7921e08b3a"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\causal_restored.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/causal_restored.png",
+    "bytes": 352809,
+    "sha256": "50ce7f1f1531a116f14d0240246a266563c8655e9ea0169c840db0c38b2143e5"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\causal_selected.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/causal_selected.png",
+    "bytes": 353656,
+    "sha256": "9653821dd7450e84de125ae59e3eb5549315b2f70a6b585457f2a10b3c7b597f"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\detail_area.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/detail_area.png",
+    "bytes": 9489,
+    "sha256": "1253a79d75ad1158508633e22c4fdb62e170d3a53c2ce2b862a28929a21c5ef1"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\detail_length.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/detail_length.png",
+    "bytes": 10980,
+    "sha256": "ed0e94903b4513b19e67572e0354cd3fa0e7808dc2bc7026b49c993de4be3a6a"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\detail_volume.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/detail_volume.png",
+    "bytes": 11258,
+    "sha256": "f352c6f9f3efb8527f53935727421feae0e8ef4283feb286434a2f1cf892519f"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\mode_b_reveal.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/mode_b_reveal.png",
+    "bytes": 352809,
+    "sha256": "50ce7f1f1531a116f14d0240246a266563c8655e9ea0169c840db0c38b2143e5"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\neutral_final.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/neutral_final.png",
+    "bytes": 358409,
+    "sha256": "ecd31344af36d41fee4c0ad0ff1da599c7c4ca4950b73b91a9fe313773faacc0"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\quantity_picker.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/quantity_picker.png",
+    "bytes": 365216,
+    "sha256": "b00d7c93cf60dd0fac4472a18386cf4cc4ee87bf8bcefc7ada86a40d3763188e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\rotated_neutral.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/rotated_neutral.png",
+    "bytes": 323688,
+    "sha256": "da5238f24f4be8ec32bb1e523b20d4434c3787dc778af9ae9012bc65d1169cab"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\selected_area.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/selected_area.png",
+    "bytes": 351629,
+    "sha256": "52e27b0be737b4e2d928e4903e04e258c68eb42e901f61b78e56d96fda7c2e4b"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\selected_length.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/selected_length.png",
+    "bytes": 362345,
+    "sha256": "ec86ade7b89b388f4d36f3bc03887cd43b8374f908e34360ebaedd769618d054"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\selected_volume.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/selected_volume.png",
+    "bytes": 353256,
+    "sha256": "0fd0ba9bf9eef230ac07a5983116989d8c2a5c1a1ceabf5657249e01553edeae"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\show_all.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/show_all.png",
+    "bytes": 362820,
+    "sha256": "c65bdc94f288b02b0e7bfd035080b77cfe82cad8d5182f40122aa67c041f55bd"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\solution_causal_selected.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/solution_causal_selected.png",
+    "bytes": 16897,
+    "sha256": "207d0affc463870fb6cb16d873600d182a8f9ca3c6db155509c6597057cd90ff"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\mobile\\causal_restored.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/mobile/causal_restored.png",
+    "bytes": 276745,
+    "sha256": "7683272ed515ac77984afc3d65148cc5077bad9a40e3fcf1b36f1495f2aaf939"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\mobile\\causal_selected.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/mobile/causal_selected.png",
+    "bytes": 276732,
+    "sha256": "364eebb70de8571557870def3ecfca2a0181936f94125d783b8fb86cdfc0650b"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\mobile\\detail_area.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/mobile/detail_area.png",
+    "bytes": 26570,
+    "sha256": "a7947d590d36f667a899f5da5fa217be57d3d52096563d51ff8f72a709f58079"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\mobile\\detail_length.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/mobile/detail_length.png",
+    "bytes": 32519,
+    "sha256": "98cdaf2bfbaa8fa9e85c0f9b089dacd7ded25be0d7d85fbfbc10afe7b8614257"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\mobile\\detail_volume.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/mobile/detail_volume.png",
+    "bytes": 33680,
+    "sha256": "ae7f084ed2ddd066ea50327e7578e09c212111909677cb582ce01fac0dcdb8d1"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\mobile\\mode_b_reveal.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/mobile/mode_b_reveal.png",
+    "bytes": 281672,
+    "sha256": "b6d4efd8bdf6dcaac225200ee9c58bdbbe9d0d15ec60a710dc7db637f7d1388d"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\mobile\\neutral_final.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/mobile/neutral_final.png",
+    "bytes": 276235,
+    "sha256": "d4043c67f1d2466317a960a1bb763b7d0901babe99064235cea60c5941b44d82"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\mobile\\quantity_picker.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/mobile/quantity_picker.png",
+    "bytes": 268697,
+    "sha256": "895dd806f0ff9cadba60c28f15d007865454c76870f1e98741f18932f7ecbe2f"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\mobile\\rotated_neutral.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/mobile/rotated_neutral.png",
+    "bytes": 273427,
+    "sha256": "a4bd356b646839dfd5569b417c90e55c2e2a63499b122bdccf6610452993d920"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\mobile\\selected_area.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/mobile/selected_area.png",
+    "bytes": 277138,
+    "sha256": "c115906669926f6a2794847873ddc18dbd80bd54afd8c68fc5ed9c430021cf24"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\mobile\\selected_length.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/mobile/selected_length.png",
+    "bytes": 285767,
+    "sha256": "2bc5f19036e05606f674b98b51265fa7304fb88e284847b327be07cf018b7205"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\mobile\\selected_volume.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/mobile/selected_volume.png",
+    "bytes": 276732,
+    "sha256": "364eebb70de8571557870def3ecfca2a0181936f94125d783b8fb86cdfc0650b"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\mobile\\show_all.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/mobile/show_all.png",
+    "bytes": 281848,
+    "sha256": "857a3c69d8e719bb20e56dc75ee4b2755f8da8747ef8891833e0a85051ea1e0e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\mobile\\solution_causal_selected.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/mobile/solution_causal_selected.png",
+    "bytes": 42574,
+    "sha256": "a14c2fbc927f556897350e82296a9d70711fd1e3926f7dbcaffff0c7bae003d0"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\formation\\formation_step_0.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/formation/formation_step_0.png",
+    "bytes": 290432,
+    "sha256": "c928b673da6f9cf7d9473acfb077e033b1b4bca13c5397eeff8cdc4a169d3e15"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\formation\\formation_step_1.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/formation/formation_step_1.png",
+    "bytes": 289516,
+    "sha256": "a7bfbab87fd0fe481fba9cc72274da923a2f4844e586d386d4b7adf507aae32f"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\formation\\formation_step_2.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/formation/formation_step_2.png",
+    "bytes": 296419,
+    "sha256": "351c136b259d2b6f351d0b782c37f2f1fe6103a40dc912736f30d9f899b84834"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\formation\\formation_step_3.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/formation/formation_step_3.png",
+    "bytes": 289775,
+    "sha256": "c015d325919a543d2026b53937a37079d00420a0611320e02d4ea13ceea45934"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\formation\\formation_step_4.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/formation/formation_step_4.png",
+    "bytes": 292526,
+    "sha256": "3710af38c5db5b4270e4820dc8ebfab8ce6361c0e8ae18ddd85fe7054544154f"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\formation\\formation_step_5.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/formation/formation_step_5.png",
+    "bytes": 295318,
+    "sha256": "55fc7a5a20cbac31c9380079884efbfd263cb3e6590f886378e6d4956b7d9bbf"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\formation\\formation_step_6.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/formation/formation_step_6.png",
+    "bytes": 296568,
+    "sha256": "9c83b1d598fb864bbaa4db913fd72fba2f5c1cc4b8430c8964e5d40bd6b25248"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\formation\\formation_step_7.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/formation/formation_step_7.png",
+    "bytes": 305592,
+    "sha256": "6c5bff7eb18e605dbd5924686b876d4dbaa135c7b3aad45dc1534d54b84e1c20"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\formation\\formation_step_8.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/formation/formation_step_8.png",
+    "bytes": 325126,
+    "sha256": "7c9aa223f8cd1aabe03ecafd54c637e0ebd918ea76618bff6f5b8cca80a99959"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\formation\\formation_step_9.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/formation/formation_step_9.png",
+    "bytes": 321952,
+    "sha256": "6416b2b12ce8ecf3075224efcee9e1c2a29fc4d1f552b1f3444fbe5f7abeb0f0"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\formation\\steps_panel_closed.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/formation/steps_panel_closed.png",
+    "bytes": 241394,
+    "sha256": "3c014473dd06254e2a14199ad302f44a31a845c916ec39df511a3a8ce7715604"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\desktop\\formation\\steps_panel_open.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/desktop/formation/steps_panel_open.png",
+    "bytes": 292237,
+    "sha256": "5078f7283355f2be1dd27e9e38fb1462bc92ca7e1026031eef2b9cc8cf13349f"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\mobile\\formation\\formation_current_step.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/mobile/formation/formation_current_step.png",
+    "bytes": 244615,
+    "sha256": "43c1d7d56a4df73d1634d137e9b7f35aa7aa5842883a8da0938e1be0d510c93c"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\mobile\\formation\\steps_panel_closed.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/mobile/formation/steps_panel_closed.png",
+    "bytes": 243663,
+    "sha256": "c6afaf1cc10f2de1427ab25e3feb87c784ffa135359c155e519987d623ad8f6d"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\mobile\\formation\\steps_panel_open.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/mobile/formation/steps_panel_open.png",
+    "bytes": 249856,
+    "sha256": "a30dd44f6cfaf68cf332194d10e93fd43516e89bfe30c9a9aa0ac159d184cc9e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\negative\\assumption\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/negative/assumption/desktop/refusal.png",
+    "bytes": 62972,
+    "sha256": "28d76817b498111350c51577934db2580762148e2806a82a8b6c4998b5e49630"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\negative\\assumption\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/negative/assumption/mobile/refusal.png",
+    "bytes": 127682,
+    "sha256": "1cc398f76990a224992dbcc3970a271bd171a48b9ba0bc5f5f61b5895d8ac6f8"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\negative\\point_construction_mismatch\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/negative/point_construction_mismatch/desktop/refusal.png",
+    "bytes": 64303,
+    "sha256": "122a4a60bf215fd093bfa3dfa6957d8fb8608e9aa2a40b65983373fcd9fa5e8e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\negative\\point_construction_mismatch\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/negative/point_construction_mismatch/mobile/refusal.png",
+    "bytes": 137469,
+    "sha256": "d21ac06aa695878b7cee8aab764dd6e7c1eee652611ee1633fbd97a698ee2468"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\negative\\topology_kernel\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/negative/topology_kernel/desktop/refusal.png",
+    "bytes": 57924,
+    "sha256": "501aaf755436823b94b9ac5851d45c158c646ef0b014f553dcd73e25b5fbefdc"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\negative\\topology_kernel\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/negative/topology_kernel/mobile/refusal.png",
+    "bytes": 126707,
+    "sha256": "6667a4b9ad436cb85ce8108d95594cfc4f23812e3d46d12dbf2492b367f4e3b6"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\negative\\ungrounded_source\\desktop\\refusal.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/negative/ungrounded_source/desktop/refusal.png",
+    "bytes": 58290,
+    "sha256": "3183617424b6d96729fe31fd1e9ffd1cb8af65d593065c5eb805d79b3b9e239e"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\negative\\ungrounded_source\\mobile\\refusal.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/negative/ungrounded_source/mobile/refusal.png",
+    "bytes": 120285,
+    "sha256": "50880cbf9be69e980cf11fcf9b453021f8ed2c9f771580e3efc58dc9e5a67007"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\served\\regular_tetrahedron\\desktop\\served.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/served/regular_tetrahedron/desktop/served.png",
+    "bytes": 362453,
+    "sha256": "d1ea4bb9c5ee5922095174b99daae95626d951e5b0a37d398cc54e47a71473e6"
+  },
+  {
+    "source": ".superpowers\\closure\\official-final-remaining\\screenshots\\regular-triangular-pyramid\\served\\regular_tetrahedron\\mobile\\served.png",
+    "file": "visual/official/screenshots/regular-triangular-pyramid/served/regular_tetrahedron/mobile/served.png",
+    "bytes": 297246,
+    "sha256": "4fd57416ba19ac368765d20c566b41c0b9539750036fc239913e3e12a3be4030"
+  }
+]

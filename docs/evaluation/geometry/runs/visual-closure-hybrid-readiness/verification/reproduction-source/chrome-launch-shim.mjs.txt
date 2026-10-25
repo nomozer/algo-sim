@@ -1,0 +1,16 @@
+// Environment-only launcher adaptation: same Chrome sandbox flags as Playwright.
+// No suite assertions, oracle inputs, thresholds or browser observations change.
+import cp from 'node:child_process';
+import { createRequire, syncBuiltinESMExports } from 'node:module';
+import { dirname, join } from 'node:path';
+const require = createRequire(new URL('../frontend/package.json', import.meta.url));
+const core = dirname(require.resolve('playwright-core/package.json'));
+globalThis.WebSocket = require(join(core, 'lib/utilsBundle.js')).ws;
+const spawn = cp.spawn;
+cp.spawn = function(command, args, options) {
+  if (typeof command === 'string' && /chrome(?:\.exe)?$/i.test(command)) {
+    args = [...args, '--no-sandbox', '--disable-dev-shm-usage', '--no-first-run'];
+  }
+  return spawn.call(this, command, args, options);
+};
+syncBuiltinESMExports();

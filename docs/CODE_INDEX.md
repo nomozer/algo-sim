@@ -1,5 +1,9 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Visual closure / Hybrid readiness — local, 2026-10-25
+
+Run `docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/`. Reused `Scene3DExplorer` (analysis formula shown once; the analysis paragraph has its own class `geo3d-phan-tich-cong-thuc`), `buildObject3D` (selected section/SECTION_REGION boundary cobalt, fill stays terracotta), existing picking for transient hover, existing Registry/Planner/Engine. New regression `frontend/src/simulations/domains/geometry/visual-closure.test.tsx` owns F1/F2/hover/sphere-loop checks. No new Geometry Function, no parallel engine.
+
 ## Hybrid primary B1/B2 offline research
 
 Run `docs/evaluation/geometry/runs/hybrid-primary-b1-b2-offline/`; C0 baseline, opt-in internal service, default route unchanged.

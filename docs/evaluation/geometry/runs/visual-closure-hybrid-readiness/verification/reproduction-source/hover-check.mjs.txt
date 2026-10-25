@@ -1,0 +1,32 @@
+import {chromium} from '../frontend/node_modules/playwright/index.mjs';
+import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import * as THREE from '../frontend/node_modules/three/build/three.module.js';
+const fx=JSON.parse(readFileSync('docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/inputs/fixtures/cross_section_positive.json','utf8'));
+const b=await chromium.launch({channel:'chrome',headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+const results=[];
+try { for(const width of [1440,390]){
+  const ctx=await b.newContext({viewport:{width,height:900}});
+  await ctx.route('**/*',r=>{const u=new URL(r.request().url());if(u.hostname!=='127.0.0.1')return r.abort();if(u.pathname.startsWith('/api/'))return r.fulfill({json:u.pathname==='/api/health'?{ok:true,hasKey:false}:{user:null}});return r.continue();});
+  const page=await ctx.newPage();await page.goto('http://127.0.0.1:3129');
+  await page.evaluate(async env=>{const {useAppStore}=await import('/src/state/store.ts');useAppStore.getState().loadEnvelope(env);},fx.envelope);
+  await page.locator('.geo3d-canvas canvas').waitFor();
+  const slider=page.locator('.geo3d-scrub input');
+  await slider.evaluate(el=>{const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(el,el.max);el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));});
+  await page.waitForTimeout(800);
+  const section=fx.envelope.scene3d.objects.find(o=>o.type==='section');
+  const camera=await page.evaluate(()=>window.__geo3d_camera_snapshot);
+  const pos=section.polygon.reduce((a,p)=>a.map((x,i)=>x+Number(p[i].includes('/')?p[i].split('/')[0]/p[i].split('/')[1]:p[i])/section.polygon.length),[0,0,0]);
+  const v=new THREE.Vector3(...pos).applyMatrix4(new THREE.Matrix4().fromArray(camera.view_matrix_column_major)).applyMatrix4(new THREE.Matrix4().fromArray(camera.projection_matrix_column_major));
+  const box=await page.locator('.geo3d-canvas canvas').boundingBox();
+  const point={x:box.x+(v.x+1)*box.width/2,y:box.y+(1-v.y)*box.height/2};
+  const capture=async name=>{const bytes=await page.locator('.geo3d-canvas canvas').screenshot();const path=`.superpowers/closure/hover/${width}-${name}.png`;mkdirSync('.superpowers/closure/hover',{recursive:true});writeFileSync(path,bytes);return createHash('sha256').update(bytes).digest('hex');};
+  await page.mouse.move(1,1);const before=await capture('before');
+  await page.mouse.move(point.x,point.y);await page.waitForTimeout(250);const hovered=await capture('hover');
+  const selectedDuringHover=await page.evaluate(()=>window.__geo3d_selected_id);
+  await page.mouse.move(1,1);await page.waitForTimeout(250);const after=await capture('after');
+  results.push({width,point,section:section.id,before,hovered,after,hover_changes_canvas:before!==hovered,hover_restores_canvas:before===after,selectedDuringHover});
+  await ctx.close();
+} }finally{await b.close();}
+writeFileSync('.superpowers/closure/hover-receipt.json',JSON.stringify({results,provider_calls:0},null,2));console.log(JSON.stringify(results));
+process.exitCode=results.every(r=>r.hover_changes_canvas&&r.hover_restores_canvas&&!r.selectedDuringHover)?0:1;

@@ -1,0 +1,138 @@
+{
+  "classification": "SUPPLEMENTAL_ROLE_AWARE_PROPOSAL_NOT_OFFICIAL_ORACLE_CHANGE",
+  "provider_calls": 0,
+  "results": [
+    {
+      "width": 1440,
+      "baseline": {
+        "file": "1440-selected.png",
+        "sha256": "841d4f0ec3ba8d764e5014a1605eaf234327085ce2fcb185508cf3a914403016",
+        "census": {
+          "total": 794477,
+          "cam": 3132,
+          "xanh": 104
+        },
+        "boundaryBlue": 15,
+        "locked_hue_gate": {
+          "census": {
+            "total": 794477,
+            "cam": 3132,
+            "xanh": 104
+          },
+          "tolerance_pixels": 159,
+          "cam": {
+            "pixels": 3132,
+            "allowed": false,
+            "pass": false
+          },
+          "xanh": {
+            "pixels": 104,
+            "allowed": true,
+            "pass": true
+          },
+          "pass": false
+        },
+        "role_aware_demonstration": true
+      },
+      "injected": {
+        "file": "1440-wrong-target-color.png",
+        "sha256": "2d3e47bcbf5b3514337f8b89a21c25a1bda44dc764f9655066dbce2e0f6c617d",
+        "census": {
+          "total": 819515,
+          "cam": 3298,
+          "xanh": 100
+        },
+        "boundaryBlue": 14,
+        "locked_hue_gate": {
+          "census": {
+            "total": 819515,
+            "cam": 3298,
+            "xanh": 100
+          },
+          "tolerance_pixels": 164,
+          "cam": {
+            "pixels": 3298,
+            "allowed": false,
+            "pass": false
+          },
+          "xanh": {
+            "pixels": 100,
+            "allowed": true,
+            "pass": true
+          },
+          "pass": false
+        },
+        "role_aware_demonstration": true
+      },
+      "selected_persists_after_leave": true,
+      "geometry_unchanged": true,
+      "fault_detected": false
+    },
+    {
+      "width": 390,
+      "baseline": {
+        "file": "390-selected.png",
+        "sha256": "579228d4e7b67585a93eb606d58f605b86c3652495b9fd6ee6b503d98b394e0e",
+        "census": {
+          "total": 469337,
+          "cam": 2465,
+          "xanh": 130
+        },
+        "boundaryBlue": 107,
+        "locked_hue_gate": {
+          "census": {
+            "total": 469337,
+            "cam": 2465,
+            "xanh": 130
+          },
+          "tolerance_pixels": 94,
+          "cam": {
+            "pixels": 2465,
+            "allowed": false,
+            "pass": false
+          },
+          "xanh": {
+            "pixels": 130,
+            "allowed": true,
+            "pass": true
+          },
+          "pass": false
+        },
+        "role_aware_demonstration": true
+      },
+      "injected": {
+        "file": "390-wrong-target-color.png",
+        "sha256": "579228d4e7b67585a93eb606d58f605b86c3652495b9fd6ee6b503d98b394e0e",
+        "census": {
+          "total": 469337,
+          "cam": 2465,
+          "xanh": 130
+        },
+        "boundaryBlue": 107,
+        "locked_hue_gate": {
+          "census": {
+            "total": 469337,
+            "cam": 2465,
+            "xanh": 130
+          },
+          "tolerance_pixels": 94,
+          "cam": {
+            "pixels": 2465,
+            "allowed": false,
+            "pass": false
+          },
+          "xanh": {
+            "pixels": 130,
+            "allowed": true,
+            "pass": true
+          },
+          "pass": false
+        },
+        "role_aware_demonstration": true
+      },
+      "selected_persists_after_leave": true,
+      "geometry_unchanged": true,
+      "fault_detected": false
+    }
+  ]
+}
