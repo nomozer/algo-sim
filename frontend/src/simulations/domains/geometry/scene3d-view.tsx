@@ -662,6 +662,56 @@ interface CurvedRimLoopMeta {
   midpoints: THREE.Vector3[];
   thayMesh: THREE.Mesh;
   khuatMesh: THREE.Mesh;
+  thayNet: THREE.LineSegments;
+  khuatNet: THREE.LineSegments;
+}
+
+/**
+ * Khối cong vẫn hiện (đường bao theo camera) nhưng KHÔNG che vật khác — khối phụ cùng khung với khối chính. Trước đây
+ * siêu dữ liệu bị xoá hẳn, nên đường bao cầu không bao giờ được đặt và một vòng đơn vị hiện ở gốc toạ độ.
+ */
+export function datKhoiCongKhongChe(obj: THREE.Object3D): void {
+  if (!obj.userData.curvedSolidVolume) return;
+  obj.userData.curvedSilhouetteVolume = obj.userData.curvedSolidVolume;
+  delete obj.userData.curvedSolidVolume;
+}
+
+/**
+ * Một biên logic một chủ hình (OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT): khi cảnh đã có đường tròn backend trùng tâm,
+ * bán kính và trục với một vành đáy mà khối cong tự vẽ, bỏ vành của khối — đường tròn backend hiện theo bước của chính
+ * nó (#31) và một thiết diện đang chọn không bị vành xanh đậm của khối đè lên. So sánh số của dữ kiện backend, không suy.
+ */
+export function boVanhDayTrung(obj: THREE.Object3D, khoi: SceneObject, objects: readonly SceneObject[]): void {
+  const tron = objects.filter((x) => x.id !== khoi.id && x.type === "circle3" && x.center && x.normal && x.radius_sq);
+  if (!tron.length) return;
+  const gan = (a: number, b: number) => Math.abs(a - b) <= 1e-9 * Math.max(1, Math.abs(a), Math.abs(b));
+  const vanh: THREE.Object3D[] = [];
+  obj.traverse((n) => { if (n.userData.vanhDayCua) vanh.push(n); });
+  for (const n of vanh) {
+    type Ba = [string, string, string];
+    const { center, normal, radius_sq } = n.userData.vanhDayCua as { center: Ba; normal: Ba; radius_sq: string };
+    const c = toVec3(center), d = new THREE.Vector3(...toVec3(normal)).normalize().toArray();
+    const cungTruc = (e: number[]) => e.every((v, i) => gan(v, d[i])) || e.every((v, i) => gan(v, -d[i]));
+    const trung = tron.some((x) => gan(toNumber(x.radius_sq!), toNumber(radius_sq))
+      && toVec3(x.center!).every((v, i) => gan(v, c[i]))
+      && cungTruc(new THREE.Vector3(...toVec3(x.normal!)).normalize().toArray()));
+    if (trung) { n.removeFromParent(); disposeScene3DObject(n); }
+  }
+}
+
+/**
+ * Nét 1px dọc mép ngoài vành, dùng CHUNG vật liệu với dải. Dải nằm trong mặt phẳng miền nên khi nhìn xiên nó co dưới
+ * một điểm ảnh và cung khuất biến mất (đo: elip p6, góc «quarter», 390px); nét như viền đa giác thì không co.
+ */
+function themNetVanh(nhom: THREE.Group, thay: THREE.Mesh, khuat: THREE.Mesh): Pick<CurvedRimLoopMeta, "thayNet" | "khuatNet"> {
+  const net = (dai: THREE.Mesh) => {
+    const l = new THREE.LineSegments(new THREE.BufferGeometry(), dai.material as THREE.Material);
+    l.renderOrder = dai.renderOrder;
+    l.raycast = () => {};
+    nhom.add(l);
+    return l;
+  };
+  return { thayNet: net(thay), khuatNet: net(khuat) };
 }
 
 function capNhatHinhHocVanhCong(
@@ -672,6 +722,8 @@ function capNhatHinhHocVanhCong(
   const segCount = rim.midpoints.length;
   const dinhThay: number[] = [];
   const dinhDut: number[] = [];
+  const netThay: number[] = [];
+  const netDut: number[] = [];
   const dashCycle = 4; // 24 uniform dashes around 96-segment loop (2 segments dash, 2 segments gap)
   for (let i = 0; i < segCount; i += 1) {
     const [a0, b0, a1, b1] = [rim.trong[i], rim.ngoai[i], rim.trong[i + 1], rim.ngoai[i + 1]];
@@ -679,20 +731,24 @@ function capNhatHinhHocVanhCong(
       a0.x, a0.y, a0.z, b0.x, b0.y, b0.z, a1.x, a1.y, a1.z,
       b0.x, b0.y, b0.z, b1.x, b1.y, b1.z, a1.x, a1.y, a1.z,
     ];
+    const canh = [b0.x, b0.y, b0.z, b1.x, b1.y, b1.z];
     if (!useCpuDepthOverride) {
       dinhThay.push(...quad);
-      if (i % dashCycle < 2) dinhDut.push(...quad);
+      netThay.push(...canh);
+      if (i % dashCycle < 2) { dinhDut.push(...quad); netDut.push(...canh); }
     } else if (!hiddenFlags[i]) {
       dinhThay.push(...quad);
+      netThay.push(...canh);
     } else if (i % dashCycle < 2) {
       dinhDut.push(...quad);
+      netDut.push(...canh);
     }
   }
   // Buffer cỡ TỐI ĐA (mọi đoạn) cấp một lần cho mỗi mesh, rồi ghi tại chỗ + `setDrawRange` — dựng
   // `BufferGeometry` mới mỗi lần đổi góc nhìn là một buffer GPU mới mỗi khung khi xoay (cổng
   // `scene3d-orbit-gate`, `capPhat = 0`, ca p6/p7 thiết diện elip).
-  const setPos = (mesh: THREE.Mesh, arr: number[]) => {
-    const cap = segCount * 18;
+  const setPos = (mesh: THREE.Mesh | THREE.LineSegments, arr: number[]) => {
+    const cap = segCount * (mesh instanceof THREE.LineSegments ? 6 : 18);
     let attr = mesh.geometry?.getAttribute?.("position") as THREE.BufferAttribute | undefined;
     if (!attr || attr.array.length !== cap) {
       const g = new THREE.BufferGeometry();
@@ -711,6 +767,8 @@ function capNhatHinhHocVanhCong(
   };
   setPos(rim.thayMesh, dinhThay);
   setPos(rim.khuatMesh, dinhDut);
+  setPos(rim.thayNet, netThay);
+  setPos(rim.khuatNet, netDut);
 }
 
 function updateNonCanonicalVisibility(
@@ -910,14 +968,10 @@ export function updateCanonicalEdgeVisibility(
       return;
     }
     const curvedMeta = candidate.userData?.curvedSolidVolume as CurvedSolidVolumeMeta | undefined;
-    if (curvedMeta) {
-      candidate.updateWorldMatrix(true, false);
-      curvedVolumes.push({
-        ...curvedMeta,
-        worldToLocal: candidate.matrixWorld.clone().invert(),
-      });
-      updateCurvedSolidSilhouette(candidate, camera);
-    }
+    if (!curvedMeta && !candidate.userData?.curvedSilhouetteVolume) return;
+    candidate.updateWorldMatrix(true, false);
+    if (curvedMeta) curvedVolumes.push({ ...curvedMeta, worldToLocal: candidate.matrixWorld.clone().invert() });
+    updateCurvedSolidSilhouette(candidate, camera);
   });
   for (const { candidate, source } of solidCandidates) {
     const localCamera = candidate.worldToLocal(camera.position.clone());
@@ -956,9 +1010,9 @@ export function updateCanonicalEdgeVisibility(
           })
         : [source];
       audit = classifySolidEdgeVisibility(source, localCamera, {
+        // Polyhedron edges follow the solids' faces only (base and Owner reference convention): a curved solid that
+        // encloses an inscribed polyhedron must not dash all of its edges. Curved solids still dash free segments.
         occluders: localOccluders,
-        curved_occluders: curvedVolumes.map(volume => ({ ...volume,
-          worldToLocal: volume.worldToLocal!.clone().multiply(candidate.matrixWorld) })),
         projected_edge_pixels: viewport
           ? (edge) => {
               const a = candidate.localToWorld(edge.a.clone()).project(camera);
@@ -1661,9 +1715,10 @@ export function buildObject3D(
         midpoints.push(new THREE.Vector3(ngoaiR * Math.cos(tm), ngoaiR * Math.sin(tm), 0));
       }
     }
+    // Hàng đợi trong suốt (opacity 1) như `canonicalEdgeMaterial`: chỉ vậy `renderOrder` mới đặt vành trên nét khối.
     const thay = new THREE.Mesh(
       new THREE.BufferGeometry(),
-      new THREE.MeshBasicMaterial({ ...chungVanh, depthFunc: THREE.LessEqualDepth }),
+      new THREE.MeshBasicMaterial({ ...chungVanh, depthFunc: THREE.LessEqualDepth, transparent: true }),
     );
     thay.renderOrder = THU_TU_VE_THIET_DIEN;
     const khuat = new THREE.Mesh(
@@ -1682,6 +1737,7 @@ export function buildObject3D(
       midpoints,
       thayMesh: thay,
       khuatMesh: khuat,
+      ...themNetVanh(nhomVanh, thay, khuat),
     };
     capNhatHinhHocVanhCong(rimMeta, [], false);
     nhomVanh.userData.curvedRimLoop = rimMeta;
@@ -1770,7 +1826,7 @@ export function buildObject3D(
       nhomVanh.add(to);
     }
     const thay = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({
-      ...chungVanh, depthFunc: THREE.LessEqualDepth,
+      ...chungVanh, depthFunc: THREE.LessEqualDepth, transparent: true,
     }));
     thay.renderOrder = THU_TU_VE_THIET_DIEN;
     const khuat = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({
@@ -1786,6 +1842,7 @@ export function buildObject3D(
       midpoints,
       thayMesh: thay,
       khuatMesh: khuat,
+      ...themNetVanh(nhomVanh, thay, khuat),
     };
     capNhatHinhHocVanhCong(rimMeta, [], false);
     nhomVanh.userData.curvedRimLoop = rimMeta;
@@ -1849,21 +1906,27 @@ export function buildObject3D(
         polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1,
       }));
       outline.name = `sphere_silhouette:${o.id}`;
+      outline.visible = false; // until `updateCurvedSolidSilhouette` places it for a camera
       outline.renderOrder = THU_TU_DUONG;
       outline.raycast = () => {};
       nhomCong.add(outline);
     } else if (dinh) {
       // Reuse the existing circle rim primitive for physical boundaries; no synthetic points/names enter the scene.
-      const normal = dinh.clone().sub(tam).toArray().map(String) as [string, string, string];
-      for (const center of o.curved_kind === "cylinder" ? [o.anchor, dinh.toArray().map(String) as [string, string, string]] : [o.anchor]) {
+      // Tâm: chuỗi chính xác của backend. Pháp tuyến chỉ mang HƯỚNG ⇒ phân số 1e-6; `String(1.5)` không phải phân số hợp
+      // lệ và làm `toVec3` ném lỗi với mọi trục có toạ độ không nguyên.
+      const normal = dinh.clone().sub(tam).toArray().map((v) => `${Math.round(v * 1e6)}/1000000`) as [string, string, string];
+      for (const center of o.curved_kind === "cylinder" ? [o.anchor, o.apex_or_top!] : [o.anchor]) {
         const rim = buildObject3D({ ...o, type: "circle3", render: "circle", center, normal,
           surface_role: "BASE_REGION", formation_roles: [], fill_visible: false }, noiBat,
-          banKinhBam, diemNen, cameraPosition)!;
+          banKinhBam, diemNen, cameraPosition);
+        if (!rim) continue;
         rim.raycast = () => {};
+        rim.userData.vanhDayCua = { center, normal, radius_sq: o.radius_sq }; // see `boVanhDayTrung`
         nhomCong.add(rim);
       }
       const outline = new THREE.Group();
       outline.name = `curved_silhouette:${o.id}`;
+      outline.visible = false; // until `updateCurvedSolidSilhouette` places it for a camera
       for (let i = 0; i < 2; i++) {
         const line = new THREE.Line(createSpanPoolGeometry(), new THREE.LineBasicMaterial({
           color: net(MAU.canh), transparent: true, opacity: 1, depthWrite: false,
@@ -3497,13 +3560,14 @@ export function Scene3DWorkspace({
         vaiKhoiTheoId.get(o.id) ?? vaiKhoiTheoId.get(o.parent ?? "") ?? "primary",
         coThietDienDong);
       if (!obj) continue;
+      if (o.type === "curved_solid") boVanhDayTrung(obj, o, scene.objects); // whole scene: the circle's own step decides
       const chiSoKhoi = dsKhoiId.indexOf(o.id);
       const dichVat = khoaDich(o.id);
       if (dsKhoiId.length > 1 && chiSoKhoi >= 0) {
         const laKhoiPhu = chiSoKhoi > 0;
         if (laKhoiPhu) {
           if (o.type === "curved_solid" && dichVat === khoaDich(dsKhoiId[0])) {
-            delete obj.userData.curvedSolidVolume;
+            datKhoiCongKhongChe(obj);
             for (const c of [...obj.children]) {
               if (c.userData?.chieuSau || c.userData?.chieuSauMatTruoc) obj.remove(c);
             }

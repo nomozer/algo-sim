@@ -44,7 +44,6 @@ export interface VisibilityOptions {
   projected_edge_pixels?: number | ((edge: CanonicalEdge) => number);
   /** Additional objects may occlude this owner when classifying a whole scene. */
   occluders?: SceneObject[];
-  curved_occluders?: readonly CurvedSolidVolumeMeta[];
 }
 
 export function canonicalEdgesOf(o: SceneObject): CanonicalEdge[] {
@@ -223,9 +222,7 @@ export function classifySolidEdgeVisibility(
     const states: boolean[] = [];
     for (let index = 0; index < cells; index += 1) {
       const t = (index + 0.5) / cells;
-      const point = edge.a.clone().lerp(edge.b, t);
-      states.push(pointIsHidden(point, camera, triangles, excluded)
-        || diemVanhCongBiChe(point, camera, options.curved_occluders ?? []));
+      states.push(pointIsHidden(edge.a.clone().lerp(edge.b, t), camera, triangles, excluded));
       sampleCount += 1;
     }
     const hiddenCount = states.filter(Boolean).length;
@@ -459,7 +456,8 @@ export function diemVanhCongBiChe(
 
 /** Camera tangent contours of certified primitives. Presentation only; never creates backend facts or entities. */
 export function updateCurvedSolidSilhouette(candidate: THREE.Object3D, camera: THREE.Camera): void {
-  const meta = candidate.userData.curvedSolidVolume as CurvedSolidVolumeMeta | undefined;
+  // `curvedSilhouetteVolume`: a curved solid shown but not used as an occluder (see `datKhoiCongKhongChe`).
+  const meta = (candidate.userData.curvedSolidVolume ?? candidate.userData.curvedSilhouetteVolume) as CurvedSolidVolumeMeta | undefined;
   if (!meta) return;
   const eye = candidate.worldToLocal(camera.position.clone());
   const { anchor, top, radius: r, height: h, kind } = meta;

@@ -3,16 +3,24 @@
 ## Scene3D visual correction (local candidate, 2026-10-25)
 
 `frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts` reuses `diemVanhCongBiChe` for bounded ray/ball,
-cylinder and cone intersections, including axial caps and cone slope. `classifyWorldSegmentVisibility` and
-`classifySolidEdgeVisibility` accept `curved_occluders`; inverse presentation matrices preserve local primitive geometry.
-`updateCurvedSolidSilhouette` updates camera-tangent sphere contours and cylinder/cone generators only; no facts enter
-the backend. `scene3d-view.tsx` reuses its existing circle rim and span pools for physical base rims, distinguishes
-hover from selection, and resets hover on scene replacement. `Scene3DExplorer.tsx` keeps final answers in the analysis
-panel, with identity-based inspector links and no duplicate final canvas labels.
+cylinder and cone intersections, including axial caps and cone slope. `classifyWorldSegmentVisibility` accepts
+`curved_occluders` (free segments and curve rims); polyhedron edges (`classifySolidEdgeVisibility`) follow solid faces
+only, so an enclosing curved solid does not dash an inscribed polyhedron. Inverse presentation matrices preserve local
+primitive geometry. `updateCurvedSolidSilhouette` updates camera-tangent sphere contours and cylinder/cone generators
+only (hidden until first placed); no facts enter the backend. `scene3d-view.tsx` reuses its existing circle rim and span
+pools for physical base rims, distinguishes hover from selection, and resets hover on scene replacement.
+`datKhoiCongKhongChe` keeps a secondary curved solid's silhouette while removing it from occluders;
+`boVanhDayTrung` drops a curved solid's own cap rim when the scene already has a backend `circle3` with the same
+centre, radius and axis (one visual owner per boundary; the circle's own step decides). `themNetVanh` adds a 1px stroke,
+sharing the ribbon material, to every circle/ellipse rim so it cannot vanish edge-on; the front rim material is in the
+transparent queue so `renderOrder` draws it over solid outlines. `Scene3DExplorer.tsx` keeps final answers in the
+analysis panel, with identity-based inspector links and no duplicate final canvas labels.
 
 `frontend/scripts/section-role-oracle.mjs` remains a supplemental proposal: per-edge checks, CIE76 against declared
-palette alpha composites, per-other-section ownership, cone normals and inverse camera-model transforms.
-`section-role-browser-probe.mjs` records stable camera frames and explicit incomplete-run failures.
+palette alpha composites, per-other-section ownership, cone normals and inverse camera-model transforms; curve hidden
+parts scored per maximal arc; three-way verdict PASS / FAIL / UNCERTIFIABLE (unobservable ≠ pass).
+`section-role-browser-probe.mjs` records stable camera frames and explicit incomplete-run failures, and counts a fault
+as detected only on views certified unfaulted.
 Regressions extend `scene3d-unified-materials.test.ts`, `visual-closure.test.tsx`, `simulation-coverage-fixes.test.tsx`,
 `scene3d-focus-mode.test.tsx` and `section-role-oracle.node-test.mjs`. No new product module or dependency.
 Run: `docs/evaluation/geometry/runs/scene3d-visual-correction/plan.md`.

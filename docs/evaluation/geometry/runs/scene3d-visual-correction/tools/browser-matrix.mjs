@@ -22,9 +22,14 @@ for (const id of phase === 'before' ? ['cau-cat-mat-phang', 'tru-truc-xien', 'no
 }
 if (phase !== 'before') {
   const source = 'docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json';
-  for (const row of read(source).filter(r => /oxyz|oblique|xien|coordinate|overlap/i.test(r.id))) fixtures.push({ id: row.id,
+  // The original filter matched none of the current ids; `--audit '.'` includes all of them.
+  const audit = new RegExp(arg('--audit', 'oxyz|oblique|xien|coordinate|overlap'), 'i');
+  for (const row of read(source).filter(r => audit.test(r.id))) fixtures.push({ id: row.id,
     envelope: { ...samples[0].envelope, scene3d: row.scene }, source, scope: 'DISPLAY_ONLY_AUTHORED_SCENE' });
 }
+// `--extra-scene a.json,b.json`: bare scene3d files (e.g. the frontend circumsphere test fixture), display only.
+for (const file of arg('--extra-scene', '').split(',').filter(Boolean)) fixtures.push({ id: file.split('/').pop().replace(/\.json$/, ''),
+  envelope: { ...samples[0].envelope, scene3d: read(file) }, source: file, scope: 'DISPLAY_ONLY_TEST_FIXTURE_SCENE' });
 const sha = b => createHash('sha256').update(b).digest('hex');
 const receipt = { phase, url, source_head: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
   baseline_source: phase === 'before' ? 'fe5f40b7 original product modules via Vite load plugin' : null,
@@ -66,13 +71,18 @@ try {
             mixed: window.__geo3d_mixed_edge_ids, duplicates: window.__geo3d_duplicate_visual_owner_ids,
             labels: [...document.querySelectorAll('.geo3d-label,.geo3d-nhan-mp')].filter(el => getComputedStyle(el).visibility !== 'hidden').map(el => ({ text: el.textContent, id: el.dataset.id ?? el.dataset.planeId })),
             final_canvas_labels: [...document.querySelectorAll('.geo3d-so-do.la-ket-qua')].map(el => el.textContent),
+            // Mode A/B privacy, read from the real DOM: where a final result is printed, and how many times.
+            analysis_results: [...document.querySelectorAll('section[aria-label="Kết quả toán học"] [data-analysis-item]')].map(el => el.dataset.analysisItem),
+            selected_result_items: [...document.querySelectorAll('section[aria-label="Kết quả toán học"] [data-analysis-item]')]
+              .filter(el => el.querySelector('button[aria-pressed="true"]')).map(el => el.dataset.analysisItem),
+            inspector_values: [...document.querySelectorAll('[data-value-entity],[data-formula-entity]')].map(el => el.dataset.valueEntity ?? el.dataset.formulaEntity),
             overflow: document.documentElement.scrollWidth > innerWidth + 1 }));
           const image = await page.screenshot(), file = `${fixture.id}-${width}-${state}.png`;
           writeFileSync(join(out, file), image);
           row.frames.push({ state, file, sha256: sha(image), ...metadata });
         };
         await capture('default-unselected-mode-a');
-        row.checks.mode_a_hidden = !row.frames[0].final_canvas_labels.length;
+        row.checks.mode_a_hidden = !row.frames[0].final_canvas_labels.length && !row.frames[0].analysis_results.length;
         const cameras = phase === 'before' ? ['default', 'quarter', 'half', 'high', 'low'] : ['default', 'quarter', 'half', 'high', 'low'];
         for (const camera of cameras) {
           if (camera !== 'default') {
@@ -87,7 +97,14 @@ try {
         await page.getByRole('button', { name: 'Xem lại toàn hình', exact: true }).click();
         await page.getByRole('button', { name: 'Phân tích toán học', exact: true }).click();
         const item = page.locator('[data-analysis-item] button').first();
-        if (await item.count()) { await item.click(); await capture('default-selected-mode-b'); }
+        if (await item.count()) {
+          await item.click(); await capture('default-selected-mode-b');
+          const b = row.frames.at(-1);
+          // Mode B: each result listed once in the panel; never on the canvas; the inspector links instead of repeating it.
+          row.checks.mode_b_once = !b.final_canvas_labels.length && new Set(b.analysis_results).size === b.analysis_results.length
+            && (!b.selected_result_items.length || !b.inspector_values.includes(b.selected));
+          row.mode_b_selected_is_result = b.selected_result_items.length > 0;
+        }
         row.checks.geometry_unchanged = original === await page.evaluate(() => JSON.stringify(window.__ALGO_SIM_STORE__.getState().active.envelope.scene3d));
         row.checks.no_duplicate_edge_owners = row.frames.every(f => !f.duplicates?.length);
         row.checks.no_overflow = row.frames.every(f => !f.overflow);

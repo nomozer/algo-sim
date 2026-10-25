@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import * as THREE from "three";
-import { buildObject3D, canonicalEdgeMaterial, disposeScene3DObject, updateCanonicalEdgeVisibility } from "./scene3d-view";
+import {
+  boVanhDayTrung, buildObject3D, canonicalEdgeMaterial, datKhoiCongKhongChe, disposeScene3DObject, updateCanonicalEdgeVisibility,
+} from "./scene3d-view";
 import * as roles from "./scene3d-roles";
 import type { Scene3D, SceneObject } from "./scene3d-model";
 import { diemVanhCongBiChe, classifyWorldSegmentVisibility, type CurvedSolidVolumeMeta } from "./scene3d-edge-visibility";
@@ -192,6 +194,104 @@ describe("shared semantic material behavior", () => {
         if (m?.transparent && m.side === THREE.DoubleSide && m.colorWrite !== false) expect(m.forceSinglePass).toBe(true);
       });
     }
+  });
+
+  it("queues the front curve rim with the solid outlines so it is drawn over them", () => {
+    // three.js draws the opaque queue first; renderOrder only orders within a queue. An opaque rim was therefore
+    // overdrawn by the (transparent-queue) cylinder generator where both meet near tangency.
+    const cylinder: SceneObject = { ...common, depends: [], id: "cyl", type: "curved_solid", render: "curved_solid",
+      curved_kind: "cylinder", anchor: ["0", "0", "0"], apex_or_top: ["0", "0", "3"], radius_sq: "4", height_sq: "9" };
+    const generator = buildObject3D(cylinder, false)!.getObjectByName("curved_generator:cyl:0") as THREE.Line;
+    expect((generator.material as THREE.Material).transparent).toBe(true);
+    for (const o of [circle, ellipse]) for (const selected of [false, "dich"] as const) {
+      let front: THREE.Mesh | undefined;
+      buildObject3D(o, selected)!.traverse(n => { front ??= n.userData.curvedRimLoop?.thayMesh; });
+      expect([o.id, (front!.material as THREE.Material).transparent]).toEqual([o.id, true]);
+      expect(front!.renderOrder).toBeGreaterThan(generator.renderOrder);
+    }
+  });
+
+  it("strokes every drawn rim chord with a 1px line that cannot collapse when the region is seen edge-on", () => {
+    const cylinder: SceneObject = { ...common, depends: [], id: "cyl", type: "curved_solid", render: "curved_solid",
+      curved_kind: "cylinder", anchor: ["0", "0", "-2"], apex_or_top: ["0", "0", "3"], radius_sq: "4", height_sq: "25" };
+    for (const o of [circle, ellipse]) {
+      const root = new THREE.Group(), built = buildObject3D(o, "dich")!;
+      root.add(buildObject3D(cylinder, false)!, built);
+      let rim: { thayMesh: THREE.Mesh; khuatMesh: THREE.Mesh; thayNet: THREE.LineSegments; khuatNet: THREE.LineSegments } | undefined;
+      built.traverse(n => { rim ??= n.userData.curvedRimLoop; });
+      expect(rim!.thayNet.material).toBe(rim!.thayMesh.material);
+      expect(rim!.khuatNet.material).toBe(rim!.khuatMesh.material);
+      const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+      for (const eye of [null, [9, 4, 5], [0.5, 9, 1.2]] as const) {
+        if (eye) {
+          camera.position.set(eye[0], eye[1], eye[2]); camera.lookAt(0, 0, 1); camera.updateMatrixWorld();
+          updateCanonicalEdgeVisibility(root, camera);
+        }
+        // a ribbon chord is 6 vertices, a stroke chord 2: both must carry exactly the same chords
+        expect(rim!.thayNet.geometry.drawRange.count * 3).toBe(rim!.thayMesh.geometry.drawRange.count);
+        expect(rim!.khuatNet.geometry.drawRange.count * 3).toBe(rim!.khuatMesh.geometry.drawRange.count);
+      }
+      expect(rim!.khuatNet.geometry.drawRange.count).toBeGreaterThan(0); // the side view hides part of the rim
+    }
+  });
+
+  /* Internal review 2026-10-25 (C1, I1, I2). */
+  const ball: SceneObject = { ...common, depends: [], id: "ball", type: "curved_solid", render: "curved_solid",
+    curved_kind: "ball", anchor: ["1", "1", "3/2"], radius_sq: "5" };
+  const lookFrom = (eye: [number, number, number]) => {
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    camera.position.set(...eye); camera.lookAt(1, 1, 1.5); camera.updateMatrixWorld();
+    return camera;
+  };
+
+  it("never shows a silhouette that no camera update has placed", () => {
+    const cylinder: SceneObject = { ...ball, id: "cyl", curved_kind: "cylinder", apex_or_top: ["1", "1", "3"], height_sq: "9/4" };
+    for (const o of [ball, cylinder]) {
+      const built = buildObject3D(o, false)!;
+      const outline = built.getObjectByName(`sphere_silhouette:${o.id}`) ?? built.getObjectByName(`curved_silhouette:${o.id}`);
+      expect([o.id, outline!.visible]).toEqual([o.id, false]);
+    }
+  });
+
+  it("places the silhouette of a curved solid that does not occlude (secondary solid sharing the primary's frame)", () => {
+    const root = new THREE.Group(), built = buildObject3D(ball, false)!;
+    root.add(built);
+    datKhoiCongKhongChe(built);
+    updateCanonicalEdgeVisibility(root, lookFrom([12, 9, 10]));
+    const outline = built.getObjectByName("sphere_silhouette:ball")!;
+    expect(outline.visible).toBe(true);
+    expect(outline.position.distanceTo(new THREE.Vector3(1, 1, 1.5))).toBeGreaterThan(0); // moved off the anchor, toward the eye
+    expect(Math.hypot(outline.scale.x - 1)).toBeGreaterThan(1e-6);                       // not the unplaced unit ring
+  });
+
+  it("classifies a polyhedron's edges by solid faces only, also when a curved solid encloses it", () => {
+    const hiddenWith = (withBall: boolean) => {
+      const root = new THREE.Group();
+      if (withBall) root.add(buildObject3D(ball, false)!);
+      root.add(buildObject3D(solid, false)!);
+      return updateCanonicalEdgeVisibility(root, lookFrom([12, 9, 10])).hidden_edge_ids;
+    };
+    expect(hiddenWith(false).length).toBeLessThan(6);
+    expect(hiddenWith(true)).toEqual(hiddenWith(false));
+  });
+
+  it("lets a backend circle own a cap rim: the solid drops its own rim at the same centre, radius and axis", () => {
+    const cylinder: SceneObject = { ...common, depends: [], id: "cyl", type: "curved_solid", render: "curved_solid",
+      curved_kind: "cylinder", anchor: ["0", "0", "0"], apex_or_top: ["0", "0", "3"], radius_sq: "4", height_sq: "9" };
+    const cap = (center: [string, string, string], extra: Partial<SceneObject> = {}): SceneObject =>
+      ({ ...circle, id: `c${center[2]}`, center, normal: ["0", "0", "1"], radius_sq: "4", ...extra });
+    const rims = (others: SceneObject[]) => {
+      const built = buildObject3D(cylinder, false)!;
+      boVanhDayTrung(built, cylinder, others);
+      const out: THREE.Object3D[] = [];
+      built.traverse(n => { if (n.userData.curvedRimLoop) out.push(n); });
+      return out.length;
+    };
+    expect(rims([])).toBe(2);
+    expect(rims([cap(["0", "0", "0"])])).toBe(1);
+    expect(rims([cap(["0", "0", "0"]), cap(["0", "0", "3"], { normal: ["0", "0", "-2"] })])).toBe(0); // opposite normal: same circle
+    expect(rims([cap(["0", "0", "0"], { radius_sq: "1" }), cap(["0", "0", "3"], { normal: ["1", "0", "0"] })])).toBe(2);
+    expect(rims([{ ...cap(["0", "0", "0"]), type: "ellipse3" }])).toBe(2);
   });
 
   it("shares selected shell emphasis across polyhedra and every curved solid", () => {

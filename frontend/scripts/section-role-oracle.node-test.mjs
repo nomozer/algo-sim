@@ -1,7 +1,7 @@
 // node --test scripts/section-role-oracle.node-test.mjs — synthetic frames, no browser.
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { assessSectionRole, project, sectionBoundaryWorld } from "./section-role-oracle.mjs";
+import { assessSectionRole, NGUONG_VAI_THIET_DIEN, project, sectionBoundaryWorld } from "./section-role-oracle.mjs";
 
 const TERRACOTTA = [200, 90, 50], COBALT = [37, 99, 235], MAGENTA = [235, 30, 235], GREY = [150, 150, 150], BG = [245, 244, 240];
 const W = 200, H = 160;
@@ -108,6 +108,40 @@ test("an overlay covering a whole edge prevents full certification", () => {
   assert.equal(r.edges[2].scored, false);
   assert.equal(r.pass, false);
   assert.ok(r.reasons.includes("BOUNDARY_NOT_FULLY_OBSERVABLE"));
+  assert.equal(r.verdict, "UNCERTIFIABLE");
+});
+
+test("verdict separates a wrong frame from an unobservable one", () => {
+  assert.equal(run(frame()).verdict, "PASS");
+  assert.equal(run(frame({ line: TERRACOTTA })).verdict, "FAIL");
+  // a fault is still a FAIL even when part of the boundary is under an overlay
+  assert.equal(run(frame({ line: MAGENTA }), { overlays: [{ x: 30, y: 110, w: 140, h: 20 }] }).verdict, "FAIL");
+});
+
+// An ellipse seen almost edge-on: semi-minor 1.5 px, so its front (lower) and hidden (upper) halves overlap on screen.
+function edgeOnCase(ink, N = NGUONG_VAI_THIET_DIEN) {
+  const pts = Array.from({ length: 97 }, (_, k) => ({ x: 100 + 60 * Math.cos((2 * Math.PI * k) / 96), y: 80 + 1.5 * Math.sin((2 * Math.PI * k) / 96) }));
+  const segs = pts.slice(0, 96).map((a, k) => ({ a, b: pts[k + 1], hidden: Math.sin((2 * Math.PI * (k + 0.5)) / 96) < 0, curve: true }));
+  const rgba = new Uint8Array(W * H * 4);
+  for (let q = 0; q < W * H; q += 1) rgba.set([...BG, 255], q * 4);
+  for (const s of segs) for (let t = 0; t <= 1; t += 0.1) {
+    const x = Math.round(s.a.x + (s.b.x - s.a.x) * t), y = Math.round(s.a.y + (s.b.y - s.a.y) * t);
+    for (let d = -1; d <= 1; d += 1) rgba.set([...ink, 255], ((y + d) * W + x) * 4);
+  }
+  return assessSectionRole({ w: W, h: H, rgba }, { scale: 1, box: { w: W, h: H }, edges: segs }, N);
+}
+
+test("an edge-on curve is uncertifiable, not passed, when its arcs cannot be separated", () => {
+  const r = edgeOnCase(COBALT);
+  assert.equal(r.verdict, "UNCERTIFIABLE");
+  assert.ok(r.reasons.includes("BOUNDARY_NOT_OBSERVABLE"), JSON.stringify(r.reasons));
+  assert.ok(r.hidden_arcs.every((a) => a.pass === null));            // the front ink is never credited to the hidden arc
+  // control: without the separation rule the same pixels would "certify" the hidden arc from the front ink
+  assert.ok(edgeOnCase(COBALT, { ...NGUONG_VAI_THIET_DIEN, separationCss: 0 }).hidden_arcs.every((a) => a.pass === true));
+});
+
+test("an edge-on curve with no cobalt at all still fails", () => {
+  assert.equal(edgeOnCase(TERRACOTTA).verdict, "FAIL");
 });
 
 test("a hidden edge keeps the dashed-ink threshold without borrowing coverage from another edge", () => {
@@ -130,10 +164,61 @@ test("project + sectionBoundaryWorld place a circle on a sphere", () => {
   ] };
   const eye = [10, -10, 10];
   const segs = sectionBoundaryWorld(scene, "C", eye);
-  assert.equal(segs.length, 32);
+  assert.equal(segs.length, 96);                       // one oracle segment per renderer rim segment
+  assert.ok(segs.every((s) => s.curve));
   assert.ok(segs.some((s) => s.hidden) && segs.some((s) => !s.hidden));
   for (const s of segs) assert.ok(Math.abs(Math.hypot(...s.a) - 5) < 1e-9);   // on the sphere: 3² + 4² = 5²
   const I = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
   assert.deepEqual(project([0, 0, 0], { view_matrix_column_major: I, projection_matrix_column_major: I }, { w: 100, h: 80 }),
     { x: 50, y: 40 });
+});
+
+// A curve: 96 short chords on a circle of radius 60 around (100, 80); the left half is hidden (dashed).
+function curveCase({ hiddenInk = "dashed" } = {}) {
+  const pts = Array.from({ length: 97 }, (_, k) => ({ x: 100 + 60 * Math.cos((2 * Math.PI * k) / 96), y: 80 + 60 * Math.sin((2 * Math.PI * k) / 96) }));
+  const segs = pts.slice(0, 96).map((a, k) => ({ a, b: pts[k + 1], hidden: Math.cos((2 * Math.PI * (k + 0.5)) / 96) < 0, curve: true }));
+  const rgba = new Uint8Array(W * H * 4);
+  const put = (x, y, c) => { if (x >= 0 && y >= 0 && x < W && y < H) rgba.set([...c, 255], (y * W + x) * 4); };
+  for (let y = 0; y < H; y += 1) for (let x = 0; x < W; x += 1) put(x, y, BG);
+  for (let y = 0; y < H; y += 1) for (let x = 0; x < W; x += 1) if (Math.hypot(x - 100, y - 80) < 58) put(x, y, TERRACOTTA);
+  segs.forEach((s) => {
+    for (let t = 0; t <= 1; t += 0.05) {
+      const x = s.a.x + (s.b.x - s.a.x) * t, y = s.a.y + (s.b.y - s.a.y) * t;
+      const arc = Math.atan2(y - 80, x - 100) * 60;                      // arc length, for a dash phase
+      const ink = !s.hidden || (hiddenInk === "dashed" && ((arc % 16) + 16) % 16 < 3);
+      if (ink) for (let d = -1; d <= 1; d += 1) { put(Math.round(x) + d, Math.round(y), COBALT); put(Math.round(x), Math.round(y) + d, COBALT); }
+    }
+  });
+  return { img: { w: W, h: H, rgba }, segs };
+}
+
+test("a dashed hidden arc of a curve passes as one arc even where a short chord falls in a dash gap", () => {
+  const { img, segs } = curveCase();
+  const r = assessSectionRole(img, { scale: 1, box: { w: W, h: H }, edges: segs });
+  assert.ok(r.edges.some((e) => e.hidden && e.coverage < 0.4), "some chords fall in gaps");
+  assert.equal(r.hidden_arcs.length, 1);
+  assert.equal(r.pass, true, JSON.stringify(r.reasons));
+});
+
+test("a hidden arc with 40% of its dashes missing fails (internal review I3: 0.4 let ~55% go missing)", () => {
+  const { img, segs } = curveCase();
+  const hidden = segs.map((s, i) => (s.hidden ? i : -1)).filter((i) => i >= 0);
+  for (const i of hidden.slice(0, Math.round(hidden.length * 0.4))) {           // erase one contiguous 40% of the arc
+    const s = segs[i];
+    for (let t = 0; t <= 1; t += 0.05) {
+      const x = Math.round(s.a.x + (s.b.x - s.a.x) * t), y = Math.round(s.a.y + (s.b.y - s.a.y) * t);
+      for (let dy = -2; dy <= 2; dy += 1) for (let dx = -2; dx <= 2; dx += 1) {
+        const q = ((y + dy) * W + x + dx) * 4;
+        if (img.rgba[q + 2] > 200 && img.rgba[q] < 60) img.rgba.set([...BG, 255], q);
+      }
+    }
+  }
+  const r = assessSectionRole(img, { scale: 1, box: { w: W, h: H }, edges: segs });
+  assert.equal(r.verdict, "FAIL", JSON.stringify(r.hidden_arcs));
+});
+
+test("a curve whose hidden arc is not drawn at all still fails", () => {
+  const { img, segs } = curveCase({ hiddenInk: "none" });
+  const r = assessSectionRole(img, { scale: 1, box: { w: W, h: H }, edges: segs });
+  assert.ok(r.reasons.includes("BOUNDARY_NOT_COBALT"), JSON.stringify(r.reasons));
 });

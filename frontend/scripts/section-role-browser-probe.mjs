@@ -127,27 +127,38 @@ try {
         const cam = await p.evaluate(() => window.__geo3d_camera_snapshot);
         if (JSON.stringify(cameraBefore) !== JSON.stringify(cam)) throw Error('CAMERA_CHANGED_DURING_CAPTURE');
         const world = sectionBoundaryWorld(scene, c.section, cam);
-        const edges = (world ?? []).map((s) => ({ a: project(s.a, cam, { w: box.width, h: box.height }), b: project(s.b, cam, { w: box.width, h: box.height }), hidden: s.hidden }));
+        const edges = (world ?? []).map((s) => ({ a: project(s.a, cam, { w: box.width, h: box.height }), b: project(s.b, cam, { w: box.width, h: box.height }), hidden: s.hidden, curve: Boolean(s.curve) }));
         const otherBoundaries = scene.objects.filter(o => o.id !== c.section && ["section", "circle3", "ellipse3"].includes(o.type))
           .map(o => sectionBoundaryWorld(scene, o.id, cam)).filter(Boolean)
           .map(boundary => boundary.map(s => ({ a: project(s.a, cam, { w: box.width, h: box.height }), b: project(s.b, cam, { w: box.width, h: box.height }), hidden: s.hidden })));
         const res = world ? assessSectionRole(img, { scale: img.w / box.width, box: { w: box.width, h: box.height }, overlays, edges, otherBoundaries })
-          : { pass: false, reasons: ["BOUNDARY_SHAPE_UNSUPPORTED"] };
+          : { pass: false, verdict: "FAIL", reasons: ["BOUNDARY_SHAPE_UNSUPPORTED"] };
         const identity_ok = selected === c.item;
+        const verdict = !identity_ok ? "FAIL" : res.verdict;
         rows.push({ case: c.id, shape: c.shape, width, cameraName, camera: cam, fault, file, sha256: createHash("sha256").update(png).digest("hex"),
-          selected, identity_ok, pixel_pass: res.pass, reasons: res.reasons, edges: res.edges?.map(({ edge, hidden, visible, blue, coverage, pass }) => ({ edge, hidden, visible, blue, coverage, pass })),
-          fill: res.fill, blue: res.blue, verdict: identity_ok && res.pass, errors });
-        console.log(`${c.id} ${width} ${cameraName} ${fault}: identity=${identity_ok} pixel=${res.pass} ${res.reasons.join(",")}`);
+          selected, identity_ok, pixel_pass: res.pass, reasons: res.reasons, edges: res.edges?.map(({ edge, hidden, visible, blue, coverage, scored, pass }) => ({ edge, hidden, curve: Boolean(edges[edge]?.curve), visible, blue, coverage, scored, pass })),
+          hidden_arcs: res.hidden_arcs,
+          fill: res.fill, blue: res.blue, verdict, errors });
+        console.log(`${c.id} ${width} ${cameraName} ${fault}: identity=${identity_ok} ${verdict} ${res.reasons.join(",")}`);
         await ctx.close();
       }
     }
   }
 } catch (e) { failures.push(e.message.split('\n')[0]); }
 finally { await browser.close(); }
-const baseline = rows.filter((r) => r.fault === "none"), faulted = rows.filter((r) => r.fault !== "none");
-const summary = { baseline_pass: baseline.filter((r) => r.verdict).length, baseline_total: baseline.length,
-  faults_detected: faulted.filter((r) => !r.verdict).length, faults_total: faulted.length,
+// A fault is only evidence where the same view, unfaulted, was certified: an UNCERTIFIABLE view proves nothing either way.
+const view = (r) => `${r.case}|${r.width}|${r.cameraName}`;
+const baseline = rows.filter((r) => r.fault === "none");
+const certified = new Set(baseline.filter((r) => r.verdict === "PASS").map(view));
+const faulted = rows.filter((r) => r.fault !== "none" && certified.has(view(r)));
+const count = (list, v) => list.filter((r) => r.verdict === v).length;
+const summary = { baseline_total: baseline.length, baseline_pass: count(baseline, "PASS"), baseline_fail: count(baseline, "FAIL"),
+  baseline_uncertifiable: count(baseline, "UNCERTIFIABLE"),
+  certified_views_per_case: Object.fromEntries(CASES.map((c) => [c.id, baseline.filter((r) => r.case === c.id && r.verdict === "PASS").length])),
+  faults_on_certified_views: faulted.length, faults_detected: count(faulted, "FAIL"),
+  faults_on_uncertifiable_views: rows.filter((r) => r.fault !== "none" && !certified.has(view(r))).length,
   expected_rows: CASES.length * 2 * CAMERAS.length * FAULTS.length, completed_rows: rows.length };
 writeFileSync(join(OUT, "receipt.json"), JSON.stringify({ classification: "PROPOSED_ROLE_AWARE_ORACLE_EVIDENCE_NOT_OFFICIAL_SUITE", provider_calls: 0, url: URL_, summary, failures, rows }, null, 2));
 console.log(JSON.stringify(summary));
-process.exitCode = !failures.length && rows.length === summary.expected_rows && summary.baseline_pass === summary.baseline_total && summary.faults_detected === summary.faults_total ? 0 : 1;
+process.exitCode = !failures.length && rows.length === summary.expected_rows && summary.baseline_fail === 0
+  && Object.values(summary.certified_views_per_case).every((k) => k > 0) && summary.faults_detected === summary.faults_on_certified_views ? 0 : 1;

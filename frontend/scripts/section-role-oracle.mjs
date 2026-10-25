@@ -4,24 +4,38 @@
  * Owner policy F2: a section keeps its semantic terracotta fill; when it is the selected target its BOUNDARY turns
  * cobalt. The locked hue gate (`assessCausalCanvasHues`) counts every orange pixel of a selected-state frame as a
  * violation, so it fails exactly this policy. This module checks the policy itself, per object:
- *   ① boundary — samples along every projected edge of the selected section (polygon edges, or a polyline of the
- *      projected circle/ellipse). Front edges are scored ONE BY ONE: enough visible samples must have cobalt within a
- *      small window. Each hidden edge is scored separately with a dashed-ink threshold; unobservable edges are gaps.
+ *   ① boundary — samples along every projected edge of the selected section (polygon edges, or the 96-chord polyline
+ *      the renderer also uses for a circle/ellipse). Front edges are scored ONE BY ONE: enough visible samples must
+ *      have the policy cobalt (ΔE76 to its alpha composites) within a small window. Hidden polygon edges are scored one
+ *      by one, hidden curve chords per maximal hidden ARC, each with a dashed-ink threshold. Samples under DOM overlays,
+ *      or where a front and a hidden part of the same boundary overlap on screen, are unobservable, never scored.
  *   ② fill — samples the shrunk interior (away from the boundary band): must read terracotta, must not read cobalt.
- *   ③ blue ownership — most cobalt pixels of the canvas must lie in the boundary band of THIS section.
+ *   ③ blue ownership — most cobalt pixels of the canvas must lie in the boundary band of THIS section; every other
+ *      section boundary must stay neutral.
+ * Verdict: FAIL if any check fails; else UNCERTIFIABLE if part of the boundary or fill is unobservable; else PASS.
  * Pure functions over an RGBA buffer; the browser probe supplies pixels, projection and overlay boxes. Hue bands and
- * the classifier are the locked suite's (`DAI_SAC_VAI_TRO`, `phanLoaiSac`) — no colour is redefined here.
+ * the classifier come from the locked suite (`DAI_SAC_VAI_TRO`, `phanLoaiSac`); the policy RGB values (cobalt,
+ * terracotta) and the three light backgrounds are written here. Limits on independence: the curve discretisation and
+ * ring frame mirror the renderer's, so a shared error there would not be caught.
  */
 import { DAI_SAC_VAI_TRO, phanLoaiSac, deltaE76 } from "./compiler-scene-replay-lib.mjs";
-import { Matrix4, Vector3 } from "three";
+import { Matrix4, Quaternion, Vector3 } from "three";
 
-/** Thresholds fixed from the unfaulted baseline before any fault was run (see run report); not tuned on faults. */
+/**
+ * Thresholds are set from UNFAULTED baselines only, never from fault results. History (run reports):
+ * `f2-role-aware-oracle` fixed the first set; `scene3d-visual-correction` raised `frontCoverage` 0.75→0.92 and added the
+ * ΔE distances (Codex), then added `hiddenArcCoverage` after an internal review showed that 0.4 let about half of a hidden
+ * curve arc go missing (unfaulted browser arcs: 0.678–0.991).
+ */
 export const NGUONG_VAI_THIET_DIEN = Object.freeze({
   samplesPerEdge: 12, windowCss: 2.5, minVisibleSamples: 3,
-  frontCoverage: 0.92, hiddenCoverage: 0.4, minScoredLengthShare: 0.5,
+  frontCoverage: 0.92, hiddenCoverage: 0.4, hiddenArcCoverage: 0.6, minScoredLengthShare: 0.5,
   fillMinCam: 0.5, fillMaxXanh: 0.05, minFillSamples: 12, boundaryBandCss: 6, minBlueShareInBand: 0.7,
-  boundaryDeltaE: 6, fillDeltaE: 6,
+  boundaryDeltaE: 6, fillDeltaE: 6, separationCss: 4,
 });
+
+/** Reasons that mean "this frame cannot show it", as opposed to "the frame shows it wrong". */
+const OBSERVABILITY_REASONS = new Set(["BOUNDARY_NOT_OBSERVABLE", "BOUNDARY_NOT_FULLY_OBSERVABLE", "FILL_NOT_OBSERVABLE"]);
 
 // Compare the policy RGB to its alpha composites over the declared light scene backgrounds, in CIE76.
 function distanceToComposite(rgb, ink, minimumAlpha) {
@@ -69,13 +83,20 @@ export function assessSectionRole(img, { scale, box, overlays = [], edges, other
   const r = Math.ceil(N.windowCss * scale);
   const totalLen = edges.reduce((s, e) => s + Math.hypot(e.b.x - e.a.x, e.b.y - e.a.y), 0) || 1;
 
+  // Edge-on curves: where a front and a hidden part of the same boundary project within one sampling window, the pixels
+  // cannot tell which ink belongs to which, so such samples are unobservable (like an overlay), never scored.
+  const n = edges.length;
+  const ambiguous = (x, y, i) => edges.some((s, j) => {
+    const apart = Math.min((i - j + n) % n, (j - i + n) % n) > 1;
+    return apart && Boolean(s.hidden) !== Boolean(edges[i].hidden) && distToSegment(x, y, s.a, s.b) < N.separationCss;
+  });
   const edgeRows = edges.map((e, i) => {
     let visible = 0, blue = 0, worstDistance = 0;
     const samples = Math.max(N.samplesPerEdge, Math.ceil(Math.hypot(e.b.x - e.a.x, e.b.y - e.a.y)));
     for (let k = 0; k < samples; k += 1) {
       const t = 0.05 + (0.9 * k) / (samples - 1);
       const x = e.a.x + (e.b.x - e.a.x) * t, y = e.a.y + (e.b.y - e.a.y) * t;
-      if (!usable(x, y)) continue;
+      if (!usable(x, y) || ambiguous(x, y, i)) continue;
       visible += 1;
       let nearest = Infinity;
       for (let dy = -r; dy <= r; dy += 1) {
@@ -132,12 +153,31 @@ export function assessSectionRole(img, { scale, box, overlays = [], edges, other
   const hiddenCoverage = hiddenSeen ? hiddenRows.reduce((s, e) => s + e.blue, 0) / hiddenSeen : null;
   if (scoredShare < N.minScoredLengthShare) reasons.push("BOUNDARY_NOT_OBSERVABLE");
   if (edgeRows.some(e => !e.scored)) reasons.push("BOUNDARY_NOT_FULLY_OBSERVABLE");
-  if (front.some((e) => !e.pass) || hiddenRows.some(e => !e.pass)) reasons.push("BOUNDARY_NOT_COBALT");
+  // Hidden ink is dashed. A polygon edge is long enough to average its dashes, so it is scored alone; a curve segment is
+  // a few pixels and can fall entirely in a gap, so a curve's hidden part is scored per maximal hidden ARC instead.
+  const hiddenArcs = [];
+  edgeRows.forEach((e, i) => {
+    if (!edges[i].curve || !e.hidden) return;
+    const prev = (i - 1 + edgeRows.length) % edgeRows.length;
+    if (edges[prev].curve && edgeRows[prev].hidden && hiddenArcs.length && hiddenArcs.at(-1).at(-1) === prev) hiddenArcs.at(-1).push(i);
+    else hiddenArcs.push([i]);
+  });
+  if (hiddenArcs.length > 1 && hiddenArcs[0][0] === 0 && hiddenArcs.at(-1).at(-1) === edgeRows.length - 1) {
+    hiddenArcs[0] = [...hiddenArcs.pop(), ...hiddenArcs[0]];                 // the curve is closed
+  }
+  const arcRows = hiddenArcs.map((ids) => {
+    const visible = ids.reduce((s, i) => s + edgeRows[i].visible, 0), blue = ids.reduce((s, i) => s + edgeRows[i].blue, 0);
+    return { edges: [ids[0], ids.at(-1)], visible, blue, coverage: visible ? blue / visible : null,
+      pass: visible < N.minVisibleSamples ? null : blue / visible >= N.hiddenArcCoverage };
+  });
+  const polygonHidden = hiddenRows.filter((e) => !edges[e.edge].curve);
+  if (front.some((e) => !e.pass) || polygonHidden.some((e) => !e.pass) || arcRows.some((a) => a.pass === false)) {
+    reasons.push("BOUNDARY_NOT_COBALT");
+  }
   if (fillN < N.minFillSamples) reasons.push("FILL_NOT_OBSERVABLE");
   else {
     if (fillCorrectColor / fillN < N.fillMinCam) reasons.push("FILL_NOT_TERRACOTTA");
     if (fillXanh / fillN > N.fillMaxXanh) reasons.push("FILL_TURNED_COBALT");
-    if (fillCorrectColor / fillN < N.fillMinCam) reasons.push("FILL_COLOR_DISTANCE");
   }
   // Each other section must be neutral, even if it is too small to affect the global ownership fraction.
   const otherBlue = otherBoundaries.map(boundary => boundary.reduce((count, e) => {
@@ -151,11 +191,12 @@ export function assessSectionRole(img, { scale, box, overlays = [], edges, other
   if (otherBlue.some(count => count >= 3)) reasons.push("UNSELECTED_BOUNDARY_COBALT");
   if (!blueAll || blueBand / blueAll < N.minBlueShareInBand) reasons.push("COBALT_NOT_ON_SELECTED_BOUNDARY");
   return {
-    edges: edgeRows, scored_length_share: scoredShare, hidden_coverage: hiddenCoverage,
+    edges: edgeRows, hidden_arcs: arcRows, scored_length_share: scoredShare, hidden_coverage: hiddenCoverage,
     fill: { samples: fillN, cam: fillCam, xanh: fillXanh, policy_color: fillCorrectColor, max_delta_e: fillMaxDistance },
     other_boundary_blue_samples: otherBlue,
     blue: { all: blueAll, in_band: blueBand, share: blueAll ? blueBand / blueAll : 0 },
     reasons, pass: reasons.length === 0,
+    verdict: reasons.some((r) => !OBSERVABILITY_REASONS.has(r)) ? "FAIL" : reasons.length ? "UNCERTIFIABLE" : "PASS",
   };
 }
 
@@ -170,7 +211,10 @@ const num = (s) => { const [a, b] = String(s).split("/"); return Number(a) / (b 
 const sub = (a, b) => a.map((x, i) => x - b[i]);
 const dot = (a, b) => a.reduce((s, x, i) => s + x * b[i], 0);
 const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
-const SEG = 32;
+// The renderer draws every circle/ellipse rim as 96 segments (`soDoanVanh`); matching them puts each oracle segment on
+// one product segment, so a segment never straddles a visible/hidden switch. Only the discretisation is shared — the
+// front/behind decision below stays this oracle's own (surface normal vs eye).
+const SEG = 96;
 const unit = (a) => { const n = Math.hypot(...a) || 1; return a.map((x) => x / n); };
 
 /**
@@ -218,8 +262,10 @@ export function sectionBoundaryWorld(scene, id, eye) {
     const c = toV(o.center), n = unit(toV(o.normal));
     let u, v, ru, rv;
     if (o.type === "circle3") {
-      const t = Math.abs(n[0]) < 0.9 ? [1, 0, 0] : [0, 1, 0];
-      u = unit(cross(n, t)); v = cross(n, u); ru = rv = Math.sqrt(num(o.radius_sq));
+      // Same (u, v) as the renderer's ring (local z rotated onto n), so the SEG segments coincide with its rim segments.
+      const q = new Quaternion().setFromUnitVectors(new Vector3(0, 0, 1), new Vector3(...n));
+      u = new Vector3(1, 0, 0).applyQuaternion(q).toArray(); v = new Vector3(0, 1, 0).applyQuaternion(q).toArray();
+      ru = rv = Math.sqrt(num(o.radius_sq));
     } else {
       if (!o.major_dir || !o.minor_dir) return null;
       u = unit(toV(o.major_dir)); v = unit(toV(o.minor_dir));
@@ -241,7 +287,7 @@ export function sectionBoundaryWorld(scene, id, eye) {
           outward = outward.map((x, i) => x + ax[i] * radial * slope);
         }
       }
-      return { a, b, hidden: dot(outward, sub(eye, mid)) < 0 };
+      return { a, b, hidden: dot(outward, sub(eye, mid)) < 0, curve: true };
     });
   }
   return null;
