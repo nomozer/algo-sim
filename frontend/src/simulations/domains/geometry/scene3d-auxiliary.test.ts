@@ -139,6 +139,17 @@ describe("mặt phẳng cắt khối cong", () => {
   const mau = (id: string): Scene3D => JSON.parse(readFileSync(join(__dirname, "../../../data/geometry-samples.json"), "utf8"))
     .samples.find((x: { id: string }) => x.id === id).envelope.scene3d as Scene3D;
 
+  /* Owner 2026-10-26: "Dựng mặt phẳng qua B và vuông góc với SC" — `mpb` is NEW geometry (through B, ⊥ line SC), not a
+   * face or diagonal plane of the drawn solid; the distance kc is measured TO it. It was hidden at every step as a
+   * "measurement-only" plane, so the learner never saw the plane the problem asks to construct. */
+  it("mp-vuong-goc-duong: a plane not spanned by the solid's points is not a hidden measurement plane", () => {
+    const s = mau("mp-vuong-goc-duong");
+    const cuoi = s.formation!.steps.length - 1;
+    expect(s.objects.find((o) => o.id === "mpb")!.depends).toEqual(["B", "sc"]);
+    expect(auxiliaryObjects(s).has("mpb")).toBe(false);
+    expect(auxiliaryHiddenAt(s, cuoi, false, null).has("mpb")).toBe(false);
+  });
+
   it.each(["cau-cat-mat-phang", "tru-thiet-dien-tron"])("%s: (P) không bị ẩn ở bước cuối", (id) => {
     const s = mau(id);
     const cuoi = s.formation!.steps.length - 1;

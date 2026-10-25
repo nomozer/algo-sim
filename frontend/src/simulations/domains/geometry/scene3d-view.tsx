@@ -818,6 +818,8 @@ function updateNonCanonicalVisibility(
         yield_colinear_canonical_edges: seg.yieldColinear,
       });
       const spanSig = `${res.spans.map((s) => `${s.visibility}:${s.t0}:${s.t1}`).join("|")}|${res.colinear_canonical_edge_ids.join(",")}`;
+      // Cạnh chuẩn mà đoạn này nhường nét (trùng cạnh khối): độ thấy của đoạn khi ấy nằm ở các khúc của cạnh chuẩn.
+      node.userData.colinearCanonicalIds = res.colinear_canonical_edge_ids;
       if (node.userData.nonCanonicalSpanSig === spanSig) {
         node.userData.nonCanonicalSig = worldSignature;
         return;
@@ -907,14 +909,15 @@ function updateNonCanonicalVisibility(
         res.spans.forEach((span, idx) => {
           const p0 = localA.clone().lerp(localB, span.t0);
           const p1 = localA.clone().lerp(localB, span.t1);
-          // Viền mặt phẳng: luôn nét đứt (vùng biểu diễn, không phải cạnh), không theo phân loại thấy/khuất.
-          const isHidden = loop.isPlaneBorder ? true : span.visibility === "HIDDEN";
+          // Viền mặt phẳng cũng theo phân loại thấy/khuất (liền nơi thấy, đứt nơi khối che), nét tím mảnh của mặt phẳng.
+          const isHidden = span.visibility === "HIDDEN";
           const mat = spanMaterial(node,
             [isHidden, loop.highlighted, loop.color, loop.dashSize, loop.isPlaneBorder, node.userData.lamDiu].join("|"), () => {
               const m = canonicalEdgeMaterial(isHidden, loop.highlighted, loop.color, loop.dashSize, loop.color);
               if (loop.isPlaneBorder) {
                 m.linewidth = NET.plane;
-                m.opacity = loop.highlighted ? DO_DUC.selectedPlaneEdge : DO_DUC.standalonePlaneEdge;
+                const doDuc = loop.highlighted ? DO_DUC.selectedPlaneEdge : DO_DUC.standalonePlaneEdge;
+                m.opacity = isHidden ? doDuc * DO_DUC.hiddenEdge : doDuc;
               } else if (!isHidden) {
                 m.linewidth = loop.highlighted ? NET.selected : NET.border;
               }
@@ -1471,7 +1474,7 @@ export function buildObject3D(
       const dv = Math.hypot(vx, vy, vz);
       const tich = ux * vx + uy * vy + uz * vz;
       if (du > 1e-6 && dv > 1e-6 && Math.abs(tich) <= 1e-4 * du * dv) {
-        // `s` là cỡ world TRẦN; `datCoGocVuong` thu nhỏ dấu quanh chân về ~8–12 px mỗi khung (HTML tham chiếu:
+        // `s` là cỡ world TRẦN; `datCoGocVuong` co dấu quanh chân về ~12–18 px mỗi khung (HTML tham chiếu:
         // ô vuông hai đoạn nhỏ) — trần còn bị chặn bởi một phần đoạn mang chứng chỉ để dấu không vượt ra ngoài nó.
         const daiDoan = Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z);
         const s = Math.min(0.35, Math.max(0.12, 0.22 * daiDoan), PHONG_CACH_SCENE3D.rightAngle.maxLegRatio * daiDoan);
@@ -1481,6 +1484,10 @@ export function buildObject3D(
         );
         lineMarker.name = `perp_marker:${o.id}`;
         lineMarker.userData.perpMarker = true;
+        const pw = o.perpendicular_witness;
+        if (pw?.relation && pw.on) {
+          (lineMarker.userData.gocVuongDonVi as GocVuongDonVi).nhomQuanHe = [pw.relation, pw.rule ?? "", pw.on].join("|");
+        }
 
         const nhom = new THREE.Group();
         nhom.add(duong);
@@ -1520,25 +1527,23 @@ export function buildObject3D(
         ? DO_DUC.standalonePlaneEdge
         : DO_DUC.planeEdge;
     const coNetDut = (beDayNet(diemNen, 1) / SECTION_STROKE_RATIO) * NET_DUT_TI_LE;
-    // SGK (`addCuttingPlanePatch`): viền miếng mặt phẳng LUÔN là nét đứt tím — miếng là vùng biểu diễn hữu hạn của
-    // mặt phẳng vô hạn, nên viền của nó không bao giờ được đọc như một cạnh thật (nét liền).
+    // Viền miếng mặt phẳng (Owner 2026-10-26, như `addRepresentedPlane` của HTML tham chiếu): nét LIỀN tím mảnh nơi
+    // thấy, nét ĐỨT chỉ nơi khối che — phân loại bằng cùng bộ che khuất với cạnh thật (lượt `nonCanonicalLoop`), không
+    // đứt cả viền. Viền vẫn là màu/nét riêng của mặt phẳng (tím, mảnh, nhạt) nên không đọc nhầm thành cạnh khối.
     const ganVienMatPhang = (target: THREE.Mesh, daGiacVien: Vec3[]) => {
       const ptsVien = daGiacVien.map((p) => new THREE.Vector3(...p));
       const vongVien = [...ptsVien, ptsVien[0]];
       const vienBanDau = new THREE.Line(
         new THREE.BufferGeometry().setFromPoints(vongVien),
-        new THREE.LineDashedMaterial({
+        new THREE.LineBasicMaterial({
           color: mauVienMp,
           linewidth: NET.plane,
-          dashSize: coNetDut,
-          gapSize: coNetDut * PHONG_CACH_SCENE3D.dash.gapRatio,
           transparent: true,
           opacity: doDucVienMp,
           depthTest: false,
         }),
       );
-      vienBanDau.computeLineDistances();
-      vienBanDau.userData.hidden = true;
+      vienBanDau.userData.hidden = false;
       vienBanDau.name = `plane_border:${o.id}`;
       vienBanDau.userData.nonCanonicalBorderLine = true;
       vienBanDau.renderOrder = THU_TU_DUONG;
@@ -2285,7 +2290,11 @@ export function mauNhanChung(vai: WitnessShown["vai"]): number {
   return vai === "hinh_chieu" ? MAU.line : MAU_VAI_TRO.dich;
 }
 
-interface GocVuongDonVi { foot: Vec3; u: Vec3; v: Vec3; s0: number; maxWorld: number; cornerOwner: THREE.Object3D }
+interface GocVuongDonVi {
+  foot: Vec3; u: Vec3; v: Vec3; s0: number; maxWorld: number; cornerOwner: THREE.Object3D;
+  /** Một quan hệ backend (`relation|rule|on`, vd mọi cạnh bên ⊥ đáy): mặc định chỉ một dấu đại diện (`datCoGocVuong`). */
+  nhomQuanHe?: string;
+}
 
 /** Ký hiệu góc vuông dạng ô vuông HAI đoạn (`addRightAngleMarker` của HTML tham chiếu): `foot + s0·u`,
  *  `foot + s0·(u+v)`, `foot + s0·v` ở toạ độ cảnh. `u`, `v` là hai phương ĐƠN VỊ backend đã chứng nhận vuông góc —
@@ -2320,13 +2329,16 @@ function khoaGocVuong(d: GocVuongDonVi, cha: THREE.Matrix4): string {
 
 /**
  * Cỡ ký hiệu vuông góc theo MÀN HÌNH: cạnh dấu ≈ `rightAngle.perCanvasHeight` × chiều cao khung, kẹp
- * [`minPx`, `maxPx`] (8–12 px). Co/giãn quanh chân, nhưng cỡ world không vượt `maxWorld` (một phần đoạn liên quan).
+ * [`minPx`, `maxPx`] (12–18 px). Co/giãn quanh chân, nhưng cỡ world không vượt `maxWorld` (một phần đoạn liên quan).
  * Cỡ điểm ảnh tỉ lệ nghịch với ĐỘ SÂU view-space của chân — phép chiếu của camera, không phép hình học nào trên
  * cảnh. Có `tamNhin` (đích OrbitControls): chỉ tính lại khi độ sâu của TÂM NHÌN đổi (thu phóng, đặt khung) — lúc chỉ
  * XOAY, cỡ world giữ nguyên nên toạ độ dấu đứng yên và nét dày không cấp phát lại buffer GPU mỗi khung (cổng
  * `scene3d-orbit-gate`, `capPhat = 0`). Hai dấu cùng chân và cùng cặp phương (toạ độ thế giới) ⇒ giữ dấu ĐẬM nhất
  * (dấu đang nhấn / không bị làm dịu), ẩn các dấu lặp; dấu dưới một tổ tiên ẩn không tranh khoá. Trả số dấu đang hiện.
  */
+/** Đại diện đang hiện của mỗi nhóm quan hệ (theo gốc cảnh) — chỉ để giữ ổn định giữa các khung. */
+const _daiDienGocVuong = new WeakMap<THREE.Object3D, Map<string, string>>();
+
 export function datCoGocVuong(
   roots: readonly THREE.Object3D[], cam: THREE.Camera, hCss: number, tamNhin?: THREE.Vector3,
 ): number {
@@ -2360,10 +2372,77 @@ export function datCoGocVuong(
     const cu = thang.get(c.khoa);
     if (!cu || c.dam > cu.dam) thang.set(c.khoa, c);
   }
+  // Lượt 3 (Owner 2026-10-26: ít dấu hơn, không xoá quan hệ): các dấu của CÙNG một quan hệ backend (`nhomQuanHe`,
+  // vd bốn cạnh bên ⊥ đáy) ⇒ mặc định một dấu. Dấu của đoạn đang nhấn (bước hiện tại / đang chọn) luôn hiện; không
+  // đoạn nào nhấn ⇒ một đại diện dễ đọc nhất: ưu tiên đoạn không khuất hoàn toàn, rồi ô vuông 3D THẬT chiếu ra "mở"
+  // nhất (diện tích chiếu / diện tích không co ≈ |cos| giữa mặt phẳng dấu và tia nhìn — không đổi hình dấu). GIỮ đại
+  // diện cũ trừ khi ứng viên khác mở hơn rõ (25 %), để dấu không nhảy góc khi xoay.
+  const laNhanManh = (n: THREE.Object3D) =>
+    Boolean(n.parent?.children.some((x) => (x.userData?.nonCanonicalSegment as { highlighted?: boolean } | undefined)?.highlighted));
+  // Khúc thấy của cạnh chuẩn (cạnh khối) theo id — đoạn trùng cạnh khối nhường nét cho nó (`colinearCanonicalIds`).
+  let khucChuan: Map<string, boolean> | null = null;
+  const khucCanhChuan = () => {
+    if (khucChuan) return khucChuan;
+    khucChuan = new Map();
+    for (const r of roots) r.traverse((x) => {
+      const id = x.userData?.logicalEdgeId as string | undefined;
+      if (id && (x as THREE.Line).isLine) khucChuan!.set(id, (khucChuan!.get(id) ?? false) || x.userData.hidden !== true);
+    });
+    return khucChuan;
+  };
+  const khuatHet = (n: THREE.Object3D) => {
+    const duong = n.parent?.children.find((x) => x.userData?.nonCanonicalSegment);
+    const khuc = duong?.children.filter((x) => x.userData?.nonCanonicalSpanLine && !x.name.endsWith(":proxy")) ?? [];
+    if (khuc.length > 0) return khuc.every((x) => x.userData.hidden === true);
+    const trung = (duong?.userData.colinearCanonicalIds as string[] | undefined) ?? [];
+    const thay = khucCanhChuan();
+    return trung.length > 0 && trung.every((id) => thay.has(id) && thay.get(id) === false);
+  };
+  const wCss = hCss * (pc.aspect || 1);
+  const doMo = (c: (typeof ungVien)[number]) => {
+    const m = c.node.parent?.matrixWorld ?? DONG_NHAT_MT;
+    const F = new THREE.Vector3(...c.d.foot).applyMatrix4(m);
+    const sau = -F.clone().applyMatrix4(pc.matrixWorldInverse).z;
+    if (!(sau > 0)) return 0;
+    const eps = 1e-3 * sau;                         // probe ≪ depth: the perspective linearisation error stays ≈ 0.1 %
+    const diem = [F, new THREE.Vector3(...c.d.u).transformDirection(m).multiplyScalar(eps).add(F),
+      new THREE.Vector3(...c.d.v).transformDirection(m).multiplyScalar(eps).add(F)]
+      .map((p) => { const q = p.project(pc); return [(q.x * wCss) / 2, (q.y * hCss) / 2]; });
+    const dt = Math.abs((diem[1][0] - diem[0][0]) * (diem[2][1] - diem[0][1]) - (diem[1][1] - diem[0][1]) * (diem[2][0] - diem[0][0]));
+    return dt / (f * 1e-3) ** 2;
+  };
+  const theoNhom = new Map<string, (typeof ungVien)[number][]>();
+  for (const c of thang.values()) {
+    const k = c.d.nhomQuanHe;
+    if (k) theoNhom.set(k, [...(theoNhom.get(k) ?? []), c]);
+  }
+  const truoc = roots[0] ? (_daiDienGocVuong.get(roots[0]) ?? new Map<string, string>()) : new Map<string, string>();
+  if (roots[0]) _daiDienGocVuong.set(roots[0], truoc);
+  const anTheoNhom = new Set<(typeof ungVien)[number]>();
+  for (const [k, ds] of theoNhom) {
+    if (ds.length < 2) continue;
+    const nhan = ds.filter((c) => laNhanManh(c.node));
+    let giu: (typeof ungVien)[number][];
+    if (nhan.length > 0) giu = nhan;
+    else {
+      const hang = new Map(ds.map((c) => [c, { thay: khuatHet(c.node) ? 0 : 1, mo: doMo(c) }]));
+      const hon = (a: (typeof ds)[number], b: (typeof ds)[number]) => {
+        const x = hang.get(a)!, y = hang.get(b)!;
+        return x.thay !== y.thay ? x.thay > y.thay : x.mo > y.mo;
+      };
+      const tot = ds.reduce((a, b) => (hon(b, a) ? b : a));
+      const cu = ds.find((c) => c.node.uuid === truoc.get(k));
+      const giuCu = cu !== undefined && hang.get(cu)!.thay === hang.get(tot)!.thay && hang.get(tot)!.mo <= hang.get(cu)!.mo * 1.25;
+      const chon = giuCu ? cu! : tot;
+      truoc.set(k, chon.node.uuid);
+      giu = [chon];
+    }
+    for (const c of ds) if (!giu.includes(c)) anTheoNhom.add(c);
+  }
   let hien = 0;
   for (const c of ungVien) {
     const { node, d } = c;
-    node.visible = thang.get(c.khoa) === c;
+    node.visible = thang.get(c.khoa) === c && !anTheoNhom.has(c);
     if (!node.visible) continue;
     hien += 1;
     // Chỉ XOAY (độ sâu tâm nhìn, cỡ khung và vị trí cha không đổi) ⇒ giữ cỡ world đã đặt: không ghi toạ độ mới.
@@ -2521,10 +2600,16 @@ export function dungLuoiNenSuPham(diem: Vec3[], heSoDiu = 1): THREE.Group {
  * Đặt vị trí nhãn điểm hướng ra ngoài tâm hình chiếu, đồng thời tránh các cạnh đi qua đỉnh
  * và ký hiệu góc vuông tại chân đường cao (như đỉnh A trong family04_derived_sub_pyramid).
  */
+const THUONG_GIU_HUONG = 10;
+
 export function tinhViTriNhanDiem(
   diem: readonly { id: string; x: number; y: number; w: number; h: number }[],
   canh2d: readonly { ax: number; ay: number; bx: number; by: number }[],
   gocVuong: readonly { fx: number; fy: number; cx: number; cy: number; tx?: number; ty?: number }[],
+  /** Hướng (rad, màn hình) đã chọn ở khung trước, theo id — được cập nhật tại chỗ. Owner 2026-10-26 (P5): ứng viên gần
+   *  hướng cũ được cộng tối đa `THUONG_GIU_HUONG` điểm, đủ để hai phía tương đương không đổi qua lại giữa các khung khi
+   *  xoay, quá nhỏ để thắng một va chạm thật (phạt tới ~77 điểm khi đè lên nét). */
+  huongTruoc?: Map<string, number>,
 ): Map<string, { x: number; y: number; duoi: boolean }> {
   const ra = new Map<string, { x: number; y: number; duoi: boolean }>();
   if (diem.length === 0) return ra;
@@ -2572,6 +2657,8 @@ export function tinhViTriNhanDiem(
     let bestLx = p.x - cw / 2;
     let bestLy = p.y - 1.4 * ch;
     let bestScore = -Infinity;
+    let bestTheta = theta0;
+    const cu = huongTruoc?.get(p.id);
 
     for (const dTheta of deltas) {
       const theta = theta0 + dTheta;
@@ -2583,6 +2670,10 @@ export function tinhViTriNhanDiem(
       const ly = my - ch / 2;
 
       let score = (ux * rx + uy * ry) * 16;
+      if (cu !== undefined) {
+        const lech = Math.abs(Math.atan2(Math.sin(theta - cu), Math.cos(theta - cu)));
+        score += THUONG_GIU_HUONG * Math.max(0, 1 - lech / 0.6);
+      }
 
       for (const s of canh2d) {
         const dSeg = kcDiemDoan(mx, my, s.ax, s.ay, s.bx, s.by);
@@ -2618,9 +2709,11 @@ export function tinhViTriNhanDiem(
         bestScore = score;
         bestLx = lx;
         bestLy = ly;
+        bestTheta = theta;
       }
     }
 
+    huongTruoc?.set(p.id, bestTheta);
     ra.set(p.id, { x: bestLx, y: bestLy, duoi: bestLy > p.y });
   }
   return ra;
@@ -2638,6 +2731,9 @@ export function Scene3DWorkspace({
   const vuaKhungRef = useRef<(() => void) | null>(null);
   const sceneRef = useRef(scene);
   sceneRef.current = scene;
+  //: Hướng nhãn điểm của khung trước (`tinhViTriNhanDiem`), để nhãn không nhảy qua lại khi xoay; xoá khi đổi cảnh.
+  const huongNhanRef = useRef(new Map<string, number>());
+  useEffect(() => { huongNhanRef.current.clear(); }, [scene]);
   const vaiKhoiTheoId = useMemo(() => vaiTroKhoi(scene), [scene]);
   const [webglFailed, setWebglFailed] = useState(false);
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
@@ -2951,7 +3047,7 @@ export function Scene3DWorkspace({
         const [cw, ch] = co.get(el)!;
         ungVienDiem2d.push({ el, id, x, y, w: cw, h: ch, uuTien: Number(el.dataset.uuTien ?? "1") });
       }
-      const viTriToiUu = tinhViTriNhanDiem(ungVienDiem2d, canh2d, gocVuongPts);
+      const viTriToiUu = tinhViTriNhanDiem(ungVienDiem2d, canh2d, gocVuongPts, huongNhanRef.current);
       for (const u of ungVienDiem2d) {
         const pos = viTriToiUu.get(u.id) ?? { x: u.x - (u.w || 18) / 2, y: u.y - 1.4 * (u.h || 18), duoi: false };
         u.el.style.transform = `translate(${Math.round(pos.x)}px,${Math.round(pos.y)}px)`;

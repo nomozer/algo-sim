@@ -353,8 +353,8 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
     expect(summary.maxSectionBorderWidth).toBeGreaterThan(summary.maxVisibleEdgeWidth);
     expect(summary.maxVisibleEdgeWidth).toBeGreaterThan(summary.minHiddenEdgeWidth);
 
-    // 4. SGK reference (addCuttingPlanePatch): the finite plane patch ALWAYS carries a dashed violet border — with or
-    //    without a closed section — so the patch edge is never read as a real (solid) edge.
+    // 4. Owner 2026-10-26 (superseding "always dashed"): the plane patch border is a thin violet stroke, SOLID where
+    //    visible and DASHED only where the solid hides it — as the reference `addRepresentedPlane` draws it.
     const planeObj: SceneObject = {
       id: "mp_P",
       label: "Mặt phẳng (P)",
@@ -369,34 +369,77 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
     const diemNen = diemHuuHan([pyramid]);
     const carrierPlane = buildObject3D(planeObj, false, undefined, diemNen)!;
     const carrierBorder = carrierPlane.getObjectByName("plane_border:mp_P") as THREE.Line;
-    expect(carrierBorder.material).toBeInstanceOf(THREE.LineDashedMaterial);
-    expect((carrierBorder.material as THREE.LineDashedMaterial).colorWrite).toBe(true);
-    expect((carrierBorder.material as THREE.LineDashedMaterial).color.getHex()).toBe(PHONG_CACH_SCENE3D.colors.planeOutline);
+    // Before any occluder is known, nothing hides the border: it starts solid, never dashed.
+    expect(carrierBorder.material).not.toBeInstanceOf(THREE.LineDashedMaterial);
+    expect((carrierBorder.material as THREE.LineBasicMaterial).colorWrite).toBe(true);
+    expect((carrierBorder.material as THREE.LineBasicMaterial).color.getHex()).toBe(PHONG_CACH_SCENE3D.colors.planeOutline);
 
     const standalonePlane = buildObject3D(
       planeObj, false, undefined, diemNen, undefined, undefined, undefined, false, "primary", false,
     )!;
     const standaloneBorder = standalonePlane.getObjectByName("plane_border:mp_P") as THREE.Line;
-    expect(standaloneBorder.material).toBeInstanceOf(THREE.LineDashedMaterial);
-    expect((standaloneBorder.material as THREE.LineDashedMaterial).colorWrite).toBe(true);
-    expect((standaloneBorder.material as THREE.LineDashedMaterial).opacity).toBeGreaterThanOrEqual(0.28);
+    expect((standaloneBorder.material as THREE.LineBasicMaterial).colorWrite).toBe(true);
+    expect((standaloneBorder.material as THREE.LineBasicMaterial).opacity).toBeGreaterThanOrEqual(0.28);
 
-    // …and still dashed and drawn AFTER the visibility pass splits the border into spans (the path where the old
-    // closed-section suppression removed it), next to a real occluding solid.
+    // After the visibility pass, next to a real occluding solid: each span is dashed EXACTLY when an independent
+    // ray–convex-solid clip (written here, not the product classifier) says its midpoint is behind the pyramid.
     const rootMp = new THREE.Group();
     rootMp.add(buildObject3D(pyramid, false, undefined, diemNen)!, carrierPlane);
     const camMp = new THREE.PerspectiveCamera(50, 4 / 3, 0.1, 200);
     camMp.up.set(0, 0, 1); camMp.position.set(8, 3, 6); camMp.lookAt(0, 0, 1);
     camMp.updateMatrixWorld(true); camMp.updateProjectionMatrix();
     updateCanonicalEdgeVisibility(rootMp, camMp, "800x600@1");
+    const V = pyramid.vertices!.map((p) => new THREE.Vector3(...p.map(Number)));
+    const tam = V.reduce((s, p) => s.add(p), new THREE.Vector3()).divideScalar(V.length);
+    const matPhang = pyramid.faces!.map((f) => {
+      const n = new THREE.Vector3().subVectors(V[f[1]], V[f[0]]).cross(new THREE.Vector3().subVectors(V[f[2]], V[f[0]])).normalize();
+      if (n.dot(new THREE.Vector3().subVectors(tam, V[f[0]])) > 0) n.negate();          // outward
+      return { n, d: n.dot(V[f[0]]) };
+    });
+    const biChe = (p: THREE.Vector3) => {                                                 // segment p→eye enters the solid's interior
+      const dir = new THREE.Vector3().subVectors(camMp.position, p);
+      let t0 = 1e-6, t1 = 1;
+      for (const { n, d } of matPhang) {
+        const dn = n.dot(dir), dist = d - n.dot(p);                                         // inside ⇔ n·x < d
+        if (Math.abs(dn) < 1e-12) { if (dist <= 1e-9) return false; continue; }
+        const t = dist / dn;
+        if (dn > 0) t1 = Math.min(t1, t); else t0 = Math.max(t0, t);
+      }
+      return t1 - t0 > 1e-6;
+    };
     const spans: THREE.Line[] = [];
     rootMp.traverse((n) => { if ((n as THREE.Line).isLine && /^plane_border:mp_P:/.test(n.name)) spans.push(n as THREE.Line); });
     expect(spans.length).toBeGreaterThan(0);
-    for (const sp of spans) {
-      expect(sp.material).toBeInstanceOf(THREE.LineDashedMaterial);
-      expect((sp.material as THREE.LineDashedMaterial).colorWrite).not.toBe(false);
-      expect((sp.material as THREE.LineDashedMaterial).opacity).toBeCloseTo(PHONG_CACH_SCENE3D.opacity.standalonePlaneEdge, 6);
-    }
+    const kieu = spans.map((sp) => {
+      const pos = sp.geometry.getAttribute("position");
+      const giua = new THREE.Vector3().fromBufferAttribute(pos, 0).add(new THREE.Vector3().fromBufferAttribute(pos, 1))
+        .multiplyScalar(0.5).applyMatrix4(sp.parent!.matrixWorld);
+      const dut = sp.material instanceof THREE.LineDashedMaterial;
+      expect([sp.name, dut]).toEqual([sp.name, biChe(giua)]);
+      expect((sp.material as THREE.LineBasicMaterial).color.getHex()).toBe(PHONG_CACH_SCENE3D.colors.planeOutline);
+      return dut;
+    });
+    expect(kieu).toContain(false);                                                         // part of the border is in front: solid
+    expect(kieu).toContain(true);                                                          // part is behind the pyramid: dashed
+
+    // 4b. Owner 2026-10-26 (P5): a label must not flip between two equivalent sides from one frame to the next.
+    //     An edge straight up from A makes "up-left" and "up-right" tie; a 0.5 px change of that edge decides the tie.
+    // 14 px labels: the two best candidates (±1.14 rad from "up") lie 15.8 px from the edge, inside the 16 px
+    // penalty band, so the 0.5 px change of the edge genuinely decides the side.
+    const chamA = [{ id: "A", x: 100, y: 100, w: 14, h: 14 }, { id: "B", x: 100, y: 200, w: 14, h: 14 }];
+    const canhLen = (eps: number) => [{ ax: 100, ay: 100, bx: 100 + eps, by: 40 }];
+    const benX = (m: Map<string, { x: number }>) => Math.sign(m.get("A")!.x + 7 - 100);
+    const truocDo = new Map<string, number>();
+    const khung1 = tinhViTriNhanDiem(chamA, canhLen(0.5), [], truocDo);
+    const khongNho = tinhViTriNhanDiem(chamA, canhLen(-0.5), []);
+    expect(benX(khongNho)).toBe(-benX(khung1));                    // without memory: the label hops to the other side
+    const coNho = tinhViTriNhanDiem(chamA, canhLen(-0.5), [], truocDo);
+    expect(benX(coNho)).toBe(benX(khung1));                         // with last frame's side: it stays
+    // …but memory never overrides a real collision: an edge laid through the label's position still moves it.
+    const tamNhan = { x: coNho.get("A")!.x + 7, y: coNho.get("A")!.y + 7 };
+    const xuyen = [{ ax: 100, ay: 100, bx: 100 + 3 * (tamNhan.x - 100), by: 100 + 3 * (tamNhan.y - 100) }];
+    const doi = tinhViTriNhanDiem(chamA, [...canhLen(-0.5), ...xuyen], [], new Map(truocDo));
+    expect(Math.hypot(doi.get("A")!.x - coNho.get("A")!.x, doi.get("A")!.y - coNho.get("A")!.y)).toBeGreaterThan(5);
 
     // 5. Outward radial & right-angle-avoiding vertex label placement
     const placed = tinhViTriNhanDiem(

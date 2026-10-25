@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import * as THREE from "three";
 import { renderToString } from "react-dom/server";
+import { PHONG_CACH_SCENE3D } from "./scene3d-roles";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import {
@@ -32,6 +33,7 @@ import {
   semanticIdOf,
   vatNhanChung,
   datCoGocVuong,
+  updateCanonicalEdgeVisibility,
 } from "./scene3d-view";
 
 /**
@@ -921,7 +923,7 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
     expect(doan.material.dashSize).toBeGreaterThanOrEqual(s * 1.04);
   });
 
-  it("SGK: ký hiệu vuông góc có cạnh ≈ 10 px trên khung 720 px, giữ trực giao quanh chân, dấu lặp cùng chân/phương bị ẩn", () => {
+  it("SGK: ký hiệu vuông góc có cạnh ≈ 16 px trên khung 720 px, giữ trực giao quanh chân, dấu lặp cùng chân/phương bị ẩn", () => {
     const w = {
       id: "perpendicular:H", vai: "hinh_chieu" as const,
       from: [0, 3, 0] as [number, number, number], foot: [0, 0, 0] as [number, number, number],
@@ -949,11 +951,16 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
     const chan = new THREE.Vector3(0, 0, 0).project(cam);
     const [x0, y0] = diemManHinh(0);
     const [x2, y2] = diemManHinh(2);
-    // Target leg = rightAngle.perCanvasHeight (0.014) × 720 = 10.08 px — inside the 8–12 px band.
-    expect(Math.hypot(x0 - chan.x * 360, y0 - chan.y * 360)).toBeCloseTo(10.08, 2);
-    expect(Math.hypot(x2 - chan.x * 360, y2 - chan.y * 360)).toBeCloseTo(10.08, 2);
+    // Target leg = rightAngle.perCanvasHeight × 720, clamped to [minPx, maxPx]. Owner 2026-10-26: readable on mobile —
+    // at least 12 px, 15.84 px on a 720 px canvas (was 8–12 px, 10.08 px here).
+    const cfgVuong = PHONG_CACH_SCENE3D.rightAngle;
+    const L = Math.min(cfgVuong.maxPx, Math.max(cfgVuong.minPx, cfgVuong.perCanvasHeight * 720));
+    expect(cfgVuong.minPx).toBeGreaterThanOrEqual(12);
+    expect(L).toBeCloseTo(15.84, 2);
+    expect(Math.hypot(x0 - chan.x * 360, y0 - chan.y * 360)).toBeCloseTo(L, 2);
+    expect(Math.hypot(x2 - chan.x * 360, y2 - chan.y * 360)).toBeCloseTo(L, 2);
     expect((x0 - chan.x * 360) * (x2 - chan.x * 360) + (y0 - chan.y * 360) * (y2 - chan.y * 360)).toBeCloseTo(0, 6);
-    const s = 10.08 * 10 / (360 / Math.tan((25 * Math.PI) / 180));
+    const s = L * 10 / (360 / Math.tan((25 * Math.PI) / 180));
     expect((a.userData.corner as number[]).map((x) => +x.toFixed(4))).toEqual([+s.toFixed(4), +s.toFixed(4), 0]);
 
     // With the orbit target: a pure ORBIT (same target depth) keeps the world size — no coordinate rewrite, so no
@@ -983,6 +990,81 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
     expect((diu.children[1] as THREE.Line).visible).toBe(false);
     expect((dam.children[1] as THREE.Line).visible).toBe(true);
     expect((tach.children[0].children[1] as THREE.Line).visible).toBe(true);
+  });
+
+  it("Owner 2026-10-26: one backend relation (4 lateral edges ⊥ base) shows ONE mark by default, stable under small turns; emphasis keeps its own", () => {
+    const sc = JSON.parse(readFileSync(join(__dirname,
+      "../../../../../docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/final-inputs/fixtures/cuboid_positive.json"), "utf8")).envelope.scene3d as Scene3D;
+    const ben = sc.objects.filter((o) => o.perpendicular_witness?.rule === "prism_lateral_altitude");
+    expect(ben.map((o) => o.id).sort()).toEqual(["canh_ben_A_A_prime", "canh_ben_B_B_prime", "canh_ben_C_C_prime", "canh_ben_D_D_prime"]);
+    const dung = (nhan: string | null) => {
+      const root = new THREE.Group();
+      for (const o of ben) root.add(buildObject3D(o, o.id === nhan)!);
+      return root;
+    };
+    const hienTai = (root: THREE.Group) => {
+      const ra: string[] = [];
+      root.traverse((n) => { if (n.name.startsWith("perp_marker:") && n.visible) ra.push(n.name.slice("perp_marker:".length)); });
+      return ra.sort();
+    };
+    const cam = new THREE.PerspectiveCamera(45, 1, 0.1, 200);
+    const nhin = (goc: number) => {
+      cam.position.set(1.5 + 13 * Math.cos(goc), 2 + 13 * Math.sin(goc), 9); cam.lookAt(1.5, 2, 2.5); cam.updateMatrixWorld(true);
+    };
+    // Independent openness of each REAL 3D mark as the viewer sees it: a small square of area A at distance r and
+    // view-axis depth z projects to f²·A·|n·e|·r/z³; relative to its depth-scaled size that is |n·e|·r/z
+    // (n = u×v of the backend directions, e = unit foot → eye). Computed from the camera's forward axis, no projection.
+    const mo = (o: (typeof ben)[number]) => {
+      const pw = o.perpendicular_witness!;
+      const v3 = (p: string[]) => new THREE.Vector3(...p.map((s) => { const [a, b] = s.split("/"); return Number(a) / Number(b ?? 1); }));
+      const n = v3(pw.marker.u).normalize().cross(v3(pw.marker.v).normalize());
+      const toi = cam.position.clone().sub(v3(pw.foot));
+      const z = -toi.dot(cam.getWorldDirection(new THREE.Vector3()));
+      return Math.abs(n.dot(toi.clone().normalize())) * (toi.length() / z);
+    };
+    const tot = () => [...ben].sort((a, b) => mo(b) - mo(a))[0].id;
+    const root = dung(null);
+    nhin(-0.6);
+    expect(datCoGocVuong([root], cam, 720)).toBe(1);
+    expect(hienTai(root)).toEqual([tot()]);                       // the most open real mark, not the nearest corner
+    // Sweep the orbit: the shown mark changes only when another is clearly (> 25 %) more open — never on a near tie.
+    let dangHien = tot(), daGiu = 0, daDoi = 0;
+    for (let g = -0.6; g < 5.6; g += 0.05) {
+      nhin(g);
+      datCoGocVuong([root], cam, 720);
+      const [moi] = hienTai(root);
+      const ratio = mo(ben.find((o) => o.id === tot())!) / mo(ben.find((o) => o.id === dangHien)!);
+      if (moi === dangHien && tot() !== dangHien) { expect(ratio).toBeLessThanOrEqual(1.25 + 1e-6); daGiu += 1; }
+      if (moi !== dangHien) { expect(moi).toBe(tot()); expect(ratio).toBeGreaterThan(1.25 - 1e-6); daDoi += 1; dangHien = moi; }
+    }
+    expect(daGiu).toBeGreaterThan(0);                             // hysteresis really exercised
+    expect(daDoi).toBeGreaterThan(0);                             // and the mark does follow a clearly better corner
+    // With the real solid, a lateral edge that is entirely hidden never carries the representative mark.
+    const voi = new THREE.Group();
+    voi.add(buildObject3D(sc.objects.find((o) => o.type === "solid")!, false)!);
+    for (const o of ben) voi.add(buildObject3D(o, false)!);
+    const canhCua = (o: (typeof ben)[number]) => (id: string) => o.depends.every((v) => id.split("::edge:")[1]?.split("-").includes(v));
+    let daThayAn = false;
+    for (let g = -0.6; g < 5.6; g += 0.4) {
+      nhin(g);
+      const audit = updateCanonicalEdgeVisibility(voi, cam);
+      datCoGocVuong([voi], cam, 720);
+      const [hienVoi] = hienTai(voi as unknown as THREE.Group);
+      const an = (o: (typeof ben)[number]) => audit.hidden_edge_ids.some(canhCua(o));
+      daThayAn ||= ben.some(an);
+      expect([g, hienVoi, an(ben.find((o) => o.id === hienVoi)!)]).toEqual([g, hienVoi, false]);
+    }
+    expect(daThayAn).toBe(true);                                  // some lateral edge really was hidden on the sweep
+    // The edge being taught (emphasised) always shows its own mark, wherever the camera is.
+    const nhanA = dung("canh_ben_A_A_prime");
+    datCoGocVuong([nhanA], cam, 720);
+    expect(hienTai(nhanA)).toEqual(["canh_ben_A_A_prime"]);
+    // A relation is never deleted, only one representative is shown: different relations keep their own marks.
+    const khac = dung(null);
+    const ma = khac.getObjectByName("perp_marker:canh_ben_D_D_prime")!;
+    (ma.userData.gocVuongDonVi as { nhomQuanHe?: string }).nhomQuanHe = "line_perpendicular_plane|other_rule|other_plane";
+    datCoGocVuong([khac], cam, 720);
+    expect(hienTai(khac)).toEqual(["canh_ben_C_C_prime", "canh_ben_D_D_prime"]);
   });
 
   it("nhân chứng vuông góc trên khối đơn vị co giãn chu kỳ nét đứt và ô góc vuông theo đường kính cảnh, không phình quá khổ", () => {

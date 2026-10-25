@@ -1548,13 +1548,19 @@ const _chiDeDo = new WeakMap<Scene3D, Set<string>>();
 export function measurementOnlyPlanes(scene: Scene3D): Set<string> {
   const co = _chiDeDo.get(scene);
   if (co) return co;
+  // Chỉ mặt phẳng ĐI QUA CÁC ĐIỂM của khối đã vẽ (mặt/mặt chéo, vd (ABC) để đo chiều cao) mới là "chỉ để đo": nó trùng
+  // thứ đã thấy. Mặt phẳng dựng mới (vd qua B ⊥ SC, phụ thuộc một đường) là hình đề yêu cầu dựng — không ẩn (Owner
+  // 2026-10-26).
+  const diemKhoi = new Set(scene.objects.flatMap((o) =>
+    (o.type === "solid" || o.type === "curved_solid") ? [...(o.depends ?? []), ...(o.vertex_ids ?? [])] : []));
   const ra = new Set(scene.objects.filter((o) => {
     const vai = o.formation_roles ?? [];
     const nhom = o.display_group ?? [];
     const con = scene.objects.filter((x) => x.depends?.includes(o.id));
     return o.type === "plane3" && o.origin === "derived" && vai.length === 1
       && vai[0] === "CONSTRUCT_AUXILIARY_GEOMETRY" && !nhom.includes("given") && !nhom.includes("target")
-      && con.length > 0 && con.every((x) => x.type === "quantity");
+      && con.length > 0 && con.every((x) => x.type === "quantity")
+      && (o.depends ?? []).length >= 3 && (o.depends ?? []).every((id) => diemKhoi.has(id));
   }).map((o) => o.id));
   _chiDeDo.set(scene, ra);
   return ra;
