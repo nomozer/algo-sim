@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "f2-role-aware-oracle",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-b3-v2-distance-bridge/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "5f7daa66139cc410aed9f2d2d7d0b139734ee3f0c3afd8be92e960f16ab9bbc6",
+  "current_product_commit": "8209718662c0c53e3c64332196d783d6b5a37382",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Ellipse rim band orientation (frontend) and exact distinct operands for typed-fact-next/2 distance targets (bridge; separate-context review I-1, M-1, M-2). Route D only; no prompt, schema, grammar card or capability-table change.",
+  "cache_version": 128,
+  "cache_version_hien_tai": 128,
+  "cache_decision": "NO_BUMP: /api/analyze (LLM_ONLY) envelopes, prompts and routing policy unchanged; route D is not cached by /api/analyze; the ellipse change is presentation only and touches no envelope.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}
