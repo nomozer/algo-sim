@@ -1,0 +1,113 @@
+{
+ "total_jump_flags": 10,
+ "rows": [
+  {
+   "id": "cross_section",
+   "width": 1440,
+   "compared": 1115,
+   "jumps": 0
+  },
+  {
+   "id": "triangular_prism",
+   "width": 1440,
+   "compared": 1308,
+   "jumps": 0
+  },
+  {
+   "id": "cuboid",
+   "width": 1440,
+   "compared": 1816,
+   "jumps": 0
+  },
+  {
+   "id": "cau-cat-mat-phang",
+   "width": 1440,
+   "compared": 207,
+   "jumps": 0
+  },
+  {
+   "id": "tru-truc-xien",
+   "width": 1440,
+   "compared": 669,
+   "jumps": 0
+  },
+  {
+   "id": "non-duong-sinh",
+   "width": 1440,
+   "compared": 687,
+   "jumps": 0
+  },
+  {
+   "id": "non-thiet-dien-truc",
+   "width": 1440,
+   "compared": 896,
+   "jumps": 0
+  },
+  {
+   "id": "family07_multi_solid_composition",
+   "width": 1440,
+   "compared": 1416,
+   "jumps": 1
+  },
+  {
+   "id": "family12_cylinder_ellipse_section",
+   "width": 1440,
+   "compared": 452,
+   "jumps": 0
+  },
+  {
+   "id": "cross_section",
+   "width": 390,
+   "compared": 1190,
+   "jumps": 1
+  },
+  {
+   "id": "triangular_prism",
+   "width": 390,
+   "compared": 1428,
+   "jumps": 0
+  },
+  {
+   "id": "cuboid",
+   "width": 390,
+   "compared": 1904,
+   "jumps": 4
+  },
+  {
+   "id": "cau-cat-mat-phang",
+   "width": 390,
+   "compared": 237,
+   "jumps": 0
+  },
+  {
+   "id": "tru-truc-xien",
+   "width": 390,
+   "compared": 711,
+   "jumps": 0
+  },
+  {
+   "id": "non-duong-sinh",
+   "width": 390,
+   "compared": 714,
+   "jumps": 0
+  },
+  {
+   "id": "non-thiet-dien-truc",
+   "width": 390,
+   "compared": 948,
+   "jumps": 0
+  },
+  {
+   "id": "family07_multi_solid_composition",
+   "width": 390,
+   "compared": 1409,
+   "jumps": 4
+  },
+  {
+   "id": "family12_cylinder_ellipse_section",
+   "width": 390,
+   "compared": 474,
+   "jumps": 0
+  }
+ ]
+}

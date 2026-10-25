@@ -1,0 +1,25 @@
+a5fbb026
+0
+{"rows":180,"errors":0}
+after exit=0
+{"rows":18,"errors":[]}
+steps exit=0
+cross_section 1440: PASS CPU p95 5.600000001490116 
+triangular_prism 1440: PASS CPU p95 5.300000004470348 
+cuboid 1440: PASS CPU p95 6.600000001490116 
+cau-cat-mat-phang 1440: PASS CPU p95 3.399999998509884 
+tru-truc-xien 1440: PASS CPU p95 3.2999999970197678 
+non-duong-sinh 1440: PASS CPU p95 3.600000001490116 
+non-thiet-dien-truc 1440: PASS CPU p95 3.7000000029802322 
+family07_multi_solid_composition 1440: PASS CPU p95 6.5 
+family12_cylinder_ellipse_section 1440: PASS CPU p95 3.2999999970197678 
+cross_section 390: PASS CPU p95 4.299999997019768 
+triangular_prism 390: PASS CPU p95 4.700000002980232 
+cuboid 390: PASS CPU p95 4.5999999940395355 
+cau-cat-mat-phang 390: PASS CPU p95 2.100000001490116 
+tru-truc-xien 390: PASS CPU p95 2.0999999940395355 
+non-duong-sinh 390: PASS CPU p95 1.6000000014901161 
+non-thiet-dien-truc 390: PASS CPU p95 1.8000000044703484 
+family07_multi_solid_composition 390: PASS CPU p95 4.9000000059604645 
+family12_cylinder_ellipse_section 390: PASS CPU p95 2.2000000029802322 
+motion exit=0
