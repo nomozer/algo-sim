@@ -68,6 +68,9 @@ Kept every Codex change. Continued from Codex's own failing evidence (21/30 role
 - found and fixed two renderer defects that Codex's browser runs exposed (see `SCENE3D_VISIBILITY_CORRECTION.md` §3–§4);
 - completed the role-aware checker: curve arcs scored as arcs, and a three-way verdict that separates a wrong frame from
   one the camera cannot show;
-- verified the remaining plan items and ran the gates listed in `FINAL_OWNER_HANDOFF.md`.
+- verified the remaining plan items and ran the gates listed in `FINAL_OWNER_HANDOFF.md`;
+- reverted one Codex change that the locked official suite rejected. Codex had hidden final results in Mode B as well
+  as Mode A, which took the suite from 7/8 to 0/8 (`b8b3311b`). Codex's inspector link was kept
+  (`OFFICIAL_VISUAL_SUITE_RESULTS.md` §2).
 
 Codex's changes and Claude's changes are committed separately on the same branch, so authorship stays traceable.

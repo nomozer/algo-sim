@@ -5,14 +5,17 @@ already exist offline. Whether a family is supported end to end by route D Hybri
 Adapter /4) is recorded separately in `../visual-b3-sphere-integration/UPDATED_18_FAMILY_CAPABILITY_MATRIX.md`.
 Nothing here changes that matrix.
 
-## 1. Final browser matrix (`verification/after-final/`, tool `tools/browser-matrix.mjs`)
+## 1. Final browser matrix (`verification/after-b8b3311b/`, tool `tools/browser-matrix.mjs`)
+
+Same result at `78aaef2f` in `verification/after-final/`, before the Mode B reveal fix. In that run `mode_b_once` still
+forbade canvas result labels.
 
 | Item | Value |
 |---|---|
 | Browser | Real Chrome (SwiftShader) |
 | Model calls | 0 |
 | Non-local requests | every one aborted (0 attempted) |
-| Source | commit `78aaef2f`, served by a freshly started Vite on `:3161` |
+| Source | commit `b8b3311b` (product of freeze `c84e8620`), served by a freshly started Vite on `:3161` |
 | Command | `--phase after --audit '.' --extra-scene frontend/src/simulations/domains/geometry/scene3d-circumsphere-fixture.json` |
 
 Each row has 7 frames:
@@ -37,7 +40,7 @@ Checks per row:
 | Check | Meaning |
 |---|---|
 | `mode_a_hidden` | no result label on the canvas, and no analysis result in the DOM |
-| `mode_b_once` | no result label on the canvas; each result listed once in the panel; the inspector does not repeat the selected result |
+| `mode_b_once` | each result listed once in the panel; the inspector does not repeat the selected result. The selected result's canvas annotation is expected in Mode B, per the locked suite |
 | `geometry_unchanged` | scene JSON byte-identical after all interactions |
 | `no_duplicate_edge_owners` | each logical edge has one visual owner |
 | `no_overflow` | no horizontal page scroll |
@@ -64,5 +67,5 @@ fixes, kept for traceability.
 - No automated check in this run asserts the placement of right-angle marks or labels. The locked official suite checks
   labels for the 7 polyhedron families (`OFFICIAL_VISUAL_SUITE_RESULTS.md`).
 - Curved families come from legacy samples and display-only scenes, not from backend envelopes of the current pipeline.
-- During this run, a 30-second single-page repro probe overlapped the matrix. The matrix checks are DOM and structure,
-  not timing. The overlap is disclosed here.
+- During the `78aaef2f` run, a 30-second single-page repro probe overlapped the matrix. The final `b8b3311b` run had no
+  overlap.

@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SCENE3D_VISUAL_CORRECTION
+
+REPORT = docs/evaluation/geometry/runs/scene3d-visual-correction/FINAL_OWNER_HANDOFF.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-visual-correction/
+CLASSIFICATION = LOCAL candidate on research/scene3d-visual-correction (NOT merged, not pushed; main 9978e512 unchanged): Claude takeover of Codex's interrupted Scene3D visual correction (Codex work committed byte-for-byte in 60e569d3) + renderer fixes (rim render queue, 1px rim stroke, two internal separate-context review rounds) + restored locked Mode B reveal + PROPOSED role-aware section check (not adopted). Status SCENE3D_VISUAL_PARTIAL_WITH_GAPS; INDEPENDENT_REVIEW_PENDING; HUMAN_VISUAL_APPROVED=PENDING; Hybrid NO-GO
+CODE_COMMIT = b8b3311b7f15dd8c13d0477f67cab765986f9c42 (product, frontend/src only); candidate c84e8620; measured_system ee474c819688426f8959daf2129f0273eb3217f039909b8ad9cade0ed740ae9d (118 files, unchanged); CACHE_VERSION 129 unchanged (UI-only)
+VERIFICATION = docs/evaluation/geometry/runs/scene3d-visual-correction/verification/full-t3/t3-c84e8620/receipt.json (FULL_PRODUCT_GATE_PASS); docs/evaluation/geometry/runs/scene3d-visual-correction/visual/official-run-c84e8620/BROWSER_EVIDENCE.json (7/8, cross_section only locked role-hue gate); docs/evaluation/geometry/runs/scene3d-visual-correction/visual/official-run-3c6d1e65-mode-b-regression/ (0/8, superseded); docs/evaluation/geometry/runs/scene3d-visual-correction/verification/after-b8b3311b/receipt.json (52/52 rendered rows); docs/evaluation/geometry/runs/scene3d-visual-correction/verification/role-aware-b8b3311b/receipt.json (19 PASS, 0 FAIL, 11 UNCERTIFIABLE; 95/95 faults); docs/evaluation/geometry/runs/scene3d-visual-correction/verification/vite-dev-server/dev-acceptance-c84e8620.json (PASS)
+MODEL_REQUEST_COUNT = 0
+CORRECTS = VISUAL_B3_SPHERE_INTEGRATION (candidate identity; role-aware proposal verdicts and thresholds); historical artifact bytes unchanged
+CORRECTED_BY = NONE
+
 ## WAVE_ID = VISUAL_B3_SPHERE_INTEGRATION
 
 REPORT = docs/evaluation/geometry/runs/visual-b3-sphere-integration/FINAL_OWNER_HANDOFF.md
@@ -9,7 +20,7 @@ CODE_COMMIT = 9ced3d2737e7782995d0ad0411b9c332683e4985 (product); candidate ddb1
 VERIFICATION = docs/evaluation/geometry/runs/visual-b3-sphere-integration/verification/full-t3/integration-ddb1a4be/receipt.json (FULL_PRODUCT_GATE_PASS; earlier candidates and the FAIL at 301692c8 kept beside it); docs/evaluation/geometry/runs/visual-b3-sphere-integration/visual/official-run-63faa5af/BROWSER_EVIDENCE.json (7/8, cross_section only locked role-hue gate); docs/evaluation/geometry/runs/visual-b3-sphere-integration/verification/b3-browser/receipt.json (10/10); docs/evaluation/geometry/runs/visual-b3-sphere-integration/verification/role-aware-probe/receipt.json (6/6 baseline, 30/30 faults); docs/evaluation/geometry/runs/visual-b3-sphere-integration/verification/sphere-capture/receipt.json
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_B3_V2_DISTANCE_BRIDGE (candidate identity; bridge operands); VISUAL_CLOSURE_HYBRID_READINESS via the sphere line (P3 sphere sample now fixed); historical artifact bytes unchanged
-CORRECTED_BY = NONE
+CORRECTED_BY = SCENE3D_VISUAL_CORRECTION (candidate identity; role-aware proposal)
 
 ## WAVE_ID = HYBRID_B3_V2_DISTANCE_BRIDGE
 

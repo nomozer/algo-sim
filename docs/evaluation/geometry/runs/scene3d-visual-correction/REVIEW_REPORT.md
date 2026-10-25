@@ -62,6 +62,15 @@ Round-2 fixes: commit `78aaef2f`.
 
 ## 4. After the fixes
 
-Code at `78aaef2f`: geometry vitest 839/839, typecheck 0 errors, oracle node tests 22/22. Full suite, browser and gate
-results on the committed code are in `OFFICIAL_VISUAL_SUITE_RESULTS.md`, `BROWSER_VISUAL_ACCEPTANCE.md` and
-`FINAL_OWNER_HANDOFF.md`. No third round was run on the round-2 fixes.
+Code at `78aaef2f`: geometry vitest 839/839, typecheck 0 errors, oracle node tests 22/22.
+
+Neither review round caught the Mode B over-hiding that Codex introduced. Both reviewers read Codex's own test as the
+spec. The locked official suite caught it (0/8 at `3c6d1e65`), and it was fixed in `b8b3311b`, after both rounds.
+That fix was not reviewed by an agent. The locked suite on `c84e8620` (7/8, Mode B assertions all pass) is its check.
+
+Final gates on candidate `c84e8620`:
+- Full T3 PASS;
+- official suite 7/8;
+- browser checks: `BROWSER_VISUAL_ACCEPTANCE.md`.
+
+No third review round was run.

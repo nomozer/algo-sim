@@ -1,0 +1,66 @@
+{
+  "pass": true,
+  "css_restored_byte_identical": true,
+  "rows": [
+    {
+      "name": "start-1",
+      "args": [],
+      "ready": true,
+      "ready_ms": 747,
+      "app_rendered": true,
+      "hot_update": "[vite] hot updated: /src/styles/global.css",
+      "exit_code": 1,
+      "eperm": false,
+      "log": [
+        "> algo-sim-frontend@0.1.0 dev",
+        "> vite --port 3171",
+        "  VITE v6.4.3  ready in 300 ms",
+        "  ➜  Local:   http://localhost:3171/",
+        "  ➜  Network: use --host to expose",
+        "9:50:20 PM [vite] (client) hmr update /src/styles/global.css",
+        "9:50:20 PM [vite] (client) hmr update /src/styles/global.css"
+      ]
+    },
+    {
+      "name": "start-2",
+      "args": [],
+      "ready": true,
+      "ready_ms": 733,
+      "app_rendered": true,
+      "hot_update": "[vite] hot updated: /src/styles/global.css",
+      "exit_code": 1,
+      "eperm": false,
+      "log": [
+        "> algo-sim-frontend@0.1.0 dev",
+        "> vite --port 3171",
+        "  VITE v6.4.3  ready in 311 ms",
+        "  ➜  Local:   http://localhost:3171/",
+        "  ➜  Network: use --host to expose",
+        "9:50:24 PM [vite] (client) hmr update /src/styles/global.css",
+        "9:50:24 PM [vite] (client) hmr update /src/styles/global.css"
+      ]
+    },
+    {
+      "name": "force-reoptimise",
+      "args": [
+        "--force"
+      ],
+      "ready": true,
+      "ready_ms": 1100,
+      "app_rendered": true,
+      "hot_update": "[vite] hot updated: /src/styles/global.css",
+      "exit_code": 1,
+      "eperm": false,
+      "log": [
+        "> algo-sim-frontend@0.1.0 dev",
+        "> vite --port 3171 --force",
+        "9:50:26 PM [vite] (client) Forced re-optimization of dependencies",
+        "  VITE v6.4.3  ready in 431 ms",
+        "  ➜  Local:   http://localhost:3171/",
+        "  ➜  Network: use --host to expose",
+        "9:50:29 PM [vite] (client) hmr update /src/styles/global.css",
+        "9:50:30 PM [vite] (client) hmr update /src/styles/global.css"
+      ]
+    }
+  ]
+}

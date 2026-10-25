@@ -1,0 +1,26 @@
+▶ triangular_pyramid/desktop 14:18:54
+▶ triangular_pyramid/mobile 14:19:47
+triangular_pyramid: PASS
+▶ triangular_prism/desktop 14:20:33
+▶ triangular_prism/mobile 14:21:30
+triangular_prism: PASS
+▶ rectangular_pyramid/desktop 14:22:21
+▶ rectangular_pyramid/mobile 14:23:17
+rectangular_pyramid: PASS
+▶ cuboid/desktop 14:24:22
+▶ cuboid/mobile 14:25:31
+cuboid: PASS
+▶ cube/desktop 14:26:32
+▶ cube/mobile 14:27:34
+cube: PASS
+▶ cross_section/desktop 14:28:37
+▶ cross_section/mobile 14:29:57
+cross_section: FAIL
+▶ regular_square_pyramid/desktop 14:31:55
+▶ regular_square_pyramid/mobile 14:33:10
+regular_square_pyramid: PASS
+▶ regular_triangular_pyramid/desktop 14:34:16
+▶ regular_triangular_pyramid/mobile 14:35:27
+regular_triangular_pyramid: PASS
+Wrote D:\Documents\projects\algo-sim\.superpowers\worktrees\svc-cand\.superpowers\official-c84e8620\BROWSER_EVIDENCE.json: FAIL
+official exit=1

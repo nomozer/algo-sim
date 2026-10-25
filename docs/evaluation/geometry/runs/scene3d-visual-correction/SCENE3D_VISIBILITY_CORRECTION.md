@@ -94,7 +94,7 @@ One related convention is left to the Owner: free segments and section borders i
 |---|---|
 | Geometry-domain vitest at `78aaef2f` | 839/839 |
 | Role-aware baseline, 3 shapes × 2 widths × 5 cameras, before §3–§4 (`verification/role-baseline-before-rim-fix`) | 18 PASS · **4 FAIL** (all p6 ellipse) · 8 UNCERTIFIABLE |
-| Same, final code `78aaef2f` (`verification/role-aware-final`) | 19 PASS · **0 FAIL** · 11 UNCERTIFIABLE; 0 retries, 0 error rows |
+| Same, `78aaef2f` (`verification/role-aware-final`) and final `b8b3311b` (`verification/role-aware-b8b3311b`) | 19 PASS · **0 FAIL** · 11 UNCERTIFIABLE, identical per view; 0 retries, 0 error rows |
 
 Per-view transitions of the four p6 FAILs:
 
