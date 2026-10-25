@@ -79,8 +79,16 @@ def test_point_to_base_plane_of_a_right_prism_is_its_height(labels, x, y, h):
 
 
 def test_point_to_lateral_face_is_the_base_altitude():
-    p = _prism(ask=("Tính khoảng cách từ A đến mặt phẳng (BCC'B').", {"point": "A", "plane": ["B", "C", "C'", "B'"]}))
+    p = _prism(ask=("Tính khoảng cách từ A đến mặt phẳng (BCC'B').", {"point": "A", "plane": ["B", "C", "C'"]}))
     assert _served(p) == F(36 * 64, 36 + 64)
+
+
+def test_four_label_plane_target_is_refused_not_truncated():
+    """The point-plane function takes exactly three points (as on /3). A four-label target used to be cut to its first
+    three labels by the planner, so a non-coplanar fourth label was never checked (review I-1)."""
+    p = _prism(ask=("Tính khoảng cách từ A đến mặt phẳng (BCC'B').", {"point": "A", "plane": ["B", "C", "C'", "B'"]}))
+    r = run_typed_fact_next_v2_route(p)
+    assert (r.status, r.code) == ("REFUSED", "INVALID_MATH_GOAL")
 
 
 def test_segment_target_is_a_length():
@@ -125,7 +133,13 @@ def test_adapter4_envelope_is_served():
                                     {"segment": ["A"]}, {"line1": ["A", "A'"]}, {"line1": ["A"], "line2": ["B", "C"]},
                                     {"point": ["A'"], "plane": ["A", "B", "C"]}, {"solid": "pr"},
                                     {"point": "A'", "plane": ["A", "B", "C"], "solid": "pr"},
-                                    {"segment": ["A", "B", "C"]}])
+                                    {"segment": ["A", "B", "C"]},
+                                    # review I-1 / M-1 / M-2: no silent truncation, no degenerate operands
+                                    {"point": "A'", "plane": ["A", "B", "C", "A'"]},      # 4 labels, not coplanar
+                                    {"point": "A'", "plane": ["A", "B", "C", "pr::A"]},    # 4 labels, one repeated
+                                    {"point": "A'", "plane": ["A", "A", "B"]},
+                                    {"segment": ["A", "A"]}, {"segment": ["A", "pr::A"]},
+                                    {"line1": ["A", "A"], "line2": ["B", "C"]}, {"line1": ["A", "A'"], "line2": ["C", "C"]}])
 def test_malformed_distance_target_is_refused(target):
     p = _prism(ask=("Tính khoảng cách từ A' đến mặt phẳng (ABC).", target))
     r = run_typed_fact_next_v2_route(p)

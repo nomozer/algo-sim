@@ -79,8 +79,11 @@ def _distance_question(g) -> dict[str, Any]:
     t = g.target
 
     def pts(key: str, n: int) -> list[str] | None:
+        # Exactly n DISTINCT labels: the planner keeps only three plane labels, so a longer list would be cut silently
+        # (and a non-coplanar fourth label never checked); a repeated label is a degenerate operand. Same arity as /3.
         v = t.get(key)
-        return _refs(v) if isinstance(v, (list, tuple)) and len(v) >= n and (n != 2 or len(v) == 2) else None
+        refs = _refs(v) if isinstance(v, (list, tuple)) and len(v) == n else None
+        return refs if refs is not None and len(set(refs)) == n else None
 
     if set(t) == {"point", "plane"} and isinstance(t["point"], str) and (pl := pts("plane", 3)):
         return {"quantity": "distance", "points_a": [_ref(t["point"])], "points_b": pl}
