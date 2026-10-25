@@ -100,12 +100,17 @@ describe("Owner F2: selected section preserves semantic fill and geometry", () =
   });
 });
 
-it("Owner P3: a sphere has no invented equator or meridian lines", () => {
+it("Owner P3.3: a standalone sphere has one presentation reference and no extra meridians", () => {
   const sphere: SceneObject = { id: "sphere", label: "Mặt cầu", type: "curved_solid", render: "curved_solid",
     origin: "derived", producer: "construct_curved", depends: [], curved_kind: "ball",
     anchor: ["0", "0", "0"], radius_sq: "25", height_sq: "0" };
   const object = buildObject3D(sphere, false)!;
   let lines = 0;
   object.traverse(child => { if ((child as THREE.Line).isLine) lines++; });
-  expect(lines).toBe(0);
+  expect(lines).toBe(2); // solid and dashed rendering passes of one circle, never two scene entities
+  const reference = object.getObjectByName("sphere_reference:sphere")!;
+  expect(reference.userData.presentationReference.authoritative).toBe(false);
+  const referenceLines: THREE.Line[] = [];
+  reference.traverse(child => { if ((child as THREE.Line).isLine) referenceLines.push(child as THREE.Line); });
+  expect(referenceLines).toHaveLength(lines);
 });

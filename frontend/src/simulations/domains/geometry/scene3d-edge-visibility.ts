@@ -403,6 +403,17 @@ export interface CurvedSolidVolumeMeta {
   worldToLocal?: THREE.Matrix4;
 }
 
+/** Compile occluders once when sampling a true 3D curve, rather than rebuilding triangles per point. */
+export function createWorldPointOcclusionTest(
+  camera: THREE.Vector3,
+  occluders: readonly WorldSolidOccluder[],
+  curved: readonly CurvedSolidVolumeMeta[],
+): (point: THREE.Vector3) => boolean {
+  const triangles = occludingTriangles(occluders.map(o => o.solid), occluders.map(o => o.matrixWorld));
+  const excluded = new Set<string>();
+  return point => pointIsHidden(point, camera, triangles, excluded) || diemVanhCongBiChe(point, camera, curved);
+}
+
 export function diemVanhCongBiChe(
   pt: THREE.Vector3,
   worldCam: THREE.Vector3,

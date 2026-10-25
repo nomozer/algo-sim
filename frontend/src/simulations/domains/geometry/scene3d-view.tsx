@@ -45,6 +45,7 @@ import {
   canonicalEdgesOf,
   classifySolidEdgeVisibility,
   classifyWorldSegmentVisibility,
+  createWorldPointOcclusionTest,
   updateCurvedSolidSilhouette,
   dongBoNetDayManHinh,
   taoGiuAmNetDay,
@@ -660,6 +661,7 @@ interface CurvedRimLoopMeta {
   trong: THREE.Vector3[];
   ngoai: THREE.Vector3[];
   midpoints: THREE.Vector3[];
+  sample: (turn: number) => { inner: THREE.Vector3; outer: THREE.Vector3 };
   thayMesh: THREE.Mesh;
   khuatMesh: THREE.Mesh;
   thayNet: THREE.LineSegments;
@@ -716,7 +718,7 @@ function themNetVanh(nhom: THREE.Group, thay: THREE.Mesh, khuat: THREE.Mesh): Pi
 
 function capNhatHinhHocVanhCong(
   rim: CurvedRimLoopMeta,
-  hiddenFlags: readonly boolean[],
+  spans: readonly { t0: number; t1: number; hidden: boolean }[],
   useCpuDepthOverride: boolean,
 ): void {
   const segCount = rim.midpoints.length;
@@ -725,8 +727,11 @@ function capNhatHinhHocVanhCong(
   const netThay: number[] = [];
   const netDut: number[] = [];
   const dashCycle = 4; // 24 uniform dashes around 96-segment loop (2 segments dash, 2 segments gap)
-  for (let i = 0; i < segCount; i += 1) {
-    const [a0, b0, a1, b1] = [rim.trong[i], rim.ngoai[i], rim.trong[i + 1], rim.ngoai[i + 1]];
+  const pieces = spans.length ? spans : Array.from({ length: segCount }, (_, i) => ({ t0: i, t1: i + 1, hidden: false }));
+  for (const span of pieces) {
+    const i = Math.floor((span.t0 + span.t1) / 2);
+    const start = rim.sample(span.t0 / segCount), end = rim.sample(span.t1 / segCount);
+    const [a0, b0, a1, b1] = [start.inner, start.outer, end.inner, end.outer];
     const quad = [
       a0.x, a0.y, a0.z, b0.x, b0.y, b0.z, a1.x, a1.y, a1.z,
       b0.x, b0.y, b0.z, b1.x, b1.y, b1.z, a1.x, a1.y, a1.z,
@@ -736,7 +741,7 @@ function capNhatHinhHocVanhCong(
       dinhThay.push(...quad);
       netThay.push(...canh);
       if (i % dashCycle < 2) { dinhDut.push(...quad); netDut.push(...canh); }
-    } else if (!hiddenFlags[i]) {
+    } else if (!span.hidden) {
       dinhThay.push(...quad);
       netThay.push(...canh);
     } else if (i % dashCycle < 2) {
@@ -748,7 +753,8 @@ function capNhatHinhHocVanhCong(
   // `BufferGeometry` mới mỗi lần đổi góc nhìn là một buffer GPU mới mỗi khung khi xoay (cổng
   // `scene3d-orbit-gate`, `capPhat = 0`, ca p6/p7 thiết diện elip).
   const setPos = (mesh: THREE.Mesh | THREE.LineSegments, arr: number[]) => {
-    const cap = segCount * (mesh instanceof THREE.LineSegments ? 6 : 18);
+    // Four probes per chord plus at most four refined transitions; capacity is camera-independent.
+    const cap = segCount * 8 * (mesh instanceof THREE.LineSegments ? 6 : 18);
     let attr = mesh.geometry?.getAttribute?.("position") as THREE.BufferAttribute | undefined;
     if (!attr || attr.array.length !== cap) {
       const g = new THREE.BufferGeometry();
@@ -1064,21 +1070,38 @@ export function updateCanonicalEdgeVisibility(
     renderSignature,
   ].join("|");
   updateNonCanonicalVisibility(root, camera, occluders, worldSignature, curvedVolumes);
-  if (curvedVolumes.length > 0) {
+  if (curvedVolumes.length > 0 || occluders.length > 0) {
     const worldCam = camera.position.clone();
+    const hiddenAt = createWorldPointOcclusionTest(worldCam, occluders, curvedVolumes);
     root.traverse((node) => {
       const rim = node.userData?.curvedRimLoop as CurvedRimLoopMeta | undefined;
       if (!rim) return;
       if (node.userData.curvedRimSig === worldSignature) return;
       node.updateWorldMatrix(true, false);
-      const flags = rim.midpoints.map((mp) => {
-        const wPt = mp.clone().applyMatrix4(node.matrixWorld);
-        return classifyWorldSegmentVisibility(wPt, wPt, worldCam, occluders,
-          { curved_occluders: curvedVolumes }).spans[0].visibility === "HIDDEN";
-      });
-      const flagSig = flags.map((f) => (f ? "1" : "0")).join("");
+      const count = rim.midpoints.length;
+      const hidden = (t: number) => hiddenAt(rim.sample(t / count).outer.applyMatrix4(node.matrixWorld));
+      const spans: { t0: number; t1: number; hidden: boolean }[] = [];
+      // Probe the curve itself: chord interiors lie inside curved solids even on their visible side.
+      // Angular probe spacing <= 2π/384; transition bracket refined to < 2π/(96*2^20).
+      for (let i = 0; i < count; i++) {
+        let start = i, state = hidden(i);
+        for (let j = 1; j <= 4; j++) {
+          const end = i + j / 4, next = hidden(end);
+          if (next === state) continue;
+          let lo = end - 0.25, hi = end;
+          for (let k = 0; k < 20; k++) {
+            const mid = (lo + hi) / 2;
+            if (hidden(mid) === state) lo = mid; else hi = mid;
+          }
+          const boundary = (lo + hi) / 2;
+          spans.push({ t0: start, t1: boundary, hidden: state });
+          start = boundary; state = next;
+        }
+        spans.push({ t0: start, t1: i + 1, hidden: state });
+      }
+      const flagSig = spans.map(s => `${s.t0.toFixed(8)},${s.t1.toFixed(8)},${+s.hidden}`).join("|");
       if (node.userData.curvedRimFlagSig !== flagSig) {
-        capNhatHinhHocVanhCong(rim, flags, true);
+        capNhatHinhHocVanhCong(rim, spans, true);
         node.userData.curvedRimFlagSig = flagSig;
       }
       node.userData.curvedRimSig = worldSignature;
@@ -1335,6 +1358,7 @@ export function buildObject3D(
   xray = false,
   vaiKhoi: VaiTroKhoi = "primary",
   coThietDienDong = true,
+  sphereReference = true,
 ): THREE.Object3D | null {
   // Ngữ cảnh cấu trúc: KHÔNG phải nhấn mạnh — nền xám nhạt, nét xám trung tính.
   // Cạnh khối vốn đã là mực trung tính nên giữ nguyên; còn MÀU KIỂU (hổ phách
@@ -1742,6 +1766,10 @@ export function buildObject3D(
       trong: trongPts,
       ngoai: ngoaiPts,
       midpoints,
+      sample: turn => {
+        const angle = turn * 2 * Math.PI, cs = Math.cos(angle), sn = Math.sin(angle);
+        return { inner: new THREE.Vector3(trongR * cs, trongR * sn, 0), outer: new THREE.Vector3(ngoaiR * cs, ngoaiR * sn, 0) };
+      },
       thayMesh: thay,
       khuatMesh: khuat,
       ...themNetVanh(nhomVanh, thay, khuat),
@@ -1847,6 +1875,12 @@ export function buildObject3D(
       trong,
       ngoai,
       midpoints,
+      sample: turn => {
+        const angle = turn * 2 * Math.PI, cs = Math.cos(angle), sn = Math.sin(angle);
+        const outer = M.clone().multiplyScalar(a * cs).addScaledVector(m, b * sn);
+        const tangent = M.clone().multiplyScalar(-a * sn).addScaledVector(m, b * cs).normalize();
+        return { outer, inner: outer.clone().sub(new THREE.Vector3().crossVectors(tangent, n).normalize().multiplyScalar(day)) };
+      },
       thayMesh: thay,
       khuatMesh: khuat,
       ...themNetVanh(nhomVanh, thay, khuat),
@@ -1917,6 +1951,17 @@ export function buildObject3D(
       outline.renderOrder = THU_TU_DUONG;
       outline.raycast = () => {};
       nhomCong.add(outline);
+      if (sphereReference) {
+        const reference = buildObject3D({ ...o, type: "circle3", render: "circle", center: o.anchor,
+          normal: ["0", "0", "1"], surface_role: "BASE_REGION", fill_visible: false }, false,
+          banKinhBam, diemNen, cameraPosition);
+        if (reference) {
+          reference.name = `sphere_reference:${o.id}`;
+          reference.userData.presentationReference = { role: "REFERENCE_CURVE", source_object_id: o.id, authoritative: false };
+          reference.traverse(child => { child.raycast = () => {}; });
+          nhomCong.add(reference);
+        }
+      }
     } else if (dinh) {
       // Reuse the existing circle rim primitive for physical boundaries; no synthetic points/names enter the scene.
       // Toạ độ dựng vành phải là phân số hợp lệ cho `toVec3` (`String(1.5)` thì không): chuỗi chính xác của backend khi
@@ -3682,7 +3727,8 @@ export function Scene3DWorkspace({
         o.id === hoveredSection && o.id !== tuongTac.selected_id && emphasis !== "dich" ? "hover" : emphasis,
         banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemChoVat, undefined, canonicalHighlights, khucToSang, xray,
         vaiKhoiTheoId.get(o.id) ?? vaiKhoiTheoId.get(o.parent ?? "") ?? "primary",
-        coThietDienDong);
+        coThietDienDong, dsKhoiId.length === 1 && !seDung.some(x => x.type === "plane3"
+          || ((x.type === "circle3" || x.type === "ellipse3" || x.type === "section") && x.depends.includes(o.id))));
       if (!obj) continue;
       // All steps (the circle's own step decides, #31), but only circles the user has not hidden or isolated away and
       // drawn at the same display translation: otherwise the solid would lose a cap nobody draws.
