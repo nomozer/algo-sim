@@ -1,0 +1,16 @@
+{
+  "schema": "geometry-run/1",
+  "task_slug": "hybrid-b3-v2-distance-bridge",
+  "wave": 1,
+  "date": "2026-10-25",
+  "authorization": "GO_CLAUDE_CONTINUE_CODEX_VISUAL_HYBRID_B3_LOCAL_ONLY",
+  "base_commit": "de49c592",
+  "branch": "research/hybrid-b3-v2-distance-bridge",
+  "product_commit": "3524bec8945c451655e92d77aba3016a9c6065cc",
+  "ALLOW_LIVE_AI": 0,
+  "cache_version": 128,
+  "default": "LLM_ONLY",
+  "hybrid_production": "NO-GO",
+  "independent_review": "PENDING_OWNER_APPOINTED_REVIEWER",
+  "evidence_class": "OFFLINE_AUTHORED_DEVELOPMENT_NOT_HOLDOUT"
+}

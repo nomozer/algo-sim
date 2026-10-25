@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-b3-v2-distance-bridge",
+  "corrects": "docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "7fbe45b24b41acbc73f8aacd6b8bf163e10172fc8b8d2c08ac8006a6d2dbd284",
+  "current_product_commit": "3524bec8945c451655e92d77aba3016a9c6065cc",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "B3 slice: the typed-fact-next/2 bridge maps measurement/distance goals (target keys of the /3 adapter) to the existing planner questions. Route D only (not wired to /api/analyze); no prompt, schema, grammar card or capability-table change.",
+  "cache_version": 128,
+  "cache_version_hien_tai": 128,
+  "cache_decision": "NO_BUMP: /api/analyze (LLM_ONLY) path, prompts and routing policy unchanged; route D is not cached by /api/analyze.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}
