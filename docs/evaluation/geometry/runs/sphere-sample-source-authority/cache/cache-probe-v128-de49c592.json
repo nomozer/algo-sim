@@ -1,0 +1,119 @@
+{
+ "cache_version": "128",
+ "cases": {
+  "REFUSED_oblique_prism": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "30afc1f00a5b78bee15afdbe693b77be41aba3e7343db8ae8d5b4f88c9aec41c",
+   "http": [
+    200,
+    200
+   ],
+   "plane_formation_roles": {},
+   "reason_code": "ASSUMPTION_INVARIANCE_UNPROVEN",
+   "request1": {
+    "cached": false,
+    "source": null
+   },
+   "request2": {
+    "cached": false,
+    "source": null
+   },
+   "row_policy_version": null,
+   "rows_for_key": 0,
+   "status": "unsupported"
+  },
+  "S1_side_height_volume": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "d620f3ca0614c91aeffac52cefaa63daa26ff55a4b4611e81b567c66a3a47bd3",
+   "http": [
+    200,
+    200
+   ],
+   "plane_formation_roles": {
+    "mp_day": [
+     "CONSTRUCT_AUXILIARY_GEOMETRY"
+    ]
+   },
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "128",
+   "rows_for_key": 1,
+   "status": "ok"
+  },
+  "cube": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "c2f270575b30dec745f1868fa730829b6a836cf3b356f8c53b8b9152971f538b",
+   "http": [
+    200,
+    200
+   ],
+   "plane_formation_roles": {},
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "128",
+   "rows_for_key": 1,
+   "status": "ok"
+  },
+  "p6_ellipse_section_of_cylinder": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "739b878238cab455b163747c2e85e35247924bd162610bf91cdbbabec22e6391",
+   "http": [
+    200,
+    200
+   ],
+   "plane_formation_roles": {
+    "mat_phang_alpha": [
+     "CONSTRUCT_AUXILIARY_GEOMETRY"
+    ]
+   },
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "128",
+   "rows_for_key": 1,
+   "status": "ok"
+  },
+  "right_triangular_prism": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "b7ef5ac166310bc8d7708f609b8ea660d49c948f8c797fc3864dc797318863f0",
+   "http": [
+    200,
+    200
+   ],
+   "plane_formation_roles": {},
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "128",
+   "rows_for_key": 1,
+   "status": "ok"
+  }
+ },
+ "provider_requests": 0
+}

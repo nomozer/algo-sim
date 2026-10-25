@@ -101,7 +101,8 @@ def test_cache_version_is_127():
     # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): served Path A scenes gain
     # segment3.perpendicular_witness; v126 rows were written without it and a hit returns them as is.
     # 127 -> 128 (visual-hybrid-final-corrections, display names): a v126 row still misses; the fresh row is v128.
-    assert main_module.CACHE_VERSION == "128"
+    # 128 -> 129 (sphere-sample-source-authority, curved cutting plane role): a v126 row still misses; the fresh row is v129.
+    assert main_module.CACHE_VERSION == "129"
     assert LEGACY["written_by_cache_version"] == "126"
 
 

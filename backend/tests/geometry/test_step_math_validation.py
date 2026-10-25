@@ -32,6 +32,13 @@ if str(RUN_DIR) not in sys.path:
 
 import oracle  # noqa: E402
 
+# Correction layer for the scalar-radius sphere form (run `sphere-sample-source-authority`); the locked oracle above
+# stays byte-identical and is still what every hash/receipt check uses.
+_LAYER = WORKTREE_ROOT / "docs" / "evaluation" / "geometry" / "runs" / "sphere-sample-source-authority"
+if str(_LAYER) not in sys.path:
+    sys.path.insert(0, str(_LAYER))
+import oracle_scalar_radius  # noqa: E402
+
 
 def _sha256_file(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -60,7 +67,7 @@ def test_frontend_sample_and_fixture_scenes_mathematically_verified() -> None:
 
     for s in samples:
         sc = s["envelope"]["scene3d"]
-        rep = oracle.verify_scene_mathematics(
+        rep = oracle_scalar_radius.verify_scene_mathematics(
             sc,
             scene_id=s["id"],
             data_source="frontend/src/data/geometry-samples.json",
@@ -161,7 +168,7 @@ def test_fault_injection_across_all_11_categories() -> None:
     for o in sc4["objects"]:
         if o["id"] == "C":
             o["radius_sq"] = "20"  # R^2 - d^2 = 25 - 9 = 16 != 20
-    rep4 = oracle.verify_scene_mathematics(sc4, scene_id="fi_4")
+    rep4 = oracle_scalar_radius.verify_scene_mathematics(sc4, scene_id="fi_4")
     assert rep4.verdict == "INVALID"
     assert not rep4.category_results["4_intersection"].passed
 

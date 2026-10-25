@@ -132,3 +132,21 @@ describe("CONTRACT-BE-1: mặt phẳng đích và đáp số của khoảng các
     });
   }
 });
+
+/* sphere-sample-source-authority — mặt phẳng ĐỀ ĐẶT TÊN cắt khối cong là mặt cắt (backend `CONSTRUCT_CUTTING_OBJECT`),
+ * không phải hình phụ: đường tròn giao nằm trên nó nên nó phải còn ở cảnh cuối. Đọc bài mẫu THẬT. */
+describe("mặt phẳng cắt khối cong", () => {
+  const mau = (id: string): Scene3D => JSON.parse(readFileSync(join(__dirname, "../../../data/geometry-samples.json"), "utf8"))
+    .samples.find((x: { id: string }) => x.id === id).envelope.scene3d as Scene3D;
+
+  it.each(["cau-cat-mat-phang", "tru-thiet-dien-tron"])("%s: (P) không bị ẩn ở bước cuối", (id) => {
+    const s = mau(id);
+    const cuoi = s.formation!.steps.length - 1;
+    expect(auxiliaryObjects(s).has("P")).toBe(false);
+    expect(auxiliaryHiddenAt(s, cuoi, false, null).has("P")).toBe(false);
+  });
+
+  it("mặt cầu: chỉ tâm I là điểm — không còn điểm bố cục do hệ bịa", () => {
+    expect(mau("cau-cat-mat-phang").objects.filter((o) => o.type === "point3").map((o) => o.id)).toEqual(["I"]);
+  });
+});

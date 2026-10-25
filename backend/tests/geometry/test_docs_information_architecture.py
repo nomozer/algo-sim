@@ -212,7 +212,8 @@ def test_inv_20_candidate_and_cache_verify_only():
     # 125 -> 126 (hybrid-offline-readiness-finalization): độ dài nguồn không đọc từ biểu thức/vectơ/giả định (served -> refused).
     # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): segment3 đường cao mang perpendicular_witness (envelope phục vụ đổi).
     # 127 -> 128 (visual-hybrid-final-corrections): tên hiển thị backend — mặt phẳng tên đề viết, chu trình thiết diện (envelope phục vụ đổi).
-    assert str(CACHE_VERSION) == "128"
+    # 128 -> 129 (sphere-sample-source-authority): mặt phẳng cắt khối cong (đường tròn/elip giao) mang vai CONSTRUCT_CUTTING_OBJECT thay CONSTRUCT_AUXILIARY_GEOMETRY trong envelope phục vụ; row v128 thật vẫn HIT (runs/sphere-sample-source-authority/cache/decision.json).
+    assert str(CACHE_VERSION) == "129"
 
 
 def test_inv_21_favicon_not_in_staged_changes():

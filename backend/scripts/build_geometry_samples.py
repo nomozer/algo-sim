@@ -301,26 +301,34 @@ def chuong_trinh_cau_the_tich() -> dict[str, Any]:
     }
 
 
-def chuong_trinh_cau_cat_mp() -> dict[str, Any]:
-    """Mặt phẳng cắt mặt cầu theo đường tròn. `r² = 25 − 9 = 16 ⇒ r = 4`."""
+def chuong_trinh_cau_cat_mp(d: int = 3) -> dict[str, Any]:
+    """Mặt phẳng cắt mặt cầu theo đường tròn. `r² = 25 − 9 = 16 ⇒ r = 4`.
+
+    Chỉ cái đề cho mới là dữ kiện: tâm I và bán kính 5 (đại lượng `R`, không cần điểm vành bịa), mặt phẳng (P) đặt
+    bằng phương trình `z = d` — vị trí là bố cục hệ chọn, khoảng cách d là của đề. `d` khác 3 chỉ để test: d = 5 tiếp
+    xúc, d > 5 không cắt — kernel phải từ chối chứ không vẽ một đường tròn giả.
+    """
     return {
         "spec_version": "1.0",
         "title": "Đường tròn giao của mặt phẳng và mặt cầu",
         "description": (
-            "Cho mặt cầu tâm I bán kính 5. Mặt phẳng (P) cách tâm I một khoảng "
-            "bằng 3 cắt mặt cầu theo một đường tròn. Tính bán kính và diện "
+            f"Cho mặt cầu tâm I bán kính 5. Mặt phẳng (P) cách tâm I một khoảng "
+            f"bằng {d} cắt mặt cầu theo một đường tròn. Tính bán kính và diện "
             "tích hình tròn đó."
         ),
         "memory_declarations": [
-            _diem("I", [0, 0, 0]), _diem("A", [5, 0, 0]),
-            _diem("H", [0, 0, 3]), _diem("U", [1, 0, 3]), _diem("W", [0, 1, 3]),
+            {"name": "I", "type": "point3", "initial_value": [0, 0, 0], "provenance": "MODEL_ASSUMPTION",
+             "model_assumption": "chọn tâm I làm gốc toạ độ"},
+            {"name": "R", "type": "float", "initial_value": 5, "provenance": "GIVEN",
+             "source_fact_id": "f_ban_kinh"},
             _khai("cau", "curved_solid"), _khai("P", "plane3"),
             _khai("C", "circle3"), _khai("r", "float"), _khai("S", "float"),
         ],
         "statements": [
-            _khoi_cong("cau", "ball", "I", None, "A", "(S)"),
-            {"kind": "construct_plane", "target_var": "P", "label": "(P)",
-             "through": ["H", "U", "W"]},
+            {"kind": "construct_curved_solid", "target_var": "cau", "curved_kind": "ball", "anchor": "I",
+             "radius": "R", "label": "(S)"},
+            {"kind": "construct_plane_from_equation", "target_var": "P", "a": 0, "b": 0, "c": 1, "d": -d,
+             "label": "(P)"},
             {"kind": "assign", "target_var": "C", "label": "(C)",
              "expr": {"kind": "intersect_plane_curved", "solid": "cau",
                       "plane": "P"}},
@@ -371,13 +379,17 @@ def chuong_trinh_tru_thiet_dien_tron() -> dict[str, Any]:
             "trụ theo một đường tròn. Tính bán kính đường tròn ấy."
         ),
         "memory_declarations": [
-            _diem("O", [0, 0, 0]), _diem("O_prime", [0, 0, 4]), _diem("A", [2, 0, 0]),
+            # Đề gọi tên O, O′ (toạ độ là bố cục) và cho bán kính 2; điểm vành không có trong đề nên không khai.
+            _diem("O", [0, 0, 0]), _diem("O_prime", [0, 0, 4]),
+            {"name": "R", "type": "float", "initial_value": 2, "provenance": "GIVEN",
+             "source_fact_id": "f_ban_kinh_day"},
             _khai("tru", "curved_solid"), _khai("M", "point3"),
             _khai("truc", "line3"), _khai("P", "plane3"),
             _khai("C", "circle3"), _khai("r", "float"),
         ],
         "statements": [
-            _khoi_cong("tru", "cylinder", "O", "O_prime", "A", "hình trụ"),
+            {"kind": "construct_curved_solid", "target_var": "tru", "curved_kind": "cylinder", "anchor": "O",
+             "apex_or_top": "O_prime", "radius": "R", "label": "hình trụ"},
             {"kind": "construct_point", "target_var": "M",
              "expr": {"kind": "midpoint", "a": "O", "b": "O_prime"}},
             {"kind": "construct_line", "target_var": "truc", "label": "OO′",
@@ -481,13 +493,21 @@ DE_HOI: dict[str, tuple[tuple[str, str, str], ...]] = {
 }
 
 
+#: Dữ kiện ĐỀ CHO của bài mẫu (`InputFact`): khai báo `GIVEN` trỏ tới đây bằng `source_fact_id`, và tầng trình bày
+#: lấy nhãn từ đây (`_nhan_du_kien_tu_fact`) — không đặt tên tay trong cảnh. Nhãn là chữ của đề.
+DU_KIEN: dict[str, tuple[tuple[str, str, tuple[Any, ...]], ...]] = {
+    "cau-cat-mat-phang": (("f_ban_kinh", "bán kính mặt cầu", (5,)),),
+    "tru-thiet-dien-tron": (("f_ban_kinh_day", "bán kính đáy", (2,)),),
+}
+
+
 def main() -> int:
     from app.simulation.semantic_program.contract import SemanticProgramSpec
     from app.simulation.semantic_program.interpreter import (
         SemanticProgramInterpreter,
     )
     from app.simulation.semantic_program.obligations import Obligation
-    from app.simulation.semantic_program.request_contract import RequestContract
+    from app.simulation.semantic_program.request_contract import InputFact, RequestContract
     from app.simulation.semantic_program.pipeline_adapter import (
         compile_semantic_program_to_envelope,
     )
@@ -512,7 +532,8 @@ def main() -> int:
         # Hợp đồng như sản phẩm có: đề nguyên văn (`problemText` ghi ra bên dưới — neo tên mặt phẳng khai) và nghĩa
         # vụ đề hỏi (`DE_HOI` — đáp số nào ẩn ở chế độ học sinh).
         hop_dong = RequestContract(problem_text=spec.description or spec.title, obligations=tuple(
-            Obligation(kind=k, container=c, params={"witness": w}) for k, c, w in DE_HOI.get(ma, ())))
+            Obligation(kind=k, container=c, params={"witness": w}) for k, c, w in DE_HOI.get(ma, ())),
+            input_facts=tuple(InputFact(fact_id=f, label=n, values=v) for f, n, v in DU_KIEN.get(ma, ())))
         canh = build_scene3d(build_simulation_state(spec, ket, hop_dong))
         if not canh["objects"]:
             print(f"DỪNG: {ma} không dựng ra cảnh 3D nào", file=sys.stderr)
