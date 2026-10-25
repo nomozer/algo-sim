@@ -1,0 +1,7559 @@
+{
+  "classification": "PROPOSED_ROLE_AWARE_ORACLE_EVIDENCE_NOT_OFFICIAL_SUITE",
+  "provider_calls": 0,
+  "url": "http://127.0.0.1:3142",
+  "summary": {
+    "baseline_pass": 6,
+    "baseline_total": 6,
+    "faults_detected": 30,
+    "faults_total": 30
+  },
+  "rows": [
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "fault": "none",
+      "file": "polygon-cross-section-1440-none.png",
+      "sha256": "0134b007863a658cfed85dfd3d00a5720b8d2c2fc0983973632b5a7514569b2d",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 9,
+          "blue": 9,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 8,
+          "blue": 7,
+          "coverage": 0.875,
+          "pass": null
+        }
+      ],
+      "fill": {
+        "samples": 60,
+        "cam": 56,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 1675,
+        "in_band": 1586,
+        "share": 0.946865671641791
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "fault": "boundary_terracotta",
+      "file": "polygon-cross-section-1440-boundary_terracotta.png",
+      "sha256": "eaa958be84fadab687346a54f4642805dfa5a311f19e9a4b7a9a5389b5244020",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 9,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 8,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        }
+      ],
+      "fill": {
+        "samples": 60,
+        "cam": 56,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 104,
+        "in_band": 15,
+        "share": 0.14423076923076922
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "fault": "boundary_magenta",
+      "file": "polygon-cross-section-1440-boundary_magenta.png",
+      "sha256": "841d4f0ec3ba8d764e5014a1605eaf234327085ce2fcb185508cf3a914403016",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 9,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 8,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        }
+      ],
+      "fill": {
+        "samples": 60,
+        "cam": 56,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 104,
+        "in_band": 15,
+        "share": 0.14423076923076922
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "fault": "fill_grey",
+      "file": "polygon-cross-section-1440-fill_grey.png",
+      "sha256": "e380a7fb8955c5aba419d28a3bc38e5e69c5e06212524308ef0e09ce8b08dab9",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 9,
+          "blue": 9,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 8,
+          "blue": 7,
+          "coverage": 0.875,
+          "pass": null
+        }
+      ],
+      "fill": {
+        "samples": 60,
+        "cam": 0,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 1754,
+        "in_band": 1663,
+        "share": 0.9481185860889396
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "fault": "fill_hidden",
+      "file": "polygon-cross-section-1440-fill_hidden.png",
+      "sha256": "e994941101511b5bbbde3e6a53039461865e5b2b0be6acb678ed426e10fd81b9",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 9,
+          "blue": 9,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 8,
+          "blue": 7,
+          "coverage": 0.875,
+          "pass": null
+        }
+      ],
+      "fill": {
+        "samples": 60,
+        "cam": 0,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 1789,
+        "in_band": 1698,
+        "share": 0.9491335941866965
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 1440,
+      "fault": "wrong_object",
+      "file": "polygon-cross-section-1440-wrong_object.png",
+      "sha256": "dfce91523848abb6967ff7482655e058fedfc338298de9e33e1c7556e0be0690",
+      "selected": "C",
+      "identity_ok": false,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "FILL_NOT_TERRACOTTA",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        }
+      ],
+      "fill": {
+        "samples": 69,
+        "cam": 0,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 48,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "fault": "none",
+      "file": "polygon-cross-section-390-none.png",
+      "sha256": "d9270ff0adbb8cf0c41fd80d9360056b385be60a7608c5e9b9878aaa1e3f99e1",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 6,
+          "blue": 6,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 2,
+          "blue": 2,
+          "coverage": 1,
+          "pass": null
+        }
+      ],
+      "fill": {
+        "samples": 39,
+        "cam": 30,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 1809,
+        "in_band": 1786,
+        "share": 0.9872857932559425
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "fault": "boundary_terracotta",
+      "file": "polygon-cross-section-390-boundary_terracotta.png",
+      "sha256": "8e06a6c8411b1fadc4458a3efe2535dd8eed42c0a86be130fc0a037656908238",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 6,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 2,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        }
+      ],
+      "fill": {
+        "samples": 39,
+        "cam": 30,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 130,
+        "in_band": 107,
+        "share": 0.823076923076923
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "fault": "boundary_magenta",
+      "file": "polygon-cross-section-390-boundary_magenta.png",
+      "sha256": "579228d4e7b67585a93eb606d58f605b86c3652495b9fd6ee6b503d98b394e0e",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 6,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 2,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        }
+      ],
+      "fill": {
+        "samples": 39,
+        "cam": 30,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 130,
+        "in_band": 107,
+        "share": 0.823076923076923
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "fault": "fill_grey",
+      "file": "polygon-cross-section-390-fill_grey.png",
+      "sha256": "73ec84b0b3eeac3759d58a91c19122453027991a0594f593073c900c148832aa",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 6,
+          "blue": 6,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 2,
+          "blue": 2,
+          "coverage": 1,
+          "pass": null
+        }
+      ],
+      "fill": {
+        "samples": 39,
+        "cam": 0,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 1957,
+        "in_band": 1934,
+        "share": 0.9882473173224323
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "fault": "fill_hidden",
+      "file": "polygon-cross-section-390-fill_hidden.png",
+      "sha256": "650161e1f4c3a93abc9c912ba8129a23ae21bd6e24a2fa48e7fe357af846ce28",
+      "selected": "area_T",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 6,
+          "blue": 6,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 2,
+          "blue": 2,
+          "coverage": 1,
+          "pass": null
+        }
+      ],
+      "fill": {
+        "samples": 39,
+        "cam": 0,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 1975,
+        "in_band": 1952,
+        "share": 0.9883544303797468
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "polygon-cross-section",
+      "shape": "polygon",
+      "width": 390,
+      "fault": "wrong_object",
+      "file": "polygon-cross-section-390-wrong_object.png",
+      "sha256": "9afe449e32854aa5bb6ae066bd11c10c4b747afe3b69981573dfa2ce6648d5f4",
+      "selected": "C",
+      "identity_ok": false,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "FILL_NOT_TERRACOTTA",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        }
+      ],
+      "fill": {
+        "samples": 39,
+        "cam": 0,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 249,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 1440,
+      "fault": "none",
+      "file": "circle-sphere-sample-1440-none.png",
+      "sha256": "ed302fdd3390c19274e231109f152cac27861820795bf8226ddcdb74c4e462d7",
+      "selected": "S",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "pass": null
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": null
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "pass": null
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 6,
+          "coverage": 0.5,
+          "pass": null
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 6,
+          "coverage": 0.5,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 6,
+          "coverage": 0.5,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 8,
+          "coverage": 0.6666666666666666,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 170,
+        "cam": 170,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 3264,
+        "in_band": 3211,
+        "share": 0.9837622549019608
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 1440,
+      "fault": "boundary_terracotta",
+      "file": "circle-sphere-sample-1440-boundary_terracotta.png",
+      "sha256": "7c4dcae92cf51cc6950dd8504323ad8d73565fae08a5c15bbb20779003a4f3c7",
+      "selected": "S",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        }
+      ],
+      "fill": {
+        "samples": 170,
+        "cam": 170,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 1440,
+      "fault": "boundary_magenta",
+      "file": "circle-sphere-sample-1440-boundary_magenta.png",
+      "sha256": "d9da6556992cc5e1962ceaa314bf82ad9811f423f6484254e9ad77f5fabce2f1",
+      "selected": "S",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        }
+      ],
+      "fill": {
+        "samples": 170,
+        "cam": 170,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 1440,
+      "fault": "fill_grey",
+      "file": "circle-sphere-sample-1440-fill_grey.png",
+      "sha256": "a5380a8bde31cc66a989a5e2c0690683682499051a4e2eda27215b971c776540",
+      "selected": "S",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "pass": null
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": null
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "pass": null
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 6,
+          "coverage": 0.5,
+          "pass": null
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 6,
+          "coverage": 0.5,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 6,
+          "coverage": 0.5,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 8,
+          "coverage": 0.6666666666666666,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 170,
+        "cam": 0,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 3422,
+        "in_band": 3352,
+        "share": 0.9795441262419637
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 1440,
+      "fault": "fill_hidden",
+      "file": "circle-sphere-sample-1440-fill_hidden.png",
+      "sha256": "acf28b2c05f1ee6350060fc1d4ab23091d769a657e7029afb4fb6b600a8d6bd6",
+      "selected": "S",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "pass": null
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": null
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "pass": null
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 6,
+          "coverage": 0.5,
+          "pass": null
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 6,
+          "coverage": 0.5,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 6,
+          "coverage": 0.5,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 8,
+          "coverage": 0.6666666666666666,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 170,
+        "cam": 0,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 3421,
+        "in_band": 3352,
+        "share": 0.9798304589301374
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 1440,
+      "fault": "wrong_object",
+      "file": "circle-sphere-sample-1440-wrong_object.png",
+      "sha256": "d20d7ea9d86731f89a5b634eda693c92d44e75edf35519fc8b3ecb99de3ec2f5",
+      "selected": "I",
+      "identity_ok": false,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "FILL_NOT_TERRACOTTA",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 12,
+          "blue": 1,
+          "coverage": 0.08333333333333333,
+          "pass": false
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        }
+      ],
+      "fill": {
+        "samples": 170,
+        "cam": 0,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 58,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 390,
+      "fault": "none",
+      "file": "circle-sphere-sample-390-none.png",
+      "sha256": "3e8509f8e91fae6257fdff8f966897ad681093a02b97104a5a81e0562ff7c13c",
+      "selected": "S",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 12,
+          "blue": 8,
+          "coverage": 0.6666666666666666,
+          "pass": null
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": null
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 5,
+          "blue": 5,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 9,
+          "blue": 9,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 176,
+        "cam": 176,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 2932,
+        "in_band": 2932,
+        "share": 1
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 390,
+      "fault": "boundary_terracotta",
+      "file": "circle-sphere-sample-390-boundary_terracotta.png",
+      "sha256": "cde91a282bf44a6bb606b027c75dc7cb4ac5c8835f6dd87d385c9a5302cb3343",
+      "selected": "S",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 5,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 9,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        }
+      ],
+      "fill": {
+        "samples": 176,
+        "cam": 176,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 390,
+      "fault": "boundary_magenta",
+      "file": "circle-sphere-sample-390-boundary_magenta.png",
+      "sha256": "486e8b1b1261cb6118b98cca9948988845f5220388a12cb6f05742dd0457cbf5",
+      "selected": "S",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 5,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 9,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        }
+      ],
+      "fill": {
+        "samples": 176,
+        "cam": 176,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 390,
+      "fault": "fill_grey",
+      "file": "circle-sphere-sample-390-fill_grey.png",
+      "sha256": "599dc2b88fb4e0639b4842ad678f61c37d2baf297f452705b7752f47b44aa2f2",
+      "selected": "S",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "pass": null
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 8,
+          "coverage": 0.6666666666666666,
+          "pass": null
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 5,
+          "blue": 5,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 9,
+          "blue": 9,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 176,
+        "cam": 0,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 3328,
+        "in_band": 3328,
+        "share": 1
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 390,
+      "fault": "fill_hidden",
+      "file": "circle-sphere-sample-390-fill_hidden.png",
+      "sha256": "3c63f71168374746bcc6a51efd282355e7a6ac0003f121249b129b5ce54b5ca6",
+      "selected": "S",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "pass": null
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": null
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 8,
+          "coverage": 0.6666666666666666,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 5,
+          "blue": 5,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 9,
+          "blue": 9,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 176,
+        "cam": 0,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 3504,
+        "in_band": 3504,
+        "share": 1
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "circle-sphere-sample",
+      "shape": "circle",
+      "width": 390,
+      "fault": "wrong_object",
+      "file": "circle-sphere-sample-390-wrong_object.png",
+      "sha256": "9c0058ed105fe4b425c8670c2b0930a220e0a6c3ad1ccab5d267d63ae5c35be1",
+      "selected": "I",
+      "identity_ok": false,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "FILL_NOT_TERRACOTTA",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 4,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 5,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 6,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 7,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 8,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 9,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 20,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 21,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 22,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 23,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 24,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 25,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 26,
+          "hidden": false,
+          "visible": 5,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 9,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        }
+      ],
+      "fill": {
+        "samples": 176,
+        "cam": 0,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 236,
+        "in_band": 28,
+        "share": 0.11864406779661017
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 1440,
+      "fault": "none",
+      "file": "ellipse-cylinder-p6-1440-none.png",
+      "sha256": "4f7f6dad41995b2c6008f977bba37162e526292a064ffb460eb642f1298699c6",
+      "selected": "dien_tich_elip_e",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 8,
+          "coverage": 0.6666666666666666,
+          "pass": null
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": null
+        },
+        {
+          "edge": 23,
+          "hidden": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": null
+        },
+        {
+          "edge": 24,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 25,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": null
+        },
+        {
+          "edge": 27,
+          "hidden": true,
+          "visible": 12,
+          "blue": 8,
+          "coverage": 0.6666666666666666,
+          "pass": null
+        },
+        {
+          "edge": 28,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 208,
+        "cam": 208,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 909,
+        "in_band": 909,
+        "share": 1
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 1440,
+      "fault": "boundary_terracotta",
+      "file": "ellipse-cylinder-p6-1440-boundary_terracotta.png",
+      "sha256": "3a8ec3e6b83dc3060257e60ec0bc45b140caaadbdeb697633973380daf191297",
+      "selected": "dien_tich_elip_e",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 4,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 5,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 10,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 23,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 24,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 25,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 27,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 28,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        }
+      ],
+      "fill": {
+        "samples": 208,
+        "cam": 208,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 1440,
+      "fault": "boundary_magenta",
+      "file": "ellipse-cylinder-p6-1440-boundary_magenta.png",
+      "sha256": "30afaecb57fa503698ef31acab7214ba01010beb29c6bc084a1f14e3c8074f11",
+      "selected": "dien_tich_elip_e",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 4,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 5,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 10,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 23,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 24,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 25,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 27,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 28,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        }
+      ],
+      "fill": {
+        "samples": 208,
+        "cam": 208,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 1440,
+      "fault": "fill_grey",
+      "file": "ellipse-cylinder-p6-1440-fill_grey.png",
+      "sha256": "908cb976e91ecc72d8f5d6b3c52e4d8fb75ad5716dd84745ee385c8953f9fcb8",
+      "selected": "dien_tich_elip_e",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 8,
+          "coverage": 0.6666666666666666,
+          "pass": null
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": null
+        },
+        {
+          "edge": 23,
+          "hidden": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": null
+        },
+        {
+          "edge": 24,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 25,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": null
+        },
+        {
+          "edge": 27,
+          "hidden": true,
+          "visible": 12,
+          "blue": 8,
+          "coverage": 0.6666666666666666,
+          "pass": null
+        },
+        {
+          "edge": 28,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 208,
+        "cam": 0,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 1093,
+        "in_band": 1093,
+        "share": 1
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 1440,
+      "fault": "fill_hidden",
+      "file": "ellipse-cylinder-p6-1440-fill_hidden.png",
+      "sha256": "6506a603779505f8d742145b62ead75d3a16259184caf22c62b3d6f7356a3cf4",
+      "selected": "dien_tich_elip_e",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 8,
+          "coverage": 0.6666666666666666,
+          "pass": null
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": null
+        },
+        {
+          "edge": 23,
+          "hidden": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": null
+        },
+        {
+          "edge": 24,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 25,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": null
+        },
+        {
+          "edge": 27,
+          "hidden": true,
+          "visible": 12,
+          "blue": 8,
+          "coverage": 0.6666666666666666,
+          "pass": null
+        },
+        {
+          "edge": 28,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 208,
+        "cam": 0,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 1093,
+        "in_band": 1093,
+        "share": 1
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 1440,
+      "fault": "wrong_object",
+      "file": "ellipse-cylinder-p6-1440-wrong_object.png",
+      "sha256": "baa15dfc355948db01eef9f9bffa5d2885babbb990baefc430f3a24e76da5696",
+      "selected": "O",
+      "identity_ok": false,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "FILL_NOT_TERRACOTTA",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 4,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 5,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 10,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 23,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 24,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 25,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 27,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 28,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        }
+      ],
+      "fill": {
+        "samples": 208,
+        "cam": 0,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 58,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 390,
+      "fault": "none",
+      "file": "ellipse-cylinder-p6-390-none.png",
+      "sha256": "c3dde053de651693ae07dad3d148de6690dfeaeeaaad0014e1e846fc1cb68e0f",
+      "selected": "dien_tich_elip_e",
+      "identity_ok": true,
+      "pixel_pass": true,
+      "reasons": [],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 7,
+          "coverage": 0.5833333333333334,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 5,
+          "coverage": 0.4166666666666667,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "pass": null
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 23,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 24,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 25,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 406,
+        "cam": 406,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 968,
+        "in_band": 968,
+        "share": 1
+      },
+      "verdict": true,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 390,
+      "fault": "boundary_terracotta",
+      "file": "ellipse-cylinder-p6-390-boundary_terracotta.png",
+      "sha256": "caf0d6cd7839c84a35432481275d754037cb118f8a9ac192d9bcee293d0b77ec",
+      "selected": "dien_tich_elip_e",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 4,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 5,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 23,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 24,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 25,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        }
+      ],
+      "fill": {
+        "samples": 406,
+        "cam": 406,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 390,
+      "fault": "boundary_magenta",
+      "file": "ellipse-cylinder-p6-390-boundary_magenta.png",
+      "sha256": "01040f7012da63ad3f702f13931121702bd9c4a67eaec0cd454e532b36e178d5",
+      "selected": "dien_tich_elip_e",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 4,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 5,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 23,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 24,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 25,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        }
+      ],
+      "fill": {
+        "samples": 406,
+        "cam": 406,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 0,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 390,
+      "fault": "fill_grey",
+      "file": "ellipse-cylinder-p6-390-fill_grey.png",
+      "sha256": "b1eee3ec9b1f8002dddfc00955db4e06e25290b57a573c0cf456347d4d99192a",
+      "selected": "dien_tich_elip_e",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 23,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 24,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 25,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 406,
+        "cam": 0,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 1252,
+        "in_band": 1252,
+        "share": 1
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 390,
+      "fault": "fill_hidden",
+      "file": "ellipse-cylinder-p6-390-fill_hidden.png",
+      "sha256": "ac59a2427d58d6997161bec032a37d149fb46cd6c64106fe7db27eba3c49bee3",
+      "selected": "dien_tich_elip_e",
+      "identity_ok": true,
+      "pixel_pass": false,
+      "reasons": [
+        "FILL_NOT_TERRACOTTA"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 4,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 5,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 9,
+          "coverage": 0.75,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 6,
+          "coverage": 0.5,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 23,
+          "hidden": true,
+          "visible": 12,
+          "blue": 10,
+          "coverage": 0.8333333333333334,
+          "pass": null
+        },
+        {
+          "edge": 24,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 25,
+          "hidden": true,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": null
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 12,
+          "blue": 11,
+          "coverage": 0.9166666666666666,
+          "pass": null
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 12,
+          "coverage": 1,
+          "pass": true
+        }
+      ],
+      "fill": {
+        "samples": 406,
+        "cam": 0,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 1317,
+        "in_band": 1317,
+        "share": 1
+      },
+      "verdict": false,
+      "errors": []
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "shape": "ellipse",
+      "width": 390,
+      "fault": "wrong_object",
+      "file": "ellipse-cylinder-p6-390-wrong_object.png",
+      "sha256": "4d7d0bef4f9853b47b1ed17cd3205de69a97e2924895b74cf9617c9cc4322b0f",
+      "selected": "O",
+      "identity_ok": false,
+      "pixel_pass": false,
+      "reasons": [
+        "BOUNDARY_NOT_COBALT",
+        "FILL_NOT_TERRACOTTA",
+        "COBALT_NOT_ON_SELECTED_BOUNDARY"
+      ],
+      "edges": [
+        {
+          "edge": 0,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 1,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 2,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 3,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 4,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 5,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 6,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 7,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 8,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 9,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 10,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 11,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 12,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 13,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 14,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 15,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 16,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 17,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 18,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 19,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 20,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 21,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 22,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 23,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 24,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 25,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 26,
+          "hidden": true,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": null
+        },
+        {
+          "edge": 27,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 28,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 29,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 30,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        },
+        {
+          "edge": 31,
+          "hidden": false,
+          "visible": 12,
+          "blue": 0,
+          "coverage": 0,
+          "pass": false
+        }
+      ],
+      "fill": {
+        "samples": 406,
+        "cam": 0,
+        "xanh": 0
+      },
+      "blue": {
+        "all": 238,
+        "in_band": 0,
+        "share": 0
+      },
+      "verdict": false,
+      "errors": []
+    }
+  ]
+}

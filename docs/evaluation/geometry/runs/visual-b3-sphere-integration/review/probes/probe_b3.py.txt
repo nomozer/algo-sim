@@ -1,0 +1,142 @@
+# -*- coding: utf-8 -*-
+"""Read-only offline probe of the B3 distance bridge. Run from b3-dist/backend with PYTHONPATH=."""
+from __future__ import annotations
+
+import json
+from copy import deepcopy
+from fractions import Fraction as F
+from math import isqrt
+
+from app.ai.adapter4_route import run_typed_fact_next_v2_route
+
+
+def prism(labels="ABC", x=6, y=8, h=12, oblique=False, ask=None, extra=()):
+    a, b, c = labels
+    base, top = list(labels), [v + "'" for v in labels]
+    name = labels + "." + "".join(top)
+    solid = f"Cho lăng trụ {'' if oblique else 'đứng '}{name}."
+    shape = f"Đáy {labels} là tam giác vuông tại {a}."
+    qs = [solid, shape, f"{a}{b} = {x}.", f"{a}{c} = {y}."]
+    premises = [{"kind": "right_angle", "args": {"vertex": a, "rays": [b, c]}, "quote": shape},
+                {"kind": "segment_length", "args": {"segment": [a, b], "value": str(x)}, "quote": qs[2]},
+                {"kind": "segment_length", "args": {"segment": [a, c], "value": str(y)}, "quote": qs[3]}]
+    q = f"{a}{a}' = {h}."
+    premises += [{"kind": "right_prism", "args": {"base": base, "top": top}, "quote": solid},
+                 {"kind": "segment_length", "args": {"segment": [a, a + "'"], "value": str(h)}, "quote": q}]
+    qs.append(q)
+    for prem in extra:
+        premises.append(prem)
+        qs.append(prem["quote"])
+    quote, target = ask
+    qs.append(quote)
+    return {"schema_version": "typed-fact-next/2", "problem_text": " ".join(qs), "length_unit": "1",
+            "solids": [{"solid_id": "pr", "solid_type": "prism", "notation": name, "quote": solid}],
+            "premises": premises,
+            "simulation_goals": [{"goal_id": "draw", "kind": "construct_object", "target_solid_id": "pr", "quote": solid}],
+            "math_goals": [{"goal_id": "q", "kind": "measurement", "goal_type": "distance", "target": target,
+                            "quote": quote}]}
+
+
+def sq(r):
+    v = r.exec_result.final_memory["kq_q"]
+    return F(v.he) ** 2 * v.can if hasattr(v, "can") else F(v) ** 2
+
+
+def run(name, p, expect):
+    try:
+        r = run_typed_fact_next_v2_route(p)
+    except Exception as e:  # noqa
+        print(json.dumps({"case": name, "RAISED": repr(e)}, ensure_ascii=False))
+        return
+    out = {"case": name, "expect": expect, "status": r.status, "code": r.code}
+    if r.status == "SERVED":
+        out["d2"] = str(sq(r))
+        prov = [x for x in r.route_d.get("source_provenance", []) if x.get("id") == "q"] if "source_provenance" in r.route_d else None
+        try:
+            from app.ai.adapter4_route import build_adapter4_response
+            rd = build_adapter4_response(r, p["problem_text"])["route_d"]
+            prov = next((x for x in rd.get("source_provenance", []) if x["id"] == "q"), None)
+            out["prov"] = {"fn": prov["fn"], "args": prov["args"]} if prov else None
+        except Exception as e:  # noqa
+            out["prov_err"] = repr(e)
+    else:
+        out["reason"] = (r.reason or "")[:160]
+    print(json.dumps(out, ensure_ascii=False))
+
+
+MID_AB = {"kind": "midpoint", "args": {"point": "M", "segment": ["A", "B"]}, "quote": "Gọi M là trung điểm của AB."}
+MID_AB_TOP = {"kind": "midpoint", "args": {"point": "M", "segment": ["A'", "B'"]}, "quote": "Gọi M là trung điểm của A'B'."}
+MID_BC_TOP = {"kind": "midpoint", "args": {"point": "N", "segment": ["B'", "C'"]}, "quote": "Gọi N là trung điểm của B'C'."}
+
+# 1. collinear plane points
+run("1a collinear (AMB), point C'", prism(ask=("Tính khoảng cách từ C' đến mặt phẳng (AMB).", {"point": "C'", "plane": ["A", "M", "B"]}), extra=[MID_AB]), "REFUSED (no plane)")
+run("1b (AMBC') 4 pts, first 3 collinear, plane valid, point C", prism(ask=("Tính khoảng cách từ C đến mặt phẳng (AMBC').", {"point": "C", "plane": ["A", "M", "B", "C'"]}), extra=[MID_AB]), "d2=d(C,(ABC'))^2=8^2*12^2/(8^2+12^2)=9216/208=576/13 or typed refusal")
+run("1c (MAC) valid with midpoint, point A'", prism(ask=("Tính khoảng cách từ A' đến mặt phẳng (MAC).", {"point": "A'", "plane": ["M", "A", "C"]}), extra=[MID_AB]), "144")
+run("1d target [A,M,B] but quote says (ABC)", prism(ask=("Tính khoảng cách từ C' đến mặt phẳng (ABC).", {"point": "C'", "plane": ["A", "M", "B"]}), extra=[MID_AB]), "REFUSED (target != quote)")
+# 2. non-coplanar >3
+run("2a (ABCA') non-coplanar in quote+target, point B'", prism(ask=("Tính khoảng cách từ B' đến mặt phẳng (ABCA').", {"point": "B'", "plane": ["A", "B", "C", "A'"]})), "REFUSED NON_COPLANAR")
+run("2b target [A,B,C,A'] quote (ABC), point B'", prism(ask=("Tính khoảng cách từ B' đến mặt phẳng (ABC).", {"point": "B'", "plane": ["A", "B", "C", "A'"]})), "REFUSED (target not a plane / != quote)")
+run("2c (ABC'B') non-coplanar 4 pts, point C", prism(ask=("Tính khoảng cách từ C đến mặt phẳng (ABC'B').", {"point": "C", "plane": ["A", "B", "C'", "B'"]})), "hmm: A,B,C',B' — coplanar? check")
+run("2d (ABB'C') ? point C", prism(ask=("Tính khoảng cách từ C đến mặt phẳng (ABB'C').", {"point": "C", "plane": ["A", "B", "B'", "C'"]})), "A,B,B' span y=0; C'(0,8,12) off => REFUSED")
+run("2e (BCC'B') valid 4, point A", prism(ask=("Tính khoảng cách từ A đến mặt phẳng (BCC'B').", {"point": "A", "plane": ["B", "C", "C'", "B'"]})), "2304/100=576/25")
+run("2f (BCB'A) non-coplanar 4, point C'", prism(ask=("Tính khoảng cách từ C' đến mặt phẳng (BCB'A).", {"point": "C'", "plane": ["B", "C", "B'", "A"]})), "REFUSED NON_COPLANAR")
+# 3. line-line
+L = lambda q, a, b: prism(ask=(q, {"line1": a, "line2": b}))
+run("3a parallel AA', BB'", L("Tính khoảng cách giữa hai đường thẳng AA' và BB'.", ["A", "A'"], ["B", "B'"]), "36 (or typed refusal)")
+run("3b parallel AB, A'B'", L("Tính khoảng cách giữa hai đường thẳng AB và A'B'.", ["A", "B"], ["A'", "B'"]), "144")
+run("3c coincident AA', A'A", L("Tính khoảng cách giữa hai đường thẳng AA' và A'A.", ["A", "A'"], ["A'", "A"]), "0 or typed refusal")
+run("3d intersecting AB, AC", L("Tính khoảng cách giữa hai đường thẳng AB và AC.", ["A", "B"], ["A", "C"]), "0 or typed refusal")
+run("3e intersecting AB', BA'", L("Tính khoảng cách giữa hai đường thẳng AB' và BA'.", ["A", "B'"], ["B", "A'"]), "0 or typed refusal")
+run("3f skew AA', BC", L("Tính khoảng cách giữa hai đường thẳng AA' và BC.", ["A", "A'"], ["B", "C"]), "576/25")
+run("3g skew B'C, AA' swapped", L("Tính khoảng cách giữa hai đường thẳng BC và AA'.", ["B", "C"], ["A", "A'"]), "576/25")
+run("3h degenerate line AA", L("Tính khoảng cách giữa hai đường thẳng AA và BC.", ["A", "A"], ["B", "C"]), "REFUSED")
+run("3i skew A'B, AC (diag)", L("Tính khoảng cách giữa hai đường thẳng A'B và AC.", ["A'", "B"], ["A", "C"]), "A(0,0,0)C(0,8,0); A'(0,0,12)B(6,0,0): d=|AB·(u×v)|/|u×v|, u=(6,0,-12),v=(0,1,0): u×v=(12,0,6), AB=(6,0,0)·=72, |u×v|^2=180 => 5184/180=144/5")
+# 4. wrong types
+run("4a point given as list", prism(ask=("Tính khoảng cách từ A' đến mặt phẳng (ABC).", {"point": ["A", "B", "C"], "plane": ["A", "B", "C"]})), "INVALID_MATH_GOAL")
+run("4b point is a plane-string 'ABC'", prism(ask=("Tính khoảng cách từ A' đến mặt phẳng (ABC).", {"point": "ABC", "plane": ["A", "B", "C"]})), "REFUSED")
+run("4c line of 3 points", L("Tính khoảng cách giữa hai đường thẳng AA' và BC.", ["A", "A'", "B"], ["B", "C"]), "INVALID_MATH_GOAL")
+run("4d xx::A undeclared solid", prism(ask=("Tính khoảng cách từ A' đến mặt phẳng (ABC).", {"point": "xx::A'", "plane": ["A", "B", "C"]})), "UNKNOWN_SOLID_ID")
+run("4e pr::Z unknown vertex", prism(ask=("Tính khoảng cách từ A' đến mặt phẳng (ABC).", {"point": "pr::Z", "plane": ["A", "B", "C"]})), "UNKNOWN_VERTEX_REF")
+run("4f plane element non-string", prism(ask=("Tính khoảng cách từ A' đến mặt phẳng (ABC).", {"point": "A'", "plane": ["A", "B", 3]})), "REFUSED typed")
+run("4g plane as a string 'ABC'", prism(ask=("Tính khoảng cách từ A' đến mặt phẳng (ABC).", {"point": "A'", "plane": "ABC"})), "INVALID_MATH_GOAL")
+run("4h segment as string", prism(ask=("Tính độ dài đoạn thẳng B'C.", {"segment": "B'C"})), "INVALID_MATH_GOAL")
+run("4i segment degenerate [A,A]", prism(ask=("Tính độ dài đoạn thẳng AA.", {"segment": ["A", "A"]})), "REFUSED")
+run("4j target point-line {point,line}", prism(ask=("Tính khoảng cách từ A đến đường thẳng BC.", {"point": "A", "line": ["B", "C"]})), "INVALID_MATH_GOAL (unsupported form)")
+run("4k xx::A in plane", prism(ask=("Tính khoảng cách từ A' đến mặt phẳng (ABC).", {"point": "A'", "plane": ["xx::A", "B", "C"]})), "UNKNOWN_SOLID_ID")
+run("4l point != quote point", prism(ask=("Tính khoảng cách từ A' đến mặt phẳng (ABC).", {"point": "B'", "plane": ["A", "B", "C"]})), "SOURCE_OBJECT_MISMATCH")
+run("4m quote asks segment, target is point-plane", prism(ask=("Tính độ dài đoạn thẳng B'C.", {"point": "A'", "plane": ["A", "B", "C"]})), "REFUSED")
+run("4n target segment but quote asks point-plane", prism(ask=("Tính khoảng cách từ A' đến mặt phẳng (ABC).", {"segment": ["A", "A'"]})), "REFUSED (target != quote)")
+run("4o plane with duplicate labels [A,B,A,C]", prism(ask=("Tính khoảng cách từ A' đến mặt phẳng (ABC).", {"point": "A'", "plane": ["A", "B", "A", "C"]})), "REFUSED or 144")
+run("4p plane [A,A,B] duplicated", prism(ask=("Tính khoảng cách từ C' đến mặt phẳng (ABC).", {"point": "C'", "plane": ["A", "A", "B"]})), "REFUSED")
+# 5. invariance
+run("5a renamed KLM 3,4,5", prism("KLM", 3, 4, 5, ask=("Tính khoảng cách từ K' đến mặt phẳng (KLM).", {"point": "K'", "plane": ["K", "L", "M"]})), "25")
+run("5b scale x2", prism(x=12, y=16, h=24, ask=("Tính khoảng cách từ A đến mặt phẳng (BCC'B').", {"point": "A", "plane": ["B", "C", "C'", "B'"]})), "4*576/25=2304/25")
+run("5c plane order [B',C',C,B]", prism(ask=("Tính khoảng cách từ A đến mặt phẳng (BCC'B').", {"point": "A", "plane": ["B'", "C'", "C", "B"]})), "576/25")
+run("5d segment reversed [C,B']", prism(ask=("Tính độ dài đoạn thẳng B'C.", {"segment": ["C", "B'"]})), "244")
+run("5e midpoint M of A'B' to (BCC'B')", prism(ask=("Tính khoảng cách từ M đến mặt phẳng (BCC'B').", {"point": "M", "plane": ["B", "C", "C'", "B'"]}), extra=[MID_AB_TOP]), "144/25")
+run("5f midpoint N of B'C' to (ABB'A')", prism(ask=("Tính khoảng cách từ N đến mặt phẳng (ABB'A').", {"point": "N", "plane": ["A", "B", "B'", "A'"]}), extra=[MID_BC_TOP]), "16")
+run("5g midpoint M of A'B' to (ABC)", prism(ask=("Tính khoảng cách từ M đến mặt phẳng (ABC).", {"point": "M", "plane": ["A", "B", "C"]}), extra=[MID_AB_TOP]), "144")
+run("5h segment CM (M mid A'B')", prism(ask=("Tính độ dài đoạn thẳng CM.", {"segment": ["C", "M"]}), extra=[MID_AB_TOP]), "C(0,8,0) M(3,0,12): 9+64+144=217")
+run("5i lines CM, AA'", L("x", [], []) if False else prism(ask=("Tính khoảng cách giữa hai đường thẳng CM và AA'.", {"line1": ["C", "M"], "line2": ["A", "A'"]}), extra=[MID_AB_TOP]), "CM dir (3,-8,12), AA' dir (0,0,1): n=(-8,-3,0)/sqrt73; AC=(0,8,0)·n=-24 => 576/73")
+run("5j renamed labels, qualified, point B to (ACC'A')", prism("DEF", ask=("Tính khoảng cách từ E đến mặt phẳng (DFF'D').", {"point": "pr::E", "plane": ["D", "F", "F'", "pr::D'"]})), "36")
+# 6. underdetermined / contradictory
+p = prism(ask=("Tính khoảng cách từ A đến mặt phẳng (BCC'B').", {"point": "A", "plane": ["B", "C", "C'", "B'"]}))
+p6 = deepcopy(p); p6["premises"] = [x for x in p6["premises"] if not (x["kind"] == "segment_length" and x["args"]["segment"] == ["A", "C"])]; p6["problem_text"] = p6["problem_text"].replace("AC = 8.", "")
+run("6a missing AC", p6, "MISSING_DIMENSION")
+p6 = deepcopy(p); p6["premises"] = [x for x in p6["premises"] if x["kind"] != "right_angle"]; p6["problem_text"] = p6["problem_text"].replace("Đáy ABC là tam giác vuông tại A.", "")
+run("6b missing right angle", p6, "MISSING_DIMENSION")
+p6 = deepcopy(p); p6["premises"].append({"kind": "segment_length", "args": {"segment": ["B", "C"], "value": "11"}, "quote": "BC = 11."}); p6["problem_text"] += " BC = 11."
+run("6c contradictory BC=11 (should be 10)", p6, "INCONSISTENT_FACTS")
+p6 = deepcopy(p); p6["premises"].append({"kind": "segment_length", "args": {"segment": ["B", "C"], "value": "10"}, "quote": "BC = 10."}); p6["problem_text"] += " BC = 10."
+run("6d consistent redundant BC=10", p6, "576/25")
+p6 = deepcopy(p); p6["premises"] = [x for x in p6["premises"] if not (x["kind"] == "segment_length" and x["args"]["segment"] == ["A", "C"])]; p6["problem_text"] = p6["problem_text"].replace("AC = 8.", "BC = 10."); p6["premises"].append({"kind": "segment_length", "args": {"segment": ["B", "C"], "value": "10"}, "quote": "BC = 10."})
+run("6e determined via hypotenuse (AB=6, BC=10)", p6, "576/25 or MISSING_DIMENSION")
+p6 = deepcopy(p); p6["premises"] = [x for x in p6["premises"] if not (x["kind"] == "segment_length" and x["args"]["segment"] == ["A", "C"])]; p6["problem_text"] = p6["problem_text"].replace("AC = 8.", "BC = 5."); p6["premises"].append({"kind": "segment_length", "args": {"segment": ["B", "C"], "value": "5"}, "quote": "BC = 5."})
+run("6f impossible hypotenuse BC=5 < AB=6", p6, "INCONSISTENT/refused")
+p6 = deepcopy(p); p6["premises"] = [x for x in p6["premises"] if not (x["kind"] == "segment_length" and x["args"]["segment"] == ["A", "A'"])]; p6["problem_text"] = p6["problem_text"].replace("AA' = 12.", "")
+run("6g missing height but distance A->(BCC'B') is height-independent", p6, "576/25 (math) or MISSING_DIMENSION (layout)")
+p6 = deepcopy(p); p6["premises"].append({"kind": "segment_length", "args": {"segment": ["A", "C"], "value": "9"}, "quote": "AC = 9."}); p6["problem_text"] += " AC = 9."
+run("6h contradictory AC=8 and AC=9", p6, "INCONSISTENT_FACTS")
+p6 = deepcopy(p); p6["premises"].append({"kind": "segment_length", "args": {"segment": ["B", "C'"], "value": "1"}, "quote": "BC' = 1."}); p6["problem_text"] += " BC' = 1."
+run("6i contradictory diagonal BC'=1", p6, "INCONSISTENT_FACTS")
+# two goals: duplicate goal id etc not needed

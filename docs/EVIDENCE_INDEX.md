@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = VISUAL_B3_SPHERE_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/visual-b3-sphere-integration/FINAL_OWNER_HANDOFF.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/visual-b3-sphere-integration/
+CLASSIFICATION = LOCAL integrated candidate on integration/visual-b3-sphere-candidate (NOT merged, not pushed; main 9978e512 unchanged): visual closure + B3 distance bridge (exact distinct operands after separate-context review I-1/M-1/M-2) + ellipse rim band fix + PROPOSED role-aware section oracle (not adopted; official suite stays 7/8) + B3 /4 distance browser acceptance (offline authored) + sphere/cylinder samples with source-only data + curved-section cutting plane CONSTRUCT_CUTTING_OBJECT + radius-declared curved solid names. Separate-context AI review only (NOT independent); human visual approval PENDING; Hybrid production NO-GO
+CODE_COMMIT = 9ced3d2737e7782995d0ad0411b9c332683e4985 (product); candidate ddb1a4be; measured_system ee474c819688426f8959daf2129f0273eb3217f039909b8ad9cade0ed740ae9d (118 files); BUMP 128 -> 129 (docs/evaluation/geometry/runs/sphere-sample-source-authority/cache/decision.json + docs/evaluation/geometry/runs/visual-b3-sphere-integration/cache/decision-addendum.json); Full T3 target ddb1a4be; browser evidence at 63faa5af
+VERIFICATION = docs/evaluation/geometry/runs/visual-b3-sphere-integration/verification/full-t3/integration-ddb1a4be/receipt.json (FULL_PRODUCT_GATE_PASS; earlier candidates and the FAIL at 301692c8 kept beside it); docs/evaluation/geometry/runs/visual-b3-sphere-integration/visual/official-run-63faa5af/BROWSER_EVIDENCE.json (7/8, cross_section only locked role-hue gate); docs/evaluation/geometry/runs/visual-b3-sphere-integration/verification/b3-browser/receipt.json (10/10); docs/evaluation/geometry/runs/visual-b3-sphere-integration/verification/role-aware-probe/receipt.json (6/6 baseline, 30/30 faults); docs/evaluation/geometry/runs/visual-b3-sphere-integration/verification/sphere-capture/receipt.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_B3_V2_DISTANCE_BRIDGE (candidate identity; bridge operands); VISUAL_CLOSURE_HYBRID_READINESS via the sphere line (P3 sphere sample now fixed); historical artifact bytes unchanged
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_B3_V2_DISTANCE_BRIDGE
 
 REPORT = docs/evaluation/geometry/runs/hybrid-b3-v2-distance-bridge/FINAL_OWNER_HANDOFF.md
@@ -9,7 +20,7 @@ CODE_COMMIT = 3524bec8945c451655e92d77aba3016a9c6065cc (product, backend geometr
 VERIFICATION = docs/evaluation/geometry/runs/hybrid-b3-v2-distance-bridge/verification/full-t3/receipt.json (FULL_PRODUCT_GATE_PASS); backend/tests/geometry/test_typed_fact_next_v2_distance_bridge.py
 MODEL_REQUEST_COUNT = 0
 CORRECTS = VISUAL_CLOSURE_HYBRID_READINESS (candidate identity; B3 status SPECIFIED → slice implemented); historical artifact bytes unchanged
-CORRECTED_BY = NONE
+CORRECTED_BY = VISUAL_B3_SPHERE_INTEGRATION (docs/evaluation/geometry/runs/visual-b3-sphere-integration/candidate_divergence.json)
 
 ## WAVE_ID = VISUAL_CLOSURE_HYBRID_READINESS
 

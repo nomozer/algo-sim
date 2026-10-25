@@ -1,0 +1,7 @@
+import sys
+sys.path.insert(0, r"C:/Users/Bunny/AppData/Local/Temp/claude/d--Documents-projects-algo-sim/9b8a0ef4-8ee8-41e6-a541-89ef55bd032b/scratchpad/review")
+from probe_b3_lib import prism, run
+L = lambda q, a, b: prism(ask=(q, {"line1": a, "line2": b}))
+run("6j source says 'chéo nhau' but AB, AC intersect", L("Tính khoảng cách giữa hai đường thẳng chéo nhau AB và AC.", ["A", "B"], ["A", "C"]), "INCONSISTENT / refuse (premise false)")
+run("6k source says 'chéo nhau' but AA', BB' parallel", L("Tính khoảng cách giữa hai đường thẳng chéo nhau AA' và BB'.", ["A", "A'"], ["B", "B'"]), "INCONSISTENT / refuse")
+run("6l point on plane A to (ABC)", prism(ask=("Tính khoảng cách từ A đến mặt phẳng (ABC).", {"point": "A", "plane": ["A", "B", "C"]})), "0")

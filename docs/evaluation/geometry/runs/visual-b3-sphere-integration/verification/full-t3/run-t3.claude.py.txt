@@ -1,0 +1,31 @@
+import hashlib,json,os,re,subprocess,time,sys
+from datetime import datetime,timezone
+from pathlib import Path
+ROOT=Path(__file__).resolve().parent.parent
+OUT=ROOT/'.superpowers/closure'/ (sys.argv[1] if len(sys.argv)>1 else 't3-final')
+OUT.mkdir(parents=True,exist_ok=False)
+git=lambda *args: subprocess.check_output(['git',*args],cwd=ROOT,text=True).strip()
+before=git('status','--porcelain'); assert not before
+head=git('rev-parse','HEAD')
+env={**os.environ,'ALLOW_LIVE_AI':'0','PYTHONUTF8':'1','PYTHONIOENCODING':'utf-8',
+     'ALGO_SIM_PYTHON':'D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe',
+     'PYTEST_ADDOPTS':os.environ.get('ALGO_T3_PYTEST_ADDOPTS','-vv --basetemp=D:/tmp/algo-t3/bt-ddb1a4be')}
+start=datetime.now(timezone.utc).isoformat(); t=time.monotonic()
+with (OUT/'stdout.log').open('wb') as stdout,(OUT/'stderr.log').open('wb') as stderr:
+    p=subprocess.Popen(['node','frontend/scripts/full-gate.mjs'],cwd=ROOT,env=env,stdout=stdout,stderr=stderr)
+    (OUT/'running.json').write_text(json.dumps({'pid':p.pid,'head':head,'start':start}))
+    code=p.wait()
+verify=subprocess.run([env['ALGO_SIM_PYTHON'],'backend/scripts/freeze_evaluation_candidate.py','--verify'],cwd=ROOT,env=env,capture_output=True,text=True)
+out=(OUT/'stdout.log').read_text(encoding='utf-8',errors='replace')
+receipt={'schema':'closure-t3/1','target':head,'source_tree_before':before,'source_tree_after':git('status','--porcelain'),
+ 'started_utc':start,'finished_utc':datetime.now(timezone.utc).isoformat(),'seconds':round(time.monotonic()-t,3),
+ 'exit_code':code,'verdict':'FULL_PRODUCT_GATE_PASS' if code==0 else 'FULL_PRODUCT_GATE_FAIL',
+ 'summaries':[line for line in out.splitlines() if re.search(r'\d+ passed|Test Files|Tests\s+|FULL_PRODUCT_GATE|^FAILED ',line)],
+ 'post_freeze':{'exit_code':verify.returncode,'stdout':verify.stdout.strip()},
+ 'streams':{name:{'bytes':(OUT/name).stat().st_size,'sha256':hashlib.sha256((OUT/name).read_bytes()).hexdigest()} for name in ['stdout.log','stderr.log']},
+ 'provider_calls':0,'executor':'Claude takeover runner (copy of Codex run-t3.py, basetemp/executor changed); machine verification, not independent review',
+ 'execution_context':os.environ.get('ALGO_T3_EXECUTION_CONTEXT','restricted sandbox'),
+ 'detached_head':subprocess.run(['git','symbolic-ref','-q','HEAD'],cwd=ROOT,capture_output=True,env=env).returncode!=0}
+(OUT/'receipt.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+print(json.dumps(receipt,ensure_ascii=False,indent=2))
+raise SystemExit(code)

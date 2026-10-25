@@ -1,0 +1,45 @@
+{
+  "schema": "closure-t3/1",
+  "target": "301692c86c7ff6ecf254e1fd7876e7e965d6a14a",
+  "source_tree_before": "",
+  "source_tree_after": "",
+  "started_utc": "2026-10-25T05:06:55.074405+00:00",
+  "finished_utc": "2026-10-25T05:16:32.150715+00:00",
+  "seconds": 577.078,
+  "exit_code": 1,
+  "verdict": "FULL_PRODUCT_GATE_FAIL",
+  "summaries": [
+    "FAILED tests/geometry/test_analyze_failure_cluster_diagnosis.py::test_tien_kiem_kho",
+    "FAILED tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[main]",
+    "FAILED tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[feat/rectangular-base-pyramid-compiler]",
+    "FAILED tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[arbitrary-feature-branch-xyz]",
+    "FAILED tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[hotfix/test-isolation-123]",
+    "FAILED tests/geometry/test_branch_independent_harness.py::test_precheck_accepts_detached_head[precheck]",
+    "FAILED tests/geometry/test_docs_test_telemetry.py::test_inv_05_candidate_and_cache_verify_only",
+    "FAILED tests/semantic_program/test_point_initialization_contract.py::test_CA2_bam_danh_tinh_KHAC_truong_cache_so_sanh",
+    "FAILED tests/test_cache_identity.py::test_khoa_gan_dung_CACHE_VERSION_voi_moi_truong_sinh",
+    "FAILED tests/test_cache_identity.py::test_script_verify_dong_y_voi_test - Ass...",
+    "= 10 failed, 11867 passed, 1 skipped, 2 deselected, 15 xfailed, 1 warning in 545.83s (0:09:05) =",
+    " Test Files  80 passed (80)",
+    "      Tests  1357 passed (1357)",
+    "FULL_PRODUCT_GATE_FAIL — không cổng con nào được bỏ qua."
+  ],
+  "post_freeze": {
+    "exit_code": 0,
+    "stdout": "Candidate khá»›p báº£n Ä‘Ã£ Ä‘Ã³ng bÄƒng (mÃ£ sáº£n pháº©m: 118 file, 5e353be2889fb1feâ€¦)."
+  },
+  "streams": {
+    "stdout.log": {
+      "bytes": 1574254,
+      "sha256": "19d5f8f77966aad690f1beb47e0eb96b1e2e80947fbe397e4be172d9553221e4"
+    },
+    "stderr.log": {
+      "bytes": 342,
+      "sha256": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a"
+    }
+  },
+  "provider_calls": 0,
+  "executor": "Claude takeover runner (copy of Codex run-t3.py, basetemp/executor changed); machine verification, not independent review",
+  "execution_context": "Claude; Bunny user, clean detached linked worktree at 301692c8, node_modules junction to root install, no ACL changes, ALLOW_LIVE_AI=0",
+  "detached_head": true
+}

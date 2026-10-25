@@ -1,0 +1,60 @@
+// Adversarial synthetic frames against the PROPOSED role-aware section oracle. Read-only; no browser.
+const mod = await import("file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/b3-dist/frontend/scripts/section-role-oracle.mjs");
+const { assessSectionRole, sectionBoundaryWorld } = mod;
+
+const TERRACOTTA = [200, 90, 50], COBALT = [37, 99, 235], BG = [245, 244, 240], GREY = [150, 150, 150];
+const W = 300, H = 220;
+const poly = [{ x: 40, y: 40 }, { x: 160, y: 40 }, { x: 160, y: 120 }, { x: 40, y: 120 }];
+const edges = poly.map((a, i) => ({ a, b: poly[(i + 1) % 4], hidden: false }));
+
+function img() {
+  const rgba = new Uint8Array(W * H * 4);
+  const put = (x, y, c) => { if (x < 0 || y < 0 || x >= W || y >= H) return; rgba.set([...c, 255], (y * W + x) * 4); };
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) put(x, y, BG);
+  const rect = (x0, y0, x1, y1, c) => { for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) put(x, y, c); };
+  const line = (a, b, c, t0 = 0, t1 = 1, w = 1) => { for (let t = t0; t <= t1; t += 0.002) { const x = Math.round(a.x + (b.x - a.x) * t), y = Math.round(a.y + (b.y - a.y) * t); for (let d = -w; d <= w; d++) { put(x + d, y, c); put(x, y + d, c); } } };
+  return { w: W, h: H, rgba, put, rect, line };
+}
+const run = (name, im, extra = {}) => {
+  const r = assessSectionRole(im, { scale: 1, box: { w: W, h: H }, overlays: [], edges, ...extra });
+  console.log(JSON.stringify({ name, pass: r.pass, reasons: r.reasons, blue: r.blue, cov: r.edges.map((e) => e.coverage) }));
+};
+
+// A. second (wrong) section ALSO highlighted cobalt, smaller polygon elsewhere
+{ const im = img(); im.rect(41, 41, 160, 120, TERRACOTTA); edges.forEach((e) => im.line(e.a, e.b, COBALT));
+  const p2 = [{ x: 200, y: 140 }, { x: 260, y: 140 }, { x: 260, y: 190 }, { x: 200, y: 190 }];
+  im.rect(201, 141, 260, 190, TERRACOTTA); p2.forEach((a, i) => im.line(a, p2[(i + 1) % 4], COBALT));
+  run("A second section boundary also cobalt (wrong extra highlight)", im); }
+// B. a quarter of one front edge missing cobalt (drawn terracotta there)
+{ const im = img(); im.rect(41, 41, 160, 120, TERRACOTTA); edges.forEach((e, i) => i === 0 ? (im.line(e.a, e.b, COBALT, 0, 0.35), im.line(e.a, e.b, COBALT, 0.6, 1)) : im.line(e.a, e.b, COBALT));
+  run("B 25% gap on edge 0", im); }
+// C. half the boundary hidden under DOM overlays, the uncovered half cobalt, the covered half not drawn
+{ const im = img(); im.rect(41, 41, 160, 120, TERRACOTTA); edges.forEach((e, i) => { if (i < 2) im.line(e.a, e.b, COBALT); });
+  run("C two edges under overlay, never drawn", im, { overlays: [{ x: 0, y: 115, w: 300, h: 20 }, { x: 30, y: 0, w: 15, h: 220 }] }); }
+// D. boundary cobalt drawn offset 2px outside the true edge (wrong geometry within window)
+{ const im = img(); im.rect(41, 41, 160, 120, TERRACOTTA); const off = [{ x: 38, y: 38 }, { x: 162, y: 38 }, { x: 162, y: 122 }, { x: 38, y: 122 }]; off.forEach((a, i) => im.line(a, off[(i + 1) % 4], COBALT));
+  run("D boundary offset by 2px", im); }
+// E. boundary offset 5px (clearly wrong)
+{ const im = img(); im.rect(41, 41, 160, 120, TERRACOTTA); const off = [{ x: 35, y: 35 }, { x: 165, y: 35 }, { x: 165, y: 125 }, { x: 35, y: 125 }]; off.forEach((a, i) => im.line(a, off[(i + 1) % 4], COBALT));
+  run("E boundary offset by 5px", im); }
+// F. fill only 55% terracotta (rest grey) — half the fill wrong
+{ const im = img(); im.rect(41, 41, 160, 120, TERRACOTTA); im.rect(41, 41, 85, 120, GREY); edges.forEach((e) => im.line(e.a, e.b, COBALT));
+  run("F ~35% of fill grey", im); }
+// G. fill entirely missing (background), boundary cobalt
+{ const im = img(); edges.forEach((e) => im.line(e.a, e.b, COBALT)); run("G no fill", im); }
+// H. sparse cobalt dashes on every front edge (dashed front boundary, i.e. drawn as hidden)
+{ const im = img(); im.rect(41, 41, 160, 120, TERRACOTTA); edges.forEach((e) => { for (let t = 0; t < 1; t += 0.1) im.line(e.a, e.b, COBALT, t, t + 0.05); });
+  run("H front edges dashed 50%", im); }
+
+// I. hidden classification for a section on a CONE: compare to true surface normal visibility
+{ const scene = { objects: [
+  { id: "non", type: "curved_solid", curved_kind: "cone", anchor: ["0", "0", "0"], apex_or_top: ["0", "0", "4"] },
+  { id: "C", type: "circle3", center: ["0", "0", "2"], normal: ["0", "0", "1"], radius_sq: "1", depends: ["non"] }] };
+  // base radius R=2 at z=0, apex z=4 ⇒ section circle radius 1 at z=2. Eye above, near the axis.
+  const eye = [3, 0, 9];
+  const segs = sectionBoundaryWorld(scene, "C", eye);
+  // true outward normal of cone lateral surface at p=(x,y,2): radial*h + axis*R ⇒ (x*4/1... ) use (cos, sin, R/h)= (cos,sin,0.5)
+  let mismatch = 0;
+  for (const s of segs) { const m = s.a.map((x, i) => (x + s.b[i]) / 2); const r = Math.hypot(m[0], m[1]); const nrm = [m[0] / r, m[1] / r, 0.5];
+    const vis = nrm[0] * (eye[0] - m[0]) + nrm[1] * (eye[1] - m[1]) + nrm[2] * (eye[2] - m[2]) > 0; if (vis === s.hidden) mismatch++; }
+  console.log(JSON.stringify({ name: "I cone section hidden flags vs true surface visibility", segments: segs.length, hidden_flags: segs.filter((s) => s.hidden).length, misclassified: mismatch })); }

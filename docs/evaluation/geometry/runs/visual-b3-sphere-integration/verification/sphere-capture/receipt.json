@@ -1,0 +1,158 @@
+{
+  "provider_calls": 0,
+  "rows": [
+    {
+      "id": "cau-cat-mat-phang",
+      "width": 1440,
+      "images": [
+        {
+          "state": "final-mode-a",
+          "file": "cau-cat-mat-phang-1440-final-mode-a.png",
+          "sha256": "8de2f3070bca396740e173d32ceb832449d3cc69a4fd93e8aa70c8ec0bd55be8"
+        },
+        {
+          "state": "analysis-open",
+          "file": "cau-cat-mat-phang-1440-analysis-open.png",
+          "sha256": "1e7de8e366a22db06d3fd5e2f45c92880a5a948a72cb662563a991e3361b6d5f"
+        },
+        {
+          "state": "click-lower-sphere",
+          "file": "cau-cat-mat-phang-1440-click-lower-sphere.png",
+          "sha256": "9964b09c967dcc3e42e1d15a6f892b5b6d1d45fe604942e19cc83561cca11799"
+        },
+        {
+          "state": "auxiliary-on",
+          "file": "cau-cat-mat-phang-1440-auxiliary-on.png",
+          "sha256": "f0acf1fb39cd99b2de1975f59d9158a4af817b9fac58d0218e56220860932172"
+        }
+      ],
+      "canvas_labels": [
+        "I"
+      ],
+      "mode_a_text_has_answer": true,
+      "suspicious_text": [],
+      "selected_after_click": "cau:ball",
+      "inspector_suspicious": [],
+      "canvas_labels_aux": [
+        "I"
+      ]
+    },
+    {
+      "id": "tru-thiet-dien-tron",
+      "width": 1440,
+      "images": [
+        {
+          "state": "final-mode-a",
+          "file": "tru-thiet-dien-tron-1440-final-mode-a.png",
+          "sha256": "473aeed2b36db625fc03c5384720ca03cf02dac8c4397c086551576b3ff041c3"
+        },
+        {
+          "state": "analysis-open",
+          "file": "tru-thiet-dien-tron-1440-analysis-open.png",
+          "sha256": "d3d233b7901f5ce16bb016a39109afdec668769e7d013d98b249ff975543d86f"
+        },
+        {
+          "state": "click-lower-sphere",
+          "file": "tru-thiet-dien-tron-1440-click-lower-sphere.png",
+          "sha256": "67f9d40b9fe23713508bf3f80a44f4cde4b920d3416dacd92678ff64142ee599"
+        },
+        {
+          "state": "auxiliary-on",
+          "file": "tru-thiet-dien-tron-1440-auxiliary-on.png",
+          "sha256": "a3d28ae7e120600f2611f7cbbfddac42413d82e90296282873f9ec670fad91ce"
+        }
+      ],
+      "canvas_labels": [
+        "O",
+        "O′",
+        "M"
+      ],
+      "mode_a_text_has_answer": false,
+      "suspicious_text": [],
+      "selected_after_click": "P",
+      "inspector_suspicious": [],
+      "canvas_labels_aux": [
+        "O",
+        "O′",
+        "M"
+      ]
+    },
+    {
+      "id": "cau-cat-mat-phang",
+      "width": 390,
+      "images": [
+        {
+          "state": "final-mode-a",
+          "file": "cau-cat-mat-phang-390-final-mode-a.png",
+          "sha256": "34d061d265d2f467ca463a109226d9d007a85f162c4f839a505a14eaacc70d98"
+        },
+        {
+          "state": "analysis-open",
+          "file": "cau-cat-mat-phang-390-analysis-open.png",
+          "sha256": "3e45c940f60725ba3cccec1f32d407d197a1a391b1ce36fbbd705ab203777ec9"
+        },
+        {
+          "state": "click-lower-sphere",
+          "file": "cau-cat-mat-phang-390-click-lower-sphere.png",
+          "sha256": "76735ffce8cf77acc11bc2f99250098531f6e6d6f35cc3cb480319bab5ed75bb"
+        },
+        {
+          "state": "auxiliary-on",
+          "file": "cau-cat-mat-phang-390-auxiliary-on.png",
+          "sha256": "550007a100f303e04abaf1bd6efa22797b53c25982aa5f32455fa7da29bb8f5d"
+        }
+      ],
+      "canvas_labels": [
+        "I"
+      ],
+      "mode_a_text_has_answer": true,
+      "suspicious_text": [],
+      "selected_after_click": "cau:ball",
+      "inspector_suspicious": [],
+      "canvas_labels_aux": [
+        "I"
+      ]
+    },
+    {
+      "id": "tru-thiet-dien-tron",
+      "width": 390,
+      "images": [
+        {
+          "state": "final-mode-a",
+          "file": "tru-thiet-dien-tron-390-final-mode-a.png",
+          "sha256": "42b00ac41971022df45ab5bd21e99570389ee7463b9ef8b6df8c2b37b00e5923"
+        },
+        {
+          "state": "analysis-open",
+          "file": "tru-thiet-dien-tron-390-analysis-open.png",
+          "sha256": "514073649d9ffa35d9cd56e00c50a7a9321527a173010f92eee7d02464b2c4c0"
+        },
+        {
+          "state": "click-lower-sphere",
+          "file": "tru-thiet-dien-tron-390-click-lower-sphere.png",
+          "sha256": "7a0e7a2977b60991bcced4831364fd1cabe150c951766739894a700564e7ed90"
+        },
+        {
+          "state": "auxiliary-on",
+          "file": "tru-thiet-dien-tron-390-auxiliary-on.png",
+          "sha256": "1812021075ff99a5d6f964f93a4d76d8b005a45fb5ea94a6297a08135268e468"
+        }
+      ],
+      "canvas_labels": [
+        "O",
+        "O′",
+        "M"
+      ],
+      "mode_a_text_has_answer": false,
+      "suspicious_text": [],
+      "selected_after_click": "tru:cylinder",
+      "inspector_suspicious": [],
+      "canvas_labels_aux": [
+        "O",
+        "O′",
+        "M"
+      ]
+    }
+  ],
+  "errors": []
+}

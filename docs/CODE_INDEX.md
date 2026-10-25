@@ -1,5 +1,10 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Sphere source authority + integration — local, 2026-10-25
+
+Runs `docs/evaluation/geometry/runs/sphere-sample-source-authority/` and `docs/evaluation/geometry/runs/visual-b3-sphere-integration/`.
+`backend/app/simulation/semantic_program/formation.py` `_vai_cua` collector: a plane that is a source of an `intersect_plane_curved*` result is `CONSTRUCT_CUTTING_OBJECT` (as for polyhedral sections). `backend/app/simulation/semantic_program/display_names.py` `_CACH_GOI_DAI_LUONG`: curved solids declared by a radius/height quantity are named by their point sources only. `backend/scripts/build_geometry_samples.py` `DU_KIEN`: InputFacts of the offline samples (source-given scalars). Oracle layer `docs/evaluation/geometry/runs/sphere-sample-source-authority/oracle_scalar_radius.py` over the hash-locked step-math oracle. Locked by `backend/tests/geometry/test_sphere_sample_source_authority.py`, `backend/tests/test_cache_curved_cutting_plane_invalidation.py`, `frontend/src/simulations/domains/geometry/scene3d-auxiliary.test.ts` › "mặt phẳng cắt khối cong".
+
 ## F2 role-aware oracle proposal + B3 distance browser acceptance — local, 2026-10-25
 
 Runs `docs/evaluation/geometry/runs/f2-role-aware-oracle/` and `docs/evaluation/geometry/runs/b3-distance-browser-e2e/`.

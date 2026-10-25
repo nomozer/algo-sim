@@ -1,0 +1,16 @@
+const { assessSectionRole } = await import("file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/b3-dist/frontend/scripts/section-role-oracle.mjs");
+const W = 200, H = 160, BG = [245, 244, 240];
+const poly = [{ x: 40, y: 40 }, { x: 160, y: 40 }, { x: 160, y: 120 }, { x: 40, y: 120 }];
+const edges = poly.map((a, i) => ({ a, b: poly[(i + 1) % 4], hidden: false }));
+const hex = (h) => [(h >> 16) & 255, (h >> 8) & 255, h & 255];
+for (const [name, fill, line] of [["policy #C85A32 fill / #2563EB rim", 0xc85a32, 0x2563eb],
+  ["WRONG: trung_gian #FB923C fill / dich #0075DE rim", 0xfb923c, 0x0075de],
+  ["WRONG: du_kien_so #C2410C fill / dich #0075DE rim", 0xc2410c, 0x0075de]]) {
+  const rgba = new Uint8Array(W * H * 4);
+  const put = (x, y, c) => { if (x < 0 || y < 0 || x >= W || y >= H) return; rgba.set([...c, 255], (y * W + x) * 4); };
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) put(x, y, BG);
+  for (let y = 41; y < 120; y++) for (let x = 41; x < 160; x++) put(x, y, hex(fill));
+  edges.forEach((e) => { for (let t = 0; t <= 1; t += 0.002) { const x = Math.round(e.a.x + (e.b.x - e.a.x) * t), y = Math.round(e.a.y + (e.b.y - e.a.y) * t); for (let d = -1; d <= 1; d++) { put(x + d, y, hex(line)); put(x, y + d, hex(line)); } } });
+  const r = assessSectionRole({ w: W, h: H, rgba }, { scale: 1, box: { w: W, h: H }, overlays: [], edges });
+  console.log(JSON.stringify({ name, pass: r.pass, reasons: r.reasons }));
+}

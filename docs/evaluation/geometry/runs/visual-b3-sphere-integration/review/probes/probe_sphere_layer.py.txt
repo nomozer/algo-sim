@@ -1,0 +1,27 @@
+import json, sys
+from copy import deepcopy
+from pathlib import Path
+ROOT = Path("D:/Documents/projects/algo-sim/.superpowers/worktrees/sphere-src")
+sys.path.insert(0, str(ROOT / "docs/evaluation/geometry/runs/sphere-sample-source-authority"))
+import oracle_scalar_radius as L
+samples = json.loads((ROOT / "frontend/src/data/geometry-samples.json").read_text(encoding="utf-8"))["samples"]
+sc0 = next(s for s in samples if s["id"] == "cau-cat-mat-phang")["envelope"]["scene3d"]
+ob = lambda sc, i: next(o for o in sc["objects"] if o["id"] == i)
+print("baseline", L.verify_scene_mathematics(sc0, scene_id="b").verdict)
+# consistent but wrong vs source text (R=6 everywhere)
+sc = deepcopy(sc0); ob(sc, "R")["value"] = "6"; ob(sc, "cau")["radius_sq"] = "36"; ob(sc, "C")["radius_sq"] = "27"
+for k in ("r", "S"):
+    print(k, ob(sc, k).get("value"), ob(sc, k).get("formula"))
+rep = L.verify_scene_mathematics(sc, scene_id="consistent_wrong")
+print("R=6,radius_sq=36,C=27 (r,S unchanged)", rep.verdict, rep.errors[:3])
+ob(sc, "r")["value"] = "3√3"; ob(sc, "S")["value"] = "27π"
+rep = L.verify_scene_mathematics(sc, scene_id="consistent_wrong2")
+print("fully consistent R=6 world", rep.verdict, rep.errors[:3])
+print("problem text in scene?", [k for k in sc0 if "text" in k.lower() or "problem" in k.lower()])
+print("R obj", {k: ob(sc0, "R").get(k) for k in ("label", "value", "origin", "provenance", "source_fact_id", "display_group")})
+sc = deepcopy(sc0); ob(sc, "R")["value"] = "6"; ob(sc, "R")["exact"] = {"kind": "rational", "value": "6"}
+ob(sc, "cau")["radius_sq"] = "36"; ob(sc, "C")["radius_sq"] = "27"
+ob(sc, "r")["exact"] = {"kind": "radical", "coefficient": "3", "radicand": 3}; ob(sc, "r")["value"] = "3√3"
+ob(sc, "S")["exact"] = {"kind": "radical", "coefficient": "27", "radicand": 1, "pi": 1}; ob(sc, "S")["value"] = "27π"
+rep = L.verify_scene_mathematics(sc, scene_id="consistent_wrong3")
+print("fully consistent R=6 world (exact fields)", rep.verdict, rep.errors[:3])

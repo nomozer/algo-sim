@@ -1,0 +1,65 @@
+# -*- coding: utf-8 -*-
+"""Read-only offline probe of the B3 distance bridge. Run from b3-dist/backend with PYTHONPATH=."""
+from __future__ import annotations
+
+import json
+from copy import deepcopy
+from fractions import Fraction as F
+from math import isqrt
+
+from app.ai.adapter4_route import run_typed_fact_next_v2_route
+
+
+def prism(labels="ABC", x=6, y=8, h=12, oblique=False, ask=None, extra=()):
+    a, b, c = labels
+    base, top = list(labels), [v + "'" for v in labels]
+    name = labels + "." + "".join(top)
+    solid = f"Cho lăng trụ {'' if oblique else 'đứng '}{name}."
+    shape = f"Đáy {labels} là tam giác vuông tại {a}."
+    qs = [solid, shape, f"{a}{b} = {x}.", f"{a}{c} = {y}."]
+    premises = [{"kind": "right_angle", "args": {"vertex": a, "rays": [b, c]}, "quote": shape},
+                {"kind": "segment_length", "args": {"segment": [a, b], "value": str(x)}, "quote": qs[2]},
+                {"kind": "segment_length", "args": {"segment": [a, c], "value": str(y)}, "quote": qs[3]}]
+    q = f"{a}{a}' = {h}."
+    premises += [{"kind": "right_prism", "args": {"base": base, "top": top}, "quote": solid},
+                 {"kind": "segment_length", "args": {"segment": [a, a + "'"], "value": str(h)}, "quote": q}]
+    qs.append(q)
+    for prem in extra:
+        premises.append(prem)
+        qs.append(prem["quote"])
+    quote, target = ask
+    qs.append(quote)
+    return {"schema_version": "typed-fact-next/2", "problem_text": " ".join(qs), "length_unit": "1",
+            "solids": [{"solid_id": "pr", "solid_type": "prism", "notation": name, "quote": solid}],
+            "premises": premises,
+            "simulation_goals": [{"goal_id": "draw", "kind": "construct_object", "target_solid_id": "pr", "quote": solid}],
+            "math_goals": [{"goal_id": "q", "kind": "measurement", "goal_type": "distance", "target": target,
+                            "quote": quote}]}
+
+
+def sq(r):
+    v = r.exec_result.final_memory["kq_q"]
+    return F(v.he) ** 2 * v.can if hasattr(v, "can") else F(v) ** 2
+
+
+def run(name, p, expect):
+    try:
+        r = run_typed_fact_next_v2_route(p)
+    except Exception as e:  # noqa
+        print(json.dumps({"case": name, "RAISED": repr(e)}, ensure_ascii=False))
+        return
+    out = {"case": name, "expect": expect, "status": r.status, "code": r.code}
+    if r.status == "SERVED":
+        out["d2"] = str(sq(r))
+        prov = [x for x in r.route_d.get("source_provenance", []) if x.get("id") == "q"] if "source_provenance" in r.route_d else None
+        try:
+            from app.ai.adapter4_route import build_adapter4_response
+            rd = build_adapter4_response(r, p["problem_text"])["route_d"]
+            prov = next((x for x in rd.get("source_provenance", []) if x["id"] == "q"), None)
+            out["prov"] = {"fn": prov["fn"], "args": prov["args"]} if prov else None
+        except Exception as e:  # noqa
+            out["prov_err"] = repr(e)
+    else:
+        out["reason"] = (r.reason or "")[:160]
+    print(json.dumps(out, ensure_ascii=False))
+

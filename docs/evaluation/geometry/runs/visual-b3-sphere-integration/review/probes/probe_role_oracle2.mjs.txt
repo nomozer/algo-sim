@@ -1,0 +1,17 @@
+const { assessSectionRole } = await import("file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/b3-dist/frontend/scripts/section-role-oracle.mjs");
+const TERRACOTTA = [200, 90, 50], COBALT = [37, 99, 235], BG = [245, 244, 240];
+const W = 300, H = 220;
+const poly = [{ x: 40, y: 40 }, { x: 160, y: 40 }, { x: 160, y: 120 }, { x: 40, y: 120 }];
+const edges = poly.map((a, i) => ({ a, b: poly[(i + 1) % 4], hidden: false }));
+for (const s of [20, 30, 40]) {
+  const rgba = new Uint8Array(W * H * 4);
+  const put = (x, y, c) => { if (x < 0 || y < 0 || x >= W || y >= H) return; rgba.set([...c, 255], (y * W + x) * 4); };
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) put(x, y, BG);
+  for (let y = 41; y < 120; y++) for (let x = 41; x < 160; x++) put(x, y, TERRACOTTA);
+  const line = (a, b) => { for (let t = 0; t <= 1; t += 0.002) { const x = Math.round(a.x + (b.x - a.x) * t), y = Math.round(a.y + (b.y - a.y) * t); for (let d = -1; d <= 1; d++) { put(x + d, y, COBALT); put(x, y + d, COBALT); } } };
+  edges.forEach((e) => line(e.a, e.b));
+  const p2 = [{ x: 200, y: 140 }, { x: 200 + s, y: 140 }, { x: 200 + s, y: 140 + s }, { x: 200, y: 140 + s }];
+  p2.forEach((a, i) => line(a, p2[(i + 1) % 4]));
+  const r = assessSectionRole({ w: W, h: H, rgba }, { scale: 1, box: { w: W, h: H }, overlays: [], edges });
+  console.log(JSON.stringify({ second_section_side: s, ratio_perimeter: (4 * s) / 400, pass: r.pass, share: r.blue.share }));
+}
