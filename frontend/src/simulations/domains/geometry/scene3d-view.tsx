@@ -1692,7 +1692,9 @@ export function buildObject3D(
     const b = Math.sqrt(Math.max(0, toNumber(o.semi_minor_sq)));
     const M = new THREE.Vector3(...toVec3(o.major_dir)).normalize();
     const m = new THREE.Vector3(...toVec3(o.minor_dir)).normalize();
-    const n = new THREE.Vector3(...toVec3(o.normal)).normalize();
+    // Pháp tuyến định hướng theo (M, m): `tt × n` khi ấy luôn chỉ RA NGOÀI, nên dải viền nằm trong elip dù envelope
+    // gửi `normal` ngược chiều (khung tay trái) — trước đó dải lật ra ngoài và cung trước mất màu viền.
+    const n = new THREE.Vector3().crossVectors(M, m).normalize();
     const day = beDayNet(diemNen, Math.max(a, b)) * (noiBat ? 0.56 : 0.46);
     const soDoanVanh = 96;
     const trong: THREE.Vector3[] = [];

@@ -162,3 +162,17 @@ describe("shared semantic material behavior", () => {
     expect(disposed.sort()).toEqual([...materials.keys()].sort()); // includes inactive encountered styles, exactly once
   });
 });
+
+/* f2-role-aware-oracle — the ellipse rim band must lie INSIDE the curve whatever the handedness of the envelope's
+ * (major_dir, minor_dir, normal). With a left-handed frame (as served for the p6 oblique cylinder cut) the band went
+ * outside and the selected cobalt boundary lost its front arc in the browser. */
+describe("ellipse rim band orientation", () => {
+  const inward = (o: SceneObject) => {
+    const g = buildObject3D(o, "dich")!;
+    let meta: { trong: THREE.Vector3[]; ngoai: THREE.Vector3[] } | undefined;
+    g.traverse((x) => { meta ??= x.userData.curvedRimLoop; });
+    return meta!.ngoai.every((p, i) => meta!.trong[i].length() < p.length());
+  };
+  it("right-handed frame", () => expect(inward(ellipse)).toBe(true));
+  it("left-handed frame", () => expect(inward({ ...ellipse, normal: ["0", "0", "-1"] })).toBe(true));
+});
