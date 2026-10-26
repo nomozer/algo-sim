@@ -14,32 +14,42 @@ import time
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "backend"))
 from scripts import run_schema_contract_evaluation as R
+if os.name == "nt":
+    from scripts.windows_process_job import WindowsJobProcess
 
 
 def invoke(command, timeout, log):
     """A timeout terminates this invocation's children; it is never a geometry result."""
     start = time.monotonic()
+    tree = None
     with Path(log).open("wb") as stream:
-        process = subprocess.Popen(command, cwd=ROOT / "backend", stdout=stream, stderr=subprocess.STDOUT,
-                                   env={**os.environ, "ALLOW_LIVE_AI": "0", "PYTHONUTF8": "1"},
-                                   start_new_session=os.name != "nt")
-        try:
-            code = process.wait(timeout=timeout)
-            status = "PASS" if code == 0 else "FAILURE"
-        except subprocess.TimeoutExpired:
-            if os.name == "nt":
-                killed = subprocess.run(["taskkill", "/F", "/PID", str(process.pid), "/T"], capture_output=True)
-                if killed.returncode:
-                    if process.poll() is None:
-                        process.kill()  # Reap our owned parent even if the environment denies descendant cleanup.
-                    process.wait(timeout=10)
-                    raise RuntimeError("WATCHDOG_TERMINATION_FAILED")
-            else:
+        env = {**os.environ, "ALLOW_LIVE_AI": "0", "PYTHONUTF8": "1"}
+        if os.name == "nt":
+            with WindowsJobProcess(command, ROOT / "backend", stream, env) as process:
+                try:
+                    code = process.wait(timeout)
+                    status = "PASS" if code == 0 else "FAILURE"
+                except subprocess.TimeoutExpired:
+                    code, status = None, "INCOMPLETE_TIMEOUT"
+                try:
+                    tree = process.stop_tree()
+                except OSError as exc:
+                    raise RuntimeError("WATCHDOG_TERMINATION_FAILED") from exc
+        else:
+            process = subprocess.Popen(command, cwd=ROOT / "backend", stdout=stream, stderr=subprocess.STDOUT,
+                                       env=env, start_new_session=True)
+            try:
+                code = process.wait(timeout=timeout)
+                status = "PASS" if code == 0 else "FAILURE"
+            except subprocess.TimeoutExpired:
                 os.killpg(process.pid, signal.SIGKILL)
-            process.wait(timeout=10)
-            code, status = None, "INCOMPLETE_TIMEOUT"
-    return {"status": status, "exit_code": code, "duration_seconds": round(time.monotonic() - start, 4),
-            "log_sha256": hashlib.sha256(Path(log).read_bytes()).hexdigest()}
+                process.wait(timeout=10)
+                code, status = None, "INCOMPLETE_TIMEOUT"
+    result = {"status": status, "exit_code": code, "duration_seconds": round(time.monotonic() - start, 4),
+              "log_sha256": hashlib.sha256(Path(log).read_bytes()).hexdigest()}
+    if tree is not None:
+        result["process_tree"] = tree
+    return result
 
 
 def check_receipt(out, identity, planned, action):

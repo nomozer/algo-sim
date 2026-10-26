@@ -1,5 +1,17 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_V2_AFTER_MAIN_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-after-main-integration/T3_RECOVERY_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-after-main-integration/
+CLASSIFICATION = T3_RECOVERY_TARGETED_PASS; OWNER_VISUAL_APPROVAL_PENDING; main/cleanup/backend NOT_STARTED
+CODE_COMMIT = pending watchdog harness commit; product unchanged e047235e
+VERIFICATION = original watchdog RED reproduced; 26 targeted PASS repeated in 3 independent processes; 153 related schema/runtime PASS; actual job accounting and PID observations; authoritative detached T3 PENDING
+MODEL_REQUEST_COUNT = 0
+CONTINUES = SPHERE_VISUAL_POLISH (old FAIL receipt retained)
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
 ## WAVE_ID = SPHERE_FINAL_CLOSURE
 
 REPORT = docs/evaluation/geometry/runs/sphere-final-closure/report.md

@@ -1,0 +1,1231 @@
+{
+  "candidate": "9b99ad4068bc5ddfc53c75792a2ecaf2f9e1f47d",
+  "main": "9978e512a8a2a087475d792c0bd9db639c36acaa",
+  "main_is_ancestor": true,
+  "root_protected_changes": [
+    {
+      "status": " M",
+      "path": "frontend/src/components/SimulationWorkspace.tsx",
+      "sha256": "88ee4e5491da74938315422ffd141426383075d511683a9d6821ae9756c64bc9"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/components/hybrid-preview-contract.test.tsx",
+      "sha256": "97bf6d7470d7a3c02faac74a49424cbc3f0507f9da1fe941be260c2d803f5925"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/simulations/domains/geometry/Scene3DExplorer.test.tsx",
+      "sha256": "9722cc1bfdedfb51e467851fb5be545ddd195a4d1c5cd0467f44e4f667c29c75"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx",
+      "sha256": "34e0ff11f5ba5e83eb58065905f0d13fd4feb841b6c9b244ec37cb5525f43233"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/simulations/domains/geometry/interaction-state.ts",
+      "sha256": "e45dfda3e579cf7832217abd3fe3d2bf7c657751fdff7cce8e41399c135de690"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/simulations/domains/geometry/pick-target.ts",
+      "sha256": "64c602fe4991338381b314e74d30c002ae7dc1d370e44ace2df3dacc7a7d48f4"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/simulations/domains/geometry/scene3d-auxiliary.ts",
+      "sha256": "af0f8e70ef9791d9907f39c031763b90b9352e5ec75d4adadcf388454512fb9b"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/simulations/domains/geometry/scene3d-camera.ts",
+      "sha256": "8eeddf314bb63edbc901b68af74190717d28f67da0ac908cb2e929540a0c8add"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts",
+      "sha256": "5c18c575dc7ef151226940277bf62fd1e6194939e6054257923b3d63cbffa9eb"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/simulations/domains/geometry/scene3d-hidden-lines.test.tsx",
+      "sha256": "6cfa83aa030f572d41deff3d21476c2ab5b432683cc9908d186202ae7aed41e5"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/simulations/domains/geometry/scene3d-model.ts",
+      "sha256": "accdee312b8a26a509d85e99626a9c6f99076ce3433f25588719524832f0d419"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/simulations/domains/geometry/scene3d-playback.tsx",
+      "sha256": "ec1b00d84d63cc89186b018f68fc5615d2c2f248911118942535e39e9b0832e1"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/simulations/domains/geometry/scene3d-presentation.ts",
+      "sha256": "c4d2323b2ef3805ac2faeb74208103246bca1714d4326fbdb67eb51f0e1e6b93"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/simulations/domains/geometry/scene3d-roles.ts",
+      "sha256": "18aa2ae4c2a27db8bc9b9187a24ab37b3b12284b6d86f424db5aeee05d07b1ae"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/simulations/domains/geometry/scene3d-section.test.ts",
+      "sha256": "ec2313d7adea5c823946b356951ddfcb8329f56dad659fa6a18f4dc74e5fb082"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "sha256": "192235f608a92d066038c0dc5edddabaeef33caf252dc29756fcb8dfd8dd3904"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/simulations/domains/geometry/scene3d.test.tsx",
+      "sha256": "fc30e8894bc25b5221c401b791f8f4c49089253fcdfe8e654745c49c833faf37"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/styles/global.css",
+      "sha256": "01bc96219861efc8ebebf2b23e38ebe2340d042524f677183526a7803aaaf714"
+    },
+    {
+      "status": " M",
+      "path": "frontend/src/styles/tokens.css",
+      "sha256": "4c2353ab87f5fd1701085baf1ea3c86ddded6a57cd0303cad82149bd28564346"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/docs-final-go-main/checksums.txt",
+      "sha256": "505c1a92d29387a4cbdbb90481b351d1b5a4e169530e89eb2a72489056012a83"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/docs-final-go-main/handoff.md",
+      "sha256": "b3e3686097436cde22bd9545c792042abeda505db8760a802363e868ea80ff95"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/docs-final-go-main/run.json",
+      "sha256": "c93e62692246ceed0119f0b5c1bda15f6f8d2d65bcc63505d921863ab369904c"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/docs-final-go-main/verification/chain.txt",
+      "sha256": "359a82dc937b401bc8b40bd30dca2860e8d441f48e2c2b4567aa7829e9b57dea"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/docs-final-go-main/verification/docs-gate.log",
+      "sha256": "6f6d4c1563bfa266d5cab036e56a34fbfbd433a47840a1597faf9f95aedf7b80"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/docs-final-go-main/verification/freeze.log",
+      "sha256": "8b6d1930cd87360c1873ac141bf585e0871e66f8e7a58fa3c88dc7fb6608af24"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/docs-final-go-main/verification/head.txt",
+      "sha256": "6897dcff52689efade454f46ee43305496e69cbfaeec2ac70ebf2a771756eaf5"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/docs-final-go-main/verification/invariants.log",
+      "sha256": "6c035b6c18c9d3f859ea1cdd8da791c3bffda6f113d6544920cb7ced506cf514"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/docs-final-go-main/verification/post-push.txt",
+      "sha256": "f2d4a8e6c0b530efb40dcebf41c058518a8664bcd817b4865a97aaadacdf1de4"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-go-main/checksums.json",
+      "sha256": "48bb6b5f86d154e6ebc105f5c59aa7d7e408b6b263ec621b2cdf0a574f3d07d7"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-go-main/cleanup-log.json",
+      "sha256": "2d3262632734640f2b0fa0466a5050c760c12ecfd886950fb09ecad26250cdfd"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-go-main/handoff.md",
+      "sha256": "2ffc4f7a42f80b23b9406be4138d84c3b8369d0a785ec95df48228840a7548b3"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-go-main/report.md",
+      "sha256": "3bf2c4e1eb90613e71722ba0c64778257568148e8177f1a8ae91b22efcf7e569"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-go-main/run.json",
+      "sha256": "ca7b53a1c1977168f0877d0f8067f77dd3231e02456fcb4bbf471243c633f35f"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/acl-audit.json",
+      "sha256": "0352892ecee8f6b59859bf3c31b693a822d0b55510ad201debbeb5ba46b01c87"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/concurrency-audit.json",
+      "sha256": "e0ceb23ad72922c7af633ba6ff9c27155e31b786848ba00dd110153d4d023267"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/integrated-commits.txt",
+      "sha256": "2bf5b0478c04d56400348aef49307eba75f94b1b56ce60a76c31724ec7f9e04d"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/inventory-before.json",
+      "sha256": "8c3d7f3251e1b8782d9f47db768b4841606be3db4247ab83c80553f13bd7568c"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/post-main-safety.log",
+      "sha256": "d1bfe8af71c7ed3c239312e161a6d5b857cfd61452bfa2c44b7adcceb8b47b96"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/post-push-integrity.json",
+      "sha256": "f5af34d3a3e3d48b1899f9d2e8c28faabd9aa42f31fb2fad1dbfbea92d8cce97"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/preflight-t3.log",
+      "sha256": "d55b8abf6dede522012cbaa1c9ce0ce9d9686d117b83b6aed36977be42452b26"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/preserved-runtime-data.json",
+      "sha256": "35391286c0aedbc6173746ce79deb48a9e15e15f21503473dee110814141d427"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/push.log",
+      "sha256": "6dafbd4c9f4c238150fc9a3e58c7a936eb39722c9e3e018c0b06de35fb9c546b"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/scope-first.json",
+      "sha256": "edf51be15d659970f9d3d849c3e89ad4e97af248e58cd4cb0185e697a9607731"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/scope-second.json",
+      "sha256": "8250320409cb91d30ab16d7c395a1f4548d4f32c594a04595fb5e804a54b8164"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/unregistered-audit.json",
+      "sha256": "6254fb168ec94a44c4414dbaf32e7f7b751334e5f955df4559c02f0c761f9fe8"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-go-main/verification/unregistered-consumers.txt",
+      "sha256": "21a72c36cf7ce04a25fbfdabab098701b3ec0f54047e997c6f44949743a22194"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/checksums.json",
+      "sha256": "7fdea8d2501e31b5b9a8ec97725871caa2e83f1ee2975a7e58c6f79df9f1867f"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/cleanup-inventory.json",
+      "sha256": "d7c35ae24513906ae785ac6d24a95fd4d143135ae0c97a3fd336fd239b567406"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/report.md",
+      "sha256": "bdda426e7d782f26ebb0fe7a9006948b203a03107f5c78b96a0b8bced4f7df6d"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/run.json",
+      "sha256": "9028bec0938d4d94cb2e8c5cff8608c144dcb71529df0d42844dc5022452ae4c"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/verification/inventory-before.json",
+      "sha256": "983575997ae19f00cf7857373745a277a4279e61c434fd0b9f6d737d48db77ab"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/verification/ownership.json",
+      "sha256": "10082e80731fc8fea796565602f25306c55c92a2af15851a84e0bf9fde800f9b"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/verification/post-main-fixtures.log",
+      "sha256": "37435b3a1f725ad4f641b0ecb2d6b8ac32441e753676cc3095f80bb8430a50c4"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/verification/post-main-freeze.log",
+      "sha256": "a9c9ce0fda3c1adda75af4002caf864fd0c5a02c98d66ce8dbdc000efe7330b1"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/verification/post-main-results.json",
+      "sha256": "ab1d2b4e51b58ac11c58b84e7f0ead5bc1a758b092209382778f3d4c43802c93"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/verification/post-main-smoke.log",
+      "sha256": "cbf695a31cddd3f0a893ccc65d921dd52330443448680c24b9a2636cf19ff10b"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/verification/post-push-integrity.json",
+      "sha256": "51ed55988bde6e7da4e56fc867b9c5c5f1f876c6812290163cc9a2affff27308"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/verification/product-invariants.log",
+      "sha256": "8322c8985a2196c83c878b786418f2a2029aaee22db97f46980f5fb1555c46be"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-route-d-preview-go-main/handoff.md",
+      "sha256": "083d74c38e844750cd12d3a18657fd9614964c3dc5592b5eaa5080303ef4063f"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-route-d-preview-go-main/report.md",
+      "sha256": "9b38649f483f8c332ee3881f1ebb670b02c7fd1ef115dae4d6f7d78d9d916434"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-route-d-preview-go-main/run.json",
+      "sha256": "1a5ad03765f760cd15a15062706e65a0447dde6525697ff77701b5ad377efa0e"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-route-d-preview-go-main/verification/post-main-smoke.log",
+      "sha256": "daf889b4723c38b34009caba33aebc2d08959026087d0d02cf1d46f1b77e92ad"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-route-d-preview-go-main/verification/post-push-freeze.log",
+      "sha256": "c7493c49f58a04c0859b38abc49d6d8de1e59d80d8f861fcb3a4e4a26a715aee"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/hybrid-route-d-preview-go-main/verification/post-push-smoke.log",
+      "sha256": "8e7c7c42d09e10374c7a43eb4fcc76006d2ac91d31151decace744be185ca39b"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/scene3d-go-main/checksums.txt",
+      "sha256": "53363ec0d34e4b8db4de9b0bdf3f9632c350fb2eabdb56b4f548de4929c4ef7e"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/scene3d-go-main/handoff.md",
+      "sha256": "eb1d7bef89cfd4d431eb4c8652d03bfdece0a95e0010419609fd32208379ff2e"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/scene3d-go-main/run.json",
+      "sha256": "4313c1e26f21fdc33ffb3b0092009d649a6f7c16538537c1a589e00aae8b707e"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/scene3d-go-main/verification/backend-smoke.log",
+      "sha256": "a01e4a5e31074e2e391dbe984192c6e4c0692c084fe6bc0335d1326ab590c17b"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/scene3d-go-main/verification/build.log",
+      "sha256": "a68644ba711df0d2ce6f737828bc441f304781b2494d53fb194be362251625a7"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/scene3d-go-main/verification/fixtures.log",
+      "sha256": "8c2fec236fb0cfafe104817b9e2db3a59735f68c6294b229b619a046ad849a19"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/scene3d-go-main/verification/freeze.log",
+      "sha256": "8b6d1930cd87360c1873ac141bf585e0871e66f8e7a58fa3c88dc7fb6608af24"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/scene3d-go-main/verification/head.txt",
+      "sha256": "170beb139a0442b689b48466b619d84189629a9b22d035f5d523f7c85db18b1c"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/scene3d-go-main/verification/invariants.log",
+      "sha256": "4da2d153f8adfec4d5d058edf2d1cb4666f6675986c4d8bd87029ec1812c3a6b"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/scene3d-go-main/verification/post-push.txt",
+      "sha256": "6ebfe6b52e29d4496f2dd37c010b785daa88f12d345bdeb8862207ed1f4a0653"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/scene3d-go-main/verification/vitest-scene3d-targeted.log",
+      "sha256": "9a894c274ea6e051ed79246254a3d445361d14b589eec1852caf26e37d897d16"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/scene3d-go-main/verification/vitest.log",
+      "sha256": "129c1fd60f1944dedcf5014c794f1168fe4c20da5bdb0490638be69254a988d8"
+    },
+    {
+      "status": "??",
+      "path": "docs/evaluation/geometry/runs/source-gate-hardening/verification/t3-fail-72d1595f.log",
+      "sha256": "e48eaa7c445c9522a571493797c64ba178fa5da8d588ad8d4ee54077b0324723"
+    },
+    {
+      "status": "??",
+      "path": "frontend/public/favicon.svg",
+      "sha256": "c5172af1ced0ad43d18e8d66d4270870fe60cf02cb175c3d0f0287ef7f52439b"
+    },
+    {
+      "status": "??",
+      "path": "frontend/src/simulations/domains/geometry/simulation-visual-consistency-session1.test.tsx",
+      "sha256": "153510e16615a0644d2e49aa261024ce16986dd52d7f0c0389ddf2d9e4087ae3"
+    }
+  ],
+  "worktree_inventory": [
+    {
+      "path": "D:\\Documents\\projects\\algo-sim",
+      "exists": true,
+      "metadata": [
+        "HEAD fe9f555437498432427ae6bbd54402cdd59c7eb7",
+        "branch refs/heads/research/hybrid-wave3a-volume-reasoning"
+      ],
+      "status_exit": 0,
+      "changes_count": 79
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\b3-dist",
+      "exists": true,
+      "metadata": [
+        "HEAD fe5f40b79d4f0ca46b08ef3b06536952a582fc74",
+        "branch refs/heads/integration/visual-b3-sphere-candidate"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\extraction-v2-safety",
+      "exists": false,
+      "metadata": [
+        "HEAD 330a222a2d4f627da7454378627a1497c239fb8c",
+        "branch refs/heads/integration/extraction-v2-safety",
+        "prunable gitdir file points to non-existent location"
+      ],
+      "status_exit": null,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\freeze-scene3d-metric-boundary",
+      "exists": false,
+      "metadata": [
+        "HEAD cb1f4954a7243de0561b3e724b7b2e94cb36bffc",
+        "detached",
+        "prunable gitdir file points to non-existent location"
+      ],
+      "status_exit": null,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\freeze-scene3d-metric-final",
+      "exists": false,
+      "metadata": [
+        "HEAD 216bbf84beb4a2bbd0e6d6c688a4f3e4becf24bc",
+        "detached",
+        "prunable gitdir file points to non-existent location"
+      ],
+      "status_exit": null,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\geometric-visual-correctness-framing",
+      "exists": true,
+      "metadata": [
+        "HEAD f95596716912e5550ed079287221274b2d70f24c",
+        "branch refs/heads/research/geometric-visual-correctness-framing"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-backend-s1",
+      "exists": true,
+      "metadata": [
+        "HEAD 82d3d25540ea643a68bd7877eb1b67a78dfc7134",
+        "branch refs/heads/research/hybrid-backend-integration-session1"
+      ],
+      "status_exit": 0,
+      "changes_count": 8
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-primary-b1-b2-offline",
+      "exists": true,
+      "metadata": [
+        "HEAD 97d59bf95c0c87eae827e48148c1a5957195a82e",
+        "branch refs/heads/research/hybrid-primary-b1-b2-offline"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-route-d-preview-wiring",
+      "exists": false,
+      "metadata": [
+        "HEAD 65d6ee97d6f693c6613153d28aaf40fa0f352ba1",
+        "branch refs/heads/research/hybrid-route-d-preview-wiring",
+        "prunable gitdir file points to non-existent location"
+      ],
+      "status_exit": null,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-semantic-extraction-v2",
+      "exists": false,
+      "metadata": [
+        "HEAD dc27009fe9530ced01c3e6d52898d789a62cb36f",
+        "branch refs/heads/research/hybrid-semantic-extraction-v2",
+        "prunable gitdir file points to non-existent location"
+      ],
+      "status_exit": null,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-session5-offline-consumer",
+      "exists": true,
+      "metadata": [
+        "HEAD 5ee973406b75e19503158549a22bb3b24c5d9bf5",
+        "branch refs/heads/research/scene3d-section-inspector-c0"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-visual-candidate",
+      "exists": true,
+      "metadata": [
+        "HEAD 1a4a0b93747143b2574d0196703aad9f454c4164",
+        "branch refs/heads/integration/hybrid-visual-candidate"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\nl-to-scene3d-e2e-readiness",
+      "exists": true,
+      "metadata": [
+        "HEAD 25f57e31604c5a12ca30667276b17596dcceb71b",
+        "branch refs/heads/research/nl-to-scene3d-e2e-readiness"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\s3d-hybrid-v2",
+      "exists": true,
+      "metadata": [
+        "HEAD 3dcd6d9fbdc5627197537dc79c1e609ac3e03bea",
+        "branch refs/heads/research/scene3d-to-hybrid-v2-replacement"
+      ],
+      "status_exit": 0,
+      "changes_count": 108
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\s3d-hybrid-v2-claude",
+      "exists": true,
+      "metadata": [
+        "HEAD 9b99ad4068bc5ddfc53c75792a2ecaf2f9e1f47d",
+        "branch refs/heads/research/scene3d-hybrid-v2-claude-resume"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\s3d-hybrid-v2-codex",
+      "exists": true,
+      "metadata": [
+        "HEAD e336e0dfee30968b27887bcf446d9ec7ad610f54",
+        "branch refs/heads/research/scene3d-hybrid-v2-codex"
+      ],
+      "status_exit": 0,
+      "changes_count": 69
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\s3d-v129-base",
+      "exists": true,
+      "metadata": [
+        "HEAD 11188e7a0a638ec749e145b0dc3c109c9cc799c4",
+        "detached"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\s3d-visual-freeze",
+      "exists": true,
+      "metadata": [
+        "HEAD 3dcd6d9fbdc5627197537dc79c1e609ac3e03bea",
+        "detached"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\scene3d-codex-takeover",
+      "exists": true,
+      "metadata": [
+        "HEAD 11188e7a0a638ec749e145b0dc3c109c9cc799c4",
+        "branch refs/heads/research/scene3d-codex-takeover"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\scene3d-html-port",
+      "exists": true,
+      "metadata": [
+        "HEAD 7f90d9b398329d9fb99867ea784d3d126b005e31",
+        "branch refs/heads/research/scene3d-html-visual-port"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\scene3d-plane-grid-camera",
+      "exists": false,
+      "metadata": [
+        "HEAD 551a354174e1c213f3ad2bf03d7574ebf75f4d85",
+        "branch refs/heads/research/scene3d-plane-grid-camera",
+        "prunable gitdir file points to non-existent location"
+      ],
+      "status_exit": null,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\scene3d-unified-visual-language",
+      "exists": true,
+      "metadata": [
+        "HEAD 8618d84c917c5d5d41eb9a9cd41a40e93ae2996c",
+        "branch refs/heads/research/scene3d-unified-visual-language"
+      ],
+      "status_exit": 0,
+      "changes_count": 1451
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\scene3d-visual-correction",
+      "exists": true,
+      "metadata": [
+        "HEAD 08929b893337e770649b9d854c8c71c4434edc29",
+        "branch refs/heads/research/scene3d-owner-math-visual-final"
+      ],
+      "status_exit": 0,
+      "changes_count": 470
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\semantic-extraction-v3",
+      "exists": false,
+      "metadata": [
+        "HEAD 7168d26963011433889dc907492df87ac62140f7",
+        "branch refs/heads/research/semantic-extraction-v3",
+        "prunable gitdir file points to non-existent location"
+      ],
+      "status_exit": null,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\semantic-extraction-v3-runtime-revision",
+      "exists": false,
+      "metadata": [
+        "HEAD bb014eb832672948e613ac21984c7c65cee14b83",
+        "branch refs/heads/research/semantic-extraction-v3-runtime-revision",
+        "prunable gitdir file points to non-existent location"
+      ],
+      "status_exit": null,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-coverage-visual-validation",
+      "exists": true,
+      "metadata": [
+        "HEAD d86c72031d8fc85cd4eef62d9379cd1690ba1417",
+        "branch refs/heads/research/simulation-coverage-visual-validation"
+      ],
+      "status_exit": 0,
+      "changes_count": 4
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-visual-consistency-learning-ux",
+      "exists": true,
+      "metadata": [
+        "HEAD f6a8e30fb70d377c5a8a97db476ebd4d7c090336",
+        "branch refs/heads/research/simulation-visual-consistency-learning-ux"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\sphere-src",
+      "exists": true,
+      "metadata": [
+        "HEAD 98d52e90d4baa663c8215a30923321df96a14290",
+        "detached"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\svc-cand",
+      "exists": true,
+      "metadata": [
+        "HEAD 08929b893337e770649b9d854c8c71c4434edc29",
+        "detached"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\svc-sphere-final",
+      "exists": true,
+      "metadata": [
+        "HEAD 39b6dbbec3d4c2d9a9615852b1c57b935feafd4e",
+        "detached"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\t3-b1b2",
+      "exists": true,
+      "metadata": [
+        "HEAD a084c180019a2c1867289b29c59a9d956d11465f",
+        "detached"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\t3-claude-resume",
+      "exists": true,
+      "metadata": [
+        "HEAD 57a4d65cba3f56682a9457e5a86004a54bb4784e",
+        "detached"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\t3-scene3d-metric-boundary",
+      "exists": false,
+      "metadata": [
+        "HEAD 2160fbcf3a8ec489f8ac792ffccdcf7436f30c86",
+        "detached",
+        "prunable gitdir file points to non-existent location"
+      ],
+      "status_exit": null,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\t3-scene3d-pre-main",
+      "exists": false,
+      "metadata": [
+        "HEAD 61668c9362c49df39f1ae948b0e7a7e1cad33f95",
+        "detached",
+        "prunable gitdir file points to non-existent location"
+      ],
+      "status_exit": null,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\t3-scene3d-pre-main-2",
+      "exists": false,
+      "metadata": [
+        "HEAD 8e2235e7a540da58c48adf6fcced12624676119c",
+        "detached",
+        "prunable gitdir file points to non-existent location"
+      ],
+      "status_exit": null,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\t3-sphere-final",
+      "exists": true,
+      "metadata": [
+        "HEAD 7e545f66a18eb27d0e6bc73c337a1a4e98b8ea4f",
+        "detached"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\t3-sphere-final-2",
+      "exists": true,
+      "metadata": [
+        "HEAD 104808d6c2678c05c0099805b2d0ffa8a4a0e848",
+        "detached"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\t3-sphere-visual-polish",
+      "exists": true,
+      "metadata": [
+        "HEAD 46300f084c0c3f093a67ad820090289394271529",
+        "detached"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-geometric-visual-correctness-framing",
+      "exists": true,
+      "metadata": [
+        "HEAD 7868db0aef3810e2089b5f8b8d6aecfb8b3e1400",
+        "detached"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-s3d-hybrid-v2-codex",
+      "exists": true,
+      "metadata": [
+        "HEAD e336e0dfee30968b27887bcf446d9ec7ad610f54",
+        "detached"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-scene3d-codex-takeover",
+      "exists": true,
+      "metadata": [
+        "HEAD e1ebc72cd3968abfe752303089efc8cb7441abe6",
+        "detached"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-sphere-main-integration",
+      "exists": true,
+      "metadata": [
+        "HEAD d1ee4f0dc4d5a377512a8fcfc810bdc6f3348202",
+        "detached"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-visual-ux-final-quality",
+      "exists": true,
+      "metadata": [
+        "HEAD 9343e8d0d4c4cdf5bf0865e0a550c13f238f28b5",
+        "detached"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\visual-hybrid-integration",
+      "exists": true,
+      "metadata": [
+        "HEAD 13d28b844925ee0c9adb02698b54597c8f9d6eee",
+        "detached"
+      ],
+      "status_exit": 0,
+      "changes_count": 210
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\visual-ux-final-quality",
+      "exists": true,
+      "metadata": [
+        "HEAD 164a5e25ad25bf42d689df115ade5d74b5c733e9",
+        "branch refs/heads/research/visual-ux-final-quality"
+      ],
+      "status_exit": 0,
+      "changes_count": 0
+    }
+  ],
+  "full_inventory_sha256": "d83bf353cc54ead9a90494f94ac33ae3cc3bc311566e0b00aa558dbdb73dfccd",
+  "active_vite_worktrees": [
+    "s3d-hybrid-v2",
+    "s3d-hybrid-v2-claude",
+    "t3-claude-resume"
+  ],
+  "renderer_hashes": {
+    "frontend/src/simulations/domains/geometry/adapter3-simulation-demos.test.tsx": "6137edf2872dbbb49ab2ae1529019c2cebf3431ab23762010fc28813b920b663",
+    "frontend/src/simulations/domains/geometry/exact-number.test.ts": "fd784ef710549e09ca6623d6d84dab26fb8ca91ed4694a7ffb28b180e55355c7",
+    "frontend/src/simulations/domains/geometry/final-quality.test.tsx": "a0a1974b3107420a6f71ab68fb1f08ef00613c0de03a619526927e4b62bb5efa",
+    "frontend/src/simulations/domains/geometry/geometry-library-expansion.test.ts": "7ed7ecc65fa00f77c45bb6223c44be3c1e25b2a0558118d9c87e0d8a00214366",
+    "frontend/src/simulations/domains/geometry/hybrid-preview-adapter.ts": "349976c81315ec44e953079606f7c786532957e00498852d1e78ff6648fe84e7",
+    "frontend/src/simulations/domains/geometry/interaction-state.test.ts": "aa2072f13888a6574a71761f120b0046fdeca2cea011107420d2a274b9f6e0f5",
+    "frontend/src/simulations/domains/geometry/interaction-state.ts": "e45dfda3e579cf7832217abd3fe3d2bf7c657751fdff7cce8e41399c135de690",
+    "frontend/src/simulations/domains/geometry/pick-target.test.ts": "ff5760ec7f82f652bc5b977a6549216ea96eba19fe7a68229c12124ee3cf7920",
+    "frontend/src/simulations/domains/geometry/pick-target.ts": "64c602fe4991338381b314e74d30c002ae7dc1d370e44ace2df3dacc7a7d48f4",
+    "frontend/src/simulations/domains/geometry/point-placement.test.ts": "fd41b852df8416f067c496e4552c04de55fe5633f341a5cfe327681e1e278f92",
+    "frontend/src/simulations/domains/geometry/polygon-triangulate.test.ts": "85d193fc81a0a9ebf635262f3910d91bd56edd362a21bc5c747fd4e5d42a02d9",
+    "frontend/src/simulations/domains/geometry/polygon-triangulate.ts": "362262f2f8cf5b1d608e7fa3e5b54b5adcbd836bc121201617229895a754e282",
+    "frontend/src/simulations/domains/geometry/prism-ui-integration.test.tsx": "291acadc2c529733942d50236a5918f485a2b5711e6a343933d75d4be59ddc68",
+    "frontend/src/simulations/domains/geometry/product-envelope-rendering.test.tsx": "c51087db7f4f43c41227f7ca35082b41b56766208105ce04cc9edbe07ae5b0e1",
+    "frontend/src/simulations/domains/geometry/rectangular-pyramid-ui-integration.test.tsx": "edc1e8e5af549cb1e83fcfff51674ad8c59e0fa18b396c82f88f957e6e13430b",
+    "frontend/src/simulations/domains/geometry/scene3d-annotations.test.ts": "58a5351ea6c9086c8da07a7008c19e27e26a88cbf291b71aa8658aa9a692f72d",
+    "frontend/src/simulations/domains/geometry/scene3d-annotations.ts": "2613cdddc92ac91004ef661aa4ca5ad44858a7f730b9d88eebafd6cb31a80a54",
+    "frontend/src/simulations/domains/geometry/scene3d-auxiliary.test.ts": "87d211ba5dd67435c80614162e4087fef65d74017e4b27d9f186c6aa1f6b2027",
+    "frontend/src/simulations/domains/geometry/scene3d-auxiliary.ts": "98125e74f3aeb357e1f7829cd007de9b7181e4a98be1fd3eb623151d7a749ebf",
+    "frontend/src/simulations/domains/geometry/scene3d-camera.test.ts": "3c4f4453a9c7cfc01de290ea8e7b911d8ea75ce0d2c9a73015291409e13f7f8e",
+    "frontend/src/simulations/domains/geometry/scene3d-camera.ts": "7553c8504b52d23397fc01bd2640ec5f8ccbcdd04ea7c73c60106267bde755dd",
+    "frontend/src/simulations/domains/geometry/scene3d-causal-colors.test.tsx": "61166405fc17fde49d4f052851042b5cd32e9db62134721a42f18ab9039578ed",
+    "frontend/src/simulations/domains/geometry/scene3d-causal-selection.test.ts": "5b5f1df196e3f5a33c34b9d3171fd8c1a1c58a1b128ebc0c39f6d6d9f2e0ec11",
+    "frontend/src/simulations/domains/geometry/scene3d-chart.test.ts": "c3c4cc61c67f76a7a93ba2236a8db4e8fba18ecf7f64bda1ec18f8075e315989",
+    "frontend/src/simulations/domains/geometry/scene3d-chart.ts": "9b789cc61385024a24d1a43c08f1781feab447a1240bc2c4536c2ec94f472617",
+    "frontend/src/simulations/domains/geometry/scene3d-circumsphere-fixture.json": "50e22e4ad1ec1909c98cf35cf5ede17869be4a5f08fd2a2b74faf13e8d02b090",
+    "frontend/src/simulations/domains/geometry/scene3d-curved-transitions.test.ts": "fca4fa06be151703b9c8d06a5ba219b6db95d659d011c2c8ce4501b733706466",
+    "frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts": "c677229bd6fee85d4b1a07266662e1bf8bf37e19dc1e7dce681e87c5c8f0d856",
+    "frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx": "5cde9692a7140b9614fa1b656d4737117d99698b9e4bdbd26fad17b7069df54b",
+    "frontend/src/simulations/domains/geometry/scene3d-focus-mode.test.tsx": "1471830e0342d739fac0d5aeee4b57d56a56c425a4d44fdf08848ec25899b2e2",
+    "frontend/src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx": "b15d17c2bd27fa13463db8d5c934c88c2e7974e1a625b4f001f0d184184c6f2f",
+    "frontend/src/simulations/domains/geometry/scene3d-hidden-lines.test.tsx": "6cfa83aa030f572d41deff3d21476c2ab5b432683cc9908d186202ae7aed41e5",
+    "frontend/src/simulations/domains/geometry/scene3d-label-formation.test.ts": "7f1f9fc72853d2266b43057a01ad084ef4b0b6c242c797a4d5888b30e9c3bbf0",
+    "frontend/src/simulations/domains/geometry/scene3d-learner-formation.test.ts": "c47fc1503ea24ef7b2408b502bccba1cd4572064ea889ac8f3fb131734f97066",
+    "frontend/src/simulations/domains/geometry/scene3d-model.ts": "fe2e8aeeec7225b2b0c729e28ba2b7c8f95837a74960b372dd928cd934f0ab40",
+    "frontend/src/simulations/domains/geometry/scene3d-occlusion-gates.test.ts": "e31467fde1e3a2f57735d52cbb8ab95991f4a406f8bac1981dd040f7d0bc05d5",
+    "frontend/src/simulations/domains/geometry/scene3d-page.test.tsx": "987d48e7d76dc177342f0b6e1746c26482fb3d59d3320e4b63aa6c555f3ad1f3",
+    "frontend/src/simulations/domains/geometry/scene3d-panels.test.tsx": "dcbec2ab9642ce7f885f52105645522f5019fd181aa4e6056d9abc7bade9b92d",
+    "frontend/src/simulations/domains/geometry/scene3d-playback.test.tsx": "5bf5d73a6aed98414f9ca4046537c869dc519a24de33ade20b581956df5b190e",
+    "frontend/src/simulations/domains/geometry/scene3d-playback.tsx": "ec1b00d84d63cc89186b018f68fc5615d2c2f248911118942535e39e9b0832e1",
+    "frontend/src/simulations/domains/geometry/scene3d-presentation.test.ts": "738b4c9fefebfcf2f1329eee4967e0589b27293ae262cfbf4894c540f981ac55",
+    "frontend/src/simulations/domains/geometry/scene3d-presentation.ts": "8c649f30f44577ae30ccb8feaffdc6c25a2502e960156a3db802c0730bf09378",
+    "frontend/src/simulations/domains/geometry/scene3d-right-angle-witness.test.ts": "290af71dce2f2776355b73a2f205428dd9a30fa275b8b2fa1cdd4a7107dd047c",
+    "frontend/src/simulations/domains/geometry/scene3d-roles.test.ts": "390cfdbe376cb576921f2f33d82a1a426d43d86897a9dcbb6a2abbb40a607a3d",
+    "frontend/src/simulations/domains/geometry/scene3d-roles.ts": "663fcfab72ab50ddc18e34fa237f02e94406c1a657485a74b97e424d20fa26e1",
+    "frontend/src/simulations/domains/geometry/scene3d-section-fixture.json": "d1e1862cb4fd74d5578fe197f1b106aa37181e90225281adcfd8d3ca1af777a8",
+    "frontend/src/simulations/domains/geometry/scene3d-section-vertex-identity.test.ts": "d7913e2a052c36295e2bd7a9c196ef7a2bc49a9545f5f1ed15c7b6bf82f8da37",
+    "frontend/src/simulations/domains/geometry/scene3d-section.test.ts": "ec2313d7adea5c823946b356951ddfcb8329f56dad659fa6a18f4dc74e5fb082",
+    "frontend/src/simulations/domains/geometry/scene3d-steps-panel.test.tsx": "a8b6a3c3122c08371a2956e4f3859e1940a695901bebf6545a9d16a0dbdfa47a",
+    "frontend/src/simulations/domains/geometry/scene3d-sub-edge.test.ts": "4eb7ed791bbffb00e92e63b8417c842f6c11b66a1cc7ff897aa6ddc7d467a296",
+    "frontend/src/simulations/domains/geometry/scene3d-subentities.test.ts": "320ae3ecbc59d0119e7b807a20a236b76e138bcc8741fb36d7f14cdcc03a1be1",
+    "frontend/src/simulations/domains/geometry/scene3d-subentities.ts": "a45fe06c8be73b5524d986b4ae48295565a2a69f58f9ff75b5eb3a927e7c4e21",
+    "frontend/src/simulations/domains/geometry/scene3d-tool-menu.tsx": "1968f744d703516df99a91d7262ca51c81d8fa70d2cdb7b8d9edcc41545f14ec",
+    "frontend/src/simulations/domains/geometry/scene3d-unified-materials.test.ts": "12efebae9530c0901ce0f8f00a8c1067f980a756c6beffd85290f8ffafc84b63",
+    "frontend/src/simulations/domains/geometry/scene3d-view.tsx": "a1943579cd6ee61f0171b37959973b5c3e8dd37a0c935a1f5a25bc1cb9a51202",
+    "frontend/src/simulations/domains/geometry/scene3d-witness-gate.ts": "a9d5849233e8f60d33c4b03d2963180f7440d17f5f9965f6f50c81ab784ee616",
+    "frontend/src/simulations/domains/geometry/scene3d-zup-lifecycle.test.tsx": "af3d6126f5bbd89227788768b81613b249b5212a46c213f329ef20a06cf7dbbd",
+    "frontend/src/simulations/domains/geometry/scene3d.test.tsx": "41ca9f2b5428dbe80fc373360dbcc66079cf32b7cd936b4bf08cbb81f8a515d2",
+    "frontend/src/simulations/domains/geometry/Scene3DExplorer.test.tsx": "9722cc1bfdedfb51e467851fb5be545ddd195a4d1c5cd0467f44e4f667c29c75",
+    "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx": "b902fd7ab51b455b2b7d61ff6e341dea1c96fdc1e2802d18e89dd5804d18b3c4",
+    "frontend/src/simulations/domains/geometry/semantic-dumb-frontend.test.ts": "c67e88e80d66e13f06b06e5b4c292b1a6b9d9fc7766f5fe520b5a47c1117653d",
+    "frontend/src/simulations/domains/geometry/simulation-coverage-fixes.test.tsx": "9345b7decb0033eb3231d579c9bbe56d9d6bd1561d1966971e366ce256773ea6",
+    "frontend/src/simulations/domains/geometry/simulation-learning-ux-session2.test.tsx": "f9073f8add345eb9f68f78b94a149477962914f1bd3d58b043bf2e65445c692d",
+    "frontend/src/simulations/domains/geometry/simulation-visual-consistency-session1.test.tsx": "131a131401bf2876414eb9f026ae38713e21820959a7b1a4a35cba44215f6807",
+    "frontend/src/simulations/domains/geometry/visual-closure.test.tsx": "d8e09e68e03e7bd20222924893cfff6220a6d300d8bda08d20aa52761d3ea622"
+  },
+  "preserved_sphere_evidence_hashes": {
+    "docs/evaluation/geometry/runs/sphere-visual-polish/.gitattributes": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-back.png": "1ccb1c36f3b91c08b054bb62677fb83fe41061dc8c9e62799b0eb12935280751",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-front.png": "d808d47a538b12e703660007d37d695d7b42dd2847628db7069db15de2b97c87",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-high.png": "c4f397b41177d89e32180a8ca67237dd163fa796d9a75b72c5ade42e90eaada5",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-left.png": "a0e6ba6f89a53cd78849ed673cebf5e75101435daa935d25613fc9b5df67613a",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-low.png": "a60bac166b2e518670103a386600674306d79c3efa17b12a6a16873cb0afc381",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-near-edge-on.png": "d388f5ec48f5c517df1fec41a86ca15b16f98b886c95362e6f255da63eebe627",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit00.png": "8e5eac80ef899b6f09178ad19c08ce29e2e328c6ac7234af10ed5462895ef773",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit01.png": "f1bba581092f7985bbf2590811f1196bdc85d64ccd0c23bb4d2b20ab1ec9057f",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit02.png": "735e0b92f6783a3d3cdc626761f671ce0ac40b498b23b74a754f9511e13ba3b6",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit03.png": "fb711cdb6418dda7c0ccb2375a57f13f21ed910d2f5d48ff65412ed06bb0d75c",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit04.png": "05f00594bcccc2d6a09a4d2ef1e5b064fe767e838b114e44b0afbca417208e15",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit05.png": "4d6bb1fbb184f5895f5cf3186e2bf7e4111ba82ec5b2a80a93aa014addb7be39",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit06.png": "8ca15af8e77a942ba6cf06acb5b7d7ec710d6900a7320317f61cc92274a307c4",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit07.png": "e28031b187143e497b7351ef3f9b5d53cd04066e5dcd539834220fd76c0c0a19",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit08.png": "d143a58f40d230557f68459f8e16859f9b3c368512b539b1b9df9bf0a41a4b8b",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit09.png": "5a5e09125e7c3ae9d779990b222d2c18b8b8fb370c5df9d433fa38879c0f2e43",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit10.png": "936e803b1eb45402a35dcccf77b9970010e6012fdb6ee22869c96017dcd6ddfe",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit11.png": "1be22ce0bccd59d1f2dada414c84910ffbbee610da2fe97f09d4f0affd17d0a1",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit12.png": "c54739051b52124296363e7572c8e725071350c95027781de972799367bfbe27",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit13.png": "2638fb6515a43e5821bf6ad7bfa3e94411101260054e95dd406efe9d09034231",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit14.png": "a7ec1e27aba7854cb81bec2738266445dfff1cbed7df358a950f0501796ed286",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit15.png": "5a69af88f74d61953df2933b7df3ffba42ab6ce2acaafbb62ec7843cf5fcd189",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit16.png": "1e11bffe2e526588982ee3d5f0cba650f7675da950e2d7ccfcbd70971d62ddd3",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit17.png": "d1f99e8d4d2b7b90896f18d6348c436defe9a01550bcdbd4d6addc6f09b905e9",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit18.png": "a232755236073a0c2ce64744b85e2fc87991476e6bed6acffe3aa9e857af68c8",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit19.png": "97dffaa2d68239c98041eeb5039d500434e438c6f2629861f7c5fe07bb8a71cc",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit20.png": "3682c75ffab15e49fb51bb6cff257524a81d795d84e281b7d77f6514be87d203",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit21.png": "a93bc35ad3d11775e107ea5a74dc7fcdfc882dbf80717d073e451b9f7c7b21aa",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit22.png": "f97faa6b7219fc0dd68b01b19728fcd592a6903b626c7ae115acc3371ac9548a",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-orbit23.png": "aeb22f2425e95c630c6c7ac91d2256f626fdb699ccc42669fcc57fc63d811706",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-1440-right.png": "a8c113676a335dcf703d3612e525e65485b57ef2640158043bd76cb98d18c2aa",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-back.png": "1dcb3831d26221f16d7cf18df95ca22dad41c873388de8742beab28bc9538df5",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-front.png": "8b078fd241160ad152d99e24925a3a37cf9c7b1a6b5208df20c7f082c7d0c73e",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-high.png": "d36f747c093b505687e8b49592bded9a72b927856656d3c7f201996c26cc03c0",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-left.png": "560a93e5da673ab561954211368759bf78ce390661baeb9df47f0f0dc186f753",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-low.png": "0f7a22447b189f614b2014eb4db3ae31a2d8b0bb20956053b58c1a643f64b613",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-near-edge-on.png": "095ac2bf030dce2889602c5f6bc823dbb278c9f73221c36c8fb8de5a1cdb59dc",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit00.png": "d825fba1824cf2a393226a1939c188e8d73dd58baebbc31f90806fc9fccd5fec",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit01.png": "da83df7200fd218d449722016ee33b5c6684bdda8920bf5e8f6bb7f7abca4dd1",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit02.png": "018bb8ee3281e35ed38c4fdd955f14e7eebb5bbf55108ef2e9464b57b39d64cf",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit03.png": "5299860c1bae4cc4a0d20c4a87c7b93d3fe3544d08247c487948b1ea462a834c",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit04.png": "a2f51850f0c26386ebde5362a49624cc3a1c4fa7dbc3b1f27e13634792dad568",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit05.png": "ef3c23bc1918ffd7075e3b7654797824d39e5e78b744f24780dea80a17fab694",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit06.png": "a60e1609711d6d039e58549f7b98ebee94d5101d0764182d7a246db15125e78d",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit07.png": "846080b1c5d79a5911564b35f4b8b0a2fa94c01af6994b8df99e36c5397271f1",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit08.png": "164005a4c6b07d639c75a650ce1080067e72889a1a7c4cf3d7334c83a656ae15",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit09.png": "332f2d09f31ca215db6ebe61f48af36859a37945b0fbb90c666a34f2d487d2c2",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit10.png": "6ea31844eddaf99c33f4e733762be45c05c417bfc01d8720558c783305cf7707",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit11.png": "d23b0c3cc7057ed306ec9f4a55b213797778d31fda0afb324d0362340f272983",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit12.png": "be1230c9c524a0f8dc0e8154f93d313f97015599407cd3b975a5887ce068c4de",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit13.png": "b571f2065e9649ea563da18bfd9de940f52d2554599d213102e00d6e2071480d",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit14.png": "e813400c8f076bdd27bf1750061ab78fefda6c4502244963d933535abf3edc53",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit15.png": "ceef991f3e18b22bb369069cec39e208ea0ce4a5e6245866822564cf833df742",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit16.png": "abaf5f3f79a79c976e494a992b5a73e218e92dddb47b2f768dde5c0b099176ec",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit17.png": "c22840210b43034b7dca17ebd8dc9a367be126d0958203e8f1ff39fbf8da95e6",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit18.png": "db01fab864d17afc7d050c566e049a6f5c44cefb4eb8ec0f738273ebefc79a73",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit19.png": "fb9af0ecfba30e03b5f47b332464be70bcc644896499017d17a376efe77204a8",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit20.png": "ce01a3a11cae559238cd9b97525beaef5ef44230229ff14e891c79c849ca449f",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit21.png": "08815a2ebc088a7a17e2faffa17cb4d0f7b5d71751ae4e507fb6d71c3d24dba9",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit22.png": "90a409be1ea9304cef818d4021dd2799fb3505869de3f6cd48f8411f80a7d14b",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-orbit23.png": "5e117cbd96e3eb40b7c197c4188c5e0793f68bb2497d3f65739c167bc75dd26c",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/basic-390-right.png": "c0382449748c60d8d6fa7de4893e1aa6263c0591fb9320557a92cac0fbf0ddca",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-back.png": "78e058330a705face8144718addec0fd803517466d091f22cce6e25293e59c4b",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-front.png": "d6cdd869ee6f6858423cf26a509f9bcf0ea41edbc369372095a6f216ed5b5b50",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-high.png": "05eae40e52d6c5c37c2de9a4d0aaf15ef7c2092fe441ef2be84465c55950e5a8",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-left.png": "d797f59d7c49d3494b332eaa3e6cae6ce651a3c13a6796e578ad21abef4bff5a",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-low.png": "89de942fc30a45cad641a5dabe22f4ffba4012b89676d01eceedca3983c24bbb",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-near-edge-on.png": "8ee72c7fdc6a73281ddceacb4fa2e7474ddd9ae3bcb759d93cff89c9fad6b5d4",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit00.png": "d6cdd869ee6f6858423cf26a509f9bcf0ea41edbc369372095a6f216ed5b5b50",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit01.png": "708ffb6630726a29c9623b95028e271e161751edb1bcec0d8d341b9ebcc014a3",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit02.png": "dc4ae6f6fd4d1f9c2964454567cb5b32d437f65d295a4590b51228a1672fd725",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit03.png": "53596ac21e4bd9c11669755197c0540a261470ba9f6a4aeac1a262dccf6fc4b1",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit04.png": "f446477f9252724abda36baedc9f3ce442b27b1bee32b53a593272bb41373736",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit05.png": "54abde1b5e4274d6ba2f3e38a712f233378d69a4dee3111fbee9d054c4c7f32a",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit06.png": "40917c2fd8718abe27edad42939e88c91d88a1c21a27c4f7f57e7cd409280a24",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit07.png": "82575ae02481664f42409f664158396307b3e2d27e57a5807c50287e7bbb9c82",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit08.png": "16d36eea59fdc9fd57b7e393fc3f18b6907d79f8e5f7da68c05373c35f922214",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit09.png": "f0736045ee9136e32f65d0c5dc1df2757175afa964cdf999ef3553721caba62d",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit10.png": "8a5e6dbe2629c22075354250a048dff8cd4ed881d30c4d3577b921cd0ad5b825",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit11.png": "f6a8596c1f61512792de2363a776f6d949471709fae0d270906948820f14e03e",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit12.png": "f4d566b4456bae7446820f43bec31eb871e503285c555b17ddf63b831f908287",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit13.png": "476cebfc44f3385da94e0eae781ec7d4abfaa4b39f5d5d4eb946c192e9be50a0",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit14.png": "ca7fd849c5724c13df9c45c32c0ef5d9dfa9314c8d3acffba5b0b2d265813ccf",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit15.png": "2b5cd86fc61301af0c37c76d381fb673d2bc1cc78e02eb9f8e8ce48437fcda97",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit16.png": "2b1be670d6c140e581e3adcc3c565b10b6c1048bfca13ecc55c6c5525e95f718",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit17.png": "1f1382f5a4aad6f7dd81a664d2e9923181ca67602791955df728a0848a895cd1",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit18.png": "51c234ffd7895ed4aea932c883c436959cdd2fd5f97474694db6203dd043ca30",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit19.png": "bebded8b97e7ff471028cdf5293fc80cd0caade345edeed7869ee53bfa48aec5",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit20.png": "286b655d5a0f449065322d067adffdc07a8742392ca0afc1a43a5d05c9fda552",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit21.png": "19254d7a92ceca6ad278175998705bcb35c0d0ffc9486bdfd555e82836391774",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit22.png": "e36bf7dba526ca8d25bf363be9be3e5818e53efdbca7d7b166c556a0ead23bcd",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-orbit23.png": "712a45ba0ab2e9b60f27180010e56d7168cb4850706f1692f9273d76ff63a38a",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-right.png": "7056a7b183fd2f98fa333aa0118a582defea4d75585a6f26fbe93cfbbc050739",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-section-deselected.png": "fc54d10ecbace06fea7e1ea08a9f4568ced492cbebc721a0239005313cacdea3",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-1440-section-selected.png": "3a104652777fc3bbc42b4266c6e470a6e8ce4301850faa045f075dbed519edc4",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-back.png": "bb5db096703f88029dd622d0871ec28d73a34c0fcee3d3ab025385d30fd3bd32",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-front.png": "b4b6fb9b26557b712cd60622e22c97ece4139735242542a9dfefce1cb8c057d7",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-high.png": "68d959704c73ec3a1cf8e46078a4e423930883053c4a2647ffa693e4297abc0d",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-left.png": "0bd0a17a175d53f3d16f5048b1a4e127f88156e6a23e39a76b5f9cdbf4c00484",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-low.png": "0238b40f76d5e7c3d39f67394ffe8fdc0b0640b69ebe6a05edb2f0fd5ed1c92c",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-near-edge-on.png": "83b3733a2b6fb4195e663cb5c4c780a889d139f486bcc16dbd5213b05f2d74a5",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit00.png": "b4b6fb9b26557b712cd60622e22c97ece4139735242542a9dfefce1cb8c057d7",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit01.png": "5c822cbb9545bc9c3c75e45c53cbf92dee81c734b82cedba09f7a353be2dc14f",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit02.png": "4814f7bd1ab42f5d062fb04d2c9c54abbe8cd398f6407929e10f748b1b82e03c",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit03.png": "3702a273b321ef49713a158372888c0578d71371b6e9d3cf8af205740ba284b1",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit04.png": "10be2fb424c3897d28ca964fc2c716c746197bdf0477100c5dc64119d919569b",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit05.png": "2b10ab225f3cbdc3dbb862c900baa05722459ac9ad667c482bd02283ae828ca6",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit06.png": "06bf2320a58328ed8699571168e46f0dbb22a9085a5187c77e0e5f4ec193cbd8",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit07.png": "39229a0d96ac61170a6bb4a153fc4adb01923e7c907f7ca712d57ac64636fcda",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit08.png": "61ee8d6a80f6ae93137f6d9b9bd6610806170930bf5af4e809948b8f47e9912a",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit09.png": "1948fd158f8a0930ffac7e130b52ee575829da63fd7cd9e2b1690fb54d985879",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit10.png": "df87a83e5e0493620d9da38102c751828a4c48943f36e6bb7cd9da50553b9b00",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit11.png": "9eb5b9072a4bcdf83bfda3a7ca3553d9237ecc2ee8254673eeb316c5ccc47ec9",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit12.png": "a7538578bd01d6b1dec31df76b3a26d7fe0b4634ebc1eeb978b0994fbd4381af",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit13.png": "b17b214de24d6e5c99335cedd606fda164aaf612f16e69c8e300ca5029d2106b",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit14.png": "e18000556aa7fdcdbf98b762c67be048fbe0e003696f1ec3b1e698cad87f7242",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit15.png": "c3db2630a0bbd0e3ed4d2dd68d5ea506bd27d0296f50ba901c7cd9f02e3904dc",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit16.png": "7f60cff6b5601444ea0568cbab3be0e52e6666c3c7478c7db597f93bceeee273",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit17.png": "f7a7d198bba4b982180db525c09509c7947c892576afc04c981d8b1dc441a556",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit18.png": "d03a133852597e6d767cd2871aa5a2db339fb10104577907f6def1a9a68a4fb1",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit19.png": "5921bba75ff943015d6309d7863747db69628ca928b2b3cd7cacea15e843928e",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit20.png": "cd84e5a9867f49758fa02a9012b4fbec5ac67a5cc2d3ed395e82cd54b9a6fb9e",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit21.png": "d93b3831d4e81f341f691067ece4cbf0505d4a9a0344462ca0628a9ae82d3b27",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit22.png": "0c98cc123f91d8a27ac235ee890a29396d96cdcf4a5afd60e36d189e8dabae7f",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-orbit23.png": "2d3c1e1bc22b367eb9fb249fe719ff6db06a62cfdbf7295a6310caad321c61e6",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-right.png": "aee6d0a5e180e7ed1fa4b898839697ce2fcef6afa28dd927ff7258df3e2045a3",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-section-deselected.png": "9b020876470fd906e619f5963cec49133dc9de5037e0f62c050e17b9213c7716",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-above-390-section-selected.png": "40d5ff0ec8d5987859fce005472a5d5b962215c5264469045c67e78e90d84b42",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-back.png": "8c1e9c87c25a2a7e4ed92667c6addd2ea575d5d665d1decb18febde581e8e243",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-front.png": "8c219328ffc5b02d233838ffc3c7d24f62fe4d773179487a8927a847942945d6",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-high.png": "edc1300ba3f9273d246660b615e3bffc56dc4e4bba4eb9302b42dcd0bcd0423a",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-left.png": "4f6f2196135f919586ca1ca9d65520b65b69299551c0a83be6cd38db81de2ee3",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-low.png": "c78dab02a5c3129401be67dd24ab5931528b61372fd7940dfb916e6a5d419b6c",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-near-edge-on.png": "568a91f30f782e5457db91c3537df3038df2027d13c94e32c31b0e5c41a711ac",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit00.png": "8c219328ffc5b02d233838ffc3c7d24f62fe4d773179487a8927a847942945d6",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit01.png": "157f76ed1ead1bed063cba938ffe22276e227dc168b879181846b68e1c99bb38",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit02.png": "29cf6940a0409c430466938d8d43dc256e40edde4f3f3a5641a1e42144140789",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit03.png": "1086098df2f7d730ae9b60d1a3cd48926b4de5a81639df17368d2001f4d440ff",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit04.png": "b64254a9e90ccb7fa171291dcd1a5e6e273d26c450043b3529fd71b1f1f30a5d",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit05.png": "47c769e87e1d4be7fc1e3592f6b5cf691c48de23b9a1dfca28679967f9a65fbe",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit06.png": "b94ba9456bc1ae5171cf16fbde66a74f24145bae3f4ec46b44710acfda82e411",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit07.png": "fb445f96ebd5c87fe7361a76bd65dad0b4729d61b0543a578d06f8fcfaed8be0",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit08.png": "ac74a64a14619e36ee574c1f7d6458e7d470e5d9f05c1207baac8afef7a67f53",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit09.png": "ebff9ffd9e2e4e737934b5fb7995aef5ffbd2dce555245b75b8e22595862c514",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit10.png": "9a73b40204051fbec7171358ff92129f40557655327f2390cdff1e1de7facca8",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit11.png": "1a59d197bcc394d328bd9d1ec7e652769b6ed5e51b4072ddc5309955d6ecb846",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit12.png": "0d1e0b795202316959c603956ec39d52e8312dc50b6edc907cf332a837631fe6",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit13.png": "28a3b0e452fd5acd7892fc7ebdeb21594866f163f589cba1cc9e8c4fd48b99d7",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit14.png": "6db4c4063a7493e286bd9bfd6fb37a75ced13575072e8cb9b5736a969b3dbd47",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit15.png": "bb05c15d55e9263afdb4fdf4ee69d739637722885c2fd5e0ff0672352bc46b58",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit16.png": "4bdc4a1665186a1dcc6164a6935b9f648eea2a98090ee06530f22ca2e594fa1b",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit17.png": "e577aa56cb7147f0dbf04062545235ba13131dcfc4ed0070bf621abe3b3213ec",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit18.png": "c3926c85ea91d7184e1bda822968e2ab4de5a23e572dbf75ce27c672352c709b",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit19.png": "b121af29126b46b91eeb706e525219356367dde6e5665207041938934a1ad4e9",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit20.png": "87147acec726d1bc780a6bd6a8c8e03211bbab677a17622e0606bf1fe2157d61",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit21.png": "4e1fcc205be796a557f065715f9498897b195b8957e5c33af0bf41a4de7bb9f6",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit22.png": "9d121b1144685a2d5883c7afdfd9df627ef90c07d9aaaac7d13ea27b366d1295",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-orbit23.png": "2d234d9f6be8813c85c1fe6818578558a1924cfe88cb55b79530b169cea06fa2",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-right.png": "f6aa4126a90bc89e35d4c6a815c2eeea75789dfec2269f47f9ad4130a5ddd1be",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-section-deselected.png": "85014f414f1f536beb547527df60070eb29dd2708485ccad9f2978cb902e4b4e",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-1440-section-selected.png": "2ea441d9117b104c1d0f094c65cf9d0531be8c1f449651e8d5c1f32f8f7154b0",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-back.png": "4e752910240d904e8b6929dbcaaa240c8c15358d0c181804ccc73571e71d47db",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-front.png": "a030eef7c5e5d44e4efdeb055acb33153cc2257007ea8f52c0a3a804a08730e9",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-high.png": "95bd4c87376158e25722377e069bc82e9253ec90a5b6e05f1cd742c2c931ab62",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-left.png": "e8e3dc3b2acbb46fb819b79baacf8023ea91154864a3596e3fe5084dc6a95d60",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-low.png": "b74b9f1d9e32b82a9b49ff26bb7543a0791a7763f63b3666963688f7980cbb60",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-near-edge-on.png": "d4c2f46b7c90fe120b1279fc582a14ca27e8704667d8bb952db8fb9c594ecd56",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit00.png": "a030eef7c5e5d44e4efdeb055acb33153cc2257007ea8f52c0a3a804a08730e9",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit01.png": "062be0a0e0a631afe11365d544dbfbfa2d95fe795494bf6d1c43874880e7f563",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit02.png": "460de629bd368aa873ebd6f7c594cc92219d43f6c6b64d530e1f6ff1de6f3044",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit03.png": "127f405bff79ec8235cb308c721418b7a47fa4b2df713717456d122018dcabce",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit04.png": "1b9ae425c35a6200d2f25fe47eb75f98aada9c5586396e4496fa93447ab72146",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit05.png": "33738149289156941c0da7aa00e76f8b2fc43e09d7fbbbc08ca5071d62fa73d1",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit06.png": "2f10d1b26973edccf333d0ded74108bfe767c2dddb1c4ea36b4a16bc98a4f14a",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit07.png": "70334ebeea6ffaef49fe6bece93784f9f5b35dffe2b838c9b64c62a6beaa9091",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit08.png": "e3252f3686ed2cf9cca3dad326d4e3d65256d187f2c63f173114b41488f1bb98",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit09.png": "7e0e54b2162da215c2eef32a3c24e8c005e8023bed28dad3e05e3d308f850f2c",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit10.png": "cb8998565aa7787047344547ac74a63cd3739d3254a03bfd2af1afe0624bc29c",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit11.png": "88ea232056e0b1cf25cd26749099ca635f5dd79c728f03520a288767e049006f",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit12.png": "ed3a22f1af4b73760a4f94002249985d2d20bb0070ec58089448892b64b50da7",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit13.png": "2506a1cf12291f8e144dd772551515730966f2f3d846a3eee487d2ad6f087d80",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit14.png": "d820cebc11a3719591e39b776bafeaa9cfbb776926725cefc159807120158ad7",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit15.png": "66a491f4ba6dfaaabcf0e624c9e26b54e4e9a495e7ae35ab88ebf0d426e38605",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit16.png": "5b3ffc7f03b9e9f6ad1d544f4029cdd597afe468384d9564752dc6a690fe6c9c",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit17.png": "7cd70849bb36dae8130aaf5537bbd639c0bce8075178a50242499307ffc980bb",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit18.png": "8a47b9a39a0398e86e499c4616cc21c7620e42057a2f642b49861b6314bdffe1",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit19.png": "46787bea68024c9d2ebc43930b927829d126cf83111d24be21d2f2c75294ad3b",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit20.png": "393c3cc0d59509fa06430e429ee2f74fd02ebe446f12424ee61f0aad89ff2f7f",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit21.png": "d291d0d8939aa31015845e70cfdcc0120d0ef9afcffc9ac0da5c66ec83dd8f6e",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit22.png": "be95d38f6efd27b770cb352c2a3b5f14db0df8ce00ccba8762f453aacef38d9c",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-orbit23.png": "96c3249db248ac9e94cdef3e0bcb7d3fbe79dde8983751a7a583fe07a3602642",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-right.png": "aa63a15f5b36f539cb1e5d744a001efed221a6b777b238935841970e77a4a8a4",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-section-deselected.png": "86f6a465c55ca51d79387d4aed5ecb0d680c9af104a3746ef251a0886f39b58d",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-through-390-section-selected.png": "c8171ae7c960d5388828ac1973792b856af33fd53a27f930a740e9fe90aad46f",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-back.png": "1f38ee20a1aa984002e27eb24463fcf770ed58c9c9175a6f737e4853d7360068",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-front.png": "0ac0ef71b9d55baa4b92a333b23f1d53bd2ab682af122ae4eeda48fe49e9bfa1",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-high.png": "23729387d580edbbd077320162ee1262258976f2e18a17c2bfe8bc0ee5fee886",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-left.png": "060ba429f7e083a75790cde664a58bc3f2122305a62d948f626139e84f05de48",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-low.png": "40a89a3e564be18565c8213cff77a1dbeeebb60e2f7a953445f7345fd55abc49",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-near-edge-on.png": "47d4bddc2e0ca8caaa21f7f88ffd3e518556ed8e8e08eb50c964b0e0917b8f2b",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit00.png": "0ac0ef71b9d55baa4b92a333b23f1d53bd2ab682af122ae4eeda48fe49e9bfa1",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit01.png": "7e38bc1b79895d98709de9f85ec16e007de0a7fa6acae4523371e37ebfc9a9c3",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit02.png": "433a26a3c2b6818f5352bfacf6e227032443a7c8f7e5601c0fc3bda2bbe1d0a1",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit03.png": "e13324ad652be915b46b230c8f2f546eecfb36f260f46564d4baf8c81cce42ed",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit04.png": "9ec5a31a0eb7833c7a03e6aa0d28a15cc393c1a9058cd81ce260aa9d3ad9039c",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit05.png": "a8e1f77f0f8ed98e31b16d1205d6f5bab34f28030d53611717073a00dba85258",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit06.png": "ffafc11b38cd6c004596ef56c98db7d62582db40034726f35fcd2548fc75fe05",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit07.png": "ce780b1d9b9728a6c01a1ae6e36de1c006dc1d42f0d8c638380da27f3702b003",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit08.png": "2b97f9761cf67d171e6bffae2917c371f2400d3cd7eedab7f675d2b54be902aa",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit09.png": "b34a8683f18a22eed9240281d0832ed23969cf65fcfe22ac9e78c5cdfc844adc",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit10.png": "9a5dbde02bc7ba0963444ce65c3d236bd7d02296077bc891fea2052706bf55d7",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit11.png": "1fb53ab91c4deeba6999d9d028f481e690edd26bcb2853abfd01b13a4d11d764",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit12.png": "4bd62609f70bb89782744ff95a8e3867b3b0a26cea8103bd742d2a6e3142e232",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit13.png": "8938018cd95e393984db1d1ed0da04b4572d953235c1b63c5fa41be29884c7a6",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit14.png": "5104b4a41e2bf1fb2f2d15311fe49120baf6ce1fb6250496e7806ccf427e7547",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit15.png": "b2aa2e0efc001baecde446c7a5d592d1e032227a70cdf977e404985ba9333e6c",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit16.png": "a0bc7e3904133146dd456951b512b3e1c6a2ce3ef05b987aa364c29aec5318b2",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit17.png": "3b3e4b363ed3b89c5551f144d1bb05f5026951f7667530910ca8f1ea6376ae3f",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit18.png": "942322b9b17be96863e951082e6e4e7cf5bacfa3497ccb36631420ba33832af1",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit19.png": "3f9b634825463aa59ad5fa0001102519cf1ee6b913801255c71df488e8caf6e4",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit20.png": "d1de15adc5c142b897300632d07f2a2f8c84cc398acea93febba7926af9e4780",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit21.png": "78e8231ddc5204d522c8cb0541cf127f69720c57715e05190933da262ac3802f",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit22.png": "29c35885c375f9d50ec00a522b958dee9c31930bafa6c442a454469102abb5fe",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-orbit23.png": "1c2630868c7df4b2ce8defe291deda0d996fede0860ef45c0ae04a255db08025",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-right.png": "1412a66a8a1b27562dc74e3f73f359adc290d0b31d44898a4fa4c6cd403fd973",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-section-deselected.png": "a4cb51c56dd45b877cdfddbb2d104bee41b302330d5f3b79cfaa3363e8fa4bcc",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-1440-section-selected.png": "0563c05144082319e596f4815728fbf9b1995a93168835ef39ff4322ad06a1be",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-back.png": "b23d33dabbc9e62c621c86bb4fba4f9ba7290122d83c5bad5cfefb215314f982",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-front.png": "961bdbe14978ed628a2ae252596d3154e6f985441a7fa968f2f5a5c7b2b71ab7",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-high.png": "800a8e05b705486bc13400c3be64b828165ae8bfddf42558a65cc0415040491a",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-left.png": "62a0c5a32d953515a114359b13b9aeb61614137ac98c64e9bffbe8abf182f09a",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-low.png": "48acdebfdb4867c9218f1aa0be66eb80c4646f30351c4f8ec37c4f85f3f62c5b",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-near-edge-on.png": "d3396b065cb882f674065e68f89c0c19d4aa15c743a17309cd3a94f7aac93221",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit00.png": "961bdbe14978ed628a2ae252596d3154e6f985441a7fa968f2f5a5c7b2b71ab7",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit01.png": "502f9dc84700a8b4fbd1d3e6404ff84c2283d70f9b3156d9583eafc0157469ec",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit02.png": "0cf10bcb11ce5158fb68d22b7e25445757a58a697f07976eae4b1ea49439a157",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit03.png": "26f8863f0da2f8e4c2ffe8c5302a37c297017e912739c3b08de9d84e66f6c21f",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit04.png": "f8a49d2e9ea08a7273d902477c22eebc4271f6fd808634ca165016df2074414a",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit05.png": "6bb7dc15532473a2004ab7a2e9c8f41b71f5b765cd3572f0f6031ab2c5c2e87b",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit06.png": "4fa6b5b1b7cfc1330e47793482dfb63ba0c7376dca4a9dc4b7dc64bdbd793980",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit07.png": "f21d218841cfe30b5aa32789cd94bc573f329c52359fe0fb4b52a6904a664693",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit08.png": "08c275d881b92ee178a1b2b2584740928d2eb887fd2e9005cababff8666a45b7",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit09.png": "201f7f6ea29a34ca855cc3b412557666a52319efbe2278e8830e89d6b19d2acf",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit10.png": "ae55663ed101f91bdb8c0247ade1118f01e3820c5c248de3797eaee1db9e924d",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit11.png": "2c5e08ef35570cb69f352e1b1d029211b77767fa66d3be2387a3473d32ad6adf",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit12.png": "4511e5ac0a7d56e02d9814979de528f22da8fc3f97b0b29eb89099f106c0337a",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit13.png": "d8b6e7efe7cf06da04c9e82a468cccbddab315be6d5a7f9e7707bb96af868c49",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit14.png": "0f6a5f288ae2deed1cb273b2a51234eb89b9c6231a1d6977fcdc7fc5e462216d",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit15.png": "1c250e5c871b72654ba15d6ba431bbf67e6113d4ca9c62d318d43e8833d414f1",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit16.png": "4d692e1488adb9f8c5fed153b691fa16a2fbfbd9215d3715268bbec91ba32298",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit17.png": "87ec7738ba07c2118276c1211328d413d827b0a1d06581e828373b7a39978c8f",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit18.png": "b7a530010409a4f96254a02296b06c4ff3b6d6dfc947a39d0bcd89a9f5ee5c78",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit19.png": "3b1f9f15ff71699fccd9c8c02044e7b566fec4450729cafed691709f58d68d3d",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit20.png": "ec38264888d6811cb456add8fc493e54be2a0a9cffa626693c3732604704f650",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit21.png": "1555eec647e210082b1fa7a7c3d1631c6b7d34b0b36ad39e6b08ff8303d7a60b",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit22.png": "7c00c35edf7cce9eb29896b1c0e78cc236c215a4a5c3f0f0bd6fe38d76b9ebd4",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-orbit23.png": "09f1758b53af98bd72ea54ecd41bdf900a21df0ef517aa77f3a62384162f87c4",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-right.png": "9d0da98b8c9e43bda377a418378adb9ef714c30efa41805dfc732992ba4d3735",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-section-deselected.png": "9c17bc66736728bdc91096e9c759ce9a95874e22d2a47196da55fea715f113d5",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/cut-tilted-390-section-selected.png": "0b6ddd2f502d154d0d0c31e441520019cb8a84db43d896451366490df36e3398",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/after-e047235e/receipt.json": "92b8f92cc6841ff1bbe28faa715f90c820a654429133bd40a7245dd40b524f7d",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/full-t3/receipt.json": "4777c91ebd18ef91e7b2f60c3ab13f7552613a63604b5f1456c87e8763f690d0",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/OWNER_VISUAL_REVIEW.html": "9b35f393de4e36b16016aae5afb5e876d12f08a0cf645e91210563214a8dc277",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/plan.md": "a5045ee362c6db65d1c9a268072aceb5cdc8fe8321ccba66790a295bf88d9530",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/prior-unresolved-rays.json": "05d409691236f8b8c5692a89593b135c262b50bb50b0c9259bed260b80d699c7",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/red.json": "37656fd885e7dfddca4ba5b961764e883fbdf6649b21747c5408616600d8ef9b",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/report.md": "b01b0a21ada1386a6f762036687a17b5a4bebb5c70575ec9d3c0c99a35f0e4b9",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/run.json": "3b8ddef0e1cc361281aa191eccd02ef841599a79bbd444b4e38224bfba955e97",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/silhouette-after-e047235e-1440.json": "b065fea86d755824ef6ef1d796ae14ce33bcf2a7df7d91071f299411e66c58d4",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/silhouette-after-e047235e-390.json": "fc5f9b24ed294ff7bfd6e1dc57324b1fb78652d97f042b72037d3aa5c696c4cf",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/silhouette-secondary-probe-after-e047235e.json": "f57d3b3a1d8af82638900b461f0386cbc449ce30b29b8052d34c957f5ca4a24e",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/sphere-plane-oracle-envelopes.json": "fed6cfe4af2f1d0594ae1902b65bd61da27619cf5eb32c4422953a6bb7ed5204",
+    "docs/evaluation/geometry/runs/sphere-visual-polish/sphere-plane-oracle.json": "9fe69ec81862facb2851470b697da2e48d49918eaa477f73011e5145be67480f"
+  },
+  "taskkill_probe": {
+    "phase": "termination",
+    "owned_parent_pid": 25016,
+    "owned_child_pid": 11292,
+    "taskkill_returncode": 1,
+    "stdout": "",
+    "stderr": "ERROR: Access denied",
+    "child_returncode_before_fallback": null,
+    "child_final_returncode": 1,
+    "child_reaped": true
+  },
+  "old_failure_repro_cleanup": {
+    "child_pid": 29560,
+    "observed_live_after_old_watchdog": true,
+    "manually_terminated_owned_child": true,
+    "signaled_after_cleanup": true
+  }
+}

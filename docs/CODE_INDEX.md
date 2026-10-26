@@ -1,5 +1,9 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Windows offline watchdog recovery (local, 2026-10-26)
+
+`backend/scripts/run_schema_contract_offline.py::invoke` uses `windows_process_job.WindowsJobProcess` on Windows 10+ to attach each offline command atomically to a kill-on-close Job Object before execution, inherit ownership across descendants, and check zero active members after bounded cleanup. Normal exit and timeout/failure taxonomy are preserved; POSIX retains process groups. `test_windows_process_job.py` covers real process handles, descendants/parent-exit races and OS-failure injection; `test_schema_contract_offline.py` preserves matrix failure persistence. Run-local `hybrid-v2-after-main-integration/tools/run_t3.py` persists UTF-8 receipts before ASCII-safe console output (`test_t3_recovery_receipt.py`). No product/cache/default or renderer change. Evidence: `docs/evaluation/geometry/runs/hybrid-v2-after-main-integration/`.
+
 ## Final sphere stroke hierarchy (local candidate, 2026-10-26; Owner review pending)
 
 `scene3d-edge-visibility.ts::dongBoNetDayManHinh` gives only `sphere_silhouette:*` a 0.65× edge width. `scene3d-view.tsx::buildObject3D` increases the sphere's non-authoritative reference-equator ribbon to 0.27× its radius and darkens only the visible arc toward the existing edge color; the hidden arc retains `hiddenEdge` and its existing opacity. Tangent placement, camera visibility, and true section geometry are unchanged. `scene3d-curved-transitions.test.ts` checks the hierarchy at desktop/mobile sizes and against a real rim. Run `docs/evaluation/geometry/runs/sphere-visual-polish/`.

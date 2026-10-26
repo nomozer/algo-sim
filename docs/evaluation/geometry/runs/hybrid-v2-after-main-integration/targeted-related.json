@@ -1,0 +1,12 @@
+{
+  "files": [
+    "test_schema_contract_evaluation.py",
+    "test_schema_contract_v3.py",
+    "test_question_tail_runtime.py",
+    "test_semantic_extraction_evaluation.py"
+  ],
+  "passed": 153,
+  "exit_code": 0,
+  "duration_seconds": 5.11,
+  "provider_calls": 0
+}

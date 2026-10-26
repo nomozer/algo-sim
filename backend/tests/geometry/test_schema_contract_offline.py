@@ -33,6 +33,7 @@ def test_windows_watchdog_terminates_the_invocation_child_tree(tmp_path):
     assert result["status"] == "INCOMPLETE_TIMEOUT"
     pid = int(log.read_text().strip())
     kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+    kernel.OpenProcess.argtypes = [ctypes.c_ulong, ctypes.c_int, ctypes.c_ulong]
     kernel.OpenProcess.restype = ctypes.c_void_p
     kernel.WaitForSingleObject.argtypes = [ctypes.c_void_p, ctypes.c_ulong]
     kernel.CloseHandle.argtypes = [ctypes.c_void_p]
@@ -42,9 +43,11 @@ def test_windows_watchdog_terminates_the_invocation_child_tree(tmp_path):
             assert kernel.WaitForSingleObject(handle, 0) == 0
         finally:
             kernel.CloseHandle(handle)
+    else:
+        assert ctypes.get_last_error() == 87, "Cannot verify process termination"
 
 
-@pytest.mark.parametrize("launch_error", [False, True])
+@pytest.mark.parametrize("launch_error", [False, True, "cleanup_timeout"])
 def test_matrix_stops_after_first_nonzero_exit_and_rejects_overwrite(tmp_path, monkeypatch, launch_error):
     batch = importlib.import_module("scripts.run_schema_contract_offline")
     inp = {"protocol": {"lock_status": "LOCKED", "offline_watchdog_seconds": 10}}
@@ -56,6 +59,8 @@ def test_matrix_stops_after_first_nonzero_exit_and_rejects_overwrite(tmp_path, m
     calls = []
     def failed(*args):
         calls.append(args)
+        if launch_error == "cleanup_timeout":
+            raise RuntimeError("WATCHDOG_TERMINATION_FAILED")
         if launch_error:
             raise FileNotFoundError("synthetic missing interpreter")
         return {"status": "FAILURE", "exit_code": 7, "duration_seconds": .01}
@@ -116,20 +121,23 @@ def test_distinct_output_roots_do_not_share_log_destinations(tmp_path, monkeypat
     assert logs[0] != logs[1]
 
 
-@pytest.mark.skipif(os.name != "nt", reason="Windows taskkill race")
+@pytest.mark.skipif(os.name != "nt", reason="Windows process-tree cleanup")
 def test_unsuccessful_tree_stop_fails_even_if_parent_exited(tmp_path, monkeypatch):
     batch = importlib.import_module("scripts.run_schema_contract_offline")
     class ExitedParent:
-        pid = 12345
         waits = 0
         def wait(self, timeout):
             self.waits += 1
             if self.waits == 1:
                 raise batch.subprocess.TimeoutExpired("synthetic", timeout)
             return 0
-        def poll(self):
-            return 0
-    monkeypatch.setattr(batch.subprocess, "Popen", lambda *a, **kw: ExitedParent())
-    monkeypatch.setattr(batch.subprocess, "run", lambda *a, **kw: batch.subprocess.CompletedProcess([], 1))
+        def stop_tree(self):
+            assert self.wait(0) == 0
+            raise OSError("synthetic denied tree cleanup")
+        def __enter__(self):
+            return self
+        def __exit__(self, *args):
+            pass
+    monkeypatch.setattr(batch, "WindowsJobProcess", lambda *a, **kw: ExitedParent())
     with pytest.raises(RuntimeError, match="WATCHDOG_TERMINATION_FAILED"):
         batch.invoke(["synthetic"], .01, tmp_path / "race.log")

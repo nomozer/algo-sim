@@ -1,0 +1,89 @@
+[
+  {
+    "attempt": 1,
+    "independent_pytest_process": true,
+    "exit_code": 0,
+    "summary": "26 passed in 6.96s",
+    "process_observations": [
+      {
+        "pids": [
+          25340,
+          13592,
+          4120
+        ],
+        "all_stopped": true,
+        "job": {
+          "method": "windows_job",
+          "parent_pid": 25340,
+          "pids_before_cleanup": [
+            25340,
+            18888,
+            13592,
+            4120
+          ],
+          "total_processes": 4,
+          "active_processes": 0
+        }
+      }
+    ],
+    "log_sha256": "1873b71ace2f3aae1947c62fd9a2619a31510d4fd821cd00d10a507ec2375ce7"
+  },
+  {
+    "attempt": 2,
+    "independent_pytest_process": true,
+    "exit_code": 0,
+    "summary": "26 passed in 6.95s",
+    "process_observations": [
+      {
+        "pids": [
+          25000,
+          18916,
+          14048
+        ],
+        "all_stopped": true,
+        "job": {
+          "method": "windows_job",
+          "parent_pid": 25000,
+          "pids_before_cleanup": [
+            25000,
+            19672,
+            18916,
+            14048
+          ],
+          "total_processes": 4,
+          "active_processes": 0
+        }
+      }
+    ],
+    "log_sha256": "79d05921d0c3c159043408c3da9a0d718aaa1e505a3474d5cc1880ba0a6cfa3f"
+  },
+  {
+    "attempt": 3,
+    "independent_pytest_process": true,
+    "exit_code": 0,
+    "summary": "26 passed in 6.89s",
+    "process_observations": [
+      {
+        "pids": [
+          28772,
+          30204,
+          23096
+        ],
+        "all_stopped": true,
+        "job": {
+          "method": "windows_job",
+          "parent_pid": 28772,
+          "pids_before_cleanup": [
+            28772,
+            25948,
+            30204,
+            23096
+          ],
+          "total_processes": 4,
+          "active_processes": 0
+        }
+      }
+    ],
+    "log_sha256": "0e18234e4f38ec7ebaa24e81f1b6a7206d027eeae710702deafdd36f8671bd4c"
+  }
+]
