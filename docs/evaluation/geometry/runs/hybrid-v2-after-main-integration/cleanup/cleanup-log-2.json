@@ -1,0 +1,86 @@
+{
+  "main": "a9889031a1ff1bedcf56b4d6843b000088fb4660",
+  "root_node_modules_entries": 73,
+  "log": [
+    {
+      "name": "svc-sphere-final",
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\svc-sphere-final",
+      "head": "39b6dbbec3d4c2d9a9615852b1c57b935feafd4e",
+      "branch": null,
+      "ignored": [
+        "frontend/dist/",
+        "frontend/node_modules/"
+      ],
+      "bytes_excluding_junctions": 3681008120,
+      "junction_removed": {
+        "link": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\svc-sphere-final\\frontend\\node_modules",
+        "target": "D:\\Documents\\projects\\algo-sim\\frontend\\node_modules"
+      },
+      "worktree_remove": {
+        "rc": 0,
+        "err": ""
+      },
+      "path_exists_after": false
+    },
+    {
+      "name": "s3d-visual-freeze",
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\s3d-visual-freeze",
+      "head": "3dcd6d9fbdc5627197537dc79c1e609ac3e03bea",
+      "branch": null,
+      "ignored": [
+        "backend/algosim.db",
+        "frontend/dist/",
+        "frontend/node_modules/"
+      ],
+      "bytes_excluding_junctions": 3477376856,
+      "algosim_db_backup": {
+        "dst": "D:\\Documents\\projects\\algo-sim\\.superpowers\\backups\\cleanup-20261026-claude\\s3d-visual-freeze\\backend\\algosim.db",
+        "bytes": 159744,
+        "sha256": "53745594170b93bce7175ca32903be1610b209f6c60f58918cbf9e540b58d54e"
+      },
+      "junction_removed": {
+        "link": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\s3d-visual-freeze\\frontend\\node_modules",
+        "target": "D:\\Documents\\projects\\algo-sim\\frontend\\node_modules"
+      },
+      "worktree_remove": {
+        "rc": 0,
+        "err": ""
+      },
+      "path_exists_after": false
+    },
+    {
+      "name": "scene3d-codex-takeover",
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\scene3d-codex-takeover",
+      "head": "11188e7a0a638ec749e145b0dc3c109c9cc799c4",
+      "branch": "research/scene3d-codex-takeover",
+      "ignored": [
+        "backend/algosim.db",
+        "backend/app/__pycache__/",
+        "backend/app/accounts/__pycache__/",
+        "backend/app/ai/__pycache__/",
+        "backend/app/ingestion/__pycache__/",
+        "backend/app/persistence/__pycache__/",
+        "backend/app/simulation/__pycache__/",
+        "backend/app/simulation/geometry/__pycache__/",
+        "backend/app/simulation/semantic_program/__pycache__/",
+        "frontend/.vite-cache/",
+        "frontend/dist/",
+        "frontend/node_modules/"
+      ],
+      "bytes_excluding_junctions": 3375922276,
+      "algosim_db_backup": {
+        "dst": "D:\\Documents\\projects\\algo-sim\\.superpowers\\backups\\cleanup-20261026-claude\\scene3d-codex-takeover\\backend\\algosim.db",
+        "bytes": 159744,
+        "sha256": "83c9f379ba089a9d21a12acac20622e72cb1018894fc3db1403e07089bae8165"
+      },
+      "junction_removed": {
+        "link": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\scene3d-codex-takeover\\frontend\\node_modules",
+        "target": "D:\\Documents\\projects\\algo-sim\\frontend\\node_modules"
+      },
+      "worktree_remove": {
+        "rc": 255,
+        "err": "error: failed to delete 'D:/Documents/projects/algo-sim/.superpowers/worktrees/scene3d-codex-takeover': Invalid argument"
+      }
+    }
+  ]
+}

@@ -1,5 +1,17 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_V2_BACKEND_NAMED_PLANE
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-after-main-integration/HYBRID_V2_VERTICAL_SLICE_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-after-main-integration/
+CLASSIFICATION = LOCAL_MAIN_INTEGRATION_VERIFIED (a9889031); IGNORED_ARTIFACT_BACKUP_INCOMPLETE; LOCAL_MAIN_CLEANUP_PARTIAL_SAFE; named-plane V2 slice OFFLINE_ADAPTER4_E2E_VERIFIED (authored development cases, not a holdout)
+CODE_COMMIT = product 1cff5458; freeze 0201c274 (c10917978af38f2c…, 118 files); divergence 19a763c1
+VERIFICATION = 33 closed-form/refusal tests (families #3, #12); fault injection 10/10; full backend pytest 12042 passed / 0 failed on clean 19a763c1; Full T3 not run; no browser row
+MODEL_REQUEST_COUNT = 0
+CONTINUES = HYBRID_V2_AFTER_MAIN_INTEGRATION (its "main/cleanup/backend NOT_STARTED" status is superseded here)
+CORRECTS = NONE (the commit message of 1cff5458 overstates the collinear case as a division by zero; corrected in the slice report)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_V2_AFTER_MAIN_INTEGRATION
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-after-main-integration/T3_RECOVERY_REPORT.md

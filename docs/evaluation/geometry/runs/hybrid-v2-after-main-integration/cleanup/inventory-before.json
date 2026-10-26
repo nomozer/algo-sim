@@ -1,0 +1,731 @@
+{
+  "main": "a9889031a1ff1bedcf56b4d6843b000088fb4660",
+  "count": 47,
+  "worktrees": [
+    {
+      "path": "D:\\Documents\\projects\\algo-sim",
+      "head": "fe9f555437498432427ae6bbd54402cdd59c7eb7",
+      "branch": "research/hybrid-wave3a-volume-reasoning",
+      "detached": false,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "warning: could not open directory 'backend/.tmp/pytest-05045731f8a046b9ba317bc970ecca11/': Permission denied",
+      "dirty_tracked": 19,
+      "untracked": 60,
+      "reparse_points": [],
+      "head_in_main": true,
+      "process_refs": [
+        "20164",
+        "9968",
+        "25844",
+        "7196",
+        "21212",
+        "3880",
+        "20724",
+        "29632",
+        "15428",
+        "19832",
+        "26552",
+        "2276",
+        "5116"
+      ]
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\b3-dist",
+      "head": "fe5f40b79d4f0ca46b08ef3b06536952a582fc74",
+      "branch": "integration/visual-b3-sphere-candidate",
+      "detached": false,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\extraction-v2-safety",
+      "head": "330a222a2d4f627da7454378627a1497c239fb8c",
+      "branch": "integration/extraction-v2-safety",
+      "detached": false,
+      "locked": null,
+      "prunable": "gitdir file points to non-existent location",
+      "exists": false,
+      "head_in_main": false,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\freeze-scene3d-metric-boundary",
+      "head": "cb1f4954a7243de0561b3e724b7b2e94cb36bffc",
+      "branch": "",
+      "detached": true,
+      "locked": null,
+      "prunable": "gitdir file points to non-existent location",
+      "exists": false,
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\freeze-scene3d-metric-final",
+      "head": "216bbf84beb4a2bbd0e6d6c688a4f3e4becf24bc",
+      "branch": "",
+      "detached": true,
+      "locked": null,
+      "prunable": "gitdir file points to non-existent location",
+      "exists": false,
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\geometric-visual-correctness-framing",
+      "head": "f95596716912e5550ed079287221274b2d70f24c",
+      "branch": "research/geometric-visual-correctness-framing",
+      "detached": false,
+      "locked": null,
+      "prunable": "gitdir file points to non-existent location",
+      "exists": false,
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-backend-s1",
+      "head": "82d3d25540ea643a68bd7877eb1b67a78dfc7134",
+      "branch": "research/hybrid-backend-integration-session1",
+      "detached": false,
+      "locked": null,
+      "prunable": "gitdir file points to non-existent location",
+      "exists": false,
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-primary-b1-b2-offline",
+      "head": "97d59bf95c0c87eae827e48148c1a5957195a82e",
+      "branch": "research/hybrid-primary-b1-b2-offline",
+      "detached": false,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "warning: could not open directory 'backend/.pytest_cache/': Permission denied",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-route-d-preview-wiring",
+      "head": "65d6ee97d6f693c6613153d28aaf40fa0f352ba1",
+      "branch": "research/hybrid-route-d-preview-wiring",
+      "detached": false,
+      "locked": null,
+      "prunable": "gitdir file points to non-existent location",
+      "exists": false,
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-semantic-extraction-v2",
+      "head": "dc27009fe9530ced01c3e6d52898d789a62cb36f",
+      "branch": "research/hybrid-semantic-extraction-v2",
+      "detached": false,
+      "locked": null,
+      "prunable": "gitdir file points to non-existent location",
+      "exists": false,
+      "head_in_main": false,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-session5-offline-consumer",
+      "head": "5ee973406b75e19503158549a22bb3b24c5d9bf5",
+      "branch": "research/scene3d-section-inspector-c0",
+      "detached": false,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-visual-candidate",
+      "head": "1a4a0b93747143b2574d0196703aad9f454c4164",
+      "branch": "integration/hybrid-visual-candidate",
+      "detached": false,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "warning: could not open directory 'backend/.pytest_cache/': Permission denied",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\local-main-integration",
+      "head": "a9889031a1ff1bedcf56b4d6843b000088fb4660",
+      "branch": "main",
+      "detached": false,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\nl-to-scene3d-e2e-readiness",
+      "head": "25f57e31604c5a12ca30667276b17596dcceb71b",
+      "branch": "research/nl-to-scene3d-e2e-readiness",
+      "detached": false,
+      "locked": null,
+      "prunable": "gitdir file points to non-existent location",
+      "exists": false,
+      "head_in_main": false,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\s3d-hybrid-v2",
+      "head": "3dcd6d9fbdc5627197537dc79c1e609ac3e03bea",
+      "branch": "research/scene3d-to-hybrid-v2-replacement",
+      "detached": false,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 6,
+      "untracked": 102,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": [
+        "25844",
+        "21212",
+        "19832"
+      ]
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\s3d-hybrid-v2-claude",
+      "head": "9b99ad4068bc5ddfc53c75792a2ecaf2f9e1f47d",
+      "branch": "research/scene3d-hybrid-v2-claude-resume",
+      "detached": false,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": [
+        "21212",
+        "19832"
+      ]
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\s3d-hybrid-v2-codex",
+      "head": "e336e0dfee30968b27887bcf446d9ec7ad610f54",
+      "branch": "research/scene3d-hybrid-v2-codex",
+      "detached": false,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 0,
+      "untracked": 69,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\s3d-v129-base",
+      "head": "11188e7a0a638ec749e145b0dc3c109c9cc799c4",
+      "branch": "",
+      "detached": true,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\s3d-visual-freeze",
+      "head": "3dcd6d9fbdc5627197537dc79c1e609ac3e03bea",
+      "branch": "",
+      "detached": true,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\scene3d-codex-takeover",
+      "head": "11188e7a0a638ec749e145b0dc3c109c9cc799c4",
+      "branch": "research/scene3d-codex-takeover",
+      "detached": false,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\scene3d-html-port",
+      "head": "7f90d9b398329d9fb99867ea784d3d126b005e31",
+      "branch": "research/scene3d-html-visual-port",
+      "detached": false,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\scene3d-plane-grid-camera",
+      "head": "551a354174e1c213f3ad2bf03d7574ebf75f4d85",
+      "branch": "research/scene3d-plane-grid-camera",
+      "detached": false,
+      "locked": null,
+      "prunable": "gitdir file points to non-existent location",
+      "exists": false,
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\scene3d-unified-visual-language",
+      "head": "8618d84c917c5d5d41eb9a9cd41a40e93ae2996c",
+      "branch": "research/scene3d-unified-visual-language",
+      "detached": false,
+      "locked": null,
+      "prunable": "gitdir file points to non-existent location",
+      "exists": false,
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\scene3d-visual-correction",
+      "head": "08929b893337e770649b9d854c8c71c4434edc29",
+      "branch": "research/scene3d-owner-math-visual-final",
+      "detached": false,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 1,
+      "untracked": 469,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\semantic-extraction-v3",
+      "head": "7168d26963011433889dc907492df87ac62140f7",
+      "branch": "research/semantic-extraction-v3",
+      "detached": false,
+      "locked": null,
+      "prunable": "gitdir file points to non-existent location",
+      "exists": false,
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\semantic-extraction-v3-runtime-revision",
+      "head": "bb014eb832672948e613ac21984c7c65cee14b83",
+      "branch": "research/semantic-extraction-v3-runtime-revision",
+      "detached": false,
+      "locked": null,
+      "prunable": "gitdir file points to non-existent location",
+      "exists": false,
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-coverage-visual-validation",
+      "head": "d86c72031d8fc85cd4eef62d9379cd1690ba1417",
+      "branch": "research/simulation-coverage-visual-validation",
+      "detached": false,
+      "locked": null,
+      "prunable": "gitdir file points to non-existent location",
+      "exists": false,
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-visual-consistency-learning-ux",
+      "head": "f6a8e30fb70d377c5a8a97db476ebd4d7c090336",
+      "branch": "research/simulation-visual-consistency-learning-ux",
+      "detached": false,
+      "locked": null,
+      "prunable": "gitdir file points to non-existent location",
+      "exists": false,
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\sphere-src",
+      "head": "98d52e90d4baa663c8215a30923321df96a14290",
+      "branch": "",
+      "detached": true,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\svc-cand",
+      "head": "08929b893337e770649b9d854c8c71c4434edc29",
+      "branch": "",
+      "detached": true,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\svc-sphere-final",
+      "head": "39b6dbbec3d4c2d9a9615852b1c57b935feafd4e",
+      "branch": "",
+      "detached": true,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\t3-b1b2",
+      "head": "a084c180019a2c1867289b29c59a9d956d11465f",
+      "branch": "",
+      "detached": true,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\t3-claude-resume",
+      "head": "57a4d65cba3f56682a9457e5a86004a54bb4784e",
+      "branch": "",
+      "detached": true,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": [
+        "20724"
+      ]
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\t3-scene3d-metric-boundary",
+      "head": "2160fbcf3a8ec489f8ac792ffccdcf7436f30c86",
+      "branch": "",
+      "detached": true,
+      "locked": null,
+      "prunable": "gitdir file points to non-existent location",
+      "exists": false,
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\t3-scene3d-pre-main",
+      "head": "61668c9362c49df39f1ae948b0e7a7e1cad33f95",
+      "branch": "",
+      "detached": true,
+      "locked": null,
+      "prunable": "gitdir file points to non-existent location",
+      "exists": false,
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\t3-scene3d-pre-main-2",
+      "head": "8e2235e7a540da58c48adf6fcced12624676119c",
+      "branch": "",
+      "detached": true,
+      "locked": null,
+      "prunable": "gitdir file points to non-existent location",
+      "exists": false,
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\t3-sphere-final",
+      "head": "7e545f66a18eb27d0e6bc73c337a1a4e98b8ea4f",
+      "branch": "",
+      "detached": true,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\t3-sphere-final-2",
+      "head": "104808d6c2678c05c0099805b2d0ffa8a4a0e848",
+      "branch": "",
+      "detached": true,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\t3-sphere-visual-polish",
+      "head": "3d6351d81deb8c1cea1d7210f53101cfc1ea26bb",
+      "branch": "",
+      "detached": true,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "warning: could not open directory 'backend/.pytest_cache/': Permission denied",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-geometric-visual-correctness-framing",
+      "head": "7868db0aef3810e2089b5f8b8d6aecfb8b3e1400",
+      "branch": "",
+      "detached": true,
+      "locked": null,
+      "prunable": "gitdir file points to non-existent location",
+      "exists": false,
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-s3d-hybrid-v2-codex",
+      "head": "e336e0dfee30968b27887bcf446d9ec7ad610f54",
+      "branch": "",
+      "detached": true,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-scene3d-codex-takeover",
+      "head": "e1ebc72cd3968abfe752303089efc8cb7441abe6",
+      "branch": "",
+      "detached": true,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "warning: could not open directory 'backend/.pytest_cache/': Permission denied",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-sphere-main-integration",
+      "head": "d1ee4f0dc4d5a377512a8fcfc810bdc6f3348202",
+      "branch": "",
+      "detached": true,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-visual-ux-final-quality",
+      "head": "9343e8d0d4c4cdf5bf0865e0a550c13f238f28b5",
+      "branch": "",
+      "detached": true,
+      "locked": null,
+      "prunable": "gitdir file points to non-existent location",
+      "exists": false,
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\visual-hybrid-integration",
+      "head": "13d28b844925ee0c9adb02698b54597c8f9d6eee",
+      "branch": "",
+      "detached": true,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 1,
+      "untracked": 209,
+      "reparse_points": [
+        "frontend\\node_modules"
+      ],
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\visual-ux-final-quality",
+      "head": "164a5e25ad25bf42d689df115ade5d74b5c733e9",
+      "branch": "research/visual-ux-final-quality",
+      "detached": false,
+      "locked": null,
+      "prunable": "gitdir file points to non-existent location",
+      "exists": false,
+      "head_in_main": true,
+      "process_refs": []
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\windows-watchdog-recovery",
+      "head": "a9889031a1ff1bedcf56b4d6843b000088fb4660",
+      "branch": "research/windows-watchdog-t3-recovery",
+      "detached": false,
+      "locked": null,
+      "prunable": null,
+      "exists": true,
+      "status_rc": 0,
+      "status_err": "",
+      "dirty_tracked": 0,
+      "untracked": 0,
+      "reparse_points": [],
+      "head_in_main": true,
+      "process_refs": [
+        "2276"
+      ]
+    }
+  ]
+}

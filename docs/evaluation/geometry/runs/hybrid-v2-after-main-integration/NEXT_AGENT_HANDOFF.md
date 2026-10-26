@@ -1,3 +1,51 @@
+# Handoff — after Claude takeover (2026-10-26, supersedes the recovery handoff below)
+
+Active development: worktree `.superpowers/worktrees/hybrid-v2-backend-generalization`, branch
+`research/hybrid-v2-backend-generalization`, from `main` `a9889031`. Not merged, not pushed. Product commit `1cff5458`,
+freeze `0201c274`, divergence `19a763c1`, then this docs commit (`git log -1` on the branch).
+
+## Campaign answers
+
+| # | Question | Answer |
+|---|---|---|
+| 1 | Main now | `a9889031a1ff1bedcf56b4d6843b000088fb4660` (local only, 226 commits ahead of `origin/main`, not pushed) |
+| 2 | Merged before the Codex limit? | Yes — fast-forward `9978e512 → a9889031` at 20:50:06 +0700, before the backup started (20:54). No second merge |
+| 3 | The three edited files | Already committed in `a9889031`; no uncommitted diff; bytes = main (`CODEX_TO_CLAUDE_RESUME.md`). No duplicate commit |
+| 4 | 5078-file backup checksum-complete? | Backup = manifest 5078/5078; source-side only 103/5078 re-verifiable (4975 ACL-locked) ⇒ `IGNORED_ARTIFACT_BACKUP_INCOMPLETE` |
+| 5 | Raw T3 logs unpreserved? | None. `receipt.json`, `stdout.log`, `stderr.log` of `t3-recovery-3d6351d8` verified source = backup = manifest; receipt also committed (`full-t3/receipt.json`) |
+| 6 | Worktrees removed / kept | 4 removed (≈ 12.6 GB); 1 partially removed → unregistered orphan dir (ACL, 3.38 GB not freed); 47 → 42 registered (+1 new backend tree = 43); 5 dirty, 20 missing-path entries kept |
+| 7 | Branches deleted / commits lost | `research/scene3d-codex-takeover` (`11188e7a`), `research/scene3d-html-visual-port` (`7f90d9b3`), both `-d`, both ancestors of `main`. No commit lost |
+| 8 | Root Owner checkout byte-identical? | Yes: 79/79 protected files = `preflight.json` before and after; HEAD `fe9f5554` |
+| 9 | Backend branch base | `main` `a9889031` |
+| 10 | Capability added | `/2` distance and angle goals may name a plane by all its vertices — (ABCD), (BCC'B') — with every label checked coplanar; collinear leading labels refused `COLLINEAR_POINTS` |
+| 11 | Real E2E? | Offline, authored payloads, through the real bridge → Source Gate → planner → engine → IR → Scene3D → Adapter /4 envelope. No browser, no NL extraction, no live call |
+| 12 | Tests | New `test_typed_fact_next_v2_named_plane.py` 33 PASS (RED 29/33 before the change); V2 bridge + benchmark files 187 PASS; fault injection 10/10 detected; full backend pytest on clean `19a763c1`: **12042 passed, 0 failed** (1 skipped, 15 xfailed). Frontend not touched, not re-run. Full T3 NOT run on this candidate. Evidence: `HYBRID_V2_VERTICAL_SLICE_REPORT.md`, `slice/` |
+| 13 | 18-family coverage changed? | No class change: 0 FULL / 9 PARTIAL / 7 RENDER_ONLY / 2 UNSUPPORTED. `/4` named-plane goals OFFLINE_GEOMETRY_VERIFIED for #3, #12 only |
+| 14 | Gates still missing | independent review; pre-registered held-out extraction set (D-04); `/4` browser rows (desktop + mobile) for FULL_E2E; D-10 presentation from certificates; D-02/D-08/D-12 wiring + cache + rollback; D-11 paired live measurement; D-13 Owner enablement; Full T3 on the new candidate; Owner call on version bump |
+| 15 | If Claude runs out again | See "Resume" below |
+
+## Resume
+
+```bash
+git -C .superpowers/worktrees/hybrid-v2-backend-generalization status --short      # expect empty
+git -C .superpowers/worktrees/hybrid-v2-backend-generalization log --oneline -5
+git rev-parse main                                                                   # a9889031…
+cd .superpowers/worktrees/hybrid-v2-backend-generalization/backend
+PYTHONIOENCODING=utf-8 ../../../../backend/.venv/Scripts/python.exe scripts/freeze_evaluation_candidate.py --verify
+PYTHONIOENCODING=utf-8 ../../../../backend/.venv/Scripts/python.exe -m pytest -q tests/geometry/test_typed_fact_next_v2_named_plane.py
+```
+
+Next useful work, in order: (1) Full T3 on a clean detached checkout of this branch before any merge request; (2) Owner
+decisions: version bump for the new engine refusal; whether the ACL-locked recovery worktree and orphan directory may be
+cleaned by an account that can read them; (3) next slice — extend the same named-plane tests to #4 (regular S.ABCD),
+#11 (cuboid faces (ABCD), (A'B'C'D'), (BCC'B')) and #13 (oblique prism), or a `/4` browser row for #12 to attempt the first
+FULL_E2E.
+
+Do not: push; merge into `main` without a new explicit Owner instruction for this branch; remove
+`windows-watchdog-recovery` before its backup is verified; prune missing-path metadata; touch the dirty trees.
+
+---
+
 # Recovery handoff
 
 Active development worktree: `.superpowers/worktrees/windows-watchdog-recovery`, branch `research/windows-watchdog-t3-recovery`, continuing candidate `9b99ad40`. Large image/video files are excluded only from this development checkout; the complete sphere visual package remains in `s3d-hybrid-v2-claude`.

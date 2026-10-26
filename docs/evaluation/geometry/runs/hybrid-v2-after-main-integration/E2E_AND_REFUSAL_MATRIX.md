@@ -14,3 +14,6 @@
 | New Hybrid vertical slice | P7 gated on main integration | NOT_STARTED |
 | Live NL extraction | No provider approval/calls | UNKNOWN |
 | Independent holdout/review | No new independent evidence | DEFERRED / NOT_RUN |
+| Post-merge smoke on `main` `a9889031` | freeze verify MATCH; LLM_ONLY + CACHE_VERSION 2/2 | PASS (Claude takeover) |
+| Hybrid V2 named-plane slice (`1cff5458`) | Adapter /4 offline, authored #3/#12 payloads, 33 tests, 10/10 faults detected; full backend 12042 PASS on `19a763c1` | OFFLINE_ADAPTER4_E2E_VERIFIED |
+| Named-plane browser row | scene contract unchanged | NOT_RUN |

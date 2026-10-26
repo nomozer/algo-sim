@@ -1,0 +1,51 @@
+{
+  "main": "a9889031a1ff1bedcf56b4d6843b000088fb4660",
+  "root_node_modules_entries": 73,
+  "log": [
+    {
+      "name": "scene3d-html-port",
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\scene3d-html-port",
+      "head": "7f90d9b398329d9fb99867ea784d3d126b005e31",
+      "branch": "research/scene3d-html-visual-port",
+      "ignored": [
+        "backend/__pycache__/",
+        "backend/algosim.db",
+        "backend/app/__pycache__/",
+        "backend/app/accounts/__pycache__/",
+        "backend/app/ai/__pycache__/",
+        "backend/app/ingestion/__pycache__/",
+        "backend/app/persistence/__pycache__/",
+        "backend/app/simulation/__pycache__/",
+        "backend/app/simulation/geometry/__pycache__/",
+        "backend/app/simulation/semantic_program/__pycache__/",
+        "backend/scripts/__pycache__/",
+        "backend/tests/__pycache__/",
+        "backend/tests/geometry/__pycache__/",
+        "backend/tests/semantic_program/__pycache__/",
+        "frontend/dist/",
+        "frontend/node_modules/"
+      ],
+      "bytes_excluding_junctions": 2093662076,
+      "algosim_db_backup": {
+        "dst": "D:\\Documents\\projects\\algo-sim\\.superpowers\\backups\\cleanup-20261026-claude\\scene3d-html-port\\backend\\algosim.db",
+        "bytes": 159744,
+        "sha256": "1ec28d16db52424e129d96adad5719c007cf161938d0dfff681a34e640c0aa3f"
+      },
+      "junction_removed": {
+        "link": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\scene3d-html-port\\frontend\\node_modules",
+        "target": "D:\\Documents\\projects\\algo-sim\\frontend\\node_modules"
+      },
+      "worktree_remove": {
+        "rc": 0,
+        "err": ""
+      },
+      "path_exists_after": false,
+      "branch_delete": {
+        "branch": "research/scene3d-html-visual-port",
+        "rc": 1,
+        "out": "",
+        "err": "error: the branch 'research/scene3d-html-visual-port' is not fully merged\nhint: If you are sure you want to delete it, run 'git branch -D research/scene3d-html-visual-port'\nhint: Disable this message with \"git config set advice.forceDeleteBranch false\""
+      }
+    }
+  ]
+}

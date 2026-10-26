@@ -5,7 +5,7 @@ three labels (`INVALID_MATH_GOAL`) because the planner cut the point–plane dis
 non-coplanar fourth label was never checked (review I-1 of the B3 slice).
 
 Now every label reaches the engine, which checks exactly that the labels lie in one plane (`SOURCE_OBJECT_MISMATCH`) and
-that the three it measures with are not collinear (`COLLINEAR_POINTS`). Closed-form oracles from the stated facts only
+that the three it measures with are not collinear (`COLLINEAR_POINTS`, the kernel's own code). Closed-form oracles from the stated facts only
 (no engine coordinates):
 
 - right prism ABC.A'B'C', right angle at A, AB = x, AC = y, AA' = h: d²(A, (BCC'B')) = x²y²/(x²+y²);
@@ -196,9 +196,10 @@ def test_a_pyramid_base_with_the_apex_as_fourth_label_is_refused():
     ("distance", {"point": "A", "plane": ["B", "M", "C", "C'"]}),
     ("angle", {"line": ["A'", "B"], "plane": ["B", "M", "C", "C'"]}),
 ])
-def test_collinear_leading_labels_are_refused_not_divided_by_zero(goal_type, target):
+def test_collinear_leading_labels_are_refused_with_the_kernel_code(goal_type, target):
     """B, M, C are collinear (M midpoint of BC); the four labels still lie in (BCC'B') but the engine measures with the
-    first three, so it refuses with the kernel's code instead of a Gram division by zero or a self-check failure."""
+    first three. The angle call already met the kernel's `COLLINEAR_POINTS`; without the leading-label check the distance
+    call (which carries only [B, M, C]) was refused as "(BMC) is not a plane" — fail-closed, but the wrong reason."""
     p = _prism_goal(goal_type, target, extra=[("Gọi M là trung điểm của BC.",
                                                {"kind": "midpoint", "args": {"point": "M", "segment": ["B", "C"]}})])
     assert _refused(p) == "COLLINEAR_POINTS"

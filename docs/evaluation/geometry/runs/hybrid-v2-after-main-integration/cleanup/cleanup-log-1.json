@@ -1,0 +1,26 @@
+{
+  "main": "a9889031a1ff1bedcf56b4d6843b000088fb4660",
+  "root_node_modules_entries": 73,
+  "log": [
+    {
+      "name": "s3d-v129-base",
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\s3d-v129-base",
+      "head": "11188e7a0a638ec749e145b0dc3c109c9cc799c4",
+      "branch": null,
+      "ignored": [
+        "frontend/.vite-cache/",
+        "frontend/node_modules/"
+      ],
+      "bytes_excluding_junctions": 3365677876,
+      "junction_removed": {
+        "link": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\s3d-v129-base\\frontend\\node_modules",
+        "target": "D:\\Documents\\projects\\algo-sim\\frontend\\node_modules"
+      },
+      "worktree_remove": {
+        "rc": 0,
+        "err": ""
+      },
+      "path_exists_after": false
+    }
+  ]
+}

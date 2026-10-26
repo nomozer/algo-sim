@@ -1,0 +1,15 @@
+{
+  "fresh_untracked_ignored": 103,
+  "fresh_untracked_not_ignored": [],
+  "manifest_files": 5078,
+  "manifest_bytes": 38421170,
+  "backup_files_on_disk": 5078,
+  "extra_in_backup_not_in_manifest": [],
+  "verified_ok": 103,
+  "problems": 4975,
+  "reparse_points_in_source": [],
+  "manifest_sha256": "59598e1174e3495e94778a3f51ecad7748eb432e955ec0ad8021898ea37527a9",
+  "unreadable_source_files": 4975,
+  "unreadable_backup_equals_manifest": 4975,
+  "unreadable_prefix": ".superpowers/t3-recovery-3d6351d8/pytest-temp/"
+}

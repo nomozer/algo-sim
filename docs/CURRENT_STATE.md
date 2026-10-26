@@ -1,5 +1,7 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+**LOCAL 2026-10-26 — Claude takeover after Codex limit:** local `main` = `a9889031` (fast-forwarded before the limit, verified, not pushed); cleanup partial-safe (4 worktrees removed, ACL-locked trees kept); branch `research/hybrid-v2-backend-generalization`: V2 distance/angle goals on planes named by all their vertices, product `1cff5458`, candidate `0201c274` (118 files, `c10917978af38f2c…`), full backend 12042 PASS, Full T3 not run; LLM_ONLY/cache130/live0, Hybrid opt-in. Handoff: `evaluation/geometry/runs/hybrid-v2-after-main-integration/NEXT_AGENT_HANDOFF.md`.
+
 **LOCAL 2026-10-26 — Claude-to-Codex continuation:** `research/scene3d-hybrid-v2-codex`, isolated from preserved Claude worktree at `3dcd6d9f`. Completed angle/local replay slice, operand-bound skew consistency, verbatim Unicode provenance and pre-ingestion offline image guard. Browser actual input UI + HTTP 20/20, authored regression only; local corpus43:22 served/0 wrong/0 false refusal/1 grouping mismatch. Official inherited 7/8, F2 proposal2 PASS/10 UNCERTIFIABLE. New clean freeze/T3 pending; no current full-product PASS claim. LLM_ONLY/cache130/live0/Hybrid NO-GO. `evaluation/geometry/runs/claude-to-codex-takeover/report.md`.
 
 
