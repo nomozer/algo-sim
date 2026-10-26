@@ -1,0 +1,33 @@
+{
+  "candidate": "57a4d65cba3f56682a9457e5a86004a54bb4784e",
+  "detached": true,
+  "source_tree_before": "",
+  "source_tree_after": "",
+  "started_utc": "2026-10-26T08:44:21.522060+00:00",
+  "finished_utc": "2026-10-26T08:56:31.391717+00:00",
+  "seconds": 729.86,
+  "exit_code": 0,
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "summaries": [
+    "= 11993 passed, 1 skipped, 2 deselected, 15 xfailed, 1 warning in 680.23s (0:11:20) =",
+    " Test Files  83 passed (83)",
+    "      Tests  1414 passed (1414)",
+    "FULL_PRODUCT_GATE_PASS"
+  ],
+  "post_freeze": {
+    "exit_code": 0,
+    "stdout": "Candidate khớp bản đã đóng băng (mã sản phẩm: 118 file, 3850e787d86f81be…)."
+  },
+  "provider_calls": 0,
+  "execution_context": "Claude clean detached machine verification; not independent review",
+  "streams": {
+    "stdout.log": {
+      "bytes": 1575121,
+      "sha256": "86ab7528b8408c2826dcc74e42129d8961876d9ddb888387b4f43318c0999e39"
+    },
+    "stderr.log": {
+      "bytes": 342,
+      "sha256": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a"
+    }
+  }
+}

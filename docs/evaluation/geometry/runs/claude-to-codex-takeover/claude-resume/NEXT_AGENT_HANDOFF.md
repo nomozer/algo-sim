@@ -11,8 +11,9 @@
 ## State
 
 - Product `1faee1db`, candidate `96415cbd` (`3850e787…`). `freeze_evaluation_candidate.py --verify` must MATCH.
-- Full T3 result: see `report.md` §13 (if it still says "đang chạy", the run did not finish — rerun once in a clean
-  detached worktree, never on this tree).
+- Full T3: `FULL_PRODUCT_GATE_PASS` at `57a4d65c` (`t3-receipt.json`). Commits after it are docs-only; any product
+  change needs a refreeze and a new T3 in a clean detached worktree (`tools/run-t3.py <worktree> <fresh out name>`).
+  The detached worktree `t3-claude-resume` was left in place (no deletion without Owner approval).
 - LLM_ONLY, cache130, live 0, no merge/push. Hybrid production NO-GO.
 
 ## Rules learned this session

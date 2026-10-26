@@ -82,7 +82,11 @@ Owner duyệt hình: PENDING.
 ## 13. Candidate, product, verification
 
 Product `1faee1db`; candidate `96415cbd` (`3850e787…`, 118 file), khai ở `../inputs/candidate_divergence.json`.
-Full T3: **đang chạy** trên worktree detached sạch — kết quả ghi ở commit sau.
+Full T3: **FULL_PRODUCT_GATE_PASS** tại `57a4d65c` trên worktree detached sạch `t3-claude-resume`
+([`t3-receipt.json`](t3-receipt.json); wrapper `tools/run-t3.py`): pytest 11993 passed / 1 skipped / 15 xfailed,
+vitest 1414/1414 (83 file), typecheck + build PASS, demo replay và crash surface PASS, cây sạch trước và sau,
+post-freeze `--verify` MATCH (`3850e787…`). Log thô ở root `.superpowers/claude-resume-t3-57a4d65c/` (ngoài Git).
+Đây là kiểm chứng máy, không phải review độc lập.
 
 ## 14. Quyết định còn cần Owner
 
