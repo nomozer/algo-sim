@@ -2456,7 +2456,13 @@ ba hàm **không tính gì mới**, chúng hỏi `predicates` xem cấu hình n�
 đường **trong** mặt · hai mặt **trùng**. Tầng gọi vì thế không phải kết luận
 quan hệ trước khi đo — đó là lý do ba hàm này nằm ở kernel chứ không ở cầu nối.
 
-Khoá bởi `tests/geometry/test_geometry_kernel.py` (40) + `test_section.py` (15),
+`kernel.common_perpendicular_feet(a, b)` (claude-to-codex-takeover) trả hai chân `(P ∈ a, Q ∈ b)` của đoạn vuông góc
+chung theo metric khung; ném khi hai đường không chéo nhau. Người dùng duy nhất:
+`quantity_annotations._nhan_chung_hai_duong` (nhân chứng `relation: "common_perpendicular"`, kiểm lại `|PQ|² = d²`),
+chỉ bật khi `build_simulation_state(..., common_perpendicular_witness=True)` — tuyến D (`function_route`); LLM_ONLY tắt.
+Frontend: `from_point` + `second` (`scene3d-annotations.ts::nhanChungDaKiem`, hai dấu, đoạn PQ vẽ một lần).
+
+Khoá bởi `tests/geometry/test_geometry_kernel.py` (45) + `test_section.py` (15),
 đáp án **kiểm tay**, không chép từ đầu ra kernel. ⚠️ Tiêm lỗi lượt đầu chỉ làm
 2/37 đỏ vì toạ độ `(0,1,2,½)` float biểu diễn đúng hết — đã thêm ca dùng bộ mẫu
 `(3,7,11,13)` tìm bằng **dò số** (`det` float = `1.084e−19` thay vì `0`).

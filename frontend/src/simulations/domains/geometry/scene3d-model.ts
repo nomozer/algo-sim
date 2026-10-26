@@ -567,6 +567,10 @@ export interface QuantityAnnotation {
     can_present_as_proven?: boolean;
     /** Chứng chỉ đường ⊥ mặt (`exact-gram-line-plane-orthogonality/1`): hai phương độc lập của mặt phẳng. */
     plane_directions?: ExactVec3[];
+    /** `relation: "common_perpendicular"` (khoảng cách hai đường chéo nhau): đầu kia của đoạn vuông góc chung không
+     *  phải điểm có tên ⇒ toạ độ chính xác ở đây (`from` là id đường kia), và `second` là dấu vuông góc ở chân ấy. */
+    from_point?: ExactVec3;
+    second?: { foot: ExactVec3; on: string; marker: { u: ExactVec3; v: ExactVec3; u_to?: string } };
   };
 }
 
@@ -844,7 +848,8 @@ export function diemHuuHan(objects: SceneObject[]): Vec3[] {
   for (const o of objects) {
     if (o.render === "surface" || o.render === "line") continue;
     them(o.xyz); them(o.center); them(o.anchor); them(o.apex_or_top);
-    them(o.rim_point); them(o.annotation?.witness?.foot); them(o.perpendicular_witness?.foot);
+    them(o.rim_point); them(o.annotation?.witness?.foot); them(o.annotation?.witness?.from_point);
+    them(o.perpendicular_witness?.foot);
     for (const v of o.vertices ?? []) them(v);
     for (const v of o.polygon ?? []) them(v);
     // Khối cong: bán kính nở ra theo hai phương ⟂ TRỤC. Chỉ có `rim_point` thì

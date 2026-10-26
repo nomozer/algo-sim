@@ -2482,6 +2482,9 @@ export function datCoGocVuong(
     const k = c.d.nhomQuanHe;
     if (k) theoNhom.set(k, [...(theoNhom.get(k) ?? []), c]);
   }
+  // Chân đã mang một dấu RIÊNG (không thuộc nhóm, vd đoạn vuông góc chung chân A): đại diện của một nhóm tránh chỗ đó —
+  // hai ô vuông ở một đỉnh đọc như rác, không như một quan hệ. Khoá chân = phần đầu của `khoa` (toạ độ thế giới).
+  const chanRieng = new Set([...thang.values()].filter((c) => !c.d.nhomQuanHe).map((c) => c.khoa.split("|")[0]));
   const truoc = roots[0] ? (_daiDienGocVuong.get(roots[0]) ?? new Map<string, string>()) : new Map<string, string>();
   if (roots[0]) _daiDienGocVuong.set(roots[0], truoc);
   const anTheoNhom = new Set<(typeof ungVien)[number]>();
@@ -2491,14 +2494,16 @@ export function datCoGocVuong(
     let giu: (typeof ungVien)[number][];
     if (nhan.length > 0) giu = nhan;
     else {
-      const hang = new Map(ds.map((c) => [c, { thay: khuatHet(c) ? 0 : 1, mo: doMo(c) }]));
+      const hang = new Map(ds.map((c) => [c, { thay: khuatHet(c) ? 0 : 1, rieng: chanRieng.has(c.khoa.split("|")[0]) ? 0 : 1,
+        mo: doMo(c) }]));
       const hon = (a: (typeof ds)[number], b: (typeof ds)[number]) => {
         const x = hang.get(a)!, y = hang.get(b)!;
-        return x.thay !== y.thay ? x.thay > y.thay : x.mo > y.mo;
+        return x.thay !== y.thay ? x.thay > y.thay : x.rieng !== y.rieng ? x.rieng > y.rieng : x.mo > y.mo;
       };
       const tot = ds.reduce((a, b) => (hon(b, a) ? b : a));
       const cu = ds.find((c) => c.node.uuid === truoc.get(k));
-      const giuCu = cu !== undefined && hang.get(cu)!.thay === hang.get(tot)!.thay && hang.get(tot)!.mo <= hang.get(cu)!.mo * 1.25;
+      const giuCu = cu !== undefined && hang.get(cu)!.thay === hang.get(tot)!.thay && hang.get(cu)!.rieng === hang.get(tot)!.rieng
+        && hang.get(tot)!.mo <= hang.get(cu)!.mo * 1.25;
       const chon = giuCu ? cu! : tot;
       truoc.set(k, chon.node.uuid);
       // Ngay cả dấu dễ đọc nhất cũng gần như nằm dọc tia nhìn (mặt phẳng dấu lệch < ~9° so với tia) ⇒ ô vuông bẹp thành
@@ -2598,7 +2603,7 @@ export function vatNhanChung(
     canhPhu.push(chanToi);
   }
   // Đoạn chân → điểm đã là một đoạn của hình (góc vuông BC ⊥ (SAB) đặt trên cạnh BC): không vẽ bản nét đứt thứ hai.
-  const doanCanVe = namTrenDoanDaVe(w.from, w.foot, doanCo) ? [] : [doan];
+  const doanCanVe = w.khongVeDoan || namTrenDoanDaVe(w.from, w.foot, doanCo) ? [] : [doan];
   const chanLaDiemCoTen = diemCoTen.some((p) => Math.hypot(p[0] - w.foot[0], p[1] - w.foot[1], p[2] - w.foot[2]) < 1e-9);
   for (const x of [...doanCanVe, ...canhPhu, goc, ...(chanLaDiemCoTen ? [] : [chamChan])]) {
     x.renderOrder = x === chamChan ? 11 : 10;

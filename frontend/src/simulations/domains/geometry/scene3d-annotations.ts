@@ -147,6 +147,8 @@ export interface WitnessShown {
   id: string; vai: "khoang_cach" | "hinh_chieu"; from: Vec3; foot: Vec3; u: Vec3; v: Vec3;
   /** Toạ độ điểm CÓ TÊN `marker.u_to` (backend) — đầu kia của đoạn chứng minh trong vật nhận; vắng ⇒ không vẽ đoạn. */
   uTo?: Vec3;
+  /** Dấu thứ hai của đoạn vuông góc chung: đoạn chân → `from` đã do dấu thứ nhất vẽ. */
+  khongVeDoan?: true;
 }
 
 type NhanChungBackend = NonNullable<QuantityAnnotation["witness"]>;
@@ -155,13 +157,20 @@ type NhanChungBackend = NonNullable<QuantityAnnotation["witness"]>;
 function nhanChungDaKiem(
   scene: Scene3D, theoId: ReadonlyMap<string, SceneObject>, id: string, vai: WitnessShown["vai"], w: NhanChungBackend,
 ): WitnessShown[] {
-  const tu = theoId.get(w.from)?.xyz;
+  const tu = w.from_point ?? theoId.get(w.from)?.xyz;
   if (!tu) return [];
-  const dich = w.marker.u_to ? theoId.get(w.marker.u_to)?.xyz : undefined;
-  if (w.marker.u_to && !dich) return [];
-  const ws: WitnessShown = { id, vai, from: toVec3(tu), foot: toVec3(w.foot), u: toVec3(w.marker.u),
-    v: toVec3(w.marker.v), ...(dich ? { uTo: toVec3(dich) } : {}) };
-  return nhanChungVuongGocHopLe(scene, ws, w.on) ? [ws] : [];
+  const dau = (from: Vec3, foot: Vec3, m: NhanChungBackend["marker"], on: string, khongVeDoan?: true): WitnessShown[] => {
+    const dich = m.u_to ? theoId.get(m.u_to)?.xyz : undefined;
+    if (m.u_to && !dich) return [];
+    const ws: WitnessShown = { id, vai, from, foot, u: toVec3(m.u), v: toVec3(m.v), ...(dich ? { uTo: toVec3(dich) } : {}),
+      ...(khongVeDoan ? { khongVeDoan } : {}) };
+    return nhanChungVuongGocHopLe(scene, ws, on) ? [ws] : [];
+  };
+  const mot = dau(toVec3(tu), toVec3(w.foot), w.marker, w.on);
+  if (!w.second) return mot;
+  // Đoạn vuông góc chung: dấu ở chân kia (chính là `from_point`); một trong hai sai ⇒ không vẽ cả cặp.
+  const hai = w.from_point ? dau(toVec3(w.foot), toVec3(w.second.foot), w.second.marker, w.second.on, true) : [];
+  return mot.length === 1 && hai.length === 1 && w.second.foot.every((x, i) => x === w.from_point![i]) ? [...mot, ...hai] : [];
 }
 
 /** §16.7 — nhân chứng của các nhãn khoảng cách ĐANG HIỆN; toạ độ đều do backend phát (chân chính xác). */
@@ -237,7 +246,7 @@ export function annotationAnchor(
   a: Pick<AnnotationEntry, "anchor" | "subject_ids"> & { witness?: AnnotationEntry["witness"] },
 ): Vec3 | null {
   if (a.anchor === "witness") {
-    const tu = a.witness ? scene.objects.find((o) => o.id === a.witness!.from)?.xyz : undefined;
+    const tu = a.witness?.from_point ?? (a.witness ? scene.objects.find((o) => o.id === a.witness!.from)?.xyz : undefined);
     return tu ? trungBinh([toVec3(tu), toVec3(a.witness!.foot)]) : null;
   }
   const byId = new Map(scene.objects.map((o) => [o.id, o]));

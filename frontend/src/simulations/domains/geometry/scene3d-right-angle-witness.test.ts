@@ -9,7 +9,7 @@ import * as THREE from "three";
 import { describe, expect, it } from "vitest";
 
 import { geometrySampleById } from "../../../data/geometry-samples";
-import { type WitnessShown, projectionWitnessesAt } from "./scene3d-annotations";
+import { type WitnessShown, annotationAnchor, projectionWitnessesAt, witnessesShown } from "./scene3d-annotations";
 import { type Scene3D, type Vec3, toVec3 } from "./scene3d-model";
 import { datCoGocVuong, doanDaVe, vatNhanChung } from "./scene3d-view";
 import { nhanChungVuongGocHopLe } from "./scene3d-witness-gate";
@@ -179,6 +179,46 @@ describe("đoạn chứng minh không vẽ chồng lên cạnh đã có", () => 
     expect(w.foot).toEqual(toVec3(s.objects.find((o) => o.id === "A")!.xyz!));
     const nhom = vatNhanChung(w, [], undefined, false, doanDaVe(s.objects));
     expect(nhom.children.some((x) => x.name.startsWith("witness_leg:"))).toBe(false);
+  });
+});
+
+describe("khoảng cách hai đường chéo nhau: đoạn vuông góc chung do backend phát", () => {
+  // Chóp S(0,0,2), đáy vuông cạnh 1. AB (trục x) và SD chéo nhau; kiểm tay: P = A, Q = (0, 4/5, 2/5);
+  // điểm có tên gần Q nhất trên SD là D (|QD|² = 1/5 < |QS|² = 16/5); (D − Q)·(P − Q) = −4/25 + 4/25 = 0.
+  const pt = (id: string, xyz: string[]) => ({ id, type: "point3", label: id, notation: id, xyz });
+  const w = {
+    relation: "common_perpendicular", from: "sd", from_point: ["0", "4/5", "2/5"], foot: ["0", "0", "0"], on: "ab",
+    marker: { u: ["1", "0", "0"], v: ["0", "4/5", "2/5"], u_to: "B" },
+    second: { foot: ["0", "4/5", "2/5"], on: "sd", marker: { u: ["0", "1/5", "-2/5"], v: ["0", "-4/5", "-2/5"], u_to: "D" } },
+  };
+  const canhCo = (_w: unknown) => ({
+    objects: [pt("A", ["0", "0", "0"]), pt("B", ["1", "0", "0"]), pt("D", ["0", "1", "0"]), pt("S", ["0", "0", "2"]),
+      { id: "ab", type: "line3", label: "AB", point: ["0", "0", "0"], direction: ["1", "0", "0"] },
+      { id: "sd", type: "line3", label: "SD", point: ["0", "0", "2"], direction: ["0", "1", "-2"] }],
+    events: [], free_objects: [],
+  }) as unknown as Scene3D;
+  const muc = (witness: unknown) => [{ id: "d", kind: "distance", role: "result", subject_ids: ["ab", "sd"],
+    anchor: "witness", witness, text: "", priority: 1, related: true }] as Parameters<typeof witnessesShown>[1];
+
+  it("hai dấu vuông góc, mỗi chân một dấu; đoạn PQ chỉ vẽ một lần", () => {
+    const ws = witnessesShown(canhCo(w), muc(w));
+    expect(ws).toHaveLength(2);
+    expect([ws[0].foot, ws[0].from, ws[0].uTo]).toEqual([[0, 0, 0], [0, 0.8, 0.4], [1, 0, 0]]);
+    expect([ws[1].foot, ws[1].from, ws[1].uTo]).toEqual([[0, 0.8, 0.4], [0, 0, 0], [0, 1, 0]]);
+    expect([ws[0].khongVeDoan, ws[1].khongVeDoan]).toEqual([undefined, true]);
+    const nhom = vatNhanChung(ws[1], [], undefined, false, []);
+    expect(nhom.children.some((x) => x.name.startsWith("witness_leg:"))).toBe(true);
+    expect(nhom.children.filter((x) => (x as THREE.Line).isLine && !x.name && !x.userData?.gocVuongDonVi)).toHaveLength(0);
+  });
+
+  it("nhãn neo ở trung điểm PQ", () => {
+    expect(annotationAnchor(canhCo(w), { anchor: "witness", subject_ids: ["ab", "sd"], witness: w as never }))
+      .toEqual([0, 0.4, 0.2]);
+  });
+
+  it("dấu thứ hai sai ⇒ không vẽ cả cặp (fail-closed)", () => {
+    const sai = { ...w, second: { ...w.second, marker: { ...w.second.marker, v: ["0", "1", "0"] } } };
+    expect(witnessesShown(canhCo(sai), muc(sai))).toEqual([]);
   });
 });
 

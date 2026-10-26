@@ -316,7 +316,8 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
         cut = any(d.get('rule') in (DINH_CAT_CANH, MAT_SONG_SONG, MAT_VUONG_DUONG) for d in auxiliary)
         with _metric.using(r.chart_metric):
             state = build_simulation_state(r.spec, r.exec_result, r.declared_topology,
-                                           prefer_declared_plane_names=bool(two_line) or cut)
+                                           prefer_declared_plane_names=bool(two_line) or cut,
+                                           common_perpendicular_witness=True)
             # CONTRACT-BE-1: the third argument carries topology, not obligations, so `targets` came out empty and the
             # asked quantity read as `intermediate` while its event was FINAL_RESULT; the engine names what the source asks.
             state["targets"] = list(r.targets)

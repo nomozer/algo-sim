@@ -1100,6 +1100,19 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
     datCoGocVuong([khac], cam, 720);
     const totABC = ben.filter((o) => o.id !== "canh_ben_D_D_prime").sort((a, b) => mo(b) - mo(a))[0].id;
     expect(hienTai(khac)).toEqual([totABC, "canh_ben_D_D_prime"].sort());
+    // Claude resume: the representative never sits on a foot that already carries another mark (the common
+    // perpendicular of AA′ and BC has its foot at A) — two squares at one vertex read as clutter, not as a relation.
+    nhin(-0.6);
+    const tot0 = ben.find((o) => o.id === tot())!;
+    const chan = tot0.perpendicular_witness!.foot.map(Number) as [number, number, number];
+    const coChanTrung = dung(null);
+    const rieng = vatNhanChung({ id: "chung", vai: "khoang_cach", foot: chan, from: [chan[0] + 0.6, chan[1] + 0.8, chan[2]],
+      u: [0, 0, 1], v: [0.6, 0.8, 0] }, [], 0x0f766e, false);
+    coChanTrung.add(rieng);
+    datCoGocVuong([coChanTrung], cam, 720);
+    const totConLai = ben.filter((o) => o.id !== tot0.id).sort((a, b) => mo(b) - mo(a))[0].id;
+    expect(hienTai(coChanTrung)).toEqual([totConLai]);
+    expect(rieng.children.find((x) => x.userData?.gocVuongDonVi)!.visible).toBe(true);
   });
 
   it("nhân chứng vuông góc trên khối đơn vị co giãn chu kỳ nét đứt và ô góc vuông theo đường kính cảnh, không phình quá khổ", () => {

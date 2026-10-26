@@ -73,6 +73,9 @@ export function veKhongGian(scene: Scene3D): Scene3D {
   const ds = (vs?: ExactVec3[]) => vs?.map(d);
   const nhanChung = (w: NonNullable<NonNullable<SceneObject["annotation"]>["witness"]>) => ({
     ...w, foot: d(w.foot), marker: { ...w.marker, u: d(w.marker.u), v: d(w.marker.v) },
+    ...(w.from_point ? { from_point: d(w.from_point) } : {}),
+    ...(w.second ? { second: { ...w.second, foot: d(w.second.foot),
+      marker: { ...w.second.marker, u: d(w.second.marker.u), v: d(w.second.marker.v) } } } : {}),
   });
   const vat = (o: SceneObject): SceneObject => {
     const r: SceneObject = { ...o };

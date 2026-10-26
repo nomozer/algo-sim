@@ -279,6 +279,37 @@ def test_khoang_cach_hai_duong_cheo_nhau():
     assert d2 == 1
 
 
+def test_doan_vuong_goc_chung_AB_SD():
+    """`AB` (trục x) và `SD` (qua S(0,0,2), D(0,1,0)). Kiểm tay: P = (t,0,0), Q = (0,s,2−2s);
+    PQ·(1,0,0) = −t = 0 ⇒ P = A; PQ·(0,1,−2) = 5s − 4 = 0 ⇒ Q = (0, 4/5, 2/5); |PQ|² = 4/5
+    (= d(A, SD)² trong tam giác vuông SAD: (SA·AD/SD)² = 4/5)."""
+    p, q = K.common_perpendicular_feet(Line3.through(A, B), Line3.through(S, D))
+    assert p == A
+    assert q == Vec3.of(0, F(4, 5), F(2, 5))
+    assert (q - p).norm_sq() == F(4, 5) == M.distance_sq_skew_lines(Line3.through(A, B), Line3.through(S, D))
+
+
+def test_doan_vuong_goc_chung_theo_metric_khung():
+    """Lăng trụ đứng khung affine: A(0,0,0), A′(0,0,1), B(1,0,0), C(0,1,0), Gram diag(36, 64, 144)
+    (AB = 6, AC = 8, AA′ = 12). Kiểm tay: P = (0,0,t), Q = (1−s, s, 0); ⟨PQ, (0,0,1)⟩ = −144t = 0 ⇒ P = A;
+    ⟨PQ, (−1,1,0)⟩ = −36(1−s) + 64s = 0 ⇒ s = 9/25 ⇒ Q = (16/25, 9/25, 0); |PQ|² = 36·(16/25)² + 64·(9/25)²
+    = 576/25 = (24/5)² — đường cao từ A của tam giác vuông 6–8–10."""
+    from app.simulation.geometry import metric as _m
+
+    g = _m.Metric(((F(36), F(0), F(0)), (F(0), F(64), F(0)), (F(0), F(0), F(144))))
+    with _m.using(g):
+        p, q = K.common_perpendicular_feet(Line3.through(A, Vec3.of(0, 0, 1)), Line3.through(B, D))
+        assert (p, q) == (A, Vec3.of(F(16, 25), F(9, 25), 0))
+        assert _m.norm_sq(q - p) == F(576, 25)
+
+
+@pytest.mark.parametrize("b", [Line3.through(D, C), Line3.through(A, D), Line3.through(B, D)])
+def test_doan_vuong_goc_chung_chi_cho_hai_duong_CHEO_nhau(b):
+    """Song song (DC ∥ AB), cắt nhau (AD ∩ AB = A, BD ∩ AB = B): không có đoạn vuông góc chung để dựng ⇒ NÉM."""
+    with pytest.raises(GeometryError):
+        K.common_perpendicular_feet(Line3.through(A, B), b)
+
+
 # ── 6. TẤT ĐỊNH — cùng input, cùng output ─────────────────────────────────
 def test_cung_input_cho_cung_output():
     """Cổng qua bắt buộc của Phase 2."""

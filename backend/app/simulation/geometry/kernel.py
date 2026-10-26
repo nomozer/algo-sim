@@ -31,7 +31,7 @@ from .exact import (
     Vec3,
 )
 from . import metric as _m
-from .predicates import line_in_plane, parallel_planes, point_on_line
+from .predicates import line_in_plane, parallel_planes, point_on_line, skew_lines
 
 
 def midpoint(a: Point3, b: Point3) -> Point3:
@@ -151,6 +151,20 @@ def intersect_line_line(a: Line3, b: Line3) -> Point3:
         )
     t = w.cross(v).dot(uv) / uv.norm_sq()
     return a.at(t)
+
+
+def common_perpendicular_feet(a: Line3, b: Line3) -> tuple[Point3, Point3]:
+    """Hai chân `(P ∈ a, Q ∈ b)` của đoạn vuông góc CHUNG của hai đường CHÉO nhau — NÉM khi chúng đồng phẳng.
+
+    `P = a.point + t·u`, `Q = b.point + s·v` với `⟨Q − P, u⟩ = ⟨Q − P, v⟩ = 0` theo metric khung (hệ 2×2,
+    định thức `⟨u,v⟩² − |u|²|v|²` ≠ 0 vì u ∦ v). Song song hay cắt nhau thì không có MỘT đoạn như thế để dựng.
+    """
+    if not skew_lines(a, b):
+        raise GeometryError(ERR_SONG_SONG, "hai đường thẳng KHÔNG chéo nhau — không có đoạn vuông góc chung để dựng")
+    u, v, w = a.direction, b.direction, b.point - a.point
+    uu, vv, uv, wu, wv = _m.dot(u, u), _m.dot(v, v), _m.dot(u, v), _m.dot(w, u), _m.dot(w, v)
+    det = uv * uv - uu * vv
+    return a.at((uv * wv - vv * wu) / det), b.at((uu * wv - uv * wu) / det)
 
 
 def project_point_onto_plane(p: Point3, pl: Plane3) -> Point3:

@@ -45,8 +45,12 @@ _DO: dict[str, tuple[str, str, frozenset[str] | None]] = {
 
 
 def gan_so_do(spec: Any, final_memory: dict[str, Any], contract: Any,
-              objects: list[dict[str, Any]]) -> tuple[dict[str, dict[str, Any]], list[str]]:
-    """→ ({id đại lượng: {kind, subject_ids, anchor, unit}}, chẩn đoán) cho mọi vật `quantity`."""
+              objects: list[dict[str, Any]], *, duong_vuong_goc_chung: bool = False,
+              ) -> tuple[dict[str, dict[str, Any]], list[str]]:
+    """→ ({id đại lượng: {kind, subject_ids, anchor, unit}}, chẩn đoán) cho mọi vật `quantity`.
+
+    `duong_vuong_goc_chung`: khoảng cách hai đường chéo nhau mang đoạn vuông góc chung (`_nhan_chung_hai_duong`). Chỉ
+    tuyến D bật (`function_route`); mặc định tắt ⇒ envelope LLM_ONLY không đổi một byte (bật ở đó = bump cache)."""
     loai = {o["id"]: o["type"] for o in objects}
     dinh_nghia = {getattr(s, "target_var", None): s for s in spec.statements}
     khai = {d.name: d for d in spec.memory_declarations}
@@ -58,7 +62,7 @@ def gan_so_do(spec: Any, final_memory: dict[str, Any], contract: Any,
     for o in objects:
         if o["type"] != "quantity":
             continue
-        kq = _gan_mot(o["id"], dinh_nghia.get(o["id"]), khai.get(o["id"]), loai, final_memory, de)
+        kq = _gan_mot(o["id"], dinh_nghia.get(o["id"]), khai.get(o["id"]), loai, final_memory, de, duong_vuong_goc_chung)
         if isinstance(kq, dict) and kq.get("anchor") == "witness":
             kq = _bam_doan_da_dung(kq, loai, final_memory, doan)
         if isinstance(kq, dict):
@@ -228,6 +232,41 @@ def _nhan_chung(diem: str, nhan: str, mem: dict[str, Any]) -> dict[str, Any] | N
     return {"from": diem, "foot": _xau(chan), "on": nhan, "marker": marker}
 
 
+def _nhan_chung_hai_duong(q: str, ten1: str, ten2: str, mem: dict[str, Any]) -> dict[str, Any] | str:
+    """Khoảng cách hai đường CHÉO nhau — đoạn vuông góc chung `PQ` (kernel, chính xác), một dấu vuông góc ở MỖI chân.
+
+    Hai chân thường KHÔNG là điểm có tên ⇒ `from_point` mang toạ độ chính xác của đầu kia (`from` là id đường kia),
+    `second` là dấu ở chân Q. Kiểm lại trước khi phát (sai một ⇒ không nhân chứng): `PQ ⟂ u`, `PQ ⟂ v` theo metric
+    khung và `|PQ|² = (giá trị đã đo)²`. `u` của mỗi dấu chĩa tới điểm có tên GẦN NHẤT trên đường của nó (`u_to`) —
+    đoạn chân → điểm ấy là phần kéo dài của đường khi chân nằm ngoài cạnh đã vẽ."""
+    d1, d2 = _duong(mem.get(ten1)), _duong(mem.get(ten2))
+    if d1 is None or d2 is None:
+        return "distance between two non-point objects has no registered anchor"
+    try:
+        p, q_ = K.common_perpendicular_feet(d1, d2)
+    except GeometryError:
+        return "distance between non-skew lines has no common perpendicular to draw"
+    do = mem.get(q)
+    try:
+        khop = (do is not None and _m.dot(q_ - p, d1.direction) == 0 and _m.dot(q_ - p, d2.direction) == 0
+                and _m.norm_sq(q_ - p) == square(do))
+    except (TypeError, ValueError):
+        khop = False
+    if not khop:
+        return "the common perpendicular does not reproduce the measured distance"
+
+    def dau(chan: Vec3, d: Line3, kia: Vec3) -> dict[str, Any]:
+        tren = [(n, x) for n, x in mem.items() if isinstance(x, Vec3) and ky_hieu_toan(n) is not None and x != chan
+                and (x - d.point).cross(d.direction).is_zero()]
+        if not tren:
+            return {"u": _xau(d.direction), "v": _xau(kia - chan)}
+        n, x = min(tren, key=lambda t: _m.norm_sq(t[1] - chan))
+        return {"u": _xau(x - chan), "v": _xau(kia - chan), "u_to": n}
+
+    return {"from": ten2, "from_point": _xau(q_), "foot": _xau(p), "on": ten1, "relation": "common_perpendicular",
+            "marker": dau(p, d1, q_), "second": {"foot": _xau(q_), "on": ten2, "marker": dau(q_, d2, p)}}
+
+
 def _duong(x: Any) -> Line3 | None:
     """Đường thẳng mang một đường hay một đoạn (đoạn ⇒ đường chứa nó)."""
     if isinstance(x, Line3):
@@ -281,7 +320,7 @@ def _goc_vuong(q: str, expr: Any, loai: dict[str, str], mem: dict[str, Any]) -> 
 
 
 def _gan_mot(q: str, st: Any, decl: Any, loai: dict[str, str], mem: dict[str, Any],
-             de: str) -> dict[str, Any] | str:
+             de: str, duong_vuong_goc_chung: bool = False) -> dict[str, Any] | str:
     expr = getattr(st, "expr", None)
     if getattr(expr, "kind", None) == "measure" and expr.quantity in ("angle_cos", "angle_cos_sq"):
         if any(x not in loai for x in (expr.of, expr.wrt) if x):
@@ -301,7 +340,11 @@ def _gan_mot(q: str, st: Any, decl: Any, loai: dict[str, str], mem: dict[str, An
             if all(loai[x] == "point3" for x in chu_the):
                 kind, anchor = "length", "segment"
             elif not any(loai[x] == "point3" for x in chu_the):
-                return "distance between two non-point objects has no registered anchor"
+                if not duong_vuong_goc_chung or len(chu_the) != 2:
+                    return "distance between two non-point objects has no registered anchor"
+                nhan_chung = _nhan_chung_hai_duong(q, chu_the[0], chu_the[1], mem)
+                if isinstance(nhan_chung, str):
+                    return nhan_chung
             else:
                 diem = next(x for x in chu_the if loai[x] == "point3")
                 nhan_chung = _nhan_chung(diem, next(x for x in chu_the if x != diem), mem)

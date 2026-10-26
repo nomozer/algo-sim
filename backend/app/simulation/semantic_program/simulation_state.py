@@ -790,6 +790,7 @@ def _nhan_du_kien_tu_fact(objects: list[dict[str, Any]], spec: SemanticProgramSp
 # ══ 4. SIMULATION STATE ══════════════════════════════════════════════════
 def build_simulation_state(
     spec: SemanticProgramSpec, exec_result: Any, contract: Any = None, *, prefer_declared_plane_names: bool = False,
+    common_perpendicular_witness: bool = False,
 ) -> dict[str, Any]:
     """Cảnh + đồ thị phụ thuộc + timeline. Đầu vào DUY NHẤT của renderer.
 
@@ -809,7 +810,8 @@ def build_simulation_state(
     _ky_hieu_dien_tich_thiet_dien(scene["objects"], contract)
     # W17 §15.4: chủ thể của từng đại lượng — tầng ngữ nghĩa quyết (toán hạng phép đo, hoặc đoạn
     # đề gọi tên kiểm bằng khoảng cách chính xác); lớp chiếu này chỉ chở.
-    so_do, chan_doan_so_do = gan_so_do(spec, exec_result.final_memory, contract, scene["objects"])
+    so_do, chan_doan_so_do = gan_so_do(spec, exec_result.final_memory, contract, scene["objects"],
+                                       duong_vuong_goc_chung=common_perpendicular_witness)
     chieu_cao = chieu_cao_the_tich(scene["objects"], exec_result.final_memory, so_do)
     dependencies = dependency_graph(spec)
     return {
