@@ -94,6 +94,10 @@ def _distance_question(g) -> dict[str, Any]:
         return {"quantity": "length", "points": seg}
     if set(t) == {"line1", "line2"} and (l1 := pts("line1", 2)) and (l2 := pts("line2", 2)):
         return {"quantity": "distance", "points_a": l1, "points_b": l2}
+    # `{point, line}` (run `hybrid-v2-backend-generalization`): the planner's point–line decomposition — the foot is built
+    # on a fresh auxiliary label (`orthogonal_projection_line`) and checked by the engine; nothing is named here.
+    if set(t) == {"point", "line"} and isinstance(t["point"], str) and (ln := pts("line", 2)):
+        return {"quantity": "distance", "points_a": [_ref(t["point"])], "points_b": ln}
     raise TuChoi("INVALID_MATH_GOAL", f"{g.goal_id}: mục tiêu distance thiếu toán hạng hợp lệ", (g.goal_id,))
 
 

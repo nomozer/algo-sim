@@ -32,7 +32,9 @@ def _ten(v) -> str:
 
 def _hoi(goal_type: str, target: dict, quote: str | None = None) -> tuple[str, dict, str]:
     if quote is None:
-        if goal_type == "distance":
+        if goal_type == "distance" and "line" in target:
+            quote = f"Tính khoảng cách từ {target['point']} đến đường thẳng {_ten(target['line'])}."
+        elif goal_type == "distance":
             quote = f"Tính khoảng cách từ {target['point']} đến mặt phẳng {_ten(target['plane'])}."
         else:
             quote = "Tính góc giữa " + " và ".join(
