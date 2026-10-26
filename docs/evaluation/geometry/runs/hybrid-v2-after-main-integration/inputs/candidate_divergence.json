@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-v2-backend-generalization — named-plane V2 distance/angle slice (1cff5458)",
+  "corrects": "docs/evaluation/geometry/runs/claude-to-codex-takeover/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "c10917978af38f2ce2ccffefdb6ddcfa84667b8381bc48df06a582283845fc59",
+  "current_product_commit": "1cff5458076df0e99841dd3311c492255ff458dd",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "typed_fact_next_bridge._operand: a /2 distance or angle goal may name its plane by >= 3 distinct labels; planner.KeHoach.named_planes + function_route.run_fact_route pass a >3-label point-plane distance plane to engine._Dung.kiem_mat_viet (the call keeps the registry's three-label contract); kiem_mat_viet refuses COLLINEAR_POINTS when such a question plane's first three labels are collinear. Route B/D only (geometry_functions); /api/analyze (LLM_ONLY) does not import them.",
+  "cache_version": 130,
+  "cache_version_hien_tai": 130,
+  "cache_decision": "NO_BUMP 130: no prompt, schema, grammar card, capability table or routing policy changed; pipeline.py (LLM_ONLY) does not reach geometry_functions (import closure test_structured_geometry_relations::test_Y); route D responses are never cached.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}
