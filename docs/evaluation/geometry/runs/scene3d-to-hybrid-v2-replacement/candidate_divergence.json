@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "scene3d-to-hybrid-v2-replacement (Owner P0 right-angle witness)",
+  "corrects": "docs/evaluation/geometry/runs/visual-b3-sphere-integration/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "69191d70020fc37af367abb09a856bb4bd776470d3a9ffa3f8c8b49221e68ea1",
+  "current_product_commit": "f3ae506c2d23d57cb12351f18dcdef3d290572c9",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "quantity_annotations (distance witness u_to; right-angle witness of an angle measured exactly 90 degrees), display_names (constructed planes named (α) when the problem writes no unshown name; multi-point plane names checked coplanar), simulation_state (points_on_plane), scene3d (assign-built geometry is a construction step without internal repr).",
+  "cache_version": 130,
+  "cache_version_hien_tai": 130,
+  "cache_decision": "BUMP 129 -> 130: scene3d-to-hybrid-v2-replacement/cache/decision.json",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}
