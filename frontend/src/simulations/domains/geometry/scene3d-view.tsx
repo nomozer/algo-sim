@@ -1515,7 +1515,7 @@ export function buildObject3D(
       const du = Math.hypot(ux, uy, uz);
       const dv = Math.hypot(vx, vy, vz);
       {
-        // `s` là cỡ world TRẦN; `datCoGocVuong` co dấu quanh chân về ~12–18 px mỗi khung (HTML tham chiếu:
+        // `s` là cỡ world TRẦN; `datCoGocVuong` co dấu quanh chân về ~16–22 px mỗi khung (HTML tham chiếu:
         // ô vuông hai đoạn nhỏ) — trần còn bị chặn bởi một phần đoạn mang chứng chỉ để dấu không vượt ra ngoài nó.
         const daiDoan = Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z);
         const s = Math.min(0.35, Math.max(0.12, 0.22 * daiDoan), PHONG_CACH_SCENE3D.rightAngle.maxLegRatio * daiDoan);
@@ -2394,7 +2394,7 @@ function khoaGocVuong(d: GocVuongDonVi, cha: THREE.Matrix4): string {
 
 /**
  * Cỡ ký hiệu vuông góc theo MÀN HÌNH: cạnh dấu ≈ `rightAngle.perCanvasHeight` × chiều cao khung, kẹp
- * [`minPx`, `maxPx`] (12–18 px). Co/giãn quanh chân, nhưng cỡ world không vượt `maxWorld` (một phần đoạn liên quan).
+ * [`minPx`, `maxPx`] (16–22 px). Co/giãn quanh chân, nhưng cỡ world không vượt `maxWorld` (một phần đoạn liên quan).
  * Cỡ điểm ảnh tỉ lệ nghịch với ĐỘ SÂU view-space của chân — phép chiếu của camera, không phép hình học nào trên
  * cảnh. Có `tamNhin` (đích OrbitControls): chỉ tính lại khi độ sâu của TÂM NHÌN đổi (thu phóng, đặt khung) — lúc chỉ
  * XOAY, cỡ world giữ nguyên nên toạ độ dấu đứng yên và nét dày không cấp phát lại buffer GPU mỗi khung (cổng

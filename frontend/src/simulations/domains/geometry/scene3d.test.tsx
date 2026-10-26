@@ -940,7 +940,7 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
     expect(doan.material.dashSize).toBeGreaterThanOrEqual(s * 1.04);
   });
 
-  it("SGK: ký hiệu vuông góc có cạnh ≈ 16 px trên khung 720 px, giữ trực giao quanh chân, dấu lặp cùng chân/phương bị ẩn", () => {
+  it("SGK: ký hiệu vuông góc có cạnh ≈ 19 px trên khung 720 px, giữ trực giao quanh chân, dấu lặp cùng chân/phương bị ẩn", () => {
     const w = {
       id: "perpendicular:H", vai: "hinh_chieu" as const,
       from: [0, 3, 0] as [number, number, number], foot: [0, 0, 0] as [number, number, number],
@@ -969,11 +969,12 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
     const [x0, y0] = diemManHinh(0);
     const [x2, y2] = diemManHinh(2);
     // Target leg = rightAngle.perCanvasHeight × 720, clamped to [minPx, maxPx]. Owner 2026-10-26: readable on mobile —
-    // at least 12 px, 15.84 px on a 720 px canvas (was 8–12 px, 10.08 px here).
+    // at least 12 px (was 8–12 px). Claude resume: 12 px at 390 px was still mostly covered by the vertex dot at a foot
+    // that is a named vertex (the-tich-chop, A) ⇒ floor 16 px, 18.72 px on a 720 px canvas.
     const cfgVuong = PHONG_CACH_SCENE3D.rightAngle;
     const L = Math.min(cfgVuong.maxPx, Math.max(cfgVuong.minPx, cfgVuong.perCanvasHeight * 720));
-    expect(cfgVuong.minPx).toBeGreaterThanOrEqual(12);
-    expect(L).toBeCloseTo(15.84, 2);
+    expect(cfgVuong.minPx).toBeGreaterThanOrEqual(16);
+    expect(L).toBeCloseTo(18.72, 2);
     expect(Math.hypot(x0 - chan.x * 360, y0 - chan.y * 360)).toBeCloseTo(L, 2);
     expect(Math.hypot(x2 - chan.x * 360, y2 - chan.y * 360)).toBeCloseTo(L, 2);
     expect((x0 - chan.x * 360) * (x2 - chan.x * 360) + (y0 - chan.y * 360) * (y2 - chan.y * 360)).toBeCloseTo(0, 6);

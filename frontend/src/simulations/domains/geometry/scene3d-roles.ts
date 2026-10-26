@@ -99,7 +99,8 @@ export const PHONG_CACH_SCENE3D = {
     referenceCanvasHeight: 720, minScale: 0.62, maxScale: 1.25,
   },
   // Owner 2026-10-26: 8–12 px was too small to read (≈ 5–8 px once foreshortened); 12–18 px, still screen-sized.
-  rightAngle: { perCanvasHeight: 0.022, minPx: 12, maxPx: 18, maxLegRatio: 0.3 },
+  // Claude resume: at 390 px a 12 px mark at a named vertex was mostly under the vertex dot ⇒ 16–22 px.
+  rightAngle: { perCanvasHeight: 0.026, minPx: 16, maxPx: 22, maxLegRatio: 0.3 },
   // Reference dash 0.17 / gap 0.12 on a ~4.5-unit figure ⇒ dash ≈ 2 × the previous relative cycle; gap ratio 0.71.
   dash: { relative: 0.044, fallback: 0.16, gapRatio: 0.72, witnessGapRatio: 0.65 },
   light: { ambient: 1.45, directional: 0.28, roughness: 0.90, metalness: 0 },
