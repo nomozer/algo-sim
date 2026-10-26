@@ -1,0 +1,6 @@
+{
+  "status": "FAIL",
+  "stage": "git_ownership_preflight",
+  "reason": "cross-user linked worktree ownership; retry uses process-local safe.directory for the exact verification worktree, no global config/ACL change",
+  "full_t3_executed": false
+}

@@ -1,0 +1,6 @@
+{
+  "status": "FAIL",
+  "stage": "harness_startup",
+  "reason": "wrong CLI flag --fixtures; correct flag is --fixture-root",
+  "product_findings": "NOT_MEASURED"
+}

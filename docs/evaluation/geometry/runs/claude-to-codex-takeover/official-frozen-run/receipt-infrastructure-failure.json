@@ -1,0 +1,7 @@
+{
+  "status": "FAIL",
+  "stage": "browser_transport",
+  "error": "CDP_TIMEOUT: Page.enable",
+  "product_verdict": "NOT_ESTABLISHED",
+  "next_transport": "existing unchanged browser-playwright-transport.mjs; locked assertions untouched"
+}

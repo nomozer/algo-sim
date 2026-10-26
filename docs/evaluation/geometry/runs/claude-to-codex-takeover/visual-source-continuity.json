@@ -1,0 +1,23 @@
+{
+  "schema": "visual-source-continuity/1",
+  "baseline": "3dcd6d9fbdc5627197537dc79c1e609ac3e03bea",
+  "candidate": "e336e0dfee30968b27887bcf446d9ec7ad610f54",
+  "scope": {
+    "frontend/src/simulations/domains/geometry": {
+      "baseline_git_object": "ad4269c7612959cf96fb84e87ec43d37150d85e5",
+      "candidate_git_object": "ad4269c7612959cf96fb84e87ec43d37150d85e5",
+      "unchanged": true
+    },
+    "frontend/src/styles": {
+      "baseline_git_object": "236a6f8c20163286a3e59b627d12bd156b7804bb",
+      "candidate_git_object": "236a6f8c20163286a3e59b627d12bd156b7804bb",
+      "unchanged": true
+    },
+    "frontend/src/data/geometry-samples.json": {
+      "baseline_git_object": "cbba0fc96c65d716e224f45414727e64b65400ed",
+      "candidate_git_object": "cbba0fc96c65d716e224f45414727e64b65400ed",
+      "unchanged": true
+    }
+  },
+  "locked_oracle_diff": ""
+}
