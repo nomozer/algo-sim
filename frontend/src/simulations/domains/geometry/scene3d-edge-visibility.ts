@@ -691,7 +691,9 @@ export function dongBoNetDayManHinh(
         ? (isHighlighted ? w.selectedSection : isDashed ? w.hiddenSection : w.section)
         : isPerpOrWitness
           ? (isDashed ? w.hiddenPerpendicular : w.perpendicular)
-          : (isHighlighted ? w.selectedEdge : isDashed ? w.hiddenEdge : w.edge);
+          : line.name.startsWith("sphere_silhouette:")
+            ? w.edge * 0.65 // A sphere's continuous outline stays subordinate to its true section curve.
+            : (isHighlighted ? w.selectedEdge : isDashed ? w.hiddenEdge : w.edge);
     const widthPx = Number((raw * heSoNet).toFixed(2));
 
     if (isSectionOrPolyBorder && !isDashed) {

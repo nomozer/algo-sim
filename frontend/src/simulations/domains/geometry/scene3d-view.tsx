@@ -1708,11 +1708,11 @@ export function buildObject3D(
     const duongTronDay = vaiMien === "base";
     // Đường tham chiếu (xích đạo minh hoạ của mặt cầu): đường PHỤ — nhẹ hơn đường bao và mọi vành thật.
     const thamChieu = o.display_role === "presentation_reference";
-    const heSoDay = thamChieu ? 0.2 : (noiBat ? 1.25 : 1) * (duongTronDay ? 0.36 : 0.46);
+    const heSoDay = thamChieu ? 0.27 : (noiBat ? 1.25 : 1) * (duongTronDay ? 0.36 : 0.46);
     const day = beDayNet(diemNen, r) * heSoDay;
     const ngoaiR = r;
     const trongR = Math.max(0, r - day);
-    const mauVanh = thamChieu ? net(MAU.hiddenEdge) : netMien(mauVienMien);
+    const mauVanh = thamChieu ? new THREE.Color(net(MAU.hiddenEdge)).lerp(new THREE.Color(net(MAU.canh)), 0.25) : netMien(mauVienMien);
     const chungVanh = {
       color: mauVanh, side: THREE.DoubleSide,
       forceSinglePass: true,
@@ -1774,6 +1774,7 @@ export function buildObject3D(
       new THREE.BufferGeometry(),
       new THREE.MeshBasicMaterial({
         ...chungVanh, depthFunc: THREE.GreaterDepth, depthWrite: false,
+        ...(thamChieu ? { color: net(MAU.hiddenEdge) } : {}),
         transparent: true, opacity: DO_DUC.hiddenRim,
       }),
     );
@@ -1961,7 +1962,7 @@ export function buildObject3D(
     if (o.curved_kind === "ball") {
       // The perspective silhouette is presentation geometry, never an equator or a new scene entity. A closed unit
       // circle LINE (placed per camera by `updateCurvedSolidSilhouette`) so the screen-space pass draws it at the
-      // visible-edge pixel width: a world-space ring was 0.6 % of the radius thick (≈1 px, uneven tone on mobile) and
+      // sphere-specific pixel width: a world-space ring was 0.6 % of the radius thick (≈1 px, uneven tone on mobile) and
       // could lose arcs to the sphere's own depth layer at the tangent. A convex body never hides its own outline.
       const vongBao = Array.from({ length: 193 }, (_, i) => {
         const t = (i % 192) / 192 * Math.PI * 2;
