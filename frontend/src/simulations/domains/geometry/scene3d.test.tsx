@@ -317,7 +317,8 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
     expect(xuat.map((m) => m[1]).sort()).toEqual(
       ["SAI_SO_NHAN_CHUNG", "namTrenDoanDaVe", "nhanChungDoanHopLe", "nhanChungVuongGocHopLe"]);
     for (const m of xuat.filter((x) => x[0].startsWith("export function"))) {
-      expect(src.slice(m.index!).split("{\n")[0], m[1]).toMatch(/\): boolean\s*$/);
+      // `\r?`: a Windows checkout (core.autocrlf) stores this file with CRLF.
+      expect(src.slice(m.index!).split(/\{\r?\n/)[0], m[1]).toMatch(/\): boolean\s*$/);
     }
   });
 
