@@ -1,0 +1,2827 @@
+{
+ "covers": [
+  "served",
+  "multi_goal",
+  "symbolic_length_unit"
+ ],
+ "expected": {
+  "envelope_status": "ok",
+  "http_status": 200
+ },
+ "id": "served-H01_CUBE",
+ "injection": null,
+ "kind": "served",
+ "producer": {
+  "adapter_version": "hybrid-preview-adapter/2",
+  "backend_app_dirty": false,
+  "commit": "b11349ae4ada8697b46d1f09d31236734295146c",
+  "envelope_version": "hybrid-route-d-preview/1",
+  "inputs_dirty": false,
+  "product_commit": "b11349ae4ada8697b46d1f09d31236734295146c",
+  "source_fingerprint": {
+   "files": 118,
+   "measured_system_hash": "e40316bec7e68e1c3eee1bfa29e32b0444f9eb90b44c29e163b1e633f635733e",
+   "rule": "scripts/freeze_evaluation_candidate.py::measured_system_hash"
+  }
+ },
+ "response": {
+  "envelope": {
+   "config": {
+    "execution_truncated": false,
+    "frames": [
+     {
+      "highlighted_object_ids": [],
+      "narration": "Khởi tạo các điểm theo cấu trúc hình và bố trí tất định.",
+      "objects": [],
+      "step_index": 0
+     },
+     {
+      "highlighted_object_ids": [],
+      "narration": "Dựng Đáy dưới ABCD.",
+      "objects": [],
+      "step_index": 1
+     },
+     {
+      "highlighted_object_ids": [],
+      "narration": "Dựng Đáy trên A′B′C′D′.",
+      "objects": [],
+      "step_index": 2
+     },
+     {
+      "highlighted_object_ids": [],
+      "narration": "Dựng các cạnh bên AA′, BB′, CC′, DD′.",
+      "objects": [],
+      "step_index": 3
+     },
+     {
+      "highlighted_object_ids": [],
+      "narration": "Dựng khối ABCD.A'B'C'D' từ 8 đỉnh và 6 mặt.",
+      "objects": [],
+      "step_index": 4
+     },
+     {
+      "highlighted_object_ids": [],
+      "narration": "Xác định khoảng cách cần dùng: √3.",
+      "objects": [],
+      "step_index": 5
+     },
+     {
+      "highlighted_object_ids": [],
+      "narration": "Tính thể tích khối: 1.",
+      "objects": [],
+      "step_index": 6
+     }
+    ],
+    "grouping_level": "step",
+    "presentation_overflow": false,
+    "spec_version": "1.0",
+    "title": "Dựng hình từ lời gọi hàm có nguồn",
+    "view_steps": [
+     {
+      "frame_hi": 0,
+      "frame_lo": 0,
+      "narration": "Khởi tạo các điểm theo cấu trúc hình và bố trí tất định.",
+      "view_index": 0
+     },
+     {
+      "frame_hi": 1,
+      "frame_lo": 1,
+      "narration": "Dựng Đáy dưới ABCD.",
+      "view_index": 1
+     },
+     {
+      "frame_hi": 2,
+      "frame_lo": 2,
+      "narration": "Dựng Đáy trên A′B′C′D′.",
+      "view_index": 2
+     },
+     {
+      "frame_hi": 3,
+      "frame_lo": 3,
+      "narration": "Dựng các cạnh bên AA′, BB′, CC′, DD′.",
+      "view_index": 3
+     },
+     {
+      "frame_hi": 4,
+      "frame_lo": 4,
+      "narration": "Dựng khối ABCD.A'B'C'D' từ 8 đỉnh và 6 mặt.",
+      "view_index": 4
+     },
+     {
+      "frame_hi": 5,
+      "frame_lo": 5,
+      "narration": "Xác định khoảng cách cần dùng: √3.",
+      "view_index": 5
+     },
+     {
+      "frame_hi": 6,
+      "frame_lo": 6,
+      "narration": "Tính thể tích khối: 1.",
+      "view_index": 6
+     }
+    ]
+   },
+   "description": "Quan sát mô hình dựng từ dữ kiện; các kiểm tra trên hình không phải chứng minh tổng quát.",
+   "domain": "geometry",
+   "notes": null,
+   "scene3d": {
+    "chart_metric": [
+     [
+      "1",
+      "0",
+      "0"
+     ],
+     [
+      "0",
+      "1",
+      "0"
+     ],
+     [
+      "0",
+      "0",
+      "1"
+     ]
+    ],
+    "diagnostics": [],
+    "events": [
+     {
+      "action": "INIT",
+      "depends": [],
+      "details": {},
+      "display_label": "Bước dựng hình",
+      "explanation": "Khởi tạo các điểm theo cấu trúc hình và bố trí tất định.",
+      "learner_text": "Đặt các điểm đề cho vào không gian.",
+      "object": null,
+      "semantic_kind": "EXPLANATION",
+      "step_index": 0
+     },
+     {
+      "action": "CREATE",
+      "depends": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "details": {
+       "dinh": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "label": "Đáy dưới ABCD"
+      },
+      "display_label": "Đáy dưới ABCD",
+      "explanation": "Dựng Đáy dưới ABCD.",
+      "learner_text": "Dựng đáy dưới ABCD.",
+      "object": "day_ABCD",
+      "semantic_kind": "GEOMETRY_CONSTRUCTION",
+      "step_index": 1
+     },
+     {
+      "action": "CREATE",
+      "depends": [
+       "A_prime",
+       "B_prime",
+       "C_prime",
+       "D_prime"
+      ],
+      "details": {
+       "dinh": [
+        "A_prime",
+        "B_prime",
+        "C_prime",
+        "D_prime"
+       ],
+       "label": "Đáy trên A′B′C′D′"
+      },
+      "display_label": "Đáy trên A′B′C′D′",
+      "explanation": "Dựng Đáy trên A′B′C′D′.",
+      "learner_text": "Dựng đáy trên A′B′C′D′.",
+      "object": "day_A_primeB_primeC_primeD_prime",
+      "semantic_kind": "GEOMETRY_CONSTRUCTION",
+      "step_index": 2
+     },
+     {
+      "action": "CREATE",
+      "depends": [
+       "canh_ben_A_A_prime",
+       "canh_ben_B_B_prime",
+       "canh_ben_C_C_prime",
+       "canh_ben_D_D_prime"
+      ],
+      "details": {
+       "label": "Các cạnh bên AA′, BB′, CC′, DD′",
+       "objects": [
+        "canh_ben_A_A_prime",
+        "canh_ben_B_B_prime",
+        "canh_ben_C_C_prime",
+        "canh_ben_D_D_prime"
+       ],
+       "qua": [
+        [
+         "A",
+         "A_prime"
+        ],
+        [
+         "B",
+         "B_prime"
+        ],
+        [
+         "C",
+         "C_prime"
+        ],
+        [
+         "D",
+         "D_prime"
+        ]
+       ]
+      },
+      "display_label": "Các cạnh bên AA′, BB′, CC′, DD′",
+      "explanation": "Dựng các cạnh bên AA′, BB′, CC′, DD′.",
+      "learner_text": "Dựng các cạnh bên AA′, BB′, CC′, DD′.",
+      "object": "canh_ben",
+      "objects": [
+       "canh_ben_A_A_prime",
+       "canh_ben_B_B_prime",
+       "canh_ben_C_C_prime",
+       "canh_ben_D_D_prime"
+      ],
+      "semantic_kind": "GEOMETRY_CONSTRUCTION",
+      "step_index": 3
+     },
+     {
+      "action": "CREATE",
+      "depends": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "A_prime",
+       "B_prime",
+       "C_prime",
+       "D_prime"
+      ],
+      "details": {
+       "dinh": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "A_prime",
+        "B_prime",
+        "C_prime",
+        "D_prime"
+       ],
+       "label": "ABCD.A'B'C'D'",
+       "so_mat": 6
+      },
+      "display_label": "Hình lập phương ABCD.A′B′C′D′",
+      "explanation": "Dựng khối ABCD.A'B'C'D' từ 8 đỉnh và 6 mặt.",
+      "learner_text": "Dựng hình lập phương ABCD.A′B′C′D′ (8 đỉnh, 6 mặt).",
+      "object": "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "semantic_kind": "GEOMETRY_CONSTRUCTION",
+      "step_index": 4
+     },
+     {
+      "action": "MEASURE",
+      "depends": [
+       "A",
+       "C_prime"
+      ],
+      "details": {
+       "value": {
+        "coefficient": "1",
+        "kind": "radical",
+        "radicand": 3
+       }
+      },
+      "display_label": "Khoảng cách giữa A và C′",
+      "explanation": "Xác định khoảng cách cần dùng: √3.",
+      "learner_text": "Tính khoảng cách giữa A và C′: d(A, C′) = √3.",
+      "object": "kq_f4",
+      "semantic_kind": "FINAL_RESULT",
+      "step_index": 5
+     },
+     {
+      "action": "MEASURE",
+      "depends": [
+       "khoi_ABCD_A_primeB_primeC_primeD_prime"
+      ],
+      "details": {
+       "value": "1"
+      },
+      "display_label": "Thể tích ABCD.A′B′C′D′",
+      "explanation": "Tính thể tích khối: 1.",
+      "learner_text": "Thể tích ABCD.A′B′C′D′ bằng 1.",
+      "object": "kq_f3",
+      "semantic_kind": "FINAL_RESULT",
+      "step_index": 6
+     }
+    ],
+    "formation": {
+     "steps": [
+      {
+       "focus_ids": [],
+       "formation_roles": [
+        "DECLARE_ENTITIES"
+       ],
+       "geometry_progress": [],
+       "learner_text": "Đặt các điểm đề cho vào không gian.",
+       "readout_ids": [],
+       "semantic_kind": "EXPLANATION",
+       "step_index": 0,
+       "visible_ids": [
+        "A",
+        "A_prime",
+        "B",
+        "B_prime",
+        "C",
+        "C_prime",
+        "D",
+        "D_prime"
+       ]
+      },
+      {
+       "focus_ids": [
+        "day_ABCD"
+       ],
+       "formation_roles": [
+        "CONSTRUCT_BASE"
+       ],
+       "geometry_progress": [],
+       "learner_text": "Dựng đáy dưới ABCD.",
+       "readout_ids": [],
+       "semantic_kind": "GEOMETRY_CONSTRUCTION",
+       "step_index": 1,
+       "visible_ids": [
+        "A",
+        "A_prime",
+        "B",
+        "B_prime",
+        "C",
+        "C_prime",
+        "D",
+        "D_prime",
+        "day_ABCD"
+       ]
+      },
+      {
+       "focus_ids": [
+        "day_A_primeB_primeC_primeD_prime"
+       ],
+       "formation_roles": [
+        "CONSTRUCT_TRANSLATED_FACE"
+       ],
+       "geometry_progress": [],
+       "learner_text": "Dựng đáy trên A′B′C′D′.",
+       "readout_ids": [],
+       "semantic_kind": "GEOMETRY_CONSTRUCTION",
+       "step_index": 2,
+       "visible_ids": [
+        "A",
+        "A_prime",
+        "B",
+        "B_prime",
+        "C",
+        "C_prime",
+        "D",
+        "D_prime",
+        "day_ABCD",
+        "day_A_primeB_primeC_primeD_prime"
+       ]
+      },
+      {
+       "focus_ids": [
+        "canh_ben_A_A_prime",
+        "canh_ben_B_B_prime",
+        "canh_ben_C_C_prime",
+        "canh_ben_D_D_prime"
+       ],
+       "formation_roles": [
+        "CONSTRUCT_LATERAL_BOUNDARY"
+       ],
+       "geometry_progress": [],
+       "learner_text": "Dựng các cạnh bên AA′, BB′, CC′, DD′.",
+       "readout_ids": [],
+       "semantic_kind": "GEOMETRY_CONSTRUCTION",
+       "step_index": 3,
+       "visible_ids": [
+        "A",
+        "A_prime",
+        "B",
+        "B_prime",
+        "C",
+        "C_prime",
+        "D",
+        "D_prime",
+        "canh_ben_A_A_prime",
+        "canh_ben_B_B_prime",
+        "canh_ben_C_C_prime",
+        "canh_ben_D_D_prime",
+        "day_ABCD",
+        "day_A_primeB_primeC_primeD_prime"
+       ]
+      },
+      {
+       "focus_ids": [
+        "khoi_ABCD_A_primeB_primeC_primeD_prime"
+       ],
+       "formation_roles": [
+        "CLOSE_SOLID"
+       ],
+       "geometry_progress": [],
+       "learner_text": "Dựng hình lập phương ABCD.A′B′C′D′ (8 đỉnh, 6 mặt).",
+       "readout_ids": [],
+       "semantic_kind": "GEOMETRY_CONSTRUCTION",
+       "step_index": 4,
+       "visible_ids": [
+        "A",
+        "A_prime",
+        "B",
+        "B_prime",
+        "C",
+        "C_prime",
+        "D",
+        "D_prime",
+        "canh_ben_A_A_prime",
+        "canh_ben_B_B_prime",
+        "canh_ben_C_C_prime",
+        "canh_ben_D_D_prime",
+        "day_ABCD",
+        "day_A_primeB_primeC_primeD_prime",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime"
+       ]
+      },
+      {
+       "focus_ids": [
+        "kq_f4"
+       ],
+       "formation_roles": [],
+       "geometry_progress": [],
+       "learner_text": "Tính khoảng cách giữa A và C′: d(A, C′) = √3.",
+       "readout_ids": [
+        "kq_f4"
+       ],
+       "semantic_kind": "FINAL_RESULT",
+       "step_index": 5,
+       "visible_ids": [
+        "A",
+        "A_prime",
+        "B",
+        "B_prime",
+        "C",
+        "C_prime",
+        "D",
+        "D_prime",
+        "canh_ben_A_A_prime",
+        "canh_ben_B_B_prime",
+        "canh_ben_C_C_prime",
+        "canh_ben_D_D_prime",
+        "day_ABCD",
+        "day_A_primeB_primeC_primeD_prime",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime",
+        "kq_f4"
+       ]
+      },
+      {
+       "focus_ids": [
+        "kq_f3"
+       ],
+       "formation_roles": [],
+       "geometry_progress": [],
+       "learner_text": "Thể tích ABCD.A′B′C′D′ bằng 1.",
+       "readout_ids": [
+        "kq_f3",
+        "kq_f4"
+       ],
+       "semantic_kind": "FINAL_RESULT",
+       "step_index": 6,
+       "visible_ids": [
+        "A",
+        "A_prime",
+        "B",
+        "B_prime",
+        "C",
+        "C_prime",
+        "D",
+        "D_prime",
+        "canh_ben_A_A_prime",
+        "canh_ben_B_B_prime",
+        "canh_ben_C_C_prime",
+        "canh_ben_D_D_prime",
+        "day_ABCD",
+        "day_A_primeB_primeC_primeD_prime",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime",
+        "kq_f3",
+        "kq_f4"
+       ]
+      }
+     ]
+    },
+    "free_objects": [
+     "A",
+     "A_prime",
+     "B",
+     "B_prime",
+     "C",
+     "C_prime",
+     "D",
+     "D_prime"
+    ],
+    "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`.",
+    "length_unit": {
+     "display_scale": "a = 1 đơn vị dựng",
+     "is_given": false,
+     "symbol": "a"
+    },
+    "objects": [
+     {
+      "dependency_edges": [],
+      "depends": [],
+      "display_group": [
+       "given",
+       "target"
+      ],
+      "display_label": "Điểm A",
+      "display_role": "visual_owner",
+      "formation_roles": [],
+      "id": "A",
+      "label": "Điểm A",
+      "notation": "A",
+      "occludes_edges": false,
+      "origin": "free",
+      "parent": "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "producer": null,
+      "reference": "A",
+      "render": "point_marker",
+      "role": "Điểm",
+      "source": {
+       "provenance": "LAYOUT_DERIVED"
+      },
+      "type": "point3",
+      "visual_transform": {
+       "scale": 1,
+       "translate": [
+        0,
+        0,
+        0
+       ]
+      },
+      "xyz": [
+       "0",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "dependency_edges": [],
+      "depends": [],
+      "display_group": [
+       "given"
+      ],
+      "display_label": "Điểm B",
+      "display_role": "visual_owner",
+      "formation_roles": [],
+      "id": "B",
+      "label": "Điểm B",
+      "notation": "B",
+      "occludes_edges": false,
+      "origin": "free",
+      "parent": "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "producer": null,
+      "reference": "B",
+      "render": "point_marker",
+      "role": "Điểm",
+      "source": {
+       "provenance": "LAYOUT_DERIVED"
+      },
+      "type": "point3",
+      "visual_transform": {
+       "scale": 1,
+       "translate": [
+        0,
+        0,
+        0
+       ]
+      },
+      "xyz": [
+       "1",
+       "0",
+       "0"
+      ]
+     },
+     {
+      "dependency_edges": [],
+      "depends": [],
+      "display_group": [
+       "given"
+      ],
+      "display_label": "Điểm C",
+      "display_role": "visual_owner",
+      "formation_roles": [],
+      "id": "C",
+      "label": "Điểm C",
+      "notation": "C",
+      "occludes_edges": false,
+      "origin": "free",
+      "parent": "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "producer": null,
+      "reference": "C",
+      "render": "point_marker",
+      "role": "Điểm",
+      "source": {
+       "provenance": "LAYOUT_DERIVED"
+      },
+      "type": "point3",
+      "visual_transform": {
+       "scale": 1,
+       "translate": [
+        0,
+        0,
+        0
+       ]
+      },
+      "xyz": [
+       "1",
+       "1",
+       "0"
+      ]
+     },
+     {
+      "dependency_edges": [],
+      "depends": [],
+      "display_group": [
+       "given"
+      ],
+      "display_label": "Điểm D",
+      "display_role": "visual_owner",
+      "formation_roles": [],
+      "id": "D",
+      "label": "Điểm D",
+      "notation": "D",
+      "occludes_edges": false,
+      "origin": "free",
+      "parent": "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "producer": null,
+      "reference": "D",
+      "render": "point_marker",
+      "role": "Điểm",
+      "source": {
+       "provenance": "LAYOUT_DERIVED"
+      },
+      "type": "point3",
+      "visual_transform": {
+       "scale": 1,
+       "translate": [
+        0,
+        0,
+        0
+       ]
+      },
+      "xyz": [
+       "0",
+       "1",
+       "0"
+      ]
+     },
+     {
+      "dependency_edges": [],
+      "depends": [],
+      "display_group": [
+       "given"
+      ],
+      "display_label": "Điểm A′",
+      "display_role": "visual_owner",
+      "formation_roles": [],
+      "id": "A_prime",
+      "label": "Điểm A′",
+      "notation": "A′",
+      "occludes_edges": false,
+      "origin": "free",
+      "parent": "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "producer": null,
+      "reference": "A′",
+      "render": "point_marker",
+      "role": "Điểm",
+      "source": {
+       "provenance": "LAYOUT_DERIVED"
+      },
+      "type": "point3",
+      "visual_transform": {
+       "scale": 1,
+       "translate": [
+        0,
+        0,
+        0
+       ]
+      },
+      "xyz": [
+       "0",
+       "0",
+       "1"
+      ]
+     },
+     {
+      "dependency_edges": [],
+      "depends": [],
+      "display_group": [
+       "given"
+      ],
+      "display_label": "Điểm B′",
+      "display_role": "visual_owner",
+      "formation_roles": [],
+      "id": "B_prime",
+      "label": "Điểm B′",
+      "notation": "B′",
+      "occludes_edges": false,
+      "origin": "free",
+      "parent": "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "producer": null,
+      "reference": "B′",
+      "render": "point_marker",
+      "role": "Điểm",
+      "source": {
+       "provenance": "LAYOUT_DERIVED"
+      },
+      "type": "point3",
+      "visual_transform": {
+       "scale": 1,
+       "translate": [
+        0,
+        0,
+        0
+       ]
+      },
+      "xyz": [
+       "1",
+       "0",
+       "1"
+      ]
+     },
+     {
+      "dependency_edges": [],
+      "depends": [],
+      "display_group": [
+       "given",
+       "target"
+      ],
+      "display_label": "Điểm C′",
+      "display_role": "visual_owner",
+      "formation_roles": [],
+      "id": "C_prime",
+      "label": "Điểm C′",
+      "notation": "C′",
+      "occludes_edges": false,
+      "origin": "free",
+      "parent": "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "producer": null,
+      "reference": "C′",
+      "render": "point_marker",
+      "role": "Điểm",
+      "source": {
+       "provenance": "LAYOUT_DERIVED"
+      },
+      "type": "point3",
+      "visual_transform": {
+       "scale": 1,
+       "translate": [
+        0,
+        0,
+        0
+       ]
+      },
+      "xyz": [
+       "1",
+       "1",
+       "1"
+      ]
+     },
+     {
+      "dependency_edges": [],
+      "depends": [],
+      "display_group": [
+       "given"
+      ],
+      "display_label": "Điểm D′",
+      "display_role": "visual_owner",
+      "formation_roles": [],
+      "id": "D_prime",
+      "label": "Điểm D′",
+      "notation": "D′",
+      "occludes_edges": false,
+      "origin": "free",
+      "parent": "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "producer": null,
+      "reference": "D′",
+      "render": "point_marker",
+      "role": "Điểm",
+      "source": {
+       "provenance": "LAYOUT_DERIVED"
+      },
+      "type": "point3",
+      "visual_transform": {
+       "scale": 1,
+       "translate": [
+        0,
+        0,
+        0
+       ]
+      },
+      "xyz": [
+       "0",
+       "1",
+       "1"
+      ]
+     },
+     {
+      "dependency_edges": [
+       {
+        "relation": "topological",
+        "source_id": "A"
+       },
+       {
+        "relation": "topological",
+        "source_id": "A_prime"
+       },
+       {
+        "relation": "topological",
+        "source_id": "B"
+       },
+       {
+        "relation": "topological",
+        "source_id": "B_prime"
+       },
+       {
+        "relation": "topological",
+        "source_id": "C"
+       },
+       {
+        "relation": "topological",
+        "source_id": "C_prime"
+       },
+       {
+        "relation": "topological",
+        "source_id": "D"
+       },
+       {
+        "relation": "topological",
+        "source_id": "D_prime"
+       }
+      ],
+      "depends": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "D",
+       "D_prime"
+      ],
+      "display_group": [
+       "construction",
+       "solid",
+       "target"
+      ],
+      "display_label": "Hình lập phương ABCD.A′B′C′D′",
+      "display_role": "visual_owner",
+      "edge_ownership": [
+       {
+        "adjacent_surface_ids": [
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:0",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:2"
+        ],
+        "edge_id": "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-B",
+        "endpoint_ids": [
+         "A",
+         "B"
+        ]
+       },
+       {
+        "adjacent_surface_ids": [
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:0",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:3"
+        ],
+        "edge_id": "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:B-C",
+        "endpoint_ids": [
+         "B",
+         "C"
+        ]
+       },
+       {
+        "adjacent_surface_ids": [
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:0",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:4"
+        ],
+        "edge_id": "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C-D",
+        "endpoint_ids": [
+         "C",
+         "D"
+        ]
+       },
+       {
+        "adjacent_surface_ids": [
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:0",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:5"
+        ],
+        "edge_id": "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-D",
+        "endpoint_ids": [
+         "A",
+         "D"
+        ]
+       },
+       {
+        "adjacent_surface_ids": [
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:1",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:2"
+        ],
+        "edge_id": "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A_prime-B_prime",
+        "endpoint_ids": [
+         "A_prime",
+         "B_prime"
+        ]
+       },
+       {
+        "adjacent_surface_ids": [
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:1",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:3"
+        ],
+        "edge_id": "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:B_prime-C_prime",
+        "endpoint_ids": [
+         "B_prime",
+         "C_prime"
+        ]
+       },
+       {
+        "adjacent_surface_ids": [
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:1",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:4"
+        ],
+        "edge_id": "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C_prime-D_prime",
+        "endpoint_ids": [
+         "C_prime",
+         "D_prime"
+        ]
+       },
+       {
+        "adjacent_surface_ids": [
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:1",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:5"
+        ],
+        "edge_id": "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A_prime-D_prime",
+        "endpoint_ids": [
+         "A_prime",
+         "D_prime"
+        ]
+       },
+       {
+        "adjacent_surface_ids": [
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:2",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:3"
+        ],
+        "edge_id": "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:B-B_prime",
+        "endpoint_ids": [
+         "B",
+         "B_prime"
+        ]
+       },
+       {
+        "adjacent_surface_ids": [
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:2",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:5"
+        ],
+        "edge_id": "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-A_prime",
+        "endpoint_ids": [
+         "A",
+         "A_prime"
+        ]
+       },
+       {
+        "adjacent_surface_ids": [
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:3",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:4"
+        ],
+        "edge_id": "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C-C_prime",
+        "endpoint_ids": [
+         "C",
+         "C_prime"
+        ]
+       },
+       {
+        "adjacent_surface_ids": [
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:4",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::face:5"
+        ],
+        "edge_id": "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:D-D_prime",
+        "endpoint_ids": [
+         "D",
+         "D_prime"
+        ]
+       }
+      ],
+      "faces": [
+       [
+        0,
+        1,
+        2,
+        3
+       ],
+       [
+        4,
+        5,
+        6,
+        7
+       ],
+       [
+        0,
+        1,
+        5,
+        4
+       ],
+       [
+        1,
+        2,
+        6,
+        5
+       ],
+       [
+        2,
+        3,
+        7,
+        6
+       ],
+       [
+        3,
+        0,
+        4,
+        7
+       ]
+      ],
+      "formation_requirements": [
+       "CONSTRUCT_BASE",
+       "CONSTRUCT_TRANSLATED_FACE",
+       "CONSTRUCT_LATERAL_BOUNDARY",
+       "CLOSE_SOLID"
+      ],
+      "formation_roles": [
+       "CLOSE_SOLID"
+      ],
+      "id": "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "label": "Hình lập phương ABCD.A′B′C′D′",
+      "notation": "ABCD.A′B′C′D′",
+      "origin": "derived",
+      "parent": null,
+      "producer": "construct_solid",
+      "reference": "ABCD.A′B′C′D′",
+      "render": "mesh",
+      "role": "Hai đáy ABCD và A′B′C′D′",
+      "shape_class": "PRISM_LIKE",
+      "source": {
+       "instruction": "construct_solid"
+      },
+      "surfaces": [
+       {
+        "boundary_edge_ids": [
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-B",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:B-C",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C-D",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-D"
+        ],
+        "occludes_edges": true,
+        "surface_id": "khoi_ABCD_A_primeB_primeC_primeD_prime::face:0",
+        "surface_role": "SOLID_FACE",
+        "vertex_indices": [
+         0,
+         1,
+         2,
+         3
+        ]
+       },
+       {
+        "boundary_edge_ids": [
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A_prime-B_prime",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:B_prime-C_prime",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C_prime-D_prime",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A_prime-D_prime"
+        ],
+        "occludes_edges": true,
+        "surface_id": "khoi_ABCD_A_primeB_primeC_primeD_prime::face:1",
+        "surface_role": "SOLID_FACE",
+        "vertex_indices": [
+         4,
+         5,
+         6,
+         7
+        ]
+       },
+       {
+        "boundary_edge_ids": [
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-B",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:B-B_prime",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A_prime-B_prime",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-A_prime"
+        ],
+        "occludes_edges": true,
+        "surface_id": "khoi_ABCD_A_primeB_primeC_primeD_prime::face:2",
+        "surface_role": "SOLID_FACE",
+        "vertex_indices": [
+         0,
+         1,
+         5,
+         4
+        ]
+       },
+       {
+        "boundary_edge_ids": [
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:B-C",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C-C_prime",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:B_prime-C_prime",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:B-B_prime"
+        ],
+        "occludes_edges": true,
+        "surface_id": "khoi_ABCD_A_primeB_primeC_primeD_prime::face:3",
+        "surface_role": "SOLID_FACE",
+        "vertex_indices": [
+         1,
+         2,
+         6,
+         5
+        ]
+       },
+       {
+        "boundary_edge_ids": [
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C-D",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:D-D_prime",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C_prime-D_prime",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C-C_prime"
+        ],
+        "occludes_edges": true,
+        "surface_id": "khoi_ABCD_A_primeB_primeC_primeD_prime::face:4",
+        "surface_role": "SOLID_FACE",
+        "vertex_indices": [
+         2,
+         3,
+         7,
+         6
+        ]
+       },
+       {
+        "boundary_edge_ids": [
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-D",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-A_prime",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A_prime-D_prime",
+         "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:D-D_prime"
+        ],
+        "occludes_edges": true,
+        "surface_id": "khoi_ABCD_A_primeB_primeC_primeD_prime::face:5",
+        "surface_role": "SOLID_FACE",
+        "vertex_indices": [
+         3,
+         0,
+         4,
+         7
+        ]
+       }
+      ],
+      "type": "solid",
+      "vertex_ids": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "A_prime",
+       "B_prime",
+       "C_prime",
+       "D_prime"
+      ],
+      "vertices": [
+       [
+        "0",
+        "0",
+        "0"
+       ],
+       [
+        "1",
+        "0",
+        "0"
+       ],
+       [
+        "1",
+        "1",
+        "0"
+       ],
+       [
+        "0",
+        "1",
+        "0"
+       ],
+       [
+        "0",
+        "0",
+        "1"
+       ],
+       [
+        "1",
+        "0",
+        "1"
+       ],
+       [
+        "1",
+        "1",
+        "1"
+       ],
+       [
+        "0",
+        "1",
+        "1"
+       ]
+      ],
+      "visual_transform": {
+       "scale": 1,
+       "translate": [
+        0,
+        0,
+        0
+       ]
+      }
+     },
+     {
+      "annotation": {
+       "anchor": "segment",
+       "category": "result",
+       "kind": "length",
+       "role": "result",
+       "subject_ids": [
+        "A",
+        "C_prime"
+       ],
+       "unit": null
+      },
+      "dependency_edges": [
+       {
+        "relation": "topological",
+        "source_id": "A"
+       },
+       {
+        "relation": "topological",
+        "source_id": "C_prime"
+       }
+      ],
+      "depends": [
+       "A",
+       "C_prime"
+      ],
+      "display_group": [
+       "construction",
+       "measurement",
+       "target"
+      ],
+      "display_label": "Khoảng cách giữa A và C′",
+      "display_role": "measurement",
+      "exact": {
+       "coefficient": "1",
+       "kind": "radical",
+       "radicand": 3
+      },
+      "formation_roles": [],
+      "formula": {
+       "references": [],
+       "text": "d(A, C′) = √3"
+      },
+      "id": "kq_f4",
+      "label": "Khoảng cách giữa A và C′",
+      "notation": "d(A, C′)",
+      "occludes_edges": false,
+      "origin": "derived",
+      "parent": null,
+      "producer": "measure.distance",
+      "reference": "d(A, C′)",
+      "render": "readout",
+      "role": "Khoảng cách",
+      "source": {
+       "instruction": "measure.distance"
+      },
+      "type": "quantity",
+      "value": "√3",
+      "visual_transform": {
+       "scale": 1,
+       "translate": [
+        0,
+        0,
+        0
+       ]
+      }
+     },
+     {
+      "annotation": {
+       "anchor": "solid",
+       "category": "result",
+       "kind": "volume",
+       "role": "result",
+       "subject_ids": [
+        "khoi_ABCD_A_primeB_primeC_primeD_prime"
+       ],
+       "unit": null
+      },
+      "dependency_edges": [
+       {
+        "relation": "structural",
+        "source_id": "khoi_ABCD_A_primeB_primeC_primeD_prime"
+       }
+      ],
+      "depends": [
+       "khoi_ABCD_A_primeB_primeC_primeD_prime"
+      ],
+      "display_group": [
+       "construction",
+       "measurement",
+       "target"
+      ],
+      "display_label": "Thể tích ABCD.A′B′C′D′",
+      "display_role": "measurement",
+      "exact": {
+       "kind": "rational",
+       "value": "1"
+      },
+      "formation_roles": [],
+      "id": "kq_f3",
+      "label": "Thể tích ABCD.A′B′C′D′",
+      "notation": "V(ABCD.A′B′C′D′)",
+      "occludes_edges": false,
+      "origin": "derived",
+      "parent": null,
+      "producer": "measure.volume",
+      "reference": "V(ABCD.A′B′C′D′)",
+      "render": "readout",
+      "role": "Thể tích khối",
+      "source": {
+       "instruction": "measure.volume"
+      },
+      "type": "quantity",
+      "value": "1",
+      "visual_transform": {
+       "scale": 1,
+       "translate": [
+        0,
+        0,
+        0
+       ]
+      }
+     },
+     {
+      "boundary_edge_ids": [
+       "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-B",
+       "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:B-C",
+       "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C-D",
+       "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-D"
+      ],
+      "dependency_edges": [
+       {
+        "relation": "topological",
+        "source_id": "A"
+       },
+       {
+        "relation": "topological",
+        "source_id": "B"
+       },
+       {
+        "relation": "topological",
+        "source_id": "C"
+       },
+       {
+        "relation": "topological",
+        "source_id": "D"
+       }
+      ],
+      "depends": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "display_group": [
+       "construction",
+       "face"
+      ],
+      "display_label": "Đáy dưới ABCD",
+      "display_role": "visual_owner",
+      "formation_roles": [
+       "CONSTRUCT_BASE"
+      ],
+      "id": "day_ABCD",
+      "label": "Đáy dưới ABCD",
+      "notation": "ABCD",
+      "occludes_edges": false,
+      "origin": "derived",
+      "parent": "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "producer": "construct_polygon",
+      "reference": "ABCD",
+      "render": "polygon",
+      "role": "Đa giác A, B, C, D",
+      "source": {
+       "instruction": "construct_polygon"
+      },
+      "surface_role": "BASE_REGION",
+      "type": "polygon3",
+      "vertex_ids": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "vertices": [
+       [
+        "0",
+        "0",
+        "0"
+       ],
+       [
+        "1",
+        "0",
+        "0"
+       ],
+       [
+        "1",
+        "1",
+        "0"
+       ],
+       [
+        "0",
+        "1",
+        "0"
+       ]
+      ],
+      "visual_transform": {
+       "scale": 1,
+       "translate": [
+        0,
+        0,
+        0
+       ]
+      }
+     },
+     {
+      "boundary_edge_ids": [
+       "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A_prime-B_prime",
+       "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:B_prime-C_prime",
+       "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C_prime-D_prime",
+       "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A_prime-D_prime"
+      ],
+      "dependency_edges": [
+       {
+        "relation": "topological",
+        "source_id": "A_prime"
+       },
+       {
+        "relation": "topological",
+        "source_id": "B_prime"
+       },
+       {
+        "relation": "topological",
+        "source_id": "C_prime"
+       },
+       {
+        "relation": "topological",
+        "source_id": "D_prime"
+       }
+      ],
+      "depends": [
+       "A_prime",
+       "B_prime",
+       "C_prime",
+       "D_prime"
+      ],
+      "display_group": [
+       "construction",
+       "face"
+      ],
+      "display_label": "Đáy trên A′B′C′D′",
+      "display_role": "visual_owner",
+      "formation_roles": [
+       "CONSTRUCT_TRANSLATED_FACE"
+      ],
+      "id": "day_A_primeB_primeC_primeD_prime",
+      "label": "Đáy trên A′B′C′D′",
+      "notation": "A′B′C′D′",
+      "occludes_edges": false,
+      "origin": "derived",
+      "parent": "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "producer": "construct_polygon",
+      "reference": "A′B′C′D′",
+      "render": "polygon",
+      "role": "Đa giác A′, B′, C′, D′",
+      "source": {
+       "instruction": "construct_polygon"
+      },
+      "surface_role": "BASE_REGION",
+      "type": "polygon3",
+      "vertex_ids": [
+       "A_prime",
+       "B_prime",
+       "C_prime",
+       "D_prime"
+      ],
+      "vertices": [
+       [
+        "0",
+        "0",
+        "1"
+       ],
+       [
+        "1",
+        "0",
+        "1"
+       ],
+       [
+        "1",
+        "1",
+        "1"
+       ],
+       [
+        "0",
+        "1",
+        "1"
+       ]
+      ],
+      "visual_transform": {
+       "scale": 1,
+       "translate": [
+        0,
+        0,
+        0
+       ]
+      }
+     },
+     {
+      "boundary_edge_ids": [
+       "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-A_prime"
+      ],
+      "dependency_edges": [
+       {
+        "relation": "topological",
+        "source_id": "A"
+       },
+       {
+        "relation": "topological",
+        "source_id": "A_prime"
+       }
+      ],
+      "depends": [
+       "A",
+       "A_prime"
+      ],
+      "display_group": [
+       "construction"
+      ],
+      "display_label": "Cạnh bên AA′",
+      "display_role": "visual_owner",
+      "endpoint_ids": [
+       "A",
+       "A_prime"
+      ],
+      "endpoints": [
+       [
+        "0",
+        "0",
+        "0"
+       ],
+       [
+        "0",
+        "0",
+        "1"
+       ]
+      ],
+      "formation_roles": [
+       "CONSTRUCT_LATERAL_BOUNDARY"
+      ],
+      "id": "canh_ben_A_A_prime",
+      "label": "Cạnh bên AA′",
+      "notation": "AA′",
+      "occludes_edges": false,
+      "origin": "derived",
+      "parent": null,
+      "perpendicular_witness": {
+       "can_present_as_proven": true,
+       "certificate": "exact-gram-line-plane-orthogonality/1",
+       "conclusion_step_index": null,
+       "foot": [
+        "0",
+        "0",
+        "0"
+       ],
+       "foot_id": "A",
+       "from": "A_prime",
+       "line_direction": [
+        "0",
+        "0",
+        "1"
+       ],
+       "marker": {
+        "u": [
+         "1",
+         "0",
+         "0"
+        ],
+        "v": [
+         "0",
+         "0",
+         "1"
+        ]
+       },
+       "on": "day_ABCD",
+       "plane_directions": [
+        [
+         "1",
+         "0",
+         "0"
+        ],
+        [
+         "0",
+         "1",
+         "0"
+        ]
+       ],
+       "plane_vertex_ids": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "relation": "line_perpendicular_plane",
+       "rule": "prism_lateral_altitude",
+       "status": "ENGINE_VERIFIED",
+       "supporting_calls": [],
+       "supporting_step_index": null
+      },
+      "point_a": [
+       "0",
+       "0",
+       "0"
+      ],
+      "point_b": [
+       "0",
+       "0",
+       "1"
+      ],
+      "producer": "construct_segment",
+      "reference": "AA′",
+      "render": "segment",
+      "role": "Đoạn thẳng nối A và A′",
+      "source": {
+       "instruction": "construct_segment"
+      },
+      "type": "segment3",
+      "visual_transform": {
+       "scale": 1,
+       "translate": [
+        0,
+        0,
+        0
+       ]
+      }
+     },
+     {
+      "boundary_edge_ids": [
+       "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:B-B_prime"
+      ],
+      "dependency_edges": [
+       {
+        "relation": "topological",
+        "source_id": "B"
+       },
+       {
+        "relation": "topological",
+        "source_id": "B_prime"
+       }
+      ],
+      "depends": [
+       "B",
+       "B_prime"
+      ],
+      "display_group": [
+       "construction"
+      ],
+      "display_label": "Cạnh bên BB′",
+      "display_role": "visual_owner",
+      "endpoint_ids": [
+       "B",
+       "B_prime"
+      ],
+      "endpoints": [
+       [
+        "1",
+        "0",
+        "0"
+       ],
+       [
+        "1",
+        "0",
+        "1"
+       ]
+      ],
+      "formation_roles": [
+       "CONSTRUCT_LATERAL_BOUNDARY"
+      ],
+      "id": "canh_ben_B_B_prime",
+      "label": "Cạnh bên BB′",
+      "notation": "BB′",
+      "occludes_edges": false,
+      "origin": "derived",
+      "parent": null,
+      "perpendicular_witness": {
+       "can_present_as_proven": true,
+       "certificate": "exact-gram-line-plane-orthogonality/1",
+       "conclusion_step_index": null,
+       "foot": [
+        "1",
+        "0",
+        "0"
+       ],
+       "foot_id": "B",
+       "from": "B_prime",
+       "line_direction": [
+        "0",
+        "0",
+        "1"
+       ],
+       "marker": {
+        "u": [
+         "0",
+         "1",
+         "0"
+        ],
+        "v": [
+         "0",
+         "0",
+         "1"
+        ]
+       },
+       "on": "day_ABCD",
+       "plane_directions": [
+        [
+         "0",
+         "1",
+         "0"
+        ],
+        [
+         "-1",
+         "0",
+         "0"
+        ]
+       ],
+       "plane_vertex_ids": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "relation": "line_perpendicular_plane",
+       "rule": "prism_lateral_altitude",
+       "status": "ENGINE_VERIFIED",
+       "supporting_calls": [],
+       "supporting_step_index": null
+      },
+      "point_a": [
+       "1",
+       "0",
+       "0"
+      ],
+      "point_b": [
+       "1",
+       "0",
+       "1"
+      ],
+      "producer": "construct_segment",
+      "reference": "BB′",
+      "render": "segment",
+      "role": "Đoạn thẳng nối B và B′",
+      "source": {
+       "instruction": "construct_segment"
+      },
+      "type": "segment3",
+      "visual_transform": {
+       "scale": 1,
+       "translate": [
+        0,
+        0,
+        0
+       ]
+      }
+     },
+     {
+      "boundary_edge_ids": [
+       "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C-C_prime"
+      ],
+      "dependency_edges": [
+       {
+        "relation": "topological",
+        "source_id": "C"
+       },
+       {
+        "relation": "topological",
+        "source_id": "C_prime"
+       }
+      ],
+      "depends": [
+       "C",
+       "C_prime"
+      ],
+      "display_group": [
+       "construction"
+      ],
+      "display_label": "Cạnh bên CC′",
+      "display_role": "visual_owner",
+      "endpoint_ids": [
+       "C",
+       "C_prime"
+      ],
+      "endpoints": [
+       [
+        "1",
+        "1",
+        "0"
+       ],
+       [
+        "1",
+        "1",
+        "1"
+       ]
+      ],
+      "formation_roles": [
+       "CONSTRUCT_LATERAL_BOUNDARY"
+      ],
+      "id": "canh_ben_C_C_prime",
+      "label": "Cạnh bên CC′",
+      "notation": "CC′",
+      "occludes_edges": false,
+      "origin": "derived",
+      "parent": null,
+      "perpendicular_witness": {
+       "can_present_as_proven": true,
+       "certificate": "exact-gram-line-plane-orthogonality/1",
+       "conclusion_step_index": null,
+       "foot": [
+        "1",
+        "1",
+        "0"
+       ],
+       "foot_id": "C",
+       "from": "C_prime",
+       "line_direction": [
+        "0",
+        "0",
+        "1"
+       ],
+       "marker": {
+        "u": [
+         "-1",
+         "0",
+         "0"
+        ],
+        "v": [
+         "0",
+         "0",
+         "1"
+        ]
+       },
+       "on": "day_ABCD",
+       "plane_directions": [
+        [
+         "-1",
+         "0",
+         "0"
+        ],
+        [
+         "0",
+         "-1",
+         "0"
+        ]
+       ],
+       "plane_vertex_ids": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "relation": "line_perpendicular_plane",
+       "rule": "prism_lateral_altitude",
+       "status": "ENGINE_VERIFIED",
+       "supporting_calls": [],
+       "supporting_step_index": null
+      },
+      "point_a": [
+       "1",
+       "1",
+       "0"
+      ],
+      "point_b": [
+       "1",
+       "1",
+       "1"
+      ],
+      "producer": "construct_segment",
+      "reference": "CC′",
+      "render": "segment",
+      "role": "Đoạn thẳng nối C và C′",
+      "source": {
+       "instruction": "construct_segment"
+      },
+      "type": "segment3",
+      "visual_transform": {
+       "scale": 1,
+       "translate": [
+        0,
+        0,
+        0
+       ]
+      }
+     },
+     {
+      "boundary_edge_ids": [
+       "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:D-D_prime"
+      ],
+      "dependency_edges": [
+       {
+        "relation": "topological",
+        "source_id": "D"
+       },
+       {
+        "relation": "topological",
+        "source_id": "D_prime"
+       }
+      ],
+      "depends": [
+       "D",
+       "D_prime"
+      ],
+      "display_group": [
+       "construction"
+      ],
+      "display_label": "Cạnh bên DD′",
+      "display_role": "visual_owner",
+      "endpoint_ids": [
+       "D",
+       "D_prime"
+      ],
+      "endpoints": [
+       [
+        "0",
+        "1",
+        "0"
+       ],
+       [
+        "0",
+        "1",
+        "1"
+       ]
+      ],
+      "formation_roles": [
+       "CONSTRUCT_LATERAL_BOUNDARY"
+      ],
+      "id": "canh_ben_D_D_prime",
+      "label": "Cạnh bên DD′",
+      "notation": "DD′",
+      "occludes_edges": false,
+      "origin": "derived",
+      "parent": null,
+      "perpendicular_witness": {
+       "can_present_as_proven": true,
+       "certificate": "exact-gram-line-plane-orthogonality/1",
+       "conclusion_step_index": null,
+       "foot": [
+        "0",
+        "1",
+        "0"
+       ],
+       "foot_id": "D",
+       "from": "D_prime",
+       "line_direction": [
+        "0",
+        "0",
+        "1"
+       ],
+       "marker": {
+        "u": [
+         "0",
+         "-1",
+         "0"
+        ],
+        "v": [
+         "0",
+         "0",
+         "1"
+        ]
+       },
+       "on": "day_ABCD",
+       "plane_directions": [
+        [
+         "0",
+         "-1",
+         "0"
+        ],
+        [
+         "1",
+         "0",
+         "0"
+        ]
+       ],
+       "plane_vertex_ids": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "relation": "line_perpendicular_plane",
+       "rule": "prism_lateral_altitude",
+       "status": "ENGINE_VERIFIED",
+       "supporting_calls": [],
+       "supporting_step_index": null
+      },
+      "point_a": [
+       "0",
+       "1",
+       "0"
+      ],
+      "point_b": [
+       "0",
+       "1",
+       "1"
+      ],
+      "producer": "construct_segment",
+      "reference": "DD′",
+      "render": "segment",
+      "role": "Đoạn thẳng nối D và D′",
+      "source": {
+       "instruction": "construct_segment"
+      },
+      "type": "segment3",
+      "visual_transform": {
+       "scale": 1,
+       "translate": [
+        0,
+        0,
+        0
+       ]
+      }
+     }
+    ]
+   },
+   "simulation_id": "generic.semantic_program",
+   "source": "hybrid_route_d_preview",
+   "status": "ok",
+   "title": "Dựng hình từ lời gọi hàm có nguồn",
+   "visual_mode": "2d"
+  },
+  "route_d": {
+   "answer_exact": {
+    "f3": {
+     "coef": "1",
+     "dim": 3,
+     "unit": "a"
+    },
+    "f4": {
+     "coef": "√3",
+     "dim": 1,
+     "unit": "a"
+    }
+   },
+   "answers": {
+    "f3": "a³",
+    "f4": "a√3"
+   },
+   "construction_trace": [
+    {
+     "calls": [
+      "f1_day",
+      "f2"
+     ],
+     "note": "mọi độ dài đề cho tỉ lệ với a ⇒ hình đồng dạng với hình tại a = 1; dựng ở a = 1 (đơn vị, không phải dữ kiện), đáp số = hệ số · a^bậc",
+     "object": "a",
+     "provenance": "LAYOUT_DERIVED",
+     "rule": "symbolic_length_unit",
+     "step": "choose_unit"
+    },
+    {
+     "calls": [
+      "f1_day"
+     ],
+     "object": "A",
+     "provenance": "LAYOUT_DERIVED",
+     "rule": "regular_polygon_chart",
+     "step": "place_point"
+    },
+    {
+     "calls": [
+      "f1_day"
+     ],
+     "object": "B",
+     "provenance": "LAYOUT_DERIVED",
+     "rule": "regular_polygon_chart",
+     "step": "place_point"
+    },
+    {
+     "calls": [
+      "f1_day"
+     ],
+     "object": "C",
+     "provenance": "LAYOUT_DERIVED",
+     "rule": "regular_polygon_chart",
+     "step": "place_point"
+    },
+    {
+     "calls": [
+      "f1_day"
+     ],
+     "object": "D",
+     "provenance": "LAYOUT_DERIVED",
+     "rule": "regular_polygon_chart",
+     "step": "place_point"
+    },
+    {
+     "calls": [
+      "f1",
+      "f2"
+     ],
+     "object": "A'",
+     "provenance": "LAYOUT_DERIVED",
+     "rule": "right_prism_translate",
+     "step": "place_point"
+    },
+    {
+     "calls": [
+      "f1",
+      "f2"
+     ],
+     "object": "B'",
+     "provenance": "LAYOUT_DERIVED",
+     "rule": "right_prism_translate",
+     "step": "place_point"
+    },
+    {
+     "calls": [
+      "f1",
+      "f2"
+     ],
+     "object": "C'",
+     "provenance": "LAYOUT_DERIVED",
+     "rule": "right_prism_translate",
+     "step": "place_point"
+    },
+    {
+     "calls": [
+      "f1",
+      "f2"
+     ],
+     "object": "D'",
+     "provenance": "LAYOUT_DERIVED",
+     "rule": "right_prism_translate",
+     "step": "place_point"
+    },
+    {
+     "calls": [
+      "f1"
+     ],
+     "object": "ABCD.A'B'C'D'",
+     "provenance": "DERIVED",
+     "rule": "prism",
+     "step": "construct_solid"
+    },
+    {
+     "calls": [
+      "f4"
+     ],
+     "object": "ask_length",
+     "provenance": "DERIVED",
+     "rule": "ask_length",
+     "step": "measure"
+    },
+    {
+     "calls": [
+      "f3"
+     ],
+     "object": "ask_volume",
+     "provenance": "DERIVED",
+     "rule": "ask_volume",
+     "step": "measure"
+    }
+   ],
+   "geometry_ir": {
+    "description": null,
+    "memory_declarations": [
+     {
+      "element_type": null,
+      "initial_value": [
+       "0",
+       "0",
+       "0"
+      ],
+      "key_type": null,
+      "model_assumption": null,
+      "name": "A",
+      "provenance": "LAYOUT_DERIVED",
+      "source_fact_id": null,
+      "type": "point3",
+      "val_type": null
+     },
+     {
+      "element_type": null,
+      "initial_value": [
+       "1",
+       "0",
+       "0"
+      ],
+      "key_type": null,
+      "model_assumption": null,
+      "name": "B",
+      "provenance": "LAYOUT_DERIVED",
+      "source_fact_id": null,
+      "type": "point3",
+      "val_type": null
+     },
+     {
+      "element_type": null,
+      "initial_value": [
+       "1",
+       "1",
+       "0"
+      ],
+      "key_type": null,
+      "model_assumption": null,
+      "name": "C",
+      "provenance": "LAYOUT_DERIVED",
+      "source_fact_id": null,
+      "type": "point3",
+      "val_type": null
+     },
+     {
+      "element_type": null,
+      "initial_value": [
+       "0",
+       "1",
+       "0"
+      ],
+      "key_type": null,
+      "model_assumption": null,
+      "name": "D",
+      "provenance": "LAYOUT_DERIVED",
+      "source_fact_id": null,
+      "type": "point3",
+      "val_type": null
+     },
+     {
+      "element_type": null,
+      "initial_value": [
+       "0",
+       "0",
+       "1"
+      ],
+      "key_type": null,
+      "model_assumption": null,
+      "name": "A_prime",
+      "provenance": "LAYOUT_DERIVED",
+      "source_fact_id": null,
+      "type": "point3",
+      "val_type": null
+     },
+     {
+      "element_type": null,
+      "initial_value": [
+       "1",
+       "0",
+       "1"
+      ],
+      "key_type": null,
+      "model_assumption": null,
+      "name": "B_prime",
+      "provenance": "LAYOUT_DERIVED",
+      "source_fact_id": null,
+      "type": "point3",
+      "val_type": null
+     },
+     {
+      "element_type": null,
+      "initial_value": [
+       "1",
+       "1",
+       "1"
+      ],
+      "key_type": null,
+      "model_assumption": null,
+      "name": "C_prime",
+      "provenance": "LAYOUT_DERIVED",
+      "source_fact_id": null,
+      "type": "point3",
+      "val_type": null
+     },
+     {
+      "element_type": null,
+      "initial_value": [
+       "0",
+       "1",
+       "1"
+      ],
+      "key_type": null,
+      "model_assumption": null,
+      "name": "D_prime",
+      "provenance": "LAYOUT_DERIVED",
+      "source_fact_id": null,
+      "type": "point3",
+      "val_type": null
+     },
+     {
+      "element_type": null,
+      "initial_value": null,
+      "key_type": null,
+      "model_assumption": null,
+      "name": "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "provenance": null,
+      "source_fact_id": null,
+      "type": "solid",
+      "val_type": null
+     },
+     {
+      "element_type": null,
+      "initial_value": null,
+      "key_type": null,
+      "model_assumption": null,
+      "name": "kq_f4",
+      "provenance": null,
+      "source_fact_id": null,
+      "type": "float",
+      "val_type": null
+     },
+     {
+      "element_type": null,
+      "initial_value": null,
+      "key_type": null,
+      "model_assumption": null,
+      "name": "kq_f3",
+      "provenance": null,
+      "source_fact_id": null,
+      "type": "float",
+      "val_type": null
+     },
+     {
+      "element_type": null,
+      "initial_value": null,
+      "key_type": null,
+      "model_assumption": null,
+      "name": "day_ABCD",
+      "provenance": null,
+      "source_fact_id": null,
+      "type": "polygon3",
+      "val_type": null
+     },
+     {
+      "element_type": null,
+      "initial_value": null,
+      "key_type": null,
+      "model_assumption": null,
+      "name": "day_A_primeB_primeC_primeD_prime",
+      "provenance": null,
+      "source_fact_id": null,
+      "type": "polygon3",
+      "val_type": null
+     },
+     {
+      "element_type": null,
+      "initial_value": null,
+      "key_type": null,
+      "model_assumption": null,
+      "name": "canh_ben_A_A_prime",
+      "provenance": null,
+      "source_fact_id": null,
+      "type": "segment3",
+      "val_type": null
+     },
+     {
+      "element_type": null,
+      "initial_value": null,
+      "key_type": null,
+      "model_assumption": null,
+      "name": "canh_ben_B_B_prime",
+      "provenance": null,
+      "source_fact_id": null,
+      "type": "segment3",
+      "val_type": null
+     },
+     {
+      "element_type": null,
+      "initial_value": null,
+      "key_type": null,
+      "model_assumption": null,
+      "name": "canh_ben_C_C_prime",
+      "provenance": null,
+      "source_fact_id": null,
+      "type": "segment3",
+      "val_type": null
+     },
+     {
+      "element_type": null,
+      "initial_value": null,
+      "key_type": null,
+      "model_assumption": null,
+      "name": "canh_ben_D_D_prime",
+      "provenance": null,
+      "source_fact_id": null,
+      "type": "segment3",
+      "val_type": null
+     }
+    ],
+    "pedagogical_intent": null,
+    "spec_version": "1.0",
+    "statements": [
+     {
+      "kind": "construct_polygon",
+      "label": "Đáy dưới ABCD",
+      "target_var": "day_ABCD",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "kind": "construct_polygon",
+      "label": "Đáy trên A′B′C′D′",
+      "target_var": "day_A_primeB_primeC_primeD_prime",
+      "vertices": [
+       "A_prime",
+       "B_prime",
+       "C_prime",
+       "D_prime"
+      ]
+     },
+     {
+      "endpoint_a": null,
+      "endpoint_b": null,
+      "items": [
+       {
+        "endpoint_a": "A",
+        "endpoint_b": "A_prime",
+        "label": "Cạnh bên AA′",
+        "name": "canh_ben_A_A_prime"
+       },
+       {
+        "endpoint_a": "B",
+        "endpoint_b": "B_prime",
+        "label": "Cạnh bên BB′",
+        "name": "canh_ben_B_B_prime"
+       },
+       {
+        "endpoint_a": "C",
+        "endpoint_b": "C_prime",
+        "label": "Cạnh bên CC′",
+        "name": "canh_ben_C_C_prime"
+       },
+       {
+        "endpoint_a": "D",
+        "endpoint_b": "D_prime",
+        "label": "Cạnh bên DD′",
+        "name": "canh_ben_D_D_prime"
+       }
+      ],
+      "kind": "construct_segment",
+      "label": "Các cạnh bên AA′, BB′, CC′, DD′",
+      "target_var": "canh_ben"
+     },
+     {
+      "faces": [
+       [
+        0,
+        1,
+        2,
+        3
+       ],
+       [
+        4,
+        5,
+        6,
+        7
+       ],
+       [
+        0,
+        1,
+        5,
+        4
+       ],
+       [
+        1,
+        2,
+        6,
+        5
+       ],
+       [
+        2,
+        3,
+        7,
+        6
+       ],
+       [
+        3,
+        0,
+        4,
+        7
+       ]
+      ],
+      "kind": "construct_solid",
+      "label": "ABCD.A'B'C'D'",
+      "target_var": "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "A_prime",
+       "B_prime",
+       "C_prime",
+       "D_prime"
+      ]
+     },
+     {
+      "expr": {
+       "kind": "measure",
+       "of": "A",
+       "quantity": "distance",
+       "wrt": "C_prime"
+      },
+      "kind": "assign",
+      "target_var": "kq_f4"
+     },
+     {
+      "expr": {
+       "kind": "measure",
+       "of": "khoi_ABCD_A_primeB_primeC_primeD_prime",
+       "quantity": "volume",
+       "wrt": null
+      },
+      "kind": "assign",
+      "target_var": "kq_f3"
+     }
+    ],
+    "title": "Dựng hình từ lời gọi hàm có nguồn",
+    "visual_bindings": {
+     "containers": [],
+     "pointers": [],
+     "value_boxes": []
+    }
+   },
+   "kernel_check": true,
+   "length_unit": {
+    "display_scale": "a = 1 đơn vị dựng",
+    "is_given": false,
+    "symbol": "a"
+   },
+   "planner": {
+    "auxiliary": [],
+    "calls": [
+     {
+      "args": {
+       "base": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "right": true,
+       "top": [
+        "A'",
+        "B'",
+        "C'",
+        "D'"
+       ]
+      },
+      "depends_on": [],
+      "fn": "prism",
+      "id": "f1",
+      "source": {
+       "quotes": [
+        "hình lập phương ABCD.A'B'C'D'"
+       ]
+      }
+     },
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "depends_on": [],
+      "fn": "regular_polygon",
+      "id": "f1_day",
+      "source": {
+       "quotes": [
+        "hình lập phương ABCD.A'B'C'D'",
+        "có cạnh bằng a"
+       ]
+      }
+     },
+     {
+      "args": {
+       "segment": [
+        "A",
+        "A'"
+       ],
+       "value": "a"
+      },
+      "depends_on": [],
+      "fn": "segment_length",
+      "id": "f2",
+      "source": {
+       "quotes": [
+        "hình lập phương ABCD.A'B'C'D'",
+        "có cạnh bằng a"
+       ]
+      }
+     },
+     {
+      "args": {
+       "solid": "ABCD.A'B'C'D'"
+      },
+      "depends_on": [],
+      "fn": "ask_volume",
+      "id": "f3",
+      "source": {
+       "quotes": [
+        "Tính thể tích khối lập phương ABCD.A'B'C'D'"
+       ]
+      }
+     },
+     {
+      "args": {
+       "segment": [
+        "A",
+        "C'"
+       ]
+      },
+      "depends_on": [],
+      "fn": "ask_length",
+      "id": "f4",
+      "source": {
+       "quotes": [
+        "độ dài đường chéo AC'"
+       ]
+      }
+     }
+    ],
+    "goal_checks": {},
+    "negated_checks": {},
+    "trace": [
+     {
+      "call": "f1",
+      "fact": "f1",
+      "fn": "prism",
+      "rule": "solid(cube)→prism (right=True)"
+     },
+     {
+      "call": "f1_day",
+      "fact": "f1",
+      "fn": "regular_polygon",
+      "rule": "lăng trụ đều / lập phương ⇒ đáy đa giác đều"
+     },
+     {
+      "call": "f2",
+      "fact": "f2",
+      "fn": "segment_length",
+      "rule": "length(edge)→cạnh đáy + cạnh bên (định nghĩa)"
+     },
+     {
+      "call": "f3",
+      "fact": "f3",
+      "fn": "ask_volume",
+      "rule": "question(volume)"
+     },
+     {
+      "call": "f4",
+      "fact": "f4",
+      "fn": "ask_length",
+      "rule": "effect(AnswerLength)→ask_length"
+     }
+    ],
+    "version": "geometry-fact-planner/14"
+   },
+   "runtime_identity": {
+    "adapter_version": "hybrid-preview-adapter/2",
+    "default_product_mode": "LLM_ONLY",
+    "enabled": true,
+    "engine_version": "geometry-function-engine/13",
+    "envelope_version": "hybrid-route-d-preview/1",
+    "extraction_surface": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+    "fingerprint": "67514fa7a9595c2f94d4c92656297b3c4e0d86ad3d5d737778f896814667fbcb",
+    "planner_version": "geometry-fact-planner/14",
+    "product_enablement": "NO-GO",
+    "provider_mode": "OFFLINE_FIXTURE_ONLY",
+    "registry_version": "geometry-functions/13",
+    "response_contract": "flat"
+   },
+   "source_provenance": [
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "right": true,
+      "top": [
+       "A'",
+       "B'",
+       "C'",
+       "D'"
+      ]
+     },
+     "fn": "prism",
+     "id": "f1",
+     "quotes": [
+      "hình lập phương ABCD.A'B'C'D'"
+     ]
+    },
+    {
+     "args": {
+      "side": "a",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "fn": "regular_polygon",
+     "id": "f1_day",
+     "quotes": [
+      "hình lập phương ABCD.A'B'C'D'",
+      "có cạnh bằng a"
+     ]
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "a"
+     },
+     "fn": "segment_length",
+     "id": "f2",
+     "quotes": [
+      "hình lập phương ABCD.A'B'C'D'",
+      "có cạnh bằng a"
+     ]
+    },
+    {
+     "args": {
+      "solid": "ABCD.A'B'C'D'"
+     },
+     "fn": "ask_volume",
+     "id": "f3",
+     "quotes": [
+      "Tính thể tích khối lập phương ABCD.A'B'C'D'"
+     ]
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C'"
+      ]
+     },
+     "fn": "ask_length",
+     "id": "f4",
+     "quotes": [
+      "độ dài đường chéo AC'"
+     ]
+    }
+   ]
+  },
+  "schema_version": "hybrid-route-d-preview/1"
+ },
+ "response_sha256": "d918aab64183ca60865ed8c965ccaa8a3dd07fcc8cc69c1355502caedc0c9987",
+ "schema": "hybrid-preview-envelope-fixture/1",
+ "source": {
+  "input_sha256": "d4a8577ec653e15f0c06aead7d4cd03227df453c0c89292f0970315286860c61",
+  "origin": "backend/tests/geometry/fixtures/hybrid_holdout_cases.json#H01_CUBE/b_facts",
+  "problem_text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Tính thể tích khối lập phương ABCD.A'B'C'D' và độ dài đường chéo AC'.",
+  "provider_body": {
+   "candidates": [
+    {
+     "content": {
+      "parts": [
+       {
+        "text": "{\"facts\": [{\"id\": \"f1\", \"kind\": \"solid\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"hình lập phương ABCD.A'B'C'D'\"], \"solid\": \"ABCD.A'B'C'D'\", \"solid_type\": \"cube\"}, {\"id\": \"f2\", \"kind\": \"length\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"có cạnh bằng a\"], \"measure\": \"edge\", \"solid\": \"ABCD.A'B'C'D'\", \"value\": \"a\"}, {\"id\": \"f3\", \"kind\": \"question\", \"role\": \"question\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"Tính thể tích khối lập phương ABCD.A'B'C'D'\"], \"quantity\": \"volume\", \"solid\": \"ABCD.A'B'C'D'\"}, {\"id\": \"f4\", \"kind\": \"question\", \"role\": \"question\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"độ dài đường chéo AC'\"], \"quantity\": \"length\", \"points\": [\"A\", \"C'\"]}]}"
+       }
+      ]
+     },
+     "finishReason": "STOP"
+    }
+   ]
+  }
+ }
+}

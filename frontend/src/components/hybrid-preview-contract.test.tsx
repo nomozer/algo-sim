@@ -41,7 +41,8 @@ import { Scene3DExplorer } from "../simulations/domains/geometry/Scene3DExplorer
 import { buildObject3D } from "../simulations/domains/geometry/scene3d-view";
 
 const RUNS_DIR = join(__dirname, "..", "..", "..", "docs", "evaluation", "geometry", "runs");
-const FIXTURES_DIR = join(RUNS_DIR, "claude-to-codex-takeover", "claude-resume", "fixtures-adapter-2-common-perpendicular");
+// Run `hybrid-v2-backend-generalization`: H03 now names its base plane (ABCD); earlier bundles stay as evidence.
+const FIXTURES_DIR = join(RUNS_DIR, "hybrid-v2-backend-generalization", "fixtures-adapter-2-named-plane");
 
 interface ManifestRow {
   id: string;
@@ -324,7 +325,7 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
       }
     });
 
-    it("đáp số góc không lặp ký hiệu: H03 cos²(SA, (ABC)) = 1/4, không phải '= cos²=1/4' (review M1)", () => {
+    it("đáp số góc không lặp ký hiệu: H03 cos²(SA, (ABCD)) = 1/4, không phải '= cos²=1/4' (review M1)", () => {
       const r = docPhanHoiHybrid(loadFixture("served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS.json").response);
       if (!r.ok) throw new Error(r.reason);
       const byId = Object.fromEntries(hybridViewCua(r.envelope)!.answers.map((a) => [a.quantity_id, giaTriDapSo(a)]));
