@@ -1,0 +1,81 @@
+{
+ "covers": [
+  "refusal",
+  "injected_fault"
+ ],
+ "expected": {
+  "envelope_status": "unsupported",
+  "failure_category": "verification_gap",
+  "http_status": 200,
+  "reason_code": "METRIC_NOT_EUCLIDEAN",
+  "refusal_cause": "UNKNOWN"
+ },
+ "id": "refusal-result-scene-metric",
+ "injection": {
+  "defined_in": "backend/tests/test_hybrid_preview_contract.py",
+  "name": "_scene_metric"
+ },
+ "kind": "refusal",
+ "producer": {
+  "adapter_version": "hybrid-preview-adapter/2",
+  "backend_app_dirty": false,
+  "commit": "1beb3d0f0eb26806baf68073e4acd52bcfbe4dde",
+  "envelope_version": "hybrid-route-d-preview/1",
+  "inputs_dirty": false,
+  "product_commit": "f3ae506c2d23d57cb12351f18dcdef3d290572c9",
+  "source_fingerprint": {
+   "files": 118,
+   "measured_system_hash": "69191d70020fc37af367abb09a856bb4bd776470d3a9ffa3f8c8b49221e68ea1",
+   "rule": "scripts/freeze_evaluation_candidate.py::measured_system_hash"
+  }
+ },
+ "response": {
+  "envelope": {
+   "failure_category": "verification_gap",
+   "learner_reason": "Hệ đã thử dựng nhưng kết quả chưa qua được khâu kiểm chứng, nên không hiển thị hình chưa được kiểm.",
+   "reason": "Hệ đã thử dựng nhưng kết quả chưa qua được khâu kiểm chứng, nên không hiển thị hình chưa được kiểm.",
+   "reason_code": "METRIC_NOT_EUCLIDEAN",
+   "refusal_cause": "UNKNOWN",
+   "status": "unsupported"
+  },
+  "route_d": {
+   "planner": {},
+   "runtime_identity": {
+    "adapter_version": "hybrid-preview-adapter/2",
+    "default_product_mode": "LLM_ONLY",
+    "enabled": true,
+    "engine_version": "geometry-function-engine/11",
+    "envelope_version": "hybrid-route-d-preview/1",
+    "extraction_surface": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+    "fingerprint": "55caa72ac1671944dbe78dc68fb48c7fc90058853d6d63fd5ca866fece0efb92",
+    "planner_version": "geometry-fact-planner/13",
+    "product_enablement": "NO-GO",
+    "provider_mode": "OFFLINE_FIXTURE_ONLY",
+    "registry_version": "geometry-functions/13",
+    "response_contract": "flat"
+   }
+  },
+  "schema_version": "hybrid-route-d-preview/1"
+ },
+ "response_sha256": "c97d6bccdd685db802c998c021f73f64190af5f0d97693de591672ac0c8086e9",
+ "schema": "hybrid-preview-envelope-fixture/1",
+ "source": {
+  "input_sha256": "b7ae13e83cca5435d9b9dbe8595b53e2d1e65958d79b476fecacac1fa51fb928",
+  "origin": "tests/test_hybrid_preview_contract.py::CASES[result-scene-metric]",
+  "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B, AB = a, BC = a√3, SA vuông góc với (ABC) và SA = 2a. Chứng minh BC vuông góc với (SAB). Tính thể tích khối chóp S.ABC.",
+  "provider_body": {
+   "candidates": [
+    {
+     "content": {
+      "parts": [
+       {
+        "text": "{\"facts\": [{\"id\": \"f1\", \"kind\": \"right_angle\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"tam giác vuông tại B\"], \"at\": \"B\", \"points\": [\"A\", \"C\"]}, {\"id\": \"f2\", \"kind\": \"length\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"AB = a, BC = a√3\"], \"measure\": \"segment\", \"points\": [\"A\", \"B\"], \"value\": \"a\"}, {\"id\": \"f3\", \"kind\": \"length\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"AB = a, BC = a√3\"], \"measure\": \"segment\", \"points\": [\"B\", \"C\"], \"value\": \"a√3\"}, {\"id\": \"f4\", \"kind\": \"perpendicular\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"SA vuông góc với (ABC)\"], \"points_a\": [\"S\", \"A\"], \"points_b\": [\"A\", \"B\", \"C\"]}, {\"id\": \"f5\", \"kind\": \"length\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"SA = 2a\"], \"measure\": \"segment\", \"points\": [\"S\", \"A\"], \"value\": \"2a\"}, {\"id\": \"f6\", \"kind\": \"solid\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"hình chóp S.ABC\"], \"solid\": \"S.ABC\", \"solid_type\": \"pyramid\"}, {\"id\": \"f7\", \"kind\": \"perpendicular\", \"role\": \"prove\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"BC vuông góc với (SAB)\"], \"points_a\": [\"B\", \"C\"], \"points_b\": [\"S\", \"A\", \"B\"]}, {\"id\": \"f8\", \"kind\": \"question\", \"role\": \"question\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"Tính thể tích khối chóp S.ABC\"], \"quantity\": \"volume\", \"solid\": \"S.ABC\"}]}"
+       }
+      ]
+     },
+     "finishReason": "STOP"
+    }
+   ]
+  }
+ }
+}

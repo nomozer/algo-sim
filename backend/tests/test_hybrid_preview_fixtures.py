@@ -10,9 +10,12 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-#: Adapter /2 bundle. The first bundle (`fixtures/`, exported at 2a832ae2) is superseded: it predates the review fixes and
-#: is labelled adapter /1, the label of the pre-classification adapter (report §6).
-FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures-adapter-2'
+#: Adapter /2 bundle at CACHE_VERSION 130 (run `scene3d-to-hybrid-v2-replacement`: distance witnesses carry `u_to`,
+#: constructed planes are named). `hybrid-preview-contract-hardening/fixtures-adapter-2/` is superseded, kept unchanged as
+#: the evidence it was; the first bundle (`fixtures/`, exported at 2a832ae2) predates the review fixes (report §6).
+FIXTURES = ROOT / 'docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/fixtures-adapter-2-cache130'
+#: The superseded bundle — the one that predates the route D version bump the identity-restore test is about.
+OLD_FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures-adapter-2'
 SCRIPT = ROOT / 'backend/scripts/export_hybrid_preview_fixtures.py'
 MANIFEST = json.loads((FIXTURES / 'manifest.json').read_text(encoding='utf-8'))
 
@@ -89,7 +92,7 @@ def test_identity_restore_maps_only_declared_version_pairs():
     fresh identity back ONLY through the declared old → new pairs; anything else stays different or is refused."""
     import copy
     X = _exporter()
-    stored = json.loads((FIXTURES / 'served-H01_CUBE.json').read_text(encoding='utf-8'))['response']
+    stored = json.loads((OLD_FIXTURES / 'served-H01_CUBE.json').read_text(encoding='utf-8'))['response']
     fresh = copy.deepcopy(stored)
     ident = fresh['route_d']['runtime_identity']
     def newest(key):                                                   # a later run may bump only some versions

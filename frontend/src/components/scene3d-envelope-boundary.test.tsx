@@ -12,7 +12,7 @@ import { ChartMetricError, veKhongGian } from "../simulations/domains/geometry/s
 import type { SimulationEnvelope } from "../simulations/types";
 
 const fixture = () => JSON.parse(readFileSync(join(__dirname,
-  "../../../docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures-adapter-2/served-H01_CUBE.json"), "utf8")).response.envelope;
+  "../../../docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/fixtures-adapter-2-cache130/served-H01_CUBE.json"), "utf8")).response.envelope;
 const store = () => useAppStore.getState();
 const diagonal = (x: string) => [[x, "0", "0"], ["0", "1", "0"], ["0", "0", "1"]];
 const BAD: [string, unknown][] = [

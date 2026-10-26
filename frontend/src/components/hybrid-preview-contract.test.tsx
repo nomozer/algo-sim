@@ -49,8 +49,8 @@ const FIXTURES_DIR = join(
   "evaluation",
   "geometry",
   "runs",
-  "hybrid-preview-contract-hardening",
-  "fixtures-adapter-2",
+  "scene3d-to-hybrid-v2-replacement",
+  "fixtures-adapter-2-cache130",
 );
 
 interface ManifestRow {
@@ -488,8 +488,12 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
 
       // Fixture TỔNG HỢP (khai trong file): chỉ đổi refusal_cause UNKNOWN → SOURCE của refusal-missing-dimension.
       expect(SYNTHETIC_SOURCE.SYNTHETIC).toBe(true);
+      // Provenance names the bundle it was DERIVED from (superseded `hybrid-preview-contract-hardening/fixtures-adapter-2`,
+      // kept unchanged); the envelope equality below ties it to the CURRENT bundle.
+      const goc = JSON.parse(readFileSync(join(FIXTURES_DIR, "..", "..", "hybrid-preview-contract-hardening",
+        "fixtures-adapter-2", "manifest.json"), "utf8")) as { fixtures: { id: string; response_sha256: string }[] };
       expect(SYNTHETIC_SOURCE.provenance.derived_from_response_sha256).toBe(
-        MANIFEST.fixtures.find((f) => f.id === "refusal-missing-dimension")!.response_sha256);
+        goc.fixtures.find((f) => f.id === "refusal-missing-dimension")!.response_sha256);
       const sourceEnv = SYNTHETIC_SOURCE.response.envelope;
       expect({ ...sourceEnv, refusal_cause: "UNKNOWN" }).toEqual(
         loadFixture("refusal-missing-dimension.json").response.envelope);

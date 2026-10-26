@@ -1,0 +1,87 @@
+{
+ "covers": [
+  "refusal"
+ ],
+ "expected": {
+  "envelope_status": "unsupported",
+  "failure_category": "verification_gap",
+  "http_status": 200,
+  "reason_code": "PROOF_UNVERIFIABLE",
+  "refusal_cause": "UNKNOWN"
+ },
+ "id": "refusal-inconclusive-proof-only",
+ "injection": null,
+ "kind": "refusal",
+ "producer": {
+  "adapter_version": "hybrid-preview-adapter/2",
+  "backend_app_dirty": false,
+  "commit": "1beb3d0f0eb26806baf68073e4acd52bcfbe4dde",
+  "envelope_version": "hybrid-route-d-preview/1",
+  "inputs_dirty": false,
+  "product_commit": "f3ae506c2d23d57cb12351f18dcdef3d290572c9",
+  "source_fingerprint": {
+   "files": 118,
+   "measured_system_hash": "69191d70020fc37af367abb09a856bb4bd776470d3a9ffa3f8c8b49221e68ea1",
+   "rule": "scripts/freeze_evaluation_candidate.py::measured_system_hash"
+  }
+ },
+ "response": {
+  "envelope": {
+   "failure_category": "verification_gap",
+   "learner_reason": "Hệ chưa có chứng chỉ để kết luận từ dữ kiện: kiểm tra trên một hình dựng chưa đủ để kết luận cho mọi hình thoả đề, nên hệ không đưa ra kết luận.",
+   "reason": "Hệ chưa có chứng chỉ để kết luận từ dữ kiện: kiểm tra trên một hình dựng chưa đủ để kết luận cho mọi hình thoả đề, nên hệ không đưa ra kết luận.",
+   "reason_code": "PROOF_UNVERIFIABLE",
+   "refusal_cause": "UNKNOWN",
+   "status": "unsupported"
+  },
+  "route_d": {
+   "planner": {
+    "goal_checks": {
+     "f7": {
+      "can_present_as_proven": false,
+      "evidence_state": "TRUE_ON_CONFIGURATION",
+      "proof_status": "UNVERIFIABLE"
+     }
+    },
+    "negated_checks": {},
+    "version": "geometry-fact-planner/13"
+   },
+   "runtime_identity": {
+    "adapter_version": "hybrid-preview-adapter/2",
+    "default_product_mode": "LLM_ONLY",
+    "enabled": true,
+    "engine_version": "geometry-function-engine/11",
+    "envelope_version": "hybrid-route-d-preview/1",
+    "extraction_surface": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+    "fingerprint": "55caa72ac1671944dbe78dc68fb48c7fc90058853d6d63fd5ca866fece0efb92",
+    "planner_version": "geometry-fact-planner/13",
+    "product_enablement": "NO-GO",
+    "provider_mode": "OFFLINE_FIXTURE_ONLY",
+    "registry_version": "geometry-functions/13",
+    "response_contract": "flat"
+   }
+  },
+  "schema_version": "hybrid-route-d-preview/1"
+ },
+ "response_sha256": "9798769f4e0cbea8a3f45d2293cd11f6b608154c7052a6ef7028019c71f07c1c",
+ "schema": "hybrid-preview-envelope-fixture/1",
+ "source": {
+  "input_sha256": "fb8fb7473258b0817b7f2206a64d609bd13212df164eb410629bf0627377a942",
+  "origin": "tests/test_hybrid_preview_contract.py::CASES[inconclusive-proof-only]",
+  "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B, AB = a, BC = a√3, SA vuông góc với (ABC) và SA = 2a. Chứng minh BC vuông góc với (SAB). .",
+  "provider_body": {
+   "candidates": [
+    {
+     "content": {
+      "parts": [
+       {
+        "text": "{\"facts\": [{\"id\": \"f1\", \"kind\": \"right_angle\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"tam giác vuông tại B\"], \"at\": \"B\", \"points\": [\"A\", \"C\"]}, {\"id\": \"f2\", \"kind\": \"length\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"AB = a, BC = a√3\"], \"measure\": \"segment\", \"points\": [\"A\", \"B\"], \"value\": \"a\"}, {\"id\": \"f3\", \"kind\": \"length\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"AB = a, BC = a√3\"], \"measure\": \"segment\", \"points\": [\"B\", \"C\"], \"value\": \"a√3\"}, {\"id\": \"f4\", \"kind\": \"perpendicular\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"SA vuông góc với (ABC)\"], \"points_a\": [\"S\", \"A\"], \"points_b\": [\"A\", \"B\", \"C\"]}, {\"id\": \"f5\", \"kind\": \"length\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"SA = 2a\"], \"measure\": \"segment\", \"points\": [\"S\", \"A\"], \"value\": \"2a\"}, {\"id\": \"f6\", \"kind\": \"solid\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"hình chóp S.ABC\"], \"solid\": \"S.ABC\", \"solid_type\": \"pyramid\"}, {\"id\": \"f7\", \"kind\": \"perpendicular\", \"role\": \"prove\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"BC vuông góc với (SAB)\"], \"points_a\": [\"B\", \"C\"], \"points_b\": [\"S\", \"A\", \"B\"]}]}"
+       }
+      ]
+     },
+     "finishReason": "STOP"
+    }
+   ]
+  }
+ }
+}
