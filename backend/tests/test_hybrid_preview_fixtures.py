@@ -13,7 +13,9 @@ ROOT = Path(__file__).resolve().parents[2]
 #: Adapter /2 bundle at CACHE_VERSION 130 (run `scene3d-to-hybrid-v2-replacement`: distance witnesses carry `u_to`,
 #: constructed planes are named). `hybrid-preview-contract-hardening/fixtures-adapter-2/` is superseded, kept unchanged as
 #: the evidence it was; the first bundle (`fixtures/`, exported at 2a832ae2) predates the review fixes (report §6).
-FIXTURES = ROOT / 'docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/fixtures-adapter-2-cache130'
+#: Superseded by run `claude-to-codex-takeover` (Claude resume): served-H11 now carries the exact common perpendicular of
+#: its skew-line distance; the cache130 bundle stays unchanged as the evidence it was.
+FIXTURES = ROOT / 'docs/evaluation/geometry/runs/claude-to-codex-takeover/claude-resume/fixtures-adapter-2-common-perpendicular'
 #: The superseded bundle — the one that predates the route D version bump the identity-restore test is about.
 OLD_FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures-adapter-2'
 SCRIPT = ROOT / 'backend/scripts/export_hybrid_preview_fixtures.py'

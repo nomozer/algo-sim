@@ -40,18 +40,8 @@ import {
 import { Scene3DExplorer } from "../simulations/domains/geometry/Scene3DExplorer";
 import { buildObject3D } from "../simulations/domains/geometry/scene3d-view";
 
-const FIXTURES_DIR = join(
-  __dirname,
-  "..",
-  "..",
-  "..",
-  "docs",
-  "evaluation",
-  "geometry",
-  "runs",
-  "scene3d-to-hybrid-v2-replacement",
-  "fixtures-adapter-2-cache130",
-);
+const RUNS_DIR = join(__dirname, "..", "..", "..", "docs", "evaluation", "geometry", "runs");
+const FIXTURES_DIR = join(RUNS_DIR, "claude-to-codex-takeover", "claude-resume", "fixtures-adapter-2-common-perpendicular");
 
 interface ManifestRow {
   id: string;
@@ -93,7 +83,7 @@ function canonicalJson(val: unknown): string {
 }
 
 /** Fixture TỔNG HỢP duy nhất của run hybrid-offline-readiness-finalization (provenance trong file). */
-const SYNTHETIC_SOURCE = JSON.parse(readFileSync(join(FIXTURES_DIR, "..", "..",
+const SYNTHETIC_SOURCE = JSON.parse(readFileSync(join(RUNS_DIR,
   "hybrid-offline-readiness-finalization", "fixtures-synthetic", "synthetic-insufficient-specification-source.json"),
 "utf8"));
 const CHUNG_MINH = /đã\s*chứng\s*minh|được\s*chứng\s*minh|điều\s*phải\s*chứng\s*minh|đpcm|✓/i;
@@ -490,7 +480,7 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
       expect(SYNTHETIC_SOURCE.SYNTHETIC).toBe(true);
       // Provenance names the bundle it was DERIVED from (superseded `hybrid-preview-contract-hardening/fixtures-adapter-2`,
       // kept unchanged); the envelope equality below ties it to the CURRENT bundle.
-      const goc = JSON.parse(readFileSync(join(FIXTURES_DIR, "..", "..", "hybrid-preview-contract-hardening",
+      const goc = JSON.parse(readFileSync(join(RUNS_DIR, "hybrid-preview-contract-hardening",
         "fixtures-adapter-2", "manifest.json"), "utf8")) as { fixtures: { id: string; response_sha256: string }[] };
       expect(SYNTHETIC_SOURCE.provenance.derived_from_response_sha256).toBe(
         goc.fixtures.find((f) => f.id === "refusal-missing-dimension")!.response_sha256);

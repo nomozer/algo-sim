@@ -1,0 +1,37 @@
+{
+ "covers": [
+  "gate"
+ ],
+ "expected": {
+  "http_status": 404,
+  "reason_code": "PREVIEW_DISABLED"
+ },
+ "id": "gate-disabled",
+ "injection": null,
+ "kind": "gate",
+ "producer": {
+  "adapter_version": "hybrid-preview-adapter/2",
+  "backend_app_dirty": false,
+  "commit": "1faee1dbcad8f7a74f312d9fc754056adac6144e",
+  "envelope_version": "hybrid-route-d-preview/1",
+  "inputs_dirty": false,
+  "product_commit": "1faee1dbcad8f7a74f312d9fc754056adac6144e",
+  "source_fingerprint": {
+   "files": 118,
+   "measured_system_hash": "3850e787d86f81befee5c4e8dfda210366916007b3bd61ce254a672d3f00744b",
+   "rule": "scripts/freeze_evaluation_candidate.py::measured_system_hash"
+  }
+ },
+ "response": {
+  "error": "Chế độ xem trước đang tắt.",
+  "reason_code": "PREVIEW_DISABLED"
+ },
+ "response_sha256": "2c8f3fee20e998b9e2d90108a2de22ef123cf37365c214921cb4cdc4bfb9249d",
+ "schema": "hybrid-preview-envelope-fixture/1",
+ "source": {
+  "input_sha256": "b87b8a8e5a1d43c3c67885b8c70677f5c2b64ca0680727523fb20890cabc2931",
+  "origin": "backend/app/main.py::hybrid_preview",
+  "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.",
+  "provider_body": null
+ }
+}

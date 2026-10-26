@@ -1,0 +1,87 @@
+{
+ "covers": [
+  "refusal"
+ ],
+ "expected": {
+  "envelope_status": "unsupported",
+  "failure_category": "verification_gap",
+  "http_status": 200,
+  "reason_code": "NEGATED_CLAUSE",
+  "refusal_cause": "UNKNOWN"
+ },
+ "id": "refusal-inconclusive-negated",
+ "injection": null,
+ "kind": "refusal",
+ "producer": {
+  "adapter_version": "hybrid-preview-adapter/2",
+  "backend_app_dirty": false,
+  "commit": "1faee1dbcad8f7a74f312d9fc754056adac6144e",
+  "envelope_version": "hybrid-route-d-preview/1",
+  "inputs_dirty": false,
+  "product_commit": "1faee1dbcad8f7a74f312d9fc754056adac6144e",
+  "source_fingerprint": {
+   "files": 118,
+   "measured_system_hash": "3850e787d86f81befee5c4e8dfda210366916007b3bd61ce254a672d3f00744b",
+   "rule": "scripts/freeze_evaluation_candidate.py::measured_system_hash"
+  }
+ },
+ "response": {
+  "envelope": {
+   "failure_category": "verification_gap",
+   "learner_reason": "Hệ chưa có chứng chỉ để kết luận từ dữ kiện: kiểm tra trên một hình dựng chưa đủ để kết luận cho mọi hình thoả đề, nên hệ không đưa ra kết luận.",
+   "reason": "Hệ chưa có chứng chỉ để kết luận từ dữ kiện: kiểm tra trên một hình dựng chưa đủ để kết luận cho mọi hình thoả đề, nên hệ không đưa ra kết luận.",
+   "reason_code": "NEGATED_CLAUSE",
+   "refusal_cause": "UNKNOWN",
+   "status": "unsupported"
+  },
+  "route_d": {
+   "planner": {
+    "goal_checks": {},
+    "negated_checks": {
+     "f6": {
+      "can_present_as_proven": false,
+      "evidence_state": "TRUE_ON_CONFIGURATION",
+      "proof_status": "UNVERIFIABLE"
+     }
+    },
+    "version": "geometry-fact-planner/13"
+   },
+   "runtime_identity": {
+    "adapter_version": "hybrid-preview-adapter/2",
+    "default_product_mode": "LLM_ONLY",
+    "enabled": true,
+    "engine_version": "geometry-function-engine/12",
+    "envelope_version": "hybrid-route-d-preview/1",
+    "extraction_surface": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+    "fingerprint": "c7de807dbced2fa18413a910f3bd336913688850310aafb42842b2ca0478b19d",
+    "planner_version": "geometry-fact-planner/13",
+    "product_enablement": "NO-GO",
+    "provider_mode": "OFFLINE_FIXTURE_ONLY",
+    "registry_version": "geometry-functions/13",
+    "response_contract": "flat"
+   }
+  },
+  "schema_version": "hybrid-route-d-preview/1"
+ },
+ "response_sha256": "bf6e2a6bb11cdbc3d20558dd00ee471ad3f9f8ff7cd438fb83a9289a5e2bc38d",
+ "schema": "hybrid-preview-envelope-fixture/1",
+ "source": {
+  "input_sha256": "e5e94442d710eb2b76028ab5bbe331752a5a74b219bf0fe680df8045c2688e8e",
+  "origin": "tests/test_hybrid_preview_contract.py::CASES[inconclusive-negated]",
+  "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B, AB = 3, BC = 4, SA vuông góc với (ABC), SA = 4 và BC không vuông góc với mặt phẳng (SAB). Tính thể tích khối chóp S.ABC.",
+  "provider_body": {
+   "candidates": [
+    {
+     "content": {
+      "parts": [
+       {
+        "text": "{\"facts\": [{\"id\": \"f1\", \"kind\": \"right_angle\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"tam giác vuông tại B\"], \"at\": \"B\", \"points\": [\"A\", \"C\"]}, {\"id\": \"f2\", \"kind\": \"length\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"AB = 3, BC = 4\"], \"measure\": \"segment\", \"points\": [\"A\", \"B\"], \"value\": \"3\"}, {\"id\": \"f3\", \"kind\": \"length\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"AB = 3, BC = 4\"], \"measure\": \"segment\", \"points\": [\"B\", \"C\"], \"value\": \"4\"}, {\"id\": \"f4\", \"kind\": \"perpendicular\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"SA vuông góc với (ABC)\"], \"points_a\": [\"S\", \"A\"], \"points_b\": [\"A\", \"B\", \"C\"]}, {\"id\": \"f5\", \"kind\": \"length\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"SA = 4\"], \"measure\": \"segment\", \"points\": [\"S\", \"A\"], \"value\": \"4\"}, {\"id\": \"f6\", \"kind\": \"perpendicular\", \"role\": \"premise\", \"negated\": true, \"ambiguous\": false, \"quotes\": [\"BC không vuông góc với mặt phẳng (SAB)\"], \"points_a\": [\"B\", \"C\"], \"points_b\": [\"S\", \"A\", \"B\"]}, {\"id\": \"f7\", \"kind\": \"solid\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"hình chóp S.ABC\"], \"solid\": \"S.ABC\", \"solid_type\": \"pyramid\"}, {\"id\": \"f8\", \"kind\": \"question\", \"role\": \"question\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"Tính thể tích khối chóp S.ABC\"], \"quantity\": \"volume\", \"solid\": \"S.ABC\"}]}"
+       }
+      ]
+     },
+     "finishReason": "STOP"
+    }
+   ]
+  }
+ }
+}

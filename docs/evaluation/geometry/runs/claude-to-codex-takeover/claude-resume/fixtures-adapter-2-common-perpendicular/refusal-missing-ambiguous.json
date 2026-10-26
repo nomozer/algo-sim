@@ -1,0 +1,79 @@
+{
+ "covers": [
+  "refusal"
+ ],
+ "expected": {
+  "envelope_status": "unsupported",
+  "failure_category": "insufficient_specification",
+  "http_status": 200,
+  "reason_code": "AMBIGUOUS_FACT",
+  "refusal_cause": "UNKNOWN"
+ },
+ "id": "refusal-missing-ambiguous",
+ "injection": null,
+ "kind": "refusal",
+ "producer": {
+  "adapter_version": "hybrid-preview-adapter/2",
+  "backend_app_dirty": false,
+  "commit": "1faee1dbcad8f7a74f312d9fc754056adac6144e",
+  "envelope_version": "hybrid-route-d-preview/1",
+  "inputs_dirty": false,
+  "product_commit": "1faee1dbcad8f7a74f312d9fc754056adac6144e",
+  "source_fingerprint": {
+   "files": 118,
+   "measured_system_hash": "3850e787d86f81befee5c4e8dfda210366916007b3bd61ce254a672d3f00744b",
+   "rule": "scripts/freeze_evaluation_candidate.py::measured_system_hash"
+  }
+ },
+ "response": {
+  "envelope": {
+   "failure_category": "insufficient_specification",
+   "learner_reason": "Dữ kiện hiện có chưa xác định được duy nhất hình cần dựng hoặc còn hiểu theo nhiều cách. AlgoSim không tự chọn số liệu hay cách hiểu thay em, nên không dựng hình.",
+   "reason": "Dữ kiện hiện có chưa xác định được duy nhất hình cần dựng hoặc còn hiểu theo nhiều cách. AlgoSim không tự chọn số liệu hay cách hiểu thay em, nên không dựng hình.",
+   "reason_code": "AMBIGUOUS_FACT",
+   "refusal_cause": "UNKNOWN",
+   "status": "unsupported"
+  },
+  "route_d": {
+   "planner": {
+    "version": "geometry-fact-planner/13"
+   },
+   "runtime_identity": {
+    "adapter_version": "hybrid-preview-adapter/2",
+    "default_product_mode": "LLM_ONLY",
+    "enabled": true,
+    "engine_version": "geometry-function-engine/12",
+    "envelope_version": "hybrid-route-d-preview/1",
+    "extraction_surface": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+    "fingerprint": "c7de807dbced2fa18413a910f3bd336913688850310aafb42842b2ca0478b19d",
+    "planner_version": "geometry-fact-planner/13",
+    "product_enablement": "NO-GO",
+    "provider_mode": "OFFLINE_FIXTURE_ONLY",
+    "registry_version": "geometry-functions/13",
+    "response_contract": "flat"
+   }
+  },
+  "schema_version": "hybrid-route-d-preview/1"
+ },
+ "response_sha256": "02ed141e59baab3331e033e31d134f99ef46dc4ab7c8765d817d9aedf477ad2e",
+ "schema": "hybrid-preview-envelope-fixture/1",
+ "source": {
+  "input_sha256": "b23fe5f356b46ce4858c54e18339b2ed6e0e06f8e07b2182aaeca574b62a827c",
+  "origin": "tests/test_hybrid_preview_contract.py::CASES[missing-ambiguous]",
+  "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.",
+  "provider_body": {
+   "candidates": [
+    {
+     "content": {
+      "parts": [
+       {
+        "text": "{\"facts\": [{\"id\": \"f1\", \"kind\": \"solid\", \"role\": \"premise\", \"quotes\": [\"Cho hình chóp S.ABCD.\"], \"solid\": \"S.ABCD\", \"solid_type\": \"pyramid\"}, {\"id\": \"f2\", \"kind\": \"polygon_shape\", \"role\": \"premise\", \"quotes\": [\"Đáy ABCD là hình vuông cạnh 2.\"], \"points\": [\"A\", \"B\", \"C\", \"D\"], \"shape\": \"square\", \"value\": \"2\"}, {\"id\": \"f3\", \"kind\": \"perpendicular\", \"role\": \"premise\", \"quotes\": [\"SA vuông góc với (ABCD).\"], \"points_a\": [\"S\", \"A\"], \"points_b\": [\"A\", \"B\", \"C\", \"D\"]}, {\"id\": \"f4\", \"kind\": \"length\", \"role\": \"premise\", \"quotes\": [\"SA = 3.\"], \"points\": [\"S\", \"A\"], \"measure\": \"segment\", \"value\": \"3\"}, {\"id\": \"q\", \"kind\": \"question\", \"role\": \"question\", \"quotes\": [\"Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.\"], \"quantity\": \"area\", \"point_kind\": \"midpoint\", \"points\": [\"S\", \"C\"], \"points_b\": [\"A\", \"B\"], \"ambiguous\": true}]}"
+       }
+      ]
+     },
+     "finishReason": "STOP"
+    }
+   ]
+  }
+ }
+}
