@@ -174,8 +174,9 @@ describe('final visual quality', () => {
     const sphGroup = buildObject3D(sphObj, false, undefined, diemNen)!;
     const depthPrepasses = sphGroup.children.filter((c) => c.userData?.chieuSau || c.userData?.chieuSauMatTruoc);
     expect(depthPrepasses.map((c) => c.renderOrder).sort((a, b) => a - b)).toEqual([5, 7.5]);
+    // The camera silhouette is one closed line (screen-width pass); nothing else may draw contours on the sphere.
     const sphereContours = sphGroup.children.filter((c) => (c as THREE.Line).isLine);
-    expect(sphereContours.length).toBe(0);
+    expect(sphereContours.map((c) => c.name)).toEqual([`sphere_silhouette:${sphObj.id}`]);
 
     const secNormal = buildObject3D(secObj, false, undefined, diemNen, undefined, undefined, undefined, false)!;
     const fillNormal = secNormal.children.find((c) => c.name.startsWith('section_fill:')) as THREE.Mesh;

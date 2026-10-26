@@ -202,7 +202,9 @@ export interface SceneObject {
   /** Nhãn learner-facing lặp lại tường minh tại biên transport. */
   display_label?: string;
   /** Chủ sở hữu nét thật, proxy bắt chuột, measurement hoặc non-visual. */
-  display_role?: "visual_owner" | "hit_proxy" | "measurement" | "non_visual";
+  /** `presentation_reference`: frontend-only (the sphere's reference equator, `sphere_reference:*`) — never sent by the
+   *  backend; drawn as an auxiliary curve, lighter and thinner than real rims. */
+  display_role?: "visual_owner" | "hit_proxy" | "measurement" | "non_visual" | "presentation_reference";
   type: string;
   render: RenderKind;
   origin: "free" | "derived";

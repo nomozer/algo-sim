@@ -1706,11 +1706,13 @@ export function buildObject3D(
   if (o.render === "circle" && o.center && o.normal && o.radius_sq) {
     const r = Math.sqrt(Math.max(0, toNumber(o.radius_sq)));
     const duongTronDay = vaiMien === "base";
-    const heSoDay = (noiBat ? 1.25 : 1) * (duongTronDay ? 0.36 : 0.46);
+    // Đường tham chiếu (xích đạo minh hoạ của mặt cầu): đường PHỤ — nhẹ hơn đường bao và mọi vành thật.
+    const thamChieu = o.display_role === "presentation_reference";
+    const heSoDay = thamChieu ? 0.2 : (noiBat ? 1.25 : 1) * (duongTronDay ? 0.36 : 0.46);
     const day = beDayNet(diemNen, r) * heSoDay;
     const ngoaiR = r;
     const trongR = Math.max(0, r - day);
-    const mauVanh = netMien(mauVienMien);
+    const mauVanh = thamChieu ? net(MAU.hiddenEdge) : netMien(mauVienMien);
     const chungVanh = {
       color: mauVanh, side: THREE.DoubleSide,
       forceSinglePass: true,
@@ -1957,10 +1959,16 @@ export function buildObject3D(
       height: h,
     } satisfies CurvedSolidVolumeMeta;
     if (o.curved_kind === "ball") {
-      // The perspective silhouette is presentation geometry, never an equator or a new scene entity.
-      const outline = new THREE.Mesh(new THREE.RingGeometry(0.994, 1, 128), new THREE.MeshBasicMaterial({
-        color: net(MAU.canh), side: THREE.DoubleSide, transparent: true, opacity: 0.9, depthWrite: false,
-        polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1,
+      // The perspective silhouette is presentation geometry, never an equator or a new scene entity. A closed unit
+      // circle LINE (placed per camera by `updateCurvedSolidSilhouette`) so the screen-space pass draws it at the
+      // visible-edge pixel width: a world-space ring was 0.6 % of the radius thick (≈1 px, uneven tone on mobile) and
+      // could lose arcs to the sphere's own depth layer at the tangent. A convex body never hides its own outline.
+      const vongBao = Array.from({ length: 193 }, (_, i) => {
+        const t = (i % 192) / 192 * Math.PI * 2;
+        return new THREE.Vector3(Math.cos(t), Math.sin(t), 0);
+      });
+      const outline = new THREE.Line(new THREE.BufferGeometry().setFromPoints(vongBao), new THREE.LineBasicMaterial({
+        color: net(MAU.canh), transparent: true, opacity: 1, depthTest: false, depthWrite: false,
       }));
       outline.name = `sphere_silhouette:${o.id}`;
       outline.visible = false; // until `updateCurvedSolidSilhouette` places it for a camera
@@ -1969,7 +1977,8 @@ export function buildObject3D(
       nhomCong.add(outline);
       if (sphereReference) {
         const reference = buildObject3D({ ...o, type: "circle3", render: "circle", center: o.anchor,
-          normal: ["0", "0", "1"], surface_role: "BASE_REGION", fill_visible: false }, false,
+          normal: ["0", "0", "1"], surface_role: "BASE_REGION", fill_visible: false,
+          display_role: "presentation_reference" }, false,
           banKinhBam, diemNen, cameraPosition);
         if (reference) {
           reference.name = `sphere_reference:${o.id}`;

@@ -106,8 +106,10 @@ it("Owner P3.3: a standalone sphere has one presentation reference and no extra 
     anchor: ["0", "0", "0"], radius_sq: "25", height_sq: "0" };
   const object = buildObject3D(sphere, false)!;
   let lines = 0;
-  object.traverse(child => { if ((child as THREE.Line).isLine) lines++; });
+  // The camera silhouette (one closed line) is the outline, not a circle on the sphere.
+  object.traverse(child => { if ((child as THREE.Line).isLine && !child.name.startsWith("sphere_silhouette:")) lines++; });
   expect(lines).toBe(2); // solid and dashed rendering passes of one circle, never two scene entities
+  expect(object.getObjectByName("sphere_silhouette:sphere")).toBeDefined();
   const reference = object.getObjectByName("sphere_reference:sphere")!;
   expect(reference.userData.presentationReference.authoritative).toBe(false);
   const referenceLines: THREE.Line[] = [];

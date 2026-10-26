@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import * as THREE from "three";
 import { buildObject3D, updateCanonicalEdgeVisibility } from "./scene3d-view";
+import { dongBoNetDayManHinh, heSoNetTheoKhung } from "./scene3d-edge-visibility";
+import { PHONG_CACH_SCENE3D } from "./scene3d-roles";
 import type { SceneObject } from "./scene3d-model";
 
 const cylinder: SceneObject = {
@@ -105,6 +107,34 @@ describe("standalone sphere presentation reference", () => {
     expect(signatures[0]).not.toBe(signatures[1]);
     expect(JSON.stringify(sphere)).toBe(source);
     expect(reference!.getObjectByName("section_fill:sphere")).toBeUndefined();
+  });
+
+  it("draws the silhouette as one closed line at the visible-edge pixel width, never cut by depth", () => {
+    const sphere: SceneObject = { ...cylinder, id: "sphere", curved_kind: "ball", height_sq: "0", apex_or_top: undefined };
+    const root = new THREE.Group();
+    root.add(buildObject3D(sphere, false)!);
+    updateCanonicalEdgeVisibility(root, cameraAt(new THREE.Vector3(8, 3, 6)), "1440x900@1");
+    const outline = root.getObjectByName("sphere_silhouette:sphere") as THREE.Line;
+    expect(outline.isLine).toBe(true);
+    const pos = outline.geometry.getAttribute("position");
+    expect([pos.getX(0), pos.getY(0), pos.getZ(0)]).toEqual([pos.getX(pos.count - 1), pos.getY(pos.count - 1), pos.getZ(pos.count - 1)]);
+    expect((outline.material as THREE.LineBasicMaterial).depthTest).toBe(false);
+    const fat = new THREE.Group();
+    dongBoNetDayManHinh([root], fat, 1440, 900);
+    const ve = fat.getObjectByName("fat:sphere_silhouette:sphere") as unknown as { material: { linewidth: number; dashed: boolean } };
+    expect(ve.material.dashed).toBe(false);
+    expect(ve.material.linewidth).toBe(Number((PHONG_CACH_SCENE3D.fatPx.edge * heSoNetTheoKhung(900)).toFixed(2)));
+  });
+
+  it("draws the reference equator as an auxiliary curve: auxiliary grey and thinner than a real rim of the same circle", () => {
+    const sphere: SceneObject = { ...cylinder, id: "sphere", curved_kind: "ball", height_sq: "0", apex_or_top: undefined };
+    const reference = buildObject3D(sphere, false)!.getObjectByName("sphere_reference:sphere")!;
+    const real = buildObject3D({ ...sphere, type: "circle3", render: "circle", center: sphere.anchor, normal: ["0", "0", "1"],
+      surface_role: "BASE_REGION", fill_visible: false }, false)!;
+    const be = (o: THREE.Object3D) => { const s = o.userData.curvedRimLoop.sample(0); return s.outer.distanceTo(s.inner); };
+    expect(be(reference)).toBeLessThan(be(real) * 0.75);
+    const mau = (reference.userData.curvedRimLoop.thayMesh.material as THREE.MeshBasicMaterial).color.getHex();
+    expect(mau).toBe(PHONG_CACH_SCENE3D.colors.hiddenEdge);
   });
 
   it("can suppress the reference for a real sphere-plane scene without suppressing its silhouette", () => {
