@@ -1,0 +1,272 @@
+[
+  {
+    "fault": "F1 planner forgets the full distance plane",
+    "file": "app/simulation/geometry_functions/planner.py",
+    "summary": "7 failed, 108 passed in 2.73s",
+    "failed": [
+      "test_a_fourth_label_absent_from_the_quote_is_still_checked",
+      "test_a_label_coinciding_with_another_point_is_skipped_for_the_witness",
+      "test_collinear_leading_labels_still_name_a_plane[plane0]",
+      "test_collinear_leading_labels_still_name_a_plane[plane1]",
+      "test_non_coplanar_fourth_plane_label_is_refused_by_the_engine",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(BCC\\u2032B\\u2032)]",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(BMCC\\u2032)]"
+    ],
+    "restored_identical": true
+  },
+  {
+    "fault": "F2 route drops named_planes",
+    "file": "app/ai/function_route.py",
+    "summary": "7 failed, 108 passed in 2.52s",
+    "failed": [
+      "test_a_fourth_label_absent_from_the_quote_is_still_checked",
+      "test_a_label_coinciding_with_another_point_is_skipped_for_the_witness",
+      "test_collinear_leading_labels_still_name_a_plane[plane0]",
+      "test_collinear_leading_labels_still_name_a_plane[plane1]",
+      "test_non_coplanar_fourth_plane_label_is_refused_by_the_engine",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(BCC\\u2032B\\u2032)]",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(BMCC\\u2032)]"
+    ],
+    "restored_identical": true
+  },
+  {
+    "fault": "F3 engine ignores named planes",
+    "file": "app/simulation/geometry_functions/engine.py",
+    "summary": "7 failed, 108 passed in 2.49s",
+    "failed": [
+      "test_a_fourth_label_absent_from_the_quote_is_still_checked",
+      "test_a_label_coinciding_with_another_point_is_skipped_for_the_witness",
+      "test_collinear_leading_labels_still_name_a_plane[plane0]",
+      "test_collinear_leading_labels_still_name_a_plane[plane1]",
+      "test_non_coplanar_fourth_plane_label_is_refused_by_the_engine",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(BCC\\u2032B\\u2032)]",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(BMCC\\u2032)]"
+    ],
+    "restored_identical": true
+  },
+  {
+    "fault": "F4 witness selection disabled",
+    "file": "app/simulation/geometry_functions/engine.py",
+    "summary": "7 failed, 108 passed in 2.57s",
+    "failed": [
+      "test_a_label_coinciding_with_another_point_is_skipped_for_the_witness",
+      "test_collinear_leading_labels_in_an_angle_plane",
+      "test_collinear_leading_labels_still_name_a_plane[plane0]",
+      "test_collinear_leading_labels_still_name_a_plane[plane1]",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(ABCD)]",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(BCC\\u2032B\\u2032)]",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(BMCC\\u2032)]"
+    ],
+    "restored_identical": true
+  },
+  {
+    "fault": "F5 witness is always the first three labels",
+    "file": "app/simulation/geometry_functions/engine.py",
+    "summary": "5 failed, 110 passed in 2.68s",
+    "failed": [
+      "test_a_label_coinciding_with_another_point_is_skipped_for_the_witness",
+      "test_collinear_leading_labels_in_an_angle_plane",
+      "test_collinear_leading_labels_still_name_a_plane[plane0]",
+      "test_collinear_leading_labels_still_name_a_plane[plane1]",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(BMCC\\u2032)]"
+    ],
+    "restored_identical": true
+  },
+  {
+    "fault": "F6 witness ignores collinearity",
+    "file": "app/simulation/geometry_functions/engine.py",
+    "summary": "5 failed, 110 passed in 2.42s",
+    "failed": [
+      "test_a_label_coinciding_with_another_point_is_skipped_for_the_witness",
+      "test_collinear_leading_labels_in_an_angle_plane",
+      "test_collinear_leading_labels_still_name_a_plane[plane0]",
+      "test_collinear_leading_labels_still_name_a_plane[plane1]",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(BMCC\\u2032)]"
+    ],
+    "restored_identical": true
+  },
+  {
+    "fault": "F7 distance witness taken from the truncated call",
+    "file": "app/simulation/geometry_functions/engine.py",
+    "summary": "5 failed, 110 passed in 2.55s",
+    "failed": [
+      "test_a_label_coinciding_with_another_point_is_skipped_for_the_witness",
+      "test_collinear_leading_labels_still_name_a_plane[plane0]",
+      "test_collinear_leading_labels_still_name_a_plane[plane1]",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(BCC\\u2032B\\u2032)]",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(BMCC\\u2032)]"
+    ],
+    "restored_identical": true
+  },
+  {
+    "fault": "F8 IR plane loses its written name",
+    "file": "app/simulation/geometry_functions/engine.py",
+    "summary": "3 failed, 112 passed in 2.42s",
+    "failed": [
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(ABCD)]",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(BCC\\u2032B\\u2032)]",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(BMCC\\u2032)]"
+    ],
+    "restored_identical": true
+  },
+  {
+    "fault": "F9 coplanarity check skips named groups",
+    "file": "app/simulation/geometry_functions/engine.py",
+    "summary": "2 failed, 113 passed in 2.46s",
+    "failed": [
+      "test_a_fourth_label_absent_from_the_quote_is_still_checked",
+      "test_non_coplanar_fourth_plane_label_is_refused_by_the_engine"
+    ],
+    "restored_identical": true
+  },
+  {
+    "fault": "F10 bridge back to exactly three plane labels",
+    "file": "app/simulation/geometry_functions/typed_fact_next_bridge.py",
+    "summary": "52 failed, 63 passed in 2.65s",
+    "failed": [
+      "test_a_fourth_label_absent_from_the_quote_is_still_checked",
+      "test_a_group_whose_points_are_all_collinear_is_refused[plane1]",
+      "test_a_label_coinciding_with_another_point_is_skipped_for_the_witness",
+      "test_a_non_coplanar_fourth_label_is_refused[angle-target1]",
+      "test_a_non_coplanar_fourth_label_is_refused[angle-target2]",
+      "test_a_non_coplanar_fourth_label_is_refused[distance-target0]",
+      "test_a_non_coplanar_fourth_plane_label_is_not_silently_dropped",
+      "test_a_pyramid_base_with_the_apex_as_fourth_label_is_refused",
+      "test_adapter4_envelope_carries_every_label_of_the_named_plane",
+      "test_an_unknown_label_in_the_plane_is_refused",
+      "test_angle_between_a_lateral_edge_and_the_square_base[PKLMN-2-5]",
+      "test_angle_between_a_lateral_edge_and_the_square_base[SABCD-4-3]",
+      "test_angle_between_a_lateral_edge_and_the_square_base[SABCD-6-1]",
+      "test_any_order_of_the_same_four_coplanar_labels_is_the_same_plane[face0]",
+      "test_any_order_of_the_same_four_coplanar_labels_is_the_same_plane[face1]",
+      "test_any_order_of_the_same_four_coplanar_labels_is_the_same_plane[face2]",
+      "test_any_order_of_the_same_four_coplanar_labels_is_the_same_plane[face3]",
+      "test_collinear_leading_labels_in_an_angle_plane",
+      "test_collinear_leading_labels_still_name_a_plane[plane0]",
+      "test_collinear_leading_labels_still_name_a_plane[plane1]",
+      "test_collinear_leading_labels_still_name_a_plane[plane2]",
+      "test_cuboid_diagonal_plane_distance[3-4-12]",
+      "test_cuboid_diagonal_plane_distance[5-12-7]",
+      "test_cuboid_dihedral_between_a_diagonal_plane_and_the_base",
+      "test_cuboid_non_coplanar_four_labels_are_refused",
+      "test_cuboid_space_diagonal_to_the_base[3-4-12]",
+      "test_cuboid_space_diagonal_to_the_base[5-12-7]",
+      "test_dihedral_angle_between_a_lateral_face_and_the_square_base",
+      "test_dihedral_angle_between_two_four_label_lateral_faces[3-4-5]",
+      "test_dihedral_angle_between_two_four_label_lateral_faces[6-8-12]",
+      "test_distance_call_keeps_the_three_label_contract_and_the_quote_names_the_face",
+      "test_distance_from_b_to_the_face_containing_ac_is_ab",
+      "test_distance_from_the_apex_to_the_square_base_is_sa",
+      "test_distance_to_a_lateral_face_named_by_its_four_vertices[ABC-6-8-12]",
+      "test_distance_to_a_lateral_face_named_by_its_four_vertices[DEF-3-4-5]",
+      "test_distance_to_a_lateral_face_named_by_its_four_vertices[KLM-12-16-7]",
+      "test_four_and_three_label_names_of_one_face_agree",
+      "test_four_label_plane_target_is_served_with_every_label_checked",
+      "test_line_to_four_label_face_angle[3-4-5]",
+      "test_line_to_four_label_face_angle[6-8-12]",
+      "test_non_coplanar_fourth_plane_label_is_refused_by_the_engine",
+      "test_oblique_prism_distance_to_a_lateral_face[12-16-24]",
+      "test_oblique_prism_distance_to_a_lateral_face[6-8-12]",
+      "test_quote_naming_another_face_is_refused",
+      "test_regular_pyramid_lateral_edge_to_the_base[2-3]",
+      "test_regular_pyramid_lateral_edge_to_the_base[4-3]",
+      "test_regular_pyramid_lateral_face_to_the_base[2-3]",
+      "test_regular_pyramid_lateral_face_to_the_base[4-3]",
+      "test_scaling_the_prism_scales_the_squared_distance_by_four",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(ABCD)]",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(BCC\\u2032B\\u2032)]",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(BMCC\\u2032)]"
+    ],
+    "restored_identical": true
+  },
+  {
+    "fault": "F11 bridge accepts repeated labels",
+    "file": "app/simulation/geometry_functions/typed_fact_next_bridge.py",
+    "summary": "9 failed, 106 passed in 2.50s",
+    "failed": [
+      "test_malformed_angle_targets_are_refused_with_a_code[target0]",
+      "test_malformed_angle_targets_are_refused_with_a_code[target1]",
+      "test_malformed_distance_target_is_refused[target10]",
+      "test_malformed_distance_target_is_refused[target11]",
+      "test_malformed_distance_target_is_refused[target12]",
+      "test_malformed_distance_target_is_refused[target13]",
+      "test_malformed_distance_target_is_refused[target14]",
+      "test_malformed_distance_target_is_refused[target15]",
+      "test_malformed_plane_operands_stay_invalid[plane0]"
+    ],
+    "restored_identical": true
+  },
+  {
+    "fault": "F12 bridge truncates the distance plane",
+    "file": "app/simulation/geometry_functions/typed_fact_next_bridge.py",
+    "summary": "7 failed, 108 passed in 2.46s",
+    "failed": [
+      "test_a_fourth_label_absent_from_the_quote_is_still_checked",
+      "test_a_label_coinciding_with_another_point_is_skipped_for_the_witness",
+      "test_collinear_leading_labels_still_name_a_plane[plane0]",
+      "test_collinear_leading_labels_still_name_a_plane[plane1]",
+      "test_non_coplanar_fourth_plane_label_is_refused_by_the_engine",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(BCC\\u2032B\\u2032)]",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(BMCC\\u2032)]"
+    ],
+    "restored_identical": true
+  },
+  {
+    "fault": "F13 bridge truncates the angle plane",
+    "file": "app/simulation/geometry_functions/typed_fact_next_bridge.py",
+    "summary": "3 failed, 112 passed in 2.50s",
+    "failed": [
+      "test_adapter4_envelope_carries_every_label_of_the_named_plane",
+      "test_collinear_leading_labels_in_an_angle_plane",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(ABCD)]"
+    ],
+    "restored_identical": true
+  },
+  {
+    "fault": "F14 bridge accepts lines longer than two labels",
+    "file": "app/simulation/geometry_functions/typed_fact_next_bridge.py",
+    "summary": "1 failed, 114 passed in 2.39s",
+    "failed": [
+      "test_malformed_distance_target_is_refused[target9]"
+    ],
+    "restored_identical": true
+  },
+  {
+    "fault": "F15 line-plane angle returns sin2 (wrong convention)",
+    "file": "app/simulation/geometry_functions/engine.py",
+    "summary": "21 failed, 94 passed in 2.57s",
+    "failed": [
+      "test_adapter4_envelope_carries_every_label_of_the_named_plane",
+      "test_adapter4_envelope_is_served_for_an_angle_goal",
+      "test_angle_between_a_lateral_edge_and_the_square_base[PKLMN-2-5]",
+      "test_angle_between_a_lateral_edge_and_the_square_base[SABCD-4-3]",
+      "test_angle_between_a_lateral_edge_and_the_square_base[SABCD-6-1]",
+      "test_angle_is_scale_invariant",
+      "test_angle_on_a_line_lying_in_the_plane_is_served_as_cos2_1",
+      "test_collinear_leading_labels_in_an_angle_plane",
+      "test_cuboid_space_diagonal_to_the_base[3-4-12]",
+      "test_cuboid_space_diagonal_to_the_base[5-12-7]",
+      "test_line_plane_angle_of_a_right_prism[ABC-6-8-12]",
+      "test_line_plane_angle_of_a_right_prism[DEF-3-4-5]",
+      "test_line_plane_angle_of_a_right_prism[KLM-12-16-7]",
+      "test_line_to_four_label_face_angle[3-4-5]",
+      "test_line_to_four_label_face_angle[6-8-12]",
+      "test_oblique_lateral_edge_angle_uses_the_true_foot[ABC-6-8-12]",
+      "test_oblique_lateral_edge_angle_uses_the_true_foot[DEF-12-16-24]",
+      "test_operand_order_of_line_and_plane_does_not_matter",
+      "test_regular_pyramid_lateral_edge_to_the_base[2-3]",
+      "test_regular_pyramid_lateral_edge_to_the_base[4-3]",
+      "test_the_scene_shows_the_full_plane_name_not_the_witness_triple[<lambda>-(ABCD)]"
+    ],
+    "restored_identical": true
+  },
+  {
+    "fault": "F16 Source Gate accepts any plane quote",
+    "file": "app/simulation/geometry_functions/registry.py",
+    "summary": "1 failed, 114 passed in 2.56s",
+    "failed": [
+      "test_quote_naming_another_face_is_refused"
+    ],
+    "restored_identical": true
+  }
+]

@@ -1,0 +1,103 @@
+{
+  "classification": "AUTHORED_REGRESSION_BROWSER_NOT_HOLDOUT_NOT_PROVIDER",
+  "fixtures": [
+    {
+      "id": "pyramid-sa-lateral-edge-base",
+      "family": "#3",
+      "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+      "expected": "SERVE",
+      "oracle_value_squared": "1024/1681"
+    },
+    {
+      "id": "pyramid-sa-apex-base-distance",
+      "family": "#3",
+      "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến mặt phẳng (ABCD).",
+      "expected": "SERVE",
+      "oracle_value_squared": "9"
+    },
+    {
+      "id": "regular-pyramid-face-base",
+      "family": "#4",
+      "problem_text": "Cho hình chóp tứ giác đều S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA = 3. Tính góc giữa mặt phẳng (SCD) và mặt phẳng (ABCD).",
+      "expected": "SERVE",
+      "oracle_value_squared": "16/25"
+    },
+    {
+      "id": "regular-pyramid-edge-base",
+      "family": "#4",
+      "problem_text": "Cho hình chóp tứ giác đều S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA = 3. Tính góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+      "expected": "SERVE",
+      "oracle_value_squared": "64/81"
+    },
+    {
+      "id": "cuboid-diagonal-plane-distance",
+      "family": "#11",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. Đáy ABCD là hình chữ nhật. AB = 3. AD = 4. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (BDD'B').",
+      "expected": "SERVE",
+      "oracle_value_squared": "144/25"
+    },
+    {
+      "id": "cuboid-diagonal-plane-dihedral",
+      "family": "#11",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. Đáy ABCD là hình chữ nhật. AB = 3. AD = 4. AA' = 12. Tính góc giữa mặt phẳng (A'B'CD) và mặt phẳng (ABCD).",
+      "expected": "SERVE",
+      "oracle_value_squared": "1/100"
+    },
+    {
+      "id": "right-prism-face-distance",
+      "family": "#12",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (BCC'B').",
+      "expected": "SERVE",
+      "oracle_value_squared": "576/25"
+    },
+    {
+      "id": "right-prism-collinear-leading",
+      "family": "#12",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Gọi M là trung điểm của BC. Tính khoảng cách từ A đến mặt phẳng (BMCC').",
+      "expected": "SERVE",
+      "oracle_value_squared": "576/25"
+    },
+    {
+      "id": "right-prism-line-face-angle",
+      "family": "#12",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính góc giữa đường thẳng A'B và mặt phẳng (ACC'A').",
+      "expected": "SERVE",
+      "oracle_value_squared": "16/25"
+    },
+    {
+      "id": "oblique-prism-face-distance",
+      "family": "#13",
+      "problem_text": "Cho lăng trụ ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. Gọi H là trung điểm của BC. Hình chiếu vuông góc của A' lên (ABC) là H. AA' = 13. Tính khoảng cách từ A đến mặt phẳng (BCC'B').",
+      "expected": "SERVE",
+      "oracle_value_squared": "576/29"
+    },
+    {
+      "id": "right-prism-non-coplanar",
+      "family": "#12",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (BCC'A').",
+      "expected": "REFUSE",
+      "expected_code": "SOURCE_OBJECT_MISMATCH"
+    },
+    {
+      "id": "cuboid-non-coplanar",
+      "family": "#11",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. Đáy ABCD là hình chữ nhật. AB = 3. AD = 4. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (BDD'C').",
+      "expected": "REFUSE",
+      "expected_code": "SOURCE_OBJECT_MISMATCH"
+    },
+    {
+      "id": "pyramid-apex-in-base",
+      "family": "#3",
+      "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính góc giữa đường thẳng SC và mặt phẳng (ABCS).",
+      "expected": "REFUSE",
+      "expected_code": "SOURCE_OBJECT_MISMATCH"
+    },
+    {
+      "id": "right-prism-all-collinear",
+      "family": "#12",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Gọi M là trung điểm của BC. Tính khoảng cách từ A đến mặt phẳng (BMC).",
+      "expected": "REFUSE",
+      "expected_code": "SOURCE_OBJECT_MISMATCH"
+    }
+  ]
+}

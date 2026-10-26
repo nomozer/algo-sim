@@ -1,0 +1,1358 @@
+{
+  "schema": "hybrid-v2-local-replay-corpus/1",
+  "outputs": {
+    "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính góc giữa đường thẳng SC và mặt phẳng (ABCD).": {
+      "schema_version": "typed-fact-next/2",
+      "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+      "length_unit": "1",
+      "solids": [
+        {
+          "solid_id": "py",
+          "solid_type": "pyramid",
+          "notation": "S.ABCD",
+          "quote": "Cho hình chóp S.ABCD."
+        }
+      ],
+      "premises": [
+        {
+          "kind": "base_is_square",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "side": "4"
+          },
+          "quote": "Đáy ABCD là hình vuông cạnh 4."
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "args": {
+            "line": [
+              "S",
+              "A"
+            ],
+            "plane": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "quote": "SA vuông góc với mặt phẳng (ABCD)."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "S",
+              "A"
+            ],
+            "value": "3"
+          },
+          "quote": "SA = 3."
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "py",
+          "quote": "Cho hình chóp S.ABCD."
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "q",
+          "kind": "measurement",
+          "goal_type": "angle",
+          "target": {
+            "line": [
+              "S",
+              "C"
+            ],
+            "plane": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "quote": "Tính góc giữa đường thẳng SC và mặt phẳng (ABCD)."
+        }
+      ]
+    },
+    "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến mặt phẳng (ABCD).": {
+      "schema_version": "typed-fact-next/2",
+      "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến mặt phẳng (ABCD).",
+      "length_unit": "1",
+      "solids": [
+        {
+          "solid_id": "py",
+          "solid_type": "pyramid",
+          "notation": "S.ABCD",
+          "quote": "Cho hình chóp S.ABCD."
+        }
+      ],
+      "premises": [
+        {
+          "kind": "base_is_square",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "side": "4"
+          },
+          "quote": "Đáy ABCD là hình vuông cạnh 4."
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "args": {
+            "line": [
+              "S",
+              "A"
+            ],
+            "plane": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "quote": "SA vuông góc với mặt phẳng (ABCD)."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "S",
+              "A"
+            ],
+            "value": "3"
+          },
+          "quote": "SA = 3."
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "py",
+          "quote": "Cho hình chóp S.ABCD."
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "q",
+          "kind": "measurement",
+          "goal_type": "distance",
+          "target": {
+            "point": "S",
+            "plane": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "quote": "Tính khoảng cách từ S đến mặt phẳng (ABCD)."
+        }
+      ]
+    },
+    "Cho hình chóp tứ giác đều S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA = 3. Tính góc giữa mặt phẳng (SCD) và mặt phẳng (ABCD).": {
+      "schema_version": "typed-fact-next/2",
+      "problem_text": "Cho hình chóp tứ giác đều S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA = 3. Tính góc giữa mặt phẳng (SCD) và mặt phẳng (ABCD).",
+      "length_unit": "1",
+      "solids": [
+        {
+          "solid_id": "py",
+          "solid_type": "pyramid",
+          "notation": "S.ABCD",
+          "quote": "Cho hình chóp tứ giác đều S.ABCD."
+        }
+      ],
+      "premises": [
+        {
+          "kind": "regular_pyramid",
+          "args": {
+            "apex": "S",
+            "base": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "quote": "Cho hình chóp tứ giác đều S.ABCD."
+        },
+        {
+          "kind": "base_is_square",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "side": "4"
+          },
+          "quote": "Đáy ABCD là hình vuông cạnh 4."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "S",
+              "A"
+            ],
+            "value": "3"
+          },
+          "quote": "SA = 3."
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "py",
+          "quote": "Cho hình chóp tứ giác đều S.ABCD."
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "q",
+          "kind": "measurement",
+          "goal_type": "angle",
+          "target": {
+            "plane1": [
+              "S",
+              "C",
+              "D"
+            ],
+            "plane2": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "quote": "Tính góc giữa mặt phẳng (SCD) và mặt phẳng (ABCD)."
+        }
+      ]
+    },
+    "Cho hình chóp tứ giác đều S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA = 3. Tính góc giữa đường thẳng SC và mặt phẳng (ABCD).": {
+      "schema_version": "typed-fact-next/2",
+      "problem_text": "Cho hình chóp tứ giác đều S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA = 3. Tính góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+      "length_unit": "1",
+      "solids": [
+        {
+          "solid_id": "py",
+          "solid_type": "pyramid",
+          "notation": "S.ABCD",
+          "quote": "Cho hình chóp tứ giác đều S.ABCD."
+        }
+      ],
+      "premises": [
+        {
+          "kind": "regular_pyramid",
+          "args": {
+            "apex": "S",
+            "base": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "quote": "Cho hình chóp tứ giác đều S.ABCD."
+        },
+        {
+          "kind": "base_is_square",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "side": "4"
+          },
+          "quote": "Đáy ABCD là hình vuông cạnh 4."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "S",
+              "A"
+            ],
+            "value": "3"
+          },
+          "quote": "SA = 3."
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "py",
+          "quote": "Cho hình chóp tứ giác đều S.ABCD."
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "q",
+          "kind": "measurement",
+          "goal_type": "angle",
+          "target": {
+            "line": [
+              "S",
+              "C"
+            ],
+            "plane": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "quote": "Tính góc giữa đường thẳng SC và mặt phẳng (ABCD)."
+        }
+      ]
+    },
+    "Cho hình hộp chữ nhật ABCD.A'B'C'D'. Đáy ABCD là hình chữ nhật. AB = 3. AD = 4. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (BDD'B').": {
+      "schema_version": "typed-fact-next/2",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. Đáy ABCD là hình chữ nhật. AB = 3. AD = 4. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (BDD'B').",
+      "length_unit": "1",
+      "solids": [
+        {
+          "solid_id": "h",
+          "solid_type": "prism",
+          "notation": "ABCD.A'B'C'D'",
+          "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+        }
+      ],
+      "premises": [
+        {
+          "kind": "base_is_rectangle",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "quote": "Đáy ABCD là hình chữ nhật."
+        },
+        {
+          "kind": "right_prism",
+          "args": {
+            "base": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "top": [
+              "A'",
+              "B'",
+              "C'",
+              "D'"
+            ]
+          },
+          "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "B"
+            ],
+            "value": "3"
+          },
+          "quote": "AB = 3."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "D"
+            ],
+            "value": "4"
+          },
+          "quote": "AD = 4."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "A'"
+            ],
+            "value": "12"
+          },
+          "quote": "AA' = 12."
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "h",
+          "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "q",
+          "kind": "measurement",
+          "goal_type": "distance",
+          "target": {
+            "point": "A",
+            "plane": [
+              "B",
+              "D",
+              "D'",
+              "B'"
+            ]
+          },
+          "quote": "Tính khoảng cách từ A đến mặt phẳng (BDD'B')."
+        }
+      ]
+    },
+    "Cho hình hộp chữ nhật ABCD.A'B'C'D'. Đáy ABCD là hình chữ nhật. AB = 3. AD = 4. AA' = 12. Tính góc giữa mặt phẳng (A'B'CD) và mặt phẳng (ABCD).": {
+      "schema_version": "typed-fact-next/2",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. Đáy ABCD là hình chữ nhật. AB = 3. AD = 4. AA' = 12. Tính góc giữa mặt phẳng (A'B'CD) và mặt phẳng (ABCD).",
+      "length_unit": "1",
+      "solids": [
+        {
+          "solid_id": "h",
+          "solid_type": "prism",
+          "notation": "ABCD.A'B'C'D'",
+          "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+        }
+      ],
+      "premises": [
+        {
+          "kind": "base_is_rectangle",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "quote": "Đáy ABCD là hình chữ nhật."
+        },
+        {
+          "kind": "right_prism",
+          "args": {
+            "base": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "top": [
+              "A'",
+              "B'",
+              "C'",
+              "D'"
+            ]
+          },
+          "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "B"
+            ],
+            "value": "3"
+          },
+          "quote": "AB = 3."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "D"
+            ],
+            "value": "4"
+          },
+          "quote": "AD = 4."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "A'"
+            ],
+            "value": "12"
+          },
+          "quote": "AA' = 12."
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "h",
+          "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "q",
+          "kind": "measurement",
+          "goal_type": "angle",
+          "target": {
+            "plane1": [
+              "A'",
+              "B'",
+              "C",
+              "D"
+            ],
+            "plane2": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "quote": "Tính góc giữa mặt phẳng (A'B'CD) và mặt phẳng (ABCD)."
+        }
+      ]
+    },
+    "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (BCC'B').": {
+      "schema_version": "typed-fact-next/2",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (BCC'B').",
+      "length_unit": "1",
+      "solids": [
+        {
+          "solid_id": "pr",
+          "solid_type": "prism",
+          "notation": "ABC.A'B'C'",
+          "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+        }
+      ],
+      "premises": [
+        {
+          "kind": "right_angle",
+          "args": {
+            "vertex": "A",
+            "rays": [
+              "B",
+              "C"
+            ]
+          },
+          "quote": "Đáy ABC là tam giác vuông tại A."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "B"
+            ],
+            "value": "6"
+          },
+          "quote": "AB = 6."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "C"
+            ],
+            "value": "8"
+          },
+          "quote": "AC = 8."
+        },
+        {
+          "kind": "right_prism",
+          "args": {
+            "base": [
+              "A",
+              "B",
+              "C"
+            ],
+            "top": [
+              "A'",
+              "B'",
+              "C'"
+            ]
+          },
+          "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "A'"
+            ],
+            "value": "12"
+          },
+          "quote": "AA' = 12."
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "pr",
+          "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "q",
+          "kind": "measurement",
+          "goal_type": "distance",
+          "target": {
+            "point": "A",
+            "plane": [
+              "B",
+              "C",
+              "C'",
+              "B'"
+            ]
+          },
+          "quote": "Tính khoảng cách từ A đến mặt phẳng (BCC'B')."
+        }
+      ]
+    },
+    "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Gọi M là trung điểm của BC. Tính khoảng cách từ A đến mặt phẳng (BMCC').": {
+      "schema_version": "typed-fact-next/2",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Gọi M là trung điểm của BC. Tính khoảng cách từ A đến mặt phẳng (BMCC').",
+      "length_unit": "1",
+      "solids": [
+        {
+          "solid_id": "pr",
+          "solid_type": "prism",
+          "notation": "ABC.A'B'C'",
+          "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+        }
+      ],
+      "premises": [
+        {
+          "kind": "right_angle",
+          "args": {
+            "vertex": "A",
+            "rays": [
+              "B",
+              "C"
+            ]
+          },
+          "quote": "Đáy ABC là tam giác vuông tại A."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "B"
+            ],
+            "value": "6"
+          },
+          "quote": "AB = 6."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "C"
+            ],
+            "value": "8"
+          },
+          "quote": "AC = 8."
+        },
+        {
+          "kind": "right_prism",
+          "args": {
+            "base": [
+              "A",
+              "B",
+              "C"
+            ],
+            "top": [
+              "A'",
+              "B'",
+              "C'"
+            ]
+          },
+          "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "A'"
+            ],
+            "value": "12"
+          },
+          "quote": "AA' = 12."
+        },
+        {
+          "kind": "midpoint",
+          "args": {
+            "point": "M",
+            "segment": [
+              "B",
+              "C"
+            ]
+          },
+          "quote": "Gọi M là trung điểm của BC."
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "pr",
+          "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "q",
+          "kind": "measurement",
+          "goal_type": "distance",
+          "target": {
+            "point": "A",
+            "plane": [
+              "B",
+              "M",
+              "C",
+              "C'"
+            ]
+          },
+          "quote": "Tính khoảng cách từ A đến mặt phẳng (BMCC')."
+        }
+      ]
+    },
+    "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính góc giữa đường thẳng A'B và mặt phẳng (ACC'A').": {
+      "schema_version": "typed-fact-next/2",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính góc giữa đường thẳng A'B và mặt phẳng (ACC'A').",
+      "length_unit": "1",
+      "solids": [
+        {
+          "solid_id": "pr",
+          "solid_type": "prism",
+          "notation": "ABC.A'B'C'",
+          "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+        }
+      ],
+      "premises": [
+        {
+          "kind": "right_angle",
+          "args": {
+            "vertex": "A",
+            "rays": [
+              "B",
+              "C"
+            ]
+          },
+          "quote": "Đáy ABC là tam giác vuông tại A."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "B"
+            ],
+            "value": "6"
+          },
+          "quote": "AB = 6."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "C"
+            ],
+            "value": "8"
+          },
+          "quote": "AC = 8."
+        },
+        {
+          "kind": "right_prism",
+          "args": {
+            "base": [
+              "A",
+              "B",
+              "C"
+            ],
+            "top": [
+              "A'",
+              "B'",
+              "C'"
+            ]
+          },
+          "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "A'"
+            ],
+            "value": "12"
+          },
+          "quote": "AA' = 12."
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "pr",
+          "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "q",
+          "kind": "measurement",
+          "goal_type": "angle",
+          "target": {
+            "line": [
+              "A'",
+              "B"
+            ],
+            "plane": [
+              "A",
+              "C",
+              "C'",
+              "A'"
+            ]
+          },
+          "quote": "Tính góc giữa đường thẳng A'B và mặt phẳng (ACC'A')."
+        }
+      ]
+    },
+    "Cho lăng trụ ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. Gọi H là trung điểm của BC. Hình chiếu vuông góc của A' lên (ABC) là H. AA' = 13. Tính khoảng cách từ A đến mặt phẳng (BCC'B').": {
+      "schema_version": "typed-fact-next/2",
+      "problem_text": "Cho lăng trụ ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. Gọi H là trung điểm của BC. Hình chiếu vuông góc của A' lên (ABC) là H. AA' = 13. Tính khoảng cách từ A đến mặt phẳng (BCC'B').",
+      "length_unit": "1",
+      "solids": [
+        {
+          "solid_id": "pr",
+          "solid_type": "prism",
+          "notation": "ABC.A'B'C'",
+          "quote": "Cho lăng trụ ABC.A'B'C'."
+        }
+      ],
+      "premises": [
+        {
+          "kind": "right_angle",
+          "args": {
+            "vertex": "A",
+            "rays": [
+              "B",
+              "C"
+            ]
+          },
+          "quote": "Đáy ABC là tam giác vuông tại A."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "B"
+            ],
+            "value": "6"
+          },
+          "quote": "AB = 6."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "C"
+            ],
+            "value": "8"
+          },
+          "quote": "AC = 8."
+        },
+        {
+          "kind": "midpoint",
+          "args": {
+            "point": "H",
+            "segment": [
+              "B",
+              "C"
+            ]
+          },
+          "quote": "Gọi H là trung điểm của BC."
+        },
+        {
+          "kind": "orthogonal_projection",
+          "args": {
+            "point": "A'",
+            "image": "H",
+            "plane": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          "quote": "Hình chiếu vuông góc của A' lên (ABC) là H."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "A'"
+            ],
+            "value": "13"
+          },
+          "quote": "AA' = 13."
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "pr",
+          "quote": "Cho lăng trụ ABC.A'B'C'."
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "q",
+          "kind": "measurement",
+          "goal_type": "distance",
+          "target": {
+            "point": "A",
+            "plane": [
+              "B",
+              "C",
+              "C'",
+              "B'"
+            ]
+          },
+          "quote": "Tính khoảng cách từ A đến mặt phẳng (BCC'B')."
+        }
+      ]
+    },
+    "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (BCC'A').": {
+      "schema_version": "typed-fact-next/2",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (BCC'A').",
+      "length_unit": "1",
+      "solids": [
+        {
+          "solid_id": "pr",
+          "solid_type": "prism",
+          "notation": "ABC.A'B'C'",
+          "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+        }
+      ],
+      "premises": [
+        {
+          "kind": "right_angle",
+          "args": {
+            "vertex": "A",
+            "rays": [
+              "B",
+              "C"
+            ]
+          },
+          "quote": "Đáy ABC là tam giác vuông tại A."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "B"
+            ],
+            "value": "6"
+          },
+          "quote": "AB = 6."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "C"
+            ],
+            "value": "8"
+          },
+          "quote": "AC = 8."
+        },
+        {
+          "kind": "right_prism",
+          "args": {
+            "base": [
+              "A",
+              "B",
+              "C"
+            ],
+            "top": [
+              "A'",
+              "B'",
+              "C'"
+            ]
+          },
+          "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "A'"
+            ],
+            "value": "12"
+          },
+          "quote": "AA' = 12."
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "pr",
+          "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "q",
+          "kind": "measurement",
+          "goal_type": "distance",
+          "target": {
+            "point": "A",
+            "plane": [
+              "B",
+              "C",
+              "C'",
+              "A'"
+            ]
+          },
+          "quote": "Tính khoảng cách từ A đến mặt phẳng (BCC'A')."
+        }
+      ]
+    },
+    "Cho hình hộp chữ nhật ABCD.A'B'C'D'. Đáy ABCD là hình chữ nhật. AB = 3. AD = 4. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (BDD'C').": {
+      "schema_version": "typed-fact-next/2",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. Đáy ABCD là hình chữ nhật. AB = 3. AD = 4. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (BDD'C').",
+      "length_unit": "1",
+      "solids": [
+        {
+          "solid_id": "h",
+          "solid_type": "prism",
+          "notation": "ABCD.A'B'C'D'",
+          "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+        }
+      ],
+      "premises": [
+        {
+          "kind": "base_is_rectangle",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "quote": "Đáy ABCD là hình chữ nhật."
+        },
+        {
+          "kind": "right_prism",
+          "args": {
+            "base": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "top": [
+              "A'",
+              "B'",
+              "C'",
+              "D'"
+            ]
+          },
+          "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "B"
+            ],
+            "value": "3"
+          },
+          "quote": "AB = 3."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "D"
+            ],
+            "value": "4"
+          },
+          "quote": "AD = 4."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "A'"
+            ],
+            "value": "12"
+          },
+          "quote": "AA' = 12."
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "h",
+          "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "q",
+          "kind": "measurement",
+          "goal_type": "distance",
+          "target": {
+            "point": "A",
+            "plane": [
+              "B",
+              "D",
+              "D'",
+              "C'"
+            ]
+          },
+          "quote": "Tính khoảng cách từ A đến mặt phẳng (BDD'C')."
+        }
+      ]
+    },
+    "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính góc giữa đường thẳng SC và mặt phẳng (ABCS).": {
+      "schema_version": "typed-fact-next/2",
+      "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính góc giữa đường thẳng SC và mặt phẳng (ABCS).",
+      "length_unit": "1",
+      "solids": [
+        {
+          "solid_id": "py",
+          "solid_type": "pyramid",
+          "notation": "S.ABCD",
+          "quote": "Cho hình chóp S.ABCD."
+        }
+      ],
+      "premises": [
+        {
+          "kind": "base_is_square",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "side": "4"
+          },
+          "quote": "Đáy ABCD là hình vuông cạnh 4."
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "args": {
+            "line": [
+              "S",
+              "A"
+            ],
+            "plane": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "quote": "SA vuông góc với mặt phẳng (ABCD)."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "S",
+              "A"
+            ],
+            "value": "3"
+          },
+          "quote": "SA = 3."
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "py",
+          "quote": "Cho hình chóp S.ABCD."
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "q",
+          "kind": "measurement",
+          "goal_type": "angle",
+          "target": {
+            "line": [
+              "S",
+              "C"
+            ],
+            "plane": [
+              "A",
+              "B",
+              "C",
+              "S"
+            ]
+          },
+          "quote": "Tính góc giữa đường thẳng SC và mặt phẳng (ABCS)."
+        }
+      ]
+    },
+    "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Gọi M là trung điểm của BC. Tính khoảng cách từ A đến mặt phẳng (BMC).": {
+      "schema_version": "typed-fact-next/2",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Gọi M là trung điểm của BC. Tính khoảng cách từ A đến mặt phẳng (BMC).",
+      "length_unit": "1",
+      "solids": [
+        {
+          "solid_id": "pr",
+          "solid_type": "prism",
+          "notation": "ABC.A'B'C'",
+          "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+        }
+      ],
+      "premises": [
+        {
+          "kind": "right_angle",
+          "args": {
+            "vertex": "A",
+            "rays": [
+              "B",
+              "C"
+            ]
+          },
+          "quote": "Đáy ABC là tam giác vuông tại A."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "B"
+            ],
+            "value": "6"
+          },
+          "quote": "AB = 6."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "C"
+            ],
+            "value": "8"
+          },
+          "quote": "AC = 8."
+        },
+        {
+          "kind": "right_prism",
+          "args": {
+            "base": [
+              "A",
+              "B",
+              "C"
+            ],
+            "top": [
+              "A'",
+              "B'",
+              "C'"
+            ]
+          },
+          "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "A'"
+            ],
+            "value": "12"
+          },
+          "quote": "AA' = 12."
+        },
+        {
+          "kind": "midpoint",
+          "args": {
+            "point": "M",
+            "segment": [
+              "B",
+              "C"
+            ]
+          },
+          "quote": "Gọi M là trung điểm của BC."
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "pr",
+          "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "q",
+          "kind": "measurement",
+          "goal_type": "distance",
+          "target": {
+            "point": "A",
+            "plane": [
+              "B",
+              "M",
+              "C"
+            ]
+          },
+          "quote": "Tính khoảng cách từ A đến mặt phẳng (BMC)."
+        }
+      ]
+    }
+  }
+}
