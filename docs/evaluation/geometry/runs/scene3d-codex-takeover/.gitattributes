@@ -1,0 +1,2 @@
+# Preserve measured artifact bytes across Windows checkouts.
+* -text

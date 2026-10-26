@@ -1,0 +1,14 @@
+{
+  "schema": "scene3d-git-byte-preservation/1",
+  "original_artifact_manifest_sha256": "50b446be82b92361521c0fd41cc933755130ba97bf64c61a3fa21690f409df09",
+  "files_checked": 578,
+  "working_tree_and_git_index": "MATCH",
+  "measured_artifact_bytes_changed": false,
+  "attributes": {
+    "path": ".gitattributes",
+    "text": "unset",
+    "reason": "Prevent autocrlf from changing measured JSON/receipt/report bytes on future Windows checkouts"
+  },
+  "mismatches": [],
+  "product_source_changed": false
+}
