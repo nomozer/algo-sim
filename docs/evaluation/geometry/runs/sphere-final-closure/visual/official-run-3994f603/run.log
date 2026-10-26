@@ -1,0 +1,29 @@
+exit=1
+[32m✓ built in 3.55s[39m
+▶ triangular_pyramid/desktop 10:07:56
+▶ triangular_pyramid/mobile 10:08:56
+triangular_pyramid: PASS
+▶ triangular_prism/desktop 10:09:48
+▶ triangular_prism/mobile 10:10:53
+triangular_prism: PASS
+▶ rectangular_pyramid/desktop 10:11:54
+▶ rectangular_pyramid/mobile 10:12:53
+rectangular_pyramid: PASS
+▶ cuboid/desktop 10:13:43
+▶ cuboid/mobile 10:14:34
+cuboid: PASS
+▶ cube/desktop 10:15:17
+▶ cube/mobile 10:16:08
+cube: PASS
+▶ cross_section/desktop 10:16:55
+▶ cross_section/mobile 10:17:59
+cross_section: FAIL
+▶ regular_square_pyramid/desktop 10:19:38
+▶ regular_square_pyramid/mobile 10:20:32
+regular_square_pyramid: PASS
+▶ regular_triangular_pyramid/desktop 10:21:24
+▶ regular_triangular_pyramid/mobile 10:22:58
+regular_triangular_pyramid: PASS
+Wrote D:\Documents\projects\algo-sim\.superpowers\official-run-3994f603-b\BROWSER_EVIDENCE.json: FAIL
+
+[exited with code 0]
