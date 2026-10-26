@@ -298,9 +298,12 @@ describe("nhân chứng hình chiếu (review I1)", () => {
     free_objects: ["A", "B", "C", "S"],
     objects: [
       P("A", ["0", "0", "0"]), P("B", ["1", "0", "0"]), P("C", ["0", "1", "0"]), P("S", ["0", "0", "1"]),
-      { ...P("K", ["3/8", "3/8", "1/4"]), origin: "derived", producer: "construct_point", depends: ["A"],
-        perpendicular_witness: { from: "A", foot: ["3/8", "3/8", "1/4"], on: "derived_K_plane",
-          marker: { u: ["-3/8", "-3/8", "3/4"], v: ["-3/8", "-3/8", "-1/4"] } } },
+      // K = hình chiếu CHÍNH XÁC của A lên (BCS): x + y + z = 1 ⇒ (1/3, 1/3, 1/3); `u` = B − K nằm trong mặt phẳng.
+      // (Bản trước dùng K = (3/8, 3/8, 1/4): thuộc mặt phẳng nhưng AK không ⊥ nó, và u·v ≠ 0 — cổng
+      // `scene3d-witness-gate` nay từ chối đúng nhân chứng sai ấy.)
+      { ...P("K", ["1/3", "1/3", "1/3"]), origin: "derived", producer: "construct_point", depends: ["A"],
+        perpendicular_witness: { from: "A", foot: ["1/3", "1/3", "1/3"], on: "derived_K_plane",
+          marker: { u: ["2/3", "-1/3", "-1/3"], v: ["-1/3", "-1/3", "-1/3"] } } },
     ],
   } as unknown as Scene3D);
 
@@ -326,17 +329,17 @@ describe("nhân chứng hình chiếu (review I1)", () => {
     expect(con).toEqual([]);
     expect(w.id).toBe("perpendicular:K");
     expect(w.from).toEqual([0, 0, 0]);
-    expect(w.foot).toEqual([3 / 8, 3 / 8, 1 / 4]);
-    expect(w.u).toEqual([-3 / 8, -3 / 8, 3 / 4]);
-    expect(w.v).toEqual([-3 / 8, -3 / 8, -1 / 4]);
+    expect(w.foot).toEqual([1 / 3, 1 / 3, 1 / 3]);
+    expect(w.u).toEqual([2 / 3, -1 / 3, -1 / 3]);
+    expect(w.v).toEqual([-1 / 3, -1 / 3, -1 / 3]);
   });
 
   it("đại lượng khoảng cách neo vào đoạn nhân chứng hình chiếu (d(A, K)) hiện nhãn khi điểm chiếu K và đoạn vuông góc đã có mặt", () => {
     const s = canhChieu();
     s.objects.push({
       id: "d_A_K", label: "Khoảng cách giữa A và K", notation: "d(A, K)", type: "quantity", render: "readout",
-      origin: "derived", producer: "measure.distance", depends: ["A", "K"], value: "√22/8",
-      exact: { kind: "radical", coefficient: "1/8", radicand: 22 },
+      origin: "derived", producer: "measure.distance", depends: ["A", "K"], value: "√3/3",
+      exact: { kind: "radical", coefficient: "1/3", radicand: 3 },
       annotation: { kind: "length", category: "result", role: "result", subject_ids: ["A", "K"], anchor: "segment" },
     } as never);
     s.events = [
@@ -346,10 +349,10 @@ describe("nhân chứng hình chiếu (review I1)", () => {
     ];
     // Bước 0 (K chưa dựng): chưa hiện
     expect(annotationsAt(s, 0, TAT_CA, "d_A_K")).toEqual([]);
-    // Bước 2 (K đã dựng kèm perpendicular_witness từ A, và d_A_K đã kết luận): hiện nhãn d(A, K) = √22/8
+    // Bước 2 (K đã dựng kèm perpendicular_witness từ A, và d_A_K đã kết luận): hiện nhãn d(A, K) = √3/3
     const a = annotationsAt(s, 2, DEFAULT_ANNOTATION_VIEW, "d_A_K");
     expect(a.map((x) => x.id)).toEqual(["d_A_K"]);
-    expect(a[0].text).toBe("d(A, K) = √22/8");
+    expect(a[0].text).toBe("d(A, K) = √3/3");
   });
 
   it("đại lượng khoảng cách kết quả có witness trên mặt phẳng (không có point3 chân riêng) hiện đoạn vuông góc ở bước kết luận", () => {
@@ -404,7 +407,7 @@ describe("nhân chứng hình chiếu (review I1)", () => {
     expect(r!.x >= 206 || r!.x + r!.w <= 194).toBe(true);
   });
 
-  it("bài toán chứng minh đường thẳng vuông góc với mặt phẳng (BC ⊥ (SAB) tại B) chỉ sinh 1 ký hiệu góc vuông rõ ràng ở bước kết luận sau khi xác minh đủ 2 hướng gốc trong mặt phẳng", () => {
+  it("BC ⊥ (SAB): chữ '⊥'/'90°' của một đại lượng KHÔNG đủ để vẽ dấu — cần nhân chứng backend, và có nó thì đúng 1 dấu tại B ở bước kết luận", () => {
     const s: Scene3D = {
       free_objects: ["A", "B", "C", "D", "S"],
       objects: [
@@ -441,16 +444,24 @@ describe("nhân chứng hình chiếu (review I1)", () => {
     // Bước 1 (chưa dựng BC) và Bước 2 (mới dựng BC, chưa tới bước kết luận BC ⊥ (SAB)): chưa sinh ký hiệu góc vuông
     expect(projectionWitnessesAt(s, presentStep1, 1)).toEqual([]);
     expect(projectionWitnessesAt(s, presentStep2, 2)).toEqual([]);
-    // Bước 3 (đã có kết luận chứng nhận kl): sinh đúng 1 ký hiệu góc vuông rõ ràng tại B, không chồng 2 dấu lên nhau
-    const ws = projectionWitnessesAt(s, presentStep3, 3);
+    // Owner 2026-10-26: frontend KHÔNG tự suy quan hệ từ chữ/giá trị — trước bản này nhánh `tuDuongMp` dựng dấu ở đây.
+    expect(projectionWitnessesAt(s, presentStep3, 3)).toEqual([]);
+    // Với nhân chứng BACKEND của phép đo (`quantity_annotations._goc_vuong`): đúng 1 dấu tại B, cạnh tới A và C.
+    const co = structuredClone(s);
+    co.events[3] = { ...co.events[3], semantic_kind: "FINAL_RESULT" } as never;
+    Object.assign(co.objects.find((o) => o.id === "kl")!, {
+      type: "quantity", render: "readout", display_group: ["target"],
+      annotation: { kind: "angle", category: "result", role: "result", subject_ids: ["bc", "sab"], anchor: "witness",
+        witness: { from: "C", foot: ["4", "0", "0"], on: "sab", relation: "line_perpendicular_plane",
+          marker: { u: ["-4", "0", "0"], v: ["0", "3", "0"], u_to: "A" } } },
+    });
+    expect(projectionWitnessesAt(co, presentStep2, 2)).toEqual([]);
+    const ws = projectionWitnessesAt(co, presentStep3, 3);
     expect(ws).toHaveLength(1);
     const [w] = ws;
-    expect(w.id).toBe("perpendicular:bc");
     expect(w.foot).toEqual([4, 0, 0]);
-    const dotUV = w.u[0] * w.v[0] + w.u[1] * w.v[1] + w.u[2] * w.v[2];
-    expect(Math.abs(dotUV)).toBeLessThan(1e-9);
-    expect(Math.abs(w.u[1])).toBeLessThan(1e-9);
-    expect(w.v[1]).toBeGreaterThan(0);
+    expect(w.uTo).toEqual([0, 0, 0]);
+    expect(w.from).toEqual([4, 3, 0]);
   });
 
   it("không dùng phép chiếu đại số để giả tạo hướng vuông góc và không phát sinh dấu góc vuông giả cho đường nằm trong mặt phẳng, đường nghiêng, quan hệ chưa chứng nhận hoặc hình suy biến", () => {

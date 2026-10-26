@@ -34,6 +34,12 @@ export function auxiliaryObjects(scene: Scene3D): Map<string, HinhPhu> {
   const duongChieu = new Set(scene.objects.flatMap((o) => o.perpendicular_witness?.on ? [o.perpendicular_witness.on] : []));
   const dinhKhoi = new Set(scene.objects.flatMap((o) =>
     (o.type === "solid" || o.type === "curved_solid") ? [...(o.depends ?? []), ...(o.vertex_ids ?? [])] : []));
+  // Tập đỉnh của từng MẶT khối (id thực thể) — mặt phẳng qua các đỉnh của một mặt đã nằm trên hình (G7: thay cho
+  // phép so `o.id === "day"` cũ; luật hiển thị không đọc tên vật).
+  const matKhoi = scene.objects.flatMap((o) => o.type === "solid" && o.vertex_ids && o.faces
+    ? o.faces.map((f) => new Set(f.map((i) => o.vertex_ids![i]))) : []);
+  const laMatCuaKhoi = (o: { depends?: string[] }) =>
+    matKhoi.some((m) => (o.depends ?? []).every((id) => m.has(id)));
   for (const o of scene.objects) {
     const vai = o.formation_roles ?? [];
     const nhom = o.display_group ?? [];
@@ -42,7 +48,7 @@ export function auxiliaryObjects(scene: Scene3D): Map<string, HinhPhu> {
       if (o.type === "plane3" && o.origin === "derived" && (o.depends ?? []).length >= 3
           && (o.depends ?? []).every((id) => dinhKhoi.has(id))
           && con.every((x) => x.type === "quantity")
-          && (con.length === 0 || o.id === "day")) {
+          && (con.length === 0 || laMatCuaKhoi(o))) {
         ra.set(o.id, { loai: "do", xongTai: -1 });
         continue;
       }

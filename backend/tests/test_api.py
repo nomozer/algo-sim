@@ -744,7 +744,8 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # (mat phang ten de viet "(P)" thay "(AB'D')", chu trinh thiet dien tu ky hieu dinh). Row v127 THAT van HIT:
     # runs/visual-hybrid-final-corrections/cache/decision.json (khoa bang tests/test_cache_display_identity_invalidation.py).
     # 128 -> 129 (sphere-sample-source-authority): mat phang cat khoi cong mang vai CONSTRUCT_CUTTING_OBJECT trong envelope phuc vu; row v128 THAT van HIT: runs/sphere-sample-source-authority/cache/decision.json (khoa bang tests/test_cache_curved_cutting_plane_invalidation.py).
-    assert main_module.CACHE_VERSION == "129"
+    # 129 -> 130 (scene3d-to-hybrid-v2-replacement): nhan chung goc vuong / u_to, buoc dung cua vat do assign sinh, ten mat phang (alpha) va ten nhieu diem kiem dong phang trong envelope phuc vu; row v129 THAT van HIT: runs/scene3d-to-hybrid-v2-replacement/cache/decision.json (khoa bang tests/test_cache_right_angle_witness_invalidation.py).
+    assert main_module.CACHE_VERSION == "130"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

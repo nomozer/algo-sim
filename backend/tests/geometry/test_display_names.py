@@ -376,14 +376,15 @@ def test_cau_LONG_NHAU_co_cau_truc_KHONG_MO_HO(ch):
 
     Trước bản này: *"Giao tuyến của Mặt phẳng qua B và vuông góc với SC và
     (ABC)"* — ba chữ "và", không tách được đâu là hết toán hạng thứ nhất.
-    Nay toán hạng nhiều chữ được BỌC, nên tách được bằng cấu trúc.
+    Toán hạng nhiều chữ được BỌC (`_boc`); từ Owner 2026-10-26 mặt phẳng không
+    tên được gọi `(α)`, nên câu lồng dùng ký hiệu và không còn cụm nào để bọc.
     """
+    from app.simulation.semantic_program.display_names import _boc
+
     nhan = ch["gt"]["label"]
-    assert "«" in nhan and "»" in nhan
-    # Đúng MỘT toán hạng được bọc — cái không có ký hiệu. `(ABC)` có ký hiệu
-    # nên để trần.
-    assert nhan.count("«") == 1
-    assert "(ABC)" in nhan
+    assert nhan == "Giao tuyến của (α) và (ABC)"
+    assert _boc("Mặt phẳng qua B và vuông góc với SC") == "«Mặt phẳng qua B và vuông góc với SC»"
+    assert _boc("(ABC)") == "(ABC)"
 
 
 def test_role_KHONG_lap_lai_ten(ch):
@@ -399,12 +400,78 @@ def test_role_KHONG_lap_lai_ten(ch):
 
 
 def test_KHONG_bia_ky_hieu_khi_khong_co__nhung_van_doc_duoc(ch):
-    """`MISSING_NOTATION_FAILS_TO_NULL` + `LEARNER_DESCRIPTION_STILL_AVAILABLE`."""
-    assert ch["mpb"]["notation"] is None
-    assert ch["gt"]["notation"] is None
+    """`MISSING_NOTATION_FAILS_TO_NULL` + `LEARNER_DESCRIPTION_STILL_AVAILABLE`.
+
+    Ngoại lệ duy nhất (Owner 2026-10-26): MẶT PHẲNG không có ký hiệu nhận tên trình bày `(α)` và được đánh dấu
+    `notation_assigned` — đường thẳng, giao tuyến… vẫn `None`."""
+    assert ch["mpb"]["notation"] == "(α)" and ch["mpb"].get("notation_assigned") is True
+    assert ch["gt"]["notation"] is None and "notation_assigned" not in ch["gt"]
+    assert "notation_assigned" not in ch["abc"]
     for ten in ("mpb", "gt"):
         assert len(ch[ten]["label"]) > 5
         assert ch[ten]["label"] != ten
+
+
+def _mp(label=None, tren=None, **k):
+    return {"type": "plane3", "producer": "construct_plane", "sources": ["A", "B", "C"], "label": label,
+            **({"points_on_plane": tren} if tren is not None else {}), **k}
+
+
+def test_ten_mp_nhieu_diem_giu_nguyen_khi_moi_diem_nam_tren_mat_phang():
+    """`(ABCD)` qua A, B, C với D đồng phẳng: KHÔNG rút thành `(ABC)`."""
+    ht = ten_hien_thi({p: {"type": "point3"} for p in "ABCD"} | {"day": _mp("(ABCD)", list("ABCD"))})
+    assert ht["day"]["notation"] == "(ABCD)" and ht["day"]["label"] == "(ABCD)"
+    assert "notation_assigned" not in ht["day"]
+
+
+def test_ten_mp_nhieu_diem_co_dau_phay_tren():
+    pts = {"B": {"type": "point3"}, "C": {"type": "point3"},
+           "C_prime": {"type": "point3"}, "B_prime": {"type": "point3"}}
+    ht = ten_hien_thi(pts | {"mat": {"type": "plane3", "producer": "construct_plane", "sources": ["B", "C", "C_prime"],
+                                     "label": "(BCC'B')", "points_on_plane": list(pts)}})
+    assert ht["mat"]["notation"] == "(BCC′B′)"
+
+
+@pytest.mark.parametrize("tren", [list("ABC"), list("ABCE")])
+def test_ten_mp_khai_mot_diem_NGOAI_mat_phang_thi_nhan_khong_duoc_tin(tren):
+    """D không nằm trên mặt phẳng (không có trong `points_on_plane`) ⇒ "(ABCD)" là một mệnh đề sai: không in nó,
+    không rút thầm nó, giữ tên ghép ĐÚNG `(ABC)` từ ba điểm dựng."""
+    ht = ten_hien_thi({p: {"type": "point3"} for p in "ABCDE"} | {"day": _mp("(ABCD)", tren)})
+    assert ht["day"]["notation"] == "(ABC)"
+    assert "(ABCD)" not in (ht["day"]["label"], ht["day"]["reference"])
+
+
+_HAI_MP_TRONG = {"B": {"type": "point3"},
+                 "p1": {"type": "plane3", "producer": "plane_perpendicular_to_line", "sources": ["B", "x"]},
+                 "p2": {"type": "plane3", "producer": "plane_perpendicular_to_line", "sources": ["B", "y"]},
+                 "q": {"type": "plane3", "producer": "construct_plane_from_equation", "label": "(β)"}}
+
+
+def test_ten_mp_gan_bo_qua_chu_da_hien_va_theo_thu_tu_dung():
+    """Chữ đã có chủ (`(β)` đang hiện) không bị gán lại; hai mặt phẳng không tên nhận hai chữ khác nhau, theo thứ tự."""
+    ht = ten_hien_thi(_HAI_MP_TRONG, source_plane_names=frozenset({"β"}))
+    assert ht["q"]["notation"] == "(β)" and "notation_assigned" not in ht["q"]
+    assert (ht["p1"]["notation"], ht["p2"]["notation"]) == ("(α)", "(γ)")
+    assert ht["p1"]["notation_assigned"] and ht["p2"]["notation_assigned"]
+
+
+def test_de_viet_mot_ten_khong_vat_nao_hien_thi_KHONG_gan_ten_nao():
+    """Ca thật `p6_thiet_dien_elip_cua_hinh_tru`: đề viết "(α)", mô hình gọi mặt phẳng là "mặt phẳng alpha" (không
+    nhận được). Mặt phẳng trống có thể CHÍNH là (α) của đề — gán `(β)` là nói trái đề, nên không gán gì."""
+    ht = ten_hien_thi(_HAI_MP_TRONG, source_plane_names=frozenset({"α", "β"}))
+    assert (ht["p1"]["notation"], ht["p2"]["notation"]) == (None, None)
+    ht = ten_hien_thi({"mp": {"type": "plane3", "producer": "construct_plane_from_equation",
+                              "label": "mặt phẳng alpha"}}, source_plane_names=frozenset({"α", "E"}))
+    assert ht["mp"]["notation"] is None and "notation_assigned" not in ht["mp"]
+
+
+def test_ten_mp_khai_mot_chu_KHONG_bi_gan_chu_khac():
+    """Mặt phẳng khai `(P)` không bao giờ bị đè `(α)`: ô soi và khung không được gọi một mặt bằng hai tên."""
+    ht = ten_hien_thi({"q": {"type": "plane3", "producer": "construct_plane_from_equation", "label": "(P)"}})
+    assert ht["q"]["notation"] == "(P)" and "notation_assigned" not in ht["q"]
+    ht = ten_hien_thi({p: {"type": "point3"} for p in "HUW"}
+                      | {"q": {"type": "plane3", "producer": "construct_plane", "sources": list("HUW"), "label": "(P)"}})
+    assert ht["q"]["notation"] == "(HUW)" and "notation_assigned" not in ht["q"]
 
 
 @pytest.mark.parametrize("ten", ["sc", "mpb", "abc", "gt", "kc"])

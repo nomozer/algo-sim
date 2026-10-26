@@ -22,6 +22,7 @@ import {
   geometryStepOf,
   huongChanVuongGoc,
   khungMatPhang,
+  measurementOnlyPlanes,
   moRongDaGiacMatPhang,
   objectsAt,
   toNumber,
@@ -89,6 +90,7 @@ import {
   projectionWitnessesAt,
   witnessesShown,
 } from "./scene3d-annotations";
+import { namTrenDoanDaVe, nhanChungDoanHopLe } from "./scene3d-witness-gate";
 import { auxiliaryHiddenAt } from "./scene3d-auxiliary";
 import { maTranKhung4 } from "./scene3d-chart";
 
@@ -1505,14 +1507,14 @@ export function buildObject3D(
     // Ký hiệu góc vuông (perpendicular marker) CHỈ khi vật mang chứng chỉ vuông góc tường minh từ backend
     // (`perpendicular_witness` hoặc `annotation.witness`) với hai phương u, v thực sự vuông góc.
     const chungChi = o.perpendicular_witness ?? o.annotation?.witness;
-    if (chungChi?.foot && chungChi.marker?.u && chungChi.marker?.v) {
+    if (chungChi?.foot && chungChi.marker?.u && chungChi.marker?.v
+        && nhanChungDoanHopLe(chungChi, [a.x, a.y, a.z], [b.x, b.y, b.z])) {
       const [cx, cy, cz] = toVec3(chungChi.foot);
       const [ux, uy, uz] = toVec3(chungChi.marker.u);
       const [vx, vy, vz] = toVec3(chungChi.marker.v);
       const du = Math.hypot(ux, uy, uz);
       const dv = Math.hypot(vx, vy, vz);
-      const tich = ux * vx + uy * vy + uz * vz;
-      if (du > 1e-6 && dv > 1e-6 && Math.abs(tich) <= 1e-4 * du * dv) {
+      {
         // `s` là cỡ world TRẦN; `datCoGocVuong` co dấu quanh chân về ~12–18 px mỗi khung (HTML tham chiếu:
         // ô vuông hai đoạn nhỏ) — trần còn bị chặn bởi một phần đoạn mang chứng chỉ để dấu không vượt ra ngoài nó.
         const daiDoan = Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z);
@@ -2530,19 +2532,35 @@ export function datCoGocVuong(
   return hien;
 }
 
+/** Đoạn HỮU HẠN đã vẽ của cảnh (cạnh khối, cạnh đa giác, đoạn thẳng) — để đoạn chứng minh không vẽ chồng lên chúng. */
+export function doanDaVe(objects: readonly SceneObject[]): [Vec3, Vec3][] {
+  return objects.flatMap((o): [Vec3, Vec3][] => {
+    if (o.type === "segment3" && o.endpoints?.length === 2) return [[toVec3(o.endpoints[0]), toVec3(o.endpoints[1])]];
+    const dinh = o.vertices?.map(toVec3);
+    if (!dinh) return [];
+    const vong = o.type === "solid" ? (o.faces ?? []) : o.type === "polygon3" ? [dinh.map((_, i) => i)] : [];
+    return vong.flatMap((f) => f.map((i, k): [Vec3, Vec3] => [dinh[i], dinh[f[(k + 1) % f.length]]]));
+  });
+}
+
 /** Nhân chứng một khoảng cách: đoạn nét đứt từ điểm tới CHÂN backend phát + ký hiệu vuông góc dựng từ
- *  hai phương backend phát (`u`, `v`) — chỉ đổi độ dài để có cỡ ký hiệu, không suy luận hình học nào. */
+ *  hai phương backend phát (`u`, `v`) — chỉ đổi độ dài để có cỡ ký hiệu, không suy luận hình học nào.
+ *  Có `uTo` (Owner 2026-10-26): cạnh trong vật nhận của dấu chĩa ĐÚNG tới điểm có tên ấy, và đoạn chứng minh
+ *  chân → điểm được vẽ (trừ khi nó đã là một đoạn của hình) — dấu nằm giữa hai đường thật, không lơ lửng. */
 export function vatNhanChung(
   w: WitnessShown,
   diemNen: Vec3[] = [],
   mau?: number,
   diu = false,
+  doanCo: readonly [Vec3, Vec3][] = [],
 ): THREE.Group {
   const g = new THREE.Group();
   const tu = new THREE.Vector3(...w.from);
   const chan = new THREE.Vector3(...w.foot);
   const v = new THREE.Vector3(...w.v);
-  const uHuong = huongChanVuongGoc(w.foot, w.u, diemNen, w.v);
+  const uHuong: Vec3 = w.uTo
+    ? [w.uTo[0] - w.foot[0], w.uTo[1] - w.foot[1], w.uTo[2] - w.foot[2]]
+    : huongChanVuongGoc(w.foot, w.u, diemNen, w.v);
   const dk = duongKinhCanh(diemNen);
   const s = dk > 0
     ? Math.min(v.length() * 0.18, Math.max(v.length() * NHAN_CHUNG_GOC.tiLe, dk * 0.032), dk * 0.042, NHAN_CHUNG_GOC.toiDa)
@@ -2568,7 +2586,17 @@ export function vatNhanChung(
   );
   chamChan.position.copy(chan);
   chamChan.userData.dauDinh = "thuong";
-  for (const x of [doan, goc, chamChan]) {
+  const canhPhu: THREE.Line[] = [];
+  if (w.uTo && !namTrenDoanDaVe(w.foot, w.uTo, doanCo)) {
+    const chanToi = new THREE.Line(new THREE.BufferGeometry().setFromPoints([chan, new THREE.Vector3(...w.uTo)]),
+      (doan.material as THREE.LineDashedMaterial).clone());
+    chanToi.computeLineDistances();
+    chanToi.name = `witness_leg:${w.id}`;
+    canhPhu.push(chanToi);
+  }
+  // Đoạn chân → điểm đã là một đoạn của hình (góc vuông BC ⊥ (SAB) đặt trên cạnh BC): không vẽ bản nét đứt thứ hai.
+  const doanCanVe = namTrenDoanDaVe(w.from, w.foot, doanCo) ? [] : [doan];
+  for (const x of [...doanCanVe, ...canhPhu, goc, chamChan]) {
     x.renderOrder = x === chamChan ? 11 : 10;
     x.raycast = () => {};                 // trình bày thuần: không bao giờ bắt cú bấm chọn vật
     g.add(x);
@@ -3550,23 +3578,34 @@ export function Scene3DWorkspace({
     }
     // Review I1: cộng đoạn vuông góc PHỤ của điểm hình chiếu đã có mặt ở bước này — cùng cách vẽ, chân do backend phát.
     const diemToanCanh = diemHuuHan(scene.objects);
-    const hienNhanChung = new Set([...coMatNhan].filter((id) => isVisible(tuongTac, id, coMatNhan)));
+    // Mặt phẳng "chỉ để đo" (`measurementOnlyPlanes`: mặt của chính khối, ẩn khỏi khung vì đã có trên hình) vẫn là chủ
+    // thể HIỆN của nhân chứng: SA ⊥ (ABCD), BC ⊥ (SAB) đặt dấu trên mặt khối đang thấy. Ẩn/cô lập của người xem vẫn áp.
+    const mpDo = measurementOnlyPlanes(scene);
+    const coMatNhanChung = new Set([...coMatNhan,
+      ...objectsAt(scene, buoc).filter((o) => mpDo.has(o.id)).map((o) => o.id)]);
+    const hienNhanChung = new Set([...coMatNhanChung].filter((id) => isVisible(tuongTac, id, coMatNhanChung)));
     const tuSoDo = witnessesShown(scene, nhanSoDo);
     const daCoSoDo = new Set(tuSoDo.map((w) => w.id));
     const tuChieu = projectionWitnessesAt(scene, hienNhanChung, !tang ? buoc : undefined)
       .filter((w) => !daCoSoDo.has(w.id.slice("perpendicular:".length)));
-    const ds = [...tuSoDo, ...tuChieu];
+    // Chế độ A không lộ đáp số: dấu vuông góc của một GÓC đo được CHÍNH LÀ đáp số (90°), nên ẩn cùng nhãn của nó.
+    // Nhân chứng khoảng cách thì không — chân đường vuông góc là cách dựng, không phải con số.
+    const laDapSoAn = (id: string) => annotationView.hiddenIds?.has(id) === true
+      && scene.objects.some((o) => o.id === id && o.annotation?.kind === "angle");
+    const ds = [...tuSoDo, ...tuChieu]
+      .filter((w) => !laDapSoAn(w.vai === "hinh_chieu" ? w.id.slice("perpendicular:".length) : w.id));
+    const doanCo = doanDaVe(scene.objects);
     for (const w of ds) {
       const chuId = w.vai === "hinh_chieu" ? w.id.slice("perpendicular:".length) : w.id;
       const t = tang?.get(chuId);
       const dangDungDiem = !tang && tapNoiBat.has(chuId) && loaiRef.current.get(chuId) === "point3";
       const mau = t && t !== "boi_canh" ? MAU_TANG[t] : (dangDungDiem ? MAU.highlight : undefined);
       const diu = Boolean(tang && !t);
-      nhom.add(vatNhanChung(w, diemToanCanh, mau, diu));
+      nhom.add(vatNhanChung(w, diemToanCanh, mau, diu, doanCo));
     }
     if (typeof window !== "undefined") (window as any).__geo3d_witness_ids = ds.map((w) => w.id);
     veRef.current?.();
-  }, [scene, buoc, nhanSoDo, coMatNhan, tuongTac, tang, tapNoiBat]);
+  }, [scene, buoc, nhanSoDo, coMatNhan, tuongTac, tang, tapNoiBat, annotationView.hiddenIds]);
 
   const heSoDiuLuoi = useMemo(() => {
     const daTonTai = entitiesPresentAt(scene, buoc, objectsAt);

@@ -387,8 +387,14 @@ def test_E_ten_hien_thi_do_BACKEND_dat__khong_phai_id(canh):
     # của nó là `AB`. Đây là hành vi của `display_names`, không phải ngoại lệ
     # của phép mới: câu đầy đủ nối bằng dấu phẩy sẽ dài hơn cả ô soi.
     assert "M" in o["label"] and "AB" in o["label"]
-    # Không có ký hiệu toán nào dẫn ra được cho vật này ⇒ `None` là đúng.
-    assert o["notation"] is None
+    # Không có ký hiệu toán nào DẪN RA được cho vật này ⇒ tên trình bày `(α)` (Owner 2026-10-26), có đánh dấu, và
+    # bước dựng nói "Gọi (α) là …" thay vì "Ghi nhận mp = Plane3(…)".
+    assert o["notation"] == "(α)" and o["notation_assigned"] is True
+    spec = _ct_mat_vuong_goc()
+    su_kien = build_scene3d(build_simulation_state(spec, SemanticProgramInterpreter().execute(spec)))["events"]
+    buoc = next(e for e in su_kien if e.get("object") == "mp")
+    assert buoc["action"] == "CREATE" and buoc["semantic_kind"] == "GEOMETRY_CONSTRUCTION"
+    assert buoc["learner_text"].startswith("Gọi (α) là mặt phẳng qua M") and "Plane3" not in buoc["learner_text"]
 
 
 def test_E_di_qua_transport_va_ve_duoc_bang_TUYEN_CU(canh):

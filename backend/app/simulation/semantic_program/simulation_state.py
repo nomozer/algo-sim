@@ -642,6 +642,9 @@ def build_scene(
                         for p in gt.polygon]
             if all(ten_dinh) and len(set(ten_dinh)) == len(ten_dinh):
                 return {"section_vertex_names": ten_dinh}
+        if loai == "plane3" and isinstance(gt, Plane3):
+            # Điểm có tên nằm TRÊN mặt phẳng (chính xác) — để tên khai `(ABCD)` được kiểm, không rút thầm thành `(ABC)`.
+            return {"points_on_plane": [n for n, v in diem_co_ten.items() if gt.signed_eval(v) == 0]}
         return {}
 
     hien_thi = ten_hien_thi({
@@ -688,6 +691,8 @@ def build_scene(
             "synthetic": ten.startswith(TIEN_TO_TAM),
             "producer": p.get("producer"),
             "sources": p.get("sources", []),
+            # Tên trình bày `(α)` do `display_names` gán (không phải tên của đề): lời kể nói "Gọi (α) là …".
+            **({"notation_assigned": True} if ht.get("notation_assigned") else {}),
         }
         # `vertex_ids` THEO VỊ TRÍ chỉ biết được ở đây (cần `sources` của vật),
         # nên `_than_hinh_hoc` để lại ô trống và lượt này điền.

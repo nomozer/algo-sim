@@ -831,7 +831,14 @@ MISSING_KEY_MSG = (
 #       `CONSTRUCT_AUXILIARY_GEOMETRY` ⇒ Scene3D không ẩn nó sau khi giao đã dựng. Row v128 THẬT của ca phát lại
 #       `p6_thiet_dien_elip_cua_hinh_tru` vẫn HIT (`runs/sphere-sample-source-authority/cache/decision.json`);
 #       3 ca đối chứng trùng byte, ca từ chối không cache.
-CACHE_VERSION = "129"
+# 130 — 2026-10-26 (scene3d-to-hybrid-v2-replacement, Owner P0 ký hiệu vuông góc): BỀ MẶT MÔ HÌNH KHÔNG ĐỔI. Envelope
+#       PHỤC VỤ của tuyến mặc định đổi nội dung (tiền lệ 127–129): nhân chứng khoảng cách mang `marker.u_to` (điểm có tên
+#       trên vật nhận); góc đo được bằng 90° có nhân chứng góc vuông (`quantity_annotations._goc_vuong`); vật hình học do
+#       `assign` dựng (khối cong, đường tròn/elip giao, mặt phẳng ⊥ đường) là bước DỰNG, không còn repr `Ellipse3(…)` /
+#       `CurvedSolid(…)` trong lời kể; mặt phẳng không tên gọi `(α)` khi đề không viết tên nào chưa hiện; tên khai nhiều
+#       điểm `(ABCD)` kiểm đồng phẳng thay vì rút thành `(ABC)`. Row v129 THẬT của 6 ca phát lại vẫn HIT
+#       (`runs/scene3d-to-hybrid-v2-replacement/cache/decision.json`); 2 ca đa diện đối chứng trùng byte.
+CACHE_VERSION = "130"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

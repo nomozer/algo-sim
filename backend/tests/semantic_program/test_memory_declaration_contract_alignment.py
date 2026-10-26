@@ -106,10 +106,13 @@ FINAL_MEMORY_START = {CA_P1: "1d51ffe0e24b07d19c107f787d39e599ceb02f377e915d2858
 # `construct_curved_solid` ("hinh_tru") STEP -> CREATE, `ellipse3` ("E") MEASURE/MEASUREMENT -> CREATE/GEOMETRY_CONSTRUCTION
 # kèm lời kể "Dựng elip giao của …" và cạnh phụ thuộc `E` numerical -> structural; 0 trường hình học/giá trị, số vật (7) và
 # final_memory giữ nguyên; P1 không đổi. Hằng trước P3 của P6: `b582e45a…`.
-SCENE_START = {CA_P1: "ae2c0df6287d2e5ff774cd99f9e427e92e9b017efb2a2b5276610002dc0e1094",
+# scene3d-to-hybrid-v2-replacement (CACHE 130): p1's d(S, BD) witness points its in-line side at B (`u_to: B`, was
+# ae2c0df6…); p6's ellipse step `explanation` no longer prints the internal `Ellipse3(…)` repr (was fda73422…). Those
+# are the only changes (`runs/scene3d-to-hybrid-v2-replacement/cache/decision.json`).
+SCENE_START = {CA_P1: "9f41c8144ccc49018d7464a40e254aed02ba72135141dd906c3d5a7bb0500a95",
                # sphere-sample-source-authority (CACHE 129): the ellipse cutting plane is CONSTRUCT_CUTTING_OBJECT, not
                # CONSTRUCT_AUXILIARY_GEOMETRY — those two role entries are the only change (was 6e6967dc…).
-               CA_P6: "fda73422cc34b51764f97d46e6b8ac288c675d0b2a3003b9bdaa7c3ed0073521"}
+               CA_P6: "7f3e6be013924d64ee4f47783face67b4d980e1b13bd41f0d252d4ca4ca6b183"}
 SO_VAT_START = {CA_P1: 17, CA_P6: 7}
 
 

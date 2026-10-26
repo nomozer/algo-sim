@@ -1,0 +1,30 @@
+{
+ "schema": "cache-version-decision/1",
+ "run": "scene3d-to-hybrid-v2-replacement",
+ "decision": "BUMP",
+ "from": "129",
+ "to": "130",
+ "model_surface_changed": false,
+ "reason": "The default LLM_ONLY route's SERVED envelope changes content. Point → line/plane distance witnesses carry marker.u_to (the named point the in-plane side of the right-angle mark points to) and u points exactly at it; an angle measured as exactly 90° (cos² = 0) gets an `angle` annotation with a right-angle witness at the intersection point; a geometric object built by `assign` (cylinder, cone, circle/ellipse of intersection, plane through a point ⟂ a line) is a CREATE/GEOMETRY_CONSTRUCTION step whose learner_text and explanation no longer print an internal CurvedSolid(…)/Circle3(…)/Ellipse3(…)/Plane3(…) repr; a plane left without notation is named (α), (β)… only when every parenthesised name the problem writes is already shown; a declared multi-point plane name such as (ABCD) is kept only after an exact coplanarity check instead of being reduced to (ABC). /api/analyze returns a cache hit's envelope_json as is, so a genuine v129 row keeps serving the old scene.",
+ "evidence": {
+  "probe": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/cache/cache_probe.py",
+  "before": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/cache/cache-probe-v129-11188e7a.json",
+  "after": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/cache/cache-probe-new-uncommitted.json",
+  "legacy_rows": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/cache/legacy-v129-rows.json",
+  "before_tree": ".superpowers/worktrees/s3d-v129-base clean detached at 11188e7a (CACHE_VERSION 129)",
+  "after_tree": "s3d-hybrid-v2 working tree with the producer changes AND the bump (CACHE_VERSION 130); the bump changes only the reported cache_version, not any envelope",
+  "changed_served_cases": {
+   "p1_chop_thiet_dien_khoang_cach": "distance witness of d(S, BD): u points at B, u_to = B",
+   "p3_mat_cau_va_thiet_dien_tron": "circle-of-intersection step explanation: Circle3(…) repr removed",
+   "p4_hinh_tru_the_tich_va_xung_quanh": "cylinder built by assign: MEASURE 'Tính khối cong.' → CREATE 'Dựng khối cong.', formation role CLOSE_SOLID",
+   "p5_hinh_non_the_tich_va_xung_quanh": "cone built by assign: same as p4",
+   "p6_thiet_dien_elip_cua_hinh_tru": "ellipse step explanation repr removed; the plane the problem names (α) but the model calls 'mặt phẳng alpha' keeps notation null (no (β) is invented)",
+   "p7_thiet_dien_elip_cua_hinh_non": "ellipse step explanation repr removed"
+  },
+  "byte_identical_controls": ["p2_chop_day_ngu_giac_lom", "right_triangular_prism", "cube"],
+  "refusals_never_cached": ["n1_khoi_tron_xoay_tong_quat", "n2_khoi_ghep_bu_can_boolean", "mp_vuong_goc_duong", "vuong_goc_chop", "REFUSED_oblique_prism"],
+  "note_on_samples": "The two offline samples behind the Owner's report (mp-vuong-goc-duong, vuong-goc-chop) are REFUSED by /api/analyze (authored layout not grounded), so they are product evidence only through frontend/src/data/geometry-samples.json, not through the served cache.",
+  "provider_requests": 0
+ },
+ "migration_test": "backend/tests/test_cache_right_angle_witness_invalidation.py"
+}

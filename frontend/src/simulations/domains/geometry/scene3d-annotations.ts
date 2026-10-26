@@ -19,6 +19,7 @@
 import type { QuantityAnnotation, Scene3D, SceneObject, Vec3 } from "./scene3d-model";
 import { clampStep, ghiChuGiaTriDung, numericalBasis, objectsAt, toVec3 } from "./scene3d-model";
 import { tangNhanManh } from "./interaction-state";
+import { nhanChungVuongGocHopLe } from "./scene3d-witness-gate";
 
 export interface AnnotationView {
   /** "Hiện tất cả": mọi nhãn khả dụng ở bước đang xem, không chỉ dữ kiện và vật đang chọn. */
@@ -142,19 +143,32 @@ export function annotationsAt(
 
 /** `vai`: nhân chứng của nhãn khoảng cách đang xét (`khoang_cach`) hay đoạn vuông góc phụ của điểm hình chiếu
  *  (`hinh_chieu`) — renderer chọn màu theo vai (`scene3d-view.tsx::mauNhanChung`), không theo tiền tố id. */
-export interface WitnessShown { id: string; vai: "khoang_cach" | "hinh_chieu"; from: Vec3; foot: Vec3; u: Vec3; v: Vec3 }
+export interface WitnessShown {
+  id: string; vai: "khoang_cach" | "hinh_chieu"; from: Vec3; foot: Vec3; u: Vec3; v: Vec3;
+  /** Toạ độ điểm CÓ TÊN `marker.u_to` (backend) — đầu kia của đoạn chứng minh trong vật nhận; vắng ⇒ không vẽ đoạn. */
+  uTo?: Vec3;
+}
+
+type NhanChungBackend = NonNullable<QuantityAnnotation["witness"]>;
+
+/** Nhân chứng backend → `WitnessShown` đã qua cổng `scene3d-witness-gate` (fail-closed); không hợp lệ ⇒ `[]`. */
+function nhanChungDaKiem(
+  scene: Scene3D, theoId: ReadonlyMap<string, SceneObject>, id: string, vai: WitnessShown["vai"], w: NhanChungBackend,
+): WitnessShown[] {
+  const tu = theoId.get(w.from)?.xyz;
+  if (!tu) return [];
+  const dich = w.marker.u_to ? theoId.get(w.marker.u_to)?.xyz : undefined;
+  if (w.marker.u_to && !dich) return [];
+  const ws: WitnessShown = { id, vai, from: toVec3(tu), foot: toVec3(w.foot), u: toVec3(w.marker.u),
+    v: toVec3(w.marker.v), ...(dich ? { uTo: toVec3(dich) } : {}) };
+  return nhanChungVuongGocHopLe(scene, ws, w.on) ? [ws] : [];
+}
 
 /** §16.7 — nhân chứng của các nhãn khoảng cách ĐANG HIỆN; toạ độ đều do backend phát (chân chính xác). */
 export function witnessesShown(scene: Scene3D, entries: AnnotationEntry[]): WitnessShown[] {
   const theoId = new Map(scene.objects.map((o) => [o.id, o]));
-  return entries.flatMap((e) => {
-    const w = e.anchor === "witness" ? e.witness : undefined;
-    const tu = w ? theoId.get(w.from)?.xyz : undefined;
-    return w && tu
-      ? [{ id: e.id, vai: "khoang_cach" as const, from: toVec3(tu), foot: toVec3(w.foot), u: toVec3(w.marker.u),
-        v: toVec3(w.marker.v) }]
-      : [];
-  });
+  return entries.flatMap((e) =>
+    e.anchor === "witness" && e.witness ? nhanChungDaKiem(scene, theoId, e.id, "khoang_cach", e.witness) : []);
 }
 
 /** Review I1 — đoạn vuông góc PHỤ của điểm dựng bằng hình chiếu (`perpendicular_witness`, chân do kernel tính) khi
@@ -167,134 +181,29 @@ export function projectionWitnessesAt(
   const theoId = new Map(scene.objects.map((o) => [o.id, o]));
   const tuDiem = scene.objects.flatMap((o) => {
     const w = o.type === "point3" && present.has(o.id) ? o.perpendicular_witness : undefined;
-    const tu = w ? theoId.get(w.from)?.xyz : undefined;
-    return w && tu && present.has(w.from)
-      ? [{ id: `perpendicular:${o.id}`, vai: "hinh_chieu" as const, from: toVec3(tu), foot: toVec3(w.foot),
-        u: toVec3(w.marker.u), v: toVec3(w.marker.v) }]
-      : [];
+    return w && present.has(w.from) ? nhanChungDaKiem(scene, theoId, `perpendicular:${o.id}`, "hinh_chieu", w) : [];
   });
   const daCo = new Set(tuDiem.map((w) => `${w.from.join(",")}|${w.foot.join(",")}`));
   const k = step !== undefined && scene.events?.length ? clampStep(scene, step) : undefined;
-  const daTinh = new Set<string>();
   const ketLuan = new Set<string>();
   if (k !== undefined) {
     for (const e of scene.events) {
       if (e.step_index > k || !e.object) continue;
-      const koLoai = !e.semantic_kind && e.action === "MEASURE";
-      if (e.semantic_kind === "FINAL_RESULT" || koLoai) ketLuan.add(e.object);
-      if (e.semantic_kind === "MEASUREMENT" || e.semantic_kind === "FINAL_RESULT" || koLoai) daTinh.add(e.object);
+      if (e.semantic_kind === "FINAL_RESULT" || (!e.semantic_kind && e.action === "MEASURE")) ketLuan.add(e.object);
     }
   }
-  const chungNhanDuongMp = (d: SceneObject, mp: SceneObject): boolean =>
-    scene.objects.some((q) => {
-      if (!present.has(q.id)) return false;
-      if (k !== undefined && !daTinh.has(q.id) && !ketLuan.has(q.id)) return false;
-      const dep = q.depends ?? [];
-      if (!dep.includes(d.id) || !dep.includes(mp.id)) return false;
-      const chu = `${q.notation ?? ""} ${q.label ?? ""}`;
-      if (chu.includes("⊥") || q.value === "90°" || q.value === "90") return true;
-      const bangKhong = q.value === "0" || (q.exact?.kind === "rational" && q.exact.value === "0");
-      if (chu.includes("cos") && bangKhong) return true;
-      return false;
-    });
-  const duongHien = scene.objects.filter(
-    (o) => present.has(o.id)
-      && ((o.type === "line3" && Boolean(o.direction)) || (o.type === "segment3" && o.endpoints?.length === 2))
-      && (o.depends?.length ?? 0) >= 2,
-  );
-  const mpHien = scene.objects.filter(
-    (o) => present.has(o.id) && o.type === "plane3" && o.normal && (o.depends?.length ?? 0) >= 3,
-  );
-  const tuDuongMp: WitnessShown[] = [];
-  for (const d of duongHien) {
-    const vd: Vec3 = d.direction
-      ? toVec3(d.direction)
-      : (() => {
-          const a = toVec3(d.endpoints![0]);
-          const b = toVec3(d.endpoints![1]);
-          return [b[0] - a[0], b[1] - a[1], b[2] - a[2]];
-        })();
-    const nd = Math.hypot(...vd);
-    if (!Number.isFinite(nd) || nd < 1e-6) continue;
-    for (const mp of mpHien) {
-      if (!chungNhanDuongMp(d, mp)) continue;
-      const np = toVec3(mp.normal!);
-      const nnp = Math.hypot(...np);
-      if (!Number.isFinite(nnp) || nnp < 1e-6) continue;
-      const cx = vd[1] * np[2] - vd[2] * np[1];
-      const cy = vd[2] * np[0] - vd[0] * np[2];
-      const cz = vd[0] * np[1] - vd[1] * np[0];
-      if (Math.hypot(cx, cy, cz) > 1e-4 * nd * nnp) continue;
-      const chungId = (d.depends ?? []).find(
-        (id) => (mp.depends ?? []).includes(id) && present.has(id) && Boolean(theoId.get(id)?.xyz),
-      );
-      if (!chungId) continue;
-      const chan = toVec3(theoId.get(chungId)!.xyz!);
-      const diemKhacD = (d.depends ?? [])
-        .filter((id) => id !== chungId && present.has(id) && Boolean(theoId.get(id)?.xyz))
-        .map((id) => toVec3(theoId.get(id)!.xyz!))[0];
-      const v: Vec3 = diemKhacD
-        ? [diemKhacD[0] - chan[0], diemKhacD[1] - chan[1], diemKhacD[2] - chan[2]]
-        : vd;
-      const nv = Math.hypot(...v);
-      if (!Number.isFinite(nv) || nv < 1e-6) continue;
-      const vcx = v[1] * np[2] - v[2] * np[1];
-      const vcy = v[2] * np[0] - v[0] * np[2];
-      const vcz = v[0] * np[1] - v[1] * np[0];
-      if (Math.hypot(vcx, vcy, vcz) > 1e-4 * nv * nnp) continue;
-      const diemKhacMp = (mp.depends ?? [])
-        .filter((id) => id !== chungId && present.has(id) && Boolean(theoId.get(id)?.xyz))
-        .map((id) => toVec3(theoId.get(id)!.xyz!))
-        .sort((a, b) => Math.abs(a[2] - chan[2]) - Math.abs(b[2] - chan[2]));
-      const daHuong: { raw: Vec3; donVi: Vec3 }[] = [];
-      for (const pMp of diemKhacMp) {
-        const uRaw: Vec3 = [pMp[0] - chan[0], pMp[1] - chan[1], pMp[2] - chan[2]];
-        const nu = Math.hypot(...uRaw);
-        if (!Number.isFinite(nu) || nu < 1e-6) continue;
-        // Kiểm tra trực tiếp trên hướng gốc uRaw (không dùng phép chiếu đại số để giả tạo hướng vuông góc):
-        // 1) uRaw phải thực sự nằm trong mặt phẳng mp (dot(uRaw, np) = 0)
-        // 2) uRaw phải thực sự vuông góc với v và vd (dot(uRaw, v) = 0)
-        const dotUN = uRaw[0] * np[0] + uRaw[1] * np[1] + uRaw[2] * np[2];
-        const dotUV = uRaw[0] * v[0] + uRaw[1] * v[1] + uRaw[2] * v[2];
-        const dotUVd = uRaw[0] * vd[0] + uRaw[1] * vd[1] + uRaw[2] * vd[2];
-        if (Math.abs(dotUN) > 1e-4 * nu * nnp) continue;
-        if (Math.abs(dotUV) > 1e-4 * nu * nv) continue;
-        if (Math.abs(dotUVd) > 1e-4 * nu * nd) continue;
-        const uDonVi: Vec3 = [uRaw[0] / nu, uRaw[1] / nu, uRaw[2] / nu];
-        if (daHuong.some((h) => Math.abs(h.donVi[0] * uDonVi[0] + h.donVi[1] * uDonVi[1] + h.donVi[2] * uDonVi[2]) > 0.98)) continue;
-        daHuong.push({ raw: uRaw, donVi: uDonVi });
-      }
-      // Phải có ít nhất 2 hướng gốc không cùng phương trong mặt phẳng cùng thực sự vuông góc với đường thẳng,
-      // và chỉ phát 1 ký hiệu góc vuông rõ ràng tại điểm giao để tránh chồng chéo 2 ký hiệu trên hình chiếu.
-      if (daHuong.length < 2) continue;
-      const khoa = `${chan.join(",")}|${chan.join(",")}`;
-      if (daCo.has(khoa)) continue;
-      daCo.add(khoa);
-      tuDuongMp.push({
-        id: `perpendicular:${d.id}`,
-        vai: "hinh_chieu",
-        from: chan,
-        foot: chan,
-        u: daHuong[0].raw,
-        v,
-      });
-    }
-  }
-  if (k === undefined) return [...tuDiem, ...tuDuongMp];
-  if (ketLuan.size === 0) return [...tuDiem, ...tuDuongMp];
+  // Owner 2026-10-26: KHÔNG còn nhánh tự suy "đường ⊥ mặt" từ chữ "⊥"/"90°"/cos = 0 của một đại lượng và toạ độ
+  // float. Góc vuông của một phép đo có nhân chứng BACKEND (`quantity_annotations._goc_vuong`) và đi qua `tuKetQua`.
+  if (k === undefined || ketLuan.size === 0) return tuDiem;
   const tuKetQua = scene.objects.flatMap((o) => {
     const ann = o.type === "quantity" && ketLuan.has(o.id) ? o.annotation : undefined;
     if (!ann) return [];
     const w = vaiTro(o, ann) === "result" && ann.anchor === "witness" ? ann.witness : undefined;
-    const tu = w ? theoId.get(w.from)?.xyz : undefined;
-    if (!w || !tu || !present.has(w.from) || !ann.subject_ids.every((s) => present.has(s))) return [];
-    const from = toVec3(tu);
-    const foot = toVec3(w.foot);
-    if (daCo.has(`${from.join(",")}|${foot.join(",")}`)) return [];
-    return [{ id: `perpendicular:${o.id}`, vai: "hinh_chieu" as const, from, foot,
-      u: toVec3(w.marker.u), v: toVec3(w.marker.v) }];
+    if (!w || !present.has(w.from) || !ann.subject_ids.every((s) => present.has(s))) return [];
+    const ws = nhanChungDaKiem(scene, theoId, `perpendicular:${o.id}`, "hinh_chieu", w);
+    return ws.filter((x) => !daCo.has(`${x.from.join(",")}|${x.foot.join(",")}`));
   });
-  return [...tuDiem, ...tuDuongMp, ...tuKetQua];
+  return [...tuDiem, ...tuKetQua];
 }
 
 /** Ô soi (§16.6): dữ kiện số trong chuỗi của đại lượng (`tangNhanManh`) và đầu vào trực tiếp

@@ -75,7 +75,8 @@ def stub_llm(monkeypatch):
 
 def test_cache_version_is_128():
     # 128 -> 129 (sphere-sample-source-authority, curved cutting plane role): a v127 row still misses; the fresh row is v129.
-    assert main_module.CACHE_VERSION == "129"
+    # 129 -> 130 (scene3d-to-hybrid-v2-replacement, right-angle witness / assign-built geometry): a v127 row still misses; the fresh row is v130.
+    assert main_module.CACHE_VERSION == "130"
     assert LEGACY["written_by_cache_version"] == "127"
 
 
@@ -101,7 +102,7 @@ def test_legacy_v127_row_misses_and_only_the_name_changes(ca, stub_llm):
                               policy_version=legacy["policy_version"]))
         s.commit()
         assert _cache_lookup(s, key, ident) is None                     # the genuine v127 row is not a valid hit
-    assert ident == "129"
+    assert ident == "130"
 
     calls = stub_llm(contract, W.spec_cua(prog))
     client = TestClient(app)
@@ -119,7 +120,7 @@ def test_legacy_v127_row_misses_and_only_the_name_changes(ca, stub_llm):
 
     with SessionLocal() as s:
         rows = s.query(SimulationCache).filter_by(key=key).all()
-        assert [r.policy_version for r in rows] == ["129"]               # overwritten in place, no duplicate
+        assert [r.policy_version for r in rows] == ["130"]               # overwritten in place, no duplicate
     hit = client.post("/api/analyze", json={"input": {"type": "text", "content": text}}).json()
     assert (hit["cached"], hit["source"]) == (True, "exact_cache")
     assert calls == {"analyze": 1, "program": 1}

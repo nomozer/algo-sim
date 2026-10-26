@@ -296,13 +296,28 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
       // backend tính CHÍNH XÁC (`geometry/metric.py`) và phát ở `chart_metric`; module chỉ áp ánh xạ tuyến tính T
       // (Tᵀ·T = G) cho toạ độ để vẽ hình Euclid — không suy quan hệ, không quyết một sự kiện hình học, không đáp số;
       // cảnh không metric đi qua NGUYÊN VẸN. View chỉ nhập `maTranKhung4` cho ảnh chụp camera của bộ đo.
+      //
+      // `./scene3d-witness-gate` THÊM 2026-10-26 (Owner P0 ký hiệu vuông góc), nói ra: CỔNG fail-closed. Đọc lại
+      // nhân chứng backend phát và trả `boolean` — không dựng chân, không chọn phương, không trả toạ độ (test kế).
       expect(["react", "three", "three/addons/controls/OrbitControls.js",
               "./scene3d-model", "./interaction-state",
               "./scene3d-subentities", "./pick-target",
               "./scene3d-presentation", "./scene3d-camera",
               "./scene3d-edge-visibility",
               "./polygon-triangulate", "./scene3d-roles",
-              "./scene3d-annotations", "./scene3d-auxiliary", "./scene3d-chart"]).toContain(i);
+              "./scene3d-annotations", "./scene3d-auxiliary", "./scene3d-chart",
+              "./scene3d-witness-gate"]).toContain(i);
+    }
+  });
+
+  it("`scene3d-witness-gate` chỉ TỪ CHỐI: mọi export trả boolean, không three, không tầng hình học backend", () => {
+    const src = readFileSync(join(__dirname, "scene3d-witness-gate.ts"), "utf8");
+    expect(src).not.toMatch(/from ["']three/);
+    const xuat = [...src.matchAll(/^export (?:function|const) (\w+)[^\n]*/gm)];
+    expect(xuat.map((m) => m[1]).sort()).toEqual(
+      ["SAI_SO_NHAN_CHUNG", "namTrenDoanDaVe", "nhanChungDoanHopLe", "nhanChungVuongGocHopLe"]);
+    for (const m of xuat.filter((x) => x[0].startsWith("export function"))) {
+      expect(src.slice(m.index!).split("{\n")[0], m[1]).toMatch(/\): boolean\s*$/);
     }
   });
 

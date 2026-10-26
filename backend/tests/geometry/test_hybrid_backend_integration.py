@@ -17,7 +17,8 @@ Covers all 11 mandatory P4 integration requirements:
 8. Version, surface fingerprint, and candidate identity separation (historical `6ba9033b...` vs combined `afab0a3c...`).
 9. Backward compatibility with `DEFAULT_MODE = "LLM_ONLY"` and `CACHE_VERSION` ("125" at this run; "126" since
    hybrid-offline-readiness-finalization; "127" since hybrid-architecture-wave1-exact-certificates-planner; "128" since
-   visual-hybrid-final-corrections; "129" since sphere-sample-source-authority).
+   visual-hybrid-final-corrections; "129" since sphere-sample-source-authority; "130" since
+   scene3d-to-hybrid-v2-replacement).
 10. Registry permutation invariance.
 11. Strict oracle metric error handling (singular/degenerate, indefinite, asymmetric, or malformed `chart_metric`
     must fail closed as `INVALID` and NEVER fall back to Euclidean `IDENTITY_METRIC`).
@@ -470,7 +471,7 @@ def test_version_constants_surface_fingerprints_and_historical_receipt_preservat
     # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): segment3 đường cao mang perpendicular_witness.
     # 127 -> 128 (visual-hybrid-final-corrections): tên hiển thị backend (mặt phẳng tên đề viết, chu trình thiết diện).
     # 128 -> 129 (sphere-sample-source-authority): mặt phẳng cắt khối cong (đường tròn/elip giao) mang vai CONSTRUCT_CUTTING_OBJECT thay CONSTRUCT_AUXILIARY_GEOMETRY trong envelope phục vụ; row v128 thật vẫn HIT (runs/sphere-sample-source-authority/cache/decision.json).
-    assert main_module.CACHE_VERSION == "129"
+    assert main_module.CACHE_VERSION == "130"
     assert main_module.semantic_route_mode() == "off"
     assert RESPONSE_CONTRACT == "flat"
     # Verify default production pipeline (`main.py` / `pipeline.py`) remains LLM_ONLY and does not wire Hybrid route

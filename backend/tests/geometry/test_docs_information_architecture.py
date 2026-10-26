@@ -213,7 +213,8 @@ def test_inv_20_candidate_and_cache_verify_only():
     # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): segment3 đường cao mang perpendicular_witness (envelope phục vụ đổi).
     # 127 -> 128 (visual-hybrid-final-corrections): tên hiển thị backend — mặt phẳng tên đề viết, chu trình thiết diện (envelope phục vụ đổi).
     # 128 -> 129 (sphere-sample-source-authority): mặt phẳng cắt khối cong (đường tròn/elip giao) mang vai CONSTRUCT_CUTTING_OBJECT thay CONSTRUCT_AUXILIARY_GEOMETRY trong envelope phục vụ; row v128 thật vẫn HIT (runs/sphere-sample-source-authority/cache/decision.json).
-    assert str(CACHE_VERSION) == "129"
+    # 129 -> 130 (scene3d-to-hybrid-v2-replacement): nhân chứng góc vuông + `u_to`, bước dựng của vật do assign sinh, tên mặt phẳng `(α)` / tên nhiều điểm kiểm đồng phẳng (envelope phục vụ đổi; row v129 thật vẫn HIT, runs/scene3d-to-hybrid-v2-replacement/cache/decision.json).
+    assert str(CACHE_VERSION) == "130"
 
 
 def test_inv_21_favicon_not_in_staged_changes():

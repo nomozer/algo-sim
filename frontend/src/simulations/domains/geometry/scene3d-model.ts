@@ -538,7 +538,8 @@ export interface SceneFormation {
 
 /** W17 §15.4 — gắn kết đại lượng ↔ chủ thể hình học (backend sở hữu nghĩa). */
 export interface QuantityAnnotation {
-  kind: "length" | "area" | "volume" | "distance";
+  /** `angle` (2026-10-26): CHỈ góc đo được bằng 90°, neo bằng nhân chứng góc vuông backend (`_goc_vuong`). */
+  kind: "length" | "area" | "volume" | "distance" | "angle";
   /** `result` = đích của đề (hoặc thứ một đích trỏ tới); còn lại `measurement`. */
   category: "measurement" | "result";
   /** W18 §16.5 — dữ kiện đề cho / trung gian / đáp số. Vắng (envelope v109) ⇒ suy từ `category` + `origin`. */
@@ -556,13 +557,16 @@ export interface QuantityAnnotation {
     from: string;
     foot: ExactVec3;
     on: string;
-    marker: { u: ExactVec3; v: ExactVec3 };
+    /** `u_to` (Owner 2026-10-26): điểm CÓ TÊN trên vật nhận mà `u` chĩa tới — renderer vẽ đoạn chứng minh chân → điểm. */
+    marker: { u: ExactVec3; v: ExactVec3; u_to?: string };
     certificate?: string | null;
     relation?: string;
     status?: string;
     rule?: string;
     foot_id?: string;
     can_present_as_proven?: boolean;
+    /** Chứng chỉ đường ⊥ mặt (`exact-gram-line-plane-orthogonality/1`): hai phương độc lập của mặt phẳng. */
+    plane_directions?: ExactVec3[];
   };
 }
 

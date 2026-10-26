@@ -161,3 +161,29 @@ describe("mặt phẳng cắt khối cong", () => {
     expect(mau("cau-cat-mat-phang").objects.filter((o) => o.type === "point3").map((o) => o.id)).toEqual(["I"]);
   });
 });
+
+describe("G7 — envelope cũ (không formation_roles): luật ẩn mặt phẳng đo không đọc TÊN vật", () => {
+  const diem = (id: string, xyz: string[]) => ({ id, type: "point3", xyz, origin: "free", depends: [] });
+  const legacy = (idMp: string, qua: string[]): Scene3D => ({
+    free_objects: ["A", "B", "C", "D", "S"],
+    objects: [
+      diem("A", ["0", "0", "0"]), diem("B", ["2", "0", "0"]), diem("C", ["2", "2", "0"]), diem("D", ["0", "2", "0"]),
+      diem("S", ["0", "0", "4"]),
+      { id: "chop", type: "solid", origin: "derived", depends: ["A", "B", "C", "D", "S"], vertex_ids: ["A", "B", "C", "D", "S"],
+        faces: [[0, 1, 2, 3], [0, 1, 4], [1, 2, 4], [2, 3, 4], [3, 0, 4]] },
+      { id: idMp, type: "plane3", origin: "derived", depends: qua, point: ["0", "0", "0"], normal: ["0", "0", "1"] },
+      { id: "d", type: "quantity", render: "readout", origin: "derived", depends: ["S", idMp], value: "4" },
+    ],
+    events: [],
+  } as unknown as Scene3D);
+
+  it("mặt phẳng qua ba đỉnh của MỘT mặt khối (đáy) mà chỉ đại lượng dựa vào ⇒ ẩn, dù id là gì", () => {
+    for (const id of ["day", "mat_day", "p7"]) {
+      expect(auxiliaryObjects(legacy(id, ["A", "B", "C"])).get(id)).toEqual({ loai: "do", xongTai: -1 });
+    }
+  });
+
+  it("mặt phẳng chéo (S, A, C — không phải một mặt khối) có đại lượng dựa vào ⇒ không ẩn, dù id là `day`", () => {
+    for (const id of ["day", "mp_cheo"]) expect(auxiliaryObjects(legacy(id, ["S", "A", "C"])).has(id)).toBe(false);
+  });
+});

@@ -464,6 +464,8 @@ def build_scene3d(state: dict[str, Any]) -> dict[str, Any]:
         for f in _TRUONG[loai]:
             if f in o:
                 v[f] = o[f]
+        if o.get("notation_assigned"):
+            v["notation_assigned"] = True
         ra.append(v)
 
     _attach_topology(ra, state.get("segments_on_edges"))
@@ -866,9 +868,19 @@ def _ke_lai(events: list[dict[str, Any]], objects: list[dict[str, Any]]) -> None
                                  else _cau_thiet_dien(o, by_id))
             if e.get("action") == "EXTEND" and (ten_buoc := _nhan_canh_thiet_dien(e, o, by_id)):
                 e["display_label"] = ten_buoc
-        elif o is not None and o["type"] in ("circle3", "ellipse3"):
-            e.update(action="CREATE", semantic_kind="GEOMETRY_CONSTRUCTION",
-                     learner_text=f"Dựng {_giua_cau(o['label'])}.")
+        elif o is not None and o.get("notation_assigned") and e.get("action") in ("CREATE", "MEASURE"):
+            # Tên trình bày `(α)` (display_names) — câu đặt tên một lần, ở chính bước dựng ra vật.
+            cau = f"Gọi {o['notation']} là {_giua_cau(o['label'])}."
+            e.update(action="CREATE", semantic_kind="GEOMETRY_CONSTRUCTION", learner_text=cau,
+                     **({"explanation": cau} if e.get("action") == "MEASURE" else {}))
+        elif o is not None and o["type"] in ("circle3", "ellipse3") or (
+                o is not None and e.get("action") == "MEASURE" and o.get("render") not in ("readout", "non_visual")):
+            # Vật HÌNH HỌC do `assign` sinh (mặt phẳng qua một điểm ⊥ một đường, giao tuyến, đường tròn giao): một
+            # phép DỰNG, không phải "Ghi nhận mpb = Plane3(…)" — repr nội bộ không bao giờ tới học sinh, kể cả qua
+            # `explanation` (lối dự phòng của `learner_text` ở frontend).
+            cau = f"Dựng {_giua_cau(o['label'])}."
+            e.update(action="CREATE", semantic_kind="GEOMETRY_CONSTRUCTION", learner_text=cau,
+                     **({"explanation": cau} if e.get("action") == "MEASURE" else {}))
         elif o is not None and e.get("action") == "CREATE":
             e["learner_text"] = (
                 f"Dựng {_giua_cau(o['label'])} ({len(o.get('vertices') or [])} đỉnh, "

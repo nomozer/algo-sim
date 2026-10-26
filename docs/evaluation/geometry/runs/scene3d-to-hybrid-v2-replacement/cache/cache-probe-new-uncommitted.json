@@ -1,0 +1,480 @@
+{
+ "cache_version": "130",
+ "cases": {
+  "REFUSED_oblique_prism": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "29aa58c663351c1e542ab21b4be6acad1b605a006ee9d7328d4ead2351c46103",
+   "http": [
+    422,
+    422
+   ],
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": null
+   },
+   "request2": {
+    "cached": false,
+    "source": null
+   },
+   "row_policy_version": null,
+   "rows_for_key": 0,
+   "status": null,
+   "summary": {
+    "annotation_kinds": {},
+    "diagnostics": [],
+    "internal_repr_in_events": false,
+    "plane_notation": {},
+    "u_to": {}
+   }
+  },
+  "cube": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "c2f270575b30dec745f1868fa730829b6a836cf3b356f8c53b8b9152971f538b",
+   "http": [
+    200,
+    200
+   ],
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "130",
+   "rows_for_key": 1,
+   "status": "ok",
+   "summary": {
+    "annotation_kinds": {
+     "AA_prime_length": null,
+     "AB_length": null,
+     "AD_length": null,
+     "V": null,
+     "chieu_cao_AA_prime": "length",
+     "dien_tich_day_ABCD": "area",
+     "the_tich_khoi_hop": "volume"
+    },
+    "diagnostics": [
+     "ANNOTATION_UNBOUND AB_length: the text gives the number without naming a segment",
+     "ANNOTATION_UNBOUND AD_length: copy of AB_length — shares its identity",
+     "ANNOTATION_UNBOUND AA_prime_length: copy of AB_length — shares its identity",
+     "ANNOTATION_UNBOUND V: copy of the_tich_khoi_hop — shares its identity"
+    ],
+    "internal_repr_in_events": false,
+    "plane_notation": {},
+    "u_to": {
+     "AA_prime_length": null,
+     "AB_length": null,
+     "AD_length": null,
+     "V": null,
+     "chieu_cao_AA_prime": null,
+     "dien_tich_day_ABCD": null,
+     "the_tich_khoi_hop": null
+    }
+   }
+  },
+  "mp_vuong_goc_duong": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "d02d2d3283e894fb1735326143e74efbc32671e848a2784078e5ab5ebff9b69e",
+   "http": [
+    200,
+    200
+   ],
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": null
+   },
+   "request2": {
+    "cached": false,
+    "source": null
+   },
+   "row_policy_version": null,
+   "rows_for_key": 0,
+   "status": "unsupported",
+   "summary": {
+    "annotation_kinds": {},
+    "diagnostics": [],
+    "internal_repr_in_events": false,
+    "plane_notation": {},
+    "u_to": {}
+   }
+  },
+  "n1_khoi_tron_xoay_tong_quat": {
+   "cached_equals_fresh": false,
+   "envelope_sha256_fresh": "06cdf0a118af026e2956eeb2601a7e41d0f5d589838b5bf4b46420729b39d975",
+   "http": [
+    200,
+    422
+   ],
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": null
+   },
+   "request2": {
+    "cached": false,
+    "source": null
+   },
+   "row_policy_version": null,
+   "rows_for_key": 0,
+   "status": "unsupported",
+   "summary": {
+    "annotation_kinds": {},
+    "diagnostics": [],
+    "internal_repr_in_events": false,
+    "plane_notation": {},
+    "u_to": {}
+   }
+  },
+  "n2_khoi_ghep_bu_can_boolean": {
+   "cached_equals_fresh": false,
+   "envelope_sha256_fresh": "c91ff85e55722632cc7c13b681eb7aa90acf29e8ac6948381dda54f54aa97e64",
+   "http": [
+    200,
+    422
+   ],
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": null
+   },
+   "request2": {
+    "cached": false,
+    "source": null
+   },
+   "row_policy_version": null,
+   "rows_for_key": 0,
+   "status": "unsupported",
+   "summary": {
+    "annotation_kinds": {},
+    "diagnostics": [],
+    "internal_repr_in_events": false,
+    "plane_notation": {},
+    "u_to": {}
+   }
+  },
+  "p1_chop_thiet_dien_khoang_cach": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "a4103335fba0631c6fbfb32629417dc3c766335d42fd0992ce60a24f5c694c62",
+   "http": [
+    200,
+    200
+   ],
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "130",
+   "rows_for_key": 1,
+   "status": "ok",
+   "summary": {
+    "annotation_kinds": {
+     "area_T": "area",
+     "dist_S_BD": "distance",
+     "the_volume_sabcd": "volume"
+    },
+    "diagnostics": [],
+    "internal_repr_in_events": false,
+    "plane_notation": {
+     "alpha_plane": "(α)"
+    },
+    "u_to": {
+     "area_T": null,
+     "dist_S_BD": "B",
+     "the_volume_sabcd": null
+    }
+   }
+  },
+  "p2_chop_day_ngu_giac_lom": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "f2a7bebecdf63c5f94277d46d44b7db6d502b12169e539603d01e7a5859c267a",
+   "http": [
+    200,
+    200
+   ],
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "130",
+   "rows_for_key": 1,
+   "status": "ok",
+   "summary": {
+    "annotation_kinds": {
+     "V_S_MNPQR": "volume"
+    },
+    "diagnostics": [],
+    "internal_repr_in_events": false,
+    "plane_notation": {},
+    "u_to": {
+     "V_S_MNPQR": null
+    }
+   }
+  },
+  "p3_mat_cau_va_thiet_dien_tron": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "b0c87f95bd30ae8de636562618b440d55b954f388b771c05cba4ef6bf78586b7",
+   "http": [
+    200,
+    200
+   ],
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "130",
+   "rows_for_key": 1,
+   "status": "ok",
+   "summary": {
+    "annotation_kinds": {
+     "dien_tich_c": null,
+     "the_tich_s": null
+    },
+    "diagnostics": [
+     "ANNOTATION_UNBOUND the_tich_s: volume of a curved_solid has no registered anchor",
+     "ANNOTATION_UNBOUND dien_tich_c: area of a circle3 has no registered anchor"
+    ],
+    "internal_repr_in_events": false,
+    "plane_notation": {
+     "P": "(P)"
+    },
+    "u_to": {
+     "dien_tich_c": null,
+     "the_tich_s": null
+    }
+   }
+  },
+  "p4_hinh_tru_the_tich_va_xung_quanh": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "da723bc0b2adf3bf77172b39d0de8432cfab2b7d2d2fd2d02e89fb6c70f7d0b1",
+   "http": [
+    200,
+    200
+   ],
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "130",
+   "rows_for_key": 1,
+   "status": "ok",
+   "summary": {
+    "annotation_kinds": {
+     "Sxq": null,
+     "V": null
+    },
+    "diagnostics": [
+     "ANNOTATION_UNBOUND V: volume of a curved_solid has no registered anchor",
+     "ANNOTATION_UNBOUND Sxq: measure lateral_area has no registered anchor"
+    ],
+    "internal_repr_in_events": false,
+    "plane_notation": {},
+    "u_to": {
+     "Sxq": null,
+     "V": null
+    }
+   }
+  },
+  "p5_hinh_non_the_tich_va_xung_quanh": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "09d40febbaa9d0dae386626c5a9e8ec09e0bb40d090106154c288a0c2ae56f25",
+   "http": [
+    200,
+    200
+   ],
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "130",
+   "rows_for_key": 1,
+   "status": "ok",
+   "summary": {
+    "annotation_kinds": {
+     "dien_tich_xung_quanh_hinh_non": null,
+     "the_tich_khoi_non": null
+    },
+    "diagnostics": [
+     "ANNOTATION_UNBOUND the_tich_khoi_non: volume of a curved_solid has no registered anchor",
+     "ANNOTATION_UNBOUND dien_tich_xung_quanh_hinh_non: measure lateral_area has no registered anchor"
+    ],
+    "internal_repr_in_events": false,
+    "plane_notation": {},
+    "u_to": {
+     "dien_tich_xung_quanh_hinh_non": null,
+     "the_tich_khoi_non": null
+    }
+   }
+  },
+  "p6_thiet_dien_elip_cua_hinh_tru": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "914c53966b2bd50e875ff444675d6021f6b67cec3ada802b8113b44a6ae93125",
+   "http": [
+    200,
+    200
+   ],
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "130",
+   "rows_for_key": 1,
+   "status": "ok",
+   "summary": {
+    "annotation_kinds": {
+     "dien_tich_elip_e": null
+    },
+    "diagnostics": [
+     "ANNOTATION_UNBOUND dien_tich_elip_e: area of a ellipse3 has no registered anchor"
+    ],
+    "internal_repr_in_events": false,
+    "plane_notation": {
+     "mat_phang_alpha": null
+    },
+    "u_to": {
+     "dien_tich_elip_e": null
+    }
+   }
+  },
+  "p7_thiet_dien_elip_cua_hinh_non": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "a2868cc96ccda317b0cf7ff6bca18a3e2fcd26286d5e6292e510a96ce1acc142",
+   "http": [
+    200,
+    200
+   ],
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "130",
+   "rows_for_key": 1,
+   "status": "ok",
+   "summary": {
+    "annotation_kinds": {
+     "dien_tich_E": null
+    },
+    "diagnostics": [
+     "ANNOTATION_UNBOUND dien_tich_E: area of a ellipse3 has no registered anchor"
+    ],
+    "internal_repr_in_events": false,
+    "plane_notation": {
+     "plane_beta": "(β)"
+    },
+    "u_to": {
+     "dien_tich_E": null
+    }
+   }
+  },
+  "right_triangular_prism": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "b7ef5ac166310bc8d7708f609b8ea660d49c948f8c797fc3864dc797318863f0",
+   "http": [
+    200,
+    200
+   ],
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "130",
+   "rows_for_key": 1,
+   "status": "ok",
+   "summary": {
+    "annotation_kinds": {
+     "AB_length": "length",
+     "AC_length": "length",
+     "AD_length": "length",
+     "dien_tich_day_ABC": "area",
+     "the_tich_lang_tru": null,
+     "the_tich_solid_ABCDEF": "volume"
+    },
+    "diagnostics": [
+     "ANNOTATION_UNBOUND the_tich_lang_tru: copy of the_tich_solid_ABCDEF — shares its identity"
+    ],
+    "internal_repr_in_events": false,
+    "plane_notation": {},
+    "u_to": {
+     "AB_length": null,
+     "AC_length": null,
+     "AD_length": null,
+     "dien_tich_day_ABC": null,
+     "the_tich_lang_tru": null,
+     "the_tich_solid_ABCDEF": null
+    }
+   }
+  },
+  "vuong_goc_chop": {
+   "cached_equals_fresh": true,
+   "envelope_sha256_fresh": "d02d2d3283e894fb1735326143e74efbc32671e848a2784078e5ab5ebff9b69e",
+   "http": [
+    200,
+    200
+   ],
+   "reason_code": null,
+   "request1": {
+    "cached": false,
+    "source": null
+   },
+   "request2": {
+    "cached": false,
+    "source": null
+   },
+   "row_policy_version": null,
+   "rows_for_key": 0,
+   "status": "unsupported",
+   "summary": {
+    "annotation_kinds": {},
+    "diagnostics": [],
+    "internal_repr_in_events": false,
+    "plane_notation": {},
+    "u_to": {}
+   }
+  }
+ },
+ "provider_requests": 0
+}

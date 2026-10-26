@@ -102,7 +102,8 @@ def test_cache_version_is_127():
     # segment3.perpendicular_witness; v126 rows were written without it and a hit returns them as is.
     # 127 -> 128 (visual-hybrid-final-corrections, display names): a v126 row still misses; the fresh row is v128.
     # 128 -> 129 (sphere-sample-source-authority, curved cutting plane role): a v126 row still misses; the fresh row is v129.
-    assert main_module.CACHE_VERSION == "129"
+    # 129 -> 130 (scene3d-to-hybrid-v2-replacement, right-angle witness / assign-built geometry): a v126 row still misses; the fresh row is v130.
+    assert main_module.CACHE_VERSION == "130"
     assert LEGACY["written_by_cache_version"] == "126"
 
 

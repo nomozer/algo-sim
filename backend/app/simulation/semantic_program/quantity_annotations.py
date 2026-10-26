@@ -23,7 +23,7 @@ from typing import Any
 
 from ..geometry import kernel as K
 from ..geometry import metric as _m
-from ..geometry.exact import Line3, Plane3, Vec3
+from ..geometry.exact import GeometryError, Line3, Plane3, Segment3, Vec3
 from ..geometry.predicates import collinear
 from ..geometry.radical import square
 from .display_names import ky_hieu_dai_luong
@@ -199,27 +199,94 @@ def _xau(v: Vec3) -> list[str]:
 def _nhan_chung(diem: str, nhan: str, mem: dict[str, Any]) -> dict[str, Any] | None:
     """W18 §16.7 — chân đường vuông góc CHÍNH XÁC từ `diem` tới đường/mặt phẳng `nhan` (kernel), và hai
     phương của ký hiệu vuông góc tại chân: `u` dọc vật nhận, `v` từ chân tới điểm. Vật nhận khác (đa
-    giác, khối…) hay khoảng cách 0 ⇒ không có nhân chứng."""
+    giác, khối…) hay khoảng cách 0 ⇒ không có nhân chứng.
+
+    Owner 2026-10-26: khi một ĐIỂM CÓ TÊN của cảnh nằm trên vật nhận (khác chân), `u` chĩa đúng tới điểm ấy và
+    `marker.u_to` mang tên nó — renderer vẽ đoạn chứng minh chân → điểm, nên dấu vuông góc nằm giữa HAI đường
+    thật (∠SHB = 90°) thay vì lơ lửng theo một phương không vẽ. Không có điểm như thế ⇒ không có `u_to`."""
     p, r = mem.get(diem), mem.get(nhan)
     if isinstance(r, Line3):
         chan, u = K.project_point_onto_line(p, r), r.direction
+        tren = lambda q: (q - r.point).cross(r.direction).is_zero()  # noqa: E731
     elif isinstance(r, Plane3):
         chan = K.project_point_onto_plane(p, r)
         u = r.point - chan
         if u.is_zero():
             u = next(w for w in (r.normal.cross(Vec3.of(*e)) for e in ((1, 0, 0), (0, 1, 0), (0, 0, 1)))
                      if not w.is_zero())
+        tren = lambda q: r.signed_eval(q) == 0  # noqa: E731
     else:
         return None
     v = p - chan
     if v.is_zero():
         return None
-    return {"from": diem, "foot": _xau(chan), "on": nhan, "marker": {"u": _xau(u), "v": _xau(v)}}
+    u_to = next((n for n, q in mem.items() if n != diem and isinstance(q, Vec3) and ky_hieu_toan(n) is not None
+                 and q != chan and tren(q)), None)
+    marker: dict[str, Any] = {"u": _xau(u), "v": _xau(v)}
+    if u_to is not None:
+        marker = {"u": _xau(mem[u_to] - chan), "v": _xau(v), "u_to": u_to}
+    return {"from": diem, "foot": _xau(chan), "on": nhan, "marker": marker}
+
+
+def _duong(x: Any) -> Line3 | None:
+    """Đường thẳng mang một đường hay một đoạn (đoạn ⇒ đường chứa nó)."""
+    if isinstance(x, Line3):
+        return x
+    if isinstance(x, Segment3):
+        return Line3.through(x.point_a, x.point_b)
+    return None
+
+
+def _goc_vuong(q: str, expr: Any, loai: dict[str, str], mem: dict[str, Any]) -> dict[str, Any] | str:
+    """G1 (Owner 2026-10-26) — góc ĐO ĐƯỢC bằng 90° có ký hiệu vuông góc tại giao điểm, dựng từ chính phép đo.
+
+    Chứng chỉ là GIÁ TRỊ chính xác của phép đo (`cos = 0` / `cos² = 0`, kernel đo theo metric khung) — không suy từ
+    toạ độ thô. Đường ⊥ mặt phẳng: chân = giao điểm đường–mặt; đường ⊥ đường: chân = giao điểm (hai đường CHÉO nhau
+    không có giao điểm ⇒ không có chỗ đặt dấu ⇒ không nhân chứng). Hai cạnh của dấu chĩa tới ĐIỂM CÓ TÊN trên mỗi
+    vật (`from` trên đường đo, `u_to` trên vật kia); thiếu điểm có tên ⇒ không nhân chứng. Góc khác 90° ⇒ không neo."""
+    v_do = mem.get(q)
+    if not isinstance(v_do, (int, Fraction)) or v_do != 0:
+        return f"measure {expr.quantity} has no registered anchor"
+    ten_duong, ten_kia = expr.of, expr.wrt
+    if isinstance(mem.get(ten_duong), Plane3):          # (mặt, đường) ⇒ đổi vai: dấu luôn đứng trên ĐƯỜNG
+        ten_duong, ten_kia = ten_kia, ten_duong
+    da, b = _duong(mem.get(ten_duong)), mem.get(ten_kia)
+    db = _duong(b)
+    if da is not None and isinstance(b, Plane3):
+        try:
+            chan = K.intersect_line_plane(da, b)
+        except GeometryError:
+            return "the measured line does not meet the plane at one point"
+        tren_kia, quan_he = (lambda p: b.signed_eval(p) == 0), "line_perpendicular_plane"
+    elif da is not None and db is not None:
+        try:
+            chan = K.intersect_line_line(da, db)
+        except GeometryError:                  # chéo nhau / song song: không có giao điểm để neo dấu
+            return "perpendicular lines do not meet — no point to anchor the mark"
+        tren_kia, quan_he = (lambda p: (p - db.point).cross(db.direction).is_zero()), "line_perpendicular_line"
+    else:
+        return f"measure {expr.quantity} of {loai.get(expr.of)} and {loai.get(expr.wrt)} has no registered anchor"
+    tren_duong = lambda p: (p - da.point).cross(da.direction).is_zero()  # noqa: E731
+    co_ten = [(n, p) for n, p in mem.items() if isinstance(p, Vec3) and ky_hieu_toan(n) is not None and p != chan]
+    tu = next((n for n, p in co_ten if tren_duong(p)), None)
+    toi = next((n for n, p in co_ten if tren_kia(p) and not tren_duong(p)), None)
+    if tu is None or toi is None:
+        return "a right angle without a named point on each side has no registered anchor"
+    u, v = mem[toi] - chan, mem[tu] - chan
+    if _m.dot(u, v) != 0:
+        return "the named sides are not perpendicular in the frame metric"
+    return {"kind": "angle", "subject_ids": [expr.of, expr.wrt], "anchor": "witness", "unit": None,
+            "witness": {"from": tu, "foot": _xau(chan), "on": ten_kia, "relation": quan_he,
+                        "marker": {"u": _xau(u), "v": _xau(v), "u_to": toi}}}
 
 
 def _gan_mot(q: str, st: Any, decl: Any, loai: dict[str, str], mem: dict[str, Any],
              de: str) -> dict[str, Any] | str:
     expr = getattr(st, "expr", None)
+    if getattr(expr, "kind", None) == "measure" and expr.quantity in ("angle_cos", "angle_cos_sq"):
+        if any(x not in loai for x in (expr.of, expr.wrt) if x):
+            return "a measured operand is not a scene object"
+        return _goc_vuong(q, expr, loai, mem)
     if getattr(expr, "kind", None) == "measure":
         kind, anchor, cho_phep = _DO.get(expr.quantity, (None, None, None))
         chu_the = [x for x in (expr.of, expr.wrt) if x]

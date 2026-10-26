@@ -65,8 +65,8 @@ def llm(monkeypatch):
     return install
 
 
-def test_cache_version_is_129():
-    assert main_module.CACHE_VERSION == "129"
+def test_cache_version_is_current():
+    assert main_module.CACHE_VERSION == "130"
     assert LEGACY["written_by_cache_version"] == "128"
 
 
@@ -88,7 +88,7 @@ def test_legacy_v128_row_misses_and_only_the_cutting_plane_role_changes(ca, llm)
                               policy_version=legacy["policy_version"]))
         s.commit()
         assert _cache_lookup(s, key, ident) is None                     # the genuine v128 row is not a valid hit
-    assert ident == "129"
+    assert ident == "130"
 
     client = TestClient(app)
     fresh = client.post("/api/analyze", json={"input": {"type": "text", "content": text}})
@@ -99,6 +99,9 @@ def test_legacy_v128_row_misses_and_only_the_cutting_plane_role_changes(ca, llm)
     if CASES[ca]:
         assert changes, "the curved case must change"
         for path, old, new in changes:                                  # nothing but the cutting plane's role moved
+            if path[-1] == "explanation":                               # 129 -> 130: no internal repr in narration
+                assert "Ellipse3(" in old and "Ellipse3(" not in new, path
+                continue
             assert path[-1] == "formation_roles", path
             assert (old, new) == (["CONSTRUCT_AUXILIARY_GEOMETRY"], ["CONSTRUCT_CUTTING_OBJECT"]), path
         plane = [o for o in fresh["scene3d"]["objects"] if o["type"] == "plane3"]
@@ -108,7 +111,7 @@ def test_legacy_v128_row_misses_and_only_the_cutting_plane_role_changes(ca, llm)
 
     with SessionLocal() as s:
         rows = s.query(SimulationCache).filter_by(key=key).all()
-        assert [r.policy_version for r in rows] == ["129"]               # overwritten in place, no duplicate
+        assert [r.policy_version for r in rows] == ["130"]               # overwritten in place, no duplicate
     hit = client.post("/api/analyze", json={"input": {"type": "text", "content": text}}).json()
     assert (hit["cached"], hit["source"]) == (True, "exact_cache")
     assert _canon(hit) == _canon(fresh)

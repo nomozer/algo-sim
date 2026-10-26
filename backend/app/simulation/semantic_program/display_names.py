@@ -54,6 +54,16 @@ Hai nguồn hợp lệ, không có nguồn thứ ba:
     **có trong đề** (`la_ten_nguon`, chốt ⑤ chống rửa năng lực), nên dùng nó
     không phải là tin lời mô hình.
 
+Hai ngoại lệ cho MẶT PHẲNG (Owner 2026-10-26):
+
+  · Tên nhiều điểm khai trong nhãn (`(ABCD)`, `(BCC′B′)`) được giữ NGUYÊN khi mọi
+    điểm ấy nằm trên mặt phẳng — `points_on_plane` do tầng có bộ nhớ kiểm chính xác.
+    Không rút thầm thành ba tên; khai một điểm ngoài mặt phẳng ⇒ nhãn không được tin.
+  · Mặt phẳng dựng ra mà vẫn không có ký hiệu nào được GỌI là `(α)`, `(β)`… — chữ chưa
+    có trong đề, theo thứ tự dựng — đánh dấu `notation_assigned` để lời kể nói "Gọi (α)
+    là …". Đó là một tên trình bày, không phải dữ kiện; một dấu vuông góc ở chân H cạnh
+    một mặt phẳng không tên khiến học sinh gán nhầm nó cho mặt phẳng có tên gần đó.
+
 ─── ĐIỀU FILE NÀY KHÔNG LÀM ────────────────────────────────────────────────
 
 Không hình học, không đọc `memory`, không chạm `exact`/`value`. Nó nhận **xuất
@@ -373,6 +383,25 @@ def _ten_mp_khai(nhan: Any) -> Optional[str]:
     return m.group(1).replace("’", "'").replace("′", "'") if m else None
 
 
+#: Nhãn mặt phẳng dạng tên nhiều điểm: `(ABCD)`, `(BCC′B′)`, `(A1B1C1)`.
+_TEN_MP_NHIEU_DIEM = re.compile(r"\(((?:[A-Z][0-9]*['’′]*){3,})\)")
+
+#: Tên trình bày cho mặt phẳng không có ký hiệu (Owner 2026-10-26), theo thứ tự dựng.
+_CHU_MP_GAN = "αβγδεθλμπστφψω"
+
+
+def _tach_ten_diem(than: str, ky: set[str]) -> Optional[list[str]]:
+    """Tách `than` thành dãy ký hiệu điểm trong `ky`; không tách trọn được ⇒ `None`."""
+    if not than:
+        return []
+    for k in sorted(ky, key=len, reverse=True):
+        if than.startswith(k):
+            sau = _tach_ten_diem(than[len(k):], ky)
+            if sau is not None:
+                return [k, *sau]
+    return None
+
+
 def ten_hien_thi(
     thong_tin: dict[str, dict[str, Any]], *, prefer_declared_plane_names: bool = False,
     source_plane_names: frozenset[str] = frozenset(),
@@ -404,7 +433,30 @@ def ten_hien_thi(
     thứ tự định-nghĩa-trước-dùng — nhưng vòng lặp vẫn được chặn bằng `dang_giai`
     thay vì tin vào lời hứa ấy: một vòng ở đây là đệ quy vô hạn giữa lúc dựng
     cảnh, tức mất cả lượt chạy chứ không phải một nhãn xấu.
+
+    Tên trình bày `(α)` (Owner 2026-10-26) cần ký hiệu CUỐI của cả bảng, nên có HAI lượt: lượt một không gán; mặt
+    phẳng nào còn trống thì lượt hai gán chữ và tính lại mọi câu nhắc tới nó (`d(S, (α))`). KHÔNG gán khi đề viết một
+    tên trong ngoặc mà không vật nào hiện tên ấy — mặt phẳng trống có thể chính là `(α)` của đề (mô hình gọi nó
+    "mặt phẳng alpha"), và gán `(β)` khi ấy là nói trái đề.
     """
+    ra = _mot_luot(thong_tin, {}, prefer_declared_plane_names, source_plane_names)
+    trong = [t for t, o in thong_tin.items() if o.get("type") == "plane3" and ra[t]["notation"] is None
+             and _ten_mp_khai(o.get("label")) is None]
+    da_hien = {(r["notation"] or "").strip("()").replace("′", "'") for r in ra.values()}
+    if not trong or set(source_plane_names) - da_hien:
+        return ra
+    chu_da_dung = set(source_plane_names) | da_hien | {
+        c for o in thong_tin.values() for c in str(o.get("label") or "") if c in _CHU_MP_GAN}
+    tu_do = (c for c in _CHU_MP_GAN if c not in chu_da_dung)
+    gan = {t: f"({c})" for t, c in zip(trong, tu_do)}
+    return _mot_luot(thong_tin, gan, prefer_declared_plane_names, source_plane_names) if gan else ra
+
+
+def _mot_luot(
+    thong_tin: dict[str, dict[str, Any]], gan_ten: dict[str, str], prefer_declared_plane_names: bool,
+    source_plane_names: frozenset[str],
+) -> dict[str, dict[str, Optional[str]]]:
+    """Một lượt đặt tên; `gan_ten` = tên trình bày đã quyết cho các mặt phẳng còn trống (`ten_hien_thi`)."""
     ky_hieu: dict[str, Optional[str]] = {}
     nhan: dict[str, str] = {}
     goi_ngan: dict[str, str] = {}
@@ -415,6 +467,8 @@ def ten_hien_thi(
     for o in thong_tin.values():
         if o.get("type") == "plane3" and (t := _ten_mp_khai(o.get("label"))):
             so_mp_khai[t] = so_mp_khai.get(t, 0) + 1
+    tu_dat: set[str] = set()
+    nhan_sai: set[str] = set()
 
     def giai(ten: str) -> None:
         if ten in ky_hieu or ten in dang_giai:
@@ -450,6 +504,19 @@ def ten_hien_thi(
             if ten_mp and (prefer_declared_plane_names
                            or (ten_mp in source_plane_names and so_mp_khai.get(ten_mp) == 1)):
                 kh = nhan_khai.strip()
+            # Tên nhiều điểm: giữ nguyên khi MỌI điểm khai nằm trên mặt phẳng (kiểm chính xác ở `points_on_plane`).
+            m_nhieu = _TEN_MP_NHIEU_DIEM.fullmatch(nhan_khai.strip()) if kh is None and loai == "plane3" else None
+            tren = o.get("points_on_plane")
+            if m_nhieu and tren is not None:
+                for p in tren:
+                    if p in thong_tin:
+                        giai(p)
+                ky_tren = {k.replace("'", "′") for p in tren if (k := ky_hieu.get(p) or ky_hieu_toan(p))}
+                phan = _tach_ten_diem(m_nhieu.group(1).replace("'", "′").replace("’", "′"), ky_tren)
+                if phan is not None and len(set(phan)) == len(phan):
+                    kh = f"({''.join(phan)})"
+                else:
+                    nhan_sai.add(ten)
         # ② Tên vật, cho những kiểu mà ký hiệu CHÍNH LÀ tên.
         if kh is None and loai in _KIEU_KY_HIEU_LA_TEN:
             kh = ky_hieu_toan(ten)
@@ -487,10 +554,14 @@ def ten_hien_thi(
             if kh is None:
                 kh = f"{khoi_a}.{khoi_b}"
         # ⑦ Mặt phẳng mô hình đặt tên kiểu *"Mặt phẳng (α): z = 3"* ⇒ `(α)`.
-        if kh is None and loai == "plane3" and isinstance(nhan_khai, str):
+        if kh is None and loai == "plane3" and isinstance(nhan_khai, str) and ten not in nhan_sai:
             m = re.search(r"\((\w{1,6}′*)\)", nhan_khai)
             if m:
                 kh = f"({m.group(1)})"
+        # ⑦b Mặt phẳng vẫn không có ký hiệu ⇒ tên trình bày `(α)` mà `ten_hien_thi` đã quyết ở lượt một.
+        if kh is None and ten in gan_ten:
+            tu_dat.add(ten)
+            kh = gan_ten[ten]
         # ⑧ Thiết diện mà MỌI đỉnh trùng một điểm có tên ⇒ ký hiệu là chu trình, ghép từ đúng ký hiệu mỗi
         #    đỉnh HIỆN. Một đỉnh không có ký hiệu ⇒ không có chu trình (không bao giờ rơi về `id` của nó).
         chu_trinh = o.get("section_vertex_names") if loai == "section" else None
@@ -532,7 +603,7 @@ def ten_hien_thi(
 
         # ── TÊN HIỂN THỊ ──────────────────────────────────────────────────
         # ① nhãn mô hình đặt · ② câu gọi tên · ③ mô tả chung theo kiểu
-        if _la_ten_that(o.get("label"), ten):
+        if _la_ten_that(o.get("label"), ten) and ten not in nhan_sai:
             nhan[ten] = str(o["label"]).strip()
         elif cau is not None:
             nhan[ten] = cau
@@ -565,7 +636,7 @@ def ten_hien_thi(
         #
         # Đo được ở `certify-curved-product.mjs` trên bài mẫu `cau-cat-mat-phang`.
         nhan_ngan = (str(o["label"]).strip()
-                     if _la_ten_that(o.get("label"), ten)
+                     if _la_ten_that(o.get("label"), ten) and ten not in nhan_sai
                      and " " not in str(o["label"]).strip() else None)
         goi_ngan[ten] = (kh or nhan_ngan or cau_ngan
                          or _DANH_TU_NGAN.get(loai, "đối tượng"))
@@ -605,7 +676,8 @@ def ten_hien_thi(
         giai(ten)
 
     return {t: {"label": nhan[t], "notation": ky_hieu[t],
-                "reference": goi_ngan[t], "role": vai[t]}
+                "reference": goi_ngan[t], "role": vai[t],
+                **({"notation_assigned": True} if t in tu_dat else {})}
             for t in thong_tin}
 
 
