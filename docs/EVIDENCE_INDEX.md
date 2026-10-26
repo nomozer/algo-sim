@@ -4,9 +4,9 @@
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-after-main-integration/T3_RECOVERY_REPORT.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-after-main-integration/
-CLASSIFICATION = T3_RECOVERY_TARGETED_PASS; OWNER_VISUAL_APPROVAL_PENDING; main/cleanup/backend NOT_STARTED
-CODE_COMMIT = pending watchdog harness commit; product unchanged e047235e
-VERIFICATION = original watchdog RED reproduced; 26 targeted PASS repeated in 3 independent processes; 153 related schema/runtime PASS; actual job accounting and PID observations; authoritative detached T3 PENDING
+CLASSIFICATION = FULL_PRODUCT_GATE_PASS; OWNER_VISUAL_APPROVAL_PENDING; main/cleanup/backend NOT_STARTED
+CODE_COMMIT = watchdog harness 5961b814; frozen candidate 3d6351d8; product unchanged e047235e
+VERIFICATION = original watchdog RED reproduced; 26 targeted PASS repeated in 3 independent processes; 153 related schema/runtime PASS; actual job accounting and PID observations; detached T3 12009 backend / 1417 frontend PASS, build/replay/crash PASS, source clean before/after, post-freeze MATCH; full-t3/receipt.json and source-identity.json
 MODEL_REQUEST_COUNT = 0
 CONTINUES = SPHERE_VISUAL_POLISH (old FAIL receipt retained)
 CORRECTS = NONE

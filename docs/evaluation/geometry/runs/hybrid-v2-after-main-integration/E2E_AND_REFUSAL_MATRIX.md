@@ -9,6 +9,7 @@
 | Denied terminate/query / cleanup wait timeout | Win32 fault injection, failure persistence | PASS targeted |
 | Runtime failure vs geometry refusal | INCOMPLETE_TIMEOUT / FAILURE_HARNESS retained | PASS targeted |
 | cp1252 / broken console | UTF-8 receipt persists, actual exit retained | PASS targeted |
+| Full T3 frozen recovery candidate | 12009 backend / 1417 frontend; build/replay/crash gates; clean detached source and freeze MATCH | PASS at 3d6351d8 |
 | Sphere-plane geometry | Prior exact oracle 5/5, unchanged source/evidence | REUSED |
 | New Hybrid vertical slice | P7 gated on main integration | NOT_STARTED |
 | Live NL extraction | No provider approval/calls | UNKNOWN |

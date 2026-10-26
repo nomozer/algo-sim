@@ -1,0 +1,37 @@
+{
+  "t3_candidate": "3d6351d81deb8c1cea1d7210f53101cfc1ea26bb",
+  "t3_git_tree": "1f458860b6f5a90ec3c03d816d3e9826399080ca",
+  "backend_tree": "417bd33dbf47d94faba7c40b62d1b4a9a0da8176",
+  "frontend_tree": "b17891f454991f41fc9f586aa112fce617394e4b",
+  "source_inventory_scope": [
+    "backend",
+    "frontend",
+    "docs/evaluation/geometry/runs/hybrid-v2-after-main-integration/tools/run_t3.py"
+  ],
+  "source_inventory_sha256": "afc9e513fc64ac3c42e90f900452c6731104925318a0a7b916ca39abb5e35b4d",
+  "product_commit": "e047235eeb46d4151f22f214a353ee9838b0e81c",
+  "freeze_sha256": "7034f1b4fd32fa4f0f2f3d98c0ec7ce671ada6ff9b9a1aaca242179008376b47",
+  "main_before": "9978e512a8a2a087475d792c0bd9db639c36acaa",
+  "main_after": "9978e512a8a2a087475d792c0bd9db639c36acaa",
+  "t3_source_clean": true,
+  "receipt_sha256": "bd881629fb9594c35acf49f69d3836c31d61dc26bf0b7ee69a062414ea89f34a",
+  "log_directory": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\windows-watchdog-recovery\\.superpowers\\t3-recovery-3d6351d8",
+  "preservation_checks": {
+    "owner": {
+      "checked": 79,
+      "mismatches": []
+    },
+    "renderer": {
+      "checked": 65,
+      "mismatches": []
+    },
+    "prior_evidence": {
+      "checked": 274,
+      "mismatches": []
+    },
+    "previous_failed_streams": {
+      "stdout.log": true,
+      "stderr.log": true
+    }
+  }
+}

@@ -26,6 +26,7 @@ The helper requires Windows 10+ Job List support. Unsupported/restricted job cre
 - Normal success, actual exit 7, child left by a normally exited parent, nonexistent executable, denied job creation, denied terminate/query and bounded cleanup wait are covered. Permission/termination denial is injected at the Win32 API boundary; this does not claim a real protected-process/ACL test.
 - Unicode log read and rename after return exercise stdio closure; related schema/runtime tests: 153 PASS. No file lock or stdout pipe blockage was observed. Arbitrary machine-load behavior is not claimed from these bounded repetitions.
 - Internal native API review: no remaining actionable findings after the cleanup-timeout correction. Independent review remains DEFERRED, not PASS.
+- Authoritative Full T3 at frozen recovery candidate 3d6351d8 passed all gates, including the original and new watchdog tests. See `T3_RECOVERY_REPORT.md`; no old FAIL receipt was changed.
 
 ## Console publication
 
