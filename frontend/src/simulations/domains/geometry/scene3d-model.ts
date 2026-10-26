@@ -2116,6 +2116,14 @@ export function phanTichToanHocCuaCanh(
 
   const givenRelations: MucPhanTichToan[] = [];
   const certificates: MucPhanTichToan[] = [];
+  // Nhiều điểm cùng MỘT giả định (vd mọi đỉnh "hệ trục …") ⇒ một dòng, không lặp từng điểm; giả định riêng giữ dòng của điểm.
+  const diemTheoGiaDinh = new Map<string, SceneObject[]>();
+  for (const o of scene.objects) {
+    if (o.type === "point3" && o.source?.assumption) {
+      diemTheoGiaDinh.set(o.source.assumption, [...(diemTheoGiaDinh.get(o.source.assumption) ?? []), o]);
+    }
+  }
+  const giaDinhDaGhi = new Set<string>();
   for (const o of scene.objects) {
     if (o.perpendicular_witness?.can_present_as_proven) {
       certificates.push({
@@ -2140,6 +2148,21 @@ export function phanTichToanHocCuaCanh(
         basisLabels: (o.depends ?? []).map(tenNgan),
         entityId: o.id,
         certificateRule: "verified_plane_section",
+      });
+    } else if (o.source?.assumption && (diemTheoGiaDinh.get(o.source.assumption)?.length ?? 0) > 1 && o.type === "point3") {
+      if (giaDinhDaGhi.has(o.source.assumption)) continue;
+      giaDinhDaGhi.add(o.source.assumption);
+      const ds = diemTheoGiaDinh.get(o.source.assumption)!;
+      givenRelations.push({
+        id: `rel:assump:${ds.map((x) => x.id).join(",")}`,
+        category: "GIVEN_RELATION",
+        label: `Điểm ${ds.map((x) => x.notation ?? x.id).join(", ")}`,
+        notation: null,
+        valueDisplay: o.source.assumption,
+        formula: null,
+        basisLabels: [],
+        entityId: null,
+        certificateRule: null,
       });
     } else if (o.source?.assumption) {
       givenRelations.push({

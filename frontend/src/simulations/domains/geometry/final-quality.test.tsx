@@ -228,3 +228,17 @@ describe('final visual quality', () => {
     expect(audit.hidden_edge_ids.length).toBeGreaterThan(0);
   });
 });
+
+describe('Phân tích toán học: giả định dùng chung không lặp từng điểm', () => {
+  it('nhiều điểm cùng một giả định toạ độ ⇒ một dòng; giả định riêng giữ dòng riêng của điểm', () => {
+    const p = (id: string, assumption: string) =>
+      ({ id, type: 'point3', label: `Điểm ${id}`, notation: id, source: { assumption } });
+    const scene = { objects: [p('A', 'hệ trục'), p('B', 'hệ trục'), p('S', 'hệ trục'), p('M', 'trung điểm SA')],
+      events: [], free_objects: [] } as unknown as Scene3D;
+    const rows = phanTichToanHocCuaCanh(scene, null).givenRelations;
+    expect(rows.map((r) => [r.label, r.valueDisplay, r.entityId])).toEqual([
+      ['Điểm A, B, S', 'hệ trục', null],
+      ['Điểm M', 'trung điểm SA', 'M'],
+    ]);
+  });
+});
