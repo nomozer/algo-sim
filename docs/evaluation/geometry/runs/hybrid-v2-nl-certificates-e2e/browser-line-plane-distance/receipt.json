@@ -1,0 +1,713 @@
+{
+  "status": "B3_DISTANCE_BROWSER_PASS",
+  "via_analyze": true,
+  "fixtures_sha256": "844f593e40116d65f16d4958b7b5d5c2aaa27b12d9c57407b22913076d93f400",
+  "harness_sha256": "91ec2eaa0e4b6e5f0e8c7867414266274276c54218b3ff77fcc88584898b99d1",
+  "classification": "AUTHORED_REGRESSION_BROWSER_NOT_HOLDOUT_NOT_PROVIDER",
+  "provider_calls": 0,
+  "browser": "Chrome headless / SwiftShader",
+  "url": "http://127.0.0.1:3391",
+  "human_visual_review": "NOT_APPROVED",
+  "rows": [
+    {
+      "id": "pyramid-sa-line-parallel-to-face",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(AB,(SCD))=12/5",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "31e0f400a96028643dd63c50aa8567531020b71b1cd3f46e9cc5fa3baec7603c",
+        "mode_b": "e5537f557d9b75aa5f17d9e292850e0e56e43518eed882379c46d86e30bfe5cb"
+      },
+      "pass": true
+    },
+    {
+      "id": "pyramid-sa-edge-parallel-to-face-ad",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(BC,(SAD))=4",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "87659814dff4faf8a34d9f0becad5c615fb93382625f1e6a160f0e6a7cb84378",
+        "mode_b": "af7af6a3bae38031ad461b32637af0bcb5454f1e6e438848af9d148843cfd7ba"
+      },
+      "pass": true
+    },
+    {
+      "id": "regular-pyramid-line-parallel-to-face",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(AB,(SCD))=4√5/5",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "08d1ffc7f57eabc14f98549e5c777831764043ac40b6f477ef0b70d39ea3be1e",
+        "mode_b": "793a3a769be5be599cd3c4cc7460ea38a830c4d89f542f488f2bb8b46e7ed031"
+      },
+      "pass": true
+    },
+    {
+      "id": "right-prism-base-planes",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d((ABC),(A′B′C′))=12",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "64c82dfd0fc5de0751fe0b6a9ceaf2e73c073d98b7b1919e0c55cdd349ca35b7",
+        "mode_b": "c700f9e1013b2027e25d237e3ef90aeea902aff2af8d0a3796bb0d368978a876"
+      },
+      "pass": true
+    },
+    {
+      "id": "right-prism-edge-to-lateral-face",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(AA′,(BCC′B′))=24/5",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "39f8dcaaad27692309f3a202c7506dc920b711212fb8959c07a467948c3f3060",
+        "mode_b": "929c16c43197fe4e82479add8821a79e46dcae6ad4af0860b637815c5a006b3c"
+      },
+      "pass": true
+    },
+    {
+      "id": "cuboid-opposite-faces",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d((ABB′A′),(DCC′D′))=4",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "bde747ff5d280ca73f855dc910ae87a1c8648ed43fcdaacc2f82d1118c4fa179",
+        "mode_b": "c96292d6dd091dfa50a58fb70b63c12c1addefdbf3613ded60531f68f2e5bdd6"
+      },
+      "pass": true
+    },
+    {
+      "id": "cuboid-edge-to-base-plane",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(A′B′,(ABCD))=12",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "c5952d0166006ab8ed213dd25fc0f6a59784625be38e11fe47e0cdb7344095a4",
+        "mode_b": "c34510fe228f7f19b4f3ed7efc1ff7a988ca592feb9250a16e24e42e36f6a066"
+      },
+      "pass": true
+    },
+    {
+      "id": "pyramid-sa-quote-names-another-plane",
+      "viewport": 1440,
+      "expected": "REFUSE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "no_scene": true,
+        "reason_shown": true,
+        "code_hidden": true,
+        "no_answer": true
+      },
+      "pass": true
+    },
+    {
+      "id": "pyramid-sa-three-label-line",
+      "viewport": 1440,
+      "expected": "REFUSE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "no_scene": true,
+        "reason_shown": true,
+        "code_hidden": true,
+        "no_answer": true
+      },
+      "pass": true
+    },
+    {
+      "id": "pyramid-sa-line-parallel-to-face",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(AB,(SCD))=12/5",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "0c80a63386b8621709c90d861a842c9920bf099d34f55d320725405f5842f39e",
+        "mode_b": "41478e78f164aa755d1554c523e744d17cb96aa2f02256fce52e4d0f2d17a908"
+      },
+      "pass": true
+    },
+    {
+      "id": "pyramid-sa-edge-parallel-to-face-ad",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(BC,(SAD))=4",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "b76130175079e5e854e70aecfb67ea3a37f47520e51fab090de07186e92642e8",
+        "mode_b": "954cca50cd598c84049f9034fb66b531b19fb237288befe74f7b03e0d60c281d"
+      },
+      "pass": true
+    },
+    {
+      "id": "regular-pyramid-line-parallel-to-face",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(AB,(SCD))=4√5/5",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "77d13dc686ce0cbfac5bdd4eca88574ad55957c2edcc86d1118f6dfc008ae9d4",
+        "mode_b": "03bd9e589bf8501dac2449af296dce97fef0795c4602461449c364e491c9899d"
+      },
+      "pass": true
+    },
+    {
+      "id": "right-prism-base-planes",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d((ABC),(A′B′C′))=12",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "4557b21147a5334330751c4b03330aaa441e9b0d75635325ebdbb3144d0bb0df",
+        "mode_b": "d898e6b99cb19223680386fdeb04960cd84c7f587f6f5163d70f567a6ddfc975"
+      },
+      "pass": true
+    },
+    {
+      "id": "right-prism-edge-to-lateral-face",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(AA′,(BCC′B′))=24/5",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "fc37156287cb50ec61b4f485b38dc1bd98e4f8145afb27c2cd4660cce0ace50e",
+        "mode_b": "c82d62ff91496cc38e67cf91df59749b08ea854622d524e5244e1b28c8547b96"
+      },
+      "pass": true
+    },
+    {
+      "id": "cuboid-opposite-faces",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d((ABB′A′),(DCC′D′))=4",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "ab2b6a73b1b0c67848324fb82cbaaba6532fd27745ee3fa9c136a317be32b4c3",
+        "mode_b": "cc8a9e664430d29f9dfb17b129529ec26859c11fa9118923ebfbd67afef5feac"
+      },
+      "pass": true
+    },
+    {
+      "id": "cuboid-edge-to-base-plane",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(A′B′,(ABCD))=12",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "8c489be908109eecfecf67e3e75f55fb8b07af725fdb1008bdf0a937db7307dc",
+        "mode_b": "d02cf1727e320c5703a8de349505aa23091445e5e174b4629297d5f35ffc6a00"
+      },
+      "pass": true
+    },
+    {
+      "id": "pyramid-sa-quote-names-another-plane",
+      "viewport": 390,
+      "expected": "REFUSE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "no_scene": true,
+        "reason_shown": true,
+        "code_hidden": true,
+        "no_answer": true
+      },
+      "pass": true
+    },
+    {
+      "id": "pyramid-sa-three-label-line",
+      "viewport": 390,
+      "expected": "REFUSE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "no_scene": true,
+        "reason_shown": true,
+        "code_hidden": true,
+        "no_answer": true
+      },
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "forbidden": []
+}

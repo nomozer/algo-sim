@@ -1,0 +1,75 @@
+{
+  "classification": "AUTHORED_REGRESSION_BROWSER_NOT_HOLDOUT_NOT_PROVIDER",
+  "fixtures": [
+    {
+      "id": "pyramid-sa-line-parallel-to-face",
+      "family": "#3",
+      "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách giữa đường thẳng AB và mặt phẳng (SCD).",
+      "expected": "SERVE",
+      "expected_goal_notation": "d(AB, (SCD))",
+      "oracle_value_squared": "144/25"
+    },
+    {
+      "id": "pyramid-sa-edge-parallel-to-face-ad",
+      "family": "#3",
+      "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách giữa đường thẳng BC và mặt phẳng (SAD).",
+      "expected": "SERVE",
+      "expected_goal_notation": "d(BC, (SAD))",
+      "oracle_value_squared": "16"
+    },
+    {
+      "id": "regular-pyramid-line-parallel-to-face",
+      "family": "#4",
+      "problem_text": "Cho hình chóp tứ giác đều S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA = 3. Tính khoảng cách giữa đường thẳng AB và mặt phẳng (SCD).",
+      "expected": "SERVE",
+      "expected_goal_notation": "d(AB, (SCD))",
+      "oracle_value_squared": "16/5"
+    },
+    {
+      "id": "right-prism-base-planes",
+      "family": "#12",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách giữa hai mặt phẳng (ABC) và (A'B'C').",
+      "expected": "SERVE",
+      "expected_goal_notation": "d((ABC), (A′B′C′))",
+      "oracle_value_squared": "144"
+    },
+    {
+      "id": "right-prism-edge-to-lateral-face",
+      "family": "#12",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách giữa đường thẳng AA' và mặt phẳng (BCC'B').",
+      "expected": "SERVE",
+      "expected_goal_notation": "d(AA′, (BCC′B′))",
+      "oracle_value_squared": "576/25"
+    },
+    {
+      "id": "cuboid-opposite-faces",
+      "family": "#11",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. Đáy ABCD là hình chữ nhật. AB = 3. AD = 4. AA' = 12. Tính khoảng cách giữa hai mặt phẳng (ABB'A') và (DCC'D').",
+      "expected": "SERVE",
+      "expected_goal_notation": "d((ABB′A′), (DCC′D′))",
+      "oracle_value_squared": "16"
+    },
+    {
+      "id": "cuboid-edge-to-base-plane",
+      "family": "#11",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. Đáy ABCD là hình chữ nhật. AB = 3. AD = 4. AA' = 12. Tính khoảng cách giữa đường thẳng A'B' và mặt phẳng (ABCD).",
+      "expected": "SERVE",
+      "expected_goal_notation": "d(A′B′, (ABCD))",
+      "oracle_value_squared": "144"
+    },
+    {
+      "id": "pyramid-sa-quote-names-another-plane",
+      "family": "#3",
+      "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách giữa đường thẳng AB và mặt phẳng (SBC).",
+      "expected": "REFUSE",
+      "expected_code": "SOURCE_OBJECT_MISMATCH"
+    },
+    {
+      "id": "pyramid-sa-three-label-line",
+      "family": "#3",
+      "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách giữa đường thẳng ABC và mặt phẳng (SCD).",
+      "expected": "REFUSE",
+      "expected_code": "INVALID_MATH_GOAL"
+    }
+  ]
+}
