@@ -67,7 +67,15 @@ và chỉ đổi viền sang xanh. Đầu vào khoá rebind chỉ danh tính (49
 
 ## 6. Candidate và cổng
 
-Product `b101dc79`, candidate `3994f603` (`3850e787…`, 118 file; cây sạch). Full T3: xem `t3-receipt.json` sau commit này.
+Product `b101dc79`, candidate `3994f603` (`3850e787…`, 118 file; cây sạch).
+
+Full T3 lần 1 tại `7e545f66`: **FULL_PRODUCT_GATE_FAIL** — 1 test (`test_hybrid_ab_pilot_runner` `FULL_AB-288`,
+`PERSISTENCE_FAILED`), 11992 passed, vitest 1416/1416; receipt giữ nguyên ở `t3-fail-7e545f66.json`. Backend giống hệt
+lượt T3 PASS trước (`57a4d65c`); chạy lại file trên cùng cây sạch đỏ 3/11 lần; lỗi bị nuốt được bắt bằng hook chẩn đoán
+ngoài kho: `PermissionError [WinError 5]` ở `os.replace` (`t3-fail-root-cause-oserror.log`) — khoá file tạm thời của
+Windows, không phải hồi quy sản phẩm. Sửa ở `backend/scripts/run_hybrid_ab_pilot.py` (`682568be`, ngoài đường đo,
+candidate không đổi): thử lại có giới hạn, khoá kéo dài vẫn fail-closed; 2 test mới (đỏ → xanh), 9/9 lượt chạy lại xanh.
+Full T3 lần 2: xem `t3-receipt.json`.
 
 | điều kiện merge (P2.5) | trạng thái |
 |---|---|
