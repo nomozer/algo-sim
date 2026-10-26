@@ -1,5 +1,15 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = ROOT_CONSOLIDATION
+
+REPORT = docs/evaluation/geometry/runs/root-consolidation/ROOT_CONSOLIDATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/root-consolidation/
+CLASSIFICATION = REPOSITORY_HYGIENE_ONLY; ROOT_MAIN_CLEAN_VERIFIED at b7b8358e; CLEAN_ROOT_MAIN_WITH_QUARANTINED_ACL_ARTIFACTS; exact final sync receipt local as described in FINAL_MAIN_SYNC.md
+CODE_COMMIT = no product change; source baseline b7b8358e
+VERIFICATION = root-audit.json (79 path/hash/disposition records); run.json; FINAL_WORKTREE_INVENTORY.md; RESEARCH_BRANCH_DISPOSITION.md; local binary snapshots and verified research bundle
+MODEL_REQUEST_COUNT = 0
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_V2_BACKEND_GENERALIZATION
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-backend-generalization/report.md
