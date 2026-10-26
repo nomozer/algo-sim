@@ -1,5 +1,17 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_V2_BACKEND_GENERALIZATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-backend-generalization/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-backend-generalization/
+CLASSIFICATION = REMOTE_MAIN_SYNC_VERIFIED (a9889031); FULL_PRODUCT_GATE_PASS at 7210a016; named planes + point-line distance OFFLINE_BROWSER_E2E_VERIFIED (authored development cases, not a holdout); independent review DEFERRED_FOR_LOCAL_DISABLED_BACKEND_INTEGRATION
+CODE_COMMIT = product 1cff5458, b11349ae, eca4b44b; freeze cec477a5 (ecae59e6…, 118 files); divergence 7210a016
+VERIFICATION = full-t3/receipt.json (12086 backend / 1417 frontend, build/replay/crash, freeze MATCH); browser-named-plane/receipt.json 28/28; browser-point-line/receipt.json 16/16; fault-injection*.json; fixtures-adapter-2-named-plane/
+MODEL_REQUEST_COUNT = 0
+CONTINUES = HYBRID_V2_BACKEND_NAMED_PLANE (supersedes its first collinear-leading refusal: such planes are now served through a non-collinear witness)
+CORRECTS = HYBRID_V2_BACKEND_NAMED_PLANE (the COLLINEAR_POINTS refusal for collinear leading labels is withdrawn; commit messages 1cff5458/b11349ae errata in run.json)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_V2_BACKEND_NAMED_PLANE
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-after-main-integration/HYBRID_V2_VERTICAL_SLICE_REPORT.md
