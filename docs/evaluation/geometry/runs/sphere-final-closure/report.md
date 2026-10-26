@@ -75,12 +75,14 @@ lượt T3 PASS trước (`57a4d65c`); chạy lại file trên cùng cây sạch
 ngoài kho: `PermissionError [WinError 5]` ở `os.replace` (`t3-fail-root-cause-oserror.log`) — khoá file tạm thời của
 Windows, không phải hồi quy sản phẩm. Sửa ở `backend/scripts/run_hybrid_ab_pilot.py` (`682568be`, ngoài đường đo,
 candidate không đổi): thử lại có giới hạn, khoá kéo dài vẫn fail-closed; 2 test mới (đỏ → xanh), 9/9 lượt chạy lại xanh.
-Full T3 lần 2: xem `t3-receipt.json`.
+Full T3 lần 2 tại `104808d6` (worktree detached sạch `t3-sphere-final-2`): **FULL_PRODUCT_GATE_PASS** —
+pytest 11995 passed / 1 skipped / 15 xfailed, vitest 1416/1416, build/demo/crash PASS, cây sạch trước và sau,
+post-freeze MATCH (`3850e787…`) — `t3-receipt.json`. Kiểm chứng máy, không phải review độc lập.
 
 | điều kiện merge (P2.5) | trạng thái |
 |---|---|
 | lỗi cầu ưu tiên đã khép, regression có mục tiêu xanh, không lỗi hình học mới | đạt |
-| freeze sạch + Full T3 PASS | xem `t3-receipt.json` |
+| freeze sạch + Full T3 PASS | **đạt** (`104808d6`, lượt 1 FAIL do khoá file Windows đã sửa — §6) |
 | Official Visual theo oracle được duyệt **hoặc** ngoại lệ Owner bằng văn bản | **chưa** (7/8) |
 | Owner xác nhận hình cuối | **chưa** |
 | review độc lập | **chưa có** (ghi rõ; merge local khi Hybrid tắt cần Owner chấp thuận phạm vi rủi ro) |
