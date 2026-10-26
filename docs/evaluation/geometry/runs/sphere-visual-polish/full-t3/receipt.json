@@ -1,0 +1,35 @@
+{
+  "candidate": "46300f084c0c3f093a67ad820090289394271529",
+  "product_commit": "e047235eeb46d4151f22f214a353ee9838b0e81c",
+  "detached": true,
+  "source_tree_after": "",
+  "started_utc": "2026-10-26T12:30:15.016205+00:00",
+  "finished_utc": "2026-10-26T12:40:33.699799+00:00",
+  "exit_code": 1,
+  "verdict": "FULL_PRODUCT_GATE_FAIL",
+  "summaries": [
+    "FAILED tests/geometry/test_schema_contract_offline.py::test_watchdog_is_incomplete_runtime_failure_not_geometry_refusal",
+    "FAILED tests/geometry/test_schema_contract_offline.py::test_windows_watchdog_terminates_the_invocation_child_tree",
+    "= 2 failed, 11993 passed, 1 skipped, 2 deselected, 15 xfailed, 1 warning in 591.89s (0:09:51) =",
+    " Test Files  83 passed (83)",
+    "      Tests  1417 passed (1417)",
+    "FULL_PRODUCT_GATE_FAIL — không cổng con nào được bỏ qua."
+  ],
+  "post_freeze": {
+    "exit_code": 0,
+    "stdout": "Candidate khớp bản đã đóng băng (mã sản phẩm: 118 file, 3850e787d86f81be…).",
+    "stderr": ""
+  },
+  "provider_calls": 0,
+  "execution_context": "Codex campaign; fresh detached full checkout",
+  "streams": {
+    "stdout.log": {
+      "bytes": 1585663,
+      "sha256": "54df90ede81c5bd7b9654c5bcb3390a4fc329a2d173950a10067224d39d7ff48"
+    },
+    "stderr.log": {
+      "bytes": 332,
+      "sha256": "ccb6bf354a0674eeb1e49df9a880a000b75240079fdb849282bb899d81eeb58c"
+    }
+  }
+}

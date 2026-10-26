@@ -5,9 +5,16 @@
   "candidate_branch": "research/scene3d-hybrid-v2-claude-resume",
   "base_commit": "d1ee4f0dc4d5a377512a8fcfc810bdc6f3348202",
   "product_commit": "e047235eeb46d4151f22f214a353ee9838b0e81c",
-  "freeze_commit": null,
+  "freeze_commit": "46300f084c0c3f093a67ad820090289394271529",
   "candidate_status": "OWNER_VISUAL_APPROVAL_PENDING",
-  "authoritative_full_t3": "PENDING",
+  "authoritative_full_t3": "FULL_PRODUCT_GATE_FAIL",
+  "authoritative_full_t3_receipt": "full-t3/receipt.json",
+  "authoritative_full_t3_counts": "11993 passed, 2 failed, 1 skipped, 2 deselected, 15 xfailed; frontend 1417/1417; build and demo gates passed",
+  "authoritative_full_t3_failures": [
+    "tests/geometry/test_schema_contract_offline.py::test_watchdog_is_incomplete_runtime_failure_not_geometry_refusal",
+    "tests/geometry/test_schema_contract_offline.py::test_windows_watchdog_terminates_the_invocation_child_tree"
+  ],
+  "authoritative_full_t3_post_freeze_verify": "PASS",
   "independent_review": "DEFERRED",
   "official_visual_inherited": "7/8; known cross-section orange-fill F2 only",
   "cache_version": 130,
