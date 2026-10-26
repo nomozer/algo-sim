@@ -52,6 +52,42 @@ def _gan_nhan_chung_duong_cao_chinh_xac(
     attach_scene_perpendicular_certificates(canh, chart_metric, trace=trace)
 
 
+def _dich_khoang_cach_diem_duong(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -> None:
+    """D-10, presentation only: the planner decomposes `distance(point, line)` through an AUXILIARY foot H, but the asked
+    quantity is d(point, line). Read the certificate (`rule == distance(point,line)`, `ask`, `point`, named `line`) and
+    name the result by the asked line; H stays in the construction step (`d = PH`). Renamed only when the foot carries a
+    verified perpendicular witness from that very point — otherwise the old wording stays (nothing is inferred). Geometry,
+    value, subjects and anchors are untouched."""
+    from app.simulation.geometry_functions.engine import ir_name
+
+    theo_id = {o["id"]: o for o in canh["objects"]}
+    ky = lambda i: (theo_id.get(i) or {}).get("notation") or i
+    for d in auxiliary:
+        if d.get("rule") != "distance(point,line)" or len(d.get("line") or []) != 2 or not d.get("label"):
+            continue
+        q, h, p = theo_id.get(f"kq_{d['ask']}"), theo_id.get(ir_name(d["label"])), ir_name(d["point"])
+        w = (h or {}).get("perpendicular_witness")
+        if not (q and w and w.get("from") == p and (q.get("annotation") or {}).get("subject_ids") == [p, h["id"]]):
+            continue
+        # The planner keeps the line canonical; the asked name is the order the source quote wrote (BD vs DB).
+        thu = ["".join(ky(ir_name(x)) for x in v) for v in (d["line"], d["line"][::-1])]
+        duong = next((t for t in thu if any(t in qt for qt in d.get("quotes") or ())), thu[0])
+        cu_n, moi_n = q["notation"], f"d({ky(p)}, {duong})"
+        cu_l, moi_l = q["label"], f"Khoảng cách giữa {ky(p)} và {duong}"
+        thuong = lambda s: s[:1].lower() + s[1:]
+        sua = lambda s: (s.replace(cu_n, moi_n).replace(cu_l, moi_l).replace(thuong(cu_l), thuong(moi_l))
+                         if isinstance(s, str) else s)
+        q.update(label=moi_l, display_label=moi_l, notation=moi_n, reference=moi_n)
+        q["formula"]["text"] = sua(q["formula"]["text"])
+        for e in canh["events"]:
+            if e.get("object") == q["id"]:
+                e.update(display_label=moi_l, learner_text=sua(e["learner_text"]))
+                canh["formation"]["steps"][e["step_index"]]["learner_text"] = e["learner_text"]
+            elif e.get("object") == h["id"] and e.get("action") == "CREATE":
+                e["learner_text"] = f"{e['learner_text'].rstrip('.')}, nên {moi_n} = {ky(p)}{ky(h['id'])}."
+                canh["formation"]["steps"][e["step_index"]]["learner_text"] = e["learner_text"]
+
+
 def _ke_diem_dung(canh: dict[str, Any], vai: dict[str, str]) -> None:
     """Lời kể bước dựng một điểm: nói PHÉP DỰNG từ producer + ký hiệu toán hạng, thay "Dựng M." (run
     `pedagogical-construction-sequencing`). Producer khác dùng vai do `display_names` đã phát; thiếu ký hiệu ⇒ giữ lời cũ.
@@ -343,6 +379,7 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
             _ke_diem_dung(canh, vai)
             _gan_nhan_chung_hinh_chieu(canh, r.spec, r.exec_result.final_memory)
             _gan_nhan_chung_duong_cao_chinh_xac(canh, r.chart_metric, trace=r.trace)
+            _dich_khoang_cach_diem_duong(canh, auxiliary)
             _an_dinh_thiet_dien_phu(canh, auxiliary)
             _vai_mat_cat(canh, auxiliary)
     except _KhoiKhongKhai as e:

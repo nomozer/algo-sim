@@ -68,7 +68,8 @@ try {
         row.checks.expected_disposition = actual.route_d?.status === (fixture.expected === "REFUSE" ? "REFUSED" : "SERVED")
           && (fixture.expected !== "REFUSE" || actual.route_d?.refusal?.code === fixture.expected_code);
         fx = { ...actual, id: fixture.id, problem_text: fixture.problem_text,
-          expected: fixture.expected, oracle_value_squared: fixture.oracle_value_squared };
+          expected: fixture.expected, oracle_value_squared: fixture.oracle_value_squared,
+          expected_goal_notation: fixture.expected_goal_notation };
         await page.waitForFunction(async (status) => {
           const { useAppStore } = await import("/src/state/store.ts");
           const state = useAppStore.getState();
@@ -141,6 +142,13 @@ try {
       row.places_after_opening = await places();
       row.checks.mode_b_once = (await page.locator(`[data-analysis-item="${kq}"]`).count()) === 1
         && Object.values(row.places_after_opening).reduce((s, n) => s + n, 0) === 1;
+      // D-10: a fixture may state the quantity the learner asked for ("d(S, BD)"); the answer row must be named by it and
+      // the scene's own notation must agree (presentation of the certificate, not a frontend rewrite).
+      if (fx.expected_goal_notation) {
+        const norm = (t) => t.replace(/[s′’]/g, (c) => (/s/.test(c) ? "" : "'"));
+        row.checks.goal_named_as_asked = norm(await item.innerText()).includes(norm(fx.expected_goal_notation))
+          && norm(scene.objects.find((o) => o.id === kq)?.notation ?? "") === norm(fx.expected_goal_notation);
+      }
       row.checks.value_matches_oracle = sq !== null && eqFrac(sq, frac(fx.oracle_value_squared));
       row.checks.engine_binding = scene.objects.find((o) => o.id === kq)?.value?.replace(/\s/g, "") === coef.replace(/\s/g, "");
       await item.locator("button").click();

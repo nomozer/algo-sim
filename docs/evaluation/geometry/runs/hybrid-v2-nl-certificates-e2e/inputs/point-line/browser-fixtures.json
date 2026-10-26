@@ -1,0 +1,67 @@
+{
+  "classification": "AUTHORED_REGRESSION_BROWSER_NOT_HOLDOUT_NOT_PROVIDER",
+  "fixtures": [
+    {
+      "id": "right-prism-base-altitude",
+      "family": "#12",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến đường thẳng BC.",
+      "expected": "SERVE",
+      "expected_goal_notation": "d(A, BC)",
+      "oracle_value_squared": "576/25"
+    },
+    {
+      "id": "right-prism-three-perpendiculars",
+      "family": "#12",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A' đến đường thẳng BC.",
+      "expected": "SERVE",
+      "expected_goal_notation": "d(A', BC)",
+      "oracle_value_squared": "4176/25"
+    },
+    {
+      "id": "pyramid-sa-a-to-sc",
+      "family": "#3",
+      "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ A đến đường thẳng SC.",
+      "expected": "SERVE",
+      "expected_goal_notation": "d(A, SC)",
+      "oracle_value_squared": "288/41"
+    },
+    {
+      "id": "pyramid-sa-s-to-bd",
+      "family": "#3",
+      "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến đường thẳng BD.",
+      "expected": "SERVE",
+      "expected_goal_notation": "d(S, BD)",
+      "oracle_value_squared": "17"
+    },
+    {
+      "id": "regular-pyramid-a-to-sc",
+      "family": "#4",
+      "problem_text": "Cho hình chóp tứ giác đều S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA = 3. Tính khoảng cách từ A đến đường thẳng SC.",
+      "expected": "SERVE",
+      "expected_goal_notation": "d(A, SC)",
+      "oracle_value_squared": "32/9"
+    },
+    {
+      "id": "cuboid-top-vertex-to-base-diagonal",
+      "family": "#11",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. Đáy ABCD là hình chữ nhật. AB = 3. AD = 4. AA' = 12. Tính khoảng cách từ A' đến đường thẳng BD.",
+      "expected": "SERVE",
+      "expected_goal_notation": "d(A', BD)",
+      "oracle_value_squared": "3744/25"
+    },
+    {
+      "id": "right-prism-undetermined-point",
+      "family": "#12",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ X đến đường thẳng BC.",
+      "expected": "REFUSE",
+      "expected_code": "UNDERDETERMINED_POINT"
+    },
+    {
+      "id": "right-prism-quote-names-another-line",
+      "family": "#12",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến đường thẳng BC'.",
+      "expected": "REFUSE",
+      "expected_code": "SOURCE_OBJECT_MISMATCH"
+    }
+  ]
+}

@@ -1,0 +1,641 @@
+{
+  "status": "B3_DISTANCE_BROWSER_PASS",
+  "via_analyze": true,
+  "fixtures_sha256": "3e1476cf5dd096f692cd639690bb16a411d497cd2a91288e65383636a289de7e",
+  "harness_sha256": "91ec2eaa0e4b6e5f0e8c7867414266274276c54218b3ff77fcc88584898b99d1",
+  "classification": "AUTHORED_REGRESSION_BROWSER_NOT_HOLDOUT_NOT_PROVIDER",
+  "provider_calls": 0,
+  "browser": "Chrome headless / SwiftShader",
+  "url": "http://127.0.0.1:3391",
+  "human_visual_review": "NOT_APPROVED",
+  "rows": [
+    {
+      "id": "right-prism-base-altitude",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [
+          "perpendicular:H"
+        ],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(A,BC)=24/5",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 1
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "1f13a00ab380797eae2266cf48067e51c195cfff08e9901c89a2cf1b03b6f66f",
+        "mode_b": "01cbaf03ccd83e0b01a256fa80dd536a2aeb5b74bbf54bc96c89650cc7002d0d"
+      },
+      "pass": true
+    },
+    {
+      "id": "right-prism-three-perpendiculars",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [
+          "perpendicular:H"
+        ],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(A′,BC)=12√29/5",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 1
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "b5b30d8c0557c39b82bb702d13927ea2f7591a795c4f33f2f5117370dcb83951",
+        "mode_b": "a1c0b5131649ec4dbc88c69275ed17fe994a3044a771a30385e3c2acddf399ab"
+      },
+      "pass": true
+    },
+    {
+      "id": "pyramid-sa-a-to-sc",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [],
+        "on_answer": null,
+        "rendered_ids": [
+          "perpendicular:H"
+        ],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(A,SC)=12√82/41",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 1
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "41a734ed93144945dc1013cb042f6b2b241f73026bc8b2a5cfd316847c4037d3",
+        "mode_b": "b99c72663fa6302978c767684a7c4456b48a032df217ae4d05da654a3e1931df"
+      },
+      "pass": true
+    },
+    {
+      "id": "pyramid-sa-s-to-bd",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [],
+        "on_answer": null,
+        "rendered_ids": [
+          "perpendicular:H"
+        ],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(S,BD)=√17",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 1
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "3341405d6731830aae5affbae19f2342e29e5b9d38c8a2b0b251f3a788fc4f08",
+        "mode_b": "1268f4041ea0b8c18184da98c0c8b769e13aa804883411003900df8570682a90"
+      },
+      "pass": true
+    },
+    {
+      "id": "regular-pyramid-a-to-sc",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [],
+        "on_answer": null,
+        "rendered_ids": [
+          "perpendicular:H"
+        ],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(A,SC)=4√2/3",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 1
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "16bddb729a2610dbf9e9371e6a3d4c4ae74803c2cde680409925d172e64ed710",
+        "mode_b": "3d8726fa4daeab43dc993c70604dff8beaca0c6358bee52375c5886f40c42edf"
+      },
+      "pass": true
+    },
+    {
+      "id": "cuboid-top-vertex-to-base-diagonal",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [
+          "perpendicular:H"
+        ],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(A′,BD)=12√26/5",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 1
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "22960fc22fddce0eb0fd36708115da2d89f4ec46e65862cfcfdcec8d23e6c72f",
+        "mode_b": "7aa804b02f7480d30721e3774ef8e29c1d98acf2e203899ac638880ef945507e"
+      },
+      "pass": true
+    },
+    {
+      "id": "right-prism-undetermined-point",
+      "viewport": 1440,
+      "expected": "REFUSE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "no_scene": true,
+        "reason_shown": true,
+        "code_hidden": true,
+        "no_answer": true
+      },
+      "pass": true
+    },
+    {
+      "id": "right-prism-quote-names-another-line",
+      "viewport": 1440,
+      "expected": "REFUSE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "no_scene": true,
+        "reason_shown": true,
+        "code_hidden": true,
+        "no_answer": true
+      },
+      "pass": true
+    },
+    {
+      "id": "right-prism-base-altitude",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [
+          "perpendicular:H"
+        ],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(A,BC)=24/5",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 1
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "4ae546c395cb33233b5294057b1a7362c5ed951922734773aae0fe9335375d68",
+        "mode_b": "f23a507c01eb764c0818d99a86aba1514d6821554c3a1d86609e3ebfc5682b2b"
+      },
+      "pass": true
+    },
+    {
+      "id": "right-prism-three-perpendiculars",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [
+          "perpendicular:H"
+        ],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(A′,BC)=12√29/5",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 1
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "7d5b82a2d637143ddb71033ff08361c1c4ed7e7b8e859b9a382f288b4ce6d993",
+        "mode_b": "a673966125c3154bbb8b68b15db8dc3a6fe00ddbda461849728f68f607b5a26f"
+      },
+      "pass": true
+    },
+    {
+      "id": "pyramid-sa-a-to-sc",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [],
+        "on_answer": null,
+        "rendered_ids": [
+          "perpendicular:H"
+        ],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(A,SC)=12√82/41",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 1
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "9ceeff7d267039a52447adfbacb5f354a0b63f50754d1671cf0d83e0103f61d8",
+        "mode_b": "9975e150d71bd3579061be1e76e3da53dd6224a50bc9f3d38ad768d2441ea607"
+      },
+      "pass": true
+    },
+    {
+      "id": "pyramid-sa-s-to-bd",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [],
+        "on_answer": null,
+        "rendered_ids": [
+          "perpendicular:H"
+        ],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(S,BD)=√17",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 1
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "a21520eb964b6e14ba1a4c61f77877c2c10c4b025606cf4c558666746eddb6b7",
+        "mode_b": "4d60233792514130b01feb5c22cfdaef03021776684c0d26ac1453c55f0a0bfc"
+      },
+      "pass": true
+    },
+    {
+      "id": "regular-pyramid-a-to-sc",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [],
+        "on_answer": null,
+        "rendered_ids": [
+          "perpendicular:H"
+        ],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(A,SC)=4√2/3",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 1
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "80ee33a15015772d14f172a9aab5e25747e4b7d7c53c5ebcdd79152afd352e40",
+        "mode_b": "826040992d0becd88cf0f14dd4b3bb8cdabbc8557bf123aaf9a0a44123e51b18"
+      },
+      "pass": true
+    },
+    {
+      "id": "cuboid-top-vertex-to-base-diagonal",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "goal_named_as_asked": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime",
+          "canh_ben_D_D_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [
+          "perpendicular:H"
+        ],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(A′,BD)=12√26/5",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 1
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "a482e6c9487a55cc87bde00e4f0fb6d059ee0bd4332d467e7425cea8a73dda37",
+        "mode_b": "f3ec67e20c4f05e35e54caf9e0068f2b2359e5db1d120976c4933dc65a3c9725"
+      },
+      "pass": true
+    },
+    {
+      "id": "right-prism-undetermined-point",
+      "viewport": 390,
+      "expected": "REFUSE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "no_scene": true,
+        "reason_shown": true,
+        "code_hidden": true,
+        "no_answer": true
+      },
+      "pass": true
+    },
+    {
+      "id": "right-prism-quote-names-another-line",
+      "viewport": 390,
+      "expected": "REFUSE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "no_scene": true,
+        "reason_shown": true,
+        "code_hidden": true,
+        "no_answer": true
+      },
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "forbidden": []
+}
