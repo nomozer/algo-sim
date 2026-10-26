@@ -3379,6 +3379,8 @@ html {
   display: grid;
   gap: 1px;
   border-left: 3px solid transparent;
+  /* Dòng không bấm được là <div>, dòng bấm được là <button> (cỡ chữ UA): cùng một cỡ cho cả hai. */
+  font-size: 0.8125rem;
 }
 
 .geo3d-dai-luong-ten {
