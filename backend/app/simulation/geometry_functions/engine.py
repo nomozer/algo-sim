@@ -756,13 +756,15 @@ class _Dung:
     def _line(self, labels) -> Line3:
         return Line3.through(*(Vec3(*self.pts[p]) for p in labels))
 
-    def kiem_mat_viet(self, nhom: list[list[str]]) -> None:
+    def kiem_mat_viet(self, nhom: list[list[str]], named: list[list[str]] = ()) -> None:
         """Nhóm nhãn mặt phẳng nguồn phải không suy biến và đồng phẳng trên hình đã dựng (chính xác).
-        Cùng `_cung_mat`, phép kiểm này không cho rút gọn một nhóm nguồn sai thành mặt ba nhãn."""
+        Cùng `_cung_mat`, phép kiểm này không cho rút gọn một nhóm nguồn sai thành mặt ba nhãn.
+        `named`: mặt câu hỏi > 3 nhãn mà lời gọi chỉ mang ba nhãn đầu (`KeHoach.named_planes`)."""
         # Các nhãn dư trong lời gọi cũng phải thuộc cùng mặt, kể cả hàm góc chỉ phát ba nhãn đầu vào IR.
-        nhom = [*nhom, *(g for c in self.calls for key in ("plane", "plane1", "plane2")
-                         if (g := getattr(c.args, key, None)) is not None)]
-        for g in nhom:
+        goi = [g for c in self.calls for key in ("plane", "plane1", "plane2") if (g := getattr(c.args, key, None)) is not None]
+        do = [*named, *(g for c in self.calls if c.fn.startswith("ask_")
+                        for key in ("plane", "plane1", "plane2") if (g := getattr(c.args, key, None)) is not None)]
+        for g in [*nhom, *named, *goi]:
             if any(p not in self.pts for p in g):
                 raise TuChoi("SOURCE_OBJECT_MISMATCH", f"({''.join(g)}) có nhãn chưa được dựng — không kiểm được là một mặt phẳng")
             v = [Vec3(*self.pts[p]) for p in g]
@@ -770,6 +772,11 @@ class _Dung:
             if ba is None or any(Plane3.through(*ba).signed_eval(p) != 0 for p in v):
                 raise TuChoi("SOURCE_OBJECT_MISMATCH", f"({''.join(g)}) không phải một mặt phẳng của hình — "
                              "không đọc nó thành mặt ba nhãn")
+            # ponytail: a question plane is measured through its first three labels; a valid face named with collinear
+            # leading labels, (BMCC') with M on BC, is refused rather than reordered — reorder here if such names matter.
+            if len(g) > 3 and g in do and (v[1] - v[0]).cross(v[2] - v[0]).is_zero():
+                raise TuChoi("COLLINEAR_POINTS", f"({''.join(g)}): ba nhãn đầu {''.join(g[:3])} thẳng hàng — không đo mặt "
+                             "qua ba điểm này")
 
     def _plane(self, labels) -> Plane3:
         plane = Plane3.through(*(Vec3(*self.pts[p]) for p in labels[:3]))
@@ -1714,7 +1721,7 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         for d in auxiliary:                              # section vertices on stated cut edges (`DINH_CAT_CANH`)
             if d.get("rule") == DINH_CAT_CANH:
                 dung.kiem_dinh_cat(d)
-        dung.kiem_mat_viet(nhom_mat_nguon(problem_text))
+        dung.kiem_mat_viet(nhom_mat_nguon(problem_text), plan.get("named_planes") or [] if isinstance(plan, dict) else [])
         chuoi = [d for d in auxiliary if d.get("rule") == "effect-chain"]
         for d in chuoi:
             dung.kiem_mo_ta(d)

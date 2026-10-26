@@ -8,6 +8,7 @@ role and cut is re-checked there. Contract and decision: `docs/architecture/HYBR
 """
 from __future__ import annotations
 
+from functools import partial
 from typing import Any
 
 from .registry import TuChoi
@@ -73,18 +74,20 @@ def _check_qualified_refs(value: Any, solids: dict[str, Any]) -> None:
             raise TuChoi("UNKNOWN_VERTEX_REF", f"{value!r} không phải đỉnh của khối đã khai")
 
 
+def _operand(t: dict[str, Any], key: str, n: int) -> list[str] | None:
+    """DISTINCT labels of one goal operand: a line / segment exactly two, a plane (n = 3) three or more — a face may be
+    named by all its vertices, (ABCD), as premises already may. Every plane label reaches the engine, which checks they
+    are coplanar and that the three it measures with are not collinear (`kiem_mat_viet`). A repeated label is degenerate."""
+    v = t.get(key)
+    refs = _refs(v) if isinstance(v, (list, tuple)) and (len(v) >= n if n == 3 else len(v) == n) else None
+    return refs if refs is not None and len(set(refs)) == len(refs) else None
+
+
 def _distance_question(g) -> dict[str, Any]:
     """`/2` distance target → the planner's existing question. Keys are exactly those the `/3` adapter already reads
     (`{point, plane}`, `{segment}`, `{line1, line2}`); anything else is refused, never guessed."""
     t = g.target
-
-    def pts(key: str, n: int) -> list[str] | None:
-        # Exactly n DISTINCT labels: the planner keeps only three plane labels, so a longer list would be cut silently
-        # (and a non-coplanar fourth label never checked); a repeated label is a degenerate operand. Same arity as /3.
-        v = t.get(key)
-        refs = _refs(v) if isinstance(v, (list, tuple)) and len(v) == n else None
-        return refs if refs is not None and len(set(refs)) == n else None
-
+    pts = partial(_operand, t)
     if set(t) == {"point", "plane"} and isinstance(t["point"], str) and (pl := pts("plane", 3)):
         return {"quantity": "distance", "points_a": [_ref(t["point"])], "points_b": pl}
     if set(t) == {"segment"} and (seg := pts("segment", 2)):
@@ -97,14 +100,9 @@ def _distance_question(g) -> dict[str, Any]:
 def _angle_question(g) -> dict[str, Any]:
     """`/2` angle target → the planner's existing angle question (answer: cos² — exact). Keys are those `/3` reads
     (`{line, plane}`, `{line1, line2}`) plus `{plane1, plane2}` for the dihedral question the planner already has. Same
-    arity rule as distance: a line is exactly two distinct labels, a plane exactly three — never truncated."""
+    arity rule as distance (`_operand`): a line is exactly two distinct labels, a plane three or more — never truncated."""
     t = g.target
-
-    def pts(key: str, n: int) -> list[str] | None:
-        v = t.get(key)
-        refs = _refs(v) if isinstance(v, (list, tuple)) and len(v) == n else None
-        return refs if refs is not None and len(set(refs)) == n else None
-
+    pts = partial(_operand, t)
     if set(t) == {"line", "plane"} and (ln := pts("line", 2)) and (pl := pts("plane", 3)):
         return {"quantity": "angle", "points_a": ln, "points_b": pl}
     if set(t) == {"line1", "line2"} and (l1 := pts("line1", 2)) and (l2 := pts("line2", 2)):

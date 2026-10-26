@@ -83,12 +83,13 @@ def test_point_to_lateral_face_is_the_base_altitude():
     assert _served(p) == F(36 * 64, 36 + 64)
 
 
-def test_four_label_plane_target_is_refused_not_truncated():
-    """The point-plane function takes exactly three points (as on /3). A four-label target used to be cut to its first
-    three labels by the planner, so a non-coplanar fourth label was never checked (review I-1)."""
+def test_four_label_plane_target_is_served_with_every_label_checked():
+    """A four-label target used to be cut to its first three labels by the planner, so a non-coplanar fourth label was
+    never checked (review I-1); this slice refused it. Since `hybrid-v2-backend-generalization` the planner hands every
+    label to the engine's coplanarity check (`KeHoach.named_planes`), so the face (BCC'B') is served; non-coplanar and
+    collinear-leading names are refused there (`test_typed_fact_next_v2_named_plane.py`)."""
     p = _prism(ask=("Tính khoảng cách từ A đến mặt phẳng (BCC'B').", {"point": "A", "plane": ["B", "C", "C'", "B'"]}))
-    r = run_typed_fact_next_v2_route(p)
-    assert (r.status, r.code) == ("REFUSED", "INVALID_MATH_GOAL")
+    assert _served(p) == F(36 * 64, 36 + 64)
 
 
 def test_segment_target_is_a_length():
@@ -135,7 +136,7 @@ def test_adapter4_envelope_is_served():
                                     {"point": "A'", "plane": ["A", "B", "C"], "solid": "pr"},
                                     {"segment": ["A", "B", "C"]},
                                     # review I-1 / M-1 / M-2: no silent truncation, no degenerate operands
-                                    {"point": "A'", "plane": ["A", "B", "C", "A'"]},      # 4 labels, not coplanar
+                                    # (4 labels, not coplanar: refused by the engine — test below)
                                     {"point": "A'", "plane": ["A", "B", "C", "pr::A"]},    # 4 labels, one repeated
                                     {"point": "A'", "plane": ["A", "A", "B"]},
                                     {"segment": ["A", "A"]}, {"segment": ["A", "pr::A"]},
@@ -144,6 +145,13 @@ def test_malformed_distance_target_is_refused(target):
     p = _prism(ask=("Tính khoảng cách từ A' đến mặt phẳng (ABC).", target))
     r = run_typed_fact_next_v2_route(p)
     assert (r.status, r.code) == ("REFUSED", "INVALID_MATH_GOAL")
+
+
+def test_non_coplanar_fourth_plane_label_is_refused_by_the_engine():
+    """Well-formed (four distinct labels) but not one plane: A' is off (ABC). Not truncated to (ABC) and served."""
+    p = _prism(ask=("Tính khoảng cách từ A' đến mặt phẳng (ABC).", {"point": "A'", "plane": ["A", "B", "C", "A'"]}))
+    r = run_typed_fact_next_v2_route(p)
+    assert (r.status, r.code) == ("REFUSED", "SOURCE_OBJECT_MISMATCH")
 
 
 def test_unknown_qualified_vertex_is_refused():

@@ -372,7 +372,7 @@ def run_fact_route(problem_text: str, facts: Any) -> KetQuaTuyen:
     except TuChoi as e:
         return KetQuaTuyen("REFUSED", e.code, e.reason, e.calls, details=e.data, planner={"version": PLANNER_VERSION})
     doc = tuple(q for g in (*k.goals, *k.negated) if g.get("call") for q in g["call"]["source"]["quotes"])
-    r = run_function_route(problem_text, {"calls": k.calls}, tuple(k.auxiliary), doc)
+    r = run_function_route(problem_text, {"calls": k.calls, "named_planes": k.named_planes}, tuple(k.auxiliary), doc)
     r.planner = {"version": PLANNER_VERSION, "calls": k.calls, "trace": k.trace, "auxiliary": k.auxiliary,
                  "goal_checks": {}, "negated_checks": {}}
     if r.status != "SERVED":

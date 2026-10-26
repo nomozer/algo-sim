@@ -80,8 +80,7 @@ def test_angle_is_scale_invariant():
 
 @pytest.mark.parametrize("target", [
     {"line": ["A", "A"], "plane": ["A", "B", "C"]},                 # degenerate line [A, A]
-    {"line": ["A'", "C"], "plane": ["A", "B", "C", "A"]},           # repeated / four-label plane — never truncated
-    {"line": ["A'", "C"], "plane": ["A", "B", "C", "B'"]},          # a non-coplanar fourth label is not silently dropped
+    {"line": ["A'", "C"], "plane": ["A", "B", "C", "A"]},           # repeated label — never truncated
     {"line": ["A'"], "plane": ["A", "B", "C"]},                     # one-point line
     {"line1": ["A", "A'"]},                                          # missing operand
     {"segment": ["A", "B"]},                                         # a distance key on an angle goal
@@ -89,6 +88,13 @@ def test_angle_is_scale_invariant():
 def test_malformed_angle_targets_are_refused_with_a_code(target):
     r = run_typed_fact_next_v2_route(_angle(target))
     assert (r.status, r.code) == ("REFUSED", "INVALID_MATH_GOAL")
+
+
+def test_a_non_coplanar_fourth_plane_label_is_not_silently_dropped():
+    """Four distinct labels are a well-formed plane operand since `hybrid-v2-backend-generalization`; B' is off (ABC), so
+    the engine refuses the operand instead of measuring against (ABC)."""
+    r = run_typed_fact_next_v2_route(_angle({"line": ["A'", "C"], "plane": ["A", "B", "C", "B'"]}))
+    assert (r.status, r.code) == ("REFUSED", "SOURCE_OBJECT_MISMATCH")
 
 
 def test_angle_on_a_line_lying_in_the_plane_is_served_as_cos2_1():
