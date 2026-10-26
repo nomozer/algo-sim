@@ -9,6 +9,17 @@ CODE_COMMIT = product b101dc79; candidate freeze 3994f603 (3850e787…, 118 file
 VERIFICATION = inputs/sphere-plane-oracle.json 5/5; before-57a4d65c/ vs after-b101dc79/ browser captures; silhouette-*.json; visual/official-run-3994f603/ locked suite 7/8 (cross_section F2 only); t3-receipt.json
 MODEL_REQUEST_COUNT = 0
 CORRECTS = NONE
+CORRECTED_BY = SPHERE_VISUAL_POLISH (the first-hit scanner classifies some rays as gaps even when a dark pixel exists in the expected circumference band; original images, raw counts and thresholds retained)
+
+## WAVE_ID = SPHERE_VISUAL_POLISH
+
+REPORT = docs/evaluation/geometry/runs/sphere-visual-polish/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/sphere-visual-polish/
+CLASSIFICATION = OWNER_VISUAL_APPROVAL_PENDING (sphere renderer polish; local candidate only)
+CODE_COMMIT = e047235e (sphere-only stroke hierarchy)
+VERIFICATION = 106 targeted frontend presentation tests; sphere-plane exact product-path oracle 5/5; desktop/mobile named-camera + 24-step orbit capture and unchanged-threshold pixel scan; authoritative Full T3 receipt to be recorded before review handoff
+MODEL_REQUEST_COUNT = 0
+CORRECTS = SPHERE_FINAL_CLOSURE (some first-dark silhouette scanner rays classified as gaps still contain a dark pixel in the expected circumference band; original images, raw JSON and thresholds remain byte-identical)
 CORRECTED_BY = NONE
 
 

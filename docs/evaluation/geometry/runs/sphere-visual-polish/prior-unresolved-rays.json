@@ -1,0 +1,313 @@
+{
+  "method": "Read-only tangent-neighbour diagnosis of the four unresolved original flagged rays. Original scanner and threshold unchanged. Physical pixels; mobile DPR2. Neighbourhood evidence is diagnostic, not a replacement acceptance score.",
+  "rows": [
+    {
+      "width": 1440,
+      "frame": "orbit16",
+      "angle": 358,
+      "radius_physical_px": 248.5,
+      "nearest_dark_tangent_offset_physical_px": 1,
+      "scan": [
+        {
+          "tangent_offset_physical_px": -8,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": -7,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": -6,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": -5,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": -4,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": -3,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": -2,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": -1,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": 0,
+          "minimum_luminance": 204.0
+        },
+        {
+          "tangent_offset_physical_px": 1,
+          "minimum_luminance": 162.44
+        },
+        {
+          "tangent_offset_physical_px": 2,
+          "minimum_luminance": 62.03
+        },
+        {
+          "tangent_offset_physical_px": 3,
+          "minimum_luminance": 39.96
+        },
+        {
+          "tangent_offset_physical_px": 4,
+          "minimum_luminance": 39.96
+        },
+        {
+          "tangent_offset_physical_px": 5,
+          "minimum_luminance": 39.96
+        },
+        {
+          "tangent_offset_physical_px": 6,
+          "minimum_luminance": 39.96
+        },
+        {
+          "tangent_offset_physical_px": 7,
+          "minimum_luminance": 39.96
+        },
+        {
+          "tangent_offset_physical_px": 8,
+          "minimum_luminance": 39.96
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "frame": "orbit00",
+      "angle": 136,
+      "radius_physical_px": 232.0,
+      "nearest_dark_tangent_offset_physical_px": 1,
+      "scan": [
+        {
+          "tangent_offset_physical_px": -8,
+          "minimum_luminance": 48.89
+        },
+        {
+          "tangent_offset_physical_px": -7,
+          "minimum_luminance": 57.1
+        },
+        {
+          "tangent_offset_physical_px": -6,
+          "minimum_luminance": 45.89
+        },
+        {
+          "tangent_offset_physical_px": -5,
+          "minimum_luminance": 46.89
+        },
+        {
+          "tangent_offset_physical_px": -4,
+          "minimum_luminance": 62.03
+        },
+        {
+          "tangent_offset_physical_px": -3,
+          "minimum_luminance": 56.82
+        },
+        {
+          "tangent_offset_physical_px": -2,
+          "minimum_luminance": 69.03
+        },
+        {
+          "tangent_offset_physical_px": -1,
+          "minimum_luminance": 82.59
+        },
+        {
+          "tangent_offset_physical_px": 0,
+          "minimum_luminance": 141.45
+        },
+        {
+          "tangent_offset_physical_px": 1,
+          "minimum_luminance": 148.66
+        },
+        {
+          "tangent_offset_physical_px": 2,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": 3,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": 4,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": 5,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": 6,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": 7,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": 8,
+          "minimum_luminance": 19.93
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "frame": "orbit02",
+      "angle": 42,
+      "radius_physical_px": 234.0,
+      "nearest_dark_tangent_offset_physical_px": 1,
+      "scan": [
+        {
+          "tangent_offset_physical_px": -8,
+          "minimum_luminance": 61.1
+        },
+        {
+          "tangent_offset_physical_px": -7,
+          "minimum_luminance": 64.03
+        },
+        {
+          "tangent_offset_physical_px": -6,
+          "minimum_luminance": 55.03
+        },
+        {
+          "tangent_offset_physical_px": -5,
+          "minimum_luminance": 60.03
+        },
+        {
+          "tangent_offset_physical_px": -4,
+          "minimum_luminance": 65.03
+        },
+        {
+          "tangent_offset_physical_px": -3,
+          "minimum_luminance": 72.24
+        },
+        {
+          "tangent_offset_physical_px": -2,
+          "minimum_luminance": 75.17
+        },
+        {
+          "tangent_offset_physical_px": -1,
+          "minimum_luminance": 81.17
+        },
+        {
+          "tangent_offset_physical_px": 0,
+          "minimum_luminance": 166.51
+        },
+        {
+          "tangent_offset_physical_px": 1,
+          "minimum_luminance": 217.72
+        },
+        {
+          "tangent_offset_physical_px": 2,
+          "minimum_luminance": 82.86
+        },
+        {
+          "tangent_offset_physical_px": 3,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": 4,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": 5,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": 6,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": 7,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": 8,
+          "minimum_luminance": 19.93
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "frame": "orbit12",
+      "angle": 134,
+      "radius_physical_px": 232.0,
+      "nearest_dark_tangent_offset_physical_px": 1,
+      "scan": [
+        {
+          "tangent_offset_physical_px": -8,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": -7,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": -6,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": -5,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": -4,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": -3,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": -2,
+          "minimum_luminance": 19.93
+        },
+        {
+          "tangent_offset_physical_px": -1,
+          "minimum_luminance": 33.93
+        },
+        {
+          "tangent_offset_physical_px": 0,
+          "minimum_luminance": 207.14
+        },
+        {
+          "tangent_offset_physical_px": 1,
+          "minimum_luminance": 184.79
+        },
+        {
+          "tangent_offset_physical_px": 2,
+          "minimum_luminance": 93.24
+        },
+        {
+          "tangent_offset_physical_px": 3,
+          "minimum_luminance": 67.03
+        },
+        {
+          "tangent_offset_physical_px": 4,
+          "minimum_luminance": 65.03
+        },
+        {
+          "tangent_offset_physical_px": 5,
+          "minimum_luminance": 71.96
+        },
+        {
+          "tangent_offset_physical_px": 6,
+          "minimum_luminance": 59.03
+        },
+        {
+          "tangent_offset_physical_px": 7,
+          "minimum_luminance": 61.03
+        },
+        {
+          "tangent_offset_physical_px": 8,
+          "minimum_luminance": 47.89
+        }
+      ]
+    }
+  ]
+}

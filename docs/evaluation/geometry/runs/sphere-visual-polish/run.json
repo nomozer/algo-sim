@@ -1,0 +1,40 @@
+{
+  "run_id": "sphere-visual-polish",
+  "task_slug": "final-sphere-visual-polish",
+  "date": "2026-10-26",
+  "candidate_branch": "research/scene3d-hybrid-v2-claude-resume",
+  "base_commit": "d1ee4f0dc4d5a377512a8fcfc810bdc6f3348202",
+  "product_commit": "e047235eeb46d4151f22f214a353ee9838b0e81c",
+  "freeze_commit": null,
+  "candidate_status": "OWNER_VISUAL_APPROVAL_PENDING",
+  "authoritative_full_t3": "PENDING",
+  "independent_review": "DEFERRED",
+  "official_visual_inherited": "7/8; known cross-section orange-fill F2 only",
+  "cache_version": 130,
+  "default_mode": "LLM_ONLY",
+  "provider_calls": 0,
+  "local_merge": false,
+  "push": false,
+  "capture": {
+    "receipt": "after-e047235e/receipt.json",
+    "viewport_policy": "1440x900 DPR1 / 390x844 DPR2",
+    "png_count": 260,
+    "orbit_steps_per_scene_viewport": 24,
+    "capture_head": "e047235eeb46d4151f22f214a353ee9838b0e81c",
+    "envelopes_sha256": "951593009d2a0b4e09b6e6f9b6af0bf392b8fa8a0169d8389dc7988a96c05024"
+  },
+  "sphere_plane_oracle": {
+    "result": "5/5",
+    "artifact": "sphere-plane-oracle.json",
+    "envelopes": "sphere-plane-oracle-envelopes.json"
+  },
+  "silhouette_scan": {
+    "primary_tool": "../sphere-final-closure/tools/silhouette_scan.py",
+    "thresholds_changed": false,
+    "desktop_flagged_rays": 18,
+    "mobile_flagged_rays": 57,
+    "secondary_probe": "silhouette-secondary-probe-after-e047235e.json",
+    "secondary_probe_recovered_at_tangent_offset_px": 1,
+    "continuity_proved": false
+  }
+}

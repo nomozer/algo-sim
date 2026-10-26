@@ -1,5 +1,9 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Final sphere stroke hierarchy (local candidate, 2026-10-26; Owner review pending)
+
+`scene3d-edge-visibility.ts::dongBoNetDayManHinh` gives only `sphere_silhouette:*` a 0.65× edge width. `scene3d-view.tsx::buildObject3D` increases the sphere's non-authoritative reference-equator ribbon to 0.27× its radius and darkens only the visible arc toward the existing edge color; the hidden arc retains `hiddenEdge` and its existing opacity. Tangent placement, camera visibility, and true section geometry are unchanged. `scene3d-curved-transitions.test.ts` checks the hierarchy at desktop/mobile sizes and against a real rim. Run `docs/evaluation/geometry/runs/sphere-visual-polish/`.
+
 ## Claude-to-Codex Hybrid V2 continuation (local, 2026-10-26)
 
 `geometry_functions/typed_fact_next_bridge.py::_angle_question` maps V2 line/plane/dihedral angle goals onto existing planner operations. `engine.py` (/12) uses Registry `_cum_hoi` spans and an exact scalar triple product for declared-skew consistency. `adapter4_route.py::build_adapter4_response` preserves verbatim planner quotes after canonical equivalence with verified calls and strict source checks.

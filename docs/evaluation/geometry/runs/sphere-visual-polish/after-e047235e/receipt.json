@@ -1,0 +1,1838 @@
+{
+ "tree_head": "e047235eeb46d4151f22f214a353ee9838b0e81c",
+ "tree_dirty": false,
+ "envelopes_sha256": "951593009d2a0b4e09b6e6f9b6af0bf392b8fa8a0169d8389dc7988a96c05024",
+ "viewport_policy": "1440x900 DPR1 / 390x844 DPR2",
+ "url": "http://127.0.0.1:3197",
+ "provider_calls": 0,
+ "rows": [
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "front",
+   "file": "basic-1440-front.png",
+   "sha256": "d808d47a538b12e703660007d37d695d7b42dd2847628db7069db15de2b97c87"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "right",
+   "file": "basic-1440-right.png",
+   "sha256": "a8c113676a335dcf703d3612e525e65485b57ef2640158043bd76cb98d18c2aa"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "back",
+   "file": "basic-1440-back.png",
+   "sha256": "1ccb1c36f3b91c08b054bb62677fb83fe41061dc8c9e62799b0eb12935280751"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "left",
+   "file": "basic-1440-left.png",
+   "sha256": "a0e6ba6f89a53cd78849ed673cebf5e75101435daa935d25613fc9b5df67613a"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "high",
+   "file": "basic-1440-high.png",
+   "sha256": "c4f397b41177d89e32180a8ca67237dd163fa796d9a75b72c5ade42e90eaada5"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "low",
+   "file": "basic-1440-low.png",
+   "sha256": "a60bac166b2e518670103a386600674306d79c3efa17b12a6a16873cb0afc381"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "near-edge-on",
+   "file": "basic-1440-near-edge-on.png",
+   "sha256": "d388f5ec48f5c517df1fec41a86ca15b16f98b886c95362e6f255da63eebe627"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit00",
+   "file": "basic-1440-orbit00.png",
+   "sha256": "8e5eac80ef899b6f09178ad19c08ce29e2e328c6ac7234af10ed5462895ef773"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit01",
+   "file": "basic-1440-orbit01.png",
+   "sha256": "f1bba581092f7985bbf2590811f1196bdc85d64ccd0c23bb4d2b20ab1ec9057f"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit02",
+   "file": "basic-1440-orbit02.png",
+   "sha256": "735e0b92f6783a3d3cdc626761f671ce0ac40b498b23b74a754f9511e13ba3b6"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit03",
+   "file": "basic-1440-orbit03.png",
+   "sha256": "fb711cdb6418dda7c0ccb2375a57f13f21ed910d2f5d48ff65412ed06bb0d75c"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit04",
+   "file": "basic-1440-orbit04.png",
+   "sha256": "05f00594bcccc2d6a09a4d2ef1e5b064fe767e838b114e44b0afbca417208e15"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit05",
+   "file": "basic-1440-orbit05.png",
+   "sha256": "4d6bb1fbb184f5895f5cf3186e2bf7e4111ba82ec5b2a80a93aa014addb7be39"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit06",
+   "file": "basic-1440-orbit06.png",
+   "sha256": "8ca15af8e77a942ba6cf06acb5b7d7ec710d6900a7320317f61cc92274a307c4"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit07",
+   "file": "basic-1440-orbit07.png",
+   "sha256": "e28031b187143e497b7351ef3f9b5d53cd04066e5dcd539834220fd76c0c0a19"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit08",
+   "file": "basic-1440-orbit08.png",
+   "sha256": "d143a58f40d230557f68459f8e16859f9b3c368512b539b1b9df9bf0a41a4b8b"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit09",
+   "file": "basic-1440-orbit09.png",
+   "sha256": "5a5e09125e7c3ae9d779990b222d2c18b8b8fb370c5df9d433fa38879c0f2e43"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit10",
+   "file": "basic-1440-orbit10.png",
+   "sha256": "936e803b1eb45402a35dcccf77b9970010e6012fdb6ee22869c96017dcd6ddfe"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit11",
+   "file": "basic-1440-orbit11.png",
+   "sha256": "1be22ce0bccd59d1f2dada414c84910ffbbee610da2fe97f09d4f0affd17d0a1"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit12",
+   "file": "basic-1440-orbit12.png",
+   "sha256": "c54739051b52124296363e7572c8e725071350c95027781de972799367bfbe27"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit13",
+   "file": "basic-1440-orbit13.png",
+   "sha256": "2638fb6515a43e5821bf6ad7bfa3e94411101260054e95dd406efe9d09034231"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit14",
+   "file": "basic-1440-orbit14.png",
+   "sha256": "a7ec1e27aba7854cb81bec2738266445dfff1cbed7df358a950f0501796ed286"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit15",
+   "file": "basic-1440-orbit15.png",
+   "sha256": "5a69af88f74d61953df2933b7df3ffba42ab6ce2acaafbb62ec7843cf5fcd189"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit16",
+   "file": "basic-1440-orbit16.png",
+   "sha256": "1e11bffe2e526588982ee3d5f0cba650f7675da950e2d7ccfcbd70971d62ddd3"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit17",
+   "file": "basic-1440-orbit17.png",
+   "sha256": "d1f99e8d4d2b7b90896f18d6348c436defe9a01550bcdbd4d6addc6f09b905e9"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit18",
+   "file": "basic-1440-orbit18.png",
+   "sha256": "a232755236073a0c2ce64744b85e2fc87991476e6bed6acffe3aa9e857af68c8"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit19",
+   "file": "basic-1440-orbit19.png",
+   "sha256": "97dffaa2d68239c98041eeb5039d500434e438c6f2629861f7c5fe07bb8a71cc"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit20",
+   "file": "basic-1440-orbit20.png",
+   "sha256": "3682c75ffab15e49fb51bb6cff257524a81d795d84e281b7d77f6514be87d203"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit21",
+   "file": "basic-1440-orbit21.png",
+   "sha256": "a93bc35ad3d11775e107ea5a74dc7fcdfc882dbf80717d073e451b9f7c7b21aa"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit22",
+   "file": "basic-1440-orbit22.png",
+   "sha256": "f97faa6b7219fc0dd68b01b19728fcd592a6903b626c7ae115acc3371ac9548a"
+  },
+  {
+   "name": "basic",
+   "width": 1440,
+   "kind": "orbit23",
+   "file": "basic-1440-orbit23.png",
+   "sha256": "aeb22f2425e95c630c6c7ac91d2256f626fdb699ccc42669fcc57fc63d811706"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "front",
+   "file": "cut-above-1440-front.png",
+   "sha256": "d6cdd869ee6f6858423cf26a509f9bcf0ea41edbc369372095a6f216ed5b5b50"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "right",
+   "file": "cut-above-1440-right.png",
+   "sha256": "7056a7b183fd2f98fa333aa0118a582defea4d75585a6f26fbe93cfbbc050739"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "back",
+   "file": "cut-above-1440-back.png",
+   "sha256": "78e058330a705face8144718addec0fd803517466d091f22cce6e25293e59c4b"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "left",
+   "file": "cut-above-1440-left.png",
+   "sha256": "d797f59d7c49d3494b332eaa3e6cae6ce651a3c13a6796e578ad21abef4bff5a"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "high",
+   "file": "cut-above-1440-high.png",
+   "sha256": "05eae40e52d6c5c37c2de9a4d0aaf15ef7c2092fe441ef2be84465c55950e5a8"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "low",
+   "file": "cut-above-1440-low.png",
+   "sha256": "89de942fc30a45cad641a5dabe22f4ffba4012b89676d01eceedca3983c24bbb"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "near-edge-on",
+   "file": "cut-above-1440-near-edge-on.png",
+   "sha256": "8ee72c7fdc6a73281ddceacb4fa2e7474ddd9ae3bcb759d93cff89c9fad6b5d4"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit00",
+   "file": "cut-above-1440-orbit00.png",
+   "sha256": "d6cdd869ee6f6858423cf26a509f9bcf0ea41edbc369372095a6f216ed5b5b50"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit01",
+   "file": "cut-above-1440-orbit01.png",
+   "sha256": "708ffb6630726a29c9623b95028e271e161751edb1bcec0d8d341b9ebcc014a3"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit02",
+   "file": "cut-above-1440-orbit02.png",
+   "sha256": "dc4ae6f6fd4d1f9c2964454567cb5b32d437f65d295a4590b51228a1672fd725"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit03",
+   "file": "cut-above-1440-orbit03.png",
+   "sha256": "53596ac21e4bd9c11669755197c0540a261470ba9f6a4aeac1a262dccf6fc4b1"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit04",
+   "file": "cut-above-1440-orbit04.png",
+   "sha256": "f446477f9252724abda36baedc9f3ce442b27b1bee32b53a593272bb41373736"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit05",
+   "file": "cut-above-1440-orbit05.png",
+   "sha256": "54abde1b5e4274d6ba2f3e38a712f233378d69a4dee3111fbee9d054c4c7f32a"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit06",
+   "file": "cut-above-1440-orbit06.png",
+   "sha256": "40917c2fd8718abe27edad42939e88c91d88a1c21a27c4f7f57e7cd409280a24"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit07",
+   "file": "cut-above-1440-orbit07.png",
+   "sha256": "82575ae02481664f42409f664158396307b3e2d27e57a5807c50287e7bbb9c82"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit08",
+   "file": "cut-above-1440-orbit08.png",
+   "sha256": "16d36eea59fdc9fd57b7e393fc3f18b6907d79f8e5f7da68c05373c35f922214"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit09",
+   "file": "cut-above-1440-orbit09.png",
+   "sha256": "f0736045ee9136e32f65d0c5dc1df2757175afa964cdf999ef3553721caba62d"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit10",
+   "file": "cut-above-1440-orbit10.png",
+   "sha256": "8a5e6dbe2629c22075354250a048dff8cd4ed881d30c4d3577b921cd0ad5b825"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit11",
+   "file": "cut-above-1440-orbit11.png",
+   "sha256": "f6a8596c1f61512792de2363a776f6d949471709fae0d270906948820f14e03e"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit12",
+   "file": "cut-above-1440-orbit12.png",
+   "sha256": "f4d566b4456bae7446820f43bec31eb871e503285c555b17ddf63b831f908287"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit13",
+   "file": "cut-above-1440-orbit13.png",
+   "sha256": "476cebfc44f3385da94e0eae781ec7d4abfaa4b39f5d5d4eb946c192e9be50a0"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit14",
+   "file": "cut-above-1440-orbit14.png",
+   "sha256": "ca7fd849c5724c13df9c45c32c0ef5d9dfa9314c8d3acffba5b0b2d265813ccf"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit15",
+   "file": "cut-above-1440-orbit15.png",
+   "sha256": "2b5cd86fc61301af0c37c76d381fb673d2bc1cc78e02eb9f8e8ce48437fcda97"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit16",
+   "file": "cut-above-1440-orbit16.png",
+   "sha256": "2b1be670d6c140e581e3adcc3c565b10b6c1048bfca13ecc55c6c5525e95f718"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit17",
+   "file": "cut-above-1440-orbit17.png",
+   "sha256": "1f1382f5a4aad6f7dd81a664d2e9923181ca67602791955df728a0848a895cd1"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit18",
+   "file": "cut-above-1440-orbit18.png",
+   "sha256": "51c234ffd7895ed4aea932c883c436959cdd2fd5f97474694db6203dd043ca30"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit19",
+   "file": "cut-above-1440-orbit19.png",
+   "sha256": "bebded8b97e7ff471028cdf5293fc80cd0caade345edeed7869ee53bfa48aec5"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit20",
+   "file": "cut-above-1440-orbit20.png",
+   "sha256": "286b655d5a0f449065322d067adffdc07a8742392ca0afc1a43a5d05c9fda552"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit21",
+   "file": "cut-above-1440-orbit21.png",
+   "sha256": "19254d7a92ceca6ad278175998705bcb35c0d0ffc9486bdfd555e82836391774"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit22",
+   "file": "cut-above-1440-orbit22.png",
+   "sha256": "e36bf7dba526ca8d25bf363be9be3e5818e53efdbca7d7b166c556a0ead23bcd"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "orbit23",
+   "file": "cut-above-1440-orbit23.png",
+   "sha256": "712a45ba0ab2e9b60f27180010e56d7168cb4850706f1692f9273d76ff63a38a"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "section-selected",
+   "file": "cut-above-1440-section-selected.png",
+   "sha256": "3a104652777fc3bbc42b4266c6e470a6e8ce4301850faa045f075dbed519edc4"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "section-deselected",
+   "file": "cut-above-1440-section-deselected.png",
+   "sha256": "fc54d10ecbace06fea7e1ea08a9f4568ced492cbebc721a0239005313cacdea3"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "front",
+   "file": "cut-through-1440-front.png",
+   "sha256": "8c219328ffc5b02d233838ffc3c7d24f62fe4d773179487a8927a847942945d6"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "right",
+   "file": "cut-through-1440-right.png",
+   "sha256": "f6aa4126a90bc89e35d4c6a815c2eeea75789dfec2269f47f9ad4130a5ddd1be"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "back",
+   "file": "cut-through-1440-back.png",
+   "sha256": "8c1e9c87c25a2a7e4ed92667c6addd2ea575d5d665d1decb18febde581e8e243"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "left",
+   "file": "cut-through-1440-left.png",
+   "sha256": "4f6f2196135f919586ca1ca9d65520b65b69299551c0a83be6cd38db81de2ee3"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "high",
+   "file": "cut-through-1440-high.png",
+   "sha256": "edc1300ba3f9273d246660b615e3bffc56dc4e4bba4eb9302b42dcd0bcd0423a"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "low",
+   "file": "cut-through-1440-low.png",
+   "sha256": "c78dab02a5c3129401be67dd24ab5931528b61372fd7940dfb916e6a5d419b6c"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "near-edge-on",
+   "file": "cut-through-1440-near-edge-on.png",
+   "sha256": "568a91f30f782e5457db91c3537df3038df2027d13c94e32c31b0e5c41a711ac"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit00",
+   "file": "cut-through-1440-orbit00.png",
+   "sha256": "8c219328ffc5b02d233838ffc3c7d24f62fe4d773179487a8927a847942945d6"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit01",
+   "file": "cut-through-1440-orbit01.png",
+   "sha256": "157f76ed1ead1bed063cba938ffe22276e227dc168b879181846b68e1c99bb38"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit02",
+   "file": "cut-through-1440-orbit02.png",
+   "sha256": "29cf6940a0409c430466938d8d43dc256e40edde4f3f3a5641a1e42144140789"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit03",
+   "file": "cut-through-1440-orbit03.png",
+   "sha256": "1086098df2f7d730ae9b60d1a3cd48926b4de5a81639df17368d2001f4d440ff"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit04",
+   "file": "cut-through-1440-orbit04.png",
+   "sha256": "b64254a9e90ccb7fa171291dcd1a5e6e273d26c450043b3529fd71b1f1f30a5d"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit05",
+   "file": "cut-through-1440-orbit05.png",
+   "sha256": "47c769e87e1d4be7fc1e3592f6b5cf691c48de23b9a1dfca28679967f9a65fbe"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit06",
+   "file": "cut-through-1440-orbit06.png",
+   "sha256": "b94ba9456bc1ae5171cf16fbde66a74f24145bae3f4ec46b44710acfda82e411"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit07",
+   "file": "cut-through-1440-orbit07.png",
+   "sha256": "fb445f96ebd5c87fe7361a76bd65dad0b4729d61b0543a578d06f8fcfaed8be0"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit08",
+   "file": "cut-through-1440-orbit08.png",
+   "sha256": "ac74a64a14619e36ee574c1f7d6458e7d470e5d9f05c1207baac8afef7a67f53"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit09",
+   "file": "cut-through-1440-orbit09.png",
+   "sha256": "ebff9ffd9e2e4e737934b5fb7995aef5ffbd2dce555245b75b8e22595862c514"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit10",
+   "file": "cut-through-1440-orbit10.png",
+   "sha256": "9a73b40204051fbec7171358ff92129f40557655327f2390cdff1e1de7facca8"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit11",
+   "file": "cut-through-1440-orbit11.png",
+   "sha256": "1a59d197bcc394d328bd9d1ec7e652769b6ed5e51b4072ddc5309955d6ecb846"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit12",
+   "file": "cut-through-1440-orbit12.png",
+   "sha256": "0d1e0b795202316959c603956ec39d52e8312dc50b6edc907cf332a837631fe6"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit13",
+   "file": "cut-through-1440-orbit13.png",
+   "sha256": "28a3b0e452fd5acd7892fc7ebdeb21594866f163f589cba1cc9e8c4fd48b99d7"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit14",
+   "file": "cut-through-1440-orbit14.png",
+   "sha256": "6db4c4063a7493e286bd9bfd6fb37a75ced13575072e8cb9b5736a969b3dbd47"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit15",
+   "file": "cut-through-1440-orbit15.png",
+   "sha256": "bb05c15d55e9263afdb4fdf4ee69d739637722885c2fd5e0ff0672352bc46b58"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit16",
+   "file": "cut-through-1440-orbit16.png",
+   "sha256": "4bdc4a1665186a1dcc6164a6935b9f648eea2a98090ee06530f22ca2e594fa1b"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit17",
+   "file": "cut-through-1440-orbit17.png",
+   "sha256": "e577aa56cb7147f0dbf04062545235ba13131dcfc4ed0070bf621abe3b3213ec"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit18",
+   "file": "cut-through-1440-orbit18.png",
+   "sha256": "c3926c85ea91d7184e1bda822968e2ab4de5a23e572dbf75ce27c672352c709b"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit19",
+   "file": "cut-through-1440-orbit19.png",
+   "sha256": "b121af29126b46b91eeb706e525219356367dde6e5665207041938934a1ad4e9"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit20",
+   "file": "cut-through-1440-orbit20.png",
+   "sha256": "87147acec726d1bc780a6bd6a8c8e03211bbab677a17622e0606bf1fe2157d61"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit21",
+   "file": "cut-through-1440-orbit21.png",
+   "sha256": "4e1fcc205be796a557f065715f9498897b195b8957e5c33af0bf41a4de7bb9f6"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit22",
+   "file": "cut-through-1440-orbit22.png",
+   "sha256": "9d121b1144685a2d5883c7afdfd9df627ef90c07d9aaaac7d13ea27b366d1295"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "orbit23",
+   "file": "cut-through-1440-orbit23.png",
+   "sha256": "2d234d9f6be8813c85c1fe6818578558a1924cfe88cb55b79530b169cea06fa2"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "section-selected",
+   "file": "cut-through-1440-section-selected.png",
+   "sha256": "2ea441d9117b104c1d0f094c65cf9d0531be8c1f449651e8d5c1f32f8f7154b0"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "section-deselected",
+   "file": "cut-through-1440-section-deselected.png",
+   "sha256": "85014f414f1f536beb547527df60070eb29dd2708485ccad9f2978cb902e4b4e"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "front",
+   "file": "cut-tilted-1440-front.png",
+   "sha256": "0ac0ef71b9d55baa4b92a333b23f1d53bd2ab682af122ae4eeda48fe49e9bfa1"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "right",
+   "file": "cut-tilted-1440-right.png",
+   "sha256": "1412a66a8a1b27562dc74e3f73f359adc290d0b31d44898a4fa4c6cd403fd973"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "back",
+   "file": "cut-tilted-1440-back.png",
+   "sha256": "1f38ee20a1aa984002e27eb24463fcf770ed58c9c9175a6f737e4853d7360068"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "left",
+   "file": "cut-tilted-1440-left.png",
+   "sha256": "060ba429f7e083a75790cde664a58bc3f2122305a62d948f626139e84f05de48"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "high",
+   "file": "cut-tilted-1440-high.png",
+   "sha256": "23729387d580edbbd077320162ee1262258976f2e18a17c2bfe8bc0ee5fee886"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "low",
+   "file": "cut-tilted-1440-low.png",
+   "sha256": "40a89a3e564be18565c8213cff77a1dbeeebb60e2f7a953445f7345fd55abc49"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "near-edge-on",
+   "file": "cut-tilted-1440-near-edge-on.png",
+   "sha256": "47d4bddc2e0ca8caaa21f7f88ffd3e518556ed8e8e08eb50c964b0e0917b8f2b"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit00",
+   "file": "cut-tilted-1440-orbit00.png",
+   "sha256": "0ac0ef71b9d55baa4b92a333b23f1d53bd2ab682af122ae4eeda48fe49e9bfa1"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit01",
+   "file": "cut-tilted-1440-orbit01.png",
+   "sha256": "7e38bc1b79895d98709de9f85ec16e007de0a7fa6acae4523371e37ebfc9a9c3"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit02",
+   "file": "cut-tilted-1440-orbit02.png",
+   "sha256": "433a26a3c2b6818f5352bfacf6e227032443a7c8f7e5601c0fc3bda2bbe1d0a1"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit03",
+   "file": "cut-tilted-1440-orbit03.png",
+   "sha256": "e13324ad652be915b46b230c8f2f546eecfb36f260f46564d4baf8c81cce42ed"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit04",
+   "file": "cut-tilted-1440-orbit04.png",
+   "sha256": "9ec5a31a0eb7833c7a03e6aa0d28a15cc393c1a9058cd81ce260aa9d3ad9039c"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit05",
+   "file": "cut-tilted-1440-orbit05.png",
+   "sha256": "a8e1f77f0f8ed98e31b16d1205d6f5bab34f28030d53611717073a00dba85258"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit06",
+   "file": "cut-tilted-1440-orbit06.png",
+   "sha256": "ffafc11b38cd6c004596ef56c98db7d62582db40034726f35fcd2548fc75fe05"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit07",
+   "file": "cut-tilted-1440-orbit07.png",
+   "sha256": "ce780b1d9b9728a6c01a1ae6e36de1c006dc1d42f0d8c638380da27f3702b003"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit08",
+   "file": "cut-tilted-1440-orbit08.png",
+   "sha256": "2b97f9761cf67d171e6bffae2917c371f2400d3cd7eedab7f675d2b54be902aa"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit09",
+   "file": "cut-tilted-1440-orbit09.png",
+   "sha256": "b34a8683f18a22eed9240281d0832ed23969cf65fcfe22ac9e78c5cdfc844adc"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit10",
+   "file": "cut-tilted-1440-orbit10.png",
+   "sha256": "9a5dbde02bc7ba0963444ce65c3d236bd7d02296077bc891fea2052706bf55d7"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit11",
+   "file": "cut-tilted-1440-orbit11.png",
+   "sha256": "1fb53ab91c4deeba6999d9d028f481e690edd26bcb2853abfd01b13a4d11d764"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit12",
+   "file": "cut-tilted-1440-orbit12.png",
+   "sha256": "4bd62609f70bb89782744ff95a8e3867b3b0a26cea8103bd742d2a6e3142e232"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit13",
+   "file": "cut-tilted-1440-orbit13.png",
+   "sha256": "8938018cd95e393984db1d1ed0da04b4572d953235c1b63c5fa41be29884c7a6"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit14",
+   "file": "cut-tilted-1440-orbit14.png",
+   "sha256": "5104b4a41e2bf1fb2f2d15311fe49120baf6ce1fb6250496e7806ccf427e7547"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit15",
+   "file": "cut-tilted-1440-orbit15.png",
+   "sha256": "b2aa2e0efc001baecde446c7a5d592d1e032227a70cdf977e404985ba9333e6c"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit16",
+   "file": "cut-tilted-1440-orbit16.png",
+   "sha256": "a0bc7e3904133146dd456951b512b3e1c6a2ce3ef05b987aa364c29aec5318b2"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit17",
+   "file": "cut-tilted-1440-orbit17.png",
+   "sha256": "3b3e4b363ed3b89c5551f144d1bb05f5026951f7667530910ca8f1ea6376ae3f"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit18",
+   "file": "cut-tilted-1440-orbit18.png",
+   "sha256": "942322b9b17be96863e951082e6e4e7cf5bacfa3497ccb36631420ba33832af1"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit19",
+   "file": "cut-tilted-1440-orbit19.png",
+   "sha256": "3f9b634825463aa59ad5fa0001102519cf1ee6b913801255c71df488e8caf6e4"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit20",
+   "file": "cut-tilted-1440-orbit20.png",
+   "sha256": "d1de15adc5c142b897300632d07f2a2f8c84cc398acea93febba7926af9e4780"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit21",
+   "file": "cut-tilted-1440-orbit21.png",
+   "sha256": "78e8231ddc5204d522c8cb0541cf127f69720c57715e05190933da262ac3802f"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit22",
+   "file": "cut-tilted-1440-orbit22.png",
+   "sha256": "29c35885c375f9d50ec00a522b958dee9c31930bafa6c442a454469102abb5fe"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "orbit23",
+   "file": "cut-tilted-1440-orbit23.png",
+   "sha256": "1c2630868c7df4b2ce8defe291deda0d996fede0860ef45c0ae04a255db08025"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "section-selected",
+   "file": "cut-tilted-1440-section-selected.png",
+   "sha256": "0563c05144082319e596f4815728fbf9b1995a93168835ef39ff4322ad06a1be"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "section-deselected",
+   "file": "cut-tilted-1440-section-deselected.png",
+   "sha256": "a4cb51c56dd45b877cdfddbb2d104bee41b302330d5f3b79cfaa3363e8fa4bcc"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "front",
+   "file": "basic-390-front.png",
+   "sha256": "8b078fd241160ad152d99e24925a3a37cf9c7b1a6b5208df20c7f082c7d0c73e"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "right",
+   "file": "basic-390-right.png",
+   "sha256": "c0382449748c60d8d6fa7de4893e1aa6263c0591fb9320557a92cac0fbf0ddca"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "back",
+   "file": "basic-390-back.png",
+   "sha256": "1dcb3831d26221f16d7cf18df95ca22dad41c873388de8742beab28bc9538df5"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "left",
+   "file": "basic-390-left.png",
+   "sha256": "560a93e5da673ab561954211368759bf78ce390661baeb9df47f0f0dc186f753"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "high",
+   "file": "basic-390-high.png",
+   "sha256": "d36f747c093b505687e8b49592bded9a72b927856656d3c7f201996c26cc03c0"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "low",
+   "file": "basic-390-low.png",
+   "sha256": "0f7a22447b189f614b2014eb4db3ae31a2d8b0bb20956053b58c1a643f64b613"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "near-edge-on",
+   "file": "basic-390-near-edge-on.png",
+   "sha256": "095ac2bf030dce2889602c5f6bc823dbb278c9f73221c36c8fb8de5a1cdb59dc"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit00",
+   "file": "basic-390-orbit00.png",
+   "sha256": "d825fba1824cf2a393226a1939c188e8d73dd58baebbc31f90806fc9fccd5fec"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit01",
+   "file": "basic-390-orbit01.png",
+   "sha256": "da83df7200fd218d449722016ee33b5c6684bdda8920bf5e8f6bb7f7abca4dd1"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit02",
+   "file": "basic-390-orbit02.png",
+   "sha256": "018bb8ee3281e35ed38c4fdd955f14e7eebb5bbf55108ef2e9464b57b39d64cf"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit03",
+   "file": "basic-390-orbit03.png",
+   "sha256": "5299860c1bae4cc4a0d20c4a87c7b93d3fe3544d08247c487948b1ea462a834c"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit04",
+   "file": "basic-390-orbit04.png",
+   "sha256": "a2f51850f0c26386ebde5362a49624cc3a1c4fa7dbc3b1f27e13634792dad568"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit05",
+   "file": "basic-390-orbit05.png",
+   "sha256": "ef3c23bc1918ffd7075e3b7654797824d39e5e78b744f24780dea80a17fab694"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit06",
+   "file": "basic-390-orbit06.png",
+   "sha256": "a60e1609711d6d039e58549f7b98ebee94d5101d0764182d7a246db15125e78d"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit07",
+   "file": "basic-390-orbit07.png",
+   "sha256": "846080b1c5d79a5911564b35f4b8b0a2fa94c01af6994b8df99e36c5397271f1"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit08",
+   "file": "basic-390-orbit08.png",
+   "sha256": "164005a4c6b07d639c75a650ce1080067e72889a1a7c4cf3d7334c83a656ae15"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit09",
+   "file": "basic-390-orbit09.png",
+   "sha256": "332f2d09f31ca215db6ebe61f48af36859a37945b0fbb90c666a34f2d487d2c2"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit10",
+   "file": "basic-390-orbit10.png",
+   "sha256": "6ea31844eddaf99c33f4e733762be45c05c417bfc01d8720558c783305cf7707"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit11",
+   "file": "basic-390-orbit11.png",
+   "sha256": "d23b0c3cc7057ed306ec9f4a55b213797778d31fda0afb324d0362340f272983"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit12",
+   "file": "basic-390-orbit12.png",
+   "sha256": "be1230c9c524a0f8dc0e8154f93d313f97015599407cd3b975a5887ce068c4de"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit13",
+   "file": "basic-390-orbit13.png",
+   "sha256": "b571f2065e9649ea563da18bfd9de940f52d2554599d213102e00d6e2071480d"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit14",
+   "file": "basic-390-orbit14.png",
+   "sha256": "e813400c8f076bdd27bf1750061ab78fefda6c4502244963d933535abf3edc53"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit15",
+   "file": "basic-390-orbit15.png",
+   "sha256": "ceef991f3e18b22bb369069cec39e208ea0ce4a5e6245866822564cf833df742"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit16",
+   "file": "basic-390-orbit16.png",
+   "sha256": "abaf5f3f79a79c976e494a992b5a73e218e92dddb47b2f768dde5c0b099176ec"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit17",
+   "file": "basic-390-orbit17.png",
+   "sha256": "c22840210b43034b7dca17ebd8dc9a367be126d0958203e8f1ff39fbf8da95e6"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit18",
+   "file": "basic-390-orbit18.png",
+   "sha256": "db01fab864d17afc7d050c566e049a6f5c44cefb4eb8ec0f738273ebefc79a73"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit19",
+   "file": "basic-390-orbit19.png",
+   "sha256": "fb9af0ecfba30e03b5f47b332464be70bcc644896499017d17a376efe77204a8"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit20",
+   "file": "basic-390-orbit20.png",
+   "sha256": "ce01a3a11cae559238cd9b97525beaef5ef44230229ff14e891c79c849ca449f"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit21",
+   "file": "basic-390-orbit21.png",
+   "sha256": "08815a2ebc088a7a17e2faffa17cb4d0f7b5d71751ae4e507fb6d71c3d24dba9"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit22",
+   "file": "basic-390-orbit22.png",
+   "sha256": "90a409be1ea9304cef818d4021dd2799fb3505869de3f6cd48f8411f80a7d14b"
+  },
+  {
+   "name": "basic",
+   "width": 390,
+   "kind": "orbit23",
+   "file": "basic-390-orbit23.png",
+   "sha256": "5e117cbd96e3eb40b7c197c4188c5e0793f68bb2497d3f65739c167bc75dd26c"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "front",
+   "file": "cut-above-390-front.png",
+   "sha256": "b4b6fb9b26557b712cd60622e22c97ece4139735242542a9dfefce1cb8c057d7"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "right",
+   "file": "cut-above-390-right.png",
+   "sha256": "aee6d0a5e180e7ed1fa4b898839697ce2fcef6afa28dd927ff7258df3e2045a3"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "back",
+   "file": "cut-above-390-back.png",
+   "sha256": "bb5db096703f88029dd622d0871ec28d73a34c0fcee3d3ab025385d30fd3bd32"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "left",
+   "file": "cut-above-390-left.png",
+   "sha256": "0bd0a17a175d53f3d16f5048b1a4e127f88156e6a23e39a76b5f9cdbf4c00484"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "high",
+   "file": "cut-above-390-high.png",
+   "sha256": "68d959704c73ec3a1cf8e46078a4e423930883053c4a2647ffa693e4297abc0d"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "low",
+   "file": "cut-above-390-low.png",
+   "sha256": "0238b40f76d5e7c3d39f67394ffe8fdc0b0640b69ebe6a05edb2f0fd5ed1c92c"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "near-edge-on",
+   "file": "cut-above-390-near-edge-on.png",
+   "sha256": "83b3733a2b6fb4195e663cb5c4c780a889d139f486bcc16dbd5213b05f2d74a5"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit00",
+   "file": "cut-above-390-orbit00.png",
+   "sha256": "b4b6fb9b26557b712cd60622e22c97ece4139735242542a9dfefce1cb8c057d7"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit01",
+   "file": "cut-above-390-orbit01.png",
+   "sha256": "5c822cbb9545bc9c3c75e45c53cbf92dee81c734b82cedba09f7a353be2dc14f"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit02",
+   "file": "cut-above-390-orbit02.png",
+   "sha256": "4814f7bd1ab42f5d062fb04d2c9c54abbe8cd398f6407929e10f748b1b82e03c"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit03",
+   "file": "cut-above-390-orbit03.png",
+   "sha256": "3702a273b321ef49713a158372888c0578d71371b6e9d3cf8af205740ba284b1"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit04",
+   "file": "cut-above-390-orbit04.png",
+   "sha256": "10be2fb424c3897d28ca964fc2c716c746197bdf0477100c5dc64119d919569b"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit05",
+   "file": "cut-above-390-orbit05.png",
+   "sha256": "2b10ab225f3cbdc3dbb862c900baa05722459ac9ad667c482bd02283ae828ca6"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit06",
+   "file": "cut-above-390-orbit06.png",
+   "sha256": "06bf2320a58328ed8699571168e46f0dbb22a9085a5187c77e0e5f4ec193cbd8"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit07",
+   "file": "cut-above-390-orbit07.png",
+   "sha256": "39229a0d96ac61170a6bb4a153fc4adb01923e7c907f7ca712d57ac64636fcda"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit08",
+   "file": "cut-above-390-orbit08.png",
+   "sha256": "61ee8d6a80f6ae93137f6d9b9bd6610806170930bf5af4e809948b8f47e9912a"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit09",
+   "file": "cut-above-390-orbit09.png",
+   "sha256": "1948fd158f8a0930ffac7e130b52ee575829da63fd7cd9e2b1690fb54d985879"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit10",
+   "file": "cut-above-390-orbit10.png",
+   "sha256": "df87a83e5e0493620d9da38102c751828a4c48943f36e6bb7cd9da50553b9b00"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit11",
+   "file": "cut-above-390-orbit11.png",
+   "sha256": "9eb5b9072a4bcdf83bfda3a7ca3553d9237ecc2ee8254673eeb316c5ccc47ec9"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit12",
+   "file": "cut-above-390-orbit12.png",
+   "sha256": "a7538578bd01d6b1dec31df76b3a26d7fe0b4634ebc1eeb978b0994fbd4381af"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit13",
+   "file": "cut-above-390-orbit13.png",
+   "sha256": "b17b214de24d6e5c99335cedd606fda164aaf612f16e69c8e300ca5029d2106b"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit14",
+   "file": "cut-above-390-orbit14.png",
+   "sha256": "e18000556aa7fdcdbf98b762c67be048fbe0e003696f1ec3b1e698cad87f7242"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit15",
+   "file": "cut-above-390-orbit15.png",
+   "sha256": "c3db2630a0bbd0e3ed4d2dd68d5ea506bd27d0296f50ba901c7cd9f02e3904dc"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit16",
+   "file": "cut-above-390-orbit16.png",
+   "sha256": "7f60cff6b5601444ea0568cbab3be0e52e6666c3c7478c7db597f93bceeee273"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit17",
+   "file": "cut-above-390-orbit17.png",
+   "sha256": "f7a7d198bba4b982180db525c09509c7947c892576afc04c981d8b1dc441a556"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit18",
+   "file": "cut-above-390-orbit18.png",
+   "sha256": "d03a133852597e6d767cd2871aa5a2db339fb10104577907f6def1a9a68a4fb1"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit19",
+   "file": "cut-above-390-orbit19.png",
+   "sha256": "5921bba75ff943015d6309d7863747db69628ca928b2b3cd7cacea15e843928e"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit20",
+   "file": "cut-above-390-orbit20.png",
+   "sha256": "cd84e5a9867f49758fa02a9012b4fbec5ac67a5cc2d3ed395e82cd54b9a6fb9e"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit21",
+   "file": "cut-above-390-orbit21.png",
+   "sha256": "d93b3831d4e81f341f691067ece4cbf0505d4a9a0344462ca0628a9ae82d3b27"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit22",
+   "file": "cut-above-390-orbit22.png",
+   "sha256": "0c98cc123f91d8a27ac235ee890a29396d96cdcf4a5afd60e36d189e8dabae7f"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "orbit23",
+   "file": "cut-above-390-orbit23.png",
+   "sha256": "2d3c1e1bc22b367eb9fb249fe719ff6db06a62cfdbf7295a6310caad321c61e6"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "section-selected",
+   "file": "cut-above-390-section-selected.png",
+   "sha256": "40d5ff0ec8d5987859fce005472a5d5b962215c5264469045c67e78e90d84b42"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "section-deselected",
+   "file": "cut-above-390-section-deselected.png",
+   "sha256": "9b020876470fd906e619f5963cec49133dc9de5037e0f62c050e17b9213c7716"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "front",
+   "file": "cut-through-390-front.png",
+   "sha256": "a030eef7c5e5d44e4efdeb055acb33153cc2257007ea8f52c0a3a804a08730e9"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "right",
+   "file": "cut-through-390-right.png",
+   "sha256": "aa63a15f5b36f539cb1e5d744a001efed221a6b777b238935841970e77a4a8a4"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "back",
+   "file": "cut-through-390-back.png",
+   "sha256": "4e752910240d904e8b6929dbcaaa240c8c15358d0c181804ccc73571e71d47db"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "left",
+   "file": "cut-through-390-left.png",
+   "sha256": "e8e3dc3b2acbb46fb819b79baacf8023ea91154864a3596e3fe5084dc6a95d60"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "high",
+   "file": "cut-through-390-high.png",
+   "sha256": "95bd4c87376158e25722377e069bc82e9253ec90a5b6e05f1cd742c2c931ab62"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "low",
+   "file": "cut-through-390-low.png",
+   "sha256": "b74b9f1d9e32b82a9b49ff26bb7543a0791a7763f63b3666963688f7980cbb60"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "near-edge-on",
+   "file": "cut-through-390-near-edge-on.png",
+   "sha256": "d4c2f46b7c90fe120b1279fc582a14ca27e8704667d8bb952db8fb9c594ecd56"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit00",
+   "file": "cut-through-390-orbit00.png",
+   "sha256": "a030eef7c5e5d44e4efdeb055acb33153cc2257007ea8f52c0a3a804a08730e9"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit01",
+   "file": "cut-through-390-orbit01.png",
+   "sha256": "062be0a0e0a631afe11365d544dbfbfa2d95fe795494bf6d1c43874880e7f563"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit02",
+   "file": "cut-through-390-orbit02.png",
+   "sha256": "460de629bd368aa873ebd6f7c594cc92219d43f6c6b64d530e1f6ff1de6f3044"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit03",
+   "file": "cut-through-390-orbit03.png",
+   "sha256": "127f405bff79ec8235cb308c721418b7a47fa4b2df713717456d122018dcabce"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit04",
+   "file": "cut-through-390-orbit04.png",
+   "sha256": "1b9ae425c35a6200d2f25fe47eb75f98aada9c5586396e4496fa93447ab72146"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit05",
+   "file": "cut-through-390-orbit05.png",
+   "sha256": "33738149289156941c0da7aa00e76f8b2fc43e09d7fbbbc08ca5071d62fa73d1"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit06",
+   "file": "cut-through-390-orbit06.png",
+   "sha256": "2f10d1b26973edccf333d0ded74108bfe767c2dddb1c4ea36b4a16bc98a4f14a"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit07",
+   "file": "cut-through-390-orbit07.png",
+   "sha256": "70334ebeea6ffaef49fe6bece93784f9f5b35dffe2b838c9b64c62a6beaa9091"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit08",
+   "file": "cut-through-390-orbit08.png",
+   "sha256": "e3252f3686ed2cf9cca3dad326d4e3d65256d187f2c63f173114b41488f1bb98"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit09",
+   "file": "cut-through-390-orbit09.png",
+   "sha256": "7e0e54b2162da215c2eef32a3c24e8c005e8023bed28dad3e05e3d308f850f2c"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit10",
+   "file": "cut-through-390-orbit10.png",
+   "sha256": "cb8998565aa7787047344547ac74a63cd3739d3254a03bfd2af1afe0624bc29c"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit11",
+   "file": "cut-through-390-orbit11.png",
+   "sha256": "88ea232056e0b1cf25cd26749099ca635f5dd79c728f03520a288767e049006f"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit12",
+   "file": "cut-through-390-orbit12.png",
+   "sha256": "ed3a22f1af4b73760a4f94002249985d2d20bb0070ec58089448892b64b50da7"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit13",
+   "file": "cut-through-390-orbit13.png",
+   "sha256": "2506a1cf12291f8e144dd772551515730966f2f3d846a3eee487d2ad6f087d80"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit14",
+   "file": "cut-through-390-orbit14.png",
+   "sha256": "d820cebc11a3719591e39b776bafeaa9cfbb776926725cefc159807120158ad7"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit15",
+   "file": "cut-through-390-orbit15.png",
+   "sha256": "66a491f4ba6dfaaabcf0e624c9e26b54e4e9a495e7ae35ab88ebf0d426e38605"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit16",
+   "file": "cut-through-390-orbit16.png",
+   "sha256": "5b3ffc7f03b9e9f6ad1d544f4029cdd597afe468384d9564752dc6a690fe6c9c"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit17",
+   "file": "cut-through-390-orbit17.png",
+   "sha256": "7cd70849bb36dae8130aaf5537bbd639c0bce8075178a50242499307ffc980bb"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit18",
+   "file": "cut-through-390-orbit18.png",
+   "sha256": "8a47b9a39a0398e86e499c4616cc21c7620e42057a2f642b49861b6314bdffe1"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit19",
+   "file": "cut-through-390-orbit19.png",
+   "sha256": "46787bea68024c9d2ebc43930b927829d126cf83111d24be21d2f2c75294ad3b"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit20",
+   "file": "cut-through-390-orbit20.png",
+   "sha256": "393c3cc0d59509fa06430e429ee2f74fd02ebe446f12424ee61f0aad89ff2f7f"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit21",
+   "file": "cut-through-390-orbit21.png",
+   "sha256": "d291d0d8939aa31015845e70cfdcc0120d0ef9afcffc9ac0da5c66ec83dd8f6e"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit22",
+   "file": "cut-through-390-orbit22.png",
+   "sha256": "be95d38f6efd27b770cb352c2a3b5f14db0df8ce00ccba8762f453aacef38d9c"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "orbit23",
+   "file": "cut-through-390-orbit23.png",
+   "sha256": "96c3249db248ac9e94cdef3e0bcb7d3fbe79dde8983751a7a583fe07a3602642"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "section-selected",
+   "file": "cut-through-390-section-selected.png",
+   "sha256": "c8171ae7c960d5388828ac1973792b856af33fd53a27f930a740e9fe90aad46f"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "section-deselected",
+   "file": "cut-through-390-section-deselected.png",
+   "sha256": "86f6a465c55ca51d79387d4aed5ecb0d680c9af104a3746ef251a0886f39b58d"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "front",
+   "file": "cut-tilted-390-front.png",
+   "sha256": "961bdbe14978ed628a2ae252596d3154e6f985441a7fa968f2f5a5c7b2b71ab7"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "right",
+   "file": "cut-tilted-390-right.png",
+   "sha256": "9d0da98b8c9e43bda377a418378adb9ef714c30efa41805dfc732992ba4d3735"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "back",
+   "file": "cut-tilted-390-back.png",
+   "sha256": "b23d33dabbc9e62c621c86bb4fba4f9ba7290122d83c5bad5cfefb215314f982"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "left",
+   "file": "cut-tilted-390-left.png",
+   "sha256": "62a0c5a32d953515a114359b13b9aeb61614137ac98c64e9bffbe8abf182f09a"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "high",
+   "file": "cut-tilted-390-high.png",
+   "sha256": "800a8e05b705486bc13400c3be64b828165ae8bfddf42558a65cc0415040491a"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "low",
+   "file": "cut-tilted-390-low.png",
+   "sha256": "48acdebfdb4867c9218f1aa0be66eb80c4646f30351c4f8ec37c4f85f3f62c5b"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "near-edge-on",
+   "file": "cut-tilted-390-near-edge-on.png",
+   "sha256": "d3396b065cb882f674065e68f89c0c19d4aa15c743a17309cd3a94f7aac93221"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit00",
+   "file": "cut-tilted-390-orbit00.png",
+   "sha256": "961bdbe14978ed628a2ae252596d3154e6f985441a7fa968f2f5a5c7b2b71ab7"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit01",
+   "file": "cut-tilted-390-orbit01.png",
+   "sha256": "502f9dc84700a8b4fbd1d3e6404ff84c2283d70f9b3156d9583eafc0157469ec"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit02",
+   "file": "cut-tilted-390-orbit02.png",
+   "sha256": "0cf10bcb11ce5158fb68d22b7e25445757a58a697f07976eae4b1ea49439a157"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit03",
+   "file": "cut-tilted-390-orbit03.png",
+   "sha256": "26f8863f0da2f8e4c2ffe8c5302a37c297017e912739c3b08de9d84e66f6c21f"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit04",
+   "file": "cut-tilted-390-orbit04.png",
+   "sha256": "f8a49d2e9ea08a7273d902477c22eebc4271f6fd808634ca165016df2074414a"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit05",
+   "file": "cut-tilted-390-orbit05.png",
+   "sha256": "6bb7dc15532473a2004ab7a2e9c8f41b71f5b765cd3572f0f6031ab2c5c2e87b"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit06",
+   "file": "cut-tilted-390-orbit06.png",
+   "sha256": "4fa6b5b1b7cfc1330e47793482dfb63ba0c7376dca4a9dc4b7dc64bdbd793980"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit07",
+   "file": "cut-tilted-390-orbit07.png",
+   "sha256": "f21d218841cfe30b5aa32789cd94bc573f329c52359fe0fb4b52a6904a664693"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit08",
+   "file": "cut-tilted-390-orbit08.png",
+   "sha256": "08c275d881b92ee178a1b2b2584740928d2eb887fd2e9005cababff8666a45b7"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit09",
+   "file": "cut-tilted-390-orbit09.png",
+   "sha256": "201f7f6ea29a34ca855cc3b412557666a52319efbe2278e8830e89d6b19d2acf"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit10",
+   "file": "cut-tilted-390-orbit10.png",
+   "sha256": "ae55663ed101f91bdb8c0247ade1118f01e3820c5c248de3797eaee1db9e924d"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit11",
+   "file": "cut-tilted-390-orbit11.png",
+   "sha256": "2c5e08ef35570cb69f352e1b1d029211b77767fa66d3be2387a3473d32ad6adf"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit12",
+   "file": "cut-tilted-390-orbit12.png",
+   "sha256": "4511e5ac0a7d56e02d9814979de528f22da8fc3f97b0b29eb89099f106c0337a"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit13",
+   "file": "cut-tilted-390-orbit13.png",
+   "sha256": "d8b6e7efe7cf06da04c9e82a468cccbddab315be6d5a7f9e7707bb96af868c49"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit14",
+   "file": "cut-tilted-390-orbit14.png",
+   "sha256": "0f6a5f288ae2deed1cb273b2a51234eb89b9c6231a1d6977fcdc7fc5e462216d"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit15",
+   "file": "cut-tilted-390-orbit15.png",
+   "sha256": "1c250e5c871b72654ba15d6ba431bbf67e6113d4ca9c62d318d43e8833d414f1"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit16",
+   "file": "cut-tilted-390-orbit16.png",
+   "sha256": "4d692e1488adb9f8c5fed153b691fa16a2fbfbd9215d3715268bbec91ba32298"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit17",
+   "file": "cut-tilted-390-orbit17.png",
+   "sha256": "87ec7738ba07c2118276c1211328d413d827b0a1d06581e828373b7a39978c8f"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit18",
+   "file": "cut-tilted-390-orbit18.png",
+   "sha256": "b7a530010409a4f96254a02296b06c4ff3b6d6dfc947a39d0bcd89a9f5ee5c78"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit19",
+   "file": "cut-tilted-390-orbit19.png",
+   "sha256": "3b1f9f15ff71699fccd9c8c02044e7b566fec4450729cafed691709f58d68d3d"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit20",
+   "file": "cut-tilted-390-orbit20.png",
+   "sha256": "ec38264888d6811cb456add8fc493e54be2a0a9cffa626693c3732604704f650"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit21",
+   "file": "cut-tilted-390-orbit21.png",
+   "sha256": "1555eec647e210082b1fa7a7c3d1631c6b7d34b0b36ad39e6b08ff8303d7a60b"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit22",
+   "file": "cut-tilted-390-orbit22.png",
+   "sha256": "7c00c35edf7cce9eb29896b1c0e78cc236c215a4a5c3f0f0bd6fe38d76b9ebd4"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "orbit23",
+   "file": "cut-tilted-390-orbit23.png",
+   "sha256": "09f1758b53af98bd72ea54ecd41bdf900a21df0ef517aa77f3a62384162f87c4"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "section-selected",
+   "file": "cut-tilted-390-section-selected.png",
+   "sha256": "0b6ddd2f502d154d0d0c31e441520019cb8a84db43d896451366490df36e3398"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "section-deselected",
+   "file": "cut-tilted-390-section-deselected.png",
+   "sha256": "9c17bc66736728bdc91096e9c759ce9a95874e22d2a47196da55fea715f113d5"
+  }
+ ],
+ "errors": [
+  "cut-above: no «Hình phụ» toggle (no auxiliary geometry in this scene)",
+  "cut-through: no «Hình phụ» toggle (no auxiliary geometry in this scene)",
+  "cut-tilted: no «Hình phụ» toggle (no auxiliary geometry in this scene)",
+  "cut-above: no «Hình phụ» toggle (no auxiliary geometry in this scene)",
+  "cut-through: no «Hình phụ» toggle (no auxiliary geometry in this scene)",
+  "cut-tilted: no «Hình phụ» toggle (no auxiliary geometry in this scene)"
+ ]
+}

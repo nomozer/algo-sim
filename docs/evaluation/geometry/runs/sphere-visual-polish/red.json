@@ -1,0 +1,13 @@
+{
+  "baseline": "d1ee4f0dc4d5a377512a8fcfc810bdc6f3348202",
+  "command": "node node_modules/vitest/vitest.mjs run src/simulations/domains/geometry/scene3d-curved-transitions.test.ts",
+  "exit_code": 1,
+  "passed": 6,
+  "failed": 3,
+  "failures": [
+    "1440: sphere outline width 4.5 was not less than 80% of ordinary edge width",
+    "390: sphere outline width 4.22 was not less than 80% of ordinary edge width",
+    "equator band 0.0112 was below 70% of real rim band width (0.014112)"
+  ],
+  "classification": "TARGETED_PRESENTATION_RED_BEFORE_PRODUCT_CHANGE"
+}

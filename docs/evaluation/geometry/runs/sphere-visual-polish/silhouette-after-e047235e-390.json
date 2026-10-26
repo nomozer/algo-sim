@@ -1,0 +1,241 @@
+{
+  "orbit00": {
+    "gaps": 5,
+    "gap_angles": [
+      136,
+      139,
+      140,
+      143,
+      170
+    ],
+    "radius": 231.0,
+    "radius_cv": 0.003,
+    "outline_tone_max": 119.6
+  },
+  "orbit01": {
+    "gaps": 0,
+    "gap_angles": [],
+    "radius": 232.5,
+    "radius_cv": 0.0032,
+    "outline_tone_max": 118.7
+  },
+  "orbit02": {
+    "gaps": 2,
+    "gap_angles": [
+      42,
+      170
+    ],
+    "radius": 233.5,
+    "radius_cv": 0.0039,
+    "outline_tone_max": 118.7
+  },
+  "orbit03": {
+    "gaps": 5,
+    "gap_angles": [
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "radius": 234.0,
+    "radius_cv": 0.0032,
+    "outline_tone_max": 119.2
+  },
+  "orbit04": {
+    "gaps": 5,
+    "gap_angles": [
+      0,
+      1,
+      2,
+      358,
+      359
+    ],
+    "radius": 235.0,
+    "radius_cv": 0.0026,
+    "outline_tone_max": 119.2
+  },
+  "orbit05": {
+    "gaps": 0,
+    "gap_angles": [],
+    "radius": 235.0,
+    "radius_cv": 0.0023,
+    "outline_tone_max": 119.4
+  },
+  "orbit06": {
+    "gaps": 1,
+    "gap_angles": [
+      64
+    ],
+    "radius": 234.0,
+    "radius_cv": 0.0029,
+    "outline_tone_max": 119.4
+  },
+  "orbit07": {
+    "gaps": 0,
+    "gap_angles": [],
+    "radius": 233.5,
+    "radius_cv": 0.0032,
+    "outline_tone_max": 119.2
+  },
+  "orbit08": {
+    "gaps": 0,
+    "gap_angles": [],
+    "radius": 232.5,
+    "radius_cv": 0.0024,
+    "outline_tone_max": 119.2
+  },
+  "orbit09": {
+    "gaps": 0,
+    "gap_angles": [],
+    "radius": 231.5,
+    "radius_cv": 0.0024,
+    "outline_tone_max": 119.2
+  },
+  "orbit10": {
+    "gaps": 5,
+    "gap_angles": [
+      176,
+      177,
+      178,
+      179,
+      180
+    ],
+    "radius": 231.0,
+    "radius_cv": 0.0042,
+    "outline_tone_max": 119.2
+  },
+  "orbit11": {
+    "gaps": 5,
+    "gap_angles": [
+      158,
+      159,
+      160,
+      161,
+      162
+    ],
+    "radius": 231.0,
+    "radius_cv": 0.0034,
+    "outline_tone_max": 119.2
+  },
+  "orbit12": {
+    "gaps": 2,
+    "gap_angles": [
+      131,
+      134
+    ],
+    "radius": 232.0,
+    "radius_cv": 0.0023,
+    "outline_tone_max": 119.2
+  },
+  "orbit13": {
+    "gaps": 0,
+    "gap_angles": [],
+    "radius": 232.0,
+    "radius_cv": 0.0024,
+    "outline_tone_max": 119.4
+  },
+  "orbit14": {
+    "gaps": 5,
+    "gap_angles": [
+      36,
+      37,
+      38,
+      39,
+      40
+    ],
+    "radius": 234.0,
+    "radius_cv": 0.0032,
+    "outline_tone_max": 119.4
+  },
+  "orbit15": {
+    "gaps": 4,
+    "gap_angles": [
+      12,
+      13,
+      14,
+      15
+    ],
+    "radius": 234.5,
+    "radius_cv": 0.0023,
+    "outline_tone_max": 119.2
+  },
+  "orbit16": {
+    "gaps": 4,
+    "gap_angles": [
+      355,
+      356,
+      357,
+      358
+    ],
+    "radius": 235.0,
+    "radius_cv": 0.0024,
+    "outline_tone_max": 119.2
+  },
+  "orbit17": {
+    "gaps": 0,
+    "gap_angles": [],
+    "radius": 235.0,
+    "radius_cv": 0.0031,
+    "outline_tone_max": 119.2
+  },
+  "orbit18": {
+    "gaps": 0,
+    "gap_angles": [],
+    "radius": 234.5,
+    "radius_cv": 0.0038,
+    "outline_tone_max": 119.2
+  },
+  "orbit19": {
+    "gaps": 0,
+    "gap_angles": [],
+    "radius": 233.0,
+    "radius_cv": 0.0023,
+    "outline_tone_max": 119.5
+  },
+  "orbit20": {
+    "gaps": 0,
+    "gap_angles": [],
+    "radius": 232.0,
+    "radius_cv": 0.0034,
+    "outline_tone_max": 118.5
+  },
+  "orbit21": {
+    "gaps": 5,
+    "gap_angles": [
+      189,
+      190,
+      191,
+      192,
+      193
+    ],
+    "radius": 231.0,
+    "radius_cv": 0.0019,
+    "outline_tone_max": 119.2
+  },
+  "orbit22": {
+    "gaps": 4,
+    "gap_angles": [
+      173,
+      174,
+      175,
+      176
+    ],
+    "radius": 231.0,
+    "radius_cv": 0.0027,
+    "outline_tone_max": 119.4
+  },
+  "orbit23": {
+    "gaps": 5,
+    "gap_angles": [
+      154,
+      155,
+      156,
+      157,
+      158
+    ],
+    "radius": 231.0,
+    "radius_cv": 0.0018,
+    "outline_tone_max": 118.7
+  }
+}

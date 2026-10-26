@@ -1,0 +1,353 @@
+{
+  "method": "Diagnostic only: keep scanner luminance <120 and radial band R\u00b16 unchanged; sample parallel rays at tangent offsets 1..8 physical pixels. Does not modify primary scan or prove geometric continuity.",
+  "results": {
+    "1440": {
+      "orbit03": [
+        {
+          "angle": 17,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 18,
+          "tangent_recovered_within_px": 1
+        }
+      ],
+      "orbit04": [
+        {
+          "angle": 0,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 1,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 359,
+          "tangent_recovered_within_px": 1
+        }
+      ],
+      "orbit10": [
+        {
+          "angle": 177,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 178,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 179,
+          "tangent_recovered_within_px": 1
+        }
+      ],
+      "orbit11": [
+        {
+          "angle": 160,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 161,
+          "tangent_recovered_within_px": 1
+        }
+      ],
+      "orbit15": [
+        {
+          "angle": 13,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 14,
+          "tangent_recovered_within_px": 1
+        }
+      ],
+      "orbit16": [
+        {
+          "angle": 358,
+          "tangent_recovered_within_px": 1
+        }
+      ],
+      "orbit22": [
+        {
+          "angle": 174,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 175,
+          "tangent_recovered_within_px": 1
+        }
+      ],
+      "orbit23": [
+        {
+          "angle": 155,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 156,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 157,
+          "tangent_recovered_within_px": 1
+        }
+      ]
+    },
+    "390": {
+      "orbit00": [
+        {
+          "angle": 136,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 139,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 140,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 143,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 170,
+          "tangent_recovered_within_px": 1
+        }
+      ],
+      "orbit02": [
+        {
+          "angle": 42,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 170,
+          "tangent_recovered_within_px": 1
+        }
+      ],
+      "orbit03": [
+        {
+          "angle": 16,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 17,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 18,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 19,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 20,
+          "tangent_recovered_within_px": 1
+        }
+      ],
+      "orbit04": [
+        {
+          "angle": 0,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 1,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 2,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 358,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 359,
+          "tangent_recovered_within_px": 1
+        }
+      ],
+      "orbit06": [
+        {
+          "angle": 64,
+          "tangent_recovered_within_px": 1
+        }
+      ],
+      "orbit10": [
+        {
+          "angle": 176,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 177,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 178,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 179,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 180,
+          "tangent_recovered_within_px": 1
+        }
+      ],
+      "orbit11": [
+        {
+          "angle": 158,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 159,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 160,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 161,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 162,
+          "tangent_recovered_within_px": 1
+        }
+      ],
+      "orbit12": [
+        {
+          "angle": 131,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 134,
+          "tangent_recovered_within_px": 1
+        }
+      ],
+      "orbit14": [
+        {
+          "angle": 36,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 37,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 38,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 39,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 40,
+          "tangent_recovered_within_px": 1
+        }
+      ],
+      "orbit15": [
+        {
+          "angle": 12,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 13,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 14,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 15,
+          "tangent_recovered_within_px": 1
+        }
+      ],
+      "orbit16": [
+        {
+          "angle": 355,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 356,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 357,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 358,
+          "tangent_recovered_within_px": 1
+        }
+      ],
+      "orbit21": [
+        {
+          "angle": 189,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 190,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 191,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 192,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 193,
+          "tangent_recovered_within_px": 1
+        }
+      ],
+      "orbit22": [
+        {
+          "angle": 173,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 174,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 175,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 176,
+          "tangent_recovered_within_px": 1
+        }
+      ],
+      "orbit23": [
+        {
+          "angle": 154,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 155,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 156,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 157,
+          "tangent_recovered_within_px": 1
+        },
+        {
+          "angle": 158,
+          "tangent_recovered_within_px": 1
+        }
+      ]
+    }
+  }
+}
