@@ -1,0 +1,6263 @@
+{
+ "schema": "nl-eval-dataset/1",
+ "items": [
+  {
+   "id": "pr-plane-0",
+   "family": "right-prism-lateral-face",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (BCC'B').",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (BCC'B').",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "pr",
+       "solid_type": "prism",
+       "notation": "ABC.A'B'C'",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_angle",
+       "args": {
+        "vertex": "A",
+        "rays": [
+         "B",
+         "C"
+        ]
+       },
+       "quote": "Đáy ABC là tam giác vuông tại A."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "B"
+        ],
+        "value": "6"
+       },
+       "quote": "AB = 6."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "C"
+        ],
+        "value": "8"
+       },
+       "quote": "AC = 8."
+      },
+      {
+       "kind": "right_prism",
+       "args": {
+        "base": [
+         "A",
+         "B",
+         "C"
+        ],
+        "top": [
+         "A'",
+         "B'",
+         "C'"
+        ]
+       },
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "A'"
+        ],
+        "value": "12"
+       },
+       "quote": "AA' = 12."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "pr",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "A",
+        "plane": [
+         "B",
+         "C",
+         "C'",
+         "B'"
+        ]
+       },
+       "quote": "Tính khoảng cách từ A đến mặt phẳng (BCC'B')."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "24/5"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": [],
+   "stress_payloads_must_refuse": [
+    {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (BCC'B').",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "pr",
+       "solid_type": "prism",
+       "notation": "ABC.A'B'C'",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_angle",
+       "args": {
+        "vertex": "A",
+        "rays": [
+         "B",
+         "C"
+        ]
+       },
+       "quote": "Đáy ABC là tam giác vuông tại A."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "B"
+        ],
+        "value": "6"
+       },
+       "quote": "AB = 6."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "C"
+        ],
+        "value": "8"
+       },
+       "quote": "AC = 8."
+      },
+      {
+       "kind": "right_prism",
+       "args": {
+        "base": [
+         "A",
+         "B",
+         "C"
+        ],
+        "top": [
+         "A'",
+         "B'",
+         "C'"
+        ]
+       },
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "A'"
+        ],
+        "value": "12"
+       },
+       "quote": "AA' = 12."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "pr",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "C"
+        ]
+       },
+       "quote": "Tính khoảng cách từ A đến mặt phẳng (BCC'B')."
+      }
+     ]
+    },
+    {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (BCC'B').",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "pr",
+       "solid_type": "prism",
+       "notation": "ABC.A'B'C'",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_angle",
+       "args": {
+        "vertex": "A",
+        "rays": [
+         "B",
+         "C"
+        ]
+       },
+       "quote": "Đáy ABC là tam giác vuông tại A."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "B"
+        ],
+        "value": "6"
+       },
+       "quote": "AB = 6."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "C"
+        ],
+        "value": "4"
+       },
+       "quote": "AC = 8."
+      },
+      {
+       "kind": "right_prism",
+       "args": {
+        "base": [
+         "A",
+         "B",
+         "C"
+        ],
+        "top": [
+         "A'",
+         "B'",
+         "C'"
+        ]
+       },
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "A'"
+        ],
+        "value": "12"
+       },
+       "quote": "AA' = 12."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "pr",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "A",
+        "plane": [
+         "B",
+         "C",
+         "C'",
+         "B'"
+        ]
+       },
+       "quote": "Tính khoảng cách từ A đến mặt phẳng (BCC'B')."
+      }
+     ]
+    },
+    {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (BCC'B').",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "pr",
+       "solid_type": "prism",
+       "notation": "ABC.A'B'C'",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_angle",
+       "args": {
+        "vertex": "A",
+        "rays": [
+         "B",
+         "C"
+        ],
+        "side": "5"
+       },
+       "quote": "Đáy ABC là tam giác vuông tại A."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "B"
+        ],
+        "value": "6"
+       },
+       "quote": "AB = 6."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "C"
+        ],
+        "value": "8"
+       },
+       "quote": "AC = 8."
+      },
+      {
+       "kind": "right_prism",
+       "args": {
+        "base": [
+         "A",
+         "B",
+         "C"
+        ],
+        "top": [
+         "A'",
+         "B'",
+         "C'"
+        ]
+       },
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "A'"
+        ],
+        "value": "12"
+       },
+       "quote": "AA' = 12."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "pr",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "A",
+        "plane": [
+         "B",
+         "C",
+         "C'",
+         "B'"
+        ]
+       },
+       "quote": "Tính khoảng cách từ A đến mặt phẳng (BCC'B')."
+      }
+     ]
+    },
+    {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (BCC'B').",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "pr",
+       "solid_type": "prism",
+       "notation": "ABC.A'B'C'",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_angle",
+       "args": {
+        "vertex": "A",
+        "rays": [
+         "B",
+         "C"
+        ]
+       },
+       "quote": "Đáy ABC là tam giác vuông tại A."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "B"
+        ],
+        "value": "6",
+        "plane": [
+         "A",
+         "B",
+         "C"
+        ]
+       },
+       "quote": "AB = 6."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "C"
+        ],
+        "value": "8"
+       },
+       "quote": "AC = 8."
+      },
+      {
+       "kind": "right_prism",
+       "args": {
+        "base": [
+         "A",
+         "B",
+         "C"
+        ],
+        "top": [
+         "A'",
+         "B'",
+         "C'"
+        ]
+       },
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "A'"
+        ],
+        "value": "12"
+       },
+       "quote": "AA' = 12."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "pr",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "A",
+        "plane": [
+         "B",
+         "C",
+         "C'",
+         "B'"
+        ]
+       },
+       "quote": "Tính khoảng cách từ A đến mặt phẳng (BCC'B')."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pr-plane-1",
+   "family": "right-prism-lateral-face",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (BCC′B′).",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (BCC′B′).",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "pr",
+       "solid_type": "prism",
+       "notation": "ABC.A'B'C'",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_angle",
+       "args": {
+        "vertex": "A",
+        "rays": [
+         "B",
+         "C"
+        ]
+       },
+       "quote": "Đáy ABC là tam giác vuông tại A."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "B"
+        ],
+        "value": "6"
+       },
+       "quote": "AB = 6."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "C"
+        ],
+        "value": "8"
+       },
+       "quote": "AC = 8."
+      },
+      {
+       "kind": "right_prism",
+       "args": {
+        "base": [
+         "A",
+         "B",
+         "C"
+        ],
+        "top": [
+         "A'",
+         "B'",
+         "C'"
+        ]
+       },
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "A'"
+        ],
+        "value": "12"
+       },
+       "quote": "AA' = 12."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "pr",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "A",
+        "plane": [
+         "B",
+         "C",
+         "C'",
+         "B'"
+        ]
+       },
+       "quote": "Tính khoảng cách từ A đến mặt phẳng (BCC′B′)."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "24/5"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "pr-plane-2",
+   "family": "right-prism-lateral-face",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (B'BCC').",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến mặt phẳng (B'BCC').",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "pr",
+       "solid_type": "prism",
+       "notation": "ABC.A'B'C'",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_angle",
+       "args": {
+        "vertex": "A",
+        "rays": [
+         "B",
+         "C"
+        ]
+       },
+       "quote": "Đáy ABC là tam giác vuông tại A."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "B"
+        ],
+        "value": "6"
+       },
+       "quote": "AB = 6."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "C"
+        ],
+        "value": "8"
+       },
+       "quote": "AC = 8."
+      },
+      {
+       "kind": "right_prism",
+       "args": {
+        "base": [
+         "A",
+         "B",
+         "C"
+        ],
+        "top": [
+         "A'",
+         "B'",
+         "C'"
+        ]
+       },
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "A'"
+        ],
+        "value": "12"
+       },
+       "quote": "AA' = 12."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "pr",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "A",
+        "plane": [
+         "B'",
+         "B",
+         "C",
+         "C'"
+        ]
+       },
+       "quote": "Tính khoảng cách từ A đến mặt phẳng (B'BCC')."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "24/5"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "pr-plane-3",
+   "family": "right-prism-lateral-face",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến mặt bên BCC'B'.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến mặt bên BCC'B'.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "pr",
+       "solid_type": "prism",
+       "notation": "ABC.A'B'C'",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_angle",
+       "args": {
+        "vertex": "A",
+        "rays": [
+         "B",
+         "C"
+        ]
+       },
+       "quote": "Đáy ABC là tam giác vuông tại A."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "B"
+        ],
+        "value": "6"
+       },
+       "quote": "AB = 6."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "C"
+        ],
+        "value": "8"
+       },
+       "quote": "AC = 8."
+      },
+      {
+       "kind": "right_prism",
+       "args": {
+        "base": [
+         "A",
+         "B",
+         "C"
+        ],
+        "top": [
+         "A'",
+         "B'",
+         "C'"
+        ]
+       },
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "A'"
+        ],
+        "value": "12"
+       },
+       "quote": "AA' = 12."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "pr",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "A",
+        "plane": [
+         "B",
+         "C",
+         "C'",
+         "B'"
+        ]
+       },
+       "quote": "Tính khoảng cách từ A đến mặt bên BCC'B'."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "24/5"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "pr-plane-4",
+   "family": "right-prism-lateral-face",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến mp(BCC'B').",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến mp(BCC'B').",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "pr",
+       "solid_type": "prism",
+       "notation": "ABC.A'B'C'",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_angle",
+       "args": {
+        "vertex": "A",
+        "rays": [
+         "B",
+         "C"
+        ]
+       },
+       "quote": "Đáy ABC là tam giác vuông tại A."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "B"
+        ],
+        "value": "6"
+       },
+       "quote": "AB = 6."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "C"
+        ],
+        "value": "8"
+       },
+       "quote": "AC = 8."
+      },
+      {
+       "kind": "right_prism",
+       "args": {
+        "base": [
+         "A",
+         "B",
+         "C"
+        ],
+        "top": [
+         "A'",
+         "B'",
+         "C'"
+        ]
+       },
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "A'"
+        ],
+        "value": "12"
+       },
+       "quote": "AA' = 12."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "pr",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "A",
+        "plane": [
+         "B",
+         "C",
+         "C'",
+         "B'"
+        ]
+       },
+       "quote": "Tính khoảng cách từ A đến mp(BCC'B')."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "24/5"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "pr-plane-5",
+   "family": "right-prism-lateral-face",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến (BCC'B').",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A đến (BCC'B').",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "pr",
+       "solid_type": "prism",
+       "notation": "ABC.A'B'C'",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_angle",
+       "args": {
+        "vertex": "A",
+        "rays": [
+         "B",
+         "C"
+        ]
+       },
+       "quote": "Đáy ABC là tam giác vuông tại A."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "B"
+        ],
+        "value": "6"
+       },
+       "quote": "AB = 6."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "C"
+        ],
+        "value": "8"
+       },
+       "quote": "AC = 8."
+      },
+      {
+       "kind": "right_prism",
+       "args": {
+        "base": [
+         "A",
+         "B",
+         "C"
+        ],
+        "top": [
+         "A'",
+         "B'",
+         "C'"
+        ]
+       },
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "A'"
+        ],
+        "value": "12"
+       },
+       "quote": "AA' = 12."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "pr",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "A",
+        "plane": [
+         "B",
+         "C",
+         "C'",
+         "B'"
+        ]
+       },
+       "quote": "Tính khoảng cách từ A đến (BCC'B')."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "24/5"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "pr-gap-plane-containing-face",
+   "family": "right-prism-lateral-face",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ điểm A đến mặt phẳng chứa mặt bên (BCC'B').",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": "KNOWN_GAP"
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ điểm A đến mặt phẳng chứa mặt bên (BCC'B').",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "pr",
+       "solid_type": "prism",
+       "notation": "ABC.A'B'C'",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "right_angle",
+       "args": {
+        "vertex": "A",
+        "rays": [
+         "B",
+         "C"
+        ]
+       },
+       "quote": "Đáy ABC là tam giác vuông tại A."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "B"
+        ],
+        "value": "6"
+       },
+       "quote": "AB = 6."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "C"
+        ],
+        "value": "8"
+       },
+       "quote": "AC = 8."
+      },
+      {
+       "kind": "right_prism",
+       "args": {
+        "base": [
+         "A",
+         "B",
+         "C"
+        ],
+        "top": [
+         "A'",
+         "B'",
+         "C'"
+        ]
+       },
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "A'"
+        ],
+        "value": "12"
+       },
+       "quote": "AA' = 12."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "pr",
+       "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "A",
+        "plane": [
+         "B",
+         "C",
+         "C'",
+         "B'"
+        ]
+       },
+       "quote": "Tính khoảng cách từ điểm A đến mặt phẳng chứa mặt bên (BCC'B')."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "24/5"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-dist-goal-0",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-dist-goal-1",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tìm khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tìm khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tìm khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-dist-goal-2",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tìm khoảng cách từ S tới BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tìm khoảng cách từ S tới BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tìm khoảng cách từ S tới BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-dist-goal-3",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Khoảng cách từ S đến đường thẳng BD bằng bao nhiêu?",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Khoảng cách từ S đến đường thẳng BD bằng bao nhiêu?",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Khoảng cách từ S đến đường thẳng BD bằng bao nhiêu?"
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-dist-goal-4",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ điểm S đến đường thẳng BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ điểm S đến đường thẳng BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ điểm S đến đường thẳng BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-angle-goal-0",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính góc giữa SC và mặt phẳng (ABCD).",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính góc giữa SC và mặt phẳng (ABCD).",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "angle",
+       "target": {
+        "line": [
+         "S",
+         "C"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "Tính góc giữa SC và mặt phẳng (ABCD)."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "32/41"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-angle-goal-1",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính góc giữa đường thẳng SC và mặt đáy.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính góc giữa đường thẳng SC và mặt đáy.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "angle",
+       "target": {
+        "line": [
+         "S",
+         "C"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "Tính góc giữa đường thẳng SC và mặt đáy."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "32/41"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-angle-goal-2",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính góc tạo bởi SC và (ABCD).",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính góc tạo bởi SC và (ABCD).",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "angle",
+       "target": {
+        "line": [
+         "S",
+         "C"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "Tính góc tạo bởi SC và (ABCD)."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "32/41"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-angle-goal-3",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Góc giữa SC và đáy bằng bao nhiêu?",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Góc giữa SC và đáy bằng bao nhiêu?",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "angle",
+       "target": {
+        "line": [
+         "S",
+         "C"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "Góc giữa SC và đáy bằng bao nhiêu?"
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "32/41"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-base-0",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-base-1",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy là hình vuông ABCD cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy là hình vuông ABCD cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy là hình vuông ABCD cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-base-2",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông có cạnh bằng 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông có cạnh bằng 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông có cạnh bằng 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-base-3",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông, cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông, cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông, cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-base-4",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông với cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông với cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông với cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-base-5",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông và có cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông và có cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông và có cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-base-6",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông có độ dài cạnh bằng 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông có độ dài cạnh bằng 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông có độ dài cạnh bằng 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-base-7",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông có cạnh là 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông có cạnh là 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông có cạnh là 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-perp-0",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với đáy. SA = 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với đáy. SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với đáy."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-perp-1",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA ⊥ (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA ⊥ (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA ⊥ (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-perp-2",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt đáy (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt đáy (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt đáy (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-perp-3",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. Cạnh bên SA vuông góc với đáy ABCD. SA = 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. Cạnh bên SA vuông góc với đáy ABCD. SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "Cạnh bên SA vuông góc với đáy ABCD."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-perp-4",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng đáy. SA = 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng đáy. SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng đáy."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-len-0",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA bằng 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA bằng 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA bằng 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-len-1",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3 cm. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3 cm. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3 cm."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-len-2",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). Cạnh bên SA có độ dài bằng 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). Cạnh bên SA có độ dài bằng 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "Cạnh bên SA có độ dài bằng 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-len-3",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). Cho SA = 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). Cho SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "Cho SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-rename-PKLMN-2-5",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp P.KLMN. Đáy KLMN là hình vuông cạnh 2. PK vuông góc với mặt phẳng (KLMN). PK = 5. Tính khoảng cách từ P đến LN.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp P.KLMN. Đáy KLMN là hình vuông cạnh 2. PK vuông góc với mặt phẳng (KLMN). PK = 5. Tính khoảng cách từ P đến LN.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "P.KLMN",
+       "quote": "Cho hình chóp P.KLMN."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "K",
+         "L",
+         "M",
+         "N"
+        ],
+        "side": "2"
+       },
+       "quote": "Đáy KLMN là hình vuông cạnh 2."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "P",
+         "K"
+        ],
+        "plane": [
+         "K",
+         "L",
+         "M",
+         "N"
+        ]
+       },
+       "quote": "PK vuông góc với mặt phẳng (KLMN)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "P",
+         "K"
+        ],
+        "value": "5"
+       },
+       "quote": "PK = 5."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp P.KLMN."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "P",
+        "line": [
+         "L",
+         "N"
+        ]
+       },
+       "quote": "Tính khoảng cách từ P đến LN."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "3√3"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-rename-angle-PKLMN-2-5",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp P.KLMN. Đáy KLMN là hình vuông cạnh 2. PK vuông góc với mặt phẳng (KLMN). PK = 5. Tính góc giữa PM và mặt phẳng (KLMN).",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp P.KLMN. Đáy KLMN là hình vuông cạnh 2. PK vuông góc với mặt phẳng (KLMN). PK = 5. Tính góc giữa PM và mặt phẳng (KLMN).",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "P.KLMN",
+       "quote": "Cho hình chóp P.KLMN."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "K",
+         "L",
+         "M",
+         "N"
+        ],
+        "side": "2"
+       },
+       "quote": "Đáy KLMN là hình vuông cạnh 2."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "P",
+         "K"
+        ],
+        "plane": [
+         "K",
+         "L",
+         "M",
+         "N"
+        ]
+       },
+       "quote": "PK vuông góc với mặt phẳng (KLMN)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "P",
+         "K"
+        ],
+        "value": "5"
+       },
+       "quote": "PK = 5."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp P.KLMN."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "angle",
+       "target": {
+        "line": [
+         "P",
+         "M"
+        ],
+        "plane": [
+         "K",
+         "L",
+         "M",
+         "N"
+        ]
+       },
+       "quote": "Tính góc giữa PM và mặt phẳng (KLMN)."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "8/33"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-rename-SABCD-6-1",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 6. SA vuông góc với mặt phẳng (ABCD). SA = 1. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 6. SA vuông góc với mặt phẳng (ABCD). SA = 1. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "6"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 6."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "1"
+       },
+       "quote": "SA = 1."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√19"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-rename-angle-SABCD-6-1",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 6. SA vuông góc với mặt phẳng (ABCD). SA = 1. Tính góc giữa SC và mặt phẳng (ABCD).",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 6. SA vuông góc với mặt phẳng (ABCD). SA = 1. Tính góc giữa SC và mặt phẳng (ABCD).",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "6"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 6."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "1"
+       },
+       "quote": "SA = 1."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "angle",
+       "target": {
+        "line": [
+         "S",
+         "C"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "Tính góc giữa SC và mặt phẳng (ABCD)."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "72/73"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-rename-OPQRT-5-12",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp O.PQRT. Đáy PQRT là hình vuông cạnh 5. OP vuông góc với mặt phẳng (PQRT). OP = 12. Tính khoảng cách từ O đến QT.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp O.PQRT. Đáy PQRT là hình vuông cạnh 5. OP vuông góc với mặt phẳng (PQRT). OP = 12. Tính khoảng cách từ O đến QT.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "O.PQRT",
+       "quote": "Cho hình chóp O.PQRT."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "P",
+         "Q",
+         "R",
+         "T"
+        ],
+        "side": "5"
+       },
+       "quote": "Đáy PQRT là hình vuông cạnh 5."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "O",
+         "P"
+        ],
+        "plane": [
+         "P",
+         "Q",
+         "R",
+         "T"
+        ]
+       },
+       "quote": "OP vuông góc với mặt phẳng (PQRT)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "O",
+         "P"
+        ],
+        "value": "12"
+       },
+       "quote": "OP = 12."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp O.PQRT."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "O",
+        "line": [
+         "Q",
+         "T"
+        ]
+       },
+       "quote": "Tính khoảng cách từ O đến QT."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√626/2"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-rename-angle-OPQRT-5-12",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp O.PQRT. Đáy PQRT là hình vuông cạnh 5. OP vuông góc với mặt phẳng (PQRT). OP = 12. Tính góc giữa OR và mặt phẳng (PQRT).",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp O.PQRT. Đáy PQRT là hình vuông cạnh 5. OP vuông góc với mặt phẳng (PQRT). OP = 12. Tính góc giữa OR và mặt phẳng (PQRT).",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "O.PQRT",
+       "quote": "Cho hình chóp O.PQRT."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "P",
+         "Q",
+         "R",
+         "T"
+        ],
+        "side": "5"
+       },
+       "quote": "Đáy PQRT là hình vuông cạnh 5."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "O",
+         "P"
+        ],
+        "plane": [
+         "P",
+         "Q",
+         "R",
+         "T"
+        ]
+       },
+       "quote": "OP vuông góc với mặt phẳng (PQRT)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "O",
+         "P"
+        ],
+        "value": "12"
+       },
+       "quote": "OP = 12."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp O.PQRT."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "angle",
+       "target": {
+        "line": [
+         "O",
+         "R"
+        ],
+        "plane": [
+         "P",
+         "Q",
+         "R",
+         "T"
+        ]
+       },
+       "quote": "Tính góc giữa OR và mặt phẳng (PQRT)."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "25/97"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-gap-notation-d",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính d(S, BD).",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": "KNOWN_GAP"
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính d(S, BD).",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính d(S, BD)."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-gap-plane-day-labelled",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính góc giữa đường thẳng SC và mặt phẳng đáy (ABCD).",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": "KNOWN_GAP"
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính góc giữa đường thẳng SC và mặt phẳng đáy (ABCD).",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "angle",
+       "target": {
+        "line": [
+         "S",
+         "C"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "Tính góc giữa đường thẳng SC và mặt phẳng đáy (ABCD)."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "32/41"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-gap-side-in-parentheses",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông (cạnh 4). SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": "KNOWN_GAP"
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông (cạnh 4). SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông (cạnh 4)."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "SERVE",
+     "values": {
+      "q": "√17"
+     }
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-neg-no-height",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "REFUSE",
+     "category": "INSUFFICIENT",
+     "allowed_codes": [
+      "MISSING_DIMENSION"
+     ]
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-neg-no-perp",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA = 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "REFUSE",
+     "category": "INSUFFICIENT",
+     "allowed_codes": [
+      "UNDERDETERMINED_POINT"
+     ]
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-neg-prove-perp",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. Chứng minh rằng SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. Chứng minh rằng SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "REFUSE",
+     "category": "UNPROVEN_RELATION",
+     "allowed_codes": [
+      "UNDERDETERMINED_POINT",
+      "GOAL_CLAUSE_NOT_PREMISE"
+     ]
+    },
+    "contradiction": false
+   },
+   "stress_payloads": [
+    {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. Chứng minh rằng SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "Chứng minh rằng SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "py-neg-conditional-perp",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. Nếu SA vuông góc với mặt phẳng (ABCD) thì SA = 3. SA = 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. Nếu SA vuông góc với mặt phẳng (ABCD) thì SA = 3. SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "REFUSE",
+     "category": "NOT_A_PREMISE",
+     "allowed_codes": [
+      "UNDERDETERMINED_POINT",
+      "CONDITIONAL_CLAUSE"
+     ]
+    },
+    "contradiction": false
+   },
+   "stress_payloads": [
+    {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. Nếu SA vuông góc với mặt phẳng (ABCD) thì SA = 3. SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "Nếu SA vuông góc với mặt phẳng (ABCD) thì SA = 3."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "py-neg-negated-perp",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA không vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA không vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "REFUSE",
+     "category": "NOT_A_PREMISE",
+     "allowed_codes": [
+      "UNDERDETERMINED_POINT",
+      "NEGATED_CLAUSE"
+     ]
+    },
+    "contradiction": false
+   },
+   "stress_payloads": [
+    {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA không vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA không vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "py-neg-two-heights",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. SA = 5. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. SA = 5. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "5"
+       },
+       "quote": "SA = 5."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "REFUSE",
+     "category": "CONTRADICTORY",
+     "allowed_codes": [
+      "INCONSISTENT_FACTS"
+     ]
+    },
+    "contradiction": true
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-neg-side-vs-diagonal",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. AC = 4. Tính khoảng cách từ S đến BD.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. AC = 4. Tính khoảng cách từ S đến BD.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "A",
+         "C"
+        ],
+        "value": "4"
+       },
+       "quote": "AC = 4."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "D"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BD."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "REFUSE",
+     "category": "CONTRADICTORY",
+     "allowed_codes": [
+      "INCONSISTENT_FACTS"
+     ]
+    },
+    "contradiction": true
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-neg-unknown-label",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BX.",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": ""
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính khoảng cách từ S đến BX.",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "distance",
+       "target": {
+        "point": "S",
+        "line": [
+         "B",
+         "X"
+        ]
+       },
+       "quote": "Tính khoảng cách từ S đến BX."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "REFUSE",
+     "category": "AMBIGUOUS",
+     "allowed_codes": [
+      "UNDERDETERMINED_POINT"
+     ]
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  },
+  {
+   "id": "py-neg-degree-measure",
+   "family": "pyramid-sa-perp-base",
+   "split": "DEV_AUTHORED",
+   "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính số đo góc giữa SC và mặt phẳng (ABCD).",
+   "provenance": {
+    "author_kind": "SAME_AGENT",
+    "origin": "HAND_AUTHORED_WORDING_VARIANT",
+    "author": "implementing-agent",
+    "created": "2026-10-27",
+    "note": "the product returns cos² of the angle, never the degree measure: asking the measure is refused by design"
+   },
+   "exposure": {
+    "label": "EXPOSED",
+    "in_tests": true,
+    "in_prompt": false,
+    "seen_by_implementer": true
+   },
+   "gold": {
+    "payload": {
+     "schema_version": "typed-fact-next/2",
+     "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 4. SA vuông góc với mặt phẳng (ABCD). SA = 3. Tính số đo góc giữa SC và mặt phẳng (ABCD).",
+     "length_unit": "1",
+     "solids": [
+      {
+       "solid_id": "py",
+       "solid_type": "pyramid",
+       "notation": "S.ABCD",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "premises": [
+      {
+       "kind": "base_is_square",
+       "args": {
+        "vertices": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ],
+        "side": "4"
+       },
+       "quote": "Đáy ABCD là hình vuông cạnh 4."
+      },
+      {
+       "kind": "perpendicular_line_plane",
+       "args": {
+        "line": [
+         "S",
+         "A"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "SA vuông góc với mặt phẳng (ABCD)."
+      },
+      {
+       "kind": "segment_length",
+       "args": {
+        "segment": [
+         "S",
+         "A"
+        ],
+        "value": "3"
+       },
+       "quote": "SA = 3."
+      }
+     ],
+     "simulation_goals": [
+      {
+       "goal_id": "draw",
+       "kind": "construct_object",
+       "target_solid_id": "py",
+       "quote": "Cho hình chóp S.ABCD."
+      }
+     ],
+     "math_goals": [
+      {
+       "goal_id": "q",
+       "kind": "measurement",
+       "goal_type": "angle",
+       "target": {
+        "line": [
+         "S",
+         "C"
+        ],
+        "plane": [
+         "A",
+         "B",
+         "C",
+         "D"
+        ]
+       },
+       "quote": "Tính số đo góc giữa SC và mặt phẳng (ABCD)."
+      }
+     ]
+    },
+    "expectation": {
+     "disposition": "REFUSE",
+     "category": "UNSUPPORTED",
+     "allowed_codes": [
+      "QUESTION_CONTEXT_UNSUPPORTED"
+     ]
+    },
+    "contradiction": false
+   },
+   "stress_payloads": []
+  }
+ ]
+}

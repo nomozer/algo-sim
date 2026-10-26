@@ -1,0 +1,2136 @@
+{
+ "schema": "nl-eval-report/1",
+ "dataset_sha256": "a0e66799edd30781903abe3bc564650097b572a4fdb20ba0210eec75166a0d11",
+ "claim_ceiling": "DEV_AUTHORED_NOT_INDEPENDENT",
+ "provider_calls": 0,
+ "gold_arm": {
+  "summary": {
+   "n": 51,
+   "outcomes": {
+    "CORRECT_SERVED": 38,
+    "INCORRECT_SERVED": 0,
+    "CORRECT_REFUSED": 9,
+    "INCORRECT_REFUSED": 4,
+    "EXTRACTION_FAILURE": 0
+   },
+   "entity_exact": 50,
+   "goal_exact": 50,
+   "provenance_ok": 50,
+   "facts": {
+    "tp": 162,
+    "fp": 0,
+    "fn": 2
+   },
+   "contradiction": {
+    "n": 2,
+    "refused_by_gate": 2,
+    "served": 0
+   },
+   "e2e": {
+    "correct_served": 38,
+    "gold_serve_items": 42,
+    "served": 38
+   }
+  },
+  "rows": [
+   {
+    "id": "pr-plane-0",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "24/5"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 5,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "pr-plane-1",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "24/5"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 5,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "pr-plane-2",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "24/5"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 5,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "pr-plane-3",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "24/5"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 5,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "pr-plane-4",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "24/5"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 5,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "pr-plane-5",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "24/5"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 5,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "pr-gap-plane-containing-face",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "answers": {},
+     "failure_stage": "deterministic_route",
+     "failure_kind": "SOURCE_UNVERIFIED"
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "INCORRECT_REFUSED",
+    "detail": "SOURCE_OBJECT_MISMATCH",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 5,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-dist-goal-0",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-dist-goal-1",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-dist-goal-2",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-dist-goal-3",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-dist-goal-4",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-angle-goal-0",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "cos²=32/41"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-angle-goal-1",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "cos²=32/41"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-angle-goal-2",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "cos²=32/41"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-angle-goal-3",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "cos²=32/41"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-base-0",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-base-1",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-base-2",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-base-3",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-base-4",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-base-5",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-base-6",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-base-7",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-perp-0",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-perp-1",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-perp-2",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-perp-3",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-perp-4",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-len-0",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-len-1",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-len-2",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-len-3",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√17"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-rename-PKLMN-2-5",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "3√3"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-rename-angle-PKLMN-2-5",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "cos²=8/33"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-rename-SABCD-6-1",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√19"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-rename-angle-SABCD-6-1",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "cos²=72/73"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-rename-OPQRT-5-12",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "√626/2"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-rename-angle-OPQRT-5-12",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "cos²=25/97"
+     },
+     "failure_stage": null,
+     "failure_kind": null
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "CORRECT_SERVED",
+    "detail": "{\"q\": true}",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-gap-notation-d",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "answers": {},
+     "failure_stage": "deterministic_route",
+     "failure_kind": "SOURCE_UNVERIFIED"
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "INCORRECT_REFUSED",
+    "detail": "SOURCE_OBJECT_MISMATCH",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-gap-plane-day-labelled",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "REFUSED",
+     "code": "NOT_ASKED_IN_SOURCE",
+     "answers": {},
+     "failure_stage": "deterministic_route",
+     "failure_kind": "SOURCE_UNVERIFIED"
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "INCORRECT_REFUSED",
+    "detail": "NOT_ASKED_IN_SOURCE",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-gap-side-in-parentheses",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "REFUSED",
+     "code": "UNGROUNDED_VALUE",
+     "answers": {},
+     "failure_stage": "deterministic_route",
+     "failure_kind": "SOURCE_UNVERIFIED"
+    },
+    "gold_disposition": "SERVE",
+    "outcome": "INCORRECT_REFUSED",
+    "detail": "UNGROUNDED_VALUE",
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-neg-no-height",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "REFUSED",
+     "code": "MISSING_DIMENSION",
+     "answers": {},
+     "failure_stage": "deterministic_route",
+     "failure_kind": "MISSING_DATA"
+    },
+    "gold_disposition": "REFUSE",
+    "outcome": "CORRECT_REFUSED",
+    "detail": "MISSING_DIMENSION",
+    "code_in_allowed": true,
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-neg-no-perp",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "REFUSED",
+     "code": "UNDERDETERMINED_POINT",
+     "answers": {},
+     "failure_stage": "deterministic_route",
+     "failure_kind": "MISSING_DATA"
+    },
+    "gold_disposition": "REFUSE",
+    "outcome": "CORRECT_REFUSED",
+    "detail": "UNDERDETERMINED_POINT",
+    "code_in_allowed": true,
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-neg-prove-perp",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "REFUSED",
+     "code": "UNDERDETERMINED_POINT",
+     "answers": {},
+     "failure_stage": "deterministic_route",
+     "failure_kind": "MISSING_DATA"
+    },
+    "gold_disposition": "REFUSE",
+    "outcome": "CORRECT_REFUSED",
+    "detail": "UNDERDETERMINED_POINT",
+    "code_in_allowed": true,
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-neg-conditional-perp",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "REFUSED",
+     "code": "CONDITIONAL_CLAUSE",
+     "answers": {},
+     "failure_stage": "extraction",
+     "failure_kind": "EXTRACTION_FAILURE"
+    },
+    "gold_disposition": "REFUSE",
+    "outcome": "CORRECT_REFUSED",
+    "detail": "CONDITIONAL_CLAUSE",
+    "code_in_allowed": true,
+    "layers": {
+     "entity": {
+      "exact": false
+     },
+     "facts": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2
+     },
+     "goal": {
+      "exact": false
+     },
+     "provenance": {
+      "ok": false,
+      "bad_quotes": [
+       "<no extraction>"
+      ]
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-neg-negated-perp",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "REFUSED",
+     "code": "SOURCE_PREMISE_UNREAD",
+     "answers": {},
+     "failure_stage": "deterministic_route",
+     "failure_kind": "SOURCE_UNVERIFIED"
+    },
+    "gold_disposition": "REFUSE",
+    "outcome": "CORRECT_REFUSED",
+    "detail": "SOURCE_PREMISE_UNREAD",
+    "code_in_allowed": false,
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-neg-two-heights",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "REFUSED",
+     "code": "INCONSISTENT_FACTS",
+     "answers": {},
+     "failure_stage": "deterministic_route",
+     "failure_kind": "INVALID_DATA"
+    },
+    "gold_disposition": "REFUSE",
+    "outcome": "CORRECT_REFUSED",
+    "detail": "INCONSISTENT_FACTS",
+    "code_in_allowed": true,
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 4,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": true
+   },
+   {
+    "id": "py-neg-side-vs-diagonal",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "REFUSED",
+     "code": "INCONSISTENT_FACTS",
+     "answers": {},
+     "failure_stage": "deterministic_route",
+     "failure_kind": "INVALID_DATA"
+    },
+    "gold_disposition": "REFUSE",
+    "outcome": "CORRECT_REFUSED",
+    "detail": "INCONSISTENT_FACTS",
+    "code_in_allowed": true,
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 4,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": true
+   },
+   {
+    "id": "py-neg-unknown-label",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "REFUSED",
+     "code": "UNDERDETERMINED_POINT",
+     "answers": {},
+     "failure_stage": "deterministic_route",
+     "failure_kind": "MISSING_DATA"
+    },
+    "gold_disposition": "REFUSE",
+    "outcome": "CORRECT_REFUSED",
+    "detail": "UNDERDETERMINED_POINT",
+    "code_in_allowed": true,
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-neg-degree-measure",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "REFUSED",
+     "code": "QUESTION_CONTEXT_UNSUPPORTED",
+     "answers": {},
+     "failure_stage": "deterministic_route",
+     "failure_kind": "CAPABILITY"
+    },
+    "gold_disposition": "REFUSE",
+    "outcome": "CORRECT_REFUSED",
+    "detail": "QUESTION_CONTEXT_UNSUPPORTED",
+    "code_in_allowed": true,
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   }
+  ]
+ },
+ "stress_arm": {
+  "summary": {
+   "n": 7,
+   "outcomes": {
+    "CORRECT_SERVED": 0,
+    "INCORRECT_SERVED": 0,
+    "CORRECT_REFUSED": 7,
+    "INCORRECT_REFUSED": 0,
+    "EXTRACTION_FAILURE": 0
+   },
+   "entity_exact": 2,
+   "goal_exact": 2,
+   "provenance_ok": 1,
+   "facts": {
+    "tp": 10,
+    "fp": 0,
+    "fn": 19
+   },
+   "contradiction": {
+    "n": 0,
+    "refused_by_gate": 0,
+    "served": 0
+   },
+   "e2e": {
+    "correct_served": 0,
+    "gold_serve_items": 0,
+    "served": 0
+   }
+  },
+  "rows": [
+   {
+    "id": "pr-plane-0#stress0",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "REFUSED",
+     "code": "UNKNOWN_LABEL",
+     "answers": {},
+     "failure_stage": "deterministic_route",
+     "failure_kind": "SOURCE_UNVERIFIED"
+    },
+    "gold_disposition": "REFUSE",
+    "outcome": "CORRECT_REFUSED",
+    "detail": "UNKNOWN_LABEL",
+    "code_in_allowed": null,
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 5,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": false,
+      "bad_quotes": [
+       "Tính khoảng cách từ A đến mặt phẳng (BCC'B')."
+      ]
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "pr-plane-0#stress1",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "REFUSED",
+     "code": "UNGROUNDED_VALUE",
+     "answers": {},
+     "failure_stage": "deterministic_route",
+     "failure_kind": "SOURCE_UNVERIFIED"
+    },
+    "gold_disposition": "REFUSE",
+    "outcome": "CORRECT_REFUSED",
+    "detail": "UNGROUNDED_VALUE",
+    "code_in_allowed": null,
+    "layers": {
+     "entity": {
+      "exact": true,
+      "missing": [],
+      "extra": []
+     },
+     "facts": {
+      "tp": 5,
+      "fp": 0,
+      "fn": 0
+     },
+     "goal": {
+      "exact": true
+     },
+     "provenance": {
+      "ok": true,
+      "bad_quotes": []
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "pr-plane-0#stress2",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "REFUSED",
+     "code": "INVALID_PREMISE_ARGS",
+     "answers": {},
+     "failure_stage": "extraction",
+     "failure_kind": "EXTRACTION_FAILURE"
+    },
+    "gold_disposition": "REFUSE",
+    "outcome": "CORRECT_REFUSED",
+    "detail": "INVALID_PREMISE_ARGS",
+    "code_in_allowed": null,
+    "layers": {
+     "entity": {
+      "exact": false
+     },
+     "facts": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 5
+     },
+     "goal": {
+      "exact": false
+     },
+     "provenance": {
+      "ok": false,
+      "bad_quotes": [
+       "<no extraction>"
+      ]
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "pr-plane-0#stress3",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "REFUSED",
+     "code": "INVALID_PREMISE_ARGS",
+     "answers": {},
+     "failure_stage": "extraction",
+     "failure_kind": "EXTRACTION_FAILURE"
+    },
+    "gold_disposition": "REFUSE",
+    "outcome": "CORRECT_REFUSED",
+    "detail": "INVALID_PREMISE_ARGS",
+    "code_in_allowed": null,
+    "layers": {
+     "entity": {
+      "exact": false
+     },
+     "facts": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 5
+     },
+     "goal": {
+      "exact": false
+     },
+     "provenance": {
+      "ok": false,
+      "bad_quotes": [
+       "<no extraction>"
+      ]
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-neg-prove-perp#stress0",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "REFUSED",
+     "code": "GOAL_CLAUSE_NOT_PREMISE",
+     "answers": {},
+     "failure_stage": "extraction",
+     "failure_kind": "EXTRACTION_FAILURE"
+    },
+    "gold_disposition": "REFUSE",
+    "outcome": "CORRECT_REFUSED",
+    "detail": "GOAL_CLAUSE_NOT_PREMISE",
+    "code_in_allowed": true,
+    "layers": {
+     "entity": {
+      "exact": false
+     },
+     "facts": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3
+     },
+     "goal": {
+      "exact": false
+     },
+     "provenance": {
+      "ok": false,
+      "bad_quotes": [
+       "<no extraction>"
+      ]
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-neg-conditional-perp#stress0",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "REFUSED",
+     "code": "CONDITIONAL_CLAUSE",
+     "answers": {},
+     "failure_stage": "extraction",
+     "failure_kind": "EXTRACTION_FAILURE"
+    },
+    "gold_disposition": "REFUSE",
+    "outcome": "CORRECT_REFUSED",
+    "detail": "CONDITIONAL_CLAUSE",
+    "code_in_allowed": true,
+    "layers": {
+     "entity": {
+      "exact": false
+     },
+     "facts": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3
+     },
+     "goal": {
+      "exact": false
+     },
+     "provenance": {
+      "ok": false,
+      "bad_quotes": [
+       "<no extraction>"
+      ]
+     }
+    },
+    "contradiction_gold": false
+   },
+   {
+    "id": "py-neg-negated-perp#stress0",
+    "split": "DEV_AUTHORED",
+    "route": {
+     "status": "REFUSED",
+     "code": "NEGATED_CLAUSE",
+     "answers": {},
+     "failure_stage": "extraction",
+     "failure_kind": "EXTRACTION_FAILURE"
+    },
+    "gold_disposition": "REFUSE",
+    "outcome": "CORRECT_REFUSED",
+    "detail": "NEGATED_CLAUSE",
+    "code_in_allowed": true,
+    "layers": {
+     "entity": {
+      "exact": false
+     },
+     "facts": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 3
+     },
+     "goal": {
+      "exact": false
+     },
+     "provenance": {
+      "ok": false,
+      "bad_quotes": [
+       "<no extraction>"
+      ]
+     }
+    },
+    "contradiction_gold": false
+   }
+  ]
+ }
+}
