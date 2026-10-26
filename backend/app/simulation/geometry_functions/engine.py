@@ -50,7 +50,7 @@ from .registry import DINH_CAT_CANH, _cum_hoi
 #: two lines "chéo nhau" but they are coplanar (NFC-normalised quote).
 #: /13 (run `hybrid-v2-backend-generalization`): question planes are measured through the first non-collinear triple of
 #: the whole label group (`chon_ba_mat`), every named label is checked coplanar, and the IR plane carries the full name.
-ENGINE_VERSION = "geometry-function-engine/13"
+ENGINE_VERSION = "geometry-function-engine/14"
 Z = Fraction(0)
 V3 = tuple[Fraction, Fraction, Fraction]
 
@@ -779,7 +779,8 @@ class _Dung:
         for c in self.calls:
             sua = {}
             for key in ("plane", "plane1", "plane2") if c.fn in ("ask_distance_point_plane", "ask_angle_line_plane",
-                                                                 "ask_angle_plane_plane") else ():
+                                                                 "ask_angle_plane_plane", "ask_distance_line_plane",
+                                                                 "ask_distance_planes") else ():
                 if (g := getattr(c.args, key, None)) is None:
                     continue
                 g = day_du.get(c.id, g) if c.fn == "ask_distance_point_plane" else list(g)
@@ -1050,6 +1051,28 @@ class _Dung:
               + M[0][2] * (M[1][0] * M[2][1] - M[1][1] * M[2][0]))
         return d3 / (M[0][0] * M[1][1] - M[0][1] * M[1][0])
 
+    def _det_gram(self, u: V3, v: V3, w: V3) -> Fraction:
+        """det Gram(u, v, w) — zero exactly when the three vectors are linearly dependent (any positive-definite G)."""
+        M = [[self.g(x, y) for y in (u, v, w)] for x in (u, v, w)]
+        return (M[0][0] * (M[1][1] * M[2][2] - M[1][2] * M[2][1]) - M[0][1] * (M[1][0] * M[2][2] - M[1][2] * M[2][0])
+                + M[0][2] * (M[1][0] * M[2][1] - M[1][1] * M[2][0]))
+
+    def _kc2_duong_mat(self, line: tuple[str, ...], mp: tuple[str, ...]) -> Fraction:
+        """Distance² between a line and a plane, from the chart Gram metric, independent of the kernel: the line meets the
+        plane (⇒ 0, also when it lies in it) unless its direction is in the plane's direction space, then every point of
+        the line is as far from the plane as its anchor."""
+        u, e1, e2 = self._vec(*line), self._vec(mp[0], mp[1]), self._vec(mp[0], mp[2])
+        return Fraction(0) if self._det_gram(u, e1, e2) != 0 else self._kc2_mat(line[0], mp)
+
+    def _kc2_mat_mat(self, mp: tuple[str, ...], mq: tuple[str, ...]) -> Fraction:
+        """Distance² between two planes: 0 unless both directions of `mq` lie in the direction space of `mp` (parallel or
+        coincident), then the distance of one point of `mq` to `mp`."""
+        e1, e2 = self._vec(mp[0], mp[1]), self._vec(mp[0], mp[2])
+        f1, f2 = self._vec(mq[0], mq[1]), self._vec(mq[0], mq[2])
+        if self._det_gram(f1, e1, e2) != 0 or self._det_gram(f2, e1, e2) != 0:
+            return Fraction(0)
+        return self._kc2_mat(mq[0], mp)
+
     def _canh_da_giac_deu(self, v) -> Fraction | None:
         """Exact Gram check: equal sides and equal distance to the vertex centroid ⇒ regular polygon; side² or None."""
         n = len(v)
@@ -1250,12 +1273,18 @@ class _Dung:
                 lenh.append(self._mat_hoi(c, "plane", mp, a.plane))
                 khai += [P.memory_declaration(dt, "line3"), P.memory_declaration(mp, "plane3")]
                 lenh.append(P.measure_quantity(kq, "angle_cos_sq", dt, mp))
-            elif c.fn == "ask_angle_plane_plane":
+            elif c.fn in ("ask_angle_plane_plane", "ask_distance_planes"):
                 m1, m2 = f"mp1_{c.id}", f"mp2_{c.id}"
                 for m, key, mp in ((m1, "plane1", a.plane1), (m2, "plane2", a.plane2)):
                     lenh.append(self._mat_hoi(c, key, m, mp))
                     khai.append(P.memory_declaration(m, "plane3"))
-                lenh.append(P.measure_quantity(kq, "angle_cos_sq", m1, m2))
+                lenh.append(P.measure_quantity(kq, "angle_cos_sq" if c.fn == "ask_angle_plane_plane" else "distance", m1, m2))
+            elif c.fn == "ask_distance_line_plane":
+                dt, mp = f"dt_{c.id}", f"mp_{c.id}"
+                lenh.append(P.construct_line(dt, ir_name(a.line[0]), ir_name(a.line[1])))
+                lenh.append(self._mat_hoi(c, "plane", mp, a.plane))
+                khai += [P.memory_declaration(dt, "line3"), P.memory_declaration(mp, "plane3")]
+                lenh.append(P.measure_quantity(kq, "distance", dt, mp))
             elif c.fn in ("ask_distance_lines", "ask_angle_lines"):
                 d1, d2 = f"dt1_{c.id}", f"dt2_{c.id}"
                 for d, ln in ((d1, a.line1), (d2, a.line2)):
@@ -1320,6 +1349,14 @@ class _Dung:
                     cur_id = (c.id,)
                     self._line(c.args.line)
                     self._plane(c.args.plane[:3])
+                for c in self.of("ask_distance_line_plane"):
+                    cur_id = (c.id,)
+                    self._line(c.args.line)
+                    self._plane(c.args.plane[:3])
+                for c in self.of("ask_distance_planes"):
+                    cur_id = (c.id,)
+                    self._plane(c.args.plane1[:3])
+                    self._plane(c.args.plane2[:3])
                 for c in self.of("ask_angle_lines"):              # a line through two coincident points ⇒ kernel code
                     cur_id = (c.id,)
                     self._line(c.args.line1)
@@ -1641,7 +1678,8 @@ _KIEM_DICH = {
 #: Bậc theo độ dài của mỗi đại lượng được hỏi — đáp số với độ dài ký hiệu a là (hệ số tại a = 1) · a^bậc.
 BAC_DAI_LUONG = {"ask_volume": 3, "ask_length": 1, "ask_distance_point_plane": 1, "ask_angle_line_plane": 0,
                  "ask_area": 2, "ask_angle_plane_plane": 0, "ask_distance_lines": 1, "ask_section_area": 2,
-                 "ask_angle_lines": 0, "ask_volume_ratio": 0, "ask_residual_volume": 3}
+                 "ask_angle_lines": 0, "ask_volume_ratio": 0, "ask_residual_volume": 3,
+                 "ask_distance_line_plane": 1, "ask_distance_planes": 1}
 
 
 #: Definitions of the unnamed points a planner `effect-chain` may introduce (affine: valid in chart coordinates). A
@@ -1842,6 +1880,12 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         for c in dung.of("ask_angle_line_plane"):
             if fm.get(hoi.get(c.id, "")) != dung._goc_duong_mat_cos2(tuple(c.args.line), tuple(c.args.plane[:3])):
                 raise TuChoi("ENGINE_SELF_CHECK_FAILED", "góc đường–mặt thực thi khác công thức Gram độc lập", (c.id,))
+        for c in dung.of("ask_distance_line_plane"):
+            if _binh_phuong(fm.get(hoi.get(c.id, ""))) != dung._kc2_duong_mat(tuple(c.args.line), tuple(c.args.plane[:3])):
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", "khoảng cách đường–mặt thực thi khác công thức Gram độc lập", (c.id,))
+        for c in dung.of("ask_distance_planes"):
+            if _binh_phuong(fm.get(hoi.get(c.id, ""))) != dung._kc2_mat_mat(tuple(c.args.plane1[:3]), tuple(c.args.plane2[:3])):
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", "khoảng cách mặt–mặt thực thi khác công thức Gram độc lập", (c.id,))
         for c in dung.of("ask_angle_lines"):
             if fm.get(hoi.get(c.id, "")) != dung._goc_hai_duong_cos2(tuple(c.args.line1), tuple(c.args.line2)):
                 raise TuChoi("ENGINE_SELF_CHECK_FAILED", "góc hai đường thực thi khác công thức Gram độc lập", (c.id,))

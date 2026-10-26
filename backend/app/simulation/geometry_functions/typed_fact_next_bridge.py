@@ -94,6 +94,12 @@ def _distance_question(g) -> dict[str, Any]:
         return {"quantity": "length", "points": seg}
     if set(t) == {"line1", "line2"} and (l1 := pts("line1", 2)) and (l2 := pts("line2", 2)):
         return {"quantity": "distance", "points_a": l1, "points_b": l2}
+    # `{line, plane}` / `{plane1, plane2}` (run `hybrid-v2-nl-certificates-e2e`): the kernel measures both exactly (0 when
+    # they meet). Same arity rule: a line is exactly two labels, a plane three or more.
+    if set(t) == {"line", "plane"} and (ln := pts("line", 2)) and (pl := pts("plane", 3)):
+        return {"quantity": "distance", "points_a": ln, "points_b": pl}
+    if set(t) == {"plane1", "plane2"} and (p1 := pts("plane1", 3)) and (p2 := pts("plane2", 3)):
+        return {"quantity": "distance", "points_a": p1, "points_b": p2}
     # `{point, line}` (run `hybrid-v2-backend-generalization`): the planner's point–line decomposition — the foot is built
     # on a fresh auxiliary label (`orthogonal_projection_line`) and checked by the engine; nothing is named here.
     if set(t) == {"point", "line"} and isinstance(t["point"], str) and (ln := pts("line", 2)):

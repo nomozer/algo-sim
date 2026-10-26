@@ -44,7 +44,7 @@ from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationEr
 #: reads "M thuộc cạnh SA sao cho …"; `DINH_CAT_CANH` cut-clause / derived-pyramid certificate.
 #: /13 (run `hybrid-contract-v2`, owner D3/D5/D6): `intersect_line_plane` planning contract (effect `Meet`); `derived_fresh`
 #: section vertices; closed definition / cut-clause alternatives (see `_QUA_SONG_SONG`, `_cum_cat_canh`).
-REGISTRY_VERSION = "geometry-functions/13"
+REGISTRY_VERSION = "geometry-functions/14"
 
 
 class TuChoi(Exception):
@@ -268,6 +268,16 @@ class AskDistancePointPlaneArgs(_Args):
 class AskDistanceLinesArgs(_Args):
     line1: Seg
     line2: Seg
+
+
+class AskDistanceLinePlaneArgs(_Args):
+    line: Seg
+    plane: Poly
+
+
+class AskDistancePlanesArgs(_Args):
+    plane1: Poly
+    plane2: Poly
 
 
 class AskAngleLinePlaneArgs(_Args):
@@ -501,6 +511,12 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
                                  call=(("point", "P"), ("plane", "Q")))),
     _F("ask_distance_lines", AskDistanceLinesArgs, "ask", "Đề hỏi khoảng cách giữa hai đường thẳng (chéo nhau).",
        (("khoảng cách",),)),
+    # Run `hybrid-v2-nl-certificates-e2e`: kernel/IR already measure `distance(line3, plane3)` and `distance(plane3, plane3)`
+    # exactly (`measure.distance_sq_line_plane` / `distance_sq_planes`); these expose them to route B / `/4` only.
+    _F("ask_distance_line_plane", AskDistanceLinePlaneArgs, "ask", "Đề hỏi khoảng cách giữa một đường thẳng và một mặt phẳng.",
+       (("khoảng cách",),), provider_offered=False),
+    _F("ask_distance_planes", AskDistancePlanesArgs, "ask", "Đề hỏi khoảng cách giữa hai mặt phẳng.",
+       (("khoảng cách",),), provider_offered=False),
     # Goal contracts of the angle asks (Wave 2A): the line is (described point P, named point Q), the target `{M}` a plane /
     # `{L}` a line, in closed wordings (both orders of "nối … với …"). Named angles keep their direct rule (`_cau_hoi`).
     _F("ask_angle_line_plane", AskAngleLinePlaneArgs, "ask", "Đề hỏi góc giữa đường thẳng và mặt phẳng (trả cos²).",
@@ -2829,6 +2845,15 @@ _CUM_HOI = {
     "ask_distance_lines": [
         (_cum(rf"khoảng cách\s+giữa\s+(?:hai\s+đường thẳng(?:\s+chéo nhau)?\s+)?{_doan_cum('a')}\s+(?:và|với)\s+{_doan_cum('b')}"),
          lambda m, a, k: {frozenset(_nhan_cum(m["a"])), frozenset(_nhan_cum(m["b"]))} == {frozenset(a.line1), frozenset(a.line2)})],
+    # a line (exactly two labels) and a plane group, or two plane groups: disjoint from `ask_distance_lines` (two labels each)
+    # and `ask_distance_point_plane` (one label before "đến")
+    "ask_distance_line_plane": [
+        (_cum(rf"khoảng cách\s+(?:giữa|từ)\s+{_doan_cum('l')}\s+(?:và|với|đến|tới)\s+{_mat_cum('m')}"),
+         lambda m, a, k: set(_nhan_cum(m["l"])) == set(a.line) and _cung_mat(_mat_cua(m, "m", k), a.plane)),
+        (_cum(rf"khoảng cách\s+giữa\s+{_mat_cum('m')}\s+(?:và|với)\s+{_doan_cum('l')}"),
+         lambda m, a, k: set(_nhan_cum(m["l"])) == set(a.line) and _cung_mat(_mat_cua(m, "m", k), a.plane))],
+    "ask_distance_planes": [
+        (_cum(rf"khoảng cách\s+(?:giữa|từ)\s+(?:hai\s+mặt phẳng\s+)?{_mat_cum('a')}\s+(?:và|với|đến|tới)\s+{_mat_cum('b')}"), _hai_mat)],
     "ask_angle_line_plane": [
         (_cum(rf"(?:số đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo bởi|hợp bởi)\s+{_doan_cum('l')}\s+(?:và|với)\s+{_mat_cum('m')}"),
          lambda m, a, k: set(_nhan_cum(m["l"])) == set(a.line) and _cung_mat(_mat_cua(m, "m", k), a.plane))],
@@ -3033,6 +3058,8 @@ _CHIEU_HAM_HOI = {
     "ask_length": "length",
     "ask_distance_point_plane": "length",
     "ask_distance_lines": "length",
+    "ask_distance_line_plane": "length",
+    "ask_distance_planes": "length",
     "ask_area": "area",
     "ask_section_area": "area",
     "ask_volume": "volume",

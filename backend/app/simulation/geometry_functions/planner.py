@@ -42,7 +42,7 @@ from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, rende
 #: producer); `/2`-only derived vertices on unstated lateral edges where a closed boundary is required; declared boundary.
 #: /14 (run `hybrid-v2-backend-generalization`): a > 3-label question plane is handed to the engine in full
 #: (`KeHoach.named_planes`, keyed by call id) instead of being cut to its first three labels.
-PLANNER_VERSION = "geometry-fact-planner/14"
+PLANNER_VERSION = "geometry-fact-planner/15"
 #: Nhãn điểm phụ: chuỗi H, H1, H2, …; nhãn đầu tiên không có trong đề lẫn dữ kiện (Label của Registry không cho namespace
 #: riêng mà không đổi bề mặt nhà cung cấp của A ⇒ "dành riêng" = chọn tươi + cổng kiểm `AUXILIARY_LABEL_COLLISION`).
 def _nhan_tuoi(stem: str) -> tuple[str, ...]:
@@ -1031,6 +1031,12 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
             return phat(f.id, "ask_distance_point_plane", {"point": a[0], "plane": b[:3]}, q, "question(distance point–plane)")
         if loai == ("line", "line"):
             return phat(f.id, "ask_distance_lines", {"line1": a, "line2": b}, q, "question(distance line–line)")
+        if loai == ("plane", "line"):
+            a, b, loai = b, a, ("line", "plane")
+        if loai == ("line", "plane"):
+            return phat(f.id, "ask_distance_line_plane", {"line": a, "plane": b}, q, "question(distance line–plane)")
+        if loai == ("plane", "plane"):
+            return phat(f.id, "ask_distance_planes", {"plane1": a, "plane2": b}, q, "question(distance plane–plane)")
         if loai in (("point", "line"), ("line", "point")) and f.role == "question" and not f.negated:
             p, dt = (a, b) if loai == ("point", "line") else (b, a)
             return _phan_ra(f, q, k, phat, p[0], dt)

@@ -1,4 +1,4 @@
-# Contract: Text-to-Geometry Functions & Kiến trúc Hybrid (`geometry-functions/13`, planner `geometry-fact-planner/14`, engine `geometry-function-engine/13`)
+# Contract: Text-to-Geometry Functions & Kiến trúc Hybrid (`geometry-functions/14`, planner `geometry-fact-planner/15`, engine `geometry-function-engine/14`)
 
 Contract **đang hiệu lực** của nền tảng hàm hình học và kiến trúc mục tiêu **Hybrid**
 ([`TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md`](TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md),
@@ -20,8 +20,8 @@ Sửa contract ⇒ wave mới + test. Bản v1 bất biến: `../evaluation/geom
 > - **TO-BE (Kiến trúc mục tiêu — Hybrid):** AI chỉ trích xuất JSON Typed Facts (`TypedFact` ở `fact_extraction.py`
 >   `hybrid-semantic-extraction/3`, hoặc `TypedFactNext` ở `typed_fact_next.py` `typed-fact-next/1`), đi qua cổng kiểm
 >   chứng nguồn **Semantic Grounding**, sau đó **Goal-Directed Construction Planner** tất định (`planner.py`,
->   `geometry-fact-planner/14`) tự chọn và phối hợp các **Geometry Functions** (`registry.py`, `geometry-functions/13`)
->   → **Compiler / Construction IR** → **Engine / Kernel** (`engine.py`, `geometry-function-engine/13`;
+>   `geometry-fact-planner/15`) tự chọn và phối hợp các **Geometry Functions** (`registry.py`, `geometry-functions/14`)
+>   → **Compiler / Construction IR** → **Engine / Kernel** (`engine.py`, `geometry-function-engine/14`;
 >   `adapter3_simulation.py`, `hybrid-simulation-adapter/3`) → **Scene3D**.
 > - **Tuyến đối chứng trực tiếp (Baseline A):** AI gọi trực tiếp hàm dựng hình (`function_calling.py` →
 >   `function_route.py`) chỉ giữ làm baseline đối chứng thực nghiệm.
@@ -31,11 +31,11 @@ Sửa contract ⇒ wave mới + test. Bản v1 bất biến: `../evaluation/geom
 đề tiếng Việt
    ──► AI trích xuất JSON Typed Facts                     backend/app/ai/fact_extraction.py (`hybrid-semantic-extraction/3`)
        (`TypedFact` / `TypedFactNext`)                    backend/app/simulation/geometry_functions/typed_fact_next.py (`typed-fact-next/1`)
-   ──► Semantic Grounding & chuẩn hoá dữ kiện             backend/app/simulation/geometry_functions/planner.py (`geometry-fact-planner/14`)
+   ──► Semantic Grounding & chuẩn hoá dữ kiện             backend/app/simulation/geometry_functions/planner.py (`geometry-fact-planner/15`)
    ──► Goal-Directed Construction Planner (tất định tự phối hợp lời gọi Geometry Functions)
-   ──► lược đồ đóng · cổng nguồn 6 tầng (`kiem_nguon`)    backend/app/simulation/geometry_functions/registry.py (`geometry-functions/13`)
+   ──► lược đồ đóng · cổng nguồn 6 tầng (`kiem_nguon`)    backend/app/simulation/geometry_functions/registry.py (`geometry-functions/14`)
    ──► Engine: chuẩn hoá có tiền điều kiện · phụ thuộc · bố cục khung affine + Gram · kiểm MỌI dữ kiện
-                                                          backend/app/simulation/geometry_functions/engine.py (`geometry-function-engine/13`)
+                                                          backend/app/simulation/geometry_functions/engine.py (`geometry-function-engine/14`)
    ──► IR SemanticProgram ──► interpreter + kernel dưới metric.using(G)
    ──► Scene3D + chart_metric (+ length_unit)             backend/app/ai/function_route.py · backend/app/ai/adapter3_simulation.py (`hybrid-simulation-adapter/3`)
 
@@ -52,12 +52,12 @@ Sửa contract ⇒ wave mới + test. Bản v1 bất biến: `../evaluation/geom
 `a · 2a · a√3 · a√3/2 · 3a/2`. `depends_on` là khai báo phụ thuộc: treo ⇒ `DANGLING_DEPENDENCY`, vòng ⇒ `DEPENDENCY_CYCLE`;
 engine tự tính thứ tự dựng, không tin khai báo ấy.
 
-## 2. Thư viện hàm (`geometry-functions/13` — 35 hàm trong `REGISTRY`)
+## 2. Thư viện hàm (`geometry-functions/14` — 37 hàm trong `REGISTRY`)
 
 Danh sách đồng bộ trực tiếp theo mã nguồn tại `backend/app/simulation/geometry_functions/registry.py`
-(`REGISTRY_VERSION = "geometry-functions/13"`, `PLANNER_VERSION = "geometry-fact-planner/14"`,
-`ENGINE_VERSION = "geometry-function-engine/13"`):
-- Tổng số hàm đăng ký trong `REGISTRY`: **35 hàm** (`11` hàm `fact`, `12` hàm `construct`, `11` hàm `ask`, `1` hàm `escape`).
+(`REGISTRY_VERSION = "geometry-functions/14"`, `PLANNER_VERSION = "geometry-fact-planner/15"`,
+`ENGINE_VERSION = "geometry-function-engine/14"`):
+- Tổng số hàm đăng ký trong `REGISTRY`: **37 hàm** (`11` hàm `fact`, `12` hàm `construct`, `11` hàm `ask`, `1` hàm `escape`).
 - Trong đó **31 hàm** có `provider_offered = True` (30 hàm trong `PROVIDER_FUNCTIONS` cho bề mặt function-calling đối chứng +
   `translate_point` có `auxiliary_only = True` chỉ dành cho Planner), và **4 hàm** có `provider_offered = False`
   (`divide_segment`, `ask_angle_lines`, `ask_volume_ratio`, `ask_residual_volume`) được biên dịch tất định từ
@@ -144,7 +144,7 @@ của một hàm. Từ khoá định nghĩa của hàm là điều kiện **cầ
    - Dữ kiện cùng câu đã xác minh vẫn phục vụ, kể cả "Tính thể tích …, biết SA = 3." và cạnh AB = 2 của đáy vuông cạnh 2.
    Engine tiếp tục sở hữu dựng hình và kiểm ràng buộc. Hai route (Baseline A và **Hybrid**) dùng chung cổng; `LLM_ONLY` mặc định không đổi.
 
-## 4. Engine (`geometry-function-engine/13`)
+## 4. Engine (`geometry-function-engine/14`)
 
 - **Mặt phẳng câu hỏi gọi bằng nhiều nhãn** (run `hybrid-v2-backend-generalization`): mục tiêu `/2` `distance`/`angle` nêu
   mặt bằng ≥ 3 nhãn phân biệt — (ABCD), (BCC′B′). Mọi nhãn tới engine (lời gọi khoảng cách giữ ô ba nhãn của registry;
@@ -176,7 +176,7 @@ của một hàm. Từ khoá định nghĩa của hàm là điều kiện **cầ
 ## 5. Adapter Gemini (offline ở `ai-function-route` & `fact_extraction.py`)
 
 - **Tuyến Hybrid (`fact_extraction.py`, `hybrid-semantic-extraction/3`):** Một lượt `generateContent`/đề với JSON Schema đóng
-  (`RESPONSE_CONTRACT = "flat"`); chuẩn hoá và kiểm chứng nguồn trước khi chuyển cho `planner.py` (`geometry-fact-planner/14`).
+  (`RESPONSE_CONTRACT = "flat"`); chuẩn hoá và kiểm chứng nguồn trước khi chuyển cho `planner.py` (`geometry-fact-planner/15`).
   Với hợp đồng mở rộng hướng mô phỏng (`typed-fact-next/1`), `adapter3_simulation.py` (`hybrid-simulation-adapter/3`) biên
   dịch sang `Scene3D` có kiểm chứng (xem [`TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md`](TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md)).
 - **Tuyến đối chứng Baseline A (`function_calling.py`):** Một `generateContent`/đề; `tools.functionDeclarations` dẫn xuất từ

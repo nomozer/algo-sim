@@ -302,6 +302,10 @@ IDENTITY_DELTAS = (
     {"run": "hybrid-v2-backend-generalization",            # registry unchanged (/13)
      "versions": {"planner_version": ("geometry-fact-planner/13", "geometry-fact-planner/14"),
                   "engine_version": ("geometry-function-engine/12", "geometry-function-engine/13")}},
+    {"run": "hybrid-v2-nl-certificates-e2e",
+     "versions": {"registry_version": ("geometry-functions/13", "geometry-functions/14"),
+                  "planner_version": ("geometry-fact-planner/14", "geometry-fact-planner/15"),
+                  "engine_version": ("geometry-function-engine/13", "geometry-function-engine/14")}},
 )
 
 
