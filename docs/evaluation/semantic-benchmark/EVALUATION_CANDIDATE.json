@@ -1,9 +1,9 @@
 {
   "khai": "Danh tính của hệ tại thời điểm ĐÓNG BĂNG để đánh giá. Không sửa file này vì kết quả SEALED — SEALED chỉ được phép làm thay đổi KẾT LUẬN.",
-  "dong_bang_luc": "2026-10-26T13:14:32+00:00",
-  "commit": "0dd82e0fc4399420611e5c301bb3ea21abef9152",
-  "commit_ngan": "0dd82e0f",
-  "product_commit_sha": "e047235eeb46d4151f22f214a353ee9838b0e81c",
+  "dong_bang_luc": "2026-10-26T14:49:54+00:00",
+  "commit": "1cff5458076df0e99841dd3311c492255ff458dd",
+  "commit_ngan": "1cff5458",
+  "product_commit_sha": "1cff5458076df0e99841dd3311c492255ff458dd",
   "product_commit_rule": "product-paths-excluding-test-only/1",
   "cay_lam_viec_sach": true,
   "cache_version": "130",
@@ -15,7 +15,7 @@
       "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
     ],
     "so_file": 118,
-    "tree_hash": "3850e787d86f81befee5c4e8dfda210366916007b3bd61ce254a672d3f00744b",
+    "tree_hash": "c10917978af38f2ce2ccffefdb6ddcfa84667b8381bc48df06a582283845fc59",
     "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
   },
   "taxonomy": {
