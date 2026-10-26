@@ -1,0 +1,48 @@
+{
+  "run_id": "hybrid-v2-nl-certificates-e2e",
+  "date": "2026-10-27",
+  "agent": "Claude",
+  "authorization": "Owner campaign prompt 2026-10-27 (backend development: D-10, NL audit, evaluation readiness, one more vertical slice). No GO to merge or push for this task.",
+  "main_before": "dd557f8ffbd112528f8c71a9ad764972e2e7e7c3",
+  "origin_main_before": "dd557f8ffbd112528f8c71a9ad764972e2e7e7c3",
+  "branch": "research/hybrid-v2-nl-certificates-e2e",
+  "branch_base": "dd557f8ffbd112528f8c71a9ad764972e2e7e7c3",
+  "product_commits": ["4eae907d", "30530cf8", "059daadc418268d0707d6ff58e8650e5137e235d"],
+  "product_commit": "059daadc418268d0707d6ff58e8650e5137e235d",
+  "freeze_commit": "28a6a348",
+  "divergence_commit": "34ecce49",
+  "measured_system": {"files": 118, "tree_hash": "fef0b050e42f6ee8629e76ddb44f6b3dc0191cf89f5df922d8a62be54ef71657"},
+  "t3_candidate": "34ecce4961c2e6369dcf9e03ce9919540c96420d",
+  "full_t3": "FULL_PRODUCT_GATE_PASS",
+  "full_t3_backend_passed": 12228,
+  "full_t3_frontend_passed": 1417,
+  "full_t3_receipt": "full-t3/receipt.json",
+  "capabilities": {
+    "d10_asked_line_naming": "OFFLINE_BROWSER_E2E_VERIFIED (#3 #4 #11 #12; 16/16 rows, goal_named_as_asked 12/12)",
+    "line_plane_and_plane_plane_distance": "OFFLINE_BROWSER_E2E_VERIFIED (#3 #4 #11 #12; 18/18 rows, goal_named_as_asked 14/14); no drawn foot segment"
+  },
+  "nl_audit": {
+    "fixed": ["NL-1 square-base side clause (30530cf8)"],
+    "open_pinned": ["NL-2 side in parentheses", "NL-3 mặt phẳng đáy (ABCD) in a question", "NL-4 d(S, BD) notation", "NL-5 mặt phẳng chứa mặt bên (…)"],
+    "by_design_refusal": "số đo góc (the product answers cos², never degrees)"
+  },
+  "evaluation_harness": {
+    "dataset": "inputs/nl_dev_authored.json",
+    "items": 51,
+    "classification": "DEV_AUTHORED_NOT_INDEPENDENT",
+    "gold_arm": {"CORRECT_SERVED": 38, "INCORRECT_SERVED": 0, "CORRECT_REFUSED": 9, "INCORRECT_REFUSED": 4, "EXTRACTION_FAILURE": 0},
+    "stress_arm": {"CORRECT_REFUSED": 7},
+    "independent_holdout": "INDEPENDENT_HOLDOUT_NOT_EXECUTED",
+    "live_pilot": "LIVE_PROVIDER_GO_REQUIRED (not approved, not run)"
+  },
+  "g05_reuse": "concepts only (exact-value key, provider failure never a correct refusal, outcome taxonomy, stop policy), rewritten for V2; no code merged; no raw responses copied",
+  "versions": {"registry": "geometry-functions/14", "planner": "geometry-fact-planner/15", "engine": "geometry-function-engine/14", "bridge_v2": "typed-fact-next-bridge/2"},
+  "cache_version": 130,
+  "cache_decision": "NO_BUMP: default route never imports geometry_functions / function_route; Hybrid V2 local route no-store; preview excluded from the product cache; route A surface fingerprints unchanged",
+  "default_mode": "LLM_ONLY",
+  "hybrid": "OPT_IN_ONLY",
+  "provider_calls": 0,
+  "independent_review": "INDEPENDENT_REVIEW_NOT_EXECUTED",
+  "family_matrix": "unchanged 0 FULL / 9 PARTIAL / 7 RENDER_ONLY / 2 UNSUPPORTED",
+  "merge": "MERGE_READY_PENDING_OWNER_GO — not merged, not pushed; main = origin/main = dd557f8f"
+}

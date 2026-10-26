@@ -1,0 +1,8 @@
+{"case": "faithful extraction (control)", "status": "SERVED", "code": null, "answers": {"q": "√17"}}
+{"case": "derived SA ⊥ BD quoted from 'SA ⊥ (ABCD)'", "status": "REFUSED", "code": "INVALID_PREMISE_ARGS", "answers": null}
+{"case": "derived SB = SD quoted from the side sentence", "status": "REFUSED", "code": "BRIDGE_UNSUPPORTED_PREMISE", "answers": null}
+{"case": "height 3 quoted from the side sentence", "status": "REFUSED", "code": "UNGROUNDED_VALUE", "answers": null}
+{"case": "invented quote", "status": "REFUSED", "code": "QUOTE_NOT_IN_SOURCE", "answers": null}
+{"case": "height value taken from the question sentence", "status": "REFUSED", "code": "UNGROUNDED_VALUE", "answers": null}
+{"case": "perpendicularity quoted from the length sentence", "status": "REFUSED", "code": "PREDICATE_NOT_IN_QUOTE", "answers": null}
+CONTROL_SERVED_ALL_UNFAITHFUL_REFUSED 7
