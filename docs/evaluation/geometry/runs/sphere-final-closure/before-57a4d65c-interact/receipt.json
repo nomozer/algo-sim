@@ -1,0 +1,102 @@
+{
+ "tree_head": "1c760b71bfd1084ffa05c3e7612e6ba9bff7654d",
+ "tree_dirty": true,
+ "envelopes_sha256": "951593009d2a0b4e09b6e6f9b6af0bf392b8fa8a0169d8389dc7988a96c05024",
+ "viewport_policy": "1440x900 DPR1 / 390x844 DPR2",
+ "url": "http://127.0.0.1:3198",
+ "provider_calls": 0,
+ "rows": [
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "section-selected",
+   "file": "cut-above-1440-section-selected.png",
+   "sha256": "92c1a3b249febc201215acbcb95e785b0a9db2a92b1874f61ff897888d459cea"
+  },
+  {
+   "name": "cut-above",
+   "width": 1440,
+   "kind": "section-deselected",
+   "file": "cut-above-1440-section-deselected.png",
+   "sha256": "2d8763bb12ff415a4cbffd85f5183d0535cd06afbdfc0ed0959df180a0b2e1dd"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "section-selected",
+   "file": "cut-through-1440-section-selected.png",
+   "sha256": "a1fec0b488ada249023a871b0a80222d0c55b2db24bc459f5bf0094be828d986"
+  },
+  {
+   "name": "cut-through",
+   "width": 1440,
+   "kind": "section-deselected",
+   "file": "cut-through-1440-section-deselected.png",
+   "sha256": "b95c0d3b4f5a4954f8fc60d74d49b6ac5c7e46202fba59e3701bd93992c47ecf"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "section-selected",
+   "file": "cut-tilted-1440-section-selected.png",
+   "sha256": "783bda88139ef3ec32273e178ff0fb96a3bdb9d00a6cd341db41a230b56d36de"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 1440,
+   "kind": "section-deselected",
+   "file": "cut-tilted-1440-section-deselected.png",
+   "sha256": "c457644fc3dba11472bc96769781b3ae3ef3af6ade22aecde785872b9ad6435e"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "section-selected",
+   "file": "cut-above-390-section-selected.png",
+   "sha256": "f5b1dfc463f41ac74eef2999a4ebf1b5f89eef8249dcf258d41085866a04640d"
+  },
+  {
+   "name": "cut-above",
+   "width": 390,
+   "kind": "section-deselected",
+   "file": "cut-above-390-section-deselected.png",
+   "sha256": "20cb2332bca929fd109c62bedcb39bfb7fa99b6fc670e0465f0308c617d92287"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "section-selected",
+   "file": "cut-through-390-section-selected.png",
+   "sha256": "2607ca9a22bdf5b556f99ad5a5f539b50980cd782c9886cd7c3b1c60c6daa138"
+  },
+  {
+   "name": "cut-through",
+   "width": 390,
+   "kind": "section-deselected",
+   "file": "cut-through-390-section-deselected.png",
+   "sha256": "955f449c2470999b7e689a3dc17e7adc3e3f4cd059cab4a110b2e781229091af"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "section-selected",
+   "file": "cut-tilted-390-section-selected.png",
+   "sha256": "0109e802dcac6545996e03d9323fd13d94fbdeb3be9c74f4eb265d7e01897600"
+  },
+  {
+   "name": "cut-tilted",
+   "width": 390,
+   "kind": "section-deselected",
+   "file": "cut-tilted-390-section-deselected.png",
+   "sha256": "b9682735ec833347df15df8bf15b1db98a74f845f89b4d6029aef5e7bcfb59fd"
+  }
+ ],
+ "errors": [
+  "cut-above: no «Hình phụ» toggle (no auxiliary geometry in this scene)",
+  "cut-through: no «Hình phụ» toggle (no auxiliary geometry in this scene)",
+  "cut-tilted: no «Hình phụ» toggle (no auxiliary geometry in this scene)",
+  "cut-above: no «Hình phụ» toggle (no auxiliary geometry in this scene)",
+  "cut-through: no «Hình phụ» toggle (no auxiliary geometry in this scene)",
+  "cut-tilted: no «Hình phụ» toggle (no auxiliary geometry in this scene)"
+ ]
+}
