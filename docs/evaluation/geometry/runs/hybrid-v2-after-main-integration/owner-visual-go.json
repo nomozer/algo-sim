@@ -1,0 +1,14 @@
+{
+  "decision": "OWNER_VISUAL_GO",
+  "source": "Explicit Owner message in this session, 2026-10-26",
+  "quote": "Tôi duyệt bộ ảnh hình cầu cuối cùng của renderer `e047235e`, gắn với recovery candidate đã đạt Full T3 PASS `3d6351d8`.\n\nKhông yêu cầu chỉnh sửa hình cầu thêm trong chiến dịch này.",
+  "renderer_commit": "e047235eeb46d4151f22f214a353ee9838b0e81c",
+  "t3_candidate": "3d6351d81deb8c1cea1d7210f53101cfc1ea26bb",
+  "handoff_candidate": "4be4094e3946cbdeb2aaf9f2ef1c6fa9bb1e1cb3",
+  "verified_source_sha256": "afc9e513fc64ac3c42e90f900452c6731104925318a0a7b916ca39abb5e35b4d",
+  "official_visual": "7/8; F2 policy exception for local disabled merge only",
+  "independent_review": "DEFERRED for local disabled merge; not PASS",
+  "production_approval": false,
+  "authorized_sequence": ["recheck", "local fast-forward main", "post-merge smoke", "safe cleanup", "new backend branch from main", "implement one Hybrid V2 E2E vertical slice"],
+  "constraints": ["no remote push", "no live provider", "Hybrid remains opt-in", "LLM_ONLY remains default", "CACHE_VERSION remains 130", "preserve Owner dirty files and unique evidence"]
+}
