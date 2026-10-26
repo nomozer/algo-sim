@@ -1,5 +1,17 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = CLAUDE_RESUME_AFTER_CODEX_LIMIT
+
+REPORT = docs/evaluation/geometry/runs/claude-to-codex-takeover/claude-resume/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/claude-to-codex-takeover/claude-resume/
+CLASSIFICATION = LOCAL_PARTIAL_WITH_GAPS; SCENE3D_VISUAL_PARTIAL_WITH_GAPS; one VERIFIED_OFFLINE_E2E slice on authored development cases (route-D common perpendicular); not holdout or provider evidence; no independent review; human visual approval PENDING
+CODE_COMMIT = research/scene3d-hybrid-v2-claude-resume from e336e0df; product 1faee1db; candidate freeze 96415cbd (3850e787…, 118 files)
+VERIFICATION = ../../scene3d-codex-takeover/CLAUDE_RESUME_CHECKPOINT.md (preservation 112 + 69 files byte-identical); t3-diagnosis.json (interrupted Codex T3 INCOMPLETE, 9 failures, 0 product regressions); SCENE3D_CHECKPOINT_C.md; HYBRID_V2_CHECKPOINT_D.md; Full T3 in report.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = CLAUDE_TO_CODEX_TAKEOVER ("current Full T3 pending": that run was INCOMPLETE; engine /12 bump, fixtures identity delta and candidate declaration completed)
+CORRECTED_BY = NONE
+
+
 ## WAVE_ID = CLAUDE_TO_CODEX_TAKEOVER
 
 REPORT = docs/evaluation/geometry/runs/claude-to-codex-takeover/report.md
@@ -9,7 +21,7 @@ CODE_COMMIT = continuation from 3dcd6d9f; research/scene3d-hybrid-v2-codex (new 
 VERIFICATION = preservation.json (112 file hashes); browser-auth-settled/receipt.json 20/20 real UI+HTTP; local-route-results.json 43 scored /22 served /0 wrong /0 false refusal /1 grouping mismatch; inherited official7/8; role-aware2 PASS/10 UNCERTIFIABLE; current Full T3 pending
 MODEL_REQUEST_COUNT = 0
 CORRECTS = SCENE3D_CODEX_TAKEOVER (preserved Claude producer-witness/plane-name correction and its actual 3dcd6d9f receipt; unfinished local Hybrid slice completed)
-CORRECTED_BY = NONE
+CORRECTED_BY = CLAUDE_RESUME_AFTER_CODEX_LIMIT
 
 
 ## WAVE_ID = SCENE3D_CODEX_TAKEOVER
