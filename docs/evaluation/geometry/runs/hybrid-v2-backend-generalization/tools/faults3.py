@@ -1,0 +1,22 @@
+TESTS = ["tests/geometry/test_typed_fact_next_v2_point_line_distance.py"]
+FAULTS = [
+    ("Q1 bridge drops the {point, line} mapping", G + "typed_fact_next_bridge.py",
+     'if set(t) == {"point", "line"} and isinstance(t["point"], str) and (ln := pts("line", 2)):',
+     'if False:'),
+    ("Q2 bridge accepts a three-label line", G + "typed_fact_next_bridge.py",
+     "(len(v) >= n if n == 3 else len(v) == n)", "(len(v) >= n if n == 3 else len(v) >= n)"),
+    ("Q3 bridge accepts a list as the point", G + "typed_fact_next_bridge.py",
+     'if set(t) == {"point", "line"} and isinstance(t["point"], str) and',
+     'if set(t) == {"point", "line"} and'),
+    ("Q4 planner decomposes onto a degenerate line (wrong point)", G + "planner.py",
+     'return k.resolver.distance(f, p, ("named", tuple(sorted(dt))))',
+     'return k.resolver.distance(f, p, ("named", (dt[0], dt[0])))'),
+    ("Q5 kernel computes a wrong foot (the line's base point)", G + "engine.py",
+     '"orthogonal_projection_line": K.project_point_onto_line,',
+     '"orthogonal_projection_line": (lambda p, ln: ln.point),'),
+    ("Q6 independent perpendicularity check removed (correct foot: defence in depth, may stay green)", G + "engine.py",
+     "return point_on_line(p, y) and _metric.dot(x - p, y.direction) == 0", "return point_on_line(p, y)"),
+    ("Q7 independent length verifier doubled", G + "engine.py",
+     '        w = self._vec(d["operand"]["label"], d["target"]["point"])' + NL + "        return self.g(w, w)",
+     '        w = self._vec(d["operand"]["label"], d["target"]["point"])' + NL + "        return 2 * self.g(w, w)"),
+]

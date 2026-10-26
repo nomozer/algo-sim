@@ -1,0 +1,105 @@
+[
+  {
+    "fault": "Q1 bridge drops the {point, line} mapping",
+    "file": "app/simulation/geometry_functions/typed_fact_next_bridge.py",
+    "summary": "17 failed, 5 passed in 1.27s",
+    "failed": [
+      "test_a_point_on_the_line_is_served_as_zero",
+      "test_a_text_that_already_uses_h_gets_another_foot_label",
+      "test_cuboid_top_vertex_to_base_diagonal",
+      "test_line_order_does_not_matter",
+      "test_pyramid_sa_perpendicular_base[2-5]",
+      "test_pyramid_sa_perpendicular_base[4-3]",
+      "test_quote_naming_another_line_is_refused",
+      "test_regular_pyramid_vertex_to_opposite_lateral_edge[2-3]",
+      "test_regular_pyramid_vertex_to_opposite_lateral_edge[4-3]",
+      "test_right_prism_base_altitude[ABC-6-8-12]",
+      "test_right_prism_base_altitude[DEF-3-4-5]",
+      "test_right_prism_base_altitude[KLM-12-16-7]",
+      "test_right_prism_three_perpendiculars[3-4-5]",
+      "test_right_prism_three_perpendiculars[6-8-12]",
+      "test_scale_multiplies_the_squared_distance_by_four",
+      "test_the_foot_is_a_fresh_auxiliary_label_and_the_answer_is_certified",
+      "test_unknown_point_is_refused"
+    ],
+    "restored_identical": true
+  },
+  {
+    "fault": "Q2 bridge accepts a three-label line",
+    "file": "app/simulation/geometry_functions/typed_fact_next_bridge.py",
+    "summary": "1 failed, 21 passed in 1.33s",
+    "failed": [
+      "test_malformed_point_line_targets_stay_invalid[target2]"
+    ],
+    "restored_identical": true
+  },
+  {
+    "fault": "Q3 bridge accepts a list as the point",
+    "file": "app/simulation/geometry_functions/typed_fact_next_bridge.py",
+    "summary": "1 failed, 21 passed in 1.29s",
+    "failed": [
+      "test_malformed_point_line_targets_stay_invalid[target3]"
+    ],
+    "restored_identical": true
+  },
+  {
+    "fault": "Q4 planner decomposes onto a degenerate line (wrong point)",
+    "file": "app/simulation/geometry_functions/planner.py",
+    "summary": "16 failed, 6 passed in 1.37s",
+    "failed": [
+      "test_a_point_on_the_line_is_served_as_zero",
+      "test_a_text_that_already_uses_h_gets_another_foot_label",
+      "test_cuboid_top_vertex_to_base_diagonal",
+      "test_line_order_does_not_matter",
+      "test_pyramid_sa_perpendicular_base[2-5]",
+      "test_pyramid_sa_perpendicular_base[4-3]",
+      "test_regular_pyramid_vertex_to_opposite_lateral_edge[2-3]",
+      "test_regular_pyramid_vertex_to_opposite_lateral_edge[4-3]",
+      "test_right_prism_base_altitude[ABC-6-8-12]",
+      "test_right_prism_base_altitude[DEF-3-4-5]",
+      "test_right_prism_base_altitude[KLM-12-16-7]",
+      "test_right_prism_three_perpendiculars[3-4-5]",
+      "test_right_prism_three_perpendiculars[6-8-12]",
+      "test_scale_multiplies_the_squared_distance_by_four",
+      "test_the_foot_is_a_fresh_auxiliary_label_and_the_answer_is_certified",
+      "test_unknown_point_is_refused"
+    ],
+    "restored_identical": true
+  },
+  {
+    "fault": "Q5 kernel computes a wrong foot (the line's base point)",
+    "file": "app/simulation/geometry_functions/engine.py",
+    "summary": "14 failed, 8 passed in 1.45s",
+    "failed": [
+      "test_a_text_that_already_uses_h_gets_another_foot_label",
+      "test_cuboid_top_vertex_to_base_diagonal",
+      "test_line_order_does_not_matter",
+      "test_pyramid_sa_perpendicular_base[2-5]",
+      "test_pyramid_sa_perpendicular_base[4-3]",
+      "test_regular_pyramid_vertex_to_opposite_lateral_edge[2-3]",
+      "test_regular_pyramid_vertex_to_opposite_lateral_edge[4-3]",
+      "test_right_prism_base_altitude[ABC-6-8-12]",
+      "test_right_prism_base_altitude[DEF-3-4-5]",
+      "test_right_prism_base_altitude[KLM-12-16-7]",
+      "test_right_prism_three_perpendiculars[3-4-5]",
+      "test_right_prism_three_perpendiculars[6-8-12]",
+      "test_scale_multiplies_the_squared_distance_by_four",
+      "test_the_foot_is_a_fresh_auxiliary_label_and_the_answer_is_certified"
+    ],
+    "restored_identical": true
+  },
+  {
+    "fault": "Q6 independent perpendicularity check removed (correct foot: defence in depth, may stay green)",
+    "file": "app/simulation/geometry_functions/engine.py",
+    "summary": "22 passed in 1.27s",
+    "failed": [],
+    "restored_identical": true
+  },
+  {
+    "fault": "Q7 independent length verifier doubled",
+    "file": "app/simulation/geometry_functions/engine.py",
+    "summary": "22 passed in 1.43s",
+    "failed": [],
+    "restored_identical": true
+  }
+]
