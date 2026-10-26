@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "claude-to-codex-takeover — Claude resume P3 (route-D common perpendicular witness 1faee1db)",
+  "corrects": "docs/evaluation/geometry/runs/claude-to-codex-takeover/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "3850e787d86f81befee5c4e8dfda210366916007b3bd61ce254a672d3f00744b",
+  "current_product_commit": "1faee1dbcad8f7a74f312d9fc754056adac6144e",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "kernel.common_perpendicular_feet; quantity_annotations common_perpendicular witness for a skew-line distance, enabled only by function_route (route D) through build_simulation_state(common_perpendicular_witness=True). Also Scene3D frontend fixes since 01d9d155 (outside measured paths, product identity only).",
+  "cache_version": 130,
+  "cache_version_hien_tai": 130,
+  "cache_decision": "NO_BUMP 130: pipeline.py (LLM_ONLY) does not pass the switch; the default scene builder keeps the pre-existing ANNOTATION_UNBOUND outcome byte for byte (test_skew_claim_consistency::test_the_default_scene_builder_is_unchanged_without_the_route_d_switch). Route D responses are never cached.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}
