@@ -1,5 +1,17 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SPHERE_FINAL_CLOSURE
+
+REPORT = docs/evaluation/geometry/runs/sphere-final-closure/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/sphere-final-closure/
+CLASSIFICATION = SPHERE_VISUAL_MERGE_GATE_BLOCKED (Owner image approval and F2 decision pending); authored development evidence; no independent review
+CODE_COMMIT = product b101dc79; candidate freeze 3994f603 (3850e787…, 118 files)
+VERIFICATION = inputs/sphere-plane-oracle.json 5/5; before-57a4d65c/ vs after-b101dc79/ browser captures; silhouette-*.json; visual/official-run-3994f603/ locked suite 7/8 (cross_section F2 only); t3-receipt.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
+
 ## WAVE_ID = CLAUDE_RESUME_AFTER_CODEX_LIMIT
 
 REPORT = docs/evaluation/geometry/runs/claude-to-codex-takeover/claude-resume/report.md
