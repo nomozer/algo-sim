@@ -1,0 +1,14 @@
+# RED-baseline probe (same file on both trees; copied in, run, removed)
+baseline 11188e7a (.superpowers/worktrees/s3d-v129-base):
+     × R1 the constructed plane of mp-vuong-goc-duong has a name 5ms
+     × R2 the base plane keeps its declared name (ABCD) 1ms
+     × R3 no internal repr in learner-facing steps 1ms
+     × R4 a tampered witness foot is not drawn 3ms
+     × R5 a non-perpendicular witness (u·v ≠ 0) is not drawn 2ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  5 failed | 1 passed (6)
+
+campaign tree (uncommitted, s3d-hybrid-v2):
+      Tests  6 passed (6)
+
+R6 is not discriminating: on the baseline the frontend INFERRED a BC ⊥ (SAB) mark at the final step from the quantity text (cos² = 0) — the removed 'tuDuongMp' branch. On the campaign tree the same mark comes from the backend witness and the inference is gone (scene3d-annotations.test.ts negative case).

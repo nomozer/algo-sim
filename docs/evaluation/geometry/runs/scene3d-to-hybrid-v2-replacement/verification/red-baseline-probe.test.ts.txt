@@ -1,0 +1,38 @@
+// RED-baseline probe for the Owner P0 right-angle fix. Uses ONLY APIs present on both trees, so the same file runs on
+// the v129 baseline (expected: every case FAILS) and on the campaign tree (expected: every case PASSES).
+import { describe, expect, it } from "vitest";
+import { geometrySampleById } from "../../../data/geometry-samples";
+import { projectionWitnessesAt } from "./scene3d-annotations";
+import type { Scene3D } from "./scene3d-model";
+
+const canh = (id: string): Scene3D =>
+  structuredClone((geometrySampleById(id)!.envelope as unknown as { scene3d: Scene3D }).scene3d);
+const tatCa = (s: Scene3D) => new Set(s.objects.map((o) => o.id));
+const cuoi = (s: Scene3D) => s.events.length - 1;
+
+describe("RED baseline", () => {
+  it("R1 the constructed plane of mp-vuong-goc-duong has a name", () => {
+    expect(canh("mp-vuong-goc-duong").objects.find((o) => o.id === "mpb")?.notation).toBe("(α)");
+  });
+  it("R2 the base plane keeps its declared name (ABCD)", () => {
+    expect(canh("mp-vuong-goc-duong").objects.find((o) => o.id === "day")?.notation).toBe("(ABCD)");
+  });
+  it("R3 no internal repr in learner-facing steps", () => {
+    expect(JSON.stringify(canh("mp-vuong-goc-duong").events)).not.toMatch(/Plane3\(/);
+  });
+  it("R4 a tampered witness foot is not drawn", () => {
+    const s = canh("mp-vuong-goc-duong");
+    s.objects.find((o) => o.id === "kc")!.annotation!.witness!.foot = ["2", "5/3", "2/3"];
+    expect(projectionWitnessesAt(s, tatCa(s), cuoi(s))).toEqual([]);
+  });
+  it("R5 a non-perpendicular witness (u·v ≠ 0) is not drawn", () => {
+    const s = canh("mp-vuong-goc-duong");
+    const w = s.objects.find((o) => o.id === "kc")!.annotation!.witness!;
+    w.marker.u = [w.marker.u[0], w.marker.u[1], "1"];
+    expect(projectionWitnessesAt(s, tatCa(s), cuoi(s))).toEqual([]);
+  });
+  it("R6 BC ⊥ (SAB) carries a backend witness", () => {
+    const s = canh("vuong-goc-chop");
+    expect(projectionWitnessesAt(s, tatCa(s), cuoi(s))).toHaveLength(1);
+  });
+});
