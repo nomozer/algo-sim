@@ -266,7 +266,16 @@ def _persist(path: Path, state: dict[str, Any], secrets: tuple[str, ...]) -> Non
             stream.write(data)
             stream.flush()
             os.fsync(stream.fileno())
-        os.replace(temporary, path)
+        # Windows: another process (indexer, antivirus) can hold a just-written file for a moment, and `os.replace`
+        # raises PermissionError [WinError 5]. Retry briefly; a lock that lasts ~1.6 s still stops the pilot.
+        for attempt in range(8):
+            try:
+                os.replace(temporary, path)
+                break
+            except PermissionError:
+                if attempt == 7:
+                    raise
+                time.sleep(0.025 * 2 ** attempt)
         if path.read_bytes() != data:
             raise OSError("readback mismatch")
     except OSError:

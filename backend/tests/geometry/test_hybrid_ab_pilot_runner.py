@@ -376,6 +376,37 @@ def test_live_approval_must_match_frozen_run_not_only_current_code(monkeypatch, 
         P.live_provider(P.PilotMode.SMOKE_AB, approval)
 
 
+def _replace_denied(monkeypatch, times):
+    """Windows: a just-written file can be held for a moment by another process, and `os.replace` then raises
+    `PermissionError [WinError 5]` (caught in the Full T3 of run `sphere-final-closure`, 2/5 reruns of this file)."""
+    real, calls = P.os.replace, {"n": 0}
+
+    def replace_(src, dst):
+        calls["n"] += 1
+        if calls["n"] <= times:
+            raise PermissionError(13, "Access is denied")
+        return real(src, dst)
+
+    monkeypatch.setattr(P.os, "replace", replace_)
+    monkeypatch.setattr(P.time, "sleep", lambda _s: None)
+    return calls
+
+
+def test_a_transient_windows_replace_lock_does_not_stop_the_pilot(tmp_path, monkeypatch):
+    calls = _replace_denied(monkeypatch, 2)
+    path = tmp_path / "manifest.json"
+    P._persist(path, {"n": 1}, ())
+    assert json.loads(path.read_bytes()) == {"n": 1} and calls["n"] == 3
+    assert not path.with_suffix(".pending").exists()
+
+
+def test_a_lasting_replace_lock_still_stops_with_persistence_failed(tmp_path, monkeypatch):
+    _replace_denied(monkeypatch, 10 ** 6)
+    with pytest.raises(P.PilotStopped, match="PERSISTENCE_FAILED"):
+        P._persist(tmp_path / "manifest.json", {"n": 1}, ())
+    assert not (tmp_path / "manifest.json").exists()
+
+
 def test_budget_audit_integer_keys_can_be_persisted_safely(tmp_path):
     path = tmp_path / "budget.json"
     P._persist(path, {"comparison": {3072: {"usd": .3107664}}}, ())
