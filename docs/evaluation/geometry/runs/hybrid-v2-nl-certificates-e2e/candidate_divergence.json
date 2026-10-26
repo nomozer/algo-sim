@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-v2-nl-certificates-e2e — D-10 asked-line naming (4eae907d), base-side wording of the source gate (30530cf8), line-plane / plane-plane distance (059daadc)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-v2-backend-generalization/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "fef0b050e42f6ee8629e76ddb44f6b3dc0191cf89f5df922d8a62be54ef71657",
+  "current_product_commit": "059daadc418268d0707d6ff58e8650e5137e235d",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "registry /14: ask_distance_line_plane + ask_distance_planes (provider_offered=False) and the square-base side clause of the source gate (_C_DAY takes the connectors of _CANH_SAU_DAY); planner /15: line-plane and plane-plane distance dispatch; engine /14: emission of the two asks plus an independent Gram-determinant cross-check (_kc2_duong_mat, _kc2_mat_mat); typed_fact_next_bridge: /2 {line, plane} and {plane1, plane2} distance goals; function_route: a served point-line distance is named by the asked line (d(S, BD)) from the planner's certificate, only when the foot carries a verified perpendicular witness. Route B/D only (geometry_functions, function_route); /api/analyze (LLM_ONLY) does not import them.",
+  "cache_version": 130,
+  "cache_version_hien_tai": 130,
+  "cache_decision": "NO_BUMP 130: no prompt, schema, grammar card, capability table or routing policy changed; the default pipeline does not reach geometry_functions or function_route; the Hybrid V2 local route answers Cache-Control no-store and route D preview refuses the product cache (main._policy_identity), so no stored result can be replayed. Route identity changes are carried by registry /14, planner /15, engine /14 (IDENTITY_DELTAS). The route A function-calling surface (7ea511a6…) and the frozen flat surface (485d3834…) are unchanged (pinned by test_version_constants_surface_fingerprints_and_historical_receipt_preservation).",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}
