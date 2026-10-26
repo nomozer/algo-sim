@@ -181,3 +181,18 @@ describe("đoạn chứng minh không vẽ chồng lên cạnh đã có", () => 
     expect(nhom.children.some((x) => x.name.startsWith("witness_leg:"))).toBe(false);
   });
 });
+
+describe("chấm chân không chồng lên một điểm có tên", () => {
+  const s = canh("the-tich-chop");
+  const w = nhanChungKetQua(s).find((x) => x.uTo)!;
+  const chams = (nhom: THREE.Group) => nhom.children.filter((x) => (x as THREE.Mesh).isMesh);
+
+  it("chân ≡ đỉnh A đã vẽ ⇒ không có chấm chân thứ hai (A không bị tô thành điểm dẫn xuất)", () => {
+    const A = toVec3(s.objects.find((o) => o.id === "A")!.xyz!);
+    expect(chams(vatNhanChung(w, [], undefined, false, doanDaVe(s.objects), [A]))).toHaveLength(0);
+  });
+
+  it("chân không trùng điểm có tên nào ⇒ chấm chân vẫn đánh dấu chân", () => {
+    expect(chams(vatNhanChung(w, [], undefined, false, doanDaVe(s.objects), []))).toHaveLength(1);
+  });
+});

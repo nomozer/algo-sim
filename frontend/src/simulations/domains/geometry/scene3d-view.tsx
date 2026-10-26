@@ -2546,13 +2546,16 @@ export function doanDaVe(objects: readonly SceneObject[]): [Vec3, Vec3][] {
 /** Nhân chứng một khoảng cách: đoạn nét đứt từ điểm tới CHÂN backend phát + ký hiệu vuông góc dựng từ
  *  hai phương backend phát (`u`, `v`) — chỉ đổi độ dài để có cỡ ký hiệu, không suy luận hình học nào.
  *  Có `uTo` (Owner 2026-10-26): cạnh trong vật nhận của dấu chĩa ĐÚNG tới điểm có tên ấy, và đoạn chứng minh
- *  chân → điểm được vẽ (trừ khi nó đã là một đoạn của hình) — dấu nằm giữa hai đường thật, không lơ lửng. */
+ *  chân → điểm được vẽ (trừ khi nó đã là một đoạn của hình) — dấu nằm giữa hai đường thật, không lơ lửng.
+ *  Chân trùng một điểm có tên đang vẽ (`diemCoTen`, vd chân A của SA ⊥ (ABCD)) ⇒ không thêm chấm chân: chấm thứ hai
+ *  chồng lên góc dấu và tô đỉnh đề cho bằng màu điểm dẫn xuất. */
 export function vatNhanChung(
   w: WitnessShown,
   diemNen: Vec3[] = [],
   mau?: number,
   diu = false,
   doanCo: readonly [Vec3, Vec3][] = [],
+  diemCoTen: readonly Vec3[] = [],
 ): THREE.Group {
   const g = new THREE.Group();
   const tu = new THREE.Vector3(...w.from);
@@ -2596,7 +2599,8 @@ export function vatNhanChung(
   }
   // Đoạn chân → điểm đã là một đoạn của hình (góc vuông BC ⊥ (SAB) đặt trên cạnh BC): không vẽ bản nét đứt thứ hai.
   const doanCanVe = namTrenDoanDaVe(w.from, w.foot, doanCo) ? [] : [doan];
-  for (const x of [...doanCanVe, ...canhPhu, goc, chamChan]) {
+  const chanLaDiemCoTen = diemCoTen.some((p) => Math.hypot(p[0] - w.foot[0], p[1] - w.foot[1], p[2] - w.foot[2]) < 1e-9);
+  for (const x of [...doanCanVe, ...canhPhu, goc, ...(chanLaDiemCoTen ? [] : [chamChan])]) {
     x.renderOrder = x === chamChan ? 11 : 10;
     x.raycast = () => {};                 // trình bày thuần: không bao giờ bắt cú bấm chọn vật
     g.add(x);
@@ -3595,13 +3599,14 @@ export function Scene3DWorkspace({
     const ds = [...tuSoDo, ...tuChieu]
       .filter((w) => !laDapSoAn(w.vai === "hinh_chieu" ? w.id.slice("perpendicular:".length) : w.id));
     const doanCo = doanDaVe(scene.objects);
+    const diemCoTen = objectsAt(scene, buoc).flatMap((o) => (o.type === "point3" && o.xyz ? [toVec3(o.xyz)] : []));
     for (const w of ds) {
       const chuId = w.vai === "hinh_chieu" ? w.id.slice("perpendicular:".length) : w.id;
       const t = tang?.get(chuId);
       const dangDungDiem = !tang && tapNoiBat.has(chuId) && loaiRef.current.get(chuId) === "point3";
       const mau = t && t !== "boi_canh" ? MAU_TANG[t] : (dangDungDiem ? MAU.highlight : undefined);
       const diu = Boolean(tang && !t);
-      nhom.add(vatNhanChung(w, diemToanCanh, mau, diu, doanCo));
+      nhom.add(vatNhanChung(w, diemToanCanh, mau, diu, doanCo, diemCoTen));
     }
     if (typeof window !== "undefined") (window as any).__geo3d_witness_ids = ds.map((w) => w.id);
     veRef.current?.();
