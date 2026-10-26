@@ -40,7 +40,9 @@ from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, rende
 #: named / fresh), derived pyramid over the section, solid operands by fact id.
 #: /13 (run `hybrid-contract-v2`, owner D5/D6): section vertices through the Registry `Meet` contract (no hard-coded
 #: producer); `/2`-only derived vertices on unstated lateral edges where a closed boundary is required; declared boundary.
-PLANNER_VERSION = "geometry-fact-planner/13"
+#: /14 (run `hybrid-v2-backend-generalization`): a > 3-label question plane is handed to the engine in full
+#: (`KeHoach.named_planes`, keyed by call id) instead of being cut to its first three labels.
+PLANNER_VERSION = "geometry-fact-planner/14"
 #: Nhãn điểm phụ: chuỗi H, H1, H2, …; nhãn đầu tiên không có trong đề lẫn dữ kiện (Label của Registry không cho namespace
 #: riêng mà không đổi bề mặt nhà cung cấp của A ⇒ "dành riêng" = chọn tươi + cổng kiểm `AUXILIARY_LABEL_COLLISION`).
 def _nhan_tuoi(stem: str) -> tuple[str, ...]:
@@ -135,9 +137,10 @@ class KeHoach:
     volume_asks: dict[str, str] = field(default_factory=dict)       # id câu hỏi thể tích → khối
     solids: dict[str, "_Khoi"] = field(default_factory=dict)
     derived_planes: dict[tuple, dict] = field(default_factory=dict)  # (khối, điểm, mặt tham chiếu) → khai báo `MAT_SONG_SONG`
-    # A question plane named by > 3 labels whose function slot takes three: every label is still checked by the engine
-    # (`kiem_mat_viet`) — the call keeps the registry's three-label contract, nothing is dropped unchecked (review I-1).
-    named_planes: list[list[str]] = field(default_factory=list)
+    # A question plane named by > 3 labels whose function slot takes three, `{"call": id, "labels": [...]}`: the engine
+    # checks every label (`kiem_mat_viet`), measures through a non-collinear triple of them (`chon_ba_mat`) and shows the
+    # full name — the call keeps the registry's three-label contract, nothing is dropped unchecked (review I-1).
+    named_planes: list[dict[str, Any]] = field(default_factory=list)
     resolver: Any = field(default=None, repr=False)  # ephemeral view of existing calls; no geometry/semantic state
 
 
@@ -965,7 +968,7 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
             raise TuChoi("NEGATED_CLAUSE", f"{f.id}: câu hỏi khoảng cách bị phủ định", (f.id,))
         b = list(dict.fromkeys(f.points_b or []))
         if len(b) > 3 and not f.line_ref:
-            k.named_planes.append(b)
+            k.named_planes.append({"call": f.id, "labels": b})
         target = (("result", f.line_ref) if f.line_ref else ("named", tuple(sorted(b))) if len(b) == 2 else tuple(b[:3]))
         return k.resolver.distance(f, ("desc", f.point_kind, tuple(sorted(f.points))), target)
     if f.line_ref:
@@ -1024,7 +1027,7 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
             a, b, loai = b, a, ("point", "plane")
         if loai == ("point", "plane"):
             if len(b) > 3:
-                k.named_planes.append(list(b))
+                k.named_planes.append({"call": f.id, "labels": list(b)})
             return phat(f.id, "ask_distance_point_plane", {"point": a[0], "plane": b[:3]}, q, "question(distance point–plane)")
         if loai == ("line", "line"):
             return phat(f.id, "ask_distance_lines", {"line1": a, "line2": b}, q, "question(distance line–line)")

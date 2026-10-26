@@ -299,6 +299,9 @@ IDENTITY_DELTAS = (
                   "engine_version": ("geometry-function-engine/10", "geometry-function-engine/11")}},
     {"run": "claude-to-codex-takeover",
      "versions": {"engine_version": ("geometry-function-engine/11", "geometry-function-engine/12")}},
+    {"run": "hybrid-v2-backend-generalization",            # registry unchanged (/13)
+     "versions": {"planner_version": ("geometry-fact-planner/13", "geometry-fact-planner/14"),
+                  "engine_version": ("geometry-function-engine/12", "geometry-function-engine/13")}},
 )
 
 

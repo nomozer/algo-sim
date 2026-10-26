@@ -4,9 +4,10 @@ by ALL of its vertices — (ABCD), (BCC'B') — as the premises already may. Bef
 three labels (`INVALID_MATH_GOAL`) because the planner cut the point–plane distance plane to its first three labels, so a
 non-coplanar fourth label was never checked (review I-1 of the B3 slice).
 
-Now every label reaches the engine, which checks exactly that the labels lie in one plane (`SOURCE_OBJECT_MISMATCH`) and
-that the three it measures with are not collinear (`COLLINEAR_POINTS`, the kernel's own code). Closed-form oracles from the stated facts only
-(no engine coordinates):
+Now every label reaches the engine, which checks exactly that the labels lie in one plane (`SOURCE_OBJECT_MISMATCH`
+otherwise, also when every point is collinear), measures through the first non-collinear triple of the WHOLE group
+(`chon_ba_mat`, so label order never causes a refusal) and shows the plane under the full written name. Closed-form
+oracles from the stated facts only (no engine coordinates):
 
 - right prism ABC.A'B'C', right angle at A, AB = x, AC = y, AA' = h: d²(A, (BCC'B')) = x²y²/(x²+y²);
   d²(B, (ACC'A')) = x²; cos²(A'B, (ACC'A')) = h²/(x²+h²); cos²((BCC'B'), (ACC'A')) = cos²(ACB) = y²/(x²+y²);
@@ -192,17 +193,132 @@ def test_a_pyramid_base_with_the_apex_as_fourth_label_is_refused():
     assert _refused(_pyramid("angle", {"line": ["S", "C"], "plane": ["A", "B", "C", "S"]})) == "SOURCE_OBJECT_MISMATCH"
 
 
-@pytest.mark.parametrize("goal_type,target", [
-    ("distance", {"point": "A", "plane": ["B", "M", "C", "C'"]}),
-    ("angle", {"line": ["A'", "B"], "plane": ["B", "M", "C", "C'"]}),
+_M_ON_BC = [("Gọi M là trung điểm của BC.", {"kind": "midpoint", "args": {"point": "M", "segment": ["B", "C"]}})]
+#: A' projects onto A in a right prism: H and A are two labels of ONE point.
+_H_IS_A = [("Hình chiếu vuông góc của A' lên (ABC) là H.",
+            {"kind": "orthogonal_projection", "args": {"point": "A'", "image": "H", "plane": ["A", "B", "C"]}})]
+
+
+@pytest.mark.parametrize("plane", [["B", "M", "C", "C'"], ["M", "B", "C", "C'", "B'"], ["C'", "B", "M", "C"]])
+def test_collinear_leading_labels_still_name_a_plane(plane):
+    """B, M, C are collinear (M midpoint of BC) but the group also holds C' off that line, so it names exactly the face
+    (BCC'B'). The engine measures through the first NON-collinear triple of the whole group (`chon_ba_mat`), never
+    refuses because of the order the labels were written in (Owner, 2026-10-26)."""
+    assert _d2(_prism_goal("distance", {"point": "A", "plane": plane}, extra=_M_ON_BC)) == F(36 * 64, 36 + 64)
+
+
+def test_collinear_leading_labels_in_an_angle_plane():
+    # w = B - A' = (x, 0, -h) against the face normal ∝ (y, x, 0): sin² = (xy)² / ((x²+h²)(x²+y²)) = 2304/18000
+    p = _prism_goal("angle", {"line": ["A'", "B"], "plane": ["B", "M", "C", "C'"]}, extra=_M_ON_BC)
+    assert _cos2(p) == 1 - F(36 * 64, (36 + 144) * (36 + 64))
+
+
+def test_a_label_coinciding_with_another_point_is_skipped_for_the_witness():
+    """H = A (projection of A' in a right prism): triples (H, A, ·) are degenerate, (H, B, C) is not."""
+    assert _d2(_prism_goal("distance", {"point": "A'", "plane": ["H", "A", "B", "C"]}, extra=_H_IS_A)) == 144
+
+
+@pytest.mark.parametrize("plane", [["B", "M", "C"], ["B", "M", "C", "H"]])
+def test_a_group_whose_points_are_all_collinear_is_refused(plane):
+    extra = _M_ON_BC + ([("Gọi H là trung điểm của BM.", {"kind": "midpoint", "args": {"point": "H",
+                                                                                 "segment": ["B", "M"]}})]
+                        if "H" in plane else [])
+    assert _refused(_prism_goal("distance", {"point": "A", "plane": plane}, extra=extra)) == "SOURCE_OBJECT_MISMATCH"
+
+
+def test_an_unknown_label_in_the_plane_is_refused():
+    p = _prism_goal("distance", {"point": "A", "plane": ["B", "C", "C'", "X"]})
+    assert _refused(p) in ("UNKNOWN_LABEL", "SOURCE_OBJECT_MISMATCH", "UNKNOWN_VERTEX_REF")
+
+
+# ── learner-facing identity: the plane is shown under the name the problem wrote ───────────────────────────
+
+@pytest.mark.parametrize("p,name", [
+    (lambda: _prism_goal("distance", {"point": "A", "plane": ["B", "C", "C'", "B'"]}), "(BCC′B′)"),
+    (lambda: _pyramid("angle", {"line": ["S", "C"], "plane": ["A", "B", "C", "D"]}), "(ABCD)"),
+    (lambda: _prism_goal("distance", {"point": "A", "plane": ["B", "M", "C", "C'"]}, extra=_M_ON_BC), "(BMCC′)"),
 ])
-def test_collinear_leading_labels_are_refused_with_the_kernel_code(goal_type, target):
-    """B, M, C are collinear (M midpoint of BC); the four labels still lie in (BCC'B') but the engine measures with the
-    first three. The angle call already met the kernel's `COLLINEAR_POINTS`; without the leading-label check the distance
-    call (which carries only [B, M, C]) was refused as "(BMC) is not a plane" — fail-closed, but the wrong reason."""
-    p = _prism_goal(goal_type, target, extra=[("Gọi M là trung điểm của BC.",
-                                               {"kind": "midpoint", "args": {"point": "M", "segment": ["B", "C"]}})])
-    assert _refused(p) == "COLLINEAR_POINTS"
+def test_the_scene_shows_the_full_plane_name_not_the_witness_triple(p, name):
+    obj = next(o for o in _served(p()).scene3d["objects"] if o["id"] == "mp_q")
+    assert (obj["label"], obj["notation"], obj["reference"]) == (name, name, name)
+
+
+def test_a_three_label_plane_keeps_its_previous_display():
+    obj = next(o for o in _served(_prism_goal("distance", {"point": "A'", "plane": ["A", "B", "C"]})).scene3d["objects"]
+               if o["id"] == "mp_q")
+    assert obj["notation"] == "(ABC)"
+
+
+# ── the same code on more families: #4 regular pyramid, #11 cuboid, #13 oblique prism ────────────────────────
+
+def _cuboid(goal_type, target, a=3, b=4, c=12):
+    solid, rect = "Cho hình hộp chữ nhật ABCD.A'B'C'D'.", "Đáy ABCD là hình chữ nhật."
+    qs = [solid, rect, f"AB = {a}.", f"AD = {b}.", f"AA' = {c}."]
+    quote, target, goal_type = _hoi(goal_type, target)
+    base, top = ["A", "B", "C", "D"], ["A'", "B'", "C'", "D'"]
+    return {"schema_version": "typed-fact-next/2", "problem_text": " ".join([*qs, quote]), "length_unit": "1",
+            "solids": [{"solid_id": "h", "solid_type": "prism", "notation": "ABCD.A'B'C'D'", "quote": solid}],
+            "premises": [{"kind": "base_is_rectangle", "args": {"vertices": base}, "quote": rect},
+                         {"kind": "right_prism", "args": {"base": base, "top": top}, "quote": solid},
+                         {"kind": "segment_length", "args": {"segment": ["A", "B"], "value": str(a)}, "quote": qs[2]},
+                         {"kind": "segment_length", "args": {"segment": ["A", "D"], "value": str(b)}, "quote": qs[3]},
+                         {"kind": "segment_length", "args": {"segment": ["A", "A'"], "value": str(c)}, "quote": qs[4]}],
+            "simulation_goals": [{"goal_id": "draw", "kind": "construct_object", "target_solid_id": "h", "quote": solid}],
+            "math_goals": [{"goal_id": "q", "kind": "measurement", "goal_type": goal_type, "target": target,
+                            "quote": quote}]}
+
+
+def _regular(goal_type, target, s=4, l=3):
+    solid, sq, sa = "Cho hình chóp tứ giác đều S.ABCD.", f"Đáy ABCD là hình vuông cạnh {s}.", f"SA = {l}."
+    quote, target, goal_type = _hoi(goal_type, target)
+    base = ["A", "B", "C", "D"]
+    return {"schema_version": "typed-fact-next/2", "problem_text": " ".join([solid, sq, sa, quote]), "length_unit": "1",
+            "solids": [{"solid_id": "py", "solid_type": "pyramid", "notation": "S.ABCD", "quote": solid}],
+            "premises": [{"kind": "regular_pyramid", "args": {"apex": "S", "base": base}, "quote": solid},
+                         {"kind": "base_is_square", "args": {"vertices": base, "side": str(s)}, "quote": sq},
+                         {"kind": "segment_length", "args": {"segment": ["S", "A"], "value": str(l)}, "quote": sa}],
+            "simulation_goals": [{"goal_id": "draw", "kind": "construct_object", "target_solid_id": "py", "quote": solid}],
+            "math_goals": [{"goal_id": "q", "kind": "measurement", "goal_type": goal_type, "target": target,
+                            "quote": quote}]}
+
+
+@pytest.mark.parametrize("x,y,h", [(6, 8, 12), (12, 16, 24)])
+def test_oblique_prism_distance_to_a_lateral_face(x, y, h):
+    """A' over the midpoint of BC at height h: AA' = (x/2, y/2, h), face normal ∝ (yh, xh, −xy)."""
+    p = _prism_goal("distance", {"point": "A", "plane": ["B", "C", "C'", "B'"]}, x=x, y=y, h=h, oblique=True)
+    assert _d2(p) == F(x * x * y * y * h * h, y * y * h * h + x * x * h * h + x * x * y * y)
+
+
+@pytest.mark.parametrize("a,b,c", [(3, 4, 12), (5, 12, 7)])
+def test_cuboid_diagonal_plane_distance(a, b, c):
+    assert _d2(_cuboid("distance", {"point": "A", "plane": ["B", "D", "D'", "B'"]}, a, b, c)) == F(a * a * b * b,
+                                                                                                 a * a + b * b)
+
+
+@pytest.mark.parametrize("a,b,c", [(3, 4, 12), (5, 12, 7)])
+def test_cuboid_space_diagonal_to_the_base(a, b, c):
+    assert _cos2(_cuboid("angle", {"line": ["A'", "C"], "plane": ["A", "B", "C", "D"]}, a, b, c)) == \
+        F(a * a + b * b, a * a + b * b + c * c)
+
+
+def test_cuboid_dihedral_between_a_diagonal_plane_and_the_base():
+    assert _cos2(_cuboid("angle", {"plane1": ["A'", "B'", "C", "D"], "plane2": ["D", "C", "B", "A"]})) == F(16, 16 + 144)
+
+
+def test_cuboid_non_coplanar_four_labels_are_refused():
+    assert _refused(_cuboid("distance", {"point": "A", "plane": ["B", "D", "D'", "C'"]})) == "SOURCE_OBJECT_MISMATCH"
+
+
+@pytest.mark.parametrize("s,l", [(4, 3), (2, 3)])
+def test_regular_pyramid_lateral_edge_to_the_base(s, l):
+    assert _cos2(_regular("angle", {"line": ["S", "C"], "plane": ["A", "B", "C", "D"]}, s, l)) == F(s * s, 2 * l * l)
+
+
+@pytest.mark.parametrize("s,l", [(4, 3), (2, 3)])
+def test_regular_pyramid_lateral_face_to_the_base(s, l):
+    h2 = l * l - F(s * s, 2)
+    assert _cos2(_regular("angle", {"plane1": ["S", "C", "D"], "plane2": ["A", "B", "C", "D"]}, s, l)) == \
+        F(s * s, 4) / (F(s * s, 4) + h2)
 
 
 @pytest.mark.parametrize("plane", [["B", "C", "C'", "B"], ["B", "C"], "BCC'B'", ["B", "C", "C'", 7]])

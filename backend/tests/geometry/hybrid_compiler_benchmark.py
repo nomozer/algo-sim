@@ -436,11 +436,7 @@ REFUSAL_CLASS = {
     # hybrid-b3-v2-distance-bridge: a `/2` distance target outside its three key forms; taxonomy only.
     "INVALID_MATH_GOAL": "malformed",
     # claude-to-codex-takeover (engine /12): the question calls two coplanar lines skew; taxonomy only.
-    "SKEW_CLAIM_CONTRADICTED": "contradictory",
-    # hybrid-v2-backend-generalization: a > 3-label question plane whose first three labels are collinear — a valid face
-    # the engine will not measure through that naming (a known ceiling, not a contradiction); taxonomy only.
-    "COLLINEAR_POINTS": "unsupported",
-    # malformed facts / plan
+    "SKEW_CLAIM_CONTRADICTED": "contradictory",    # malformed facts / plan
     "SCHEMA_INVALID": "malformed", "FACT_INCOMPLETE": "malformed", "UNKNOWN_SOLID": "malformed", "NO_SOLID": "malformed",
     "DUPLICATE_CALL_ID": "malformed", "DEPENDENCY_CYCLE": "dependency", "DANGLING_DEPENDENCY": "dependency",
     # system faults (never a correct answer to a geometry question)

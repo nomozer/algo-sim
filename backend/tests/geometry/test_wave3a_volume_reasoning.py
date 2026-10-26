@@ -188,8 +188,8 @@ def test_wave3a_version_and_surface_fingerprint_invariants():
     # /13, /13, /11 since hybrid-contract-v2 (owner D5); engine /12 since claude-to-codex-takeover (skew-claim refusal).
     # Wave 3A surface fingerprints below unchanged
     assert registry.REGISTRY_VERSION == "geometry-functions/13"
-    assert planner.PLANNER_VERSION == "geometry-fact-planner/13"
-    assert engine.ENGINE_VERSION == "geometry-function-engine/12"
+    assert planner.PLANNER_VERSION == "geometry-fact-planner/14"
+    assert engine.ENGINE_VERSION == "geometry-function-engine/13"
     assert ADAPTER_VERSION == "hybrid-preview-adapter/2"
     assert RESPONSE_CONTRACT == "flat"
     assert registry.REGISTRY["ask_volume_ratio"].provider_offered is False

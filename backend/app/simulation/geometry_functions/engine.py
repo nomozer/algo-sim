@@ -24,7 +24,7 @@ from __future__ import annotations
 import json
 import re
 import unicodedata
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from fractions import Fraction
 from itertools import combinations
 from math import isqrt
@@ -48,7 +48,9 @@ from .registry import DINH_CAT_CANH, _cum_hoi
 #: declared-boundary verification; IR canonicalization limited to engine-owned names.
 #: /12 (run `claude-to-codex-takeover`): `ask_distance_lines` refuses `SKEW_CLAIM_CONTRADICTED` when the question calls the
 #: two lines "chéo nhau" but they are coplanar (NFC-normalised quote).
-ENGINE_VERSION = "geometry-function-engine/12"
+#: /13 (run `hybrid-v2-backend-generalization`): question planes are measured through the first non-collinear triple of
+#: the whole label group (`chon_ba_mat`), every named label is checked coplanar, and the IR plane carries the full name.
+ENGINE_VERSION = "geometry-function-engine/13"
 Z = Fraction(0)
 V3 = tuple[Fraction, Fraction, Fraction]
 
@@ -248,6 +250,7 @@ class _Dung:
         self.h2: Fraction | None = None
         self.trace: list[dict[str, Any]] = []
         self.dung: set[str] = set()             # id lời gọi engine ĐÃ DÙNG để dựng bố cục
+        self.ten_mat_hoi: dict[tuple[str, str], list[str]] = {}   # `chon_ba_mat`
         self.khoi: dict[str, _Khoi] = {}
         self.tam: str | None = None
         self.midpoints: dict[str, tuple[str, str]] = {}
@@ -756,14 +759,53 @@ class _Dung:
     def _line(self, labels) -> Line3:
         return Line3.through(*(Vec3(*self.pts[p]) for p in labels))
 
-    def kiem_mat_viet(self, nhom: list[list[str]], named: list[list[str]] = ()) -> None:
+    def _ba_nhan(self, nhan: list[str]) -> tuple[str, str, str] | None:
+        """Bộ ba nhãn KHÔNG thẳng hàng đầu tiên (theo thứ tự đã viết) của một nhóm — chứng nhân xác định mặt; None nếu
+        thiếu toạ độ hoặc mọi bộ ba đều thẳng hàng / trùng điểm (khi đó `kiem_mat_viet` từ chối)."""
+        if any(p not in self.pts for p in nhan):
+            return None
+        return next(((a, b, c) for a, b, c in combinations(nhan, 3)
+                     if not (Vec3(*self.pts[b]) - Vec3(*self.pts[a])).cross(Vec3(*self.pts[c]) - Vec3(*self.pts[a])).is_zero()),
+                    None)
+
+    def chon_ba_mat(self, named: list[dict[str, Any]]) -> None:
+        """Mặt của câu hỏi được ĐO qua ba nhãn đầu (IR `construct_plane`, các công thức Gram). Sắp lại nhãn để ba nhãn
+        đầu là bộ chứng nhân không thẳng hàng của CẢ nhóm — (BMCC′) với M ∈ BC đo qua (B, M, C′), không bị từ chối. Với
+        khoảng cách (ô ba nhãn của registry) bộ ba lấy từ nhóm đầy đủ `named`. Chỉ sắp lại: không thêm, không bớt nhãn,
+        không từ chối — đồng phẳng / suy biến vẫn do `kiem_mat_viet`. Nhóm đã có ba nhãn đầu hợp lệ giữ nguyên thứ tự.
+        `ten_mat_hoi`: (lời gọi, ô) → nhóm đầy đủ > 3 nhãn như đề viết, để IR mang đúng tên học sinh thấy."""
+        day_du = {g["call"]: list(g["labels"]) for g in named if isinstance(g, dict)}
+        moi = []
+        for c in self.calls:
+            sua = {}
+            for key in ("plane", "plane1", "plane2") if c.fn in ("ask_distance_point_plane", "ask_angle_line_plane",
+                                                                 "ask_angle_plane_plane") else ():
+                if (g := getattr(c.args, key, None)) is None:
+                    continue
+                g = day_du.get(c.id, g) if c.fn == "ask_distance_point_plane" else list(g)
+                if len(g) > 3:
+                    self.ten_mat_hoi[(c.id, key)] = g
+                if (ba := self._ba_nhan(g)) is not None and list(ba) != g[:3]:
+                    xep = [*ba, *(p for p in g if p not in ba)]
+                    sua[key] = xep[:3] if c.fn == "ask_distance_point_plane" else xep
+            moi.append(replace(c, args=c.args.model_copy(update=sua)) if sua else c)
+        self.calls = tuple(moi)
+
+    def _mat_hoi(self, c: LoiGoi, key: str, var: str, labels) -> dict[str, Any]:
+        """IR của mặt câu hỏi: dựng qua bộ ba chứng nhân; mặt > 3 nhãn mang tên đầy đủ như đề viết (`label`), để học
+        sinh thấy (BCC′B′) chứ không phải (BCC′)."""
+        st = {"kind": "construct_plane", "target_var": var, "through": [ir_name(x) for x in labels[:3]]}
+        if g := self.ten_mat_hoi.get((c.id, key)):
+            st["label"] = "(" + "".join(g).replace("'", "′") + ")"
+        return st
+
+    def kiem_mat_viet(self, nhom: list[list[str]], named: list[dict[str, Any]] = ()) -> None:
         """Nhóm nhãn mặt phẳng nguồn phải không suy biến và đồng phẳng trên hình đã dựng (chính xác).
         Cùng `_cung_mat`, phép kiểm này không cho rút gọn một nhóm nguồn sai thành mặt ba nhãn.
-        `named`: mặt câu hỏi > 3 nhãn mà lời gọi chỉ mang ba nhãn đầu (`KeHoach.named_planes`)."""
+        `named`: mặt câu hỏi > 3 nhãn mà lời gọi chỉ mang ba nhãn (`KeHoach.named_planes`)."""
         # Các nhãn dư trong lời gọi cũng phải thuộc cùng mặt, kể cả hàm góc chỉ phát ba nhãn đầu vào IR.
         goi = [g for c in self.calls for key in ("plane", "plane1", "plane2") if (g := getattr(c.args, key, None)) is not None]
-        do = [*named, *(g for c in self.calls if c.fn.startswith("ask_")
-                        for key in ("plane", "plane1", "plane2") if (g := getattr(c.args, key, None)) is not None)]
+        named = [list(g["labels"]) for g in named if isinstance(g, dict)]
         for g in [*nhom, *named, *goi]:
             if any(p not in self.pts for p in g):
                 raise TuChoi("SOURCE_OBJECT_MISMATCH", f"({''.join(g)}) có nhãn chưa được dựng — không kiểm được là một mặt phẳng")
@@ -772,11 +814,6 @@ class _Dung:
             if ba is None or any(Plane3.through(*ba).signed_eval(p) != 0 for p in v):
                 raise TuChoi("SOURCE_OBJECT_MISMATCH", f"({''.join(g)}) không phải một mặt phẳng của hình — "
                              "không đọc nó thành mặt ba nhãn")
-            # ponytail: a question plane is measured through its first three labels; a valid face named with collinear
-            # leading labels, (BMCC') with M on BC, is refused rather than reordered — reorder here if such names matter.
-            if len(g) > 3 and g in do and (v[1] - v[0]).cross(v[2] - v[0]).is_zero():
-                raise TuChoi("COLLINEAR_POINTS", f"({''.join(g)}): ba nhãn đầu {''.join(g[:3])} thẳng hàng — không đo mặt "
-                             "qua ba điểm này")
 
     def _plane(self, labels) -> Plane3:
         plane = Plane3.through(*(Vec3(*self.pts[p]) for p in labels[:3]))
@@ -1204,19 +1241,19 @@ class _Dung:
                 lenh.append(P.measure_quantity(kq, "distance", ir_name(a.segment[0]), ir_name(a.segment[1])))
             elif c.fn == "ask_distance_point_plane":
                 mp = f"mp_{c.id}"
-                lenh.append({"kind": "construct_plane", "target_var": mp, "through": [ir_name(x) for x in a.plane]})
+                lenh.append(self._mat_hoi(c, "plane", mp, a.plane))
                 khai.append(P.memory_declaration(mp, "plane3"))
                 lenh.append(P.measure_quantity(kq, "distance", ir_name(a.point), mp))
             elif c.fn == "ask_angle_line_plane":
                 dt, mp = f"dt_{c.id}", f"mp_{c.id}"
                 lenh.append(P.construct_line(dt, ir_name(a.line[0]), ir_name(a.line[1])))
-                lenh.append({"kind": "construct_plane", "target_var": mp, "through": [ir_name(x) for x in a.plane[:3]]})
+                lenh.append(self._mat_hoi(c, "plane", mp, a.plane))
                 khai += [P.memory_declaration(dt, "line3"), P.memory_declaration(mp, "plane3")]
                 lenh.append(P.measure_quantity(kq, "angle_cos_sq", dt, mp))
             elif c.fn == "ask_angle_plane_plane":
                 m1, m2 = f"mp1_{c.id}", f"mp2_{c.id}"
-                for m, mp in ((m1, a.plane1), (m2, a.plane2)):
-                    lenh.append({"kind": "construct_plane", "target_var": m, "through": [ir_name(x) for x in mp[:3]]})
+                for m, key, mp in ((m1, "plane1", a.plane1), (m2, "plane2", a.plane2)):
+                    lenh.append(self._mat_hoi(c, key, m, mp))
                     khai.append(P.memory_declaration(m, "plane3"))
                 lenh.append(P.measure_quantity(kq, "angle_cos_sq", m1, m2))
             elif c.fn in ("ask_distance_lines", "ask_angle_lines"):
@@ -1710,6 +1747,8 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         dung.thu_khoi()
         dung.bo_cuc_day()
         dung.giai_phu_thuoc()
+        named = plan.get("named_planes") or [] if isinstance(plan, dict) else []
+        dung.chon_ba_mat(named)
         phu = {x: d for d in auxiliary for x in (d.get("labels") or ([d['label']] if d.get('label') else []))}
         for s in dung.trace:                             # điểm phụ: DẪN XUẤT, không phải nhãn của đề — ghi rõ ràng buộc
             if s["step"] == "place_point" and s["object"] in phu:
@@ -1721,7 +1760,7 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         for d in auxiliary:                              # section vertices on stated cut edges (`DINH_CAT_CANH`)
             if d.get("rule") == DINH_CAT_CANH:
                 dung.kiem_dinh_cat(d)
-        dung.kiem_mat_viet(nhom_mat_nguon(problem_text), plan.get("named_planes") or [] if isinstance(plan, dict) else [])
+        dung.kiem_mat_viet(nhom_mat_nguon(problem_text), named)
         chuoi = [d for d in auxiliary if d.get("rule") == "effect-chain"]
         for d in chuoi:
             dung.kiem_mo_ta(d)
