@@ -908,7 +908,7 @@ _C_KHOI = re.compile(rf"(?:(?:cho|xét)\s+)?(?:một\s+)?(?:(?:hình|khối)\s+)
                      rf"(?P<km>(?:\s+(?:đứng|đều|xiên|tam\s+giác|tứ\s+giác|ngũ\s+giác|lục\s+giác|chữ\s+nhật))*)"
                      rf"\s+(?P<k>{_NHAN}(?:\.{_NHAN})?)(?![\w'])", re.IGNORECASE)
 _C_DAY = re.compile(rf"(?:có\s+)?(?:mặt\s+)?đáy(?:\s+(?P<d>{_NHAN}))?\s+(?:là\s+(?:một\s+)?{_HINH}(?:\s+(?P<d2>{_NHAN}))?|đều)(?![\w'])"
-                    rf"(?:\s+(?:có\s+)?cạnh\s*(?:(?:bằng|=|là)\s*)?{_so_nhom('ds')})?", re.IGNORECASE)
+                    rf"(?:(?:\s*,\s*|\s+)(?:(?:và|với)\s+)?(?:có\s+)?(?:độ\s+dài\s+)?cạnh\s*(?:(?:bằng|=|là)\s*)?{_so_nhom('ds')})?", re.IGNORECASE)
 _C_VAI = re.compile(rf"(?:(?:có|với)\s+)?(?P<vai>cạnh\s+đáy|cạnh\s+bên|chiều\s+cao|đường\s+cao|cạnh)(?:\s+của\s+(?:(?:hình|khối)\s+)?"
                     rf"(?P<qn>chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)(?:\s+(?P<ql>{_NHAN}(?:\.{_NHAN})?))?)?"
                     rf"\s*(?:(?:có\s+)?độ\s+dài\s*)?(?:(?:=|bằng|là)\s*)?{_so_nhom('vs')}", re.IGNORECASE)
