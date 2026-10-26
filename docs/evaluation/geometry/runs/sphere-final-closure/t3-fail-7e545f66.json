@@ -1,0 +1,34 @@
+{
+  "candidate": "7e545f66a18eb27d0e6bc73c337a1a4e98b8ea4f",
+  "detached": true,
+  "source_tree_before": "",
+  "source_tree_after": "",
+  "started_utc": "2026-10-26T10:32:48.723070+00:00",
+  "finished_utc": "2026-10-26T10:42:30.751941+00:00",
+  "seconds": 582.032,
+  "exit_code": 1,
+  "verdict": "FULL_PRODUCT_GATE_FAIL",
+  "summaries": [
+    "FAILED tests/geometry/test_hybrid_ab_pilot_runner.py::test_runner_executes_both_real_adapters_with_separate_telemetry_and_resume[FULL_AB-288]",
+    "= 1 failed, 11992 passed, 1 skipped, 2 deselected, 15 xfailed, 1 warning in 551.35s (0:09:11) =",
+    " Test Files  83 passed (83)",
+    "      Tests  1416 passed (1416)",
+    "FULL_PRODUCT_GATE_FAIL — không cổng con nào được bỏ qua."
+  ],
+  "post_freeze": {
+    "exit_code": 0,
+    "stdout": "Candidate khớp bản đã đóng băng (mã sản phẩm: 118 file, 3850e787d86f81be…)."
+  },
+  "provider_calls": 0,
+  "execution_context": "Claude clean detached machine verification; not independent review",
+  "streams": {
+    "stdout.log": {
+      "bytes": 1585849,
+      "sha256": "0e8c3a575b5e50a0497a57adba151bad23df3b69dd7e400834cb7dbf3e51094a"
+    },
+    "stderr.log": {
+      "bytes": 342,
+      "sha256": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a"
+    }
+  }
+}

@@ -1,0 +1,1 @@
+PermissionError winerror=5 errno=13 [WinError 5] Access is denied: 'D:\\Documents\\projects\\algo-sim\\.superpowers\\pt-sphere-diag-4\\test_runner_executes_both_real1\\manifest.pending' -> 'D:\\Documents\\projects\\algo-sim\\.superpowers\\pt-sphere-diag-4\\test_runner_executes_both_real1\\manifest.json'
