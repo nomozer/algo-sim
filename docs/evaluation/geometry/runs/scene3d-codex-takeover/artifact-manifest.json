@@ -1,0 +1,2889 @@
+{
+  "schema": "scene3d-artifact-manifest/1",
+  "product_commit": "511a48c777c187ff92d219185214f882e09726b0",
+  "candidate": "e1ebc72cd3968abfe752303089efc8cb7441abe6",
+  "files": [
+    {
+      "path": "after/cau-cat-mat-phang-1440-back.png",
+      "bytes": 269201,
+      "sha256": "35c40a87c434afefe816d42dd31c801fc933270a843b269fdcdbc00d2be98d59"
+    },
+    {
+      "path": "after/cau-cat-mat-phang-1440-default.png",
+      "bytes": 270320,
+      "sha256": "5dfbe476b0c3c67f6725f8524312e163f3d7b5cab90521ed4e3e7ae0dc4e7c54"
+    },
+    {
+      "path": "after/cau-cat-mat-phang-1440-half.png",
+      "bytes": 270849,
+      "sha256": "1517f30d8886ae99b69b96154c095369142549f1e7ddea656824be2d5cbb612c"
+    },
+    {
+      "path": "after/cau-cat-mat-phang-1440-high.png",
+      "bytes": 287472,
+      "sha256": "8222917f714ac1964aea7c6f87de772b0e7f4de4592aa1332fbdc86292a7228e"
+    },
+    {
+      "path": "after/cau-cat-mat-phang-1440-low.png",
+      "bytes": 223323,
+      "sha256": "9a3abf6bad0a681b0435738e6ad9fa4c173f317ffbb32b25886fba7217b32034"
+    },
+    {
+      "path": "after/cau-cat-mat-phang-1440-quarter.png",
+      "bytes": 270317,
+      "sha256": "62e0fe3641242494202b3c347e6fb50c873c6f9f19f73e51bce9064a990f4b45"
+    },
+    {
+      "path": "after/cau-the-tich-1440-back.png",
+      "bytes": 260869,
+      "sha256": "8da7adf9d6f7c98c20ac9ee86c85802e57d3457931506fea042b29c5ae7fc30c"
+    },
+    {
+      "path": "after/cau-the-tich-1440-default.png",
+      "bytes": 261099,
+      "sha256": "df4fe3d86d54debf876aac86fa46f0817c35c7e9f528c52e3e41ece24afc1aa8"
+    },
+    {
+      "path": "after/cau-the-tich-1440-half.png",
+      "bytes": 225280,
+      "sha256": "174ba827cf4ccef6ce6e025ac4abf43c142b7aa4b914ed131d94739034f922a4"
+    },
+    {
+      "path": "after/cau-the-tich-1440-high.png",
+      "bytes": 279013,
+      "sha256": "89d30a4d3f1c58ba9773544085c2049d7bbbaa45864cbaac5c940364f0983a50"
+    },
+    {
+      "path": "after/cau-the-tich-1440-low.png",
+      "bytes": 253926,
+      "sha256": "f66861fa22c86954f74eee431307a550618251170ff0f08882626e55bf75fd3d"
+    },
+    {
+      "path": "after/cau-the-tich-1440-quarter.png",
+      "bytes": 260108,
+      "sha256": "9a278103deaf55adb60a903efee656c80d5b86aa3d7a9c0b7f838027c45b0615"
+    },
+    {
+      "path": "after/mat-cheo-sac-1440-back.png",
+      "bytes": 312382,
+      "sha256": "47f31e4d60011a7433c0b5659d23088ae76282d5e39fb340efc2d1822732ce3d"
+    },
+    {
+      "path": "after/mat-cheo-sac-1440-default.png",
+      "bytes": 310950,
+      "sha256": "7a03a3a136d3e2532714034fed31d1a730baaf0028330382e9fe84594b407049"
+    },
+    {
+      "path": "after/mat-cheo-sac-1440-half.png",
+      "bytes": 307295,
+      "sha256": "da16e2b878e1c8fd6b8211f7fec2c8a43c2f3e074dd753c73577c41fac641740"
+    },
+    {
+      "path": "after/mat-cheo-sac-1440-high.png",
+      "bytes": 281365,
+      "sha256": "dd7f7e227dca0b69057d47880c542c8a073bb617d23ce10653d667b0793877c0"
+    },
+    {
+      "path": "after/mat-cheo-sac-1440-low.png",
+      "bytes": 257976,
+      "sha256": "838a0869920268bf9440783741c9b69c3ca072d5374b328f4d72b79e83df0d68"
+    },
+    {
+      "path": "after/mat-cheo-sac-1440-quarter.png",
+      "bytes": 268164,
+      "sha256": "911b724dc318ac2e909c788c615ab17fa117a2f9b6abeb501ef29f57d2a202c8"
+    },
+    {
+      "path": "after/mp-vuong-goc-duong-1440-back.png",
+      "bytes": 321363,
+      "sha256": "11022d819f53d40b63946dfc4a3f74b0813ecbc7564ab21bb4eb1786ad134499"
+    },
+    {
+      "path": "after/mp-vuong-goc-duong-1440-default.png",
+      "bytes": 318242,
+      "sha256": "89af7a4aa829889531aa9b8a79812f3aced87b92acf3f0a986a1496686c4e6ab"
+    },
+    {
+      "path": "after/mp-vuong-goc-duong-1440-half.png",
+      "bytes": 299844,
+      "sha256": "53e5dd89526602e9d128f3f0a7674b4b22b2ccfb4415c2928070da4ae33f3c1a"
+    },
+    {
+      "path": "after/mp-vuong-goc-duong-1440-high.png",
+      "bytes": 279204,
+      "sha256": "1011058e22fcf877857e9487891fc113e528de5350fc5d50b4efa6bc88bce267"
+    },
+    {
+      "path": "after/mp-vuong-goc-duong-1440-low.png",
+      "bytes": 285221,
+      "sha256": "da7016a1aa3eac2cc41d14f9655a6e647b1fd285ff420203640680668def1498"
+    },
+    {
+      "path": "after/mp-vuong-goc-duong-1440-quarter.png",
+      "bytes": 275292,
+      "sha256": "c11ff065c13304e915c852e2b33c7a5d0a1274ec3aa256f4bd5ad9abb6520fe6"
+    },
+    {
+      "path": "after/the-tich-chop-1440-back.png",
+      "bytes": 305519,
+      "sha256": "38ff8ca0b68f3b05719cc2219249523e48094b2f62f46661e4c94f9884407a3e"
+    },
+    {
+      "path": "after/the-tich-chop-1440-default.png",
+      "bytes": 306062,
+      "sha256": "b16d558d2490820a4756632d9953d644ca6618d7243458d42f5d726ca55d29dd"
+    },
+    {
+      "path": "after/the-tich-chop-1440-half.png",
+      "bytes": 305903,
+      "sha256": "735f5e86b5256f351e941cf05ae51d69c7a1f9070cebf4d87cde906c77925cc1"
+    },
+    {
+      "path": "after/the-tich-chop-1440-high.png",
+      "bytes": 280898,
+      "sha256": "7f6dacf17c16234ad5702f32e64bbee3adcd06e2ee40c0b3e1bf382fc2a20d85"
+    },
+    {
+      "path": "after/the-tich-chop-1440-low.png",
+      "bytes": 250106,
+      "sha256": "7bbc683a9f9cce5d9c3c8d560dab727ff9dabc82852a6ba08e040bd1e767e4c9"
+    },
+    {
+      "path": "after/the-tich-chop-1440-quarter.png",
+      "bytes": 270933,
+      "sha256": "c1d8b4fddb588fa8cfd0e996927c52ef2397b3cb8e75bfa90c691072f76606c5"
+    },
+    {
+      "path": "after/thiet-dien-chop-1440-back.png",
+      "bytes": 306659,
+      "sha256": "2ce54023ed0c56dbece55c0ac771f07e54b6135be79bc1471dfc3cbc782c8fe3"
+    },
+    {
+      "path": "after/thiet-dien-chop-1440-default.png",
+      "bytes": 307870,
+      "sha256": "0c6fca0ae8056f22d8c04678465a30ba4b04a7cf3c760ee766053045b7989747"
+    },
+    {
+      "path": "after/thiet-dien-chop-1440-half.png",
+      "bytes": 306900,
+      "sha256": "7f38a7fa7f7949b87aaefbe895fbdcabaabaa3eac1789e91227f2efec9516394"
+    },
+    {
+      "path": "after/thiet-dien-chop-1440-high.png",
+      "bytes": 281319,
+      "sha256": "434dfa5d654c80167a5fd23ae4efb306d0bca12e5b9d3865f5b821dab3ea25fd"
+    },
+    {
+      "path": "after/thiet-dien-chop-1440-low.png",
+      "bytes": 251396,
+      "sha256": "65e3bb72a9571a69b98623fd01ea2c10ad93c997332f58a52f95149d4153397d"
+    },
+    {
+      "path": "after/thiet-dien-chop-1440-quarter.png",
+      "bytes": 275819,
+      "sha256": "21ab728c4eb13b83684b008dc065fe29bfe2492d1d25563204938ad9e09378cc"
+    },
+    {
+      "path": "after/tru-thiet-dien-tron-1440-back.png",
+      "bytes": 296915,
+      "sha256": "8f23ac54f3fbb1caf3a77c604e6aadf186acb9f56ae25ca658baf0b5c7d05a3b"
+    },
+    {
+      "path": "after/tru-thiet-dien-tron-1440-default.png",
+      "bytes": 295865,
+      "sha256": "d49ccd1f321651871975ad471ed0108551a0bd29521b4aa0f3757da68b5845b2"
+    },
+    {
+      "path": "after/tru-thiet-dien-tron-1440-half.png",
+      "bytes": 302385,
+      "sha256": "711b7166722e3f2348f256625dd839345161307b6af9152d6d57d2e9cb40bddb"
+    },
+    {
+      "path": "after/tru-thiet-dien-tron-1440-quarter.png",
+      "bytes": 300023,
+      "sha256": "f8316b62a45aee9a4c31d35693f789e7a9f285ecf3a37822605a3e77831746fc"
+    },
+    {
+      "path": "after/tru-truc-xien-1440-back.png",
+      "bytes": 275291,
+      "sha256": "c1bd3fd3aafe8c1ea72460feba6bb4451dad507294222900f38981d575f8ee36"
+    },
+    {
+      "path": "after/tru-truc-xien-1440-default.png",
+      "bytes": 275126,
+      "sha256": "55c9eab266174cc7d9ad64a15d202df47e8d6e905bd5f4d9377b7f9635dde7a3"
+    },
+    {
+      "path": "after/tru-truc-xien-1440-half.png",
+      "bytes": 252414,
+      "sha256": "b0f7f628e1a1dda953ed61f111ce688c1ac850ff1c0b11c008e59babc40e3a5e"
+    },
+    {
+      "path": "after/tru-truc-xien-1440-high.png",
+      "bytes": 284581,
+      "sha256": "5949c3eac5e6a5de761f1996c12b133134e3fd9a1b828ecde6e3bf20c96b3fe8"
+    },
+    {
+      "path": "after/tru-truc-xien-1440-low.png",
+      "bytes": 241274,
+      "sha256": "acdac40c5db7cf3a94ccf5f667ec0257d49052c3f9c0ff79d8542f99d95742d0"
+    },
+    {
+      "path": "after/tru-truc-xien-1440-quarter.png",
+      "bytes": 231066,
+      "sha256": "8286040baf1b836147b0eb0710febf3418c59e360f05427b22d55aba92cc5910"
+    },
+    {
+      "path": "after/vuong-goc-chop-1440-back.png",
+      "bytes": 306416,
+      "sha256": "ccc44ab192229da1b2b6a23bc2f13aba24de0bcd1092419f279ed5013964a1d1"
+    },
+    {
+      "path": "after/vuong-goc-chop-1440-default.png",
+      "bytes": 306230,
+      "sha256": "cadebc3e1ff0dd4534e277b11bc7e84b1fd795fae5d10f531f40ec2d699984b6"
+    },
+    {
+      "path": "after/vuong-goc-chop-1440-half.png",
+      "bytes": 306861,
+      "sha256": "fc19d0b372a0817f3f8bee172a3678a5ab8acaf94c3a55f7e2f1963607cebd52"
+    },
+    {
+      "path": "after/vuong-goc-chop-1440-high.png",
+      "bytes": 282004,
+      "sha256": "2e9e7ae72d1780d9477e605ca7ca965abf4046695b6097e43de833cde50a33a1"
+    },
+    {
+      "path": "after/vuong-goc-chop-1440-low.png",
+      "bytes": 249550,
+      "sha256": "601bda70550413c944dbf22932aaee0aa1c257e27dd8bb19d6a8703b34179f7a"
+    },
+    {
+      "path": "after/vuong-goc-chop-1440-quarter.png",
+      "bytes": 271740,
+      "sha256": "2e8f2fe7081d6d2cff47c87176a76a15c63d5e5388d9d8d2d5782fd76507c467"
+    },
+    {
+      "path": "before/cau-cat-mat-phang-1440-back.png",
+      "bytes": 269871,
+      "sha256": "11f184a334ad27fe1fa4f0b3a9a1db4025db53d0e8dcbdeb3431be90c604631d"
+    },
+    {
+      "path": "before/cau-cat-mat-phang-1440-default.png",
+      "bytes": 270325,
+      "sha256": "42093393f739ee4bc208ab857149e3de76c61d9844fd24e50caa87217a9df814"
+    },
+    {
+      "path": "before/cau-cat-mat-phang-1440-half.png",
+      "bytes": 269767,
+      "sha256": "7249d450d49172e67556251cfcd8ea75bb01b5d36b18675d43607f51e63eb2b7"
+    },
+    {
+      "path": "before/cau-cat-mat-phang-1440-high.png",
+      "bytes": 287080,
+      "sha256": "4d012c6af80d1917f01d55e6404c170acfc715f600641b2ed1f1cf438479cefc"
+    },
+    {
+      "path": "before/cau-cat-mat-phang-1440-low.png",
+      "bytes": 266875,
+      "sha256": "c783840cc91cece3cf407324f592df5127d8168d302ba7583a91582356c97189"
+    },
+    {
+      "path": "before/cau-cat-mat-phang-1440-quarter.png",
+      "bytes": 268824,
+      "sha256": "a555bf6f029183c557e40f8cf512e895a5e57729baa874a19427a9e495173338"
+    },
+    {
+      "path": "before/cau-cat-mat-phang-390-back.png",
+      "bytes": 184437,
+      "sha256": "e378dabe89111ebfcdbe95245cd0a5b4a1c21c87def197996a865af033c5fec9"
+    },
+    {
+      "path": "before/cau-cat-mat-phang-390-default.png",
+      "bytes": 184858,
+      "sha256": "2ba5eb0011c8649b0fcdbf272cd83adbfd0ac0b8533bdb5cb67a9f13ef56e868"
+    },
+    {
+      "path": "before/cau-cat-mat-phang-390-half.png",
+      "bytes": 181986,
+      "sha256": "5f7dc14bf679bde3f9fd4e0477eb5d8e78f034efbf76c38ee5f1095065267097"
+    },
+    {
+      "path": "before/cau-cat-mat-phang-390-high.png",
+      "bytes": 198826,
+      "sha256": "c3a997b2a717fdb94a47d8e2caeea61cc1f492c720a4fbb7cbd28ce298db79ce"
+    },
+    {
+      "path": "before/cau-cat-mat-phang-390-low.png",
+      "bytes": 174822,
+      "sha256": "2656230560d9433f6066d2b34f97433d597530707ef0eb073fca691480a9b300"
+    },
+    {
+      "path": "before/cau-cat-mat-phang-390-quarter.png",
+      "bytes": 181463,
+      "sha256": "67b62a72ddb12483e6f8f37f6e98695ffa035b644428c7b37badf366bc9aef9f"
+    },
+    {
+      "path": "before/cau-the-tich-1440-back.png",
+      "bytes": 264522,
+      "sha256": "9b269619dac4ed8a01a5dc589043483023ddca263b23b07208b122ee6122c611"
+    },
+    {
+      "path": "before/cau-the-tich-1440-default.png",
+      "bytes": 265329,
+      "sha256": "af1d7874b968be42d42acb8074acd2c63170aff55f968e0d2a2f0161ae7e5bb3"
+    },
+    {
+      "path": "before/cau-the-tich-1440-half.png",
+      "bytes": 263992,
+      "sha256": "e7b8339577e14802e33f1cedee6ba0ddb1f3cfb72b6fadd968c0b3059219d9cb"
+    },
+    {
+      "path": "before/cau-the-tich-1440-high.png",
+      "bytes": 265826,
+      "sha256": "529d370a11b288c78d71486d396e525927927d2c2427bea8c61be41dfd128544"
+    },
+    {
+      "path": "before/cau-the-tich-1440-low.png",
+      "bytes": 258403,
+      "sha256": "e2de7aa7b9a4997c7724facae16d2d94f71d78056545468ab03004b391bae032"
+    },
+    {
+      "path": "before/cau-the-tich-1440-quarter.png",
+      "bytes": 261819,
+      "sha256": "dc83f4b8baa3256383dd27c9ec8728a9be90dbb66db4298eb65252eb7a4c189e"
+    },
+    {
+      "path": "before/cau-the-tich-390-back.png",
+      "bytes": 170977,
+      "sha256": "5c47f8444f99c9c961fb8690bd816d35366f26d80f83a569fdfdc388649f6302"
+    },
+    {
+      "path": "before/cau-the-tich-390-default.png",
+      "bytes": 171214,
+      "sha256": "b5139ed214694ec57ccb0f32556b48abef5ebe5084cd11c2a694b548e3ef422c"
+    },
+    {
+      "path": "before/cau-the-tich-390-half.png",
+      "bytes": 170795,
+      "sha256": "33a48c5baa761e16c6b23054d5ca6b5c3ad332f3890c4c7efb86320191af17e1"
+    },
+    {
+      "path": "before/cau-the-tich-390-high.png",
+      "bytes": 166557,
+      "sha256": "0c787e0fa004d698f23b3eb649eb535188e2b5fa9d41ca291984f11a78d78772"
+    },
+    {
+      "path": "before/cau-the-tich-390-low.png",
+      "bytes": 163625,
+      "sha256": "2c1f38894ad2313173b401187c03058517751368f617599562125402be29af88"
+    },
+    {
+      "path": "before/cau-the-tich-390-quarter.png",
+      "bytes": 170251,
+      "sha256": "39fe0e5bc9956d9c3ce23cce443cc2d5c737c84ab31b385b9f706c6ac3c04638"
+    },
+    {
+      "path": "before/non-duong-sinh-1440-back.png",
+      "bytes": 243842,
+      "sha256": "1879d01cba690268b17678418fcf47f3a4c636df78fe72abaa06cacbcc24b33d"
+    },
+    {
+      "path": "before/non-duong-sinh-1440-default.png",
+      "bytes": 241279,
+      "sha256": "1ca21b60c322791f8bbc4a4c9cc7e0b23d6eeb7a1ee4a2849881d542435b478d"
+    },
+    {
+      "path": "before/non-duong-sinh-1440-half.png",
+      "bytes": 248342,
+      "sha256": "3b1d2325cb195773f6fd5038bdfc4066f546062b1307f59dcdfacdd435d90bf0"
+    },
+    {
+      "path": "before/non-duong-sinh-1440-high.png",
+      "bytes": 270067,
+      "sha256": "dd4e5b4f49629ccd9f6314185502ee514cb04a828a9a780d5eaf2a0e93f2b643"
+    },
+    {
+      "path": "before/non-duong-sinh-1440-low.png",
+      "bytes": 224770,
+      "sha256": "2faad5776c0bd6836acbc0258a34d3fa8620739445abc840a799dbe5a0f6c0d9"
+    },
+    {
+      "path": "before/non-duong-sinh-1440-quarter.png",
+      "bytes": 248739,
+      "sha256": "5c65f46da7ca90dbfedd4c19488c6cb1afb464e820670fec6ed5c0095d53f5c9"
+    },
+    {
+      "path": "before/non-duong-sinh-390-back.png",
+      "bytes": 183027,
+      "sha256": "50e968bdedcd6fc4f44ef142bc4a610b2a36ae81bddcc984db33605735ec22a7"
+    },
+    {
+      "path": "before/non-duong-sinh-390-default.png",
+      "bytes": 183150,
+      "sha256": "cf59c8ceec9ddcc57910493bb044492cb2b263a0c76cd1bba4b3f30e0a287b98"
+    },
+    {
+      "path": "before/non-duong-sinh-390-half.png",
+      "bytes": 181240,
+      "sha256": "c0d4491e7a0fbb6fc507816fdb178730c906c4cb3065d47a98d30e8ee09d8f8f"
+    },
+    {
+      "path": "before/non-duong-sinh-390-high.png",
+      "bytes": 178686,
+      "sha256": "efeb15eaa15d3f87378fd2b61187fedcd9cb9d216d8f803629f9841fbb1aed4e"
+    },
+    {
+      "path": "before/non-duong-sinh-390-low.png",
+      "bytes": 161790,
+      "sha256": "d5ef6899f38649bf9f732387565893ae2dc3a2cdb86880f074eb56c8ed60c9a0"
+    },
+    {
+      "path": "before/non-duong-sinh-390-quarter.png",
+      "bytes": 180082,
+      "sha256": "d046e134bc8a821c80f0a4f03d6c6fb1ae0c7e5d9cabe74e3bba85f24ab6b46b"
+    },
+    {
+      "path": "before/receipt.json",
+      "bytes": 64988,
+      "sha256": "0a77ec254a4d562235c6b8f4407ec1c73013efc21f7803d370bf87a457c901ed"
+    },
+    {
+      "path": "before/tru-truc-xien-1440-back.png",
+      "bytes": 274680,
+      "sha256": "0aabd72d33b7aaf812bd73988d6153beed5ecd9c18b9c944e214baa6ea30f1b1"
+    },
+    {
+      "path": "before/tru-truc-xien-1440-default.png",
+      "bytes": 275162,
+      "sha256": "316b90dc43a0a0b54b526e3f5de309a21eabc18ad4a45148a60fd25150de58e1"
+    },
+    {
+      "path": "before/tru-truc-xien-1440-half.png",
+      "bytes": 253069,
+      "sha256": "9545626e56eb484049428915f146d3dc673c0285c3bb63da510681f2d7d15b77"
+    },
+    {
+      "path": "before/tru-truc-xien-1440-high.png",
+      "bytes": 284806,
+      "sha256": "289aa5d20fa030865882e3cf0e0dfb074c992c189eaa5b0f6b31f928f15739ee"
+    },
+    {
+      "path": "before/tru-truc-xien-1440-low.png",
+      "bytes": 240902,
+      "sha256": "6472ee97f216300b2b4c248d6dadacb75c8845fe2d6d181b9cf5061c13976d9b"
+    },
+    {
+      "path": "before/tru-truc-xien-1440-quarter.png",
+      "bytes": 230272,
+      "sha256": "d138c64ea5d324e13862853a15d0e39e0698abeadc8ae709bad2c296e6bde100"
+    },
+    {
+      "path": "before/tru-truc-xien-390-back.png",
+      "bytes": 183468,
+      "sha256": "bb33f88616df5048bf4efcbdc2498cd7faa0b2b7b7ccd2e265bdfdfca7cecb4b"
+    },
+    {
+      "path": "before/tru-truc-xien-390-default.png",
+      "bytes": 183057,
+      "sha256": "4314655e2f14f09975c85b8d55514bd67b8740cc8b852354103d54f983347c71"
+    },
+    {
+      "path": "before/tru-truc-xien-390-half.png",
+      "bytes": 189095,
+      "sha256": "6bbc28fd1c646b5fe428e3466cc1cb4340fee002e7817bf0f5dff04675b6e58e"
+    },
+    {
+      "path": "before/tru-truc-xien-390-high.png",
+      "bytes": 188539,
+      "sha256": "38d6900ac9e707ddb398908e1874571a3d992e041a583b0859183758acaa8e8d"
+    },
+    {
+      "path": "before/tru-truc-xien-390-low.png",
+      "bytes": 176941,
+      "sha256": "2f88cf42aa1f8fb33d39d1bfa39254b90aa82304a9c130559c99736383ad37c8"
+    },
+    {
+      "path": "before/tru-truc-xien-390-quarter.png",
+      "bytes": 187222,
+      "sha256": "e076820314957342b3b67c6878fbbd715f5bfeeb3a0d5b39c2bf6d60d09fec90"
+    },
+    {
+      "path": "ellipse-before/ellipse-cylinder-p6-1440-low-none.png",
+      "bytes": 323065,
+      "sha256": "9afc56a63d602d7d644016658bfa13b0857c2f52337400666e7566d88def19e2"
+    },
+    {
+      "path": "ellipse-before/ellipse-cylinder-p6-390-low-none.png",
+      "bytes": 185029,
+      "sha256": "6808f216ade92120cc4fcdd4812cd2a4aaf574395aa350e82d53a71475018588"
+    },
+    {
+      "path": "ellipse-before/receipt.json",
+      "bytes": 366557,
+      "sha256": "ec302a64f01479dbf68d6cd7b6b8db319d2bc00071d0d361a9ab07b637ed606d"
+    },
+    {
+      "path": "exploratory.json",
+      "bytes": 404,
+      "sha256": "9e6cd0862f1c787598398f5b69ec2dfc82b3393201d4046fa73435988ca52172"
+    },
+    {
+      "path": "final/cau-cat-mat-phang-1440-back.png",
+      "bytes": 269954,
+      "sha256": "c57990d6dda2f8fc1b7bcc080e8f6d8b230a68d771db6e0b2b24b6f37a337455"
+    },
+    {
+      "path": "final/cau-cat-mat-phang-1440-default.png",
+      "bytes": 270320,
+      "sha256": "5dfbe476b0c3c67f6725f8524312e163f3d7b5cab90521ed4e3e7ae0dc4e7c54"
+    },
+    {
+      "path": "final/cau-cat-mat-phang-1440-half.png",
+      "bytes": 269898,
+      "sha256": "9b84124ccb2d34ea0e723210a27066b159765ae14e95d3614b5a60d1d56f1424"
+    },
+    {
+      "path": "final/cau-cat-mat-phang-1440-high.png",
+      "bytes": 287108,
+      "sha256": "9bf7be4c981f957104142690b35a08aaad56e05fdd2794199ab605b692db4cc3"
+    },
+    {
+      "path": "final/cau-cat-mat-phang-1440-low.png",
+      "bytes": 266941,
+      "sha256": "35fbc23c5289ba68c0f6024d76103f62f1e281f8581ed8b394ae9d4fad8fee9b"
+    },
+    {
+      "path": "final/cau-cat-mat-phang-1440-quarter.png",
+      "bytes": 269912,
+      "sha256": "eb28b87c50042cafcf9b1b9bfbaf7581f01f69b448f80277b5701793c5514fe2"
+    },
+    {
+      "path": "final/cau-cat-mat-phang-390-back.png",
+      "bytes": 184497,
+      "sha256": "599cb0e573d4f8ba2256f74647a67e2c970fc3b5793e52f9e972f77028fb41fb"
+    },
+    {
+      "path": "final/cau-cat-mat-phang-390-default.png",
+      "bytes": 184972,
+      "sha256": "00570c3158ba5d6587cefac6c0ad6e294a527321e19a17a899bac6afc218064c"
+    },
+    {
+      "path": "final/cau-cat-mat-phang-390-half.png",
+      "bytes": 182165,
+      "sha256": "1fd702d1e63e73dfa61179eca6891ed3c7e924639c02be0935ac4c56a0d42602"
+    },
+    {
+      "path": "final/cau-cat-mat-phang-390-high.png",
+      "bytes": 198815,
+      "sha256": "841ef2453b0f421268917bd3e8b91c8f0eb94b492439f318d32f8e582a3007c0"
+    },
+    {
+      "path": "final/cau-cat-mat-phang-390-low.png",
+      "bytes": 174816,
+      "sha256": "83ad751670bf3d6357a4c491731611e8020fcb5eac6ba5a2dfeab1c9b08b3bad"
+    },
+    {
+      "path": "final/cau-cat-mat-phang-390-quarter.png",
+      "bytes": 181406,
+      "sha256": "406b3d46a7a6c23e201d68c3080cf9493ecbcb39deb2dabcd614e38e43d31f41"
+    },
+    {
+      "path": "final/cau-the-tich-1440-back.png",
+      "bytes": 260842,
+      "sha256": "2b120e123835b49fde39a65eaeea2b8737d6f11f36e6be55c6933287ae0def43"
+    },
+    {
+      "path": "final/cau-the-tich-1440-default.png",
+      "bytes": 261468,
+      "sha256": "874cf5aad083a60bb09dac2fc97e2ecfcbbf00e51364e48f169f3d80dde5aeea"
+    },
+    {
+      "path": "final/cau-the-tich-1440-half.png",
+      "bytes": 262194,
+      "sha256": "742a5e2351cf70853276711cbdbff15003004232678dc2ab83b7f7e77ce1f0ea"
+    },
+    {
+      "path": "final/cau-the-tich-1440-high.png",
+      "bytes": 279111,
+      "sha256": "cc865c34ca9179f7c83b78fa6d4212242e590e29bced25367ab547853549e5cb"
+    },
+    {
+      "path": "final/cau-the-tich-1440-low.png",
+      "bytes": 253690,
+      "sha256": "8987740b3dd24bb6a9881fb646dbd6b5a8c8f3c84eeadca34d34e83579814442"
+    },
+    {
+      "path": "final/cau-the-tich-1440-quarter.png",
+      "bytes": 259065,
+      "sha256": "c5fdc095c22523027b6954d0c5c31bcea9c3e96e7ccae1e2b3e5dc62b592be68"
+    },
+    {
+      "path": "final/cau-the-tich-390-back.png",
+      "bytes": 179083,
+      "sha256": "6c2de1eeb56bb70a710487d98367831129b2e4ba09c3bd1678f3adc3a696248e"
+    },
+    {
+      "path": "final/cau-the-tich-390-default.png",
+      "bytes": 178659,
+      "sha256": "66a1c183c29bb0cf492c77685989ddc2923bd72f542f12ab6dcb440b9f345746"
+    },
+    {
+      "path": "final/cau-the-tich-390-half.png",
+      "bytes": 177948,
+      "sha256": "1ea2ec0b47ae306c3819fe9322aac1137c1c590bf4b4024a6e536e1b1bb954f5"
+    },
+    {
+      "path": "final/cau-the-tich-390-high.png",
+      "bytes": 181098,
+      "sha256": "d0eba1b2b6281bd30c7355279bbc8b49b55c12a28de1fa674429e7f2c04f1912"
+    },
+    {
+      "path": "final/cau-the-tich-390-low.png",
+      "bytes": 171168,
+      "sha256": "5684140c678ae0b4bdc906bd77185efb84f0fd759f1391e845fadd055c7181da"
+    },
+    {
+      "path": "final/cau-the-tich-390-quarter.png",
+      "bytes": 178355,
+      "sha256": "abda35b78c7451dd671312df72c88970899ad23aa3329a2ac2f00eed6c6fdd07"
+    },
+    {
+      "path": "final/cross_section_positive-1440-back.png",
+      "bytes": 287229,
+      "sha256": "2b1823fcb67e668bfc0be7d795a095d233e724ec12653c50f314e449cc310e9c"
+    },
+    {
+      "path": "final/cross_section_positive-1440-default.png",
+      "bytes": 286896,
+      "sha256": "8a943a1cd004172e90858186aba236c99995e8039e5cad8f4260f2e40f7531ee"
+    },
+    {
+      "path": "final/cross_section_positive-1440-half.png",
+      "bytes": 299843,
+      "sha256": "5b043e8d96eeb4989ebdf69b66ada5e9d136214a8b3d2a9ce16278b11edeff07"
+    },
+    {
+      "path": "final/cross_section_positive-1440-high.png",
+      "bytes": 316968,
+      "sha256": "1e9a92580b2395abe74d9645ea1b8a19491201beda7438947803bfe6cedba077"
+    },
+    {
+      "path": "final/cross_section_positive-1440-low.png",
+      "bytes": 233110,
+      "sha256": "b6acae92440eeca22eb7847a43b84578aebd8164ea19dda6f13bc4614f712fb4"
+    },
+    {
+      "path": "final/cross_section_positive-1440-quarter.png",
+      "bytes": 249530,
+      "sha256": "dda29d46d2e6b395acc8749c52ac5fd74a09a95786ecaf60565ed22c8eb80c9e"
+    },
+    {
+      "path": "final/cross_section_positive-390-back.png",
+      "bytes": 192420,
+      "sha256": "318e53bc79ef47543fb6a534eae1ecd5d161b0cd941c79d9c4b83f21765fc5a5"
+    },
+    {
+      "path": "final/cross_section_positive-390-default.png",
+      "bytes": 191828,
+      "sha256": "8942cc20d47b8c8f2f9c3719bb3cc55eb81d89752d77aa6fcbd9cc4fa3a3aa96"
+    },
+    {
+      "path": "final/cross_section_positive-390-half.png",
+      "bytes": 184635,
+      "sha256": "9e32d651ae145f28f03e7f226d3ce26f1d19a87dbd663e5f9bd44ec42cae6c74"
+    },
+    {
+      "path": "final/cross_section_positive-390-high.png",
+      "bytes": 208142,
+      "sha256": "84ae4242ac53b0e87c63fbd4804d5c32d2e2f859f52628a7ee5ccd4a1717edb3"
+    },
+    {
+      "path": "final/cross_section_positive-390-low.png",
+      "bytes": 168854,
+      "sha256": "4a4c1eb42fc82951f010a6bf5676e6822cffc17978e41d4bdf0a56ff6648fc94"
+    },
+    {
+      "path": "final/cross_section_positive-390-quarter.png",
+      "bytes": 185490,
+      "sha256": "a0661ab4a2d6cdeec99246c6a6463f87d5b9130e67f9923af8c7891195f2711c"
+    },
+    {
+      "path": "final/cuboid_positive-1440-back.png",
+      "bytes": 311077,
+      "sha256": "fd8e3464daa035bbeb7e938e7b36d187778b390a1e972cd68baa7fc327ab7c32"
+    },
+    {
+      "path": "final/cuboid_positive-1440-default.png",
+      "bytes": 312747,
+      "sha256": "22575c85cf296b47b6c99cb5b9d80925910ba3c92383df2755c3c4530cd428b5"
+    },
+    {
+      "path": "final/cuboid_positive-1440-half.png",
+      "bytes": 320155,
+      "sha256": "8eb0e49134559bc0d5563623152c641bce50a85e17960343bf613cb49ba5305a"
+    },
+    {
+      "path": "final/cuboid_positive-1440-high.png",
+      "bytes": 247674,
+      "sha256": "ee5ce0e28d100a2dfc6fa716e3878f07d2b010a7bdac9f1531dc3c967a579e92"
+    },
+    {
+      "path": "final/cuboid_positive-1440-low.png",
+      "bytes": 325824,
+      "sha256": "cea05208c26dc463b9a2df50ddd906accf3ebec44c2522f4c777a150f1ea2b08"
+    },
+    {
+      "path": "final/cuboid_positive-1440-quarter.png",
+      "bytes": 327215,
+      "sha256": "5bdd641690e2c666901aef9fa5cae13b924fe6ea8ba606075538272ce08af508"
+    },
+    {
+      "path": "final/cuboid_positive-390-back.png",
+      "bytes": 190593,
+      "sha256": "acbc52caefb7a24a0e1784d93224f4ac68a0a5b61a8c7d1e7a6247197b13c074"
+    },
+    {
+      "path": "final/cuboid_positive-390-default.png",
+      "bytes": 192212,
+      "sha256": "f20f91b618c6217bee03eec865048d24b680eadcc3c9140475bfa9e962d20851"
+    },
+    {
+      "path": "final/cuboid_positive-390-half.png",
+      "bytes": 193286,
+      "sha256": "35518d752f2c0c842058d55a9feb8f59e24f199005e5f9d107eae0e5b52bd51d"
+    },
+    {
+      "path": "final/cuboid_positive-390-high.png",
+      "bytes": 186018,
+      "sha256": "04a3c3df216decda4119c8e40c9c3880a645944391dc8c0c2cbe52228f5ba47d"
+    },
+    {
+      "path": "final/cuboid_positive-390-low.png",
+      "bytes": 200105,
+      "sha256": "ac126a20324d3e6d77c51a892be5ccf73b20068f58df45fb1ee59e89a25a79d9"
+    },
+    {
+      "path": "final/cuboid_positive-390-quarter.png",
+      "bytes": 192348,
+      "sha256": "f75cfc932c706734f479b5f7a27c5959a66cc233f608e6dcabdfa80be7ae2fce"
+    },
+    {
+      "path": "final/family01_triangular_pyramid-1440-back.png",
+      "bytes": 290316,
+      "sha256": "49c980aab508b0adcdafef73b74387e4fc9468ae936c0accfe42363243a05d3e"
+    },
+    {
+      "path": "final/family01_triangular_pyramid-1440-default.png",
+      "bytes": 291239,
+      "sha256": "15d40ee47fa5a7fbb750b221b59bd4658ceaf6025668febe90b9f2b09e7a8887"
+    },
+    {
+      "path": "final/family01_triangular_pyramid-1440-half.png",
+      "bytes": 283666,
+      "sha256": "ffff2ff5f2edb953d310bff19ffe6c46db865c0979710fe186cf050b70cb4fd5"
+    },
+    {
+      "path": "final/family01_triangular_pyramid-1440-high.png",
+      "bytes": 259454,
+      "sha256": "c7fd37575541609449e1947d5aeae8e818d582b03efce1a655b09a510ef133fa"
+    },
+    {
+      "path": "final/family01_triangular_pyramid-1440-low.png",
+      "bytes": 256426,
+      "sha256": "c04f6a1c2159cc3e61c53c64c6d11e541ba7c31f4e0b61347c71244e5f51395e"
+    },
+    {
+      "path": "final/family01_triangular_pyramid-1440-quarter.png",
+      "bytes": 281810,
+      "sha256": "26ecc2074f15c3616fab8924eb5237c81900436009ce30eaf265ba1efba6ef6f"
+    },
+    {
+      "path": "final/family01_triangular_pyramid-390-back.png",
+      "bytes": 198587,
+      "sha256": "149042aac4d2cdb264e06a3500850e6bebc43222bcbaf4a91fa2e42b45c75fd0"
+    },
+    {
+      "path": "final/family01_triangular_pyramid-390-default.png",
+      "bytes": 198348,
+      "sha256": "c7842f53391d94145b854f539892ab6a0547106804ca2d5196817ad6af829c69"
+    },
+    {
+      "path": "final/family01_triangular_pyramid-390-half.png",
+      "bytes": 173904,
+      "sha256": "080ab14f6c4f10c205c1d7cad7ffbd96f4d9a69302d6ea80b9490b5ce56c795a"
+    },
+    {
+      "path": "final/family01_triangular_pyramid-390-high.png",
+      "bytes": 172597,
+      "sha256": "50533998f34ada53e0a3bcfa1791742239a2be187770ba1c9556f0afa642b67a"
+    },
+    {
+      "path": "final/family01_triangular_pyramid-390-low.png",
+      "bytes": 172224,
+      "sha256": "a100413052494795214bb2eccfa1d6d69f17970dabfa54c88a516b6a2a7f3a32"
+    },
+    {
+      "path": "final/family01_triangular_pyramid-390-quarter.png",
+      "bytes": 189718,
+      "sha256": "844a01e152c5c766631cc0c346902197cce748a2cc47fbe4075ed57d326921ea"
+    },
+    {
+      "path": "final/family12_cylinder_ellipse_section-1440-back.png",
+      "bytes": 307806,
+      "sha256": "f0619ddcf150035a42ba1c078d81d0e01ca57156316c24b81b2ea4a7775233fe"
+    },
+    {
+      "path": "final/family12_cylinder_ellipse_section-1440-default.png",
+      "bytes": 307803,
+      "sha256": "e4a2131c5c4c96921cf9dd8eab604bdaa7bed85de6e1bfe8efe38b255eac9892"
+    },
+    {
+      "path": "final/family12_cylinder_ellipse_section-1440-half.png",
+      "bytes": 308725,
+      "sha256": "ba23ad81b3c47eb00dc2a8b705a4f214f5edecc1036eeb0d2a3354fa364f28dd"
+    },
+    {
+      "path": "final/family12_cylinder_ellipse_section-1440-high.png",
+      "bytes": 248535,
+      "sha256": "6d56a3ab5d79f78b39e4ef181a504ff94080c0ff17579ed0eca93dd506c8d1c9"
+    },
+    {
+      "path": "final/family12_cylinder_ellipse_section-1440-low.png",
+      "bytes": 308764,
+      "sha256": "6df30f4c0839aa36d5e44749817df64ec464b733960e294796355ec87feec323"
+    },
+    {
+      "path": "final/family12_cylinder_ellipse_section-1440-quarter.png",
+      "bytes": 309540,
+      "sha256": "f06e793beb5f066841987d66b7a2a52a3de941c44321fd7e1d0554889dcd2cb5"
+    },
+    {
+      "path": "final/family12_cylinder_ellipse_section-390-back.png",
+      "bytes": 179136,
+      "sha256": "cf57d7bc834d72065cd09ff27693f227ca282c7140f1c24bc6d3851a92f8f778"
+    },
+    {
+      "path": "final/family12_cylinder_ellipse_section-390-default.png",
+      "bytes": 179219,
+      "sha256": "1ad452537af6577e149156ce83a4f93626334a3084ac63637cdce06d92d1a4d7"
+    },
+    {
+      "path": "final/family12_cylinder_ellipse_section-390-half.png",
+      "bytes": 179462,
+      "sha256": "576f632168a87a414924dd051ff0e321cd68d441bc351954eb2889789bcbc005"
+    },
+    {
+      "path": "final/family12_cylinder_ellipse_section-390-high.png",
+      "bytes": 156477,
+      "sha256": "658c2b7258ae8c493d9dbb001ced09fef8ab08538621d35c756e1e5fc3a35547"
+    },
+    {
+      "path": "final/family12_cylinder_ellipse_section-390-low.png",
+      "bytes": 175728,
+      "sha256": "65d0a56352e1305a06bda9440c52b30670e81ef132f6be7931da7ea2f19463d4"
+    },
+    {
+      "path": "final/family12_cylinder_ellipse_section-390-quarter.png",
+      "bytes": 180041,
+      "sha256": "1f04e61a09ff1af48b68dc9e16f92f957fc92a3cd3a26646dd0b87428ea4a098"
+    },
+    {
+      "path": "final/mat-cheo-sac-1440-back.png",
+      "bytes": 311346,
+      "sha256": "7afa101439424dd6d7b4e9589dc3db96dafbc86225a7d9f49818506127e6c5af"
+    },
+    {
+      "path": "final/mat-cheo-sac-1440-default.png",
+      "bytes": 310950,
+      "sha256": "7a03a3a136d3e2532714034fed31d1a730baaf0028330382e9fe84594b407049"
+    },
+    {
+      "path": "final/mat-cheo-sac-1440-half.png",
+      "bytes": 307941,
+      "sha256": "54ce958f658cef82c634f154c8c6f839129ea73ad4ce8879e8a74a13baea36b1"
+    },
+    {
+      "path": "final/mat-cheo-sac-1440-high.png",
+      "bytes": 281364,
+      "sha256": "290fad1070c21beadae3eed3907bbae701c01ca2794a8e405c0e1bc6402ae53c"
+    },
+    {
+      "path": "final/mat-cheo-sac-1440-low.png",
+      "bytes": 257980,
+      "sha256": "f6d828a6570e4c168a09b1cb9cdc0b5318760e671afa9e08cef89992a46b807e"
+    },
+    {
+      "path": "final/mat-cheo-sac-1440-quarter.png",
+      "bytes": 268167,
+      "sha256": "f40b40838e8e15b65465a963b1eda786a0963b6958e2648e31cbd072aa06cba1"
+    },
+    {
+      "path": "final/mat-cheo-sac-390-back.png",
+      "bytes": 194451,
+      "sha256": "04942a2e579e1adacb59a13939ca4e96ed3f5594c6fd8c721ebfa901bd7db64c"
+    },
+    {
+      "path": "final/mat-cheo-sac-390-default.png",
+      "bytes": 194087,
+      "sha256": "a1996e95c1609ce39ccf6cc69f59565634e63835a58483fe4825c41245b57f75"
+    },
+    {
+      "path": "final/mat-cheo-sac-390-half.png",
+      "bytes": 182845,
+      "sha256": "2963ab3a3c9b8f122f5cb105dc0870f16c6e49b86d8b7eab0aedfcd3b5f529bc"
+    },
+    {
+      "path": "final/mat-cheo-sac-390-high.png",
+      "bytes": 177069,
+      "sha256": "12a293696b0d61de41b12a76d25768c749c54e072f030f93da742036d58e26d1"
+    },
+    {
+      "path": "final/mat-cheo-sac-390-low.png",
+      "bytes": 175642,
+      "sha256": "013ac6158a4cbcf25ec52041c4357c007759710badb69f4da2bc491087cbb574"
+    },
+    {
+      "path": "final/mat-cheo-sac-390-quarter.png",
+      "bytes": 177752,
+      "sha256": "feaab9d743a137a19b5098fc512caf075e1b3fb60bd6d8a9c7b377129865c147"
+    },
+    {
+      "path": "final/mp-vuong-goc-duong-1440-back.png",
+      "bytes": 321289,
+      "sha256": "080e57df7438aab6cf877a913ae918a502aa97e811a6bdbbfbd6c71bd944d7c3"
+    },
+    {
+      "path": "final/mp-vuong-goc-duong-1440-default.png",
+      "bytes": 318242,
+      "sha256": "89af7a4aa829889531aa9b8a79812f3aced87b92acf3f0a986a1496686c4e6ab"
+    },
+    {
+      "path": "final/mp-vuong-goc-duong-1440-half.png",
+      "bytes": 299839,
+      "sha256": "0bda1cbd8ebd737f8c1be768b6afc4ed9d4a05eacc018349387e02d9ef21c7c1"
+    },
+    {
+      "path": "final/mp-vuong-goc-duong-1440-high.png",
+      "bytes": 278916,
+      "sha256": "3d1df28b2f3ff29701c6790cd63bda0fac0d6f076d6571d093bb562876739933"
+    },
+    {
+      "path": "final/mp-vuong-goc-duong-1440-low.png",
+      "bytes": 285225,
+      "sha256": "d61d0fc938a981885d384f74a86e8abfdadfdcc7bf2a1df3c82094384bd3fa9a"
+    },
+    {
+      "path": "final/mp-vuong-goc-duong-1440-quarter.png",
+      "bytes": 275742,
+      "sha256": "d493303790027a2f8a2f144aaa6e65c0e3125d3014d1c1d65a76304343f8b791"
+    },
+    {
+      "path": "final/mp-vuong-goc-duong-390-back.png",
+      "bytes": 204716,
+      "sha256": "50ca06cba4fa143027b3ac00559075158c6516c35211e0d5813d937dde11c71d"
+    },
+    {
+      "path": "final/mp-vuong-goc-duong-390-default.png",
+      "bytes": 204894,
+      "sha256": "f6f00cd6e88f126241277c1803082a10930e9ecfe6efaf324a95408c4fb08d63"
+    },
+    {
+      "path": "final/mp-vuong-goc-duong-390-half.png",
+      "bytes": 188307,
+      "sha256": "e11fd63bcf0de1a76556c7818dcdf223e20a90d47d74549dea37116b748d62ba"
+    },
+    {
+      "path": "final/mp-vuong-goc-duong-390-high.png",
+      "bytes": 184386,
+      "sha256": "b4352a76fe13827720ab937e735ab28bec8ac1f0720fb64b715c6bff74090621"
+    },
+    {
+      "path": "final/mp-vuong-goc-duong-390-low.png",
+      "bytes": 180536,
+      "sha256": "03ca9b9477cf3efe105dcff1821c8d580ba0f648bb915b070b0cf1b95fc09ab2"
+    },
+    {
+      "path": "final/mp-vuong-goc-duong-390-quarter.png",
+      "bytes": 192556,
+      "sha256": "782c3ea992065ed6f875d34537cc432beaaa99bc96bd4835e5469b530f2f8626"
+    },
+    {
+      "path": "final/non-duong-sinh-1440-back.png",
+      "bytes": 243974,
+      "sha256": "4ba931c9dbdab59cc43bb9855379e876150d188e57a22eaae64402c836d541a7"
+    },
+    {
+      "path": "final/non-duong-sinh-1440-default.png",
+      "bytes": 241291,
+      "sha256": "8db74cfa56d73c30de2f3dfdcbd2539d09183ac2a190024b38bed4fc71d979b6"
+    },
+    {
+      "path": "final/non-duong-sinh-1440-half.png",
+      "bytes": 248638,
+      "sha256": "a506010d0fcc22e47f5627142e553a6b2233fc5c1914769e900559d64d231d6b"
+    },
+    {
+      "path": "final/non-duong-sinh-1440-high.png",
+      "bytes": 270340,
+      "sha256": "f5d9892b50d004ad580e58e2aed0980dfbfcc5035901ddf91bb5cb35598709e7"
+    },
+    {
+      "path": "final/non-duong-sinh-1440-low.png",
+      "bytes": 224881,
+      "sha256": "7fb36470bbc7084664eb305aed54904692dcbe34c468843f4d2e5b181b282c1b"
+    },
+    {
+      "path": "final/non-duong-sinh-1440-quarter.png",
+      "bytes": 248761,
+      "sha256": "045c0dd229dda4948f29bd7069375e486cf3d997fd5991850a59e42ab224cade"
+    },
+    {
+      "path": "final/non-duong-sinh-390-back.png",
+      "bytes": 183124,
+      "sha256": "5ce6f5a26c9c1707b6c64e2eed4b0e5f1e21e7deca9c59b1ea33e40f47b1d4f1"
+    },
+    {
+      "path": "final/non-duong-sinh-390-default.png",
+      "bytes": 183150,
+      "sha256": "cf59c8ceec9ddcc57910493bb044492cb2b263a0c76cd1bba4b3f30e0a287b98"
+    },
+    {
+      "path": "final/non-duong-sinh-390-half.png",
+      "bytes": 180992,
+      "sha256": "a41a7471208d9fae60b4dcbc95df3e18d804ca3cfe17dda335cf706fff47bf32"
+    },
+    {
+      "path": "final/non-duong-sinh-390-high.png",
+      "bytes": 178954,
+      "sha256": "5895efcac3365e93153f271a9f213a506bafb26389ee34a6cb87e761a036c052"
+    },
+    {
+      "path": "final/non-duong-sinh-390-low.png",
+      "bytes": 161821,
+      "sha256": "db257ff6aeb65449472bc46e6af8a814db17207ab59102ffdeedfc1ffe690a23"
+    },
+    {
+      "path": "final/non-duong-sinh-390-quarter.png",
+      "bytes": 179992,
+      "sha256": "94a07405433a4afa31eaa3b81cbd5e76a88034998846e4f2dd4ae0a679fe1051"
+    },
+    {
+      "path": "final/non-thiet-dien-truc-1440-back.png",
+      "bytes": 278620,
+      "sha256": "555cf6cece4566bc4f2159efbc5d4f212fdefd8bd0144c91d5283cfc3e2f5136"
+    },
+    {
+      "path": "final/non-thiet-dien-truc-1440-default.png",
+      "bytes": 274476,
+      "sha256": "bd902dbc7fde514d7ab4bce14965eeeab67a116dc971ac64fe1e5815e096422b"
+    },
+    {
+      "path": "final/non-thiet-dien-truc-1440-half.png",
+      "bytes": 281587,
+      "sha256": "756abec3d39b40755c0da7412d6f3a2846936111050bb24e02cdef7300e8468f"
+    },
+    {
+      "path": "final/non-thiet-dien-truc-1440-high.png",
+      "bytes": 288498,
+      "sha256": "0227d0f330a58a28b92e313e17646a769f938e72591f8b4d0686be437ce2445a"
+    },
+    {
+      "path": "final/non-thiet-dien-truc-1440-low.png",
+      "bytes": 234366,
+      "sha256": "6a87acef252568bbf2cc7e2ccc1ccbe50d9aa732497ec607637f5a7a04bc81cf"
+    },
+    {
+      "path": "final/non-thiet-dien-truc-1440-quarter.png",
+      "bytes": 259933,
+      "sha256": "0a39d006b91a5516a8e729e1b8b3c42269b29f523b779fdc8411cb2741ce4c0f"
+    },
+    {
+      "path": "final/non-thiet-dien-truc-390-back.png",
+      "bytes": 200344,
+      "sha256": "2728ade394cec67a1845b54d9d7c56a743048fca8fa94dc818d081d5084ae356"
+    },
+    {
+      "path": "final/non-thiet-dien-truc-390-default.png",
+      "bytes": 200503,
+      "sha256": "9b7f36426e29bcf422ae5df9331bedf1af279427691c5342ea408887a3fdab08"
+    },
+    {
+      "path": "final/non-thiet-dien-truc-390-half.png",
+      "bytes": 202138,
+      "sha256": "7feca1ebab9822b010cec79c55487f3dd45c3da32744945a6b032a2db6d0ca7a"
+    },
+    {
+      "path": "final/non-thiet-dien-truc-390-high.png",
+      "bytes": 197544,
+      "sha256": "7b507c1e225d120ffbfd9baa63624dd8679a00d00153dda571469d2e13b817d7"
+    },
+    {
+      "path": "final/non-thiet-dien-truc-390-low.png",
+      "bytes": 177248,
+      "sha256": "852eefbb13da3c56c11e95838da28b6265993702d40fed0857ae7be38697be0e"
+    },
+    {
+      "path": "final/non-thiet-dien-truc-390-quarter.png",
+      "bytes": 192114,
+      "sha256": "b54070132170047fb931fa25b540da0b717f1ce0f1e0aa67ea8b428bcfe05aec"
+    },
+    {
+      "path": "final/receipt.json",
+      "bytes": 354149,
+      "sha256": "8e8512e90d1ee1807e0ab4cfda8d0654008673a8c3d6e23987727c4f68d7ef8c"
+    },
+    {
+      "path": "final/the-tich-chop-1440-back.png",
+      "bytes": 307199,
+      "sha256": "647418e696360a0f41b64e3c1b5a938f02c36249c255f00fd7267a3a0a26c8b9"
+    },
+    {
+      "path": "final/the-tich-chop-1440-default.png",
+      "bytes": 306062,
+      "sha256": "b16d558d2490820a4756632d9953d644ca6618d7243458d42f5d726ca55d29dd"
+    },
+    {
+      "path": "final/the-tich-chop-1440-half.png",
+      "bytes": 306255,
+      "sha256": "3cadbbc05c5bcda41bfcf1a55fcc6cc94fca1364ac6398e4c3a54c955e344fb8"
+    },
+    {
+      "path": "final/the-tich-chop-1440-high.png",
+      "bytes": 280427,
+      "sha256": "c05dacbab1420c751766047ce9161e3fca4ca85c93648bafdffd59a2e5fa94ff"
+    },
+    {
+      "path": "final/the-tich-chop-1440-low.png",
+      "bytes": 250346,
+      "sha256": "a72a0d6c79de127a5b7520d92b6ab6faedfc102e544cf4f71134f1c26e2c862d"
+    },
+    {
+      "path": "final/the-tich-chop-1440-quarter.png",
+      "bytes": 270921,
+      "sha256": "8bb315e36e2b95b8deeacb7cb5155bd8a4dfe5d216b8a22e69ecb525f21e3a77"
+    },
+    {
+      "path": "final/the-tich-chop-390-back.png",
+      "bytes": 188737,
+      "sha256": "6b60f4ba4e0f27943d4fe96722b1185df8e28f37f74435cbb1ee55385f370fc8"
+    },
+    {
+      "path": "final/the-tich-chop-390-default.png",
+      "bytes": 188768,
+      "sha256": "f44a8b1ba2da9b94f9372c8f167a455c00e82e329750922f5cdca51958126331"
+    },
+    {
+      "path": "final/the-tich-chop-390-half.png",
+      "bytes": 178643,
+      "sha256": "83339bb03dc0f80f14792a2672dd8d983c0074d1e39d46b6481045d95565d45f"
+    },
+    {
+      "path": "final/the-tich-chop-390-high.png",
+      "bytes": 173377,
+      "sha256": "742e21962fc0df79b0e613327662a562add943d5e3973f56c730d6a7d7056e08"
+    },
+    {
+      "path": "final/the-tich-chop-390-low.png",
+      "bytes": 170011,
+      "sha256": "5b6fa912b919ad10d0c235132d0d889391b9149e3faee0b981fb3d94fbd61144"
+    },
+    {
+      "path": "final/the-tich-chop-390-quarter.png",
+      "bytes": 177632,
+      "sha256": "d3b6f762ca0bf7f200b4a5d927e87b449957345d51620976b060af8d396e911e"
+    },
+    {
+      "path": "final/thiet-dien-chop-1440-back.png",
+      "bytes": 306637,
+      "sha256": "66044817d314a1870e05603fd0c574f0509aa5bf2e7a23909d62b27b2d47209f"
+    },
+    {
+      "path": "final/thiet-dien-chop-1440-default.png",
+      "bytes": 307870,
+      "sha256": "0c6fca0ae8056f22d8c04678465a30ba4b04a7cf3c760ee766053045b7989747"
+    },
+    {
+      "path": "final/thiet-dien-chop-1440-half.png",
+      "bytes": 306775,
+      "sha256": "a1534d4acb06ee641b0f941ffc364d6ea52212a055412abfdd0ab1a76d67582e"
+    },
+    {
+      "path": "final/thiet-dien-chop-1440-high.png",
+      "bytes": 280796,
+      "sha256": "e015365c7a3105ef1cddad939e5a5a69d40747cabf0bf6a89008af1301cafd75"
+    },
+    {
+      "path": "final/thiet-dien-chop-1440-low.png",
+      "bytes": 251367,
+      "sha256": "65dad930ee61f9012fbb11eae73a4940ac5f2dbef6d0d08e8cd3c867d708cd1b"
+    },
+    {
+      "path": "final/thiet-dien-chop-1440-quarter.png",
+      "bytes": 274171,
+      "sha256": "bf838079746a9409e2cddfd62702f1abe1f90a3f7bcef72d7e99b63ca96b8636"
+    },
+    {
+      "path": "final/thiet-dien-chop-390-back.png",
+      "bytes": 188475,
+      "sha256": "4513a6527233ffd0403543db19882c2307d6881d36be82050906537d9a46f0f0"
+    },
+    {
+      "path": "final/thiet-dien-chop-390-default.png",
+      "bytes": 188383,
+      "sha256": "7bba3fddbe2ea254fd2adc5f4de18360dade1804ed4d72234867b71c7aa8675e"
+    },
+    {
+      "path": "final/thiet-dien-chop-390-half.png",
+      "bytes": 178871,
+      "sha256": "b120b145dfe94919baaaba7231019780c409e185308b2ecd7f1a09ef4f5b9f79"
+    },
+    {
+      "path": "final/thiet-dien-chop-390-high.png",
+      "bytes": 173622,
+      "sha256": "7c789fa88f8b2b46feb40ad09413eed091ddab6ed8bce4488cbf2a915063b8a7"
+    },
+    {
+      "path": "final/thiet-dien-chop-390-low.png",
+      "bytes": 169304,
+      "sha256": "a79b843da7ead52954cacd74d02012d09039c7ea8e146f83212c7b5aaf4eba05"
+    },
+    {
+      "path": "final/thiet-dien-chop-390-quarter.png",
+      "bytes": 179679,
+      "sha256": "98bbcb5e4265e18efcfde39891cc40423c2728f154b4d1c3c74b2b4ce705d5a3"
+    },
+    {
+      "path": "final/triangular_prism_positive-1440-back.png",
+      "bytes": 327897,
+      "sha256": "7f86023a378ce8ab9481f0b835445d193919d95b6733470daeeed82ca36d8611"
+    },
+    {
+      "path": "final/triangular_prism_positive-1440-default.png",
+      "bytes": 329539,
+      "sha256": "1b35722946ce5bd41beb8facf999eeb521460e8f91783c9a7912531295242227"
+    },
+    {
+      "path": "final/triangular_prism_positive-1440-half.png",
+      "bytes": 337099,
+      "sha256": "392eb64a885bdbfc331c843a8c6936dc34e445332a1899a86b5cee98005c1da0"
+    },
+    {
+      "path": "final/triangular_prism_positive-1440-high.png",
+      "bytes": 262090,
+      "sha256": "2ecd7bf8441aa69b800d79ecf0a53301424266b01d7fbfa3be7ef5a6f5c99a2d"
+    },
+    {
+      "path": "final/triangular_prism_positive-1440-low.png",
+      "bytes": 315865,
+      "sha256": "31a15168a73a9c5cfd10458f054c5814a334c9a6338fb942c55899ccd6398331"
+    },
+    {
+      "path": "final/triangular_prism_positive-1440-quarter.png",
+      "bytes": 335258,
+      "sha256": "5b9afff272a2da954996a093e39b5355cfc346061d29f760369a7a2e16fef874"
+    },
+    {
+      "path": "final/triangular_prism_positive-390-back.png",
+      "bytes": 193873,
+      "sha256": "856561d196de8cd48eacaf49bd332a492b3f8ee3bee9b0c33464fef98d94fb74"
+    },
+    {
+      "path": "final/triangular_prism_positive-390-default.png",
+      "bytes": 195057,
+      "sha256": "e9dad0fc62567568f80d7151dc8bddc08dafd3d0d25600b0102e0831e1005fb8"
+    },
+    {
+      "path": "final/triangular_prism_positive-390-half.png",
+      "bytes": 195176,
+      "sha256": "f58954508b4c542917270c44669995fd406c7d3c38f22581f3ec25dff94137ef"
+    },
+    {
+      "path": "final/triangular_prism_positive-390-high.png",
+      "bytes": 189631,
+      "sha256": "93afcc0bb274181dae334b28ce2cd09d19edcfa58767d31747664dc350866b74"
+    },
+    {
+      "path": "final/triangular_prism_positive-390-low.png",
+      "bytes": 198256,
+      "sha256": "29c64adefdda5225164e0f1264b258a2e1b0ec8e5132211426ce33406a1af5a0"
+    },
+    {
+      "path": "final/triangular_prism_positive-390-quarter.png",
+      "bytes": 204688,
+      "sha256": "4f6230e98f63b667c19ce6cb134695a34f211dbe1bf5da9a3319801130cb3a20"
+    },
+    {
+      "path": "final/tru-thiet-dien-tron-1440-back.png",
+      "bytes": 296940,
+      "sha256": "eb58f4618c0a8f1da1ebfce3b87f7121479a074e8c1d226717b36970e4f68815"
+    },
+    {
+      "path": "final/tru-thiet-dien-tron-1440-default.png",
+      "bytes": 295606,
+      "sha256": "a7c46b35d7cd5260b9282354f81bfbc49145069dcedbf016441cbcd6ae2993be"
+    },
+    {
+      "path": "final/tru-thiet-dien-tron-1440-half.png",
+      "bytes": 302343,
+      "sha256": "7b0f2b44fe9dbd385882d55e89bd65cd91e2a4cd6f241360edeeba7f6beb10f7"
+    },
+    {
+      "path": "final/tru-thiet-dien-tron-1440-high.png",
+      "bytes": 272507,
+      "sha256": "0cc33167e2991e65c9e48bf7b0022fe8e6702bb1ceaa60e455eb7b4db26c5e88"
+    },
+    {
+      "path": "final/tru-thiet-dien-tron-1440-low.png",
+      "bytes": 301286,
+      "sha256": "abced1215d0a4a6e1e45f64fdf6caa5b46b6f1a35b98180ec6c9d7f0b61232cd"
+    },
+    {
+      "path": "final/tru-thiet-dien-tron-1440-quarter.png",
+      "bytes": 299500,
+      "sha256": "6329ab0b4487f72e9f1721381287d3f7db2d13ae56b164d9dae96614e4db74b4"
+    },
+    {
+      "path": "final/tru-thiet-dien-tron-390-back.png",
+      "bytes": 178931,
+      "sha256": "9cce5a461f8d239d7c1bb92305482c8f752ad06b2e50e465ad039e43db006d92"
+    },
+    {
+      "path": "final/tru-thiet-dien-tron-390-default.png",
+      "bytes": 179098,
+      "sha256": "d07ff1f9aa355471c02d4023febcefd30ec51fec73b3b9a8ece89c0d5c4a7f8b"
+    },
+    {
+      "path": "final/tru-thiet-dien-tron-390-half.png",
+      "bytes": 181448,
+      "sha256": "252fecfdb9ed7dec6724c34006a69d87639c03717b3ad9176ced9c6e586265dc"
+    },
+    {
+      "path": "final/tru-thiet-dien-tron-390-high.png",
+      "bytes": 184696,
+      "sha256": "16eb6b8d2bb7a0e9990e15da92f6501d6a0fb7003a19e8b8a94d2adda11cbdc8"
+    },
+    {
+      "path": "final/tru-thiet-dien-tron-390-low.png",
+      "bytes": 175216,
+      "sha256": "79191f2b0da4c07aa694b38b084acc6b4da9b72418869cd77c3ea63b97cdf722"
+    },
+    {
+      "path": "final/tru-thiet-dien-tron-390-quarter.png",
+      "bytes": 180453,
+      "sha256": "a0ace235c8c7a424e333832d9b66b1defc54a25d5d56621a98eeeb5ed51ce96e"
+    },
+    {
+      "path": "final/tru-truc-xien-1440-back.png",
+      "bytes": 274969,
+      "sha256": "483569d146ae5a86dc89c3cfc674be0d1a2459fd82e82777553ef7fbb6963d28"
+    },
+    {
+      "path": "final/tru-truc-xien-1440-default.png",
+      "bytes": 275126,
+      "sha256": "55c9eab266174cc7d9ad64a15d202df47e8d6e905bd5f4d9377b7f9635dde7a3"
+    },
+    {
+      "path": "final/tru-truc-xien-1440-half.png",
+      "bytes": 253659,
+      "sha256": "4beb7369f262063cb5308c5c00077b53d84e191e756b2513a98a8314c62089eb"
+    },
+    {
+      "path": "final/tru-truc-xien-1440-high.png",
+      "bytes": 284812,
+      "sha256": "85982137cdc90d2f14640cfee78c624e7557a3aa11e3f9f254c37e96129655ae"
+    },
+    {
+      "path": "final/tru-truc-xien-1440-low.png",
+      "bytes": 240811,
+      "sha256": "c12539743e4c69ce72329026172fb0baa21787d5bccaf7acbe9195a5c7ab9755"
+    },
+    {
+      "path": "final/tru-truc-xien-1440-quarter.png",
+      "bytes": 230618,
+      "sha256": "785c5455763061aa33b587b79fb6c0d3cee72b7a349a3be166d32e882199e745"
+    },
+    {
+      "path": "final/tru-truc-xien-390-back.png",
+      "bytes": 180856,
+      "sha256": "73bf0b4f93191f11b76d2250e86a359606bae9dc23e43579ed67c51af5985bca"
+    },
+    {
+      "path": "final/tru-truc-xien-390-default.png",
+      "bytes": 183865,
+      "sha256": "2fa9194ac09dabcb38ef8ef1be8f03a54dfe1aa03a1c7dcfe8af54acf5ebe70d"
+    },
+    {
+      "path": "final/tru-truc-xien-390-half.png",
+      "bytes": 186550,
+      "sha256": "0fca1e3f37293132cb99ce92a1fa6c52541281760735c0b5ebc243313dfe7436"
+    },
+    {
+      "path": "final/tru-truc-xien-390-high.png",
+      "bytes": 186357,
+      "sha256": "c3db553bb65aeac8580df19569d5200a336c696591f0104d08db874f0413775e"
+    },
+    {
+      "path": "final/tru-truc-xien-390-low.png",
+      "bytes": 177101,
+      "sha256": "443354742f37d942e5947fccb4b215cc6d8c08818ef4494ccb1b49acb079c71e"
+    },
+    {
+      "path": "final/tru-truc-xien-390-quarter.png",
+      "bytes": 183415,
+      "sha256": "8952b0e27143701b800e36131a218328a31a9ead91c7e50a2744c419f3ce0ecd"
+    },
+    {
+      "path": "final/vuong-goc-chop-1440-back.png",
+      "bytes": 306451,
+      "sha256": "08ce9398da281b06ef7038546e31a8d5a6e375e3eb18b01076908ea1ae105b0b"
+    },
+    {
+      "path": "final/vuong-goc-chop-1440-default.png",
+      "bytes": 306230,
+      "sha256": "cadebc3e1ff0dd4534e277b11bc7e84b1fd795fae5d10f531f40ec2d699984b6"
+    },
+    {
+      "path": "final/vuong-goc-chop-1440-half.png",
+      "bytes": 307784,
+      "sha256": "07c32c6aec9c1671ec8010776c8a846556a11ceac084e9f3dcfd95725c58a2ce"
+    },
+    {
+      "path": "final/vuong-goc-chop-1440-high.png",
+      "bytes": 281901,
+      "sha256": "428e47fdf70cc669243ffb0c9d68789afd4b39972a627f1f945ef095a3f972c1"
+    },
+    {
+      "path": "final/vuong-goc-chop-1440-low.png",
+      "bytes": 249954,
+      "sha256": "915fb6e6e97ed2f0604c9abb68c61ca7e783a1ed0394e7b821bd7f77231e6e91"
+    },
+    {
+      "path": "final/vuong-goc-chop-1440-quarter.png",
+      "bytes": 273131,
+      "sha256": "74c9ae009762a1d6c30981f08f31a5c07e24b4aa6ebc673c0164f73a51aadb2e"
+    },
+    {
+      "path": "final/vuong-goc-chop-390-back.png",
+      "bytes": 189786,
+      "sha256": "63f33a43714f723b7fb521e82f5109aeab7ca049bbb647a6ada71fea770ead4f"
+    },
+    {
+      "path": "final/vuong-goc-chop-390-default.png",
+      "bytes": 189530,
+      "sha256": "ad3bd6ccc3fd93a44671e11192c4fafd6d9d172180896b855e5eae955717ce22"
+    },
+    {
+      "path": "final/vuong-goc-chop-390-half.png",
+      "bytes": 179171,
+      "sha256": "757e5ffd95dbb8299a92eeb822f63e641204040207b75a5727d1adebe4cb6a68"
+    },
+    {
+      "path": "final/vuong-goc-chop-390-high.png",
+      "bytes": 174352,
+      "sha256": "74603d018015e8dd99f30fa3a197df78548588753eb83f05b01c59df44bdb8e3"
+    },
+    {
+      "path": "final/vuong-goc-chop-390-low.png",
+      "bytes": 171021,
+      "sha256": "94cb8af364696d6f2f351653255298f52fa7711191988bd8e665583cb29bc1ba"
+    },
+    {
+      "path": "final/vuong-goc-chop-390-quarter.png",
+      "bytes": 178827,
+      "sha256": "36767695a8397e6226c2bcd2a08214166024b85ab64973880bb187da820fb7d0"
+    },
+    {
+      "path": "final/w18_projection_line-1440-back.png",
+      "bytes": 293029,
+      "sha256": "145c52aace8bf152734791e84e965246f372d4b6d8eef5b7eef84da4a2c81b1a"
+    },
+    {
+      "path": "final/w18_projection_line-1440-default.png",
+      "bytes": 293650,
+      "sha256": "a6f050c2cba6a266b1b2a20ad727c3cac736e89d9eb03db705aaf158048cc5c3"
+    },
+    {
+      "path": "final/w18_projection_line-1440-half.png",
+      "bytes": 317615,
+      "sha256": "b45a00cea92984d14764044df90c93b3866d4dade2b0d6a4e30bfc971610a788"
+    },
+    {
+      "path": "final/w18_projection_line-1440-high.png",
+      "bytes": 308290,
+      "sha256": "9b463a54aff8a46ec2d59a5d436bb579570c951b5db0ba97311dce89902a470d"
+    },
+    {
+      "path": "final/w18_projection_line-1440-low.png",
+      "bytes": 241348,
+      "sha256": "816711829b64f135b04faf600d95a3c05fdc34a3acd545c222dedc9b7943ff1f"
+    },
+    {
+      "path": "final/w18_projection_line-1440-quarter.png",
+      "bytes": 250555,
+      "sha256": "2e8534c4b43df61d2ec2ac14732c3a239ae515de5e298746728dd1a8808c9af6"
+    },
+    {
+      "path": "final/w18_projection_line-390-back.png",
+      "bytes": 195774,
+      "sha256": "fadc5810a1142a4301a361c9372264fe9cbfed25fee7d101c42197f2d00adbe7"
+    },
+    {
+      "path": "final/w18_projection_line-390-default.png",
+      "bytes": 196136,
+      "sha256": "732eb691d205dda4fb08ad875dfa9cd68625cd216e24bc31b4e8d135ec2dcaf2"
+    },
+    {
+      "path": "final/w18_projection_line-390-half.png",
+      "bytes": 182779,
+      "sha256": "56d2c3d183bb76037a7b6676c3adc5eb9ee8775dde98a41fa5669f4dd555daa7"
+    },
+    {
+      "path": "final/w18_projection_line-390-high.png",
+      "bytes": 202902,
+      "sha256": "5b73a35c8145afdf7bc384f6c811f3cc785443698dbd6cb21e93a522a6f7ad51"
+    },
+    {
+      "path": "final/w18_projection_line-390-low.png",
+      "bytes": 168617,
+      "sha256": "5982d3d8ff8c9feb10e69aebb53cf103db244ae81f5cfd31772bd0e543ff51eb"
+    },
+    {
+      "path": "final/w18_projection_line-390-quarter.png",
+      "bytes": 180147,
+      "sha256": "79611c9e5c3fc36c873cd57b25e04eabbc25e59b21d7793dabc000a9568c2c9f"
+    },
+    {
+      "path": "handoff.md",
+      "bytes": 13703,
+      "sha256": "b0fe86cca04eec66b71c9481aaea00c96fda0f35e8ff5c16b5747b8d4ffd983d"
+    },
+    {
+      "path": "inputs/ellipse-case.json",
+      "bytes": 264,
+      "sha256": "38d3b80c84c8d4b47adf9541a73cf8f3adcabdae857c73537662ec40876ef075"
+    },
+    {
+      "path": "motion/cau-cat-mat-phang-1440-back.png",
+      "bytes": 263343,
+      "sha256": "bce9bf59a10b403b3acf15e2b55669191cf6b8651e3eaf513e6703f0f705ab92"
+    },
+    {
+      "path": "motion/cau-cat-mat-phang-1440-default-mode-a.png",
+      "bytes": 270320,
+      "sha256": "5dfbe476b0c3c67f6725f8524312e163f3d7b5cab90521ed4e3e7ae0dc4e7c54"
+    },
+    {
+      "path": "motion/cau-cat-mat-phang-1440-high.png",
+      "bytes": 285670,
+      "sha256": "fa5d8e05b0c9c3b62486f1a4b070d67b7f4a0afb15d3e0ecd82f4ba7d12ea19c"
+    },
+    {
+      "path": "motion/cau-cat-mat-phang-1440-low.png",
+      "bytes": 260374,
+      "sha256": "bff46a2d7dd280aa7ad2f473c5b78e47e20025631474fabd151ed1fbab214810"
+    },
+    {
+      "path": "motion/cau-cat-mat-phang-1440-quarter.png",
+      "bytes": 266696,
+      "sha256": "d6a771eb659838c236fe743d8e6f831fd504c8183b9b3df6b60efe11db3647eb"
+    },
+    {
+      "path": "motion/cau-cat-mat-phang-1440-selected-mode-b.png",
+      "bytes": 307629,
+      "sha256": "08e70950b8e49d62d6f52618c02a09041e86712b5294d40a065947cae555703c"
+    },
+    {
+      "path": "motion/cau-cat-mat-phang-390-back.png",
+      "bytes": 180967,
+      "sha256": "9696ad0e594a8bd540c0a1bd48fc4c865b059716d835feb53f5901c9d99d5dd7"
+    },
+    {
+      "path": "motion/cau-cat-mat-phang-390-default-mode-a.png",
+      "bytes": 184972,
+      "sha256": "00570c3158ba5d6587cefac6c0ad6e294a527321e19a17a899bac6afc218064c"
+    },
+    {
+      "path": "motion/cau-cat-mat-phang-390-high.png",
+      "bytes": 192363,
+      "sha256": "c70bcd0b39b614ed47688687895d2d82df56172d9bc8ae3f397976bea8e36e87"
+    },
+    {
+      "path": "motion/cau-cat-mat-phang-390-low.png",
+      "bytes": 178101,
+      "sha256": "abf1d44cf461d312dcdf4d926e969a1582217d2da52267a5437cb4e368d45ff7"
+    },
+    {
+      "path": "motion/cau-cat-mat-phang-390-quarter.png",
+      "bytes": 182125,
+      "sha256": "821d9315a7fc0fc9063e9f5c8ea9e695b4bd018454f2a1406f085a1bd6422200"
+    },
+    {
+      "path": "motion/cau-cat-mat-phang-390-selected-mode-b.png",
+      "bytes": 181406,
+      "sha256": "633d44fc0f6e3adafc0d6ac2dbec8af28913e9aa197ff8cc27db9a30dc34b055"
+    },
+    {
+      "path": "motion/cross_section-1440-back.png",
+      "bytes": 291315,
+      "sha256": "a514887f27fef49fa7318d6e70adcd9257cea761b638a4edff2afd7e1dbd63ab"
+    },
+    {
+      "path": "motion/cross_section-1440-default-mode-a.png",
+      "bytes": 286896,
+      "sha256": "8a943a1cd004172e90858186aba236c99995e8039e5cad8f4260f2e40f7531ee"
+    },
+    {
+      "path": "motion/cross_section-1440-high.png",
+      "bytes": 317710,
+      "sha256": "5644c4f1987823b2f0bb908042afb4193b26dcf1649380e0219c4ecb5f51160d"
+    },
+    {
+      "path": "motion/cross_section-1440-low.png",
+      "bytes": 234030,
+      "sha256": "95bdefd5559c929ae4327c847620b04a8472a7ff38c7c2c3b27ed92803543bee"
+    },
+    {
+      "path": "motion/cross_section-1440-quarter.png",
+      "bytes": 250323,
+      "sha256": "a2e51d72139b23281ea2e484ba6f28dcef0687a798fb759096e0f15057907353"
+    },
+    {
+      "path": "motion/cross_section-1440-selected-mode-b.png",
+      "bytes": 306578,
+      "sha256": "eca2d6a940ed9f4942cb4cc6c628f3efd4b5c80242458293ad92a3793c811d0d"
+    },
+    {
+      "path": "motion/cross_section-390-back.png",
+      "bytes": 184523,
+      "sha256": "062ab942b4a66f51ce225d53ff47644d716875342ba03d5b99c21c7be5842c2a"
+    },
+    {
+      "path": "motion/cross_section-390-default-mode-a.png",
+      "bytes": 191828,
+      "sha256": "880d134b49d4da36983c639d4b27c99daecccb437de53806ad74e85500f7b978"
+    },
+    {
+      "path": "motion/cross_section-390-high.png",
+      "bytes": 208664,
+      "sha256": "49b747617dac5de844c81312c5bab119dab8a537d0e959ee5ef52feacc22869b"
+    },
+    {
+      "path": "motion/cross_section-390-low.png",
+      "bytes": 169273,
+      "sha256": "fab6b120188b6ddd7a79d8d20b3f28fed8c5cc3ef35173f1df9e87ec18ab695a"
+    },
+    {
+      "path": "motion/cross_section-390-quarter.png",
+      "bytes": 184497,
+      "sha256": "f6a8d7bf99bc13f4888b449642bd66db0c9cb22685a459392c10e30b3b42ac0b"
+    },
+    {
+      "path": "motion/cross_section-390-selected-mode-b.png",
+      "bytes": 183441,
+      "sha256": "620536fad8c6cc0d30a25864c22417c81a502a1453d2fe5f67f8246da34a0bd2"
+    },
+    {
+      "path": "motion/cuboid-1440-back.png",
+      "bytes": 317003,
+      "sha256": "94f361f3def0874d376308f1746888e9d42476fdba9a559d2ed546f042ae38d3"
+    },
+    {
+      "path": "motion/cuboid-1440-default-mode-a.png",
+      "bytes": 312784,
+      "sha256": "1cdb7baa7a6afc40700f9e271f7e49bad1d1ab6abbd3e4918699f6ec9675b715"
+    },
+    {
+      "path": "motion/cuboid-1440-high.png",
+      "bytes": 247859,
+      "sha256": "ad920d4321a5fb1f9a7c2050184d5032e9846ba19c748b116f70f4c753e9720e"
+    },
+    {
+      "path": "motion/cuboid-1440-low.png",
+      "bytes": 326806,
+      "sha256": "95eff75059cb61ccab0ea66eb59440e49a70a65b6d0dfbe8654e2248b0e0da44"
+    },
+    {
+      "path": "motion/cuboid-1440-quarter.png",
+      "bytes": 321460,
+      "sha256": "06ebe1802764ec09028519d25b8031b3d52b01c5352b4a0b278990b40f0ac9b3"
+    },
+    {
+      "path": "motion/cuboid-1440-selected-mode-b.png",
+      "bytes": 284928,
+      "sha256": "5ed74ad971a19123fffbd8cc1d618419a7ad210b85a8b8318d6b1ffdb706bdcb"
+    },
+    {
+      "path": "motion/cuboid-390-back.png",
+      "bytes": 193179,
+      "sha256": "ed1b2454989ae35d263bbd9eed20080b40147e2adc2f7e3a900c7fc5c393bbdb"
+    },
+    {
+      "path": "motion/cuboid-390-default-mode-a.png",
+      "bytes": 191757,
+      "sha256": "1de37dafe068834dbf39a4a09f919cee3e3d12a9469c1f93cc078edb8b2020f8"
+    },
+    {
+      "path": "motion/cuboid-390-high.png",
+      "bytes": 181257,
+      "sha256": "8f80fa673dbf247a30a947b961f331480873c4286c1f296a5c6a34a0d41cf8a3"
+    },
+    {
+      "path": "motion/cuboid-390-low.png",
+      "bytes": 201438,
+      "sha256": "f1446083e5c60f376b6bcb9a7629c185936636bd6415a052989d79052af3fcd4"
+    },
+    {
+      "path": "motion/cuboid-390-quarter.png",
+      "bytes": 191947,
+      "sha256": "e5cad6574afeda6520077a183812977f9e5f0bf48501966e4fbae5251a050615"
+    },
+    {
+      "path": "motion/cuboid-390-selected-mode-b.png",
+      "bytes": 190900,
+      "sha256": "956355e795d69cb0552a9dda84f5396d5eb03f6403e032b10174c878344db107"
+    },
+    {
+      "path": "motion/family07_multi_solid_composition-1440-back.png",
+      "bytes": 313932,
+      "sha256": "aa032582c4a715e19367bd97fda12d31ba77855b6ea1ad33e8d635ba2e91d546"
+    },
+    {
+      "path": "motion/family07_multi_solid_composition-1440-default-mode-a.png",
+      "bytes": 326679,
+      "sha256": "a107b08aa38118828622a2d46f1bef297103e64a7cf5a2af7ead4048da03a1e4"
+    },
+    {
+      "path": "motion/family07_multi_solid_composition-1440-high.png",
+      "bytes": 251794,
+      "sha256": "11538ebaca62115dcbed7ff65144ae6f4a7ec3cea9eb86c71b7c2e7e484f3324"
+    },
+    {
+      "path": "motion/family07_multi_solid_composition-1440-low.png",
+      "bytes": 288921,
+      "sha256": "33d6359f5f575aefc0a2908bdabc48356baff61d5b0409a09c7de3f0cfdb76db"
+    },
+    {
+      "path": "motion/family07_multi_solid_composition-1440-quarter.png",
+      "bytes": 320323,
+      "sha256": "1a4e9fe074b1b6e74914dca9b5ed67b629dc4f2935a4f1880dc3007986e94337"
+    },
+    {
+      "path": "motion/family07_multi_solid_composition-1440-selected-mode-b.png",
+      "bytes": 324796,
+      "sha256": "47e9bc1e5a39dff4c1a005b1be9110e63d3a8f946bae73d807439730c170ceee"
+    },
+    {
+      "path": "motion/family07_multi_solid_composition-390-back.png",
+      "bytes": 181562,
+      "sha256": "7af367eea5e39d0c77ab5f9417e347b8940ffa1568ccc8e9166b27a1c77ca186"
+    },
+    {
+      "path": "motion/family07_multi_solid_composition-390-default-mode-a.png",
+      "bytes": 188367,
+      "sha256": "fc28f785686f83a4380195c69ce6ca4fc61b2f2e72a0803a8f3690686ee9af3b"
+    },
+    {
+      "path": "motion/family07_multi_solid_composition-390-high.png",
+      "bytes": 152142,
+      "sha256": "97926568576d57ae6760dc8f94a41931469b341769edb59ca2bcf3bacc4ef840"
+    },
+    {
+      "path": "motion/family07_multi_solid_composition-390-low.png",
+      "bytes": 178779,
+      "sha256": "34f21bb1d573b8921e7ee469344914dbf3a6ac876b815618b3a1e8d1b0876d5c"
+    },
+    {
+      "path": "motion/family07_multi_solid_composition-390-quarter.png",
+      "bytes": 188201,
+      "sha256": "3c68d866ecd121d29ac8f7c18072085e98a43affe4135e42e5be0fb4df004890"
+    },
+    {
+      "path": "motion/family07_multi_solid_composition-390-selected-mode-b.png",
+      "bytes": 188742,
+      "sha256": "3703d45becc62baf6bfcba6b77f1cf273c3c7726d96b06f81e926c3b65b707ec"
+    },
+    {
+      "path": "motion/family12_cylinder_ellipse_section-1440-back.png",
+      "bytes": 307036,
+      "sha256": "3cfdd002fea4a08e70657b000b6dcf411827fd8d22c763472a879a052e82ad63"
+    },
+    {
+      "path": "motion/family12_cylinder_ellipse_section-1440-default-mode-a.png",
+      "bytes": 307803,
+      "sha256": "e4a2131c5c4c96921cf9dd8eab604bdaa7bed85de6e1bfe8efe38b255eac9892"
+    },
+    {
+      "path": "motion/family12_cylinder_ellipse_section-1440-high.png",
+      "bytes": 249868,
+      "sha256": "8388eb707ed83646c6d0b4f4191431d0fc18cebeb4b8aeefad0c8c4e49be287e"
+    },
+    {
+      "path": "motion/family12_cylinder_ellipse_section-1440-low.png",
+      "bytes": 306940,
+      "sha256": "bcb30f5376d8b96663e26beccef00e8ee2cd65f733807243e28278e6649ab27e"
+    },
+    {
+      "path": "motion/family12_cylinder_ellipse_section-1440-quarter.png",
+      "bytes": 308111,
+      "sha256": "670ab7d58cc4ebad0672b36dc7e2ba54fea446dc6fadec782876117c1af8fb4e"
+    },
+    {
+      "path": "motion/family12_cylinder_ellipse_section-1440-selected-mode-b.png",
+      "bytes": 322114,
+      "sha256": "600a89ba99e57817274885e22aceddc6b7071fd07563b16fd9b260547b69d4ac"
+    },
+    {
+      "path": "motion/family12_cylinder_ellipse_section-390-back.png",
+      "bytes": 179541,
+      "sha256": "dc354e5285cda635cf668fe8ba1235cb1deecfe09d87f1375cbb5d27a4020a52"
+    },
+    {
+      "path": "motion/family12_cylinder_ellipse_section-390-default-mode-a.png",
+      "bytes": 179219,
+      "sha256": "1ad452537af6577e149156ce83a4f93626334a3084ac63637cdce06d92d1a4d7"
+    },
+    {
+      "path": "motion/family12_cylinder_ellipse_section-390-high.png",
+      "bytes": 156054,
+      "sha256": "406ac7ede8d5e7bca415c9e08a93108c30ede0501fb0575e2e08d61ac336f576"
+    },
+    {
+      "path": "motion/family12_cylinder_ellipse_section-390-low.png",
+      "bytes": 177053,
+      "sha256": "7f359e0cafa3cb5294b37db254f22fc0227261aefcf1e135a47cccca112728bc"
+    },
+    {
+      "path": "motion/family12_cylinder_ellipse_section-390-quarter.png",
+      "bytes": 179940,
+      "sha256": "f34377961d83608a8f61f7a4a45aceb9eac3fe9b645ae476fc0138b3bc36e781"
+    },
+    {
+      "path": "motion/family12_cylinder_ellipse_section-390-selected-mode-b.png",
+      "bytes": 189646,
+      "sha256": "f0e393c4daba5ca7043ba6dbe083d638075ab05b37298055fe623dc82503215c"
+    },
+    {
+      "path": "motion/non-duong-sinh-1440-back.png",
+      "bytes": 249703,
+      "sha256": "c3c3f68abd7a824b71d751a6361b4236fa24c8777aea1caf16db23fabff6ae3a"
+    },
+    {
+      "path": "motion/non-duong-sinh-1440-default-mode-a.png",
+      "bytes": 241291,
+      "sha256": "8db74cfa56d73c30de2f3dfdcbd2539d09183ac2a190024b38bed4fc71d979b6"
+    },
+    {
+      "path": "motion/non-duong-sinh-1440-high.png",
+      "bytes": 272221,
+      "sha256": "42aff2310031e1d64b8e33a57d4a47752a0e0e12c9f4d7557af5a6b8ad771f47"
+    },
+    {
+      "path": "motion/non-duong-sinh-1440-low.png",
+      "bytes": 229498,
+      "sha256": "7cbda3cd27b7b62a398a6926ae02b17435a1071300a7869eb3fe7e909141cb0c"
+    },
+    {
+      "path": "motion/non-duong-sinh-1440-quarter.png",
+      "bytes": 248661,
+      "sha256": "d1dd37c61f132a387cf9560fda8de9955321c57420e425e97534827edad827a0"
+    },
+    {
+      "path": "motion/non-duong-sinh-1440-selected-mode-b.png",
+      "bytes": 316850,
+      "sha256": "8539c421a03a637bd14848347fa3a330d980e0800e09dc2c1b19ce9e35c78636"
+    },
+    {
+      "path": "motion/non-duong-sinh-390-back.png",
+      "bytes": 182289,
+      "sha256": "e0bfc342cc4aacc58ffb88ac49cb7936d07c3af2c2d6be961f0717d94bf8b913"
+    },
+    {
+      "path": "motion/non-duong-sinh-390-default-mode-a.png",
+      "bytes": 183150,
+      "sha256": "cf59c8ceec9ddcc57910493bb044492cb2b263a0c76cd1bba4b3f30e0a287b98"
+    },
+    {
+      "path": "motion/non-duong-sinh-390-high.png",
+      "bytes": 178020,
+      "sha256": "d7972ed1ee6609a87bcfda8ba6c4d9313eb6df2f862f196b3fd4b4ce77806710"
+    },
+    {
+      "path": "motion/non-duong-sinh-390-low.png",
+      "bytes": 167398,
+      "sha256": "9ebb53aeab2ef68e6f74666821d8ac541f430ff2b1deae12c66e330405adc7e9"
+    },
+    {
+      "path": "motion/non-duong-sinh-390-quarter.png",
+      "bytes": 178470,
+      "sha256": "f99f880e8c66e2f6261b336c31095686db0face583f3de6c640c524165bfcf85"
+    },
+    {
+      "path": "motion/non-duong-sinh-390-selected-mode-b.png",
+      "bytes": 191523,
+      "sha256": "db32032204e18be306ea89de10f11f3033d0d690e1526ccb0775637169852e84"
+    },
+    {
+      "path": "motion/non-thiet-dien-truc-1440-back.png",
+      "bytes": 282980,
+      "sha256": "f88947806fdab09de52ca4157e2f960c6717d18c83d4604dc1880ca391c4b693"
+    },
+    {
+      "path": "motion/non-thiet-dien-truc-1440-default-mode-a.png",
+      "bytes": 274257,
+      "sha256": "7b34e570038c7d2621fdc6386dcb3d298f2c88abfd8a701549059805707dd843"
+    },
+    {
+      "path": "motion/non-thiet-dien-truc-1440-high.png",
+      "bytes": 288004,
+      "sha256": "ae515b3ccdd34c2445241e9fb3f5b46831179f4da3fd4775553f0a983d65eaef"
+    },
+    {
+      "path": "motion/non-thiet-dien-truc-1440-low.png",
+      "bytes": 233463,
+      "sha256": "dc5d554757991dc337337ef4c2c9e3d126eb8cd6dc151da8550b508538f859df"
+    },
+    {
+      "path": "motion/non-thiet-dien-truc-1440-quarter.png",
+      "bytes": 262858,
+      "sha256": "10062e2579b85f75472a346ac8d962d3ad2145f25ad9a177a054c993e7e606e2"
+    },
+    {
+      "path": "motion/non-thiet-dien-truc-1440-selected-mode-b.png",
+      "bytes": 319302,
+      "sha256": "c3a832db96b7ab81baa3c8ef37d7f39dd02d6be7c337c20725537ff67eb79fa8"
+    },
+    {
+      "path": "motion/non-thiet-dien-truc-390-back.png",
+      "bytes": 206458,
+      "sha256": "00f6d1847202fda729a5cdf48675b03c06b2e36dcd280e3690560a72051af539"
+    },
+    {
+      "path": "motion/non-thiet-dien-truc-390-default-mode-a.png",
+      "bytes": 200446,
+      "sha256": "d70da1b13ab47f21391be26bd5a74631200fa0383bf481e97884a57139e057d5"
+    },
+    {
+      "path": "motion/non-thiet-dien-truc-390-high.png",
+      "bytes": 199586,
+      "sha256": "92625e570c1992cad9b66276146d640661b05e85725981c2f8a3801ffb1382ff"
+    },
+    {
+      "path": "motion/non-thiet-dien-truc-390-low.png",
+      "bytes": 178575,
+      "sha256": "3a8dda0132083d75aadf6d75f29e9863fa8f6e01d7d02de144c2c114a069dd70"
+    },
+    {
+      "path": "motion/non-thiet-dien-truc-390-quarter.png",
+      "bytes": 192206,
+      "sha256": "80fc483ccfafe1b1d6b21b841ed903a0c673c17acc324f9d0255de0300c56cbe"
+    },
+    {
+      "path": "motion/non-thiet-dien-truc-390-selected-mode-b.png",
+      "bytes": 208506,
+      "sha256": "06bba80115d252a7433eddd3727aafbe0ced66f6c93e3502a97172bce3cfb8fb"
+    },
+    {
+      "path": "motion/receipt.json",
+      "bytes": 12543949,
+      "sha256": "70f0da948d691698162a98da90949049f41a9c9b8dbb3df204cf3e4dd8b3d178"
+    },
+    {
+      "path": "motion/triangular_prism-1440-back.png",
+      "bytes": 330533,
+      "sha256": "b1153d383829423627392d5a702ad742ea41deea2134b89661e746754a1fd3c0"
+    },
+    {
+      "path": "motion/triangular_prism-1440-default-mode-a.png",
+      "bytes": 329539,
+      "sha256": "1b35722946ce5bd41beb8facf999eeb521460e8f91783c9a7912531295242227"
+    },
+    {
+      "path": "motion/triangular_prism-1440-high.png",
+      "bytes": 261442,
+      "sha256": "1cb156974394af9f8d6358deb2cf1de710946eb32a0768c31b54487935759d1b"
+    },
+    {
+      "path": "motion/triangular_prism-1440-low.png",
+      "bytes": 313916,
+      "sha256": "93dcafc94f7532219578a639f29791332bfd56f15b78eea6b3ee99c77ad41774"
+    },
+    {
+      "path": "motion/triangular_prism-1440-quarter.png",
+      "bytes": 333199,
+      "sha256": "09f279a5b3459c1e3d6fa61121d29d5d348c5b0cf39551f95b44ff01a3364363"
+    },
+    {
+      "path": "motion/triangular_prism-1440-selected-mode-b.png",
+      "bytes": 290156,
+      "sha256": "849e51d2711e105c815be1717e6d4a09fa8772bcd61058d8186ef95668b1912a"
+    },
+    {
+      "path": "motion/triangular_prism-390-back.png",
+      "bytes": 204685,
+      "sha256": "bcb9a38dd315b5fd5063a9f5bf54bee19b084b65b3452ec9262a5d7f4b9a3e7c"
+    },
+    {
+      "path": "motion/triangular_prism-390-default-mode-a.png",
+      "bytes": 195367,
+      "sha256": "d9c09a22f5790977b938f71b1fc9e72475be7b3ade1e33b0ddeaa8115eaea1e2"
+    },
+    {
+      "path": "motion/triangular_prism-390-high.png",
+      "bytes": 190816,
+      "sha256": "530c0011ce8131a39511feb6bf92ad44d44e2b81b33209b7f5fb706df077c83e"
+    },
+    {
+      "path": "motion/triangular_prism-390-low.png",
+      "bytes": 196831,
+      "sha256": "ca3828bb0fe7405aea0aa766f2e12d3f45aa8efcb5768b9c810d881f8f854be4"
+    },
+    {
+      "path": "motion/triangular_prism-390-quarter.png",
+      "bytes": 209208,
+      "sha256": "5d019d2723c6c3e88a73cba4eaf41c5931d2f6baae1b147a4940a7285e063470"
+    },
+    {
+      "path": "motion/triangular_prism-390-selected-mode-b.png",
+      "bytes": 194227,
+      "sha256": "26fef604f5a163739e16f6e71e2dd196440a69b9d03ff119815d6f3fc8a6108e"
+    },
+    {
+      "path": "motion/tru-truc-xien-1440-back.png",
+      "bytes": 262534,
+      "sha256": "0b7944a84f837efe3987440c471482c5162d330673f640d51f382af9f0200856"
+    },
+    {
+      "path": "motion/tru-truc-xien-1440-default-mode-a.png",
+      "bytes": 275126,
+      "sha256": "55c9eab266174cc7d9ad64a15d202df47e8d6e905bd5f4d9377b7f9635dde7a3"
+    },
+    {
+      "path": "motion/tru-truc-xien-1440-high.png",
+      "bytes": 282905,
+      "sha256": "337cd96db62850004d1dced0b16fe696eb0f2b9829f22534500e35cee5b67f45"
+    },
+    {
+      "path": "motion/tru-truc-xien-1440-low.png",
+      "bytes": 239934,
+      "sha256": "0d5d99062ce886f549699cefe85755218efbe60bb5b39eb8473c74e1e426d858"
+    },
+    {
+      "path": "motion/tru-truc-xien-1440-quarter.png",
+      "bytes": 232331,
+      "sha256": "9ed17fd14af07e21be1118bd69a591603137e9d928a62118626aefdcfc5745da"
+    },
+    {
+      "path": "motion/tru-truc-xien-1440-selected-mode-b.png",
+      "bytes": 280214,
+      "sha256": "335df2f7d29954a915d19cf1506154f4e3ef3d5e6a736412026741930af27494"
+    },
+    {
+      "path": "motion/tru-truc-xien-390-back.png",
+      "bytes": 186986,
+      "sha256": "1111f99f04addc435fdaac2c61c2198b9e4ac52b9c5d405231123ae707e75059"
+    },
+    {
+      "path": "motion/tru-truc-xien-390-default-mode-a.png",
+      "bytes": 183019,
+      "sha256": "887108674a6a57618996c67c4878418919d6a2dad3992915b36fb40a1be79a0b"
+    },
+    {
+      "path": "motion/tru-truc-xien-390-high.png",
+      "bytes": 187001,
+      "sha256": "94f11cda66abb71ad6beba78140f4284a67436a1fd6808a65064ae55b7b83282"
+    },
+    {
+      "path": "motion/tru-truc-xien-390-low.png",
+      "bytes": 180766,
+      "sha256": "645ce9dd27ee9cedef4a3f011617ead3baed21032a346d58f086177c101711d4"
+    },
+    {
+      "path": "motion/tru-truc-xien-390-quarter.png",
+      "bytes": 187379,
+      "sha256": "6fea8faaed19bd0f4f98f57c93eb6400843b42c7e7c18025acc909579f497395"
+    },
+    {
+      "path": "motion/tru-truc-xien-390-selected-mode-b.png",
+      "bytes": 178450,
+      "sha256": "73254e4fca3b737681991ed04554d54dcb7be4817f23efc11ac0aa41afc004f9"
+    },
+    {
+      "path": "official-inputs-rebinding.json",
+      "bytes": 5550,
+      "sha256": "ef6f6e54c7c2274aa4889f02bc06fb7fb03de70940f92df0e436fce8a425c5b1"
+    },
+    {
+      "path": "owner-review.png",
+      "bytes": 500067,
+      "sha256": "3b19c429811024dcec9068774a1c98e88961bee8351fbaaf4f2b8597022a33da"
+    },
+    {
+      "path": "owner-sheet.png",
+      "bytes": 488051,
+      "sha256": "fea7dcbae9f88a883ac7e5df8d1ab83ec651a6455e62bf1bf997758bcfd00ca1"
+    },
+    {
+      "path": "plan.md",
+      "bytes": 2981,
+      "sha256": "34afe8338289ead837947d78c15540c39fbbbb7599effaa9cb589f2c5ce83918"
+    },
+    {
+      "path": "prepare-official-inputs.py",
+      "bytes": 3092,
+      "sha256": "476a660026f1a2bc9b2632dba172b2dd8c32e7215517192d103cc6dd473d8c14"
+    },
+    {
+      "path": "role-aware/circle-sphere-sample-1440-default-none.png",
+      "bytes": 306717,
+      "sha256": "b2bef5e0c2b511dfcdee90ba84ef78730cb8ced58ae5c339cde32b2a616e06a7"
+    },
+    {
+      "path": "role-aware/circle-sphere-sample-1440-low-none.png",
+      "bytes": 309249,
+      "sha256": "2f5e3fb5ded94ddb4532edd9686b8d57a467f26d32fbfe46ad5a81be25fc8534"
+    },
+    {
+      "path": "role-aware/circle-sphere-sample-390-default-none.png",
+      "bytes": 181406,
+      "sha256": "633d44fc0f6e3adafc0d6ac2dbec8af28913e9aa197ff8cc27db9a30dc34b055"
+    },
+    {
+      "path": "role-aware/circle-sphere-sample-390-low-none.png",
+      "bytes": 178991,
+      "sha256": "e2637e3d9b0ba58df400b5678c17a1244019609218c5b67c7e19d549c96e9a35"
+    },
+    {
+      "path": "role-aware/ellipse-cylinder-p6-1440-default-none.png",
+      "bytes": 309978,
+      "sha256": "f1473a92f69d8115049e17970a0e380089f35b1f2bba1527c7d8d3383b38ffad"
+    },
+    {
+      "path": "role-aware/ellipse-cylinder-p6-1440-low-none.png",
+      "bytes": 322859,
+      "sha256": "b536cfab8e3ab691c570647112853888584317bd2b8c7ddbbd3de66b9a4dce91"
+    },
+    {
+      "path": "role-aware/ellipse-cylinder-p6-390-default-none.png",
+      "bytes": 181552,
+      "sha256": "03cdc17395ee44e8d79e835bc6fcfb3843bedebc6a1d9767d6041c3cbedfe0dc"
+    },
+    {
+      "path": "role-aware/ellipse-cylinder-p6-390-low-none.png",
+      "bytes": 185088,
+      "sha256": "79ed226ba0fb181a0edd1da0a591a002bcf0b842e14b8cd8bfffd99b75465aeb"
+    },
+    {
+      "path": "role-aware/polygon-cross-section-1440-default-none.png",
+      "bytes": 309195,
+      "sha256": "3d4066b415e81bc254ba64b7d38597a371991978c8e98e72bcd815d633f805ef"
+    },
+    {
+      "path": "role-aware/polygon-cross-section-1440-low-none.png",
+      "bytes": 296212,
+      "sha256": "48aadf1d150a5072c5ace8ed5b28f6aea282ea32cbda4ae7fb2cc572a0f61233"
+    },
+    {
+      "path": "role-aware/polygon-cross-section-390-default-none.png",
+      "bytes": 186763,
+      "sha256": "d9270ff0adbb8cf0c41fd80d9360056b385be60a7608c5e9b9878aaa1e3f99e1"
+    },
+    {
+      "path": "role-aware/polygon-cross-section-390-low-none.png",
+      "bytes": 169827,
+      "sha256": "88d1f9e218e5cbcd29668fa71dc1473fc9d0a850f259ed51788898a13d15c533"
+    },
+    {
+      "path": "role-aware/receipt.json",
+      "bytes": 1496685,
+      "sha256": "a5dbff1cf80f4fcf0ce8a328c63409ee6101b4d9002146fbf839b9209ceb2bc8"
+    },
+    {
+      "path": "run.json",
+      "bytes": 1709,
+      "sha256": "f42340a75968fb5182daa2674857506da66cd2b57edccb11ee73d788f10bc6fc"
+    },
+    {
+      "path": "steps/mp-vuong-goc-duong-step00.png",
+      "bytes": 220933,
+      "sha256": "cd05eedac9e6ad08800f446b26e1c2dc07df7bd2ea43e19171351dcdc7d76ca7"
+    },
+    {
+      "path": "steps/mp-vuong-goc-duong-step01.png",
+      "bytes": 241956,
+      "sha256": "7d7b3bf07310ef157c80246037140940775f55a952b0f33850a967d4517e0711"
+    },
+    {
+      "path": "steps/mp-vuong-goc-duong-step02.png",
+      "bytes": 268450,
+      "sha256": "ba2a4504702f643bae852c5d8280aa0c656c4b4378d1d934cff6a200fe38bf19"
+    },
+    {
+      "path": "steps/mp-vuong-goc-duong-step03.png",
+      "bytes": 275124,
+      "sha256": "e1baee93661823dea6e852ac747bdf30e972722939e394bd5c6eec58996bbef5"
+    },
+    {
+      "path": "steps/receipt.json",
+      "bytes": 17106,
+      "sha256": "6ede9ada07386556387391f9aa7775513561be027ae26c1c4c25b22b824c2ed9"
+    },
+    {
+      "path": "steps/thiet-dien-chop-step00.png",
+      "bytes": 218101,
+      "sha256": "12e01545a0c12042941e62c4b1c129b8cf0e71abba63ec2a0c50146ecefdb13e"
+    },
+    {
+      "path": "steps/thiet-dien-chop-step01.png",
+      "bytes": 251371,
+      "sha256": "fd9c6b1569c85757e9f62b6ea64d791f3aa3b3f650496829147079149ec1333a"
+    },
+    {
+      "path": "steps/thiet-dien-chop-step02.png",
+      "bytes": 272012,
+      "sha256": "ad158f78bf5fb3fdcbcdf76a7059b3599464f6197f34915df9365be85b540ba6"
+    },
+    {
+      "path": "steps/thiet-dien-chop-step03.png",
+      "bytes": 273879,
+      "sha256": "be72ed16e7ad1c911449df30403436c11109ded11f9547968f64bf6873d6603e"
+    },
+    {
+      "path": "steps/thiet-dien-chop-step04.png",
+      "bytes": 274020,
+      "sha256": "7a481e3dd495cb5ca781cd301f9477a37a7db726ebead907a4266e01d8be6c7d"
+    },
+    {
+      "path": "steps/thiet-dien-chop-step05.png",
+      "bytes": 274802,
+      "sha256": "3d4f89f5d0ae302ca10dd80c8cfb75c57f0005d399ff2612c27a35758dd0ec38"
+    },
+    {
+      "path": "steps/thiet-dien-chop-step06.png",
+      "bytes": 276194,
+      "sha256": "c08553e4afb9e631ccaf4ca948be234fc03ebe35d8458362709b2d8bffdf6de3"
+    },
+    {
+      "path": "steps/thiet-dien-chop-step07.png",
+      "bytes": 276227,
+      "sha256": "7fc3c60419fa085626dc97f00b345026ec63ab943e51a52414ce0193cb5aad91"
+    },
+    {
+      "path": "steps/thiet-dien-chop-step08.png",
+      "bytes": 276610,
+      "sha256": "762aa8dc43b1cc4f1747bb1cf6bce3be0e761b820949eeeb92a84513019d0143"
+    },
+    {
+      "path": "steps/thiet-dien-chop-step09.png",
+      "bytes": 273405,
+      "sha256": "4595bbd4dd06533720c6c63108d927c970e0f97d223f61aed6a61db7e76ddaf9"
+    },
+    {
+      "path": "steps/thiet-dien-chop-step10.png",
+      "bytes": 274379,
+      "sha256": "2e5e6b98f76c84d5de34206b5d3fdf08b14d314d37874606e63e25f074be18bc"
+    },
+    {
+      "path": "steps/vuong-goc-chop-step00.png",
+      "bytes": 218095,
+      "sha256": "22be4a3daed06e88d60fbc2ae4d53835b643c4d32c21f83942028b478980be25"
+    },
+    {
+      "path": "steps/vuong-goc-chop-step01.png",
+      "bytes": 251695,
+      "sha256": "d9ba6e4b112cfaac9d0b8ff2abcd11cc0c9d538d82497bdba25eabb52b323393"
+    },
+    {
+      "path": "steps/vuong-goc-chop-step02.png",
+      "bytes": 274351,
+      "sha256": "80d3f0e295111cad627c65585a51818d9245db687a8ccb56bbef332b350803fa"
+    },
+    {
+      "path": "tools/aggregate-official.py",
+      "bytes": 2703,
+      "sha256": "a5aeb03b6ac2b84e07b5557f5e4309970ee2c42c23e8fa8b0cf5333e84c1dec1"
+    },
+    {
+      "path": "tools/capture-final.mjs",
+      "bytes": 5198,
+      "sha256": "d0b328747acd9a0f597e9befabbe5faab6bf7d1df9d7b3182e13ca8544c14978"
+    },
+    {
+      "path": "tools/compare-ellipse-cameras.mjs",
+      "bytes": 1679,
+      "sha256": "98c0186c56a97735fd0073d86e176c233ee435b2c033a6fa516d91a5b5294adc"
+    },
+    {
+      "path": "tools/run-t3.py",
+      "bytes": 2858,
+      "sha256": "6ef119a71d3cd23075d6e82a16153f72c974766fca61aa2e0c40e2d332eda391"
+    },
+    {
+      "path": "verification/acceptance-summary.json",
+      "bytes": 6510,
+      "sha256": "5ae804dd00709ee4ec77dd31b9b9a0ff141451d4d949b735782d5499f46f0459"
+    },
+    {
+      "path": "verification/camera-interpretation.json",
+      "bytes": 1049,
+      "sha256": "46cdd2bcdb3f134959a187a8ada5f8c58f51163063632e9af97ba737f2cd5d93"
+    },
+    {
+      "path": "verification/dev-server.json",
+      "bytes": 98,
+      "sha256": "d85295ad57ef2d9507270911b29ceeebf618b1fb1ea8ef4f9b54a9a000c074be"
+    },
+    {
+      "path": "verification/docs-audit.json",
+      "bytes": 10801,
+      "sha256": "77ec56dda54a789c41302a2c500fef1a50e5fad455e0ad34b963aecf460ea444"
+    },
+    {
+      "path": "verification/ellipse-camera-deltas.json",
+      "bytes": 6631,
+      "sha256": "027a0b92eb565b97e833fd060ec4a674542d758b92dd901362a016be7b833f9f"
+    },
+    {
+      "path": "verification/ellipse-comparison.json",
+      "bytes": 1427,
+      "sha256": "b52bae970afb09fe037a8cc6bb0e2761e2c20a19fe5201862c22331aa71555bf"
+    },
+    {
+      "path": "verification/ellipse-projection-comparison.json",
+      "bytes": 848,
+      "sha256": "2d3e883ca54e580cfd3286cb0b58942bccd21e1b419ac3d3face0f87c71c0e13"
+    },
+    {
+      "path": "verification/label-jumps.json",
+      "bytes": 1698,
+      "sha256": "e32fcc66b959c10eb49abea501c516814402fc967f530abd5d3dab75441e61d4"
+    },
+    {
+      "path": "verification/math.json",
+      "bytes": 6964,
+      "sha256": "4675f47c00def6003d87bda2e71d992287b49f315be6800870537af8b1b6a344"
+    },
+    {
+      "path": "verification/official-scenarios.json",
+      "bytes": 4584,
+      "sha256": "09c62682427e7e9627c591145e4a0b09ecfa5b1ed3c40292e0a349e2a30a3989"
+    },
+    {
+      "path": "verification/preservation.json",
+      "bytes": 172,
+      "sha256": "5da0ecf273e2c82f79e2c04671ab46f8c623bccebf342483e82888375f2ac180"
+    },
+    {
+      "path": "verification/product.json",
+      "bytes": 1572,
+      "sha256": "b166d9d4b0cc1b391e9fbdc3c16ef32ecb9f21a3f4d4ffc434beaff83647bb65"
+    },
+    {
+      "path": "verification/t3-environment-check.json",
+      "bytes": 1597,
+      "sha256": "6f2ad9693de7f7990c213641e592ded785c8b4b9c2065755c5d8b468264fcbce"
+    },
+    {
+      "path": "verification/t3-interrupted-attempt.json",
+      "bytes": 1218,
+      "sha256": "1116cad4a96a56661d985c7b40c568fbf9d08c23a39af6ff01f9b445a9237988"
+    },
+    {
+      "path": "verification/t3.json",
+      "bytes": 1125,
+      "sha256": "00072042033d24e15621b035656a4996ed5236a6322593fddd00b6611cfefe1a"
+    },
+    {
+      "path": "verification/temp-preservation.json",
+      "bytes": 413,
+      "sha256": "3e4517a53924ffb4996a1513ed880b5efc8388fe04f34417065c836a218ee3ca"
+    },
+    {
+      "path": "visual/official-authoritative/cube.json",
+      "bytes": 378959,
+      "sha256": "d28277be29ca8d9b800a67f932aa97bacf213dfa4ac7b3f87ec511ac67eeee64"
+    },
+    {
+      "path": "visual/official-authoritative/cuboid.json",
+      "bytes": 381469,
+      "sha256": "fffa5089c449499bf597c1eeddab2b90cbe521e6a511cd56fcdb652c14b5b4a0"
+    },
+    {
+      "path": "visual/official-authoritative/rectangular_pyramid.json",
+      "bytes": 325907,
+      "sha256": "35ac8f51e3945f69e4dfeedc3fbb995c04f72288c81b49ebde0503200cb96a3f"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/cross-section/desktop/neutral_final.png",
+      "bytes": 290309,
+      "sha256": "27fab7b14114e04b3d4883e8d181c6c8fae19f30f20b2d92a5be27381b0c3dcb"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/cross-section/desktop/rotated_neutral.png",
+      "bytes": 256566,
+      "sha256": "53ae0d18168c4fa25c37a4acf31956956876907ad7c935bbf2acd1d0cf07c90e"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/cube/desktop/neutral_final.png",
+      "bytes": 299521,
+      "sha256": "7de6c4fdeb4b21f9d1116443723e285f826f0935f82f6f5cf0ac56237c9cf146"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/cube/desktop/rotated_neutral.png",
+      "bytes": 294152,
+      "sha256": "89758f6b23a4dcce07de7506fd88d5aa615075c558bfd33d5ec869de008ccd2a"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/cube/mobile/neutral_final.png",
+      "bytes": 277615,
+      "sha256": "ba12a1f3f13527761f64d0bd4ff22d118e4bdba5b6e23162c5cd5eed431d3342"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/cube/mobile/rotated_neutral.png",
+      "bytes": 266509,
+      "sha256": "afcc7db85266ecc1372dc15dc0f7332e96a4e365feca51a9e1388c2c6b8564ba"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/cuboid/desktop/neutral_final.png",
+      "bytes": 308990,
+      "sha256": "8c7c62a2740990d5ebdf80185a4976ad0549983267471f4ecce0db5cd34ef484"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/cuboid/desktop/rotated_neutral.png",
+      "bytes": 302535,
+      "sha256": "55a12f79fb15c1d5484075e97fc4cadf1fafb3eb47cada366b862c3bd680abe6"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/cuboid/mobile/neutral_final.png",
+      "bytes": 277732,
+      "sha256": "170618e932108ef7e1d0e7362c020ea861a6fa14d8e807d5aac581ecc4097c19"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/cuboid/mobile/rotated_neutral.png",
+      "bytes": 267748,
+      "sha256": "8c75d8d6590f8be9eb89b8049a4492f9f32407d0dfe8110ab6f69267acd82a1f"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/rectangular-pyramid/desktop/neutral_final.png",
+      "bytes": 296361,
+      "sha256": "b5eae539ecbf770c414f7660da67d5cd5980bb0b43dbc18a307804386a271289"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/rectangular-pyramid/desktop/rotated_neutral.png",
+      "bytes": 268025,
+      "sha256": "f47c623ed7aa342d24757b2cf959022288f7e6760f6e0bee65eeb00676394a14"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/rectangular-pyramid/mobile/neutral_final.png",
+      "bytes": 283725,
+      "sha256": "b4caa93fd3c7e5533cd00a0b1000fc11eaf67e355197a7fbdc4a0fa81b704609"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/rectangular-pyramid/mobile/rotated_neutral.png",
+      "bytes": 263493,
+      "sha256": "60a7e51b6aaa28eea043e28e49c9dbaa508c9d755e5b628fdd15212188344e5e"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/triangular-prism/desktop/neutral_final.png",
+      "bytes": 319319,
+      "sha256": "a7c598add82f0fa0580f0724d8bec22ec4fed07f24d61c1b6d7127574df7d32d"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/triangular-prism/desktop/rotated_neutral.png",
+      "bytes": 314632,
+      "sha256": "77b3ec993f8025d1535b81db27047441e8fdb107d71980a106c54dca8369dc6e"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/triangular-prism/mobile/neutral_final.png",
+      "bytes": 288732,
+      "sha256": "177297fd30fd7e27c5911e5892d1315a9515ce29109fe994c0c2b0d11103e511"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/triangular-prism/mobile/rotated_neutral.png",
+      "bytes": 288057,
+      "sha256": "435b2eaf9dd8621b9b37fd1f3818acefcd9a026764db920b80d7679888d49a0b"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/triangular-pyramid/desktop/neutral_final.png",
+      "bytes": 300882,
+      "sha256": "7ddcddb4030f2baecc2c0e7566d00f6e6bdb58b5f84025795acb0a76019c7ff5"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/triangular-pyramid/desktop/rotated_neutral.png",
+      "bytes": 280992,
+      "sha256": "3961ea68088bb3695797e3ad050a56d05611aa009a8625a3222d7c6a2f9220bd"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/triangular-pyramid/mobile/neutral_final.png",
+      "bytes": 296180,
+      "sha256": "cc91f6774d2086dc7e173b297af97a352303f179245f59bc8e77cfa7a19ed5c3"
+    },
+    {
+      "path": "visual/official-authoritative/screenshots/triangular-pyramid/mobile/rotated_neutral.png",
+      "bytes": 279338,
+      "sha256": "bb949596bc15487d7a0304e42c1f65b894e114dc074ff72321dc0e60a515feca"
+    },
+    {
+      "path": "visual/official-authoritative/triangular_prism.json",
+      "bytes": 338914,
+      "sha256": "b1ed7dfa7c554fa4619793e64cafc9502eb7e2c25b77538fa197f1298aa50c88"
+    },
+    {
+      "path": "visual/official-authoritative/triangular_pyramid.json",
+      "bytes": 307602,
+      "sha256": "f5c313cc797f19ade25cc576b4480f5e14e5d895c80e73dfc3fa506a7e001ba5"
+    },
+    {
+      "path": "visual/official-continuation/BROWSER_EVIDENCE.json",
+      "bytes": 1452307,
+      "sha256": "3f050bdbf9811e55153f49f60db7b5d49b743f3ab26711784d321f3930798fb2"
+    },
+    {
+      "path": "visual/official-continuation/cross_section.json",
+      "bytes": 464864,
+      "sha256": "abc5eaf807dee2e94017497a1b420580df97bba0639b5336561a5425a6fb5975"
+    },
+    {
+      "path": "visual/official-continuation/regular_square_pyramid.json",
+      "bytes": 388531,
+      "sha256": "c71a8d8778c6fb04146bfc9a5679e8e74ed1752b791dfe702b5b0d3db9de4e7f"
+    },
+    {
+      "path": "visual/official-continuation/regular_triangular_pyramid.json",
+      "bytes": 422083,
+      "sha256": "6675af595229d75376568319fc9558eb8881a2bcfbcb1d3c13385fd32deabeec"
+    },
+    {
+      "path": "visual/official-continuation/screenshots/cross-section/desktop/failure.png",
+      "bytes": 290183,
+      "sha256": "81f524c0811352c63bd8b4cc31f614892267e6779b81e0e5979695591a1ff825"
+    },
+    {
+      "path": "visual/official-continuation/screenshots/cross-section/desktop/neutral_final.png",
+      "bytes": 290309,
+      "sha256": "27fab7b14114e04b3d4883e8d181c6c8fae19f30f20b2d92a5be27381b0c3dcb"
+    },
+    {
+      "path": "visual/official-continuation/screenshots/cross-section/desktop/rotated_neutral.png",
+      "bytes": 256566,
+      "sha256": "53ae0d18168c4fa25c37a4acf31956956876907ad7c935bbf2acd1d0cf07c90e"
+    },
+    {
+      "path": "visual/official-continuation/screenshots/cross-section/mobile/failure.png",
+      "bytes": 282725,
+      "sha256": "051e0b0a4d6e8b5c7205f6d1306a86042c9bfccc4b193546f3b59b8f954c2a7c"
+    },
+    {
+      "path": "visual/official-continuation/screenshots/cross-section/mobile/neutral_final.png",
+      "bytes": 283556,
+      "sha256": "51bd3aa67c8ef9f80b9878799d355b78ff38a8ca4ec4b8d53b6f25bcd283f87a"
+    },
+    {
+      "path": "visual/official-continuation/screenshots/cross-section/mobile/rotated_neutral.png",
+      "bytes": 262540,
+      "sha256": "5f12d39b9b3de672c0989398bae7092e2400354fe38451925495a796b394abe8"
+    },
+    {
+      "path": "visual/official-continuation/screenshots/regular-square-pyramid/desktop/neutral_final.png",
+      "bytes": 283317,
+      "sha256": "d2bb5aec7996034db11f101735295034dbee056faeb77525050f9066194a87a0"
+    },
+    {
+      "path": "visual/official-continuation/screenshots/regular-square-pyramid/desktop/rotated_neutral.png",
+      "bytes": 292028,
+      "sha256": "3145b1c2a2ab0312217bde835bd93e24b3cd2f8b294f1b60d8fcfb8b30ba464b"
+    },
+    {
+      "path": "visual/official-continuation/screenshots/regular-square-pyramid/mobile/neutral_final.png",
+      "bytes": 267630,
+      "sha256": "391888d1be7c99eca8a422bed4a17c9526dcaa0ccd6c80180952b340318365a2"
+    },
+    {
+      "path": "visual/official-continuation/screenshots/regular-square-pyramid/mobile/rotated_neutral.png",
+      "bytes": 255491,
+      "sha256": "78acd27696b53e16139c6b52961f1952fc1e7859f29250fa80552b5e7a01bfa8"
+    },
+    {
+      "path": "visual/official-continuation/screenshots/regular-triangular-pyramid/desktop/neutral_final.png",
+      "bytes": 319297,
+      "sha256": "5f1475d65e76d3452a32f22132b49cba1011fca15737d0424a5dbc45a8d22937"
+    },
+    {
+      "path": "visual/official-continuation/screenshots/regular-triangular-pyramid/desktop/rotated_neutral.png",
+      "bytes": 294631,
+      "sha256": "3b01b9d790e7766a077ecc31b58d7fc0a0ad77b11b763bce578877bd6491a2e8"
+    },
+    {
+      "path": "visual/official-continuation/screenshots/regular-triangular-pyramid/mobile/neutral_final.png",
+      "bytes": 275851,
+      "sha256": "f80db3e9e984da5c1c9d103f491f7857d136838c68f205db88d1b93d02db1cdc"
+    },
+    {
+      "path": "visual/official-continuation/screenshots/regular-triangular-pyramid/mobile/rotated_neutral.png",
+      "bytes": 273204,
+      "sha256": "75aac83d72e1923c505265cd525da22e5646dd754fc2de416bb00b42283f0e35"
+    },
+    {
+      "path": "visual/official-inputs/FIXTURE_MANIFEST.json",
+      "bytes": 8018,
+      "sha256": "e2a3a75c68327bb6d92db2cdb5be5952f427429b421e5954d6784d5b9f350df9"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/cross_section_assumption.json",
+      "bytes": 1790,
+      "sha256": "84e8925e9dae710f28a1cc0be32ec6b7c48e60fa4901205236586e16210d19a0"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/cross_section_correct_plane.json",
+      "bytes": 64570,
+      "sha256": "b6fd5ed4acca33c00427e27824047c937138fdccbac32dc522724ae3d71eb986"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/cross_section_negative.json",
+      "bytes": 1768,
+      "sha256": "ed2af2886c4659e75c14311c7c52a3f33ec56c1611b8a25b3b667a1cf08c18c8"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/cross_section_positive.json",
+      "bytes": 76037,
+      "sha256": "b1f7738c2f71c6af52957db1fc2d170ae3ea8645e54283dc0ece83d977b7b199"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/cross_section_ungrounded.json",
+      "bytes": 1592,
+      "sha256": "655f47c1b561832a5538b6fd8df31f13cc184e7b4821335caef950bae543052f"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/cross_section_wrong_plane.json",
+      "bytes": 1622,
+      "sha256": "8c9658679c91f4c7c4e0947026a4030dd347b7b423ae7f7945b92706b3e4727a"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/cube_assumption.json",
+      "bytes": 1433,
+      "sha256": "2632b00e6389e962c3a040b45e1eda93ffbe76cb03c39250fe2413ce175c6966"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/cube_negative.json",
+      "bytes": 1157,
+      "sha256": "5a1f63dabe33c689eb905cb354a5bf03a35a117dc2b32999c2872ba012bd5d99"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/cube_positive.json",
+      "bytes": 71565,
+      "sha256": "3b4b1a243246e07773f52956612ffcf13d7cfa789ec0a22213a80658996a4b01"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/cube_system_cause.json",
+      "bytes": 1261,
+      "sha256": "217633839759bf8a27b2b09c69d6ff5d0d10025a2fbd8a45dbb4494769c13821"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/cube_ungrounded.json",
+      "bytes": 1336,
+      "sha256": "e84f41f11b3b022e4229b4ffa8d08341452afb1a0b7428b438c57c6b485e6d9a"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/cuboid_assumption.json",
+      "bytes": 1460,
+      "sha256": "0e19986867b6b3cb2299ac5fb8f16f67d10de5ce5834cd63a53c5a72b5b083a9"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/cuboid_negative.json",
+      "bytes": 1179,
+      "sha256": "068b4c6b91231507f1cd6a03edfc041a0fc43782badfd284219f9e9c5adec3e9"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/cuboid_positive.json",
+      "bytes": 69301,
+      "sha256": "724d18ff62b03360b44f5cb2f29bb307ad2b6b07d9c6cbdc1b495f9c97af5b59"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/cuboid_ungrounded.json",
+      "bytes": 1363,
+      "sha256": "288734c4f4088a89dea5f57a3e49312fa8d38436bb5fcc252fd684a3da0fc7bd"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/rectangular_pyramid_assumption.json",
+      "bytes": 1515,
+      "sha256": "29c2f19e1266c7e99bc8c081131cf973853e6a379c74360f91027e3973e9d4b9"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/rectangular_pyramid_negative.json",
+      "bytes": 1240,
+      "sha256": "36981650640c1d8bd1d2166f8f5222dfcd01f5c3c092a0dface66e7283b46a77"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/rectangular_pyramid_positive.json",
+      "bytes": 50147,
+      "sha256": "8be197d8ad30f2b85fe6faad0a58a14f8e4cde9fbc1ebd9c4a349fb3b07ffc77"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/rectangular_pyramid_ungrounded.json",
+      "bytes": 1418,
+      "sha256": "1d622c7a6e9eed3f55b3713ca5957dc1093c933ea680d8b0e133ffecc5aae8b4"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/regular_square_pyramid_assumption.json",
+      "bytes": 1554,
+      "sha256": "cbe4ca3fac803e2a569ad49d93e518a2e2d4b7376b8496e2f5f8047aa7156bf0"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/regular_square_pyramid_non_positive.json",
+      "bytes": 1401,
+      "sha256": "ae349521d43150e8126d79761c8c713a2febf09c5128df2be3907807330130c8"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/regular_square_pyramid_positive.json",
+      "bytes": 63297,
+      "sha256": "5c64880b7058526d4e706300e282fa3a809db28d79906c1e2a83acccf6bf139b"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/regular_square_pyramid_ungrounded.json",
+      "bytes": 1422,
+      "sha256": "9004c601463515868a1420e6a9847725a83d1e63a3f31d7f45780f939f784c1d"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/regular_square_pyramid_wrong_centre.json",
+      "bytes": 1602,
+      "sha256": "f98a336504f39db4be3d2209a197481c25904f7856af53f148ef90de915ab083"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/regular_tetrahedron_positive.json",
+      "bytes": 62794,
+      "sha256": "73d9e5a0d610b71151878688653d9c9d435891fcdd7141de5e12b3bce7d06ef0"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/regular_tetrahedron_radical_positive.json",
+      "bytes": 62466,
+      "sha256": "80ce7921579c50c699c366c017c1aa8deec317b6e3a33783280809c62862f0bf"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/regular_triangular_pyramid_assumption.json",
+      "bytes": 1531,
+      "sha256": "114b1d108b4a518c3bea21b7eb3253b1ad7be8dcca572a4773df6fca6a5c0c02"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/regular_triangular_pyramid_non_positive.json",
+      "bytes": 1373,
+      "sha256": "8cd97e8c8d77c7385fc74082a07413de8f285bd30c76f0f00fb061fada52e48c"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/regular_triangular_pyramid_positive.json",
+      "bytes": 64953,
+      "sha256": "86f722206774c32f46457db17ab1479de87f6f66c1ce30dbf3d055af198e2fcc"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/regular_triangular_pyramid_radical_assumption.json",
+      "bytes": 1537,
+      "sha256": "4fc7579854bf2f12375518be326e1d1fe9630f246aaf031326b2b510f2ff2b39"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/regular_triangular_pyramid_radical_non_positive.json",
+      "bytes": 1375,
+      "sha256": "3f3f9341ca93650b26cfa18988898e4ce2db9099ae3474e6c1ecda290bde2382"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/regular_triangular_pyramid_radical_positive.json",
+      "bytes": 64876,
+      "sha256": "c792165d566aeda588c0e51c713bf4667e1930aa08b0a129b1fe35f16a34f2ee"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/regular_triangular_pyramid_radical_ungrounded.json",
+      "bytes": 1402,
+      "sha256": "3e679a317e4d50044c5b3926925058f5ce92f6ecacf8cbdd8b9005d6731b6b9d"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/regular_triangular_pyramid_radical_wrong_centroid.json",
+      "bytes": 1601,
+      "sha256": "b892d72a416d8caa251dc87d9a8b1db278010f05d4df967fd1f06e5cc1df6afe"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/regular_triangular_pyramid_ungrounded.json",
+      "bytes": 1396,
+      "sha256": "79e902b48aef7ae98976e282b557d99bf742d36f51b8c5b52007231db09023b7"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/regular_triangular_pyramid_wrong_centroid.json",
+      "bytes": 1595,
+      "sha256": "4cf259271aaa4fc696a70b60add52f2cbad1b11ca7bcbe389c4379a6d54f9781"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/triangular_prism_assumption.json",
+      "bytes": 1497,
+      "sha256": "dfed6629f5db7b3c877958e6ff80edf42a73f5caa11509c5c3365c77111d92ba"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/triangular_prism_negative.json",
+      "bytes": 1222,
+      "sha256": "36afb7f466457fa7df076051fb1f57169dcdf7c17fcc4c662ac58645dd7c53b4"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/triangular_prism_positive.json",
+      "bytes": 54909,
+      "sha256": "e41d710a05cb382b8cc850c2cb30d22966c2c926649031871237a290f4c4253f"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/triangular_prism_ungrounded.json",
+      "bytes": 1400,
+      "sha256": "8dff8be9e43d9c70c7bd44731aecb8496d72e222015fe5bba39312488c8723b4"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/triangular_pyramid_assumption.json",
+      "bytes": 1503,
+      "sha256": "aea196b184974218bfbde92d29a689adc351c6ea19edd6b70c2f790b4862efa3"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/triangular_pyramid_negative.json",
+      "bytes": 1228,
+      "sha256": "3bd0e3c9159677a4c8f03dceb07141b8ffa42d4d778447da8bac8ad3461eab1f"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/triangular_pyramid_positive.json",
+      "bytes": 45460,
+      "sha256": "295fb9e4c5c11f01f81aed9c17885ec797b9f6ad8989ac3d2dc3863f8886bbf5"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/triangular_pyramid_ungrounded.json",
+      "bytes": 1406,
+      "sha256": "b7e20fd48bbef01d896599b3b7495e02a63dacbf16fadd978213f31225625c23"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/w18_midpoint_mismatch.json",
+      "bytes": 1595,
+      "sha256": "aecb9cc8f56fc262052d9752aa804a61e96a6ca5e54d68ba4767355deaf79e36"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/w18_midpoint_plane_distance.json",
+      "bytes": 41866,
+      "sha256": "28ea853212af3a43a1ab696e2326bdeeca8ee298f0479b9614c85b32c9547fb8"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/w18_projection_line.json",
+      "bytes": 44904,
+      "sha256": "f57a717d8d4d056ae3336b36bcf59ed52a99695371ce0f3a7449e7a9e3cd2740"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/w18_projection_mismatch.json",
+      "bytes": 1662,
+      "sha256": "4e3219bb0771219f7bf1945efd45d2eb34514dddb1250f98f83100dfbaae44bc"
+    },
+    {
+      "path": "visual/official-inputs/fixtures/w18_unverified.json",
+      "bytes": 1667,
+      "sha256": "f7ea0baabe98aeeca99d9a3b4cbc670a8dc72ce90429b827ab6b406638fd23b7"
+    },
+    {
+      "path": "visual/official-inputs/suite.json",
+      "bytes": 37604,
+      "sha256": "ddaf622589347c6674a8cedb79244b4a948a407a3dd032b7b70967802e2abf32"
+    }
+  ],
+  "total_files": 575,
+  "total_bytes": 138062897,
+  "excludes": [
+    "artifact-manifest.json",
+    "verification/staging.json"
+  ],
+  "human_visual_approval": "PENDING"
+}

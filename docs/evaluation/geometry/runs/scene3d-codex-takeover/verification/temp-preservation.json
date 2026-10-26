@@ -1,0 +1,5 @@
+﻿{
+    "reason":  "Codex runner PYTEST_ADDOPTS backslashes were parsed as escapes; preserve own generated temp without deletion",
+    "source":  "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-scene3d-codex-takeover\\backend\\Documentsprojectsalgo-sim.superpowerspt-codex-scene3d",
+    "preserved_at":  "D:\\Documents\\projects\\algo-sim\\.superpowers\\scene3d-interrupted-test-temp"
+}

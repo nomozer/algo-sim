@@ -1,5 +1,14 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+**LOCAL 2026-10-26 — Scene3D Codex takeover:** branch `research/scene3d-codex-takeover`, product `511a48c7`, clean detached
+freeze `e1ebc72c` (118 measured files, `ee474c819688426f…`; frontend source tree `102ccee8…`). Claude `08929b89` changes and
+dirty root preserved. True conic transitions, host tangencies, transform invalidation and standalone sphere reference;
+geometry 847/847, exact checks 56/56, 204 camera frames + 18 step frames, motion 18/18 with 7 heuristic label flags.
+Official scenarios 7/8 (five completed before interruption + three scoped continuation; locked F2 failure retained).
+Proposed role-aware 2 PASS / 10 UNCERTIFIABLE / 0 FAIL. Full T3 FULL_PRODUCT_GATE_PASS (11923 backend / 1386 frontend), clean before/after, post-freeze MATCH; no ready claim (remaining scope gaps and Owner review).
+Independent and human approval PENDING; LLM_ONLY/cache129/live0/Hybrid NO-GO, main not merged or pushed.
+Handoff: `evaluation/geometry/runs/scene3d-codex-takeover/handoff.md`.
+
 **LOCAL 2026-10-25 — Scene3D visual correction, Claude takeover of Codex (latest):** research/scene3d-visual-correction; product b8b3311b (frontend/src only), candidate c84e8620 (118 files, ee474c81… unchanged), CACHE_VERSION 129, Full T3 PASS at c84e8620. Official Visual 7/8 (locked role-hue gate; `F2_POLICY_DECISION_REQUIRED`); Mode A/B per the locked contract; `npm run dev` PASS on the candidate checkout. Status SCENE3D_VISUAL_PARTIAL_WITH_GAPS. Review: two internal separate-context rounds — independent review PENDING; human visual approval PENDING; Hybrid default NO-GO; local main unchanged. Handoff: `evaluation/geometry/runs/scene3d-visual-correction/FINAL_OWNER_HANDOFF.md`.
 
 **LOCAL 2026-10-25 — Visual + B3 + sphere integrated candidate:** integration/visual-b3-sphere-candidate; product 9ced3d27, candidate ddb1a4be (118 files, ee474c81…), CACHE_VERSION 129, Full T3 PASS at ddb1a4be and, after the per-checkout Vite cacheDir fix (`npm run dev` EPERM), at 88a1b43e. Official Visual 7/8 (locked role-hue gate; role-aware proposal not adopted); B3 /4 distance browser 10/10 (offline authored); sphere sample source-correct. Review: separate-context AI only — independent review PENDING; human visual approval NOT_GRANTED; Hybrid default NO-GO; local main unchanged. Handoff: `evaluation/geometry/runs/visual-b3-sphere-integration/FINAL_OWNER_HANDOFF.md`.

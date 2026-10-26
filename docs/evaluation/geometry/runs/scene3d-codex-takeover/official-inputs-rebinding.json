@@ -1,0 +1,210 @@
+{
+  "source": "docs/evaluation/geometry/runs/visual-closure-hybrid-readiness/visual/final-inputs",
+  "product_commit_sha": "511a48c777c187ff92d219185214f882e09726b0",
+  "product_tree_sha": "ee474c819688426f8959daf2129f0273eb3217f039909b8ad9cade0ed740ae9d",
+  "geometry_envelopes_changed": 0,
+  "oracle_expectations_changed": 0,
+  "suite_fields_changed": [
+    "product_commit_sha",
+    "product_tree_sha",
+    "task_id"
+  ],
+  "fixtures": [
+    {
+      "fixture": "cross_section_assumption.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "cross_section_correct_plane.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "cross_section_negative.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "cross_section_positive.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "cross_section_ungrounded.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "cross_section_wrong_plane.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "cube_assumption.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "cube_negative.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "cube_positive.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "cube_system_cause.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "cube_ungrounded.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "cuboid_assumption.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "cuboid_negative.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "cuboid_positive.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "cuboid_ungrounded.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "rectangular_pyramid_assumption.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "rectangular_pyramid_negative.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "rectangular_pyramid_positive.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "rectangular_pyramid_ungrounded.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "regular_square_pyramid_assumption.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "regular_square_pyramid_non_positive.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "regular_square_pyramid_positive.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "regular_square_pyramid_ungrounded.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "regular_square_pyramid_wrong_centre.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "regular_tetrahedron_positive.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "regular_tetrahedron_radical_positive.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "regular_triangular_pyramid_assumption.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "regular_triangular_pyramid_non_positive.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "regular_triangular_pyramid_positive.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "regular_triangular_pyramid_radical_assumption.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "regular_triangular_pyramid_radical_non_positive.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "regular_triangular_pyramid_radical_positive.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "regular_triangular_pyramid_radical_ungrounded.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "regular_triangular_pyramid_radical_wrong_centroid.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "regular_triangular_pyramid_ungrounded.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "regular_triangular_pyramid_wrong_centroid.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "triangular_prism_assumption.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "triangular_prism_negative.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "triangular_prism_positive.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "triangular_prism_ungrounded.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "triangular_pyramid_assumption.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "triangular_pyramid_negative.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "triangular_pyramid_positive.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "triangular_pyramid_ungrounded.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "w18_midpoint_mismatch.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "w18_midpoint_plane_distance.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "w18_projection_line.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "w18_projection_mismatch.json",
+      "envelope_unchanged": true
+    },
+    {
+      "fixture": "w18_unverified.json",
+      "envelope_unchanged": true
+    }
+  ]
+}

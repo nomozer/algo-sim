@@ -1,0 +1,11 @@
+{
+  "exit_code": 0,
+  "nodes": [
+    "tests/geometry/test_completion_measurement_repair_post_safety.py::test_R1_A_rang_buoc_du_17_truong_ghi_TRUOC_request_dau_va_nap_lai_hop_le",
+    "tests/geometry/test_hybrid_ab_pilot_runner.py::test_real_transport_http_error_preserves_redacted_body_status_and_known_usage",
+    "tests/geometry/test_holdout_readiness.py::test_bao_cao_da_sinh_va_KHONG_TROI"
+  ],
+  "provider_calls": 0,
+  "pytest_addopts": "--basetemp=D:/Documents/projects/algo-sim/.superpowers/pt-scene3d-env",
+  "stdout": "============================= test session starts =============================\nplatform win32 -- Python 3.12.10, pytest-9.1.1, pluggy-1.6.0 -- D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe\ncachedir: .pytest_cache\nrootdir: D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-scene3d-codex-takeover\\backend\nconfigfile: pytest.ini\nplugins: anyio-4.14.1\ncollecting ... collected 4 items\n\ntests/geometry/test_completion_measurement_repair_post_safety.py::test_R1_A_rang_buoc_du_17_truong_ghi_TRUOC_request_dau_va_nap_lai_hop_le PASSED [ 25%]\ntests/geometry/test_hybrid_ab_pilot_runner.py::test_real_transport_http_error_preserves_redacted_body_status_and_known_usage[False] PASSED [ 50%]\ntests/geometry/test_hybrid_ab_pilot_runner.py::test_real_transport_http_error_preserves_redacted_body_status_and_known_usage[True] PASSED [ 75%]\ntests/geometry/test_holdout_readiness.py::test_bao_cao_da_sinh_va_KHONG_TROI PASSED [100%]\n\n============================== 4 passed in 4.42s ==============================\n"
+}

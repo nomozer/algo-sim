@@ -1,0 +1,33 @@
+{
+  "candidate": "e1ebc72cd3968abfe752303089efc8cb7441abe6",
+  "detached": true,
+  "source_tree_before": "",
+  "source_tree_after": "",
+  "started_utc": "2026-10-26T02:05:36.061700+00:00",
+  "finished_utc": "2026-10-26T02:19:44.624590+00:00",
+  "seconds": 848.562,
+  "exit_code": 0,
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "summaries": [
+    "= 11923 passed, 1 skipped, 2 deselected, 15 xfailed, 2 warnings in 809.70s (0:13:29) =",
+    " Test Files  81 passed (81)",
+    "      Tests  1386 passed (1386)",
+    "FULL_PRODUCT_GATE_PASS"
+  ],
+  "post_freeze": {
+    "exit_code": 0,
+    "stdout": "Candidate khớp bản đã đóng băng (mã sản phẩm: 118 file, ee474c819688426f…)."
+  },
+  "provider_calls": 0,
+  "execution_context": "Codex clean detached machine verification; not independent review",
+  "streams": {
+    "stdout.log": {
+      "bytes": 1567012,
+      "sha256": "ddb2e2799d8f0156c836f75ff5b65c861ee62652faf7c210630a76acbfb45ebb"
+    },
+    "stderr.log": {
+      "bytes": 332,
+      "sha256": "ccb6bf354a0674eeb1e49df9a880a000b75240079fdb849282bb899d81eeb58c"
+    }
+  }
+}

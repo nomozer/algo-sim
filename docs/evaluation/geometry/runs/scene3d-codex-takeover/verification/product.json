@@ -1,0 +1,42 @@
+{
+  "product_commit": "511a48c777c187ff92d219185214f882e09726b0",
+  "source_head": "0936d2493ec4237c0648d7443f25b9bad3cca3ef",
+  "frontend_src_git_tree": "102ccee8e3a47f6706472de40ca41dd7e2904e1b",
+  "provider_calls": 0,
+  "default_mode": "LLM_ONLY",
+  "cache_version": 129,
+  "vite_cache_dir": ".vite-cache",
+  "files": {
+    "frontend/src/simulations/domains/geometry/scene3d-view.tsx": "2792761ba94eeaa1caf0ea843968aec28fe19c772cc2f58755eefbf40d2178ce",
+    "frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts": "db2eea3ab5972a996f89e62bd284af1c4f0923e095e1cd8a4094e36520719d6c"
+  },
+  "regression": {
+    "initial_red": {
+      "base": "08929b89",
+      "ellipse_transition_distance": 0.06981872252302022,
+      "limit": 0.0002,
+      "sphere_reference": "missing"
+    },
+    "review_red": {
+      "base": "7c4162cc",
+      "near_tangent_visible_vertices": 0,
+      "fixed_camera_rotation": "stale signature"
+    },
+    "final_green": {
+      "focused_tests": 6,
+      "geometry_tests": 847,
+      "geometry_files": 43,
+      "build": "PASS",
+      "math_exact_checks": 56,
+      "math_failed": 0
+    }
+  },
+  "review": {
+    "classification": "INTERNAL_REVIEW",
+    "first_round": "2 Important + 1 Minor",
+    "delta_round": "all addressed, no new Important findings; targeted 18/18",
+    "independent": "PENDING",
+    "human": "PENDING"
+  },
+  "known_limitation": "Unrelated occluders can create intervals narrower than finite probes; analytic tangent guarantee is for curves lying on the host quadric."
+}

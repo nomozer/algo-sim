@@ -1,0 +1,19 @@
+{
+  "product_commit": "511a48c777c187ff92d219185214f882e09726b0",
+  "receipt": "../final/receipt.json",
+  "note": "Camera positions/matrices in each receipt are authoritative. Names inherited from the capture script describe drag fractions; the filename back is not a rear-view certificate.",
+  "gestures": {
+    "default": "product default framing",
+    "quarter": "horizontal drag of 0.25 canvas heights, about 90 degrees",
+    "half": "horizontal drag of 0.5 canvas heights, about 180 degrees; use for rear view",
+    "back": "horizontal drag of 1 canvas height, about 360 degrees; full-turn closure observation",
+    "high": "vertical drag +0.15 canvas heights",
+    "low": "vertical drag -0.15 canvas heights"
+  },
+  "viewports": [
+    {"width":1440,"height":900,"dpr":1},
+    {"width":390,"height":844,"dpr":2}
+  ],
+  "selection": "unselected for final/; selected section states are in role-aware/ with their own receipts",
+  "source_geometry": "offline validated fixture/sample envelopes through the actual product store; no live provider"
+}

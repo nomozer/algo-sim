@@ -1,5 +1,16 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Scene3D Codex takeover (local candidate, 2026-10-26)
+
+`scene3d-edge-visibility.ts::createWorldPointOcclusionTest` compiles solid triangles lazily for true conic sampling;
+`curvedSurfaceTangentTurns` seeds host-sphere/cylinder/cone tangencies using the normal equation in primitive coordinates.
+`scene3d-view.tsx` refines curve transitions, caches against rim/occluder transforms, reuses camera-independent buffers,
+and presents one non-authoritative great-circle reference for standalone spheres (suppressed for plane/section scenes).
+No new product module or dependency. `scene3d-curved-transitions.test.ts` covers analytic cylinder tangency, near-tangent
+short sphere arcs, transform invalidation, source immutability and buffer reuse. The obsolete zero-reference sphere unit
+policy is updated to the Owner's P3.3; locked Official Visual oracles are unchanged.
+Run and limitations: `docs/evaluation/geometry/runs/scene3d-codex-takeover/handoff.md`.
+
 ## Final Scene3D acceptance (local proposal, 2026-10-25)
 
 `frontend/scripts/section-role-oracle-v2.mjs` extends the proposed pixel evaluator with source-conic sampling independent

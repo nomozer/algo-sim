@@ -1,0 +1,101 @@
+{
+  "schema": "scene3d-official-scenario-aggregation/1",
+  "classification": "DERIVED_SUMMARY_OF_UNCHANGED_OFFICIAL_SCENARIO_RESULTS",
+  "not_one_uninterrupted_suite_process": true,
+  "product_commit": "511a48c777c187ff92d219185214f882e09726b0",
+  "product_tree_sha": "ee474c819688426f8959daf2129f0273eb3217f039909b8ad9cade0ed740ae9d",
+  "suite_sha256": "ddaf622589347c6674a8cedb79244b4a948a407a3dd032b7b70967802e2abf32",
+  "oracle_changes": 0,
+  "envelope_changes": 0,
+  "application_llm_calls": 0,
+  "total": 8,
+  "passed": 7,
+  "rows": [
+    {
+      "scenario": "triangular_pyramid",
+      "pass": true,
+      "source": "visual/official-authoritative/triangular_pyramid.json",
+      "sha256": "f5c313cc797f19ade25cc576b4480f5e14e5d895c80e73dfc3fa506a7e001ba5",
+      "failed_gate_paths": [],
+      "process": "interrupted full run, completed scenario"
+    },
+    {
+      "scenario": "triangular_prism",
+      "pass": true,
+      "source": "visual/official-authoritative/triangular_prism.json",
+      "sha256": "b1ed7dfa7c554fa4619793e64cafc9502eb7e2c25b77538fa197f1298aa50c88",
+      "failed_gate_paths": [],
+      "process": "interrupted full run, completed scenario"
+    },
+    {
+      "scenario": "rectangular_pyramid",
+      "pass": true,
+      "source": "visual/official-authoritative/rectangular_pyramid.json",
+      "sha256": "35ac8f51e3945f69e4dfeedc3fbb995c04f72288c81b49ebde0503200cb96a3f",
+      "failed_gate_paths": [],
+      "process": "interrupted full run, completed scenario"
+    },
+    {
+      "scenario": "cuboid",
+      "pass": true,
+      "source": "visual/official-authoritative/cuboid.json",
+      "sha256": "fffa5089c449499bf597c1eeddab2b90cbe521e6a511cd56fcdb652c14b5b4a0",
+      "failed_gate_paths": [],
+      "process": "interrupted full run, completed scenario"
+    },
+    {
+      "scenario": "cube",
+      "pass": true,
+      "source": "visual/official-authoritative/cube.json",
+      "sha256": "d28277be29ca8d9b800a67f932aa97bacf213dfa4ac7b3f87ec511ac67eeee64",
+      "failed_gate_paths": [],
+      "process": "interrupted full run, completed scenario"
+    },
+    {
+      "scenario": "cross_section",
+      "pass": false,
+      "source": "visual/official-continuation/cross_section.json",
+      "sha256": "abc5eaf807dee2e94017497a1b420580df97bba0639b5336561a5425a6fb5975",
+      "failed_gate_paths": [
+        "positive.desktop",
+        "positive.desktop.assertions.causal_closure",
+        "positive.desktop.assertions.causal_closure.details",
+        "positive.desktop.assertions.causal_closure.details.visual.canvas_role_hues",
+        "positive.desktop.assertions.causal_closure.details.visual.canvas_role_hues.cam",
+        "positive.desktop.assertions.evidence_gates",
+        "positive.desktop.causal_closure",
+        "positive.desktop.causal_closure.visual.canvas_role_hues",
+        "positive.desktop.causal_closure.visual.canvas_role_hues.cam",
+        "positive.desktop.evidence_gates",
+        "positive.mobile",
+        "positive.mobile.assertions.causal_closure",
+        "positive.mobile.assertions.causal_closure.details",
+        "positive.mobile.assertions.causal_closure.details.visual.canvas_role_hues",
+        "positive.mobile.assertions.causal_closure.details.visual.canvas_role_hues.cam",
+        "positive.mobile.assertions.evidence_gates",
+        "positive.mobile.causal_closure",
+        "positive.mobile.causal_closure.visual.canvas_role_hues",
+        "positive.mobile.causal_closure.visual.canvas_role_hues.cam",
+        "positive.mobile.evidence_gates"
+      ],
+      "process": "completed scoped continuation"
+    },
+    {
+      "scenario": "regular_square_pyramid",
+      "pass": true,
+      "source": "visual/official-continuation/regular_square_pyramid.json",
+      "sha256": "c71a8d8778c6fb04146bfc9a5679e8e74ed1752b791dfe702b5b0d3db9de4e7f",
+      "failed_gate_paths": [],
+      "process": "completed scoped continuation"
+    },
+    {
+      "scenario": "regular_triangular_pyramid",
+      "pass": true,
+      "source": "visual/official-continuation/regular_triangular_pyramid.json",
+      "sha256": "6675af595229d75376568319fc9558eb8881a2bcfbcb1d3c13385fd32deabeec",
+      "failed_gate_paths": [],
+      "process": "completed scoped continuation"
+    }
+  ],
+  "note": "The five completed scenario JSON files are preserved from the interrupted full run; the same candidate, build, suite and locked oracles continued for the remaining three. This is an explicit aggregation, not a fabricated full-run receipt."
+}

@@ -1,0 +1,20 @@
+{
+  "rows": [
+    {
+      "width": 1440,
+      "camera": "low",
+      "before": "FAIL",
+      "after": "PASS",
+      "max_source_boundary_projection_delta_css_px": 0.0008050218660537313,
+      "note": "Identical source conic and gesture; damping leaves slightly different camera floats. These are near-matched observations, not bit-identical camera captures; analytic regression is the exact mathematical check."
+    },
+    {
+      "width": 390,
+      "camera": "low",
+      "before": "UNCERTIFIABLE",
+      "after": "UNCERTIFIABLE",
+      "max_source_boundary_projection_delta_css_px": 0.0003740844101210387,
+      "note": "Identical source conic and gesture; damping leaves slightly different camera floats. These are near-matched observations, not bit-identical camera captures; analytic regression is the exact mathematical check."
+    }
+  ]
+}

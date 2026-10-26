@@ -1,0 +1,5 @@
+{
+  "after": "Interrupted exploratory capture; HMR source changed during review; NOT final candidate acceptance. Retained without deletion.",
+  "before": "48 valid baseline frames from archived frontend at 08929b893337e770649b9d854c8c71c4434edc29; port3172 was our isolated baseline server.",
+  "review": "Internal review found two regressions, both reproduced RED then GREEN before final capture."
+}

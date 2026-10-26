@@ -1,0 +1,53 @@
+{
+  "schema": "scene3d-codex-takeover/1",
+  "run_id": "scene3d-codex-takeover",
+  "task_id": "SCENE3D_CODEX_TAKEOVER",
+  "wave_id": "scene3d-codex-takeover-w01",
+  "date": "2026-10-26",
+  "classification": "CORE",
+  "status": "SCENE3D_VISUAL_PARTIAL_WITH_GAPS",
+  "report": "handoff.md",
+  "branch": "research/scene3d-codex-takeover",
+  "base_candidate": "08929b893337e770649b9d854c8c71c4434edc29",
+  "product_commit": "511a48c777c187ff92d219185214f882e09726b0",
+  "candidate_commit": "e1ebc72cd3968abfe752303089efc8cb7441abe6",
+  "measured_system_hash": "ee474c819688426f8959daf2129f0273eb3217f039909b8ad9cade0ed740ae9d",
+  "frontend_src_git_tree": "102ccee8e3a47f6706472de40ca41dd7e2904e1b",
+  "default_mode": "LLM_ONLY",
+  "cache_version": 129,
+  "allow_live_ai": 0,
+  "provider_calls": 0,
+  "geometry_regression": {
+    "passed": 847,
+    "files": 43
+  },
+  "exact_math": {
+    "passed": 56,
+    "failed": 0
+  },
+  "visual_frames": 204,
+  "construction_step_frames": 18,
+  "motion_checks": {
+    "passed": 18,
+    "total": 18,
+    "label_jump_flags": 7
+  },
+  "proposed_role_aware": {
+    "pass": 2,
+    "fail": 0,
+    "uncertifiable": 10
+  },
+  "full_t3": "FULL_PRODUCT_GATE_PASS",
+  "official_visual_suite": "7/8_LOCKED_F2_FAIL",
+  "independent_review": "PENDING",
+  "human_visual_approval": "PENDING",
+  "main_merged": false,
+  "pushed": false,
+  "full_t3_backend_passed": 11923,
+  "full_t3_frontend_passed": 1386,
+  "freeze_verification": "MATCH",
+  "official_result_kind": "5 completed scenarios + 3 scoped continuation, unchanged candidate/oracles",
+  "preserved_files": 1679,
+  "preservation": "MATCH",
+  "dev_server": "http://127.0.0.1:3173"
+}

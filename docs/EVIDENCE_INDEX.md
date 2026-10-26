@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SCENE3D_CODEX_TAKEOVER
+
+REPORT = docs/evaluation/geometry/runs/scene3d-codex-takeover/handoff.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-codex-takeover/
+CLASSIFICATION = SCENE3D_VISUAL_PARTIAL_WITH_GAPS; no merge/push; independent and human review PENDING
+CODE_COMMIT = product 511a48c777c187ff92d219185214f882e09726b0; clean freeze e1ebc72cd3968abfe752303089efc8cb7441abe6
+VERIFICATION = geometry 847/847; exact checks 56/56; final/receipt.json 204 frames; steps/receipt.json 18; motion/receipt.json 18/18; verification/official-scenarios.json 7/8 explicit aggregation with F2 retained; role-aware/receipt.json 2 PASS / 10 UNCERTIFIABLE / 0 FAIL; Full T3 FULL_PRODUCT_GATE_PASS (11923 backend / 1386 frontend), clean before/after, post-freeze MATCH; verification/t3.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = SCENE3D_FINAL_ACCEPTANCE (G5 host conic transition regression fixed, true sphere reference added under new Owner P3.3; old evidence unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = SCENE3D_FINAL_ACCEPTANCE
 
 REPORT = docs/evaluation/geometry/runs/scene3d-final-acceptance/handoff.md
@@ -9,7 +20,7 @@ CODE_COMMIT = product b8b3311b unchanged; frozen candidate c84e8620; evaluation-
 VERIFICATION = provenance-verified.json (clean detached freeze match, prior T3 streams hash match, served product source match); oracle-tests.log (40/40); baseline-final.json (V2 4 PASS / 1 FAIL / 25 UNCERTIFIABLE, same frames V1 19/0/11); faults-final.json (10/10 on certified views); label-controls/receipt.json (18/18); motion-summary.json (112 heuristic flags, no continuity/performance certification); artifact-manifest.json
 MODEL_REQUEST_COUNT = 0
 CORRECTS = SCENE3D_VISUAL_CORRECTION (F2 policy no longer unspecified; proposed V1 completeness limits reproduced, strict V2 uncertainty and unresolved ellipse transition; old evidence unchanged)
-CORRECTED_BY = NONE
+CORRECTED_BY = SCENE3D_CODEX_TAKEOVER
 
 ## WAVE_ID = SCENE3D_VISUAL_CORRECTION
 

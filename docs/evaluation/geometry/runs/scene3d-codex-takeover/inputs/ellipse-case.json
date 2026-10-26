@@ -1,0 +1,10 @@
+[
+  {
+    "id": "ellipse-cylinder-p6",
+    "shape": "ellipse",
+    "envelope_file": "../docs/evaluation/geometry/runs/f2-role-aware-oracle/inputs/p6-ellipse-envelope.json",
+    "item": "dien_tich_elip_e",
+    "section": "E",
+    "wrong_point": "O"
+  }
+]

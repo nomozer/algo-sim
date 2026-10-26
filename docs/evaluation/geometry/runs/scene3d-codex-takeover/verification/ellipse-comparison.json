@@ -1,0 +1,32 @@
+{
+  "baseline_commit": "08929b893337e770649b9d854c8c71c4434edc29",
+  "product_commit": "511a48c777c187ff92d219185214f882e09726b0",
+  "oracle": "existing proposed V2, unchanged; not Official Suite",
+  "rows": [
+    {
+      "case": "ellipse-cylinder-p6",
+      "width": 1440,
+      "camera": "low",
+      "before": "FAIL",
+      "after": "PASS",
+      "camera_equal": false,
+      "before_png": "ellipse-before/ellipse-cylinder-p6-1440-low-none.png",
+      "after_png": "role-aware/ellipse-cylinder-p6-1440-low-none.png",
+      "before_sha256": "9afc56a63d602d7d644016658bfa13b0857c2f52337400666e7566d88def19e2",
+      "after_sha256": "b536cfab8e3ab691c570647112853888584317bd2b8c7ddbbd3de66b9a4dce91"
+    },
+    {
+      "case": "ellipse-cylinder-p6",
+      "width": 390,
+      "camera": "low",
+      "before": "UNCERTIFIABLE",
+      "after": "UNCERTIFIABLE",
+      "camera_equal": false,
+      "before_png": "ellipse-before/ellipse-cylinder-p6-390-low-none.png",
+      "after_png": "role-aware/ellipse-cylinder-p6-390-low-none.png",
+      "before_sha256": "6808f216ade92120cc4fcdd4812cd2a4aaf574395aa350e82d53a71475018588",
+      "after_sha256": "79ed226ba0fb181a0edd1da0a591a002bcf0b842e14b8cd8bfffd99b75465aeb"
+    }
+  ],
+  "independent_geometry_check": "scene3d-curved-transitions.test.ts analytic cylinder tangency, RED 0.0698187225 world error versus limit 0.0002, GREEN after refinement"
+}

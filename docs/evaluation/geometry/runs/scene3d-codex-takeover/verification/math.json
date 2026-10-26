@@ -1,0 +1,343 @@
+{
+ "checks": 56,
+ "failed": 0,
+ "failures": [],
+ "rows": [
+  {
+   "scene": "thiet-dien-chop",
+   "check": "mp: depends point M on the plane",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "thiet-dien-chop",
+   "check": "mp: depends point N on the plane",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "thiet-dien-chop",
+   "check": "mp: depends point P on the plane",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "thiet-dien-chop",
+   "check": "thiet_dien: polygon vertices coplanar",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "thiet-dien-chop",
+   "check": "thiet_dien: edge 0 lies in a face plane of chop",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "thiet-dien-chop",
+   "check": "thiet_dien: edge 1 lies in a face plane of chop",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "thiet-dien-chop",
+   "check": "thiet_dien: edge 2 lies in a face plane of chop",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "thiet-dien-chop",
+   "check": "thiet_dien: edge 3 lies in a face plane of chop",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "mat-cheo-sac",
+   "check": "sac: depends point A on the plane",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "mat-cheo-sac",
+   "check": "sac: depends point C on the plane",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "mat-cheo-sac",
+   "check": "sac: depends point S on the plane",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "mat-cheo-sac",
+   "check": "thiet_dien: edge 0 lies in a face plane of chop",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "mat-cheo-sac",
+   "check": "thiet_dien: edge 1 lies in a face plane of chop",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "mat-cheo-sac",
+   "check": "thiet_dien: edge 2 lies in a face plane of chop",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "vuong-goc-chop",
+   "check": "sab: depends point A on the plane",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "vuong-goc-chop",
+   "check": "sab: depends point B on the plane",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "vuong-goc-chop",
+   "check": "sab: depends point S on the plane",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "mp-vuong-goc-duong",
+   "check": "day: depends point A on the plane",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "mp-vuong-goc-duong",
+   "check": "day: depends point B on the plane",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "mp-vuong-goc-duong",
+   "check": "day: depends point C on the plane",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "mp-vuong-goc-duong",
+   "check": "mpb: depends point B on the plane",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "mp-vuong-goc-duong",
+   "check": "kc: marker u ⊥ v",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "mp-vuong-goc-duong",
+   "check": "kc: (from − foot) ∥ v",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "mp-vuong-goc-duong",
+   "check": "kc: foot on plane mpb",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "mp-vuong-goc-duong",
+   "check": "kc: (from − foot) ∥ normal of mpb",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "the-tich-chop",
+   "check": "day: depends point A on the plane",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "the-tich-chop",
+   "check": "day: depends point B on the plane",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "the-tich-chop",
+   "check": "day: depends point C on the plane",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "the-tich-chop",
+   "check": "d: marker u ⊥ v",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "the-tich-chop",
+   "check": "d: (from − foot) ∥ v",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "the-tich-chop",
+   "check": "d: foot on plane day",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "the-tich-chop",
+   "check": "d: (from − foot) ∥ normal of day",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "tru-thiet-dien-tron",
+   "check": "P: depends point M on the plane",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "cuboid_positive",
+   "check": "canh_ben_A_A_prime: marker u ⊥ v",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "cuboid_positive",
+   "check": "canh_ben_A_A_prime: (from − foot) ∥ v",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "cuboid_positive",
+   "check": "canh_ben_B_B_prime: marker u ⊥ v",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "cuboid_positive",
+   "check": "canh_ben_B_B_prime: (from − foot) ∥ v",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "cuboid_positive",
+   "check": "canh_ben_C_C_prime: marker u ⊥ v",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "cuboid_positive",
+   "check": "canh_ben_C_C_prime: (from − foot) ∥ v",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "cuboid_positive",
+   "check": "canh_ben_D_D_prime: marker u ⊥ v",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "cuboid_positive",
+   "check": "canh_ben_D_D_prime: (from − foot) ∥ v",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "triangular_prism_positive",
+   "check": "canh_ben_A_D: marker u ⊥ v",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "triangular_prism_positive",
+   "check": "canh_ben_A_D: (from − foot) ∥ v",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "triangular_prism_positive",
+   "check": "canh_ben_B_E: marker u ⊥ v",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "triangular_prism_positive",
+   "check": "canh_ben_B_E: (from − foot) ∥ v",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "triangular_prism_positive",
+   "check": "canh_ben_C_F: marker u ⊥ v",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "triangular_prism_positive",
+   "check": "canh_ben_C_F: (from − foot) ∥ v",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "cross_section_positive",
+   "check": "T: polygon vertices coplanar",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "cross_section_positive",
+   "check": "T: edge 0 lies in a face plane of S.ABCD",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "cross_section_positive",
+   "check": "T: edge 1 lies in a face plane of S.ABCD",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "cross_section_positive",
+   "check": "T: edge 2 lies in a face plane of S.ABCD",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "cross_section_positive",
+   "check": "T: edge 3 lies in a face plane of S.ABCD",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "cross_section_positive",
+   "check": "dist_S_BD: marker u ⊥ v",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "cross_section_positive",
+   "check": "dist_S_BD: (from − foot) ∥ v",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "cross_section_positive",
+   "check": "dist_S_BD: foot on line BD",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "scene": "cross_section_positive",
+   "check": "dist_S_BD: (from − foot) ⊥ BD",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}

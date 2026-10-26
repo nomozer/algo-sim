@@ -1,0 +1,24 @@
+{
+  "status": "INTERRUPTED_NO_FINAL_RECEIPT",
+  "candidate": "e1ebc72cd3968abfe752303089efc8cb7441abe6",
+  "total_passed": "UNKNOWN",
+  "total_failed": "UNKNOWN",
+  "exit_code": "UNKNOWN",
+  "termination_cause": "UNKNOWN",
+  "observed_progress_indicators": 3042,
+  "observed_failure_hint": "holdout readiness report test; isolated rerun PASS; no report/oracle edits",
+  "invocation_defect": "Windows backslashes in PYTEST_ADDOPTS were interpreted as escapes; own generated temp polluted verification checkout. Preserved outside candidate before retry.",
+  "streams": {
+    "stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout.log": {
+      "bytes": 3527,
+      "sha256": "e8aed4e6202e52f850842ad8869cf66cc96706a9c4aa25aa2727f621b414964a"
+    }
+  },
+  "raw_logs_local": "D:\\Documents\\projects\\algo-sim\\.superpowers\\scene3d-codex-t3",
+  "clean_preflight_attempt": "REJECTED before any tests because generated temp was visible; source unchanged",
+  "repeat_reason": "Correct runner temp path and encoding; four focused environment tests PASS, candidate restored clean by preserving only own generated temp"
+}
