@@ -1,0 +1,12 @@
+{
+  "schema": "takeover-run/1",
+  "task": "claude-to-codex-takeover",
+  "wave": "claude-to-codex-takeover-w01",
+  "date": "2026-10-26",
+  "base_commit": "3dcd6d9fbdc5627197537dc79c1e609ac3e03bea",
+  "source_worktree": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\s3d-hybrid-v2",
+  "worktree": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\s3d-hybrid-v2-codex",
+  "branch": "research/scene3d-hybrid-v2-codex",
+  "provider_requests": 0,
+  "independent_holdout": "NOT_MEASURED"
+}

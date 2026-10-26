@@ -1,5 +1,17 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = CLAUDE_TO_CODEX_TAKEOVER
+
+REPORT = docs/evaluation/geometry/runs/claude-to-codex-takeover/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/claude-to-codex-takeover/
+CLASSIFICATION = LOCAL_PARTIAL_WITH_GAPS; authored development/regression/browser; not holdout or provider evidence; internal agent review only; independent/human approval PENDING
+CODE_COMMIT = continuation from 3dcd6d9f; research/scene3d-hybrid-v2-codex (new clean freeze pending)
+VERIFICATION = preservation.json (112 file hashes); browser-auth-settled/receipt.json 20/20 real UI+HTTP; local-route-results.json 43 scored /22 served /0 wrong /0 false refusal /1 grouping mismatch; inherited official7/8; role-aware2 PASS/10 UNCERTIFIABLE; current Full T3 pending
+MODEL_REQUEST_COUNT = 0
+CORRECTS = SCENE3D_CODEX_TAKEOVER (preserved Claude producer-witness/plane-name correction and its actual 3dcd6d9f receipt; unfinished local Hybrid slice completed)
+CORRECTED_BY = NONE
+
+
 ## WAVE_ID = SCENE3D_CODEX_TAKEOVER
 
 REPORT = docs/evaluation/geometry/runs/scene3d-codex-takeover/handoff.md
@@ -9,7 +21,7 @@ CODE_COMMIT = product 511a48c777c187ff92d219185214f882e09726b0; clean freeze e1e
 VERIFICATION = geometry 847/847; exact checks 56/56; final/receipt.json 204 frames; steps/receipt.json 18; motion/receipt.json 18/18; verification/official-scenarios.json 7/8 explicit aggregation with F2 retained; role-aware/receipt.json 2 PASS / 10 UNCERTIFIABLE / 0 FAIL; Full T3 FULL_PRODUCT_GATE_PASS (11923 backend / 1386 frontend), clean before/after, post-freeze MATCH; verification/t3.json
 MODEL_REQUEST_COUNT = 0
 CORRECTS = SCENE3D_FINAL_ACCEPTANCE (G5 host conic transition regression fixed, true sphere reference added under new Owner P3.3; old evidence unchanged)
-CORRECTED_BY = NONE
+CORRECTED_BY = CLAUDE_TO_CODEX_TAKEOVER
 
 ## WAVE_ID = SCENE3D_FINAL_ACCEPTANCE
 

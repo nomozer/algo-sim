@@ -1,0 +1,758 @@
+{
+  "schema": "claude-to-codex-backup/1",
+  "source": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\s3d-hybrid-v2",
+  "head": "3dcd6d9fbdc5627197537dc79c1e609ac3e03bea",
+  "branch": "research/scene3d-to-hybrid-v2-replacement",
+  "created_utc": "2026-10-26T06:38:59.337557+00:00",
+  "archive_sha256": "8db6107d6096e62b374b0c11ee982beade0f0d4da6a2d712206aca2f2401ca01",
+  "excluded": [
+    {
+      "path": "backend/__pycache__",
+      "reason": "reproducible dependency/cache"
+    },
+    {
+      "path": "backend/app/__pycache__",
+      "reason": "reproducible dependency/cache"
+    },
+    {
+      "path": "backend/app/accounts/__pycache__",
+      "reason": "reproducible dependency/cache"
+    },
+    {
+      "path": "backend/app/ai/__pycache__",
+      "reason": "reproducible dependency/cache"
+    },
+    {
+      "path": "backend/app/ingestion/__pycache__",
+      "reason": "reproducible dependency/cache"
+    },
+    {
+      "path": "backend/app/persistence/__pycache__",
+      "reason": "reproducible dependency/cache"
+    },
+    {
+      "path": "backend/app/simulation/__pycache__",
+      "reason": "reproducible dependency/cache"
+    },
+    {
+      "path": "backend/app/simulation/geometry/__pycache__",
+      "reason": "reproducible dependency/cache"
+    },
+    {
+      "path": "backend/app/simulation/geometry_compiler/__pycache__",
+      "reason": "reproducible dependency/cache"
+    },
+    {
+      "path": "backend/app/simulation/geometry_functions/__pycache__",
+      "reason": "reproducible dependency/cache"
+    },
+    {
+      "path": "backend/app/simulation/semantic_program/__pycache__",
+      "reason": "reproducible dependency/cache"
+    },
+    {
+      "path": "backend/scripts/__pycache__",
+      "reason": "reproducible dependency/cache"
+    },
+    {
+      "path": "backend/tests/__pycache__",
+      "reason": "reproducible dependency/cache"
+    },
+    {
+      "path": "backend/tests/geometry/__pycache__",
+      "reason": "reproducible dependency/cache"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/sphere-sample-source-authority/__pycache__",
+      "reason": "reproducible dependency/cache"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/step-math-validation/__pycache__",
+      "reason": "reproducible dependency/cache"
+    },
+    {
+      "path": "frontend/.vite-cache",
+      "reason": "reproducible dependency/cache"
+    },
+    {
+      "path": "frontend/node_modules",
+      "reason": "reproducible dependency/cache"
+    }
+  ],
+  "changed_during_snapshot": [],
+  "writer_status": "Claude process exists; source not modified; continue in separate worktree",
+  "files": [
+    {
+      "path": "backend/algosim.db",
+      "kind": "ignored-preserved",
+      "size": 159744,
+      "sha256": "a46a934463a7d15745ceab20cd4fd9b8b2d103f3e2b6a877cd36fd65072501ce"
+    },
+    {
+      "path": "backend/app/ai/hybrid_offline.py",
+      "kind": "tracked-modification",
+      "size": 9935,
+      "sha256": "70c3da0e0620b01011d82693568751daa5fe266f9ee5ca49d412f23304009252"
+    },
+    {
+      "path": "backend/app/main.py",
+      "kind": "tracked-modification",
+      "size": 99808,
+      "sha256": "707bf74ff894e63d5abadb3b358e0f2a89c3e21a85d131e81569f3fbc17d8305"
+    },
+    {
+      "path": "backend/app/simulation/geometry_functions/engine.py",
+      "kind": "tracked-modification",
+      "size": 124349,
+      "sha256": "ccee4cdcb5d486d00ea2b1a7048625fe0dbf9c3dc3af14b202d8ce5cb73c93cb"
+    },
+    {
+      "path": "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py",
+      "kind": "tracked-modification",
+      "size": 20178,
+      "sha256": "1ee9657ec42e453bf2d197640eae9eca53df7f2ffa80444d8f78e5904096abb6"
+    },
+    {
+      "path": "backend/scripts/export_hybrid_v2_local_corpus.py",
+      "kind": "untracked",
+      "size": 3021,
+      "sha256": "8b30fcd0f70ccf98e003b2c93b7fcf2685acb64b7bf84a46659ee9027b3e98da"
+    },
+    {
+      "path": "backend/tests/geometry/test_structured_geometry_relations.py",
+      "kind": "tracked-modification",
+      "size": 51373,
+      "sha256": "7ca00d9f886fad32e63431e9a6fd248d55a38cd08cc03d3ce8fd73b61f495514"
+    },
+    {
+      "path": "backend/tests/geometry/test_typed_fact_next_v2_angle_bridge.py",
+      "kind": "untracked",
+      "size": 4975,
+      "sha256": "cb51f81ec41c6d5d8338a20a9e250c75d24207cd2d1590b25b58f13d752cc67f"
+    },
+    {
+      "path": "backend/tests/test_hybrid_v2_local_analyze.py",
+      "kind": "untracked",
+      "size": 5956,
+      "sha256": "4cc3e78d474dc6be6b9296324f6ba138fd6511d01d5e779209a1f1cea3599069"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/HYBRID_V2_ARCHITECTURE_DIFF.md",
+      "kind": "untracked",
+      "size": 2942,
+      "sha256": "31d3123bcc14b742343804d9cb38f7d0fed767c7315449ef07523f91fa2f1605"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/local-replay-corpus.json",
+      "kind": "untracked",
+      "size": 155171,
+      "sha256": "e9276e5c5b75ab3a2dc10f54287310b27f713b95c674feea1d2b84d119e1b5b0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/official-inputs-3dcd6d9f-rebinding.json",
+      "kind": "untracked",
+      "size": 5550,
+      "sha256": "6c3703f051b91c1035b9aba70639302961c69720c5fb96c2c97d428f78c16543"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/tools/evaluate_local_route.py",
+      "kind": "untracked",
+      "size": 5240,
+      "sha256": "1f39af66c81523bf7c01b1176127638c7706cbbdeed319e0aaf8dfcc9385d536"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/FIXTURE_MANIFEST.json",
+      "kind": "untracked",
+      "size": 8018,
+      "sha256": "912baa4357933036e493959248efdfa2d29e8f5e2e03c2208a2a64dc7acd799e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/cross_section_assumption.json",
+      "kind": "untracked",
+      "size": 1790,
+      "sha256": "d7710a08c44ec5bf95c6727e3e956c373c92abdc3ed4592fa8ef234c3b1536e4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/cross_section_correct_plane.json",
+      "kind": "untracked",
+      "size": 64570,
+      "sha256": "759cab0efaa7e94ecd12495f273826e587a01c5acb6a31fe069a600079ed5a6d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/cross_section_negative.json",
+      "kind": "untracked",
+      "size": 1768,
+      "sha256": "ceeb6b8ed7258e481db6b4bdac23dd2407078c167a2108bd34ae320aa2141e56"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/cross_section_positive.json",
+      "kind": "untracked",
+      "size": 76037,
+      "sha256": "198da9fcbf60fb4cf1c69a092392665a8b9456d3c7c2c32cc64924cde0b0759f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/cross_section_ungrounded.json",
+      "kind": "untracked",
+      "size": 1592,
+      "sha256": "10cd3f221cfd6bce18d43b54e4e043a73afee8ee8ff51d0bd4e0f7c3fdcc044e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/cross_section_wrong_plane.json",
+      "kind": "untracked",
+      "size": 1622,
+      "sha256": "756fab2e1c247de23cb0d5780fe15c3b2241d3143bb7b0493b89031465f1155c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/cube_assumption.json",
+      "kind": "untracked",
+      "size": 1433,
+      "sha256": "fddf63b332aed7ab4bc4e48b5a85d3c57bea8e42253bd7a3b82eefacb5620f7e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/cube_negative.json",
+      "kind": "untracked",
+      "size": 1157,
+      "sha256": "86160aea9966803128c338cec5ab15b5cf1212c0ecb0058b2bb7b770322b6742"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/cube_positive.json",
+      "kind": "untracked",
+      "size": 71565,
+      "sha256": "6c6ad25280073ac1e8ecaea46b6216c8a14c7bf0766ac1dea966f2db0801457e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/cube_system_cause.json",
+      "kind": "untracked",
+      "size": 1261,
+      "sha256": "d61561618398db6cab82f69cc8a3469ac66c001d7ccdff1bdaa264a1b05bbce5"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/cube_ungrounded.json",
+      "kind": "untracked",
+      "size": 1336,
+      "sha256": "1a69e9ccd0004ec8b6296d7261ed04e3d30a0f763a0fdaa80405a1fa52c6ac24"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/cuboid_assumption.json",
+      "kind": "untracked",
+      "size": 1460,
+      "sha256": "c6930ea72c483c6d74c0f83ae100e2753ebcaf895e8489ac947f6e750bc6fd43"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/cuboid_negative.json",
+      "kind": "untracked",
+      "size": 1179,
+      "sha256": "6eb62f219f4acb5cf7f91b536a69e513ea9174539065bc2b5a4af3224eaf472f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/cuboid_positive.json",
+      "kind": "untracked",
+      "size": 69301,
+      "sha256": "eb7f4a4a11450fe503bd1e1afcbb4daaf3e2392666e53e787ae47975ec39826f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/cuboid_ungrounded.json",
+      "kind": "untracked",
+      "size": 1363,
+      "sha256": "d22bf1f1fe1ae566fb1e82a52e4cd416943a5209e45090dd73150cddf9d25694"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/rectangular_pyramid_assumption.json",
+      "kind": "untracked",
+      "size": 1515,
+      "sha256": "814102b5896c3dabfdc5ae16be7bffc9d92bd053ffddceafc627d13e05f0b0b4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/rectangular_pyramid_negative.json",
+      "kind": "untracked",
+      "size": 1240,
+      "sha256": "dd6cf1bddca350e9e18101a90f91ab689dafc12a0f2570f006df038ea0d1fdcf"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/rectangular_pyramid_positive.json",
+      "kind": "untracked",
+      "size": 50147,
+      "sha256": "e0ed12f916a94192b75244b4016c996817d5b2a196dcf7710c788980d1aba6a5"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/rectangular_pyramid_ungrounded.json",
+      "kind": "untracked",
+      "size": 1418,
+      "sha256": "f2f9676ce3db97ef5bcca8a3892a3d6531c7963a0a7f048f7ac46c2b56595724"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/regular_square_pyramid_assumption.json",
+      "kind": "untracked",
+      "size": 1554,
+      "sha256": "523cd31876b21094211d44088887327b10630b083e352094d949ab883ca3cb8f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/regular_square_pyramid_non_positive.json",
+      "kind": "untracked",
+      "size": 1401,
+      "sha256": "44116e206c171bb16546b99df1706b0a920833e6d224427fc5a20d4d450ef19a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/regular_square_pyramid_positive.json",
+      "kind": "untracked",
+      "size": 63297,
+      "sha256": "4597445b65a960c46771ad473c54eefb2a4668cc3f273a31a3656cb3fcbe92bd"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/regular_square_pyramid_ungrounded.json",
+      "kind": "untracked",
+      "size": 1422,
+      "sha256": "b9eb251aef32ace22ab4b89f9296716bd60df50eae9cb1209e8f36e89e953c8a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/regular_square_pyramid_wrong_centre.json",
+      "kind": "untracked",
+      "size": 1602,
+      "sha256": "f9af687c6bf7fed094efddf94451437ba9aaaa311165de93f50a93b4b8c8bfb8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/regular_tetrahedron_positive.json",
+      "kind": "untracked",
+      "size": 62794,
+      "sha256": "0955d8276b091ea043185230f6cb008b3ce9142e975d5e56a68c94c71dffce3e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/regular_tetrahedron_radical_positive.json",
+      "kind": "untracked",
+      "size": 62466,
+      "sha256": "88123f951fee2387868b30d37df81a50c8bdf31952ce6a2228d306d9375e352a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/regular_triangular_pyramid_assumption.json",
+      "kind": "untracked",
+      "size": 1531,
+      "sha256": "bdd2516cef5e2fd86c6497ed6623f53d8a105f714a98330bfe238e5e13042804"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/regular_triangular_pyramid_non_positive.json",
+      "kind": "untracked",
+      "size": 1373,
+      "sha256": "683ca59ce019e73204813a828527bde5381e55cb8c3e329a9704b89925f72e0e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/regular_triangular_pyramid_positive.json",
+      "kind": "untracked",
+      "size": 64953,
+      "sha256": "c6a4adf2db8a33cd18db298786662f404c184e90cb86785b8f4f5e7ca45ed6bc"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/regular_triangular_pyramid_radical_assumption.json",
+      "kind": "untracked",
+      "size": 1537,
+      "sha256": "c160a53414d0aa15073e93db46ef442f880e3bd5487314b67d4bf190b034ad1a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/regular_triangular_pyramid_radical_non_positive.json",
+      "kind": "untracked",
+      "size": 1375,
+      "sha256": "5f84587044e08f0cbf8e81188e38ff467a6014406d16bc7c02e3e4eaaed2711d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/regular_triangular_pyramid_radical_positive.json",
+      "kind": "untracked",
+      "size": 64876,
+      "sha256": "71e02ad7d79104408e97dd212ee3e68d3afbfb6952e584e5b749e2f5da26446f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/regular_triangular_pyramid_radical_ungrounded.json",
+      "kind": "untracked",
+      "size": 1402,
+      "sha256": "0fe4afdd8adf86b1321fb74112e6203d6533b2ecc6f89efec3b1a951775ffd52"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/regular_triangular_pyramid_radical_wrong_centroid.json",
+      "kind": "untracked",
+      "size": 1601,
+      "sha256": "270a68f11d4d2f359653364d8bd97952f8bea19f98fb6588ab8fb70889bc29e1"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/regular_triangular_pyramid_ungrounded.json",
+      "kind": "untracked",
+      "size": 1396,
+      "sha256": "ab0782fcac0e472b552baeecc182e2e6ea8866aa6f20efe8084221d526272476"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/regular_triangular_pyramid_wrong_centroid.json",
+      "kind": "untracked",
+      "size": 1595,
+      "sha256": "64030a20bbeeeb1f9a55341bd2a470148225a6d6f72a16f67c531c02829fa946"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/triangular_prism_assumption.json",
+      "kind": "untracked",
+      "size": 1497,
+      "sha256": "229e164e471f552c768e74bffe8489d9f8b3b2f2a9d97a39006d953ef807c922"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/triangular_prism_negative.json",
+      "kind": "untracked",
+      "size": 1222,
+      "sha256": "75805b6014c2a210208af4456d1356bea7a60f50b2bef86a2b600415922d15dc"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/triangular_prism_positive.json",
+      "kind": "untracked",
+      "size": 54909,
+      "sha256": "7b4c1c3c532730ce5900d83cb7618dad68d65d25fe7e0ce3801e98a3dd7b2364"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/triangular_prism_ungrounded.json",
+      "kind": "untracked",
+      "size": 1400,
+      "sha256": "e5cfe296e1211614d9908294c2f80f3b367ca0217dbf09b9d140778341314dec"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/triangular_pyramid_assumption.json",
+      "kind": "untracked",
+      "size": 1503,
+      "sha256": "e8769c811bc55d6c70a2317c4c33b426be6415fe78c6cfa9b34c3f08c4f2ea4e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/triangular_pyramid_negative.json",
+      "kind": "untracked",
+      "size": 1228,
+      "sha256": "76d829f02ecfecf4843f52c3b07f37b30e38baf94582274d4b6beb5cca0660d6"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/triangular_pyramid_positive.json",
+      "kind": "untracked",
+      "size": 45460,
+      "sha256": "49e78fd017dffe89d20374e02dfde3c49a87d151c44481233cf55e3eae5a9bcb"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/triangular_pyramid_ungrounded.json",
+      "kind": "untracked",
+      "size": 1406,
+      "sha256": "71e5401eb5477805c891ae3ff553ff03f0e8bc4aa5947474853144b61ee29527"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/w18_midpoint_mismatch.json",
+      "kind": "untracked",
+      "size": 1595,
+      "sha256": "b1df61fac814ab0b7abacca08ecfce2a3ee7e97f0aa53d0c9b4467eee94f0111"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/w18_midpoint_plane_distance.json",
+      "kind": "untracked",
+      "size": 41866,
+      "sha256": "7218b7276e432a9065042d8ac1f12f081d948e46811898a8cf1694e5bc2aa09e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/w18_projection_line.json",
+      "kind": "untracked",
+      "size": 44904,
+      "sha256": "c5aef55771e2b41aa15dd55a774b7d26d6c27c356891e0a0c355e998a0a942a3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/w18_projection_mismatch.json",
+      "kind": "untracked",
+      "size": 1662,
+      "sha256": "e01e85733e3fa70e2d4c81f805f89d01e1e07083aacdefdb13e391dca07cc069"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/fixtures/w18_unverified.json",
+      "kind": "untracked",
+      "size": 1667,
+      "sha256": "e883a93aebd26fa7d4c71b18bb9a143b8388ced73b9a229802a1883b37103a50"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-inputs-3dcd6d9f/suite.json",
+      "kind": "untracked",
+      "size": 37614,
+      "sha256": "78d075c64e277c475fb06eaeecdf8bb15b4974bfd36f027c9ef291463b9e6a99"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/BROWSER_EVIDENCE.json",
+      "kind": "untracked",
+      "size": 3424971,
+      "sha256": "9437eebea4cd6e957d8839ab61c52e361b553a1282ca22e2b964fbe6a84b857c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/cross_section.json",
+      "kind": "untracked",
+      "size": 465093,
+      "sha256": "4bffa38b257668d4bc5bbc6bc7f2b4adc5865ff9e5e44ef9b43fa623df611407"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/cube.json",
+      "kind": "untracked",
+      "size": 379063,
+      "sha256": "d032f62d4eebc55891b1c4a41ac64edd5ef18d886c69f6b538a1450172199289"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/cuboid.json",
+      "kind": "untracked",
+      "size": 381549,
+      "sha256": "50e73ae073d23e638d52501a4eb6c9d3732e4a646d895353210b6d46de8874b5"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/rectangular_pyramid.json",
+      "kind": "untracked",
+      "size": 326015,
+      "sha256": "56807c2ecbdabc26afd6cd22f5665916a6503188549df06df653ab9a7b46a364"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/regular_square_pyramid.json",
+      "kind": "untracked",
+      "size": 388606,
+      "sha256": "a488f9d40f3218745d8c863250d7f4373f68a0b187a0feeba150c051e29eaa78"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/regular_triangular_pyramid.json",
+      "kind": "untracked",
+      "size": 422182,
+      "sha256": "6cd8208a397994dd8c8e031c8efab49d515458c9f09cd469dca1ac382bf59925"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/cross-section/desktop/failure.png",
+      "kind": "untracked",
+      "size": 290183,
+      "sha256": "81f524c0811352c63bd8b4cc31f614892267e6779b81e0e5979695591a1ff825"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/cross-section/desktop/neutral_final.png",
+      "kind": "untracked",
+      "size": 290309,
+      "sha256": "27fab7b14114e04b3d4883e8d181c6c8fae19f30f20b2d92a5be27381b0c3dcb"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/cross-section/desktop/rotated_neutral.png",
+      "kind": "untracked",
+      "size": 256566,
+      "sha256": "53ae0d18168c4fa25c37a4acf31956956876907ad7c935bbf2acd1d0cf07c90e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/cross-section/mobile/failure.png",
+      "kind": "untracked",
+      "size": 282725,
+      "sha256": "051e0b0a4d6e8b5c7205f6d1306a86042c9bfccc4b193546f3b59b8f954c2a7c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/cross-section/mobile/neutral_final.png",
+      "kind": "untracked",
+      "size": 283556,
+      "sha256": "51bd3aa67c8ef9f80b9878799d355b78ff38a8ca4ec4b8d53b6f25bcd283f87a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/cross-section/mobile/rotated_neutral.png",
+      "kind": "untracked",
+      "size": 262537,
+      "sha256": "5aa660d5ccc040a78e7f37a1a593728b7e491eb73ef87ee354a3f85bebfea6d9"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/cube/desktop/neutral_final.png",
+      "kind": "untracked",
+      "size": 299521,
+      "sha256": "7de6c4fdeb4b21f9d1116443723e285f826f0935f82f6f5cf0ac56237c9cf146"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/cube/desktop/rotated_neutral.png",
+      "kind": "untracked",
+      "size": 294167,
+      "sha256": "dfa44c8da38d59a2ac00876c97b842a37a892d3d9107d216a0f6512f0eb3c858"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/cube/mobile/neutral_final.png",
+      "kind": "untracked",
+      "size": 277615,
+      "sha256": "ba12a1f3f13527761f64d0bd4ff22d118e4bdba5b6e23162c5cd5eed431d3342"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/cube/mobile/rotated_neutral.png",
+      "kind": "untracked",
+      "size": 266497,
+      "sha256": "b42d696e6730f35fe03ebe66c030154afbe089c1d2c79396ea879aa8547a0b3a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/cuboid/desktop/neutral_final.png",
+      "kind": "untracked",
+      "size": 308990,
+      "sha256": "8c7c62a2740990d5ebdf80185a4976ad0549983267471f4ecce0db5cd34ef484"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/cuboid/desktop/rotated_neutral.png",
+      "kind": "untracked",
+      "size": 301834,
+      "sha256": "22ad0f56c5e21b9802969780815d509a6c62f5234082f34b9df71e1be10146be"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/cuboid/mobile/neutral_final.png",
+      "kind": "untracked",
+      "size": 277732,
+      "sha256": "170618e932108ef7e1d0e7362c020ea861a6fa14d8e807d5aac581ecc4097c19"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/cuboid/mobile/rotated_neutral.png",
+      "kind": "untracked",
+      "size": 267747,
+      "sha256": "217049c66c4ad44e11fb394c898c7a12a0f17b13d28f7fe80c2358766648facd"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/rectangular-pyramid/desktop/neutral_final.png",
+      "kind": "untracked",
+      "size": 296361,
+      "sha256": "b5eae539ecbf770c414f7660da67d5cd5980bb0b43dbc18a307804386a271289"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/rectangular-pyramid/desktop/rotated_neutral.png",
+      "kind": "untracked",
+      "size": 268020,
+      "sha256": "9a8f607b1f8324fecaf35c6748cc2ee1045d198a0d1afcec81c1053d2f19e230"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/rectangular-pyramid/mobile/neutral_final.png",
+      "kind": "untracked",
+      "size": 283725,
+      "sha256": "b4caa93fd3c7e5533cd00a0b1000fc11eaf67e355197a7fbdc4a0fa81b704609"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/rectangular-pyramid/mobile/rotated_neutral.png",
+      "kind": "untracked",
+      "size": 263051,
+      "sha256": "f99d7b232b7391691a95353ead109dc54774a6a5d50e5d12b56eb8b3cc343c0e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/regular-square-pyramid/desktop/neutral_final.png",
+      "kind": "untracked",
+      "size": 283317,
+      "sha256": "d2bb5aec7996034db11f101735295034dbee056faeb77525050f9066194a87a0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/regular-square-pyramid/desktop/rotated_neutral.png",
+      "kind": "untracked",
+      "size": 292084,
+      "sha256": "46b7796b9222b425294cfdc1d17ebc638911ad261d1b4f49275142e151de5aa4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/regular-square-pyramid/mobile/neutral_final.png",
+      "kind": "untracked",
+      "size": 267630,
+      "sha256": "391888d1be7c99eca8a422bed4a17c9526dcaa0ccd6c80180952b340318365a2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/regular-square-pyramid/mobile/rotated_neutral.png",
+      "kind": "untracked",
+      "size": 255432,
+      "sha256": "99c3233febebb082497aae0eb719e6d9ed96609a85b01e5bfc8034533ba0cc0d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/regular-triangular-pyramid/desktop/neutral_final.png",
+      "kind": "untracked",
+      "size": 319297,
+      "sha256": "5f1475d65e76d3452a32f22132b49cba1011fca15737d0424a5dbc45a8d22937"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/regular-triangular-pyramid/desktop/rotated_neutral.png",
+      "kind": "untracked",
+      "size": 294626,
+      "sha256": "82ec5a89792d20b8053c6332e91ba7bce6917e153c22bddef8c16e746b1b22f3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/regular-triangular-pyramid/mobile/neutral_final.png",
+      "kind": "untracked",
+      "size": 275851,
+      "sha256": "f80db3e9e984da5c1c9d103f491f7857d136838c68f205db88d1b93d02db1cdc"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/regular-triangular-pyramid/mobile/rotated_neutral.png",
+      "kind": "untracked",
+      "size": 273204,
+      "sha256": "75aac83d72e1923c505265cd525da22e5646dd754fc2de416bb00b42283f0e35"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/triangular-prism/desktop/neutral_final.png",
+      "kind": "untracked",
+      "size": 319319,
+      "sha256": "a7c598add82f0fa0580f0724d8bec22ec4fed07f24d61c1b6d7127574df7d32d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/triangular-prism/desktop/rotated_neutral.png",
+      "kind": "untracked",
+      "size": 314668,
+      "sha256": "2dd2769e5d7e45dc73be6c44ef56c291337d83646f4ee7615ce73baa0dc0e9a5"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/triangular-prism/mobile/neutral_final.png",
+      "kind": "untracked",
+      "size": 288698,
+      "sha256": "6ddfdea201590f4a5ba4188c224797aebdcbe303714106b37c10ae14184c6483"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/triangular-prism/mobile/rotated_neutral.png",
+      "kind": "untracked",
+      "size": 288076,
+      "sha256": "7146901dd3db56c47bcc8943f85168f9dcb688831a8dabb0e3be72e544e30874"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/triangular-pyramid/desktop/neutral_final.png",
+      "kind": "untracked",
+      "size": 300882,
+      "sha256": "7ddcddb4030f2baecc2c0e7566d00f6e6bdb58b5f84025795acb0a76019c7ff5"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/triangular-pyramid/desktop/rotated_neutral.png",
+      "kind": "untracked",
+      "size": 281198,
+      "sha256": "fb51142c95228f355d85223a2ee24f161112b1ef03d6c95070d1e879958fec75"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/triangular-pyramid/mobile/neutral_final.png",
+      "kind": "untracked",
+      "size": 296180,
+      "sha256": "cc91f6774d2086dc7e173b297af97a352303f179245f59bc8e77cfa7a19ed5c3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/screenshots/triangular-pyramid/mobile/rotated_neutral.png",
+      "kind": "untracked",
+      "size": 280276,
+      "sha256": "66046a835b466fa105ac454cc0b3c7a1296e8468b74da4b2b36cd125b301ea06"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/triangular_prism.json",
+      "kind": "untracked",
+      "size": 338996,
+      "sha256": "3d1df3b79b74439ed40f27fcecf120c8ef2dbdc8b236aefa8a8ea5327e271e46"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-to-hybrid-v2-replacement/visual/official-run-3dcd6d9f/triangular_pyramid.json",
+      "kind": "untracked",
+      "size": 307717,
+      "sha256": "20c0056097c8a556bd3fa7218a7ce9a7cfe1789d312586e685d61e531baf7db1"
+    },
+    {
+      "path": "frontend/dist/assets/index-C_Oiapyl.css",
+      "kind": "ignored-preserved",
+      "size": 57584,
+      "sha256": "45764872c1c6cc741feeb969e426db9daae2a2e6aa0009cbaebb693eec33b2d1"
+    },
+    {
+      "path": "frontend/dist/assets/index-R_RaMU1C.js",
+      "kind": "ignored-preserved",
+      "size": 1150724,
+      "sha256": "d79a4be020600fad918437469a28340f5cd51e0c48044e4a43d8aa1b6fa207c9"
+    },
+    {
+      "path": "frontend/dist/index.html",
+      "kind": "ignored-preserved",
+      "size": 601,
+      "sha256": "fffaaca726278f26cc77e809844a7fd24fe0e48e22d94b3b19ffb55cf01ade34"
+    },
+    {
+      "path": "frontend/src/components/hybrid-v2-local-analyze.test.ts",
+      "kind": "untracked",
+      "size": 2867,
+      "sha256": "02d70d0c8e45e17ccb4facbabcf07043d48ecc04fb62016d5cd40d022bf9487c"
+    },
+    {
+      "path": "frontend/src/llm/client.ts",
+      "kind": "tracked-modification",
+      "size": 6476,
+      "sha256": "39e9abe0cdbfdd81616b7fc692ff85b714a07fefeaa59cb9f1ff4082d22dce4d"
+    }
+  ]
+}

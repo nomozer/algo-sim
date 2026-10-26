@@ -1,5 +1,8 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+**LOCAL 2026-10-26 — Claude-to-Codex continuation:** `research/scene3d-hybrid-v2-codex`, isolated from preserved Claude worktree at `3dcd6d9f`. Completed angle/local replay slice, operand-bound skew consistency, verbatim Unicode provenance and pre-ingestion offline image guard. Browser actual input UI + HTTP 20/20, authored regression only; local corpus43:22 served/0 wrong/0 false refusal/1 grouping mismatch. Official inherited 7/8, F2 proposal2 PASS/10 UNCERTIFIABLE. New clean freeze/T3 pending; no current full-product PASS claim. LLM_ONLY/cache130/live0/Hybrid NO-GO. `evaluation/geometry/runs/claude-to-codex-takeover/report.md`.
+
+
 **LOCAL 2026-10-26 — Scene3D Codex takeover:** branch `research/scene3d-codex-takeover`, product `511a48c7`, clean detached
 freeze `e1ebc72c` (118 measured files, `ee474c819688426f…`; frontend source tree `102ccee8…`). Claude `08929b89` changes and
 dirty root preserved. True conic transitions, host tangencies, transform invalidation and standalone sphere reference;

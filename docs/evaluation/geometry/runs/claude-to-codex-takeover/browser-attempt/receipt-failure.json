@@ -1,0 +1,8 @@
+{
+  "status": "FAIL",
+  "stage": "harness_oracle_field",
+  "exit_code": 1,
+  "error": "fixture used expected_square; reused harness expects oracle_value_squared; corrected in a new fixture file and fresh run",
+  "input_sha256": "ec79c5cfda6f78221029046ed723c86435b9740f57a0f8a7c578f3c9d90b272d",
+  "provider_requests": 0
+}

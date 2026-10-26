@@ -94,6 +94,26 @@ def _distance_question(g) -> dict[str, Any]:
     raise TuChoi("INVALID_MATH_GOAL", f"{g.goal_id}: mục tiêu distance thiếu toán hạng hợp lệ", (g.goal_id,))
 
 
+def _angle_question(g) -> dict[str, Any]:
+    """`/2` angle target → the planner's existing angle question (answer: cos² — exact). Keys are those `/3` reads
+    (`{line, plane}`, `{line1, line2}`) plus `{plane1, plane2}` for the dihedral question the planner already has. Same
+    arity rule as distance: a line is exactly two distinct labels, a plane exactly three — never truncated."""
+    t = g.target
+
+    def pts(key: str, n: int) -> list[str] | None:
+        v = t.get(key)
+        refs = _refs(v) if isinstance(v, (list, tuple)) and len(v) == n else None
+        return refs if refs is not None and len(set(refs)) == n else None
+
+    if set(t) == {"line", "plane"} and (ln := pts("line", 2)) and (pl := pts("plane", 3)):
+        return {"quantity": "angle", "points_a": ln, "points_b": pl}
+    if set(t) == {"line1", "line2"} and (l1 := pts("line1", 2)) and (l2 := pts("line2", 2)):
+        return {"quantity": "angle", "points_a": l1, "points_b": l2}
+    if set(t) == {"plane1", "plane2"} and (p1 := pts("plane1", 3)) and (p2 := pts("plane2", 3)):
+        return {"quantity": "angle", "points_a": p1, "points_b": p2}
+    raise TuChoi("INVALID_MATH_GOAL", f"{g.goal_id}: mục tiêu angle thiếu toán hạng hợp lệ", (g.goal_id,))
+
+
 def _mat_fact(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2, solids: dict[str, Any],
               asked: list[str]) -> dict[str, Any]:
     """The section fact's PLANE (shared by `/1` and `/2`)."""
@@ -296,6 +316,8 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
                                                                          "points_a", "plane_name") if k in f}})
         elif v2 and g.goal_type == "distance":
             facts.append({**q, **_distance_question(g)})
+        elif v2 and g.goal_type == "angle":
+            facts.append({**q, **_angle_question(g)})
         else:
             raise TuChoi("BRIDGE_UNSUPPORTED_MEASUREMENT", f"{g.goal_id}: mục tiêu {g.kind}/{g.goal_type} chưa có ánh xạ",
                          (g.goal_id,))

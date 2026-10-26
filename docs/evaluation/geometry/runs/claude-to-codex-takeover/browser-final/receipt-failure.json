@@ -1,0 +1,9 @@
+{
+  "status": "FAIL",
+  "exit_code": 1,
+  "stage": "real_http_auth_concurrency",
+  "observed": "17 completed rows printed PASS before a mobile refusal request returned HTTP 500; no complete browser certification",
+  "backend_error": "sqlite3.OperationalError: database is locked during auth_sessions last_seen_at update",
+  "next_run": "wait for real auth bootstrap network idle before submit; do not stub API or change auth product code",
+  "provider_requests": 0
+}

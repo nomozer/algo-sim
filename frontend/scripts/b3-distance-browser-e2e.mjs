@@ -16,6 +16,7 @@ import { join } from "node:path";
 
 const arg = (k) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : undefined; };
 const URL_ = arg("--url"), OUT = arg("--out"), FX = arg("--fixtures");
+const ANALYZE = process.argv.includes("--analyze"); // real input UI -> HTTP -> /4 consumer, using a local replay server
 if (!URL_ || !OUT || !FX || existsSync(OUT)) throw Error("--url, --fixtures and a fresh --out are required");
 mkdirSync(OUT, { recursive: true });
 const bytes = readFileSync(FX), data = JSON.parse(bytes);
@@ -36,10 +37,12 @@ const browser = await chromium.launch({ channel: "chrome", headless: true, args:
 const rows = [], errors = [], forbidden = [];
 try {
   for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) {
-    for (const fx of data.fixtures) {
+    for (const fixture of data.fixtures) {
+      let fx = fixture;
       const ctx = await browser.newContext({ viewport });
       await ctx.route("**/*", (r) => {
         const u = new URL(r.request().url());
+        if (ANALYZE && u.origin === URL_) return r.continue();
         if (u.origin === URL_ && u.pathname === "/api/health") return r.fulfill({ json: { status: "ok", allow_live_ai: false } });
         if (u.origin === URL_ && u.pathname.startsWith("/api/")) return r.fulfill({ json: null });
         if (u.origin === URL_) return r.continue();
@@ -52,7 +55,31 @@ try {
       await page.goto(URL_);
       const row = { id: fx.id, viewport: viewport.width, expected: fx.expected, checks: {} };
       rows.push(row);
-      const loaded = await page.evaluate(async (fx) => {
+      let loaded;
+      if (ANALYZE) {
+        await page.waitForLoadState("networkidle"); // let the real auth bootstrap finish before submitting
+        await page.getByRole("textbox", { name: "Đề bài hình học không gian", exact: true }).fill(fixture.problem_text);
+        const pending = page.waitForResponse((r) => new URL(r.url()).pathname === "/api/analyze" && r.request().method() === "POST");
+        await page.getByRole("button", { name: "Phân tích đề bằng AI", exact: true }).click();
+        const response = await pending;
+        const actual = await response.json();
+        row.checks.http_contract = response.ok() && response.headers()["cache-control"] === "no-store"
+          && actual.schema_version === "hybrid-route-d-simulation/4";
+        row.checks.expected_disposition = actual.route_d?.status === (fixture.expected === "REFUSE" ? "REFUSED" : "SERVED")
+          && (fixture.expected !== "REFUSE" || actual.route_d?.refusal?.code === fixture.expected_code);
+        fx = { ...actual, id: fixture.id, problem_text: fixture.problem_text,
+          expected: fixture.expected, oracle_value_squared: fixture.oracle_value_squared };
+        await page.waitForFunction(async (status) => {
+          const { useAppStore } = await import("/src/state/store.ts");
+          const state = useAppStore.getState();
+          return !state.analyzing && (status === "ok" ? !!state.active : !state.active);
+        }, actual.envelope?.status);
+        loaded = await page.evaluate(async () => {
+          const { useAppStore } = await import("/src/state/store.ts");
+          const state = useAppStore.getState();
+          return { ok: !state.analysisError, status: state.active ? "ok" : "unsupported", active: !!state.active };
+        });
+      } else loaded = await page.evaluate(async (fx) => {
         const a = await import("/src/simulations/domains/geometry/hybrid-preview-adapter.ts");
         const { useAppStore } = await import("/src/state/store.ts");
         const r = a.docPhanHoiHybrid(fx);
@@ -149,9 +176,11 @@ try {
       await ctx.close();
     }
   }
+} catch (error) {
+  errors.push({ stage: "browser_run", message: error.message });
 } finally { await browser.close(); }
 const status = rows.every((r) => r.pass) && !errors.length && !forbidden.length ? "B3_DISTANCE_BROWSER_PASS" : "FAIL";
-writeFileSync(join(OUT, "receipt.json"), JSON.stringify({ status, fixtures_sha256: sha(bytes), harness_sha256: sha(readFileSync(import.meta.filename)),
+writeFileSync(join(OUT, "receipt.json"), JSON.stringify({ status, via_analyze: ANALYZE, fixtures_sha256: sha(bytes), harness_sha256: sha(readFileSync(import.meta.filename)),
   classification: data.classification, provider_calls: 0, browser: "Chrome headless / SwiftShader", url: URL_,
   human_visual_review: "NOT_APPROVED", rows, errors, forbidden }, null, 2) + "\n");
 console.log(JSON.stringify({ status, rows: rows.length, errors: errors.length, forbidden: forbidden.length }));

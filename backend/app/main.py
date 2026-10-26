@@ -14,7 +14,7 @@ import os
 import hmac
 import ipaddress
 from datetime import datetime, timezone
-from typing import Literal
+from typing import Any, Literal
 
 from fastapi import Cookie, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -1054,8 +1054,61 @@ async def hybrid_preview(request: Request):
     return JSONResponse(content=result.model_dump(mode="json"), headers=headers)
 
 
+def _hybrid_v2_local(request: Request) -> str | None:
+    """Migration Stage 2 (run `scene3d-to-hybrid-v2-replacement`): đường Hybrid V2 BẬT TAY ở máy cục bộ.
+
+    Chỉ khi máy chủ đặt `HYBRID_V2_LOCAL=offline-replay` VÀ khách là loopback ⇒ trả đường dẫn kho phát lại
+    (`HYBRID_V2_LOCAL_REPLAY_CORPUS`). Ngoài ra `None`: tuyến mặc định `LLM_ONLY` chạy NGUYÊN như cũ — công tắc này không
+    đổi chính sách mặc định, không đổi cache (lượt Hybrid không đọc, không ghi cache), không bao giờ là đường lùi."""
+    if os.getenv("HYBRID_V2_LOCAL") != "offline-replay":
+        return None
+    try:
+        local = request.client is not None and ipaddress.ip_address(request.client.host).is_loopback
+    except ValueError:
+        local = False
+    return os.getenv("HYBRID_V2_LOCAL_REPLAY_CORPUS", "") if local else None
+
+
+def _ngoai_pham_vi(text: str) -> dict | None:
+    """Phạm vi sản phẩm: hình học không gian, fail closed (xem chú thích ở `analyze`). `None` = trong phạm vi."""
+    from app.simulation.error_codes import ErrorCode
+    from app.simulation.semantic_program.domain_profile import (
+        DOMAIN_HINH_HOC as _MIEN_HH,
+        detect_domain as _do_mien,
+    )
+
+    if _do_mien(text) == _MIEN_HH:
+        return None
+    return {
+        "status": "unsupported",
+        "reason": "Hệ thống này mô phỏng HÌNH HỌC KHÔNG GIAN (Toán 11–12). "
+                  "Đề bạn gửi không thuộc phạm vi ấy.",
+        "failure_category": "out_of_scope",
+        "error_code": ErrorCode.GATE_OUT_OF_SCOPE.value,
+        "stage_reached": "domain",
+    }
+
+
+async def _analyze_hybrid_v2_local(text: str, corpus_path: str, algosim_session: str | None) -> Any:
+    """Đường Hybrid V2 offline (Stage 2): phản hồi /4 nguyên vẹn (`hybrid-route-d-simulation/4`), `no-store`."""
+    ngoai = _ngoai_pham_vi(text)
+    if ngoai is not None:
+        return JSONResponse(content=ngoai, headers={"Cache-Control": "no-store"})
+    # Declared Hybrid V2 execution boundary, reached only after the opt-in and loopback gates.
+    from starlette.concurrency import run_in_threadpool
+
+    from app.ai.hybrid_offline import run_local_replay
+
+    result = await run_in_threadpool(run_local_replay, text, corpus_path)
+    if result.response["route_d"]["status"] == "SERVED":
+        with SessionLocal() as session:
+            _consume_guest_trial(session, algosim_session)
+            session.commit()
+    return JSONResponse(content=result.response, headers={"Cache-Control": "no-store"})
+
+
 @app.post("/api/analyze")
-async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(default=None)):
+async def analyze(body: AnalyzeBody, request: Request, algosim_session: str | None = Cookie(default=None)):
     """M18 — CỔNG LƯỢT DÙNG THỬ ĐỨNG TRƯỚC MỌI THỨ KHÁC.
 
     Khách được chạy MỘT mô phỏng thật (cùng pipeline này, không phải renderer
@@ -1073,6 +1126,10 @@ async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(defaul
 
     # Bước 1: chuẩn hóa MỌI loại input về text (M4) — sau bước này, text/docx/
     # code/image đi CHUNG một đường qua pipeline, không loại nào bypass.
+    kho_hybrid = _hybrid_v2_local(request)
+    if kho_hybrid is not None and body.input.type == "image":
+        return JSONResponse(status_code=400, headers={"Cache-Control": "no-store"}, content={
+            "error": "Chế độ phát lại cục bộ chỉ đọc đề văn bản. Hãy nhập nội dung đề để dựng hình."})
     try:
         text = await ingest_to_text(
             body.input.type,
@@ -1092,6 +1149,11 @@ async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(defaul
             status_code=400,
             content={"error": "Nội dung đề quá ngắn — hãy nhập/chọn đầy đủ bài toán."},
         )
+
+    # Stage 2 Hybrid V2 — chỉ khi bật tay ở máy cục bộ; TRƯỚC cache để một envelope `LLM_ONLY` đã cache không bao giờ
+    # được trả dưới danh nghĩa Hybrid (đó chính là lùi về đường cũ trong im lặng).
+    if kho_hybrid is not None:
+        return await _analyze_hybrid_v2_local(text, kho_hybrid, algosim_session)
 
     # Bước 2 — TẦNG 1 reuse (M7.13B): exact validated cache, version-aware.
     # Hit = 0 call LLM (tiết kiệm tối thiểu analyze + classify + simulate = 3).
@@ -1127,21 +1189,9 @@ async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(defaul
     #
     # `detect_domain` tất định, chạy trên văn bản, **0 lượt gọi model** — nên
     # lời từ chối này không tốn gì.
-    from app.simulation.error_codes import ErrorCode
-    from app.simulation.semantic_program.domain_profile import (
-        DOMAIN_HINH_HOC as _MIEN_HH,
-        detect_domain as _do_mien,
-    )
-
-    if _do_mien(text) != _MIEN_HH:
-        return {
-            "status": "unsupported",
-            "reason": "Hệ thống này mô phỏng HÌNH HỌC KHÔNG GIAN (Toán 11–12). "
-                      "Đề bạn gửi không thuộc phạm vi ấy.",
-            "failure_category": "out_of_scope",
-            "error_code": ErrorCode.GATE_OUT_OF_SCOPE.value,
-            "stage_reached": "domain",
-        }
+    ngoai = _ngoai_pham_vi(text)
+    if ngoai is not None:
+        return ngoai
 
     # Bước 3: pipeline analyze → classify → (pattern reuse | simulate) → validate.
     # TẦNG 2 (pattern reuse) bật qua store inject — pipeline tự giới hạn nó

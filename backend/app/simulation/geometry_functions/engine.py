@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import json
 import re
+import unicodedata
 from dataclasses import dataclass, field
 from fractions import Fraction
 from itertools import combinations
@@ -36,7 +37,7 @@ from app.simulation.geometry.predicates import parallel_planes, point_on_line, p
 from app.simulation.semantic_program import ir_builders as P
 
 from .registry import MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_so, kiem_nguon, nhan_cua_de, nhom_mat_nguon
-from .registry import DINH_CAT_CANH
+from .registry import DINH_CAT_CANH, _cum_hoi
 
 #: /6 (run `goal-directed-function-composition`): `ask_angle_lines` IR + independent line–line Gram verifier.
 #: /7 (run `geometry-capability-expansion`): ratio points, right-angle-chain base, prism lateral vector, ⊥-line plane check.
@@ -45,7 +46,7 @@ from .registry import DINH_CAT_CANH
 #: /10 (run `typedfactnext-planner-bridge`): section vertices verified on their edge segment (0 < t ≤ 1, `kiem_dinh_cat`).
 #: /11 (run `hybrid-contract-v2`, owner D5/D6): section closure certificate (`chung_chi_khep_kin` = exact `cross_section`),
 #: declared-boundary verification; IR canonicalization limited to engine-owned names.
-ENGINE_VERSION = "geometry-function-engine/11"
+ENGINE_VERSION = "geometry-function-engine/12"
 Z = Fraction(0)
 V3 = tuple[Fraction, Fraction, Fraction]
 
@@ -1742,6 +1743,17 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
                 raise TuChoi(e.code, str(e)) from None
             raise TuChoi("ENGINE_EXECUTION_FAILED", f"{type(e).__name__}: {e}") from None
         fm = ket.final_memory
+        for c in dung.of("ask_distance_lines"):
+            # B3 gap (review I-2): the question CALLS the two lines skew ("chéo nhau"). Coplanar lines (they meet or are
+            # parallel — triple product 0, exact and frame-independent) contradict the problem: refuse, never serve the
+            # distance of a configuration the problem says it is not.
+            d1, d2 = fm.get(f"dt1_{c.id}"), fm.get(f"dt2_{c.id}")
+            noi_cheo = any(re.search(r"chéo\s+nhau", unicodedata.normalize("NFC", q[a:b]).lower())
+                           for q in c.quotes for a, b in _cum_hoi(c, q, 0, len(q), calls))
+            if noi_cheo and d1 is not None and d2 is not None \
+                    and (d2.point - d1.point).dot(d1.direction.cross(d2.direction)) == 0:
+                raise TuChoi("SKEW_CLAIM_CONTRADICTED", f"{c.id}: đề gọi hai đường là chéo nhau nhưng chúng đồng phẳng "
+                             "(cắt nhau hoặc song song) — không trả khoảng cách cho một cấu hình đề nói là khác", (c.id,))
         for c in dung.of("ask_volume"):
             expected = dung.volume_certificates.get(c.args.solid)
             if expected is not None and _binh_phuong(fm.get(hoi[c.id])) != expected:

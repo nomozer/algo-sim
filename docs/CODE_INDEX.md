@@ -1,5 +1,11 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Claude-to-Codex Hybrid V2 continuation (local, 2026-10-26)
+
+`geometry_functions/typed_fact_next_bridge.py::_angle_question` maps V2 line/plane/dihedral angle goals onto existing planner operations. `engine.py` (/12) uses Registry `_cum_hoi` spans and an exact scalar triple product for declared-skew consistency. `adapter4_route.py::build_adapter4_response` preserves verbatim planner quotes after canonical equivalence with verified calls and strict source checks.
+`hybrid_offline.py::run_local_replay`, `main.py::_hybrid_v2_local/_analyze_hybrid_v2_local` and `llm/client.ts::docPhanHoiPhanTich` connect loopback-only offline /api/analyze to the existing /4 reader/store, before cache; images refuse before ingestion. Default LLM_ONLY/cache130 retained. `b3-distance-browser-e2e.mjs --analyze` reuses the real UI/HTTP route, with auth network-idle and durable failure receipts. No new product module/dependency. Report: `docs/evaluation/geometry/runs/claude-to-codex-takeover/report.md`.
+
+
 ## Scene3D Codex takeover (local candidate, 2026-10-26)
 
 `scene3d-edge-visibility.ts::createWorldPointOcclusionTest` compiles solid triangles lazily for true conic sampling;

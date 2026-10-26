@@ -1,0 +1,65 @@
+{
+  "classification": "AUTHORED_REGRESSION_BROWSER_NOT_HOLDOUT_NOT_PROVIDER",
+  "fixtures": [
+    {
+      "id": "right-prism-distance",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A' đến mặt phẳng (ABC).",
+      "expected": "SERVE",
+      "oracle_value_squared": "144"
+    },
+    {
+      "id": "oblique-prism-distance",
+      "problem_text": "Cho lăng trụ ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. Gọi H là trung điểm của BC. Hình chiếu vuông góc của A' lên (ABC) là H. AA' = 13. Tính khoảng cách từ A' đến mặt phẳng (ABC).",
+      "expected": "SERVE",
+      "oracle_value_squared": "144"
+    },
+    {
+      "id": "skew-lines-distance",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách giữa hai đường thẳng chéo nhau AA' và BC.",
+      "expected": "SERVE",
+      "oracle_value_squared": "576/25"
+    },
+    {
+      "id": "line-plane-angle",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính góc giữa đường thẳng A'C và mặt phẳng (ABC).",
+      "expected": "SERVE",
+      "oracle_value_squared": "16/169"
+    },
+    {
+      "id": "line-line-angle",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính góc giữa đường thẳng AA' và đường thẳng BC.",
+      "expected": "SERVE",
+      "oracle_value_squared": "0"
+    },
+    {
+      "id": "dihedral-angle",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính góc giữa mặt phẳng (A'BC) và mặt phẳng (ABC).",
+      "expected": "SERVE",
+      "oracle_value_squared": "16/841"
+    },
+    {
+      "id": "nfd-skew-distance",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách giữa hai đường thẳng chéo nhau AA' và BC.",
+      "expected": "SERVE",
+      "oracle_value_squared": "576/25"
+    },
+    {
+      "id": "false-skew-claim",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách giữa hai đường thẳng chéo nhau AB và AC.",
+      "expected": "REFUSE",
+      "expected_code": "SKEW_CLAIM_CONTRADICTED"
+    },
+    {
+      "id": "four-point-plane-refusal",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A' đến mặt phẳng (ABCB').",
+      "expected": "REFUSE",
+      "expected_code": "INVALID_MATH_GOAL"
+    },
+    {
+      "id": "unrecorded-text",
+      "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A' đến mặt phẳng (ABC). Tính thêm thể tích khối lăng trụ.",
+      "expected": "REFUSE",
+      "expected_code": "NO_RECORDED_EXTRACTION"
+    }
+  ]
+}

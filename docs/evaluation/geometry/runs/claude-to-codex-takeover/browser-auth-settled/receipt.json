@@ -1,0 +1,765 @@
+{
+  "status": "B3_DISTANCE_BROWSER_PASS",
+  "via_analyze": true,
+  "fixtures_sha256": "43d28ee65693692c82c6fd09a278db490f1bdfaf3fbf02ce94890305e7cb4a0f",
+  "harness_sha256": "4599880bf1589aab31081ee15687e40ded1bfa12f25669002a0b5adb190ee4f7",
+  "classification": "AUTHORED_REGRESSION_BROWSER_NOT_HOLDOUT_NOT_PROVIDER",
+  "provider_calls": 0,
+  "browser": "Chrome headless / SwiftShader",
+  "url": "http://127.0.0.1:3193",
+  "human_visual_review": "NOT_APPROVED",
+  "rows": [
+    {
+      "id": "right-prism-distance",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": true,
+        "tied_segments": [
+          "canh_ben_A_A_prime"
+        ]
+      },
+      "shown": "d(A′,(ABC))=12",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 1
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "c6e6c0ec503255820fc88975cdcc2f4227f76a5b53b265272dd915349bace152",
+        "mode_b": "bcd0d584bf324182deeae5816d8e2e35cde5c4ea6bbf9ade1eff003451f18195"
+      },
+      "pass": true
+    },
+    {
+      "id": "oblique-prism-distance",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [],
+        "on_answer": {
+          "from": "A_prime",
+          "foot": [
+            "1/2",
+            "1/2",
+            "0"
+          ],
+          "on": "mp_q"
+        },
+        "rendered_ids": [
+          "kq_q"
+        ],
+        "provided_for_answer": true,
+        "tied_segments": []
+      },
+      "shown": "d(A′,(ABC))=12",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 1
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "4b3b46b9b6ac46dc2269e7094e21cdca7a2dfabfe719ed3e21f312d112fb8d0d",
+        "mode_b": "b36497d6c7ea4a0a164b8ae0108db32b7970aca254a1cf3289c289e61cd0aa30"
+      },
+      "pass": true
+    },
+    {
+      "id": "skew-lines-distance",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(AA′,BC)=24/5",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "30b33aea220b8a3085f3bad2baa4ef11950f8cee7cd1b0ee2056dc1a566ec99d",
+        "mode_b": "5ccbdc04953ab148bca9bb8681b971113a701cb3634dbb41ca031f7c2c7145d9"
+      },
+      "pass": true
+    },
+    {
+      "id": "line-plane-angle",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "cos²(A′C,(ABC))=4/13",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "70d54f3bad83a39cf2ac8bc92b8fcf2895a69c488ff0a273d796519a2eb723a0",
+        "mode_b": "66d462eea3ae257c4fba25dc9220596c843a03e78e66ca68d58272228c0aea0e"
+      },
+      "pass": true
+    },
+    {
+      "id": "line-line-angle",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "cos²(AA′,BC)=0",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "30b33aea220b8a3085f3bad2baa4ef11950f8cee7cd1b0ee2056dc1a566ec99d",
+        "mode_b": "3cf21da13fd75e42204a5da7b515e204d821c8ad32d478552f7b912d82add532"
+      },
+      "pass": true
+    },
+    {
+      "id": "dihedral-angle",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "cos²((A′BC),(ABC))=4/29",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "fecbeac55e0ee077074d0c916f8bba39d201f05be07d6a9c62eaef83b34b07c9",
+        "mode_b": "8d6837972c0eb4ee27d3a2a1052ed83abaeafe70d43ebd89c028f96f5d044425"
+      },
+      "pass": true
+    },
+    {
+      "id": "nfd-skew-distance",
+      "viewport": 1440,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(AA′,BC)=24/5",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "30b33aea220b8a3085f3bad2baa4ef11950f8cee7cd1b0ee2056dc1a566ec99d",
+        "mode_b": "5ccbdc04953ab148bca9bb8681b971113a701cb3634dbb41ca031f7c2c7145d9"
+      },
+      "pass": true
+    },
+    {
+      "id": "false-skew-claim",
+      "viewport": 1440,
+      "expected": "REFUSE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "no_scene": true,
+        "reason_shown": true,
+        "code_hidden": true,
+        "no_answer": true
+      },
+      "pass": true
+    },
+    {
+      "id": "four-point-plane-refusal",
+      "viewport": 1440,
+      "expected": "REFUSE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "no_scene": true,
+        "reason_shown": true,
+        "code_hidden": true,
+        "no_answer": true
+      },
+      "pass": true
+    },
+    {
+      "id": "unrecorded-text",
+      "viewport": 1440,
+      "expected": "REFUSE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "no_scene": true,
+        "reason_shown": true,
+        "code_hidden": true,
+        "no_answer": true
+      },
+      "pass": true
+    },
+    {
+      "id": "right-prism-distance",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": true,
+        "tied_segments": [
+          "canh_ben_A_A_prime"
+        ]
+      },
+      "shown": "d(A′,(ABC))=12",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 1
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "e8118d400d3ed805dc5ecb3028625d94bfcd751cfbd9f3c6d36af41b58688a82",
+        "mode_b": "70d938a0c7b6f2a77743e071656373f38482b8e1d4b7095eff4898ddfc60a63b"
+      },
+      "pass": true
+    },
+    {
+      "id": "oblique-prism-distance",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [],
+        "on_answer": {
+          "from": "A_prime",
+          "foot": [
+            "1/2",
+            "1/2",
+            "0"
+          ],
+          "on": "mp_q"
+        },
+        "rendered_ids": [
+          "kq_q"
+        ],
+        "provided_for_answer": true,
+        "tied_segments": []
+      },
+      "shown": "d(A′,(ABC))=12",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 1
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "ee4a98653893de4cedffc3be6500baf01f0401a121c5f1df6049488ca6ba5f09",
+        "mode_b": "a778530a6b9aecbb11331c50d47ead403feee30614c419418b12bd50c44de9bf"
+      },
+      "pass": true
+    },
+    {
+      "id": "skew-lines-distance",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(AA′,BC)=24/5",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "9b87489dc84755e8c87d6ae223a26c58f00b5f0e1742c99fc5f515e7b3921f0e",
+        "mode_b": "a78b90232aa57416b181d9e168ae82c42e834ffbd3b58dff898730288e75cea9"
+      },
+      "pass": true
+    },
+    {
+      "id": "line-plane-angle",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "cos²(A′C,(ABC))=4/13",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "a3473af848a6cbc70d1d0d8747f273155f4a57a9ac35d3593a08983676cb2468",
+        "mode_b": "933bca89082ea7d572ebbece061b6e032e3ba8ec4fcb4650babd8536308a0c2c"
+      },
+      "pass": true
+    },
+    {
+      "id": "line-line-angle",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "cos²(AA′,BC)=0",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "9b87489dc84755e8c87d6ae223a26c58f00b5f0e1742c99fc5f515e7b3921f0e",
+        "mode_b": "597e26fcf0aae322de656b46c3bb5faae5ad7ded145e582805a30531b39b9d06"
+      },
+      "pass": true
+    },
+    {
+      "id": "dihedral-angle",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "cos²((A′BC),(ABC))=4/29",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "ad0f3a0c7f321f28cb081c81558c08904474e8c89a62de2e3822949e8d9aba36",
+        "mode_b": "ca3052ff9b0f33df85253c75982223357e90a552a6f81c6796caa8a9ba8c037e"
+      },
+      "pass": true
+    },
+    {
+      "id": "nfd-skew-distance",
+      "viewport": 390,
+      "expected": "SERVE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "mode_a_hidden": true,
+        "mode_b_once": true,
+        "value_matches_oracle": true,
+        "engine_binding": true,
+        "witness_rendered": true,
+        "inspector_no_new_math": true,
+        "no_internal_name": true,
+        "no_overflow": true
+      },
+      "witness": {
+        "segments": [
+          "canh_ben_A_A_prime",
+          "canh_ben_B_B_prime",
+          "canh_ben_C_C_prime"
+        ],
+        "on_answer": null,
+        "rendered_ids": [],
+        "provided_for_answer": false,
+        "tied_segments": []
+      },
+      "shown": "d(AA′,BC)=24/5",
+      "places_after_opening": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "places_after_selecting": {
+        "analysis": 1,
+        "inspector": 0,
+        "canvas_label": 0
+      },
+      "inspector_numbers": [],
+      "images": {
+        "mode_a": "9b87489dc84755e8c87d6ae223a26c58f00b5f0e1742c99fc5f515e7b3921f0e",
+        "mode_b": "a78b90232aa57416b181d9e168ae82c42e834ffbd3b58dff898730288e75cea9"
+      },
+      "pass": true
+    },
+    {
+      "id": "false-skew-claim",
+      "viewport": 390,
+      "expected": "REFUSE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "no_scene": true,
+        "reason_shown": true,
+        "code_hidden": true,
+        "no_answer": true
+      },
+      "pass": true
+    },
+    {
+      "id": "four-point-plane-refusal",
+      "viewport": 390,
+      "expected": "REFUSE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "no_scene": true,
+        "reason_shown": true,
+        "code_hidden": true,
+        "no_answer": true
+      },
+      "pass": true
+    },
+    {
+      "id": "unrecorded-text",
+      "viewport": 390,
+      "expected": "REFUSE",
+      "checks": {
+        "http_contract": true,
+        "expected_disposition": true,
+        "consumed": true,
+        "no_scene": true,
+        "reason_shown": true,
+        "code_hidden": true,
+        "no_answer": true
+      },
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "forbidden": []
+}

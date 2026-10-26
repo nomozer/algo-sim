@@ -692,7 +692,12 @@ _CONG_COMPILER = {("ai/pipeline.py", "app.simulation.geometry_compiler.routing")
 # Explicit lazy D boundaries: metadata, guarded preview, diagnostics and internal offline /4 validation.
 _CONG_PREVIEW = {("ai/pipeline.py", "app.ai.hybrid_preview"), ("main.py", "app.ai.hybrid_preview"),
                  ("runtime_identity.py", "app.ai.hybrid_preview"),
-                 ("ai/adapter4_route.py", "app.ai.hybrid_preview"), ("ai/hybrid_offline.py", "app.ai.hybrid_preview")}
+                 ("ai/adapter4_route.py", "app.ai.hybrid_preview"), ("ai/hybrid_offline.py", "app.ai.hybrid_preview"),
+                 # Migration Stage 2 (run `scene3d-to-hybrid-v2-replacement`): `/api/analyze` reaches Hybrid V2 only in
+                 # `_analyze_hybrid_v2_local`, behind `HYBRID_V2_LOCAL=offline-replay` + a loopback client — same lazy rule.
+                 ("main.py", "app.ai.hybrid_offline")}
+#: The gate modules the declared edges above lead to: every import of one of them must stay inside a function body.
+_MODULE_CONG = ("app.ai.hybrid_preview", "app.ai.hybrid_offline")
 
 _NAP_DONG_TEN = {"__import__", "exec", "eval", "compile", "__builtins__", "__loader__"}
 _NAP_DONG_THUOC_TINH = {"import_module", "__import__", "spec_from_file_location", "spec_from_loader",
@@ -834,8 +839,10 @@ def test_Y_bao_dong_tinh_compiler_chi_qua_cong_routing_va_khong_cham_route_D():
     # The preview boundary must really reach D; excluding it must not hide a missing runtime implementation.
     assert "app.ai.fact_extraction" in _bao_dong_import(goc, "app.ai.hybrid_preview")
     preview_edges = {(p.relative_to(goc).as_posix(), m) for p in goc.rglob("*.py")
-                     for m in _nhap_tu(p) if m == "app.ai.hybrid_preview"}
+                     for m in _nhap_tu(p) if m in _MODULE_CONG}
     assert preview_edges == _CONG_PREVIEW
+    # Stage 2: the Hybrid V2 gate must really reach D, so skipping its edge cannot hide a missing implementation.
+    assert "app.simulation.geometry_functions" in _bao_dong_import(goc, "app.ai.hybrid_offline")
     # The closure SKIPS these declared edges, so they must stay lazy: an import inside a function body that only the
     # gated code path runs. A module-level import would load Route D at app import and hide behind the skip (review).
     # Every spelling is resolved like `_nhap_tu` does (`import a.b`, `from a import b`, relative `from .x import y`) —
@@ -853,12 +860,12 @@ def test_Y_bao_dong_tinh_compiler_chi_qua_cong_routing_va_khong_cham_route_D():
                 dich = {mod} | {f"{mod}.{a.name}" for a in n.names}
             else:
                 continue
-            if not any(d.startswith("app.ai.hybrid_preview") for d in dich):
+            if not any(d.startswith(m) for d in dich for m in _MODULE_CONG):
                 continue
             tren = cha.get(n)
             while tren is not None and not isinstance(tren, (ast.FunctionDef, ast.AsyncFunctionDef)):
                 tren = cha.get(tren)
-            assert tren is not None, f"{tep}:{n.lineno} imports app.ai.hybrid_preview at module level"
+            assert tren is not None, f"{tep}:{n.lineno} imports a declared gate module at module level"
     # Tệp sản phẩm nào nhập gói compiler (AST, cả import trong hàm), nhập cái gì: đúng cổng đã khai, không hơn.
     def la_module(m: str) -> bool:
         p = goc.parent.joinpath(*m.split("."))

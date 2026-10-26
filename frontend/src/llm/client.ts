@@ -1,4 +1,5 @@
 import type { AnalysisUnsupported } from "../core/types";
+import { HYBRID_SIMULATION_SCHEMA, docPhanHoiHybrid } from "../simulations/domains/geometry/hybrid-preview-adapter";
 import type { SimulationEnvelope } from "../simulations/types";
 import type { InputPayload } from "./input";
 
@@ -64,7 +65,29 @@ export async function fetchHealth(): Promise<ServerHealth | null> {
 export async function analyzeViaServer(
   input: InputPayload,
 ): Promise<SimulationEnvelope | AnalysisUnsupported> {
-  return postJson("/api/analyze", { input });
+  return docPhanHoiPhanTich(await postJson<unknown>("/api/analyze", { input }));
+}
+
+/**
+ * Migration Stage 2 (run `scene3d-to-hybrid-v2-replacement`): khi máy chủ bật tay tuyến Hybrid V2 cục bộ, `/api/analyze`
+ * trả phản hồi Adapter /4 (`hybrid-route-d-simulation/4`). Nó đi qua ĐÚNG bộ đọc đã kiểm của tuyến ấy
+ * (`docPhanHoiHybrid`): phục vụ ⇒ envelope mang view đã kiểm; từ chối ⇒ envelope từ chối nguyên vẹn. Phản hồi /4 không
+ * qua được bộ đọc ⇒ một lời từ chối của HỆ (không phải lỗi đề), không bao giờ là cảnh. Phản hồi tuyến mặc định đi nguyên.
+ */
+export function docPhanHoiPhanTich(raw: unknown): SimulationEnvelope | AnalysisUnsupported {
+  if (typeof raw !== "object" || raw === null || (raw as { schema_version?: unknown }).schema_version !== HYBRID_SIMULATION_SCHEMA) {
+    return raw as SimulationEnvelope | AnalysisUnsupported;
+  }
+  const r = docPhanHoiHybrid(raw);
+  if (!r.ok) {
+    return {
+      status: "unsupported",
+      reason: "Kết quả của tuyến Hybrid không qua được bước kiểm tra nên không được hiển thị.",
+      failure_category: "verification_gap",
+      error_code: "HYBRID_RESPONSE_INVALID",
+    };
+  }
+  return r.envelope as unknown as SimulationEnvelope | AnalysisUnsupported;
 }
 
 /* ── Đọc ảnh đề bài — TẦNG A (PHOTO_PROBLEM_TO_SCENE_END_TO_END) ─────────────

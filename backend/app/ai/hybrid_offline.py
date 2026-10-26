@@ -1,13 +1,19 @@
-"""Internal opt-in Hybrid integration. No HTTP route, cache, live transport or automatic fallback.
+"""Internal opt-in Hybrid integration. No cache, live transport or automatic fallback.
 
 The source-only injected extractor is trusted local code, not client-supplied code. The deadline/cancellation policy
 is cooperative between synchronous stages; a future live transport needs its own bounded I/O timeout.
+
+Migration Stage 2 (run `scene3d-to-hybrid-v2-replacement`): `run_local_replay` is reachable from `/api/analyze` only
+when the server sets `HYBRID_V2_LOCAL=offline-replay` and the client is loopback (`main._hybrid_v2_local`). The default
+route stays `LLM_ONLY`; nothing is cached; a Hybrid refusal is returned as a refusal, never re-run on `LLM_ONLY`.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
 from hashlib import sha256
+import json
 import math
+from pathlib import Path
 from time import perf_counter
 from typing import Callable
 from uuid import uuid4
@@ -17,7 +23,7 @@ from app.ai.adapter4_route import (
     build_adapter4_response, run_typed_fact_next_v2_route,
 )
 from app.ai.pipeline import RoutePolicy, route_policy_snapshot
-from app.ai.typed_fact_next_extraction import Extractor, extract_typed_fact_next_v2
+from app.ai.typed_fact_next_extraction import Extractor, ReplayExtractor, extract_typed_fact_next_v2
 from app.ingestion.input import MAX_TEXT_CHARS
 from app.simulation.geometry_functions import KetQuaTuyen
 from app.simulation.geometry_functions.typed_fact_next import TYPED_FACT_NEXT_V2_SCHEMA_VERSION
@@ -149,3 +155,23 @@ def run_hybrid_offline(problem_text: str, extractor: Extractor, *, policy: Route
                        failure_kind='TECHNICAL_FAILURE' if technical else classify_refusal(result.code or '').group)
     stopped = interruption('adapter4')
     return stopped if stopped is not None else outcome
+
+
+#: Schema of the authored replay corpus file `run_local_replay` reads (`scripts/export_hybrid_v2_local_corpus.py`).
+LOCAL_REPLAY_SCHEMA = 'hybrid-v2-local-replay-corpus/1'
+
+
+def run_local_replay(problem_text: str, corpus_path: str) -> HybridOfflineResult:
+    """Stage 2 opt-in local route: verbatim source → recorded `typed-fact-next/2` (authored replay corpus, keyed by the
+    exact problem text) → the same validation, Source Gate, planner, exact engine and /4 wrapper as `run_hybrid_offline`.
+
+    A text the corpus does not hold is refused `NO_RECORDED_EXTRACTION` — the offline mode has no language
+    understanding, so it never guesses. An unreadable or foreign corpus file is an empty corpus, not an error page."""
+    try:
+        data = json.loads(Path(corpus_path).read_text(encoding='utf-8'))
+        outputs = data['outputs'] if data.get('schema') == LOCAL_REPLAY_SCHEMA and isinstance(data['outputs'], dict) \
+            else {}
+    except (OSError, ValueError, TypeError, KeyError, AttributeError):
+        outputs = {}
+    policy = hybrid_offline_policy({'HYBRID_ROUTE_D_PREVIEW': '1'})
+    return run_hybrid_offline(problem_text, ReplayExtractor(outputs), policy=policy)

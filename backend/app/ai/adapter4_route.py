@@ -94,6 +94,7 @@ def build_adapter4_response(result: KetQuaTuyen, problem_text: str) -> dict[str,
     )
     from app.simulation.geometry_functions.typed_fact_next import TYPED_FACT_NEXT_V2_SCHEMA_VERSION
     from app.simulation.geometry_functions.engine import BAC_DAI_LUONG, _hien_thi_ky_hieu, dinh_dang
+    from app.simulation.geometry_functions.registry import chuan_hoa
     from app.simulation.geometry_functions.planner import PLANNER_VERSION
 
     identity = {"schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION, "adapter_version": ADAPTER_V4_VERSION,
@@ -120,9 +121,18 @@ def build_adapter4_response(result: KetQuaTuyen, problem_text: str) -> dict[str,
         # Substring quotes alone allow appending an unanswered question to an already served result.
         if (not problem_text or result.ai.get("source_sha256") != sha256(problem_text.encode("utf-8")).hexdigest()):
             raise PreviewInvalid("SOURCE_OBJECT_MISMATCH")
-        if not result.calls or any(
+        # The gate uses canonical quotes; provenance keeps the planner's verbatim spelling only when it is
+        # canonically identical to the verified quote. Raw substring and source-identity checks still apply.
+        provenance = deepcopy(result.calls)
+        sources = {c["id"]: c["source"] for c in (result.planner or {}).get("calls", [])}
+        for c in provenance:
+            source = sources.get(c["id"], {})
+            quotes = ([source["quote"]] if source.get("quote") else []) + list(source.get("quotes") or [])
+            if quotes and [chuan_hoa(q) for q in quotes] == c.get("quotes"):
+                c["quotes"] = quotes
+        if not provenance or any(
                 not c.get("quotes") or any(not isinstance(q, str) or not q or q not in problem_text for q in c["quotes"])
-                for c in result.calls):
+                for c in provenance):
             raise PreviewInvalid("QUOTE_NOT_IN_SOURCE")
         planner = deepcopy(result.planner)
         if planner.get("version") != PLANNER_VERSION or route.get("planner", {}).get("version") != PLANNER_VERSION:
@@ -190,7 +200,7 @@ def build_adapter4_response(result: KetQuaTuyen, problem_text: str) -> dict[str,
         texts += [s.get("learner_text", "") for s in scene["formation"]["steps"]]
         if any(_noi_chung_minh(t) for t in texts):
             raise PreviewInvalid("PREVIEW_PROOF_TEXT_INVALID")
-        route.update(planner=planner, source_provenance=deepcopy(result.calls), construction_trace=deepcopy(result.trace))
+        route.update(planner=planner, source_provenance=provenance, construction_trace=deepcopy(result.trace))
         return {"schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION, "envelope": envelope, "route_d": route}
     except PreviewInvalid as exc:
         return refuse(str(exc), adapter=True)
