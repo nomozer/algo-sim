@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-v2-backend-generalization — named-plane witness/identity (b11349ae) and V2 point-line distance (eca4b44b)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-v2-after-main-integration/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "ecae59e688d2ae1e3262d0f44da2acf5bbe1677c28c7a141165fcfb11257016b",
+  "current_product_commit": "eca4b44be1fc1b4de45a87eb9931995ea37cb8aa",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "engine /13: question planes measured through the first non-collinear triple of the whole label group (chon_ba_mat), every named label checked coplanar, IR plane carries the full written name; planner /14: >3-label question planes handed to the engine with their call id (KeHoach.named_planes); typed_fact_next_bridge: /2 {point, line} distance goals reach the existing point-line decomposition. Route B/D only (geometry_functions); /api/analyze (LLM_ONLY) does not import them.",
+  "cache_version": 130,
+  "cache_version_hien_tai": 130,
+  "cache_decision": "NO_BUMP 130: no prompt, schema, grammar card, capability table or routing policy changed; the default pipeline does not reach geometry_functions; the Hybrid V2 local route answers Cache-Control no-store and route D preview refuses the product cache (main._policy_identity), so no stored refusal can be replayed. Route identity changes are carried by planner /14 and engine /13 (IDENTITY_DELTAS).",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}
