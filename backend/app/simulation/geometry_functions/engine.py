@@ -46,6 +46,8 @@ from .registry import DINH_CAT_CANH, _cum_hoi
 #: /10 (run `typedfactnext-planner-bridge`): section vertices verified on their edge segment (0 < t ≤ 1, `kiem_dinh_cat`).
 #: /11 (run `hybrid-contract-v2`, owner D5/D6): section closure certificate (`chung_chi_khep_kin` = exact `cross_section`),
 #: declared-boundary verification; IR canonicalization limited to engine-owned names.
+#: /12 (run `claude-to-codex-takeover`): `ask_distance_lines` refuses `SKEW_CLAIM_CONTRADICTED` when the question calls the
+#: two lines "chéo nhau" but they are coplanar (NFC-normalised quote).
 ENGINE_VERSION = "geometry-function-engine/12"
 Z = Fraction(0)
 V3 = tuple[Fraction, Fraction, Fraction]

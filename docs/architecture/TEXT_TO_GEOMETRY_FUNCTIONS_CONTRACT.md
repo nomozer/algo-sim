@@ -1,4 +1,4 @@
-# Contract: Text-to-Geometry Functions & Kiến trúc Hybrid (`geometry-functions/13`, planner `geometry-fact-planner/13`, engine `geometry-function-engine/11`)
+# Contract: Text-to-Geometry Functions & Kiến trúc Hybrid (`geometry-functions/13`, planner `geometry-fact-planner/13`, engine `geometry-function-engine/12`)
 
 Contract **đang hiệu lực** của nền tảng hàm hình học và kiến trúc mục tiêu **Hybrid**
 ([`TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md`](TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md),
@@ -21,7 +21,7 @@ Sửa contract ⇒ wave mới + test. Bản v1 bất biến: `../evaluation/geom
 >   `hybrid-semantic-extraction/3`, hoặc `TypedFactNext` ở `typed_fact_next.py` `typed-fact-next/1`), đi qua cổng kiểm
 >   chứng nguồn **Semantic Grounding**, sau đó **Goal-Directed Construction Planner** tất định (`planner.py`,
 >   `geometry-fact-planner/13`) tự chọn và phối hợp các **Geometry Functions** (`registry.py`, `geometry-functions/13`)
->   → **Compiler / Construction IR** → **Engine / Kernel** (`engine.py`, `geometry-function-engine/11`;
+>   → **Compiler / Construction IR** → **Engine / Kernel** (`engine.py`, `geometry-function-engine/12`;
 >   `adapter3_simulation.py`, `hybrid-simulation-adapter/3`) → **Scene3D**.
 > - **Tuyến đối chứng trực tiếp (Baseline A):** AI gọi trực tiếp hàm dựng hình (`function_calling.py` →
 >   `function_route.py`) chỉ giữ làm baseline đối chứng thực nghiệm.
@@ -35,7 +35,7 @@ Sửa contract ⇒ wave mới + test. Bản v1 bất biến: `../evaluation/geom
    ──► Goal-Directed Construction Planner (tất định tự phối hợp lời gọi Geometry Functions)
    ──► lược đồ đóng · cổng nguồn 6 tầng (`kiem_nguon`)    backend/app/simulation/geometry_functions/registry.py (`geometry-functions/13`)
    ──► Engine: chuẩn hoá có tiền điều kiện · phụ thuộc · bố cục khung affine + Gram · kiểm MỌI dữ kiện
-                                                          backend/app/simulation/geometry_functions/engine.py (`geometry-function-engine/11`)
+                                                          backend/app/simulation/geometry_functions/engine.py (`geometry-function-engine/12`)
    ──► IR SemanticProgram ──► interpreter + kernel dưới metric.using(G)
    ──► Scene3D + chart_metric (+ length_unit)             backend/app/ai/function_route.py · backend/app/ai/adapter3_simulation.py (`hybrid-simulation-adapter/3`)
 
@@ -56,7 +56,7 @@ engine tự tính thứ tự dựng, không tin khai báo ấy.
 
 Danh sách đồng bộ trực tiếp theo mã nguồn tại `backend/app/simulation/geometry_functions/registry.py`
 (`REGISTRY_VERSION = "geometry-functions/13"`, `PLANNER_VERSION = "geometry-fact-planner/13"`,
-`ENGINE_VERSION = "geometry-function-engine/11"`):
+`ENGINE_VERSION = "geometry-function-engine/12"`):
 - Tổng số hàm đăng ký trong `REGISTRY`: **35 hàm** (`11` hàm `fact`, `12` hàm `construct`, `11` hàm `ask`, `1` hàm `escape`).
 - Trong đó **31 hàm** có `provider_offered = True` (30 hàm trong `PROVIDER_FUNCTIONS` cho bề mặt function-calling đối chứng +
   `translate_point` có `auxiliary_only = True` chỉ dành cho Planner), và **4 hàm** có `provider_offered = False`
@@ -144,7 +144,7 @@ của một hàm. Từ khoá định nghĩa của hàm là điều kiện **cầ
    - Dữ kiện cùng câu đã xác minh vẫn phục vụ, kể cả "Tính thể tích …, biết SA = 3." và cạnh AB = 2 của đáy vuông cạnh 2.
    Engine tiếp tục sở hữu dựng hình và kiểm ràng buộc. Hai route (Baseline A và **Hybrid**) dùng chung cổng; `LLM_ONLY` mặc định không đổi.
 
-## 4. Engine (`geometry-function-engine/11`)
+## 4. Engine (`geometry-function-engine/12`)
 
 - **Độ dài** (`do_dai`): `segment_length`, lớp `equal_length`, hình đã dựng, cạnh khác của đa giác đều; hai nguồn lệch ⇒
   `INCONSISTENT_FACTS` nêu đủ lời gọi.
