@@ -1,0 +1,27 @@
+{
+  "fixture_schema": "generic-tier-a-fixture/1",
+  "case_id": "regular_triangular_pyramid_wrong_centroid",
+  "problem_text": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 6. Gọi G là trọng tâm tam giác ABC, biết SG = 4. Tính thể tích khối chóp S.ABC.",
+  "source": "exact_dimensions_corpus_frozen_program_through_production_route",
+  "product_commit_sha": "b101dc790b66c7e3a29e0861d7fe331255a5d066",
+  "product_tree_sha": "3850e787d86f81befee5c4e8dfda210366916007b3bd61ce254a672d3f00744b",
+  "application_llm_calls": 0,
+  "envelope": {
+    "status": "unsupported",
+    "reason": "Phép dựng điểm không dùng đúng thực thể đề nêu.",
+    "failure_category": "geometry_generation_failed",
+    "error_code": "input_not_grounded",
+    "stage_reached": "construction_binding",
+    "representation_plan": {},
+    "analysis": {},
+    "reason_code": "CONSTRUCTION_NOT_TEXT_BOUND",
+    "reason_subjects": [
+      "G là trọng tâm của tam giác ABC",
+      "G là trung điểm của BC"
+    ],
+    "refusal_cause": "CONSTRUCTION",
+    "learner_reason": "Đề bài nêu \"G là trọng tâm của tam giác ABC\", nhưng phép dựng của AlgoSim lại dựng \"G là trung điểm của BC\". AlgoSim dừng lại thay vì đưa ra một đáp số tính trên một hình khác với hình đề nói. Đây là lỗi dựng hình của hệ, đề không cần sửa — em có thể gửi lại để hệ dựng lại."
+  },
+  "refusal_cause": "CONSTRUCTION",
+  "source_reason_code": "CONSTRUCTION_NOT_TEXT_BOUND"
+}
