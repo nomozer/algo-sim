@@ -203,7 +203,7 @@ def _vai_mat_cat(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -> None:
             duong_ky = ky(d.get("perpendicular_to") or ())
             for f_lbl, z_lbl in zip(d.get("feet") or (), d.get("anchors") or ()):
                 z_ky = ky([z_lbl])
-                mo_ta_f = f"hình chiếu vuông góc phụ của {z_ky} lên {duong_ky}"
+                mo_ta_f = f"chân đường vuông góc phụ từ {z_ky} lên {duong_ky}"
                 doi_phu(ir_name(f_lbl), mo_ta_f[:1].upper() + mo_ta_f[1:], f"Dựng {mo_ta_f}.")
             for x_lbl, z_lbl in zip(d.get("labels") or (), d.get("anchors") or ()):
                 z_ky = ky([z_lbl])
