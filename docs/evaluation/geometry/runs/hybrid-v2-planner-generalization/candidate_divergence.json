@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-v2-planner-generalization — prism perpendicular-plane anchors (planner /16) and section-reference solid binding with bare solid words (registry /15), product de7b2813",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-v2-nl-certificates-e2e/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "316f66cc8141c30951cf662ec04a318980a6040c67d6a9dd932baf7314e8b857",
+  "current_product_commit": "de7b28134aedbd1e1c87dab7567653670afe69a7",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "planner /16: MAT_VUONG_DUONG chooses its two anchors from the solid seen as two layers (pyramid base/apex, prism base/top) instead of refusing every non-pyramid; pyramid anchors unchanged. registry /15: section phrases accept bare 'chóp' / 'lăng trụ' / 'tứ diện' (_TU_KHOI, as _MO_KHOI_DUNG already did) and every section reference bound to a derived plane must name the cut solid (_cum_goi_khoi), closing a fail-open present at 386d2149. Engine, bridge, adapter and provider surfaces unchanged. Route B/D only (geometry_functions); /api/analyze (LLM_ONLY) does not import them.",
+  "cache_version": 130,
+  "cache_version_hien_tai": 130,
+  "cache_decision": "NO_BUMP 130: no prompt, schema, grammar card, capability table or routing policy changed; the default pipeline does not reach geometry_functions; the Hybrid V2 local route answers Cache-Control no-store and route D preview refuses the product cache. Route identity changes are carried by registry /15 and planner /16 (IDENTITY_DELTAS in export_hybrid_preview_fixtures.py). Surface fingerprints pinned by test_version_constants_surface_fingerprints_and_historical_receipt_preservation are unchanged.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}
