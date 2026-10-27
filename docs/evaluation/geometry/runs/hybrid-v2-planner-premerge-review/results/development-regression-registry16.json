@@ -1,0 +1,160 @@
+{
+ "classification": "AUTHORED_DEVELOPMENT_NOT_HOLDOUT",
+ "provider_calls": 0,
+ "aggregate": {
+  "registry": "geometry-functions/16",
+  "planner": "geometry-fact-planner/16",
+  "positives_served": "10/10",
+  "oracle_agreement": "10/10",
+  "negatives_refused_with_registered_code": "8/8",
+  "wrong_served": 0
+ },
+ "rows": [
+  {
+   "id": "right-base",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "area_squared": "2304",
+   "oracle_area_squared": "2304",
+   "oracle_agree": true
+  },
+  {
+   "id": "right-top",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "area_squared": "2304",
+   "oracle_area_squared": "2304",
+   "oracle_agree": true
+  },
+  {
+   "id": "right-lateral",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "area_squared": "576",
+   "oracle_area_squared": "576",
+   "oracle_agree": true
+  },
+  {
+   "id": "right-diagonal",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "area_squared": "976",
+   "oracle_area_squared": "976",
+   "oracle_agree": true
+  },
+  {
+   "id": "cuboid-base",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "area_squared": "9216",
+   "oracle_area_squared": "9216",
+   "oracle_agree": true
+  },
+  {
+   "id": "cube-diagonal",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "area_squared": "432",
+   "oracle_area_squared": "432",
+   "oracle_agree": true
+  },
+  {
+   "id": "oblique-base",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "area_squared": "2304",
+   "oracle_area_squared": "2304",
+   "oracle_agree": true
+  },
+  {
+   "id": "oblique-diagonal",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "area_squared": "2737152/4489",
+   "oracle_area_squared": "2737152/4489",
+   "oracle_agree": true
+  },
+  {
+   "id": "renamed-changed-reversed",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "area_squared": "72",
+   "oracle_area_squared": "72",
+   "oracle_agree": true
+  },
+  {
+   "id": "symbolic-top",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "area_squared": "2304",
+   "oracle_area_squared": "2304",
+   "oracle_agree": true
+  },
+  {
+   "id": "missing-dimension",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "MISSING_DIMENSION",
+   "reason_ok": true
+  },
+  {
+   "id": "conflicting-length",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "INCONSISTENT_FACTS",
+   "reason_ok": true
+  },
+  {
+   "id": "constructed-line-endpoint",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "reason_ok": true
+  },
+  {
+   "id": "wrong-source-line",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason_ok": true
+  },
+  {
+   "id": "unmentioned-line-endpoint",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "reason_ok": true
+  },
+  {
+   "id": "plane-perpendicular-plane",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "reason_ok": true
+  },
+  {
+   "id": "boundary-face",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "reason_ok": true
+  },
+  {
+   "id": "vertex-touch",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "reason_ok": true
+  }
+ ]
+}

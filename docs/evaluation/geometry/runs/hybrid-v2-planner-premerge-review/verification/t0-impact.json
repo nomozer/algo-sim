@@ -1,0 +1,124 @@
+{
+  "status": "IMPACT_GATE",
+  "changed": [
+    "backend/app/simulation/geometry_functions/registry.py",
+    "backend/scripts/export_hybrid_preview_fixtures.py",
+    "backend/tests/geometry/test_hybrid_ask_operand_binding.py",
+    "backend/tests/geometry/test_hybrid_backend_integration.py",
+    "backend/tests/geometry/test_solid_kind_source_binding.py",
+    "backend/tests/geometry/test_wave3a_adapter3_integration.py",
+    "backend/tests/geometry/test_wave3a_volume_reasoning.py",
+    "docs/CODE_INDEX.md",
+    "docs/evaluation/geometry/runs/hybrid-v2-planner-premerge-review/candidate_divergence.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-planner-premerge-review/plan.md",
+    "docs/evaluation/geometry/runs/hybrid-v2-planner-premerge-review/results/green-after.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-planner-premerge-review/results/red-before.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-planner-premerge-review/tools/adversarial.py",
+    "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json"
+  ],
+  "patterns": [
+    "src/code-index-sync.test.ts"
+  ],
+  "pytest": true,
+  "docsOnly": false,
+  "reasons": [
+    {
+      "file": "backend/app/simulation/geometry_functions/registry.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/scripts/export_hybrid_preview_fixtures.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/tests/geometry/test_hybrid_ask_operand_binding.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/tests/geometry/test_hybrid_backend_integration.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/tests/geometry/test_solid_kind_source_binding.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/tests/geometry/test_wave3a_adapter3_integration.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/tests/geometry/test_wave3a_volume_reasoning.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "docs/CODE_INDEX.md",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-planner-premerge-review/candidate_divergence.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-planner-premerge-review/plan.md",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-planner-premerge-review/results/green-after.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-planner-premerge-review/results/red-before.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-planner-premerge-review/tools/adversarial.py",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    }
+  ]
+}
