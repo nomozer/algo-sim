@@ -57,6 +57,10 @@ def test_outside_the_gate_a_specific_kind_cannot_be_verified():
     from app.simulation.geometry_functions import registry as RG
     assert RG._loai_cum_dung("lăng trụ", "ABC.A'B'C'", ())            # generic: structure suffices
     assert not RG._loai_cum_dung("hình lập phương", "ABCD.A'B'C'D'", ())   # specific: no validated calls -> refuse
+    # the gate's calls do not outlive the gate run (independent review MINOR 1)
+    assert A._run(A.ROW["cube-diagonal"])["status"] == "SERVED"
+    assert RG._GOI_NGUON.get() == ()
+    assert not RG._loai_cum_dung("hình lập phương", "ABCD.A'B'C'D'")
 
 
 @pytest.mark.xfail(strict=True, reason="OWNER_DECISION: a correct solid symbol outranks a contradicting kind word "

@@ -1959,11 +1959,20 @@ def _kiem_mat_chung(de: str, calls: tuple[LoiGoi, ...]) -> None:
 
 def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...] = (),
                read_quotes: tuple[str, ...] = ()) -> dict[str, str | None]:
+    """See `_kiem_nguon`; `_GOI_NGUON` holds THIS run's calls and is reset afterwards (run `hybrid-v2-planner-premerge-review`)."""
+    token = _GOI_NGUON.set(tuple(calls))
+    try:
+        return _kiem_nguon(calls, text, auxiliary, read_quotes)
+    finally:
+        _GOI_NGUON.reset(token)
+
+
+def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...] = (),
+                read_quotes: tuple[str, ...] = ()) -> dict[str, str | None]:
     """Cổng nguồn tất định — xem docstring module. Ném `TuChoi` ở lời gọi đầu tiên hỏng (theo thứ tự id).
     `auxiliary`: điểm phụ planner nhánh B khai (`AUXILIARY_RULES`); nhánh A không truyền ⇒ mọi nhãn phải có trong đề.
     Returns the name the source gave each bound derived plane (first construct id → "P", or None when unnamed)."""
     _KHOI_MO_TA.set({})
-    _GOI_NGUON.set(tuple(calls))
     de = chuan_hoa(text)
     nhan = nhan_cua_de(de)
     don_vi_de = _don_vi_met_cua_de(de)
@@ -2785,7 +2794,7 @@ def _loai_cum_dung(cum: str, solid: str, calls: tuple | None = None) -> bool:
         return False
     if "đều" in km:
         if tu == "tứ diện":
-            return any(d == "tứ diện" and "đều" in x for d, x in dn)
+            return k.fn == "regular_pyramid" and any(d == "tứ diện" and "đều" in x for d, x in dn)
         if "regular_polygon" not in hinh or (tu == "chóp" and k.fn != "regular_pyramid") or (lang_tru and not right):
             return False
     return True
