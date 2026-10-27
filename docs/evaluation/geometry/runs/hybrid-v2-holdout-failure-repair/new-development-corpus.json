@@ -1,0 +1,3087 @@
+{
+  "schema_version": "holdout-failure-repair-dev-corpus/1",
+  "cases": [
+    {
+      "id": "D001",
+      "defect_family": "M1",
+      "expected_status": "SERVED",
+      "description": "M1: Greek plane_name α on through_point_parallel_two_lines with semicolon premise",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B với AB = 3, BC = 4; cạnh SA vuông góc với mặt phẳng (ABC) và SA = 5. Gọi M là trung điểm của AB. Mặt phẳng (α) qua M, song song với SA và BC. Tính diện tích thiết diện của hình chóp cắt bởi (α).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "hình chóp S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": ["A", "B", "C"],
+              "right_at": "B"
+            },
+            "quote": "đáy ABC là tam giác vuông tại B"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "3"
+            },
+            "quote": "AB = 3"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["B", "C"],
+              "value": "4"
+            },
+            "quote": "BC = 4"
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": ["S", "A"],
+              "plane": ["A", "B", "C"]
+            },
+            "quote": "cạnh SA vuông góc với mặt phẳng (ABC)"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["S", "A"],
+              "value": "5"
+            },
+            "quote": "SA = 5"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["A", "B"]
+            },
+            "quote": "M là trung điểm của AB"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_two_lines",
+            "quote": "Mặt phẳng (α) qua M, song song với SA và BC",
+            "through_point": "M",
+            "parallel_line_a": ["S", "A"],
+            "parallel_line_b": ["B", "C"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "hình chóp S.ABC",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích thiết diện của hình chóp cắt bởi (α)",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "D002",
+      "defect_family": "M1",
+      "expected_status": "SERVED",
+      "description": "M1: Greek plane_name β with inline section definition, semicolon, and thiết diện đó",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông cân tại B với AB = BC = 6 và AA' = 4. Gọi M là trung điểm của A'B'. Xác định thiết diện của lăng trụ cắt bởi mặt phẳng (β) đi qua M và song song với hai đường thẳng BC', AC; tính diện tích thiết diện đó.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "lăng trụ đứng ABC.A'B'C'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": ["A", "B", "C"],
+              "top": ["A'", "B'", "C'"]
+            },
+            "quote": "lăng trụ đứng ABC.A'B'C'"
+          },
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": ["A", "B", "C"],
+              "right_at": "B"
+            },
+            "quote": "đáy ABC là tam giác vuông cân tại B"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "6"
+            },
+            "quote": "AB = BC = 6"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["B", "C"],
+              "value": "6"
+            },
+            "quote": "AB = BC = 6"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "A'"],
+              "value": "4"
+            },
+            "quote": "AA' = 4"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["A'", "B'"]
+            },
+            "quote": "M là trung điểm của A'B'"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "β",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_two_lines",
+            "quote": "mặt phẳng (β) đi qua M và song song với hai đường thẳng BC', AC",
+            "through_point": "M",
+            "parallel_line_a": ["B", "C'"],
+            "parallel_line_b": ["A", "C"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_plane_section",
+            "quote": "Xác định thiết diện của lăng trụ cắt bởi mặt phẳng (β)",
+            "target_solid_id": "s1",
+            "target_section_id": "sec1",
+            "style_role": "section"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "tính diện tích thiết diện đó",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "D003",
+      "defect_family": "M1",
+      "expected_status": "SERVED",
+      "description": "M1: Latin plane_name P on through_point_parallel_two_lines with các đường thẳng",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 6, AD = 4, AA' = 4. Gọi M là trung điểm của AA'. Mặt phẳng (P) đi qua M, song song với các đường thẳng BD và AB'. Tính diện tích thiết diện của hình hộp chữ nhật cắt bởi (P).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABCD.A'B'C'D'",
+            "quote": "hình hộp chữ nhật ABCD.A'B'C'D'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": ["A", "B", "C", "D"],
+              "top": ["A'", "B'", "C'", "D'"]
+            },
+            "quote": "hình hộp chữ nhật ABCD.A'B'C'D'"
+          },
+          {
+            "kind": "rectangle",
+            "args": {
+              "vertices": ["A", "B", "C", "D"]
+            },
+            "quote": "hình hộp chữ nhật ABCD.A'B'C'D'"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "6"
+            },
+            "quote": "AB = 6"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "D"],
+              "value": "4"
+            },
+            "quote": "AD = 4"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "A'"],
+              "value": "4"
+            },
+            "quote": "AA' = 4"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["A", "A'"]
+            },
+            "quote": "M là trung điểm của AA'"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "P",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_two_lines",
+            "quote": "Mặt phẳng (P) đi qua M, song song với các đường thẳng BD và AB'",
+            "through_point": "M",
+            "parallel_line_a": ["B", "D"],
+            "parallel_line_b": ["A", "B'"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "hình hộp chữ nhật ABCD.A'B'C'D'",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích thiết diện của hình hộp chữ nhật cắt bởi (P)",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "D004",
+      "defect_family": "M2",
+      "expected_status": "SERVED",
+      "description": "M2: Omitted solid on height with plural quantifier các cạnh đáy",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp tứ giác đều S.ABCD có các cạnh đáy bằng 8, chiều cao của hình chóp bằng 3. Gọi N là trung điểm của SD. Xác định thiết diện của hình chóp với mặt phẳng (P) đi qua N và song song với (SAB).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABCD",
+            "quote": "hình chóp tứ giác đều S.ABCD"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "regular_pyramid",
+            "args": {
+              "apex": "S",
+              "base": ["A", "B", "C", "D"]
+            },
+            "quote": "hình chóp tứ giác đều S.ABCD"
+          },
+          {
+            "kind": "base_is_square",
+            "args": {
+              "vertices": ["A", "B", "C", "D"],
+              "side": "8"
+            },
+            "quote": "các cạnh đáy bằng 8"
+          },
+          {
+            "kind": "height",
+            "args": {
+              "value": "3"
+            },
+            "quote": "chiều cao của hình chóp bằng 3"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "N",
+              "segment": ["S", "D"]
+            },
+            "quote": "N là trung điểm của SD"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "P",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_plane",
+            "quote": "mặt phẳng (P) đi qua N và song song với (SAB)",
+            "through_point": "N",
+            "parallel_plane": ["S", "A", "B"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_plane_section",
+            "quote": "Xác định thiết diện của hình chóp với mặt phẳng (P)",
+            "target_solid_id": "s1",
+            "target_section_id": "sec1",
+            "style_role": "section"
+          }
+        ],
+        "math_goals": []
+      }
+    },
+    {
+      "id": "D005",
+      "defect_family": "M2",
+      "expected_status": "SERVED",
+      "description": "M2: Omitted solid on height for regular triangular pyramid + section area",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 6 và chiều cao bằng 4. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với mặt phẳng (ABC). Tính diện tích thiết diện của hình chóp khi cắt bởi mặt phẳng (α).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "hình chóp tam giác đều S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "regular_pyramid",
+            "args": {
+              "apex": "S",
+              "base": ["A", "B", "C"]
+            },
+            "quote": "hình chóp tam giác đều S.ABC"
+          },
+          {
+            "kind": "base_is_equilateral_triangle",
+            "args": {
+              "vertices": ["A", "B", "C"],
+              "side": "6"
+            },
+            "quote": "cạnh đáy bằng 6"
+          },
+          {
+            "kind": "height",
+            "args": {
+              "value": "4"
+            },
+            "quote": "chiều cao bằng 4"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["S", "A"]
+            },
+            "quote": "M là trung điểm của SA"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_plane",
+            "quote": "Mặt phẳng (α) qua M và song song với mặt phẳng (ABC)",
+            "through_point": "M",
+            "parallel_plane": ["A", "B", "C"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "hình chóp tam giác đều S.ABC",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích thiết diện của hình chóp khi cắt bởi mặt phẳng (α)",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "D006",
+      "defect_family": "M2",
+      "expected_status": "SERVED",
+      "description": "M2: Omitted solid on altitude fact",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B, AB = 6, BC = 8; SA là đường cao của hình chóp và SA = 10. Gọi M là trung điểm của SA. Mặt phẳng (α) đi qua M và song song với mặt phẳng (ABC). Tính diện tích thiết diện của hình chóp cắt bởi (α).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "hình chóp S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": ["A", "B", "C"],
+              "right_at": "B"
+            },
+            "quote": "đáy ABC là tam giác vuông tại B"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "6"
+            },
+            "quote": "AB = 6"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["B", "C"],
+              "value": "8"
+            },
+            "quote": "BC = 8"
+          },
+          {
+            "kind": "altitude",
+            "args": {
+              "apex": "S",
+              "foot": "A"
+            },
+            "quote": "SA là đường cao của hình chóp"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["S", "A"],
+              "value": "10"
+            },
+            "quote": "SA = 10"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["S", "A"]
+            },
+            "quote": "M là trung điểm của SA"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_plane",
+            "quote": "Mặt phẳng (α) đi qua M và song song với mặt phẳng (ABC)",
+            "through_point": "M",
+            "parallel_plane": ["A", "B", "C"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "hình chóp S.ABC",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích thiết diện của hình chóp cắt bởi (α)",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "D007",
+      "defect_family": "M3",
+      "expected_status": "SERVED",
+      "description": "M3: thiết diện tạo bởi hình chóp và mặt phẳng (β) đi qua M, song song với mặt phẳng (SAB)",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp S.ABC có SA ⊥ (ABC), SA = 8; tam giác ABC có AB = AC = 5 và BC = 6. Gọi M là trung điểm của BC. Hãy xác định thiết diện tạo bởi hình chóp và mặt phẳng (β) đi qua M, song song với mặt phẳng (SAB).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "hình chóp S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": ["S", "A"],
+              "plane": ["A", "B", "C"]
+            },
+            "quote": "SA ⊥ (ABC)"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["S", "A"],
+              "value": "8"
+            },
+            "quote": "SA = 8"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "5"
+            },
+            "quote": "AB = AC = 5"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "C"],
+              "value": "5"
+            },
+            "quote": "AB = AC = 5"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["B", "C"],
+              "value": "6"
+            },
+            "quote": "BC = 6"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["B", "C"]
+            },
+            "quote": "M là trung điểm của BC"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "β",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_plane",
+            "quote": "mặt phẳng (β) đi qua M, song song với mặt phẳng (SAB)",
+            "through_point": "M",
+            "parallel_plane": ["S", "A", "B"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_plane_section",
+            "quote": "xác định thiết diện tạo bởi hình chóp và mặt phẳng (β)",
+            "target_solid_id": "s1",
+            "target_section_id": "sec1",
+            "style_role": "section"
+          }
+        ],
+        "math_goals": []
+      }
+    },
+    {
+      "id": "D008",
+      "defect_family": "M3",
+      "expected_status": "SERVED",
+      "description": "M3: 4-vertex diagonal reference plane (ACC'A') + có các kích thước + thiết diện của hình hộp",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có các kích thước AB = 8, AD = 6, AA' = 5. Gọi M là trung điểm của BC. Xác định thiết diện của hình hộp cắt bởi mặt phẳng (α) đi qua M và song song với mặt phẳng (ACC'A').",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABCD.A'B'C'D'",
+            "quote": "hình hộp chữ nhật ABCD.A'B'C'D'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": ["A", "B", "C", "D"],
+              "top": ["A'", "B'", "C'", "D'"]
+            },
+            "quote": "hình hộp chữ nhật ABCD.A'B'C'D'"
+          },
+          {
+            "kind": "rectangle",
+            "args": {
+              "vertices": ["A", "B", "C", "D"]
+            },
+            "quote": "hình hộp chữ nhật ABCD.A'B'C'D'"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "8"
+            },
+            "quote": "AB = 8"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "D"],
+              "value": "6"
+            },
+            "quote": "AD = 6"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "A'"],
+              "value": "5"
+            },
+            "quote": "AA' = 5"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["B", "C"]
+            },
+            "quote": "M là trung điểm của BC"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_plane",
+            "quote": "mặt phẳng (α) đi qua M và song song với mặt phẳng (ACC'A')",
+            "through_point": "M",
+            "parallel_plane": ["A", "C", "C'"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_plane_section",
+            "quote": "Xác định thiết diện của hình hộp cắt bởi mặt phẳng (α)",
+            "target_solid_id": "s1",
+            "target_section_id": "sec1",
+            "style_role": "section"
+          }
+        ],
+        "math_goals": []
+      }
+    },
+    {
+      "id": "D009",
+      "defect_family": "M3",
+      "expected_status": "SERVED",
+      "description": "M3: vuông góc với đường chéo A'C + khi cắt bởi mặt phẳng (P)",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' với AB = 4, BC = 4 và AA' = 2. Gọi M là trung điểm của cạnh AB. Tính diện tích thiết diện của hình hộp khi cắt bởi mặt phẳng (P) qua M và vuông góc với đường chéo A'C.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABCD.A'B'C'D'",
+            "quote": "hình hộp chữ nhật ABCD.A'B'C'D'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": ["A", "B", "C", "D"],
+              "top": ["A'", "B'", "C'", "D'"]
+            },
+            "quote": "hình hộp chữ nhật ABCD.A'B'C'D'"
+          },
+          {
+            "kind": "rectangle",
+            "args": {
+              "vertices": ["A", "B", "C", "D"]
+            },
+            "quote": "hình hộp chữ nhật ABCD.A'B'C'D'"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "4"
+            },
+            "quote": "AB = 4"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["B", "C"],
+              "value": "4"
+            },
+            "quote": "BC = 4"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "A'"],
+              "value": "2"
+            },
+            "quote": "AA' = 2"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["A", "B"]
+            },
+            "quote": "M là trung điểm của cạnh AB"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "P",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "quote": "mặt phẳng (P) qua M và vuông góc với đường chéo A'C",
+            "through_point": "M",
+            "perpendicular_line": ["A'", "C"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "hình hộp chữ nhật ABCD.A'B'C'D'",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích thiết diện của hình hộp khi cắt bởi mặt phẳng (P) qua M và vuông góc với đường chéo A'C",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "D010",
+      "defect_family": "M3",
+      "expected_status": "SERVED",
+      "description": "M3: Tính theo a diện tích thiết diện của hình lập phương cắt bởi mặt phẳng (P)",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Gọi M là trung điểm của AA' và (P) là mặt phẳng đi qua M, song song với mặt phẳng (ABCD). Tính theo a diện tích thiết diện của hình lập phương cắt bởi mặt phẳng (P).",
+        "length_unit": "a",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABCD.A'B'C'D'",
+            "quote": "hình lập phương ABCD.A'B'C'D'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": ["A", "B", "C", "D"],
+              "top": ["A'", "B'", "C'", "D'"]
+            },
+            "quote": "hình lập phương ABCD.A'B'C'D'"
+          },
+          {
+            "kind": "base_is_square",
+            "args": {
+              "vertices": ["A", "B", "C", "D"],
+              "side": "a"
+            },
+            "quote": "hình lập phương ABCD.A'B'C'D' cạnh a"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "A'"],
+              "value": "a"
+            },
+            "quote": "hình lập phương ABCD.A'B'C'D' cạnh a"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["A", "A'"]
+            },
+            "quote": "M là trung điểm của AA'"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "P",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_plane",
+            "quote": "(P) là mặt phẳng đi qua M, song song với mặt phẳng (ABCD)",
+            "through_point": "M",
+            "parallel_plane": ["A", "B", "C"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "hình lập phương ABCD.A'B'C'D'",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính theo a diện tích thiết diện của hình lập phương cắt bởi mặt phẳng (P)",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "D011",
+      "defect_family": "M3",
+      "expected_status": "SERVED",
+      "description": "M3: Named section polygon Xác định thiết diện MNP và tính diện tích của thiết diện này",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 6, AC = 8, SA vuông góc với mặt phẳng (ABC) và SA = 6. Mặt phẳng (α) đi qua trung điểm M của SA, song song với mặt phẳng (ABC) và cắt các cạnh SB, SC lần lượt tại N, P. Xác định thiết diện MNP và tính diện tích của thiết diện này.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "hình chóp S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": ["B", "A", "C"],
+              "right_at": "A"
+            },
+            "quote": "đáy ABC là tam giác vuông tại A"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "6"
+            },
+            "quote": "AB = 6"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "C"],
+              "value": "8"
+            },
+            "quote": "AC = 8"
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": ["S", "A"],
+              "plane": ["A", "B", "C"]
+            },
+            "quote": "SA vuông góc với mặt phẳng (ABC)"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["S", "A"],
+              "value": "6"
+            },
+            "quote": "SA = 6"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["S", "A"]
+            },
+            "quote": "trung điểm M của SA"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_plane",
+            "quote": "Mặt phẳng (α) đi qua trung điểm M của SA, song song với mặt phẳng (ABC) và cắt các cạnh SB, SC lần lượt tại N, P",
+            "through_point": "M",
+            "parallel_plane": ["A", "B", "C"],
+            "stated_intersections": [
+              {
+                "edge": ["S", "B"],
+                "point": "N",
+                "quote": "cắt các cạnh SB, SC lần lượt tại N, P"
+              },
+              {
+                "edge": ["S", "C"],
+                "point": "P",
+                "quote": "cắt các cạnh SB, SC lần lượt tại N, P"
+              }
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_plane_section",
+            "quote": "Xác định thiết diện MNP",
+            "target_solid_id": "s1",
+            "target_section_id": "sec1",
+            "style_role": "section"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "tính diện tích của thiết diện này",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "D012",
+      "defect_family": "M4",
+      "expected_status": "SERVED",
+      "description": "M4 + R2: Compound right-triangle base có đáy là tam giác ABC vuông tại A + trùng với trung điểm H",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp S.ABC có đáy là tam giác ABC vuông tại A với AB = 9, AC = 12. Hình chiếu vuông góc của S lên mặt phẳng (ABC) trùng với trung điểm H của cạnh BC và SH = 6. Gọi M là trung điểm của AB, (P) là mặt phẳng qua M và vuông góc với BC. Tính diện tích thiết diện của hình chóp cắt bởi mặt phẳng (P).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "hình chóp S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": ["B", "A", "C"],
+              "right_at": "A"
+            },
+            "quote": "tam giác ABC vuông tại A"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "9"
+            },
+            "quote": "AB = 9"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "C"],
+              "value": "12"
+            },
+            "quote": "AC = 12"
+          },
+          {
+            "kind": "orthogonal_projection",
+            "args": {
+              "point": "S",
+              "image": "H",
+              "plane": ["A", "B", "C"]
+            },
+            "quote": "Hình chiếu vuông góc của S lên mặt phẳng (ABC) trùng với trung điểm H của cạnh BC"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "H",
+              "segment": ["B", "C"]
+            },
+            "quote": "trung điểm H của cạnh BC"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["S", "H"],
+              "value": "6"
+            },
+            "quote": "SH = 6"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["A", "B"]
+            },
+            "quote": "M là trung điểm của AB"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "P",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "quote": "(P) là mặt phẳng qua M và vuông góc với BC",
+            "through_point": "M",
+            "perpendicular_line": ["B", "C"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "hình chóp S.ABC",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích thiết diện của hình chóp cắt bởi mặt phẳng (P)",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "D013",
+      "defect_family": "M5",
+      "expected_status": "SERVED",
+      "description": "M5: Anaphoric tính diện tích của nó with 4-vertex lateral face (BCC'B')",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác ABC vuông cân tại B, AB = BC = 6, chiều cao AA' = 3. Gọi M là trung điểm của AB và (P) là mặt phẳng qua M song song với mặt bên (BCC'B'). Xác định thiết diện của lăng trụ cắt bởi (P) và tính diện tích của nó.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "lăng trụ đứng ABC.A'B'C'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": ["A", "B", "C"],
+              "top": ["A'", "B'", "C'"]
+            },
+            "quote": "lăng trụ đứng ABC.A'B'C'"
+          },
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": ["A", "B", "C"],
+              "right_at": "B"
+            },
+            "quote": "tam giác ABC vuông cân tại B"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "6"
+            },
+            "quote": "AB = BC = 6"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["B", "C"],
+              "value": "6"
+            },
+            "quote": "AB = BC = 6"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "A'"],
+              "value": "3"
+            },
+            "quote": "AA' = 3"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["A", "B"]
+            },
+            "quote": "M là trung điểm của AB"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "P",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_plane",
+            "quote": "(P) là mặt phẳng qua M song song với mặt bên (BCC'B')",
+            "through_point": "M",
+            "parallel_plane": ["B", "C", "C'"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_plane_section",
+            "quote": "Xác định thiết diện của lăng trụ cắt bởi (P)",
+            "target_solid_id": "s1",
+            "target_section_id": "sec1",
+            "style_role": "section"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "tính diện tích của nó",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "D014",
+      "defect_family": "M5",
+      "expected_status": "SERVED",
+      "description": "M5: Xác định thiết diện MNP và tính diện tích của nó",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác ABC vuông tại A, AB = 6, AC = 8, AA' = 5. Gọi M là trung điểm của BB'. Mặt phẳng (α) qua M song song với (ABC) cắt AA', CC' lần lượt tại N, P. Xác định thiết diện MNP và tính diện tích của nó.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "lăng trụ đứng ABC.A'B'C'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": ["A", "B", "C"],
+              "top": ["A'", "B'", "C'"]
+            },
+            "quote": "lăng trụ đứng ABC.A'B'C'"
+          },
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": ["B", "A", "C"],
+              "right_at": "A"
+            },
+            "quote": "tam giác ABC vuông tại A"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "6"
+            },
+            "quote": "AB = 6"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "C"],
+              "value": "8"
+            },
+            "quote": "AC = 8"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "A'"],
+              "value": "5"
+            },
+            "quote": "AA' = 5"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["B", "B'"]
+            },
+            "quote": "M là trung điểm của BB'"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_plane",
+            "quote": "Mặt phẳng (α) qua M song song với (ABC) cắt AA', CC' lần lượt tại N, P",
+            "through_point": "M",
+            "parallel_plane": ["A", "B", "C"],
+            "stated_intersections": [
+              {
+                "edge": ["A", "A'"],
+                "point": "N",
+                "quote": "cắt AA', CC' lần lượt tại N, P"
+              },
+              {
+                "edge": ["C", "C'"],
+                "point": "P",
+                "quote": "cắt AA', CC' lần lượt tại N, P"
+              }
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_plane_section",
+            "quote": "Xác định thiết diện MNP",
+            "target_solid_id": "s1",
+            "target_section_id": "sec1",
+            "style_role": "section"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "tính diện tích của nó",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "D015",
+      "defect_family": "M5",
+      "expected_status": "SERVED",
+      "description": "M5: Named triangle area Tính diện tích tam giác MNP",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp S.ABC có SA ⊥ (ABC), SA = 5, đáy ABC là tam giác vuông tại A với AB = 8, AC = 6. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M, song song với mặt phẳng (ABC), cắt SB, SC lần lượt tại N và P. Tính diện tích tam giác MNP.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "hình chóp S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": ["S", "A"],
+              "plane": ["A", "B", "C"]
+            },
+            "quote": "SA ⊥ (ABC)"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["S", "A"],
+              "value": "5"
+            },
+            "quote": "SA = 5"
+          },
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": ["B", "A", "C"],
+              "right_at": "A"
+            },
+            "quote": "tam giác vuông tại A"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "8"
+            },
+            "quote": "AB = 8"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "C"],
+              "value": "6"
+            },
+            "quote": "AC = 6"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["S", "A"]
+            },
+            "quote": "M là trung điểm của SA"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_plane",
+            "quote": "Mặt phẳng (α) qua M, song song với mặt phẳng (ABC), cắt SB, SC lần lượt tại N và P",
+            "through_point": "M",
+            "parallel_plane": ["A", "B", "C"],
+            "stated_intersections": [
+              {
+                "edge": ["S", "B"],
+                "point": "N",
+                "quote": "cắt SB, SC lần lượt tại N và P"
+              },
+              {
+                "edge": ["S", "C"],
+                "point": "P",
+                "quote": "cắt SB, SC lần lượt tại N và P"
+              }
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "hình chóp S.ABC",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích tam giác MNP",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "D016",
+      "defect_family": "M5",
+      "expected_status": "SERVED",
+      "description": "M2 + M5: Omitted solid on height + named quadrilateral area Tính diện tích tứ giác AEFK",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 2 và chiều cao bằng 2. Gọi (P) là mặt phẳng qua A và vuông góc với SC; (P) cắt SB, SC, SD theo thứ tự tại E, F, K. Tính diện tích tứ giác AEFK.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABCD",
+            "quote": "hình chóp tứ giác đều S.ABCD"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "regular_pyramid",
+            "args": {
+              "apex": "S",
+              "base": ["A", "B", "C", "D"]
+            },
+            "quote": "hình chóp tứ giác đều S.ABCD"
+          },
+          {
+            "kind": "base_is_square",
+            "args": {
+              "vertices": ["A", "B", "C", "D"],
+              "side": "2"
+            },
+            "quote": "cạnh đáy bằng 2"
+          },
+          {
+            "kind": "height",
+            "args": {
+              "value": "2"
+            },
+            "quote": "chiều cao bằng 2"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "P",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "quote": "(P) là mặt phẳng qua A và vuông góc với SC; (P) cắt SB, SC, SD theo thứ tự tại E, F, K",
+            "through_point": "A",
+            "perpendicular_line": ["S", "C"],
+            "stated_intersections": [
+              {
+                "edge": ["S", "B"],
+                "point": "E",
+                "quote": "cắt SB, SC, SD theo thứ tự tại E, F, K"
+              },
+              {
+                "edge": ["S", "C"],
+                "point": "F",
+                "quote": "cắt SB, SC, SD theo thứ tự tại E, F, K"
+              },
+              {
+                "edge": ["S", "D"],
+                "point": "K",
+                "quote": "cắt SB, SC, SD theo thứ tự tại E, F, K"
+              }
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "hình chóp tứ giác đều S.ABCD",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích tứ giác AEFK",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "N001",
+      "defect_family": "M1",
+      "expected_status": "REFUSED",
+      "expected_codes": ["SOURCE_OBJECT_MISMATCH"],
+      "description": "M1 negative: Wrong plane reference (source defines (α), question asks (β))",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B với AB = 3, BC = 4; cạnh SA vuông góc với mặt phẳng (ABC) và SA = 5. Gọi M là trung điểm của AB. Mặt phẳng (α) qua M, song song với SA và BC. Tính diện tích thiết diện của hình chóp cắt bởi (β).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "hình chóp S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": ["A", "B", "C"],
+              "right_at": "B"
+            },
+            "quote": "đáy ABC là tam giác vuông tại B"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "3"
+            },
+            "quote": "AB = 3"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["B", "C"],
+              "value": "4"
+            },
+            "quote": "BC = 4"
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": ["S", "A"],
+              "plane": ["A", "B", "C"]
+            },
+            "quote": "cạnh SA vuông góc với mặt phẳng (ABC)"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["S", "A"],
+              "value": "5"
+            },
+            "quote": "SA = 5"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["A", "B"]
+            },
+            "quote": "M là trung điểm của AB"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_two_lines",
+            "quote": "Mặt phẳng (α) qua M, song song với SA và BC",
+            "through_point": "M",
+            "parallel_line_a": ["S", "A"],
+            "parallel_line_b": ["B", "C"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "hình chóp S.ABC",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích thiết diện của hình chóp cắt bởi (β)",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "N002",
+      "defect_family": "M1",
+      "expected_status": "REFUSED",
+      "expected_codes": ["SOURCE_OBJECT_MISMATCH"],
+      "description": "M1 negative: Plane name collision / two distinct planes mapped to one section",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B với AB = 3, BC = 4; cạnh SA vuông góc với mặt phẳng (ABC) và SA = 5. Gọi M là trung điểm của AB. Mặt phẳng (α) qua M, song song với SA và BC. Mặt phẳng (α) đi qua C và vuông góc với SB. Tính diện tích thiết diện của hình chóp cắt bởi (α).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "hình chóp S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": ["A", "B", "C"],
+              "right_at": "B"
+            },
+            "quote": "đáy ABC là tam giác vuông tại B"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "3"
+            },
+            "quote": "AB = 3"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["B", "C"],
+              "value": "4"
+            },
+            "quote": "BC = 4"
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": ["S", "A"],
+              "plane": ["A", "B", "C"]
+            },
+            "quote": "cạnh SA vuông góc với mặt phẳng (ABC)"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["S", "A"],
+              "value": "5"
+            },
+            "quote": "SA = 5"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["A", "B"]
+            },
+            "quote": "M là trung điểm của AB"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_two_lines",
+            "quote": "Mặt phẳng (α) qua M, song song với SA và BC",
+            "through_point": "M",
+            "parallel_line_a": ["S", "A"],
+            "parallel_line_b": ["B", "C"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "hình chóp S.ABC",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích thiết diện của hình chóp cắt bởi (α)",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "N003",
+      "defect_family": "M1",
+      "expected_status": "REFUSED",
+      "expected_codes": ["INVALID_PREMISE_ARGS", "SCHEMA_INVALID"],
+      "description": "M1 negative: Greek symbol α used as point/vertex label is still rejected",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp S.ABC có đáy ABC đều cạnh 4, SA ⊥ (ABC), SA = 4. Gọi α là trung điểm của SA.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "hình chóp S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "base_is_equilateral_triangle",
+            "args": {
+              "vertices": ["A", "B", "C"],
+              "side": "4"
+            },
+            "quote": "đáy ABC đều cạnh 4"
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": ["S", "A"],
+              "plane": ["A", "B", "C"]
+            },
+            "quote": "SA ⊥ (ABC)"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["S", "A"],
+              "value": "4"
+            },
+            "quote": "SA = 4"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "α",
+              "segment": ["S", "A"]
+            },
+            "quote": "α là trung điểm của SA"
+          }
+        ],
+        "derived_sections": [],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "hình chóp S.ABC",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": []
+      }
+    },
+    {
+      "id": "N004",
+      "defect_family": "M2",
+      "expected_status": "REFUSED",
+      "expected_codes": ["AMBIGUOUS_REFERENCE"],
+      "description": "M2 negative: Multiple solids with omitted solid reference on height",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Hai hình chóp S.ABC và T.ABC có mặt chung (ABC). Tam giác ABC đều cạnh 4, chiều cao bằng 5. Tính thể tích khối chóp S.ABC.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "Hai hình chóp S.ABC và T.ABC có mặt chung (ABC)"
+          },
+          {
+            "solid_id": "s2",
+            "solid_type": "pyramid",
+            "notation": "T.ABC",
+            "quote": "Hai hình chóp S.ABC và T.ABC có mặt chung (ABC)"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "base_is_equilateral_triangle",
+            "args": {
+              "vertices": ["A", "B", "C"],
+              "side": "4"
+            },
+            "quote": "Tam giác ABC đều cạnh 4"
+          },
+          {
+            "kind": "height",
+            "args": {
+              "value": "5"
+            },
+            "quote": "chiều cao bằng 5"
+          }
+        ],
+        "derived_sections": [],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "S.ABC",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "volume",
+            "quote": "Tính thể tích khối chóp S.ABC",
+            "target": {
+              "solid": "s1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "N005",
+      "defect_family": "M2",
+      "expected_status": "REFUSED",
+      "expected_codes": ["UNGROUNDED_VALUE"],
+      "description": "M2 negative: Omitted solid on height whose quote contradicts solid kind (của hình lăng trụ on a pyramid)",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp tứ giác đều S.ABCD có các cạnh đáy bằng 4, chiều cao của hình lăng trụ bằng 3. Gọi N là trung điểm của SD. Xác định thiết diện của hình chóp với mặt phẳng (P) đi qua N và song song với (SAB).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABCD",
+            "quote": "hình chóp tứ giác đều S.ABCD"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "regular_pyramid",
+            "args": {
+              "apex": "S",
+              "base": ["A", "B", "C", "D"]
+            },
+            "quote": "hình chóp tứ giác đều S.ABCD"
+          },
+          {
+            "kind": "base_is_square",
+            "args": {
+              "vertices": ["A", "B", "C", "D"],
+              "side": "4"
+            },
+            "quote": "các cạnh đáy bằng 4"
+          },
+          {
+            "kind": "height",
+            "args": {
+              "value": "3"
+            },
+            "quote": "chiều cao của hình lăng trụ bằng 3"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "N",
+              "segment": ["S", "D"]
+            },
+            "quote": "N là trung điểm của SD"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "P",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_plane",
+            "quote": "mặt phẳng (P) đi qua N và song song với (SAB)",
+            "through_point": "N",
+            "parallel_plane": ["S", "A", "B"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_plane_section",
+            "quote": "Xác định thiết diện của hình chóp với mặt phẳng (P)",
+            "target_solid_id": "s1",
+            "target_section_id": "sec1",
+            "style_role": "section"
+          }
+        ],
+        "math_goals": []
+      }
+    },
+    {
+      "id": "N006",
+      "defect_family": "M2",
+      "expected_status": "REFUSED",
+      "expected_codes": ["UNKNOWN_SOLID"],
+      "description": "M2 negative: Wrong explicit solid reference on height",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 6 và chiều cao bằng 5. Mặt phẳng (α) chứa điểm A và vuông góc với đường thẳng SC. Tính diện tích thiết diện của hình chóp khi cắt bởi mặt phẳng (α).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABCD",
+            "quote": "hình chóp tứ giác đều S.ABCD"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "regular_pyramid",
+            "args": {
+              "apex": "S",
+              "base": ["A", "B", "C", "D"]
+            },
+            "quote": "hình chóp tứ giác đều S.ABCD"
+          },
+          {
+            "kind": "base_is_square",
+            "args": {
+              "vertices": ["A", "B", "C", "D"],
+              "side": "6"
+            },
+            "quote": "cạnh đáy bằng 6"
+          },
+          {
+            "kind": "height",
+            "args": {
+              "solid": "s99",
+              "value": "5"
+            },
+            "quote": "chiều cao bằng 5"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "quote": "Mặt phẳng (α) chứa điểm A và vuông góc với đường thẳng SC",
+            "through_point": "A",
+            "perpendicular_line": ["S", "C"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "hình chóp tứ giác đều S.ABCD",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích thiết diện của hình chóp khi cắt bởi mặt phẳng (α)",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "N007",
+      "defect_family": "M3",
+      "expected_status": "REFUSED",
+      "expected_codes": ["SOURCE_OBJECT_MISMATCH"],
+      "description": "M3 negative: Section phrase claims hình hộp on a pyramid solid (I-1 source-kind consistency)",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA vuông góc với mặt phẳng (ABCD) và SA = 4. Gọi (α) là mặt phẳng đi qua A và vuông góc với SC. Xác định thiết diện của hình hộp khi cắt bởi (α).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABCD",
+            "quote": "hình chóp S.ABCD"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "base_is_square",
+            "args": {
+              "vertices": ["A", "B", "C", "D"],
+              "side": "4"
+            },
+            "quote": "đáy ABCD là hình vuông cạnh 4"
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": ["S", "A"],
+              "plane": ["A", "B", "C", "D"]
+            },
+            "quote": "SA vuông góc với mặt phẳng (ABCD)"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["S", "A"],
+              "value": "4"
+            },
+            "quote": "SA = 4"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "quote": "(α) là mặt phẳng đi qua A và vuông góc với SC",
+            "through_point": "A",
+            "perpendicular_line": ["S", "C"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_plane_section",
+            "quote": "Xác định thiết diện của hình hộp khi cắt bởi (α)",
+            "target_solid_id": "s1",
+            "target_section_id": "sec1",
+            "style_role": "section"
+          }
+        ],
+        "math_goals": []
+      }
+    },
+    {
+      "id": "N008",
+      "defect_family": "M3",
+      "expected_status": "REFUSED",
+      "expected_codes": ["SOURCE_OBJECT_MISMATCH"],
+      "description": "M3 negative: Incorrect named section polygon (Xác định thiết diện ABCD when section is AMNP)",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 3, AD = 4, SA vuông góc với mặt phẳng (ABCD) và SA = 6. Mặt phẳng (α) đi qua A, vuông góc với SC và cắt các cạnh SB, SC, SD lần lượt tại M, N, P. Xác định thiết diện ABCD và tính diện tích của thiết diện này.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABCD",
+            "quote": "hình chóp S.ABCD"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "rectangle",
+            "args": {
+              "vertices": ["A", "B", "C", "D"]
+            },
+            "quote": "đáy ABCD là hình chữ nhật"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "3"
+            },
+            "quote": "AB = 3"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "D"],
+              "value": "4"
+            },
+            "quote": "AD = 4"
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": ["S", "A"],
+              "plane": ["A", "B", "C", "D"]
+            },
+            "quote": "SA vuông góc với mặt phẳng (ABCD)"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["S", "A"],
+              "value": "6"
+            },
+            "quote": "SA = 6"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "quote": "Mặt phẳng (α) đi qua A, vuông góc với SC và cắt các cạnh SB, SC, SD lần lượt tại M, N, P",
+            "through_point": "A",
+            "perpendicular_line": ["S", "C"],
+            "stated_intersections": [
+              {
+                "edge": ["S", "B"],
+                "point": "M",
+                "quote": "cắt các cạnh SB, SC, SD lần lượt tại M, N, P"
+              },
+              {
+                "edge": ["S", "C"],
+                "point": "N",
+                "quote": "cắt các cạnh SB, SC, SD lần lượt tại M, N, P"
+              },
+              {
+                "edge": ["S", "D"],
+                "point": "P",
+                "quote": "cắt các cạnh SB, SC, SD lần lượt tại M, N, P"
+              }
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_plane_section",
+            "quote": "Xác định thiết diện ABCD",
+            "target_solid_id": "s1",
+            "target_section_id": "sec1",
+            "style_role": "section"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "tính diện tích của thiết diện này",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "N009",
+      "defect_family": "M3",
+      "expected_status": "REFUSED",
+      "expected_codes": ["NEGATED_CLAUSE"],
+      "description": "M3 negative: Negated section plane definition (không đi qua M)",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp S.ABC có SA ⊥ (ABC), SA = 8; tam giác ABC có AB = AC = 5 và BC = 6. Gọi M là trung điểm của BC. Mặt phẳng (β) không đi qua M, song song với mặt phẳng (SAB). Hãy xác định thiết diện tạo bởi hình chóp và mặt phẳng (β).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "hình chóp S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": ["S", "A"],
+              "plane": ["A", "B", "C"]
+            },
+            "quote": "SA ⊥ (ABC)"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["S", "A"],
+              "value": "8"
+            },
+            "quote": "SA = 8"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "5"
+            },
+            "quote": "AB = AC = 5"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "C"],
+              "value": "5"
+            },
+            "quote": "AB = AC = 5"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["B", "C"],
+              "value": "6"
+            },
+            "quote": "BC = 6"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["B", "C"]
+            },
+            "quote": "M là trung điểm của BC"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "β",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_plane",
+            "quote": "Mặt phẳng (β) không đi qua M, song song với mặt phẳng (SAB)",
+            "through_point": "M",
+            "parallel_plane": ["S", "A", "B"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_plane_section",
+            "quote": "xác định thiết diện tạo bởi hình chóp và mặt phẳng (β)",
+            "target_solid_id": "s1",
+            "target_section_id": "sec1",
+            "style_role": "section"
+          }
+        ],
+        "math_goals": []
+      }
+    },
+    {
+      "id": "N010",
+      "defect_family": "M3",
+      "expected_status": "REFUSED",
+      "expected_codes": ["CONDITIONAL_CLAUSE"],
+      "description": "M3 negative: Conditional section description (Nếu mặt phẳng (β) đi qua M...)",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp S.ABC có SA ⊥ (ABC), SA = 8; tam giác ABC có AB = AC = 5 và BC = 6. Gọi M là trung điểm của BC. Nếu mặt phẳng (β) đi qua M và song song với mặt phẳng (SAB) thì hãy xác định thiết diện tạo bởi hình chóp và mặt phẳng (β).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "hình chóp S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": ["S", "A"],
+              "plane": ["A", "B", "C"]
+            },
+            "quote": "SA ⊥ (ABC)"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["S", "A"],
+              "value": "8"
+            },
+            "quote": "SA = 8"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "5"
+            },
+            "quote": "AB = AC = 5"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "C"],
+              "value": "5"
+            },
+            "quote": "AB = AC = 5"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["B", "C"],
+              "value": "6"
+            },
+            "quote": "BC = 6"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["B", "C"]
+            },
+            "quote": "M là trung điểm của BC"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "β",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_plane",
+            "quote": "mặt phẳng (β) đi qua M và song song với mặt phẳng (SAB)",
+            "through_point": "M",
+            "parallel_plane": ["S", "A", "B"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_plane_section",
+            "quote": "xác định thiết diện tạo bởi hình chóp và mặt phẳng (β)",
+            "target_solid_id": "s1",
+            "target_section_id": "sec1",
+            "style_role": "section"
+          }
+        ],
+        "math_goals": []
+      }
+    },
+    {
+      "id": "N011",
+      "defect_family": "M3",
+      "expected_status": "REFUSED",
+      "expected_codes": ["SOURCE_OBJECT_MISMATCH"],
+      "description": "M3 negative: Non-coplanar 4-vertex reference plane (ABCC') on cuboid",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 8, AD = 6, AA' = 5. Gọi M là trung điểm của AD. Xác định thiết diện của hình hộp cắt bởi mặt phẳng (α) đi qua M và song song với mặt phẳng (ABCC').",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABCD.A'B'C'D'",
+            "quote": "hình hộp chữ nhật ABCD.A'B'C'D'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": ["A", "B", "C", "D"],
+              "top": ["A'", "B'", "C'", "D'"]
+            },
+            "quote": "hình hộp chữ nhật ABCD.A'B'C'D'"
+          },
+          {
+            "kind": "rectangle",
+            "args": {
+              "vertices": ["A", "B", "C", "D"]
+            },
+            "quote": "hình hộp chữ nhật ABCD.A'B'C'D'"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "8"
+            },
+            "quote": "AB = 8"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "D"],
+              "value": "6"
+            },
+            "quote": "AD = 6"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "A'"],
+              "value": "5"
+            },
+            "quote": "AA' = 5"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["A", "D"]
+            },
+            "quote": "M là trung điểm của AD"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_plane",
+            "quote": "mặt phẳng (α) đi qua M và song song với mặt phẳng (ABCC')",
+            "through_point": "M",
+            "parallel_plane": ["A", "B", "C"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_plane_section",
+            "quote": "Xác định thiết diện của hình hộp cắt bởi mặt phẳng (α)",
+            "target_solid_id": "s1",
+            "target_section_id": "sec1",
+            "style_role": "section"
+          }
+        ],
+        "math_goals": []
+      }
+    },
+    {
+      "id": "N012",
+      "defect_family": "M4",
+      "expected_status": "REFUSED",
+      "expected_codes": ["SOURCE_OBJECT_MISMATCH"],
+      "description": "M4 negative: Compound sentence right-angle vertex mismatch (source says vuông tại C, fact says right_at A)",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp S.ABC có đáy là tam giác ABC vuông tại C với AB = 9, AC = 12. Hình chiếu vuông góc của S lên mặt phẳng (ABC) trùng với trung điểm H của cạnh BC và SH = 6. Gọi M là trung điểm của AB, (P) là mặt phẳng qua M và vuông góc với BC. Tính diện tích thiết diện của hình chóp cắt bởi mặt phẳng (P).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "hình chóp S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": ["B", "A", "C"],
+              "right_at": "A"
+            },
+            "quote": "tam giác ABC vuông tại C"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "9"
+            },
+            "quote": "AB = 9"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "C"],
+              "value": "12"
+            },
+            "quote": "AC = 12"
+          },
+          {
+            "kind": "orthogonal_projection",
+            "args": {
+              "point": "S",
+              "image": "H",
+              "plane": ["A", "B", "C"]
+            },
+            "quote": "Hình chiếu vuông góc của S lên mặt phẳng (ABC) trùng với trung điểm H của cạnh BC"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "H",
+              "segment": ["B", "C"]
+            },
+            "quote": "trung điểm H của cạnh BC"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["S", "H"],
+              "value": "6"
+            },
+            "quote": "SH = 6"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["A", "B"]
+            },
+            "quote": "M là trung điểm của AB"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "P",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "quote": "(P) là mặt phẳng qua M và vuông góc với BC",
+            "through_point": "M",
+            "perpendicular_line": ["B", "C"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "hình chóp S.ABC",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích thiết diện của hình chóp cắt bởi mặt phẳng (P)",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "N013",
+      "defect_family": "M4",
+      "expected_status": "REFUSED",
+      "expected_codes": ["SOURCE_PREMISE_UNREAD"],
+      "description": "M4 negative: Compound sentence with unread extra premise (và góc SBA bằng 60 độ)",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp S.ABC có đáy là tam giác ABC vuông tại A với AB = 9, AC = 12 và góc SBA bằng 60 độ. Hình chiếu vuông góc của S lên mặt phẳng (ABC) trùng với trung điểm H của cạnh BC và SH = 6. Gọi M là trung điểm của AB, (P) là mặt phẳng qua M và vuông góc với BC. Tính diện tích thiết diện của hình chóp cắt bởi mặt phẳng (P).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "hình chóp S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": ["B", "A", "C"],
+              "right_at": "A"
+            },
+            "quote": "tam giác ABC vuông tại A"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "9"
+            },
+            "quote": "AB = 9"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "C"],
+              "value": "12"
+            },
+            "quote": "AC = 12"
+          },
+          {
+            "kind": "orthogonal_projection",
+            "args": {
+              "point": "S",
+              "image": "H",
+              "plane": ["A", "B", "C"]
+            },
+            "quote": "Hình chiếu vuông góc của S lên mặt phẳng (ABC) trùng với trung điểm H của cạnh BC"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "H",
+              "segment": ["B", "C"]
+            },
+            "quote": "trung điểm H của cạnh BC"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["S", "H"],
+              "value": "6"
+            },
+            "quote": "SH = 6"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["A", "B"]
+            },
+            "quote": "M là trung điểm của AB"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "P",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "quote": "(P) là mặt phẳng qua M và vuông góc với BC",
+            "through_point": "M",
+            "perpendicular_line": ["B", "C"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "hình chóp S.ABC",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích thiết diện của hình chóp cắt bởi mặt phẳng (P)",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "N014",
+      "defect_family": "M5",
+      "expected_status": "REFUSED",
+      "expected_codes": ["UNSUPPORTED_CAPABILITY", "SOURCE_OBJECT_MISMATCH"],
+      "description": "M5 negative: Ambiguous antecedent for tính diện tích của nó when base triangle is mentioned after section",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác ABC vuông cân tại B, AB = BC = 6, chiều cao AA' = 3. Gọi M là trung điểm của AB và (P) là mặt phẳng qua M song song với mặt bên (BCC'B'). Xác định thiết diện của lăng trụ cắt bởi (P), xét tam giác ABC và tính diện tích của nó.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "lăng trụ đứng ABC.A'B'C'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": ["A", "B", "C"],
+              "top": ["A'", "B'", "C'"]
+            },
+            "quote": "lăng trụ đứng ABC.A'B'C'"
+          },
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": ["A", "B", "C"],
+              "right_at": "B"
+            },
+            "quote": "tam giác ABC vuông cân tại B"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "6"
+            },
+            "quote": "AB = BC = 6"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["B", "C"],
+              "value": "6"
+            },
+            "quote": "AB = BC = 6"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "A'"],
+              "value": "3"
+            },
+            "quote": "AA' = 3"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["A", "B"]
+            },
+            "quote": "M là trung điểm của AB"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "P",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_plane",
+            "quote": "(P) là mặt phẳng qua M song song với mặt bên (BCC'B')",
+            "through_point": "M",
+            "parallel_plane": ["B", "C", "C'"]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_plane_section",
+            "quote": "Xác định thiết diện của lăng trụ cắt bởi (P)",
+            "target_solid_id": "s1",
+            "target_section_id": "sec1",
+            "style_role": "section"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "tính diện tích của nó",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "N015",
+      "defect_family": "M5",
+      "expected_status": "REFUSED",
+      "expected_codes": ["UNSUPPORTED_CAPABILITY", "SOURCE_OBJECT_MISMATCH"],
+      "description": "M5 negative: Named polygon area Tính diện tích tam giác MBC when grounded section is MNP",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp S.ABC có SA ⊥ (ABC), SA = 5, đáy ABC là tam giác vuông tại A với AB = 8, AC = 6. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M, song song với mặt phẳng (ABC), cắt SB, SC lần lượt tại N và P. Tính diện tích tam giác MBC.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "hình chóp S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": ["S", "A"],
+              "plane": ["A", "B", "C"]
+            },
+            "quote": "SA ⊥ (ABC)"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["S", "A"],
+              "value": "5"
+            },
+            "quote": "SA = 5"
+          },
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": ["B", "A", "C"],
+              "right_at": "A"
+            },
+            "quote": "tam giác vuông tại A"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "8"
+            },
+            "quote": "AB = 8"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "C"],
+              "value": "6"
+            },
+            "quote": "AC = 6"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["S", "A"]
+            },
+            "quote": "M là trung điểm của SA"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_plane",
+            "quote": "Mặt phẳng (α) qua M, song song với mặt phẳng (ABC), cắt SB, SC lần lượt tại N và P",
+            "through_point": "M",
+            "parallel_plane": ["A", "B", "C"],
+            "stated_intersections": [
+              {
+                "edge": ["S", "B"],
+                "point": "N",
+                "quote": "cắt SB, SC lần lượt tại N và P"
+              },
+              {
+                "edge": ["S", "C"],
+                "point": "P",
+                "quote": "cắt SB, SC lần lượt tại N và P"
+              }
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "hình chóp S.ABC",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích tam giác MBC",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "N016",
+      "defect_family": "M5",
+      "expected_status": "REFUSED",
+      "expected_codes": ["UNSUPPORTED_CAPABILITY", "SOURCE_OBJECT_MISMATCH"],
+      "description": "M5 negative: Shape noun count mismatch (Tính diện tích tứ giác MNP for 3-vertex section MNP)",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp S.ABC có SA ⊥ (ABC), SA = 5, đáy ABC là tam giác vuông tại A với AB = 8, AC = 6. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M, song song với mặt phẳng (ABC), cắt SB, SC lần lượt tại N và P. Tính diện tích tứ giác MNP.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "hình chóp S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": ["S", "A"],
+              "plane": ["A", "B", "C"]
+            },
+            "quote": "SA ⊥ (ABC)"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["S", "A"],
+              "value": "5"
+            },
+            "quote": "SA = 5"
+          },
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": ["B", "A", "C"],
+              "right_at": "A"
+            },
+            "quote": "tam giác vuông tại A"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "B"],
+              "value": "8"
+            },
+            "quote": "AB = 8"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": ["A", "C"],
+              "value": "6"
+            },
+            "quote": "AC = 6"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "M",
+              "segment": ["S", "A"]
+            },
+            "quote": "M là trung điểm của SA"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec1",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_plane",
+            "quote": "Mặt phẳng (α) qua M, song song với mặt phẳng (ABC), cắt SB, SC lần lượt tại N và P",
+            "through_point": "M",
+            "parallel_plane": ["A", "B", "C"],
+            "stated_intersections": [
+              {
+                "edge": ["S", "B"],
+                "point": "N",
+                "quote": "cắt SB, SC lần lượt tại N và P"
+              },
+              {
+                "edge": ["S", "C"],
+                "point": "P",
+                "quote": "cắt SB, SC lần lượt tại N và P"
+              }
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "hình chóp S.ABC",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích tứ giác MNP",
+            "target": {
+              "section_id": "sec1"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

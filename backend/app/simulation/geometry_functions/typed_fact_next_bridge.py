@@ -226,8 +226,11 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif k == "segment_length":
             f = {"kind": "length", "measure": "segment", "points": _refs(a["segment"]), "value": str(a["value"])}
         elif k == "height":
-            sol = solids.get(a.get("solid") or prem.solid_id or "")
-            f = {"kind": "length", "measure": "height", "solid": sol.notation if sol else a.get("solid"),
+            sid = a.get("solid") or prem.solid_id
+            sol = solids.get(sid or "")
+            if sol is None and sid is None and len(solids) == 1:
+                sol = next(iter(solids.values()))
+            f = {"kind": "length", "measure": "height", "solid": sol.notation if sol else sid,
                  "value": str(a["value"])}
         elif k in ("equal_length", "equal_segments"):
             f = {"kind": "equal_lengths", "points_a": _refs(a["segment_a"]), "points_b": _refs(a["segment_b"])}
@@ -238,9 +241,12 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif k in ("face_perpendicular_base", "plane_perp_base"):
             f = {"kind": "perpendicular", "points_a": _refs(a["face"]), "points_b": _refs(a["base"])}
         elif k == "altitude":
-            sol = solids.get(a.get("solid") or prem.solid_id or "")
+            sid = a.get("solid") or prem.solid_id
+            sol = solids.get(sid or "")
+            if sol is None and sid is None and len(solids) == 1:
+                sol = next(iter(solids.values()))
             f = {"kind": "altitude", "points": [_ref(a["apex"]), _ref(a["foot"])],
-                 "solid": sol.notation if sol else a.get("solid")}
+                 "solid": sol.notation if sol else sid}
         elif k in ("midpoint", "point_is_midpoint"):
             f = {"kind": "point_def", "point_kind": "midpoint", "point": _ref(a["point"]), "points": _refs(a["segment"])}
         elif k in ("divide_segment", "point_divides_segment"):

@@ -26,10 +26,10 @@ import re
 from dataclasses import dataclass, field
 from typing import Annotated, Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, ValidationError, WithJsonSchema
+from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationError, WithJsonSchema
 from pydantic.json_schema import SkipJsonSchema
 
-from .registry import AUXILIARY_RULES, DINH_CAT_CANH, MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, ExactNumber, Label, TuChoi
+from .registry import AUXILIARY_RULES, DINH_CAT_CANH, MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, ExactNumber, Label, TuChoi, chuan_hoa
 from .registry import nhan_cua_de, nhan_phu_da_dung
 from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, render_call, same_call, planning_contracts
 
@@ -43,7 +43,14 @@ from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, rende
 #: /14 (run `hybrid-v2-backend-generalization`): a > 3-label question plane is handed to the engine in full
 #: (`KeHoach.named_planes`, keyed by call id) instead of being cut to its first three labels.
 #: /16 (run `hybrid-v2-planner-generalization`): `MAT_VUONG_DUONG` anchors on prisms (two layers: base/top), not only pyramids.
-PLANNER_VERSION = "geometry-fact-planner/16"
+#: /17 (run `hybrid-v2-holdout-failure-repair`): M1 Greek/Latin `PlaneName` alignment, M2 single-solid height/altitude resolution,
+#: M5 bounded section-area question binding (`diện tích của nó` and grounded named section polygons).
+PLANNER_VERSION = "geometry-fact-planner/17"
+PlaneName = Annotated[
+    str,
+    BeforeValidator(lambda v: chuan_hoa(v) if isinstance(v, str) else v),
+    Field(pattern=r"^(?:[A-Z][0-9]*'?|[α-ω]'?)$", description="nhãn một điểm của đề, vd S, A, A'"),
+]
 #: Nhãn điểm phụ: chuỗi H, H1, H2, …; nhãn đầu tiên không có trong đề lẫn dữ kiện (Label của Registry không cho namespace
 #: riêng mà không đổi bề mặt nhà cung cấp của A ⇒ "dành riêng" = chọn tươi + cổng kiểm `AUXILIARY_LABEL_COLLISION`).
 def _nhan_tuoi(stem: str) -> tuple[str, ...]:
@@ -102,7 +109,7 @@ class TypedFact(BaseModel):
     plane_relation: Literal["parallel", "perpendicular", "parallel_two_lines"] | None = Field(
         None, description="thiết diện / diện tích thiết diện với mặt cắt cho bằng QUAN HỆ: mặt qua `point`, song song "
         "(parallel) hay vuông góc (perpendicular) với mặt `points_b`; khi đó không có `points`")
-    plane_name: Label | None = Field(None, description="tên mặt phẳng cắt trong đề; bắt buộc cho parallel_two_lines")
+    plane_name: PlaneName | None = Field(None, description="tên mặt phẳng cắt trong đề; bắt buộc cho parallel_two_lines")
     reason: str | None = None
     # Internal only (run `typedfactnext-planner-bridge`): absent from every provider schema (`SkipJsonSchema`, frozen
     # fingerprints unchanged) and refused when a provider response carries them (`INTERNAL_FACT_FIELDS`). Written by the
@@ -198,7 +205,7 @@ def _doc_khoi_tho(f: TypedFact) -> _Khoi:
 
 _CAN = {"solid": ("solid", "solid_type"), "polygon_shape": ("points", "shape"), "right_angle": ("at", "points"),
         "length": ("value", "measure"), "equal_lengths": ("points_a", "points_b"), "perpendicular": ("points_a", "points_b"),
-        "altitude": ("points", "solid"), "projection": ("point", "points", "at"), "point_def": ("point", "point_kind", "points"),
+        "altitude": ("points",), "projection": ("point", "points", "at"), "point_def": ("point", "point_kind", "points"),
         "section": ("solid", "points"), "intersection_line": ("points_a", "points_b"),
         "question": ("quantity",), "unsupported": ("reason",)}
 _DA_GIAC_DEU = {"equilateral_triangle": 3, "square": 4, "regular_hexagon": 6, "regular_polygon": None}
@@ -382,6 +389,11 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
         return c
 
     def khoi_cua(s: str | None, f: TypedFact) -> _Khoi:
+        if not s and (f.kind == "altitude" or (f.kind == "length" and f.measure == "height")):
+            if len(k.solids) == 1:
+                return next(iter(k.solids.values()))
+            if len(k.solids) > 1:
+                raise TuChoi("AMBIGUOUS_REFERENCE", f"{f.id}: không nêu khối trong bài có nhiều khối", (f.id,))
         kh = k.solids.get(s or "") or next((x for x in k.solids.values() if x.ten == s), None)
         if kh is None:
             raise TuChoi("UNKNOWN_SOLID", f"{f.id}: khối {s!r} không có trong dữ kiện", (f.id,))
@@ -911,6 +923,15 @@ def _do_dai(f: TypedFact, q: list[str], deu: dict, khoi_cua, phat) -> dict:
 
 _DIEN_TICH_THIET_DIEN = re.compile(r"diện tích\s+(?:của\s+)?thiết diện", re.IGNORECASE)
 _DIEN_TICH_DA_GIAC = re.compile(r"(?i:diện tích)\s+(?:(?i:của)\s+)?(?:(?i:tam giác|tứ giác|hình|đa giác|mặt|đáy)|[A-Z])")
+_DIEN_TICH_NO = re.compile(r"diện tích\s+(?:của\s+)?nó(?![\w'])", re.IGNORECASE)
+_DIEN_TICH_TEN_TD = re.compile(
+    r"diện tích\s+(?:của\s+)?(?P<loai>tam\s+giác|tứ\s+giác|đa\s+giác)\s+(?P<poly>(?-i:[A-Z][0-9]*'?){3,})(?![\w'])",
+    re.IGNORECASE,
+)
+_DANH_TU_CANH_TRANH_TD = re.compile(
+    r"(?<!\w)(?:tam\s+giác|tứ\s+giác|đa\s+giác|hình\s+vuông|hình\s+chữ\s+nhật|hình\s+thoi|hình\s+thang|mặt\s+bên|mặt\s+đáy|đáy)(?!\w)",
+    re.IGNORECASE,
+)
 
 
 def _khoi_tu_toan_hang(pts: list[str] | None, k: KeHoach, f: TypedFact, khoi_cua) -> _Khoi:
@@ -937,6 +958,48 @@ def _khoi_tu_toan_hang(pts: list[str] | None, k: KeHoach, f: TypedFact, khoi_cua
     raise TuChoi("UNKNOWN_SOLID", f"{f.id}: khối từ các đỉnh {pts} không có trong dữ kiện", (f.id,))
 
 
+def _hoi_dien_tich_thiet_dien_phu(f: TypedFact, q: list[str], k: KeHoach, khoi_cua) -> bool:
+    """M5 bounded section-area question binding for `f.plane_relation`:
+    1. Anaphoric `diện tích (của )?nó` when there is a unique derived section in the problem and no competing polygon/face
+       noun phrase intervenes between the section antecedent (`thiết diện`) and `diện tích (của )?nó`.
+    2. Named section polygon `diện tích (của )?(tam giác|tứ giác|đa giác) <POLY>` when `<POLY>` has distinct vertex labels
+       matching the shape noun vertex count (`tam giác` = 3, `tứ giác` = 4) and `set(<POLY>)` equals the grounded section
+       vertex set `{through_point, *stated_cut_points}` (or `<POLY>` is explicitly declared as `thiết diện <POLY>`).
+    """
+    txt = chuan_hoa(k.resolver.text) if k.resolver and k.resolver.text else chuan_hoa(" ".join(q))
+    if any(_DIEN_TICH_NO.search(x) for x in q):
+        if len(k.derived_planes) > 1:
+            raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{f.id}: 'diện tích của nó' mơ hồ khi có nhiều thiết diện", (f.id,))
+        m_no = _DIEN_TICH_NO.search(txt)
+        if m_no is None:
+            raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{f.id}: không tìm thấy cụm 'diện tích của nó' trong nguồn", (f.id,))
+        tds = list(re.finditer(r"thiết\s+diện(?:\s+(?-i:[A-Z][0-9]*'?){3,})?", txt[:m_no.start()], re.IGNORECASE))
+        if len(tds) != 1 or _DANH_TU_CANH_TRANH_TD.search(txt[tds[-1].end():m_no.start()]):
+            raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{f.id}: 'diện tích của nó' không gắn duy nhất với thiết diện", (f.id,))
+        return True
+    m_ten = next((m for x in q for m in _DIEN_TICH_TEN_TD.finditer(x)), None)
+    if m_ten is not None:
+        pts = re.findall(r"[A-Z][0-9]*'?", m_ten["poly"])
+        loai = re.sub(r"\s+", " ", m_ten["loai"].lower())
+        if (len(pts) != len(set(pts))
+                or (loai == "tam giác" and len(pts) != 3)
+                or (loai == "tứ giác" and len(pts) != 4)):
+            raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{f.id}: số đỉnh của {m_ten['poly']} không khớp {loai}", (f.id,))
+        solid_ten = khoi_cua(f.solid, f).ten
+        cat = next((x for x in k.auxiliary if x.get("rule") == DINH_CAT_CANH and x.get("solid") == solid_ten
+                    and x.get("point") == f.point), None)
+        if cat is not None and cat.get("stated_points") and all(cat["stated_points"]):
+            if set(pts) != {f.point, *cat["stated_points"]}:
+                raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{f.id}: đa giác {m_ten['poly']} không khớp các đỉnh thiết diện đã nêu", (f.id,))
+            return True
+        if f.point in pts and re.search(
+                rf"thiết\s+diện(?:\s+là)?(?:\s+(?:tam\s+giác|tứ\s+giác|đa\s+giác))?\s+(?-i:{re.escape(m_ten['poly'])})(?![\w'])",
+                txt, re.IGNORECASE):
+            return True
+        raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{f.id}: đa giác {m_ten['poly']} không phải thiết diện đã xác thực", (f.id,))
+    return False
+
+
 def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
     n = f.quantity
     # Diện tích THIẾT DIỆN chỉ khi câu hỏi gọi tên đúng đối tượng ấy ("diện tích (của) thiết diện"); "diện tích tam giác MAB"
@@ -944,6 +1007,8 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
     hoi_td = any(_DIEN_TICH_THIET_DIEN.search(x) for x in q)
     if n == "area" and hoi_td and any(_DIEN_TICH_DA_GIAC.search(x) for x in q):
         raise TuChoi("AMBIGUOUS_FACT", f"{f.id}: một câu hỏi diện tích nêu cả thiết diện lẫn một đa giác — tách hai câu hỏi", (f.id,))
+    if n == "area" and f.plane_relation and not hoi_td and not f.negated and f.role == "question":
+        hoi_td = _hoi_dien_tich_thiet_dien_phu(f, q, k, khoi_cua)
     if n == "area" and f.plane_relation and hoi_td and not f.negated and f.role == "question":
         return _mat_qua_diem(f, q, k, phat, khoi_cua(f.solid, f).ten, "ask_section_area")
     if f.plane_relation:
@@ -1178,8 +1243,11 @@ def _mat_vuong_duong(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn
     c = phat(f.id, fn, {"solid": khoi, "plane": [m, *dd["labels"]]}, dd["quotes"], f"{MAT_VUONG_DUONG}→{fn}")
     k.trace[-1]["fact"] = f.id
     dd["targets"].append(f.id)
+    cat = [x for x in k.auxiliary if x.get("rule") == DINH_CAT_CANH and x.get("plane_goal") == dd["goal"]]
+    for x in cat:
+        x["quotes"] = list(dd["quotes"])
     for call in k.calls:
-        if call["id"] in dd["constructs"] + dd["targets"]:
+        if call["id"] in dd["constructs"] + dd["targets"] + [i for x in cat for i in x["constructs"]]:
             call["source"]["quotes"] = list(dd["quotes"])
     k.trace.append({"fact": f.id, "step": "decompose_goal", "rule": MAT_VUONG_DUONG,
                     "goal": f"Section({khoi}, Plane({m} ⊥ {''.join(d)}))",

@@ -468,9 +468,9 @@ def test_version_constants_surface_fingerprints_and_historical_receipt_preservat
     # (route B only, provider_offered=False), the base-side wording clause of the source gate.
     # -> registry /15, planner /16 (hybrid-v2-planner-generalization): prism ⊥-plane anchors; bare solid words in section
     # phrases, bound to the cut solid; provider schemas unchanged.
-    assert REGISTRY_VERSION == "geometry-functions/17"
+    assert REGISTRY_VERSION == "geometry-functions/18"
     # planner /14, engine /13 (hybrid-v2-backend-generalization): full > 3-label question planes, witness triple.
-    assert PLANNER_VERSION == "geometry-fact-planner/16"
+    assert PLANNER_VERSION == "geometry-fact-planner/17"
     # engine /11 -> /12 (claude-to-codex-takeover): skew-claim contradiction refusal on ask_distance_lines; registry/planner unchanged.
     assert ENGINE_VERSION == "geometry-function-engine/14"
     # 125 -> 126 (hybrid-offline-readiness-finalization): độ dài nguồn không đọc từ biểu thức/vectơ/giả định.
