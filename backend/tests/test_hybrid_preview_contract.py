@@ -207,7 +207,11 @@ def test_integrity_and_unknown_codes_are_never_a_capability_verdict():
 
 
 #: Literals in the Route D modules that are not refusal codes.
-_NOT_REFUSAL = {'TRUE_ON_CONFIGURATION', 'FALSE_ON_CONFIGURATION', 'LAYOUT_DERIVED', 'GEOMETRY_CONSTRUCTION'}
+_NOT_REFUSAL = {
+    'TRUE_ON_CONFIGURATION', 'FALSE_ON_CONFIGURATION', 'LAYOUT_DERIVED', 'GEOMETRY_CONSTRUCTION',
+    'ENGINE_DERIVED_SECTION', 'ENGINE_DERIVED_EDGE_CUT', 'SOLID_VERTEX', 'SOLID_VERTEX_INTERSECTION',
+    'SOLID_EDGE_INTERSECTION', 'THROUGH_POINT_REUSE',
+}
 _ROUTE_D_SOURCES = ('app/simulation/geometry_functions/registry.py', 'app/simulation/geometry_functions/planner.py',
                     'app/simulation/geometry_functions/engine.py', 'app/simulation/geometry_functions/__init__.py',
                     'app/ai/function_route.py', 'app/ai/fact_extraction.py')

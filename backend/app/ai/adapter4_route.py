@@ -351,6 +351,8 @@ def _validate_engine_derived_section(
 
     if section.get("certificate_version") != PLANE_SECTION_CERTIFICATE_VERSION:
         raise PreviewInvalid("PREVIEW_IDENTITY_CHANGED")
+    if result is None:
+        raise PreviewInvalid("PREVIEW_RESULT_INVALID")
     sid = section.get("section_id")
     if (section.get("certificate_category") != "ENGINE_DERIVED_SECTION"
             or section.get("section_object_id") != obj["id"]
@@ -438,14 +440,19 @@ def _validate_engine_derived_section(
         tp_obj = objects.get(ir_name(tp), {})
         if tp_obj.get("type") != "point3" or sum(a * b for a, b in zip(normal, (Fraction(c) for c in tp_obj["xyz"]))) != offset:
             raise PreviewInvalid("PREVIEW_RESULT_INVALID")
-        if result is not None:
-            dan = next(
-                (d for d in ((result.planner or {}).get("auxiliary") or ())
-                 if d.get("rule") == plane_rule and sid in (d.get("targets") or ())),
-                None,
-            )
-            if dan is None or dan.get("point") != tp or [dan["point"], *dan["labels"]] != plane_points:
-                raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        dan = next(
+            (d for d in ((result.planner or {}).get("auxiliary") or ())
+             if d.get("rule") == plane_rule and sid in (d.get("targets") or ())),
+            None,
+        )
+        if dan is None or dan.get("point") != tp or [dan["point"], *dan["labels"]] != plane_points:
+            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        if plane_rule == MAT_SONG_SONG and (rel.get("kind") != "parallel_plane" or rel.get("parallel_to") != list(dan["parallel_to"])):
+            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        if plane_rule == MAT_HAI_DUONG and (rel.get("kind") != "parallel_lines" or rel.get("lines") != [list(x) for x in dan["lines"]]):
+            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        if plane_rule == MAT_VUONG_DUONG and (rel.get("kind") != "perpendicular_line" or rel.get("perpendicular_to") != list(dan["perpendicular_to"])):
+            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
         # Derived cutting plane cannot be a boundary face of the solid.
         dau = [sum(a * b for a, b in zip(normal, pt)) - offset for pt in solid_pts]
         if sum(x == 0 for x in dau) >= 3 and {x > 0 for x in dau if x != 0} != {True, False}:
@@ -580,27 +587,26 @@ def _validate_engine_derived_section(
         raise PreviewInvalid("PREVIEW_RESULT_INVALID")
 
     # Invariants 8, 9, 10: Nondegeneracy, kernel cross_section agreement, and exact Gram-metric area agreement.
-    if result is not None:
-        sec_mem = result.exec_result.final_memory.get(obj["id"])
-        if (sec_mem is None or not getattr(sec_mem, "is_closed", False)
-                or list(sec_mem.polygon) != poly_pts):
-            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
-        with using(result.chart_metric):
-            p3 = [Vec3(*(Fraction(c) for c in objects[ir_name(p)]["xyz"])) for p in plane_points]
-            cs = cross_section(Polyhedron(tuple(Vec3(*p) for p in solid_pts), tuple(faces)), Plane3.through(*p3))
-        if not same_section_cycle(poly_pts, cs.polygon) or list(cs.polygon) != poly_pts:
-            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
-        area_sq = _polygon_area_squared(poly_pts, result.chart_metric)
-        if Fraction(cert.get("area_squared")) != area_sq:
-            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
-        for c in result.calls:
-            if c.get("fn") != "ask_section_area" or (c.get("args") or {}).get("solid") != section.get("solid"):
-                continue
-            c_plane = (c.get("args") or {}).get("plane") or []
-            if c_plane and all(
-                ir_name(p) in objects
-                and sum(a * b for a, b in zip(normal, (Fraction(x) for x in objects[ir_name(p)]["xyz"]))) == offset
-                for p in c_plane
-            ):
-                if _binh_phuong(result.exec_result.final_memory.get(f"kq_{c['id']}")) != area_sq:
-                    raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+    sec_mem = result.exec_result.final_memory.get(obj["id"])
+    if (sec_mem is None or not getattr(sec_mem, "is_closed", False)
+            or list(sec_mem.polygon) != poly_pts):
+        raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+    with using(result.chart_metric):
+        p3 = [Vec3(*(Fraction(c) for c in objects[ir_name(p)]["xyz"])) for p in plane_points]
+        cs = cross_section(Polyhedron(tuple(Vec3(*p) for p in solid_pts), tuple(faces)), Plane3.through(*p3))
+    if not same_section_cycle(poly_pts, cs.polygon) or list(cs.polygon) != poly_pts:
+        raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+    area_sq = _polygon_area_squared(poly_pts, result.chart_metric)
+    if Fraction(cert.get("area_squared")) != area_sq:
+        raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+    for c in result.calls:
+        if c.get("fn") != "ask_section_area" or (c.get("args") or {}).get("solid") != section.get("solid"):
+            continue
+        c_plane = (c.get("args") or {}).get("plane") or []
+        if c_plane and all(
+            ir_name(p) in objects
+            and sum(a * b for a, b in zip(normal, (Fraction(x) for x in objects[ir_name(p)]["xyz"]))) == offset
+            for p in c_plane
+        ):
+            if _binh_phuong(result.exec_result.final_memory.get(f"kq_{c['id']}")) != area_sq:
+                raise PreviewInvalid("PREVIEW_RESULT_INVALID")

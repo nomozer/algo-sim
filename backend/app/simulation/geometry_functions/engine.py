@@ -1816,17 +1816,6 @@ class _Dung:
                 },
                 "declared_boundary": None,
             })
-            self.trace.append({
-                "step": "certify_plane_section",
-                "object": rec["section_object_id"],
-                "section_id": rec["section_id"],
-                "rule": PLANE_SECTION_CERTIFICATE_RULE,
-                "version": PLANE_SECTION_CERTIFICATE_VERSION,
-                "vertex_count": len(dinh_chung_chi),
-                "area_squared": str(dt2),
-                "relation_verified": True,
-                "provenance": "DERIVED",
-            })
 
     def _goc_duong_mat_cos2(self, line: tuple[str, ...], plane: tuple[str, ...]) -> Fraction:
         """Line–plane angle cos²(θ) = 1 - sin²(θ) directly from Gram determinants of (u, v, w), independent of kernel covectors."""

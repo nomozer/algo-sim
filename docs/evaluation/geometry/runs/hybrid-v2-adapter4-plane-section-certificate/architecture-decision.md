@@ -37,7 +37,7 @@ Each Category B section certificate in `KetQuaTuyen.section_certificates` and `r
   "plane_relation": {
     "kind": "perpendicular_line",
     "point": "M",
-    "line": ["A", "B"]
+    "perpendicular_to": ["A", "B"]
   },
   "plane_equation": {
     "normal": ["36", "0", "0"],
