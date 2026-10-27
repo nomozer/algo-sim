@@ -68,12 +68,12 @@ def no_network(monkeypatch):
     monkeypatch.setenv("ALLOW_LIVE_AI", "0")
 
 
-def run(arm, extra, scale=1, rename=None, reverse=False, solid="S.ABCD"):
+def run(arm, extra, scale=1, rename=None, reverse=False, solid="S.ABCD", kind="hình chóp"):
     """Exercise real provider payload/parser/selector/engine/IR/scene; no direct kernel call."""
     calls = copy.deepcopy(CALLS) + [(fn, args, q) for fn, args, fact, q in extra]
     facts = copy.deepcopy(FACTS) + [fact for fn, args, fact, q in extra]
     quotes = BASE + [q for fn, args, fact, q in extra]
-    query = f"Tính thể tích hình chóp {solid}."
+    query = f"Tính thể tích {kind} {solid}."
     calls.append(("ask_volume", {"solid": solid}, query))
     facts.append({"kind": "question", "role": "question", "quantity": "volume", "solid": solid})
     quotes.append(query)
@@ -290,7 +290,7 @@ def test_projection_waits_for_right_prism_top(arm, monkeypatch, source, y):
         {"kind": "length", "measure": "segment", "points": list("AE"), "value": "2"}])
     r, _ = run(arm, [("orthogonal_projection", {"point": source, "plane": list("EBC"), "image": "I"},
                      {"kind": "projection", "point": source, "points": list("EBC"), "at": "I"},
-                     f"Gọi I là hình chiếu vuông góc của {source} lên (EBC).")], solid="ABCD.EFGH")
+                     f"Gọi I là hình chiếu vuông góc của {source} lên (EBC).")], solid="ABCD.EFGH", kind="hình lập phương")
     assert r.status == "SERVED", (r.code, r.reason)
     assert scene_point(r, "I")["xyz"] == ["1/2", y, "1/2"]
     assert list(r.answers.values()) == ["8"]

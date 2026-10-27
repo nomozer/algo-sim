@@ -49,7 +49,7 @@ from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationEr
 #: /16 (run `hybrid-v2-planner-premerge-review`): a kind word written WITHOUT a solid symbol must be true of the solid the
 #: gate validated — a specific class ("tứ diện", "hộp", "lập phương", "đứng", "tam giác" …) is checked, not only the coarse
 #: pyramid-/prism-like split (`_loai_cum_dung`).
-REGISTRY_VERSION = "geometry-functions/16"
+REGISTRY_VERSION = "geometry-functions/17"
 
 
 class TuChoi(Exception):
@@ -2737,8 +2737,8 @@ def _khoi_khop(m: re.Match, n: str, solid: str, khoi: dict) -> bool:
         return False
     if not sym and not tu and len(khoi) != 1:
         return False
-    # từ loại chỉ xét khi KHÔNG có ký hiệu: ký hiệu đúng đã định danh khối ("hình chóp ABCD.EFGH" gọi đúng lăng trụ ấy)
-    if (kw := m[n + "k"]) and not sym and not tu and not _loai_cum_dung(m.string[m.start(n + "k"):m.end()], solid):
+    # từ loại xét cả khi có hay không có ký hiệu (run `hybrid-v2-source-kind-consistency`)
+    if (kw := m[n + "k"]) and not _loai_cum_dung(m.string[m.start(n + "k"):m.end()], solid):
         return False
     return True
 
@@ -2829,8 +2829,8 @@ _SAU_CAT_BO = r"(?:sau\s+khi|khi)(?:\s+đã)?\s+(?:cắt\s+bỏ|bỏ\s+đi|bỏ|
 
 def _khoi_ro_cum(n: str) -> str:
     return (
-        rf"(?:(?:(?:(?:hình|khối)(?:\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện|đa diện))?|tứ diện)"
-        rf"(?:\s+(?:đứng|đều|tam giác|tứ giác|chữ nhật|lục giác))*\s+)?"
+        rf"(?:(?:(?P<{n}k>(?:(?:hình|khối)(?:\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện|đa diện))?|tứ diện)(?:\s+(?:đứng|đều|tam giác|tứ giác|chữ nhật|lục giác))*)\s+)?"
+
         rf"(?P<{n}s>{_P1}+\.{_P1}+|{_P1}{{4}})(?![\w'])"
         # a derived pyramid named by DESCRIPTION — apex + the plane that cut it (run `hybrid-contract-v2`, D3); resolved
         # only to a pyramid the gate validated on that plane (`_KHOI_MO_TA`), never by guessing
@@ -2859,8 +2859,8 @@ def _sym_khoi(m: re.Match, n: str) -> str | None:
     return next((gd[n + k] for k in ("s", "v", "u", "w") if gd.get(n + k)), None)
 
 
-def _ten_khoi_khop(sym: str | None, solid: str, khoi: dict) -> bool:
-    if not sym:
+def _ten_khoi_khop(sym: str | None, solid: str, khoi: dict, kw: str | None = None) -> bool:
+    if not sym or (kw and not _loai_cum_dung(kw, solid)):
         return False
     if "." in sym:
         if sym == solid:
@@ -2885,7 +2885,8 @@ def _ds_khoi_ro_cum(n: str) -> str:
 def _ds_khoi_khop(m: re.Match, n: str, solids: list[str], khoi: dict) -> bool:
     gd = m.groupdict()
     raw = gd.get(n) or ""
-    toks = re.findall(rf"{_P1}+\.{_P1}+|{_P1}{{4}}", raw)
+    items = [(x["k"], x["s"]) for x in re.finditer(_khoi_ro_cum(""), raw, re.I) if x["s"]]
+    toks = [t for _kw, t in items]
     if not toks or len(toks) != len(solids) or len(set(toks)) != len(toks) or len(set(solids)) != len(solids):
         return False
     if q := (gd.get(n + "q") or "").lower():
@@ -2896,8 +2897,8 @@ def _ds_khoi_khop(m: re.Match, n: str, solids: list[str], khoi: dict) -> bool:
         if q == "các" and len(toks) < 2:
             return False
     used: set[int] = set()
-    for t in toks:
-        idx = next((i for i, s in enumerate(solids) if i not in used and _ten_khoi_khop(t, s, khoi)), None)
+    for kw, t in items:
+        idx = next((i for i, s in enumerate(solids) if i not in used and _ten_khoi_khop(t, s, khoi, kw)), None)
         if idx is None:
             return False
         used.add(idx)
@@ -2955,16 +2956,16 @@ _CUM_HOI = {
                           if x[1] or x[2]} == {frozenset(a.plane)})],
     "ask_volume_ratio": [
         (_cum(rf"(?:tỉ|tỷ)\s+số(?:\s+giữa)?(?:\s+thể\s+tích)?(?:\s+(?:của|giữa))?"
-              rf"(?:\s+(?:hai|2)\s+(?:(?:hình|khối)(?:\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện|đa diện))?|(?:chóp|lăng trụ|lập phương|hộp|tứ diện|đa diện))"
-              rf"(?:\s+(?:đứng|đều|tam giác|tứ giác|chữ nhật|lục giác))*)?"
+              rf"(?:\s+(?:hai|2)\s+(?P<hk>(?:(?:hình|khối)(?:\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện|đa diện))?|(?:chóp|lăng trụ|lập phương|hộp|tứ diện|đa diện))(?:\s+(?:đứng|đều|tam giác|tứ giác|chữ nhật|lục giác))*))?"
+
               rf"\s+(?:{_v_ky_hieu_cum('x')}|{_khoi_ro_cum('x')})"
               rf"\s+(?:và|với|trên|so\s+với|chia(?:\s+cho)?)"
               rf"(?:\s+thể\s+tích(?:\s+của)?)?"
               rf"\s+(?:{_v_ky_hieu_cum('y')}|{_khoi_ro_cum('y')})"
               rf"(?:\s*,?\s*(?:tức\s+là\s+)?{_v_ky_hieu_cum('c')}\s*/\s*{_v_ky_hieu_cum('d')})?"),
          lambda m, a, k: (
-             _ten_khoi_khop(_sym_khoi(m, "x"), a.numerator_solid, k)
-             and _ten_khoi_khop(_sym_khoi(m, "y"), a.denominator_solid, k)
+             _ten_khoi_khop(_sym_khoi(m, "x"), a.numerator_solid, k, m.groupdict().get("xk") or m.groupdict().get("hk"))
+             and _ten_khoi_khop(_sym_khoi(m, "y"), a.denominator_solid, k, m.groupdict().get("yk") or m.groupdict().get("hk"))
              and (not _sym_khoi(m, "c") or (
                  _ten_khoi_khop(_sym_khoi(m, "c"), a.numerator_solid, k)
                  and _ten_khoi_khop(_sym_khoi(m, "d"), a.denominator_solid, k)
@@ -2973,19 +2974,19 @@ _CUM_HOI = {
         (_cum(rf"(?:(?:tỉ|tỷ)\s+số(?:\s+thể\s+tích)?(?:\s+(?:của|giữa))?\s+)?"
               rf"{_v_ky_hieu_cum('x')}\s*/\s*{_v_ky_hieu_cum('y')}"),
          lambda m, a, k: (
-             _ten_khoi_khop(_sym_khoi(m, "x"), a.numerator_solid, k)
-             and _ten_khoi_khop(_sym_khoi(m, "y"), a.denominator_solid, k)
+             _ten_khoi_khop(_sym_khoi(m, "x"), a.numerator_solid, k, m.groupdict().get("xk") or m.groupdict().get("hk"))
+             and _ten_khoi_khop(_sym_khoi(m, "y"), a.denominator_solid, k, m.groupdict().get("yk") or m.groupdict().get("hk"))
          )),
     ],
     "ask_residual_volume": [
         (_cum(rf"{_PHAN_CON_LAI}\s+của\s+{_khoi_ro_cum('o')}\s+{_SAU_CAT_BO}\s+{_ds_khoi_ro_cum('s')}"),
          lambda m, a, k: (
-             _ten_khoi_khop(_sym_khoi(m, "o"), a.original_solid, k)
+             _ten_khoi_khop(_sym_khoi(m, "o"), a.original_solid, k, m.groupdict().get("ok"))
              and _ds_khoi_khop(m, "s", a.subtracted_solids, k)
          )),
         (_cum(rf"{_PHAN_CON_LAI}\s+{_SAU_CAT_BO}\s+{_ds_khoi_ro_cum('s')}\s+(?:khỏi|từ|của|ở|trong)\s+{_khoi_ro_cum('o')}"),
          lambda m, a, k: (
-             _ten_khoi_khop(_sym_khoi(m, "o"), a.original_solid, k)
+             _ten_khoi_khop(_sym_khoi(m, "o"), a.original_solid, k, m.groupdict().get("ok"))
              and _ds_khoi_khop(m, "s", a.subtracted_solids, k)
          )),
     ],
@@ -3414,7 +3415,7 @@ def _doc_phep_dung_cau_hoi(de: str, start: int, end: int, calls: tuple[LoiGoi, .
             if any(_cung_mat(_mat_cua(m, "m", khoi), c.args.plane) and _khoi_thiet_dien(m, c.args, khoi) for c in sec_calls):
                 spans.append((m.start(), m.end()))
         for m in _CAT_BOI[3].finditer(de, start, end):
-            if any(_cung_mat(frozenset(_nhan_cum(m[1] or m[2])), c.args.plane) for c in sec_calls):
+            if any(_cung_mat(frozenset(_nhan_cum(m[1] or m[2])), c.args.plane) and _cum_goi_khoi(m[0], c.args.solid, calls) for c in sec_calls):
                 spans.append((m.start(), m.end()))
     if any(c.id in phu and c.fn in ("section", "ask_section_area") for c in calls):
         for pat in (_CUM_DUNG_MAT_PHU, _CUM_DUNG_THIET_DIEN_PHU):
@@ -3548,7 +3549,7 @@ def _cum_goi_khoi(cum: str, solid: str, calls: tuple | None = None) -> bool:
     m = re.match(rf"thiết diện\s+(?:của\s+)?({_KHOI_NGU})", cum, re.I) or re.search(r"cắt\s+(.*?)\s+theo", cum, re.I | re.S)
     cum = m[1] if m else ""
     if ky := [phan for _a, _b, phan in _tu_nhan(cum)]:
-        return all(".".join(map("".join, p)) == solid if len(p) == 2 else set(p[0]) == set(_nhan_cum(solid)) for p in ky)
+        return all(".".join(map("".join, p)) == solid if len(p) == 2 else set(p[0]) == set(_nhan_cum(solid)) for p in ky) and _loai_cum_dung(cum, solid, calls)
     return _loai_cum_dung(cum, solid, calls)
 
 
@@ -4019,7 +4020,7 @@ def _mat_hai_duong_dung_nguon(c: LoiGoi, point: str, lines: list[list[str]], nam
             if _vai_tro_tai(de,m.start()) in ('GOAL','CONDITIONAL') or _phu_dinh(de,m.start(),m[0]):
                 continue
             symbols={''.join(parts[0])+'.'+''.join(parts[1]) for _a,_b,parts in _tu_nhan(m[0]) if len(parts)==2}
-            if symbols and symbols != {c.args.solid}:
+            if (symbols and symbols != {c.args.solid}) or not _cum_goi_khoi(m[0], c.args.solid, calls):
                 continue
             if c.fn == 'section':
                 tail=_HET_CAU.search(de,m.end())
@@ -4050,7 +4051,7 @@ def mat_cat_dung_nguon(c: LoiGoi, calls: tuple[LoiGoi, ...]) -> bool:
     if (ky_hieu and c.args.solid not in ky_hieu) or (not ky_hieu and len(khoi) != 1):
         return False
     day = khoi.get(c.args.solid)
-    return any(_tap_mat(m, 1, day) == frozenset(c.args.plane) for q in c.quotes for mau in _CAT_BOI for m in mau.finditer(q))
+    return any(_tap_mat(m, 1, day) == frozenset(c.args.plane) and _cum_goi_khoi(m[0], c.args.solid, calls) for q in c.quotes for mau in _CAT_BOI for m in mau.finditer(q))
 
 
 _DIEM = r"[A-Z][0-9]*'?"

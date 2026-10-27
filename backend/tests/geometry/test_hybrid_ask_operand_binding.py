@@ -403,7 +403,7 @@ MUTANTS = [
      ("Tính nửa thể tích khối chóp S.ABCD.", VOL, False)),
     ("section solid word not checked",
      # re-pointed to the /16 kind check (run `hybrid-v2-planner-premerge-review`)
-     '    if (kw := m[n + "k"]) and not sym and not tu and not _loai_cum_dung(',
+     '    if (kw := m[n + "k"]) and not _loai_cum_dung(',
      '    if False and not _loai_cum_dung(', ("Tính diện tích thiết diện của khối lập phương cắt bởi (MAB).", SAREA, True)),
 ]
 VALUE_MUTANTS = [
@@ -484,7 +484,12 @@ def test_solid_symbol_outranks_the_solid_word():
     from app.simulation.geometry_functions import registry as RG
 
     m = RG._CUM_HOI["ask_volume"][0][0].search("Tính thể tích hình chóp ABCD.EFGH.")
-    assert m and RG._khoi_khop(m, "k", "ABCD.EFGH", {"ABCD.EFGH": frozenset("ABCD")})
+    # Amended by OWNER DECISION `SOURCE_CONTRADICTION_MUST_FAIL_CLOSED` (run `hybrid-v2-source-kind-consistency`,
+    # `docs/evaluation/geometry/runs/hybrid-v2-source-kind-consistency/decision-amendment.md`): a correct symbol identifies
+    # the solid, and an explicit kind phrase must ALSO be true of that solid (`_loai_cum_dung`).
+    assert m and not RG._khoi_khop(m, "k", "ABCD.EFGH", {"ABCD.EFGH": frozenset("ABCD")})
+    m_ok = RG._CUM_HOI["ask_volume"][0][0].search("Tính thể tích khối lăng trụ ABCD.EFGH.")
+    assert m_ok and RG._khoi_khop(m_ok, "k", "ABCD.EFGH", {"ABCD.EFGH": frozenset("ABCD")})
     m = RG._CUM_HOI["ask_volume"][0][0].search("Tính thể tích khối lập phương.")
     assert m and not RG._khoi_khop(m, "k", "S.ABCD", {"S.ABCD": frozenset("ABCD")})
 

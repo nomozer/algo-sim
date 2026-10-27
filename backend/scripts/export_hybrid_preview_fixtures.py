@@ -311,6 +311,8 @@ IDENTITY_DELTAS = (
                   "planner_version": ("geometry-fact-planner/15", "geometry-fact-planner/16")}},
     {"run": "hybrid-v2-planner-premerge-review",           # planner /16, engine /14 unchanged
      "versions": {"registry_version": ("geometry-functions/15", "geometry-functions/16")}},
+    {"run": "hybrid-v2-source-kind-consistency",           # planner /16, engine /14 unchanged
+     "versions": {"registry_version": ("geometry-functions/16", "geometry-functions/17")}},
 )
 
 
