@@ -1,0 +1,2901 @@
+{
+  "classification": "AUTHORED_DEVELOPMENT_NOT_HOLDOUT",
+  "live_calls": 0,
+  "cases": [
+    {
+      "id": "right-base",
+      "family": "triangle",
+      "text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Gọi M là trung điểm của BC'. Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P). Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "solid",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ đứng ABC.A'B'C'."
+            ],
+            "solid": "ABC.A'B'C'",
+            "solid_type": "prism",
+            "right": true
+          },
+          {
+            "id": "shape",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác vuông tại A."
+            ],
+            "at": "A",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 6."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AC = 8."
+            ],
+            "points": [
+              "A",
+              "C"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "height",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 12."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "measure": "segment",
+            "value": "12"
+          },
+          {
+            "id": "mid",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của BC'."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "C'"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "B"
+            ],
+            "plane_relation": "perpendicular"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "quantity": "area",
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "B"
+            ],
+            "plane_relation": "perpendicular"
+          }
+        ]
+      },
+      "geometry": {
+        "points": {
+          "A": [
+            "0",
+            "0",
+            "0"
+          ],
+          "B": [
+            "6",
+            "0",
+            "0"
+          ],
+          "C": [
+            "0",
+            "8",
+            "0"
+          ],
+          "A'": [
+            "0",
+            "0",
+            "12"
+          ],
+          "B'": [
+            "6",
+            "0",
+            "12"
+          ],
+          "C'": [
+            "0",
+            "8",
+            "12"
+          ],
+          "M": [
+            "3.0",
+            "4.0",
+            "6.0"
+          ]
+        },
+        "base": [
+          "A",
+          "B",
+          "C"
+        ],
+        "top": [
+          "A'",
+          "B'",
+          "C'"
+        ],
+        "point": "M",
+        "line": [
+          "A",
+          "B"
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_codes": [],
+      "unit": "1",
+      "expected_area_squared": "2304"
+    },
+    {
+      "id": "right-top",
+      "family": "triangle",
+      "text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Gọi M là trung điểm của BC'. Dựng mặt phẳng (P) đi qua M và vuông góc với A'B'. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P). Dựng mặt phẳng (P) đi qua M và vuông góc với A'B'. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "solid",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ đứng ABC.A'B'C'."
+            ],
+            "solid": "ABC.A'B'C'",
+            "solid_type": "prism",
+            "right": true
+          },
+          {
+            "id": "shape",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác vuông tại A."
+            ],
+            "at": "A",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 6."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AC = 8."
+            ],
+            "points": [
+              "A",
+              "C"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "height",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 12."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "measure": "segment",
+            "value": "12"
+          },
+          {
+            "id": "mid",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của BC'."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "C'"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với A'B'. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A'",
+              "B'"
+            ],
+            "plane_relation": "perpendicular"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với A'B'. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "quantity": "area",
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A'",
+              "B'"
+            ],
+            "plane_relation": "perpendicular"
+          }
+        ]
+      },
+      "geometry": {
+        "points": {
+          "A": [
+            "0",
+            "0",
+            "0"
+          ],
+          "B": [
+            "6",
+            "0",
+            "0"
+          ],
+          "C": [
+            "0",
+            "8",
+            "0"
+          ],
+          "A'": [
+            "0",
+            "0",
+            "12"
+          ],
+          "B'": [
+            "6",
+            "0",
+            "12"
+          ],
+          "C'": [
+            "0",
+            "8",
+            "12"
+          ],
+          "M": [
+            "3.0",
+            "4.0",
+            "6.0"
+          ]
+        },
+        "base": [
+          "A",
+          "B",
+          "C"
+        ],
+        "top": [
+          "A'",
+          "B'",
+          "C'"
+        ],
+        "point": "M",
+        "line": [
+          "A'",
+          "B'"
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_codes": [],
+      "unit": "1",
+      "expected_area_squared": "2304"
+    },
+    {
+      "id": "right-lateral",
+      "family": "triangle",
+      "text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Gọi M là trung điểm của BC'. Dựng mặt phẳng (P) đi qua M và vuông góc với AA'. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P). Dựng mặt phẳng (P) đi qua M và vuông góc với AA'. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "solid",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ đứng ABC.A'B'C'."
+            ],
+            "solid": "ABC.A'B'C'",
+            "solid_type": "prism",
+            "right": true
+          },
+          {
+            "id": "shape",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác vuông tại A."
+            ],
+            "at": "A",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 6."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AC = 8."
+            ],
+            "points": [
+              "A",
+              "C"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "height",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 12."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "measure": "segment",
+            "value": "12"
+          },
+          {
+            "id": "mid",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của BC'."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "C'"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AA'. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "A'"
+            ],
+            "plane_relation": "perpendicular"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AA'. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "quantity": "area",
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "A'"
+            ],
+            "plane_relation": "perpendicular"
+          }
+        ]
+      },
+      "geometry": {
+        "points": {
+          "A": [
+            "0",
+            "0",
+            "0"
+          ],
+          "B": [
+            "6",
+            "0",
+            "0"
+          ],
+          "C": [
+            "0",
+            "8",
+            "0"
+          ],
+          "A'": [
+            "0",
+            "0",
+            "12"
+          ],
+          "B'": [
+            "6",
+            "0",
+            "12"
+          ],
+          "C'": [
+            "0",
+            "8",
+            "12"
+          ],
+          "M": [
+            "3.0",
+            "4.0",
+            "6.0"
+          ]
+        },
+        "base": [
+          "A",
+          "B",
+          "C"
+        ],
+        "top": [
+          "A'",
+          "B'",
+          "C'"
+        ],
+        "point": "M",
+        "line": [
+          "A",
+          "A'"
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_codes": [],
+      "unit": "1",
+      "expected_area_squared": "576"
+    },
+    {
+      "id": "right-diagonal",
+      "family": "triangle",
+      "text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Gọi M là trung điểm của BC'. Dựng mặt phẳng (P) đi qua M và vuông góc với BC'. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P). Dựng mặt phẳng (P) đi qua M và vuông góc với BC'. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "solid",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ đứng ABC.A'B'C'."
+            ],
+            "solid": "ABC.A'B'C'",
+            "solid_type": "prism",
+            "right": true
+          },
+          {
+            "id": "shape",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác vuông tại A."
+            ],
+            "at": "A",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 6."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AC = 8."
+            ],
+            "points": [
+              "A",
+              "C"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "height",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 12."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "measure": "segment",
+            "value": "12"
+          },
+          {
+            "id": "mid",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của BC'."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "C'"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với BC'. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "B",
+              "C'"
+            ],
+            "plane_relation": "perpendicular"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với BC'. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "quantity": "area",
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "B",
+              "C'"
+            ],
+            "plane_relation": "perpendicular"
+          }
+        ]
+      },
+      "geometry": {
+        "points": {
+          "A": [
+            "0",
+            "0",
+            "0"
+          ],
+          "B": [
+            "6",
+            "0",
+            "0"
+          ],
+          "C": [
+            "0",
+            "8",
+            "0"
+          ],
+          "A'": [
+            "0",
+            "0",
+            "12"
+          ],
+          "B'": [
+            "6",
+            "0",
+            "12"
+          ],
+          "C'": [
+            "0",
+            "8",
+            "12"
+          ],
+          "M": [
+            "3.0",
+            "4.0",
+            "6.0"
+          ]
+        },
+        "base": [
+          "A",
+          "B",
+          "C"
+        ],
+        "top": [
+          "A'",
+          "B'",
+          "C'"
+        ],
+        "point": "M",
+        "line": [
+          "B",
+          "C'"
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_codes": [],
+      "unit": "1",
+      "expected_area_squared": "976"
+    },
+    {
+      "id": "cuboid-base",
+      "family": "cuboid",
+      "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. Đáy ABCD là hình chữ nhật. AB = 6. AD = 8. AA' = 12. Gọi M là trung điểm của AC'. Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Dựng thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' với (P). Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Tính diện tích thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "solid",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+            ],
+            "solid": "ABCD.A'B'C'D'",
+            "solid_type": "cuboid",
+            "right": true
+          },
+          {
+            "id": "shape",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình chữ nhật."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "rectangle"
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 6."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "ad",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AD = 8."
+            ],
+            "points": [
+              "A",
+              "D"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "height",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 12."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "measure": "segment",
+            "value": "12"
+          },
+          {
+            "id": "mid",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của AC'."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "C'"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Dựng thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' với (P)."
+            ],
+            "solid": "ABCD.A'B'C'D'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "B"
+            ],
+            "plane_relation": "perpendicular"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Tính diện tích thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' với (P)."
+            ],
+            "quantity": "area",
+            "solid": "ABCD.A'B'C'D'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "B"
+            ],
+            "plane_relation": "perpendicular"
+          }
+        ]
+      },
+      "geometry": {
+        "points": {
+          "A": [
+            "0",
+            "0",
+            "0"
+          ],
+          "B": [
+            "6",
+            "0",
+            "0"
+          ],
+          "C": [
+            "6",
+            "8",
+            "0"
+          ],
+          "D": [
+            "0",
+            "8",
+            "0"
+          ],
+          "A'": [
+            "0",
+            "0",
+            "12"
+          ],
+          "B'": [
+            "6",
+            "0",
+            "12"
+          ],
+          "C'": [
+            "6",
+            "8",
+            "12"
+          ],
+          "D'": [
+            "0",
+            "8",
+            "12"
+          ],
+          "M": [
+            "3.0",
+            "4.0",
+            "6.0"
+          ]
+        },
+        "base": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "top": [
+          "A'",
+          "B'",
+          "C'",
+          "D'"
+        ],
+        "point": "M",
+        "line": [
+          "A",
+          "B"
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_codes": [],
+      "unit": "1",
+      "expected_area_squared": "9216"
+    },
+    {
+      "id": "cube-diagonal",
+      "family": "cube",
+      "text": "Cho hình lập phương ABCD.A'B'C'D'. Đáy ABCD là hình chữ nhật. AB = 4. AD = 4. AA' = 4. Gọi M là trung điểm của AC'. Dựng mặt phẳng (P) đi qua M và vuông góc với AC'. Dựng thiết diện của hình lập phương ABCD.A'B'C'D' với (P). Dựng mặt phẳng (P) đi qua M và vuông góc với AC'. Tính diện tích thiết diện của hình lập phương ABCD.A'B'C'D' với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "solid",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình lập phương ABCD.A'B'C'D'."
+            ],
+            "solid": "ABCD.A'B'C'D'",
+            "solid_type": "cube",
+            "right": true
+          },
+          {
+            "id": "shape",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình chữ nhật."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "rectangle"
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 4."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "4"
+          },
+          {
+            "id": "ad",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AD = 4."
+            ],
+            "points": [
+              "A",
+              "D"
+            ],
+            "measure": "segment",
+            "value": "4"
+          },
+          {
+            "id": "height",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 4."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "measure": "segment",
+            "value": "4"
+          },
+          {
+            "id": "mid",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của AC'."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "C'"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AC'. Dựng thiết diện của hình lập phương ABCD.A'B'C'D' với (P)."
+            ],
+            "solid": "ABCD.A'B'C'D'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "C'"
+            ],
+            "plane_relation": "perpendicular"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AC'. Tính diện tích thiết diện của hình lập phương ABCD.A'B'C'D' với (P)."
+            ],
+            "quantity": "area",
+            "solid": "ABCD.A'B'C'D'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "C'"
+            ],
+            "plane_relation": "perpendicular"
+          }
+        ]
+      },
+      "geometry": {
+        "points": {
+          "A": [
+            "0",
+            "0",
+            "0"
+          ],
+          "B": [
+            "4",
+            "0",
+            "0"
+          ],
+          "C": [
+            "4",
+            "4",
+            "0"
+          ],
+          "D": [
+            "0",
+            "4",
+            "0"
+          ],
+          "A'": [
+            "0",
+            "0",
+            "4"
+          ],
+          "B'": [
+            "4",
+            "0",
+            "4"
+          ],
+          "C'": [
+            "4",
+            "4",
+            "4"
+          ],
+          "D'": [
+            "0",
+            "4",
+            "4"
+          ],
+          "M": [
+            "2.0",
+            "2.0",
+            "2.0"
+          ]
+        },
+        "base": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "top": [
+          "A'",
+          "B'",
+          "C'",
+          "D'"
+        ],
+        "point": "M",
+        "line": [
+          "A",
+          "C'"
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_codes": [],
+      "unit": "1",
+      "expected_area_squared": "432"
+    },
+    {
+      "id": "oblique-base",
+      "family": "oblique",
+      "text": "Cho lăng trụ ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. Gọi H là trung điểm của BC. Hình chiếu vuông góc của A' lên (ABC) là H. AA' = 13. Gọi M là trung điểm của BC'. Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Dựng thiết diện của lăng trụ ABC.A'B'C' với (P). Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Tính diện tích thiết diện của lăng trụ ABC.A'B'C' với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "solid",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ ABC.A'B'C'."
+            ],
+            "solid": "ABC.A'B'C'",
+            "solid_type": "prism",
+            "right": false
+          },
+          {
+            "id": "shape",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác vuông tại A."
+            ],
+            "at": "A",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 6."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AC = 8."
+            ],
+            "points": [
+              "A",
+              "C"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "foot",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi H là trung điểm của BC."
+            ],
+            "point": "H",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "projection",
+            "kind": "projection",
+            "role": "premise",
+            "quotes": [
+              "Hình chiếu vuông góc của A' lên (ABC) là H."
+            ],
+            "point": "A'",
+            "points": [
+              "A",
+              "B",
+              "C"
+            ],
+            "at": "H"
+          },
+          {
+            "id": "height",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 13."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "measure": "segment",
+            "value": "13"
+          },
+          {
+            "id": "mid",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của BC'."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "C'"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Dựng thiết diện của lăng trụ ABC.A'B'C' với (P)."
+            ],
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "B"
+            ],
+            "plane_relation": "perpendicular"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Tính diện tích thiết diện của lăng trụ ABC.A'B'C' với (P)."
+            ],
+            "quantity": "area",
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "B"
+            ],
+            "plane_relation": "perpendicular"
+          }
+        ]
+      },
+      "geometry": {
+        "points": {
+          "A": [
+            "0",
+            "0",
+            "0"
+          ],
+          "B": [
+            "6",
+            "0",
+            "0"
+          ],
+          "C": [
+            "0",
+            "8",
+            "0"
+          ],
+          "H": [
+            "3",
+            "4",
+            "0"
+          ],
+          "A'": [
+            "3",
+            "4",
+            "12"
+          ],
+          "B'": [
+            "9",
+            "4",
+            "12"
+          ],
+          "C'": [
+            "3",
+            "12",
+            "12"
+          ],
+          "M": [
+            "9/2",
+            "6",
+            "6.0"
+          ]
+        },
+        "base": [
+          "A",
+          "B",
+          "C"
+        ],
+        "top": [
+          "A'",
+          "B'",
+          "C'"
+        ],
+        "point": "M",
+        "line": [
+          "A",
+          "B"
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_codes": [],
+      "unit": "1",
+      "expected_area_squared": "2304"
+    },
+    {
+      "id": "oblique-diagonal",
+      "family": "oblique",
+      "text": "Cho lăng trụ ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. Gọi H là trung điểm của BC. Hình chiếu vuông góc của A' lên (ABC) là H. AA' = 13. Gọi M là trung điểm của BC'. Dựng mặt phẳng (P) đi qua M và vuông góc với AC'. Dựng thiết diện của lăng trụ ABC.A'B'C' với (P). Dựng mặt phẳng (P) đi qua M và vuông góc với AC'. Tính diện tích thiết diện của lăng trụ ABC.A'B'C' với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "solid",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ ABC.A'B'C'."
+            ],
+            "solid": "ABC.A'B'C'",
+            "solid_type": "prism",
+            "right": false
+          },
+          {
+            "id": "shape",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác vuông tại A."
+            ],
+            "at": "A",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 6."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AC = 8."
+            ],
+            "points": [
+              "A",
+              "C"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "foot",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi H là trung điểm của BC."
+            ],
+            "point": "H",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "projection",
+            "kind": "projection",
+            "role": "premise",
+            "quotes": [
+              "Hình chiếu vuông góc của A' lên (ABC) là H."
+            ],
+            "point": "A'",
+            "points": [
+              "A",
+              "B",
+              "C"
+            ],
+            "at": "H"
+          },
+          {
+            "id": "height",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 13."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "measure": "segment",
+            "value": "13"
+          },
+          {
+            "id": "mid",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của BC'."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "C'"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AC'. Dựng thiết diện của lăng trụ ABC.A'B'C' với (P)."
+            ],
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "C'"
+            ],
+            "plane_relation": "perpendicular"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AC'. Tính diện tích thiết diện của lăng trụ ABC.A'B'C' với (P)."
+            ],
+            "quantity": "area",
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "C'"
+            ],
+            "plane_relation": "perpendicular"
+          }
+        ]
+      },
+      "geometry": {
+        "points": {
+          "A": [
+            "0",
+            "0",
+            "0"
+          ],
+          "B": [
+            "6",
+            "0",
+            "0"
+          ],
+          "C": [
+            "0",
+            "8",
+            "0"
+          ],
+          "H": [
+            "3",
+            "4",
+            "0"
+          ],
+          "A'": [
+            "3",
+            "4",
+            "12"
+          ],
+          "B'": [
+            "9",
+            "4",
+            "12"
+          ],
+          "C'": [
+            "3",
+            "12",
+            "12"
+          ],
+          "M": [
+            "9/2",
+            "6",
+            "6.0"
+          ]
+        },
+        "base": [
+          "A",
+          "B",
+          "C"
+        ],
+        "top": [
+          "A'",
+          "B'",
+          "C'"
+        ],
+        "point": "M",
+        "line": [
+          "A",
+          "C'"
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_codes": [],
+      "unit": "1",
+      "expected_area_squared": "2737152/4489"
+    },
+    {
+      "id": "renamed-changed-reversed",
+      "family": "triangle",
+      "text": "Cho lăng trụ đứng DEF.D'E'F'. Đáy DEF là tam giác vuông tại D. DE = 3. DF = 4. DD' = 5. Gọi M là trung điểm của EF'. Dựng mặt phẳng (P) đi qua M và vuông góc với F'E. Dựng thiết diện của lăng trụ đứng DEF.D'E'F' với (P). Dựng mặt phẳng (P) đi qua M và vuông góc với F'E. Tính diện tích thiết diện của lăng trụ đứng DEF.D'E'F' với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với F'E. Tính diện tích thiết diện của lăng trụ đứng DEF.D'E'F' với (P)."
+            ],
+            "quantity": "area",
+            "solid": "DEF.D'E'F'",
+            "point": "M",
+            "points_b": [
+              "F'",
+              "E"
+            ],
+            "plane_relation": "perpendicular"
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với F'E. Dựng thiết diện của lăng trụ đứng DEF.D'E'F' với (P)."
+            ],
+            "solid": "DEF.D'E'F'",
+            "point": "M",
+            "points_b": [
+              "F'",
+              "E"
+            ],
+            "plane_relation": "perpendicular"
+          },
+          {
+            "id": "mid",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của EF'."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "E",
+              "F'"
+            ]
+          },
+          {
+            "id": "height",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "DD' = 5."
+            ],
+            "points": [
+              "D",
+              "D'"
+            ],
+            "measure": "segment",
+            "value": "5"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "DF = 4."
+            ],
+            "points": [
+              "D",
+              "F"
+            ],
+            "measure": "segment",
+            "value": "4"
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "DE = 3."
+            ],
+            "points": [
+              "D",
+              "E"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "shape",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy DEF là tam giác vuông tại D."
+            ],
+            "at": "D",
+            "points": [
+              "E",
+              "F"
+            ]
+          },
+          {
+            "id": "solid",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ đứng DEF.D'E'F'."
+            ],
+            "solid": "DEF.D'E'F'",
+            "solid_type": "prism",
+            "right": true
+          }
+        ]
+      },
+      "geometry": {
+        "points": {
+          "D": [
+            "0",
+            "0",
+            "0"
+          ],
+          "E": [
+            "3",
+            "0",
+            "0"
+          ],
+          "F": [
+            "0",
+            "4",
+            "0"
+          ],
+          "D'": [
+            "0",
+            "0",
+            "5"
+          ],
+          "E'": [
+            "3",
+            "0",
+            "5"
+          ],
+          "F'": [
+            "0",
+            "4",
+            "5"
+          ],
+          "M": [
+            "1.5",
+            "2.0",
+            "2.5"
+          ]
+        },
+        "base": [
+          "D",
+          "E",
+          "F"
+        ],
+        "top": [
+          "D'",
+          "E'",
+          "F'"
+        ],
+        "point": "M",
+        "line": [
+          "F'",
+          "E"
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_codes": [],
+      "unit": "1",
+      "expected_area_squared": "72"
+    },
+    {
+      "id": "symbolic-top",
+      "family": "triangle",
+      "text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6a. AC = 8a. AA' = 12a. Gọi M là trung điểm của BC'. Dựng mặt phẳng (P) đi qua M và vuông góc với B'A'. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P). Dựng mặt phẳng (P) đi qua M và vuông góc với B'A'. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "solid",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ đứng ABC.A'B'C'."
+            ],
+            "solid": "ABC.A'B'C'",
+            "solid_type": "prism",
+            "right": true
+          },
+          {
+            "id": "shape",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác vuông tại A."
+            ],
+            "at": "A",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 6a."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "6a"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AC = 8a."
+            ],
+            "points": [
+              "A",
+              "C"
+            ],
+            "measure": "segment",
+            "value": "8a"
+          },
+          {
+            "id": "height",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 12a."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "measure": "segment",
+            "value": "12a"
+          },
+          {
+            "id": "mid",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của BC'."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "C'"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với B'A'. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "B'",
+              "A'"
+            ],
+            "plane_relation": "perpendicular"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với B'A'. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "quantity": "area",
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "B'",
+              "A'"
+            ],
+            "plane_relation": "perpendicular"
+          }
+        ]
+      },
+      "geometry": {
+        "points": {
+          "A": [
+            "0",
+            "0",
+            "0"
+          ],
+          "B": [
+            "6",
+            "0",
+            "0"
+          ],
+          "C": [
+            "0",
+            "8",
+            "0"
+          ],
+          "A'": [
+            "0",
+            "0",
+            "12"
+          ],
+          "B'": [
+            "6",
+            "0",
+            "12"
+          ],
+          "C'": [
+            "0",
+            "8",
+            "12"
+          ],
+          "M": [
+            "3.0",
+            "4.0",
+            "6.0"
+          ]
+        },
+        "base": [
+          "A",
+          "B",
+          "C"
+        ],
+        "top": [
+          "A'",
+          "B'",
+          "C'"
+        ],
+        "point": "M",
+        "line": [
+          "B'",
+          "A'"
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_codes": [],
+      "unit": "a^2",
+      "expected_area_squared": "2304"
+    },
+    {
+      "id": "missing-dimension",
+      "family": "triangle",
+      "text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8.  Gọi M là trung điểm của BC'. Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P). Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "solid",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ đứng ABC.A'B'C'."
+            ],
+            "solid": "ABC.A'B'C'",
+            "solid_type": "prism",
+            "right": true
+          },
+          {
+            "id": "shape",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác vuông tại A."
+            ],
+            "at": "A",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 6."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AC = 8."
+            ],
+            "points": [
+              "A",
+              "C"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "mid",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của BC'."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "C'"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "B"
+            ],
+            "plane_relation": "perpendicular"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "quantity": "area",
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "B"
+            ],
+            "plane_relation": "perpendicular"
+          }
+        ]
+      },
+      "geometry": null,
+      "expected_status": "REFUSED",
+      "expected_codes": [
+        "MISSING_DIMENSION"
+      ],
+      "unit": "1",
+      "expected_area_squared": null
+    },
+    {
+      "id": "conflicting-length",
+      "family": "triangle",
+      "text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Gọi M là trung điểm của BC'. Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P). Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P). AA' = 13.",
+      "payload": {
+        "facts": [
+          {
+            "id": "solid",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ đứng ABC.A'B'C'."
+            ],
+            "solid": "ABC.A'B'C'",
+            "solid_type": "prism",
+            "right": true
+          },
+          {
+            "id": "shape",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác vuông tại A."
+            ],
+            "at": "A",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 6."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AC = 8."
+            ],
+            "points": [
+              "A",
+              "C"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "height",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 12."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "measure": "segment",
+            "value": "12"
+          },
+          {
+            "id": "mid",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của BC'."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "C'"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "B"
+            ],
+            "plane_relation": "perpendicular"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "quantity": "area",
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "B"
+            ],
+            "plane_relation": "perpendicular"
+          },
+          {
+            "id": "conflict",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 13."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "measure": "segment",
+            "value": "13"
+          }
+        ]
+      },
+      "geometry": null,
+      "expected_status": "REFUSED",
+      "expected_codes": [
+        "INCONSISTENT_FACTS"
+      ],
+      "unit": "1",
+      "expected_area_squared": null
+    },
+    {
+      "id": "constructed-line-endpoint",
+      "family": "triangle",
+      "text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Gọi M là trung điểm của BC'. Dựng mặt phẳng (P) đi qua M và vuông góc với AM. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P). Dựng mặt phẳng (P) đi qua M và vuông góc với AM. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "solid",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ đứng ABC.A'B'C'."
+            ],
+            "solid": "ABC.A'B'C'",
+            "solid_type": "prism",
+            "right": true
+          },
+          {
+            "id": "shape",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác vuông tại A."
+            ],
+            "at": "A",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 6."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AC = 8."
+            ],
+            "points": [
+              "A",
+              "C"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "height",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 12."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "measure": "segment",
+            "value": "12"
+          },
+          {
+            "id": "mid",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của BC'."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "C'"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AM. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "M"
+            ],
+            "plane_relation": "perpendicular"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AM. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "quantity": "area",
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "M"
+            ],
+            "plane_relation": "perpendicular"
+          }
+        ]
+      },
+      "geometry": null,
+      "expected_status": "REFUSED",
+      "expected_codes": [
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "unit": "1",
+      "expected_area_squared": null
+    },
+    {
+      "id": "wrong-source-line",
+      "family": "triangle",
+      "text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Gọi M là trung điểm của BC'. Dựng mặt phẳng (P) đi qua M và vuông góc với AC. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P). Dựng mặt phẳng (P) đi qua M và vuông góc với AC. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "solid",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ đứng ABC.A'B'C'."
+            ],
+            "solid": "ABC.A'B'C'",
+            "solid_type": "prism",
+            "right": true
+          },
+          {
+            "id": "shape",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác vuông tại A."
+            ],
+            "at": "A",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 6."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AC = 8."
+            ],
+            "points": [
+              "A",
+              "C"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "height",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 12."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "measure": "segment",
+            "value": "12"
+          },
+          {
+            "id": "mid",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của BC'."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "C'"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AC. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "B"
+            ],
+            "plane_relation": "perpendicular"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AC. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "quantity": "area",
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "B"
+            ],
+            "plane_relation": "perpendicular"
+          }
+        ]
+      },
+      "geometry": null,
+      "expected_status": "REFUSED",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "unit": "1",
+      "expected_area_squared": null
+    },
+    {
+      "id": "unmentioned-line-endpoint",
+      "family": "triangle",
+      "text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Gọi M là trung điểm của BC'. Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P). Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "solid",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ đứng ABC.A'B'C'."
+            ],
+            "solid": "ABC.A'B'C'",
+            "solid_type": "prism",
+            "right": true
+          },
+          {
+            "id": "shape",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác vuông tại A."
+            ],
+            "at": "A",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 6."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AC = 8."
+            ],
+            "points": [
+              "A",
+              "C"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "height",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 12."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "measure": "segment",
+            "value": "12"
+          },
+          {
+            "id": "mid",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của BC'."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "C'"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "Z"
+            ],
+            "plane_relation": "perpendicular"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với AB. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "quantity": "area",
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "Z"
+            ],
+            "plane_relation": "perpendicular"
+          }
+        ]
+      },
+      "geometry": null,
+      "expected_status": "REFUSED",
+      "expected_codes": [
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "unit": "1",
+      "expected_area_squared": null
+    },
+    {
+      "id": "plane-perpendicular-plane",
+      "family": "triangle",
+      "text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Gọi M là trung điểm của BC'. Dựng mặt phẳng (P) đi qua M và vuông góc với (ABC). Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P). Dựng mặt phẳng (P) đi qua M và vuông góc với (ABC). Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "solid",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ đứng ABC.A'B'C'."
+            ],
+            "solid": "ABC.A'B'C'",
+            "solid_type": "prism",
+            "right": true
+          },
+          {
+            "id": "shape",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác vuông tại A."
+            ],
+            "at": "A",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 6."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AC = 8."
+            ],
+            "points": [
+              "A",
+              "C"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "height",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 12."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "measure": "segment",
+            "value": "12"
+          },
+          {
+            "id": "mid",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của BC'."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "C'"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với (ABC). Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "B",
+              "C"
+            ],
+            "plane_relation": "perpendicular"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và vuông góc với (ABC). Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "quantity": "area",
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_b": [
+              "A",
+              "B",
+              "C"
+            ],
+            "plane_relation": "perpendicular"
+          }
+        ]
+      },
+      "geometry": null,
+      "expected_status": "REFUSED",
+      "expected_codes": [
+        "PLANE_NOT_UNIQUE"
+      ],
+      "unit": "1",
+      "expected_area_squared": null
+    },
+    {
+      "id": "boundary-face",
+      "family": "triangle",
+      "text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Gọi M là trung điểm của BC'. Dựng mặt phẳng (P) đi qua A và vuông góc với AB. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P). Dựng mặt phẳng (P) đi qua A và vuông góc với AB. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "solid",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ đứng ABC.A'B'C'."
+            ],
+            "solid": "ABC.A'B'C'",
+            "solid_type": "prism",
+            "right": true
+          },
+          {
+            "id": "shape",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác vuông tại A."
+            ],
+            "at": "A",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 6."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AC = 8."
+            ],
+            "points": [
+              "A",
+              "C"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "height",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 12."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "measure": "segment",
+            "value": "12"
+          },
+          {
+            "id": "mid",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của BC'."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "C'"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua A và vuông góc với AB. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "solid": "ABC.A'B'C'",
+            "point": "A",
+            "points_b": [
+              "A",
+              "B"
+            ],
+            "plane_relation": "perpendicular"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua A và vuông góc với AB. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "quantity": "area",
+            "solid": "ABC.A'B'C'",
+            "point": "A",
+            "points_b": [
+              "A",
+              "B"
+            ],
+            "plane_relation": "perpendicular"
+          }
+        ]
+      },
+      "geometry": null,
+      "expected_status": "REFUSED",
+      "expected_codes": [
+        "SECTION_PLANE_IS_FACE"
+      ],
+      "unit": "1",
+      "expected_area_squared": null
+    },
+    {
+      "id": "vertex-touch",
+      "family": "triangle",
+      "text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Gọi M là trung điểm của BC'. Dựng mặt phẳng (P) đi qua C' và vuông góc với AC'. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P). Dựng mặt phẳng (P) đi qua C' và vuông góc với AC'. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "solid",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ đứng ABC.A'B'C'."
+            ],
+            "solid": "ABC.A'B'C'",
+            "solid_type": "prism",
+            "right": true
+          },
+          {
+            "id": "shape",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác vuông tại A."
+            ],
+            "at": "A",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 6."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AC = 8."
+            ],
+            "points": [
+              "A",
+              "C"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "height",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 12."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "measure": "segment",
+            "value": "12"
+          },
+          {
+            "id": "mid",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của BC'."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "C'"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua C' và vuông góc với AC'. Dựng thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "solid": "ABC.A'B'C'",
+            "point": "C'",
+            "points_b": [
+              "A",
+              "C'"
+            ],
+            "plane_relation": "perpendicular"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua C' và vuông góc với AC'. Tính diện tích thiết diện của lăng trụ đứng ABC.A'B'C' với (P)."
+            ],
+            "quantity": "area",
+            "solid": "ABC.A'B'C'",
+            "point": "C'",
+            "points_b": [
+              "A",
+              "C'"
+            ],
+            "plane_relation": "perpendicular"
+          }
+        ]
+      },
+      "geometry": null,
+      "expected_status": "REFUSED",
+      "expected_codes": [
+        "PLANE_TOUCHES_VERTEX",
+        "PLANE_DOES_NOT_CUT"
+      ],
+      "unit": "1",
+      "expected_area_squared": null
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "baseline_commit": "386d214952e6a7ba98f0931b5ecfd7a5b89d1667",
+  "remote_verified_sha": "386d214952e6a7ba98f0931b5ecfd7a5b89d1667",
+  "remote_method": "git fetch origin --no-tags; git ls-remote origin refs/heads/main (2026-10-27)",
+  "baseline_detached_freeze": "MATCH (checked before research branch creation)",
+  "baseline_product_tree_equals_t3": true,
+  "product_commit": "059daadc418268d0707d6ff58e8650e5137e235d",
+  "t3_candidate": "34ecce4961c2e6369dcf9e03ce9919540c96420d",
+  "measured_system": {
+    "paths": [
+      "backend/app",
+      "frontend/src/simulations/domains/semantic",
+      "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+    ],
+    "so_file": 118,
+    "tree_hash": "fef0b050e42f6ee8629e76ddb44f6b3dc0191cf89f5df922d8a62be54ef71657",
+    "khai": "B\u0103m n\u1ed9i dung to\u00e0n b\u1ed9 m\u00e3 S\u1ea2N PH\u1ea8M c\u1ee7a h\u1ec7 \u0111\u01b0\u1ee3c \u0111o. Harness (scripts/tests/docs) KH\u00d4NG n\u1eb1m trong \u0111\u00e2y, n\u00ean b\u1ed9 \u0111o \u0111\u01b0\u1ee3c ph\u00e9p c\u1ee9ng c\u00e1p th\u00eam m\u00e0 kh\u00f4ng ph\u1ea3i \u0111\u00f3ng b\u0103ng l\u1ea1i candidate."
+  },
+  "receipt_verdict": "FULL_PRODUCT_GATE_PASS",
+  "receipt_streams": {
+    "stdout.log": {
+      "checkout": {
+        "sha256": "07d3d5599f13ed0d97753df38033dc13f0bf62a49370538e947d235c4c89ecc6",
+        "bytes": 1608626
+      },
+      "git_blob": {
+        "sha256": "ed2db509114d87abed03af7cc635c23a30f9d96622dd7d888e106ae8fcf0ce64",
+        "bytes": 1596280
+      },
+      "receipt": {
+        "sha256": "faa011c1316eb084e8eb96928b33625481e2f0a328333163940917d3fbec5627",
+        "bytes": 1608580
+      },
+      "checkout_matches_receipt": false,
+      "git_blob_matches_receipt": false,
+      "checkout_normalizes_to_git_blob": true,
+      "raw_recovery": "NOT_RECOVERABLE"
+    },
+    "stderr.log": {
+      "checkout": {
+        "sha256": "0f4857e3ea27de57096171b3c237d23936aadc2a05f81742105fabebea12c0f8",
+        "bytes": 347
+      },
+      "git_blob": {
+        "sha256": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a",
+        "bytes": 342
+      },
+      "receipt": {
+        "sha256": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a",
+        "bytes": 342
+      },
+      "checkout_matches_receipt": false,
+      "git_blob_matches_receipt": true,
+      "checkout_normalizes_to_git_blob": true,
+      "raw_recovery": "EXACT_GIT_BLOB"
+    }
+  },
+  "baseline_t3_rerun": false,
+  "receipt_limit": "stdout original mixed-newline bytes not preserved by Git; PASS is inherited from receipt and committed normalized transcript, not re-proved here. New candidate gets fresh T3 with binary-preserved streams.",
+  "default_mode": "LLM_ONLY",
+  "cache_version": 130,
+  "live_provider_calls": 0,
+  "old_worktrees": "Preserved; four dirty and two Git-clean, see preflight in plan.md",
+  "stale_documentation": "Historical handoffs still say unmerged/dd557f8f. Git ancestry proves integration at baseline; no product divergence."
+}
