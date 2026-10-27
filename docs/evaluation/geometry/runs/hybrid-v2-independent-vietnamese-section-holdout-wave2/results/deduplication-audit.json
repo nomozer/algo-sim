@@ -1,0 +1,29 @@
+{
+  "schema": "HOLDOUT_WAVE2_DEDUPLICATION_AUDIT/1",
+  "wave2_case_count": 96,
+  "historical_items_compared": 654,
+  "wave1_holdout_present": true,
+  "dimensions_checked": [
+    "1_normalized_vietnamese_text_5gram_jaccard",
+    "2_solid_topology",
+    "3_plane_relation",
+    "4_through_point_role",
+    "5_reference_line_or_plane_role",
+    "6_exact_dimensions_and_cut_ratios",
+    "7_vertex_relabelling_invariance",
+    "8_uniform_scale_invariance",
+    "9_question_objective"
+  ],
+  "max_external_5gram_jaccard": 0.6372,
+  "max_external_pair": [
+    "W2-N46",
+    "wave1_holdout:H001",
+    0.6372
+  ],
+  "max_internal_5gram_jaccard": 0.7563,
+  "external_text_flags": [],
+  "external_exact_config_flags": [],
+  "external_scale_invariant_flags": [],
+  "internal_duplicate_flags": [],
+  "passed": true
+}

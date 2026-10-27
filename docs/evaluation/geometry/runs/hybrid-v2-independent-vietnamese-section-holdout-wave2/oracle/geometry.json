@@ -1,0 +1,9001 @@
+{
+  "schema": "HOLDOUT_WAVE2_ORACLE_GEOMETRY/1",
+  "cases": {
+    "W2-B01": {
+      "solid": "S.ABC",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": null,
+      "solid_vertices": [
+        "S",
+        "A",
+        "B",
+        "C"
+      ],
+      "edges": [
+        [
+          "S",
+          "A"
+        ],
+        [
+          "S",
+          "B"
+        ],
+        [
+          "S",
+          "C"
+        ],
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "A"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "S",
+          "A",
+          "B"
+        ],
+        [
+          "S",
+          "B",
+          "C"
+        ],
+        [
+          "S",
+          "C",
+          "A"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          7,
+          0,
+          0
+        ],
+        "C": [
+          0,
+          14,
+          0
+        ],
+        "S": [
+          0,
+          0,
+          14
+        ],
+        "M": [
+          "0",
+          "0",
+          "10"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "C"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "7"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "C"
+          ],
+          "value": "14"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "S",
+            "A"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "S",
+            "A"
+          ],
+          "value": "14"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "M",
+          "segment": [
+            "S",
+            "A"
+          ],
+          "ratio": "2/7"
+        }
+      ],
+      "plane_spec": {
+        "kind": "perpendicular_line",
+        "through_point": "M",
+        "perpendicular_line": [
+          "S",
+          "B"
+        ]
+      }
+    },
+    "W2-B02": {
+      "solid": "A.BCD",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "A",
+          "D"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "B"
+        ]
+      ],
+      "faces": [
+        [
+          "B",
+          "C",
+          "D"
+        ],
+        [
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "A",
+          "C",
+          "D"
+        ],
+        [
+          "A",
+          "D",
+          "B"
+        ]
+      ],
+      "points": {
+        "B": [
+          0,
+          0,
+          0
+        ],
+        "C": [
+          7,
+          0,
+          0
+        ],
+        "D": [
+          0,
+          11,
+          0
+        ],
+        "A": [
+          0,
+          0,
+          13
+        ],
+        "M": [
+          "14/5",
+          "0",
+          "39/5"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "B",
+            "C",
+            "D"
+          ],
+          "right_at": "B"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "B",
+            "C"
+          ],
+          "value": "7a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "B",
+            "D"
+          ],
+          "value": "11a"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "B"
+          ],
+          "plane": [
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "13a"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "M",
+          "segment": [
+            "A",
+            "C"
+          ],
+          "ratio": "2/5"
+        }
+      ],
+      "plane_spec": {
+        "kind": "perpendicular_line",
+        "through_point": "M",
+        "perpendicular_line": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    "W2-B03": {
+      "solid": "S.MNP",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "S",
+        "M",
+        "N",
+        "P"
+      ],
+      "edges": [
+        [
+          "S",
+          "M"
+        ],
+        [
+          "S",
+          "N"
+        ],
+        [
+          "S",
+          "P"
+        ],
+        [
+          "M",
+          "N"
+        ],
+        [
+          "N",
+          "P"
+        ],
+        [
+          "P",
+          "M"
+        ]
+      ],
+      "faces": [
+        [
+          "M",
+          "N",
+          "P"
+        ],
+        [
+          "S",
+          "M",
+          "N"
+        ],
+        [
+          "S",
+          "N",
+          "P"
+        ],
+        [
+          "S",
+          "P",
+          "M"
+        ]
+      ],
+      "points": {
+        "M": [
+          0,
+          0,
+          0
+        ],
+        "N": [
+          11,
+          0,
+          0
+        ],
+        "P": [
+          0,
+          15,
+          0
+        ],
+        "S": [
+          0,
+          0,
+          9
+        ],
+        "K": [
+          "0",
+          "0",
+          "3"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "M",
+            "N",
+            "P"
+          ],
+          "right_at": "M"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "N"
+          ],
+          "value": "11"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "P"
+          ],
+          "value": "15"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "S",
+            "M"
+          ],
+          "plane": [
+            "M",
+            "N",
+            "P"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "S",
+            "M"
+          ],
+          "value": "9"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "K",
+          "segment": [
+            "S",
+            "M"
+          ],
+          "ratio": "2/3"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_plane",
+        "through_point": "K",
+        "parallel_plane": [
+          "M",
+          "N",
+          "P"
+        ]
+      }
+    },
+    "W2-B04": {
+      "solid": "S.ABC",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": null,
+      "solid_vertices": [
+        "S",
+        "A",
+        "B",
+        "C"
+      ],
+      "edges": [
+        [
+          "S",
+          "A"
+        ],
+        [
+          "S",
+          "B"
+        ],
+        [
+          "S",
+          "C"
+        ],
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "A"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "S",
+          "A",
+          "B"
+        ],
+        [
+          "S",
+          "B",
+          "C"
+        ],
+        [
+          "S",
+          "C",
+          "A"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          9,
+          0,
+          0
+        ],
+        "C": [
+          0,
+          13,
+          0
+        ],
+        "S": [
+          0,
+          0,
+          16
+        ],
+        "E": [
+          "3",
+          "0",
+          "0"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "C"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "9a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "C"
+          ],
+          "value": "13a"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "S",
+            "A"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "S",
+            "A"
+          ],
+          "value": "16a"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "E",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "ratio": "1/3"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_plane",
+        "through_point": "E",
+        "parallel_plane": [
+          "S",
+          "A",
+          "C"
+        ]
+      }
+    },
+    "W2-B05": {
+      "solid": "S.EFG",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "S",
+        "E",
+        "F",
+        "G"
+      ],
+      "edges": [
+        [
+          "S",
+          "E"
+        ],
+        [
+          "S",
+          "F"
+        ],
+        [
+          "S",
+          "G"
+        ],
+        [
+          "E",
+          "F"
+        ],
+        [
+          "F",
+          "G"
+        ],
+        [
+          "G",
+          "E"
+        ]
+      ],
+      "faces": [
+        [
+          "E",
+          "F",
+          "G"
+        ],
+        [
+          "S",
+          "E",
+          "F"
+        ],
+        [
+          "S",
+          "F",
+          "G"
+        ],
+        [
+          "S",
+          "G",
+          "E"
+        ]
+      ],
+      "points": {
+        "E": [
+          0,
+          0,
+          0
+        ],
+        "F": [
+          10,
+          0,
+          0
+        ],
+        "G": [
+          0,
+          17,
+          0
+        ],
+        "S": [
+          0,
+          0,
+          12
+        ],
+        "H": [
+          "0",
+          "0",
+          "3"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "E",
+            "F",
+            "G"
+          ],
+          "right_at": "E"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "E",
+            "F"
+          ],
+          "value": "10"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "E",
+            "G"
+          ],
+          "value": "17"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "S",
+            "E"
+          ],
+          "plane": [
+            "E",
+            "F",
+            "G"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "S",
+            "E"
+          ],
+          "value": "12"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "H",
+          "segment": [
+            "S",
+            "E"
+          ],
+          "ratio": "3/4"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_two_lines",
+        "through_point": "H",
+        "parallel_line_a": [
+          "E",
+          "F"
+        ],
+        "parallel_line_b": [
+          "E",
+          "G"
+        ]
+      }
+    },
+    "W2-B06": {
+      "solid": "A.BCD",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "A",
+          "D"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "B"
+        ]
+      ],
+      "faces": [
+        [
+          "B",
+          "C",
+          "D"
+        ],
+        [
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "A",
+          "C",
+          "D"
+        ],
+        [
+          "A",
+          "D",
+          "B"
+        ]
+      ],
+      "points": {
+        "B": [
+          0,
+          0,
+          0
+        ],
+        "C": [
+          9,
+          0,
+          0
+        ],
+        "D": [
+          0,
+          12,
+          0
+        ],
+        "A": [
+          0,
+          0,
+          14
+        ],
+        "I": [
+          "9/4",
+          "0",
+          "0"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "B",
+            "C",
+            "D"
+          ],
+          "right_at": "B"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "B",
+            "C"
+          ],
+          "value": "9a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "B",
+            "D"
+          ],
+          "value": "12a"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "B"
+          ],
+          "plane": [
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "14a"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "I",
+          "segment": [
+            "B",
+            "C"
+          ],
+          "ratio": "1/4"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_two_lines",
+        "through_point": "I",
+        "parallel_line_a": [
+          "A",
+          "B"
+        ],
+        "parallel_line_b": [
+          "C",
+          "D"
+        ]
+      }
+    },
+    "W2-B07": {
+      "solid": "S.ABCD",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "S",
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "edges": [
+        [
+          "S",
+          "A"
+        ],
+        [
+          "S",
+          "B"
+        ],
+        [
+          "S",
+          "C"
+        ],
+        [
+          "S",
+          "D"
+        ],
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "A"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        [
+          "S",
+          "A",
+          "B"
+        ],
+        [
+          "S",
+          "B",
+          "C"
+        ],
+        [
+          "S",
+          "C",
+          "D"
+        ],
+        [
+          "S",
+          "D",
+          "A"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          11,
+          0,
+          0
+        ],
+        "C": [
+          11,
+          15,
+          0
+        ],
+        "D": [
+          0,
+          15,
+          0
+        ],
+        "S": [
+          0,
+          0,
+          10
+        ],
+        "M": [
+          "0",
+          "0",
+          "6"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "D"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "11"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "D"
+          ],
+          "value": "15"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "S",
+            "A"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "S",
+            "A"
+          ],
+          "value": "10"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "M",
+          "segment": [
+            "S",
+            "A"
+          ],
+          "ratio": "2/5"
+        }
+      ],
+      "plane_spec": {
+        "kind": "perpendicular_line",
+        "through_point": "M",
+        "perpendicular_line": [
+          "S",
+          "A"
+        ]
+      }
+    },
+    "W2-B08": {
+      "solid": "S.MNPQ",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "S",
+        "M",
+        "N",
+        "P",
+        "Q"
+      ],
+      "edges": [
+        [
+          "S",
+          "M"
+        ],
+        [
+          "S",
+          "N"
+        ],
+        [
+          "S",
+          "P"
+        ],
+        [
+          "S",
+          "Q"
+        ],
+        [
+          "M",
+          "N"
+        ],
+        [
+          "N",
+          "P"
+        ],
+        [
+          "P",
+          "Q"
+        ],
+        [
+          "Q",
+          "M"
+        ]
+      ],
+      "faces": [
+        [
+          "M",
+          "N",
+          "P",
+          "Q"
+        ],
+        [
+          "S",
+          "M",
+          "N"
+        ],
+        [
+          "S",
+          "N",
+          "P"
+        ],
+        [
+          "S",
+          "P",
+          "Q"
+        ],
+        [
+          "S",
+          "Q",
+          "M"
+        ]
+      ],
+      "points": {
+        "M": [
+          0,
+          0,
+          0
+        ],
+        "N": [
+          9,
+          0,
+          0
+        ],
+        "P": [
+          9,
+          9,
+          0
+        ],
+        "Q": [
+          0,
+          9,
+          0
+        ],
+        "S": [
+          0,
+          0,
+          9
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "M",
+            "N",
+            "Q"
+          ],
+          "right_at": "M"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "N"
+          ],
+          "value": "9a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "Q"
+          ],
+          "value": "9a"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "S",
+            "M"
+          ],
+          "plane": [
+            "M",
+            "N",
+            "P",
+            "Q"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "S",
+            "M"
+          ],
+          "value": "9a"
+        }
+      ],
+      "plane_spec": {
+        "kind": "perpendicular_line",
+        "through_point": "M",
+        "perpendicular_line": [
+          "S",
+          "P"
+        ]
+      }
+    },
+    "W2-B09": {
+      "solid": "S.ABCD",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": null,
+      "solid_vertices": [
+        "S",
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "edges": [
+        [
+          "S",
+          "A"
+        ],
+        [
+          "S",
+          "B"
+        ],
+        [
+          "S",
+          "C"
+        ],
+        [
+          "S",
+          "D"
+        ],
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "A"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        [
+          "S",
+          "A",
+          "B"
+        ],
+        [
+          "S",
+          "B",
+          "C"
+        ],
+        [
+          "S",
+          "C",
+          "D"
+        ],
+        [
+          "S",
+          "D",
+          "A"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          14,
+          0,
+          0
+        ],
+        "C": [
+          14,
+          14,
+          0
+        ],
+        "D": [
+          0,
+          14,
+          0
+        ],
+        "S": [
+          "7",
+          "7",
+          12
+        ],
+        "I": [
+          "14/5",
+          "14/5",
+          "24/5"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "D"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "14"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "D"
+          ],
+          "value": "14"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "I",
+          "segment": [
+            "S",
+            "A"
+          ],
+          "ratio": "3/5"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_plane",
+        "through_point": "I",
+        "parallel_plane": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    "W2-B10": {
+      "solid": "S.EFGH",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "S",
+        "E",
+        "F",
+        "G",
+        "H"
+      ],
+      "edges": [
+        [
+          "S",
+          "E"
+        ],
+        [
+          "S",
+          "F"
+        ],
+        [
+          "S",
+          "G"
+        ],
+        [
+          "S",
+          "H"
+        ],
+        [
+          "E",
+          "F"
+        ],
+        [
+          "F",
+          "G"
+        ],
+        [
+          "G",
+          "H"
+        ],
+        [
+          "H",
+          "E"
+        ]
+      ],
+      "faces": [
+        [
+          "E",
+          "F",
+          "G",
+          "H"
+        ],
+        [
+          "S",
+          "E",
+          "F"
+        ],
+        [
+          "S",
+          "F",
+          "G"
+        ],
+        [
+          "S",
+          "G",
+          "H"
+        ],
+        [
+          "S",
+          "H",
+          "E"
+        ]
+      ],
+      "points": {
+        "E": [
+          0,
+          0,
+          0
+        ],
+        "F": [
+          9,
+          0,
+          0
+        ],
+        "G": [
+          9,
+          14,
+          0
+        ],
+        "H": [
+          0,
+          14,
+          0
+        ],
+        "S": [
+          0,
+          0,
+          7
+        ],
+        "K": [
+          "3",
+          "0",
+          "0"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "E",
+            "F",
+            "H"
+          ],
+          "right_at": "E"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "E",
+            "F"
+          ],
+          "value": "9a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "E",
+            "H"
+          ],
+          "value": "14a"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "S",
+            "E"
+          ],
+          "plane": [
+            "E",
+            "F",
+            "G",
+            "H"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "S",
+            "E"
+          ],
+          "value": "7a"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "K",
+          "segment": [
+            "E",
+            "F"
+          ],
+          "ratio": "1/3"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_plane",
+        "through_point": "K",
+        "parallel_plane": [
+          "S",
+          "E",
+          "H"
+        ]
+      }
+    },
+    "W2-B11": {
+      "solid": "S.MNPQ",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "S",
+        "M",
+        "N",
+        "P",
+        "Q"
+      ],
+      "edges": [
+        [
+          "S",
+          "M"
+        ],
+        [
+          "S",
+          "N"
+        ],
+        [
+          "S",
+          "P"
+        ],
+        [
+          "S",
+          "Q"
+        ],
+        [
+          "M",
+          "N"
+        ],
+        [
+          "N",
+          "P"
+        ],
+        [
+          "P",
+          "Q"
+        ],
+        [
+          "Q",
+          "M"
+        ]
+      ],
+      "faces": [
+        [
+          "M",
+          "N",
+          "P",
+          "Q"
+        ],
+        [
+          "S",
+          "M",
+          "N"
+        ],
+        [
+          "S",
+          "N",
+          "P"
+        ],
+        [
+          "S",
+          "P",
+          "Q"
+        ],
+        [
+          "S",
+          "Q",
+          "M"
+        ]
+      ],
+      "points": {
+        "M": [
+          0,
+          0,
+          0
+        ],
+        "N": [
+          15,
+          0,
+          0
+        ],
+        "P": [
+          15,
+          15,
+          0
+        ],
+        "Q": [
+          0,
+          15,
+          0
+        ],
+        "S": [
+          0,
+          0,
+          11
+        ],
+        "E": [
+          "0",
+          "0",
+          "22/3"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "M",
+            "N",
+            "Q"
+          ],
+          "right_at": "M"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "N"
+          ],
+          "value": "15"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "Q"
+          ],
+          "value": "15"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "S",
+            "M"
+          ],
+          "plane": [
+            "M",
+            "N",
+            "P",
+            "Q"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "S",
+            "M"
+          ],
+          "value": "11"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "E",
+          "segment": [
+            "S",
+            "M"
+          ],
+          "ratio": "1/3"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_two_lines",
+        "through_point": "E",
+        "parallel_line_a": [
+          "M",
+          "N"
+        ],
+        "parallel_line_b": [
+          "M",
+          "Q"
+        ]
+      }
+    },
+    "W2-B12": {
+      "solid": "S.ABCD",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": null,
+      "solid_vertices": [
+        "S",
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "edges": [
+        [
+          "S",
+          "A"
+        ],
+        [
+          "S",
+          "B"
+        ],
+        [
+          "S",
+          "C"
+        ],
+        [
+          "S",
+          "D"
+        ],
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "A"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        [
+          "S",
+          "A",
+          "B"
+        ],
+        [
+          "S",
+          "B",
+          "C"
+        ],
+        [
+          "S",
+          "C",
+          "D"
+        ],
+        [
+          "S",
+          "D",
+          "A"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          12,
+          0,
+          0
+        ],
+        "C": [
+          12,
+          11,
+          0
+        ],
+        "D": [
+          0,
+          11,
+          0
+        ],
+        "S": [
+          0,
+          0,
+          7
+        ],
+        "M": [
+          "6",
+          "0",
+          "0"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "D"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "12a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "D"
+          ],
+          "value": "11a"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "S",
+            "A"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "S",
+            "A"
+          ],
+          "value": "7a"
+        },
+        {
+          "kind": "midpoint",
+          "point": "M",
+          "segment": [
+            "A",
+            "B"
+          ]
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_two_lines",
+        "through_point": "M",
+        "parallel_line_a": [
+          "S",
+          "A"
+        ],
+        "parallel_line_b": [
+          "B",
+          "C"
+        ]
+      }
+    },
+    "W2-B13": {
+      "solid": "ABC.A'B'C'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "A",
+        "B",
+        "C",
+        "A'",
+        "B'",
+        "C'"
+      ],
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "A"
+        ],
+        [
+          "A'",
+          "B'"
+        ],
+        [
+          "B'",
+          "C'"
+        ],
+        [
+          "C'",
+          "A'"
+        ],
+        [
+          "A",
+          "A'"
+        ],
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "A'",
+          "B'",
+          "C'"
+        ],
+        [
+          "A",
+          "B",
+          "B'",
+          "A'"
+        ],
+        [
+          "B",
+          "C",
+          "C'",
+          "B'"
+        ],
+        [
+          "C",
+          "A",
+          "A'",
+          "C'"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          7,
+          0,
+          0
+        ],
+        "C": [
+          0,
+          13,
+          0
+        ],
+        "A'": [
+          0,
+          0,
+          9
+        ],
+        "B'": [
+          7,
+          0,
+          9
+        ],
+        "C'": [
+          0,
+          13,
+          9
+        ],
+        "M": [
+          "0",
+          "0",
+          "3"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "C"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "7"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "C"
+          ],
+          "value": "13"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "A'"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "A'"
+          ],
+          "value": "9"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "M",
+          "segment": [
+            "A",
+            "A'"
+          ],
+          "ratio": "1/3"
+        }
+      ],
+      "plane_spec": {
+        "kind": "perpendicular_line",
+        "through_point": "M",
+        "perpendicular_line": [
+          "A",
+          "A'"
+        ]
+      }
+    },
+    "W2-B14": {
+      "solid": "MNP.M'N'P'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": null,
+      "solid_vertices": [
+        "M",
+        "N",
+        "P",
+        "M'",
+        "N'",
+        "P'"
+      ],
+      "edges": [
+        [
+          "M",
+          "N"
+        ],
+        [
+          "N",
+          "P"
+        ],
+        [
+          "P",
+          "M"
+        ],
+        [
+          "M'",
+          "N'"
+        ],
+        [
+          "N'",
+          "P'"
+        ],
+        [
+          "P'",
+          "M'"
+        ],
+        [
+          "M",
+          "M'"
+        ],
+        [
+          "N",
+          "N'"
+        ],
+        [
+          "P",
+          "P'"
+        ]
+      ],
+      "faces": [
+        [
+          "M",
+          "N",
+          "P"
+        ],
+        [
+          "M'",
+          "N'",
+          "P'"
+        ],
+        [
+          "M",
+          "N",
+          "N'",
+          "M'"
+        ],
+        [
+          "N",
+          "P",
+          "P'",
+          "N'"
+        ],
+        [
+          "P",
+          "M",
+          "M'",
+          "P'"
+        ]
+      ],
+      "points": {
+        "M": [
+          0,
+          0,
+          0
+        ],
+        "N": [
+          8,
+          0,
+          0
+        ],
+        "P": [
+          0,
+          11,
+          0
+        ],
+        "M'": [
+          0,
+          0,
+          13
+        ],
+        "N'": [
+          8,
+          0,
+          13
+        ],
+        "P'": [
+          0,
+          11,
+          13
+        ],
+        "I": [
+          "4",
+          "0",
+          "0"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "M",
+            "N",
+            "P"
+          ],
+          "right_at": "M"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "N"
+          ],
+          "value": "8a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "P"
+          ],
+          "value": "11a"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "M",
+            "M'"
+          ],
+          "plane": [
+            "M",
+            "N",
+            "P"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "M'"
+          ],
+          "value": "13a"
+        },
+        {
+          "kind": "midpoint",
+          "point": "I",
+          "segment": [
+            "M",
+            "N"
+          ]
+        }
+      ],
+      "plane_spec": {
+        "kind": "perpendicular_line",
+        "through_point": "I",
+        "perpendicular_line": [
+          "M",
+          "N"
+        ]
+      }
+    },
+    "W2-B15": {
+      "solid": "EFG.E'F'G'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "E",
+        "F",
+        "G",
+        "E'",
+        "F'",
+        "G'"
+      ],
+      "edges": [
+        [
+          "E",
+          "F"
+        ],
+        [
+          "F",
+          "G"
+        ],
+        [
+          "G",
+          "E"
+        ],
+        [
+          "E'",
+          "F'"
+        ],
+        [
+          "F'",
+          "G'"
+        ],
+        [
+          "G'",
+          "E'"
+        ],
+        [
+          "E",
+          "E'"
+        ],
+        [
+          "F",
+          "F'"
+        ],
+        [
+          "G",
+          "G'"
+        ]
+      ],
+      "faces": [
+        [
+          "E",
+          "F",
+          "G"
+        ],
+        [
+          "E'",
+          "F'",
+          "G'"
+        ],
+        [
+          "E",
+          "F",
+          "F'",
+          "E'"
+        ],
+        [
+          "F",
+          "G",
+          "G'",
+          "F'"
+        ],
+        [
+          "G",
+          "E",
+          "E'",
+          "G'"
+        ]
+      ],
+      "points": {
+        "E": [
+          0,
+          0,
+          0
+        ],
+        "F": [
+          9,
+          0,
+          0
+        ],
+        "G": [
+          0,
+          16,
+          0
+        ],
+        "E'": [
+          0,
+          0,
+          11
+        ],
+        "F'": [
+          9,
+          0,
+          11
+        ],
+        "G'": [
+          0,
+          16,
+          11
+        ],
+        "K": [
+          "0",
+          "0",
+          "22/5"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "E",
+            "F",
+            "G"
+          ],
+          "right_at": "E"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "E",
+            "F"
+          ],
+          "value": "9"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "E",
+            "G"
+          ],
+          "value": "16"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "E",
+            "E'"
+          ],
+          "plane": [
+            "E",
+            "F",
+            "G"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "E",
+            "E'"
+          ],
+          "value": "11"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "K",
+          "segment": [
+            "E",
+            "E'"
+          ],
+          "ratio": "2/5"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_plane",
+        "through_point": "K",
+        "parallel_plane": [
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    "W2-B16": {
+      "solid": "ABC.A'B'C'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "A",
+        "B",
+        "C",
+        "A'",
+        "B'",
+        "C'"
+      ],
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "A"
+        ],
+        [
+          "A'",
+          "B'"
+        ],
+        [
+          "B'",
+          "C'"
+        ],
+        [
+          "C'",
+          "A'"
+        ],
+        [
+          "A",
+          "A'"
+        ],
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "A'",
+          "B'",
+          "C'"
+        ],
+        [
+          "A",
+          "B",
+          "B'",
+          "A'"
+        ],
+        [
+          "B",
+          "C",
+          "C'",
+          "B'"
+        ],
+        [
+          "C",
+          "A",
+          "A'",
+          "C'"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          12,
+          0,
+          0
+        ],
+        "C": [
+          0,
+          14,
+          0
+        ],
+        "A'": [
+          0,
+          0,
+          7
+        ],
+        "B'": [
+          12,
+          0,
+          7
+        ],
+        "C'": [
+          0,
+          14,
+          7
+        ],
+        "M": [
+          "3",
+          "0",
+          "0"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "C"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "12a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "C"
+          ],
+          "value": "14a"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "A'"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "A'"
+          ],
+          "value": "7a"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "M",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "ratio": "1/4"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_plane",
+        "through_point": "M",
+        "parallel_plane": [
+          "A",
+          "C",
+          "C'"
+        ]
+      }
+    },
+    "W2-B17": {
+      "solid": "MNP.M'N'P'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": null,
+      "solid_vertices": [
+        "M",
+        "N",
+        "P",
+        "M'",
+        "N'",
+        "P'"
+      ],
+      "edges": [
+        [
+          "M",
+          "N"
+        ],
+        [
+          "N",
+          "P"
+        ],
+        [
+          "P",
+          "M"
+        ],
+        [
+          "M'",
+          "N'"
+        ],
+        [
+          "N'",
+          "P'"
+        ],
+        [
+          "P'",
+          "M'"
+        ],
+        [
+          "M",
+          "M'"
+        ],
+        [
+          "N",
+          "N'"
+        ],
+        [
+          "P",
+          "P'"
+        ]
+      ],
+      "faces": [
+        [
+          "M",
+          "N",
+          "P"
+        ],
+        [
+          "M'",
+          "N'",
+          "P'"
+        ],
+        [
+          "M",
+          "N",
+          "N'",
+          "M'"
+        ],
+        [
+          "N",
+          "P",
+          "P'",
+          "N'"
+        ],
+        [
+          "P",
+          "M",
+          "M'",
+          "P'"
+        ]
+      ],
+      "points": {
+        "M": [
+          0,
+          0,
+          0
+        ],
+        "N": [
+          11,
+          0,
+          0
+        ],
+        "P": [
+          0,
+          14,
+          0
+        ],
+        "M'": [
+          0,
+          0,
+          8
+        ],
+        "N'": [
+          11,
+          0,
+          8
+        ],
+        "P'": [
+          0,
+          14,
+          8
+        ],
+        "H": [
+          "0",
+          "0",
+          "6"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "M",
+            "N",
+            "P"
+          ],
+          "right_at": "M"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "N"
+          ],
+          "value": "11"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "P"
+          ],
+          "value": "14"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "M",
+            "M'"
+          ],
+          "plane": [
+            "M",
+            "N",
+            "P"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "M'"
+          ],
+          "value": "8"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "H",
+          "segment": [
+            "M",
+            "M'"
+          ],
+          "ratio": "3/4"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_two_lines",
+        "through_point": "H",
+        "parallel_line_a": [
+          "M",
+          "N"
+        ],
+        "parallel_line_b": [
+          "M",
+          "P"
+        ]
+      }
+    },
+    "W2-B18": {
+      "solid": "ABC.A'B'C'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "A",
+        "B",
+        "C",
+        "A'",
+        "B'",
+        "C'"
+      ],
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "A"
+        ],
+        [
+          "A'",
+          "B'"
+        ],
+        [
+          "B'",
+          "C'"
+        ],
+        [
+          "C'",
+          "A'"
+        ],
+        [
+          "A",
+          "A'"
+        ],
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "A'",
+          "B'",
+          "C'"
+        ],
+        [
+          "A",
+          "B",
+          "B'",
+          "A'"
+        ],
+        [
+          "B",
+          "C",
+          "C'",
+          "B'"
+        ],
+        [
+          "C",
+          "A",
+          "A'",
+          "C'"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          9,
+          0,
+          0
+        ],
+        "C": [
+          0,
+          15,
+          0
+        ],
+        "A'": [
+          0,
+          0,
+          7
+        ],
+        "B'": [
+          9,
+          0,
+          7
+        ],
+        "C'": [
+          0,
+          15,
+          7
+        ],
+        "E": [
+          "0",
+          "5",
+          "0"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "C"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "9a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "C"
+          ],
+          "value": "15a"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "A'"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "A'"
+          ],
+          "value": "7a"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "E",
+          "segment": [
+            "A",
+            "C"
+          ],
+          "ratio": "1/3"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_two_lines",
+        "through_point": "E",
+        "parallel_line_a": [
+          "A",
+          "B"
+        ],
+        "parallel_line_b": [
+          "A",
+          "A'"
+        ]
+      }
+    },
+    "W2-B19": {
+      "solid": "ABC.A'B'C'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": null,
+      "solid_vertices": [
+        "A",
+        "B",
+        "C",
+        "A'",
+        "B'",
+        "C'"
+      ],
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "A"
+        ],
+        [
+          "A'",
+          "B'"
+        ],
+        [
+          "B'",
+          "C'"
+        ],
+        [
+          "C'",
+          "A'"
+        ],
+        [
+          "A",
+          "A'"
+        ],
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "A'",
+          "B'",
+          "C'"
+        ],
+        [
+          "A",
+          "B",
+          "B'",
+          "A'"
+        ],
+        [
+          "B",
+          "C",
+          "C'",
+          "B'"
+        ],
+        [
+          "C",
+          "A",
+          "A'",
+          "C'"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          7,
+          0,
+          0
+        ],
+        "C": [
+          0,
+          12,
+          0
+        ],
+        "A'": [
+          7,
+          0,
+          9
+        ],
+        "B'": [
+          14,
+          0,
+          9
+        ],
+        "C'": [
+          7,
+          12,
+          9
+        ],
+        "M": [
+          "7/2",
+          "0",
+          "9/2"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "C"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "7"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "C"
+          ],
+          "value": "12"
+        },
+        {
+          "kind": "orthogonal_projection",
+          "point": "A'",
+          "image": "B",
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A'",
+            "B"
+          ],
+          "value": "9"
+        },
+        {
+          "kind": "midpoint",
+          "point": "M",
+          "segment": [
+            "A",
+            "A'"
+          ]
+        }
+      ],
+      "plane_spec": {
+        "kind": "perpendicular_line",
+        "through_point": "M",
+        "perpendicular_line": [
+          "A'",
+          "B"
+        ]
+      }
+    },
+    "W2-B20": {
+      "solid": "MNP.M'N'P'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "M",
+        "N",
+        "P",
+        "M'",
+        "N'",
+        "P'"
+      ],
+      "edges": [
+        [
+          "M",
+          "N"
+        ],
+        [
+          "N",
+          "P"
+        ],
+        [
+          "P",
+          "M"
+        ],
+        [
+          "M'",
+          "N'"
+        ],
+        [
+          "N'",
+          "P'"
+        ],
+        [
+          "P'",
+          "M'"
+        ],
+        [
+          "M",
+          "M'"
+        ],
+        [
+          "N",
+          "N'"
+        ],
+        [
+          "P",
+          "P'"
+        ]
+      ],
+      "faces": [
+        [
+          "M",
+          "N",
+          "P"
+        ],
+        [
+          "M'",
+          "N'",
+          "P'"
+        ],
+        [
+          "M",
+          "N",
+          "N'",
+          "M'"
+        ],
+        [
+          "N",
+          "P",
+          "P'",
+          "N'"
+        ],
+        [
+          "P",
+          "M",
+          "M'",
+          "P'"
+        ]
+      ],
+      "points": {
+        "M": [
+          0,
+          0,
+          0
+        ],
+        "N": [
+          6,
+          0,
+          0
+        ],
+        "P": [
+          0,
+          11,
+          0
+        ],
+        "M'": [
+          6,
+          0,
+          10
+        ],
+        "N'": [
+          12,
+          0,
+          10
+        ],
+        "P'": [
+          6,
+          11,
+          10
+        ],
+        "K": [
+          "12/5",
+          "0",
+          "4"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "M",
+            "N",
+            "P"
+          ],
+          "right_at": "M"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "N"
+          ],
+          "value": "6a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "P"
+          ],
+          "value": "11a"
+        },
+        {
+          "kind": "orthogonal_projection",
+          "point": "M'",
+          "image": "N",
+          "plane": [
+            "M",
+            "N",
+            "P"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M'",
+            "N"
+          ],
+          "value": "10a"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "K",
+          "segment": [
+            "M",
+            "M'"
+          ],
+          "ratio": "2/5"
+        }
+      ],
+      "plane_spec": {
+        "kind": "perpendicular_line",
+        "through_point": "K",
+        "perpendicular_line": [
+          "M'",
+          "N"
+        ]
+      }
+    },
+    "W2-B21": {
+      "solid": "ABC.A'B'C'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "A",
+        "B",
+        "C",
+        "A'",
+        "B'",
+        "C'"
+      ],
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "A"
+        ],
+        [
+          "A'",
+          "B'"
+        ],
+        [
+          "B'",
+          "C'"
+        ],
+        [
+          "C'",
+          "A'"
+        ],
+        [
+          "A",
+          "A'"
+        ],
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "A'",
+          "B'",
+          "C'"
+        ],
+        [
+          "A",
+          "B",
+          "B'",
+          "A'"
+        ],
+        [
+          "B",
+          "C",
+          "C'",
+          "B'"
+        ],
+        [
+          "C",
+          "A",
+          "A'",
+          "C'"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          8,
+          0,
+          0
+        ],
+        "C": [
+          0,
+          17,
+          0
+        ],
+        "A'": [
+          0,
+          17,
+          9
+        ],
+        "B'": [
+          8,
+          17,
+          9
+        ],
+        "C'": [
+          0,
+          34,
+          9
+        ],
+        "M": [
+          "0",
+          "17/3",
+          "3"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "C"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "8"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "C"
+          ],
+          "value": "17"
+        },
+        {
+          "kind": "orthogonal_projection",
+          "point": "A'",
+          "image": "C",
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A'",
+            "C"
+          ],
+          "value": "9"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "M",
+          "segment": [
+            "A",
+            "A'"
+          ],
+          "ratio": "1/3"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_plane",
+        "through_point": "M",
+        "parallel_plane": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    "W2-B22": {
+      "solid": "EFG.E'F'G'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": null,
+      "solid_vertices": [
+        "E",
+        "F",
+        "G",
+        "E'",
+        "F'",
+        "G'"
+      ],
+      "edges": [
+        [
+          "E",
+          "F"
+        ],
+        [
+          "F",
+          "G"
+        ],
+        [
+          "G",
+          "E"
+        ],
+        [
+          "E'",
+          "F'"
+        ],
+        [
+          "F'",
+          "G'"
+        ],
+        [
+          "G'",
+          "E'"
+        ],
+        [
+          "E",
+          "E'"
+        ],
+        [
+          "F",
+          "F'"
+        ],
+        [
+          "G",
+          "G'"
+        ]
+      ],
+      "faces": [
+        [
+          "E",
+          "F",
+          "G"
+        ],
+        [
+          "E'",
+          "F'",
+          "G'"
+        ],
+        [
+          "E",
+          "F",
+          "F'",
+          "E'"
+        ],
+        [
+          "F",
+          "G",
+          "G'",
+          "F'"
+        ],
+        [
+          "G",
+          "E",
+          "E'",
+          "G'"
+        ]
+      ],
+      "points": {
+        "E": [
+          0,
+          0,
+          0
+        ],
+        "F": [
+          7,
+          0,
+          0
+        ],
+        "G": [
+          0,
+          10,
+          0
+        ],
+        "E'": [
+          7,
+          0,
+          8
+        ],
+        "F'": [
+          14,
+          0,
+          8
+        ],
+        "G'": [
+          7,
+          10,
+          8
+        ],
+        "I": [
+          "21/4",
+          "0",
+          "6"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "E",
+            "F",
+            "G"
+          ],
+          "right_at": "E"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "E",
+            "F"
+          ],
+          "value": "7a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "E",
+            "G"
+          ],
+          "value": "10a"
+        },
+        {
+          "kind": "orthogonal_projection",
+          "point": "E'",
+          "image": "F",
+          "plane": [
+            "E",
+            "F",
+            "G"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "E'",
+            "F"
+          ],
+          "value": "8a"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "I",
+          "segment": [
+            "E",
+            "E'"
+          ],
+          "ratio": "3/4"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_plane",
+        "through_point": "I",
+        "parallel_plane": [
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    "W2-B23": {
+      "solid": "MNP.M'N'P'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "M",
+        "N",
+        "P",
+        "M'",
+        "N'",
+        "P'"
+      ],
+      "edges": [
+        [
+          "M",
+          "N"
+        ],
+        [
+          "N",
+          "P"
+        ],
+        [
+          "P",
+          "M"
+        ],
+        [
+          "M'",
+          "N'"
+        ],
+        [
+          "N'",
+          "P'"
+        ],
+        [
+          "P'",
+          "M'"
+        ],
+        [
+          "M",
+          "M'"
+        ],
+        [
+          "N",
+          "N'"
+        ],
+        [
+          "P",
+          "P'"
+        ]
+      ],
+      "faces": [
+        [
+          "M",
+          "N",
+          "P"
+        ],
+        [
+          "M'",
+          "N'",
+          "P'"
+        ],
+        [
+          "M",
+          "N",
+          "N'",
+          "M'"
+        ],
+        [
+          "N",
+          "P",
+          "P'",
+          "N'"
+        ],
+        [
+          "P",
+          "M",
+          "M'",
+          "P'"
+        ]
+      ],
+      "points": {
+        "M": [
+          0,
+          0,
+          0
+        ],
+        "N": [
+          9,
+          0,
+          0
+        ],
+        "P": [
+          0,
+          19,
+          0
+        ],
+        "M'": [
+          9,
+          0,
+          12
+        ],
+        "N'": [
+          18,
+          0,
+          12
+        ],
+        "P'": [
+          9,
+          19,
+          12
+        ],
+        "E": [
+          "9/4",
+          "0",
+          "3"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "M",
+            "N",
+            "P"
+          ],
+          "right_at": "M"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "N"
+          ],
+          "value": "9"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "P"
+          ],
+          "value": "19"
+        },
+        {
+          "kind": "orthogonal_projection",
+          "point": "M'",
+          "image": "N",
+          "plane": [
+            "M",
+            "N",
+            "P"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M'",
+            "N"
+          ],
+          "value": "12"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "E",
+          "segment": [
+            "M",
+            "M'"
+          ],
+          "ratio": "1/4"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_two_lines",
+        "through_point": "E",
+        "parallel_line_a": [
+          "M",
+          "N"
+        ],
+        "parallel_line_b": [
+          "M",
+          "P"
+        ]
+      }
+    },
+    "W2-B24": {
+      "solid": "ABC.A'B'C'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "A",
+        "B",
+        "C",
+        "A'",
+        "B'",
+        "C'"
+      ],
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "A"
+        ],
+        [
+          "A'",
+          "B'"
+        ],
+        [
+          "B'",
+          "C'"
+        ],
+        [
+          "C'",
+          "A'"
+        ],
+        [
+          "A",
+          "A'"
+        ],
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "A'",
+          "B'",
+          "C'"
+        ],
+        [
+          "A",
+          "B",
+          "B'",
+          "A'"
+        ],
+        [
+          "B",
+          "C",
+          "C'",
+          "B'"
+        ],
+        [
+          "C",
+          "A",
+          "A'",
+          "C'"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          9,
+          0,
+          0
+        ],
+        "C": [
+          0,
+          15,
+          0
+        ],
+        "A'": [
+          9,
+          0,
+          8
+        ],
+        "B'": [
+          18,
+          0,
+          8
+        ],
+        "C'": [
+          9,
+          15,
+          8
+        ],
+        "M": [
+          "0",
+          "5",
+          "0"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "C"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "9a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "C"
+          ],
+          "value": "15a"
+        },
+        {
+          "kind": "orthogonal_projection",
+          "point": "A'",
+          "image": "B",
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A'",
+            "B"
+          ],
+          "value": "8a"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "M",
+          "segment": [
+            "A",
+            "C"
+          ],
+          "ratio": "1/3"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_two_lines",
+        "through_point": "M",
+        "parallel_line_a": [
+          "A",
+          "B"
+        ],
+        "parallel_line_b": [
+          "A",
+          "A'"
+        ]
+      }
+    },
+    "W2-B25": {
+      "solid": "ABCD.A'B'C'D'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "A'",
+        "B'",
+        "C'",
+        "D'"
+      ],
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "A"
+        ],
+        [
+          "A'",
+          "B'"
+        ],
+        [
+          "B'",
+          "C'"
+        ],
+        [
+          "C'",
+          "D'"
+        ],
+        [
+          "D'",
+          "A'"
+        ],
+        [
+          "A",
+          "A'"
+        ],
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ],
+        [
+          "D",
+          "D'"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        [
+          "A'",
+          "B'",
+          "C'",
+          "D'"
+        ],
+        [
+          "A",
+          "B",
+          "B'",
+          "A'"
+        ],
+        [
+          "B",
+          "C",
+          "C'",
+          "B'"
+        ],
+        [
+          "C",
+          "D",
+          "D'",
+          "C'"
+        ],
+        [
+          "D",
+          "A",
+          "A'",
+          "D'"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          7,
+          0,
+          0
+        ],
+        "C": [
+          7,
+          11,
+          0
+        ],
+        "D": [
+          0,
+          11,
+          0
+        ],
+        "A'": [
+          0,
+          0,
+          10
+        ],
+        "B'": [
+          7,
+          0,
+          10
+        ],
+        "C'": [
+          7,
+          11,
+          10
+        ],
+        "D'": [
+          0,
+          11,
+          10
+        ],
+        "M": [
+          "0",
+          "0",
+          "4"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "D"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "7"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "D"
+          ],
+          "value": "11"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "A'"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "A'"
+          ],
+          "value": "10"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "M",
+          "segment": [
+            "A",
+            "A'"
+          ],
+          "ratio": "2/5"
+        }
+      ],
+      "plane_spec": {
+        "kind": "perpendicular_line",
+        "through_point": "M",
+        "perpendicular_line": [
+          "A",
+          "A'"
+        ]
+      }
+    },
+    "W2-B26": {
+      "solid": "MNPQ.M'N'P'Q'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "M'",
+        "N'",
+        "P'",
+        "Q'"
+      ],
+      "edges": [
+        [
+          "M",
+          "N"
+        ],
+        [
+          "N",
+          "P"
+        ],
+        [
+          "P",
+          "Q"
+        ],
+        [
+          "Q",
+          "M"
+        ],
+        [
+          "M'",
+          "N'"
+        ],
+        [
+          "N'",
+          "P'"
+        ],
+        [
+          "P'",
+          "Q'"
+        ],
+        [
+          "Q'",
+          "M'"
+        ],
+        [
+          "M",
+          "M'"
+        ],
+        [
+          "N",
+          "N'"
+        ],
+        [
+          "P",
+          "P'"
+        ],
+        [
+          "Q",
+          "Q'"
+        ]
+      ],
+      "faces": [
+        [
+          "M",
+          "N",
+          "P",
+          "Q"
+        ],
+        [
+          "M'",
+          "N'",
+          "P'",
+          "Q'"
+        ],
+        [
+          "M",
+          "N",
+          "N'",
+          "M'"
+        ],
+        [
+          "N",
+          "P",
+          "P'",
+          "N'"
+        ],
+        [
+          "P",
+          "Q",
+          "Q'",
+          "P'"
+        ],
+        [
+          "Q",
+          "M",
+          "M'",
+          "Q'"
+        ]
+      ],
+      "points": {
+        "M": [
+          0,
+          0,
+          0
+        ],
+        "N": [
+          9,
+          0,
+          0
+        ],
+        "P": [
+          9,
+          13,
+          0
+        ],
+        "Q": [
+          0,
+          13,
+          0
+        ],
+        "M'": [
+          0,
+          0,
+          5
+        ],
+        "N'": [
+          9,
+          0,
+          5
+        ],
+        "P'": [
+          9,
+          13,
+          5
+        ],
+        "Q'": [
+          0,
+          13,
+          5
+        ],
+        "I": [
+          "3",
+          "0",
+          "0"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "M",
+            "N",
+            "Q"
+          ],
+          "right_at": "M"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "N"
+          ],
+          "value": "9a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "Q"
+          ],
+          "value": "13a"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "M",
+            "M'"
+          ],
+          "plane": [
+            "M",
+            "N",
+            "P",
+            "Q"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "M'"
+          ],
+          "value": "5a"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "I",
+          "segment": [
+            "M",
+            "N"
+          ],
+          "ratio": "1/3"
+        }
+      ],
+      "plane_spec": {
+        "kind": "perpendicular_line",
+        "through_point": "I",
+        "perpendicular_line": [
+          "M",
+          "N"
+        ]
+      }
+    },
+    "W2-B27": {
+      "solid": "EFGH.E'F'G'H'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": null,
+      "solid_vertices": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "E'",
+        "F'",
+        "G'",
+        "H'"
+      ],
+      "edges": [
+        [
+          "E",
+          "F"
+        ],
+        [
+          "F",
+          "G"
+        ],
+        [
+          "G",
+          "H"
+        ],
+        [
+          "H",
+          "E"
+        ],
+        [
+          "E'",
+          "F'"
+        ],
+        [
+          "F'",
+          "G'"
+        ],
+        [
+          "G'",
+          "H'"
+        ],
+        [
+          "H'",
+          "E'"
+        ],
+        [
+          "E",
+          "E'"
+        ],
+        [
+          "F",
+          "F'"
+        ],
+        [
+          "G",
+          "G'"
+        ],
+        [
+          "H",
+          "H'"
+        ]
+      ],
+      "faces": [
+        [
+          "E",
+          "F",
+          "G",
+          "H"
+        ],
+        [
+          "E'",
+          "F'",
+          "G'",
+          "H'"
+        ],
+        [
+          "E",
+          "F",
+          "F'",
+          "E'"
+        ],
+        [
+          "F",
+          "G",
+          "G'",
+          "F'"
+        ],
+        [
+          "G",
+          "H",
+          "H'",
+          "G'"
+        ],
+        [
+          "H",
+          "E",
+          "E'",
+          "H'"
+        ]
+      ],
+      "points": {
+        "E": [
+          0,
+          0,
+          0
+        ],
+        "F": [
+          11,
+          0,
+          0
+        ],
+        "G": [
+          11,
+          7,
+          0
+        ],
+        "H": [
+          0,
+          7,
+          0
+        ],
+        "E'": [
+          0,
+          0,
+          8
+        ],
+        "F'": [
+          11,
+          0,
+          8
+        ],
+        "G'": [
+          11,
+          7,
+          8
+        ],
+        "H'": [
+          0,
+          7,
+          8
+        ],
+        "K": [
+          "0",
+          "0",
+          "6"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "E",
+            "F",
+            "H"
+          ],
+          "right_at": "E"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "E",
+            "F"
+          ],
+          "value": "11"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "E",
+            "H"
+          ],
+          "value": "7"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "E",
+            "E'"
+          ],
+          "plane": [
+            "E",
+            "F",
+            "G",
+            "H"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "E",
+            "E'"
+          ],
+          "value": "8"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "K",
+          "segment": [
+            "E",
+            "E'"
+          ],
+          "ratio": "3/4"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_plane",
+        "through_point": "K",
+        "parallel_plane": [
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    "W2-B28": {
+      "solid": "ABCD.A'B'C'D'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "A'",
+        "B'",
+        "C'",
+        "D'"
+      ],
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "A"
+        ],
+        [
+          "A'",
+          "B'"
+        ],
+        [
+          "B'",
+          "C'"
+        ],
+        [
+          "C'",
+          "D'"
+        ],
+        [
+          "D'",
+          "A'"
+        ],
+        [
+          "A",
+          "A'"
+        ],
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ],
+        [
+          "D",
+          "D'"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        [
+          "A'",
+          "B'",
+          "C'",
+          "D'"
+        ],
+        [
+          "A",
+          "B",
+          "B'",
+          "A'"
+        ],
+        [
+          "B",
+          "C",
+          "C'",
+          "B'"
+        ],
+        [
+          "C",
+          "D",
+          "D'",
+          "C'"
+        ],
+        [
+          "D",
+          "A",
+          "A'",
+          "D'"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          10,
+          0,
+          0
+        ],
+        "C": [
+          10,
+          13,
+          0
+        ],
+        "D": [
+          0,
+          13,
+          0
+        ],
+        "A'": [
+          0,
+          0,
+          6
+        ],
+        "B'": [
+          10,
+          0,
+          6
+        ],
+        "C'": [
+          10,
+          13,
+          6
+        ],
+        "D'": [
+          0,
+          13,
+          6
+        ],
+        "M": [
+          "6",
+          "0",
+          "0"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "D"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "10a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "D"
+          ],
+          "value": "13a"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "A'"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "A'"
+          ],
+          "value": "6a"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "M",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "ratio": "3/5"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_plane",
+        "through_point": "M",
+        "parallel_plane": [
+          "A",
+          "D",
+          "D'"
+        ]
+      }
+    },
+    "W2-B29": {
+      "solid": "MNPQ.M'N'P'Q'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "M'",
+        "N'",
+        "P'",
+        "Q'"
+      ],
+      "edges": [
+        [
+          "M",
+          "N"
+        ],
+        [
+          "N",
+          "P"
+        ],
+        [
+          "P",
+          "Q"
+        ],
+        [
+          "Q",
+          "M"
+        ],
+        [
+          "M'",
+          "N'"
+        ],
+        [
+          "N'",
+          "P'"
+        ],
+        [
+          "P'",
+          "Q'"
+        ],
+        [
+          "Q'",
+          "M'"
+        ],
+        [
+          "M",
+          "M'"
+        ],
+        [
+          "N",
+          "N'"
+        ],
+        [
+          "P",
+          "P'"
+        ],
+        [
+          "Q",
+          "Q'"
+        ]
+      ],
+      "faces": [
+        [
+          "M",
+          "N",
+          "P",
+          "Q"
+        ],
+        [
+          "M'",
+          "N'",
+          "P'",
+          "Q'"
+        ],
+        [
+          "M",
+          "N",
+          "N'",
+          "M'"
+        ],
+        [
+          "N",
+          "P",
+          "P'",
+          "N'"
+        ],
+        [
+          "P",
+          "Q",
+          "Q'",
+          "P'"
+        ],
+        [
+          "Q",
+          "M",
+          "M'",
+          "Q'"
+        ]
+      ],
+      "points": {
+        "M": [
+          0,
+          0,
+          0
+        ],
+        "N": [
+          11,
+          0,
+          0
+        ],
+        "P": [
+          11,
+          5,
+          0
+        ],
+        "Q": [
+          0,
+          5,
+          0
+        ],
+        "M'": [
+          0,
+          0,
+          9
+        ],
+        "N'": [
+          11,
+          0,
+          9
+        ],
+        "P'": [
+          11,
+          5,
+          9
+        ],
+        "Q'": [
+          0,
+          5,
+          9
+        ],
+        "H": [
+          "0",
+          "0",
+          "3"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "M",
+            "N",
+            "Q"
+          ],
+          "right_at": "M"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "N"
+          ],
+          "value": "11"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "Q"
+          ],
+          "value": "5"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "M",
+            "M'"
+          ],
+          "plane": [
+            "M",
+            "N",
+            "P",
+            "Q"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "M'"
+          ],
+          "value": "9"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "H",
+          "segment": [
+            "M",
+            "M'"
+          ],
+          "ratio": "1/3"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_two_lines",
+        "through_point": "H",
+        "parallel_line_a": [
+          "M",
+          "N"
+        ],
+        "parallel_line_b": [
+          "M",
+          "Q"
+        ]
+      }
+    },
+    "W2-B30": {
+      "solid": "ABCD.A'B'C'D'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": null,
+      "solid_vertices": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "A'",
+        "B'",
+        "C'",
+        "D'"
+      ],
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "A"
+        ],
+        [
+          "A'",
+          "B'"
+        ],
+        [
+          "B'",
+          "C'"
+        ],
+        [
+          "C'",
+          "D'"
+        ],
+        [
+          "D'",
+          "A'"
+        ],
+        [
+          "A",
+          "A'"
+        ],
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ],
+        [
+          "D",
+          "D'"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        [
+          "A'",
+          "B'",
+          "C'",
+          "D'"
+        ],
+        [
+          "A",
+          "B",
+          "B'",
+          "A'"
+        ],
+        [
+          "B",
+          "C",
+          "C'",
+          "B'"
+        ],
+        [
+          "C",
+          "D",
+          "D'",
+          "C'"
+        ],
+        [
+          "D",
+          "A",
+          "A'",
+          "D'"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          7,
+          0,
+          0
+        ],
+        "C": [
+          7,
+          16,
+          0
+        ],
+        "D": [
+          0,
+          16,
+          0
+        ],
+        "A'": [
+          0,
+          0,
+          9
+        ],
+        "B'": [
+          7,
+          0,
+          9
+        ],
+        "C'": [
+          7,
+          16,
+          9
+        ],
+        "D'": [
+          0,
+          16,
+          9
+        ],
+        "E": [
+          "0",
+          "4",
+          "0"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "D"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "7a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "D"
+          ],
+          "value": "16a"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "A'"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "A'"
+          ],
+          "value": "9a"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "E",
+          "segment": [
+            "A",
+            "D"
+          ],
+          "ratio": "1/4"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_two_lines",
+        "through_point": "E",
+        "parallel_line_a": [
+          "A",
+          "B"
+        ],
+        "parallel_line_b": [
+          "A",
+          "A'"
+        ]
+      }
+    },
+    "W2-B31": {
+      "solid": "ABCD.A'B'C'D'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "A'",
+        "B'",
+        "C'",
+        "D'"
+      ],
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "A"
+        ],
+        [
+          "A'",
+          "B'"
+        ],
+        [
+          "B'",
+          "C'"
+        ],
+        [
+          "C'",
+          "D'"
+        ],
+        [
+          "D'",
+          "A'"
+        ],
+        [
+          "A",
+          "A'"
+        ],
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ],
+        [
+          "D",
+          "D'"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        [
+          "A'",
+          "B'",
+          "C'",
+          "D'"
+        ],
+        [
+          "A",
+          "B",
+          "B'",
+          "A'"
+        ],
+        [
+          "B",
+          "C",
+          "C'",
+          "B'"
+        ],
+        [
+          "C",
+          "D",
+          "D'",
+          "C'"
+        ],
+        [
+          "D",
+          "A",
+          "A'",
+          "D'"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          11,
+          0,
+          0
+        ],
+        "C": [
+          11,
+          11,
+          0
+        ],
+        "D": [
+          0,
+          11,
+          0
+        ],
+        "A'": [
+          0,
+          0,
+          11
+        ],
+        "B'": [
+          11,
+          0,
+          11
+        ],
+        "C'": [
+          11,
+          11,
+          11
+        ],
+        "D'": [
+          0,
+          11,
+          11
+        ],
+        "M": [
+          "0",
+          "0",
+          "11/3"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "D"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "11"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "D"
+          ],
+          "value": "11"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "A'"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "A'"
+          ],
+          "value": "11"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "M",
+          "segment": [
+            "A",
+            "A'"
+          ],
+          "ratio": "1/3"
+        }
+      ],
+      "plane_spec": {
+        "kind": "perpendicular_line",
+        "through_point": "M",
+        "perpendicular_line": [
+          "A",
+          "A'"
+        ]
+      }
+    },
+    "W2-B32": {
+      "solid": "MNPQ.M'N'P'Q'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": null,
+      "solid_vertices": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "M'",
+        "N'",
+        "P'",
+        "Q'"
+      ],
+      "edges": [
+        [
+          "M",
+          "N"
+        ],
+        [
+          "N",
+          "P"
+        ],
+        [
+          "P",
+          "Q"
+        ],
+        [
+          "Q",
+          "M"
+        ],
+        [
+          "M'",
+          "N'"
+        ],
+        [
+          "N'",
+          "P'"
+        ],
+        [
+          "P'",
+          "Q'"
+        ],
+        [
+          "Q'",
+          "M'"
+        ],
+        [
+          "M",
+          "M'"
+        ],
+        [
+          "N",
+          "N'"
+        ],
+        [
+          "P",
+          "P'"
+        ],
+        [
+          "Q",
+          "Q'"
+        ]
+      ],
+      "faces": [
+        [
+          "M",
+          "N",
+          "P",
+          "Q"
+        ],
+        [
+          "M'",
+          "N'",
+          "P'",
+          "Q'"
+        ],
+        [
+          "M",
+          "N",
+          "N'",
+          "M'"
+        ],
+        [
+          "N",
+          "P",
+          "P'",
+          "N'"
+        ],
+        [
+          "P",
+          "Q",
+          "Q'",
+          "P'"
+        ],
+        [
+          "Q",
+          "M",
+          "M'",
+          "Q'"
+        ]
+      ],
+      "points": {
+        "M": [
+          0,
+          0,
+          0
+        ],
+        "N": [
+          13,
+          0,
+          0
+        ],
+        "P": [
+          13,
+          13,
+          0
+        ],
+        "Q": [
+          0,
+          13,
+          0
+        ],
+        "M'": [
+          0,
+          0,
+          13
+        ],
+        "N'": [
+          13,
+          0,
+          13
+        ],
+        "P'": [
+          13,
+          13,
+          13
+        ],
+        "Q'": [
+          0,
+          13,
+          13
+        ],
+        "I": [
+          "26/3",
+          "0",
+          "0"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "M",
+            "N",
+            "Q"
+          ],
+          "right_at": "M"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "N"
+          ],
+          "value": "13a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "Q"
+          ],
+          "value": "13a"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "M",
+            "M'"
+          ],
+          "plane": [
+            "M",
+            "N",
+            "P",
+            "Q"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "M'"
+          ],
+          "value": "13a"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "I",
+          "segment": [
+            "M",
+            "N"
+          ],
+          "ratio": "2/3"
+        }
+      ],
+      "plane_spec": {
+        "kind": "perpendicular_line",
+        "through_point": "I",
+        "perpendicular_line": [
+          "M",
+          "N"
+        ]
+      }
+    },
+    "W2-B33": {
+      "solid": "EFGH.E'F'G'H'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "E'",
+        "F'",
+        "G'",
+        "H'"
+      ],
+      "edges": [
+        [
+          "E",
+          "F"
+        ],
+        [
+          "F",
+          "G"
+        ],
+        [
+          "G",
+          "H"
+        ],
+        [
+          "H",
+          "E"
+        ],
+        [
+          "E'",
+          "F'"
+        ],
+        [
+          "F'",
+          "G'"
+        ],
+        [
+          "G'",
+          "H'"
+        ],
+        [
+          "H'",
+          "E'"
+        ],
+        [
+          "E",
+          "E'"
+        ],
+        [
+          "F",
+          "F'"
+        ],
+        [
+          "G",
+          "G'"
+        ],
+        [
+          "H",
+          "H'"
+        ]
+      ],
+      "faces": [
+        [
+          "E",
+          "F",
+          "G",
+          "H"
+        ],
+        [
+          "E'",
+          "F'",
+          "G'",
+          "H'"
+        ],
+        [
+          "E",
+          "F",
+          "F'",
+          "E'"
+        ],
+        [
+          "F",
+          "G",
+          "G'",
+          "F'"
+        ],
+        [
+          "G",
+          "H",
+          "H'",
+          "G'"
+        ],
+        [
+          "H",
+          "E",
+          "E'",
+          "H'"
+        ]
+      ],
+      "points": {
+        "E": [
+          0,
+          0,
+          0
+        ],
+        "F": [
+          14,
+          0,
+          0
+        ],
+        "G": [
+          14,
+          14,
+          0
+        ],
+        "H": [
+          0,
+          14,
+          0
+        ],
+        "E'": [
+          0,
+          0,
+          14
+        ],
+        "F'": [
+          14,
+          0,
+          14
+        ],
+        "G'": [
+          14,
+          14,
+          14
+        ],
+        "H'": [
+          0,
+          14,
+          14
+        ],
+        "K": [
+          "0",
+          "0",
+          "28/5"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "E",
+            "F",
+            "H"
+          ],
+          "right_at": "E"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "E",
+            "F"
+          ],
+          "value": "14"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "E",
+            "H"
+          ],
+          "value": "14"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "E",
+            "E'"
+          ],
+          "plane": [
+            "E",
+            "F",
+            "G",
+            "H"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "E",
+            "E'"
+          ],
+          "value": "14"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "K",
+          "segment": [
+            "E",
+            "E'"
+          ],
+          "ratio": "2/5"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_plane",
+        "through_point": "K",
+        "parallel_plane": [
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    },
+    "W2-B34": {
+      "solid": "ABCD.A'B'C'D'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "A'",
+        "B'",
+        "C'",
+        "D'"
+      ],
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "A"
+        ],
+        [
+          "A'",
+          "B'"
+        ],
+        [
+          "B'",
+          "C'"
+        ],
+        [
+          "C'",
+          "D'"
+        ],
+        [
+          "D'",
+          "A'"
+        ],
+        [
+          "A",
+          "A'"
+        ],
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ],
+        [
+          "D",
+          "D'"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        [
+          "A'",
+          "B'",
+          "C'",
+          "D'"
+        ],
+        [
+          "A",
+          "B",
+          "B'",
+          "A'"
+        ],
+        [
+          "B",
+          "C",
+          "C'",
+          "B'"
+        ],
+        [
+          "C",
+          "D",
+          "D'",
+          "C'"
+        ],
+        [
+          "D",
+          "A",
+          "A'",
+          "D'"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          10,
+          0,
+          0
+        ],
+        "C": [
+          10,
+          10,
+          0
+        ],
+        "D": [
+          0,
+          10,
+          0
+        ],
+        "A'": [
+          0,
+          0,
+          10
+        ],
+        "B'": [
+          10,
+          0,
+          10
+        ],
+        "C'": [
+          10,
+          10,
+          10
+        ],
+        "D'": [
+          0,
+          10,
+          10
+        ],
+        "M": [
+          "6",
+          "0",
+          "0"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "D"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "10a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "D"
+          ],
+          "value": "10a"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "A'"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "A'"
+          ],
+          "value": "10a"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "M",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "ratio": "3/5"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_plane",
+        "through_point": "M",
+        "parallel_plane": [
+          "B",
+          "D",
+          "D'"
+        ]
+      }
+    },
+    "W2-B35": {
+      "solid": "MNPQ.M'N'P'Q'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": null,
+      "solid_vertices": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "M'",
+        "N'",
+        "P'",
+        "Q'"
+      ],
+      "edges": [
+        [
+          "M",
+          "N"
+        ],
+        [
+          "N",
+          "P"
+        ],
+        [
+          "P",
+          "Q"
+        ],
+        [
+          "Q",
+          "M"
+        ],
+        [
+          "M'",
+          "N'"
+        ],
+        [
+          "N'",
+          "P'"
+        ],
+        [
+          "P'",
+          "Q'"
+        ],
+        [
+          "Q'",
+          "M'"
+        ],
+        [
+          "M",
+          "M'"
+        ],
+        [
+          "N",
+          "N'"
+        ],
+        [
+          "P",
+          "P'"
+        ],
+        [
+          "Q",
+          "Q'"
+        ]
+      ],
+      "faces": [
+        [
+          "M",
+          "N",
+          "P",
+          "Q"
+        ],
+        [
+          "M'",
+          "N'",
+          "P'",
+          "Q'"
+        ],
+        [
+          "M",
+          "N",
+          "N'",
+          "M'"
+        ],
+        [
+          "N",
+          "P",
+          "P'",
+          "N'"
+        ],
+        [
+          "P",
+          "Q",
+          "Q'",
+          "P'"
+        ],
+        [
+          "Q",
+          "M",
+          "M'",
+          "Q'"
+        ]
+      ],
+      "points": {
+        "M": [
+          0,
+          0,
+          0
+        ],
+        "N": [
+          12,
+          0,
+          0
+        ],
+        "P": [
+          12,
+          12,
+          0
+        ],
+        "Q": [
+          0,
+          12,
+          0
+        ],
+        "M'": [
+          0,
+          0,
+          12
+        ],
+        "N'": [
+          12,
+          0,
+          12
+        ],
+        "P'": [
+          12,
+          12,
+          12
+        ],
+        "Q'": [
+          0,
+          12,
+          12
+        ],
+        "H": [
+          "0",
+          "0",
+          "9"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "M",
+            "N",
+            "Q"
+          ],
+          "right_at": "M"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "N"
+          ],
+          "value": "12"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "Q"
+          ],
+          "value": "12"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "M",
+            "M'"
+          ],
+          "plane": [
+            "M",
+            "N",
+            "P",
+            "Q"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "M'"
+          ],
+          "value": "12"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "H",
+          "segment": [
+            "M",
+            "M'"
+          ],
+          "ratio": "3/4"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_two_lines",
+        "through_point": "H",
+        "parallel_line_a": [
+          "M",
+          "N"
+        ],
+        "parallel_line_b": [
+          "M",
+          "Q"
+        ]
+      }
+    },
+    "W2-B36": {
+      "solid": "EFGH.E'F'G'H'",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "E",
+        "F",
+        "G",
+        "H",
+        "E'",
+        "F'",
+        "G'",
+        "H'"
+      ],
+      "edges": [
+        [
+          "E",
+          "F"
+        ],
+        [
+          "F",
+          "G"
+        ],
+        [
+          "G",
+          "H"
+        ],
+        [
+          "H",
+          "E"
+        ],
+        [
+          "E'",
+          "F'"
+        ],
+        [
+          "F'",
+          "G'"
+        ],
+        [
+          "G'",
+          "H'"
+        ],
+        [
+          "H'",
+          "E'"
+        ],
+        [
+          "E",
+          "E'"
+        ],
+        [
+          "F",
+          "F'"
+        ],
+        [
+          "G",
+          "G'"
+        ],
+        [
+          "H",
+          "H'"
+        ]
+      ],
+      "faces": [
+        [
+          "E",
+          "F",
+          "G",
+          "H"
+        ],
+        [
+          "E'",
+          "F'",
+          "G'",
+          "H'"
+        ],
+        [
+          "E",
+          "F",
+          "F'",
+          "E'"
+        ],
+        [
+          "F",
+          "G",
+          "G'",
+          "F'"
+        ],
+        [
+          "G",
+          "H",
+          "H'",
+          "G'"
+        ],
+        [
+          "H",
+          "E",
+          "E'",
+          "H'"
+        ]
+      ],
+      "points": {
+        "E": [
+          0,
+          0,
+          0
+        ],
+        "F": [
+          15,
+          0,
+          0
+        ],
+        "G": [
+          15,
+          15,
+          0
+        ],
+        "H": [
+          0,
+          15,
+          0
+        ],
+        "E'": [
+          0,
+          0,
+          15
+        ],
+        "F'": [
+          15,
+          0,
+          15
+        ],
+        "G'": [
+          15,
+          15,
+          15
+        ],
+        "H'": [
+          0,
+          15,
+          15
+        ],
+        "I": [
+          "3",
+          "0",
+          "0"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "E",
+            "F",
+            "H"
+          ],
+          "right_at": "E"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "E",
+            "F"
+          ],
+          "value": "15a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "E",
+            "H"
+          ],
+          "value": "15a"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "E",
+            "E'"
+          ],
+          "plane": [
+            "E",
+            "F",
+            "G",
+            "H"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "E",
+            "E'"
+          ],
+          "value": "15a"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "I",
+          "segment": [
+            "E",
+            "F"
+          ],
+          "ratio": "1/5"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_two_lines",
+        "through_point": "I",
+        "parallel_line_a": [
+          "E",
+          "H"
+        ],
+        "parallel_line_b": [
+          "E",
+          "E'"
+        ]
+      }
+    },
+    "W2-A01": {
+      "solid": "S.ABC",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": null,
+      "solid_vertices": [
+        "S",
+        "A",
+        "B",
+        "C"
+      ],
+      "edges": [
+        [
+          "S",
+          "A"
+        ],
+        [
+          "S",
+          "B"
+        ],
+        [
+          "S",
+          "C"
+        ],
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "A"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "S",
+          "A",
+          "B"
+        ],
+        [
+          "S",
+          "B",
+          "C"
+        ],
+        [
+          "S",
+          "C",
+          "A"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          7,
+          0,
+          0
+        ],
+        "C": [
+          7,
+          7,
+          0
+        ],
+        "S": [
+          0,
+          0,
+          7
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "C"
+          ],
+          "right_at": "B"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "7"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "B",
+            "C"
+          ],
+          "value": "7"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "S",
+            "A"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "S",
+            "A"
+          ],
+          "value": "7"
+        }
+      ],
+      "plane_spec": {
+        "kind": "perpendicular_line",
+        "through_point": "A",
+        "perpendicular_line": [
+          "S",
+          "C"
+        ]
+      },
+      "stated_edges": [
+        [
+          "S",
+          "B"
+        ],
+        [
+          "S",
+          "C"
+        ]
+      ]
+    },
+    "W2-A02": {
+      "solid": "S.ABC",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "S",
+        "A",
+        "B",
+        "C"
+      ],
+      "edges": [
+        [
+          "S",
+          "A"
+        ],
+        [
+          "S",
+          "B"
+        ],
+        [
+          "S",
+          "C"
+        ],
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "A"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "S",
+          "A",
+          "B"
+        ],
+        [
+          "S",
+          "B",
+          "C"
+        ],
+        [
+          "S",
+          "C",
+          "A"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          9,
+          0,
+          0
+        ],
+        "C": [
+          0,
+          15,
+          0
+        ],
+        "S": [
+          0,
+          0,
+          11
+        ],
+        "M": [
+          "0",
+          "0",
+          "22/3"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "C"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "9a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "C"
+          ],
+          "value": "15a"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "S",
+            "A"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "S",
+            "A"
+          ],
+          "value": "11a"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "M",
+          "segment": [
+            "S",
+            "A"
+          ],
+          "ratio": "1/3"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_plane",
+        "through_point": "M",
+        "parallel_plane": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "stated_edges": [
+        [
+          "S",
+          "B"
+        ],
+        [
+          "S",
+          "C"
+        ]
+      ]
+    },
+    "W2-A03": {
+      "solid": "S.MNP",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "S",
+        "M",
+        "N",
+        "P"
+      ],
+      "edges": [
+        [
+          "S",
+          "M"
+        ],
+        [
+          "S",
+          "N"
+        ],
+        [
+          "S",
+          "P"
+        ],
+        [
+          "M",
+          "N"
+        ],
+        [
+          "N",
+          "P"
+        ],
+        [
+          "P",
+          "M"
+        ]
+      ],
+      "faces": [
+        [
+          "M",
+          "N",
+          "P"
+        ],
+        [
+          "S",
+          "M",
+          "N"
+        ],
+        [
+          "S",
+          "N",
+          "P"
+        ],
+        [
+          "S",
+          "P",
+          "M"
+        ]
+      ],
+      "points": {
+        "M": [
+          0,
+          0,
+          0
+        ],
+        "N": [
+          10,
+          0,
+          0
+        ],
+        "P": [
+          0,
+          14,
+          0
+        ],
+        "S": [
+          0,
+          0,
+          12
+        ],
+        "I": [
+          "0",
+          "0",
+          "6"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "M",
+            "N",
+            "P"
+          ],
+          "right_at": "M"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "N"
+          ],
+          "value": "10"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "M",
+            "P"
+          ],
+          "value": "14"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "S",
+            "M"
+          ],
+          "plane": [
+            "M",
+            "N",
+            "P"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "S",
+            "M"
+          ],
+          "value": "12"
+        },
+        {
+          "kind": "midpoint",
+          "point": "I",
+          "segment": [
+            "S",
+            "M"
+          ]
+        }
+      ],
+      "plane_spec": {
+        "kind": "perpendicular_line",
+        "through_point": "I",
+        "perpendicular_line": [
+          "S",
+          "M"
+        ]
+      },
+      "stated_edges": [
+        [
+          "S",
+          "N"
+        ],
+        [
+          "S",
+          "P"
+        ]
+      ]
+    },
+    "W2-A04": {
+      "solid": "S.ABCD",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "S",
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "edges": [
+        [
+          "S",
+          "A"
+        ],
+        [
+          "S",
+          "B"
+        ],
+        [
+          "S",
+          "C"
+        ],
+        [
+          "S",
+          "D"
+        ],
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "A"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        [
+          "S",
+          "A",
+          "B"
+        ],
+        [
+          "S",
+          "B",
+          "C"
+        ],
+        [
+          "S",
+          "C",
+          "D"
+        ],
+        [
+          "S",
+          "D",
+          "A"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          6,
+          0,
+          0
+        ],
+        "C": [
+          6,
+          8,
+          0
+        ],
+        "D": [
+          0,
+          8,
+          0
+        ],
+        "S": [
+          0,
+          0,
+          10
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "D"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "6"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "D"
+          ],
+          "value": "8"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "S",
+            "A"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "S",
+            "A"
+          ],
+          "value": "10"
+        }
+      ],
+      "plane_spec": {
+        "kind": "perpendicular_line",
+        "through_point": "A",
+        "perpendicular_line": [
+          "S",
+          "C"
+        ]
+      },
+      "stated_edges": [
+        [
+          "S",
+          "B"
+        ],
+        [
+          "S",
+          "C"
+        ],
+        [
+          "S",
+          "D"
+        ]
+      ]
+    },
+    "W2-A05": {
+      "solid": "S.ABCD",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": null,
+      "solid_vertices": [
+        "S",
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "edges": [
+        [
+          "S",
+          "A"
+        ],
+        [
+          "S",
+          "B"
+        ],
+        [
+          "S",
+          "C"
+        ],
+        [
+          "S",
+          "D"
+        ],
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "A"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        [
+          "S",
+          "A",
+          "B"
+        ],
+        [
+          "S",
+          "B",
+          "C"
+        ],
+        [
+          "S",
+          "C",
+          "D"
+        ],
+        [
+          "S",
+          "D",
+          "A"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          12,
+          0,
+          0
+        ],
+        "C": [
+          12,
+          16,
+          0
+        ],
+        "D": [
+          0,
+          16,
+          0
+        ],
+        "S": [
+          0,
+          0,
+          9
+        ],
+        "M": [
+          "0",
+          "0",
+          "27/4"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "D"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "12a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "D"
+          ],
+          "value": "16a"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "S",
+            "A"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "S",
+            "A"
+          ],
+          "value": "9a"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "M",
+          "segment": [
+            "S",
+            "A"
+          ],
+          "ratio": "1/4"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_plane",
+        "through_point": "M",
+        "parallel_plane": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "stated_edges": [
+        [
+          "S",
+          "B"
+        ],
+        [
+          "S",
+          "C"
+        ],
+        [
+          "S",
+          "D"
+        ]
+      ]
+    },
+    "W2-A06": {
+      "solid": "S.ABCD",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "S",
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "edges": [
+        [
+          "S",
+          "A"
+        ],
+        [
+          "S",
+          "B"
+        ],
+        [
+          "S",
+          "C"
+        ],
+        [
+          "S",
+          "D"
+        ],
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "A"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        [
+          "S",
+          "A",
+          "B"
+        ],
+        [
+          "S",
+          "B",
+          "C"
+        ],
+        [
+          "S",
+          "C",
+          "D"
+        ],
+        [
+          "S",
+          "D",
+          "A"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          12,
+          0,
+          0
+        ],
+        "C": [
+          12,
+          12,
+          0
+        ],
+        "D": [
+          0,
+          12,
+          0
+        ],
+        "S": [
+          0,
+          0,
+          13
+        ],
+        "M": [
+          "0",
+          "0",
+          "13/3"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "D"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "12"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "D"
+          ],
+          "value": "12"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "S",
+            "A"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "S",
+            "A"
+          ],
+          "value": "13"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "M",
+          "segment": [
+            "S",
+            "A"
+          ],
+          "ratio": "2/3"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_two_lines",
+        "through_point": "M",
+        "parallel_line_a": [
+          "A",
+          "B"
+        ],
+        "parallel_line_b": [
+          "A",
+          "D"
+        ]
+      },
+      "stated_edges": [
+        [
+          "S",
+          "B"
+        ],
+        [
+          "S",
+          "C"
+        ],
+        [
+          "S",
+          "D"
+        ]
+      ]
+    },
+    "W2-A07": {
+      "solid": "ABC.A'B'C'",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "A",
+        "B",
+        "C",
+        "A'",
+        "B'",
+        "C'"
+      ],
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "A"
+        ],
+        [
+          "A'",
+          "B'"
+        ],
+        [
+          "B'",
+          "C'"
+        ],
+        [
+          "C'",
+          "A'"
+        ],
+        [
+          "A",
+          "A'"
+        ],
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "A'",
+          "B'",
+          "C'"
+        ],
+        [
+          "A",
+          "B",
+          "B'",
+          "A'"
+        ],
+        [
+          "B",
+          "C",
+          "C'",
+          "B'"
+        ],
+        [
+          "C",
+          "A",
+          "A'",
+          "C'"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          5,
+          0,
+          0
+        ],
+        "C": [
+          5,
+          5,
+          0
+        ],
+        "A'": [
+          0,
+          0,
+          10
+        ],
+        "B'": [
+          5,
+          0,
+          10
+        ],
+        "C'": [
+          5,
+          5,
+          10
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "C"
+          ],
+          "right_at": "B"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "5"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "B",
+            "C"
+          ],
+          "value": "5"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "A'"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "A'"
+          ],
+          "value": "10"
+        }
+      ],
+      "plane_spec": {
+        "kind": "perpendicular_line",
+        "through_point": "A'",
+        "perpendicular_line": [
+          "A",
+          "C'"
+        ]
+      },
+      "stated_edges": [
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ]
+      ]
+    },
+    "W2-A08": {
+      "solid": "ABC.A'B'C'",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "A",
+        "B",
+        "C",
+        "A'",
+        "B'",
+        "C'"
+      ],
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "A"
+        ],
+        [
+          "A'",
+          "B'"
+        ],
+        [
+          "B'",
+          "C'"
+        ],
+        [
+          "C'",
+          "A'"
+        ],
+        [
+          "A",
+          "A'"
+        ],
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "A'",
+          "B'",
+          "C'"
+        ],
+        [
+          "A",
+          "B",
+          "B'",
+          "A'"
+        ],
+        [
+          "B",
+          "C",
+          "C'",
+          "B'"
+        ],
+        [
+          "C",
+          "A",
+          "A'",
+          "C'"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          7,
+          0,
+          0
+        ],
+        "C": [
+          0,
+          12,
+          0
+        ],
+        "A'": [
+          0,
+          0,
+          9
+        ],
+        "B'": [
+          7,
+          0,
+          9
+        ],
+        "C'": [
+          0,
+          12,
+          9
+        ],
+        "M": [
+          "0",
+          "0",
+          "3"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "C"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "7a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "C"
+          ],
+          "value": "12a"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "A'"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "A'"
+          ],
+          "value": "9a"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "M",
+          "segment": [
+            "A",
+            "A'"
+          ],
+          "ratio": "1/3"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_plane",
+        "through_point": "M",
+        "parallel_plane": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "stated_edges": [
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ]
+      ]
+    },
+    "W2-A09": {
+      "solid": "ABC.A'B'C'",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": null,
+      "solid_vertices": [
+        "A",
+        "B",
+        "C",
+        "A'",
+        "B'",
+        "C'"
+      ],
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "A"
+        ],
+        [
+          "A'",
+          "B'"
+        ],
+        [
+          "B'",
+          "C'"
+        ],
+        [
+          "C'",
+          "A'"
+        ],
+        [
+          "A",
+          "A'"
+        ],
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "A'",
+          "B'",
+          "C'"
+        ],
+        [
+          "A",
+          "B",
+          "B'",
+          "A'"
+        ],
+        [
+          "B",
+          "C",
+          "C'",
+          "B'"
+        ],
+        [
+          "C",
+          "A",
+          "A'",
+          "C'"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          5,
+          0,
+          0
+        ],
+        "C": [
+          0,
+          16,
+          0
+        ],
+        "A'": [
+          5,
+          0,
+          9
+        ],
+        "B'": [
+          10,
+          0,
+          9
+        ],
+        "C'": [
+          5,
+          16,
+          9
+        ],
+        "M": [
+          "10/3",
+          "0",
+          "6"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "C"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "5"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "C"
+          ],
+          "value": "16"
+        },
+        {
+          "kind": "orthogonal_projection",
+          "point": "A'",
+          "image": "B",
+          "plane": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A'",
+            "B"
+          ],
+          "value": "9"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "M",
+          "segment": [
+            "A",
+            "A'"
+          ],
+          "ratio": "2/3"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_plane",
+        "through_point": "M",
+        "parallel_plane": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "stated_edges": [
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ]
+      ]
+    },
+    "W2-A10": {
+      "solid": "ABCD.A'B'C'D'",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": null,
+      "solid_vertices": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "A'",
+        "B'",
+        "C'",
+        "D'"
+      ],
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "A"
+        ],
+        [
+          "A'",
+          "B'"
+        ],
+        [
+          "B'",
+          "C'"
+        ],
+        [
+          "C'",
+          "D'"
+        ],
+        [
+          "D'",
+          "A'"
+        ],
+        [
+          "A",
+          "A'"
+        ],
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ],
+        [
+          "D",
+          "D'"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        [
+          "A'",
+          "B'",
+          "C'",
+          "D'"
+        ],
+        [
+          "A",
+          "B",
+          "B'",
+          "A'"
+        ],
+        [
+          "B",
+          "C",
+          "C'",
+          "B'"
+        ],
+        [
+          "C",
+          "D",
+          "D'",
+          "C'"
+        ],
+        [
+          "D",
+          "A",
+          "A'",
+          "D'"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          3,
+          0,
+          0
+        ],
+        "C": [
+          3,
+          6,
+          0
+        ],
+        "D": [
+          0,
+          6,
+          0
+        ],
+        "A'": [
+          0,
+          0,
+          9
+        ],
+        "B'": [
+          3,
+          0,
+          9
+        ],
+        "C'": [
+          3,
+          6,
+          9
+        ],
+        "D'": [
+          0,
+          6,
+          9
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "D"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "3a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "D"
+          ],
+          "value": "6a"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "A'"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "A'"
+          ],
+          "value": "9a"
+        }
+      ],
+      "plane_spec": {
+        "kind": "perpendicular_line",
+        "through_point": "A'",
+        "perpendicular_line": [
+          "A",
+          "C'"
+        ]
+      },
+      "stated_edges": [
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ],
+        [
+          "D",
+          "D'"
+        ]
+      ]
+    },
+    "W2-A11": {
+      "solid": "ABCD.A'B'C'D'",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "A'",
+        "B'",
+        "C'",
+        "D'"
+      ],
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "A"
+        ],
+        [
+          "A'",
+          "B'"
+        ],
+        [
+          "B'",
+          "C'"
+        ],
+        [
+          "C'",
+          "D'"
+        ],
+        [
+          "D'",
+          "A'"
+        ],
+        [
+          "A",
+          "A'"
+        ],
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ],
+        [
+          "D",
+          "D'"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        [
+          "A'",
+          "B'",
+          "C'",
+          "D'"
+        ],
+        [
+          "A",
+          "B",
+          "B'",
+          "A'"
+        ],
+        [
+          "B",
+          "C",
+          "C'",
+          "B'"
+        ],
+        [
+          "C",
+          "D",
+          "D'",
+          "C'"
+        ],
+        [
+          "D",
+          "A",
+          "A'",
+          "D'"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          9,
+          0,
+          0
+        ],
+        "C": [
+          9,
+          11,
+          0
+        ],
+        "D": [
+          0,
+          11,
+          0
+        ],
+        "A'": [
+          0,
+          0,
+          10
+        ],
+        "B'": [
+          9,
+          0,
+          10
+        ],
+        "C'": [
+          9,
+          11,
+          10
+        ],
+        "D'": [
+          0,
+          11,
+          10
+        ],
+        "M": [
+          "0",
+          "0",
+          "6"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "D"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "9"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "D"
+          ],
+          "value": "11"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "A'"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "A'"
+          ],
+          "value": "10"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "M",
+          "segment": [
+            "A",
+            "A'"
+          ],
+          "ratio": "3/5"
+        }
+      ],
+      "plane_spec": {
+        "kind": "parallel_plane",
+        "through_point": "M",
+        "parallel_plane": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      "stated_edges": [
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ],
+        [
+          "D",
+          "D'"
+        ]
+      ]
+    },
+    "W2-A12": {
+      "solid": "ABCD.A'B'C'D'",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": "mg1",
+      "solid_vertices": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "A'",
+        "B'",
+        "C'",
+        "D'"
+      ],
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "A"
+        ],
+        [
+          "A'",
+          "B'"
+        ],
+        [
+          "B'",
+          "C'"
+        ],
+        [
+          "C'",
+          "D'"
+        ],
+        [
+          "D'",
+          "A'"
+        ],
+        [
+          "A",
+          "A'"
+        ],
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ],
+        [
+          "D",
+          "D'"
+        ]
+      ],
+      "faces": [
+        [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        [
+          "A'",
+          "B'",
+          "C'",
+          "D'"
+        ],
+        [
+          "A",
+          "B",
+          "B'",
+          "A'"
+        ],
+        [
+          "B",
+          "C",
+          "C'",
+          "B'"
+        ],
+        [
+          "C",
+          "D",
+          "D'",
+          "C'"
+        ],
+        [
+          "D",
+          "A",
+          "A'",
+          "D'"
+        ]
+      ],
+      "points": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          16,
+          0,
+          0
+        ],
+        "C": [
+          16,
+          16,
+          0
+        ],
+        "D": [
+          0,
+          16,
+          0
+        ],
+        "A'": [
+          0,
+          0,
+          16
+        ],
+        "B'": [
+          16,
+          0,
+          16
+        ],
+        "C'": [
+          16,
+          16,
+          16
+        ],
+        "D'": [
+          0,
+          16,
+          16
+        ],
+        "M": [
+          "0",
+          "0",
+          "4"
+        ]
+      },
+      "checks": [
+        {
+          "kind": "right_angle",
+          "vertices": [
+            "A",
+            "B",
+            "D"
+          ],
+          "right_at": "A"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "B"
+          ],
+          "value": "16a"
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "D"
+          ],
+          "value": "16a"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "line": [
+            "A",
+            "A'"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        {
+          "kind": "segment_length",
+          "segment": [
+            "A",
+            "A'"
+          ],
+          "value": "16a"
+        },
+        {
+          "kind": "divide_segment",
+          "point": "M",
+          "segment": [
+            "A",
+            "A'"
+          ],
+          "ratio": "1/4"
+        }
+      ],
+      "plane_spec": {
+        "kind": "perpendicular_line",
+        "through_point": "M",
+        "perpendicular_line": [
+          "A",
+          "A'"
+        ]
+      },
+      "stated_edges": [
+        [
+          "B",
+          "B'"
+        ],
+        [
+          "C",
+          "C'"
+        ],
+        [
+          "D",
+          "D'"
+        ]
+      ]
+    }
+  }
+}

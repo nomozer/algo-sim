@@ -1,0 +1,3404 @@
+{
+  "schema": "HOLDOUT_WAVE2_INDEPENDENT_ORACLE_REVIEW/1",
+  "task": "HYBRID_V2_INDEPENDENT_VIETNAMESE_SECTION_HOLDOUT_WAVE2",
+  "reviewer": "independent-holdout-wave2-oracle-reviewer",
+  "oracle_script_zero_app_imports": true,
+  "positive_cases_total": 48,
+  "positive_cases_agreed": 48,
+  "category_b_agreed": 36,
+  "category_a_agreed": 12,
+  "discrepancy_count": 0,
+  "discrepancies": [],
+  "cases": [
+    {
+      "case_id": "W2-B01",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "solid": "S.ABC",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 3,
+      "vertex_count_oracle": 3,
+      "boundary_independent": [
+        {
+          "edge": [
+            "S",
+            "A"
+          ],
+          "t": "2/7"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "2/7"
+        },
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "8/35"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "S",
+            "A"
+          ],
+          "t": "2/7"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "2/7"
+        },
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "8/35"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "64/5",
+      "area_squared_oracle": "64/5",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B02",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "solid": "A.BCD",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 3,
+      "vertex_count_oracle": 3,
+      "boundary_independent": [
+        {
+          "edge": [
+            "A",
+            "B"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "A",
+            "D"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "A",
+            "C"
+          ],
+          "t": "2/5"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "A",
+            "B"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "A",
+            "D"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "A",
+            "C"
+          ],
+          "t": "2/5"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "23716/625",
+      "area_squared_oracle": "23716/625",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B03",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "solid": "S.MNP",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 3,
+      "vertex_count_oracle": 3,
+      "boundary_independent": [
+        {
+          "edge": [
+            "S",
+            "M"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "S",
+            "N"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "S",
+            "P"
+          ],
+          "t": "2/3"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "S",
+            "M"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "S",
+            "N"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "S",
+            "P"
+          ],
+          "t": "2/3"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "12100/9",
+      "area_squared_oracle": "12100/9",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B04",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "solid": "S.ABC",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 3,
+      "vertex_count_oracle": 3,
+      "boundary_independent": [
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "A",
+            "B"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "B",
+            "C"
+          ],
+          "t": "2/3"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "A",
+            "B"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "B",
+            "C"
+          ],
+          "t": "2/3"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "173056/81",
+      "area_squared_oracle": "173056/81",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B05",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "solid": "S.EFG",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 3,
+      "vertex_count_oracle": 3,
+      "boundary_independent": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "3/4"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "3/4"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "585225/256",
+      "area_squared_oracle": "585225/256",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B06",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "solid": "A.BCD",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "A",
+            "C"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "B",
+            "C"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "D",
+            "B"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "A",
+            "D"
+          ],
+          "t": "1/4"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "A",
+            "C"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "B",
+            "C"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "D",
+            "B"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "A",
+            "D"
+          ],
+          "t": "1/4"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "99225/64",
+      "area_squared_oracle": "99225/64",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B07",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "solid": "S.ABCD",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "S",
+            "A"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "S",
+            "D"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "2/5"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "S",
+            "A"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "S",
+            "D"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "2/5"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "17424/25",
+      "area_squared_oracle": "17424/25",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B08",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "solid": "S.MNPQ",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "vertex": "M"
+        },
+        {
+          "edge": [
+            "S",
+            "Q"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "P"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "S",
+            "N"
+          ],
+          "t": "1/2"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "vertex": "M"
+        },
+        {
+          "edge": [
+            "S",
+            "Q"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "P"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "S",
+            "N"
+          ],
+          "t": "1/2"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "2187/4",
+      "area_squared_oracle": "2187/4",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B09",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "solid": "S.ABCD",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "S",
+            "A"
+          ],
+          "t": "3/5"
+        },
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "3/5"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "3/5"
+        },
+        {
+          "edge": [
+            "S",
+            "D"
+          ],
+          "t": "3/5"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "S",
+            "A"
+          ],
+          "t": "3/5"
+        },
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "3/5"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "3/5"
+        },
+        {
+          "edge": [
+            "S",
+            "D"
+          ],
+          "t": "3/5"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "3111696/625",
+      "area_squared_oracle": "3111696/625",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B10",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "solid": "S.EFGH",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "E",
+            "F"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "G",
+            "H"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "1/3"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "E",
+            "F"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "G",
+            "H"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "1/3"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "153664/81",
+      "area_squared_oracle": "153664/81",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B11",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "solid": "S.MNPQ",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "S",
+            "M"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "S",
+            "N"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "S",
+            "P"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "S",
+            "Q"
+          ],
+          "t": "1/3"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "S",
+            "M"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "S",
+            "N"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "S",
+            "P"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "S",
+            "Q"
+          ],
+          "t": "1/3"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "625",
+      "area_squared_oracle": "625",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B12",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_only",
+      "solid": "S.ABCD",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "A",
+            "B"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "C",
+            "D"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "1/2"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "A",
+            "B"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "C",
+            "D"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "1/2"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "53361/64",
+      "area_squared_oracle": "53361/64",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B13",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "solid": "ABC.A'B'C'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 3,
+      "vertex_count_oracle": 3,
+      "boundary_independent": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "1/3"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "1/3"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "8281/4",
+      "area_squared_oracle": "8281/4",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B14",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "solid": "MNP.M'N'P'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "M",
+            "N"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "N",
+            "P"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "N'",
+            "P'"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "M'",
+            "N'"
+          ],
+          "t": "1/2"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "M",
+            "N"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "N",
+            "P"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "N'",
+            "P'"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "M'",
+            "N'"
+          ],
+          "t": "1/2"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "20449/4",
+      "area_squared_oracle": "20449/4",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B15",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "solid": "EFG.E'F'G'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 3,
+      "vertex_count_oracle": 3,
+      "boundary_independent": [
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "2/5"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "2/5"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "5184",
+      "area_squared_oracle": "5184",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B16",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "solid": "ABC.A'B'C'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "A",
+            "B"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "B",
+            "C"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "B'",
+            "C'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "A'",
+            "B'"
+          ],
+          "t": "1/4"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "A",
+            "B"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "B",
+            "C"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "B'",
+            "C'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "A'",
+            "B'"
+          ],
+          "t": "1/4"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "21609/4",
+      "area_squared_oracle": "21609/4",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B17",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_only",
+      "solid": "MNP.M'N'P'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 3,
+      "vertex_count_oracle": 3,
+      "boundary_independent": [
+        {
+          "edge": [
+            "M",
+            "M'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "N",
+            "N'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "P",
+            "P'"
+          ],
+          "t": "3/4"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "M",
+            "M'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "N",
+            "N'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "P",
+            "P'"
+          ],
+          "t": "3/4"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "5929",
+      "area_squared_oracle": "5929",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B18",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "solid": "ABC.A'B'C'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "B",
+            "C"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "B'",
+            "C'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "C'",
+            "A'"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "C",
+            "A"
+          ],
+          "t": "2/3"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "B",
+            "C"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "B'",
+            "C'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "C'",
+            "A'"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "C",
+            "A"
+          ],
+          "t": "2/3"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "1764",
+      "area_squared_oracle": "1764",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B19",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "solid": "ABC.A'B'C'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 3,
+      "vertex_count_oracle": 3,
+      "boundary_independent": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "1/2"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "1/2"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "1764",
+      "area_squared_oracle": "1764",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B20",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "solid": "MNP.M'N'P'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 3,
+      "vertex_count_oracle": 3,
+      "boundary_independent": [
+        {
+          "edge": [
+            "M",
+            "M'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "P",
+            "P'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "N",
+            "N'"
+          ],
+          "t": "2/5"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "M",
+            "M'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "P",
+            "P'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "N",
+            "N'"
+          ],
+          "t": "2/5"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "1089",
+      "area_squared_oracle": "1089",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B21",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "solid": "ABC.A'B'C'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 3,
+      "vertex_count_oracle": 3,
+      "boundary_independent": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "1/3"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "1/3"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "4624",
+      "area_squared_oracle": "4624",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B22",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "solid": "EFG.E'F'G'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 3,
+      "vertex_count_oracle": 3,
+      "boundary_independent": [
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "3/4"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "3/4"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "1225",
+      "area_squared_oracle": "1225",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B23",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "solid": "MNP.M'N'P'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 3,
+      "vertex_count_oracle": 3,
+      "boundary_independent": [
+        {
+          "edge": [
+            "M",
+            "M'"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "N",
+            "N'"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "P",
+            "P'"
+          ],
+          "t": "1/4"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "M",
+            "M'"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "N",
+            "N'"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "P",
+            "P'"
+          ],
+          "t": "1/4"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "29241/4",
+      "area_squared_oracle": "29241/4",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B24",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "solid": "ABC.A'B'C'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "B",
+            "C"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "B'",
+            "C'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "C'",
+            "A'"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "C",
+            "A"
+          ],
+          "t": "2/3"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "B",
+            "C"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "B'",
+            "C'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "C'",
+            "A'"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "C",
+            "A"
+          ],
+          "t": "2/3"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "2304",
+      "area_squared_oracle": "2304",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B25",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "solid": "ABCD.A'B'C'D'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "2/5"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "2/5"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "5929",
+      "area_squared_oracle": "5929",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B26",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "solid": "MNPQ.M'N'P'Q'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "M",
+            "N"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "P",
+            "Q"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "P'",
+            "Q'"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "M'",
+            "N'"
+          ],
+          "t": "1/3"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "M",
+            "N"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "P",
+            "Q"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "P'",
+            "Q'"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "M'",
+            "N'"
+          ],
+          "t": "1/3"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "4225",
+      "area_squared_oracle": "4225",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B27",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "solid": "EFGH.E'F'G'H'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "H",
+            "H'"
+          ],
+          "t": "3/4"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "H",
+            "H'"
+          ],
+          "t": "3/4"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "5929",
+      "area_squared_oracle": "5929",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B28",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "solid": "ABCD.A'B'C'D'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "A",
+            "B"
+          ],
+          "t": "3/5"
+        },
+        {
+          "edge": [
+            "C",
+            "D"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "C'",
+            "D'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "A'",
+            "B'"
+          ],
+          "t": "3/5"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "A",
+            "B"
+          ],
+          "t": "3/5"
+        },
+        {
+          "edge": [
+            "C",
+            "D"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "C'",
+            "D'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "A'",
+            "B'"
+          ],
+          "t": "3/5"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "6084",
+      "area_squared_oracle": "6084",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B29",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "solid": "MNPQ.M'N'P'Q'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "M",
+            "M'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "N",
+            "N'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "P",
+            "P'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "Q",
+            "Q'"
+          ],
+          "t": "1/3"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "M",
+            "M'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "N",
+            "N'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "P",
+            "P'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "Q",
+            "Q'"
+          ],
+          "t": "1/3"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "3025",
+      "area_squared_oracle": "3025",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B30",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_only",
+      "solid": "ABCD.A'B'C'D'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "B",
+            "C"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "B'",
+            "C'"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "D'",
+            "A'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "D",
+            "A"
+          ],
+          "t": "3/4"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "B",
+            "C"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "B'",
+            "C'"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "D'",
+            "A'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "D",
+            "A"
+          ],
+          "t": "3/4"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "3969",
+      "area_squared_oracle": "3969",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B31",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "solid": "ABCD.A'B'C'D'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "1/3"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "1/3"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "14641",
+      "area_squared_oracle": "14641",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B32",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "solid": "MNPQ.M'N'P'Q'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "M",
+            "N"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "P",
+            "Q"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "P'",
+            "Q'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "M'",
+            "N'"
+          ],
+          "t": "2/3"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "M",
+            "N"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "P",
+            "Q"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "P'",
+            "Q'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "M'",
+            "N'"
+          ],
+          "t": "2/3"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "28561",
+      "area_squared_oracle": "28561",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B33",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "solid": "EFGH.E'F'G'H'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "H",
+            "H'"
+          ],
+          "t": "2/5"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "H",
+            "H'"
+          ],
+          "t": "2/5"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "38416",
+      "area_squared_oracle": "38416",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B34",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "solid": "ABCD.A'B'C'D'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "A",
+            "B"
+          ],
+          "t": "3/5"
+        },
+        {
+          "edge": [
+            "D",
+            "A"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "D'",
+            "A'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "A'",
+            "B'"
+          ],
+          "t": "3/5"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "A",
+            "B"
+          ],
+          "t": "3/5"
+        },
+        {
+          "edge": [
+            "D",
+            "A"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "D'",
+            "A'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "A'",
+            "B'"
+          ],
+          "t": "3/5"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "7200",
+      "area_squared_oracle": "7200",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B35",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_only",
+      "solid": "MNPQ.M'N'P'Q'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "M",
+            "M'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "N",
+            "N'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "P",
+            "P'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "Q",
+            "Q'"
+          ],
+          "t": "3/4"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "M",
+            "M'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "N",
+            "N'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "P",
+            "P'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "Q",
+            "Q'"
+          ],
+          "t": "3/4"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "20736",
+      "area_squared_oracle": "20736",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-B36",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "solid": "EFGH.E'F'G'H'",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "E",
+            "F"
+          ],
+          "t": "1/5"
+        },
+        {
+          "edge": [
+            "G",
+            "H"
+          ],
+          "t": "4/5"
+        },
+        {
+          "edge": [
+            "G'",
+            "H'"
+          ],
+          "t": "4/5"
+        },
+        {
+          "edge": [
+            "E'",
+            "F'"
+          ],
+          "t": "1/5"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "E",
+            "F"
+          ],
+          "t": "1/5"
+        },
+        {
+          "edge": [
+            "G",
+            "H"
+          ],
+          "t": "4/5"
+        },
+        {
+          "edge": [
+            "G'",
+            "H'"
+          ],
+          "t": "4/5"
+        },
+        {
+          "edge": [
+            "E'",
+            "F'"
+          ],
+          "t": "1/5"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "50625",
+      "area_squared_oracle": "50625",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-A01",
+      "stratum": "P-A",
+      "family": "triangular_pyramid",
+      "plane_relation": "stated_intersections",
+      "question_type": "section_only",
+      "solid": "S.ABC",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "vertex_count_independent": 3,
+      "vertex_count_oracle": 3,
+      "boundary_independent": [
+        {
+          "vertex": "A"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "1/2"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "vertex": "A"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "1/2"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "2401/48",
+      "area_squared_oracle": "2401/48",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-A02",
+      "stratum": "P-A",
+      "family": "triangular_pyramid",
+      "plane_relation": "stated_intersections",
+      "question_type": "area_only",
+      "solid": "S.ABC",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "vertex_count_independent": 3,
+      "vertex_count_oracle": 3,
+      "boundary_independent": [
+        {
+          "edge": [
+            "S",
+            "A"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "1/3"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "S",
+            "A"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "1/3"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "225/4",
+      "area_squared_oracle": "225/4",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-A03",
+      "stratum": "P-A",
+      "family": "triangular_pyramid",
+      "plane_relation": "stated_intersections",
+      "question_type": "section_and_area",
+      "solid": "S.MNP",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "vertex_count_independent": 3,
+      "vertex_count_oracle": 3,
+      "boundary_independent": [
+        {
+          "edge": [
+            "S",
+            "M"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "P"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "N"
+          ],
+          "t": "1/2"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "S",
+            "M"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "P"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "N"
+          ],
+          "t": "1/2"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "1225/4",
+      "area_squared_oracle": "1225/4",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-A04",
+      "stratum": "P-A",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "stated_intersections",
+      "question_type": "section_and_area",
+      "solid": "S.ABCD",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "vertex": "A"
+        },
+        {
+          "edge": [
+            "S",
+            "D"
+          ],
+          "t": "25/41"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "25/34"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "vertex": "A"
+        },
+        {
+          "edge": [
+            "S",
+            "D"
+          ],
+          "t": "25/41"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "25/34"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "253125000/485809",
+      "area_squared_oracle": "253125000/485809",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-A05",
+      "stratum": "P-A",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "stated_intersections",
+      "question_type": "section_only",
+      "solid": "S.ABCD",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "S",
+            "A"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "S",
+            "D"
+          ],
+          "t": "1/4"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "S",
+            "A"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "S",
+            "D"
+          ],
+          "t": "1/4"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "144",
+      "area_squared_oracle": "144",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-A06",
+      "stratum": "P-A",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "stated_intersections",
+      "question_type": "area_only",
+      "solid": "S.ABCD",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "S",
+            "A"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "S",
+            "D"
+          ],
+          "t": "2/3"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "S",
+            "A"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "S",
+            "D"
+          ],
+          "t": "2/3"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "4096",
+      "area_squared_oracle": "4096",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-A07",
+      "stratum": "P-A",
+      "family": "right_triangular_prism",
+      "plane_relation": "stated_intersections",
+      "question_type": "area_only",
+      "solid": "ABC.A'B'C'",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "vertex_count_independent": 3,
+      "vertex_count_oracle": 3,
+      "boundary_independent": [
+        {
+          "vertex": "A'"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "1/2"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "vertex": "A'"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "1/2"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "1875/8",
+      "area_squared_oracle": "1875/8",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-A08",
+      "stratum": "P-A",
+      "family": "right_triangular_prism",
+      "plane_relation": "stated_intersections",
+      "question_type": "section_and_area",
+      "solid": "ABC.A'B'C'",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "vertex_count_independent": 3,
+      "vertex_count_oracle": 3,
+      "boundary_independent": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "1/3"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "1/3"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "1/3"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "1764",
+      "area_squared_oracle": "1764",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-A09",
+      "stratum": "P-A",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "stated_intersections",
+      "question_type": "section_only",
+      "solid": "ABC.A'B'C'",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "vertex_count_independent": 3,
+      "vertex_count_oracle": 3,
+      "boundary_independent": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "2/3"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "2/3"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "2/3"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "1600",
+      "area_squared_oracle": "1600",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-A10",
+      "stratum": "P-A",
+      "family": "cuboid",
+      "plane_relation": "stated_intersections",
+      "question_type": "section_only",
+      "solid": "ABCD.A'B'C'D'",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "vertex": "A'"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "8/9"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "5/9"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "vertex": "A'"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "8/9"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "5/9"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "504",
+      "area_squared_oracle": "504",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-A11",
+      "stratum": "P-A",
+      "family": "cuboid",
+      "plane_relation": "stated_intersections",
+      "question_type": "area_only",
+      "solid": "ABCD.A'B'C'D'",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "3/5"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "3/5"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "3/5"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "3/5"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "3/5"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "3/5"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "3/5"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "3/5"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "9801",
+      "area_squared_oracle": "9801",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    },
+    {
+      "case_id": "W2-A12",
+      "stratum": "P-A",
+      "family": "cube",
+      "plane_relation": "stated_intersections",
+      "question_type": "section_and_area",
+      "solid": "ABCD.A'B'C'D'",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "vertex_count_independent": 4,
+      "vertex_count_oracle": 4,
+      "boundary_independent": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "1/4"
+        }
+      ],
+      "boundary_oracle": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "1/4"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "1/4"
+        }
+      ],
+      "boundary_cyclic_match": true,
+      "area_squared_independent": "65536",
+      "area_squared_oracle": "65536",
+      "premises_and_text_verified": true,
+      "agreement": true,
+      "discrepancies": []
+    }
+  ]
+}

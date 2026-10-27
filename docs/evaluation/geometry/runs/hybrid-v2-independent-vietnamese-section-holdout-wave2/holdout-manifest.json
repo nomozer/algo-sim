@@ -1,0 +1,106 @@
+{
+  "schema": "HOLDOUT_WAVE2_MANIFEST/1",
+  "task": "HYBRID_V2_INDEPENDENT_VIETNAMESE_SECTION_HOLDOUT_WAVE2",
+  "baseline_main_commit": "d7a94d3cd4bbdea3df99e383bec78425fcc8bf1c",
+  "product_commit": "e3678608f1f7110d7046c9c43c312c69d7614f55",
+  "t3_candidate_commit": "e7bcff316ee6d443e753105a887e0689ea04848b",
+  "measured_product_files": 118,
+  "measured_product_tree_hash": "84ccf653441d1bd54f352756b9a5e917ee02a9ea11a83ac60585dfc585f3f99f",
+  "preregistration_commit": "5e329d759af675fdc3a7393c9479bfacd636460f",
+  "versions": {
+    "registry": "geometry-functions/18",
+    "planner": "geometry-fact-planner/17",
+    "engine": "geometry-function-engine/14",
+    "adapter": "hybrid-simulation-adapter/4",
+    "certificate": "plane-section-certificate/1",
+    "cache_version": "130",
+    "default_mode": "LLM_ONLY"
+  },
+  "corpus_counts": {
+    "total": 96,
+    "positive_serve": 48,
+    "category_b_serve": 36,
+    "category_a_serve": 12,
+    "negative_refuse": 48
+  },
+  "frozen_before_execution": true,
+  "live_provider_calls": 0,
+  "files": {
+    "plan.md": {
+      "bytes": 4817,
+      "sha256": "51f9a426ffbe027b8b907e3d7366e208a93953a91a0c6eafc27a8222bc7ae037"
+    },
+    "preregistration.md": {
+      "bytes": 15810,
+      "sha256": "2864c2f111c1afb0e24265601ecfbfb6aa0e7ff286714eef45ef33d9e4faa5b4"
+    },
+    "supported-family-matrix.md": {
+      "bytes": 7717,
+      "sha256": "ea4c4c3f5a87f9325112d8c29ac42af8070c171bd35dc0da1c8c85698caca542"
+    },
+    "scoring-contract.md": {
+      "bytes": 8978,
+      "sha256": "88b32f56df396acc0e1b3d70cd94621db19063b9105451ac817b2375274719df"
+    },
+    "curator-brief.md": {
+      "bytes": 11252,
+      "sha256": "9dd31c18cd4ee205d3904a39192e3d7b19d9e82b8f0d194b0ecb24b65913aa7c"
+    },
+    "curator-attestation.md": {
+      "bytes": 6719,
+      "sha256": "dd1a2dee3eba7601d1fbab2d2aa625f7bf12a0db1673a5be5354867b32aeda9e"
+    },
+    "corpus-provenance.md": {
+      "bytes": 19304,
+      "sha256": "90ce7aa3fd39191db5802caf72ae10ddc70ad2e2a679b1769a256eab6d88d70d"
+    },
+    "inputs/holdout-wave2.json": {
+      "bytes": 471848,
+      "sha256": "1104be2ad8d4c5c96363f3648bc3c57dfcef5af4334c714e9cc94fc466f38e2d"
+    },
+    "oracle/geometry.json": {
+      "bytes": 148844,
+      "sha256": "dcee137a2a10bad499401bd3b45b4c9cc530d9e0ebf51fe669a7ab3bf7ae8d33"
+    },
+    "oracle/oracle_holdout_wave2.py": {
+      "bytes": 20871,
+      "sha256": "5511dd0e7dbfb854dcdda4f523c2cd0dd3f52ab22c5851769f7424b243d897d8"
+    },
+    "oracle/expected.json": {
+      "bytes": 28976,
+      "sha256": "5efbe57de91c31e18995e679ae6f0ecd69c366ea6bf148ee96255d4cfae7c844"
+    },
+    "tools/refusal_taxonomy.json": {
+      "bytes": 4962,
+      "sha256": "a30ebeae583275ca7b3bff809ca93193e0b11f961c9c8c667a681e1f8190e5d8"
+    },
+    "tools/evaluate_holdout_wave2.py": {
+      "bytes": 30730,
+      "sha256": "1a053c4ef4caaa22f2618d6d89e34adf9d024cd35f2d77c4c01759af3c96aa44"
+    },
+    "tools/test_evaluate_holdout_wave2.py": {
+      "bytes": 19475,
+      "sha256": "33da058c0ac23cfde529cb3a9641a55009f12fa55cd38d162349f8cc745f62a1"
+    },
+    "tools/audit_curator_log.py": {
+      "bytes": 6606,
+      "sha256": "34c430be83a2aeef5e00716a31f5ca1a3465229ad375b60f1ba45ed3ffe41a22"
+    },
+    "tools/dedup_check_wave2.py": {
+      "bytes": 17690,
+      "sha256": "ada310bde4754112273d6de39593508915b6a2cc65b9ec9dea4d68f65cc51849"
+    },
+    "results/independence-audit.json": {
+      "bytes": 4277,
+      "sha256": "3fa99f0aed29710e8fc9d0d3f4a67f80a5927bc86d98a979cc5141f991e480c9"
+    },
+    "results/deduplication-audit.json": {
+      "bytes": 833,
+      "sha256": "f256fcfc96a20916617c992ec287189818b8d0c4cd7feb69708f1d4a3d389535"
+    },
+    "results/independent-oracle-review-48.json": {
+      "bytes": 71125,
+      "sha256": "373e7094f20d2f2ce95ba2aa934307c7b1a693d5e9de56686aa8b6066e697c12"
+    }
+  }
+}
