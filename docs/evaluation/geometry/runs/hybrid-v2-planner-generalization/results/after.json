@@ -1,0 +1,606 @@
+{
+  "classification": "AUTHORED_DEVELOPMENT_NOT_HOLDOUT",
+  "name": "after",
+  "head": "de7b28134aedbd1e1c87dab7567653670afe69a7",
+  "planner_version": "geometry-fact-planner/16",
+  "planner_sha256_lf": "6c2efb940528665b2574e1b9ed2c39ffca22ba6549031744098ddfedf3cbe1fd",
+  "input_sha256_lf": "0e63874274c38f94a31657a79f0ecda61f9eb19261bbc16de0436ce614a75e0e",
+  "oracle_sha256_lf": "572f3ff0dca0cb6250df012c20972b79d4acd17b0defaf917d5ce522c27dfc3a",
+  "summary": {
+    "correctly_served": 10,
+    "correctly_refused": 8,
+    "wrongly_served": 0,
+    "false_refusal": 0,
+    "negative_reason_mismatches": 0,
+    "exact_mathematical_agreement": 10,
+    "novel_compositions_served": 10
+  },
+  "cases": [
+    {
+      "id": "right-base",
+      "expected_status": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "planner_code": null,
+      "outcome": "correctly_served",
+      "area_squared": "2304",
+      "oracle_area_squared": "2304",
+      "exact_agreement": true,
+      "negative_reason_match": null,
+      "planner_ms": 3.343,
+      "plan_metrics": {
+        "function_calls": 12,
+        "dependency_depth": 1,
+        "functions": {
+          "prism": 1,
+          "segment_length": 3,
+          "right_angle": 1,
+          "midpoint": 1,
+          "orthogonal_projection_line": 2,
+          "translate_point": 2,
+          "section": 1,
+          "ask_section_area": 1
+        },
+        "derived_planes": 1,
+        "reused_intermediate_constructions": 4,
+        "anchor_labels": [
+          [
+            "C",
+            "A'"
+          ]
+        ],
+        "effect_search": "NOT_APPLICABLE: existing structural plane decomposition; no effect search invoked"
+      }
+    },
+    {
+      "id": "right-top",
+      "expected_status": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "planner_code": null,
+      "outcome": "correctly_served",
+      "area_squared": "2304",
+      "oracle_area_squared": "2304",
+      "exact_agreement": true,
+      "negative_reason_match": null,
+      "planner_ms": 1.285,
+      "plan_metrics": {
+        "function_calls": 12,
+        "dependency_depth": 1,
+        "functions": {
+          "prism": 1,
+          "segment_length": 3,
+          "right_angle": 1,
+          "midpoint": 1,
+          "orthogonal_projection_line": 2,
+          "translate_point": 2,
+          "section": 1,
+          "ask_section_area": 1
+        },
+        "derived_planes": 1,
+        "reused_intermediate_constructions": 4,
+        "anchor_labels": [
+          [
+            "C'",
+            "A"
+          ]
+        ],
+        "effect_search": "NOT_APPLICABLE: existing structural plane decomposition; no effect search invoked"
+      }
+    },
+    {
+      "id": "right-lateral",
+      "expected_status": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "planner_code": null,
+      "outcome": "correctly_served",
+      "area_squared": "576",
+      "oracle_area_squared": "576",
+      "exact_agreement": true,
+      "negative_reason_match": null,
+      "planner_ms": 1.194,
+      "plan_metrics": {
+        "function_calls": 12,
+        "dependency_depth": 1,
+        "functions": {
+          "prism": 1,
+          "segment_length": 3,
+          "right_angle": 1,
+          "midpoint": 1,
+          "orthogonal_projection_line": 2,
+          "translate_point": 2,
+          "section": 1,
+          "ask_section_area": 1
+        },
+        "derived_planes": 1,
+        "reused_intermediate_constructions": 4,
+        "anchor_labels": [
+          [
+            "B",
+            "C"
+          ]
+        ],
+        "effect_search": "NOT_APPLICABLE: existing structural plane decomposition; no effect search invoked"
+      }
+    },
+    {
+      "id": "right-diagonal",
+      "expected_status": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "planner_code": null,
+      "outcome": "correctly_served",
+      "area_squared": "976",
+      "oracle_area_squared": "976",
+      "exact_agreement": true,
+      "negative_reason_match": null,
+      "planner_ms": 1.266,
+      "plan_metrics": {
+        "function_calls": 12,
+        "dependency_depth": 1,
+        "functions": {
+          "prism": 1,
+          "segment_length": 3,
+          "right_angle": 1,
+          "midpoint": 1,
+          "orthogonal_projection_line": 2,
+          "translate_point": 2,
+          "section": 1,
+          "ask_section_area": 1
+        },
+        "derived_planes": 1,
+        "reused_intermediate_constructions": 4,
+        "anchor_labels": [
+          [
+            "A",
+            "C"
+          ]
+        ],
+        "effect_search": "NOT_APPLICABLE: existing structural plane decomposition; no effect search invoked"
+      }
+    },
+    {
+      "id": "cuboid-base",
+      "expected_status": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "planner_code": null,
+      "outcome": "correctly_served",
+      "area_squared": "9216",
+      "oracle_area_squared": "9216",
+      "exact_agreement": true,
+      "negative_reason_match": null,
+      "planner_ms": 6.815,
+      "plan_metrics": {
+        "function_calls": 12,
+        "dependency_depth": 1,
+        "functions": {
+          "prism": 1,
+          "rectangle": 1,
+          "segment_length": 3,
+          "midpoint": 1,
+          "orthogonal_projection_line": 2,
+          "translate_point": 2,
+          "section": 1,
+          "ask_section_area": 1
+        },
+        "derived_planes": 1,
+        "reused_intermediate_constructions": 4,
+        "anchor_labels": [
+          [
+            "C",
+            "A'"
+          ]
+        ],
+        "effect_search": "NOT_APPLICABLE: existing structural plane decomposition; no effect search invoked"
+      }
+    },
+    {
+      "id": "cube-diagonal",
+      "expected_status": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "planner_code": null,
+      "outcome": "correctly_served",
+      "area_squared": "432",
+      "oracle_area_squared": "432",
+      "exact_agreement": true,
+      "negative_reason_match": null,
+      "planner_ms": 1.217,
+      "plan_metrics": {
+        "function_calls": 13,
+        "dependency_depth": 1,
+        "functions": {
+          "prism": 1,
+          "regular_polygon": 1,
+          "segment_length": 3,
+          "rectangle": 1,
+          "midpoint": 1,
+          "orthogonal_projection_line": 2,
+          "translate_point": 2,
+          "section": 1,
+          "ask_section_area": 1
+        },
+        "derived_planes": 1,
+        "reused_intermediate_constructions": 4,
+        "anchor_labels": [
+          [
+            "B",
+            "C"
+          ]
+        ],
+        "effect_search": "NOT_APPLICABLE: existing structural plane decomposition; no effect search invoked"
+      }
+    },
+    {
+      "id": "oblique-base",
+      "expected_status": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "planner_code": null,
+      "outcome": "correctly_served",
+      "area_squared": "2304",
+      "oracle_area_squared": "2304",
+      "exact_agreement": true,
+      "negative_reason_match": null,
+      "planner_ms": 1.489,
+      "plan_metrics": {
+        "function_calls": 14,
+        "dependency_depth": 1,
+        "functions": {
+          "prism": 1,
+          "segment_length": 3,
+          "right_angle": 1,
+          "midpoint": 2,
+          "orthogonal_projection": 1,
+          "orthogonal_projection_line": 2,
+          "translate_point": 2,
+          "section": 1,
+          "ask_section_area": 1
+        },
+        "derived_planes": 1,
+        "reused_intermediate_constructions": 4,
+        "anchor_labels": [
+          [
+            "C",
+            "A'"
+          ]
+        ],
+        "effect_search": "NOT_APPLICABLE: existing structural plane decomposition; no effect search invoked"
+      }
+    },
+    {
+      "id": "oblique-diagonal",
+      "expected_status": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "planner_code": null,
+      "outcome": "correctly_served",
+      "area_squared": "2737152/4489",
+      "oracle_area_squared": "2737152/4489",
+      "exact_agreement": true,
+      "negative_reason_match": null,
+      "planner_ms": 1.324,
+      "plan_metrics": {
+        "function_calls": 14,
+        "dependency_depth": 1,
+        "functions": {
+          "prism": 1,
+          "segment_length": 3,
+          "right_angle": 1,
+          "midpoint": 2,
+          "orthogonal_projection": 1,
+          "orthogonal_projection_line": 2,
+          "translate_point": 2,
+          "section": 1,
+          "ask_section_area": 1
+        },
+        "derived_planes": 1,
+        "reused_intermediate_constructions": 4,
+        "anchor_labels": [
+          [
+            "B",
+            "C"
+          ]
+        ],
+        "effect_search": "NOT_APPLICABLE: existing structural plane decomposition; no effect search invoked"
+      }
+    },
+    {
+      "id": "renamed-changed-reversed",
+      "expected_status": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "planner_code": null,
+      "outcome": "correctly_served",
+      "area_squared": "72",
+      "oracle_area_squared": "72",
+      "exact_agreement": true,
+      "negative_reason_match": null,
+      "planner_ms": 1.288,
+      "plan_metrics": {
+        "function_calls": 12,
+        "dependency_depth": 1,
+        "functions": {
+          "prism": 1,
+          "segment_length": 3,
+          "right_angle": 1,
+          "midpoint": 1,
+          "orthogonal_projection_line": 2,
+          "translate_point": 2,
+          "section": 1,
+          "ask_section_area": 1
+        },
+        "derived_planes": 1,
+        "reused_intermediate_constructions": 4,
+        "anchor_labels": [
+          [
+            "D",
+            "F"
+          ]
+        ],
+        "effect_search": "NOT_APPLICABLE: existing structural plane decomposition; no effect search invoked"
+      }
+    },
+    {
+      "id": "symbolic-top",
+      "expected_status": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "planner_code": null,
+      "outcome": "correctly_served",
+      "area_squared": "2304",
+      "oracle_area_squared": "2304",
+      "exact_agreement": true,
+      "negative_reason_match": null,
+      "planner_ms": 1.288,
+      "plan_metrics": {
+        "function_calls": 12,
+        "dependency_depth": 1,
+        "functions": {
+          "prism": 1,
+          "segment_length": 3,
+          "right_angle": 1,
+          "midpoint": 1,
+          "orthogonal_projection_line": 2,
+          "translate_point": 2,
+          "section": 1,
+          "ask_section_area": 1
+        },
+        "derived_planes": 1,
+        "reused_intermediate_constructions": 4,
+        "anchor_labels": [
+          [
+            "C'",
+            "A"
+          ]
+        ],
+        "effect_search": "NOT_APPLICABLE: existing structural plane decomposition; no effect search invoked"
+      }
+    },
+    {
+      "id": "missing-dimension",
+      "expected_status": "REFUSED",
+      "status": "REFUSED",
+      "code": "MISSING_DIMENSION",
+      "planner_code": null,
+      "outcome": "correctly_refused",
+      "area_squared": null,
+      "oracle_area_squared": null,
+      "exact_agreement": null,
+      "negative_reason_match": true,
+      "planner_ms": 1.135,
+      "plan_metrics": {
+        "function_calls": 11,
+        "dependency_depth": 1,
+        "functions": {
+          "prism": 1,
+          "segment_length": 2,
+          "right_angle": 1,
+          "midpoint": 1,
+          "orthogonal_projection_line": 2,
+          "translate_point": 2,
+          "section": 1,
+          "ask_section_area": 1
+        },
+        "derived_planes": 1,
+        "reused_intermediate_constructions": 4,
+        "anchor_labels": [
+          [
+            "C",
+            "A'"
+          ]
+        ],
+        "effect_search": "NOT_APPLICABLE: existing structural plane decomposition; no effect search invoked"
+      }
+    },
+    {
+      "id": "conflicting-length",
+      "expected_status": "REFUSED",
+      "status": "REFUSED",
+      "code": "INCONSISTENT_FACTS",
+      "planner_code": null,
+      "outcome": "correctly_refused",
+      "area_squared": null,
+      "oracle_area_squared": null,
+      "exact_agreement": null,
+      "negative_reason_match": true,
+      "planner_ms": 1.227,
+      "plan_metrics": {
+        "function_calls": 13,
+        "dependency_depth": 1,
+        "functions": {
+          "prism": 1,
+          "segment_length": 4,
+          "right_angle": 1,
+          "midpoint": 1,
+          "orthogonal_projection_line": 2,
+          "translate_point": 2,
+          "section": 1,
+          "ask_section_area": 1
+        },
+        "derived_planes": 1,
+        "reused_intermediate_constructions": 4,
+        "anchor_labels": [
+          [
+            "C",
+            "A'"
+          ]
+        ],
+        "effect_search": "NOT_APPLICABLE: existing structural plane decomposition; no effect search invoked"
+      }
+    },
+    {
+      "id": "constructed-line-endpoint",
+      "expected_status": "REFUSED",
+      "status": "REFUSED",
+      "code": "UNSUPPORTED_CAPABILITY",
+      "planner_code": "UNSUPPORTED_CAPABILITY",
+      "outcome": "correctly_refused",
+      "area_squared": null,
+      "oracle_area_squared": null,
+      "exact_agreement": null,
+      "negative_reason_match": true,
+      "planner_ms": 0.416,
+      "plan_metrics": null
+    },
+    {
+      "id": "wrong-source-line",
+      "expected_status": "REFUSED",
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "planner_code": null,
+      "outcome": "correctly_refused",
+      "area_squared": null,
+      "oracle_area_squared": null,
+      "exact_agreement": null,
+      "negative_reason_match": true,
+      "planner_ms": 1.1,
+      "plan_metrics": {
+        "function_calls": 12,
+        "dependency_depth": 1,
+        "functions": {
+          "prism": 1,
+          "segment_length": 3,
+          "right_angle": 1,
+          "midpoint": 1,
+          "orthogonal_projection_line": 2,
+          "translate_point": 2,
+          "section": 1,
+          "ask_section_area": 1
+        },
+        "derived_planes": 1,
+        "reused_intermediate_constructions": 4,
+        "anchor_labels": [
+          [
+            "C",
+            "A'"
+          ]
+        ],
+        "effect_search": "NOT_APPLICABLE: existing structural plane decomposition; no effect search invoked"
+      }
+    },
+    {
+      "id": "unmentioned-line-endpoint",
+      "expected_status": "REFUSED",
+      "status": "REFUSED",
+      "code": "UNSUPPORTED_CAPABILITY",
+      "planner_code": "UNSUPPORTED_CAPABILITY",
+      "outcome": "correctly_refused",
+      "area_squared": null,
+      "oracle_area_squared": null,
+      "exact_agreement": null,
+      "negative_reason_match": true,
+      "planner_ms": 0.395,
+      "plan_metrics": null
+    },
+    {
+      "id": "plane-perpendicular-plane",
+      "expected_status": "REFUSED",
+      "status": "REFUSED",
+      "code": "PLANE_NOT_UNIQUE",
+      "planner_code": "PLANE_NOT_UNIQUE",
+      "outcome": "correctly_refused",
+      "area_squared": null,
+      "oracle_area_squared": null,
+      "exact_agreement": null,
+      "negative_reason_match": true,
+      "planner_ms": 0.478,
+      "plan_metrics": null
+    },
+    {
+      "id": "boundary-face",
+      "expected_status": "REFUSED",
+      "status": "REFUSED",
+      "code": "SECTION_PLANE_IS_FACE",
+      "planner_code": null,
+      "outcome": "correctly_refused",
+      "area_squared": null,
+      "oracle_area_squared": null,
+      "exact_agreement": null,
+      "negative_reason_match": true,
+      "planner_ms": 1.117,
+      "plan_metrics": {
+        "function_calls": 12,
+        "dependency_depth": 1,
+        "functions": {
+          "prism": 1,
+          "segment_length": 3,
+          "right_angle": 1,
+          "midpoint": 1,
+          "orthogonal_projection_line": 2,
+          "translate_point": 2,
+          "section": 1,
+          "ask_section_area": 1
+        },
+        "derived_planes": 1,
+        "reused_intermediate_constructions": 4,
+        "anchor_labels": [
+          [
+            "C",
+            "A'"
+          ]
+        ],
+        "effect_search": "NOT_APPLICABLE: existing structural plane decomposition; no effect search invoked"
+      }
+    },
+    {
+      "id": "vertex-touch",
+      "expected_status": "REFUSED",
+      "status": "REFUSED",
+      "code": "PLANE_TOUCHES_VERTEX",
+      "planner_code": null,
+      "outcome": "correctly_refused",
+      "area_squared": null,
+      "oracle_area_squared": null,
+      "exact_agreement": null,
+      "negative_reason_match": true,
+      "planner_ms": 1.145,
+      "plan_metrics": {
+        "function_calls": 12,
+        "dependency_depth": 1,
+        "functions": {
+          "prism": 1,
+          "segment_length": 3,
+          "right_angle": 1,
+          "midpoint": 1,
+          "orthogonal_projection_line": 2,
+          "translate_point": 2,
+          "section": 1,
+          "ask_section_area": 1
+        },
+        "derived_planes": 1,
+        "reused_intermediate_constructions": 4,
+        "anchor_labels": [
+          [
+            "B",
+            "C"
+          ]
+        ],
+        "effect_search": "NOT_APPLICABLE: existing structural plane decomposition; no effect search invoked"
+      }
+    }
+  ],
+  "live_provider_calls": 0
+}
