@@ -1,0 +1,92 @@
+{
+  "run_id": "hybrid-v2-adapter4-plane-section-certificate",
+  "task_code": "HYBRID_V2_ADAPTER4_PLANE_ONLY_SECTION_CERTIFICATE",
+  "date": "2026-10-27",
+  "authorization": "Owner GO 2026-10-27 (HYBRID_V2_ADAPTER4_PLANE_ONLY_SECTION_CERTIFICATE): close ADAPTER_INTEGRATION_GAP for plane-only derived sections on Adapter /4 from verified main a3ee14a7; no merge, push, worktree cleanup, live provider calls, or default mode change.",
+  "branch": "research/hybrid-v2-adapter4-plane-section-certificate",
+  "worktree": ".superpowers/worktrees/adapter4-plane-section-certificate",
+  "main_before": "a3ee14a707f35dddd70a52f551d23beb16476c41",
+  "commits": {
+    "registration_red": "1070134e4484d89a565947bcfe9023e742764f51",
+    "initial_product_green": "05f3bd47d294ac034b9965c28dfb4f826640556e",
+    "initial_freeze": "67069f3c30cbb9e6c60a4d60e3ae24decf990a39",
+    "product_fix": "f54c3561b09153021bba0b35a5a9ab78a82546b3",
+    "t3_candidate": "0be084d95d5343e0c25adeef12c99b5e17811054"
+  },
+  "measured_system": {
+    "files": 118,
+    "tree_hash": "ae6360b1d20beb96b87bad4f335b74b3a61e7483d06214aa2192f17fe6f1c70a"
+  },
+  "adapter4_corpus_36": {
+    "cases": 36,
+    "red_a3ee14a7": {
+      "passed": 19,
+      "failed": 17,
+      "positive_passed": 1,
+      "positive_total": 18,
+      "negative_passed": 18,
+      "negative_total": 18,
+      "wrong_served": 0
+    },
+    "green_f54c3561": {
+      "passed": 36,
+      "failed": 0,
+      "positive_passed": 18,
+      "positive_total": 18,
+      "negative_passed": 18,
+      "negative_total": 18,
+      "wrong_served": 0
+    },
+    "files": [
+      "inputs/development.json",
+      "inputs/oracle.json",
+      "results/red-before.json",
+      "results/green-after.json"
+    ]
+  },
+  "tiers": {
+    "T0": "IMPACT_GATE (--base a3ee14a7; src/code-index-sync.test.ts 3/3 + PYTEST)",
+    "T1": "520 passed (test_adapter4_plane_section_certificate.py 39/39, test_prism_perpendicular_section_planning.py 17/17, targeted geometry/contract/acceptance suites) + 41 passed (test_hybrid_preview_fixtures.py)",
+    "T2": "83 files, 1417/1417 passed",
+    "file": "verification/tiers.json"
+  },
+  "full_t3": "FULL_PRODUCT_GATE_PASS",
+  "full_t3_backend_passed": 12421,
+  "full_t3_frontend_passed": 1417,
+  "full_t3_post_freeze": "MATCH",
+  "full_t3_receipt": "full-t3/receipt.json",
+  "independent_review": {
+    "status": "INDEPENDENT_CODE_REVIEW",
+    "reviewer_subagent": "c4924ed9-a99b-42af-8a33-f47c2865b248",
+    "verdict": "INDEPENDENT_REVIEW_PASS",
+    "blocker": 0,
+    "major": 0,
+    "minor": 0,
+    "nit": 2,
+    "nit_resolution": "RESOLVED in f54c3561",
+    "adapter_integration_gap_status": "CLOSED",
+    "file": "review.md"
+  },
+  "versions": {
+    "registry": "geometry-functions/17",
+    "planner": "geometry-fact-planner/16",
+    "engine": "geometry-function-engine/14",
+    "bridge_v2": "typed-fact-next-bridge/2",
+    "adapter4": "hybrid-simulation-adapter/4",
+    "section_certificate": "plane-section-certificate/1"
+  },
+  "cache_version": 130,
+  "cache_decision": "NO_BUMP (candidate_divergence.json)",
+  "default_mode": "LLM_ONLY",
+  "hybrid": "OPT_IN_ONLY",
+  "provider_calls": 0,
+  "classification": "AUTHORED_DEVELOPMENT_NOT_HOLDOUT",
+  "independent_holdout": "INDEPENDENT_HOLDOUT_NOT_EXECUTED",
+  "live_nl_e2e": "LIVE_NL_E2E_NOT_MEASURED",
+  "browser_evidence": "BROWSER_EVIDENCE_NOT_MEASURED",
+  "open_gaps": [
+    "INDEPENDENT_HOLDOUT_NOT_EXECUTED (blind Vietnamese holdout required before curriculum readiness claims)"
+  ],
+  "t3_checkout": "D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red (detached 0be084d9, left in place; frontend/node_modules and backend/.venv are junctions)",
+  "status": "READY_FOR_OWNER_REVIEW - not merged, not pushed"
+}
