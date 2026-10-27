@@ -33,7 +33,7 @@ from app.simulation.geometry_functions.typed_fact_next import (
 def test_combined_version_identities_and_governance() -> None:
     """Verify version identities of Registry /13, Planner /13 (hybrid-contract-v2, owner D5), Engine /12
     (claude-to-codex-takeover skew-claim refusal), Adapter /2 and /3."""
-    assert REGISTRY_VERSION == "geometry-functions/18"
+    assert REGISTRY_VERSION == "geometry-functions/19"
     assert PLANNER_VERSION == "geometry-fact-planner/17"
     assert ENGINE_VERSION == "geometry-function-engine/14"
     assert ADAPTER_V2_VERSION == "hybrid-preview-adapter/2"

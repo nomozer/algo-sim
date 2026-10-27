@@ -51,7 +51,7 @@ from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationEr
 #: pyramid-/prism-like split (`_loai_cum_dung`).
 #: /18 (run `hybrid-v2-holdout-failure-repair`): M1–M5 Source Gate parity (`MAT_HAI_DUONG` / `_kiem_nguon_dong`, SG-3 plural
 #: quantifiers, section wording & 4-vertex coplanar solid planes, compound premise coverage, bounded section-area question binding).
-REGISTRY_VERSION = "geometry-functions/18"
+REGISTRY_VERSION = "geometry-functions/19"
 
 
 class TuChoi(Exception):
@@ -951,7 +951,7 @@ _C_DIEM = re.compile(rf"(?:gọi\s+)?{_L1}\s+là\s+(?:(?:trung\s+điểm|tâm|tr
                      rf"(?![\w'])(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
 #: A projection may be read as the foot of a height stated in the same sentence: kept readable, but a subject change.
 _C_CHIEU = re.compile(rf"(?:(?:gọi\s+)?{_L1}\s+(?:là|trùng\s+với)\s+hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}"
-                      rf"|hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}\s+(?:là|trùng\s+với)\s+(?:(?:điểm|trung\s+điểm|trọng\s+tâm)\s+)?{_L1}(?:\s+của\s+{_DOI_TUONG_NHAN})?)"
+                      rf"|hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}\s+(?:là|trùng\s+với)\s+(?:(?:điểm|đỉnh|trung\s+điểm|trọng\s+tâm)\s+)?{_L1}(?:\s+của\s+{_DOI_TUONG_NHAN})?)"
                       rf"(?![\w'])(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
 _C_DOAN = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:các\s+)?kích\s+thước\s+)?(?:độ\s+dài\s+(?:của\s+)?)?(?:(?:cạnh\s+bên|cạnh|đoạn(?:\s+thẳng)?|đường\s+chéo)\s+)?"
                      rf"(?P<seg>{_L1}{_L1})(?![\w'])"
@@ -3405,7 +3405,7 @@ _CUM_DINH_NGHIA_DIEM = re.compile(
     # ratio point (`divide_segment`, bound by `_TY_SO`): "M là điểm thuộc cạnh SA sao cho SM = 2MA"
     rf"|(?:một\s+)?điểm\s+(?:thuộc|nằm\s+trên|trên)\s+(?:(?:cạnh|đoạn\s+thẳng|đoạn)\s+)?{_P1}{_P1}\s*,?\s*sao\s+cho\s+"
     rf"{_P1}{_P1}\s*=\s*(?:\d+(?:/\d+)?)?\s*{_P1}{_P1})"
-    rf"|hình chiếu(?:\s+vuông góc)?\s+của\s+(?:điểm\s+|đỉnh\s+)?{_P1}\s+(?:lên|trên)\s+(?:{_MAT_TOAN_HANG}|(?:đường thẳng\s+|cạnh\s+)?{_P1}{_P1})\s+(?:là|trùng\s+với)\s+(?:(?:điểm|trọng tâm|trung điểm)\s+)?{_P1}(?:\s+của\s+(?:(?:cạnh(?:\s+bên|\s+đáy)?|đoạn(?:\s+thẳng)?|tam\s+giác|đáy)\s+)?(?:{_NHOM_NHAN}|{_P1}{_P1}))?)[.\s]*",
+    rf"|hình chiếu(?:\s+vuông góc)?\s+của\s+(?:điểm\s+|đỉnh\s+)?{_P1}\s+(?:lên|trên)\s+(?:{_MAT_TOAN_HANG}|(?:đường thẳng\s+|cạnh\s+)?{_P1}{_P1})\s+(?:là|trùng\s+với)\s+(?:(?:điểm|đỉnh|trọng tâm|trung điểm)\s+)?{_P1}(?:\s+của\s+(?:(?:cạnh(?:\s+bên|\s+đáy)?|đoạn(?:\s+thẳng)?|tam\s+giác|đáy)\s+)?(?:{_NHOM_NHAN}|{_P1}{_P1}))?)[.\s]*",
     re.IGNORECASE,
 )
 _CUM_DUNG_THIET_DIEN = re.compile(
@@ -3430,7 +3430,8 @@ def _doc_phep_dung_cau_hoi(de: str, start: int, end: int, calls: tuple[LoiGoi, .
                     "intersect_line_line", "intersect_line_plane"):
             for q in c.quotes:
                 if (vt := _vi_tri(de, q)) is not None and start <= vt[0] and vt[1] <= end:
-                    if _CUM_DINH_NGHIA_DIEM.fullmatch(de[vt[0]:vt[1]]):
+                    if (_CUM_DINH_NGHIA_DIEM.fullmatch(de[vt[0]:vt[1]])
+                            or c.fn == "divide_segment" and _ty_so_tron_cau(c, de[vt[0]:vt[1]])):
                         m_lead = re.search(r"(?<!\w)(?:gọi|lấy|cho)\s+$", de[start:vt[0]], re.IGNORECASE)
                         spans.append((start + m_lead.start() if m_lead else vt[0], vt[1]))
         elif c.fn == "intersection_line":
@@ -4308,8 +4309,10 @@ def _dinh_nghia_diem_dung_nguon(c: LoiGoi, q: str, de: str) -> bool:
 #: "M (là điểm) thuộc / nằm trên (cạnh | đoạn (thẳng)) SA sao cho SM = 2MA" — one closed equation between two segments of
 #: {X, Y, P}. Labels stay case-sensitive; the coefficient is a positive integer or fraction (absent = 1).
 _TY_SO = re.compile(
-    r"(?<![\w'])(?P<p>[A-Z][0-9]*'?)(?![\w'])\s+(?:(?i:là)\s+(?:(?i:một)\s+)?(?i:điểm)\s+)?(?i:thuộc|nằm\s+trên|trên)\s+"
-    r"(?:(?i:cạnh|đoạn\s+thẳng|đoạn)\s+)?(?P<x>[A-Z][0-9]*'?)(?P<y>[A-Z][0-9]*'?)(?![\w'])\s*,?\s*(?i:sao\s+cho)\s+"
+    r"(?<![\w'])(?:(?P<p>[A-Z][0-9]*'?)(?![\w'])\s+(?:(?i:là)\s+(?:(?i:một)\s+)?(?i:điểm)\s+)?(?i:thuộc|nằm\s+trên|trên)\s+"
+    r"(?:(?i:cạnh|đoạn\s+thẳng|đoạn)\s+)?(?P<x>[A-Z][0-9]*'?)(?P<y>[A-Z][0-9]*'?)(?![\w'])"
+    r"|(?i:trên)\s+(?i:cạnh|đoạn\s+thẳng|đoạn)\s+(?P<ix>[A-Z][0-9]*'?)(?P<iy>[A-Z][0-9]*'?)(?![\w'])\s*,?\s+"
+    r"(?i:lấy)\s+(?:(?i:điểm)\s+)?(?P<ip>[A-Z][0-9]*'?)(?![\w']))\s*,?\s*(?i:sao\s+cho)\s+"
     r"(?P<l>(?:[A-Z][0-9]*'?){2})(?![\w'])\s*=\s*(?P<k>\d+(?:/\d+)?)?\s*(?P<r>(?:[A-Z][0-9]*'?){2})(?![\w'])")
 
 
@@ -4325,7 +4328,7 @@ def _ty_so_khop(c: LoiGoi, s: str, pos: int = 0, endpos: int | None = None):
     also used by premise coverage to own exactly the coefficient the equation read (run `typedfactnext-planner-bridge`)."""
     a = c.args
     for m in _TY_SO.finditer(s, pos, len(s) if endpos is None else endpos):
-        p, x, y = m["p"], m["x"], m["y"]
+        p, x, y = m["p"] or m["ip"], m["x"] or m["ix"], m["y"] or m["iy"]
         if p != a.point or len({p, x, y}) != 3:
             continue
         he = {frozenset((x, p)): (Fraction(0), Fraction(1)), frozenset((p, y)): (Fraction(1), Fraction(-1)),
@@ -4343,6 +4346,13 @@ def _ty_so_khop(c: LoiGoi, s: str, pos: int = 0, endpos: int | None = None):
             continue
         if (list(a.segment), Fraction(a.ratio)) in (([x, y], t), ([y, x], 1 - t)):
             yield m
+
+
+def _ty_so_tron_cau(c: LoiGoi, s: str) -> bool:
+    """The shared exact ratio reader consumes the whole premise, including its optional point introducer."""
+    return any(re.fullmatch(r"\s*(?:(?:gọi|lấy|cho)\s+)?(?:điểm\s+)?", s[:m.start()], re.I)
+               and re.fullmatch(r"[.\s]*", s[m.end():])
+               for m in _ty_so_khop(c, s))
 
 
 def construction_source_bound(c: LoiGoi, de: str = "") -> bool:
@@ -4378,10 +4388,10 @@ def construction_source_bound(c: LoiGoi, de: str = "") -> bool:
         else:
             target = a.line if c.fn.endswith("_line") else a.plane
             patterns = [rf"(?<![\w'])({point})\s+(?:là|trùng\s+với)\s+hình chiếu\s+(?:vuông góc\s+)?của\s+(?:(?:điểm|đỉnh)\s+)?({point})\s+(?:lên|trên)\s+{operand}(?![\w'])",
-                        rf"[Hh]ình chiếu\s+(?:vuông góc\s+)?của\s+(?:(?:điểm|đỉnh)\s+)?({point})\s+(?:lên|trên)\s+{operand}\s+(?:là|trùng\s+với)\s+(?:điểm\s+|trọng tâm\s+|trung điểm\s+)?({point})(?![\w'])"]
+                        rf"[Hh]ình chiếu\s+(?:vuông góc\s+)?của\s+(?:(?:điểm|đỉnh)\s+)?({point})\s+(?:lên|trên)\s+{operand}\s+(?:là|trùng\s+với)\s+(?:(?P<noun>điểm|đỉnh|trọng tâm|trung điểm)\s+)?({point})(?![\w'])"]
             for i, pattern in enumerate(patterns):
                 for m in re.finditer(pattern, q):
-                    out, src, dst = m.groups() if i == 0 else (m[3], m[1], m[2])
+                    out, src, dst = m.groups() if i == 0 else (m[4], m[1], m[2])
                     pts = labels(dst)
                     if dst == "đáy" and len(target) >= 3:
                         bases = {tuple(p[1]) for dau, _cuoi, p in _tu_nhan(de) if len(p) == 2 and
@@ -4389,6 +4399,11 @@ def construction_source_bound(c: LoiGoi, de: str = "") -> bool:
                         if len(bases) == 1 and _cung_da_giac(list(next(iter(bases))), target):
                             pts = target
                     if out == a.image and src == a.point and (pts == target or (len(target) == 2 and pts == target[::-1])):
+                        if i == 1 and m["noun"] == "đỉnh":
+                            owners = [_nhan_khoi(k) for k in _GOI_NGUON.get()
+                                      if k.fn in _KHOI_FN and {src, *pts} <= _nhan_khoi(k)]
+                            if len(owners) != 1 or out not in owners[0]:
+                                continue
                         return True
     return False
 
@@ -4612,6 +4627,12 @@ def _kiem_nguon_dong(calls, de, phu, read_quotes):
             if sent_ok:
                 continue
             for s, s_start in spans:
+                if c.fn == 'divide_segment' and _ty_so_tron_cau(c, s):
+                    continue
+                if (c.fn == 'right_angle'
+                        and re.fullmatch(rf'tam giác\s+(?:{_P1}){{3}}\s+vuông\s+tại\s+{_P1}[.\s]*', s, re.I)
+                        and construction_source_bound(replace(c, quotes=(s,)), de)):
+                    continue
                 if c.fn in ('prism', 'regular_polygon', 'segment_length') and re.fullmatch(cube_form, s, re.I):
                     continue
                 atomic = re.sub(r'(?<!\w)song\s+song(?!\w)',' ',s,flags=re.I)
@@ -4647,7 +4668,7 @@ def _kiem_nguon_dong(calls, de, phu, read_quotes):
                     atomic_forms = {
                         'pyramid': rf'(?:cho\s+)?(?:hình|khối) chóp\s+{solid}[.\s]*',
                         'regular_pyramid': reg_pyr,
-                        'prism': rf'(?:cho\s+)?(?:hình\s+)?(?:lăng trụ đứng|hình hộp chữ nhật)\s+{solid}[.\s]*',
+                        'prism': rf'(?:cho\s+)?(?:hình\s+)?(?:lăng trụ(?:\s+(?:đứng|xiên))?|hình hộp chữ nhật)\s+{solid}[.\s]*',
                         'regular_polygon': rf'(?:đáy\s+{labels}\s+là\s+)?{shape}[.\s]*',
                         'rectangle': rf'(?:cho\s+)?(?:hình hộp chữ nhật\s+{solid}|(?:đáy\s+{labels}\s+là\s+)?hình chữ nhật\s*(?:{labels})?)[.\s]*',
                         'midpoint': rf'(?:gọi\s+)?{_P1}\s+là trung điểm\s+(?:của\s+)?(?:(?:cạnh|đoạn(?:\s+thẳng)?)\s+)?{_P1}{_P1}[.\s]*',

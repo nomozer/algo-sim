@@ -1,5 +1,24 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_V2_WAVE2_SOURCE_GATE_LANGUAGE_GENERALIZATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/
+CLASSIFICATION = POST_FEEDBACK_DEVELOPMENT_REGRESSION; NOT_READY (locked positive radical-ceiling refusal; verification in progress)
+VERIFICATION = results/red-before.json; results/green-after.json (raw); results/development-adjudication.json; results/wave2-post-feedback-regression.json; verification/tiers.json; review.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_V2_INDEPENDENT_VIETNAMESE_SECTION_HOLDOUT_WAVE2 (three narrative errors only; correction-layer.md; original bytes and primary results unchanged)
+CORRECTED_BY = NONE
+
+## WAVE_ID = HYBRID_V2_INDEPENDENT_VIETNAMESE_SECTION_HOLDOUT_WAVE2
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/correction-layer.md
+HISTORICAL_SOURCE = git commit ecdc26b012c8ce80d53524a98dc75cdcb020079d, docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-section-holdout-wave2/ (retained research branch; not integrated into main)
+CLASSIFICATION = INDEPENDENT_BLIND_HOLDOUT_WAVE2_ADJUDICATED: 5/48 positive served correct; 48/48 negatives refused; 0/96 genuine wrong-served
+VERIFICATION = docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/results/historical-integrity.json
+MODEL_REQUEST_COUNT = 0
+CORRECTED_BY = HYBRID_V2_WAVE2_SOURCE_GATE_LANGUAGE_GENERALIZATION (narrative Track B counts, handoff hash table, radical factorization only)
+
 ## WAVE_ID = ROOT_CONSOLIDATION
 
 REPORT = docs/evaluation/geometry/runs/root-consolidation/ROOT_CONSOLIDATION_REPORT.md

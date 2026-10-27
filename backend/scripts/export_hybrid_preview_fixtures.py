@@ -316,6 +316,8 @@ IDENTITY_DELTAS = (
     {"run": "hybrid-v2-holdout-failure-repair",            # engine unchanged (/14)
      "versions": {"registry_version": ("geometry-functions/17", "geometry-functions/18"),
                   "planner_version": ("geometry-fact-planner/16", "geometry-fact-planner/17")}},
+    {"run": "hybrid-v2-wave2-source-gate-language-generalization",
+     "versions": {"registry_version": ("geometry-functions/18", "geometry-functions/19")}},
 )
 
 

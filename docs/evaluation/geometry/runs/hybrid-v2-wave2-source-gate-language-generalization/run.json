@@ -1,0 +1,17 @@
+{
+  "run_id": "hybrid-v2-wave2-source-gate-language-generalization",
+  "task_code": "HYBRID_V2_WAVE2_SOURCE_GATE_LANGUAGE_GENERALIZATION",
+  "task_wave": 1,
+  "date": "2026-10-28",
+  "branch": "research/hybrid-v2-wave2-source-gate-language-generalization",
+  "baseline": "d7a94d3cd4bbdea3df99e383bec78425fcc8bf1c",
+  "preregistration_commit": "6554d733203619dad9ea8c4c640fc80ee5782a34",
+  "classification": "PRODUCT_REPAIR_WITH_POST_FEEDBACK_DEVELOPMENT_REGRESSION",
+  "historical_source_commit": "ecdc26b012c8ce80d53524a98dc75cdcb020079d",
+  "status": "NOT_READY_VERIFICATION_IN_PROGRESS",
+  "live_provider_calls": 0,
+  "default_mode": "LLM_ONLY",
+  "hybrid": "OPT_IN_ONLY",
+  "cache_version": 130,
+  "merge_push_cleanup": "NONE"
+}

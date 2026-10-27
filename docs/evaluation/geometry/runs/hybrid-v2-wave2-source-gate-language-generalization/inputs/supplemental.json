@@ -1,0 +1,1056 @@
+{
+  "classification": "ADDITIVE_DEVELOPMENT_CONTROLS",
+  "cases": [
+    {
+      "id": "ADD-contradictory-two-line-premise",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "variant": 1,
+      "expected_status": "REFUSED",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ ABC.A'B'C'. Tam giác ABC vuông tại A. AB = 12. AC = 18. Hình chiếu vuông góc của A' trên mặt phẳng (ABC) trùng với đỉnh B. A'B = 10. Trên cạnh AA' lấy điểm M sao cho AM = 4/9 AA'. Mặt phẳng (α) đi qua M, song song với hai đường thẳng AB và AC. Tính diện tích thiết diện của lăng trụ ABC.A'B'C' cắt bởi mặt phẳng (α). Biết AC vuông góc với BC.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "lăng trụ ABC.A'B'C'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ],
+              "right_at": "A"
+            },
+            "quote": "Tam giác ABC vuông tại A"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "12"
+            },
+            "quote": "AB = 12"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "18"
+            },
+            "quote": "AC = 18"
+          },
+          {
+            "kind": "orthogonal_projection",
+            "args": {
+              "point": "A'",
+              "image": "B",
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Hình chiếu vuông góc của A' trên mặt phẳng (ABC) trùng với đỉnh B"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A'",
+                "B"
+              ],
+              "value": "10"
+            },
+            "quote": "A'B = 10"
+          },
+          {
+            "kind": "divide_segment",
+            "args": {
+              "point": "M",
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "ratio": "4/9"
+            },
+            "quote": "Trên cạnh AA' lấy điểm M sao cho AM = 4/9 AA'"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_two_lines",
+            "quote": "Mặt phẳng (α) đi qua M, song song với hai đường thẳng AB và AC",
+            "through_point": "M",
+            "parallel_line_a": [
+              "A",
+              "B"
+            ],
+            "parallel_line_b": [
+              "A",
+              "C"
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "lăng trụ ABC.A'B'C'",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "area",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích thiết diện của lăng trụ ABC.A'B'C' cắt bởi mặt phẳng (α)",
+            "target": {
+              "section_id": "sec"
+            }
+          }
+        ]
+      },
+      "expected_codes": [
+        "SOURCE_PREMISE_UNREAD",
+        "SOURCE_OBJECT_MISMATCH",
+        "INCONSISTENT_FACTS"
+      ]
+    },
+    {
+      "id": "ADD-primed-target-là",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "variant": 1,
+      "expected_status": "SERVED",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ ABC.A'B'C'. Tam giác ABC vuông tại A. AB = 12. AC = 18. Hình chiếu vuông góc của A' trên mặt phẳng (ABC) trùng với đỉnh B. A'B = 10. Trên cạnh AA' lấy điểm M sao cho AM = 4/9 AA'. Mặt phẳng (α) đi qua M, song song với hai đường thẳng AB và AC. Tính diện tích thiết diện của lăng trụ ABC.A'B'C' cắt bởi mặt phẳng (α). Hình chiếu vuông góc của B trên mặt phẳng (A'B'C') là đỉnh A'.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "lăng trụ ABC.A'B'C'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ],
+              "right_at": "A"
+            },
+            "quote": "Tam giác ABC vuông tại A"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "12"
+            },
+            "quote": "AB = 12"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "18"
+            },
+            "quote": "AC = 18"
+          },
+          {
+            "kind": "orthogonal_projection",
+            "args": {
+              "point": "A'",
+              "image": "B",
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Hình chiếu vuông góc của A' trên mặt phẳng (ABC) trùng với đỉnh B"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A'",
+                "B"
+              ],
+              "value": "10"
+            },
+            "quote": "A'B = 10"
+          },
+          {
+            "kind": "divide_segment",
+            "args": {
+              "point": "M",
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "ratio": "4/9"
+            },
+            "quote": "Trên cạnh AA' lấy điểm M sao cho AM = 4/9 AA'"
+          },
+          {
+            "kind": "orthogonal_projection",
+            "args": {
+              "point": "B",
+              "image": "A'",
+              "plane": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Hình chiếu vuông góc của B trên mặt phẳng (A'B'C') là đỉnh A'"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_two_lines",
+            "quote": "Mặt phẳng (α) đi qua M, song song với hai đường thẳng AB và AC",
+            "through_point": "M",
+            "parallel_line_a": [
+              "A",
+              "B"
+            ],
+            "parallel_line_b": [
+              "A",
+              "C"
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "lăng trụ ABC.A'B'C'",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "area",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích thiết diện của lăng trụ ABC.A'B'C' cắt bởi mặt phẳng (α)",
+            "target": {
+              "section_id": "sec"
+            }
+          }
+        ]
+      },
+      "oracle": {
+        "method": "horizontal translation",
+        "area_squared": "11664",
+        "vertex_count": 3,
+        "boundary": [
+          {
+            "edge": [
+              "A",
+              "A'"
+            ],
+            "t": "4/9"
+          },
+          {
+            "edge": [
+              "B",
+              "B'"
+            ],
+            "t": "4/9"
+          },
+          {
+            "edge": [
+              "C",
+              "C'"
+            ],
+            "t": "4/9"
+          }
+        ],
+        "solid": "ABC.A'B'C'",
+        "section_id": "sec",
+        "area_goal_id": "area",
+        "expected_certificate_category": "ENGINE_DERIVED_SECTION"
+      }
+    },
+    {
+      "id": "ADD-primed-target-trùng-với",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "variant": 1,
+      "expected_status": "SERVED",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ ABC.A'B'C'. Tam giác ABC vuông tại A. AB = 12. AC = 18. Hình chiếu vuông góc của A' trên mặt phẳng (ABC) trùng với đỉnh B. A'B = 10. Trên cạnh AA' lấy điểm M sao cho AM = 4/9 AA'. Mặt phẳng (α) đi qua M, song song với hai đường thẳng AB và AC. Tính diện tích thiết diện của lăng trụ ABC.A'B'C' cắt bởi mặt phẳng (α). Hình chiếu vuông góc của B trên mặt phẳng (A'B'C') trùng với đỉnh A'.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "lăng trụ ABC.A'B'C'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ],
+              "right_at": "A"
+            },
+            "quote": "Tam giác ABC vuông tại A"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "12"
+            },
+            "quote": "AB = 12"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "18"
+            },
+            "quote": "AC = 18"
+          },
+          {
+            "kind": "orthogonal_projection",
+            "args": {
+              "point": "A'",
+              "image": "B",
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Hình chiếu vuông góc của A' trên mặt phẳng (ABC) trùng với đỉnh B"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A'",
+                "B"
+              ],
+              "value": "10"
+            },
+            "quote": "A'B = 10"
+          },
+          {
+            "kind": "divide_segment",
+            "args": {
+              "point": "M",
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "ratio": "4/9"
+            },
+            "quote": "Trên cạnh AA' lấy điểm M sao cho AM = 4/9 AA'"
+          },
+          {
+            "kind": "orthogonal_projection",
+            "args": {
+              "point": "B",
+              "image": "A'",
+              "plane": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Hình chiếu vuông góc của B trên mặt phẳng (A'B'C') trùng với đỉnh A'"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_two_lines",
+            "quote": "Mặt phẳng (α) đi qua M, song song với hai đường thẳng AB và AC",
+            "through_point": "M",
+            "parallel_line_a": [
+              "A",
+              "B"
+            ],
+            "parallel_line_b": [
+              "A",
+              "C"
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "lăng trụ ABC.A'B'C'",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "area",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích thiết diện của lăng trụ ABC.A'B'C' cắt bởi mặt phẳng (α)",
+            "target": {
+              "section_id": "sec"
+            }
+          }
+        ]
+      },
+      "oracle": {
+        "method": "horizontal translation",
+        "area_squared": "11664",
+        "vertex_count": 3,
+        "boundary": [
+          {
+            "edge": [
+              "A",
+              "A'"
+            ],
+            "t": "4/9"
+          },
+          {
+            "edge": [
+              "B",
+              "B'"
+            ],
+            "t": "4/9"
+          },
+          {
+            "edge": [
+              "C",
+              "C'"
+            ],
+            "t": "4/9"
+          }
+        ],
+        "solid": "ABC.A'B'C'",
+        "section_id": "sec",
+        "area_goal_id": "area",
+        "expected_certificate_category": "ENGINE_DERIVED_SECTION"
+      }
+    },
+    {
+      "id": "ADD-midpoint-is-not-vertex",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "variant": 1,
+      "expected_status": "REFUSED",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ ABC.A'B'C'. Tam giác ABC vuông tại A. AB = 12. AC = 18. Hình chiếu vuông góc của A' trên mặt phẳng (ABC) trùng với đỉnh J. A'J = 10. Trên cạnh AA' lấy điểm M sao cho AM = 4/9 AA'. Mặt phẳng (α) đi qua M, song song với hai đường thẳng AB và AC. Tính diện tích thiết diện của lăng trụ ABC.A'B'C' cắt bởi mặt phẳng (α). Gọi J là trung điểm của AB.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "lăng trụ ABC.A'B'C'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ],
+              "right_at": "A"
+            },
+            "quote": "Tam giác ABC vuông tại A"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "12"
+            },
+            "quote": "AB = 12"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "18"
+            },
+            "quote": "AC = 18"
+          },
+          {
+            "kind": "orthogonal_projection",
+            "args": {
+              "point": "A'",
+              "image": "J",
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Hình chiếu vuông góc của A' trên mặt phẳng (ABC) trùng với đỉnh J"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A'",
+                "J"
+              ],
+              "value": "10"
+            },
+            "quote": "A'J = 10"
+          },
+          {
+            "kind": "divide_segment",
+            "args": {
+              "point": "M",
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "ratio": "4/9"
+            },
+            "quote": "Trên cạnh AA' lấy điểm M sao cho AM = 4/9 AA'"
+          },
+          {
+            "kind": "midpoint",
+            "args": {
+              "point": "J",
+              "segment": [
+                "A",
+                "B"
+              ]
+            },
+            "quote": "Gọi J là trung điểm của AB"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_two_lines",
+            "quote": "Mặt phẳng (α) đi qua M, song song với hai đường thẳng AB và AC",
+            "through_point": "M",
+            "parallel_line_a": [
+              "A",
+              "B"
+            ],
+            "parallel_line_b": [
+              "A",
+              "C"
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "lăng trụ ABC.A'B'C'",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "area",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích thiết diện của lăng trụ ABC.A'B'C' cắt bởi mặt phẳng (α)",
+            "target": {
+              "section_id": "sec"
+            }
+          }
+        ]
+      },
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH",
+        "SOURCE_PREMISE_UNREAD"
+      ]
+    },
+    {
+      "id": "ADD-unread-tail",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "variant": 1,
+      "expected_status": "REFUSED",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp S.ABC. Tam giác ABC vuông tại A. AB = 12. AC = 18. SA vuông góc với mặt phẳng (ABC). SA = 10. Trên cạnh SA lấy điểm M sao cho SM = 4/9 SA, với SB = SC. Mặt phẳng (α) đi qua M, song song với hai đường thẳng AB và AC. Tính diện tích thiết diện của hình chóp S.ABC cắt bởi mặt phẳng (α).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "hình chóp S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ],
+              "right_at": "A"
+            },
+            "quote": "Tam giác ABC vuông tại A"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "12"
+            },
+            "quote": "AB = 12"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "18"
+            },
+            "quote": "AC = 18"
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": [
+                "S",
+                "A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "quote": "SA vuông góc với mặt phẳng (ABC)"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "S",
+                "A"
+              ],
+              "value": "10"
+            },
+            "quote": "SA = 10"
+          },
+          {
+            "kind": "divide_segment",
+            "args": {
+              "point": "M",
+              "segment": [
+                "S",
+                "A"
+              ],
+              "ratio": "4/9"
+            },
+            "quote": "Trên cạnh SA lấy điểm M sao cho SM = 4/9 SA, với SB = SC"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_two_lines",
+            "quote": "Mặt phẳng (α) đi qua M, song song với hai đường thẳng AB và AC",
+            "through_point": "M",
+            "parallel_line_a": [
+              "A",
+              "B"
+            ],
+            "parallel_line_b": [
+              "A",
+              "C"
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "hình chóp S.ABC",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "area",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích thiết diện của hình chóp S.ABC cắt bởi mặt phẳng (α)",
+            "target": {
+              "section_id": "sec"
+            }
+          }
+        ]
+      },
+      "expected_codes": [
+        "SOURCE_PREMISE_UNREAD",
+        "SOURCE_OBJECT_MISMATCH",
+        "NEGATED_CLAUSE",
+        "CONDITIONAL_CLAUSE"
+      ]
+    },
+    {
+      "id": "ADD-negated",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "variant": 1,
+      "expected_status": "REFUSED",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp S.ABC. Tam giác ABC vuông tại A. AB = 12. AC = 18. SA vuông góc với mặt phẳng (ABC). SA = 10. Trên cạnh SA lấy điểm M sao cho SM = 4/9 SA không. Mặt phẳng (α) đi qua M, song song với hai đường thẳng AB và AC. Tính diện tích thiết diện của hình chóp S.ABC cắt bởi mặt phẳng (α).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "hình chóp S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ],
+              "right_at": "A"
+            },
+            "quote": "Tam giác ABC vuông tại A"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "12"
+            },
+            "quote": "AB = 12"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "18"
+            },
+            "quote": "AC = 18"
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": [
+                "S",
+                "A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "quote": "SA vuông góc với mặt phẳng (ABC)"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "S",
+                "A"
+              ],
+              "value": "10"
+            },
+            "quote": "SA = 10"
+          },
+          {
+            "kind": "divide_segment",
+            "args": {
+              "point": "M",
+              "segment": [
+                "S",
+                "A"
+              ],
+              "ratio": "4/9"
+            },
+            "quote": "Trên cạnh SA lấy điểm M sao cho SM = 4/9 SA không"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_two_lines",
+            "quote": "Mặt phẳng (α) đi qua M, song song với hai đường thẳng AB và AC",
+            "through_point": "M",
+            "parallel_line_a": [
+              "A",
+              "B"
+            ],
+            "parallel_line_b": [
+              "A",
+              "C"
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "hình chóp S.ABC",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "area",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích thiết diện của hình chóp S.ABC cắt bởi mặt phẳng (α)",
+            "target": {
+              "section_id": "sec"
+            }
+          }
+        ]
+      },
+      "expected_codes": [
+        "SOURCE_PREMISE_UNREAD",
+        "SOURCE_OBJECT_MISMATCH",
+        "NEGATED_CLAUSE",
+        "CONDITIONAL_CLAUSE"
+      ]
+    },
+    {
+      "id": "ADD-conditional",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "variant": 1,
+      "expected_status": "REFUSED",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình chóp S.ABC. Tam giác ABC vuông tại A. AB = 12. AC = 18. SA vuông góc với mặt phẳng (ABC). SA = 10. Trên cạnh SA lấy điểm M sao cho SM = 4/9 SA nếu SB = SC. Mặt phẳng (α) đi qua M, song song với hai đường thẳng AB và AC. Tính diện tích thiết diện của hình chóp S.ABC cắt bởi mặt phẳng (α).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "pyramid",
+            "notation": "S.ABC",
+            "quote": "hình chóp S.ABC"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ],
+              "right_at": "A"
+            },
+            "quote": "Tam giác ABC vuông tại A"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "12"
+            },
+            "quote": "AB = 12"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "18"
+            },
+            "quote": "AC = 18"
+          },
+          {
+            "kind": "perpendicular_line_plane",
+            "args": {
+              "line": [
+                "S",
+                "A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "quote": "SA vuông góc với mặt phẳng (ABC)"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "S",
+                "A"
+              ],
+              "value": "10"
+            },
+            "quote": "SA = 10"
+          },
+          {
+            "kind": "divide_segment",
+            "args": {
+              "point": "M",
+              "segment": [
+                "S",
+                "A"
+              ],
+              "ratio": "4/9"
+            },
+            "quote": "Trên cạnh SA lấy điểm M sao cho SM = 4/9 SA nếu SB = SC"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_parallel_two_lines",
+            "quote": "Mặt phẳng (α) đi qua M, song song với hai đường thẳng AB và AC",
+            "through_point": "M",
+            "parallel_line_a": [
+              "A",
+              "B"
+            ],
+            "parallel_line_b": [
+              "A",
+              "C"
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "g1",
+            "kind": "construct_object",
+            "quote": "hình chóp S.ABC",
+            "target_solid_id": "s1",
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "area",
+            "kind": "measurement",
+            "goal_type": "area",
+            "quote": "Tính diện tích thiết diện của hình chóp S.ABC cắt bởi mặt phẳng (α)",
+            "target": {
+              "section_id": "sec"
+            }
+          }
+        ]
+      },
+      "expected_codes": [
+        "SOURCE_PREMISE_UNREAD",
+        "SOURCE_OBJECT_MISMATCH",
+        "NEGATED_CLAUSE",
+        "CONDITIONAL_CLAUSE"
+      ]
+    }
+  ]
+}

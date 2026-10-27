@@ -1,5 +1,16 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Source Gate language repair (local research, 2026-10-28)
+
+Registry /19 in `backend/app/simulation/geometry_functions/registry.py` extends `_TY_SO` / `_ty_so_khop`
+to inverted Vietnamese edge-point definitions. `_ty_so_tron_cau` reuses that exact solver for complete
+premise coverage in `_doc_phep_dung_cau_hoi` and `_kiem_nguon_dong`. Projection target noun “đỉnh”
+requires the image to be a vertex of the unique source solid owning the projection operands.
+Generic/oblique prism and standalone right-angle premises still use existing binding/kind checks.
+Tests: `backend/tests/geometry/test_source_gate_language.py`, existing I-1, two-line and Category A/B suites.
+Run-local builders/evaluator/adjudicator/replay: `docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/tools/`.
+Product scope: Registry only. Locked development acceptance remains unmet at excluded W2-M4; see run report.
+
 ## Windows offline watchdog recovery (local, 2026-10-26)
 
 `backend/scripts/run_schema_contract_offline.py::invoke` uses `windows_process_job.WindowsJobProcess` on Windows 10+ to attach each offline command atomically to a kill-on-close Job Object before execution, inherit ownership across descendants, and check zero active members after bounded cleanup. Normal exit and timeout/failure taxonomy are preserved; POSIX retains process groups. `test_windows_process_job.py` covers real process handles, descendants/parent-exit races and OS-failure injection; `test_schema_contract_offline.py` preserves matrix failure persistence. Run-local `hybrid-v2-after-main-integration/tools/run_t3.py` persists UTF-8 receipts before ASCII-safe console output (`test_t3_recovery_receipt.py`). No product/cache/default or renderer change. Evidence: `docs/evaluation/geometry/runs/hybrid-v2-after-main-integration/`.

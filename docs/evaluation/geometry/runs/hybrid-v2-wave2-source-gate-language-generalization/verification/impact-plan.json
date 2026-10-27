@@ -1,0 +1,180 @@
+{
+  "status": "IMPACT_GATE",
+  "changed": [
+    "backend/app/simulation/geometry_functions/registry.py",
+    "backend/scripts/export_hybrid_preview_fixtures.py",
+    "backend/tests/geometry/test_holdout_failure_repair.py",
+    "backend/tests/geometry/test_hybrid_backend_integration.py",
+    "backend/tests/geometry/test_source_gate_language.py",
+    "backend/tests/geometry/test_wave3a_adapter3_integration.py",
+    "backend/tests/geometry/test_wave3a_volume_reasoning.py",
+    "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/architecture-decision.md",
+    "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/baseline-audit.md",
+    "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/correction-layer.md",
+    "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/inputs/development-gold-revision1.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/inputs/development-initial.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/inputs/development.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/plan.md",
+    "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/preregistration.md",
+    "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/results/historical-integrity.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/results/red-before.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/results/red-gold-revision1.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/results/red-initial-gold-error.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/tools/build_development.py",
+    "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/tools/evaluate_development.py"
+  ],
+  "patterns": [
+    "src/code-index-sync.test.ts"
+  ],
+  "pytest": true,
+  "docsOnly": false,
+  "reasons": [
+    {
+      "file": "backend/app/simulation/geometry_functions/registry.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/scripts/export_hybrid_preview_fixtures.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/tests/geometry/test_holdout_failure_repair.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/tests/geometry/test_hybrid_backend_integration.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/tests/geometry/test_source_gate_language.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/tests/geometry/test_wave3a_adapter3_integration.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/tests/geometry/test_wave3a_volume_reasoning.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/architecture-decision.md",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/baseline-audit.md",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/correction-layer.md",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/inputs/development-gold-revision1.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/inputs/development-initial.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/inputs/development.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/plan.md",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/preregistration.md",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/results/historical-integrity.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/results/red-before.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/results/red-gold-revision1.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/results/red-initial-gold-error.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/tools/build_development.py",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/tools/evaluate_development.py",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    }
+  ]
+}

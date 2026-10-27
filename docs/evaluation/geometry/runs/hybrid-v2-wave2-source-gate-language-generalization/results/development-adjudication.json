@@ -1,0 +1,148 @@
+{
+  "classification": "DEVELOPMENT_CORPUS_ADJUDICATION_NOT_HOLDOUT",
+  "basis": "Independent review review-first-pass.md; exact coordinate witness",
+  "raw_preserved_lf_sha256": {
+    "inputs/development.json": "d5d8d8ac94071bcced3522fe8f4bc7b93313fe927a70c7c8902122902663d9fa",
+    "results/red-before.json": "09d3714405c957c4ddce7ef799c48c7d2d82d31be68139571a5c6bba02ffd82f",
+    "results/green-attempt1.json": "1298fe201a37abaf26207636700b55d35c1e5423f5af18d43dc628d2f1df314a",
+    "results/green-after.json": "452359c8ed2a5e71aae2fffa17fbfd9a441bf3b14c866a02da7578bd51af90a0"
+  },
+  "cases": {
+    "NEG-unproven-two-line-premise": {
+      "raw_expected_status": "REFUSED",
+      "adjudicated_expected_status": "SERVED",
+      "expected_oracle": {
+        "solid": "ABC.A'B'C'",
+        "section_id": "sec",
+        "area_goal_id": "area",
+        "vertex_count": 3,
+        "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+        "area_squared": "11664",
+        "boundary": [
+          {
+            "edge": [
+              "A",
+              "A'"
+            ],
+            "t": "4/9"
+          },
+          {
+            "edge": [
+              "B",
+              "B'"
+            ],
+            "t": "4/9"
+          },
+          {
+            "edge": [
+              "C",
+              "C'"
+            ],
+            "t": "4/9"
+          }
+        ]
+      },
+      "mathematical_reason": "The extra AC perpendicular AB assertion is precisely angle BAC=90 already in the source.",
+      "execution": {
+        "id": "NEG-unproven-two-line-premise",
+        "stratum": "development",
+        "family": "oblique_triangular_prism",
+        "plane_relation": "parallel_two_lines",
+        "question_type": "section_and_area",
+        "negative_class": "unproven-two-line-premise",
+        "negative_origin": null,
+        "expected": "SERVE",
+        "acceptable_categories": [],
+        "served": true,
+        "route_status": "SERVED",
+        "route_code": null,
+        "adapter4_status": "SERVED",
+        "envelope_status": "ok",
+        "code": null,
+        "subcode": null,
+        "reason": null,
+        "refusal_layer": null,
+        "category": null,
+        "source_identity_leaks": [],
+        "pedagogical_auxiliary_points": [
+          {
+            "id": "H",
+            "label": "H",
+            "notation": "H",
+            "origin": "derived",
+            "role": "Điểm dựng phụ",
+            "visibly_distinguished_from_given": true
+          },
+          {
+            "id": "H1",
+            "label": "H1",
+            "notation": "H1",
+            "origin": "derived",
+            "role": "Điểm dựng phụ",
+            "visibly_distinguished_from_given": true
+          }
+        ],
+        "r2_auxiliary_notation_observed": true,
+        "all_auxiliary_visibly_distinguished": true,
+        "certificate_category": [
+          "ENGINE_DERIVED_SECTION"
+        ],
+        "area_squared": "11664",
+        "oracle_mismatches": [],
+        "outcome": "SERVED_CORRECT",
+        "matches_expected": true
+      }
+    }
+  },
+  "raw_green_overall": {
+    "n": 61,
+    "outcomes": {
+      "SERVED_CORRECT": 23,
+      "FALSE_REFUSAL": 1,
+      "REFUSED_CORRECT_REASON": 36,
+      "WRONG_SERVED": 1
+    },
+    "serve_cases": 24,
+    "served_correct": 23,
+    "served_correct_ci95": [
+      0.7976,
+      0.9926
+    ],
+    "false_refusals": 1,
+    "false_refusal_ci95": [
+      0.0074,
+      0.2024
+    ],
+    "wrong_served_on_serve_cases": 0,
+    "refuse_cases": 37,
+    "refuse_cases_refused": 36,
+    "refuse_cases_refused_ci95": [
+      0.8618,
+      0.9952
+    ],
+    "refused_correct_reason": 36,
+    "reason_agreement_ci95": [
+      0.9036,
+      1.0
+    ],
+    "wrong_served_on_refuse_cases": 1,
+    "wrong_served_total": 1,
+    "wrong_served_ci95": [
+      0.0029,
+      0.0872
+    ],
+    "internal_exceptions": 0
+  },
+  "adjudicated": {
+    "original_positive_served_correct": 23,
+    "original_positive_total": 24,
+    "original_positive_false_refusals": 1,
+    "genuine_negative_refused": 36,
+    "genuine_negative_total": 36,
+    "mislabeled_negative_served_correct": 1,
+    "genuine_wrong_served": 0,
+    "served_exact_oracle_agreement": "24/24",
+    "locked_literal_acceptance": "NOT_MET",
+    "unresolved": "DEV-1-3 exceeds unchanged radical domain ceiling (excluded W2-M4)."
+  }
+}
