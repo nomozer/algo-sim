@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-v2-source-kind-consistency - solid-kind Source Gate consistency when a symbol is present (registry /17, I-1), product ff48db2a",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-v2-planner-premerge-review/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "31bb915d3550e58ca9985afa607c0664f480acacdcb223b82451cc06d649f8b8",
+  "current_product_commit": "ff48db2a0c3f4424fc91c313a9bfaee8e3646bc1",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "registry /17 (OWNER GO SOURCE_CONTRADICTION_MUST_FAIL_CLOSED, reversing I-1): whenever an explicit solid-kind phrase is written alongside a solid symbol in a volume, residual-volume, volume-ratio, or cross-section reference (_khoi_khop, _cum_goi_khoi, _doc_phep_dung_cau_hoi, _mat_hai_duong_dung_nguon, mat_cat_dung_nguon, _ten_khoi_khop, _ds_khoi_khop, ask_volume_ratio, ask_residual_volume), both the symbol identity AND the solid-kind phrase (_loai_cum_dung) must be true of the grounded solid. Closes the 6 symbol-bearing fail-open cases on the 124-case adversarial suite (118/124 -> 124/124) and the 15 fail-open cases on the 31-case symbol+kind suite (16/31 -> 31/31) while keeping 0 false refusals and 10/10 + 8/8 on the development corpus. Planner /16, engine /14, bridge, Adapter /4, and provider surfaces unchanged. Route B/D only (geometry_functions); /api/analyze (LLM_ONLY) does not import them.",
+  "cache_version": 130,
+  "cache_version_hien_tai": 130,
+  "cache_decision": "NO_BUMP 130: no prompt, schema, grammar card, capability table or routing policy changed; the default pipeline does not reach geometry_functions; the Hybrid V2 local route answers Cache-Control no-store and route D preview refuses the product cache. The route identity change is carried by registry /17 (IDENTITY_DELTAS in export_hybrid_preview_fixtures.py).",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}
