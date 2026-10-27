@@ -1,0 +1,307 @@
+{
+ "classification": "AUTHORED_DEVELOPMENT_NOT_HOLDOUT",
+ "provider_calls": 0,
+ "aggregate": {
+  "cases": 31,
+  "agree": 16,
+  "fail_open": [
+   "sym-specific|right|hình hộp",
+   "sym-specific|right|lăng trụ tam giác đều",
+   "sym-specific|oblique|lăng trụ đứng",
+   "sym-specific|oblique|hình hộp chữ nhật",
+   "sym-specific|cuboid|lăng trụ tứ giác đều",
+   "sym-specific|cuboid-4x4x4|hình lập phương",
+   "sym-family|right|hình chóp",
+   "sym-family|cube|tứ diện",
+   "sym-reversed|cuboid|hình lập phương",
+   "vol-sym|right|khối lập phương",
+   "vol-sym|right|khối chóp",
+   "vol-sym|cuboid|khối lập phương",
+   "vol-sym|oblique|khối lăng trụ đứng",
+   "multi|sym-right-cube-word",
+   "multi|sym-right-pyramid-word"
+  ],
+  "false_refusal": []
+ },
+ "rows": [
+  {
+   "id": "sym-generic|right|lăng trụ",
+   "class": "symbol_compatible",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "OK"
+  },
+  {
+   "id": "sym-generic|right|khối lăng trụ đứng",
+   "class": "symbol_compatible",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "OK"
+  },
+  {
+   "id": "sym-generic|cuboid|hình hộp",
+   "class": "symbol_compatible",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "OK"
+  },
+  {
+   "id": "sym-generic|cube|hình hộp chữ nhật",
+   "class": "symbol_compatible",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "OK"
+  },
+  {
+   "id": "sym-generic|cube|lăng trụ đứng",
+   "class": "symbol_compatible",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "OK"
+  },
+  {
+   "id": "sym-generic|oblique|lăng trụ",
+   "class": "symbol_compatible",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "OK"
+  },
+  {
+   "id": "sym-nokind|right",
+   "class": "symbol_no_kind",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "OK"
+  },
+  {
+   "id": "sym-specific|right|hình hộp",
+   "class": "symbol_contradiction",
+   "expect": "REFUSED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "FAIL_OPEN"
+  },
+  {
+   "id": "sym-specific|right|lăng trụ tứ giác",
+   "class": "symbol_contradiction",
+   "expect": "REFUSED",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason": "\"lăng trụ tứ giác ABC.A'B'C'\": tên khối nêu số đỉnh đáy khác nhãn của nó",
+   "kind": "OK"
+  },
+  {
+   "id": "sym-specific|right|lăng trụ tam giác đều",
+   "class": "insufficient_evidence",
+   "expect": "REFUSED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "FAIL_OPEN"
+  },
+  {
+   "id": "sym-specific|oblique|lăng trụ đứng",
+   "class": "symbol_contradiction",
+   "expect": "REFUSED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "FAIL_OPEN"
+  },
+  {
+   "id": "sym-specific|oblique|hình hộp chữ nhật",
+   "class": "symbol_contradiction",
+   "expect": "REFUSED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "FAIL_OPEN"
+  },
+  {
+   "id": "sym-specific|cuboid|lăng trụ tứ giác đều",
+   "class": "insufficient_evidence",
+   "expect": "REFUSED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "FAIL_OPEN"
+  },
+  {
+   "id": "sym-specific|cuboid-4x4x4|hình lập phương",
+   "class": "insufficient_evidence",
+   "expect": "REFUSED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "FAIL_OPEN"
+  },
+  {
+   "id": "sym-specific|cuboid-4x4x4|hình hộp chữ nhật",
+   "class": "symbol_compatible",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "OK"
+  },
+  {
+   "id": "sym-family|right|hình chóp",
+   "class": "symbol_contradiction",
+   "expect": "REFUSED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "FAIL_OPEN"
+  },
+  {
+   "id": "sym-family|cube|tứ diện",
+   "class": "symbol_contradiction",
+   "expect": "REFUSED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "FAIL_OPEN"
+  },
+  {
+   "id": "sym-reversed|cuboid|hình lập phương",
+   "class": "symbol_contradiction",
+   "expect": "REFUSED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "FAIL_OPEN"
+  },
+  {
+   "id": "sym-reversed|cube|hình lập phương",
+   "class": "symbol_compatible",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "OK"
+  },
+  {
+   "id": "vol-sym|right|khối lập phương",
+   "class": "symbol_contradiction",
+   "expect": "REFUSED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "FAIL_OPEN"
+  },
+  {
+   "id": "vol-sym|right|khối chóp",
+   "class": "symbol_contradiction",
+   "expect": "REFUSED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "FAIL_OPEN"
+  },
+  {
+   "id": "vol-sym|right|khối lăng trụ",
+   "class": "symbol_compatible",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "OK"
+  },
+  {
+   "id": "vol-sym|cuboid|khối lập phương",
+   "class": "symbol_contradiction",
+   "expect": "REFUSED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "FAIL_OPEN"
+  },
+  {
+   "id": "vol-sym|cuboid|khối hộp chữ nhật",
+   "class": "symbol_compatible",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "OK"
+  },
+  {
+   "id": "vol-sym|cube|khối lập phương",
+   "class": "symbol_compatible",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "OK"
+  },
+  {
+   "id": "vol-sym|oblique|khối lăng trụ đứng",
+   "class": "symbol_contradiction",
+   "expect": "REFUSED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "FAIL_OPEN"
+  },
+  {
+   "id": "multi|sym-right",
+   "class": "multi_solid",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "OK"
+  },
+  {
+   "id": "multi|sym-other",
+   "class": "multi_solid",
+   "expect": "REFUSED",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason": "sec: đề không nói thiết diện của ABC.A'B'C' với mặt phẳng qua M vuông góc AB",
+   "kind": "OK"
+  },
+  {
+   "id": "multi|sym-right-cube-word",
+   "class": "multi_solid",
+   "expect": "REFUSED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "FAIL_OPEN"
+  },
+  {
+   "id": "multi|sym-right-pyramid-word",
+   "class": "multi_solid",
+   "expect": "REFUSED",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "kind": "FAIL_OPEN"
+  },
+  {
+   "id": "multi|bare-without-symbol",
+   "class": "multi_solid",
+   "expect": "REFUSED",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason": "sec: đề không nói thiết diện của ABC.A'B'C' với mặt phẳng qua M vuông góc AB",
+   "kind": "OK"
+  }
+ ]
+}
