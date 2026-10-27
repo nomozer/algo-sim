@@ -402,8 +402,9 @@ MUTANTS = [
     ("words before the phrase not checked", "if _GIUA_HOP_LE.fullmatch(_bo_cum(giua)) and sau else None", "if sau else None",
      ("Tính nửa thể tích khối chóp S.ABCD.", VOL, False)),
     ("section solid word not checked",
-     '    if (kw := m[n + "k"]) and not sym and not tu and \\\n',
-     '    if False and \\\n', ("Tính diện tích thiết diện của khối lập phương cắt bởi (MAB).", SAREA, True)),
+     # re-pointed to the /16 kind check (run `hybrid-v2-planner-premerge-review`)
+     '    if (kw := m[n + "k"]) and not sym and not tu and not _loai_cum_dung(',
+     '    if False and not _loai_cum_dung(', ("Tính diện tích thiết diện của khối lập phương cắt bởi (MAB).", SAREA, True)),
 ]
 VALUE_MUTANTS = [
     ("equality connector not checked", "if so and _NOI_BANG.fullmatch(de[dau + b:so.start()]) and ", "if so and ",

@@ -46,7 +46,10 @@ from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationEr
 #: section vertices; closed definition / cut-clause alternatives (see `_QUA_SONG_SONG`, `_cum_cat_canh`).
 #: /15 (run `hybrid-v2-planner-generalization`): bare "chóp" / "lăng trụ" / "tứ diện" in section phrases (`_TU_KHOI`); a
 #: section reference bound to a derived plane must name the cut solid (`_cum_goi_khoi`).
-REGISTRY_VERSION = "geometry-functions/15"
+#: /16 (run `hybrid-v2-planner-premerge-review`): a kind word written WITHOUT a solid symbol must be true of the solid the
+#: gate validated — a specific class ("tứ diện", "hộp", "lập phương", "đứng", "tam giác" …) is checked, not only the coarse
+#: pyramid-/prism-like split (`_loai_cum_dung`).
+REGISTRY_VERSION = "geometry-functions/16"
 
 
 class TuChoi(Exception):
@@ -1960,6 +1963,7 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
     `auxiliary`: điểm phụ planner nhánh B khai (`AUXILIARY_RULES`); nhánh A không truyền ⇒ mọi nhãn phải có trong đề.
     Returns the name the source gave each bound derived plane (first construct id → "P", or None when unnamed)."""
     _KHOI_MO_TA.set({})
+    _GOI_NGUON.set(tuple(calls))
     de = chuan_hoa(text)
     nhan = nhan_cua_de(de)
     don_vi_de = _don_vi_met_cua_de(de)
@@ -2725,9 +2729,65 @@ def _khoi_khop(m: re.Match, n: str, solid: str, khoi: dict) -> bool:
     if not sym and not tu and len(khoi) != 1:
         return False
     # từ loại chỉ xét khi KHÔNG có ký hiệu: ký hiệu đúng đã định danh khối ("hình chóp ABCD.EFGH" gọi đúng lăng trụ ấy)
-    if (kw := m[n + "k"]) and not sym and not tu and \
-            bool(re.search(r"chóp|tứ diện", kw, re.IGNORECASE)) != (len(_nhan_cum(solid.split(".")[0])) == 1):
+    if (kw := m[n + "k"]) and not sym and not tu and not _loai_cum_dung(m.string[m.start(n + "k"):m.end()], solid):
         return False
+    return True
+
+
+#: Calls of the `kiem_nguon` call in progress (set there, like `_KHOI_MO_TA`): lets a question's kind word be checked
+#: against the solid the gate validated. Empty outside the gate — a specific class then cannot be verified and refuses.
+_GOI_NGUON: contextvars.ContextVar[tuple] = contextvars.ContextVar("_GOI_NGUON", default=())
+_TU_LOAI = re.compile(r"(?P<kn>chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)"
+                      r"(?P<km>(?:\s+(?:đứng|đều|xiên|tam\s+giác|tứ\s+giác|ngũ\s+giác|lục\s+giác|chữ\s+nhật))*)",
+                      re.IGNORECASE)
+_SO_DINH_TU = {"tam giác": 3, "tứ giác": 4, "ngũ giác": 5, "lục giác": 6}
+
+
+def _loai_cum_dung(cum: str, solid: str, calls: tuple | None = None) -> bool:
+    """The kind words of a solid phrase written without its symbol are TRUE of `solid` (run
+    `hybrid-v2-planner-premerge-review`). Generic class ("chóp", "lăng trụ") keeps the pyramid-/prism-like test; a
+    specific class is accepted only when the gate's validated calls establish it, never from the letters alone:
+    "tứ diện" = pyramid on a triangle; "tam/tứ/ngũ/lục giác" = base vertex count; "đứng" = right prism, "xiên" = not;
+    "hộp" = prism on a 4-gon with a rectangle/square base or defined as a box by the source; "chữ nhật" = right prism on a
+    rectangle/square; "lập phương" / "tứ diện đều" = the source's own validated definition of that solid says so (the gate
+    reads no lengths); "đều" = regular base (+ regular pyramid / right prism), as in `_cau_tien_de_dong_hop_le`."""
+    m = _TU_LOAI.search(cum)
+    if not m:
+        return True
+    tu, km = re.sub(r"\s+", " ", m["kn"].lower()), re.sub(r"\s+", " ", m["km"].lower())
+    if bool(re.search(r"chóp|tứ diện", tu)) != (len(_nhan_cum(solid.split(".")[0])) == 1):
+        return False                                     # coarse class (unchanged from /15)
+    if tu in ("chóp", "lăng trụ") and not km:
+        return True                                      # generic class word: nothing more to verify
+    calls = _GOI_NGUON.get() if calls is None else calls
+    nhan = set(_nhan_cum(solid))
+    k = next((x for x in calls if x.fn in _KHOI_FN and _nhan_khoi(x) == nhan), None)
+    if k is None or k.fn not in _LOAI_KHOI.get(tu, ()):
+        return False                                     # specific class, solid not validated here: cannot verify
+    day, lang_tru = list(k.args.base), k.fn == "prism"
+    right = lang_tru and bool(k.args.right)
+    hinh = {d.fn for d in calls if d.fn in ("rectangle", "regular_polygon") and _cung_da_giac(list(d.args.vertices), day)}
+    dn = [(re.sub(r"\s+", " ", x["kn"].lower()), x["km"].lower()) for q in k.quotes
+          for x in _C_KHOI.finditer(chuan_hoa(q)) if set(_nhan_cum(x["k"])) == nhan]
+    if tu == "tứ diện" and len(day) != 3:
+        return False
+    if tu in ("hộp", "hộp chữ nhật", "lập phương") and len(day) != 4:
+        return False
+    if tu == "hộp" and not hinh and not any(d in ("hộp", "hộp chữ nhật", "lập phương") for d, _x in dn):
+        return False
+    if (tu == "hộp chữ nhật" or "chữ nhật" in km) and not (right and hinh):
+        return False
+    if tu == "lập phương" and not (right and "regular_polygon" in hinh and any(d == "lập phương" for d, _x in dn)):
+        return False
+    if "đứng" in km and not right or "xiên" in km and not (lang_tru and not right):
+        return False
+    if (n := next((v for w, v in _SO_DINH_TU.items() if w in km), None)) and n != len(day):
+        return False
+    if "đều" in km:
+        if tu == "tứ diện":
+            return any(d == "tứ diện" and "đều" in x for d, x in dn)
+        if "regular_polygon" not in hinh or (tu == "chóp" and k.fn != "regular_pyramid") or (lang_tru and not right):
+            return False
     return True
 
 
@@ -3471,7 +3531,7 @@ _DAI_TU_THIET_DIEN = re.compile(r"\s+(?:đó|này|trên)(?![\w'])\s*(?:(?:có\s+
                                 re.IGNORECASE)
 
 
-def _cum_goi_khoi(cum: str, solid: str) -> bool:
+def _cum_goi_khoi(cum: str, solid: str, calls: tuple | None = None) -> bool:
     """A matched section reference ("thiết diện của <khối> với (P)" / "(P) cắt <khối> theo thiết diện") names `solid`: a
     written symbol IS it (a tetrahedron by its four labels), else a kind word is its kind (`_khoi_khop`). Needed because
     `_khoi_trong_quote` takes a symbol from ANY merged quote of a shared plane — "diện tích thiết diện của hình chóp T.XYZ
@@ -3480,8 +3540,7 @@ def _cum_goi_khoi(cum: str, solid: str) -> bool:
     cum = m[1] if m else ""
     if ky := [phan for _a, _b, phan in _tu_nhan(cum)]:
         return all(".".join(map("".join, p)) == solid if len(p) == 2 else set(p[0]) == set(_nhan_cum(solid)) for p in ky)
-    tu = re.search(r"chóp|tứ diện|lăng trụ|lập phương|hộp", cum, re.I)
-    return not tu or bool(re.search(r"chóp|tứ diện", tu[0], re.I)) == (len(_nhan_cum(solid.split(".")[0])) == 1)
+    return _loai_cum_dung(cum, solid, calls)
 
 
 def _khoi_trong_quote(c: LoiGoi, khoi: dict[str, frozenset]) -> bool:
@@ -3542,7 +3601,7 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
             if m["ten"]:
                 ten_mat.add(m["ten"])
             if noi_gop := re.search(_DAN_THIET_DIEN + r"$", qn[:m.start()], re.IGNORECASE):  # nói gộp trong cụm thiết diện
-                if not _cum_goi_khoi(noi_gop[0], c.args.solid):
+                if not _cum_goi_khoi(noi_gop[0], c.args.solid, calls):
                     return False
                 gan[goc + noi_gop.start()] = goc + m.end()
             elif not m["ten"]:
@@ -3561,7 +3620,7 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
             for r, o_cuoi in ((r, o) for x, o in mau for r in re.finditer(x, qn, re.IGNORECASE)):
                 if r.groupdict().get("dinh") not in (None, c.args.solid.split(".")[0]):
                     continue
-                if not _cum_goi_khoi(r[0], c.args.solid):
+                if not _cum_goi_khoi(r[0], c.args.solid, calls):
                     return False
                 if not vai_tro_ok(s, goc + r.start(), r[0]):
                     return False
