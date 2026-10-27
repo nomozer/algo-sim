@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-v2-holdout-failure-repair - Holdout failure repair M1-M5 (Registry /18, Planner /17), product e3678608",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-v2-adapter4-plane-section-certificate/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "84ccf653441d1bd54f352756b9a5e917ee02a9ea11a83ac60585dfc585f3f99f",
+  "current_product_commit": "e3678608f1f7110d7046c9c43c312c69d7614f55",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "OWNER GO HYBRID_V2_HOLDOUT_FAILURE_REPAIR: bounded correctness and language-coverage repair of M1-M5 defects across typed_fact_next_bridge.py, planner.py (geometry-fact-planner/17), and registry.py (geometry-functions/18). Aligns PlaneName contract ([A-Z][0-9]*'? and [α-ω]'?) while preserving TypedFact JSON schema hash, adds MAT_HAI_DUONG and _kiem_nguon_dong parity, resolves omitted single-solid height/altitude facts deterministically, expands bounded Source Gate section wording and 4-vertex coplanar solid reference planes, supports bounded compound premise clauses, and binds anaphoric/named-polygon section-area questions with fail-closed goal solid validation. R2 non-coincident auxiliary point notation hiding is explicitly deferred to preserve locked pedagogical-construction-sequencing O4 and scene3d-section-inspector-c0 R1 contracts. All 32 new development cases pass (16/16 positive, 16/16 negative), 0 live calls. Engine /14, Adapter /4, CACHE_VERSION 130, and DEFAULT_MODE = LLM_ONLY unchanged.",
+  "cache_version": 130,
+  "cache_version_hien_tai": 130,
+  "cache_decision": "NO_BUMP 130: no prompt, schema, grammar card, capability table or routing policy changed; `/api/analyze` (`LLM_ONLY`) does not import `geometry_functions` or `adapter4_route`.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}
