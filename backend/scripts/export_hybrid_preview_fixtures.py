@@ -306,6 +306,9 @@ IDENTITY_DELTAS = (
      "versions": {"registry_version": ("geometry-functions/13", "geometry-functions/14"),
                   "planner_version": ("geometry-fact-planner/14", "geometry-fact-planner/15"),
                   "engine_version": ("geometry-function-engine/13", "geometry-function-engine/14")}},
+    {"run": "hybrid-v2-planner-generalization",            # engine unchanged (/14)
+     "versions": {"registry_version": ("geometry-functions/14", "geometry-functions/15"),
+                  "planner_version": ("geometry-fact-planner/15", "geometry-fact-planner/16")}},
 )
 
 

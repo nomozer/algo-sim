@@ -44,7 +44,9 @@ from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationEr
 #: reads "M thuộc cạnh SA sao cho …"; `DINH_CAT_CANH` cut-clause / derived-pyramid certificate.
 #: /13 (run `hybrid-contract-v2`, owner D3/D5/D6): `intersect_line_plane` planning contract (effect `Meet`); `derived_fresh`
 #: section vertices; closed definition / cut-clause alternatives (see `_QUA_SONG_SONG`, `_cum_cat_canh`).
-REGISTRY_VERSION = "geometry-functions/14"
+#: /15 (run `hybrid-v2-planner-generalization`): bare "chóp" / "lăng trụ" / "tứ diện" in section phrases (`_TU_KHOI`); a
+#: section reference bound to a derived plane must name the cut solid (`_cum_goi_khoi`).
+REGISTRY_VERSION = "geometry-functions/15"
 
 
 class TuChoi(Exception):
@@ -2629,8 +2631,10 @@ _NHOM_NHAN = r"(?-i:[A-Z][0-9]*'?(?:[A-Z][0-9]*'?){2,})"
 _MAT_TOAN_HANG = (r"(?:(?:hai|2|các)\s+mặt phẳng\s+)?(?:(?:mặt phẳng|mp)\s*)?"
                   r"(?:\((" + _NHOM_NHAN + r")\)|(" + _NHOM_NHAN + r")|(?:mặt\s+)?(đáy))(?![\w'])")
 #: Cụm vai trò gọi tên MẶT CẮT của một thiết diện. "song song với …" / "vuông góc với …" là phép dựng khác — không gắn.
+#: Từ loại khối; "chóp" / "lăng trụ" / "tứ diện" cũng viết trần như `_MO_KHOI_DUNG` (run `hybrid-v2-planner-generalization`).
+_TU_KHOI = r"(?:(?:hình|khối)\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện)|chóp|lăng trụ|tứ diện)"
 #: Cụm danh từ khối đứng giữa "thiết diện của" và "với (P)": "hình chóp S.ABCD", "khối lăng trụ đứng ABC.A'B'C'"…
-_KHOI_NGU = (r"(?:(?:hình|khối)\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện)(?:\s+(?:đứng|đều|tam giác|tứ giác|chữ nhật|lục giác))*\s+)?"
+_KHOI_NGU = (rf"(?:{_TU_KHOI}(?:\s+(?:đứng|đều|tam giác|tứ giác|chữ nhật|lục giác))*\s+)?"
              r"(?:(?-i:[A-Z][0-9]*'?(?:[A-Z][0-9]*'?)*(?:\.[A-Z][0-9]*'?(?:[A-Z][0-9]*'?)*)?)\s+)?")
 #: Đầu mệnh đề (đầu đề, sau . ; : ,) — "(P) cắt …" chỉ khi (P) là CHỦ NGỮ của mệnh đề (second re-verification, N1).
 _DAU_MENH_DE = r"(?:^|(?<=[.;:,])|(?<=[.;:,]\s))\s*"
@@ -2664,7 +2668,7 @@ def _doan_cum(n: str) -> str:
 
 def _khoi_cum(n: str) -> str:
     # ký hiệu khối: "S.ABCD", "ABCD.A'B'C'D'"; tứ diện viết liền bốn nhãn "ABCD" (`{n}t`)
-    return (rf"(?:\s+(?P<{n}k>(?:hình|khối)\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện))"
+    return (rf"(?:\s+(?P<{n}k>{_TU_KHOI})"
             rf"(?:\s+(?:đứng|đều|tam giác|tứ giác|chữ nhật|lục giác))*)?"
             rf"(?:\s+(?:(?P<{n}s>{_P1}+\.{_P1}+)|(?P<{n}t>{_P1}{{4}}))(?![\w']))?")
 
@@ -3467,6 +3471,19 @@ _DAI_TU_THIET_DIEN = re.compile(r"\s+(?:đó|này|trên)(?![\w'])\s*(?:(?:có\s+
                                 re.IGNORECASE)
 
 
+def _cum_goi_khoi(cum: str, solid: str) -> bool:
+    """A matched section reference ("thiết diện của <khối> với (P)" / "(P) cắt <khối> theo thiết diện") names `solid`: a
+    written symbol IS it (a tetrahedron by its four labels), else a kind word is its kind (`_khoi_khop`). Needed because
+    `_khoi_trong_quote` takes a symbol from ANY merged quote of a shared plane — "diện tích thiết diện của hình chóp T.XYZ
+    với (P)" beside "Dựng thiết diện của hình chóp S.ABC với (P)" was served (run `hybrid-v2-planner-generalization`)."""
+    m = re.match(rf"thiết diện\s+(?:của\s+)?({_KHOI_NGU})", cum, re.I) or re.search(r"cắt\s+(.*?)\s+theo", cum, re.I | re.S)
+    cum = m[1] if m else ""
+    if ky := [phan for _a, _b, phan in _tu_nhan(cum)]:
+        return all(".".join(map("".join, p)) == solid if len(p) == 2 else set(p[0]) == set(_nhan_cum(solid)) for p in ky)
+    tu = re.search(r"chóp|tứ diện|lăng trụ|lập phương|hộp", cum, re.I)
+    return not tu or bool(re.search(r"chóp|tứ diện", tu[0], re.I)) == (len(_nhan_cum(solid.split(".")[0])) == 1)
+
+
 def _khoi_trong_quote(c: LoiGoi, khoi: dict[str, frozenset]) -> bool:
     """Solid symbol written in the quote is the call's solid; with no symbol the problem has exactly one solid."""
     ky_hieu = {"".join(phan[0]) + "." + "".join(phan[1]) for q in c.quotes for _a, _b, phan in _tu_nhan(chuan_hoa(q))
@@ -3525,6 +3542,8 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
             if m["ten"]:
                 ten_mat.add(m["ten"])
             if noi_gop := re.search(_DAN_THIET_DIEN + r"$", qn[:m.start()], re.IGNORECASE):  # nói gộp trong cụm thiết diện
+                if not _cum_goi_khoi(noi_gop[0], c.args.solid):
+                    return False
                 gan[goc + noi_gop.start()] = goc + m.end()
             elif not m["ten"]:
                 return False                                 # mặt không tên, không nằm trong cụm thiết diện: không gắn được
@@ -3542,6 +3561,8 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
             for r, o_cuoi in ((r, o) for x, o in mau for r in re.finditer(x, qn, re.IGNORECASE)):
                 if r.groupdict().get("dinh") not in (None, c.args.solid.split(".")[0]):
                     continue
+                if not _cum_goi_khoi(r[0], c.args.solid):
+                    return False
                 if not vai_tro_ok(s, goc + r.start(), r[0]):
                     return False
                 gan[goc + (r.end() - _TU_THIET_DIEN if o_cuoi else r.start())] = goc + r.end()

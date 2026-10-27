@@ -42,7 +42,8 @@ from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, rende
 #: producer); `/2`-only derived vertices on unstated lateral edges where a closed boundary is required; declared boundary.
 #: /14 (run `hybrid-v2-backend-generalization`): a > 3-label question plane is handed to the engine in full
 #: (`KeHoach.named_planes`, keyed by call id) instead of being cut to its first three labels.
-PLANNER_VERSION = "geometry-fact-planner/15"
+#: /16 (run `hybrid-v2-planner-generalization`): `MAT_VUONG_DUONG` anchors on prisms (two layers: base/top), not only pyramids.
+PLANNER_VERSION = "geometry-fact-planner/16"
 #: Nhãn điểm phụ: chuỗi H, H1, H2, …; nhãn đầu tiên không có trong đề lẫn dữ kiện (Label của Registry không cho namespace
 #: riêng mà không đổi bề mặt nhà cung cấp của A ⇒ "dành riêng" = chọn tươi + cổng kiểm `AUXILIARY_LABEL_COLLISION`).
 def _nhan_tuoi(stem: str) -> tuple[str, ...]:
@@ -1128,21 +1129,21 @@ def _mat_vuong_duong(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn
     """PHÂN RÃ MỤC TIÊU (`MAT_VUONG_DUONG`): Section(khối, mặt qua M ⊥ d) from EXISTING primitives only.
 
     For a solid vertex Z off d, F = foot of Z on d (`orthogonal_projection_line`) and X = M + F→Z (`translate_point`) lies on
-    the plane through M ⊥ d. Two anchors Z₁, Z₂ chosen from the solid's STRUCTURE (no coordinates): with d through the apex,
-    two base vertices off d; otherwise one base vertex off d and the apex — either way d ∪ {Z₁, Z₂} spans space, so the two
-    directions are independent. Pyramids only (a prism needs a face-plane rule this run does not have). The engine re-checks
-    ⊥ in the Gram metric and against the kernel's `plane_through_point_perpendicular_to`."""
+    the plane through M ⊥ d. Two anchors Z₁, Z₂ chosen from the solid's STRUCTURE (no coordinates), the solid seen as two
+    layers — base and apex of a pyramid, base and top of a prism: with d inside one layer, a vertex of that layer off d and a
+    vertex of the other layer; otherwise (d joins the layers) two base vertices off d — either way d ∪ {Z₁, Z₂} spans space,
+    so the two directions are independent (pyramid anchors unchanged from /9). The engine re-checks ⊥ in the Gram metric,
+    independence, and against the kernel's `plane_through_point_perpendicular_to`."""
     if f.role not in ("premise", "question") or f.negated:
         raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: mặt dựng từ quan hệ chỉ cho thiết diện được yêu cầu", (f.id,))
     m, d = f.point, list(f.points_b)
     kh = next(x for x in k.solids.values() if x.ten == khoi)
-    if kh.loai != "pyramid":
-        raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: mặt qua {m} vuông góc {''.join(d)} — bản này chỉ chọn điểm neo trên khối "
-                     "chóp", (f.id,))
-    if not set(d) <= set(kh.day) | {kh.dinh}:
+    tang = [kh.day, [kh.dinh] if kh.loai == "pyramid" else kh.tren]
+    if not set(d) <= {*tang[0], *tang[1]}:
         raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: đường {''.join(d)} phải nối hai đỉnh của {khoi}", (f.id,))
-    ngoai = [v for v in kh.day if v not in d]
-    moc = ngoai[:2] if kh.dinh in d else [ngoai[0], kh.dinh]
+    cung = next((i for i, t in enumerate(tang) if set(d) <= set(t) and set(t) - set(d)), None)
+    moc = ([v for v in kh.day if v not in d][:2] if cung is None
+           else [next(v for v in tang[cung] if v not in d), tang[1 - cung][0]])
     khoa = (khoi, m, "perpendicular_line", frozenset(d))
     dd = k.derived_planes.get(khoa)
     if dd is None:
