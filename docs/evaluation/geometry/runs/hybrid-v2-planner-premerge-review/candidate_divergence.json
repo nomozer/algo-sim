@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-v2-planner-premerge-review - solid-kind Source Gate binding without a symbol (registry /16), product 37e84352",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-v2-planner-generalization/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "1377e65411c8375cadab093606989c7bff40d47ce5cb7722012fed4300dad305",
+  "current_product_commit": "37e8435213303f54f37a19b6ce85f896fc0631a0",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "registry /16: a solid kind word written without the solid's symbol (volume question via _khoi_khop, section reference via _cum_goi_khoi) must be true of the solid the gate validated. Generic 'chóp' / 'lăng trụ' keep the /15 pyramid-like / prism-like test; specific 'tứ diện', 'hộp', 'hộp chữ nhật', 'lập phương', 'đứng', 'xiên', 'đều', 'tam/tứ/ngũ/lục giác' are checked against the gate's validated calls (_loai_cum_dung, calls held in the _GOI_NGUON context for one kiem_nguon run). Closes a fail-open reproduced on candidate ca0bb5f2 (26 kind-only cases served, e.g. 'hình lập phương' for a triangular prism, 'tứ diện' for S.ABCD, 'lăng trụ đứng' for an oblique prism). Only narrows acceptance. Planner /16, engine /14, bridge, Adapter /4 and provider surfaces unchanged. Route B/D only (geometry_functions); /api/analyze (LLM_ONLY) does not import them.",
+  "cache_version": 130,
+  "cache_version_hien_tai": 130,
+  "cache_decision": "NO_BUMP 130: no prompt, schema, grammar card, capability table or routing policy changed; the default pipeline does not reach geometry_functions; the Hybrid V2 local route answers Cache-Control no-store and route D preview refuses the product cache. The route identity change is carried by registry /16 (IDENTITY_DELTAS in export_hybrid_preview_fixtures.py).",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}
