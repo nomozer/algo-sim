@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-v2-adapter4-plane-section-certificate - Engine-derived plane-section certificate (`plane-section-certificate/1`) and Adapter /4 validation, product 05f3bd47",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-v2-source-kind-consistency/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "873ae53ca184d29df8cc16e1af4b87d6ba2a1ce9a3ce380e210d4b5767de2ff8",
+  "current_product_commit": "05f3bd47d294ac034b9965c28dfb4f826640556e",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "OWNER GO HYBRID_V2_ADAPTER4_PLANE_ONLY_SECTION_CERTIFICATE: closes the ADAPTER_INTEGRATION_GAP where canonical V2 (`run_typed_fact_next_v2_route`) serves a verified plane-only derived section (`status = SERVED`) while `build_adapter4_response` previously refused with `PREVIEW_RESULT_INVALID` due to empty `route_d['sections']`. Introduces Category B (`plane-section-certificate/1`, rule `engine_derived_plane_section`, producer `engine.kiem_chung_chi_thiet_dien`) strictly separated from Category A (`DINH_CAT_CANH`), verifying all 10 mathematical and structural invariants in exact Fraction arithmetic across `engine.py` and `adapter4_route.py` (`_validate_engine_derived_section`), and prevents coincident plane-construction translate labels (`H`, `H1`) from leaking into learner-facing section display names (`function_route.py`). All 36 development cases pass (`18/18` positive, `18/18` negative/tamper), 0 live calls. Registry `/17`, Planner `/16`, Engine `/14`, Adapter `/4`, CACHE_VERSION 130, and DEFAULT_MODE = LLM_ONLY unchanged.",
+  "cache_version": 130,
+  "cache_version_hien_tai": 130,
+  "cache_decision": "NO_BUMP 130: no prompt, schema, grammar card, capability table or routing policy changed; `/api/analyze` (`LLM_ONLY`) does not import `geometry_functions` or `adapter4_route`.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}
