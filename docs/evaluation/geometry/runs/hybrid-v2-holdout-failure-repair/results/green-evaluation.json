@@ -2,7 +2,7 @@
   "schema": "HOLDOUT_REPAIR_DEV_EVAL/1",
   "phase": "GREEN",
   "live_provider_calls": 0,
-  "git_head": "7690e4001eec1a544bf257ed4c3ee6b6b68086ed",
+  "git_head": "22d615bf97f662b8bf7b25639f386d6243c14397",
   "corpus_sha256": "0378b0093b35286a2e220875676af539df3431b1e822c2cca4637c345ee47eac",
   "versions": {
     "registry": "geometry-functions/18",

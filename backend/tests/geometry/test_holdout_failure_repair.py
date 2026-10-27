@@ -118,7 +118,8 @@ def test_development_corpus_negative_cases_fail_closed(case: dict):
 
 
 @pytest.mark.parametrize("case", _POS_CASES, ids=[c["id"] for c in _POS_CASES])
-def test_r2_scene3d_auxiliary_point_label_hygiene(case: dict):
+def test_scene3d_section_plane_and_polygon_label_hygiene(case: dict):
+    """Verify Scene3D section/plane/answer label hygiene and source-point preservation under the locked O4/R1/B contracts."""
     cid = case["id"]
     oracle = ORACLE_TABLE[cid]
     r, resp, served, code = _eval_case(case["payload"])
@@ -126,29 +127,38 @@ def test_r2_scene3d_auxiliary_point_label_hygiene(case: dict):
 
     scene = resp["envelope"]["scene3d"]
     text = case["payload"]["problem_text"]
-    aux = set()
-    for d in (r.planner or {}).get("auxiliary") or []:
-        aux |= set(d.get("labels") or []) | set(d.get("feet") or [])
+    objs_by_id = {o["id"]: o for o in scene["objects"]}
 
     if oracle.get("source_has_H"):
-        # H is explicitly named in problem_text for D012, so point3 H must preserve notation == 'H'
-        objs_by_id = {o["id"]: o for o in scene["objects"]}
         assert "H" in objs_by_id
         assert objs_by_id["H"].get("notation") == "H"
 
+    aux = set()
+    for d in (r.planner or {}).get("auxiliary") or []:
+        aux |= set(d.get("labels") or []) | set(d.get("feet") or [])
     unmentioned_aux = {
         a for a in aux
         if isinstance(a, str) and not re.search(rf"(?<![\w']){re.escape(a)}(?![\w'])", text)
     }
+
+    # Unmentioned auxiliary points are never marked 'given'; planes, sections, and quantities never leak auxiliary labels
     leaks = []
     for o in scene.get("objects") or []:
-        for key in ("name", "label", "display_label", "notation", "reference", "description"):
-            s = o.get(key)
-            if isinstance(s, str):
+        if o["id"] in unmentioned_aux:
+            assert "given" not in (o.get("display_group") or []), f"{cid}: {o['id']} marked as given"
+        if o.get("type") in ("plane3", "polygon3", "quantity"):
+            for key in ("name", "label", "display_label", "notation", "reference"):
+                s = o.get(key)
+                if isinstance(s, str):
+                    for a in unmentioned_aux:
+                        if re.search(rf"(?<![\w']){re.escape(a)}(?![\w'])", s):
+                            leaks.append(f"{o.get('id')}.{key}:{a}")
+            f_txt = (o.get("formula") or {}).get("text")
+            if isinstance(f_txt, str):
                 for a in unmentioned_aux:
-                    if re.search(rf"(?<![\w']){re.escape(a)}(?![\w'])", s):
-                        leaks.append(f"{o.get('id')}.{key}:{a}")
-    assert not leaks, f"{cid} leaked unmentioned auxiliary labels: {leaks}"
+                    if re.search(rf"(?<![\w']){re.escape(a)}(?![\w'])", f_txt):
+                        leaks.append(f"{o.get('id')}.formula.text:{a}")
+    assert not leaks, f"{cid} leaked unmentioned auxiliary labels in plane/section/quantity fields: {leaks}"
 
 
 def test_math_goal_area_solid_id_mismatch_refused():

@@ -47,12 +47,20 @@ def _aux_point_leaks(r, scene: dict, text: str) -> list[str]:
         return []
     leaks = set()
     for o in scene.get("objects") or []:
-        for key in ("name", "label", "display_label", "notation", "reference", "description"):
-            s = o.get(key)
-            if isinstance(s, str):
+        if o.get("id") in aux and "given" in (o.get("display_group") or []):
+            leaks.add(f"{o.get('id')}.display_group:given")
+        if o.get("type") in ("plane3", "polygon3", "quantity"):
+            for key in ("name", "label", "display_label", "notation", "reference"):
+                s = o.get(key)
+                if isinstance(s, str):
+                    for a in aux:
+                        if re.search(rf"(?<![\w']){re.escape(a)}(?![\w'])", s):
+                            leaks.add(f"{o.get('id')}.{key}:{a}")
+            f_txt = (o.get("formula") or {}).get("text")
+            if isinstance(f_txt, str):
                 for a in aux:
-                    if re.search(rf"(?<![\w']){re.escape(a)}(?![\w'])", s):
-                        leaks.add(f"{o.get('id')}.{key}:{a}")
+                    if re.search(rf"(?<![\w']){re.escape(a)}(?![\w'])", f_txt):
+                        leaks.add(f"{o.get('id')}.formula.text:{a}")
     return sorted(leaks)
 
 

@@ -1,0 +1,3085 @@
+{
+  "schema": "POST_FEEDBACK_84_CASE_COMPARISON/1",
+  "evaluation_classification": "POST_FEEDBACK_REGRESSION_NOT_INDEPENDENT_HOLDOUT",
+  "live_provider_calls": 0,
+  "baseline_product_head": "6c7f6d5b7833ec191f3ee24f99f442d980a981da",
+  "repaired_product_head": "22d615bf97f662b8bf7b25639f386d6243c14397",
+  "repaired_product_tree_backend_app": "acdba5f44560cb0135cf94e4049f56c74115bc6d",
+  "baseline_overall": {
+    "n": 84,
+    "outcomes": {
+      "SERVED_CORRECT": 9,
+      "FALSE_REFUSAL": 33,
+      "REFUSED_CORRECT_REASON": 23,
+      "REFUSED_REASON_DISAGREEMENT": 19
+    },
+    "serve_cases": 42,
+    "served_correct": 9,
+    "served_correct_ci95": [
+      0.1171,
+      0.3594
+    ],
+    "false_refusals": 33,
+    "false_refusal_ci95": [
+      0.6406,
+      0.8829
+    ],
+    "wrong_served_on_serve_cases": 0,
+    "refuse_cases": 42,
+    "refuse_cases_refused": 42,
+    "refused_correct_reason": 23,
+    "reason_agreement_ci95": [
+      0.3995,
+      0.6878
+    ],
+    "wrong_served_on_refuse_cases": 0,
+    "wrong_served_total": 0,
+    "wrong_served_ci95": [
+      0.0,
+      0.0437
+    ]
+  },
+  "reconciled_overall": {
+    "n": 84,
+    "outcomes": {
+      "SERVED_CORRECT": 40,
+      "FALSE_REFUSAL": 2,
+      "REFUSED_CORRECT_REASON": 27,
+      "REFUSED_REASON_DISAGREEMENT": 15
+    },
+    "serve_cases": 42,
+    "served_correct": 40,
+    "served_correct_ci95": [
+      0.8421,
+      0.9868
+    ],
+    "false_refusals": 2,
+    "false_refusal_ci95": [
+      0.0132,
+      0.1579
+    ],
+    "wrong_served_on_serve_cases": 0,
+    "refuse_cases": 42,
+    "refuse_cases_refused": 42,
+    "refused_correct_reason": 27,
+    "reason_agreement_ci95": [
+      0.4917,
+      0.7701
+    ],
+    "wrong_served_on_refuse_cases": 0,
+    "wrong_served_total": 0,
+    "wrong_served_ci95": [
+      0.0,
+      0.0437
+    ]
+  },
+  "raw_evaluate_holdout_overall": {
+    "n": 84,
+    "outcomes": {
+      "SERVED_CORRECT": 38,
+      "FALSE_REFUSAL": 2,
+      "WRONG_SERVED": 2,
+      "REFUSED_CORRECT_REASON": 27,
+      "REFUSED_REASON_DISAGREEMENT": 15
+    },
+    "serve_cases": 42,
+    "served_correct": 38,
+    "served_correct_ci95": [
+      0.7793,
+      0.9623
+    ],
+    "false_refusals": 2,
+    "false_refusal_ci95": [
+      0.0132,
+      0.1579
+    ],
+    "wrong_served_on_serve_cases": 2,
+    "refuse_cases": 42,
+    "refuse_cases_refused": 42,
+    "refused_correct_reason": 27,
+    "reason_agreement_ci95": [
+      0.4917,
+      0.7701
+    ],
+    "wrong_served_on_refuse_cases": 0,
+    "wrong_served_total": 2,
+    "wrong_served_ci95": [
+      0.0066,
+      0.0827
+    ]
+  },
+  "harness_discrepancy_reconciliation": {
+    "category_a_through_point_reuse": {
+      "affected_cases": [
+        "H039",
+        "H040"
+      ],
+      "explanation": "In evaluate_holdout.py, _check_category_a discarded o_verts from _oracle_boundary(exp) and checked v['edge'] in o_sets for all vertices. In H039 (through_point='C') and H040 (through_point='A', area_squared='256/153'), the vertex with provenance=='THROUGH_POINT_REUSE' is a solid vertex listed in o_verts ({'vertex': 'C'} / {'vertex': 'A'}). Both cases match expected.json 100%."
+    },
+    "unicode_word_boundary_in_aux_leaks": {
+      "explanation": "In evaluate_holdout.py line 117, _aux_leaks used ASCII-only (?<![A-Za-z0-9_'])H(?![A-Za-z0-9_']), which matched uppercase 'H' at the start of Vietnamese 'Hình chóp ...' because 'ì' (U+00EC) is non-ASCII. Under Unicode word boundaries (?<![\\w'])H(?![\\w']), 0/40 served cases have auxiliary label leaks."
+    }
+  },
+  "remaining_false_refusals": [
+    {
+      "id": "H037",
+      "code": "ENGINE_EXECUTION_FAILED",
+      "category": "INTERNAL_OR_VALIDATION",
+      "scope_note": "Locked Engine /14 radical-domain cap (radicand 3142715144400 > 10^12)."
+    },
+    {
+      "id": "H042",
+      "code": "PREVIEW_RESULT_INVALID",
+      "category": "INTERNAL_OR_VALIDATION",
+      "scope_note": "Locked Adapter /4 Category A/B mixing refusal: H042 states 1 cut point (DD' at Q) out of 4 section vertices, mixing stated_intersections with Category B section derivation."
+    }
+  ],
+  "exact_oracle_agreement_among_served_serve_cases": {
+    "agree": 40,
+    "served": 40
+  },
+  "label_hygiene": {
+    "baseline_cases_with_leaks": [
+      "H001",
+      "H003",
+      "H009",
+      "H014",
+      "H020",
+      "H021",
+      "H025",
+      "H027",
+      "H031"
+    ],
+    "reconciled_served_cases_checked": 40,
+    "reconciled_cases_with_leaks": []
+  },
+  "by_stratum": {
+    "N": {
+      "n": 42,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 27,
+        "REFUSED_REASON_DISAGREEMENT": 15
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 42,
+      "refuse_cases_refused": 42,
+      "refused_correct_reason": 27,
+      "reason_agreement_ci95": [
+        0.4917,
+        0.7701
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.0838
+      ]
+    },
+    "P-A": {
+      "n": 6,
+      "outcomes": {
+        "FALSE_REFUSAL": 2,
+        "SERVED_CORRECT": 4
+      },
+      "serve_cases": 6,
+      "served_correct": 4,
+      "served_correct_ci95": [
+        0.3,
+        0.9032
+      ],
+      "false_refusals": 2,
+      "false_refusal_ci95": [
+        0.0968,
+        0.7
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 0,
+      "refuse_cases_refused": 0,
+      "refused_correct_reason": 0,
+      "reason_agreement_ci95": null,
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.3903
+      ]
+    },
+    "P-B": {
+      "n": 36,
+      "outcomes": {
+        "SERVED_CORRECT": 36
+      },
+      "serve_cases": 36,
+      "served_correct": 36,
+      "served_correct_ci95": [
+        0.9036,
+        1.0
+      ],
+      "false_refusals": 0,
+      "false_refusal_ci95": [
+        0.0,
+        0.0964
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 0,
+      "refuse_cases_refused": 0,
+      "refused_correct_reason": 0,
+      "reason_agreement_ci95": null,
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.0964
+      ]
+    }
+  },
+  "by_family": {
+    "cube": {
+      "n": 11,
+      "outcomes": {
+        "SERVED_CORRECT": 6,
+        "REFUSED_CORRECT_REASON": 4,
+        "REFUSED_REASON_DISAGREEMENT": 1
+      },
+      "serve_cases": 6,
+      "served_correct": 6,
+      "served_correct_ci95": [
+        0.6097,
+        1.0
+      ],
+      "false_refusals": 0,
+      "false_refusal_ci95": [
+        0.0,
+        0.3903
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 5,
+      "refuse_cases_refused": 5,
+      "refused_correct_reason": 4,
+      "reason_agreement_ci95": [
+        0.3755,
+        0.9638
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.2588
+      ]
+    },
+    "cuboid": {
+      "n": 11,
+      "outcomes": {
+        "SERVED_CORRECT": 6,
+        "FALSE_REFUSAL": 1,
+        "REFUSED_CORRECT_REASON": 3,
+        "REFUSED_REASON_DISAGREEMENT": 1
+      },
+      "serve_cases": 7,
+      "served_correct": 6,
+      "served_correct_ci95": [
+        0.4869,
+        0.9743
+      ],
+      "false_refusals": 1,
+      "false_refusal_ci95": [
+        0.0257,
+        0.5131
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refused_correct_reason": 3,
+      "reason_agreement_ci95": [
+        0.3006,
+        0.9544
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.2588
+      ]
+    },
+    "oblique_triangular_prism": {
+      "n": 8,
+      "outcomes": {
+        "SERVED_CORRECT": 7,
+        "REFUSED_REASON_DISAGREEMENT": 1
+      },
+      "serve_cases": 7,
+      "served_correct": 7,
+      "served_correct_ci95": [
+        0.6457,
+        1.0
+      ],
+      "false_refusals": 0,
+      "false_refusal_ci95": [
+        0.0,
+        0.3543
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 1,
+      "refuse_cases_refused": 1,
+      "refused_correct_reason": 0,
+      "reason_agreement_ci95": [
+        0.0,
+        0.7935
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.3244
+      ]
+    },
+    "other": {
+      "n": 7,
+      "outcomes": {
+        "REFUSED_REASON_DISAGREEMENT": 4,
+        "REFUSED_CORRECT_REASON": 3
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 7,
+      "refuse_cases_refused": 7,
+      "refused_correct_reason": 3,
+      "reason_agreement_ci95": [
+        0.1582,
+        0.7495
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.3543
+      ]
+    },
+    "quadrilateral_pyramid": {
+      "n": 24,
+      "outcomes": {
+        "SERVED_CORRECT": 7,
+        "FALSE_REFUSAL": 1,
+        "REFUSED_CORRECT_REASON": 11,
+        "REFUSED_REASON_DISAGREEMENT": 5
+      },
+      "serve_cases": 8,
+      "served_correct": 7,
+      "served_correct_ci95": [
+        0.5291,
+        0.9776
+      ],
+      "false_refusals": 1,
+      "false_refusal_ci95": [
+        0.0224,
+        0.4709
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 16,
+      "refuse_cases_refused": 16,
+      "refused_correct_reason": 11,
+      "reason_agreement_ci95": [
+        0.444,
+        0.8584
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.138
+      ]
+    },
+    "right_triangular_prism": {
+      "n": 12,
+      "outcomes": {
+        "SERVED_CORRECT": 7,
+        "REFUSED_CORRECT_REASON": 4,
+        "REFUSED_REASON_DISAGREEMENT": 1
+      },
+      "serve_cases": 7,
+      "served_correct": 7,
+      "served_correct_ci95": [
+        0.6457,
+        1.0
+      ],
+      "false_refusals": 0,
+      "false_refusal_ci95": [
+        0.0,
+        0.3543
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 5,
+      "refuse_cases_refused": 5,
+      "refused_correct_reason": 4,
+      "reason_agreement_ci95": [
+        0.3755,
+        0.9638
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.2425
+      ]
+    },
+    "triangular_pyramid": {
+      "n": 11,
+      "outcomes": {
+        "SERVED_CORRECT": 7,
+        "REFUSED_REASON_DISAGREEMENT": 2,
+        "REFUSED_CORRECT_REASON": 2
+      },
+      "serve_cases": 7,
+      "served_correct": 7,
+      "served_correct_ci95": [
+        0.6457,
+        1.0
+      ],
+      "false_refusals": 0,
+      "false_refusal_ci95": [
+        0.0,
+        0.3543
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refused_correct_reason": 2,
+      "reason_agreement_ci95": [
+        0.15,
+        0.85
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.2588
+      ]
+    }
+  },
+  "by_plane_relation": {
+    "other": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 4
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refused_correct_reason": 4,
+      "reason_agreement_ci95": [
+        0.5101,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ]
+    },
+    "parallel_plane": {
+      "n": 40,
+      "outcomes": {
+        "SERVED_CORRECT": 14,
+        "FALSE_REFUSAL": 1,
+        "REFUSED_CORRECT_REASON": 13,
+        "REFUSED_REASON_DISAGREEMENT": 12
+      },
+      "serve_cases": 15,
+      "served_correct": 14,
+      "served_correct_ci95": [
+        0.7018,
+        0.9881
+      ],
+      "false_refusals": 1,
+      "false_refusal_ci95": [
+        0.0119,
+        0.2982
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 25,
+      "refuse_cases_refused": 25,
+      "refused_correct_reason": 13,
+      "reason_agreement_ci95": [
+        0.335,
+        0.6997
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.0876
+      ]
+    },
+    "parallel_two_lines": {
+      "n": 16,
+      "outcomes": {
+        "SERVED_CORRECT": 12,
+        "REFUSED_CORRECT_REASON": 3,
+        "REFUSED_REASON_DISAGREEMENT": 1
+      },
+      "serve_cases": 12,
+      "served_correct": 12,
+      "served_correct_ci95": [
+        0.7575,
+        1.0
+      ],
+      "false_refusals": 0,
+      "false_refusal_ci95": [
+        0.0,
+        0.2425
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refused_correct_reason": 3,
+      "reason_agreement_ci95": [
+        0.3006,
+        0.9544
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.1936
+      ]
+    },
+    "perpendicular_line": {
+      "n": 24,
+      "outcomes": {
+        "SERVED_CORRECT": 14,
+        "FALSE_REFUSAL": 1,
+        "REFUSED_CORRECT_REASON": 7,
+        "REFUSED_REASON_DISAGREEMENT": 2
+      },
+      "serve_cases": 15,
+      "served_correct": 14,
+      "served_correct_ci95": [
+        0.7018,
+        0.9881
+      ],
+      "false_refusals": 1,
+      "false_refusal_ci95": [
+        0.0119,
+        0.2982
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 9,
+      "refuse_cases_refused": 9,
+      "refused_correct_reason": 7,
+      "reason_agreement_ci95": [
+        0.4526,
+        0.9368
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.138
+      ]
+    }
+  },
+  "by_question_type": {
+    "area_only": {
+      "n": 29,
+      "outcomes": {
+        "SERVED_CORRECT": 14,
+        "REFUSED_CORRECT_REASON": 10,
+        "REFUSED_REASON_DISAGREEMENT": 5
+      },
+      "serve_cases": 14,
+      "served_correct": 14,
+      "served_correct_ci95": [
+        0.7847,
+        1.0
+      ],
+      "false_refusals": 0,
+      "false_refusal_ci95": [
+        0.0,
+        0.2153
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 15,
+      "refuse_cases_refused": 15,
+      "refused_correct_reason": 10,
+      "reason_agreement_ci95": [
+        0.4171,
+        0.8482
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.117
+      ]
+    },
+    "section_and_area": {
+      "n": 22,
+      "outcomes": {
+        "SERVED_CORRECT": 13,
+        "FALSE_REFUSAL": 1,
+        "REFUSED_CORRECT_REASON": 8
+      },
+      "serve_cases": 14,
+      "served_correct": 13,
+      "served_correct_ci95": [
+        0.6853,
+        0.9873
+      ],
+      "false_refusals": 1,
+      "false_refusal_ci95": [
+        0.0127,
+        0.3147
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 8,
+      "refuse_cases_refused": 8,
+      "refused_correct_reason": 8,
+      "reason_agreement_ci95": [
+        0.6756,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.1487
+      ]
+    },
+    "section_only": {
+      "n": 33,
+      "outcomes": {
+        "SERVED_CORRECT": 13,
+        "FALSE_REFUSAL": 1,
+        "REFUSED_CORRECT_REASON": 9,
+        "REFUSED_REASON_DISAGREEMENT": 10
+      },
+      "serve_cases": 14,
+      "served_correct": 13,
+      "served_correct_ci95": [
+        0.6853,
+        0.9873
+      ],
+      "false_refusals": 1,
+      "false_refusal_ci95": [
+        0.0127,
+        0.3147
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 19,
+      "refuse_cases_refused": 19,
+      "refused_correct_reason": 9,
+      "reason_agreement_ci95": [
+        0.2733,
+        0.6829
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.1043
+      ]
+    }
+  },
+  "by_negative_class": {
+    "ambiguous_point_reference": {
+      "n": 3,
+      "outcomes": {
+        "REFUSED_REASON_DISAGREEMENT": 3
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 3,
+      "refuse_cases_refused": 3,
+      "refused_correct_reason": 0,
+      "reason_agreement_ci95": [
+        0.0,
+        0.5615
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.5615
+      ]
+    },
+    "contradictory_edge_cut_claim": {
+      "n": 3,
+      "outcomes": {
+        "REFUSED_REASON_DISAGREEMENT": 3
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 3,
+      "refuse_cases_refused": 3,
+      "refused_correct_reason": 0,
+      "reason_agreement_ci95": [
+        0.0,
+        0.5615
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.5615
+      ]
+    },
+    "contradictory_solid_kind": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 3,
+        "REFUSED_REASON_DISAGREEMENT": 1
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refused_correct_reason": 3,
+      "reason_agreement_ci95": [
+        0.3006,
+        0.9544
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ]
+    },
+    "degenerate_cutting_plane": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_REASON_DISAGREEMENT": 1,
+        "REFUSED_CORRECT_REASON": 3
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refused_correct_reason": 3,
+      "reason_agreement_ci95": [
+        0.3006,
+        0.9544
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ]
+    },
+    "missing_dimension": {
+      "n": 3,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 2,
+        "REFUSED_REASON_DISAGREEMENT": 1
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 3,
+      "refuse_cases_refused": 3,
+      "refused_correct_reason": 2,
+      "reason_agreement_ci95": [
+        0.2077,
+        0.9385
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.5615
+      ]
+    },
+    "multiple_solid_reference": {
+      "n": 3,
+      "outcomes": {
+        "REFUSED_REASON_DISAGREEMENT": 3
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 3,
+      "refuse_cases_refused": 3,
+      "refused_correct_reason": 0,
+      "reason_agreement_ci95": [
+        0.0,
+        0.5615
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.5615
+      ]
+    },
+    "none": {
+      "n": 42,
+      "outcomes": {
+        "SERVED_CORRECT": 40,
+        "FALSE_REFUSAL": 2
+      },
+      "serve_cases": 42,
+      "served_correct": 40,
+      "served_correct_ci95": [
+        0.8421,
+        0.9868
+      ],
+      "false_refusals": 2,
+      "false_refusal_ci95": [
+        0.0132,
+        0.1579
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 0,
+      "refuse_cases_refused": 0,
+      "refused_correct_reason": 0,
+      "reason_agreement_ci95": null,
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.0838
+      ]
+    },
+    "shared_plane_wrong_solid": {
+      "n": 3,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 3
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 3,
+      "refuse_cases_refused": 3,
+      "refused_correct_reason": 3,
+      "reason_agreement_ci95": [
+        0.4385,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.5615
+      ]
+    },
+    "unstated_intersection_inconsistent": {
+      "n": 3,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 1,
+        "REFUSED_REASON_DISAGREEMENT": 2
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 3,
+      "refuse_cases_refused": 3,
+      "refused_correct_reason": 1,
+      "reason_agreement_ci95": [
+        0.0615,
+        0.7923
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.5615
+      ]
+    },
+    "unsupported_plane_description": {
+      "n": 3,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 3
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 3,
+      "refuse_cases_refused": 3,
+      "refused_correct_reason": 3,
+      "reason_agreement_ci95": [
+        0.4385,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.5615
+      ]
+    },
+    "unsupported_topology": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 3,
+        "REFUSED_REASON_DISAGREEMENT": 1
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refused_correct_reason": 3,
+      "reason_agreement_ci95": [
+        0.3006,
+        0.9544
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ]
+    },
+    "unverified_source_assertion": {
+      "n": 3,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 3
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 3,
+      "refuse_cases_refused": 3,
+      "refused_correct_reason": 3,
+      "reason_agreement_ci95": [
+        0.4385,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.5615
+      ]
+    },
+    "wrong_section_operand": {
+      "n": 3,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 3
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 3,
+      "refuse_cases_refused": 3,
+      "refused_correct_reason": 3,
+      "reason_agreement_ci95": [
+        0.4385,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.5615
+      ]
+    },
+    "wrong_solid_symbol": {
+      "n": 3,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 3
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 3,
+      "refuse_cases_refused": 3,
+      "refused_correct_reason": 3,
+      "reason_agreement_ci95": [
+        0.4385,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.5615
+      ]
+    }
+  },
+  "false_refusals_by_category": {
+    "INTERNAL_OR_VALIDATION": 2
+  },
+  "false_refusals_by_code": {
+    "ENGINE_EXECUTION_FAILED": 1,
+    "PREVIEW_RESULT_INVALID": 1
+  },
+  "cases": [
+    {
+      "id": "H001",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H002",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "2916/625",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H003",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "882",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H004",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H005",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "81",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H006",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "612",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H007",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H008",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "63504/1075",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H009",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "9/16",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H010",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H011",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "50",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H012",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "162",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H013",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H014",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "83200/729",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H015",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "16",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H016",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H017",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "162",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H018",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "6",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H019",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H020",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "324",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H021",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "576",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H022",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H023",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "2448",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H024",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "45",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H025",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H026",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "896/9",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H027",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "6",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H028",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H029",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "549/4",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H030",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "576",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H031",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H032",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "27",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H033",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "12",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H034",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H035",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "243/4",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H036",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "label_leaks": [],
+      "area_squared": "3/64",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H037",
+      "stratum": "P-A",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "ENGINE_EXECUTION_FAILED",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "ENGINE_EXECUTION_FAILED",
+      "refusal_layer": "route",
+      "category": "INTERNAL_OR_VALIDATION",
+      "outcome": "FALSE_REFUSAL"
+    },
+    {
+      "id": "H038",
+      "stratum": "P-A",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "DINH_CAT_CANH"
+      ],
+      "label_leaks": [],
+      "area_squared": "9",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H039",
+      "stratum": "P-A",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "DINH_CAT_CANH"
+      ],
+      "label_leaks": [],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H040",
+      "stratum": "P-A",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "DINH_CAT_CANH"
+      ],
+      "label_leaks": [],
+      "area_squared": "256/153",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H041",
+      "stratum": "P-A",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "refusal_layer": null,
+      "category": null,
+      "certificate_category": [
+        "DINH_CAT_CANH"
+      ],
+      "label_leaks": [],
+      "area_squared": "36",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT"
+    },
+    {
+      "id": "H042",
+      "stratum": "P-A",
+      "family": "cuboid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "PREVIEW_RESULT_INVALID",
+      "refusal_layer": "adapter4",
+      "category": "INTERNAL_OR_VALIDATION",
+      "outcome": "FALSE_REFUSAL"
+    },
+    {
+      "id": "H043",
+      "stratum": "N",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "wrong_solid_symbol",
+      "negative_origin": "faulty_extraction",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "INPUT_INVALID"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "UNGROUNDED_VALUE",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "UNGROUNDED_VALUE",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H044",
+      "stratum": "N",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "negative_class": "wrong_solid_symbol",
+      "negative_origin": "faulty_extraction",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "INPUT_INVALID"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "UNKNOWN_SOLID",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "UNKNOWN_SOLID",
+      "refusal_layer": "route",
+      "category": "INPUT_INVALID",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H045",
+      "stratum": "N",
+      "family": "cube",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "negative_class": "wrong_solid_symbol",
+      "negative_origin": "faulty_extraction",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "INPUT_INVALID"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "UNKNOWN_SOLID",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "UNKNOWN_SOLID",
+      "refusal_layer": "route",
+      "category": "INPUT_INVALID",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H046",
+      "stratum": "N",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "contradictory_solid_kind",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "CONTRADICTION"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_OBJECT_MISMATCH",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H047",
+      "stratum": "N",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "negative_class": "contradictory_solid_kind",
+      "negative_origin": "faulty_extraction",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "INPUT_INVALID"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "FACT_INCOMPLETE",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "FACT_INCOMPLETE",
+      "refusal_layer": "route",
+      "category": "UNDERDETERMINED",
+      "outcome": "REFUSED_REASON_DISAGREEMENT"
+    },
+    {
+      "id": "H048",
+      "stratum": "N",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "negative_class": "contradictory_solid_kind",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "CONTRADICTION",
+        "SOURCE_GROUNDING"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "INCONSISTENT_FACTS",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "INCONSISTENT_FACTS",
+      "refusal_layer": "route",
+      "category": "CONTRADICTION",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H049",
+      "stratum": "N",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "contradictory_solid_kind",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "CONTRADICTION"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_OBJECT_MISMATCH",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H050",
+      "stratum": "N",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "negative_class": "missing_dimension",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "UNDERDETERMINED"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "MISSING_DIMENSION",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "MISSING_DIMENSION",
+      "refusal_layer": "route",
+      "category": "UNDERDETERMINED",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H051",
+      "stratum": "N",
+      "family": "cuboid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "negative_class": "missing_dimension",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "UNDERDETERMINED"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "MISSING_DIMENSION",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "MISSING_DIMENSION",
+      "refusal_layer": "route",
+      "category": "UNDERDETERMINED",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H052",
+      "stratum": "N",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "missing_dimension",
+      "negative_origin": "faulty_extraction",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "UNDERDETERMINED"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_PREMISE_UNREAD",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT"
+    },
+    {
+      "id": "H053",
+      "stratum": "N",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "ambiguous_point_reference",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "UNDERDETERMINED",
+        "AMBIGUOUS"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_PREMISE_UNREAD",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT"
+    },
+    {
+      "id": "H054",
+      "stratum": "N",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "negative_class": "ambiguous_point_reference",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "AMBIGUOUS",
+        "UNDERDETERMINED"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_PREMISE_UNREAD",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT"
+    },
+    {
+      "id": "H055",
+      "stratum": "N",
+      "family": "cube",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "ambiguous_point_reference",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "AMBIGUOUS",
+        "CONTRADICTION"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_PREMISE_UNREAD",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT"
+    },
+    {
+      "id": "H056",
+      "stratum": "N",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "other",
+      "question_type": "area_only",
+      "negative_class": "unsupported_plane_description",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "BRIDGE_UNSUPPORTED_PLANE_KIND",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "BRIDGE_UNSUPPORTED_PLANE_KIND",
+      "refusal_layer": "route",
+      "category": "UNSUPPORTED_CAPABILITY",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H057",
+      "stratum": "N",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "other",
+      "question_type": "section_only",
+      "negative_class": "unsupported_plane_description",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "BRIDGE_UNSUPPORTED_PLANE_KIND",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "BRIDGE_UNSUPPORTED_PLANE_KIND",
+      "refusal_layer": "route",
+      "category": "UNSUPPORTED_CAPABILITY",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H058",
+      "stratum": "N",
+      "family": "cube",
+      "plane_relation": "other",
+      "question_type": "area_only",
+      "negative_class": "unsupported_plane_description",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "UNSUPPORTED_CAPABILITY",
+        "UNDERDETERMINED"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "BRIDGE_UNSUPPORTED_PLANE_KIND",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "BRIDGE_UNSUPPORTED_PLANE_KIND",
+      "refusal_layer": "route",
+      "category": "UNSUPPORTED_CAPABILITY",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H059",
+      "stratum": "N",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "degenerate_cutting_plane",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "GEOMETRY_DEGENERATE"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "PLANE_TOUCHES_VERTEX",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "PLANE_TOUCHES_VERTEX",
+      "refusal_layer": "route",
+      "category": "UNMAPPED",
+      "outcome": "REFUSED_REASON_DISAGREEMENT"
+    },
+    {
+      "id": "H060",
+      "stratum": "N",
+      "family": "cube",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "negative_class": "degenerate_cutting_plane",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "GEOMETRY_DEGENERATE"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SECTION_PLANE_IS_FACE",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SECTION_PLANE_IS_FACE",
+      "refusal_layer": "route",
+      "category": "GEOMETRY_DEGENERATE",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H061",
+      "stratum": "N",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "degenerate_cutting_plane",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "GEOMETRY_DEGENERATE"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "DERIVED_PLANE_IS_REFERENCE",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "DERIVED_PLANE_IS_REFERENCE",
+      "refusal_layer": "route",
+      "category": "GEOMETRY_DEGENERATE",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H062",
+      "stratum": "N",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "negative_class": "degenerate_cutting_plane",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "GEOMETRY_DEGENERATE",
+        "UNDERDETERMINED"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "PLANE_NOT_UNIQUE",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "PLANE_NOT_UNIQUE",
+      "refusal_layer": "route",
+      "category": "UNDERDETERMINED",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H063",
+      "stratum": "N",
+      "family": "triangular_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "negative_class": "wrong_section_operand",
+      "negative_origin": "faulty_extraction",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_OBJECT_MISMATCH",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H064",
+      "stratum": "N",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "negative_class": "wrong_section_operand",
+      "negative_origin": "faulty_extraction",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_OBJECT_MISMATCH",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H065",
+      "stratum": "N",
+      "family": "cuboid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "negative_class": "wrong_section_operand",
+      "negative_origin": "faulty_extraction",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_OBJECT_MISMATCH",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H066",
+      "stratum": "N",
+      "family": "cuboid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "negative_class": "shared_plane_wrong_solid",
+      "negative_origin": "faulty_extraction",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "INPUT_INVALID",
+        "SOURCE_GROUNDING"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "UNKNOWN_SOLID_ID",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "UNKNOWN_SOLID_ID",
+      "refusal_layer": "route",
+      "category": "INPUT_INVALID",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H067",
+      "stratum": "N",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "negative_class": "shared_plane_wrong_solid",
+      "negative_origin": "faulty_extraction",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "INPUT_INVALID",
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_OBJECT_MISMATCH",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H068",
+      "stratum": "N",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "negative_class": "shared_plane_wrong_solid",
+      "negative_origin": "faulty_extraction",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "INPUT_INVALID"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "INVALID_MATH_GOAL",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "INVALID_MATH_GOAL",
+      "refusal_layer": "route",
+      "category": "INPUT_INVALID",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H069",
+      "stratum": "N",
+      "family": "cube",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "negative_class": "unstated_intersection_inconsistent",
+      "negative_origin": "faulty_extraction",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "CONTRADICTION",
+        "GEOMETRY_DEGENERATE",
+        "SOURCE_GROUNDING"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SECTION_VERTEX_OFF_EDGE",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SECTION_VERTEX_OFF_EDGE",
+      "refusal_layer": "route",
+      "category": "GEOMETRY_DEGENERATE",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H070",
+      "stratum": "N",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "negative_class": "unstated_intersection_inconsistent",
+      "negative_origin": "faulty_extraction",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "CONTRADICTION",
+        "GEOMETRY_DEGENERATE",
+        "SOURCE_GROUNDING"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "UNSUPPORTED_CAPABILITY",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "UNSUPPORTED_CAPABILITY",
+      "refusal_layer": "route",
+      "category": "UNSUPPORTED_CAPABILITY",
+      "outcome": "REFUSED_REASON_DISAGREEMENT"
+    },
+    {
+      "id": "H071",
+      "stratum": "N",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "negative_class": "unstated_intersection_inconsistent",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "CONTRADICTION",
+        "GEOMETRY_DEGENERATE"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "UNSUPPORTED_CAPABILITY",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "UNSUPPORTED_CAPABILITY",
+      "refusal_layer": "route",
+      "category": "UNSUPPORTED_CAPABILITY",
+      "outcome": "REFUSED_REASON_DISAGREEMENT"
+    },
+    {
+      "id": "H072",
+      "stratum": "N",
+      "family": "triangular_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "negative_class": "contradictory_edge_cut_claim",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "CONTRADICTION",
+        "GEOMETRY_DEGENERATE"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_OBJECT_MISMATCH",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT"
+    },
+    {
+      "id": "H073",
+      "stratum": "N",
+      "family": "cuboid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "contradictory_edge_cut_claim",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "CONTRADICTION",
+        "GEOMETRY_DEGENERATE"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_OBJECT_MISMATCH",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT"
+    },
+    {
+      "id": "H074",
+      "stratum": "N",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "contradictory_edge_cut_claim",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "CONTRADICTION",
+        "GEOMETRY_DEGENERATE"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "UNSUPPORTED_CAPABILITY",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "UNSUPPORTED_CAPABILITY",
+      "refusal_layer": "route",
+      "category": "UNSUPPORTED_CAPABILITY",
+      "outcome": "REFUSED_REASON_DISAGREEMENT"
+    },
+    {
+      "id": "H075",
+      "stratum": "N",
+      "family": "other",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "multiple_solid_reference",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "UNSUPPORTED_CAPABILITY",
+        "AMBIGUOUS"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_OBJECT_MISMATCH",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT"
+    },
+    {
+      "id": "H076",
+      "stratum": "N",
+      "family": "other",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "multiple_solid_reference",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "UNSUPPORTED_CAPABILITY",
+        "AMBIGUOUS"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_OBJECT_MISMATCH",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT"
+    },
+    {
+      "id": "H077",
+      "stratum": "N",
+      "family": "other",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "negative_class": "multiple_solid_reference",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "AMBIGUOUS",
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_OBJECT_MISMATCH",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT"
+    },
+    {
+      "id": "H078",
+      "stratum": "N",
+      "family": "other",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "unsupported_topology",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "BRIDGE_UNSUPPORTED_PREMISE",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "BRIDGE_UNSUPPORTED_PREMISE",
+      "refusal_layer": "route",
+      "category": "UNSUPPORTED_CAPABILITY",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H079",
+      "stratum": "N",
+      "family": "other",
+      "plane_relation": "other",
+      "question_type": "area_only",
+      "negative_class": "unsupported_topology",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "BRIDGE_UNSUPPORTED_CURVED",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "BRIDGE_UNSUPPORTED_CURVED",
+      "refusal_layer": "route",
+      "category": "UNSUPPORTED_CAPABILITY",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H080",
+      "stratum": "N",
+      "family": "other",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "unsupported_topology",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "OBJECT_NOT_IN_QUOTE",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "OBJECT_NOT_IN_QUOTE",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT"
+    },
+    {
+      "id": "H081",
+      "stratum": "N",
+      "family": "other",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "negative_class": "unsupported_topology",
+      "negative_origin": "flawed_or_unsupported_problem",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "BRIDGE_UNSUPPORTED_PREMISE",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "BRIDGE_UNSUPPORTED_PREMISE",
+      "refusal_layer": "route",
+      "category": "UNSUPPORTED_CAPABILITY",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H082",
+      "stratum": "N",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "negative_class": "unverified_source_assertion",
+      "negative_origin": "faulty_extraction",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "PREDICATE_NOT_IN_QUOTE",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H083",
+      "stratum": "N",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "negative_class": "unverified_source_assertion",
+      "negative_origin": "faulty_extraction",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "UNGROUNDED_VALUE",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "UNGROUNDED_VALUE",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_CORRECT_REASON"
+    },
+    {
+      "id": "H084",
+      "stratum": "N",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "unverified_source_assertion",
+      "negative_origin": "faulty_extraction",
+      "expected": "REFUSE",
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "PREDICATE_NOT_IN_QUOTE",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_CORRECT_REASON"
+    }
+  ]
+}

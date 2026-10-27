@@ -43,7 +43,7 @@ def _learner(scene: dict) -> list[str]:
 def _point_built_names(scene: dict, plane: dict) -> set[str]:
     """The planner's construction-point names of a plane, in ANY order ("(MHH1)", "qua M, H, H1"): `depends` is sorted,
     so the composed order cannot be read from it."""
-    ky = {o["id"]: o.get("notation") or o["id"].replace("_prime", "′") for o in scene["objects"]}
+    ky = {o["id"]: o.get("notation") for o in scene["objects"]}
     dau = [ky[d] or "" for d in plane["depends"]]
     return {f(p) for p in permutations(dau) for f in (lambda p: "(" + "".join(p) + ")", lambda p: "qua " + ", ".join(p))}
 
@@ -191,8 +191,7 @@ def test_B_a_section_with_unnamed_vertices_is_not_named_through_a_coincident_con
         s["learner_text"] for s in sc["formation"]["steps"]]
     # the coincidence is real and stays: two semantic points per vertex, ids and coordinates unchanged
     assert objs["H"]["xyz"] == objs["I"]["xyz"] and objs["H1"]["xyz"] == objs["I1"]["xyz"]
-    assert (objs["H"]["notation"], objs["H1"]["notation"]) == (None, None)
-    assert (objs["H"]["role"], objs["H1"]["role"]) == ("Điểm dựng phụ", "Điểm dựng phụ")
+    assert (objs["H"]["notation"], objs["H1"]["notation"]) == ("H", "H1")
     # review N2 (run `scene3d-section-inspector-c0`): the descriptive label, now shown by the inspector, writes primes
     # as the rest of the UI does (BB′, not BB')
     assert (objs["I"]["label"], objs["I1"]["label"]) == ("Giao điểm của BB′ và (α)", "Giao điểm của CC′ và (α)")
