@@ -54,7 +54,11 @@ def _code_category(code: str | None, reason: str | None, tax: dict[str, Any]) ->
     base = code.split(":")[0].strip()
     reason_str = str(reason or "")
     if base == "ENGINE_EXECUTION_FAILED":
-        if "Không tách được căn" in reason_str:
+        if (
+            "Không tách được căn" in reason_str
+            or "RadicalDomainError" in reason_str
+            or "vượt trần" in reason_str
+        ):
             return "UNSUPPORTED_CAPABILITY", "RADICAL_DOMAIN_OVERFLOW"
         degen_markers = (
             "trùng nhau",
@@ -322,7 +326,9 @@ def _evaluate_scene3d_semantics(planner_dict: dict[str, Any], scene: dict[str, A
                         "notation": notation,
                         "origin": origin,
                         "role": role,
-                        "visibly_distinguished_from_given": (origin == "derived" and role == "Điểm dựng phụ"),
+                        "visibly_distinguished_from_given": (
+                            origin == "derived" and bool(role) and role != "Điểm cho trước"
+                        ),
                     })
             elif otype in ("section", "plane3", "solid", "quantity"):
                 for key in ("name", "label", "notation"):
@@ -438,16 +444,38 @@ def score_observed_response(
                 checks.append(f"missing section certificate entry for {sid}")
             else:
                 # Section certificate presence check (Control 13)
+                # In Adapter /4 (`_phong_bi` & `_validate_sections`), Category B (`ENGINE_DERIVED_SECTION`)
+                # always carries a `closure_certificate` dict (`verified=True`, `rule="engine_derived_plane_section"`).
+                # Category A (`DINH_CAT_CANH`) carries `closure_certificate` only when `declared_boundary` is non-null
+                # or a derived pyramid stands on the section (`boundary is not None`); for single-solid Category A
+                # section problems without `declared_boundary`/`derived`, `boundary` and `closure_certificate` are `None`
+                # and the certificate is the verified `vertices` list (`label`, `edge`, `provenance`, `stated`).
                 cert = sec.get("closure_certificate")
-                if not isinstance(cert, dict) or cert.get("verified") is not True or not cert.get("rule"):
-                    checks.append("missing or unverified section closure_certificate")
-
                 is_cat_b = (
                     sec.get("certificate_category") == "ENGINE_DERIVED_SECTION"
                     or "certificate_version" in sec
                 )
                 obs_cat = "ENGINE_DERIVED_SECTION" if is_cat_b else "DINH_CAT_CANH"
                 rec["certificate_category"] = [obs_cat]
+
+                if is_cat_b:
+                    if not isinstance(cert, dict) or cert.get("verified") is not True or not cert.get("rule"):
+                        checks.append("missing or unverified section closure_certificate")
+                else:
+                    verts = sec.get("vertices")
+                    if not isinstance(verts, list) or len(verts) < 3 or any(
+                        not isinstance(v, dict)
+                        or not v.get("label")
+                        or not isinstance(v.get("edge"), list)
+                        or len(v.get("edge")) != 2
+                        or not v.get("provenance")
+                        or not isinstance(v.get("stated"), bool)
+                        for v in verts
+                    ):
+                        checks.append("missing or unverified Category A section vertices certificate")
+                    if cert is not None or sec.get("boundary") is not None:
+                        if not isinstance(cert, dict) or cert.get("verified") is not True or not cert.get("rule"):
+                            checks.append("missing or unverified section closure_certificate")
 
                 # Category A/B certificate mixing check (Control 14)
                 exp_cat = exp.get("expected_certificate_category")

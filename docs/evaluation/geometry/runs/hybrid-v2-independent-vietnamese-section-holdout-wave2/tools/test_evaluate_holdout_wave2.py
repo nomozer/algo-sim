@@ -423,3 +423,28 @@ def test_18_scene3d_semantics_10a_vs_10b_separation():
     resp["envelope"]["scene3d"]["objects"][-1]["name"] = "Thiết diện HMN"
     res_leak = score_observed_response(case, exp, TAX, r, resp)
     assert "td_sec.name:H" in res_leak["source_identity_leaks"]
+
+
+def test_19_category_a_single_solid_null_closure_certificate_and_vertices_contract():
+    """Verify Adapter /4 Category A contract: single-solid DINH_CAT_CANH without declared_boundary/derived
+    emits boundary=None, closure_certificate=None and is SERVED_CORRECT when vertices certificate is complete;
+    missing/malformed vertices or unverified non-null closure_certificate is WRONG_SERVED."""
+    case, exp, r, resp = _make_cat_a_fixture()
+    resp["route_d"]["sections"][0]["boundary"] = None
+    resp["route_d"]["sections"][0]["closure_certificate"] = None
+    res = score_observed_response(case, exp, TAX, r, resp)
+    assert res["outcome"] == "SERVED_CORRECT", res.get("oracle_mismatches")
+
+    # Non-null unverified closure_certificate on Category A must still fail
+    resp["route_d"]["sections"][0]["closure_certificate"] = {"verified": False, "rule": "dinh-cat-canh"}
+    res_bad_cert = score_observed_response(case, exp, TAX, r, resp)
+    assert res_bad_cert["outcome"] == "WRONG_SERVED"
+    assert any("closure_certificate" in m for m in res_bad_cert["oracle_mismatches"])
+
+    # Missing provenance on Category A vertex must fail
+    resp["route_d"]["sections"][0]["closure_certificate"] = None
+    del resp["route_d"]["sections"][0]["vertices"][0]["provenance"]
+    res_bad_verts = score_observed_response(case, exp, TAX, r, resp)
+    assert res_bad_verts["outcome"] == "WRONG_SERVED"
+    assert any("Category A section vertices certificate" in m for m in res_bad_verts["oracle_mismatches"])
+

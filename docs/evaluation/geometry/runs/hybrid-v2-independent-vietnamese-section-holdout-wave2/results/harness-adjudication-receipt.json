@@ -1,0 +1,394 @@
+{
+  "schema": "HOLDOUT_WAVE2_HARNESS_ADJUDICATION_RECEIPT/1",
+  "task": "HYBRID_V2_INDEPENDENT_VIETNAMESE_SECTION_HOLDOUT_WAVE2",
+  "pre_execution_freeze_commit": "7e5c3ddde78710f4ea174956302d11e711b51635",
+  "raw_scored_run_dir": "results/scored-run-1",
+  "corrected_scored_run_dir": "results/scored-run-2-harness-corrected",
+  "raw_scored_run_preserved_untouched": true,
+  "raw_scored_run_hashes": {
+    "track-a.json": "eea9c5d88265bedaeccff06dc059ef39d60496d923f0c7a1426c4fa867c1e3eb",
+    "summary.json": "7287aee2a166afc030ec68e69107762cbe636e0d13674d101740312667c7a512",
+    "track-b.json": "53fee45e31b19ee5a25993412d7674e7c05ad2f9a01ee9df315d64f2a31748b8"
+  },
+  "corrected_scored_run_hashes": {
+    "track-a.json": "2034468882f7e9663f81b033abb2bdc54d3139a9d871de8aa81dabb29463b6ec",
+    "summary.json": "a3f6521fa227f12a51aaa52ecd4fc1bf7959c48d3ad6331f699c687faef68abc",
+    "track-b.json": "53fee45e31b19ee5a25993412d7674e7c05ad2f9a01ee9df315d64f2a31748b8"
+  },
+  "evaluator_hashes": {
+    "tools/evaluate_holdout_wave2.py": {
+      "pre_correction_sha256": "1a053c4ef4caaa22f2618d6d89e34adf9d024cd35f2d77c4c01759af3c96aa44",
+      "post_correction_sha256": "e9c36a177c2f43cb8af59f361a78421b6f253a5c642e980ad98939793ae51e12"
+    },
+    "tools/test_evaluate_holdout_wave2.py": {
+      "pre_correction_sha256": "33da058c0ac23cfde529cb3a9641a55009f12fa55cd38d162349f8cc745f62a1",
+      "post_correction_sha256": "07330fca6bed5e58cd07d0eb9dfa3e526d322083d7e97b75907eb4c3435e5cd2"
+    }
+  },
+  "corpus_and_oracle_hashes_unchanged": true,
+  "defect_summary": {
+    "primary_defect": "tools/evaluate_holdout_wave2.py lines 441-443 unconditionally required sec.get('closure_certificate') to be a dict with verified=True and non-empty rule on all sections before checking is_cat_b. In Adapter /4 (backend/app/ai/adapter4_route.py lines 78 & 280-288) and Engine /14 (backend/app/simulation/geometry_functions/engine.py lines 1420-1435), single-solid Category A (DINH_CAT_CANH) sections without declared_boundary or a derived pyramid emit boundary=None and closure_certificate=None and certify the section via section['vertices']. This caused the two served Category A cases (W2-A01 and W2-A03) to be falsely marked WRONG_SERVED despite 100% mathematical, topological, solid-identity, vertex-provenance, and area-squared agreement with the oracle.",
+    "secondary_refinements": [
+      "tools/evaluate_holdout_wave2.py (_code_category): recognized RadicalDomainError / 'vượt trần' alongside 'Không tách được căn' for subcode RADICAL_DOMAIN_OVERFLOW on ENGINE_EXECUTION_FAILED (affects diagnostic subcode/category on W2-A04; primary outcome FALSE_REFUSAL unchanged).",
+      "tools/evaluate_holdout_wave2.py (_evaluate_scene3d_semantics Track 10.B): recognized descriptive derived roles (e.g. 'Hình chiếu của ...', 'Ảnh của ... qua phép tịnh tiến ...') alongside 'Điểm dựng phụ' as visibly distinguished from source-given points ('Điểm cho trước') when origin=='derived' (affects Track 10.B diagnostic field all_auxiliary_visibly_distinguished; primary outcomes and Track 10.A source_identity_leaks=[] unchanged)."
+    ]
+  },
+  "side_by_side_comparison": {
+    "scored_run_1_raw": {
+      "n": 96,
+      "outcomes": {
+        "FALSE_REFUSAL": 43,
+        "SERVED_CORRECT": 3,
+        "WRONG_SERVED": 2,
+        "REFUSED_CORRECT_REASON": 33,
+        "REFUSED_REASON_DISAGREEMENT": 15
+      },
+      "serve_cases": 48,
+      "served_correct": 3,
+      "served_correct_ci95": [
+        0.0215,
+        0.1684
+      ],
+      "false_refusals": 43,
+      "false_refusal_ci95": [
+        0.7783,
+        0.9547
+      ],
+      "wrong_served_on_serve_cases": 2,
+      "refuse_cases": 48,
+      "refuse_cases_refused": 48,
+      "refuse_cases_refused_ci95": [
+        0.9259,
+        1.0
+      ],
+      "refused_correct_reason": 33,
+      "reason_agreement_ci95": [
+        0.5467,
+        0.8005
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 2,
+      "wrong_served_ci95": [
+        0.0057,
+        0.0728
+      ],
+      "internal_exceptions": 0
+    },
+    "scored_run_2_harness_corrected": {
+      "n": 96,
+      "outcomes": {
+        "FALSE_REFUSAL": 43,
+        "SERVED_CORRECT": 5,
+        "REFUSED_CORRECT_REASON": 33,
+        "REFUSED_REASON_DISAGREEMENT": 15
+      },
+      "serve_cases": 48,
+      "served_correct": 5,
+      "served_correct_ci95": [
+        0.0453,
+        0.2217
+      ],
+      "false_refusals": 43,
+      "false_refusal_ci95": [
+        0.7783,
+        0.9547
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 48,
+      "refuse_cases_refused": 48,
+      "refuse_cases_refused_ci95": [
+        0.9259,
+        1.0
+      ],
+      "refused_correct_reason": 33,
+      "reason_agreement_ci95": [
+        0.5467,
+        0.8005
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.0385
+      ],
+      "internal_exceptions": 0
+    }
+  },
+  "adjudicated_cases": {
+    "W2-A01": {
+      "case_id": "W2-A01",
+      "stratum": "P-A",
+      "family": "triangular_pyramid",
+      "plane_relation": "stated_intersections",
+      "question_type": "section_only",
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B, AB = 7, BC = 7, cạnh bên SA vuông góc với mặt phẳng (ABC) và SA = 7. Mặt phẳng (α) đi qua điểm A và vuông góc với đường thẳng SC, cắt các cạnh bên SB, SC lần lượt tại M, N. Xác định thiết diện của hình chóp S.ABC cắt bởi mặt phẳng (α).",
+      "scored_run_1_outcome": "WRONG_SERVED",
+      "scored_run_1_oracle_mismatches": [
+        "missing or unverified section closure_certificate"
+      ],
+      "scored_run_2_outcome": "SERVED_CORRECT",
+      "scored_run_2_oracle_mismatches": [],
+      "route_status": "SERVED",
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "oracle_expected": {
+        "solid": "S.ABC",
+        "section_id": "sec",
+        "expected_certificate_category": "DINH_CAT_CANH",
+        "area_goal_id": null,
+        "vertex_count": 3,
+        "boundary": [
+          {
+            "vertex": "A"
+          },
+          {
+            "edge": [
+              "S",
+              "C"
+            ],
+            "t": "1/3"
+          },
+          {
+            "edge": [
+              "S",
+              "B"
+            ],
+            "t": "1/2"
+          }
+        ],
+        "area_squared": "2401/48"
+      },
+      "product_section_entry": {
+        "section_id": "sec",
+        "boundary": null,
+        "vertices": [
+          {
+            "label": "A",
+            "edge": [
+              "S",
+              "A"
+            ],
+            "provenance": "THROUGH_POINT_REUSE",
+            "stated": false
+          },
+          {
+            "label": "M",
+            "edge": [
+              "S",
+              "B"
+            ],
+            "provenance": "SOURCE_NAMED",
+            "stated": true
+          },
+          {
+            "label": "N",
+            "edge": [
+              "S",
+              "C"
+            ],
+            "provenance": "SOURCE_NAMED",
+            "stated": true
+          }
+        ],
+        "closure_certificate": null,
+        "declared_boundary": null
+      },
+      "product_scene_polygon_chart": [
+        [
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "1/2",
+          "0",
+          "1/2"
+        ],
+        [
+          "0",
+          "1/3",
+          "2/3"
+        ]
+      ],
+      "product_vertex_sources": [
+        {
+          "kind": "SOLID_VERTEX",
+          "solid_vertex_index": 1,
+          "solid_edge_vertex_indices": null
+        },
+        {
+          "kind": "SOLID_EDGE_INTERSECTION",
+          "solid_vertex_index": null,
+          "solid_edge_vertex_indices": [
+            0,
+            2
+          ]
+        },
+        {
+          "kind": "SOLID_EDGE_INTERSECTION",
+          "solid_vertex_index": null,
+          "solid_edge_vertex_indices": [
+            0,
+            3
+          ]
+        }
+      ],
+      "product_answers": {},
+      "product_answer_exact": {},
+      "independent_verification": {
+        "solid_identity_matches": true,
+        "certificate_category": "DINH_CAT_CANH",
+        "vertex_count_matches": true,
+        "boundary_cycle_matches": true,
+        "area_squared_matches": true,
+        "adapter4_validate_sections_passed": true,
+        "why_closure_certificate_is_null": "In backend/app/ai/adapter4_route.py (_phong_bi line 78 and _validate_sections lines 280-288) and backend/app/simulation/geometry_functions/engine.py (kiem_dinh_cat lines 1420-1435), Category A (DINH_CAT_CANH) sections populate d['closure'] only when declared_boundary is non-null or a derived pyramid (d['derived']) stands on the section. For single-solid Category A section problems without declared_boundary or a derived pyramid, section['boundary'] and section['closure_certificate'] are None, and the Category A certificate is section['vertices'] (verified by engine.kiem_dinh_cat and adapter4_route._validate_sections)."
+      }
+    },
+    "W2-A03": {
+      "case_id": "W2-A03",
+      "stratum": "P-A",
+      "family": "triangular_pyramid",
+      "plane_relation": "stated_intersections",
+      "question_type": "section_and_area",
+      "problem_text": "Cho hình chóp S.MNP có đáy MNP là tam giác vuông tại M, MN = 10, MP = 14, cạnh bên SM vuông góc với mặt phẳng (MNP) và SM = 12. Gọi I là trung điểm của cạnh SM. Mặt phẳng (β) đi qua điểm I và vuông góc với đường thẳng SM, cắt các cạnh bên SN, SP. Xác định thiết diện của hình chóp S.MNP cắt bởi mặt phẳng (β). Tính diện tích thiết diện của hình chóp S.MNP cắt bởi mặt phẳng (β).",
+      "scored_run_1_outcome": "WRONG_SERVED",
+      "scored_run_1_oracle_mismatches": [
+        "missing or unverified section closure_certificate"
+      ],
+      "scored_run_2_outcome": "SERVED_CORRECT",
+      "scored_run_2_oracle_mismatches": [],
+      "route_status": "SERVED",
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "oracle_expected": {
+        "solid": "S.MNP",
+        "section_id": "sec",
+        "expected_certificate_category": "DINH_CAT_CANH",
+        "area_goal_id": "mg1",
+        "vertex_count": 3,
+        "boundary": [
+          {
+            "edge": [
+              "S",
+              "M"
+            ],
+            "t": "1/2"
+          },
+          {
+            "edge": [
+              "S",
+              "P"
+            ],
+            "t": "1/2"
+          },
+          {
+            "edge": [
+              "S",
+              "N"
+            ],
+            "t": "1/2"
+          }
+        ],
+        "area_squared": "1225/4"
+      },
+      "product_section_entry": {
+        "section_id": "sec",
+        "boundary": null,
+        "vertices": [
+          {
+            "label": "I",
+            "edge": [
+              "S",
+              "M"
+            ],
+            "provenance": "THROUGH_POINT_REUSE",
+            "stated": false
+          },
+          {
+            "label": "I1",
+            "edge": [
+              "S",
+              "N"
+            ],
+            "provenance": "STATED_UNNAMED",
+            "stated": true
+          },
+          {
+            "label": "I2",
+            "edge": [
+              "S",
+              "P"
+            ],
+            "provenance": "STATED_UNNAMED",
+            "stated": true
+          }
+        ],
+        "closure_certificate": null,
+        "declared_boundary": null
+      },
+      "product_scene_polygon_chart": [
+        [
+          "0",
+          "0",
+          "1/2"
+        ],
+        [
+          "1/2",
+          "0",
+          "1/2"
+        ],
+        [
+          "0",
+          "1/2",
+          "1/2"
+        ]
+      ],
+      "product_vertex_sources": [
+        {
+          "kind": "SOLID_EDGE_INTERSECTION",
+          "solid_vertex_index": null,
+          "solid_edge_vertex_indices": [
+            0,
+            1
+          ]
+        },
+        {
+          "kind": "SOLID_EDGE_INTERSECTION",
+          "solid_vertex_index": null,
+          "solid_edge_vertex_indices": [
+            0,
+            2
+          ]
+        },
+        {
+          "kind": "SOLID_EDGE_INTERSECTION",
+          "solid_vertex_index": null,
+          "solid_edge_vertex_indices": [
+            0,
+            3
+          ]
+        }
+      ],
+      "product_answers": {
+        "mg1": "35/2"
+      },
+      "product_answer_exact": {
+        "mg1": {
+          "coef": "35/2",
+          "dim": 0,
+          "unit": null
+        }
+      },
+      "independent_verification": {
+        "solid_identity_matches": true,
+        "certificate_category": "DINH_CAT_CANH",
+        "vertex_count_matches": true,
+        "boundary_cycle_matches": true,
+        "area_squared_matches": true,
+        "adapter4_validate_sections_passed": true,
+        "why_closure_certificate_is_null": "In backend/app/ai/adapter4_route.py (_phong_bi line 78 and _validate_sections lines 280-288) and backend/app/simulation/geometry_functions/engine.py (kiem_dinh_cat lines 1420-1435), Category A (DINH_CAT_CANH) sections populate d['closure'] only when declared_boundary is non-null or a derived pyramid (d['derived']) stands on the section. For single-solid Category A section problems without declared_boundary or a derived pyramid, section['boundary'] and section['closure_certificate'] are None, and the Category A certificate is section['vertices'] (verified by engine.kiem_dinh_cat and adapter4_route._validate_sections)."
+      }
+    }
+  }
+}

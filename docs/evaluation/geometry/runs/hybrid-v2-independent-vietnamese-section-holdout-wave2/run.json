@@ -1,0 +1,178 @@
+{
+  "run_id": "hybrid-v2-independent-vietnamese-section-holdout-wave2",
+  "task_code": "HYBRID_V2_INDEPENDENT_VIETNAMESE_SECTION_HOLDOUT_WAVE2",
+  "date": "2026-10-28",
+  "authorization": "Owner GO 2026-10-27 (HYBRID_V2_INDEPENDENT_VIETNAMESE_SECTION_HOLDOUT_WAVE2): preregistered, independent offline holdout evaluation of AlgoSim Hybrid V2 after M1-M5 repairs from baseline main d7a94d3cd4bbdea3df99e383bec78425fcc8bf1c, with zero product modifications, zero live provider calls, and no merge or push.",
+  "branch": "research/hybrid-v2-independent-vietnamese-section-holdout-wave2",
+  "worktree": ".superpowers/worktrees/independent-section-holdout-wave2",
+  "authoritative_baseline": "d7a94d3cd4bbdea3df99e383bec78425fcc8bf1c",
+  "commits": {
+    "baseline_main": "d7a94d3cd4bbdea3df99e383bec78425fcc8bf1c",
+    "product_commit": "e3678608f1f7110d7046c9c43c312c69d7614f55",
+    "t3_candidate": "e7bcff316ee6d443e753105a887e0689ea04848b",
+    "preregistration_commit": "5e329d759af675fdc3a7393c9479bfacd636460f",
+    "pre_execution_freeze_commit": "7e5c3ddde78710f4ea174956302d11e711b51635"
+  },
+  "measured_system": {
+    "verify_status": "MATCH",
+    "files": 118,
+    "tree_hash": "84ccf653441d1bd54f352756b9a5e917ee02a9ea11a83ac60585dfc585f3f99f"
+  },
+  "versions": {
+    "registry": "geometry-functions/18",
+    "planner": "geometry-fact-planner/17",
+    "engine": "geometry-function-engine/14",
+    "bridge_v2": "typed-fact-next-bridge/2",
+    "adapter4": "hybrid-simulation-adapter/4",
+    "section_certificate": "plane-section-certificate/1"
+  },
+  "cache_version": 130,
+  "default_mode": "LLM_ONLY",
+  "hybrid": "OPT_IN_ONLY",
+  "provider_calls": 0,
+  "curator_independence": {
+    "curator_subagent": "317d3ae6-3a79-4d40-976e-f528d0124b31",
+    "audit_status": "HOLDOUT_INDEPENDENCE_ESTABLISHED",
+    "tool_calls_audited": 80,
+    "forbidden_reads": 0,
+    "forbidden_commands": 0,
+    "audit_file": "results/independence-audit.json"
+  },
+  "deduplication_audit": {
+    "passed": true,
+    "historical_items_compared": 654,
+    "external_text_similarity_flags": 0,
+    "external_exact_config_matches": 0,
+    "external_scale_invariant_matches": 0,
+    "internal_duplicate_flags": 0,
+    "max_external_5gram_jaccard": 0.6372,
+    "audit_file": "results/deduplication-audit.json"
+  },
+  "independent_pre_freeze_oracle_audit": {
+    "reviewer_subagent": "9b55a8a4-4834-4cbb-b8bc-aec696ad8026",
+    "positive_cases_verified": 48,
+    "exact_agreement": 48,
+    "discrepancies": 0,
+    "audit_file": "results/independent-oracle-review-48.json"
+  },
+  "corpus_96": {
+    "total_cases": 96,
+    "positive_cases": 48,
+    "category_b_cases": 36,
+    "category_a_cases": 12,
+    "negative_cases": 48,
+    "files": [
+      "inputs/holdout-wave2.json",
+      "oracle/geometry.json",
+      "oracle/oracle_holdout_wave2.py",
+      "oracle/expected.json",
+      "holdout-manifest.json"
+    ]
+  },
+  "scored_run_1_raw": {
+    "classification": "INDEPENDENT_BLIND_HOLDOUT_WAVE2_RAW",
+    "dir": "results/scored-run-1",
+    "preserved_untouched": true,
+    "serve_cases": 48,
+    "served_correct": 3,
+    "false_refusals": 43,
+    "wrong_served_on_serve_cases": 2,
+    "wrong_served_cases": [
+      "W2-A01",
+      "W2-A03"
+    ],
+    "refuse_cases": 48,
+    "refuse_cases_refused": 48,
+    "refused_correct_reason": 33,
+    "refused_reason_disagreement": 15,
+    "wrong_served_on_refuse_cases": 0,
+    "wrong_served_total": 2,
+    "harness_errors": 0,
+    "product_exceptions": 0
+  },
+  "scored_run_2_harness_corrected": {
+    "classification": "INDEPENDENT_BLIND_HOLDOUT_WAVE2_ADJUDICATED",
+    "dir": "results/scored-run-2-harness-corrected",
+    "adjudication_receipt": "results/harness-adjudication-receipt.json",
+    "serve_cases": 48,
+    "served_correct": 5,
+    "served_correct_ci95": [
+      0.0453,
+      0.2217
+    ],
+    "served_correct_cases": [
+      "W2-B08",
+      "W2-B12",
+      "W2-B14",
+      "W2-A01",
+      "W2-A03"
+    ],
+    "exact_oracle_agreement_among_served": {
+      "agree": 5,
+      "served": 5,
+      "rate": 1.0
+    },
+    "route_level_oracle_agreement": {
+      "agree": 7,
+      "route_served": 7,
+      "adapter4_refused_cases": [
+        "W2-A07",
+        "W2-A10"
+      ]
+    },
+    "false_refusals": 43,
+    "false_refusal_ci95": [
+      0.7783,
+      0.9547
+    ],
+    "wrong_served_on_serve_cases": 0,
+    "refuse_cases": 48,
+    "refuse_cases_refused": 48,
+    "refuse_cases_refused_ci95": [
+      0.9259,
+      1.0
+    ],
+    "refused_correct_reason": 33,
+    "reason_agreement_ci95": [
+      0.5467,
+      0.8005
+    ],
+    "refused_reason_disagreement": 15,
+    "wrong_served_on_refuse_cases": 0,
+    "wrong_served_total": 0,
+    "wrong_served_ci95": [
+      0.0,
+      0.0385
+    ],
+    "harness_errors": 0,
+    "product_exceptions": 0,
+    "scene3d_semantics": {
+      "served_cases_checked": 5,
+      "track_10a_cases_with_source_identity_leaks": [],
+      "track_10b_cases_with_r2_auxiliary_notation": [
+        "W2-B08",
+        "W2-B12",
+        "W2-B14",
+        "W2-A01",
+        "W2-A03"
+      ],
+      "track_10b_all_auxiliary_visibly_distinguished": true
+    }
+  },
+  "positive_false_refusal_mechanisms": {
+    "W2-M1_divide_segment_inverted_syntax": 23,
+    "W2-M2_orthogonal_projection_dinh_noun": 5,
+    "W2-M3_parallel_two_lines_premise_guard": 12,
+    "W2-M4_radical_domain_ceiling": 1,
+    "W2-M5_adapter4_cat_a_primed_vertex_lookup": 2,
+    "in_memory_joint_diagnostic_oracle_agreement": "48/48 (100.0%)",
+    "diagnostics_file": "results/diagnostics.json"
+  },
+  "independent_review": {
+    "reviewer_subagent": "9b55a8a4-4834-4cbb-b8bc-aec696ad8026",
+    "verdict": "INDEPENDENT_HOLDOUT_WAVE2_REVIEW_PASS",
+    "file": "review.md",
+    "sha256": "cf433ec7ece52b8aa9ffeb19a7d9195140651a10032d0d3021cddd5a7b742b3f"
+  },
+  "status": "INDEPENDENT_HOLDOUT_EXECUTED"
+}

@@ -1,0 +1,338 @@
+{
+  "schema": "HOLDOUT_WAVE2_DIAGNOSTICS/1",
+  "task": "HYBRID_V2_INDEPENDENT_VIETNAMESE_SECTION_HOLDOUT_WAVE2",
+  "positive_mechanisms": {
+    "W2-M1": {
+      "id": "W2-M1",
+      "title": "Inverted Vietnamese divide_segment syntax ('Trên cạnh XY lấy điểm P sao cho ...')",
+      "layer": "Registry Source Gate (registry.py:4310 _TY_SO & 2068 construction_source_bound)",
+      "refusal_code": "SOURCE_OBJECT_MISMATCH",
+      "refusal_reason_pattern": "vai trò điểm và toán hạng dựng không khớp nguồn",
+      "first_refusal_count": 23,
+      "first_refusal_cases": [
+        "W2-B01",
+        "W2-B02",
+        "W2-B03",
+        "W2-B04",
+        "W2-B07",
+        "W2-B09",
+        "W2-B10",
+        "W2-B13",
+        "W2-B15",
+        "W2-B16",
+        "W2-B25",
+        "W2-B26",
+        "W2-B27",
+        "W2-B28",
+        "W2-B31",
+        "W2-B32",
+        "W2-B33",
+        "W2-B34",
+        "W2-A02",
+        "W2-A05",
+        "W2-A08",
+        "W2-A11",
+        "W2-A12"
+      ],
+      "secondary_co_occurrence_cases": [
+        "W2-B20",
+        "W2-B21",
+        "W2-B22",
+        "W2-A09",
+        "W2-B05",
+        "W2-B06",
+        "W2-B11",
+        "W2-B17",
+        "W2-B18",
+        "W2-B23",
+        "W2-B24",
+        "W2-B29",
+        "W2-B30",
+        "W2-B35",
+        "W2-B36",
+        "W2-A06"
+      ],
+      "total_affected_positive_cases": 39,
+      "root_cause": "_TY_SO in backend/app/simulation/geometry_functions/registry.py (line 4310) matches only point-first wording ('Điểm M thuộc cạnh SA sao cho ...' or 'M là điểm thuộc cạnh SA sao cho ...') and rejects standard Vietnamese schoolbook inverted wording ('Trên cạnh SA lấy điểm M sao cho SM = 2/7 SA.')."
+    },
+    "W2-M2": {
+      "id": "W2-M2",
+      "title": "Orthogonal projection target noun 'đỉnh' ('trùng với đỉnh B')",
+      "layer": "Registry Source Gate (registry.py:4381 construction_source_bound)",
+      "refusal_code": "SOURCE_OBJECT_MISMATCH",
+      "refusal_reason_pattern": "vai trò ảnh và điểm chiếu không khớp nguồn",
+      "first_refusal_count": 5,
+      "first_refusal_cases": [
+        "W2-B19",
+        "W2-B20",
+        "W2-B21",
+        "W2-B22",
+        "W2-A09"
+      ],
+      "secondary_co_occurrence_cases": [
+        "W2-B23",
+        "W2-B24"
+      ],
+      "total_affected_positive_cases": 7,
+      "root_cause": "construction_source_bound in backend/app/simulation/geometry_functions/registry.py (line 4381) allows '(?:điểm|đỉnh)' before the projected source point but only '(?:điểm|trọng tâm|trung điểm)' after 'là|trùng với', rejecting 'hình chiếu vuông góc của A\\' trên mặt phẳng (ABC) trùng với đỉnh B'."
+    },
+    "W2-M3": {
+      "id": "W2-M3",
+      "title": "MAT_HAI_DUONG (parallel_two_lines) premise coverage atomic_forms omits divide_segment and oblique prism",
+      "layer": "Registry Source Gate (registry.py:4647-4659 MAT_HAI_DUONG premise guard)",
+      "refusal_code": "SOURCE_PREMISE_UNREAD",
+      "refusal_reason_pattern": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+      "first_refusal_count": 12,
+      "first_refusal_cases": [
+        "W2-B05",
+        "W2-B06",
+        "W2-B11",
+        "W2-B17",
+        "W2-B18",
+        "W2-B23",
+        "W2-B24",
+        "W2-B29",
+        "W2-B30",
+        "W2-B35",
+        "W2-B36",
+        "W2-A06"
+      ],
+      "secondary_co_occurrence_cases": [],
+      "total_affected_positive_cases": 12,
+      "root_cause": "In backend/app/simulation/geometry_functions/registry.py (lines 4647-4659), the MAT_HAI_DUONG (parallel_two_lines) standalone premise guard atomic_forms lists only 'pyramid', 'regular_pyramid', 'prism' ('lăng trụ đứng|hình hộp chữ nhật'), 'regular_polygon', 'rectangle', and 'midpoint', omitting 'divide_segment' and oblique 'lăng trụ' standalone quotes."
+    },
+    "W2-M4": {
+      "id": "W2-M4",
+      "title": "Exact radical radicand ceiling MAX_RADICAND = 10**12 exceeded before squarefree reduction",
+      "layer": "Engine /14 & Exact Radical Kernel (radical.py:103, 214)",
+      "refusal_code": "ENGINE_EXECUTION_FAILED",
+      "refusal_subcode": "RADICAL_DOMAIN_OVERFLOW",
+      "refusal_reason_pattern": "RadicalDomainError: căn thức 122970403125000 vượt trần 1000000000000 — từ chối thay vì treo",
+      "first_refusal_count": 1,
+      "first_refusal_cases": [
+        "W2-A04"
+      ],
+      "secondary_co_occurrence_cases": [],
+      "total_affected_positive_cases": 1,
+      "root_cause": "In W2-A04 (quadrilateral pyramid S.ABCD with AB=6, AD=8, SA=10 cut by plane through A perpendicular to SC), intermediate radical arithmetic produces radicand 122970403125000 = 2^3 * 3^2 * 5^7 * 148^2 > 10^12, triggering MAX_RADICAND = 10**12 in backend/app/simulation/geometry/radical.py:214."
+    },
+    "W2-M5": {
+      "id": "W2-M5",
+      "title": "Adapter /4 Category A _validate_sections lookup fails on primed solid vertex label (\"A'\" vs \"A_prime\")",
+      "layer": "Adapter /4 (adapter4_route.py:261 _validate_sections)",
+      "refusal_code": "PREVIEW_VALIDATION_FAILED",
+      "refusal_reason_pattern": "KeyError: \"A'\" in _validate_sections Caught by build_adapter4_response",
+      "first_refusal_count": 2,
+      "first_refusal_cases": [
+        "W2-A07",
+        "W2-A10"
+      ],
+      "secondary_co_occurrence_cases": [],
+      "total_affected_positive_cases": 2,
+      "root_cause": "Both W2-A07 and W2-A10 pass Bridge /2, Planner /17, Source Gate /18, and Engine /14 with r.status == 'SERVED' and 100% exact mathematical oracle agreement (W2-A07 area_squared = 1875/8). However, in backend/app/ai/adapter4_route.py line 261 (_validate_sections for Category A DINH_CAT_CANH), `point = objects[vertex['label']]` looks up `\"A'\"` directly in `scene3d['objects']` where primed points are keyed by `ir_name(\"A'\") == \"A_prime\"`, raising `KeyError: \"A'\"` and returning PREVIEW_VALIDATION_FAILED."
+    }
+  },
+  "positive_first_refusal_summary": {
+    "SERVED_CORRECT": 5,
+    "W2-M1_divide_segment_inverted_syntax": 23,
+    "W2-M2_orthogonal_projection_dinh_noun": 5,
+    "W2-M3_parallel_two_lines_premise_guard": 12,
+    "W2-M4_radical_domain_ceiling": 1,
+    "W2-M5_adapter4_cat_a_primed_vertex_lookup": 2,
+    "total_positive_cases": 48,
+    "in_memory_joint_diagnostic_oracle_agreement": "48/48 (100.0%)"
+  },
+  "negative_reason_disagreements": [
+    {
+      "id": "W2-N06",
+      "negative_class": "contradictory_solid_kind",
+      "acceptable_categories": [
+        "CONTRADICTION",
+        "GEOMETRY_DEGENERATE"
+      ],
+      "observed_category": "SOURCE_GROUNDING",
+      "observed_code": "SOURCE_PREMISE_UNREAD",
+      "observed_subcode": null,
+      "observed_reason": "tiền đề 'Cho hình chóp S.ABC có đáy ABC là tam giác với AB = 3, AC = 4, BC = 9, cạnh bên SA vuông góc với mặt phẳng (ABC) và SA = 6.' chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+      "explanation": "Source Gate /18 rejected earlier premise wording (W2-M1/W2-M2/W2-M3 or unbacked clause) before downstream geometric/dimension check"
+    },
+    {
+      "id": "W2-N23",
+      "negative_class": "unsupported_topology",
+      "acceptable_categories": [
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "observed_category": "SOURCE_GROUNDING",
+      "observed_code": "UNGROUNDED_VALUE",
+      "observed_subcode": null,
+      "observed_reason": "p3: 'chiều cao của hình chóp bằng 9' không gắn 9 với vai trò của ô này trong một câu đọc trọn",
+      "explanation": "Source Gate /18 rejected earlier premise wording (W2-M1/W2-M2/W2-M3 or unbacked clause) before downstream geometric/dimension check"
+    },
+    {
+      "id": "W2-N25",
+      "negative_class": "missing_dimensions",
+      "acceptable_categories": [
+        "UNDERDETERMINED"
+      ],
+      "observed_category": "UNSUPPORTED_CAPABILITY",
+      "observed_code": "UNSUPPORTED_CAPABILITY",
+      "observed_subcode": null,
+      "observed_reason": "mg1: mặt cho bằng quan hệ chỉ dùng cho thiết diện / diện tích thiết diện",
+      "explanation": "Planner /17 rejected non-section metric goal on relation-defined plane with UNSUPPORTED_CAPABILITY before Source Gate"
+    },
+    {
+      "id": "W2-N27",
+      "negative_class": "missing_dimensions",
+      "acceptable_categories": [
+        "UNDERDETERMINED"
+      ],
+      "observed_category": "SOURCE_GROUNDING",
+      "observed_code": "SOURCE_OBJECT_MISMATCH",
+      "observed_subcode": null,
+      "observed_reason": "p5: vai trò điểm và toán hạng dựng không khớp nguồn",
+      "explanation": "Source Gate /18 rejected earlier premise wording (W2-M1/W2-M2/W2-M3 or unbacked clause) before downstream geometric/dimension check"
+    },
+    {
+      "id": "W2-N29",
+      "negative_class": "underconstrained_geometry",
+      "acceptable_categories": [
+        "UNDERDETERMINED",
+        "INPUT_INVALID"
+      ],
+      "observed_category": "SOURCE_GROUNDING",
+      "observed_code": "SOURCE_PREMISE_UNREAD",
+      "observed_subcode": null,
+      "observed_reason": "tiền đề 'Lấy điểm M bất kỳ thuộc cạnh SA.' chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+      "explanation": "Source Gate /18 rejected earlier premise wording (W2-M1/W2-M2/W2-M3 or unbacked clause) before downstream geometric/dimension check"
+    },
+    {
+      "id": "W2-N30",
+      "negative_class": "underconstrained_geometry",
+      "acceptable_categories": [
+        "UNDERDETERMINED"
+      ],
+      "observed_category": "SOURCE_GROUNDING",
+      "observed_code": "SOURCE_OBJECT_MISMATCH",
+      "observed_subcode": null,
+      "observed_reason": "p4: vai trò ảnh và điểm chiếu không khớp nguồn",
+      "explanation": "Source Gate /18 rejected earlier premise wording (W2-M1/W2-M2/W2-M3 or unbacked clause) before downstream geometric/dimension check"
+    },
+    {
+      "id": "W2-N34",
+      "negative_class": "wrong_question_target",
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "observed_category": "UNSUPPORTED_CAPABILITY",
+      "observed_code": "UNSUPPORTED_CAPABILITY",
+      "observed_subcode": null,
+      "observed_reason": "mg1: mặt cho bằng quan hệ chỉ dùng cho thiết diện / diện tích thiết diện",
+      "explanation": "Planner /17 rejected non-section metric goal on relation-defined plane with UNSUPPORTED_CAPABILITY before Source Gate"
+    },
+    {
+      "id": "W2-N35",
+      "negative_class": "wrong_question_target",
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "observed_category": "UNSUPPORTED_CAPABILITY",
+      "observed_code": "UNSUPPORTED_CAPABILITY",
+      "observed_subcode": null,
+      "observed_reason": "mg1: mặt cho bằng quan hệ chỉ dùng cho thiết diện / diện tích thiết diện",
+      "explanation": "Planner /17 rejected non-section metric goal on relation-defined plane with UNSUPPORTED_CAPABILITY before Source Gate"
+    },
+    {
+      "id": "W2-N36",
+      "negative_class": "wrong_question_target",
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "observed_category": "UNSUPPORTED_CAPABILITY",
+      "observed_code": "UNSUPPORTED_CAPABILITY",
+      "observed_subcode": null,
+      "observed_reason": "mg1: mặt cho bằng quan hệ chỉ dùng cho thiết diện / diện tích thiết diện",
+      "explanation": "Planner /17 rejected non-section metric goal on relation-defined plane with UNSUPPORTED_CAPABILITY before Source Gate"
+    },
+    {
+      "id": "W2-N41",
+      "negative_class": "ambiguous_anaphoric_area_request",
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "AMBIGUOUS"
+      ],
+      "observed_category": "UNSUPPORTED_CAPABILITY",
+      "observed_code": "UNSUPPORTED_CAPABILITY",
+      "observed_subcode": null,
+      "observed_reason": "mg1: mặt cho bằng quan hệ chỉ dùng cho thiết diện / diện tích thiết diện",
+      "explanation": "Planner /17 rejected non-section metric goal on relation-defined plane with UNSUPPORTED_CAPABILITY before Source Gate"
+    },
+    {
+      "id": "W2-N42",
+      "negative_class": "ambiguous_anaphoric_area_request",
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "AMBIGUOUS"
+      ],
+      "observed_category": "UNSUPPORTED_CAPABILITY",
+      "observed_code": "UNSUPPORTED_CAPABILITY",
+      "observed_subcode": null,
+      "observed_reason": "mg1: mặt cho bằng quan hệ chỉ dùng cho thiết diện / diện tích thiết diện",
+      "explanation": "Planner /17 rejected non-section metric goal on relation-defined plane with UNSUPPORTED_CAPABILITY before Source Gate"
+    },
+    {
+      "id": "W2-N43",
+      "negative_class": "contradictory_cut_point_claims",
+      "acceptable_categories": [
+        "CONTRADICTION",
+        "GEOMETRY_DEGENERATE"
+      ],
+      "observed_category": "UNSUPPORTED_CAPABILITY",
+      "observed_code": "UNSUPPORTED_CAPABILITY",
+      "observed_subcode": null,
+      "observed_reason": "sec: ['FG'] không phải cạnh bên của S.EFG",
+      "explanation": "Planner /17 rejected stated cut on base edge FG with UNSUPPORTED_CAPABILITY ('không phải cạnh bên')"
+    },
+    {
+      "id": "W2-N44",
+      "negative_class": "contradictory_cut_point_claims",
+      "acceptable_categories": [
+        "CONTRADICTION",
+        "GEOMETRY_DEGENERATE",
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "observed_category": "SOURCE_GROUNDING",
+      "observed_code": "SOURCE_OBJECT_MISMATCH",
+      "observed_subcode": null,
+      "observed_reason": "p4: vai trò điểm và toán hạng dựng không khớp nguồn",
+      "explanation": "Source Gate /18 rejected earlier premise wording (W2-M1/W2-M2/W2-M3 or unbacked clause) before downstream geometric/dimension check"
+    },
+    {
+      "id": "W2-N45",
+      "negative_class": "contradictory_cut_point_claims",
+      "acceptable_categories": [
+        "CONTRADICTION",
+        "GEOMETRY_DEGENERATE",
+        "INPUT_INVALID"
+      ],
+      "observed_category": "SOURCE_GROUNDING",
+      "observed_code": "SOURCE_OBJECT_MISMATCH",
+      "observed_subcode": null,
+      "observed_reason": "p6: vai trò điểm và toán hạng dựng không khớp nguồn",
+      "explanation": "Source Gate /18 rejected earlier premise wording (W2-M1/W2-M2/W2-M3 or unbacked clause) before downstream geometric/dimension check"
+    },
+    {
+      "id": "W2-N47",
+      "negative_class": "degenerate_or_tampered_section_plane",
+      "acceptable_categories": [
+        "GEOMETRY_DEGENERATE",
+        "CONTRADICTION",
+        "UNDERDETERMINED"
+      ],
+      "observed_category": "SOURCE_GROUNDING",
+      "observed_code": "SOURCE_PREMISE_UNREAD",
+      "observed_subcode": null,
+      "observed_reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+      "explanation": "Source Gate /18 rejected earlier premise wording (W2-M1/W2-M2/W2-M3 or unbacked clause) before downstream geometric/dimension check"
+    }
+  ]
+}
