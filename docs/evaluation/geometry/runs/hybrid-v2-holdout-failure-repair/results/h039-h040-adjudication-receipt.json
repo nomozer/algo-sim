@@ -1,0 +1,455 @@
+{
+  "schema": "HOLDOUT_SCORER_DISCREPANCY_ADJUDICATION_RECEIPT/1",
+  "task_code": "HYBRID_V2_HOLDOUT_FAILURE_REPAIR",
+  "product_commit": "e3678608f1f7110d7046c9c43c312c69d7614f55",
+  "t3_candidate_commit": "e7bcff316ee6d443e753105a887e0689ea04848b",
+  "measured_system_tree_hash": "84ccf653441d1bd54f352756b9a5e917ee02a9ea11a83ac60585dfc585f3f99f",
+  "evaluation_classification": "POST_FEEDBACK_DEVELOPMENT_REGRESSION",
+  "summary_comparison": {
+    "original_independent_holdout_129c1a95": {
+      "classification": "FROZEN_INDEPENDENT_HOLDOUT_BASELINE",
+      "served_correct": 9,
+      "false_refusals": 33,
+      "wrong_served": 0,
+      "negatives_refused": 42,
+      "refused_correct_reason": 23,
+      "exact_oracle_agreement_among_served": "9/9"
+    },
+    "post_feedback_raw_evaluator_e7bcff31": {
+      "classification": "POST_FEEDBACK_DEVELOPMENT_REGRESSION_RAW_SCORER",
+      "served_correct": 38,
+      "false_refusals": 2,
+      "reported_wrong_served": 2,
+      "reported_wrong_served_cases": [
+        "H039",
+        "H040"
+      ],
+      "negatives_refused": 42,
+      "refused_correct_reason": 27
+    },
+    "post_feedback_independently_adjudicated_e7bcff31": {
+      "classification": "POST_FEEDBACK_DEVELOPMENT_REGRESSION_ADJUDICATED",
+      "served_correct": 40,
+      "false_refusals": 2,
+      "false_refusal_cases": [
+        "H037",
+        "H042"
+      ],
+      "wrong_served": 0,
+      "negatives_refused": 42,
+      "refused_correct_reason": 27,
+      "exact_oracle_agreement_among_served": "40/40"
+    }
+  },
+  "adjudicated_cases": {
+    "H039": {
+      "case_id": "H039",
+      "problem_text": "Cho hình lăng trụ ABC.A'B'C' có đáy ABC là tam giác vuông tại A với AB = 6, AC = 8. Hình chiếu vuông góc của A' lên mặt phẳng (ABC) là trung điểm H của BC, cạnh bên AA' = 13. Mặt phẳng (α) qua C, vuông góc với AA', cắt các cạnh bên AA' và BB' lần lượt tại E và F. Xác định thiết diện CEF của hình lăng trụ cắt bởi (α).",
+      "question_type": "section_only",
+      "expected_disposition": "SERVE",
+      "oracle_geometry_plane": {
+        "through": "C",
+        "perpendicular_line": [
+          "A",
+          "A'"
+        ]
+      },
+      "oracle_expected": {
+        "section_id": "sec1",
+        "area_goal_id": null,
+        "vertex_count": 3,
+        "boundary": [
+          {
+            "vertex": "C"
+          },
+          {
+            "edge": [
+              "A",
+              "A'"
+            ],
+            "t": "32/169"
+          },
+          {
+            "edge": [
+              "B",
+              "B'"
+            ],
+            "t": "14/169"
+          }
+        ],
+        "area_squared": null
+      },
+      "independent_exact_fraction_verification": {
+        "plane_normal_euclidean": [
+          "3",
+          "4",
+          "12"
+        ],
+        "through_point_euclidean": [
+          "0",
+          "8",
+          "0"
+        ],
+        "signed_plane_distances": {
+          "A": "-32",
+          "B": "-14",
+          "C": "0",
+          "A'": "137",
+          "B'": "155",
+          "C'": "169"
+        },
+        "solid_vertices_on_plane": [
+          "C"
+        ],
+        "strict_interior_edge_cuts": [
+          {
+            "edge": [
+              "B",
+              "B'"
+            ],
+            "t": "14/169",
+            "coord_euclidean": [
+              "1056/169",
+              "56/169",
+              "168/169"
+            ]
+          },
+          {
+            "edge": [
+              "A",
+              "A'"
+            ],
+            "t": "32/169",
+            "coord_euclidean": [
+              "96/169",
+              "128/169",
+              "384/169"
+            ]
+          }
+        ],
+        "independent_area_squared": "82944/169",
+        "matches_oracle_expected_100_percent": true
+      },
+      "product_execution_verification": {
+        "route_status": "SERVED",
+        "adapter4_status": "SERVED",
+        "envelope_status": "ok",
+        "certificate_category": "DINH_CAT_CANH",
+        "route_d_section_vertices": [
+          {
+            "label": "E",
+            "edge": [
+              "A",
+              "A'"
+            ],
+            "provenance": "SOURCE_NAMED",
+            "stated": true
+          },
+          {
+            "label": "F",
+            "edge": [
+              "B",
+              "B'"
+            ],
+            "provenance": "SOURCE_NAMED",
+            "stated": true
+          },
+          {
+            "label": "C",
+            "edge": [
+              "C",
+              "C'"
+            ],
+            "provenance": "THROUGH_POINT_REUSE",
+            "stated": false
+          }
+        ],
+        "scene3d_polygon_vertex_count": 3,
+        "scene3d_polygon_exact_verification": [
+          {
+            "ordinal": 0,
+            "kind": "SOLID_EDGE_INTERSECTION",
+            "edge": [
+              "B",
+              "B'"
+            ],
+            "t": "14/169",
+            "scene_coord": [
+              "176/169",
+              "7/169",
+              "14/169"
+            ],
+            "matches_oracle_edge_and_t_exact": true
+          },
+          {
+            "ordinal": 1,
+            "kind": "SOLID_EDGE_INTERSECTION",
+            "edge": [
+              "A",
+              "A'"
+            ],
+            "t": "32/169",
+            "scene_coord": [
+              "16/169",
+              "16/169",
+              "32/169"
+            ],
+            "matches_oracle_edge_and_t_exact": true
+          },
+          {
+            "ordinal": 2,
+            "kind": "SOLID_VERTEX",
+            "vertex": "C",
+            "scene_coord": [
+              "0",
+              "1",
+              "0"
+            ],
+            "matches_solid_vertex_exact": true
+          }
+        ],
+        "scene3d_identity_diagnostics": [],
+        "product_area_squared": null,
+        "oracle_area_squared": null,
+        "area_squared_exact_match": true
+      },
+      "raw_evaluator_discrepancy": {
+        "raw_evaluator_outcome": "WRONG_SERVED",
+        "raw_evaluator_oracle_mismatches": [
+          "Category A cut edges not in oracle boundary: [['C', \"C'\"]]"
+        ],
+        "false_positive_mechanism_file": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-section-holdout/tools/evaluate_holdout.py",
+        "false_positive_mechanism_lines": "64-73 (_oracle_boundary) and 97-101 (_check_category_a)",
+        "mechanism_explanation": "In evaluate_holdout.py, _oracle_boundary(exp) returns (verts, edges, edge_sets) where verts holds solid vertices lying on the cutting plane ({\"vertex\": \"C\"} for H039; {\"vertex\": \"A\"} for H040) and edge_sets holds only strict interior cut edges (0 < t < 1). However, _check_category_a(sec, exp) unpacks `_, _, o_sets = _oracle_boundary(exp)`—discarding `verts`—and checks `frozenset(v.get(\"edge\")) in o_sets` for every vertex entry in `route_d.sections[0].vertices`. In Category A (`DINH_CAT_CANH`), the cutting-plane through_point (`C` in H039, `A` in H040) is a solid vertex represented with `provenance == \"THROUGH_POINT_REUSE\"`, `stated == False`, and carrier lateral edge `v[\"edge\"]` (`[\"C\", \"C'\"]` in H039; `[\"S\", \"A\"]` in H040), while in scene3d `td_sec1` it is emitted with `vertex_sources[i].kind == \"SOLID_VERTEX\"` and `endpoint_entities[i].provenance_kind == \"SOLID_VERTEX\"`. Because _check_category_a did not check `v[\"provenance\"] == \"THROUGH_POINT_REUSE\"` against `o_verts`, it falsely treated the solid vertex as an interior edge-cut point.",
+        "reconciled_category_a_mismatches": [],
+        "adjudicated_outcome": "SERVED_CORRECT"
+      }
+    },
+    "H040": {
+      "case_id": "H040",
+      "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4 và chiều cao bằng 3. Gọi (P) là mặt phẳng qua A và vuông góc với SC; (P) cắt SB, SC, SD theo thứ tự tại E, F, K. Tính diện tích tứ giác AEFK.",
+      "question_type": "area_only",
+      "expected_disposition": "SERVE",
+      "oracle_geometry_plane": {
+        "through": "A",
+        "perpendicular_line": [
+          "S",
+          "C"
+        ]
+      },
+      "oracle_expected": {
+        "section_id": "sec1",
+        "area_goal_id": "q1",
+        "vertex_count": 4,
+        "boundary": [
+          {
+            "vertex": "A"
+          },
+          {
+            "edge": [
+              "S",
+              "D"
+            ],
+            "t": "1/9"
+          },
+          {
+            "edge": [
+              "S",
+              "C"
+            ],
+            "t": "1/17"
+          },
+          {
+            "edge": [
+              "S",
+              "B"
+            ],
+            "t": "1/9"
+          }
+        ],
+        "area_squared": "256/153"
+      },
+      "independent_exact_fraction_verification": {
+        "plane_normal_euclidean": [
+          "2",
+          "2",
+          "-3"
+        ],
+        "through_point_euclidean": [
+          "0",
+          "0",
+          "0"
+        ],
+        "signed_plane_distances": {
+          "S": "-1",
+          "A": "0",
+          "B": "8",
+          "C": "16",
+          "D": "8"
+        },
+        "solid_vertices_on_plane": [
+          "A"
+        ],
+        "strict_interior_edge_cuts": [
+          {
+            "edge": [
+              "S",
+              "B"
+            ],
+            "t": "1/9",
+            "coord_euclidean": [
+              "20/9",
+              "16/9",
+              "8/3"
+            ]
+          },
+          {
+            "edge": [
+              "S",
+              "C"
+            ],
+            "t": "1/17",
+            "coord_euclidean": [
+              "36/17",
+              "36/17",
+              "48/17"
+            ]
+          },
+          {
+            "edge": [
+              "S",
+              "D"
+            ],
+            "t": "1/9",
+            "coord_euclidean": [
+              "16/9",
+              "20/9",
+              "8/3"
+            ]
+          }
+        ],
+        "independent_area_squared": "256/153",
+        "matches_oracle_expected_100_percent": true
+      },
+      "product_execution_verification": {
+        "route_status": "SERVED",
+        "adapter4_status": "SERVED",
+        "envelope_status": "ok",
+        "certificate_category": "DINH_CAT_CANH",
+        "route_d_section_vertices": [
+          {
+            "label": "A",
+            "edge": [
+              "S",
+              "A"
+            ],
+            "provenance": "THROUGH_POINT_REUSE",
+            "stated": false
+          },
+          {
+            "label": "E",
+            "edge": [
+              "S",
+              "B"
+            ],
+            "provenance": "SOURCE_NAMED",
+            "stated": true
+          },
+          {
+            "label": "F",
+            "edge": [
+              "S",
+              "C"
+            ],
+            "provenance": "SOURCE_NAMED",
+            "stated": true
+          },
+          {
+            "label": "K",
+            "edge": [
+              "S",
+              "D"
+            ],
+            "provenance": "SOURCE_NAMED",
+            "stated": true
+          }
+        ],
+        "scene3d_polygon_vertex_count": 4,
+        "scene3d_polygon_exact_verification": [
+          {
+            "ordinal": 0,
+            "kind": "SOLID_VERTEX",
+            "vertex": "A",
+            "scene_coord": [
+              "0",
+              "0",
+              "0"
+            ],
+            "matches_solid_vertex_exact": true
+          },
+          {
+            "ordinal": 1,
+            "kind": "SOLID_EDGE_INTERSECTION",
+            "edge": [
+              "S",
+              "B"
+            ],
+            "t": "1/9",
+            "scene_coord": [
+              "5/9",
+              "4/9",
+              "8/9"
+            ],
+            "matches_oracle_edge_and_t_exact": true
+          },
+          {
+            "ordinal": 2,
+            "kind": "SOLID_EDGE_INTERSECTION",
+            "edge": [
+              "S",
+              "C"
+            ],
+            "t": "1/17",
+            "scene_coord": [
+              "9/17",
+              "9/17",
+              "16/17"
+            ],
+            "matches_oracle_edge_and_t_exact": true
+          },
+          {
+            "ordinal": 3,
+            "kind": "SOLID_EDGE_INTERSECTION",
+            "edge": [
+              "S",
+              "D"
+            ],
+            "t": "1/9",
+            "scene_coord": [
+              "4/9",
+              "5/9",
+              "8/9"
+            ],
+            "matches_oracle_edge_and_t_exact": true
+          }
+        ],
+        "scene3d_identity_diagnostics": [],
+        "product_area_squared": "256/153",
+        "oracle_area_squared": "256/153",
+        "area_squared_exact_match": true
+      },
+      "raw_evaluator_discrepancy": {
+        "raw_evaluator_outcome": "WRONG_SERVED",
+        "raw_evaluator_oracle_mismatches": [
+          "Category A cut edges not in oracle boundary: [['A', 'S']]"
+        ],
+        "false_positive_mechanism_file": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-section-holdout/tools/evaluate_holdout.py",
+        "false_positive_mechanism_lines": "64-73 (_oracle_boundary) and 97-101 (_check_category_a)",
+        "mechanism_explanation": "In evaluate_holdout.py, _oracle_boundary(exp) returns (verts, edges, edge_sets) where verts holds solid vertices lying on the cutting plane ({\"vertex\": \"C\"} for H039; {\"vertex\": \"A\"} for H040) and edge_sets holds only strict interior cut edges (0 < t < 1). However, _check_category_a(sec, exp) unpacks `_, _, o_sets = _oracle_boundary(exp)`—discarding `verts`—and checks `frozenset(v.get(\"edge\")) in o_sets` for every vertex entry in `route_d.sections[0].vertices`. In Category A (`DINH_CAT_CANH`), the cutting-plane through_point (`C` in H039, `A` in H040) is a solid vertex represented with `provenance == \"THROUGH_POINT_REUSE\"`, `stated == False`, and carrier lateral edge `v[\"edge\"]` (`[\"C\", \"C'\"]` in H039; `[\"S\", \"A\"]` in H040), while in scene3d `td_sec1` it is emitted with `vertex_sources[i].kind == \"SOLID_VERTEX\"` and `endpoint_entities[i].provenance_kind == \"SOLID_VERTEX\"`. Because _check_category_a did not check `v[\"provenance\"] == \"THROUGH_POINT_REUSE\"` against `o_verts`, it falsely treated the solid vertex as an interior edge-cut point.",
+        "reconciled_category_a_mismatches": [],
+        "adjudicated_outcome": "SERVED_CORRECT"
+      }
+    }
+  },
+  "verdict": "ADJUDICATED_PASS_ZERO_GENUINE_WRONG_SERVED"
+}

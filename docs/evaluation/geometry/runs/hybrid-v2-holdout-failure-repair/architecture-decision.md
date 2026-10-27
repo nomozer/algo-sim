@@ -89,7 +89,7 @@
 
 ---
 
-## 7. Phase F — R2 (Scene3D Auxiliary-Point Label Hygiene — Explicit Deferral)
+## 7. Phase F — R2 (`R2_AUXILIARY_POINT_NOTATION_DEFERRED`)
 
 - **Audit of Locked Scene3D Contracts**:
   1. **Locked Contract O4 (`pedagogical-construction-sequencing`)**: `backend/tests/geometry/construction_sequencing.py` (enforced by `backend/tests/geometry/test_pedagogical_sequencing.py`) requires every `point3` object with `producer == "construct_point.translate"` (i.e. `H, H1` in `MAT_SONG_SONG`, `MAT_HAI_DUONG`, `MAT_VUONG_DUONG`) to appear in `formation.steps`, carry `notation == <point_id>` (`"H"`, `"H1"`), and have a formation event `learner_text` containing `"vectơ"` and `f"vectơ {names[1]}{names[0]}"` (`"Qua M dựng điểm H sao cho vectơ MH = vectơ BC."`).

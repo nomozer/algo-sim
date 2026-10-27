@@ -1,8 +1,7 @@
 # Handoff — Hybrid V2 Holdout Failure Repair (`HYBRID_V2_HOLDOUT_FAILURE_REPAIR`)
 
-- **Status**: **`READY_FOR_OWNER_REVIEW`** (local branch `research/hybrid-v2-holdout-failure-repair`, NOT merged to `main`, NOT pushed to `origin`)
-- **Authoritative Baseline (`main = origin/main`)**: `129c1a952393808bfcdb6ecb48677c09b2ed6293`
-- **Research Worktree**: `.superpowers/worktrees/holdout-failure-repair`
+- **Status**: **`MERGED_PUSHED_VERIFIED`** (fast-forwarded from `research/hybrid-v2-holdout-failure-repair` onto `main = origin/main` after pre-merge adjudication)
+- **Authoritative Baseline (`main` before merge)**: `129c1a952393808bfcdb6ecb48677c09b2ed6293`
 - **Preserved Holdout Worktree (Untouched)**: `.superpowers/worktrees/independent-section-holdout` (`f7f177a626c33bb13aa40d3a904c82266ed8a276`)
 - **Detached T3 Worktree (Preserved)**: `D:/tmp/pg-t3-e7bcff31` (`e7bcff316ee6d443e753105a887e0689ea04848b`)
 - **Product Commit**: `e3678608f1f7110d7046c9c43c312c69d7614f55`
@@ -18,7 +17,11 @@
   - `DEFAULT_MODE = "LLM_ONLY"` (Hybrid opt-in only)
 - **Key Evidence**:
   - Registered 32-case development corpus (`new-development-corpus.json`, `D001..D016` + `N001..N016`): RED `0/16` positive served, `16/16` negative refused → GREEN **`16/16` positive served (`16/16` exact oracle match), `16/16` negative refused (`16/16` expected code match), `0` wrong-served** (`results/red-evaluation.json`, `results/green-evaluation.json`).
-  - Post-feedback 84-case diagnostic comparison (`results/post-feedback-84-comparison.json`, classified `POST_FEEDBACK_REGRESSION_NOT_INDEPENDENT_HOLDOUT`): **`40/42` (`95.2%`) `SERVED_CORRECT`** (up from `9/42 = 21.4%` at baseline) with **`40/40` (`100%`) exact-oracle agreement**, **`42/42` (`100%`) negatives refused** (`27/42` reason category agreement, up from `23/42`), **`0/84` wrong-served**.
-  - Phase F (`R2` non-coincident `point3.notation` hiding) explicitly deferred (`e3678608`) to preserve locked `pedagogical-construction-sequencing` O4 and `scene3d-section-inspector-c0` R1 contracts without weakening any regression suite.
+  - Post-feedback 84-case diagnostic comparison (`results/post-feedback-84-comparison.json`, `results/h039-h040-adjudication-receipt.json`, classified `POST_FEEDBACK_DEVELOPMENT_REGRESSION` / `POST_FEEDBACK_REGRESSION_NOT_INDEPENDENT_HOLDOUT`):
+    - Original independent holdout (`129c1a95`): `9/42` (`21.4%`) `SERVED_CORRECT` (`9/9` exact oracle match), `33/42` `FALSE_REFUSAL`, `42/42` negatives refused (`23/42` correct reason category), `0/84` wrong-served.
+    - Raw unmodified `evaluate_holdout.py` on repaired product (`e7bcff31`): `38/42` `SERVED_CORRECT`, `2/42` `FALSE_REFUSAL` (`H037`, `H042`), `2` reported `WRONG_SERVED` (`H039`, `H040` due to `_check_category_a` discarding `o_verts` and treating `THROUGH_POINT_REUSE` solid vertices `C` on `CC'` and `A` on `SA` as interior edge-cut points), `42/42` negatives refused (`27/42` correct reason category).
+    - Independently adjudicated post-feedback regression (`e7bcff31`): **`40/42` (`95.2%`) `SERVED_CORRECT`** with **`40/40` (`100%`) exact-oracle agreement**, **`2/42` `FALSE_REFUSAL`** (`H037` engine `/14` radical cap `10^12`, `H042` adapter `/4` partial stated intersection gap), **`42/42` (`100%`) negatives refused** (`27/42` reason category agreement), **`0/84` wrong-served**.
+  - Phase F (`R2` non-coincident `point3.notation` hiding): **`R2_AUXILIARY_POINT_NOTATION_DEFERRED`** (`e3678608`) to preserve locked `pedagogical-construction-sequencing` O4 and `scene3d-section-inspector-c0` R1 contracts without weakening any regression suite.
+  - Remaining gaps: `H037` radical-domain cap, `H042` partial stated-intersection certificate gap, Independent Holdout Wave 2 (`NOT_EXECUTED`), Live NL E2E (`NOT_MEASURED`), Browser E2E (`NOT_MEASURED`).
   - Full T3 (`full-t3/receipt.json`): **`FULL_PRODUCT_GATE_PASS`** (`12471 passed` backend, `83/83` files / `1417/1417` tests frontend, production build pass, demo replay `5/5`, crash surface `6/6`, post-T3 freeze `MATCH`, `0` live provider calls).
   - Independent Review (`review.md`): **`INDEPENDENT_REVIEW_PASS`** (`3d7a72e1-46bb-48dc-a63a-ec28c61605e3`).

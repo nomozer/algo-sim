@@ -2,7 +2,7 @@
   "run_id": "hybrid-v2-holdout-failure-repair",
   "task_code": "HYBRID_V2_HOLDOUT_FAILURE_REPAIR",
   "date": "2026-10-27",
-  "authorization": "Owner GO 2026-10-27 (HYBRID_V2_HOLDOUT_FAILURE_REPAIR): bounded repair of contract/Bridge/Planner and Source Gate defects M1-M5 from verified main 129c1a95, with R2 explicitly deferred to preserve locked O4/R1 Scene3D contracts; no merge, push, worktree cleanup, live provider calls, or default mode change.",
+  "authorization": "Owner GO 2026-10-27 (HYBRID_V2_HOLDOUT_FAILURE_REPAIR + PREMERGE ADJUDICATION AND MAIN INTEGRATION): bounded repair of contract/Bridge/Planner and Source Gate defects M1-M5 from verified main 129c1a95, with R2 recorded as R2_AUXILIARY_POINT_NOTATION_DEFERRED to preserve locked O4/R1 Scene3D contracts, independent exact-Fraction adjudication of H039/H040, fast-forward merge to main, and normal push to origin.",
   "branch": "research/hybrid-v2-holdout-failure-repair",
   "worktree": ".superpowers/worktrees/holdout-failure-repair",
   "main_before": "129c1a952393808bfcdb6ecb48677c09b2ed6293",
@@ -10,7 +10,8 @@
     "m1_m5_initial": "7690e400b4764e154ab007200f4a6f49e81b871e",
     "m1_m5_refinements": "6c9c8ed00fa6859216c563a35195e74f98643198",
     "product_final": "e3678608f1f7110d7046c9c43c312c69d7614f55",
-    "t3_candidate": "e7bcff316ee6d443e753105a887e0689ea04848b"
+    "t3_candidate": "e7bcff316ee6d443e753105a887e0689ea04848b",
+    "docs_initial": "a29796efb2ae546d9befcc03ab903bfb2d42329e"
   },
   "measured_system": {
     "files": 118,
@@ -43,17 +44,29 @@
     ]
   },
   "post_feedback_84_comparison": {
-    "classification": "POST_FEEDBACK_REGRESSION_NOT_INDEPENDENT_HOLDOUT",
+    "classification": "POST_FEEDBACK_DEVELOPMENT_REGRESSION",
+    "subclassification": "POST_FEEDBACK_REGRESSION_NOT_INDEPENDENT_HOLDOUT",
     "baseline_served_correct": 9,
-    "repaired_reconciled_served_correct": 40,
+    "raw_evaluator_served_correct": 38,
+    "raw_evaluator_reported_wrong_served": 2,
+    "raw_evaluator_reported_wrong_served_cases": [
+      "H039",
+      "H040"
+    ],
+    "repaired_adjudicated_served_correct": 40,
     "positive_total": 42,
     "exact_oracle_agree": 40,
     "false_refusals": 2,
+    "false_refusal_cases": [
+      "H037",
+      "H042"
+    ],
     "negatives_refused": 42,
     "negative_total": 42,
     "negative_reason_agreement": 27,
     "wrong_served": 0,
-    "file": "results/post-feedback-84-comparison.json"
+    "file": "results/post-feedback-84-comparison.json",
+    "adjudication_receipt": "results/h039-h040-adjudication-receipt.json"
   },
   "tiers": {
     "T0": "IMPACT_GATE (--base 129c1a95; src/code-index-sync.test.ts 3/3 + PYTEST)",
@@ -90,14 +103,19 @@
   "default_mode": "LLM_ONLY",
   "hybrid": "OPT_IN_ONLY",
   "provider_calls": 0,
+  "r2_status": "R2_AUXILIARY_POINT_NOTATION_DEFERRED",
   "classification": "AUTHORED_DEVELOPMENT_AND_POST_FEEDBACK_REGRESSION",
-  "independent_holdout": "REQUIRES_NEW_BLIND_HOLDOUT_AFTER_REPAIR",
-  "live_nl_e2e": "LIVE_NL_E2E_NOT_MEASURED",
-  "browser_evidence": "BROWSER_EVIDENCE_NOT_MEASURED",
+  "independent_holdout_wave_2": "NOT_EXECUTED",
+  "live_nl_e2e": "NOT_MEASURED",
+  "browser_e2e": "NOT_MEASURED",
   "open_gaps": [
-    "REQUIRES_NEW_BLIND_HOLDOUT_AFTER_REPAIR (previous 84-case holdout reclassified as POST_FEEDBACK_DEVELOPMENT_REGRESSION)",
-    "R2_AUXILIARY_POINT_NOTATION_DEFERRED (requires Owner decision on pedagogical-construction-sequencing O4 / scene3d-section-inspector-c0 R1 contract)"
+    "R2_AUXILIARY_POINT_NOTATION_DEFERRED (requires Owner decision on pedagogical-construction-sequencing O4 / scene3d-section-inspector-c0 R1 contract)",
+    "H037: radical-domain cap (3142715144400 > 10^12 in locked engine.py /14)",
+    "H042: partial stated-intersection certificate gap (1 stated cut point out of 4 section vertices in locked adapter4_route.py /4)",
+    "Independent holdout Wave 2: NOT_EXECUTED (previous 84-case holdout reclassified as POST_FEEDBACK_DEVELOPMENT_REGRESSION)",
+    "Live NL E2E: NOT_MEASURED",
+    "Browser E2E: NOT_MEASURED"
   ],
   "t3_checkout": "D:/tmp/pg-t3-e7bcff31 (detached e7bcff31, left in place; frontend/node_modules is a junction)",
-  "status": "READY_FOR_OWNER_REVIEW - not merged, not pushed"
+  "status": "MERGED_PUSHED_VERIFIED"
 }
