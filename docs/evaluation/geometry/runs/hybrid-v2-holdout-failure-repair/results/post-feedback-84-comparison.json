@@ -3,8 +3,10 @@
   "evaluation_classification": "POST_FEEDBACK_REGRESSION_NOT_INDEPENDENT_HOLDOUT",
   "live_provider_calls": 0,
   "baseline_product_head": "6c7f6d5b7833ec191f3ee24f99f442d980a981da",
-  "repaired_product_head": "22d615bf97f662b8bf7b25639f386d6243c14397",
-  "repaired_product_tree_backend_app": "acdba5f44560cb0135cf94e4049f56c74115bc6d",
+  "repaired_candidate_head": "e7bcff316ee6d443e753105a887e0689ea04848b",
+  "repaired_product_head": "e3678608f1f7110d7046c9c43c312c69d7614f55",
+  "repaired_product_tree_backend_app": "2e3d57160abd9e3c8ea87cab1ae3c8c1d6a3a1db",
+  "measured_system_tree_hash": "84ccf653441d1bd54f352756b9a5e917ee02a9ea11a83ac60585dfc585f3f99f",
   "baseline_overall": {
     "n": 84,
     "outcomes": {
@@ -116,8 +118,8 @@
       ],
       "explanation": "In evaluate_holdout.py, _check_category_a discarded o_verts from _oracle_boundary(exp) and checked v['edge'] in o_sets for all vertices. In H039 (through_point='C') and H040 (through_point='A', area_squared='256/153'), the vertex with provenance=='THROUGH_POINT_REUSE' is a solid vertex listed in o_verts ({'vertex': 'C'} / {'vertex': 'A'}). Both cases match expected.json 100%."
     },
-    "unicode_word_boundary_in_aux_leaks": {
-      "explanation": "In evaluate_holdout.py line 117, _aux_leaks used ASCII-only (?<![A-Za-z0-9_'])H(?![A-Za-z0-9_']), which matched uppercase 'H' at the start of Vietnamese 'Hình chóp ...' because 'ì' (U+00EC) is non-ASCII. Under Unicode word boundaries (?<![\\w'])H(?![\\w']), 0/40 served cases have auxiliary label leaks."
+    "aux_leaks_and_r2_deferral": {
+      "explanation": "In evaluate_holdout.py line 117, _aux_leaks used ASCII-only (?<![A-Za-z0-9_'])H(?![A-Za-z0-9_']) across all objects (matching 'H' in 'Hình chóp ...' and flagging point3.notation='H'/'H1' which is required by the locked pedagogical-construction-sequencing O4 contract and scene3d-section-inspector-c0 R1 contract). Checking plane3/polygon3/quantity learner fields and non-given status under Unicode word boundaries (?<![\\w'])H(?![\\w']), 0/40 served cases leak auxiliary labels into section/plane/quantity display fields."
     }
   },
   "remaining_false_refusals": [

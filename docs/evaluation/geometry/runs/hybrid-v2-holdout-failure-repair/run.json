@@ -1,0 +1,103 @@
+{
+  "run_id": "hybrid-v2-holdout-failure-repair",
+  "task_code": "HYBRID_V2_HOLDOUT_FAILURE_REPAIR",
+  "date": "2026-10-27",
+  "authorization": "Owner GO 2026-10-27 (HYBRID_V2_HOLDOUT_FAILURE_REPAIR): bounded repair of contract/Bridge/Planner and Source Gate defects M1-M5 from verified main 129c1a95, with R2 explicitly deferred to preserve locked O4/R1 Scene3D contracts; no merge, push, worktree cleanup, live provider calls, or default mode change.",
+  "branch": "research/hybrid-v2-holdout-failure-repair",
+  "worktree": ".superpowers/worktrees/holdout-failure-repair",
+  "main_before": "129c1a952393808bfcdb6ecb48677c09b2ed6293",
+  "commits": {
+    "m1_m5_initial": "7690e400b4764e154ab007200f4a6f49e81b871e",
+    "m1_m5_refinements": "6c9c8ed00fa6859216c563a35195e74f98643198",
+    "product_final": "e3678608f1f7110d7046c9c43c312c69d7614f55",
+    "t3_candidate": "e7bcff316ee6d443e753105a887e0689ea04848b"
+  },
+  "measured_system": {
+    "files": 118,
+    "tree_hash": "84ccf653441d1bd54f352756b9a5e917ee02a9ea11a83ac60585dfc585f3f99f"
+  },
+  "development_corpus_32": {
+    "cases": 32,
+    "red_129c1a95": {
+      "positive_served": 0,
+      "positive_total": 16,
+      "negative_refused": 16,
+      "negative_total": 16,
+      "wrong_served": 0
+    },
+    "green_e7bcff31": {
+      "positive_served": 16,
+      "positive_total": 16,
+      "positive_oracle_agree": 16,
+      "negative_refused": 16,
+      "negative_total": 16,
+      "negative_code_match": 16,
+      "wrong_served": 0
+    },
+    "files": [
+      "new-development-corpus.json",
+      "oracle/new_dev_oracle.py",
+      "oracle/run_dev_eval.py",
+      "results/red-evaluation.json",
+      "results/green-evaluation.json"
+    ]
+  },
+  "post_feedback_84_comparison": {
+    "classification": "POST_FEEDBACK_REGRESSION_NOT_INDEPENDENT_HOLDOUT",
+    "baseline_served_correct": 9,
+    "repaired_reconciled_served_correct": 40,
+    "positive_total": 42,
+    "exact_oracle_agree": 40,
+    "false_refusals": 2,
+    "negatives_refused": 42,
+    "negative_total": 42,
+    "negative_reason_agreement": 27,
+    "wrong_served": 0,
+    "file": "results/post-feedback-84-comparison.json"
+  },
+  "tiers": {
+    "T0": "IMPACT_GATE (--base 129c1a95; src/code-index-sync.test.ts 3/3 + PYTEST)",
+    "T1": "50 passed (test_holdout_failure_repair.py) + 184 passed (sequencing/bridge/display/preview fixtures) + 482 passed (candidate/docs/readiness/integration/acceptance)",
+    "T2": "83 files, 1417/1417 passed",
+    "file": "verification/tiers.json"
+  },
+  "full_t3": "FULL_PRODUCT_GATE_PASS",
+  "full_t3_backend_passed": 12471,
+  "full_t3_frontend_passed": 1417,
+  "full_t3_post_freeze": "MATCH",
+  "full_t3_receipt": "full-t3/receipt.json",
+  "independent_review": {
+    "status": "INDEPENDENT_CODE_REVIEW",
+    "reviewer_subagent": "3d7a72e1-46bb-48dc-a63a-ec28c61605e3",
+    "verdict": "INDEPENDENT_REVIEW_PASS",
+    "blocker": 0,
+    "major": 0,
+    "minor": 0,
+    "nit": 2,
+    "nit_resolution": "RESOLVED in final documentation commit",
+    "file": "review.md"
+  },
+  "versions": {
+    "registry": "geometry-functions/18",
+    "planner": "geometry-fact-planner/17",
+    "engine": "geometry-function-engine/14",
+    "bridge_v2": "typed-fact-next-bridge/2",
+    "adapter4": "hybrid-simulation-adapter/4",
+    "section_certificate": "plane-section-certificate/1"
+  },
+  "cache_version": 130,
+  "cache_decision": "NO_BUMP (candidate_divergence.json)",
+  "default_mode": "LLM_ONLY",
+  "hybrid": "OPT_IN_ONLY",
+  "provider_calls": 0,
+  "classification": "AUTHORED_DEVELOPMENT_AND_POST_FEEDBACK_REGRESSION",
+  "independent_holdout": "REQUIRES_NEW_BLIND_HOLDOUT_AFTER_REPAIR",
+  "live_nl_e2e": "LIVE_NL_E2E_NOT_MEASURED",
+  "browser_evidence": "BROWSER_EVIDENCE_NOT_MEASURED",
+  "open_gaps": [
+    "REQUIRES_NEW_BLIND_HOLDOUT_AFTER_REPAIR (previous 84-case holdout reclassified as POST_FEEDBACK_DEVELOPMENT_REGRESSION)",
+    "R2_AUXILIARY_POINT_NOTATION_DEFERRED (requires Owner decision on pedagogical-construction-sequencing O4 / scene3d-section-inspector-c0 R1 contract)"
+  ],
+  "t3_checkout": "D:/tmp/pg-t3-e7bcff31 (detached e7bcff31, left in place; frontend/node_modules is a junction)",
+  "status": "READY_FOR_OWNER_REVIEW - not merged, not pushed"
+}

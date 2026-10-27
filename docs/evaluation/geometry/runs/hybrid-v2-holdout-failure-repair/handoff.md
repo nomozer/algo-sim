@@ -1,0 +1,24 @@
+# Handoff — Hybrid V2 Holdout Failure Repair (`HYBRID_V2_HOLDOUT_FAILURE_REPAIR`)
+
+- **Status**: **`READY_FOR_OWNER_REVIEW`** (local branch `research/hybrid-v2-holdout-failure-repair`, NOT merged to `main`, NOT pushed to `origin`)
+- **Authoritative Baseline (`main = origin/main`)**: `129c1a952393808bfcdb6ecb48677c09b2ed6293`
+- **Research Worktree**: `.superpowers/worktrees/holdout-failure-repair`
+- **Preserved Holdout Worktree (Untouched)**: `.superpowers/worktrees/independent-section-holdout` (`f7f177a626c33bb13aa40d3a904c82266ed8a276`)
+- **Detached T3 Worktree (Preserved)**: `D:/tmp/pg-t3-e7bcff31` (`e7bcff316ee6d443e753105a887e0689ea04848b`)
+- **Product Commit**: `e3678608f1f7110d7046c9c43c312c69d7614f55`
+- **Frozen Full T3 Candidate Commit**: `e7bcff316ee6d443e753105a887e0689ea04848b`
+- **Measured System**: `118` files, `tree_hash = 84ccf653441d1bd54f352756b9a5e917ee02a9ea11a83ac60585dfc585f3f99f`
+- **Versions**:
+  - `REGISTRY_VERSION = "geometry-functions/18"`
+  - `PLANNER_VERSION = "geometry-fact-planner/17"`
+  - `ENGINE_VERSION = "geometry-function-engine/14"`
+  - `ADAPTER_V4_VERSION = "hybrid-simulation-adapter/4"`
+  - `PLANE_SECTION_CERTIFICATE_VERSION = "plane-section-certificate/1"`
+  - `CACHE_VERSION = "130"` (`NO_BUMP`)
+  - `DEFAULT_MODE = "LLM_ONLY"` (Hybrid opt-in only)
+- **Key Evidence**:
+  - Registered 32-case development corpus (`new-development-corpus.json`, `D001..D016` + `N001..N016`): RED `0/16` positive served, `16/16` negative refused → GREEN **`16/16` positive served (`16/16` exact oracle match), `16/16` negative refused (`16/16` expected code match), `0` wrong-served** (`results/red-evaluation.json`, `results/green-evaluation.json`).
+  - Post-feedback 84-case diagnostic comparison (`results/post-feedback-84-comparison.json`, classified `POST_FEEDBACK_REGRESSION_NOT_INDEPENDENT_HOLDOUT`): **`40/42` (`95.2%`) `SERVED_CORRECT`** (up from `9/42 = 21.4%` at baseline) with **`40/40` (`100%`) exact-oracle agreement**, **`42/42` (`100%`) negatives refused** (`27/42` reason category agreement, up from `23/42`), **`0/84` wrong-served**.
+  - Phase F (`R2` non-coincident `point3.notation` hiding) explicitly deferred (`e3678608`) to preserve locked `pedagogical-construction-sequencing` O4 and `scene3d-section-inspector-c0` R1 contracts without weakening any regression suite.
+  - Full T3 (`full-t3/receipt.json`): **`FULL_PRODUCT_GATE_PASS`** (`12471 passed` backend, `83/83` files / `1417/1417` tests frontend, production build pass, demo replay `5/5`, crash surface `6/6`, post-T3 freeze `MATCH`, `0` live provider calls).
+  - Independent Review (`review.md`): **`INDEPENDENT_REVIEW_PASS`** (`3d7a72e1-46bb-48dc-a63a-ec28c61605e3`).

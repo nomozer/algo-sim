@@ -2,7 +2,7 @@
 
 ## 1. Decision Summary
 
-- **Decision**: Proceed with bounded implementation of **M1–M5** (Contract/Bridge/Planner/Source Gate correctness and Vietnamese section language-coverage repairs) in Commit 1, followed by **R2** (Scene3D auxiliary-point label hygiene) in Commit 2.
+- **Decision**: Proceed with bounded implementation of **M1–M5** (Contract/Bridge/Planner/Source Gate correctness and Vietnamese section language-coverage repairs). Explicitly **defer R2** (non-coincident auxiliary `point3.notation` hiding) in accordance with Section 0 (`"if it can be implemented safely"`), Section 8 (`"If this correction requires a broad frontend/Scene3D contract redesign, STOP and request a separate Owner decision"`), Section 9 (`"No regression suite may be weakened"`), and Section 14.4 (`"R2 resolution or explicit deferral"`).
 - **Version Updates**:
   - `REGISTRY_VERSION`: `geometry-functions/17` → `geometry-functions/18`
   - `PLANNER_VERSION`: `geometry-fact-planner/16` → `geometry-fact-planner/17`
@@ -89,12 +89,12 @@
 
 ---
 
-## 7. Phase F — R2 (Scene3D Auxiliary-Point Label Hygiene — Separate Commit)
+## 7. Phase F — R2 (Scene3D Auxiliary-Point Label Hygiene — Explicit Deferral)
 
-- **Audit of Scene3D Point Classifications**:
-  1. **Source-named points** (`A, B, C, S, M, N, P, H` when `H` is in the source text): keep `notation = <label>`, `source.binding = "EXPLICIT"` or `"DERIVED"`.
-  2. **Plane-construction & cut-vertex internal auxiliaries** (`d["labels"]` and `d.get("feet")` of `MAT_SONG_SONG`, `MAT_HAI_DUONG`, `MAT_VUONG_DUONG`, and `d["labels"]` of `DINH_CAT_CANH`):
-     - Must have `role = "Điểm dựng phụ"`, `source.binding = "AUXILIARY"`, and `notation = None`.
-     - Must have descriptive Vietnamese `label`, `display_label`, and `reference` (e.g. `"Điểm phụ dựng mặt cắt (1)"`, `"Chân đường vuông góc phụ (1)"`) that do not expose internal `H, H1..H4` symbols.
-     - Helper vectors (`derived_<id>_vec`) and construction events/formation steps for these auxiliary calls must also use descriptive Vietnamese text without leaking `H, H1..H4`.
-     - All `point3` objects, coordinates, dependencies, and formation steps remain intact in `scene3d` so Adapter `/4` and frontend playback invariants are 100% preserved.
+- **Audit of Locked Scene3D Contracts**:
+  1. **Locked Contract O4 (`pedagogical-construction-sequencing`)**: `backend/tests/geometry/construction_sequencing.py` (enforced by `backend/tests/geometry/test_pedagogical_sequencing.py`) requires every `point3` object with `producer == "construct_point.translate"` (i.e. `H, H1` in `MAT_SONG_SONG`, `MAT_HAI_DUONG`, `MAT_VUONG_DUONG`) to appear in `formation.steps`, carry `notation == <point_id>` (`"H"`, `"H1"`), and have a formation event `learner_text` containing `"vectơ"` and `f"vectơ {names[1]}{names[0]}"` (`"Qua M dựng điểm H sao cho vectơ MH = vectơ BC."`).
+  2. **Locked Contract R1 (`scene3d-section-inspector-c0`)**: `backend/tests/geometry/test_section_display_identity.py` (`test_R1_plane_explanation_states_the_source_definition_then_the_real_construction`) requires the cutting plane's `explanation` to state `"Dựng (α): mặt phẳng qua M và song song với (ABCD); dựng qua M và hai điểm dựng phụ H, H1."` and locks `ev["learner_text"] == before["learner_text"]`.
+  3. **Locked Contract B (`scene3d-plane-section-display-identity`) & `test_typedfactnext_planner_bridge.py:487`**: `test_typedfactnext_planner_bridge.py:487` requires `objs[d]["notation"]` for `d in mat["depends"]` (`M, H, H1`) to be strings on non-coincident auxiliary points while forbidding `"(MHH1)"` or `"qua M, H, H1"` on any plane/section field; `test_B_a_section_with_unnamed_vertices_is_not_named_through_a_coincident_construction_point` clears `objs["H"]["notation"] = None` specifically when `H` or `H1` coincides in 3D coordinates (`xyz`) with an unnamed section vertex (`I, I1`).
+- **Decision (Explicit Deferral of Non-Coincident `point3.notation` Hiding)**:
+  - Stripping `notation` (`notation = None`) on non-coincident `H, H1..H4` auxiliary `point3` objects directly contradicts the locked `pedagogical-construction-sequencing` O4 contract, `scene3d-section-inspector-c0` R1 contract, and `test_typedfactnext_planner_bridge.py:487`.
+  - Per Section 8 (*"If this correction requires a broad frontend/Scene3D contract redesign, STOP and request a separate Owner decision"*) and Section 9 (*"No regression suite may be weakened"*), non-coincident `point3.notation` hiding is **explicitly deferred** (`backend/app/ai/function_route.py` remains byte-identical to baseline `129c1a952393808bfcdb6ecb48677c09b2ed6293`), preserving 100% of existing Scene3D section/plane/quantity display identity guarantees (`mp_td_*` shows `(α)`, `td_*` shows `"Thiết diện bởi (α)"` with `notation = None`, `kq_*` formulas never leak `H, H1..H4`, unmentioned auxiliary points never carry `"given"` in `display_group`, and source-mentioned `H` in `D012` preserves `notation = "H"`).
