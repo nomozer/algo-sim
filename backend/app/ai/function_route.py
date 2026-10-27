@@ -178,11 +178,46 @@ def _vai_mat_cat(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -> None:
         # Review R1 (run `scene3d-section-inspector-c0`): the fallback explanation read "Dựng mặt phẳng (α) qua ba điểm
         # M, H, H1." as if H, H1 defined (α). Source definition first, then the real construction and its auxiliaries.
         ten = mat.get("display_label") or mat.get("label")
-        phu = ", ".join(ky([x]) for x in d.get("labels") or ())
+        buoc = canh.get("formation", {}).get("steps", [])
+
+        def doi_phu(oid: str, nhan: str, cau: str) -> None:
+            o = objs.get(oid)
+            if not o:
+                return
+            o.update(label=nhan, display_label=nhan, reference=nhan[:1].lower() + nhan[1:], notation=None, role="Điểm dựng phụ")
+            for ev in canh["events"]:
+                if ev.get("object") == oid:
+                    ev.update(display_label=nhan, learner_text=cau, explanation=cau)
+                    if isinstance(ev.get("details"), dict) and "label" in ev["details"]:
+                        ev["details"]["label"] = nhan
+                    if 0 <= ev["step_index"] < len(buoc):
+                        buoc[ev["step_index"]]["learner_text"] = cau
+
+        if d.get("rule") in (MAT_SONG_SONG, MAT_HAI_DUONG):
+            for idx, x in enumerate(d.get("labels") or (), 1):
+                vec_o = objs.get(f"derived_{ir_name(x)}_vec") or {}
+                huong = vec_o.get("notation") or f"phương thứ {idx}"
+                mo_ta = f"điểm dựng phụ của {ten} qua {ky([d['point']])} theo phương {huong}"
+                doi_phu(ir_name(x), mo_ta[:1].upper() + mo_ta[1:], f"Qua {ky([d['point']])} dựng {mo_ta}.")
+        elif d.get("rule") == MAT_VUONG_DUONG:
+            duong_ky = ky(d.get("perpendicular_to") or ())
+            for f_lbl, z_lbl in zip(d.get("feet") or (), d.get("anchors") or ()):
+                z_ky = ky([z_lbl])
+                mo_ta_f = f"hình chiếu vuông góc phụ của {z_ky} lên {duong_ky}"
+                doi_phu(ir_name(f_lbl), mo_ta_f[:1].upper() + mo_ta_f[1:], f"Dựng {mo_ta_f}.")
+            for x_lbl, z_lbl in zip(d.get("labels") or (), d.get("anchors") or ()):
+                z_ky = ky([z_lbl])
+                vec_oid = f"derived_{ir_name(x_lbl)}_vec"
+                if vec_oid in objs:
+                    nhan_v = f"Vectơ vuông góc phụ từ {duong_ky} đến {z_ky}"
+                    objs[vec_oid].update(label=nhan_v, display_label=nhan_v, reference=nhan_v[:1].lower() + nhan_v[1:], notation=None)
+                mo_ta_x = f"điểm dựng phụ của {ten} qua {ky([d['point']])} theo phương vuông góc từ {duong_ky} đến {z_ky}"
+                doi_phu(ir_name(x_lbl), mo_ta_x[:1].upper() + mo_ta_x[1:], f"Qua {ky([d['point']])} dựng {mo_ta_x}.")
+
         for e in canh["events"]:
-            if e.get("object") == mat["id"] and e.get("action") == "CREATE" and phu:
+            if e.get("object") == mat["id"] and e.get("action") == "CREATE" and (d.get("labels") or ()):
                 e["explanation"] = (f"Dựng {ten}: mặt phẳng qua {ky(d['point'])} và {quan_he}; dựng qua "
-                                    f"{ky(d['point'])} và các điểm dựng phụ {phu}.")
+                                    f"{ky(d['point'])} và hai điểm dựng phụ theo phương đã khai.")
         phu_mat = [x for x in (*(d.get("labels") or ()), *(d.get("feet") or ())) if isinstance(x, str)]
         if phu_mat and ten:
             an_mat = re.compile(
@@ -395,7 +430,8 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
             # asked quantity read as `intermediate` while its event was FINAL_RESULT; the engine names what the source asks.
             state["targets"] = list(r.targets)
             # Presentation of the certified auxiliary binding; no new geometry or semantic authority.
-            aux_ids = ({ir_name(p) for d in two_line for p in d['labels']}
+            plane_aux = [d for d in auxiliary if d.get('rule') in (MAT_HAI_DUONG, MAT_SONG_SONG, MAT_VUONG_DUONG)]
+            aux_ids = ({ir_name(p) for d in plane_aux for p in (*(d.get('labels') or ()), *(d.get('feet') or ()))}
                        | {ir_name(d['label']) for d in auxiliary if d.get('effect_binding') and d.get('fresh')}
                        | {ir_name(p) for d in auxiliary if d.get('rule') == 'effect-chain' for p in d['labels']})
             vai = {o['id']: o.get('role') for o in state['scene']['objects'] if (o.get('producer') or '').startswith('construct_point.')}

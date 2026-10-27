@@ -1,0 +1,592 @@
+{
+  "schema": "HOLDOUT_REPAIR_DEV_EVAL/1",
+  "phase": "GREEN",
+  "live_provider_calls": 0,
+  "git_head": "7690e4001eec1a544bf257ed4c3ee6b6b68086ed",
+  "corpus_sha256": "0378b0093b35286a2e220875676af539df3431b1e822c2cca4637c345ee47eac",
+  "versions": {
+    "registry": "geometry-functions/18",
+    "planner": "geometry-fact-planner/17",
+    "engine": "geometry-function-engine/14",
+    "adapter": "hybrid-simulation-adapter/4",
+    "section_certificate": "plane-section-certificate/1"
+  },
+  "summary": {
+    "total_cases": 32,
+    "positive_total": 16,
+    "positive_served": 16,
+    "positive_oracle_agree": 16,
+    "positive_false_refusals": 0,
+    "negative_total": 16,
+    "negative_refused": 16,
+    "negative_expected_code_match": 16,
+    "wrong_served_total": 0,
+    "cases_with_aux_point_leaks": []
+  },
+  "cases": [
+    {
+      "id": "D001",
+      "defect_family": "M1",
+      "expected_status": "SERVED",
+      "served": true,
+      "route_status": "SERVED",
+      "adapter4_status": "SERVED",
+      "code": null,
+      "detail": null,
+      "expected_codes": null,
+      "oracle_check": {
+        "agree": true,
+        "mismatches": [],
+        "oracle_expected_answer": "5",
+        "oracle_area_sq": "25",
+        "oracle_polygon_vertices": 4,
+        "oracle_certificate_category": "ENGINE_DERIVED_SECTION"
+      },
+      "aux_point_leaks": []
+    },
+    {
+      "id": "D002",
+      "defect_family": "M1",
+      "expected_status": "SERVED",
+      "served": true,
+      "route_status": "SERVED",
+      "adapter4_status": "SERVED",
+      "code": null,
+      "detail": null,
+      "expected_codes": null,
+      "oracle_check": {
+        "agree": true,
+        "mismatches": [],
+        "oracle_expected_answer": "3√17/2",
+        "oracle_area_sq": "153/4",
+        "oracle_polygon_vertices": 3,
+        "oracle_certificate_category": "ENGINE_DERIVED_SECTION"
+      },
+      "aux_point_leaks": []
+    },
+    {
+      "id": "D003",
+      "defect_family": "M1",
+      "expected_status": "SERVED",
+      "served": true,
+      "route_status": "SERVED",
+      "adapter4_status": "SERVED",
+      "code": null,
+      "detail": null,
+      "expected_codes": null,
+      "oracle_check": {
+        "agree": true,
+        "mismatches": [],
+        "oracle_expected_answer": "√22",
+        "oracle_area_sq": "22",
+        "oracle_polygon_vertices": 3,
+        "oracle_certificate_category": "ENGINE_DERIVED_SECTION"
+      },
+      "aux_point_leaks": []
+    },
+    {
+      "id": "D004",
+      "defect_family": "M2",
+      "expected_status": "SERVED",
+      "served": true,
+      "route_status": "SERVED",
+      "adapter4_status": "SERVED",
+      "code": null,
+      "detail": null,
+      "expected_codes": null,
+      "oracle_check": {
+        "agree": true,
+        "mismatches": [],
+        "oracle_expected_answer": null,
+        "oracle_area_sq": null,
+        "oracle_polygon_vertices": 4,
+        "oracle_certificate_category": "ENGINE_DERIVED_SECTION"
+      },
+      "aux_point_leaks": []
+    },
+    {
+      "id": "D005",
+      "defect_family": "M2",
+      "expected_status": "SERVED",
+      "served": true,
+      "route_status": "SERVED",
+      "adapter4_status": "SERVED",
+      "code": null,
+      "detail": null,
+      "expected_codes": null,
+      "oracle_check": {
+        "agree": true,
+        "mismatches": [],
+        "oracle_expected_answer": "9√3/4",
+        "oracle_area_sq": "243/16",
+        "oracle_polygon_vertices": 3,
+        "oracle_certificate_category": "ENGINE_DERIVED_SECTION"
+      },
+      "aux_point_leaks": []
+    },
+    {
+      "id": "D006",
+      "defect_family": "M2",
+      "expected_status": "SERVED",
+      "served": true,
+      "route_status": "SERVED",
+      "adapter4_status": "SERVED",
+      "code": null,
+      "detail": null,
+      "expected_codes": null,
+      "oracle_check": {
+        "agree": true,
+        "mismatches": [],
+        "oracle_expected_answer": "6",
+        "oracle_area_sq": "36",
+        "oracle_polygon_vertices": 3,
+        "oracle_certificate_category": "ENGINE_DERIVED_SECTION"
+      },
+      "aux_point_leaks": []
+    },
+    {
+      "id": "D007",
+      "defect_family": "M3",
+      "expected_status": "SERVED",
+      "served": true,
+      "route_status": "SERVED",
+      "adapter4_status": "SERVED",
+      "code": null,
+      "detail": null,
+      "expected_codes": null,
+      "oracle_check": {
+        "agree": true,
+        "mismatches": [],
+        "oracle_expected_answer": null,
+        "oracle_area_sq": null,
+        "oracle_polygon_vertices": 3,
+        "oracle_certificate_category": "ENGINE_DERIVED_SECTION"
+      },
+      "aux_point_leaks": []
+    },
+    {
+      "id": "D008",
+      "defect_family": "M3",
+      "expected_status": "SERVED",
+      "served": true,
+      "route_status": "SERVED",
+      "adapter4_status": "SERVED",
+      "code": null,
+      "detail": null,
+      "expected_codes": null,
+      "oracle_check": {
+        "agree": true,
+        "mismatches": [],
+        "oracle_expected_answer": null,
+        "oracle_area_sq": null,
+        "oracle_polygon_vertices": 4,
+        "oracle_certificate_category": "ENGINE_DERIVED_SECTION"
+      },
+      "aux_point_leaks": []
+    },
+    {
+      "id": "D009",
+      "defect_family": "M3",
+      "expected_status": "SERVED",
+      "served": true,
+      "route_status": "SERVED",
+      "adapter4_status": "SERVED",
+      "code": null,
+      "detail": null,
+      "expected_codes": null,
+      "oracle_check": {
+        "agree": true,
+        "mismatches": [],
+        "oracle_expected_answer": "15/2",
+        "oracle_area_sq": "225/4",
+        "oracle_polygon_vertices": 4,
+        "oracle_certificate_category": "ENGINE_DERIVED_SECTION"
+      },
+      "aux_point_leaks": []
+    },
+    {
+      "id": "D010",
+      "defect_family": "M3",
+      "expected_status": "SERVED",
+      "served": true,
+      "route_status": "SERVED",
+      "adapter4_status": "SERVED",
+      "code": null,
+      "detail": null,
+      "expected_codes": null,
+      "oracle_check": {
+        "agree": true,
+        "mismatches": [],
+        "oracle_expected_answer": "a²",
+        "oracle_area_sq": "1",
+        "oracle_polygon_vertices": 4,
+        "oracle_certificate_category": "ENGINE_DERIVED_SECTION"
+      },
+      "aux_point_leaks": []
+    },
+    {
+      "id": "D011",
+      "defect_family": "M3",
+      "expected_status": "SERVED",
+      "served": true,
+      "route_status": "SERVED",
+      "adapter4_status": "SERVED",
+      "code": null,
+      "detail": null,
+      "expected_codes": null,
+      "oracle_check": {
+        "agree": true,
+        "mismatches": [],
+        "oracle_expected_answer": "6",
+        "oracle_area_sq": "36",
+        "oracle_polygon_vertices": 3,
+        "oracle_certificate_category": "DINH_CAT_CANH"
+      },
+      "aux_point_leaks": []
+    },
+    {
+      "id": "D012",
+      "defect_family": "M4",
+      "expected_status": "SERVED",
+      "served": true,
+      "route_status": "SERVED",
+      "adapter4_status": "SERVED",
+      "code": null,
+      "detail": null,
+      "expected_codes": null,
+      "oracle_check": {
+        "agree": true,
+        "mismatches": [],
+        "oracle_expected_answer": "486/125",
+        "oracle_area_sq": "236196/15625",
+        "oracle_polygon_vertices": 3,
+        "oracle_certificate_category": "ENGINE_DERIVED_SECTION"
+      },
+      "aux_point_leaks": []
+    },
+    {
+      "id": "D013",
+      "defect_family": "M5",
+      "expected_status": "SERVED",
+      "served": true,
+      "route_status": "SERVED",
+      "adapter4_status": "SERVED",
+      "code": null,
+      "detail": null,
+      "expected_codes": null,
+      "oracle_check": {
+        "agree": true,
+        "mismatches": [],
+        "oracle_expected_answer": "9",
+        "oracle_area_sq": "81",
+        "oracle_polygon_vertices": 4,
+        "oracle_certificate_category": "ENGINE_DERIVED_SECTION"
+      },
+      "aux_point_leaks": []
+    },
+    {
+      "id": "D014",
+      "defect_family": "M5",
+      "expected_status": "SERVED",
+      "served": true,
+      "route_status": "SERVED",
+      "adapter4_status": "SERVED",
+      "code": null,
+      "detail": null,
+      "expected_codes": null,
+      "oracle_check": {
+        "agree": true,
+        "mismatches": [],
+        "oracle_expected_answer": "24",
+        "oracle_area_sq": "576",
+        "oracle_polygon_vertices": 3,
+        "oracle_certificate_category": "DINH_CAT_CANH"
+      },
+      "aux_point_leaks": []
+    },
+    {
+      "id": "D015",
+      "defect_family": "M5",
+      "expected_status": "SERVED",
+      "served": true,
+      "route_status": "SERVED",
+      "adapter4_status": "SERVED",
+      "code": null,
+      "detail": null,
+      "expected_codes": null,
+      "oracle_check": {
+        "agree": true,
+        "mismatches": [],
+        "oracle_expected_answer": "6",
+        "oracle_area_sq": "36",
+        "oracle_polygon_vertices": 3,
+        "oracle_certificate_category": "DINH_CAT_CANH"
+      },
+      "aux_point_leaks": []
+    },
+    {
+      "id": "D016",
+      "defect_family": "M5",
+      "expected_status": "SERVED",
+      "served": true,
+      "route_status": "SERVED",
+      "adapter4_status": "SERVED",
+      "code": null,
+      "detail": null,
+      "expected_codes": null,
+      "oracle_check": {
+        "agree": true,
+        "mismatches": [],
+        "oracle_expected_answer": "2√6/3",
+        "oracle_area_sq": "8/3",
+        "oracle_polygon_vertices": 4,
+        "oracle_certificate_category": "DINH_CAT_CANH"
+      },
+      "aux_point_leaks": []
+    },
+    {
+      "id": "N001",
+      "defect_family": "M1",
+      "expected_status": "REFUSED",
+      "served": false,
+      "route_status": "REFUSED",
+      "adapter4_status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "detail": "sec1: đề không nói thiết diện của S.ABC với mặt phẳng qua M song song (BC)",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "oracle_check": null,
+      "aux_point_leaks": []
+    },
+    {
+      "id": "N002",
+      "defect_family": "M1",
+      "expected_status": "REFUSED",
+      "served": false,
+      "route_status": "REFUSED",
+      "adapter4_status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "detail": "sec1: đề không nói thiết diện của S.ABC với mặt phẳng qua M song song (BC)",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "oracle_check": null,
+      "aux_point_leaks": []
+    },
+    {
+      "id": "N003",
+      "defect_family": "M1",
+      "expected_status": "REFUSED",
+      "served": false,
+      "route_status": "REFUSED",
+      "adapter4_status": "REFUSED",
+      "code": "INVALID_PREMISE_ARGS",
+      "detail": "Premise 'midpoint' needs args [{'point': 'ref', 'segment': 'refs2='}], got ['point', 'segment'].",
+      "expected_codes": [
+        "INVALID_PREMISE_ARGS",
+        "SCHEMA_INVALID"
+      ],
+      "oracle_check": null,
+      "aux_point_leaks": []
+    },
+    {
+      "id": "N004",
+      "defect_family": "M2",
+      "expected_status": "REFUSED",
+      "served": false,
+      "route_status": "REFUSED",
+      "adapter4_status": "REFUSED",
+      "code": "AMBIGUOUS_REFERENCE",
+      "detail": "p2: không nêu khối trong bài có nhiều khối",
+      "expected_codes": [
+        "AMBIGUOUS_REFERENCE"
+      ],
+      "oracle_check": null,
+      "aux_point_leaks": []
+    },
+    {
+      "id": "N005",
+      "defect_family": "M2",
+      "expected_status": "REFUSED",
+      "served": false,
+      "route_status": "REFUSED",
+      "adapter4_status": "REFUSED",
+      "code": "UNGROUNDED_VALUE",
+      "detail": "p3: 'chiều cao của hình lăng trụ bằng 3' không gắn 3 với vai trò của ô này trong một câu đọc trọn",
+      "expected_codes": [
+        "UNGROUNDED_VALUE"
+      ],
+      "oracle_check": null,
+      "aux_point_leaks": []
+    },
+    {
+      "id": "N006",
+      "defect_family": "M2",
+      "expected_status": "REFUSED",
+      "served": false,
+      "route_status": "REFUSED",
+      "adapter4_status": "REFUSED",
+      "code": "UNKNOWN_SOLID",
+      "detail": "p3: khối 's99' không có trong dữ kiện",
+      "expected_codes": [
+        "UNKNOWN_SOLID"
+      ],
+      "oracle_check": null,
+      "aux_point_leaks": []
+    },
+    {
+      "id": "N007",
+      "defect_family": "M3",
+      "expected_status": "REFUSED",
+      "served": false,
+      "route_status": "REFUSED",
+      "adapter4_status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "detail": "sec1: đề không nói thiết diện của S.ABCD với mặt phẳng qua A vuông góc SC",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "oracle_check": null,
+      "aux_point_leaks": []
+    },
+    {
+      "id": "N008",
+      "defect_family": "M3",
+      "expected_status": "REFUSED",
+      "served": false,
+      "route_status": "REFUSED",
+      "adapter4_status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "detail": "sec1: đề không nói thiết diện của S.ABCD với mặt phẳng qua A vuông góc SC",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "oracle_check": null,
+      "aux_point_leaks": []
+    },
+    {
+      "id": "N009",
+      "defect_family": "M3",
+      "expected_status": "REFUSED",
+      "served": false,
+      "route_status": "REFUSED",
+      "adapter4_status": "REFUSED",
+      "code": "NEGATED_CLAUSE",
+      "detail": "sec1: 'Mặt phẳng (β) không đi qua M, song song với mặt phẳng (SAB)' mang phủ định",
+      "expected_codes": [
+        "NEGATED_CLAUSE"
+      ],
+      "oracle_check": null,
+      "aux_point_leaks": []
+    },
+    {
+      "id": "N010",
+      "defect_family": "M3",
+      "expected_status": "REFUSED",
+      "served": false,
+      "route_status": "REFUSED",
+      "adapter4_status": "REFUSED",
+      "code": "CONDITIONAL_CLAUSE",
+      "detail": "sec1: mệnh đề mặt phẳng nằm trong mệnh đề điều kiện/giả sử",
+      "expected_codes": [
+        "CONDITIONAL_CLAUSE"
+      ],
+      "oracle_check": null,
+      "aux_point_leaks": []
+    },
+    {
+      "id": "N011",
+      "defect_family": "M3",
+      "expected_status": "REFUSED",
+      "served": false,
+      "route_status": "REFUSED",
+      "adapter4_status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "detail": "sec1: đề không nói thiết diện của ABCD.A'B'C'D' với mặt phẳng qua M song song (ABC)",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "oracle_check": null,
+      "aux_point_leaks": []
+    },
+    {
+      "id": "N012",
+      "defect_family": "M4",
+      "expected_status": "REFUSED",
+      "served": false,
+      "route_status": "REFUSED",
+      "adapter4_status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "detail": "p1: vai trò điểm và toán hạng dựng không khớp nguồn",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "oracle_check": null,
+      "aux_point_leaks": []
+    },
+    {
+      "id": "N013",
+      "defect_family": "M4",
+      "expected_status": "REFUSED",
+      "served": false,
+      "route_status": "REFUSED",
+      "adapter4_status": "REFUSED",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "detail": "tiền đề 'Cho hình chóp S.ABC có đáy là tam giác ABC vuông tại A với AB = 9, AC = 12 và góc SBA bằng 60 độ.' chưa được lời gọi nào đọc — có thể đổi hình; không dùng mô hình cũ",
+      "expected_codes": [
+        "SOURCE_PREMISE_UNREAD"
+      ],
+      "oracle_check": null,
+      "aux_point_leaks": []
+    },
+    {
+      "id": "N014",
+      "defect_family": "M5",
+      "expected_status": "REFUSED",
+      "served": false,
+      "route_status": "REFUSED",
+      "adapter4_status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "detail": "q1: 'diện tích của nó' không gắn duy nhất với thiết diện",
+      "expected_codes": [
+        "UNSUPPORTED_CAPABILITY",
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "oracle_check": null,
+      "aux_point_leaks": []
+    },
+    {
+      "id": "N015",
+      "defect_family": "M5",
+      "expected_status": "REFUSED",
+      "served": false,
+      "route_status": "REFUSED",
+      "adapter4_status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "detail": "q1: đa giác MBC không khớp các đỉnh thiết diện đã nêu",
+      "expected_codes": [
+        "UNSUPPORTED_CAPABILITY",
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "oracle_check": null,
+      "aux_point_leaks": []
+    },
+    {
+      "id": "N016",
+      "defect_family": "M5",
+      "expected_status": "REFUSED",
+      "served": false,
+      "route_status": "REFUSED",
+      "adapter4_status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "detail": "q1: số đỉnh của MNP không khớp tứ giác",
+      "expected_codes": [
+        "UNSUPPORTED_CAPABILITY",
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "oracle_check": null,
+      "aux_point_leaks": []
+    }
+  ]
+}
