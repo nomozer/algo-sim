@@ -1,0 +1,871 @@
+{
+  "right-base": {
+    "vertex_count": 4,
+    "area_squared": "2304",
+    "interior_cut": true,
+    "vertices": [
+      {
+        "xyz": [
+          "3",
+          "0",
+          "0"
+        ],
+        "edge": [
+          "A",
+          "B"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "3",
+          "4",
+          "0"
+        ],
+        "edge": [
+          "B",
+          "C"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "3",
+          "4",
+          "12"
+        ],
+        "edge": [
+          "B'",
+          "C'"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "3",
+          "0",
+          "12"
+        ],
+        "edge": [
+          "A'",
+          "B'"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      }
+    ]
+  },
+  "right-top": {
+    "vertex_count": 4,
+    "area_squared": "2304",
+    "interior_cut": true,
+    "vertices": [
+      {
+        "xyz": [
+          "3",
+          "0",
+          "0"
+        ],
+        "edge": [
+          "A",
+          "B"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "3",
+          "4",
+          "0"
+        ],
+        "edge": [
+          "B",
+          "C"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "3",
+          "4",
+          "12"
+        ],
+        "edge": [
+          "B'",
+          "C'"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "3",
+          "0",
+          "12"
+        ],
+        "edge": [
+          "A'",
+          "B'"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      }
+    ]
+  },
+  "right-lateral": {
+    "vertex_count": 3,
+    "area_squared": "576",
+    "interior_cut": true,
+    "vertices": [
+      {
+        "xyz": [
+          "0",
+          "0",
+          "6"
+        ],
+        "edge": [
+          "A",
+          "A'"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "6",
+          "0",
+          "6"
+        ],
+        "edge": [
+          "B",
+          "B'"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "0",
+          "8",
+          "6"
+        ],
+        "edge": [
+          "C",
+          "C'"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      }
+    ]
+  },
+  "right-diagonal": {
+    "vertex_count": 3,
+    "area_squared": "976",
+    "interior_cut": true,
+    "vertices": [
+      {
+        "xyz": [
+          "0",
+          "0",
+          "43/6"
+        ],
+        "edge": [
+          "A",
+          "A'"
+        ],
+        "t": "43/72",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "6",
+          "0",
+          "61/6"
+        ],
+        "edge": [
+          "B",
+          "B'"
+        ],
+        "t": "61/72",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "0",
+          "8",
+          "11/6"
+        ],
+        "edge": [
+          "C",
+          "C'"
+        ],
+        "t": "11/72",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      }
+    ]
+  },
+  "cuboid-base": {
+    "vertex_count": 4,
+    "area_squared": "9216",
+    "interior_cut": true,
+    "vertices": [
+      {
+        "xyz": [
+          "3",
+          "0",
+          "0"
+        ],
+        "edge": [
+          "A",
+          "B"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "3",
+          "8",
+          "0"
+        ],
+        "edge": [
+          "C",
+          "D"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "3",
+          "8",
+          "12"
+        ],
+        "edge": [
+          "C'",
+          "D'"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "3",
+          "0",
+          "12"
+        ],
+        "edge": [
+          "A'",
+          "B'"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      }
+    ]
+  },
+  "cube-diagonal": {
+    "vertex_count": 6,
+    "area_squared": "432",
+    "interior_cut": true,
+    "vertices": [
+      {
+        "xyz": [
+          "4",
+          "2",
+          "0"
+        ],
+        "edge": [
+          "B",
+          "C"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "2",
+          "4",
+          "0"
+        ],
+        "edge": [
+          "C",
+          "D"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "0",
+          "4",
+          "2"
+        ],
+        "edge": [
+          "D",
+          "D'"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "0",
+          "2",
+          "4"
+        ],
+        "edge": [
+          "D'",
+          "A'"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "2",
+          "0",
+          "4"
+        ],
+        "edge": [
+          "A'",
+          "B'"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "4",
+          "0",
+          "2"
+        ],
+        "edge": [
+          "B",
+          "B'"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      }
+    ]
+  },
+  "oblique-base": {
+    "vertex_count": 4,
+    "area_squared": "2304",
+    "interior_cut": true,
+    "vertices": [
+      {
+        "xyz": [
+          "9/2",
+          "0",
+          "0"
+        ],
+        "edge": [
+          "A",
+          "B"
+        ],
+        "t": "3/4",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "9/2",
+          "2",
+          "0"
+        ],
+        "edge": [
+          "B",
+          "C"
+        ],
+        "t": "1/4",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "9/2",
+          "10",
+          "12"
+        ],
+        "edge": [
+          "B'",
+          "C'"
+        ],
+        "t": "3/4",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "9/2",
+          "4",
+          "12"
+        ],
+        "edge": [
+          "A'",
+          "B'"
+        ],
+        "t": "1/4",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      }
+    ]
+  },
+  "oblique-diagonal": {
+    "vertex_count": 3,
+    "area_squared": "2737152/4489",
+    "interior_cut": true,
+    "vertices": [
+      {
+        "xyz": [
+          "315/134",
+          "210/67",
+          "630/67"
+        ],
+        "edge": [
+          "A",
+          "A'"
+        ],
+        "t": "105/134",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "1083/134",
+          "186/67",
+          "558/67"
+        ],
+        "edge": [
+          "B",
+          "B'"
+        ],
+        "t": "93/134",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "123/134",
+          "618/67",
+          "246/67"
+        ],
+        "edge": [
+          "C",
+          "C'"
+        ],
+        "t": "41/134",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      }
+    ]
+  },
+  "renamed-changed-reversed": {
+    "vertex_count": 3,
+    "area_squared": "72",
+    "interior_cut": true,
+    "vertices": [
+      {
+        "xyz": [
+          "0",
+          "4",
+          "0"
+        ],
+        "edge": [
+          "E",
+          "F"
+        ],
+        "t": "1",
+        "kind": "SOLID_VERTEX",
+        "vertex": "F"
+      },
+      {
+        "xyz": [
+          "3",
+          "0",
+          "5"
+        ],
+        "edge": [
+          "D'",
+          "E'"
+        ],
+        "t": "1",
+        "kind": "SOLID_VERTEX",
+        "vertex": "E'"
+      },
+      {
+        "xyz": [
+          "0",
+          "0",
+          "16/5"
+        ],
+        "edge": [
+          "D",
+          "D'"
+        ],
+        "t": "16/25",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      }
+    ]
+  },
+  "symbolic-top": {
+    "vertex_count": 4,
+    "area_squared": "2304",
+    "interior_cut": true,
+    "vertices": [
+      {
+        "xyz": [
+          "3",
+          "0",
+          "0"
+        ],
+        "edge": [
+          "A",
+          "B"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "3",
+          "0",
+          "12"
+        ],
+        "edge": [
+          "A'",
+          "B'"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "3",
+          "4",
+          "12"
+        ],
+        "edge": [
+          "B'",
+          "C'"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "3",
+          "4",
+          "0"
+        ],
+        "edge": [
+          "B",
+          "C"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      }
+    ]
+  },
+  "right-base-section-only": {
+    "vertex_count": 4,
+    "area_squared": "2304",
+    "interior_cut": true,
+    "vertices": [
+      {
+        "xyz": [
+          "3",
+          "0",
+          "0"
+        ],
+        "edge": [
+          "A",
+          "B"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "3",
+          "4",
+          "0"
+        ],
+        "edge": [
+          "B",
+          "C"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "3",
+          "4",
+          "12"
+        ],
+        "edge": [
+          "B'",
+          "C'"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "3",
+          "0",
+          "12"
+        ],
+        "edge": [
+          "A'",
+          "B'"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      }
+    ]
+  },
+  "right-base-area-only": {
+    "vertex_count": 4,
+    "area_squared": "2304",
+    "interior_cut": true,
+    "vertices": [
+      {
+        "xyz": [
+          "3",
+          "0",
+          "0"
+        ],
+        "edge": [
+          "A",
+          "B"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "3",
+          "4",
+          "0"
+        ],
+        "edge": [
+          "B",
+          "C"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "3",
+          "4",
+          "12"
+        ],
+        "edge": [
+          "B'",
+          "C'"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "3",
+          "0",
+          "12"
+        ],
+        "edge": [
+          "A'",
+          "B'"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      }
+    ]
+  },
+  "prism-parallel-base-plane-only": {
+    "vertex_count": 3,
+    "area_squared": "3/16",
+    "interior_cut": true
+  },
+  "pyramid-parallel-base-plane-only": {
+    "vertex_count": 3,
+    "area_squared": "3/256",
+    "interior_cut": true
+  },
+  "pyramid-parallel-base-section-only": {
+    "vertex_count": 3,
+    "area_squared": "3/256",
+    "interior_cut": true
+  },
+  "pyramid-perpendicular-line-plane-only": {
+    "vertex_count": 4,
+    "area_squared": "16",
+    "interior_cut": true,
+    "vertices": [
+      {
+        "xyz": [
+          "0",
+          "0",
+          "2"
+        ],
+        "edge": [
+          "S",
+          "A"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "0",
+          "2",
+          "2"
+        ],
+        "edge": [
+          "S",
+          "D"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "2",
+          "2",
+          "2"
+        ],
+        "edge": [
+          "S",
+          "C"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "2",
+          "0",
+          "2"
+        ],
+        "edge": [
+          "S",
+          "B"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      }
+    ]
+  },
+  "pyramid-parallel-two-lines-plane-only": {
+    "vertex_count": 4,
+    "area_squared": "117/16",
+    "interior_cut": true,
+    "vertices": [
+      {
+        "xyz": [
+          "2",
+          "1",
+          "0"
+        ],
+        "edge": [
+          "B",
+          "C"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "0",
+          "1",
+          "0"
+        ],
+        "edge": [
+          "D",
+          "A"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "0",
+          "0",
+          "3/2"
+        ],
+        "edge": [
+          "S",
+          "A"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      },
+      {
+        "xyz": [
+          "1",
+          "0",
+          "3/2"
+        ],
+        "edge": [
+          "S",
+          "B"
+        ],
+        "t": "1/2",
+        "kind": "SOLID_EDGE_INTERSECTION",
+        "vertex": null
+      }
+    ]
+  }
+}
