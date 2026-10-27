@@ -149,3 +149,13 @@ def test_r2_scene3d_auxiliary_point_label_hygiene(case: dict):
                     if re.search(rf"(?<![\w']){re.escape(a)}(?![\w'])", s):
                         leaks.append(f"{o.get('id')}.{key}:{a}")
     assert not leaks, f"{cid} leaked unmentioned auxiliary labels: {leaks}"
+
+
+def test_math_goal_area_solid_id_mismatch_refused():
+    from copy import deepcopy
+    base_case = next(c for c in _POS_CASES if c["id"] == "D001")
+    bad = deepcopy(base_case["payload"])
+    bad["math_goals"][0]["solid_id"] = "s99"
+    r, resp, served, code = _eval_case(bad)
+    assert not served
+    assert code == "UNKNOWN_SOLID_ID"

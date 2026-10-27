@@ -323,8 +323,16 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
                           "solid_refs": [solid_fact(g.parent_solid_id, g.goal_id), solid_fact(g.cut_solid_id, g.goal_id)]})
         elif g.goal_type == "volume" and (g.target.get("solid") or g.solid_id) in solids:
             facts.append({**q, "quantity": "volume", "solid": solids[g.target.get("solid") or g.solid_id].notation})
-        elif g.goal_type == "area" and g.target.get("section_id") in {s.section_id for s in p.derived_sections}:
-            sec = next(s for s in p.derived_sections if s.section_id == g.target["section_id"])
+        elif g.goal_type == "area" and "section_id" in g.target:
+            sec = next((s for s in p.derived_sections if s.section_id == g.target["section_id"]), None)
+            if sec is None:
+                raise TuChoi("INVALID_MATH_GOAL", f"{g.goal_id}: thiết diện {g.target['section_id']!r} không có trong dữ kiện", (g.goal_id,))
+            g_solid = g.solid_id or g.target.get("solid_id") or g.target.get("solid")
+            if g_solid is not None:
+                if g_solid not in solids:
+                    raise TuChoi("UNKNOWN_SOLID_ID", f"{g.goal_id}: khối {g_solid!r} không có", (g.goal_id,))
+                if g_solid != sec.target_solid_id:
+                    raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{g.goal_id}: khối {g_solid!r} không khớp khối của thiết diện {sec.section_id!r}", (g.goal_id,))
             f = _mat_fact(sec, solids, [])
             facts.append({**q, "quantity": "area", **{k: f[k] for k in ("solid", "point", "plane_relation", "points_b",
                                                                          "points_a", "plane_name") if k in f}})

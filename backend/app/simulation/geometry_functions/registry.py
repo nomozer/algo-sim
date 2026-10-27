@@ -930,9 +930,9 @@ _HINH = (rf"(?:tam\s+giác(?:\s+(?:đều|vuông\s+cân|vuông|cân))?(?:\s+tạ
 _C_KHOI = re.compile(rf"(?:(?:cho|xét)\s+)?(?:một\s+)?(?:(?:hình|khối)\s+)?(?P<kn>chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)"
                      rf"(?P<km>(?:\s+(?:đứng|đều|xiên|tam\s+giác|tứ\s+giác|ngũ\s+giác|lục\s+giác|chữ\s+nhật))*)"
                      rf"\s+(?P<k>{_NHAN}(?:\.{_NHAN})?)(?![\w'])", re.IGNORECASE)
-_C_DAY = re.compile(rf"(?:có\s+)?(?:mặt\s+)?đáy(?:\s+(?P<d>{_NHAN}))?\s+(?:là\s+(?:một\s+)?{_HINH}(?:\s+(?P<d2>{_NHAN}))?(?:\s+vuông(?:\s+cân)?\s+tại\s+{_L1})?|đều)(?![\w'])"
+_C_DAY = re.compile(rf"(?:có\s+)?(?:mặt\s+)?đáy(?:\s+(?P<d>{_NHAN}))?\s+(?:là\s+(?:một\s+)?{_HINH}(?:\s+(?P<d2>{_NHAN}))?(?:\s+vuông(?:\s+cân)?\s+tại\s+{_L1})?|đều|vuông(?:\s+cân)?\s+tại\s+{_L1})(?![\w'])"
                     rf"(?:(?:\s*,\s*|\s+)(?:(?:và|với)\s+)?(?:có\s+)?(?:(?:các|mọi|mỗi)\s+)?(?:độ\s+dài\s+)?cạnh\s*(?:(?:bằng|=|là)\s*)?{_so_nhom('ds')})?", re.IGNORECASE)
-_C_VAI = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:các|mọi|mỗi)\s+)?(?P<vai>cạnh\s+đáy|cạnh\s+bên|chiều\s+cao|đường\s+cao|cạnh)(?:\s+của\s+(?:(?:hình|khối)\s+)?"
+_C_VAI = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:các|mọi|mỗi)\s+)?(?:độ\s+dài\s+(?:(?:các|mọi|mỗi)\s+)?)?(?P<vai>cạnh\s+đáy|cạnh\s+bên|chiều\s+cao|đường\s+cao|cạnh)(?:\s+của\s+(?:(?:hình|khối)\s+)?"
                     rf"(?P<qn>chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)(?:\s+(?P<ql>{_NHAN}(?:\.{_NHAN})?))?)?"
                     rf"\s*(?:(?:có\s+)?độ\s+dài\s*)?(?:(?:=|bằng|là)\s*)?{_so_nhom('vs')}", re.IGNORECASE)
 #: "của <solid>" names the role's owner: its noun must be the bound solid's kind, its label (if any) the bound solid's
@@ -957,7 +957,7 @@ _C_DOAN = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:các\s+)?kích\s+thước\s+)
                      rf"(?P<seg>{_L1}{_L1})(?![\w'])"
                      rf"(?:\s*=\s*{_L1}{_L1}(?![\w']))*\s*(?:=|bằng|(?:có\s+)?độ\s+dài(?:\s+bằng)?)\s*{_so_nhom('ss')}",
                      re.IGNORECASE)
-_C_VUONG = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:cạnh\s+bên|cạnh|đường\s+thẳng)\s+)?{_L1}{_L1}\s*(?:vuông\s+góc\s+với|vuông|⊥)\s*"
+_C_VUONG = re.compile(rf"(?:(?:có|với|biết)\s+)?(?:(?:cạnh\s+bên|cạnh|đường\s+thẳng)\s+)?{_L1}{_L1}\s*(?:vuông\s+góc\s+với|vuông|⊥)\s*"
                       rf"(?:mặt\s+phẳng\s+|mp\s*)?(?:\({_NHAN}\)|{_L1}{_L1}\s+và\s+{_L1}{_L1}(?![\w'])(?!\s*(?:=|bằng))|{_NHAN}(?![\w'])"
                       rf"|(?:mặt\s+(?:phẳng\s+)?)?đáy(?!\w))", re.IGNORECASE)
 #: "cạnh CD" (a named edge) continues its clause; only a role "cạnh" ("… cạnh 2", "… cạnh bên") opens a new one
@@ -2136,13 +2136,29 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
 
     def cover(a: int, b: int) -> tuple[str, bool]:
         """Check every length / shape assertion in `de[a:b]` against validated calls; return the span with them blanked."""
+        def rb_khop(assertion) -> bool:
+            from ..semantic_program.source_entities import dinh_danh_thuc_the
+            if assertion.kind in ("cuboid", "cube", "cube_edge"):
+                want_fn = "rectangle" if assertion.kind == "cuboid" else "regular_polygon"
+                return any(
+                    c.fn == "prism" and c.args.right
+                    and tuple(dinh_danh_thuc_the(n)[0] for n in c.args.base + c.args.top) == assertion.entities
+                    and any(
+                        d.fn == want_fn and d.args.vertices == c.args.base
+                        and (assertion.kind == "cuboid" or assertion.value is None or _canh_khop(assertion, d.args.side, de))
+                        for d in calls
+                    )
+                    for c in calls
+                )
+            return any(_rang_buoc_cuc_bo_khop(assertion, c, de) for c in calls)
+
         if de[a:b].strip(" ,;:.?!"):
             # Extraction may omit an original shape fact while keeping a local replacement. Preserve source authority.
             for original in rb:
                 if (_vai_tro_tai(de, original.span[0]) in ("GOAL", "CONDITIONAL", "QUESTION")
                         or _phu_dinh(de, original.span[0], de[slice(*original.span)])):
                     continue
-                if not any(_rang_buoc_cuc_bo_khop(original, c, de) for c in calls):
+                if not rb_khop(original):
                     raise TuChoi("QUESTION_LOCAL_GIVEN_UNVERIFIED", "giả thiết hình dạng gốc chưa được bảo toàn; không thay mô hình")
         residue = list(de[a:b])
         found = False
@@ -2173,7 +2189,7 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
         for r in rb:
             if not (a <= r.span[0] < r.span[1] <= b) or _vai_tro_tai(de, r.span[0]) in ("GOAL", "QUESTION"):
                 continue
-            if not any(_rang_buoc_cuc_bo_khop(r, c, de) for c in calls):
+            if not rb_khop(r):
                 raise TuChoi("QUESTION_LOCAL_GIVEN_UNVERIFIED",
                              f"dữ kiện {r.kind} trong câu hỏi chưa có giả thiết tương ứng đã xác thực")
             x, y = _span_rang_buoc(r, de)
@@ -2674,7 +2690,7 @@ _P1 = r"(?-i:[A-Z][0-9]*'?)"
 
 # Same label, equality and exact-number grammars as the source gate; every segment in a chain needs coverage.
 _DO_DAI_CUC_BO = re.compile(rf"(?<![\w']){_P1}{_P1}(?![\w']){_NOI_BANG.pattern}(?P<number>{_SO.pattern})", re.IGNORECASE)
-_NOI_DU_KIEN_CUC_BO = re.compile(r"[\s,;:.?!]*(?:(?:biết|rằng|với|cho|trong đó|có|và|cạnh|độ dài|đoạn thẳng)(?!\w)[\s,;:.?!]*)*",
+_NOI_DU_KIEN_CUC_BO = re.compile(r"[\s,;:.?!]*(?:(?:biết|rằng|với|cho|trong đó|có|và|cạnh\s+bên|cạnh\s+đáy|cạnh|độ dài|đoạn thẳng)(?!\w)[\s,;:.?!]*)*",
                                  re.IGNORECASE)
 
 
@@ -3389,7 +3405,7 @@ _CUM_DINH_NGHIA_DIEM = re.compile(
     # ratio point (`divide_segment`, bound by `_TY_SO`): "M là điểm thuộc cạnh SA sao cho SM = 2MA"
     rf"|(?:một\s+)?điểm\s+(?:thuộc|nằm\s+trên|trên)\s+(?:(?:cạnh|đoạn\s+thẳng|đoạn)\s+)?{_P1}{_P1}\s*,?\s*sao\s+cho\s+"
     rf"{_P1}{_P1}\s*=\s*(?:\d+(?:/\d+)?)?\s*{_P1}{_P1})"
-    rf"|hình chiếu(?:\s+vuông góc)?\s+của\s+(?:điểm\s+|đỉnh\s+)?{_P1}\s+(?:lên|trên)\s+(?:{_MAT_TOAN_HANG}|(?:đường thẳng\s+|cạnh\s+)?{_P1}{_P1})\s+(?:là|trùng\s+với)\s+(?:(?:điểm|trọng tâm|trung điểm)\s+)?{_P1}(?:\s+của\s+(?:(?:cạnh|đoạn(?:\s+thẳng)?|tam\s+giác|đáy)\s+)?{_NHOM_NHAN})?)[.\s]*",
+    rf"|hình chiếu(?:\s+vuông góc)?\s+của\s+(?:điểm\s+|đỉnh\s+)?{_P1}\s+(?:lên|trên)\s+(?:{_MAT_TOAN_HANG}|(?:đường thẳng\s+|cạnh\s+)?{_P1}{_P1})\s+(?:là|trùng\s+với)\s+(?:(?:điểm|trọng tâm|trung điểm)\s+)?{_P1}(?:\s+của\s+(?:(?:cạnh(?:\s+bên|\s+đáy)?|đoạn(?:\s+thẳng)?|tam\s+giác|đáy)\s+)?(?:{_NHOM_NHAN}|{_P1}{_P1}))?)[.\s]*",
     re.IGNORECASE,
 )
 _CUM_DUNG_THIET_DIEN = re.compile(
@@ -3517,7 +3533,7 @@ def _cum_cat_canh(cut: dict | None, ten_mat: str | None = None) -> re.Pattern[st
     than = [rf"cắt\s+{lop}{canh}{duoi}"]
     if all(ten):
         tai = [rf"{canh1(a, b)}\s+tại\s+(?:điểm\s+)?(?-i:{re.escape(p)})(?![\w'])" for (a, b), p in zip(cut["edges"], ten)]
-        than.append(rf"cắt\s+(?:cạnh\s+)?{tai[0]}" + "".join(rf"{_NOI_DS}(?:cắt\s+(?:cạnh\s+)?)?{t}" for t in tai[1:]))
+        than.append(rf"cắt\s+(?:cạnh(?:\s+bên)?\s+)?{tai[0]}" + "".join(rf"{_NOI_DS}(?:cắt\s+(?:cạnh(?:\s+bên)?\s+)?)?{t}" for t in tai[1:]))
     mo = [r"\s*,?\s*(?:và\s+)?"]
     if ten_mat:
         mo.append(rf"\s*[,;]\s*(?:(?:mặt phẳng|mp)\s*)?\({re.escape(ten_mat)}\)\s+")
@@ -3530,7 +3546,7 @@ _CHU_NGU_CAT = re.compile(rf"[,;]\s*(?:(?:mặt phẳng|mp)\s*)?\((?P<ten>{_P1}|
 #: form "cắt SB tại N, cắt SC tại P" comes first so it is matched whole (run `hybrid-contract-v2`).
 _CAT_TAI = rf"(?-i:{_P1}{_P1})(?![\w'])\s+tại\s+(?:điểm\s+)?(?-i:{_P1})(?![\w'])"
 _CAT_CANH_CHUNG = re.compile(
-    rf"cắt\s+(?:cạnh\s+)?{_CAT_TAI}(?:{_NOI_DS}(?:cắt\s+(?:cạnh\s+)?)?{_CAT_TAI})*"
+    rf"cắt\s+(?:cạnh(?:\s+bên)?\s+)?{_CAT_TAI}(?:{_NOI_DS}(?:cắt\s+(?:cạnh(?:\s+bên)?\s+)?)?{_CAT_TAI})*"
     rf"|cắt\s+(?:(?:các\s+|hai\s+|ba\s+|bốn\s+)?(?:cạnh|đường thẳng)(?:\s+bên)?\s+)?(?-i:{_P1}{_P1})(?![\w'])"
     rf"(?:{_NOI_DS}(?-i:{_P1}{_P1})(?![\w']))*(?:\s+(?:lần\s+lượt|theo\s+thứ\s+tự)\s+tại\s+(?:(?:các\s+)?điểm\s+)?(?-i:{_P1})(?![\w'])"
     rf"(?:{_NOI_DS}(?-i:{_P1})(?![\w']))*)?", re.IGNORECASE)
@@ -3611,6 +3627,8 @@ def _mat_coplanar_khoi(calls: tuple[LoiGoi, ...], solid: str) -> set[frozenset[s
             if n == 4:
                 out.add(frozenset(b))
                 out.add(frozenset(t))
+                for i in range(4):
+                    out.add(frozenset((b[i], b[(i + 1) % 4], t[(i + 2) % 4], t[(i + 3) % 4])))
             for i in range(n):
                 j = (i + 1) % n
                 out.add(frozenset((b[i], b[j], t[j], t[i])))
@@ -4525,9 +4543,23 @@ def _cau_tien_de_dong_hop_le(s: str, s_start: int, de: str, calls: tuple[LoiGoi,
             if want not in vals:
                 raise TuChoi("UNGROUNDED_VALUE", f"{matched[0].id}: giá trị vai trò không khớp số đo nguồn", (matched[0].id,))
         elif kind == "diem":
-            pt = re.findall(r"[A-Z][0-9]*'?", m.group())[0]
+            pt = re.findall(r"[A-Z][0-9]*'?", re.sub(r"^gọi\s+", "", m.group(), flags=re.I))[0]
             if not any(d.fn in ("midpoint", "centroid", "divide_segment", "intersect_line_line", "intersect_line_plane") and getattr(d.args, "point", None) == pt
                        and construction_source_bound(replace(d, quotes=(m.group(),)), de) for d in calls):
+                return False
+        elif kind == "chieu":
+            proj = [d for d in calls if d.fn == "orthogonal_projection"
+                    and construction_source_bound(replace(d, quotes=(m.group(),)), de)]
+            if not proj:
+                return False
+            txt_c = re.sub(r"\s+", " ", m.group().lower())
+            if "trung điểm" in txt_c and not any(
+                    d.fn == "midpoint" and d.args.point == proj[0].args.image
+                    and construction_source_bound(replace(d, quotes=(m.group(),)), de) for d in calls):
+                return False
+            if "trọng tâm" in txt_c and not any(
+                    d.fn == "centroid" and d.args.point == proj[0].args.image
+                    and construction_source_bound(replace(d, quotes=(m.group(),)), de) for d in calls):
                 return False
         elif kind == "dcao":
             seg = re.findall(r"[A-Z][0-9]*'?", m.group())[:2]
@@ -4571,6 +4603,14 @@ def _kiem_nguon_dong(calls, de, phu, read_quotes):
                 if not all(re.fullmatch(intersection_form, s, re.I) for s, _st in spans):
                     raise TuChoi('SOURCE_PREMISE_UNREAD','quote giao tuyến có phần chưa được đọc',(c.id,))
                 continue
+            sent_ok = (
+                vt is not None
+                and c.spec.kind != 'ask'
+                and not re.search(r'(?<!\w)(?:song|đổi|thay|gấp|nhân đôi|nhân ba)(?!\w)', re.sub(r'(?<!\w)song\s+song(?!\w)', ' ', sent_s, flags=re.I), re.I)
+                and _cau_tien_de_dong_hop_le(sent_s, sent_start, de, calls, allow_single=True)
+            )
+            if sent_ok:
+                continue
             for s, s_start in spans:
                 if c.fn in ('prism', 'regular_polygon', 'segment_length') and re.fullmatch(cube_form, s, re.I):
                     continue
@@ -4610,7 +4650,7 @@ def _kiem_nguon_dong(calls, de, phu, read_quotes):
                         'prism': rf'(?:cho\s+)?(?:hình\s+)?(?:lăng trụ đứng|hình hộp chữ nhật)\s+{solid}[.\s]*',
                         'regular_polygon': rf'(?:đáy\s+{labels}\s+là\s+)?{shape}[.\s]*',
                         'rectangle': rf'(?:cho\s+)?(?:hình hộp chữ nhật\s+{solid}|(?:đáy\s+{labels}\s+là\s+)?hình chữ nhật\s*(?:{labels})?)[.\s]*',
-                        'midpoint': rf'(?:gọi\s+)?{_P1}\s+là trung điểm\s+(?:của\s+)?{_P1}{_P1}[.\s]*',
+                        'midpoint': rf'(?:gọi\s+)?{_P1}\s+là trung điểm\s+(?:của\s+)?(?:(?:cạnh|đoạn(?:\s+thẳng)?)\s+)?{_P1}{_P1}[.\s]*',
                     }
                     form = atomic_forms.get(c.fn)
                     if not ((form and re.fullmatch(form,s,re.I))
