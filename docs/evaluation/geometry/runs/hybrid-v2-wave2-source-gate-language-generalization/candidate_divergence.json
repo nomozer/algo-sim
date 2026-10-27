@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "HYBRID_V2_WAVE2_SOURCE_GATE_LANGUAGE_GENERALIZATION",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-v2-holdout-failure-repair/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "8baf3205006d097efdd21087b9d52e85625fa1263e9125b418cf658ccac18d25",
+  "current_product_commit": "c6f6b64bda6473c175a32a7875a9dd9831ae7c6d",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Authorized Source Gate-only grammar/binding repair W2-M1/M2/M3; Registry19. Historical inputs/results unchanged. Post-feedback replay is not independent holdout. Literal positive development gate remains unmet on excluded W2-M4; status NOT_READY.",
+  "cache_version": 130,
+  "cache_version_hien_tai": 130,
+  "cache_decision": "NO_BUMP130: default LLM_ONLY route unchanged, semantic cache lock MATCH; Hybrid runtime registry identity19 and declared fixture identity delta.41/41 legacy preview fixtures reproduce; no provider/schema/IR change.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}
