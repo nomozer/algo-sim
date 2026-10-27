@@ -183,6 +183,43 @@ def _vai_mat_cat(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -> None:
             if e.get("object") == mat["id"] and e.get("action") == "CREATE" and phu:
                 e["explanation"] = (f"Dựng {ten}: mặt phẳng qua {ky(d['point'])} và {quan_he}; dựng qua "
                                     f"{ky(d['point'])} và các điểm dựng phụ {phu}.")
+        phu_mat = [x for x in (*(d.get("labels") or ()), *(d.get("feet") or ())) if isinstance(x, str)]
+        if phu_mat and ten:
+            an_mat = re.compile(
+                r"(?<![\w'])[A-Z0-9'.]*(?:"
+                + "|".join(map(re.escape, sorted(phu_mat, key=len, reverse=True)))
+                + r")[A-Z0-9'.]*(?![\w'])"
+            )
+            cu_mat: list[tuple[str, str]] = []
+            for o in canh["objects"]:
+                if (o.get("type") in ("polygon3", "section")
+                        and mat["id"] in (o.get("depends") or ())
+                        and an_mat.search(str(o.get("notation") or o.get("label") or ""))):
+                    truoc = o.get("notation")
+                    nhan = f"Thiết diện bởi {ten}"
+                    o.update(label=nhan, display_label=nhan, reference=nhan[:1].lower() + nhan[1:], notation=None)
+                    if truoc:
+                        cu_mat.append((truoc, o["reference"]))
+            if cu_mat:
+                cu_mat.sort(key=lambda p: len(p[0]), reverse=True)
+                thay_mat = lambda s: _thay_ten(s, cu_mat)
+                for o in canh["objects"]:
+                    nguon = [o.get("label"), o.get("notation"), (o.get("formula") or {}).get("text")]
+                    if o.get("type") != "quantity" or not any(isinstance(s, str) and thay_mat(s) != s for s in nguon):
+                        continue
+                    nhan = thay_mat(str(o.get("label") or ""))
+                    o.update(label=nhan, display_label=nhan, reference=nhan[:1].lower() + nhan[1:], notation=None)
+                    if isinstance((o.get("formula") or {}).get("text"), str):
+                        o["formula"]["text"] = thay_mat(o["formula"]["text"])
+                    if isinstance(o.get("role"), str):
+                        o["role"] = thay_mat(o["role"])
+                for e in canh["events"]:
+                    for k in ("display_label", "learner_text", "explanation"):
+                        if isinstance(e.get(k), str):
+                            e[k] = thay_mat(e[k])
+                for s in canh.get("formation", {}).get("steps", []):
+                    if isinstance(s.get("learner_text"), str):
+                        s["learner_text"] = thay_mat(s["learner_text"])
 
 
 def _an_dinh_thiet_dien_phu(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -> None:

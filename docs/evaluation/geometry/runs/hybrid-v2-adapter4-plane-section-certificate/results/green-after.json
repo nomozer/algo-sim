@@ -1,0 +1,372 @@
+{
+  "live_calls": 0,
+  "total": 36,
+  "passed": 36,
+  "failed": 0,
+  "positive_passed": 18,
+  "positive_total": 18,
+  "negative_passed": 18,
+  "negative_total": 18,
+  "cases": [
+    {
+      "id": "right-base",
+      "group": "positive",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "adapter4_refusal_code": null,
+      "sections_count": 1,
+      "passed": true
+    },
+    {
+      "id": "right-top",
+      "group": "positive",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "adapter4_refusal_code": null,
+      "sections_count": 1,
+      "passed": true
+    },
+    {
+      "id": "right-lateral",
+      "group": "positive",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "adapter4_refusal_code": null,
+      "sections_count": 1,
+      "passed": true
+    },
+    {
+      "id": "right-diagonal",
+      "group": "positive",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "adapter4_refusal_code": null,
+      "sections_count": 1,
+      "passed": true
+    },
+    {
+      "id": "cuboid-base",
+      "group": "positive",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "adapter4_refusal_code": null,
+      "sections_count": 1,
+      "passed": true
+    },
+    {
+      "id": "cube-diagonal",
+      "group": "positive",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "adapter4_refusal_code": null,
+      "sections_count": 1,
+      "passed": true
+    },
+    {
+      "id": "oblique-base",
+      "group": "positive",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "adapter4_refusal_code": null,
+      "sections_count": 1,
+      "passed": true
+    },
+    {
+      "id": "oblique-diagonal",
+      "group": "positive",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "adapter4_refusal_code": null,
+      "sections_count": 1,
+      "passed": true
+    },
+    {
+      "id": "renamed-changed-reversed",
+      "group": "positive",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "adapter4_refusal_code": null,
+      "sections_count": 1,
+      "passed": true
+    },
+    {
+      "id": "symbolic-top",
+      "group": "positive",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "adapter4_refusal_code": null,
+      "sections_count": 1,
+      "passed": true
+    },
+    {
+      "id": "right-base-section-only",
+      "group": "positive",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "adapter4_refusal_code": null,
+      "sections_count": 1,
+      "passed": true
+    },
+    {
+      "id": "right-base-area-only",
+      "group": "positive",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "adapter4_refusal_code": null,
+      "sections_count": 1,
+      "passed": true
+    },
+    {
+      "id": "prism-parallel-base-plane-only",
+      "group": "positive",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "adapter4_refusal_code": null,
+      "sections_count": 1,
+      "passed": true
+    },
+    {
+      "id": "pyramid-parallel-base-plane-only",
+      "group": "positive",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "adapter4_refusal_code": null,
+      "sections_count": 1,
+      "passed": true
+    },
+    {
+      "id": "pyramid-parallel-base-section-only",
+      "group": "positive",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "adapter4_refusal_code": null,
+      "sections_count": 1,
+      "passed": true
+    },
+    {
+      "id": "pyramid-perpendicular-line-plane-only",
+      "group": "positive",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "adapter4_refusal_code": null,
+      "sections_count": 1,
+      "passed": true
+    },
+    {
+      "id": "pyramid-parallel-two-lines-plane-only",
+      "group": "positive",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "adapter4_refusal_code": null,
+      "sections_count": 1,
+      "passed": true
+    },
+    {
+      "id": "pyramid-category-a-stated-cuts-preserved",
+      "group": "positive_category_a",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "adapter4_refusal_code": null,
+      "sections_count": 1,
+      "passed": true
+    },
+    {
+      "id": "neg-wrong-solid-identity",
+      "group": "negative_route",
+      "route_status": "REFUSED",
+      "route_code": "UNKNOWN_SOLID_ID",
+      "adapter4_status": "REFUSED",
+      "adapter4_refusal_code": "UNKNOWN_SOLID_ID",
+      "sections_count": 0,
+      "passed": true
+    },
+    {
+      "id": "neg-source-kind-contradiction",
+      "group": "negative_route",
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_OBJECT_MISMATCH",
+      "adapter4_status": "REFUSED",
+      "adapter4_refusal_code": "SOURCE_OBJECT_MISMATCH",
+      "sections_count": 0,
+      "passed": true
+    },
+    {
+      "id": "neg-unverified-plane",
+      "group": "negative_route",
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_OBJECT_MISMATCH",
+      "adapter4_status": "REFUSED",
+      "adapter4_refusal_code": "SOURCE_OBJECT_MISMATCH",
+      "sections_count": 0,
+      "passed": true
+    },
+    {
+      "id": "neg-missing-geometric-dependency",
+      "group": "negative_route",
+      "route_status": "REFUSED",
+      "route_code": "MISSING_DIMENSION",
+      "adapter4_status": "REFUSED",
+      "adapter4_refusal_code": "MISSING_DIMENSION",
+      "sections_count": 0,
+      "passed": true
+    },
+    {
+      "id": "neg-degenerate-section-boundary-face",
+      "group": "negative_route",
+      "route_status": "REFUSED",
+      "route_code": "SECTION_PLANE_IS_FACE",
+      "adapter4_status": "REFUSED",
+      "adapter4_refusal_code": "SECTION_PLANE_IS_FACE",
+      "sections_count": 0,
+      "passed": true
+    },
+    {
+      "id": "neg-degenerate-section-vertex-touch",
+      "group": "negative_route",
+      "route_status": "REFUSED",
+      "route_code": "PLANE_TOUCHES_VERTEX",
+      "adapter4_status": "REFUSED",
+      "adapter4_refusal_code": "PLANE_TOUCHES_VERTEX",
+      "sections_count": 0,
+      "passed": true
+    },
+    {
+      "id": "neg-unsupported-topology-curved",
+      "group": "negative_route",
+      "route_status": "REFUSED",
+      "route_code": "BRIDGE_UNSUPPORTED_CURVED",
+      "adapter4_status": "REFUSED",
+      "adapter4_refusal_code": "BRIDGE_UNSUPPORTED_CURVED",
+      "sections_count": 0,
+      "passed": true
+    },
+    {
+      "id": "tamper-forged-certificate",
+      "group": "negative_tamper",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "REFUSED",
+      "adapter4_refusal_code": "PREVIEW_RESULT_INVALID",
+      "sections_count": 0,
+      "passed": true
+    },
+    {
+      "id": "tamper-mismatched-edge-and-vertex",
+      "group": "negative_tamper",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "REFUSED",
+      "adapter4_refusal_code": "PREVIEW_RESULT_INVALID",
+      "sections_count": 0,
+      "passed": true
+    },
+    {
+      "id": "tamper-wrong-intersection-ordering",
+      "group": "negative_tamper",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "REFUSED",
+      "adapter4_refusal_code": "PREVIEW_RESULT_INVALID",
+      "sections_count": 0,
+      "passed": true
+    },
+    {
+      "id": "tamper-duplicated-or-missing-vertex",
+      "group": "negative_tamper",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "REFUSED",
+      "adapter4_refusal_code": "PREVIEW_RESULT_INVALID",
+      "sections_count": 0,
+      "passed": true
+    },
+    {
+      "id": "tamper-degenerate-collinear-polygon",
+      "group": "negative_tamper",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "REFUSED",
+      "adapter4_refusal_code": "PREVIEW_RESULT_INVALID",
+      "sections_count": 0,
+      "passed": true
+    },
+    {
+      "id": "tamper-exact-area",
+      "group": "negative_tamper",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "REFUSED",
+      "adapter4_refusal_code": "PREVIEW_RESULT_INVALID",
+      "sections_count": 0,
+      "passed": true
+    },
+    {
+      "id": "tamper-unknown-certificate-version",
+      "group": "negative_tamper",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "REFUSED",
+      "adapter4_refusal_code": "PREVIEW_IDENTITY_CHANGED",
+      "sections_count": 0,
+      "passed": true
+    },
+    {
+      "id": "tamper-unsupported-topology-diagonal-edge",
+      "group": "negative_tamper",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "REFUSED",
+      "adapter4_refusal_code": "PREVIEW_RESULT_INVALID",
+      "sections_count": 0,
+      "passed": true
+    },
+    {
+      "id": "tamper-inconsistent-provenance",
+      "group": "negative_tamper",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "REFUSED",
+      "adapter4_refusal_code": "PREVIEW_RESULT_INVALID",
+      "sections_count": 0,
+      "passed": true
+    },
+    {
+      "id": "tamper-certificate-reuse-across-plane-or-solid",
+      "group": "negative_tamper",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "REFUSED",
+      "adapter4_refusal_code": "PREVIEW_RESULT_INVALID",
+      "sections_count": 0,
+      "passed": true
+    },
+    {
+      "id": "tamper-wrong-solid-identity",
+      "group": "negative_tamper",
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "REFUSED",
+      "adapter4_refusal_code": "PREVIEW_RESULT_INVALID",
+      "sections_count": 0,
+      "passed": true
+    }
+  ]
+}

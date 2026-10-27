@@ -51,6 +51,9 @@ from .registry import DINH_CAT_CANH, _cum_hoi
 #: /13 (run `hybrid-v2-backend-generalization`): question planes are measured through the first non-collinear triple of
 #: the whole label group (`chon_ba_mat`), every named label is checked coplanar, and the IR plane carries the full name.
 ENGINE_VERSION = "geometry-function-engine/14"
+PLANE_SECTION_CERTIFICATE_VERSION = "plane-section-certificate/1"
+PLANE_SECTION_CERTIFICATE_RULE = "engine_derived_plane_section"
+PLANE_SECTION_CERTIFICATE_PRODUCER = "engine.kiem_chung_chi_thiet_dien"
 Z = Fraction(0)
 V3 = tuple[Fraction, Fraction, Fraction]
 
@@ -122,6 +125,8 @@ class KetQuaTuyen:
     #: Tên IR mà ĐỀ hỏi (CONTRACT-BE-1): biến đáp số của mỗi lời hỏi đã qua cổng nguồn + toán hạng phép đo của nó, trừ điểm
     #: phụ tươi do planner dựng. Cùng nghĩa `targets` mà tuyến LLM_ONLY đọc từ nghĩa vụ của `RequestContract`.
     targets: tuple[str, ...] = ()
+    #: Chứng chỉ thiết diện dẫn xuất từ mặt phẳng (`plane-section-certificate/1`) do `kiem_chung_chi_thiet_dien` xác minh.
+    section_certificates: tuple[dict[str, Any], ...] = ()
 
 
 def hop_dong_to_po_da_khai(calls: tuple[LoiGoi, ...]) -> Any:
@@ -266,6 +271,8 @@ class _Dung:
                 groups.setdefault(key,[]).append(c.id)
             self.line_aliases={cid:min(ids) for ids in groups.values() for cid in ids}
         self.sections: list[str] = []           # biến IR của thiết diện đã dựng (kiểm khép kín sau khi thực thi)
+        self.section_records: list[dict[str, Any]] = []  # thiết diện đã biên dịch → chứng chỉ mặt phẳng cắt khối
+        self.section_certificates: list[dict[str, Any]] = []  # `plane-section-certificate/1` đã kiểm trên hình thực thi
         self.mat_phu: list[dict] = []           # mặt phẳng dẫn xuất đã khai (`MAT_SONG_SONG`), kiểm ở `kiem_mat_cat`
         self.ten_mat_phu: dict[str, str | None] = {}   # tên đề đặt cho mỗi mặt dẫn xuất — do `kiem_nguon` trả về
 
@@ -1525,22 +1532,30 @@ class _Dung:
         mặt) chỉ dựng MỘT lần dù được yêu cầu dựng và hỏi diện tích; trả {khoá: biến thiết diện}."""
         td: dict[tuple, str] = {}
         vet: dict[tuple, dict] = {}
+        ban: dict[tuple, dict] = {}
         for c in (*self.of("section"), *self.of("ask_section_area")):
             if (khoa := self._khoa_mat_cat(c)) in td:
                 vet[khoa]["calls"].append(c.id)                 # cùng thiết diện: một đối tượng, vết ghi mọi lời gọi (M3)
+                ban[khoa]["calls"].append(c.id)
                 continue
             ten, mp = f"td_{c.id}", f"mp_td_{c.id}"
             # A derived plane is named by its verified relation, never by the planner's auxiliary labels.
             dan = next((d for d in self.mat_phu if c.id in d["targets"]), None)
             nhan_mat = (f"({self.ten_mat_phu.get(dan['constructs'][0]) or 'α'})" if dan
                         else "(" + "".join(c.args.plane) + ")")
+            khoi_id = "khoi_" + ir_name(c.args.solid.replace(".", "_"))
             lenh.append({"kind": "construct_plane", "target_var": mp, "through": [ir_name(x) for x in c.args.plane[:3]],
                          "label": nhan_mat})
-            lenh.append({"kind": "construct_section", "target_var": ten, "solid": "khoi_" + ir_name(c.args.solid.replace(".", "_")),
+            lenh.append({"kind": "construct_section", "target_var": ten, "solid": khoi_id,
                          "plane": mp, "label": "thiết diện"})
             khai += [P.memory_declaration(mp, "plane3"), P.memory_declaration(ten, "section")]
             td[khoa] = ten
             self.sections.append(ten)
+            ban[khoa] = {"section_id": c.id, "section_object_id": ten, "plane_object_id": mp,
+                         "solid": c.args.solid, "solid_object_id": khoi_id,
+                         "plane": list(c.args.plane), "plane_label": nhan_mat,
+                         "derived_plane": dan, "calls": [c.id]}
+            self.section_records.append(ban[khoa])
             vet[khoa] = {"step": "construct_section", "object": ten, "rule": c.fn, "calls": [c.id], "provenance": "DERIVED"}
             self.trace.append(vet[khoa])
         for c in self.of("intersection_line"):
@@ -1584,6 +1599,234 @@ class _Dung:
         if det <= 0:
             raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"ba đỉnh {p}, {q}, {r} thẳng hàng — định thức Gram suy biến")
         return det / 4
+
+    def _dt2_da_giac(self, poly: tuple[Vec3, ...] | list[Vec3], ids: tuple[str, ...] = ()) -> Fraction:
+        """Exact squared area of a planar convex polygon in chart coordinates under the chart Gram metric G, without
+        radicals: on the 2D subspace span(u₁, v₁), the chart cross product and the signed Euclidean area 2-form are
+        proportional, so each fan triangle (P₀, Pₖ, Pₖ₊₁) has signed area ratio λₖ = (cₖ·c₁)/(c₁·c₁) > 0, detₖ = λₖ²·det₁,
+        and S² = (∑ λₖ)² · det₁."""
+        if len(poly) < 3:
+            raise TuChoi("ENGINE_SELF_CHECK_FAILED", "đa giác thiết diện có ít hơn 3 đỉnh", ids)
+        p0 = poly[0]
+        c1 = (poly[1] - p0).cross(poly[2] - p0)
+        c1_sq = c1.dot(c1)
+        if c1_sq == 0:
+            raise TuChoi("ENGINE_SELF_CHECK_FAILED", "ba đỉnh đầu của thiết diện thẳng hàng", ids)
+        u1 = (poly[1].x - p0.x, poly[1].y - p0.y, poly[1].z - p0.z)
+        v1 = (poly[2].x - p0.x, poly[2].y - p0.y, poly[2].z - p0.z)
+        det1 = (self.g(u1, u1) * self.g(v1, v1) - self.g(u1, v1) ** 2) / 4
+        if det1 <= 0:
+            raise TuChoi("ENGINE_SELF_CHECK_FAILED", "định thức Gram của tam giác thiết diện không dương", ids)
+        tong = Z
+        for k in range(1, len(poly) - 1):
+            uk = (poly[k].x - p0.x, poly[k].y - p0.y, poly[k].z - p0.z)
+            vk = (poly[k + 1].x - p0.x, poly[k + 1].y - p0.y, poly[k + 1].z - p0.z)
+            ck = (poly[k] - p0).cross(poly[k + 1] - p0)
+            if ck.is_zero() or not ck.cross(c1).is_zero():
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", "đa giác thiết diện không đồng phẳng hoặc có ba đỉnh thẳng hàng", ids)
+            lam = ck.dot(c1) / c1_sq
+            if lam <= 0:
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", "đa giác thiết diện tự cắt hoặc sai thứ tự vòng", ids)
+            detk = (self.g(uk, uk) * self.g(vk, vk) - self.g(uk, vk) ** 2) / 4
+            if detk != lam * lam * det1:
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", "tỉ số diện tích Gram của tam giác thành phần không nhất quán", ids)
+            tong += lam
+        return (tong ** 2) * det1
+
+    def kiem_chung_chi_thiet_dien(self, fm: dict[str, Any], hoi: dict[str, str]) -> None:
+        """Verify and emit `plane-section-certificate/1` for every compiled section on the executed figure."""
+        from app.simulation.geometry.section import Polyhedron, cross_section, same_section_cycle
+
+        self.section_certificates = []
+        G = self.metric()
+        for rec in self.section_records:
+            ids = tuple(rec["calls"])
+            k = self.khoi.get(rec["solid"])
+            if k is None:
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"thiết diện tham chiếu khối chưa dựng {rec['solid']!r}", ids)
+            if k.kind == "pyramid":
+                dinh = [k.apex, *k.base]
+                mat_khoi = P.construct_pyramid("solid", k.apex, k.base)["faces"]
+            else:
+                dinh = [*k.base, *k.top]
+                mat_khoi = P.construct_prism("solid", k.base, k.top, tuple(zip(k.base, k.top)))["faces"]
+            faces_idx = tuple(tuple(dinh.index(p) for p in f) for f in mat_khoi)
+            canh_khoi = {
+                (min(f[i], f[(i + 1) % len(f)]), max(f[i], f[(i + 1) % len(f)]))
+                for f in faces_idx for i in range(len(f))
+            }
+            with _metric.using(G):
+                mp = self._plane(rec["plane"][:3])
+                try:
+                    cs = cross_section(Polyhedron(tuple(Vec3(*self.pts[p]) for p in dinh), faces_idx), mp)
+                except GeometryError as e:
+                    raise TuChoi(e.code, str(e), ids) from None
+            sec_val = fm.get(rec["section_object_id"])
+            if (sec_val is None or not getattr(sec_val, "is_closed", False)
+                    or len(sec_val.polygon) < 3 or len(cs.polygon) < 3
+                    or not same_section_cycle(sec_val.polygon, cs.polygon)
+                    or list(sec_val.polygon) != list(cs.polygon)
+                    or list(sec_val.vertex_sources) != list(cs.vertex_sources)):
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", "thiết diện thực thi lệch kết quả giao phẳng–khối của kernel", ids)
+            n = (mp.normal.x, mp.normal.y, mp.normal.z)
+            nz = next((x for x in n if x != 0), Z)
+            if nz == 0:
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", "pháp tuyến mặt cắt suy biến", ids)
+            n_norm = tuple(Fraction(x) / nz for x in n)
+            d_norm = sum(a * Fraction(b) for a, b in zip(n_norm, (mp.point.x, mp.point.y, mp.point.z)))
+            dan = rec["derived_plane"]
+            qua_diem = dan["point"] if dan else None
+            if dan:
+                if dan["rule"] == MAT_SONG_SONG:
+                    quan_he = {"kind": "parallel_plane", "through_point": qua_diem, "parallel_to": list(dan["parallel_to"])}
+                elif dan["rule"] == MAT_HAI_DUONG:
+                    quan_he = {"kind": "parallel_lines", "through_point": qua_diem, "lines": [list(x) for x in dan["lines"]]}
+                else:
+                    quan_he = {"kind": "perpendicular_line", "through_point": qua_diem,
+                               "perpendicular_to": list(dan["perpendicular_to"])}
+                luat_mat = dan["rule"]
+            else:
+                for p in rec["plane"]:
+                    if mp.signed_eval(Vec3(*self.pts[p])) != 0:
+                        raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"điểm {p} không nằm trên mặt cắt đã dựng", ids)
+                quan_he = {"kind": "explicit_points", "points": list(rec["plane"])}
+                luat_mat = "explicit_plane"
+            dinh_chung_chi: list[dict[str, Any]] = []
+            da_thay_toa_do: set[V3] = set()
+            da_thay_thuc_the: set[str] = set()
+            for stt, (pt, src) in enumerate(zip(cs.polygon, cs.vertex_sources)):
+                xyz = (pt.x, pt.y, pt.z)
+                if sum(a * b for a, b in zip(n_norm, xyz)) != d_norm or mp.signed_eval(pt) != 0:
+                    raise TuChoi("ENGINE_SELF_CHECK_FAILED", "đỉnh thiết diện không nằm trên mặt phẳng cắt", ids)
+                if xyz in da_thay_toa_do:
+                    raise TuChoi("DEGENERATE_DERIVED_SECTION", "hai đỉnh thiết diện trùng tọa độ", ids)
+                da_thay_toa_do.add(xyz)
+                if src.kind == "SOLID_VERTEX":
+                    iv = src.solid_vertex_index
+                    if iv is None or not (0 <= iv < len(dinh)) or self.pts[dinh[iv]] != xyz:
+                        raise TuChoi("ENGINE_SELF_CHECK_FAILED", "đỉnh thiết diện loại SOLID_VERTEX lệch đỉnh khối", ids)
+                    ke = sorted(u for a, b in canh_khoi if iv in (a, b) for u in (a, b) if u != iv)
+                    if not ke:
+                        raise TuChoi("ENGINE_SELF_CHECK_FAILED", "đỉnh khối không có cạnh kề", ids)
+                    ia, ib = (iv, ke[0]) if iv < ke[0] else (ke[0], iv)
+                    t_val = Z if iv == ia else Fraction(1)
+                    nhan_dinh = dinh[iv]
+                    choice = "reuse_through_point" if (qua_diem and nhan_dinh == qua_diem) else "solid_vertex"
+                    entity_id = ir_name(nhan_dinh)
+                    solid_v_idx: int | None = iv
+                elif src.kind == "SOLID_EDGE_INTERSECTION":
+                    pair = src.solid_edge_vertex_indices
+                    if pair is None or len(pair) != 2:
+                        raise TuChoi("ENGINE_SELF_CHECK_FAILED", "giao điểm cạnh thiếu cặp chỉ số cạnh khối", ids)
+                    ia, ib = (pair[0], pair[1]) if pair[0] < pair[1] else (pair[1], pair[0])
+                    if (ia, ib) not in canh_khoi:
+                        raise TuChoi("ENGINE_SELF_CHECK_FAILED", "giao điểm thiết diện nằm trên cặp đỉnh không phải cạnh khối", ids)
+                    va, vb = self.pts[dinh[ia]], self.pts[dinh[ib]]
+                    axis = next((j for j in range(3) if vb[j] != va[j]), None)
+                    if axis is None:
+                        raise TuChoi("ENGINE_SELF_CHECK_FAILED", "cạnh khối suy biến", ids)
+                    t_val = (xyz[axis] - va[axis]) / (vb[axis] - va[axis])
+                    if not (Z < t_val < Fraction(1)):
+                        raise TuChoi("SECTION_VERTEX_OFF_EDGE", "giao điểm cạnh thiết diện không nằm phần trong cạnh", ids)
+                    if any((1 - t_val) * va[j] + t_val * vb[j] != xyz[j] for j in range(3)):
+                        raise TuChoi("ENGINE_SELF_CHECK_FAILED", "tham số nội suy cạnh thiết diện không khớp tọa độ", ids)
+                    if any(self.pts[v] == xyz for v in dinh):
+                        raise TuChoi("ENGINE_SELF_CHECK_FAILED", "giao điểm phần trong cạnh trùng đỉnh khối", ids)
+                    trung_diem_qua = bool(qua_diem and qua_diem in self.pts and self.pts[qua_diem] == xyz)
+                    nhan_dinh = qua_diem if trung_diem_qua else None
+                    choice = "reuse_through_point" if trung_diem_qua else "engine_derived_edge_cut"
+                    entity_id = (
+                        f"section:{rec['section_object_id']}:point:on:{rec['solid_object_id']}"
+                        f"::edge:{ir_name(dinh[ia])}-{ir_name(dinh[ib])}"
+                    )
+                    solid_v_idx = None
+                else:
+                    raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"loại nguồn đỉnh thiết diện không hợp lệ: {src.kind!r}", ids)
+                if entity_id in da_thay_thuc_the:
+                    raise TuChoi("DEGENERATE_DERIVED_SECTION", "hai đỉnh thiết diện trùng định danh thực thể", ids)
+                da_thay_thuc_the.add(entity_id)
+                dinh_chung_chi.append({
+                    "ordinal": stt,
+                    "entity_id": entity_id,
+                    "label": ir_name(nhan_dinh) if nhan_dinh else None,
+                    "display_notation": nhan_dinh,
+                    "xyz": [str(xyz[0]), str(xyz[1]), str(xyz[2])],
+                    "source_kind": src.kind,
+                    "solid_vertex_index": solid_v_idx,
+                    "solid_edge_vertex_indices": [ia, ib],
+                    "edge": [dinh[ia], dinh[ib]],
+                    "t": str(t_val),
+                    "choice": choice,
+                    "provenance": (
+                        "THROUGH_POINT_REUSE" if choice == "reuse_through_point"
+                        else "SOLID_VERTEX_INTERSECTION" if choice == "solid_vertex"
+                        else "ENGINE_DERIVED_EDGE_CUT"
+                    ),
+                    "stated": False,
+                })
+            m = len(dinh_chung_chi)
+            for i in range(m):
+                v_cur, v_nxt = dinh_chung_chi[i], dinh_chung_chi[(i + 1) % m]
+                faces_cur = {
+                    fi for fi, f in enumerate(faces_idx)
+                    if (v_cur["solid_vertex_index"] in f if v_cur["source_kind"] == "SOLID_VERTEX"
+                        else set(v_cur["solid_edge_vertex_indices"]) <= set(f))
+                }
+                faces_nxt = {
+                    fi for fi, f in enumerate(faces_idx)
+                    if (v_nxt["solid_vertex_index"] in f if v_nxt["source_kind"] == "SOLID_VERTEX"
+                        else set(v_nxt["solid_edge_vertex_indices"]) <= set(f))
+                }
+                if not (faces_cur & faces_nxt):
+                    raise TuChoi("SECTION_BOUNDARY_INCOMPLETE", "hai đỉnh liên tiếp của thiết diện không cùng thuộc một mặt biên", ids)
+            dt2 = self._dt2_da_giac(cs.polygon, ids)
+            for cid in rec["calls"]:
+                c_call = next((c for c in self.calls if c.id == cid), None)
+                if c_call and c_call.fn == "ask_section_area":
+                    if _binh_phuong(fm.get(hoi.get(cid, ""))) != dt2:
+                        raise TuChoi("ENGINE_SELF_CHECK_FAILED", "diện tích thiết diện thực thi khác định thức Gram độc lập", (cid,))
+            boundary_ids = [v["entity_id"] for v in dinh_chung_chi]
+            self.section_certificates.append({
+                "certificate_version": PLANE_SECTION_CERTIFICATE_VERSION,
+                "certificate_category": "ENGINE_DERIVED_SECTION",
+                "section_id": rec["section_id"],
+                "section_object_id": rec["section_object_id"],
+                "solid": rec["solid"],
+                "solid_object_id": rec["solid_object_id"],
+                "plane_object_id": rec["plane_object_id"],
+                "plane_points": list(rec["plane"][:3]),
+                "plane_label": rec["plane_label"],
+                "plane_rule": luat_mat,
+                "plane_relation": quan_he,
+                "through_point": qua_diem,
+                "plane_equation": {
+                    "normal": [str(x) for x in n_norm],
+                    "offset": str(d_norm),
+                },
+                "boundary": boundary_ids,
+                "vertices": dinh_chung_chi,
+                "closure_certificate": {
+                    "verified": True,
+                    "version": PLANE_SECTION_CERTIFICATE_VERSION,
+                    "rule": PLANE_SECTION_CERTIFICATE_RULE,
+                    "producer": PLANE_SECTION_CERTIFICATE_PRODUCER,
+                    "boundary": boundary_ids,
+                    "polygon": [v["xyz"] for v in dinh_chung_chi],
+                    "area_squared": str(dt2),
+                },
+                "declared_boundary": None,
+            })
+            self.trace.append({
+                "step": "certify_plane_section",
+                "object": rec["section_object_id"],
+                "section_id": rec["section_id"],
+                "rule": PLANE_SECTION_CERTIFICATE_RULE,
+                "version": PLANE_SECTION_CERTIFICATE_VERSION,
+                "vertex_count": len(dinh_chung_chi),
+                "area_squared": str(dt2),
+                "relation_verified": True,
+                "provenance": "DERIVED",
+            })
 
     def _goc_duong_mat_cos2(self, line: tuple[str, ...], plane: tuple[str, ...]) -> Fraction:
         """Line–plane angle cos²(θ) = 1 - sin²(θ) directly from Gram determinants of (u, v, w), independent of kernel covectors."""
@@ -1891,6 +2134,7 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
                 raise TuChoi("ENGINE_SELF_CHECK_FAILED", "góc hai đường thực thi khác công thức Gram độc lập", (c.id,))
         if hong := [t for t in dung.sections if not fm[t].is_closed]:
             raise TuChoi("SECTION_EMPTY", f"mặt phẳng không cắt khối thành một đa giác ({hong}) — không có thiết diện để dựng")
+        dung.kiem_chung_chi_thiet_dien(fm, hoi)
         tra, chinh_xac = {}, {}
         for cid, kq in hoi.items():
             v = fm.get(kq)
@@ -1926,6 +2170,7 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         return KetQuaTuyen("SERVED", answers=tra, trace=dung.trace, program=program, points=dict(dung.pts),
                            metric=G.as_json(), kernel_check=True, spec=spec, exec_result=ket, chart_metric=G,
                            targets=tuple(sorted(muc_tieu)),
+                           section_certificates=tuple(dung.section_certificates),
                            answer_exact=chinh_xac, length_unit=ky_hieu, checker=_kiem_tren_hinh(dung), declared_topology=to_po,
                            calls=[{"id": c.id, "fn": c.fn, "args": c.args.model_dump(), "quotes": list(c.quotes)}
                                   for c in calls])

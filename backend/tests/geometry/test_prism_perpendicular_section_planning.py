@@ -79,16 +79,21 @@ def test_unsupported_ungrounded_and_invalid_prism_sections_refuse(row):
 
 @pytest.mark.parametrize('row',[POS[0],POS[7]],ids=lambda r:r['id'])
 def test_canonical_v2_existing_schema_serves_same_section_and_adapter4_fails_closed(row):
-    """The V2 route serves the section exactly. The /4 consumer wrapper still refuses: a plane-only derived section has no
-    `DINH_CAT_CANH` vertex certificate, which /4 requires of every section — pre-existing at 386d2149 for pyramids too
-    (ADAPTER_INTEGRATION_GAP, run report). Pinned here so the gap cannot close or turn into a wrong serve silently."""
+    """The V2 route and Adapter /4 consumer wrapper both serve plane-only derived sections via `plane-section-certificate/1`
+    (run `hybrid-v2-adapter4-plane-section-certificate`), closing the historical `ADAPTER_INTEGRATION_GAP` while keeping
+    every derived vertex `stated=False`."""
     payload=_module('corpus').canonical(row)
     result=run_typed_fact_next_v2_route(payload)
     assert result.status=='SERVED',(result.code,result.reason)
     assert _square(result)==F(row['expected_area_squared'])
-    assert result.route_d['sections']==[]
-    rd=build_adapter4_response(result,payload['problem_text'])['route_d']
-    assert (rd['status'],rd['refusal'])==('REFUSED',{'code':'PREVIEW_RESULT_INVALID'})
+    assert len(result.route_d['sections'])==1
+    sec=result.route_d['sections'][0]
+    assert sec['certificate_version']=='plane-section-certificate/1'
+    assert sec['certificate_category']=='ENGINE_DERIVED_SECTION'
+    assert all(v['stated'] is False for v in sec['vertices'])
+    resp=build_adapter4_response(result,payload['problem_text'])
+    rd=resp['route_d']
+    assert (resp['envelope']['status'],rd['status'],rd['refusal'])==('ok','SERVED',None)
 
 
 @pytest.mark.parametrize('word,status',[('lăng trụ','SERVED'),('chóp','REFUSED'),('tứ diện','REFUSED')])
