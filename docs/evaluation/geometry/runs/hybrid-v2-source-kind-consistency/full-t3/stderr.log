@@ -1,0 +1,829 @@
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiến/lùi và dừng ở bước hình học cuối[2m > [22m[2mtriangular_pyramid: thanh bước của trình phát đếm bước DỰNG, không đếm bước tính
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiến/lùi và dừng ở bước hình học cuối[2m > [22m[2mtriangular_prism: thanh bước của trình phát đếm bước DỰNG, không đếm bước tính
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiến/lùi và dừng ở bước hình học cuối[2m > [22m[2mrectangular_pyramid: thanh bước của trình phát đếm bước DỰNG, không đếm bước tính
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiến/lùi và dừng ở bước hình học cuối[2m > [22m[2mcuboid: thanh bước của trình phát đếm bước DỰNG, không đếm bước tính
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiến/lùi và dừng ở bước hình học cuối[2m > [22m[2mcube: thanh bước của trình phát đếm bước DỰNG, không đếm bước tính
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiến/lùi và dừng ở bước hình học cuối[2m > [22m[2mcross_section: thanh bước của trình phát đếm bước DỰNG, không đếm bước tính
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiến/lùi và dừng ở bước hình học cuối[2m > [22m[2mtriangular_pyramid: dòng Bước ở đáy xưởng nói số bước DỰNG
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/final-quality.test.tsx[2m > [22m[2mfinal visual quality[2m > [22m[2mprovides entry guidance and a complete-model action without opening analysis
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mC5/D · hàng trên: quay lại · tên bài · công cụ đã nhóm[2m > [22m[2mnút quay lại có chữ trang đích và tên bài là tiêu đề
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiến/lùi và dừng ở bước hình học cuối[2m > [22m[2mtriangular_prism: dòng Bước ở đáy xưởng nói số bước DỰNG
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mC5/D · hàng trên: quay lại · tên bài · công cụ đã nhóm[2m > [22m[2m«Đề bài» là nút chính mở bảng đề; ba nhóm là nút menu có chữ
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiến/lùi và dừng ở bước hình học cuối[2m > [22m[2mrectangular_pyramid: dòng Bước ở đáy xưởng nói số bước DỰNG
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mC5/D · hàng trên: quay lại · tên bài · công cụ đã nhóm[2m > [22m[2mchip phẳng cũ không còn trên thanh: Chi tiết, Lưới, Hình phụ, Hiện tất cả, Thành phần, Đại lượng nằm trong menu
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mC5/D · hàng trên: quay lại · tên bài · công cụ đã nhóm[2m > [22m[2m«Tách khối» chỉ dựng khi cảnh có mặt; «Xem lại toàn hình» luôn có
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mE · không còn thẻ lời giải lặp dưới mô phỏng[2m > [22m[2mtriangular_pyramid: trình phát không dựng thẻ lời giải ở bước cuối
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mE · không còn thẻ lời giải lặp dưới mô phỏng[2m > [22m[2mtriangular_prism: trình phát không dựng thẻ lời giải ở bước cuối
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mE · không còn thẻ lời giải lặp dưới mô phỏng[2m > [22m[2mrectangular_pyramid: trình phát không dựng thẻ lời giải ở bước cuối
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiến/lùi và dừng ở bước hình học cuối[2m > [22m[2mcuboid: dòng Bước ở đáy xưởng nói số bước DỰNG
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiến/lùi và dừng ở bước hình học cuối[2m > [22m[2mcube: dòng Bước ở đáy xưởng nói số bước DỰNG
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiến/lùi và dừng ở bước hình học cuối[2m > [22m[2mcross_section: dòng Bước ở đáy xưởng nói số bước DỰNG
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mE · không còn thẻ lời giải lặp dưới mô phỏng[2m > [22m[2mcuboid: trình phát không dựng thẻ lời giải ở bước cuối
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mE · không còn thẻ lời giải lặp dưới mô phỏng[2m > [22m[2mcube: trình phát không dựng thẻ lời giải ở bước cuối
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mlớp lời giải giữ công thức và nguồn[2m > [22m[2mkhông còn bảng lời giải dưới thanh bước — đáp số MỘT mục ở «Đại lượng», công thức ở ô soi
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mE · không còn thẻ lời giải lặp dưới mô phỏng[2m > [22m[2mcross_section: trình phát không dựng thẻ lời giải ở bước cuối
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mdải lớp gọn trên màn chật[2m > [22m[2mkhông có dải lớp ⇒ không chip, hàng trên y như trước (mô phỏng tự học không đổi)
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mdải lớp gọn trên màn chật[2m > [22m[2mcó dải lớp ⇒ chip disclosure (`aria-expanded`/`aria-controls`) mang trạng thái, dải đầy đủ trong vùng của nó
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mdải lớp gọn trên màn chật[2m > [22m[2mnút quay lại: tên gọi giữ ở `aria-label` khi chữ ẩn (chip lớp, màn hẹp)
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/components/hybrid-preview-contract.test.tsx[2m > [22m[2mHybrid Preview Contract v2 — 41 fixtures & F1–F6[2m > [22m[2mF3 — ISSUE-ARCH-HYBRID-ROUTE-D-NOT-WIRED (length_unit.display_scale)[2m > [22m[2mhiện scene3d.length_unit.display_scale khi có mặt và không đổi cảnh không có length_unit
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/components/hybrid-preview-contract.test.tsx[2m > [22m[2mHybrid Preview Contract v2 — 41 fixtures & F1–F6[2m > [22m[2mHFOI-F4 — biên route_d, quan hệ, neo timeline[2m > [22m[2mSSR ở bước đầu: không đáp số, không quan sát (không kết luận trước bước chống đỡ)
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/simulation-learning-ux-session2.test.tsx[2m > [22m[2mSession 2 (P6–P10) — Simulation-First Learning Experience & Mathematical Analysis[2m > [22m[2mP6: Mode A (Simulation) is the default across all 13 served families; Mode B button is present and panel is closed by default
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/simulation-learning-ux-session2.test.tsx[2m > [22m[2mSession 2 (P6–P10) — Simulation-First Learning Experience & Mathematical Analysis[2m > [22m[2mP6: If a geometry scene has no mathematical results, measurements, or certificates, no analysis panel button is fabricated
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/components/hybrid-preview-contract.test.tsx[2m > [22m[2mHybrid Preview Contract v2 — 41 fixtures & F1–F6[2m > [22m[2mSIMULATION-FIRST UX — không lộ đáp số cuối ở cả Path A và Path B, giữ nguyên đại lượng dựng hình & chứng chỉ[2m > [22m[2mScene3DExplorer không dựng nút Xem/Ẩn đáp án hay thẻ Đáp số, lọc kết quả cuối khỏi Đại lượng và nhãn trên hình, và dựng hướng dẫn quan sát
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx[2m > [22m[2m§0.1-1 · không có card Kết quả dưới hình[2m > [22m[2mtrình phát không dựng thẻ lời giải nào — đáp số đọc ở «Đại lượng» và ô soi
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx[2m > [22m[2m§0.1-3/4/5 · «Các bước dựng»[2m > [22m[2mnút mở nằm trong thanh điều khiển; đóng ⇒ không có danh sách; mở ⇒ một nút mỗi bước, bước hiện tại đánh dấu
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx[2m > [22m[2m§0.1-8 · bớt dòng mô tả lặp[2m > [22m[2mkhông còn dải «Đang dựng / Dựa trên» — dòng thuyết minh và ô soi đã nói điều ấy
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx[2m > [22m[2mbảng nổi «Các bước dựng»[2m > [22m[2mkhông còn cột lưới: mở bảng không đổi lưới/kích thước của trình phát
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx[2m > [22m[2mbảng nổi «Các bước dựng»[2m > [22m[2mnút ở phía phải thanh điều khiển; aria-controls chỉ trỏ tới bảng khi bảng có mặt
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx[2m > [22m[2mbảng nổi «Các bước dựng»[2m > [22m[2mbảng có đóng, về vị trí mặc định, thu gọn và tiêu đề nhận bàn phím
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-panels.test.tsx[2m > [22m[2mmọi bảng thông tin đi qua MỘT cơ chế[2m > [22m[2mmặc định không bảng nào mở
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx[2m > [22m[2mmặt phẳng phụ chỉ để đo không mở bước dựng[2m > [22m[2mdanh sách bước không có bước riêng cho mặt phẳng ấy; bật «Hình phụ» thì nó hiện ở khung cuối
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/Scene3DExplorer.test.tsx[2m > [22m[2mcây phân rã: dữ liệu đủ, nhưng gọi ra mới hiện[2m > [22m[2mmặc định KHÔNG dựng cây — canvas không bị bảng chiếm chỗ
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx[2m > [22m[2mmặt phẳng phụ chỉ để đo không mở bước dựng[2m > [22m[2mmặt phẳng KHÔNG phải hình phụ chỉ để đo vẫn mở bước của nó
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/Scene3DExplorer.test.tsx[2m > [22m[2mcây phân rã: dữ liệu đủ, nhưng gọi ra mới hiện[2m > [22m[2mmột công tắc «Hiện tất cả», tắt mặc định; không còn Số đo/Kết quả
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx[2m > [22m[2mlời kể của bước đang xem không lặp tiêu đề[2m > [22m[2mbước dữ kiện (tiêu đề CHÍNH LÀ lời kể) không in lời kể lần hai; bước dựng có lời kể khác tiêu đề thì giữ
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/Scene3DExplorer.test.tsx[2m > [22m[2mô soi[2m > [22m[2mbề mặt học sinh KHÔNG lộ định danh kỹ thuật của hệ
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-panels.test.tsx[2m > [22m[2mbước dựng trong thanh điều khiển[2m > [22m[2m«Bước n/N» nằm trong thanh điều khiển; xưởng không còn dòng lời kể dài dưới thanh
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/Scene3DExplorer.test.tsx[2m > [22m[2mthao tác xem là phép thuần trên trạng thái nhìn[2m > [22m[2mrender KHÔNG chạm cảnh gốc
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/product-envelope-rendering.test.tsx[2m > [22m[2mraw JSON không nằm trên bề mặt học sinh[2m > [22m[2mp1_chop_thiet_dien_khoang_cach — xưởng dựng thật, và KHÔNG in payload thô
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/Scene3DExplorer.test.tsx[2m > [22m[2m§16 · xưởng: canvas là màn hình, chữ gọi ra khi cần[2m > [22m[2mMẶC ĐỊNH gần như không có chữ: không tiêu đề, không đoạn dẫn
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-panels.test.tsx[2m > [22m[2mbước dựng trong thanh điều khiển[2m > [22m[2mmô tả đầy đủ của bước đang xem ở bảng «Các bước dựng», ngay dưới mục của nó
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/Scene3DExplorer.test.tsx[2m > [22m[2m§16 · xưởng: canvas là màn hình, chữ gọi ra khi cần[2m > [22m[2mKHÔNG phơi metadata kỹ thuật ở màn mặc định
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/Scene3DExplorer.test.tsx[2m > [22m[2m§16 · xưởng: canvas là màn hình, chữ gọi ra khi cần[2m > [22m[2mcanvas TỒN TẠI, và ngăn kéo KHÔNG bóp nó lại
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/Scene3DExplorer.test.tsx[2m > [22m[2m§16 · xưởng: canvas là màn hình, chữ gọi ra khi cần[2m > [22m[2mô soi là NGỮ CẢNH: không chọn gì thì không có nút thao tác nào
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/Scene3DExplorer.test.tsx[2m > [22m[2mtích hợp · trạng thái không được rớt sang bài mới[2m > [22m[2mdòng chữ bước được KẸP — không bao giờ in một bước không tồn tại
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/product-envelope-rendering.test.tsx[2m > [22m[2mraw JSON không nằm trên bề mặt học sinh[2m > [22m[2mp2_chop_day_ngu_giac_lom — xưởng dựng thật, và KHÔNG in payload thô
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/product-envelope-rendering.test.tsx[2m > [22m[2mraw JSON không nằm trên bề mặt học sinh[2m > [22m[2mp3_mat_cau_va_thiet_dien_tron — xưởng dựng thật, và KHÔNG in payload thô
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/product-envelope-rendering.test.tsx[2m > [22m[2mraw JSON không nằm trên bề mặt học sinh[2m > [22m[2mp4_hinh_tru_the_tich_va_xung_quanh — xưởng dựng thật, và KHÔNG in payload thô
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/product-envelope-rendering.test.tsx[2m > [22m[2mraw JSON không nằm trên bề mặt học sinh[2m > [22m[2mp5_hinh_non_the_tich_va_xung_quanh — xưởng dựng thật, và KHÔNG in payload thô
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/product-envelope-rendering.test.tsx[2m > [22m[2mraw JSON không nằm trên bề mặt học sinh[2m > [22m[2mp6_thiet_dien_elip_cua_hinh_tru — xưởng dựng thật, và KHÔNG in payload thô
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/product-envelope-rendering.test.tsx[2m > [22m[2mraw JSON không nằm trên bề mặt học sinh[2m > [22m[2mp7_thiet_dien_elip_cua_hinh_non — xưởng dựng thật, và KHÔNG in payload thô
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-playback.test.tsx[2m > [22m[2m(5E) tôn trọng giảm chuyển động ở tầng JS[2m > [22m[2mbật giảm chuyển động ⇒ KHÔNG có nút Phát, vẫn đi được từng bước
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-playback.test.tsx[2m > [22m[2m(5E) vỏ điều khiển[2m > [22m[2mcó đủ prev · play · next · chọn bước
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-playback.test.tsx[2m > [22m[2m(5E) vỏ điều khiển[2m > [22m[2mbước cuối ⇒ nút Phát thành Xem lại, bấm được (w10)
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-playback.test.tsx[2m > [22m[2m(5E) vỏ điều khiển[2m > [22m[2mbước đầu ⇒ nút lùi bị vô hiệu
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-playback.test.tsx[2m > [22m[2m(5E) vỏ điều khiển[2m > [22m[2m§0.1-8 · không còn dải «Đang dựng / Dựa trên» dưới thanh bước
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-playback.test.tsx[2m > [22m[2m(5E) vỏ điều khiển[2m > [22m[2mbước 0 nói rõ đây là dữ kiện đề cho, không phải chỗ trống
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-playback.test.tsx[2m > [22m[2m(5E) vỏ điều khiển[2m > [22m[2mtrình phát (cả panel các bước đang mở) không in tên biến IR
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/prism-ui-integration.test.tsx[2m > [22m[2mPRISM_P01 UI End-to-End Integration[2m > [22m[2mScene3DExplorer renderToString hoàn tất với 6 nhãn điểm A-F và 6 bước dựng
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-page.test.tsx[2m > [22m[2mxưởng — hợp đồng, không phải bài đọc[2m > [22m[2mtự có nhãn, KHÔNG mở đầu bằng một khối văn bản
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-page.test.tsx[2m > [22m[2mxưởng — hợp đồng, không phải bài đọc[2m > [22m[2mdựng luôn trình phát bên trong
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-page.test.tsx[2m > [22m[2mxưởng — hợp đồng, không phải bài đọc[2m > [22m[2mcanvas đứng TRƯỚC mọi bảng chữ trong thứ tự đọc
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/rectangular-pyramid-ui-integration.test.tsx[2m > [22m[2mRECT_PYRAMID_P01 UI End-to-End Integration[2m > [22m[2mPositive Case A: Đáy chữ nhật (V=24)[2m > [22m[2mScene3DExplorer renderToString hiển thị đầy đủ 5 nhãn A-D, S
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-page.test.tsx[2m > [22m[2mxưởng — hợp đồng, không phải bài đọc[2m > [22m[2mđề bài KHÔNG đổ ra màn hình, chỉ có nút gọi
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:192:10)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-playback.test.tsx[2m > [22m[2m(5E) vỏ điều khiển[2m > [22m[2mbước dựng NHÓM cạnh nói tên hành động, không tự nhận là dữ kiện đề cho
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-playback.test.tsx[2m > [22m[2m(5E) vỏ điều khiển[2m > [22m[2mmọi điều khiển đều có nhãn cho trình đọc màn hình
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-playback.test.tsx[2m > [22m[2m(5E) playback chỉ đổi MỘT SỐ NGUYÊN[2m > [22m[2m`scene` đi vào và đi ra NGUYÊN VẸN cùng tham chiếu
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+[33m
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m

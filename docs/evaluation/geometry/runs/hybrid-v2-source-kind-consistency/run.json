@@ -1,0 +1,110 @@
+{
+  "run_id": "hybrid-v2-source-kind-consistency",
+  "task_code": "HYBRID_V2_SOURCE_GATE_I1_CONSISTENCY_HARDENING",
+  "date": "2026-10-27",
+  "authorization": "Owner GO 2026-10-27 (SOURCE_CONTRADICTION_MUST_FAIL_CLOSED): reverse historical solid_symbol_outranks_the_solid_word policy (I-1) on research/hybrid-v2-planner-generalization; no merge, push, worktree cleanup, live provider calls, Adapter /4 changes, or default mode change.",
+  "branch": "research/hybrid-v2-planner-generalization",
+  "worktree": ".superpowers/worktrees/planner-generalization",
+  "main_before": "386d214952e6a7ba98f0931b5ecfd7a5b89d1667",
+  "baseline_before_wave": {
+    "doc_commit": "9b5697be",
+    "candidate": "99faf026bdcbcaa2f32e07a9f1687416a820dffd",
+    "product": "37e8435213303f54f37a19b6ce85f896fc0631a0"
+  },
+  "commits": {
+    "registration_red": "558b49f9",
+    "product_fix": "ff48db2a0c3f4424fc91c313a9bfaee8e3646bc1",
+    "green": "c1074b22d61280cbaa6f6fb8d28718123549aac4",
+    "freeze": "4581886f701f54179f4c1c4b89c7a2d333029268",
+    "divergence_t3_candidate": "71029809201ca691e583943cc5cf1c74d6bd5d73"
+  },
+  "measured_system": {
+    "files": 118,
+    "tree_hash": "31bb915d3550e58ca9985afa607c0664f480acacdcb223b82451cc06d649f8b8"
+  },
+  "adversarial_124": {
+    "cases": 124,
+    "red_99faf026": {
+      "agree": 118,
+      "fail_open": 6,
+      "false_refusal": 0
+    },
+    "green_ff48db2a": {
+      "agree": 124,
+      "fail_open": 0,
+      "false_refusal": 0
+    },
+    "files": [
+      "results/red-124-before.json",
+      "results/green-124-after.json"
+    ]
+  },
+  "symbol_kind_31": {
+    "cases": 31,
+    "red_99faf026": {
+      "agree": 16,
+      "fail_open": 15,
+      "false_refusal": 0
+    },
+    "green_ff48db2a": {
+      "agree": 31,
+      "fail_open": 0,
+      "false_refusal": 0
+    },
+    "files": [
+      "results/red-symbol-before.json",
+      "results/green-symbol-after.json"
+    ]
+  },
+  "development_regression": {
+    "positives_served": "10/10",
+    "oracle_agreement": "10/10",
+    "negatives_registered_code": "8/8",
+    "wrong_served": 0,
+    "file": "results/development-regression-registry17.json"
+  },
+  "tiers": {
+    "T0": "IMPACT_GATE (--base 9b5697be; src/code-index-sync.test.ts 3/3 + PYTEST)",
+    "T1": "429 passed (targeted geometry/source-binding/version pins) + 52 passed (test_thesis_acceptance_matrix.py)",
+    "T2": "83 files, 1417/1417 passed",
+    "file": "verification/tiers.json"
+  },
+  "full_t3": "FULL_PRODUCT_GATE_PASS",
+  "full_t3_backend_passed": 12382,
+  "full_t3_frontend_passed": 1417,
+  "full_t3_post_freeze": "MATCH",
+  "full_t3_receipt": "full-t3/receipt.json",
+  "independent_review": {
+    "status": "INDEPENDENT_CODE_REVIEW",
+    "reviewer_subagent": "fade27d4-582f-474f-a80e-dc4cb618f1d2",
+    "verdict": "INDEPENDENT_REVIEW_PASS",
+    "blocker": 0,
+    "major": 0,
+    "minor": 3,
+    "nit": 1,
+    "i1_status": "CLOSED",
+    "file": "review.md"
+  },
+  "versions": {
+    "registry": "geometry-functions/17",
+    "planner": "geometry-fact-planner/16",
+    "engine": "geometry-function-engine/14",
+    "bridge_v2": "unchanged",
+    "adapter4": "unchanged"
+  },
+  "cache_version": 130,
+  "cache_decision": "NO_BUMP (candidate_divergence.json)",
+  "default_mode": "LLM_ONLY",
+  "hybrid": "OPT_IN_ONLY",
+  "provider_calls": 0,
+  "classification": "AUTHORED_DEVELOPMENT_NOT_HOLDOUT",
+  "independent_holdout": "INDEPENDENT_HOLDOUT_NOT_EXECUTED",
+  "live_nl_e2e": "LIVE_NL_E2E_NOT_MEASURED",
+  "browser_evidence": "BROWSER_EVIDENCE_NOT_MEASURED",
+  "open_gaps": [
+    "ADAPTER_INTEGRATION_GAP (/4 plane-only derived sections, pinned)",
+    "kind vocabulary & adjacent suffix/masking notes (review.md MINOR-1..3)"
+  ],
+  "t3_checkout": "D:/Documents/projects/algo-sim/.superpowers/worktrees/.superpowers/worktrees/premerge-red (detached 71029809, left in place; frontend/node_modules is a junction)",
+  "status": "READY_FOR_OWNER_GO_MAIN_REVIEW - not merged, not pushed"
+}
