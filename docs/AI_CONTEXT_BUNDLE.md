@@ -35,9 +35,9 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 
 Cập nhật 2026-10-19 — mới hơn khối "LOCAL override" ở đầu file; tường thuật cũ ở đó và §5–§6 có thể lỗi thời (việc mở: `OPEN_ISSUES.md`; việc kế tiếp: `ROADMAP.md` §0).
 ```text
-MAIN = origin/main (2026-10-27) dd557f8f; Hybrid V2 named-plane + point-line merged b7b8358e; NEXT branch research/hybrid-v2-nl-certificates-e2e (product 059daadc, T3 PASS 34ecce49, NOT merged): runs/hybrid-v2-nl-certificates-e2e/NEXT_AGENT_HANDOFF.md
+MAIN = origin/main (2026-10-27) 386d2149 (includes hybrid-v2-nl-certificates-e2e); NEXT branch research/hybrid-v2-planner-generalization (product de7b2813, T3 PASS ca0bb5f2, NOT merged): runs/hybrid-v2-planner-generalization/handoff.md
 SGH_STATE = product 602316ed · candidate c5a83b74 (112 file 0512dbc5…) · review PASS · T3 2d0641f4 PASS · corpus 18/18, BH2A 11/12 · SGH blind 6/10 pos (10/16 math, 8/16 tuple, 5/5 neg, threshold NOT MET); FOLLOWUP_AB (`research/hybrid-source-gate-followup-ab`, product `68acc140`, candidate `b5e80380` / `de66bd5c…`, review PASS, T3 `b0b2a3c3` PASS): fixes Defect Classes A (`_kiem_don_vi_hoi`/`_kiem_du_kien_cau_hoi` unnamed-point multi-goal boundary) & B (`_kiem_nguon_dong`/`_cau_tien_de_dong_hop_le` compound premises on `line_ref` slice) -> SGH post-feedback regression 10/10 pos (16/16 math), 5/5 neg, 0 false serves; BH2A 11/12 + `BH2A-03-variant-ABCD` served `a√10` (`runs/source-gate-followup-ab/handoff.md`)
-PRODUCT_STATE = CACHE_VERSION 130 · DEFAULT_MODE LLM_ONLY · flat · Hybrid opt-in only, product NO-GO · route D registry/14 · planner/15 · engine/14 (branch; main still /13·/14·/13) · Full T3 PASS 34ecce49 (12228/1417)
+PRODUCT_STATE = CACHE_VERSION 130 · DEFAULT_MODE LLM_ONLY · flat · Hybrid opt-in only, product NO-GO · route D registry/15 · planner/16 · engine/14 (branch; main /14·/15·/14) · Full T3 PASS ca0bb5f2 (12275/1417)
 SCENE3D = M2 #7, F1, F2 xong; P0–P3 owner duyệt hình trên bộ cảnh mẫu (chỉ phạm vi đó); "chọn kết quả" trên canvas chưa kiểm; KHÔNG Product E2E PASS
 HYBRID = product enablement NO-GO · không frontend caller /api/preview/hybrid · không tích hợp provider live · không GO LIVE
 OPEN = F3–F6 + thiếu fixture insufficient_specification+SOURCE · SOURCE-LENGTH-READER-VECTOR-ZERO · CACHE-HISTORICAL-MODE-UNKNOWN · SCENE3D-ALTITUDE-CERTIFICATE-MISSING · offline Product E2E chưa đạt (OPEN_ISSUES.md)

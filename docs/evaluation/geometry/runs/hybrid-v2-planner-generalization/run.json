@@ -1,0 +1,48 @@
+{
+  "run_id": "hybrid-v2-planner-generalization",
+  "date": "2026-10-27",
+  "agent": "Codex (audit, registration, baseline RED) then Claude (continuation from takeover-checkpoint.md)",
+  "authorization": "Owner handoff 2026-10-27: continue HYBRID_V2_GOAL_DIRECTED_PLANNER_GENERALIZATION on the research worktree; no merge, push, default-route change, live provider or cleanup of old worktrees. Owner decisions during the run: widen the section-phrase grammar; record the /4 wrapper gap separately; harden the section-reference solid binding in this wave.",
+  "continuation_from_codex": "VERIFIED",
+  "main_before": "386d214952e6a7ba98f0931b5ecfd7a5b89d1667",
+  "branch": "research/hybrid-v2-planner-generalization",
+  "worktree": ".superpowers/worktrees/planner-generalization",
+  "commits": {
+    "registration": "70ba1577",
+    "product": "de7b28134aedbd1e1c87dab7567653670afe69a7",
+    "measurement": "ba828b0b",
+    "freeze": "23669d09",
+    "divergence": "ca0bb5f28a76f529f62e5beb4556b55b9ad7aeef"
+  },
+  "measured_system": {"files": 118, "tree_hash": "316f66cc8141c30951cf662ec04a318980a6040c67d6a9dd932baf7314e8b857"},
+  "t3_candidate": "ca0bb5f28a76f529f62e5beb4556b55b9ad7aeef",
+  "full_t3": "FULL_PRODUCT_GATE_PASS",
+  "full_t3_backend_passed": 12275,
+  "full_t3_frontend_passed": 1417,
+  "full_t3_post_freeze": "MATCH",
+  "full_t3_receipt": "full-t3/receipt.json",
+  "tiers": {"T0": "IMPACT_GATE_PASS (--base main)", "T1": "geometry 872/872, semantic 24/24", "T2": "1417/1417"},
+  "development_corpus": {
+    "dataset": "inputs/development.json",
+    "classification": "AUTHORED_DEVELOPMENT_NOT_HOLDOUT",
+    "oracle": "INDEPENDENT_ORACLE (tools/oracle.py, Fraction edge clipping, no product imports)",
+    "baseline": {"correctly_served": 0, "correctly_refused": 8, "wrongly_served": 0, "false_refusal": 10, "negative_reason_mismatches": 5},
+    "after": {"correctly_served": 10, "correctly_refused": 8, "wrongly_served": 0, "false_refusal": 0, "negative_reason_mismatches": 0, "exact_mathematical_agreement": 10}
+  },
+  "gaps": {
+    "closed": ["PLANNER_COMPOSITION_GAP prism MAT_VUONG_DUONG anchors", "SOURCE_GROUNDING_GAP bare solid word in section phrases", "SOURCE_GROUNDING fail-open: section reference naming another solid on a shared derived plane (pre-existing at 386d2149)"],
+    "open": ["ADAPTER_INTEGRATION_GAP: /4 wrapper refuses plane-only derived sections (no DINH_CAT_CANH certificate), pre-existing, pinned", "coarse kind-word check without a symbol (pyramid-like vs prism-like)", "evaluate.py dependency_depth NOT_INFORMATIVE"]
+  },
+  "versions": {"registry": "geometry-functions/15", "planner": "geometry-fact-planner/16", "engine": "geometry-function-engine/14", "bridge_v2": "unchanged"},
+  "cache_version": 130,
+  "cache_decision": "NO_BUMP (candidate_divergence.json)",
+  "default_mode": "LLM_ONLY",
+  "hybrid": "OPT_IN_ONLY",
+  "provider_calls": 0,
+  "independent_holdout": "INDEPENDENT_HOLDOUT_NOT_EXECUTED",
+  "live_nl_e2e": "LIVE_NL_E2E_NOT_MEASURED",
+  "independent_review": "INDEPENDENT_REVIEW_NOT_EXECUTED",
+  "browser_evidence": "NOT_MEASURED",
+  "t3_checkout": "D:/tmp/pg-t3-ca0bb5f2 (detached, left in place; frontend/node_modules is a junction — rmdir it before git worktree remove)",
+  "status": "READY_FOR_OWNER_REVIEW — not merged, not pushed"
+}

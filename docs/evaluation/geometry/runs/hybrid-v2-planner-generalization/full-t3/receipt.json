@@ -1,0 +1,40 @@
+{
+  "candidate": "ca0bb5f28a76f529f62e5beb4556b55b9ad7aeef",
+  "git_tree": "6f29d76ff0c3a8a2016e6f9c2dbf040028fa9394",
+  "product_commit": "de7b28134aedbd1e1c87dab7567653670afe69a7",
+  "detached": true,
+  "source_tree_before": "",
+  "source_tree_after": "",
+  "head_after": "ca0bb5f28a76f529f62e5beb4556b55b9ad7aeef",
+  "git_tree_after": "6f29d76ff0c3a8a2016e6f9c2dbf040028fa9394",
+  "started_utc": "2026-10-27T05:06:49.098161+00:00",
+  "finished_utc": "2026-10-27T05:16:40.824512+00:00",
+  "exit_code": 0,
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "summaries": [
+    "= 12275 passed, 1 skipped, 2 deselected, 15 xfailed, 1 warning in 562.62s (0:09:22) =",
+    " Test Files  83 passed (83)",
+    "      Tests  1417 passed (1417)",
+    "FULL_PRODUCT_GATE_PASS"
+  ],
+  "post_freeze": {
+    "exit_code": 0,
+    "stdout": "Candidate khớp bản đã đóng băng (mã sản phẩm: 118 file, 316f66cc8141c309…).",
+    "stderr": ""
+  },
+  "freeze_sha256_before": "0a31eae091950ef7b09697eca71fdd7fef245929aed79677ec27173b29b4113e",
+  "freeze_sha256_after": "0a31eae091950ef7b09697eca71fdd7fef245929aed79677ec27173b29b4113e",
+  "live_provider_calls": 0,
+  "allow_live_ai": "0",
+  "hybrid_v2_local": "UNSET",
+  "streams": {
+    "stdout.log": {
+      "sha256": "28be73dd7d594c91e5013fadd36c5cbe3ccfa40da786b69110a57ba0752bc6d8",
+      "bytes": 1615959
+    },
+    "stderr.log": {
+      "sha256": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a",
+      "bytes": 342
+    }
+  }
+}
