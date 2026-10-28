@@ -1,0 +1,885 @@
+{
+  "schema": "HOLDOUT_WAVE3_DIAGNOSTICS/1",
+  "task": "HYBRID_V2_INDEPENDENT_VIETNAMESE_GEOMETRY_HOLDOUT_WAVE3",
+  "scored_run": "results/scored-run-1",
+  "served_correct_count": 20,
+  "served_correct_ids": [
+    "W3-B05",
+    "W3-B10",
+    "W3-B11",
+    "W3-B13",
+    "W3-B17",
+    "W3-B19",
+    "W3-B23",
+    "W3-B25",
+    "W3-B29",
+    "W3-B37",
+    "W3-B41",
+    "W3-B49",
+    "W3-A01",
+    "W3-A04",
+    "W3-A05",
+    "W3-A07",
+    "W3-A08",
+    "W3-A11",
+    "W3-A13",
+    "W3-A14"
+  ],
+  "false_refusal_count": 52,
+  "false_refusal_clusters": [
+    {
+      "cluster_id": "W3-F1",
+      "name": "SECTION_AND_AREA_COMPOUND_QUESTION_GROUNDING",
+      "layer": "SOURCE_GROUNDING (registry.py kiem_nguon)",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "count": 24,
+      "share_of_false_refusals": 0.4615,
+      "case_ids": [
+        "W3-B03",
+        "W3-B06",
+        "W3-B09",
+        "W3-B12",
+        "W3-B15",
+        "W3-B18",
+        "W3-B21",
+        "W3-B24",
+        "W3-B27",
+        "W3-B30",
+        "W3-B33",
+        "W3-B36",
+        "W3-B39",
+        "W3-B42",
+        "W3-B45",
+        "W3-B48",
+        "W3-B51",
+        "W3-B54",
+        "W3-A03",
+        "W3-A06",
+        "W3-A09",
+        "W3-A12",
+        "W3-A15",
+        "W3-A18"
+      ],
+      "root_cause": "In all 24 positive section_and_area problems, the cutting-plane definition sentence and the compound question sentence ('Hãy xác định thiết diện tạo bởi mặt phẳng (P) với hình ... và tính diện tích của thiết diện đó') are separate sentences. When derived_section.source.quote points to the question sentence, kiem_nguon rejects it with SOURCE_OBJECT_MISMATCH because the question sentence refers to plane (P) by name without repeating its through_point and parallel/perpendicular relation."
+    },
+    {
+      "cluster_id": "W3-F2",
+      "name": "DIVIDE_SEGMENT_AND_PROJECTION_KEYWORD_LEXICON",
+      "layer": "SOURCE_GROUNDING (registry.py kiem_nguon)",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "count": 14,
+      "share_of_false_refusals": 0.2692,
+      "case_ids": [
+        "W3-B02",
+        "W3-B04",
+        "W3-B14",
+        "W3-B20",
+        "W3-B22",
+        "W3-B28",
+        "W3-B31",
+        "W3-B32",
+        "W3-B38",
+        "W3-B40",
+        "W3-B46",
+        "W3-A02",
+        "W3-A10",
+        "W3-A16"
+      ],
+      "subclusters": {
+        "divide_segment_thoa_man_or_voi": [
+          "W3-B02",
+          "W3-B04",
+          "W3-B14",
+          "W3-B20",
+          "W3-B22",
+          "W3-B38",
+          "W3-B40",
+          "W3-B46",
+          "W3-A02",
+          "W3-A16"
+        ],
+        "orthogonal_projection_chan_duong_cao": [
+          "W3-B28",
+          "W3-B31",
+          "W3-B32",
+          "W3-A10"
+        ]
+      },
+      "root_cause": "10 cases use standard Vietnamese ratio connectors 'thỏa mãn' or 'với' instead of literal 'sao cho' for divide_segment; 4 oblique_triangular_prism cases state the altitude foot as 'chân đường cao kẻ/hạ từ ... đến/xuống mặt phẳng ... là ...' instead of literal 'hình chiếu'."
+    },
+    {
+      "cluster_id": "W3-F3",
+      "name": "PARALLEL_TWO_LINES_SLICE_GRAMMAR_COVERAGE",
+      "layer": "SOURCE_GROUNDING (registry.py kiem_nguon)",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "count": 10,
+      "share_of_false_refusals": 0.1923,
+      "case_ids": [
+        "W3-B07",
+        "W3-B08",
+        "W3-B16",
+        "W3-B26",
+        "W3-B34",
+        "W3-B35",
+        "W3-B43",
+        "W3-B44",
+        "W3-B52",
+        "W3-B53"
+      ],
+      "root_cause": "The full-text slice check on parallel_two_lines requires every premise quote and plane clause to match a narrow set of clause templates; multi-clause premise sentences or 'đồng thời song song với hai đường thẳng' trigger SOURCE_PREMISE_UNREAD."
+    },
+    {
+      "cluster_id": "W3-F4",
+      "name": "CUBE_BASE_SQUARE_EDGE_LENGTH_BINDING",
+      "layer": "SOURCE_GROUNDING (registry.py kiem_nguon)",
+      "code": "UNGROUNDED_VALUE",
+      "count": 3,
+      "share_of_false_refusals": 0.0577,
+      "case_ids": [
+        "W3-B47",
+        "W3-B50",
+        "W3-A17"
+      ],
+      "root_cause": "When a cube problem states the edge length via its base square ('biết mặt đáy MNPQ là hình vuông có cạnh bằng 9a'), kiem_nguon does not bind that value to segment_length(M, N) without 'hình lập phương ... có cạnh bằng' or 'MN = 9a'."
+    },
+    {
+      "cluster_id": "W3-F5",
+      "name": "GIA_SU_PREMISE_OPENER_CONDITIONAL_FALSE_POSITIVE",
+      "layer": "SOURCE_GROUNDING (registry.py kiem_nguon)",
+      "code": "CONDITIONAL_CLAUSE",
+      "count": 1,
+      "share_of_false_refusals": 0.0192,
+      "case_ids": [
+        "W3-B01"
+      ],
+      "root_cause": "W3-B01 introduces the point ratio with 'Giả sử H là điểm thuộc cạnh bên SE...' and the derived_section quote spans across that sentence, triggering the substring guard for 'giả sử' (CONDITIONAL_CLAUSE)."
+    }
+  ],
+  "false_refusal_details": [
+    {
+      "id": "W3-B01",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "refusal_layer": "route",
+      "code": "CONDITIONAL_CLAUSE",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: mệnh đề mặt phẳng nằm trong mệnh đề điều kiện/giả sử"
+    },
+    {
+      "id": "W3-B02",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "refusal_layer": "route",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "category": "SOURCE_GROUNDING",
+      "reason": "p6: divide_segment cần một trong ['sao cho'] trong 'Trên cạnh SM lấy điểm K thỏa mãn SK = 3/7 SM'"
+    },
+    {
+      "id": "W3-B03",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của S.EFG với mặt phẳng qua H vuông góc SF"
+    },
+    {
+      "id": "W3-B04",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "refusal_layer": "route",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "category": "SOURCE_GROUNDING",
+      "reason": "p6: divide_segment cần một trong ['sao cho'] trong 'Trên đoạn SP chọn điểm I với SI = 3/8 SP'"
+    },
+    {
+      "id": "W3-B06",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của A.BCD với mặt phẳng qua M song song (ABC)"
+    },
+    {
+      "id": "W3-B07",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_only",
+      "refusal_layer": "route",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "category": "SOURCE_GROUNDING",
+      "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+    },
+    {
+      "id": "W3-B08",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "refusal_layer": "route",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "category": "SOURCE_GROUNDING",
+      "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+    },
+    {
+      "id": "W3-B09",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của S.KLM với mặt phẳng qua N song song (KL)"
+    },
+    {
+      "id": "W3-B12",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của S.EFGH với mặt phẳng qua I vuông góc SH"
+    },
+    {
+      "id": "W3-B14",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "refusal_layer": "route",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "category": "SOURCE_GROUNDING",
+      "reason": "p6: divide_segment cần một trong ['sao cho'] trong 'Trên cạnh KL lấy điểm H thỏa mãn KH = 2/7 KL'"
+    },
+    {
+      "id": "W3-B15",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của A.BCDE với mặt phẳng qua F song song (ABC)"
+    },
+    {
+      "id": "W3-B16",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_only",
+      "refusal_layer": "route",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "category": "SOURCE_GROUNDING",
+      "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+    },
+    {
+      "id": "W3-B18",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của S.GHKL với mặt phẳng qua M song song (GH)"
+    },
+    {
+      "id": "W3-B20",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "refusal_layer": "route",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "category": "SOURCE_GROUNDING",
+      "reason": "p6: divide_segment cần một trong ['sao cho'] trong \"Trên đoạn MM' chọn điểm K với MK = 3/4 MM'\""
+    },
+    {
+      "id": "W3-B21",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của DEF.D'E'F' với mặt phẳng qua I vuông góc DF'"
+    },
+    {
+      "id": "W3-B22",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "refusal_layer": "route",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "category": "SOURCE_GROUNDING",
+      "reason": "p6: divide_segment cần một trong ['sao cho'] trong \"Trên cạnh EE' lấy điểm H thỏa mãn EH = 2/9 EE'\""
+    },
+    {
+      "id": "W3-B24",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của GHK.G'H'K' với mặt phẳng qua L song song (GHG')"
+    },
+    {
+      "id": "W3-B26",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "refusal_layer": "route",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "category": "SOURCE_GROUNDING",
+      "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+    },
+    {
+      "id": "W3-B27",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của RST.R'S'T' với mặt phẳng qua U song song (RS)"
+    },
+    {
+      "id": "W3-B28",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "refusal_layer": "route",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "category": "SOURCE_GROUNDING",
+      "reason": "p2: orthogonal_projection cần một trong ['hình chiếu'] trong \"chân đường cao kẻ từ A' đến mặt phẳng (ABC) là B\""
+    },
+    {
+      "id": "W3-B30",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của DEF.D'E'F' với mặt phẳng qua I vuông góc DF'"
+    },
+    {
+      "id": "W3-B31",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "refusal_layer": "route",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "category": "SOURCE_GROUNDING",
+      "reason": "p2: orthogonal_projection cần một trong ['hình chiếu'] trong \"chân đường cao hạ từ E' xuống mặt phẳng (EFG) trùng với đỉnh F\""
+    },
+    {
+      "id": "W3-B32",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "refusal_layer": "route",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "category": "SOURCE_GROUNDING",
+      "reason": "p2: orthogonal_projection cần một trong ['hình chiếu'] trong \"chân đường cao kẻ từ P' đến mặt phẳng (PQR) là Q\""
+    },
+    {
+      "id": "W3-B33",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của GHK.G'H'K' với mặt phẳng qua L song song (GHG')"
+    },
+    {
+      "id": "W3-B34",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_only",
+      "refusal_layer": "route",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "category": "SOURCE_GROUNDING",
+      "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+    },
+    {
+      "id": "W3-B35",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "refusal_layer": "route",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "category": "SOURCE_GROUNDING",
+      "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+    },
+    {
+      "id": "W3-B36",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của UVW.U'V'W' với mặt phẳng qua J song song (UV)"
+    },
+    {
+      "id": "W3-B38",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "refusal_layer": "route",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "category": "SOURCE_GROUNDING",
+      "reason": "p6: divide_segment cần một trong ['sao cho'] trong \"Trên cạnh MM' lấy điểm K thỏa mãn MK = 5/7 MM'\""
+    },
+    {
+      "id": "W3-B39",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của EFGH.E'F'G'H' với mặt phẳng qua E' vuông góc EG'"
+    },
+    {
+      "id": "W3-B40",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "refusal_layer": "route",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "category": "SOURCE_GROUNDING",
+      "reason": "p6: divide_segment cần một trong ['sao cho'] trong \"Trên đoạn PP' chọn điểm I với PI = 4/13 PP'\""
+    },
+    {
+      "id": "W3-B42",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của GHKL.G'H'K'L' với mặt phẳng qua I song song (GHG')"
+    },
+    {
+      "id": "W3-B43",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_only",
+      "refusal_layer": "route",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "category": "SOURCE_GROUNDING",
+      "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+    },
+    {
+      "id": "W3-B44",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "refusal_layer": "route",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "category": "SOURCE_GROUNDING",
+      "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+    },
+    {
+      "id": "W3-B45",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của CDEF.C'D'E'F' với mặt phẳng qua K song song (CD)"
+    },
+    {
+      "id": "W3-B46",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "refusal_layer": "route",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "category": "SOURCE_GROUNDING",
+      "reason": "p4: divide_segment cần một trong ['sao cho'] trong \"Trên cạnh AA' lấy điểm M thỏa mãn AM = 2/11 AA'\""
+    },
+    {
+      "id": "W3-B47",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "refusal_layer": "route",
+      "code": "UNGROUNDED_VALUE",
+      "category": "SOURCE_GROUNDING",
+      "reason": "p2: 'biết mặt đáy MNPQ là hình vuông có cạnh bằng 9a' không gắn 9a với vai trò của ô này trong một câu đọc trọn"
+    },
+    {
+      "id": "W3-B48",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của EFGH.E'F'G'H' với mặt phẳng qua I vuông góc EF"
+    },
+    {
+      "id": "W3-B50",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "refusal_layer": "route",
+      "code": "UNGROUNDED_VALUE",
+      "category": "SOURCE_GROUNDING",
+      "reason": "p2: 'biết mặt đáy KLMN là hình vuông có cạnh bằng 14' không gắn 14 với vai trò của ô này trong một câu đọc trọn"
+    },
+    {
+      "id": "W3-B51",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của GHKL.G'H'K'L' với mặt phẳng qua I song song (GHG')"
+    },
+    {
+      "id": "W3-B52",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_only",
+      "refusal_layer": "route",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "category": "SOURCE_GROUNDING",
+      "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+    },
+    {
+      "id": "W3-B53",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "refusal_layer": "route",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "category": "SOURCE_GROUNDING",
+      "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+    },
+    {
+      "id": "W3-B54",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của CDEF.C'D'E'F' với mặt phẳng qua K song song (CD)"
+    },
+    {
+      "id": "W3-A02",
+      "stratum": "P-A",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "refusal_layer": "route",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "category": "SOURCE_GROUNDING",
+      "reason": "p6: divide_segment cần một trong ['sao cho'] trong 'Trên đoạn SM chọn điểm K với SK = 3/11 SM'"
+    },
+    {
+      "id": "W3-A03",
+      "stratum": "P-A",
+      "family": "triangular_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của S.EFG với mặt phẳng qua M vuông góc SF"
+    },
+    {
+      "id": "W3-A06",
+      "stratum": "P-A",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của S.EFGH với mặt phẳng qua I vuông góc SG"
+    },
+    {
+      "id": "W3-A09",
+      "stratum": "P-A",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của DEF.D'E'F' với mặt phẳng qua K song song (DEF)"
+    },
+    {
+      "id": "W3-A10",
+      "stratum": "P-A",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "refusal_layer": "route",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "category": "SOURCE_GROUNDING",
+      "reason": "p2: orthogonal_projection cần một trong ['hình chiếu'] trong \"chân đường cao kẻ từ A' đến mặt phẳng (ABC) là B\""
+    },
+    {
+      "id": "W3-A12",
+      "stratum": "P-A",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của DEF.D'E'F' với mặt phẳng qua I vuông góc DD'"
+    },
+    {
+      "id": "W3-A15",
+      "stratum": "P-A",
+      "family": "cuboid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của EFGH.E'F'G'H' với mặt phẳng qua K song song (EH)"
+    },
+    {
+      "id": "W3-A16",
+      "stratum": "P-A",
+      "family": "cube",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "refusal_layer": "route",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "category": "SOURCE_GROUNDING",
+      "reason": "p4: divide_segment cần một trong ['sao cho'] trong \"Trên cạnh AA' lấy điểm M thỏa mãn AM = 3/16 AA'\""
+    },
+    {
+      "id": "W3-A17",
+      "stratum": "P-A",
+      "family": "cube",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "refusal_layer": "route",
+      "code": "UNGROUNDED_VALUE",
+      "category": "SOURCE_GROUNDING",
+      "reason": "p2: 'biết mặt đáy MNPQ là hình vuông có cạnh bằng 19a' không gắn 19a với vai trò của ô này trong một câu đọc trọn"
+    },
+    {
+      "id": "W3-A18",
+      "stratum": "P-A",
+      "family": "cube",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "refusal_layer": "route",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "category": "SOURCE_GROUNDING",
+      "reason": "sec: đề không nói thiết diện của EFGH.E'F'G'H' với mặt phẳng qua I song song (EH)"
+    }
+  ],
+  "refused_reason_disagreement_count": 12,
+  "refused_reason_disagreement_details": [
+    {
+      "id": "W3-N02",
+      "negative_class": "contradictory_source_facts",
+      "refusal_layer": "route",
+      "observed_code": "PREDICATE_NOT_IN_QUOTE",
+      "observed_category": "SOURCE_GROUNDING",
+      "acceptable_categories": [
+        "CONTRADICTION",
+        "GEOMETRY_DEGENERATE"
+      ],
+      "reason": "p6: divide_segment cần một trong ['sao cho'] trong 'Trên đoạn thẳng SM chọn điểm K thỏa mãn hệ thức SK = 3/7 SM'"
+    },
+    {
+      "id": "W3-N03",
+      "negative_class": "contradictory_source_facts",
+      "refusal_layer": "route",
+      "observed_code": "PREDICATE_NOT_IN_QUOTE",
+      "observed_category": "SOURCE_GROUNDING",
+      "acceptable_categories": [
+        "CONTRADICTION",
+        "GEOMETRY_DEGENERATE"
+      ],
+      "reason": "p6: divide_segment cần một trong ['sao cho'] trong 'Xét điểm H thuộc cạnh bên SE với tỷ số SH = 3/8 SE'"
+    },
+    {
+      "id": "W3-N20",
+      "negative_class": "missing_mandatory_premise",
+      "refusal_layer": "route",
+      "observed_code": "QUESTION_CONTEXT_UNSUPPORTED",
+      "observed_category": "SOURCE_GROUNDING",
+      "acceptable_categories": [
+        "UNDERDETERMINED",
+        "CONTRADICTION"
+      ],
+      "reason": "câu hỏi có phần chưa được đọc ('Xét                                                              .') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác"
+    },
+    {
+      "id": "W3-N25",
+      "negative_class": "ambiguous_source_labels",
+      "refusal_layer": "route",
+      "observed_code": "PREDICATE_NOT_IN_QUOTE",
+      "observed_category": "SOURCE_GROUNDING",
+      "acceptable_categories": [
+        "AMBIGUOUS",
+        "CONTRADICTION",
+        "INPUT_INVALID"
+      ],
+      "reason": "p6: divide_segment cần một trong ['sao cho'] trong 'Xét điểm M thuộc cạnh bên SA với tỷ số SM = 2/5 SA'"
+    },
+    {
+      "id": "W3-N38",
+      "negative_class": "impossible_vertex",
+      "refusal_layer": "route",
+      "observed_code": "UNSUPPORTED_CAPABILITY",
+      "observed_category": "UNSUPPORTED_CAPABILITY",
+      "acceptable_categories": [
+        "INPUT_INVALID",
+        "SOURCE_GROUNDING",
+        "UNDERDETERMINED"
+      ],
+      "reason": "sec: đường SD' phải nối hai đỉnh của S.MNP"
+    },
+    {
+      "id": "W3-N47",
+      "negative_class": "unsupported_geometry_capability",
+      "refusal_layer": "route",
+      "observed_code": "UNGROUNDED_VALUE",
+      "observed_category": "SOURCE_GROUNDING",
+      "acceptable_categories": [
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "reason": "p3: 'chiều cao của hình chóp bằng 15' không gắn 15 với vai trò của ô này trong một câu đọc trọn"
+    },
+    {
+      "id": "W3-N49",
+      "negative_class": "conflicting_section_area_requests",
+      "refusal_layer": "route",
+      "observed_code": "UNSUPPORTED_CAPABILITY",
+      "observed_category": "UNSUPPORTED_CAPABILITY",
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "INPUT_INVALID"
+      ],
+      "reason": "mg1: mặt cho bằng quan hệ chỉ dùng cho thiết diện / diện tích thiết diện"
+    },
+    {
+      "id": "W3-N53",
+      "negative_class": "incorrect_stated_intersections",
+      "refusal_layer": "route",
+      "observed_code": "PARALLEL_NO_INTERSECTION",
+      "observed_category": "UNMAPPED",
+      "acceptable_categories": [
+        "GEOMETRY_DEGENERATE",
+        "CONTRADICTION",
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "reason": "PARALLEL_NO_INTERSECTION: đường thẳng SONG SONG với mặt phẳng — không có giao điểm"
+    },
+    {
+      "id": "W3-N54",
+      "negative_class": "incorrect_stated_intersections",
+      "refusal_layer": "adapter4",
+      "observed_code": "PREVIEW_RESULT_INVALID",
+      "observed_category": "INTERNAL_OR_VALIDATION",
+      "acceptable_categories": [
+        "GEOMETRY_DEGENERATE",
+        "CONTRADICTION",
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "reason": null
+    },
+    {
+      "id": "W3-N55",
+      "negative_class": "incorrect_stated_intersections",
+      "refusal_layer": "adapter4",
+      "observed_code": "PREVIEW_RESULT_INVALID",
+      "observed_category": "INTERNAL_OR_VALIDATION",
+      "acceptable_categories": [
+        "GEOMETRY_DEGENERATE",
+        "CONTRADICTION",
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "reason": null
+    },
+    {
+      "id": "W3-N58",
+      "negative_class": "category_a_b_semantic_contradictions",
+      "refusal_layer": "route",
+      "observed_code": "PREDICATE_NOT_IN_QUOTE",
+      "observed_category": "SOURCE_GROUNDING",
+      "acceptable_categories": [
+        "AMBIGUOUS",
+        "CONTRADICTION",
+        "INPUT_INVALID",
+        "GEOMETRY_DEGENERATE"
+      ],
+      "reason": "p6: divide_segment cần một trong ['sao cho'] trong 'Xét điểm K thuộc cạnh bên SM với tỷ số SK = 2/5 SM'"
+    },
+    {
+      "id": "W3-N72",
+      "negative_class": "geometry_degeneration",
+      "refusal_layer": "route",
+      "observed_code": "SOURCE_OBJECT_MISMATCH",
+      "observed_category": "SOURCE_GROUNDING",
+      "acceptable_categories": [
+        "GEOMETRY_DEGENERATE",
+        "CONTRADICTION"
+      ],
+      "reason": "sec: đề không nói thiết diện của S.DEF với mặt phẳng qua D vuông góc DF"
+    }
+  ]
+}

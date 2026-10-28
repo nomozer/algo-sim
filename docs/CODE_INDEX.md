@@ -1,5 +1,13 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Independent Holdout Wave 3 evaluation harness & oracle (local evaluation, 2026-10-28)
+
+Run `docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/` (`INDEPENDENT_HOLDOUT_WAVE3_EXECUTED`, no product change, freeze `1170ca16…` MATCH):
+- `docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/evaluate_holdout_wave3.py`: preregistered Track A/B/C evaluator fixing the Wave 2 `W2-A10` polygon-index lookup defect via `_find_point_xyz` (`_norm_label` for `A'`, `A′`, `A_prime`), exact `Fraction` coordinate matching, Category B `ordinal` vs coordinate index consistency check, and strict non-zero fallback guard.
+- `docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/test_evaluate_holdout_wave3.py`: 24 synthetic + 10-mutation qualification suite (`verification/scorer-qualification-receipt.json`).
+- `docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/dedup_check_wave3.py` & `tools/audit_curator_log.py`: 9-dimensional semantic/structural deduplication and Curator transcript firewall auditor.
+- `docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/oracle_holdout_wave3.py`: standalone pure-`Fraction` 3D geometry section and Lagrange area² oracle (`0` product imports).
+
 ## W2-M5 Adapter /4 Category A identity repair (integrated on main, 2026-10-28)
 
 `backend/app/ai/adapter4_route.py` (`_validate_sections`, `_polygon_area_squared`) canonicalizes Category A (`DINH_CAT_CANH`)

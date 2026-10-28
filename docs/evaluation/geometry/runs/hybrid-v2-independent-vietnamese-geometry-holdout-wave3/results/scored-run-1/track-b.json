@@ -1,0 +1,1027 @@
+{
+  "schema": "HOLDOUT_WAVE3_TRACK_B/1",
+  "representability": {
+    "representable_without_loss": 72,
+    "representable_with_explicit_gap": 64,
+    "intentionally_outside_supported_v2_capability": 8
+  },
+  "by_disposition": {
+    "SERVE": {
+      "representable_without_loss": 72
+    },
+    "REFUSE": {
+      "representable_with_explicit_gap": 64,
+      "intentionally_outside_supported_v2_capability": 8
+    }
+  },
+  "cases": [
+    {
+      "id": "W3-B01",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B02",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B03",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B04",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B05",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B06",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B07",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B08",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B09",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B10",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B11",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B12",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B13",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B14",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B15",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B16",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B17",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B18",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B19",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B20",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B21",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B22",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B23",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B24",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B25",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B26",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B27",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B28",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B29",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B30",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B31",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B32",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B33",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B34",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B35",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B36",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B37",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B38",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B39",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B40",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B41",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B42",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B43",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B44",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B45",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B46",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B47",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B48",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B49",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B50",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B51",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B52",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B53",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-B54",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-A01",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-A02",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-A03",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-A04",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-A05",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-A06",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-A07",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-A08",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-A09",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-A10",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-A11",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-A12",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-A13",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-A14",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-A15",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-A16",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-A17",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-A18",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": null
+    },
+    {
+      "id": "W3-N01",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N02",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N03",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N04",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N05",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N06",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N07",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N08",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N09",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N10",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N11",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N12",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N13",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "intentionally_outside_supported_v2_capability",
+      "note": "unsupported_topology"
+    },
+    {
+      "id": "W3-N14",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "intentionally_outside_supported_v2_capability",
+      "note": "unsupported_topology"
+    },
+    {
+      "id": "W3-N15",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N16",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N17",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "missing_required_information"
+    },
+    {
+      "id": "W3-N18",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "missing_required_information"
+    },
+    {
+      "id": "W3-N19",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "missing_required_information"
+    },
+    {
+      "id": "W3-N20",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "missing_required_information"
+    },
+    {
+      "id": "W3-N21",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "missing_required_information"
+    },
+    {
+      "id": "W3-N22",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "missing_required_information"
+    },
+    {
+      "id": "W3-N23",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "missing_required_information"
+    },
+    {
+      "id": "W3-N24",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N25",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "ambiguous"
+    },
+    {
+      "id": "W3-N26",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "ambiguous"
+    },
+    {
+      "id": "W3-N27",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "ambiguous"
+    },
+    {
+      "id": "W3-N28",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "ambiguous"
+    },
+    {
+      "id": "W3-N29",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N30",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N31",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N32",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N33",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N34",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N35",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "intentionally_outside_supported_v2_capability",
+      "note": "unsupported_relation"
+    },
+    {
+      "id": "W3-N36",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "intentionally_outside_supported_v2_capability",
+      "note": "unsupported_relation"
+    },
+    {
+      "id": "W3-N37",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N38",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N39",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N40",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N41",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "missing_required_information"
+    },
+    {
+      "id": "W3-N42",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "missing_required_information"
+    },
+    {
+      "id": "W3-N43",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "missing_required_information"
+    },
+    {
+      "id": "W3-N44",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N45",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "intentionally_outside_supported_v2_capability",
+      "note": "unsupported_topology"
+    },
+    {
+      "id": "W3-N46",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "intentionally_outside_supported_v2_capability",
+      "note": "unsupported_topology"
+    },
+    {
+      "id": "W3-N47",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "intentionally_outside_supported_v2_capability",
+      "note": "unsupported_topology"
+    },
+    {
+      "id": "W3-N48",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "intentionally_outside_supported_v2_capability",
+      "note": "unsupported_relation"
+    },
+    {
+      "id": "W3-N49",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N50",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N51",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N52",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N53",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N54",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N55",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N56",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N57",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N58",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N59",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N60",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N61",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N62",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N63",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N64",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N65",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N66",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N67",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N68",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N69",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N70",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N71",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    },
+    {
+      "id": "W3-N72",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_with_explicit_gap",
+      "note": "contradictory"
+    }
+  ]
+}

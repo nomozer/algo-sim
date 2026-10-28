@@ -1,0 +1,183 @@
+{
+  "run_id": "hybrid-v2-independent-vietnamese-geometry-holdout-wave3",
+  "task_code": "HYBRID_V2_INDEPENDENT_VIETNAMESE_GEOMETRY_HOLDOUT_WAVE3",
+  "date": "2026-10-28",
+  "authorization": "Owner GO 2026-10-28 (HYBRID_V2_INDEPENDENT_VIETNAMESE_GEOMETRY_HOLDOUT_WAVE3): preregistered, blinded 144-case offline holdout evaluation of AlgoSim Hybrid V2 after W2-M1..W2-M5 repairs from baseline main e137623c4f674135a8d7884b78614c132eb78085, with zero product modifications, zero live provider calls, and no merge or push.",
+  "branch": "research/hybrid-v2-independent-vietnamese-geometry-holdout-wave3",
+  "worktree": ".superpowers/worktrees/independent-section-holdout-wave3",
+  "authoritative_baseline": "e137623c4f674135a8d7884b78614c132eb78085",
+  "independence_class": "AI_CURATED_PROCEDURAL_INDEPENDENCE",
+  "commits": {
+    "baseline_main": "e137623c4f674135a8d7884b78614c132eb78085",
+    "product_commit": "73ca8d92e74059680ce53b99692af396df37a2f8",
+    "t3_candidate": "b61f16995dfbe0110a639a2127d0fb5a9c3afde0",
+    "gate1_preregistration_commit": "f438a62a3485ce9b8d687cb91102c366e6848960",
+    "gate2_scorer_qualification_commit": "53cba0c8a63ae3cf7c1b058b8b09f07046449f06",
+    "gate4_pre_execution_freeze_commit": "2332f7ad3d1a73733bbc720bcf36705c67bc2d6b"
+  },
+  "measured_system": {
+    "verify_status": "MATCH",
+    "files": 118,
+    "tree_hash": "1170ca163529dd40b57f4058826db92a6433359546aa2ad718712f38a538c10d",
+    "backend_app_git_tree": "29eb33d0e767069ce9d6557e7da8532644ceee7c"
+  },
+  "versions": {
+    "registry": "geometry-functions/19",
+    "planner": "geometry-fact-planner/17",
+    "engine": "geometry-function-engine/14",
+    "bridge_v2": "typed-fact-next-bridge/2",
+    "adapter4": "hybrid-simulation-adapter/4",
+    "section_certificate": "plane-section-certificate/1"
+  },
+  "cache_version": 130,
+  "default_mode": "LLM_ONLY",
+  "hybrid": "OPT_IN_ONLY",
+  "provider_calls": 0,
+  "scorer_qualification": {
+    "qualified_before_corpus_creation": true,
+    "test_suites_passed": 24,
+    "test_suites_total": 24,
+    "mutations_killed": 10,
+    "mutations_total": 10,
+    "receipt_file": "verification/scorer-qualification-receipt.json",
+    "receipt_sha256": "2f71f3ff7143d9e55cfd67f661963ca46acb8709450518e41845242518f11f4c"
+  },
+  "curator_independence": {
+    "curator_subagent": "206cf35f-d6b5-4ac4-a16a-38ae2ced52d1",
+    "audit_status": "HOLDOUT_INDEPENDENCE_ESTABLISHED",
+    "independence_class": "AI_CURATED_PROCEDURAL_INDEPENDENCE",
+    "tool_calls_audited": 68,
+    "forbidden_reads": 0,
+    "forbidden_commands": 0,
+    "audit_file": "verification/independence-audit.json",
+    "audit_sha256": "f786348e04383ada8826e600655a00fac2a424ea4204e4cb3101a4f36f6f6eb3"
+  },
+  "deduplication_audit": {
+    "passed": true,
+    "historical_items_compared": 940,
+    "external_text_similarity_flags": 0,
+    "external_exact_config_matches": 0,
+    "external_scale_invariant_matches": 0,
+    "external_oracle_invariant_matches": 0,
+    "internal_duplicate_flags": 0,
+    "max_external_5gram_jaccard": 0.6713,
+    "max_internal_positive_5gram_jaccard": 0.7153,
+    "pre_freeze_replacements_logged": [
+      "W3-B01"
+    ],
+    "audit_file": "verification/deduplication-audit.json",
+    "audit_sha256": "ce3a11849799b1942a7c41ea7ffa4e2776a2d611ed15fdce8d4524bed581873e"
+  },
+  "independent_pre_freeze_oracle_audit": {
+    "reviewer_subagent": "9fdf8f17-aeaf-4fd3-8530-34c02d1363c2",
+    "status": "ORACLE_VERIFIED_BEFORE_EXECUTION",
+    "positive_cases_verified": 72,
+    "negative_cases_verified": 72,
+    "discrepancies": 0,
+    "audit_file": "verification/independent-oracle-review.json",
+    "audit_sha256": "69086bd1593def53676f27d9d9c48f1aeee8646b978240fcb63ae9ca8d478fdd"
+  },
+  "corpus_144": {
+    "total_cases": 144,
+    "positive_cases": 72,
+    "category_b_cases": 54,
+    "category_a_cases": 18,
+    "negative_cases": 72,
+    "files": [
+      "inputs/holdout-wave3.json",
+      "oracle/geometry.json",
+      "oracle/oracle_holdout_wave3.py",
+      "oracle/expected.json",
+      "holdout-manifest.json"
+    ],
+    "sha256": {
+      "inputs/holdout-wave3.json": "cf2d3fd759b6a94c4eae2545a4a409e50859ff28e861f797609b6a259fe4dee0",
+      "oracle/geometry.json": "a7c04b77211d85fc7912bbcc6ad34e83e864cf46ea5904e4ebc5e201b520b983",
+      "oracle/oracle_holdout_wave3.py": "aa156523cc6895d935fc6428995dad48a4684bfc60d96be89e51d41ef4b5c1c0",
+      "oracle/expected.json": "9cabeb19ae0d10e1112795097e7ed18e0b0b3aa7bc18700a9d60813a0cbcf9df",
+      "holdout-manifest.json": "2c7f459f92c53c854717272e620dfed619b335918fe9ba84642e08dd67d8fedf"
+    }
+  },
+  "scored_run_1": {
+    "classification": "INDEPENDENT_BLIND_HOLDOUT_WAVE3_ONE_SHOT",
+    "dir": "results/scored-run-1",
+    "total_cases": 144,
+    "serve_cases": 72,
+    "served_correct": 20,
+    "served_correct_ci95": [
+      0.1876,
+      0.3905
+    ],
+    "category_b_served_correct": 12,
+    "category_b_total": 54,
+    "category_b_ci95": [
+      0.132,
+      0.3494
+    ],
+    "category_a_served_correct": 8,
+    "category_a_total": 18,
+    "category_a_ci95": [
+      0.2456,
+      0.6628
+    ],
+    "exact_oracle_agreement_among_served": {
+      "agree": 20,
+      "served": 20,
+      "rate": 1.0,
+      "ci95": [
+        0.8389,
+        1.0
+      ]
+    },
+    "false_refusals": 52,
+    "false_refusal_ci95": [
+      0.6095,
+      0.8124
+    ],
+    "wrong_served_on_serve_cases": 0,
+    "refuse_cases": 72,
+    "refuse_cases_refused": 72,
+    "refuse_cases_refused_ci95": [
+      0.9493,
+      1.0
+    ],
+    "refused_correct_reason": 60,
+    "reason_agreement_ci95": [
+      0.7309,
+      0.902
+    ],
+    "refused_reason_disagreement": 12,
+    "wrong_served_on_refuse_cases": 0,
+    "wrong_served_total": 0,
+    "wrong_served_ci95": [
+      0.0,
+      0.026
+    ],
+    "harness_errors": 0,
+    "product_exceptions": 0,
+    "scene3d_semantics": {
+      "served_cases_checked": 20,
+      "source_identity_leak_cases": [],
+      "machine_id_leak_cases": [],
+      "all_auxiliary_visibly_distinguished": true
+    }
+  },
+  "positive_false_refusal_clusters": {
+    "W3-F1_section_and_area_compound_question_grounding": 24,
+    "W3-F2_divide_segment_and_projection_keyword_lexicon": 14,
+    "W3-F3_parallel_two_lines_slice_grammar_coverage": 10,
+    "W3-F4_cube_base_square_edge_length_binding": 3,
+    "W3-F5_gia_su_premise_opener_conditional_false_positive": 1,
+    "w2_m4_radical_domain_overflow": 0,
+    "w2_m5_adapter4_category_a_false_refusals": 0,
+    "diagnostics_file": "results/diagnostics.json"
+  },
+  "independent_review": {
+    "reviewer_subagent": "a0d7483f-ba91-481b-b44e-68424bcb368f",
+    "verdict": "APPROVED_NO_FINDINGS",
+    "review_status": "INDEPENDENT_HOLDOUT_WAVE3_REVIEW_PASS",
+    "file": "review.md",
+    "sha256": "acdd214cf79dfcb18a603f9c21f185e65680e2d779f76f983de3f6156ca38a87"
+  },
+  "status": "INDEPENDENT_HOLDOUT_WAVE3_EXECUTED"
+}

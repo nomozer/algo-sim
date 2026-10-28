@@ -1,5 +1,17 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_V2_INDEPENDENT_VIETNAMESE_GEOMETRY_HOLDOUT_WAVE3
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/
+CLASSIFICATION = INDEPENDENT_BLIND_HOLDOUT_WAVE3_ONE_SHOT; INDEPENDENT_HOLDOUT_WAVE3_EXECUTED (AI_CURATED_PROCEDURAL_INDEPENDENCE); 20/72 positive SERVED_CORRECT (12/54 Category B, 8/18 Category A, 20/48 single-question section_only+area_only, 20/20 exact oracle agreement among served, 20/20 downstream Planner/17->Engine/14->Adapter/4 success given Source Gate pass, 0 W2-M4 radical overflow, 0 W2-M5 Category A Adapter /4 false refusals); 52/72 positive FALSE_REFUSAL (100% in SOURCE_GROUNDING across W3-F1..W3-F5); 72/72 negative REFUSED (60/72 reason agreement); 0/144 WRONG_SERVED; 20/20 Track C Scene3D clean; independent review APPROVED_NO_FINDINGS
+CODE_COMMIT = 73ca8d92e74059680ce53b99692af396df37a2f8; T3 candidate b61f16995dfbe0110a639a2127d0fb5a9c3afde0; baseline main e137623c4f674135a8d7884b78614c132eb78085; freeze 1170ca163529dd40b57f4058826db92a6433359546aa2ad718712f38a538c10d (MATCH, 118 files)
+VERIFICATION = holdout-manifest.json; verification/scorer-qualification-receipt.json (24/24 suites, 10/10 mutations killed before corpus creation at 53cba0c8); verification/independence-audit.json; verification/deduplication-audit.json; verification/independent-oracle-review.json; results/scored-run-1/summary.json; results/scored-run-1/track-a.json; results/scored-run-1/track-b.json; results/statistical-summary.json; results/diagnostics.json; review.md; run.json
+MODEL_REQUEST_COUNT = 0
+CONTINUES = HYBRID_V2_W2_M5_POSTMERGE_CASE_IDENTITY_ADJUDICATION
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_V2_W2_M5_POSTMERGE_CASE_IDENTITY_ADJUDICATION
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/correction-addendum.md

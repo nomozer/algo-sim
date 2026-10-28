@@ -1,0 +1,2065 @@
+{
+  "schema": "HOLDOUT_WAVE3_STATISTICAL_SUMMARY/1",
+  "task": "HYBRID_V2_INDEPENDENT_VIETNAMESE_GEOMETRY_HOLDOUT_WAVE3",
+  "scored_run": "results/scored-run-1",
+  "primary_metrics": {
+    "overall_positive_serve_accuracy": {
+      "k": 20,
+      "n": 72,
+      "rate": 0.2778,
+      "ci95_wilson": [
+        0.1876,
+        0.3905
+      ]
+    },
+    "category_b_positive_serve_accuracy": {
+      "k": 12,
+      "n": 54,
+      "rate": 0.2222,
+      "ci95_wilson": [
+        0.132,
+        0.3494
+      ]
+    },
+    "category_a_positive_serve_accuracy": {
+      "k": 8,
+      "n": 18,
+      "rate": 0.4444,
+      "ci95_wilson": [
+        0.2456,
+        0.6628
+      ]
+    },
+    "exact_oracle_agreement_given_served": {
+      "k": 20,
+      "n": 20,
+      "rate": 1.0,
+      "ci95_wilson": [
+        0.8389,
+        1.0
+      ]
+    },
+    "downstream_pipeline_serve_rate_given_source_gate_pass_on_positive": {
+      "k": 20,
+      "n": 20,
+      "rate": 1.0,
+      "ci95_wilson": [
+        0.8389,
+        1.0
+      ]
+    },
+    "false_refusal_rate_on_positive": {
+      "k": 52,
+      "n": 72,
+      "rate": 0.7222,
+      "ci95_wilson": [
+        0.6095,
+        0.8124
+      ]
+    },
+    "negative_fail_closed_refusal_rate": {
+      "k": 72,
+      "n": 72,
+      "rate": 1.0,
+      "ci95_wilson": [
+        0.9493,
+        1.0
+      ]
+    },
+    "negative_refusal_reason_agreement_rate": {
+      "k": 60,
+      "n": 72,
+      "rate": 0.8333,
+      "ci95_wilson": [
+        0.7309,
+        0.902
+      ]
+    },
+    "wrong_served_rate_overall": {
+      "k": 0,
+      "n": 144,
+      "rate": 0.0,
+      "ci95_wilson": [
+        0.0,
+        0.026
+      ]
+    },
+    "wrong_served_rate_positive": {
+      "k": 0,
+      "n": 72,
+      "rate": 0.0,
+      "ci95_wilson": [
+        0.0,
+        0.0507
+      ]
+    },
+    "wrong_served_rate_negative": {
+      "k": 0,
+      "n": 72,
+      "rate": 0.0,
+      "ci95_wilson": [
+        0.0,
+        0.0507
+      ]
+    },
+    "track_c_scene3d_clean_rate_given_served": {
+      "k": 20,
+      "n": 20,
+      "rate": 1.0,
+      "ci95_wilson": [
+        0.8389,
+        1.0
+      ]
+    },
+    "internal_exception_rate": {
+      "k": 0,
+      "n": 144,
+      "rate": 0.0,
+      "ci95_wilson": [
+        0.0,
+        0.026
+      ]
+    },
+    "harness_error_rate": {
+      "k": 0,
+      "n": 144,
+      "rate": 0.0,
+      "ci95_wilson": [
+        0.0,
+        0.026
+      ]
+    }
+  },
+  "repair_verification_from_w2_m1_to_m5": {
+    "w2_m4_radical_domain_overflow_on_positive": {
+      "failures": 0,
+      "evaluated_positive": 72,
+      "served_positive": 20,
+      "status": "VERIFIED_ZERO_OVERFLOWS"
+    },
+    "w2_m5_adapter4_category_a_false_refusals": {
+      "failures": 0,
+      "category_a_reaching_adapter4": 8,
+      "category_a_served_correct": 8,
+      "adversarial_category_a_caught_by_adapter4": 2,
+      "status": "VERIFIED_ZERO_ADAPTER4_FALSE_REFUSALS_AND_2_ADVERSARIAL_CAUGHT"
+    }
+  },
+  "by_stratum": {
+    "N": {
+      "n": 72,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 60,
+        "REFUSED_REASON_DISAGREEMENT": 12
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 72,
+      "refuse_cases_refused": 72,
+      "refuse_cases_refused_ci95": [
+        0.9493,
+        1.0
+      ],
+      "refused_correct_reason": 60,
+      "refused_reason_disagreement": 12,
+      "reason_agreement_ci95": [
+        0.7309,
+        0.902
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.0507
+      ],
+      "internal_exceptions": 0
+    },
+    "P-A": {
+      "n": 18,
+      "outcomes": {
+        "SERVED_CORRECT": 8,
+        "FALSE_REFUSAL": 10
+      },
+      "serve_cases": 18,
+      "served_correct": 8,
+      "served_correct_ci95": [
+        0.2456,
+        0.6628
+      ],
+      "false_refusals": 10,
+      "false_refusal_ci95": [
+        0.3372,
+        0.7544
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 0,
+      "refuse_cases_refused": 0,
+      "refuse_cases_refused_ci95": null,
+      "refused_correct_reason": 0,
+      "refused_reason_disagreement": 0,
+      "reason_agreement_ci95": null,
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.1759
+      ],
+      "internal_exceptions": 0
+    },
+    "P-B": {
+      "n": 54,
+      "outcomes": {
+        "FALSE_REFUSAL": 42,
+        "SERVED_CORRECT": 12
+      },
+      "serve_cases": 54,
+      "served_correct": 12,
+      "served_correct_ci95": [
+        0.132,
+        0.3494
+      ],
+      "false_refusals": 42,
+      "false_refusal_ci95": [
+        0.6506,
+        0.868
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 0,
+      "refuse_cases_refused": 0,
+      "refuse_cases_refused_ci95": null,
+      "refused_correct_reason": 0,
+      "refused_reason_disagreement": 0,
+      "reason_agreement_ci95": null,
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.0664
+      ],
+      "internal_exceptions": 0
+    }
+  },
+  "by_family": {
+    "cone": {
+      "n": 1,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 1
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 1,
+      "refuse_cases_refused": 1,
+      "refuse_cases_refused_ci95": [
+        0.2065,
+        1.0
+      ],
+      "refused_correct_reason": 1,
+      "refused_reason_disagreement": 0,
+      "reason_agreement_ci95": [
+        0.2065,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.7935
+      ],
+      "internal_exceptions": 0
+    },
+    "cube": {
+      "n": 12,
+      "outcomes": {
+        "FALSE_REFUSAL": 11,
+        "SERVED_CORRECT": 1
+      },
+      "serve_cases": 12,
+      "served_correct": 1,
+      "served_correct_ci95": [
+        0.0149,
+        0.3539
+      ],
+      "false_refusals": 11,
+      "false_refusal_ci95": [
+        0.6461,
+        0.9851
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 0,
+      "refuse_cases_refused": 0,
+      "refuse_cases_refused_ci95": null,
+      "refused_correct_reason": 0,
+      "refused_reason_disagreement": 0,
+      "reason_agreement_ci95": null,
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.2425
+      ],
+      "internal_exceptions": 0
+    },
+    "cuboid": {
+      "n": 17,
+      "outcomes": {
+        "SERVED_CORRECT": 4,
+        "FALSE_REFUSAL": 8,
+        "REFUSED_CORRECT_REASON": 3,
+        "REFUSED_REASON_DISAGREEMENT": 2
+      },
+      "serve_cases": 12,
+      "served_correct": 4,
+      "served_correct_ci95": [
+        0.1381,
+        0.6094
+      ],
+      "false_refusals": 8,
+      "false_refusal_ci95": [
+        0.3906,
+        0.8619
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 5,
+      "refuse_cases_refused": 5,
+      "refuse_cases_refused_ci95": [
+        0.5655,
+        1.0
+      ],
+      "refused_correct_reason": 3,
+      "refused_reason_disagreement": 2,
+      "reason_agreement_ci95": [
+        0.2307,
+        0.8824
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.1843
+      ],
+      "internal_exceptions": 0
+    },
+    "cylinder": {
+      "n": 1,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 1
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 1,
+      "refuse_cases_refused": 1,
+      "refuse_cases_refused_ci95": [
+        0.2065,
+        1.0
+      ],
+      "refused_correct_reason": 1,
+      "refused_reason_disagreement": 0,
+      "reason_agreement_ci95": [
+        0.2065,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.7935
+      ],
+      "internal_exceptions": 0
+    },
+    "oblique_triangular_prism": {
+      "n": 13,
+      "outcomes": {
+        "FALSE_REFUSAL": 10,
+        "SERVED_CORRECT": 2,
+        "REFUSED_CORRECT_REASON": 1
+      },
+      "serve_cases": 12,
+      "served_correct": 2,
+      "served_correct_ci95": [
+        0.047,
+        0.448
+      ],
+      "false_refusals": 10,
+      "false_refusal_ci95": [
+        0.552,
+        0.953
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 1,
+      "refuse_cases_refused": 1,
+      "refuse_cases_refused_ci95": [
+        0.2065,
+        1.0
+      ],
+      "refused_correct_reason": 1,
+      "refused_reason_disagreement": 0,
+      "reason_agreement_ci95": [
+        0.2065,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.2281
+      ],
+      "internal_exceptions": 0
+    },
+    "pentagonal_pyramid": {
+      "n": 1,
+      "outcomes": {
+        "REFUSED_REASON_DISAGREEMENT": 1
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 1,
+      "refuse_cases_refused": 1,
+      "refuse_cases_refused_ci95": [
+        0.2065,
+        1.0
+      ],
+      "refused_correct_reason": 0,
+      "refused_reason_disagreement": 1,
+      "reason_agreement_ci95": [
+        0.0,
+        0.7935
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.7935
+      ],
+      "internal_exceptions": 0
+    },
+    "quadrilateral_pyramid": {
+      "n": 14,
+      "outcomes": {
+        "SERVED_CORRECT": 6,
+        "FALSE_REFUSAL": 6,
+        "REFUSED_CORRECT_REASON": 1,
+        "REFUSED_REASON_DISAGREEMENT": 1
+      },
+      "serve_cases": 12,
+      "served_correct": 6,
+      "served_correct_ci95": [
+        0.2538,
+        0.7462
+      ],
+      "false_refusals": 6,
+      "false_refusal_ci95": [
+        0.2538,
+        0.7462
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 2,
+      "refuse_cases_refused": 2,
+      "refuse_cases_refused_ci95": [
+        0.3424,
+        1.0
+      ],
+      "refused_correct_reason": 1,
+      "refused_reason_disagreement": 1,
+      "reason_agreement_ci95": [
+        0.0945,
+        0.9055
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.2153
+      ],
+      "internal_exceptions": 0
+    },
+    "right_triangular_prism": {
+      "n": 21,
+      "outcomes": {
+        "SERVED_CORRECT": 5,
+        "FALSE_REFUSAL": 7,
+        "REFUSED_CORRECT_REASON": 8,
+        "REFUSED_REASON_DISAGREEMENT": 1
+      },
+      "serve_cases": 12,
+      "served_correct": 5,
+      "served_correct_ci95": [
+        0.1933,
+        0.6805
+      ],
+      "false_refusals": 7,
+      "false_refusal_ci95": [
+        0.3195,
+        0.8067
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 9,
+      "refuse_cases_refused": 9,
+      "refuse_cases_refused_ci95": [
+        0.7009,
+        1.0
+      ],
+      "refused_correct_reason": 8,
+      "refused_reason_disagreement": 1,
+      "reason_agreement_ci95": [
+        0.565,
+        0.9801
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.1546
+      ],
+      "internal_exceptions": 0
+    },
+    "triangular_pyramid": {
+      "n": 64,
+      "outcomes": {
+        "FALSE_REFUSAL": 10,
+        "SERVED_CORRECT": 2,
+        "REFUSED_CORRECT_REASON": 45,
+        "REFUSED_REASON_DISAGREEMENT": 7
+      },
+      "serve_cases": 12,
+      "served_correct": 2,
+      "served_correct_ci95": [
+        0.047,
+        0.448
+      ],
+      "false_refusals": 10,
+      "false_refusal_ci95": [
+        0.552,
+        0.953
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 52,
+      "refuse_cases_refused": 52,
+      "refuse_cases_refused_ci95": [
+        0.9312,
+        1.0
+      ],
+      "refused_correct_reason": 45,
+      "refused_reason_disagreement": 7,
+      "reason_agreement_ci95": [
+        0.7473,
+        0.9332
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.0566
+      ],
+      "internal_exceptions": 0
+    }
+  },
+  "by_plane_relation": {
+    "axial_section": {
+      "n": 2,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 2
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 2,
+      "refuse_cases_refused": 2,
+      "refuse_cases_refused_ci95": [
+        0.3424,
+        1.0
+      ],
+      "refused_correct_reason": 2,
+      "refused_reason_disagreement": 0,
+      "reason_agreement_ci95": [
+        0.3424,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.6576
+      ],
+      "internal_exceptions": 0
+    },
+    "parallel_plane": {
+      "n": 81,
+      "outcomes": {
+        "FALSE_REFUSAL": 16,
+        "SERVED_CORRECT": 7,
+        "REFUSED_CORRECT_REASON": 48,
+        "REFUSED_REASON_DISAGREEMENT": 10
+      },
+      "serve_cases": 23,
+      "served_correct": 7,
+      "served_correct_ci95": [
+        0.156,
+        0.5087
+      ],
+      "false_refusals": 16,
+      "false_refusal_ci95": [
+        0.4913,
+        0.844
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 58,
+      "refuse_cases_refused": 58,
+      "refuse_cases_refused_ci95": [
+        0.9379,
+        1.0
+      ],
+      "refused_correct_reason": 48,
+      "refused_reason_disagreement": 10,
+      "reason_agreement_ci95": [
+        0.7109,
+        0.9036
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.0453
+      ],
+      "internal_exceptions": 0
+    },
+    "parallel_two_lines": {
+      "n": 21,
+      "outcomes": {
+        "FALSE_REFUSAL": 18,
+        "SERVED_CORRECT": 2,
+        "REFUSED_CORRECT_REASON": 1
+      },
+      "serve_cases": 20,
+      "served_correct": 2,
+      "served_correct_ci95": [
+        0.0279,
+        0.301
+      ],
+      "false_refusals": 18,
+      "false_refusal_ci95": [
+        0.699,
+        0.9721
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 1,
+      "refuse_cases_refused": 1,
+      "refuse_cases_refused_ci95": [
+        0.2065,
+        1.0
+      ],
+      "refused_correct_reason": 1,
+      "refused_reason_disagreement": 0,
+      "reason_agreement_ci95": [
+        0.2065,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.1546
+      ],
+      "internal_exceptions": 0
+    },
+    "perpendicular_line": {
+      "n": 39,
+      "outcomes": {
+        "FALSE_REFUSAL": 18,
+        "SERVED_CORRECT": 11,
+        "REFUSED_CORRECT_REASON": 8,
+        "REFUSED_REASON_DISAGREEMENT": 2
+      },
+      "serve_cases": 29,
+      "served_correct": 11,
+      "served_correct_ci95": [
+        0.2269,
+        0.56
+      ],
+      "false_refusals": 18,
+      "false_refusal_ci95": [
+        0.44,
+        0.7731
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 10,
+      "refuse_cases_refused": 10,
+      "refuse_cases_refused_ci95": [
+        0.7225,
+        1.0
+      ],
+      "refused_correct_reason": 8,
+      "refused_reason_disagreement": 2,
+      "reason_agreement_ci95": [
+        0.4902,
+        0.9433
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.0897
+      ],
+      "internal_exceptions": 0
+    },
+    "plane_equation": {
+      "n": 1,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 1
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 1,
+      "refuse_cases_refused": 1,
+      "refuse_cases_refused_ci95": [
+        0.2065,
+        1.0
+      ],
+      "refused_correct_reason": 1,
+      "refused_reason_disagreement": 0,
+      "reason_agreement_ci95": [
+        0.2065,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.7935
+      ],
+      "internal_exceptions": 0
+    }
+  },
+  "by_question_type": {
+    "area_only": {
+      "n": 32,
+      "outcomes": {
+        "FALSE_REFUSAL": 14,
+        "SERVED_CORRECT": 10,
+        "REFUSED_CORRECT_REASON": 6,
+        "REFUSED_REASON_DISAGREEMENT": 2
+      },
+      "serve_cases": 24,
+      "served_correct": 10,
+      "served_correct_ci95": [
+        0.2447,
+        0.6117
+      ],
+      "false_refusals": 14,
+      "false_refusal_ci95": [
+        0.3883,
+        0.7553
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 8,
+      "refuse_cases_refused": 8,
+      "refuse_cases_refused_ci95": [
+        0.6756,
+        1.0
+      ],
+      "refused_correct_reason": 6,
+      "refused_reason_disagreement": 2,
+      "reason_agreement_ci95": [
+        0.4093,
+        0.9285
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.1072
+      ],
+      "internal_exceptions": 0
+    },
+    "section_and_area": {
+      "n": 25,
+      "outcomes": {
+        "FALSE_REFUSAL": 24,
+        "REFUSED_CORRECT_REASON": 1
+      },
+      "serve_cases": 24,
+      "served_correct": 0,
+      "served_correct_ci95": [
+        0.0,
+        0.138
+      ],
+      "false_refusals": 24,
+      "false_refusal_ci95": [
+        0.862,
+        1.0
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 1,
+      "refuse_cases_refused": 1,
+      "refuse_cases_refused_ci95": [
+        0.2065,
+        1.0
+      ],
+      "refused_correct_reason": 1,
+      "refused_reason_disagreement": 0,
+      "reason_agreement_ci95": [
+        0.2065,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.1332
+      ],
+      "internal_exceptions": 0
+    },
+    "section_only": {
+      "n": 87,
+      "outcomes": {
+        "FALSE_REFUSAL": 14,
+        "SERVED_CORRECT": 10,
+        "REFUSED_CORRECT_REASON": 53,
+        "REFUSED_REASON_DISAGREEMENT": 10
+      },
+      "serve_cases": 24,
+      "served_correct": 10,
+      "served_correct_ci95": [
+        0.2447,
+        0.6117
+      ],
+      "false_refusals": 14,
+      "false_refusal_ci95": [
+        0.3883,
+        0.7553
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 63,
+      "refuse_cases_refused": 63,
+      "refuse_cases_refused_ci95": [
+        0.9425,
+        1.0
+      ],
+      "refused_correct_reason": 53,
+      "refused_reason_disagreement": 10,
+      "reason_agreement_ci95": [
+        0.7319,
+        0.9114
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.0423
+      ],
+      "internal_exceptions": 0
+    }
+  },
+  "by_negative_class": {
+    "ambiguous_source_labels": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_REASON_DISAGREEMENT": 1,
+        "REFUSED_CORRECT_REASON": 3
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refuse_cases_refused_ci95": [
+        0.5101,
+        1.0
+      ],
+      "refused_correct_reason": 3,
+      "refused_reason_disagreement": 1,
+      "reason_agreement_ci95": [
+        0.3006,
+        0.9544
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ],
+      "internal_exceptions": 0
+    },
+    "category_a_b_semantic_contradictions": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 3,
+        "REFUSED_REASON_DISAGREEMENT": 1
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refuse_cases_refused_ci95": [
+        0.5101,
+        1.0
+      ],
+      "refused_correct_reason": 3,
+      "refused_reason_disagreement": 1,
+      "reason_agreement_ci95": [
+        0.3006,
+        0.9544
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ],
+      "internal_exceptions": 0
+    },
+    "conflicting_section_area_requests": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_REASON_DISAGREEMENT": 1,
+        "REFUSED_CORRECT_REASON": 3
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refuse_cases_refused_ci95": [
+        0.5101,
+        1.0
+      ],
+      "refused_correct_reason": 3,
+      "refused_reason_disagreement": 1,
+      "reason_agreement_ci95": [
+        0.3006,
+        0.9544
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ],
+      "internal_exceptions": 0
+    },
+    "contradictory_source_facts": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 2,
+        "REFUSED_REASON_DISAGREEMENT": 2
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refuse_cases_refused_ci95": [
+        0.5101,
+        1.0
+      ],
+      "refused_correct_reason": 2,
+      "refused_reason_disagreement": 2,
+      "reason_agreement_ci95": [
+        0.15,
+        0.85
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ],
+      "internal_exceptions": 0
+    },
+    "geometry_degeneration": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 3,
+        "REFUSED_REASON_DISAGREEMENT": 1
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refuse_cases_refused_ci95": [
+        0.5101,
+        1.0
+      ],
+      "refused_correct_reason": 3,
+      "refused_reason_disagreement": 1,
+      "reason_agreement_ci95": [
+        0.3006,
+        0.9544
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ],
+      "internal_exceptions": 0
+    },
+    "impossible_vertex": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 3,
+        "REFUSED_REASON_DISAGREEMENT": 1
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refuse_cases_refused_ci95": [
+        0.5101,
+        1.0
+      ],
+      "refused_correct_reason": 3,
+      "refused_reason_disagreement": 1,
+      "reason_agreement_ci95": [
+        0.3006,
+        0.9544
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ],
+      "internal_exceptions": 0
+    },
+    "incorrect_stated_intersections": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_REASON_DISAGREEMENT": 3,
+        "REFUSED_CORRECT_REASON": 1
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refuse_cases_refused_ci95": [
+        0.5101,
+        1.0
+      ],
+      "refused_correct_reason": 1,
+      "refused_reason_disagreement": 3,
+      "reason_agreement_ci95": [
+        0.0456,
+        0.6994
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ],
+      "internal_exceptions": 0
+    },
+    "invalid_section_declaration": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 4
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refuse_cases_refused_ci95": [
+        0.5101,
+        1.0
+      ],
+      "refused_correct_reason": 4,
+      "refused_reason_disagreement": 0,
+      "reason_agreement_ci95": [
+        0.5101,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ],
+      "internal_exceptions": 0
+    },
+    "missing_mandatory_premise": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 3,
+        "REFUSED_REASON_DISAGREEMENT": 1
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refuse_cases_refused_ci95": [
+        0.5101,
+        1.0
+      ],
+      "refused_correct_reason": 3,
+      "refused_reason_disagreement": 1,
+      "reason_agreement_ci95": [
+        0.3006,
+        0.9544
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ],
+      "internal_exceptions": 0
+    },
+    "mixed_solid_operands": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 4
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refuse_cases_refused_ci95": [
+        0.5101,
+        1.0
+      ],
+      "refused_correct_reason": 4,
+      "refused_reason_disagreement": 0,
+      "reason_agreement_ci95": [
+        0.5101,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ],
+      "internal_exceptions": 0
+    },
+    "none": {
+      "n": 72,
+      "outcomes": {
+        "FALSE_REFUSAL": 52,
+        "SERVED_CORRECT": 20
+      },
+      "serve_cases": 72,
+      "served_correct": 20,
+      "served_correct_ci95": [
+        0.1876,
+        0.3905
+      ],
+      "false_refusals": 52,
+      "false_refusal_ci95": [
+        0.6095,
+        0.8124
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 0,
+      "refuse_cases_refused": 0,
+      "refuse_cases_refused_ci95": null,
+      "refused_correct_reason": 0,
+      "refused_reason_disagreement": 0,
+      "reason_agreement_ci95": null,
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.0507
+      ],
+      "internal_exceptions": 0
+    },
+    "primed_label_identity_ambiguity": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 4
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refuse_cases_refused_ci95": [
+        0.5101,
+        1.0
+      ],
+      "refused_correct_reason": 4,
+      "refused_reason_disagreement": 0,
+      "reason_agreement_ci95": [
+        0.5101,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ],
+      "internal_exceptions": 0
+    },
+    "source_provenance_mismatch": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 4
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refuse_cases_refused_ci95": [
+        0.5101,
+        1.0
+      ],
+      "refused_correct_reason": 4,
+      "refused_reason_disagreement": 0,
+      "reason_agreement_ci95": [
+        0.5101,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ],
+      "internal_exceptions": 0
+    },
+    "unproven_parallel_or_perpendicular_relation": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 4
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refuse_cases_refused_ci95": [
+        0.5101,
+        1.0
+      ],
+      "refused_correct_reason": 4,
+      "refused_reason_disagreement": 0,
+      "reason_agreement_ci95": [
+        0.5101,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ],
+      "internal_exceptions": 0
+    },
+    "unsupported_geometry_capability": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 3,
+        "REFUSED_REASON_DISAGREEMENT": 1
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refuse_cases_refused_ci95": [
+        0.5101,
+        1.0
+      ],
+      "refused_correct_reason": 3,
+      "refused_reason_disagreement": 1,
+      "reason_agreement_ci95": [
+        0.3006,
+        0.9544
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ],
+      "internal_exceptions": 0
+    },
+    "wrong_edge": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 4
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refuse_cases_refused_ci95": [
+        0.5101,
+        1.0
+      ],
+      "refused_correct_reason": 4,
+      "refused_reason_disagreement": 0,
+      "reason_agreement_ci95": [
+        0.5101,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ],
+      "internal_exceptions": 0
+    },
+    "wrong_ratio": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 4
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refuse_cases_refused_ci95": [
+        0.5101,
+        1.0
+      ],
+      "refused_correct_reason": 4,
+      "refused_reason_disagreement": 0,
+      "reason_agreement_ci95": [
+        0.5101,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ],
+      "internal_exceptions": 0
+    },
+    "wrong_solid_kind": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 4
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refuse_cases_refused_ci95": [
+        0.5101,
+        1.0
+      ],
+      "refused_correct_reason": 4,
+      "refused_reason_disagreement": 0,
+      "reason_agreement_ci95": [
+        0.5101,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ],
+      "internal_exceptions": 0
+    },
+    "wrong_solid_notation": {
+      "n": 4,
+      "outcomes": {
+        "REFUSED_CORRECT_REASON": 4
+      },
+      "serve_cases": 0,
+      "served_correct": 0,
+      "served_correct_ci95": null,
+      "false_refusals": 0,
+      "false_refusal_ci95": null,
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 4,
+      "refuse_cases_refused": 4,
+      "refuse_cases_refused_ci95": [
+        0.5101,
+        1.0
+      ],
+      "refused_correct_reason": 4,
+      "refused_reason_disagreement": 0,
+      "reason_agreement_ci95": [
+        0.5101,
+        1.0
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.4899
+      ],
+      "internal_exceptions": 0
+    }
+  },
+  "positive_cell_matrix": {
+    "P-B": {
+      "cube": {
+        "parallel_plane": {
+          "n": 3,
+          "served_correct": 1,
+          "false_refusals": 2,
+          "wrong_served": 0,
+          "rate": 0.3333,
+          "ci95": [
+            0.0615,
+            0.7923
+          ],
+          "case_ids": [
+            "W3-B49",
+            "W3-B50",
+            "W3-B51"
+          ],
+          "served_ids": [
+            "W3-B49"
+          ]
+        },
+        "parallel_two_lines": {
+          "n": 3,
+          "served_correct": 0,
+          "false_refusals": 3,
+          "wrong_served": 0,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.5615
+          ],
+          "case_ids": [
+            "W3-B52",
+            "W3-B53",
+            "W3-B54"
+          ],
+          "served_ids": []
+        },
+        "perpendicular_line": {
+          "n": 3,
+          "served_correct": 0,
+          "false_refusals": 3,
+          "wrong_served": 0,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.5615
+          ],
+          "case_ids": [
+            "W3-B46",
+            "W3-B47",
+            "W3-B48"
+          ],
+          "served_ids": []
+        }
+      },
+      "cuboid": {
+        "parallel_plane": {
+          "n": 3,
+          "served_correct": 1,
+          "false_refusals": 2,
+          "wrong_served": 0,
+          "rate": 0.3333,
+          "ci95": [
+            0.0615,
+            0.7923
+          ],
+          "case_ids": [
+            "W3-B40",
+            "W3-B41",
+            "W3-B42"
+          ],
+          "served_ids": [
+            "W3-B41"
+          ]
+        },
+        "parallel_two_lines": {
+          "n": 3,
+          "served_correct": 0,
+          "false_refusals": 3,
+          "wrong_served": 0,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.5615
+          ],
+          "case_ids": [
+            "W3-B43",
+            "W3-B44",
+            "W3-B45"
+          ],
+          "served_ids": []
+        },
+        "perpendicular_line": {
+          "n": 3,
+          "served_correct": 1,
+          "false_refusals": 2,
+          "wrong_served": 0,
+          "rate": 0.3333,
+          "ci95": [
+            0.0615,
+            0.7923
+          ],
+          "case_ids": [
+            "W3-B37",
+            "W3-B38",
+            "W3-B39"
+          ],
+          "served_ids": [
+            "W3-B37"
+          ]
+        }
+      },
+      "oblique_triangular_prism": {
+        "parallel_plane": {
+          "n": 3,
+          "served_correct": 0,
+          "false_refusals": 3,
+          "wrong_served": 0,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.5615
+          ],
+          "case_ids": [
+            "W3-B31",
+            "W3-B32",
+            "W3-B33"
+          ],
+          "served_ids": []
+        },
+        "parallel_two_lines": {
+          "n": 3,
+          "served_correct": 0,
+          "false_refusals": 3,
+          "wrong_served": 0,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.5615
+          ],
+          "case_ids": [
+            "W3-B34",
+            "W3-B35",
+            "W3-B36"
+          ],
+          "served_ids": []
+        },
+        "perpendicular_line": {
+          "n": 3,
+          "served_correct": 1,
+          "false_refusals": 2,
+          "wrong_served": 0,
+          "rate": 0.3333,
+          "ci95": [
+            0.0615,
+            0.7923
+          ],
+          "case_ids": [
+            "W3-B28",
+            "W3-B29",
+            "W3-B30"
+          ],
+          "served_ids": [
+            "W3-B29"
+          ]
+        }
+      },
+      "quadrilateral_pyramid": {
+        "parallel_plane": {
+          "n": 3,
+          "served_correct": 1,
+          "false_refusals": 2,
+          "wrong_served": 0,
+          "rate": 0.3333,
+          "ci95": [
+            0.0615,
+            0.7923
+          ],
+          "case_ids": [
+            "W3-B13",
+            "W3-B14",
+            "W3-B15"
+          ],
+          "served_ids": [
+            "W3-B13"
+          ]
+        },
+        "parallel_two_lines": {
+          "n": 3,
+          "served_correct": 1,
+          "false_refusals": 2,
+          "wrong_served": 0,
+          "rate": 0.3333,
+          "ci95": [
+            0.0615,
+            0.7923
+          ],
+          "case_ids": [
+            "W3-B16",
+            "W3-B17",
+            "W3-B18"
+          ],
+          "served_ids": [
+            "W3-B17"
+          ]
+        },
+        "perpendicular_line": {
+          "n": 3,
+          "served_correct": 2,
+          "false_refusals": 1,
+          "wrong_served": 0,
+          "rate": 0.6667,
+          "ci95": [
+            0.2077,
+            0.9385
+          ],
+          "case_ids": [
+            "W3-B10",
+            "W3-B11",
+            "W3-B12"
+          ],
+          "served_ids": [
+            "W3-B10",
+            "W3-B11"
+          ]
+        }
+      },
+      "right_triangular_prism": {
+        "parallel_plane": {
+          "n": 3,
+          "served_correct": 1,
+          "false_refusals": 2,
+          "wrong_served": 0,
+          "rate": 0.3333,
+          "ci95": [
+            0.0615,
+            0.7923
+          ],
+          "case_ids": [
+            "W3-B22",
+            "W3-B23",
+            "W3-B24"
+          ],
+          "served_ids": [
+            "W3-B23"
+          ]
+        },
+        "parallel_two_lines": {
+          "n": 3,
+          "served_correct": 1,
+          "false_refusals": 2,
+          "wrong_served": 0,
+          "rate": 0.3333,
+          "ci95": [
+            0.0615,
+            0.7923
+          ],
+          "case_ids": [
+            "W3-B25",
+            "W3-B26",
+            "W3-B27"
+          ],
+          "served_ids": [
+            "W3-B25"
+          ]
+        },
+        "perpendicular_line": {
+          "n": 3,
+          "served_correct": 1,
+          "false_refusals": 2,
+          "wrong_served": 0,
+          "rate": 0.3333,
+          "ci95": [
+            0.0615,
+            0.7923
+          ],
+          "case_ids": [
+            "W3-B19",
+            "W3-B20",
+            "W3-B21"
+          ],
+          "served_ids": [
+            "W3-B19"
+          ]
+        }
+      },
+      "triangular_pyramid": {
+        "parallel_plane": {
+          "n": 3,
+          "served_correct": 1,
+          "false_refusals": 2,
+          "wrong_served": 0,
+          "rate": 0.3333,
+          "ci95": [
+            0.0615,
+            0.7923
+          ],
+          "case_ids": [
+            "W3-B04",
+            "W3-B05",
+            "W3-B06"
+          ],
+          "served_ids": [
+            "W3-B05"
+          ]
+        },
+        "parallel_two_lines": {
+          "n": 3,
+          "served_correct": 0,
+          "false_refusals": 3,
+          "wrong_served": 0,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.5615
+          ],
+          "case_ids": [
+            "W3-B07",
+            "W3-B08",
+            "W3-B09"
+          ],
+          "served_ids": []
+        },
+        "perpendicular_line": {
+          "n": 3,
+          "served_correct": 0,
+          "false_refusals": 3,
+          "wrong_served": 0,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.5615
+          ],
+          "case_ids": [
+            "W3-B01",
+            "W3-B02",
+            "W3-B03"
+          ],
+          "served_ids": []
+        }
+      }
+    },
+    "P-A": {
+      "cube": {
+        "parallel_plane": {
+          "n": 1,
+          "served_correct": 0,
+          "false_refusals": 1,
+          "wrong_served": 0,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.7935
+          ],
+          "case_ids": [
+            "W3-A16"
+          ],
+          "served_ids": []
+        },
+        "parallel_two_lines": {
+          "n": 1,
+          "served_correct": 0,
+          "false_refusals": 1,
+          "wrong_served": 0,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.7935
+          ],
+          "case_ids": [
+            "W3-A18"
+          ],
+          "served_ids": []
+        },
+        "perpendicular_line": {
+          "n": 1,
+          "served_correct": 0,
+          "false_refusals": 1,
+          "wrong_served": 0,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.7935
+          ],
+          "case_ids": [
+            "W3-A17"
+          ],
+          "served_ids": []
+        }
+      },
+      "cuboid": {
+        "parallel_two_lines": {
+          "n": 1,
+          "served_correct": 0,
+          "false_refusals": 1,
+          "wrong_served": 0,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.7935
+          ],
+          "case_ids": [
+            "W3-A15"
+          ],
+          "served_ids": []
+        },
+        "perpendicular_line": {
+          "n": 2,
+          "served_correct": 2,
+          "false_refusals": 0,
+          "wrong_served": 0,
+          "rate": 1.0,
+          "ci95": [
+            0.3424,
+            1.0
+          ],
+          "case_ids": [
+            "W3-A13",
+            "W3-A14"
+          ],
+          "served_ids": [
+            "W3-A13",
+            "W3-A14"
+          ]
+        }
+      },
+      "oblique_triangular_prism": {
+        "parallel_plane": {
+          "n": 1,
+          "served_correct": 1,
+          "false_refusals": 0,
+          "wrong_served": 0,
+          "rate": 1.0,
+          "ci95": [
+            0.2065,
+            1.0
+          ],
+          "case_ids": [
+            "W3-A11"
+          ],
+          "served_ids": [
+            "W3-A11"
+          ]
+        },
+        "perpendicular_line": {
+          "n": 2,
+          "served_correct": 0,
+          "false_refusals": 2,
+          "wrong_served": 0,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.6576
+          ],
+          "case_ids": [
+            "W3-A10",
+            "W3-A12"
+          ],
+          "served_ids": []
+        }
+      },
+      "quadrilateral_pyramid": {
+        "parallel_plane": {
+          "n": 1,
+          "served_correct": 1,
+          "false_refusals": 0,
+          "wrong_served": 0,
+          "rate": 1.0,
+          "ci95": [
+            0.2065,
+            1.0
+          ],
+          "case_ids": [
+            "W3-A05"
+          ],
+          "served_ids": [
+            "W3-A05"
+          ]
+        },
+        "perpendicular_line": {
+          "n": 2,
+          "served_correct": 1,
+          "false_refusals": 1,
+          "wrong_served": 0,
+          "rate": 0.5,
+          "ci95": [
+            0.0945,
+            0.9055
+          ],
+          "case_ids": [
+            "W3-A04",
+            "W3-A06"
+          ],
+          "served_ids": [
+            "W3-A04"
+          ]
+        }
+      },
+      "right_triangular_prism": {
+        "parallel_plane": {
+          "n": 1,
+          "served_correct": 0,
+          "false_refusals": 1,
+          "wrong_served": 0,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.7935
+          ],
+          "case_ids": [
+            "W3-A09"
+          ],
+          "served_ids": []
+        },
+        "perpendicular_line": {
+          "n": 2,
+          "served_correct": 2,
+          "false_refusals": 0,
+          "wrong_served": 0,
+          "rate": 1.0,
+          "ci95": [
+            0.3424,
+            1.0
+          ],
+          "case_ids": [
+            "W3-A07",
+            "W3-A08"
+          ],
+          "served_ids": [
+            "W3-A07",
+            "W3-A08"
+          ]
+        }
+      },
+      "triangular_pyramid": {
+        "parallel_plane": {
+          "n": 1,
+          "served_correct": 0,
+          "false_refusals": 1,
+          "wrong_served": 0,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.7935
+          ],
+          "case_ids": [
+            "W3-A02"
+          ],
+          "served_ids": []
+        },
+        "perpendicular_line": {
+          "n": 2,
+          "served_correct": 1,
+          "false_refusals": 1,
+          "wrong_served": 0,
+          "rate": 0.5,
+          "ci95": [
+            0.0945,
+            0.9055
+          ],
+          "case_ids": [
+            "W3-A01",
+            "W3-A03"
+          ],
+          "served_ids": [
+            "W3-A01"
+          ]
+        }
+      }
+    }
+  },
+  "track_b_summary": {
+    "overall_representability": {
+      "representable_without_loss": 72,
+      "representable_with_explicit_gap": 64,
+      "intentionally_outside_supported_v2_capability": 8
+    },
+    "by_disposition": {
+      "SERVE": {
+        "representable_without_loss": 72
+      },
+      "REFUSE": {
+        "representable_with_explicit_gap": 64,
+        "intentionally_outside_supported_v2_capability": 8
+      }
+    }
+  }
+}
