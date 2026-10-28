@@ -4,8 +4,8 @@
   "claim_ceiling": "NOT_INDEPENDENT_HOLDOUT",
   "historical_commit": "ecdc26b012c8ce80d53524a98dc75cdcb020079d",
   "corpus_git_sha256": "e5676fd35b79eab1b29cf7a1647a5f80a5547ffdea077f15ea7b5e845555d479",
-  "head": "574ad40ca446232bf54e8e26cda196eee943fcb3",
-  "product_diff_sha256": "c7dce3ad89feef84a8bd80e8ae7c6ff82e78c695ad3207bbf0875750c513c27e",
+  "head": "14bc010e4b4af2bb324c63e309d41c5c5847a904",
+  "product_diff_sha256": "c730cb94bbd50e557b8d8283c8f73c741d90f32b84576fb954538de07696e147",
   "live_provider_calls": 0,
   "overall": {
     "n": 96,

@@ -162,13 +162,14 @@ def is_exact_number(x: Any) -> bool:
 def _tach_binh_phuong(n: int) -> tuple[int, int]:
     """`n = k² · m` với `m` phi chính phương và `m <= MAX_RADICAND`. Trả `(k, m)`.
 
-    Chia thử tới `cbrt(m)` kết hợp `math.isqrt(m)` sau mỗi ước nguyên tố: nếu
-    `m` không chính phương và không có ước nguyên tố `< d` mà `d³ > m` thì `m`
-    có tối đa hai thừa số nguyên tố (tính cả bội) và khác bình phương, nên `m`
-    chắc chắn phi chính phương. Nhờ vậy các biểu thức trung gian có thừa số
-    bình phương lớn (`DEV-1-3`, `W2-A04`) được chuẩn hoá chính xác về căn thức
-    phi chính phương nhỏ trước khi áp trần `MAX_RADICAND`, trong khi chi phí
-    chia thử vẫn bị chặn chặt.
+    Chia thử tới `cbrt(m)` với cơ sở thừa số nguyên tố `d³ <= MAX_RADICAND`
+    (`d <= 10⁴`) kết hợp `math.isqrt(m)`: nếu `m` không chính phương và không
+    có ước nguyên tố `< d` mà `d³ > m` thì `m` có tối đa hai thừa số nguyên tố
+    (tính cả bội) và khác bình phương, nên `m` chắc chắn phi chính phương. Với
+    biểu thức trung gian vượt `MAX_RADICAND` (`DEV-1-3`, `W2-A04`), chỉ các thừa
+    số bình phương sinh bởi cơ sở hữu tỉ nhỏ (`d³ <= MAX_RADICAND`) mới được rút
+    trước khi áp trần `MAX_RADICAND`; các xấp xỉ thập phân mang thừa số nguyên tố
+    lớn (`d³ > MAX_RADICAND`) làm phình căn thức vượt trần vẫn bị từ chối.
     """
     if n <= 0:
         raise RadicalDomainError(f"căn thức phải dương, nhận {n}")
@@ -181,7 +182,7 @@ def _tach_binh_phuong(n: int) -> tuple[int, int]:
     # ngược lại là thứ biến nó thành một phép so BẰNG: `int(n**0.5)**2 == n`
     # trông giống hệt nhưng đi qua float và sai với `n` lớn.
     r = math.isqrt(n)
-    if r * r == n:
+    if r * r == n and (n <= MAX_RADICAND or r * r * r <= MAX_RADICAND):
         return r, 1
     k, sf, m = 1, 1, n
     if m % 2 == 0:
@@ -193,10 +194,10 @@ def _tach_binh_phuong(n: int) -> tuple[int, int]:
         if e & 1:
             sf = 2
         r = math.isqrt(m)
-        if r * r == m:
+        if r * r == m and (n <= MAX_RADICAND or r * r * r <= MAX_RADICAND):
             return k * r, sf
     d = 3
-    while d * d * d <= m and d * d <= MAX_RADICAND:
+    while d * d * d <= m and d * d * d <= MAX_RADICAND:
         if sf * d > MAX_RADICAND:
             raise RadicalDomainError(
                 f"căn thức {n} vượt trần {MAX_RADICAND} — từ chối thay vì treo"
@@ -215,9 +216,16 @@ def _tach_binh_phuong(n: int) -> tuple[int, int]:
                         f"căn thức {n} vượt trần {MAX_RADICAND} — từ chối thay vì treo"
                     )
             r = math.isqrt(m)
-            if r * r == m:
+            if r * r == m and (n <= MAX_RADICAND or r * r * r <= MAX_RADICAND):
                 return k * r, sf
         d += 2
+    r = math.isqrt(m)
+    if r * r == m:
+        if n <= MAX_RADICAND or r * r * r <= MAX_RADICAND:
+            return k * r, sf
+        raise RadicalDomainError(
+            f"căn thức {n} vượt trần {MAX_RADICAND} — từ chối thay vì treo"
+        )
     if d * d * d <= m or m > MAX_RADICAND or sf * m > MAX_RADICAND:
         raise RadicalDomainError(
             f"căn thức {n} vượt trần {MAX_RADICAND} — từ chối thay vì treo"
@@ -273,11 +281,7 @@ def sqrt_rational(x: Fraction | int) -> ExactNumber:
     khỏi đường khoảng cách.
 
     Cách làm THẲNG (căn tử, căn mẫu riêng) thì hỏng: `√(3/4)` cần `√3/2`, mà
-    `√3` không rút ra khỏi tử được nếu chỉ nhìn tử một mình. Vì `Fraction(x)`
-    đã tối giản (`gcd(p, q) = 1`), ta tách bình phương `p = kp²·mp` và
-    `q = kq²·mq` riêng trước khi ghép `√(p/q) = (kp / (kq·mq))·√(mp·mq)` để
-    tránh nhân thổi phồng `p·q` vượt trần khi `p` hoặc `q` mang thừa số chính
-    phương lớn.
+    `√3` không rút ra khỏi tử được nếu chỉ nhìn tử một mình.
     """
     x = Fraction(x)
     if x < 0:
@@ -285,9 +289,7 @@ def sqrt_rational(x: Fraction | int) -> ExactNumber:
     if x == 0:
         return Fraction(0)
     p, q = x.numerator, x.denominator
-    kp, mp = _tach_binh_phuong(p)
-    kq, mq = _tach_binh_phuong(q)
-    return radical(Fraction(kp, kq * mq), mp * mq)
+    return radical(Fraction(1, q), p * q)
 
 
 # ── PHÉP TOÁN (chỉ những phép hình học thật sự cần) ───────────────────────

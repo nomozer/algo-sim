@@ -301,7 +301,7 @@ def test_w2_m4_metamorphic_va_bien_max_radicand():
     các căn thức thực sự vượt `MAX_RADICAND` sau rút gọn vẫn phải fail-closed."""
     from app.simulation.geometry.radical import multiply
 
-    p, q = 999983, 999979
+    p, q = 787867, 468449
     r_rat = sqrt_rational(F(p * p, q * q))
     assert isinstance(r_rat, Fraction) and r_rat == F(p, q)
 
@@ -309,24 +309,27 @@ def test_w2_m4_metamorphic_va_bien_max_radicand():
     assert isinstance(r_irr, Radical) and (r_irr.he, r_irr.can) == (F(p, q), 3)
     assert square(r_irr) == F(3 * p * p, q * q)
 
-    # Nhân hai căn thức có ước nguyên tố chung lớn: √(2p) · √(3p) = p√6
-    prod1 = multiply(sqrt_rational(2 * p), sqrt_rational(3 * p))
-    prod2 = radical(1, 6 * p * p)
-    prod3 = times_rational(sqrt_rational(6), p)
-    assert prod1 == prod2 == prod3 == radical(p, 6)
+    # Nhân hai căn thức có ước nguyên tố chung lớn: √(2k) · √(3k) = k√6
+    k = 1026601
+    prod1 = multiply(sqrt_rational(2 * k), sqrt_rational(3 * k))
+    prod2 = radical(1, 6 * k * k)
+    prod3 = times_rational(sqrt_rational(6), k)
+    assert prod1 == prod2 == prod3 == radical(k, 6)
     assert hash(prod1) == hash(prod2) == hash(prod3)
 
     # Biên dưới/tại MAX_RADICAND
     assert radical(1, MAX_RADICAND) == F(10**6)
     assert radical(1, MAX_RADICAND - 1) == radical(3, 111111111111)
-    assert radical(1, 6 * (1000003**2)) == radical(1000003, 6)
+    assert radical(1, 6 * (1026601**2)) == radical(1026601, 6)
 
-    # Thực sự vượt MAX_RADICAND sau khi rút gọn -> phải từ chối
+    # Thực sự vượt MAX_RADICAND sau khi rút gọn hoặc chứa bình phương nguyên tố > 10⁴ ngoài cơ sở -> phải từ chối
     for bad_can in [MAX_RADICAND + 1, 10**12 + 39, 4 * (10**12 + 39), 10**24 + 7]:
         with pytest.raises(RadicalDomainError, match="vượt trần"):
             radical(1, bad_can)
     with pytest.raises(RadicalDomainError, match="vượt trần"):
         sqrt_rational(F(1000003, 1000033))
+    with pytest.raises(RadicalDomainError, match="vượt trần"):
+        sqrt_rational(F(300000000, 300017041))
     with pytest.raises(RadicalDomainError, match="vượt trần"):
         multiply(radical(1, 1000003), radical(1, 1000033))
     with pytest.raises(RadicalDomainError, match="vượt trần"):

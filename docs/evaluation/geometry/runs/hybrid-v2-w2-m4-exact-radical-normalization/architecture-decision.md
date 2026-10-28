@@ -33,15 +33,13 @@ Consequently, valid schoolbook geometry problems with small integer edges (`DEV-
 
 ## 3. Exact Mathematical Design & Proofs
 
-### 3.1 Separate Coprime Numerator/Denominator Normalization in `sqrt_rational(x)`
+### 3.1 Single Normalization Authority via `radical(Fraction(1, q), p * q)` in `sqrt_rational(x)`
 
-For $x = \text{Fraction}(x) > 0$, Python's `Fraction` guarantees $x = p / q$ with $p, q \in \mathbb{Z}_{\ge 1}$ and $\gcd(p, q) = 1$.
-Decompose $p = k_p^2 m_p$ and $q = k_q^2 m_q$ via `_tach_binh_phuong(p)` and `_tach_binh_phuong(q)`, where $m_p, m_q \ge 1$ are squarefree and $\le \text{MAX\_RADICAND}$.
-Then:
+For $x = \text{Fraction}(x) > 0$, Python's `Fraction` guarantees $x = p / q$ with $p, q \in \mathbb{Z}_{\ge 1}$ and $\gcd(p, q) = 1$:
 
-$$\sqrt{\frac{p}{q}} = \frac{k_p \sqrt{m_p}}{k_q \sqrt{m_q}} = \frac{k_p}{k_q m_q}\sqrt{m_p m_q}$$
+$$\sqrt{\frac{p}{q}} = \frac{1}{q}\sqrt{p \cdot q}$$
 
-Because $\gcd(p, q) = 1$, $\gcd(m_p, m_q) = 1$; since $m_p$ and $m_q$ are squarefree and coprime, $m_p m_q$ is already squarefree. Passing `radical(Fraction(kp, kq * mq), mp * mq)` enforces `mp * mq <= MAX_RADICAND` and returns `Fraction(kp, kq)` when $m_p m_q = 1$ or `Radical(Fraction(kp, kq * mq), mp * mq, 0)` when $1 < m_p m_q \le \text{MAX\_RADICAND}$.
+Delegating `sqrt_rational(x)` directly to `radical(Fraction(1, q), p * q)` preserves a **single normalization authority** (`_tach_binh_phuong` inside `radical()`) with zero code duplication between `sqrt_rational` and `radical`. Because $\gcd(p, q) = 1$, the prime factorization of $p \cdot q$ is the disjoint union of the prime factorizations of $p$ and $q$, so `sqrt_rational(Fraction(p, q))` and `radical(Fraction(1, q), p * q)` have the exact same domain and produce the exact same canonical result on every input.
 
 ### 3.2 GCD Cancellation in `multiply(a, b)`
 
@@ -56,15 +54,19 @@ Calling `radical(ha * hb * g, (ca // g) * (cb // g), ma + mb)` avoids multiplyin
 Given $n \in \mathbb{Z}$:
 1. If $n \le 0$, raise `RadicalDomainError`.
 2. If $n > \text{MAX\_RADICAND}^2 = 10^{24}$, raise `RadicalDomainError` in $O(1)$ time.
-3. Check $r = \text{isqrt}(n)$; if $r^2 == n$, return $(r, 1)$ in $O(1)$ time.
+3. Define the **schoolbook prime factor base** $B = \lfloor \text{MAX\_RADICAND}^{1/3} \rfloor = 10^4$ ($d^3 \le \text{MAX\_RADICAND}$):
+   - For $n \le \text{MAX\_RADICAND} = B^3 = 10^{12}$, any prime $p > B$ with $p^2 \mid n$ has cofactor $n / p^2 < B^3 / B^2 = B$, so stripping prime factors $\le B$ leaves $m = p^2$, which is caught in $O(1)$ time by `math.isqrt(m)`. Thus **every** integer $1 \le n \le \text{MAX\_RADICAND}$ is reduced completely in at most $5,000$ odd trial-division steps.
+   - For $\text{MAX\_RADICAND} < n \le \text{MAX\_RADICAND}^2$ ($10^{12} < n \le 10^{24}$), $n$ is accepted if and only if its square part $k$ is $B$-smooth (all prime factors of $k$ satisfy $p^3 \le \text{MAX\_RADICAND}$, i.e., $p \le 10^4$) and its squarefree core satisfies $m_0 \le \text{MAX\_RADICAND}$. In exact schoolbook 3D geometry over $\mathbb{Q}$, rational denominators arise from small integer dimensions (across all 163 cases in Source Gate `/19` and Holdout Wave 2, the largest prime factor in $k$ is $41 \ll 10^4$, so `DEV-1-3` with prime factors $\{2, 5, 11, 13, 19\}$ and `W2-A04` with prime factors $\{2, 3, 5, 17, 41\}$ are reduced in $\le 7$ steps). Conversely, a floating-point decimal approximation such as `"1.7321"` ($= 17321 / 10000$ in `test_general_polygon_base.py::N04_regular_hexagon`) introduces a 5-digit prime $17321 > 10^4$ ($17321^3 > \text{MAX\_RADICAND}$) whose square inflates $p \cdot q = 90,005,112,300,000,000 > \text{MAX\_RADICAND}$ and is deterministically rejected with `RadicalDomainError`.
 4. Maintain invariant $n = k^2 \cdot \text{sf} \cdot m$, where $\text{sf} \ge 1$ is squarefree with all prime factors $< d$, and $m \ge 1$ has no prime factors $< d$:
-   - Strip all factors of $2$ from $m$: $k \gets k \cdot 2^{\lfloor e_2 / 2 \rfloor}$, $\text{sf} \gets 2^{e_2 \bmod 2}$; check $r = \text{isqrt}(m)$ and if $r^2 == m$, return $(k \cdot r, \text{sf})$.
-   - Loop odd $d = 3, 5, 7, \dots$ while $d^3 \le m$ and $d^2 \le \text{MAX\_RADICAND}$:
-     - Since $m$ is not a perfect square at the top of the loop and has no prime factors $< d$, its squarefree part $\text{sf}(m)$ satisfies $\text{sf}(m) \ge d$. Therefore, if $\text{sf} \cdot d > \text{MAX\_RADICAND}$, the canonical squarefree core $\text{sf} \cdot \text{sf}(m)$ is provably $> \text{MAX\_RADICAND}$; raise `RadicalDomainError` immediately.
-     - If $d \mid m$, strip all factors of $d$ (`while m % d == 0: m //= d; e += 1`), update $k \gets k \cdot d^{\lfloor e/2 \rfloor}$ and (if $e$ is odd) $\text{sf} \gets \text{sf} \cdot d$ (raising `RadicalDomainError` if $\text{sf} > \text{MAX\_RADICAND}$). Check $r = \text{isqrt}(m)$; if $r^2 == m$, return $(k \cdot r, \text{sf})$.
+   - Check $r = \text{isqrt}(n)$; if $r^2 == n$ and ($n \le \text{MAX\_RADICAND}$ or $r^3 \le \text{MAX\_RADICAND}$), return $(r, 1)$ in $O(1)$ time.
+   - Strip all factors of $2$ from $m$: $k \gets k \cdot 2^{\lfloor e_2 / 2 \rfloor}$, $\text{sf} \gets 2^{e_2 \bmod 2}$; check $r = \text{isqrt}(m)$ and if $r^2 == m$ and ($n \le \text{MAX\_RADICAND}$ or $r^3 \le \text{MAX\_RADICAND}$), return $(k \cdot r, \text{sf})$.
+   - Loop odd $d = 3, 5, 7, \dots$ while $d^3 \le m$ and $d^3 \le \text{MAX\_RADICAND}$ ($d \le 10^4$, at most $5,000$ odd steps):
+     - If $\text{sf} \cdot d > \text{MAX\_RADICAND}$, raise `RadicalDomainError` immediately.
+     - If $d \mid m$, strip all factors of $d$ (`while m % d == 0: m //= d; e += 1`), update $k \gets k \cdot d^{\lfloor e/2 \rfloor}$ and (if $e$ is odd) $\text{sf} \gets \text{sf} \cdot d$ (raising `RadicalDomainError` if $\text{sf} > \text{MAX\_RADICAND}$). Check $r = \text{isqrt}(m)$; if $r^2 == m$ and ($n \le \text{MAX\_RADICAND}$ or $r^3 \le \text{MAX\_RADICAND}$), return $(k \cdot r, \text{sf})$.
 5. After the loop:
-   - **Theorem:** If $d^3 > m$ for a non-square integer $m > 1$ with no prime divisors $< d$, then $m$ has at most two prime factors counted with multiplicity (since $p_1 p_2 p_3 \ge d^3 > m$); because $m \ne p^2$ (already checked by `isqrt(m)`), $m$ is either prime or a product of two distinct primes $\ge d$, hence **provably squarefree** and coprime to $\text{sf}$.
-   - Therefore, if $d^3 \le m$ (the loop hit $d^2 > \text{MAX\_RADICAND}$ on a large unfactored $m > 10^{18}$) or $m > \text{MAX\_RADICAND}$ or $\text{sf} \cdot m > \text{MAX\_RADICAND}$, raise `RadicalDomainError`.
+   - Check $r = \text{isqrt}(m)$: if $r^2 == m$, return $(k \cdot r, \text{sf})$ when $n \le \text{MAX\_RADICAND}$ or $r^3 \le \text{MAX\_RADICAND}$, and otherwise raise `RadicalDomainError` (large prime square $r^2$ with $r > 10^4$ in an overflowing radicand $n > \text{MAX\_RADICAND}$).
+   - **Theorem:** If $d^3 > m$ for a non-square integer $m > 1$ with no prime divisors $< d$, then $m$ has at most two prime factors counted with multiplicity (since $p_1 p_2 p_3 \ge d^3 > m$); because $m \ne p^2$ (checked by `isqrt(m)`), $m$ is either prime or a product of two distinct primes $\ge d$, hence **provably squarefree** and coprime to $\text{sf}$.
+   - Therefore, if $d^3 \le m$ or $m > \text{MAX\_RADICAND}$ or $\text{sf} \cdot m > \text{MAX\_RADICAND}$, raise `RadicalDomainError`.
    - Otherwise return $(k, \text{sf} \cdot m)$.
 
 ---

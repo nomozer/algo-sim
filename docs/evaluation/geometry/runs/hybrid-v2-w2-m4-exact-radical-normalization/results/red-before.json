@@ -1,13 +1,13 @@
 {
   "schema": "w2-m4-exact-radical-evaluation-result/1",
-  "head": "d99f6149ff1997258970bf888db5484665b106b8",
+  "head": "14bc010e4b4af2bb324c63e309d41c5c5847a904",
   "product_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
   "live_provider_calls": 0,
   "summary": {
     "end_to_end_passed": "0/2",
     "kernel_passed": "7/16",
     "metamorphic_passed": "1/6",
-    "negative_passed": "10/10",
+    "negative_passed": "11/11",
     "all_passed": false
   },
   "end_to_end_cases": [
@@ -93,7 +93,7 @@
       },
       "actual_display": "7/11",
       "square_ok": true,
-      "elapsed_ms": 0.008
+      "elapsed_ms": 0.009
     },
     {
       "id": "K-04-dev-1-3-sqrt-rational",
@@ -113,14 +113,14 @@
       "id": "K-06-large-coprime-prime-squares",
       "passed": false,
       "error": "RadicalDomainError",
-      "detail": "căn thức 999924002157972868127449 vượt trần 1000000000000 — từ chối thay vì treo",
+      "detail": "căn thức 136216730814354801608089 vượt trần 1000000000000 — từ chối thay vì treo",
       "elapsed_ms": 0.007
     },
     {
       "id": "K-07-large-prime-squares-with-squarefree-3",
       "passed": false,
       "error": "RadicalDomainError",
-      "detail": "căn thức 2999772006473918604382347 vượt trần 1000000000000 — từ chối thay vì treo",
+      "detail": "căn thức 408650192443064404824267 vượt trần 1000000000000 — từ chối thay vì treo",
       "elapsed_ms": 0.006
     },
     {
@@ -128,7 +128,7 @@
       "passed": false,
       "error": "RadicalDomainError",
       "detail": "căn thức 2233081922500 vượt trần 1000000000000 — từ chối thay vì treo",
-      "elapsed_ms": 0.005
+      "elapsed_ms": 0.006
     },
     {
       "id": "K-09-w2-a04-direct-radical",
@@ -169,7 +169,7 @@
       },
       "actual_display": "3π√3/2",
       "square_ok": true,
-      "elapsed_ms": 0.006
+      "elapsed_ms": 0.007
     },
     {
       "id": "K-13-boundary-max-radicand-minus-1",
@@ -182,7 +182,7 @@
       },
       "actual_display": "3√111111111111",
       "square_ok": true,
-      "elapsed_ms": 43.28
+      "elapsed_ms": 45.65
     },
     {
       "id": "K-14-boundary-exact-max-radicand",
@@ -194,21 +194,21 @@
       },
       "actual_display": "1000000",
       "square_ok": true,
-      "elapsed_ms": 0.007
+      "elapsed_ms": 0.01
     },
     {
       "id": "K-15-boundary-large-prime-square-times-6",
       "passed": false,
       "error": "RadicalDomainError",
-      "detail": "căn thức 6000036000054 vượt trần 1000000000000 — từ chối thay vì treo",
-      "elapsed_ms": 0.005
+      "detail": "căn thức 6323457679206 vượt trần 1000000000000 — từ chối thay vì treo",
+      "elapsed_ms": 0.007
     },
     {
       "id": "K-16-multiply-shared-large-prime-factor",
       "passed": false,
       "error": "RadicalDomainError",
       "detail": "căn thức 5999796001734 vượt trần 1000000000000 — từ chối thay vì treo",
-      "elapsed_ms": 0.282
+      "elapsed_ms": 0.287
     }
   ],
   "metamorphic_groups": [
@@ -228,7 +228,7 @@
       "id": "M-03-shared-prime-product-paths",
       "passed": false,
       "error": "RadicalDomainError",
-      "detail": "căn thức 5999796001734 vượt trần 1000000000000 — từ chối thay vì treo"
+      "detail": "căn thức 6323457679206 vượt trần 1000000000000 — từ chối thay vì treo"
     },
     {
       "id": "M-04-cancellation-to-exact-zero",
@@ -280,7 +280,7 @@
       "passed": true,
       "error": "RadicalDomainError",
       "detail": "căn thức 1000036000099 vượt trần 1000000000000 — từ chối thay vì treo",
-      "elapsed_ms": 0.155
+      "elapsed_ms": 0.173
     },
     {
       "id": "N-05-reducible-by-4-but-squarefree-core-above-max-radicand",
@@ -301,29 +301,36 @@
       "passed": true,
       "error": "RadicalDomainError",
       "detail": "căn thức 1000000000001 vượt trần 1000000000000 — từ chối thay vì treo",
-      "elapsed_ms": 0.003
+      "elapsed_ms": 0.004
     },
     {
       "id": "N-08-negative-rational-sqrt",
       "passed": true,
       "error": "RadicalDomainError",
       "detail": "không lấy căn số âm: -4/9",
-      "elapsed_ms": 0.006
+      "elapsed_ms": 0.007
     },
     {
       "id": "N-09-incommensurable-sum",
       "passed": true,
       "error": "RadicalDomainError",
       "detail": "tổng √2 + √3 không viết được dưới dạng a·π^m·√b — miền số này cố ý không nhận tổng các hạng tử khác căn thức hoặc khác số mũ π",
-      "elapsed_ms": 0.015
+      "elapsed_ms": 0.016
     },
     {
       "id": "N-10-pi-squared-outside-domain",
       "passed": true,
       "error": "RadicalDomainError",
       "detail": "số mũ π = 2 nằm ngoài miền (0, 1) — miền số này cố ý không nhận luỹ thừa π khác 0 hoặc 1",
-      "elapsed_ms": 0.017
+      "elapsed_ms": 0.018
+    },
+    {
+      "id": "N-11-decimal-approximation-large-prime-square-above-ceiling",
+      "passed": true,
+      "error": "RadicalDomainError",
+      "detail": "căn thức 90005112300000000 vượt trần 1000000000000 — từ chối thay vì treo",
+      "elapsed_ms": 0.007
     }
   ],
-  "corpus_sha256": "309948b7b1efa8a15a47a6e6db18ec332b6410fb86ab71da8b13c9f2dac5bff7"
+  "corpus_sha256": "2d189f0b8697b6244a5b46c95ce9226d69fbcf1fd84c060f3543c2fd9637de81"
 }

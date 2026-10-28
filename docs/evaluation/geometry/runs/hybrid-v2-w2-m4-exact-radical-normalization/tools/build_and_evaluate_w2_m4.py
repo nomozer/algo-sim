@@ -127,20 +127,20 @@ def build_corpus() -> dict:
             {
                 "id": "K-06-large-coprime-prime-squares",
                 "op": "sqrt_rational",
-                "arg": f"{999983**2}/{999979**2}",
+                "arg": f"{787867**2}/{468449**2}",
                 "expected_type": "Fraction",
-                "expected_json": {"kind": "rational", "value": "999983/999979"},
-                "expected_display": "999983/999979",
-                "expected_square": f"{999983**2}/{999979**2}",
+                "expected_json": {"kind": "rational", "value": "787867/468449"},
+                "expected_display": "787867/468449",
+                "expected_square": f"{787867**2}/{468449**2}",
             },
             {
                 "id": "K-07-large-prime-squares-with-squarefree-3",
                 "op": "sqrt_rational",
-                "arg": f"{3 * (999983**2)}/{999979**2}",
+                "arg": f"{3 * (787867**2)}/{468449**2}",
                 "expected_type": "Radical",
-                "expected_json": {"kind": "radical", "coefficient": "999983/999979", "radicand": 3},
-                "expected_display": "999983√3/999979",
-                "expected_square": f"{3 * (999983**2)}/{999979**2}",
+                "expected_json": {"kind": "radical", "coefficient": "787867/468449", "radicand": 3},
+                "expected_display": "787867√3/468449",
+                "expected_square": f"{3 * (787867**2)}/{468449**2}",
             },
             {
                 "id": "K-08-dev-1-3-direct-radical",
@@ -223,12 +223,12 @@ def build_corpus() -> dict:
                 "id": "K-15-boundary-large-prime-square-times-6",
                 "op": "radical",
                 "he": "1",
-                "can": 6 * (1000003**2),
+                "can": 6 * (1026601**2),
                 "mu": 0,
                 "expected_type": "Radical",
-                "expected_json": {"kind": "radical", "coefficient": "1000003", "radicand": 6},
-                "expected_display": "1000003√6",
-                "expected_square": str(6 * (1000003**2)),
+                "expected_json": {"kind": "radical", "coefficient": "1026601", "radicand": 6},
+                "expected_display": "1026601√6",
+                "expected_square": str(6 * (1026601**2)),
             },
             {
                 "id": "K-16-multiply-shared-large-prime-factor",
@@ -256,9 +256,9 @@ def build_corpus() -> dict:
             },
             {
                 "id": "M-03-shared-prime-product-paths",
-                "description": "sqrt(2p)*sqrt(3p), radical(1, 6p^2), and p*sqrt(6) for p=999983 must yield identical Radical(999983, 6)",
-                "expected_json": {"kind": "radical", "coefficient": "999983", "radicand": 6},
-                "expected_display": "999983√6",
+                "description": "sqrt(2k)*sqrt(3k), radical(1, 6k^2), and k*sqrt(6) for k=1026601=9973*103 must yield identical Radical(1026601, 6)",
+                "expected_json": {"kind": "radical", "coefficient": "1026601", "radicand": 6},
+                "expected_display": "1026601√6",
             },
             {
                 "id": "M-04-cancellation-to-exact-zero",
@@ -358,6 +358,13 @@ def build_corpus() -> dict:
                 "op": "multiply",
                 "a": {"he": "1", "can": 2, "mu": 1},
                 "b": {"he": "1", "can": 3, "mu": 1},
+                "expected_error": "RadicalDomainError",
+                "max_ms": 50.0,
+            },
+            {
+                "id": "N-11-decimal-approximation-large-prime-square-above-ceiling",
+                "op": "sqrt_rational",
+                "arg": "300000000/300017041",
                 "expected_error": "RadicalDomainError",
                 "max_ms": 50.0,
             },
@@ -462,7 +469,7 @@ def evaluate_corpus(corpus: dict) -> dict:
                     R.multiply(Fraction(2250, 697), R.sqrt_rational(50)),
                 ]
             elif mid == "M-03-shared-prime-product-paths":
-                p = 999983
+                p = 1026601
                 vals = [
                     R.multiply(R.sqrt_rational(2 * p), R.sqrt_rational(3 * p)),
                     R.radical(1, 6 * p * p),
@@ -487,7 +494,7 @@ def evaluate_corpus(corpus: dict) -> dict:
                 xs = [
                     Fraction(38130625, 58564),
                     Fraction(253125000, 485809),
-                    Fraction(3 * (999983**2), 999979**2),
+                    Fraction(3 * (787867**2), 468449**2),
                 ]
                 ok_inv = all(R.square(R.sqrt_rational(x)) == x for x in xs)
                 vals = [Fraction(1) if ok_inv else Fraction(0), Fraction(1)]

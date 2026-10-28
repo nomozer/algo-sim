@@ -428,27 +428,27 @@
     {
       "id": "K-06-large-coprime-prime-squares",
       "op": "sqrt_rational",
-      "arg": "999966000289/999958000441",
+      "arg": "620734409689/219444465601",
       "expected_type": "Fraction",
       "expected_json": {
         "kind": "rational",
-        "value": "999983/999979"
+        "value": "787867/468449"
       },
-      "expected_display": "999983/999979",
-      "expected_square": "999966000289/999958000441"
+      "expected_display": "787867/468449",
+      "expected_square": "620734409689/219444465601"
     },
     {
       "id": "K-07-large-prime-squares-with-squarefree-3",
       "op": "sqrt_rational",
-      "arg": "2999898000867/999958000441",
+      "arg": "1862203229067/219444465601",
       "expected_type": "Radical",
       "expected_json": {
         "kind": "radical",
-        "coefficient": "999983/999979",
+        "coefficient": "787867/468449",
         "radicand": 3
       },
-      "expected_display": "999983√3/999979",
-      "expected_square": "2999898000867/999958000441"
+      "expected_display": "787867√3/468449",
+      "expected_square": "1862203229067/219444465601"
     },
     {
       "id": "K-08-dev-1-3-direct-radical",
@@ -557,16 +557,16 @@
       "id": "K-15-boundary-large-prime-square-times-6",
       "op": "radical",
       "he": "1",
-      "can": 6000036000054,
+      "can": 6323457679206,
       "mu": 0,
       "expected_type": "Radical",
       "expected_json": {
         "kind": "radical",
-        "coefficient": "1000003",
+        "coefficient": "1026601",
         "radicand": 6
       },
-      "expected_display": "1000003√6",
-      "expected_square": "6000036000054"
+      "expected_display": "1026601√6",
+      "expected_square": "6323457679206"
     },
     {
       "id": "K-16-multiply-shared-large-prime-factor",
@@ -613,13 +613,13 @@
     },
     {
       "id": "M-03-shared-prime-product-paths",
-      "description": "sqrt(2p)*sqrt(3p), radical(1, 6p^2), and p*sqrt(6) for p=999983 must yield identical Radical(999983, 6)",
+      "description": "sqrt(2k)*sqrt(3k), radical(1, 6k^2), and k*sqrt(6) for k=1026601=9973*103 must yield identical Radical(1026601, 6)",
       "expected_json": {
         "kind": "radical",
-        "coefficient": "999983",
+        "coefficient": "1026601",
         "radicand": 6
       },
-      "expected_display": "999983√6"
+      "expected_display": "1026601√6"
     },
     {
       "id": "M-04-cancellation-to-exact-zero",
@@ -745,6 +745,13 @@
         "can": 3,
         "mu": 1
       },
+      "expected_error": "RadicalDomainError",
+      "max_ms": 50.0
+    },
+    {
+      "id": "N-11-decimal-approximation-large-prime-square-above-ceiling",
+      "op": "sqrt_rational",
+      "arg": "300000000/300017041",
       "expected_error": "RadicalDomainError",
       "max_ms": 50.0
     }
