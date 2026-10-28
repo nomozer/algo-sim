@@ -1,5 +1,17 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_V2_W3_F1_CROSS_SENTENCE_PLANE_GROUNDING
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/
+CLASSIFICATION = PRODUCT_REPAIR_WITH_POST_FEEDBACK_DEVELOPMENT_REGRESSION; READY_FOR_OWNER_REVIEW; FULL_PRODUCT_GATE_PASS at b02b2c42 (12592 backend / 1417 frontend, freeze MATCH 918d3404…); independent review APPROVED_NO_FINDINGS (0 BLOCKER, 0 MAJOR, 0 MINOR, 0 NIT)
+CODE_COMMIT = a609c4871a75426db52eb8b7a7be8ba3460fcf8c; T3 candidate b02b2c422e4049dc6ff0a94996f335424e7b02b9; freeze 918d3404ac60e81d62c75f6bfb7067ea25a4e27c197e3584075edef42e441f72
+VERIFICATION = results/red-before.json; results/green-after.json; results/tamper-results.json; results/wave3-post-feedback-regression.json; verification/tiers.json; verification/full-t3/receipt.json; review.md; handoff.md
+MODEL_REQUEST_COUNT = 0
+CONTINUES = HYBRID_V2_W2_M5_POSTMERGE_CASE_IDENTITY_ADJUDICATION (main e137623c; historical Independent Vietnamese Geometry Holdout Wave 3 preserved untouched at 0943f0ee)
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_V2_W2_M5_POSTMERGE_CASE_IDENTITY_ADJUDICATION
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/correction-addendum.md

@@ -1,5 +1,17 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## W3-F1 cross-sentence plane grounding (local candidate, 2026-10-28; Owner review pending)
+
+`backend/app/simulation/geometry_functions/typed_fact_next_bridge.py` (`_mat_fact`, `_v2_plane_def_quotes`),
+`backend/app/simulation/geometry_functions/planner.py` (`geometry-fact-planner/18`: `_mat_qua_diem`, `_mat_vuong_duong`, `_cau_hoi`),
+and `backend/app/simulation/geometry_functions/registry.py` (`geometry-functions/20`: `mat_song_song_dung_nguon`, `_td_mat_truoc_khoi`,
+`_NOI_QUAN_HE_MAT`, `_QUA_HAI_DUONG`, `_DIEM_TRUOC_HAI_DUONG`, `_het_dinh_nghia`, `_ALL_PLANE_DEF_MAU`) implement Grounded
+Cross-Sentence Plane Reference Resolution for `MAT_SONG_SONG`, `MAT_HAI_DUONG`, and `MAT_VUONG_DUONG` together with compound
+`section_and_area` grounding. Enforces unique non-imperative plane-definition sentence binding across `_ALL_PLANE_DEF_MAU`,
+rejects missing/contradictory/duplicate plane definitions (`SOURCE_OBJECT_MISMATCH`) and unasked area goals (`NOT_ASKED_IN_SOURCE`),
+and closes `W3-F1` (`0/24` remaining `SOURCE_OBJECT_MISMATCH` on Holdout Wave 3). Tests: `backend/tests/geometry/test_w3_f1_cross_sentence_plane_grounding.py`.
+Run: `docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/`.
+
 ## W2-M5 Adapter /4 Category A identity repair (integrated on main, 2026-10-28)
 
 `backend/app/ai/adapter4_route.py` (`_validate_sections`, `_polygon_area_squared`) canonicalizes Category A (`DINH_CAT_CANH`)
