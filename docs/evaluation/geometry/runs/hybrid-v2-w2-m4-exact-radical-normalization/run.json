@@ -1,0 +1,80 @@
+{
+  "run_id": "hybrid-v2-w2-m4-exact-radical-normalization",
+  "task_code": "HYBRID_V2_W2_M4_EXACT_RADICAL_NORMALIZATION",
+  "task_wave": 1,
+  "date": "2026-10-28",
+  "branch": "research/hybrid-v2-w2-m4-exact-radical-normalization",
+  "baseline": "d99f6149ff1997258970bf888db5484665b106b8",
+  "main_baseline": "d7a94d3cd4bbdea3df99e383bec78425fcc8bf1c",
+  "parent_product_commit": "c6f6b64bda6473c175a32a7875a9dd9831ae7c6d",
+  "parent_t3_candidate": "b9e3d0966e14acb1d44f2f9c7cd7a3bf49ac54a9",
+  "parent_freeze_hash": "8baf3205006d097efdd21087b9d52e85625fa1263e9125b418cf658ccac18d25",
+  "parent_historical_status": "NOT_READY_ACCEPTANCE_GATE_FAILED",
+  "preregistration_commit": "574ad40ca446232bf54e8e26cda196eee943fcb3",
+  "classification": "PRODUCT_REPAIR_WITH_POST_FEEDBACK_DEVELOPMENT_REGRESSION",
+  "historical_source_commit": "ecdc26b012c8ce80d53524a98dc75cdcb020079d",
+  "status": "READY_FOR_OWNER_REVIEW",
+  "live_provider_calls": 0,
+  "default_mode": "LLM_ONLY",
+  "hybrid": "OPT_IN_ONLY",
+  "cache_version": 130,
+  "merge_push_cleanup": "NONE",
+  "product_commit": "051224ee2740cbf5d55dd94633503db1f0050ada",
+  "t3_candidate": "1e0c8db668bbe110f343a8a67cdeca465008c188",
+  "freeze_hash": "8b94a5aa4a986e312ef423492b332bf25378868f6c9578767ba2ee7003c18369",
+  "versions": {
+    "registry": "geometry-functions/19",
+    "planner": "geometry-fact-planner/17",
+    "engine": "geometry-function-engine/14",
+    "adapter": "hybrid-simulation-adapter/4",
+    "certificate": "plane-section-certificate/1"
+  },
+  "product_files": [
+    "backend/app/simulation/geometry/radical.py"
+  ],
+  "closed_findings": [
+    "ACCEPTANCE-1: DEV-1-3 SERVED_CORRECT (area 6175/242, area_squared 38130625/58564)",
+    "W2-M4: W2-A04 SERVED_CORRECT (area 11250√2/697, area_squared 253125000/485809)"
+  ],
+  "w2_m4_corpus": {
+    "end_to_end_red": "0/2",
+    "end_to_end_green": "2/2",
+    "kernel_red": "7/16",
+    "kernel_green": "16/16",
+    "metamorphic_red": "1/6",
+    "metamorphic_green": "6/6",
+    "negative_red": "11/11",
+    "negative_green": "11/11"
+  },
+  "source_gate_regression": {
+    "original_positive_served_correct": 24,
+    "original_positive_total": 24,
+    "genuine_negative_refused": 36,
+    "genuine_negative_total": 36,
+    "adjudicated_valid_mislabeled_negative_served_correct": 1,
+    "genuine_wrong_served": 0,
+    "served_exact_oracle_agreement": "25/25",
+    "supplemental_passed": "7/7"
+  },
+  "wave2_post_feedback": {
+    "served_correct": 46,
+    "positives": 48,
+    "negative_refusals": 48,
+    "negatives": 48,
+    "correct_refusal_reason": 36,
+    "reason_mismatches": 12,
+    "wrong_served": 0,
+    "exact_oracle_agreement": "46/46",
+    "remaining_false_refusals": [
+      "W2-A07 (W2-M5 PREVIEW_VALIDATION_FAILED / CANNOT_BUILD_SOLIDS, out of scope)",
+      "W2-A10 (W2-M5 PREVIEW_VALIDATION_FAILED / CANNOT_BUILD_SOLIDS, out of scope)"
+    ]
+  },
+  "final_branch_head_rule": "Final documentation commit containing report/handoff/review/run.json; resolve the named branch. Exact SHA is emitted in session final handoff after commit (avoids self-reference).",
+  "t3_verdict": "FULL_PRODUCT_GATE_PASS",
+  "t3_receipt": "verification/full-t3/receipt.json",
+  "t3_log_sha256": "57af94912561e1b06e3e9a4e363d80128814b755bf09232d367db048de4fcbc7",
+  "post_t3_freeze": "MATCH",
+  "independent_review": "review.md",
+  "reproducibility_prerequisite": "Retain/fetch Wave2 commit ecdc26b012c8ce80d53524a98dc75cdcb020079d before evaluator/unit tests; shallow single-branch clones alone are insufficient."
+}

@@ -1,0 +1,42 @@
+{
+  "schema": "w2-m4-exact-radical-full-t3/1",
+  "candidate": "1e0c8db668bbe110f343a8a67cdeca465008c188",
+  "product_commit": "051224ee2740cbf5d55dd94633503db1f0050ada",
+  "detached": true,
+  "source_tree_before": "",
+  "source_tree_after": "",
+  "started_utc": "2026-10-28T02:38:48.829249+00:00",
+  "finished_utc": "2026-10-28T02:47:24.541877+00:00",
+  "exit_code": 0,
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "source_integrity": "MATCH",
+  "measured_system": {
+    "paths": [
+      "backend/app",
+      "frontend/src/simulations/domains/semantic",
+      "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+    ],
+    "so_file": 118,
+    "tree_hash": "8b94a5aa4a986e312ef423492b332bf25378868f6c9578767ba2ee7003c18369",
+    "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
+  },
+  "post_freeze": {
+    "exit_code": 0,
+    "stdout": "Candidate khớp bản đã đóng băng (mã sản phẩm: 118 file, 8b94a5aa4a986e31…)."
+  },
+  "freeze_sha256_before": "b6e12ac088103512a1fbba1dd220227266492bdd0a124cad13c25aa0e55b4b63",
+  "freeze_sha256_after": "b6e12ac088103512a1fbba1dd220227266492bdd0a124cad13c25aa0e55b4b63",
+  "log": {
+    "path": "full-t3.log",
+    "sha256": "57af94912561e1b06e3e9a4e363d80128814b755bf09232d367db048de4fcbc7",
+    "bytes": 167683
+  },
+  "summaries": [
+    "12552 passed, 1 skipped, 2 deselected, 15 xfailed, 1 warning in 493.26s (0:08:13)",
+    "\u001b[2m Test Files \u001b[22m \u001b[1m\u001b[32m83 passed\u001b[39m\u001b[22m\u001b[90m (83)\u001b[39m",
+    "\u001b[2m      Tests \u001b[22m \u001b[1m\u001b[32m1417 passed\u001b[39m\u001b[22m\u001b[90m (1417)\u001b[39m",
+    "FULL_PRODUCT_GATE_PASS"
+  ],
+  "live_provider_calls": 0,
+  "pytest_policy": "all tests, --tb=no, no cache writes, fresh candidate-local ignored temp"
+}

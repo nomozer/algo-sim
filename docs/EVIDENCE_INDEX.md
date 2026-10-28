@@ -1,5 +1,17 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_V2_W2_M4_EXACT_RADICAL_NORMALIZATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-w2-m4-exact-radical-normalization/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-w2-m4-exact-radical-normalization/
+CLASSIFICATION = POST_FEEDBACK_DEVELOPMENT_REGRESSION; READY_FOR_OWNER_REVIEW; FULL_PRODUCT_GATE_PASS at 1e0c8db6 (12552 backend / 1417 frontend, freeze MATCH); independent review APPROVED_NO_FINDINGS (0 BLOCKER, 0 MAJOR, 0 MINOR, 0 NIT)
+CODE_COMMIT = 051224ee2740cbf5d55dd94633503db1f0050ada; T3 candidate 1e0c8db668bbe110f343a8a67cdeca465008c188; freeze 8b94a5aa4a986e312ef423492b332bf25378868f6c9578767ba2ee7003c18369
+VERIFICATION = results/red-before.json; results/green-after.json; results/source-gate-regression.json; results/wave2-post-feedback-regression.json; verification/tiers.json; verification/full-t3/receipt.json; review.md
+MODEL_REQUEST_COUNT = 0
+CONTINUES = HYBRID_V2_WAVE2_SOURCE_GATE_LANGUAGE_GENERALIZATION
+CORRECTS = HYBRID_V2_WAVE2_SOURCE_GATE_LANGUAGE_GENERALIZATION (closes ACCEPTANCE-1 on DEV-1-3 and W2-M4 on W2-A04 via exact square-factor normalization in radical.py before enforcing MAX_RADICAND; parent wave bytes, test receipts and historical NOT_READY verdict preserved unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_V2_WAVE2_SOURCE_GATE_LANGUAGE_GENERALIZATION
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/report.md
@@ -9,7 +21,7 @@ CODE_COMMIT = c6f6b64bda6473c175a32a7875a9dd9831ae7c6d; T3 candidate b9e3d0966e1
 VERIFICATION = results/red-before.json; results/green-after.json (raw); results/development-adjudication.json; results/wave2-post-feedback-regression.json; verification/tiers.json; review.md
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_V2_INDEPENDENT_VIETNAMESE_SECTION_HOLDOUT_WAVE2 (four narrative discrepancies; correction-layer.md and correction-addendum.md; original bytes and primary results unchanged)
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_V2_W2_M4_EXACT_RADICAL_NORMALIZATION (closes ACCEPTANCE-1 on DEV-1-3 and W2-M4 on W2-A04 in child branch; parent wave historical bytes and verdict preserved unchanged)
 
 ## WAVE_ID = HYBRID_V2_INDEPENDENT_VIETNAMESE_SECTION_HOLDOUT_WAVE2
 

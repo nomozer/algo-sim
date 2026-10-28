@@ -1,0 +1,31 @@
+T0 IMPACT GATE
+
+Đã đổi (2):
+  - docs/evaluation/geometry/runs/hybrid-v2-w2-m4-exact-radical-normalization/tools/run_t0_t1_t2.py
+  - docs/evaluation/geometry/runs/hybrid-v2-w2-m4-exact-radical-normalization/tools/verify_candidate.py
+
+Lý do chọn:
+  docs/evaluation/geometry/runs/hybrid-v2-w2-m4-exact-radical-normalization/tools/run_t0_t1_t2.py
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w2-m4-exact-radical-normalization/tools/verify_candidate.py
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+
+Đã chọn: 1 đơn vị — 1 mẫu vitest
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.10 [39m[90mD:/Documents/projects/algo-sim/.superpowers/worktrees/w2-m4-exact-radical-normalization/frontend[39m
+
+ [32m✓[39m src/code-index-sync.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m   Start at [22m 09:38:12
+[2m   Duration [22m 263ms[2m (transform 36ms, setup 39ms, import 20ms, tests 29ms, environment 0ms)[22m
+
+
+Kết quả: IMPACT_GATE_PASS
+Thời gian: 1.8s
+
+⚠️ IMPACT_GATE_PASS chỉ nói về tập vừa chọn. Nó KHÔNG thay được gate
+   sản phẩm đầy đủ (T3) — xem docs/TEST_TIERS.md.

@@ -1,5 +1,14 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## W2-M4 exact radical normalization (local research, 2026-10-28)
+
+`backend/app/simulation/geometry/radical.py` normalizes square factors before enforcing `MAX_RADICAND = 10**12`
+in `radical(coeff, radicand)` (guarded by `MAX_UNREDUCED_RADICAND = 10**24` and bounded prime factor base $d^3 \le 10^{12}$
+in `_tach_binh_phuong`, with `sqrt_rational` delegating to `radical(Fraction(1, q), p * q)`). Closes `ACCEPTANCE-1` (`DEV-1-3`)
+and `W2-M4` (`W2-A04`) while preserving `MAX_RADICAND = 10**12`, `MAX_DENOMINATOR = 10**9`, and fail-closed `RadicalDomainError`
+on genuine unreduced or float-approximated radicands (`N04_regular_hexagon`). Tests: `backend/tests/geometry/test_radical_domain.py`,
+`backend/tests/geometry/test_source_gate_language.py`. Run: `docs/evaluation/geometry/runs/hybrid-v2-w2-m4-exact-radical-normalization/`.
+
 ## Source Gate language repair (local research, 2026-10-28)
 
 Registry /19 in `backend/app/simulation/geometry_functions/registry.py` extends `_TY_SO` / `_ty_so_khop`

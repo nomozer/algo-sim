@@ -1,0 +1,26 @@
+{
+  "cache": {
+    "exit_code": 0,
+    "stdout": "Khoá khớp · CACHE_VERSION 130 · môi trường b1714b566e25c912…"
+  },
+  "preview_fixtures": {
+    "exit_code": 0,
+    "verified": 41,
+    "problems": [],
+    "producer_now": {
+      "commit": "1e0c8db668bbe110f343a8a67cdeca465008c188",
+      "product_commit": "051224ee2740cbf5d55dd94633503db1f0050ada",
+      "source_fingerprint": {
+        "measured_system_hash": "8b94a5aa4a986e312ef423492b332bf25378868f6c9578767ba2ee7003c18369",
+        "files": 118,
+        "rule": "scripts/freeze_evaluation_candidate.py::measured_system_hash"
+      },
+      "adapter_version": "hybrid-preview-adapter/2",
+      "envelope_version": "hybrid-route-d-preview/1",
+      "backend_app_dirty": false,
+      "inputs_dirty": false
+    }
+  },
+  "cache_version": 130,
+  "live_provider_calls": 0
+}

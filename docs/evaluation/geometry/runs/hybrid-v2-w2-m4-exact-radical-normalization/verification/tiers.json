@@ -1,0 +1,65 @@
+{
+  "candidate": "1e0c8db668bbe110f343a8a67cdeca465008c188",
+  "product_commit": "051224ee2740cbf5d55dd94633503db1f0050ada",
+  "freeze_hash": "8b94a5aa4a986e312ef423492b332bf25378868f6c9578767ba2ee7003c18369",
+  "status": "READY_FOR_OWNER_REVIEW",
+  "tiers": {
+    "T0": {
+      "impact": "NONEMPTY_SELECTION_ONLY_DRY_RUN",
+      "scope": "PASS radical.py-only product diff (1 file changed: backend/app/simulation/geometry/radical.py)",
+      "pins": "PASS Registry /19, Planner /17, Engine /14, Adapter /4, Certificate /1, CACHE_VERSION 130, DEFAULT_MODE LLM_ONLY unchanged",
+      "publication": "PASS scanned=26 messages=6 violations=0 pending_exception=0",
+      "receipts": [
+        "verification/impact-plan.json",
+        "verification/scope-and-evidence.json",
+        "verification/publication-candidate.log",
+        "verification/cache-and-fixtures.json"
+      ]
+    },
+    "T1": {
+      "status": "PASS",
+      "end_to_end_passed": "2/2 (DEV-1-3 and W2-A04 SERVED_CORRECT)",
+      "kernel_passed": "16/16",
+      "metamorphic_passed": "6/6",
+      "negative_passed": "11/11",
+      "targeted_pytest_passed": 735,
+      "targeted_pytest_failed": 0,
+      "receipts": [
+        "results/red-before.json",
+        "results/green-after.json",
+        "verification/t1-t2.log"
+      ]
+    },
+    "T2": {
+      "status": "PASS",
+      "source_gate_regression": "24/24 original positives SERVED_CORRECT (including DEV-1-3), 36/36 genuine negatives refused (36/36 reason agreement), 0 genuine wrong-served, 25/25 served exact oracle agreement, 7/7 supplemental controls passed",
+      "wave2_post_feedback_regression": "46/48 positive SERVED_CORRECT (46/46 exact oracle agreement, Category B 36/36, Category A 10/12; W2-A04 repaired from FALSE_REFUSAL to SERVED_CORRECT), 2/48 remaining false refusals (W2-A07, W2-A10 on out-of-scope W2-M5 at Adapter /4), 48/48 negatives refused (36/48 reason agreement), 0/96 wrong-served",
+      "preview_fixtures_verified": "41/41",
+      "receipts": [
+        "results/source-gate-regression.json",
+        "results/wave2-post-feedback-regression.json",
+        "verification/cache-and-fixtures.json",
+        "verification/t1-t2.log"
+      ]
+    },
+    "T3": {
+      "status": "FULL_PRODUCT_GATE_PASS",
+      "backend_passed": 12552,
+      "backend_failed": 0,
+      "backend_skipped": 1,
+      "backend_deselected": 2,
+      "backend_xfailed": 15,
+      "frontend_files_passed": 83,
+      "frontend_tests_passed": 1417,
+      "build": "PASS",
+      "demo_replay": "5/5 PASS + 1/1 expected REFUSAL",
+      "crash_checks": "6/6 PASS (0 uncaught)",
+      "source_before": "CLEAN",
+      "source_after": "CLEAN",
+      "post_freeze": "MATCH",
+      "receipt": "verification/full-t3/receipt.json",
+      "log_sha256": "57af94912561e1b06e3e9a4e363d80128814b755bf09232d367db048de4fcbc7"
+    }
+  },
+  "live_provider_calls": 0
+}

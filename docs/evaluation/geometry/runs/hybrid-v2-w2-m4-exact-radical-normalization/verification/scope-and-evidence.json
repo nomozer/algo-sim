@@ -1,0 +1,20 @@
+{
+  "status": "SOURCE_SCOPE_AND_RAW_EVIDENCE_IDENTITY_PASS",
+  "baseline_head": "d99f6149ff1997258970bf888db5484665b106b8",
+  "main_head": "d7a94d3cd4bbdea3df99e383bec78425fcc8bf1c",
+  "origin_main_head": "d7a94d3cd4bbdea3df99e383bec78425fcc8bf1c",
+  "product_commit": "051224ee2740cbf5d55dd94633503db1f0050ada",
+  "candidate": "1e0c8db668bbe110f343a8a67cdeca465008c188",
+  "product_files_changed": [
+    "backend/app/simulation/geometry/radical.py"
+  ],
+  "forbidden_layers_changed": [],
+  "locked_evidence_sha256_lf": {
+    "inputs/development.json": "0c37d00b06e5fe93f728906e9c86e7db679846dd1558494a0372ef7886277ea8",
+    "results/red-before.json": "33ac13b66f3bcbb5a8cd684b17177b1040c4f00d6659611afd2f47428beb12d6",
+    "results/green-after.json": "424ac18a9d8de07d9e785632761299be5c50f85e7de57ba4b797b5a17f4e161a",
+    "results/source-gate-regression.json": "12aeefc9ce7eb0b9c521293c8d98160bce42d605c6270888c86433b68ca498d8",
+    "results/wave2-post-feedback-regression.json": "e9d04f93dac49f569d832358282a206e85a559c0e5e8929cb69c067e14bf5c72"
+  },
+  "live_provider_calls": 0
+}
