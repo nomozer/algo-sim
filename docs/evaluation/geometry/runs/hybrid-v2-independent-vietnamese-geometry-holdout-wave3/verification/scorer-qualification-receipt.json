@@ -1,0 +1,137 @@
+{
+  "schema": "HOLDOUT_WAVE3_SCORER_QUALIFICATION_RECEIPT/1",
+  "qualified_before_corpus_creation": true,
+  "scorer_sha256_lf": "eda4a853d376f8f616919a67062da548218450a4df1d888550e66bae56599a45",
+  "qualification_tests_sha256_lf": "5179cb21b8a248e476ded0a181baa98249fa1a91f7ac3cbfdae836e9c2e51acc",
+  "total_test_suites": 24,
+  "all_passed": true,
+  "mandatory_22_controls_verified": true,
+  "non_zero_fallback_guard_verified": true,
+  "mutation_controls_verified": {
+    "killed": 10,
+    "total": 10,
+    "kill_rate": 1.0
+  },
+  "tests": [
+    {
+      "test": "test_01_primed_source_vertex_and_internal_a_prime",
+      "doc": "Control 1: Source vertex A', A′ and internal A_prime on both 3-vertex and 4-vertex Category A sections.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_02_no_machine_id_leakage_to_learner_surface",
+      "doc": "Control 2: Raw `_prime` or internal auxiliary labels leaking onto learner-facing fields must fail as WRONG_SERVED.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_03_triangle_3_vertices",
+      "doc": "Control 3: 3-vertex triangle section.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_04_quadrilateral_4_vertices",
+      "doc": "Control 4: 4-vertex quadrilateral section.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_05_polygon_5_or_more_vertices",
+      "doc": "Control 5: 5-vertex pentagon section.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_06_cyclic_shift",
+      "doc": "Control 6: Cyclic shift of polygon vertices preserves SERVED_CORRECT.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_07_reversed_orientation",
+      "doc": "Control 7: Reversed orientation of polygon vertices preserves SERVED_CORRECT.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_08_non_cyclic_vertex_permutation_rejected",
+      "doc": "Control 8: Non-cyclic vertex permutation (bow-tie `[v0, v2, v1, v3]`) is rejected as WRONG_SERVED.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_09_duplicate_vertices_rejected",
+      "doc": "Control 9: Duplicate vertices or duplicate coordinates in polygon/section are rejected as WRONG_SERVED.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_10_solid_vertex_reuse_at_t0_or_t1",
+      "doc": "Control 10: Solid vertex reuse at t=0 or t=1 in both Category A and Category B.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_11_interior_edge_intersection",
+      "doc": "Control 11: Interior edge intersection 0 < t < 1 and rejection of out-of-range t.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_12_reversed_edge_endpoints_and_complement_t",
+      "doc": "Control 12: Reversing edge endpoints [U, V] -> [V, U] and transforming t -> 1 - t matches oracle.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_13_category_a_dinh_cat_canh",
+      "doc": "Control 13: Valid Category A DINH_CAT_CANH section.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_14_category_b_engine_derived_section",
+      "doc": "Control 14: Valid Category B ENGINE_DERIVED_SECTION.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_15_category_mixing_tamper_rejected",
+      "doc": "Control 15: Category A/B mixing tamper is rejected as WRONG_SERVED.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_16_wrong_solid_identity_rejected",
+      "doc": "Control 16: Wrong solid identity is rejected as WRONG_SERVED.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_17_wrong_edge_topology_rejected",
+      "doc": "Control 17: Cut on wrong edge is rejected as WRONG_SERVED.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_18_wrong_area_squared_rejected",
+      "doc": "Control 18: Wrong area squared in final_memory or certificate is rejected as WRONG_SERVED.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_19_missing_section_certificate_rejected",
+      "doc": "Control 19: Missing section certificate on Category B or incomplete provenance on Category A is rejected.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_20_wrong_refusal_reason_rejected",
+      "doc": "Control 20: Refusal reason agreement vs disagreement.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_21_uncaught_product_exception_handled",
+      "doc": "Control 21: Uncaught exception inside product route/adapter is caught as PRODUCT_EXCEPTION and never crashes scorer.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_22_missing_oracle_entry_rejected",
+      "doc": "Control 22: Served case with missing oracle entry is rejected as WRONG_SERVED; malformed oracle triggers HARNESS_ERROR.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_23_unfound_vertex_never_defaults_to_polygon_index_zero",
+      "doc": "Mandatory Guard: If a vertex in section.vertices is missing from scene3d.objects / polygon, scorer MUST NOT default poly_idx to 0.",
+      "status": "PASS"
+    },
+    {
+      "test": "test_24_systematic_mutation_kill_suite",
+      "doc": "Mutation controls: 10 distinct mutations on valid fixtures must all be killed (0% survival).",
+      "status": "PASS"
+    }
+  ]
+}

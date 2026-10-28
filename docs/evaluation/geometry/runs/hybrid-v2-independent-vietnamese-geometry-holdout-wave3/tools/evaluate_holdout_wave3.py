@@ -201,15 +201,23 @@ def _check_section_boundary(
             xyz_p_list = _find_point_xyz(objects_by_id, str(v["label"]))
 
         poly_idx: int | None = None
+        xyz_idx: int | None = None
         if xyz_p_list is not None and len(poly_frac) == len(poly_raw):
             pt_tuple = (xyz_p_list[0], xyz_p_list[1], xyz_p_list[2])
             if pt_tuple in poly_frac:
-                poly_idx = poly_frac.index(pt_tuple)
+                xyz_idx = poly_frac.index(pt_tuple)
+                poly_idx = xyz_idx
 
-        if poly_idx is None and is_cat_b and isinstance(v.get("ordinal"), int):
+        if is_cat_b and isinstance(v.get("ordinal"), int):
             ord_val = v["ordinal"]
             if 0 <= ord_val < len(poly_raw):
+                if xyz_idx is not None and ord_val != xyz_idx:
+                    bad.append(
+                        f"Category B vertex ordinal {ord_val} disagrees with polygon coordinate index {xyz_idx}"
+                    )
                 poly_idx = ord_val
+            else:
+                bad.append(f"Category B vertex ordinal {ord_val} out of polygon range [0, {len(poly_raw)})")
 
         if poly_idx is None:
             bad.append(
