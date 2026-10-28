@@ -133,6 +133,9 @@ def _mat_fact(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2, solids: 
                          "quotes": [sec.quote, *asked], "solid": solids[sec.target_solid_id].notation,
                          "point": _ref(sec.through_point), "plane_relation": rel}
     if getattr(sec, "plane_name", None) is not None:
+        import re as _re
+        if not _re.fullmatch(r"(?:[A-Z][0-9]*'?|[α-ω]'?)", str(sec.plane_name)):
+            raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{sec.section_id}: tên mặt đã khai không khớp mặt được Source Gate xác minh", (sec.section_id,))
         f["plane_name"] = sec.plane_name
     if rel == "parallel":
         f["points_b"] = _refs(sec.parallel_plane)
