@@ -318,6 +318,9 @@ IDENTITY_DELTAS = (
                   "planner_version": ("geometry-fact-planner/16", "geometry-fact-planner/17")}},
     {"run": "hybrid-v2-wave2-source-gate-language-generalization",
      "versions": {"registry_version": ("geometry-functions/18", "geometry-functions/19")}},
+    {"run": "hybrid-v2-w3-f1-cross-sentence-plane-grounding",
+     "versions": {"registry_version": ("geometry-functions/19", "geometry-functions/20"),
+                  "planner_version": ("geometry-fact-planner/17", "geometry-fact-planner/18")}},
 )
 
 
