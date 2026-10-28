@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "HYBRID_V2_W2_M5_ADAPTER4_CATEGORY_A_IDENTITY_REPAIR",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-v2-w2-m4-exact-radical-normalization/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "1170ca163529dd40b57f4058826db92a6433359546aa2ad718712f38a538c10d",
+  "current_product_commit": "73ca8d92e74059680ce53b99692af396df37a2f8",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Authorized W2-M5 Category A section vertex identity canonicalization and independent geometric verification in backend/app/ai/adapter4_route.py (_validate_sections), resolving W2-A07 and W2-A10 false refusals. Registry /19, Planner /17, Engine /14, Adapter /4, and historical evaluation records unchanged.",
+  "cache_version": 130,
+  "cache_version_hien_tai": 130,
+  "cache_decision": "NO_BUMP 130: default LLM_ONLY route unchanged, semantic cache lock MATCH, 41/41 stored preview fixtures verify; no provider/schema/IR change.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}

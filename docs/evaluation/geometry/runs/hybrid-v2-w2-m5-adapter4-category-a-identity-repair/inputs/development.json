@@ -1,0 +1,2211 @@
+{
+  "task_id": "HYBRID_V2_W2_M5_ADAPTER4_CATEGORY_A_IDENTITY_REPAIR",
+  "positive_cases": [
+    {
+      "id": "W2-A07",
+      "stratum": "P-A",
+      "family": "right_triangular_prism",
+      "plane_relation": "stated_intersections",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = 5, BC = 5 và cạnh bên AA' = 10. Mặt phẳng (α) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC' lần lượt tại M, N. Tính diện tích thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α).",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = 5, BC = 5 và cạnh bên AA' = 10. Mặt phẳng (α) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC' lần lượt tại M, N. Tính diện tích thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho hình lăng trụ đứng ABC.A'B'C'",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ],
+              "right_at": "B"
+            },
+            "quote": "có đáy ABC là tam giác vuông tại B",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "5"
+            },
+            "quote": "AB = 5",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "B",
+                "C"
+              ],
+              "value": "5"
+            },
+            "quote": "BC = 5",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "10"
+            },
+            "quote": "cạnh bên AA' = 10",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "through_point": "A'",
+            "perpendicular_line": [
+              "A",
+              "C'"
+            ],
+            "quote": "Mặt phẳng (α) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC' lần lượt tại M, N.",
+            "stated_intersections": [
+              {
+                "edge": [
+                  "B",
+                  "B'"
+                ],
+                "point": "M",
+                "quote": "cắt các cạnh bên BB', CC' lần lượt tại M, N"
+              },
+              {
+                "edge": [
+                  "C",
+                  "C'"
+                ],
+                "point": "N",
+                "quote": "cắt các cạnh bên BB', CC' lần lượt tại M, N"
+              }
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_object",
+            "target_solid_id": "s1",
+            "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "mg1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "solid_id": "s1",
+            "target": {
+              "section_id": "sec"
+            },
+            "quote": "Tính diện tích thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α)."
+          }
+        ]
+      },
+      "expected_disposition": "SERVE",
+      "acceptable_categories": [],
+      "rationale": "Category A right triangular prism ABC.A'B'C' (right at B, AB=5, BC=5, AA'=10) cut by plane (α) through top vertex A' perpendicular to AC' at named points M on BB' and N on CC'.",
+      "track_b": {
+        "representability": "representable_without_loss",
+        "note": "Supported right_triangular_prism with stated_intersections (area_only) representable without loss in typed-fact-next/2."
+      }
+    },
+    {
+      "id": "W2-A10",
+      "stratum": "P-A",
+      "family": "cuboid",
+      "plane_relation": "stated_intersections",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật với AB = 3a, AD = 6a và cạnh bên AA' = 9a. Mặt phẳng (Q) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC', DD'. Xác định thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q).",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật với AB = 3a, AD = 6a và cạnh bên AA' = 9a. Mặt phẳng (Q) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC', DD'. Xác định thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q).",
+        "length_unit": "a",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABCD.A'B'C'D'",
+            "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'",
+                "D'"
+              ]
+            },
+            "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "rectangle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            },
+            "quote": "có đáy ABCD là hình chữ nhật",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "3a"
+            },
+            "quote": "AB = 3a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "D"
+              ],
+              "value": "6a"
+            },
+            "quote": "AD = 6a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "9a"
+            },
+            "quote": "cạnh bên AA' = 9a",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec",
+            "plane_name": "Q",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "through_point": "A'",
+            "perpendicular_line": [
+              "A",
+              "C'"
+            ],
+            "quote": "Mặt phẳng (Q) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC', DD'.",
+            "stated_intersections": [
+              {
+                "edge": [
+                  "B",
+                  "B'"
+                ],
+                "point": null,
+                "quote": "cắt các cạnh bên BB', CC', DD'"
+              },
+              {
+                "edge": [
+                  "C",
+                  "C'"
+                ],
+                "point": null,
+                "quote": "cắt các cạnh bên BB', CC', DD'"
+              },
+              {
+                "edge": [
+                  "D",
+                  "D'"
+                ],
+                "point": null,
+                "quote": "cắt các cạnh bên BB', CC', DD'"
+              }
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_plane_section",
+            "target_section_id": "sec",
+            "target_solid_id": "s1",
+            "quote": "Xác định thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q)."
+          }
+        ],
+        "math_goals": []
+      },
+      "expected_disposition": "SERVE",
+      "acceptable_categories": [],
+      "rationale": "Category A cuboid ABCD.A'B'C'D' (3ax6ax9a) cut by plane (Q) through top vertex A' perpendicular to AC', cutting BB', CC', DD' at coplanar interior points (unnamed).",
+      "track_b": {
+        "representability": "representable_without_loss",
+        "note": "Supported cuboid with stated_intersections (section_only) representable without loss in typed-fact-next/2."
+      }
+    },
+    {
+      "id": "DEV-POS-03",
+      "stratum": "P-A",
+      "family": "right_triangular_prism",
+      "plane_relation": "stated_intersections",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = 3, BC = 4 và cạnh bên AA' = 10. Mặt phẳng (α) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC' lần lượt tại M, N. Xác định thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α). Tính diện tích thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α).",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = 3, BC = 4 và cạnh bên AA' = 10. Mặt phẳng (α) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC' lần lượt tại M, N. Xác định thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α). Tính diện tích thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho hình lăng trụ đứng ABC.A'B'C'",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ],
+              "right_at": "B"
+            },
+            "quote": "có đáy ABC là tam giác vuông tại B",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "3"
+            },
+            "quote": "AB = 3",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "B",
+                "C"
+              ],
+              "value": "4"
+            },
+            "quote": "BC = 4",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "10"
+            },
+            "quote": "cạnh bên AA' = 10",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "through_point": "A'",
+            "perpendicular_line": [
+              "A",
+              "C'"
+            ],
+            "quote": "Mặt phẳng (α) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC' lần lượt tại M, N.",
+            "stated_intersections": [
+              {
+                "edge": [
+                  "B",
+                  "B'"
+                ],
+                "point": "M",
+                "quote": "cắt các cạnh bên BB', CC' lần lượt tại M, N"
+              },
+              {
+                "edge": [
+                  "C",
+                  "C'"
+                ],
+                "point": "N",
+                "quote": "cắt các cạnh bên BB', CC' lần lượt tại M, N"
+              }
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_plane_section",
+            "target_section_id": "sec",
+            "target_solid_id": "s1",
+            "quote": "Xác định thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α)."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "mg1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "solid_id": "s1",
+            "target": {
+              "section_id": "sec"
+            },
+            "quote": "Tính diện tích thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α)."
+          }
+        ]
+      },
+      "expected_disposition": "SERVE",
+      "acceptable_categories": []
+    },
+    {
+      "id": "DEV-POS-04",
+      "stratum": "P-A",
+      "family": "right_triangular_prism",
+      "plane_relation": "stated_intersections",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = 6, BC = 8 và cạnh bên AA' = 20. Mặt phẳng (α) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC'. Tính diện tích thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α).",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = 6, BC = 8 và cạnh bên AA' = 20. Mặt phẳng (α) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC'. Tính diện tích thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho hình lăng trụ đứng ABC.A'B'C'",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ],
+              "right_at": "B"
+            },
+            "quote": "có đáy ABC là tam giác vuông tại B",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "B",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "BC = 8",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "20"
+            },
+            "quote": "cạnh bên AA' = 20",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "through_point": "A'",
+            "perpendicular_line": [
+              "A",
+              "C'"
+            ],
+            "quote": "Mặt phẳng (α) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC'.",
+            "stated_intersections": [
+              {
+                "edge": [
+                  "B",
+                  "B'"
+                ],
+                "point": null,
+                "quote": "cắt các cạnh bên BB', CC'"
+              },
+              {
+                "edge": [
+                  "C",
+                  "C'"
+                ],
+                "point": null,
+                "quote": "cắt các cạnh bên BB', CC'"
+              }
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_object",
+            "target_solid_id": "s1",
+            "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "mg1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "solid_id": "s1",
+            "target": {
+              "section_id": "sec"
+            },
+            "quote": "Tính diện tích thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α)."
+          }
+        ]
+      },
+      "expected_disposition": "SERVE",
+      "acceptable_categories": []
+    },
+    {
+      "id": "DEV-POS-05",
+      "stratum": "P-A",
+      "family": "right_triangular_prism",
+      "plane_relation": "stated_intersections",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = 4, BC = 3 và cạnh bên AA' = 8. Mặt phẳng (α) đi qua điểm A' và vuông góc với đường thẳng AB', cắt các cạnh bên BB', CC' lần lượt tại M, N. Xác định thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α).",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = 4, BC = 3 và cạnh bên AA' = 8. Mặt phẳng (α) đi qua điểm A' và vuông góc với đường thẳng AB', cắt các cạnh bên BB', CC' lần lượt tại M, N. Xác định thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho hình lăng trụ đứng ABC.A'B'C'",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ],
+              "right_at": "B"
+            },
+            "quote": "có đáy ABC là tam giác vuông tại B",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "4"
+            },
+            "quote": "AB = 4",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "B",
+                "C"
+              ],
+              "value": "3"
+            },
+            "quote": "BC = 3",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "8"
+            },
+            "quote": "cạnh bên AA' = 8",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "through_point": "A'",
+            "perpendicular_line": [
+              "A",
+              "B'"
+            ],
+            "quote": "Mặt phẳng (α) đi qua điểm A' và vuông góc với đường thẳng AB', cắt các cạnh bên BB', CC' lần lượt tại M, N.",
+            "stated_intersections": [
+              {
+                "edge": [
+                  "B",
+                  "B'"
+                ],
+                "point": "M",
+                "quote": "cắt các cạnh bên BB', CC' lần lượt tại M, N"
+              },
+              {
+                "edge": [
+                  "C",
+                  "C'"
+                ],
+                "point": "N",
+                "quote": "cắt các cạnh bên BB', CC' lần lượt tại M, N"
+              }
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_plane_section",
+            "target_section_id": "sec",
+            "target_solid_id": "s1",
+            "quote": "Xác định thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α)."
+          }
+        ],
+        "math_goals": []
+      },
+      "expected_disposition": "SERVE",
+      "acceptable_categories": []
+    },
+    {
+      "id": "DEV-POS-06",
+      "stratum": "P-A",
+      "family": "right_triangular_prism",
+      "plane_relation": "stated_intersections",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = 4, BC = 3 và cạnh bên AA' = 10. Mặt phẳng (α) đi qua điểm C' và vuông góc với đường thẳng CA', cắt các cạnh bên AA', BB' lần lượt tại M, N. Xác định thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α). Tính diện tích thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α).",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = 4, BC = 3 và cạnh bên AA' = 10. Mặt phẳng (α) đi qua điểm C' và vuông góc với đường thẳng CA', cắt các cạnh bên AA', BB' lần lượt tại M, N. Xác định thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α). Tính diện tích thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho hình lăng trụ đứng ABC.A'B'C'",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ],
+              "right_at": "B"
+            },
+            "quote": "có đáy ABC là tam giác vuông tại B",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "4"
+            },
+            "quote": "AB = 4",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "B",
+                "C"
+              ],
+              "value": "3"
+            },
+            "quote": "BC = 3",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "10"
+            },
+            "quote": "cạnh bên AA' = 10",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "through_point": "C'",
+            "perpendicular_line": [
+              "C",
+              "A'"
+            ],
+            "quote": "Mặt phẳng (α) đi qua điểm C' và vuông góc với đường thẳng CA', cắt các cạnh bên AA', BB' lần lượt tại M, N.",
+            "stated_intersections": [
+              {
+                "edge": [
+                  "A",
+                  "A'"
+                ],
+                "point": "M",
+                "quote": "cắt các cạnh bên AA', BB' lần lượt tại M, N"
+              },
+              {
+                "edge": [
+                  "B",
+                  "B'"
+                ],
+                "point": "N",
+                "quote": "cắt các cạnh bên AA', BB' lần lượt tại M, N"
+              }
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_plane_section",
+            "target_section_id": "sec",
+            "target_solid_id": "s1",
+            "quote": "Xác định thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α)."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "mg1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "solid_id": "s1",
+            "target": {
+              "section_id": "sec"
+            },
+            "quote": "Tính diện tích thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α)."
+          }
+        ]
+      },
+      "expected_disposition": "SERVE",
+      "acceptable_categories": []
+    },
+    {
+      "id": "DEV-POS-07",
+      "stratum": "P-A",
+      "family": "right_triangular_prism",
+      "plane_relation": "stated_intersections",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = 3, BC = 4 và cạnh bên AA' = 8. Mặt phẳng (α) đi qua điểm C' và vuông góc với đường thẳng CB', cắt các cạnh bên AA', BB'. Tính diện tích thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α).",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = 3, BC = 4 và cạnh bên AA' = 8. Mặt phẳng (α) đi qua điểm C' và vuông góc với đường thẳng CB', cắt các cạnh bên AA', BB'. Tính diện tích thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho hình lăng trụ đứng ABC.A'B'C'",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ],
+              "right_at": "B"
+            },
+            "quote": "có đáy ABC là tam giác vuông tại B",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "3"
+            },
+            "quote": "AB = 3",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "B",
+                "C"
+              ],
+              "value": "4"
+            },
+            "quote": "BC = 4",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "8"
+            },
+            "quote": "cạnh bên AA' = 8",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "through_point": "C'",
+            "perpendicular_line": [
+              "C",
+              "B'"
+            ],
+            "quote": "Mặt phẳng (α) đi qua điểm C' và vuông góc với đường thẳng CB', cắt các cạnh bên AA', BB'.",
+            "stated_intersections": [
+              {
+                "edge": [
+                  "A",
+                  "A'"
+                ],
+                "point": null,
+                "quote": "cắt các cạnh bên AA', BB'"
+              },
+              {
+                "edge": [
+                  "B",
+                  "B'"
+                ],
+                "point": null,
+                "quote": "cắt các cạnh bên AA', BB'"
+              }
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_object",
+            "target_solid_id": "s1",
+            "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "mg1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "solid_id": "s1",
+            "target": {
+              "section_id": "sec"
+            },
+            "quote": "Tính diện tích thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α)."
+          }
+        ]
+      },
+      "expected_disposition": "SERVE",
+      "acceptable_categories": []
+    },
+    {
+      "id": "DEV-POS-08",
+      "stratum": "P-A",
+      "family": "right_triangular_prism",
+      "plane_relation": "stated_intersections",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = 5, BC = 5 và cạnh bên AA' = 10. Mặt phẳng (α) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC' lần lượt tại M, N. Xác định thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α). Tính diện tích thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α).",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = 5, BC = 5 và cạnh bên AA' = 10. Mặt phẳng (α) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC' lần lượt tại M, N. Xác định thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α). Tính diện tích thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho hình lăng trụ đứng ABC.A'B'C'",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ],
+              "right_at": "B"
+            },
+            "quote": "có đáy ABC là tam giác vuông tại B",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "5"
+            },
+            "quote": "AB = 5",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "B",
+                "C"
+              ],
+              "value": "5"
+            },
+            "quote": "BC = 5",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "10"
+            },
+            "quote": "cạnh bên AA' = 10",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec",
+            "plane_name": "α",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "through_point": "A'",
+            "perpendicular_line": [
+              "A",
+              "C'"
+            ],
+            "quote": "Mặt phẳng (α) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC' lần lượt tại M, N.",
+            "stated_intersections": [
+              {
+                "edge": [
+                  "B",
+                  "B'"
+                ],
+                "point": "M",
+                "quote": "cắt các cạnh bên BB', CC' lần lượt tại M, N"
+              },
+              {
+                "edge": [
+                  "C",
+                  "C'"
+                ],
+                "point": "N",
+                "quote": "cắt các cạnh bên BB', CC' lần lượt tại M, N"
+              }
+            ],
+            "declared_boundary": [
+              [
+                "A",
+                "A'"
+              ],
+              [
+                "B",
+                "B'"
+              ],
+              [
+                "C",
+                "C'"
+              ]
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_plane_section",
+            "target_section_id": "sec",
+            "target_solid_id": "s1",
+            "quote": "Xác định thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α)."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "mg1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "solid_id": "s1",
+            "target": {
+              "section_id": "sec"
+            },
+            "quote": "Tính diện tích thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α)."
+          }
+        ]
+      },
+      "expected_disposition": "SERVE",
+      "acceptable_categories": []
+    },
+    {
+      "id": "DEV-POS-09",
+      "stratum": "P-A",
+      "family": "cuboid",
+      "plane_relation": "stated_intersections",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật với AB = 3a, AD = 6a và cạnh bên AA' = 9a. Mặt phẳng (Q) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC', DD' lần lượt tại M, N, P. Xác định thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q). Tính diện tích thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q).",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật với AB = 3a, AD = 6a và cạnh bên AA' = 9a. Mặt phẳng (Q) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC', DD' lần lượt tại M, N, P. Xác định thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q). Tính diện tích thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q).",
+        "length_unit": "a",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABCD.A'B'C'D'",
+            "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'",
+                "D'"
+              ]
+            },
+            "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "rectangle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            },
+            "quote": "có đáy ABCD là hình chữ nhật",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "3a"
+            },
+            "quote": "AB = 3a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "D"
+              ],
+              "value": "6a"
+            },
+            "quote": "AD = 6a",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "9a"
+            },
+            "quote": "cạnh bên AA' = 9a",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec",
+            "plane_name": "Q",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "through_point": "A'",
+            "perpendicular_line": [
+              "A",
+              "C'"
+            ],
+            "quote": "Mặt phẳng (Q) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC', DD' lần lượt tại M, N, P.",
+            "stated_intersections": [
+              {
+                "edge": [
+                  "B",
+                  "B'"
+                ],
+                "point": "M",
+                "quote": "cắt các cạnh bên BB', CC', DD' lần lượt tại M, N, P"
+              },
+              {
+                "edge": [
+                  "C",
+                  "C'"
+                ],
+                "point": "N",
+                "quote": "cắt các cạnh bên BB', CC', DD' lần lượt tại M, N, P"
+              },
+              {
+                "edge": [
+                  "D",
+                  "D'"
+                ],
+                "point": "P",
+                "quote": "cắt các cạnh bên BB', CC', DD' lần lượt tại M, N, P"
+              }
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_plane_section",
+            "target_section_id": "sec",
+            "target_solid_id": "s1",
+            "quote": "Xác định thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q)."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "mg1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "solid_id": "s1",
+            "target": {
+              "section_id": "sec"
+            },
+            "quote": "Tính diện tích thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q)."
+          }
+        ]
+      },
+      "expected_disposition": "SERVE",
+      "acceptable_categories": []
+    },
+    {
+      "id": "DEV-POS-10",
+      "stratum": "P-A",
+      "family": "cuboid",
+      "plane_relation": "stated_intersections",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật với AB = 6, AD = 8 và cạnh bên AA' = 20. Mặt phẳng (Q) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC', DD'. Tính diện tích thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q).",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật với AB = 6, AD = 8 và cạnh bên AA' = 20. Mặt phẳng (Q) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC', DD'. Tính diện tích thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABCD.A'B'C'D'",
+            "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'",
+                "D'"
+              ]
+            },
+            "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "rectangle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            },
+            "quote": "có đáy ABCD là hình chữ nhật",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "D"
+              ],
+              "value": "8"
+            },
+            "quote": "AD = 8",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "20"
+            },
+            "quote": "cạnh bên AA' = 20",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec",
+            "plane_name": "Q",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "through_point": "A'",
+            "perpendicular_line": [
+              "A",
+              "C'"
+            ],
+            "quote": "Mặt phẳng (Q) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC', DD'.",
+            "stated_intersections": [
+              {
+                "edge": [
+                  "B",
+                  "B'"
+                ],
+                "point": null,
+                "quote": "cắt các cạnh bên BB', CC', DD'"
+              },
+              {
+                "edge": [
+                  "C",
+                  "C'"
+                ],
+                "point": null,
+                "quote": "cắt các cạnh bên BB', CC', DD'"
+              },
+              {
+                "edge": [
+                  "D",
+                  "D'"
+                ],
+                "point": null,
+                "quote": "cắt các cạnh bên BB', CC', DD'"
+              }
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_object",
+            "target_solid_id": "s1",
+            "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "mg1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "solid_id": "s1",
+            "target": {
+              "section_id": "sec"
+            },
+            "quote": "Tính diện tích thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q)."
+          }
+        ]
+      },
+      "expected_disposition": "SERVE",
+      "acceptable_categories": []
+    },
+    {
+      "id": "DEV-POS-11",
+      "stratum": "P-A",
+      "family": "cuboid",
+      "plane_relation": "stated_intersections",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật với AB = 4, AD = 8 và cạnh bên AA' = 12. Mặt phẳng (Q) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC', DD' lần lượt tại M, N, P. Xác định thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q). Tính diện tích thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q).",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật với AB = 4, AD = 8 và cạnh bên AA' = 12. Mặt phẳng (Q) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC', DD' lần lượt tại M, N, P. Xác định thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q). Tính diện tích thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABCD.A'B'C'D'",
+            "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'",
+                "D'"
+              ]
+            },
+            "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "rectangle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            },
+            "quote": "có đáy ABCD là hình chữ nhật",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "4"
+            },
+            "quote": "AB = 4",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "D"
+              ],
+              "value": "8"
+            },
+            "quote": "AD = 8",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "cạnh bên AA' = 12",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec",
+            "plane_name": "Q",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "through_point": "A'",
+            "perpendicular_line": [
+              "A",
+              "C'"
+            ],
+            "quote": "Mặt phẳng (Q) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC', DD' lần lượt tại M, N, P.",
+            "stated_intersections": [
+              {
+                "edge": [
+                  "B",
+                  "B'"
+                ],
+                "point": "M",
+                "quote": "cắt các cạnh bên BB', CC', DD' lần lượt tại M, N, P"
+              },
+              {
+                "edge": [
+                  "C",
+                  "C'"
+                ],
+                "point": "N",
+                "quote": "cắt các cạnh bên BB', CC', DD' lần lượt tại M, N, P"
+              },
+              {
+                "edge": [
+                  "D",
+                  "D'"
+                ],
+                "point": "P",
+                "quote": "cắt các cạnh bên BB', CC', DD' lần lượt tại M, N, P"
+              }
+            ],
+            "declared_boundary": [
+              [
+                "A",
+                "A'"
+              ],
+              [
+                "B",
+                "B'"
+              ],
+              [
+                "C",
+                "C'"
+              ],
+              [
+                "D",
+                "D'"
+              ]
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_plane_section",
+            "target_section_id": "sec",
+            "target_solid_id": "s1",
+            "quote": "Xác định thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q)."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "mg1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "solid_id": "s1",
+            "target": {
+              "section_id": "sec"
+            },
+            "quote": "Tính diện tích thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q)."
+          }
+        ]
+      },
+      "expected_disposition": "SERVE",
+      "acceptable_categories": []
+    },
+    {
+      "id": "DEV-POS-12",
+      "stratum": "P-A",
+      "family": "cuboid",
+      "plane_relation": "stated_intersections",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật với AB = 3, AD = 4 và cạnh bên AA' = 10. Mặt phẳng (Q) đi qua điểm B' và vuông góc với đường thẳng BD', cắt các cạnh bên AA', CC', DD' lần lượt tại M, N, P. Xác định thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q). Tính diện tích thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q).",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật với AB = 3, AD = 4 và cạnh bên AA' = 10. Mặt phẳng (Q) đi qua điểm B' và vuông góc với đường thẳng BD', cắt các cạnh bên AA', CC', DD' lần lượt tại M, N, P. Xác định thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q). Tính diện tích thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABCD.A'B'C'D'",
+            "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'",
+                "D'"
+              ]
+            },
+            "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "rectangle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            },
+            "quote": "có đáy ABCD là hình chữ nhật",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "3"
+            },
+            "quote": "AB = 3",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "D"
+              ],
+              "value": "4"
+            },
+            "quote": "AD = 4",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "10"
+            },
+            "quote": "cạnh bên AA' = 10",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec",
+            "plane_name": "Q",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "through_point": "B'",
+            "perpendicular_line": [
+              "B",
+              "D'"
+            ],
+            "quote": "Mặt phẳng (Q) đi qua điểm B' và vuông góc với đường thẳng BD', cắt các cạnh bên AA', CC', DD' lần lượt tại M, N, P.",
+            "stated_intersections": [
+              {
+                "edge": [
+                  "A",
+                  "A'"
+                ],
+                "point": "M",
+                "quote": "cắt các cạnh bên AA', CC', DD' lần lượt tại M, N, P"
+              },
+              {
+                "edge": [
+                  "C",
+                  "C'"
+                ],
+                "point": "N",
+                "quote": "cắt các cạnh bên AA', CC', DD' lần lượt tại M, N, P"
+              },
+              {
+                "edge": [
+                  "D",
+                  "D'"
+                ],
+                "point": "P",
+                "quote": "cắt các cạnh bên AA', CC', DD' lần lượt tại M, N, P"
+              }
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_plane_section",
+            "target_section_id": "sec",
+            "target_solid_id": "s1",
+            "quote": "Xác định thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q)."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "mg1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "solid_id": "s1",
+            "target": {
+              "section_id": "sec"
+            },
+            "quote": "Tính diện tích thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q)."
+          }
+        ]
+      },
+      "expected_disposition": "SERVE",
+      "acceptable_categories": []
+    },
+    {
+      "id": "DEV-POS-13",
+      "stratum": "P-A",
+      "family": "cuboid",
+      "plane_relation": "stated_intersections",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật với AB = 3, AD = 4 và cạnh bên AA' = 10. Mặt phẳng (Q) đi qua điểm C' và vuông góc với đường thẳng CA', cắt các cạnh bên AA', BB', DD'. Xác định thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q).",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật với AB = 3, AD = 4 và cạnh bên AA' = 10. Mặt phẳng (Q) đi qua điểm C' và vuông góc với đường thẳng CA', cắt các cạnh bên AA', BB', DD'. Xác định thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABCD.A'B'C'D'",
+            "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'",
+                "D'"
+              ]
+            },
+            "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "rectangle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            },
+            "quote": "có đáy ABCD là hình chữ nhật",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "3"
+            },
+            "quote": "AB = 3",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "D"
+              ],
+              "value": "4"
+            },
+            "quote": "AD = 4",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "10"
+            },
+            "quote": "cạnh bên AA' = 10",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec",
+            "plane_name": "Q",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "through_point": "C'",
+            "perpendicular_line": [
+              "C",
+              "A'"
+            ],
+            "quote": "Mặt phẳng (Q) đi qua điểm C' và vuông góc với đường thẳng CA', cắt các cạnh bên AA', BB', DD'.",
+            "stated_intersections": [
+              {
+                "edge": [
+                  "A",
+                  "A'"
+                ],
+                "point": null,
+                "quote": "cắt các cạnh bên AA', BB', DD'"
+              },
+              {
+                "edge": [
+                  "B",
+                  "B'"
+                ],
+                "point": null,
+                "quote": "cắt các cạnh bên AA', BB', DD'"
+              },
+              {
+                "edge": [
+                  "D",
+                  "D'"
+                ],
+                "point": null,
+                "quote": "cắt các cạnh bên AA', BB', DD'"
+              }
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_plane_section",
+            "target_section_id": "sec",
+            "target_solid_id": "s1",
+            "quote": "Xác định thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q)."
+          }
+        ],
+        "math_goals": []
+      },
+      "expected_disposition": "SERVE",
+      "acceptable_categories": []
+    },
+    {
+      "id": "DEV-POS-14",
+      "stratum": "P-A",
+      "family": "cuboid",
+      "plane_relation": "stated_intersections",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật với AB = 4, AD = 3 và cạnh bên AA' = 10. Mặt phẳng (Q) đi qua điểm D' và vuông góc với đường thẳng DB', cắt các cạnh bên AA', BB', CC' lần lượt tại E, F, G. Tính diện tích thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q).",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật với AB = 4, AD = 3 và cạnh bên AA' = 10. Mặt phẳng (Q) đi qua điểm D' và vuông góc với đường thẳng DB', cắt các cạnh bên AA', BB', CC' lần lượt tại E, F, G. Tính diện tích thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "s1",
+            "solid_type": "prism",
+            "notation": "ABCD.A'B'C'D'",
+            "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'"
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'",
+                "D'"
+              ]
+            },
+            "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "rectangle",
+            "args": {
+              "vertices": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            },
+            "quote": "có đáy ABCD là hình chữ nhật",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "4"
+            },
+            "quote": "AB = 4",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "D"
+              ],
+              "value": "3"
+            },
+            "quote": "AD = 3",
+            "solid_id": "s1"
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "10"
+            },
+            "quote": "cạnh bên AA' = 10",
+            "solid_id": "s1"
+          }
+        ],
+        "derived_sections": [
+          {
+            "section_id": "sec",
+            "plane_name": "Q",
+            "target_solid_id": "s1",
+            "plane_kind": "through_point_perpendicular_line",
+            "through_point": "D'",
+            "perpendicular_line": [
+              "D",
+              "B'"
+            ],
+            "quote": "Mặt phẳng (Q) đi qua điểm D' và vuông góc với đường thẳng DB', cắt các cạnh bên AA', BB', CC' lần lượt tại E, F, G.",
+            "stated_intersections": [
+              {
+                "edge": [
+                  "A",
+                  "A'"
+                ],
+                "point": "E",
+                "quote": "cắt các cạnh bên AA', BB', CC' lần lượt tại E, F, G"
+              },
+              {
+                "edge": [
+                  "B",
+                  "B'"
+                ],
+                "point": "F",
+                "quote": "cắt các cạnh bên AA', BB', CC' lần lượt tại E, F, G"
+              },
+              {
+                "edge": [
+                  "C",
+                  "C'"
+                ],
+                "point": "G",
+                "quote": "cắt các cạnh bên AA', BB', CC' lần lượt tại E, F, G"
+              }
+            ]
+          }
+        ],
+        "relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sg1",
+            "kind": "construct_object",
+            "target_solid_id": "s1",
+            "quote": "Cho hình hộp chữ nhật ABCD.A'B'C'D'"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "mg1",
+            "kind": "measurement",
+            "goal_type": "area",
+            "solid_id": "s1",
+            "target": {
+              "section_id": "sec"
+            },
+            "quote": "Tính diện tích thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q)."
+          }
+        ]
+      },
+      "expected_disposition": "SERVE",
+      "acceptable_categories": []
+    }
+  ],
+  "negative_tamper_specs": [
+    {
+      "id": "TAMPER-01",
+      "base_case": "W2-A07",
+      "tamper_kind": "NONEXISTENT_PRIMED_POINT",
+      "description": "Điểm có dấu phẩy nhưng không tồn tại (Z' in section vertices)."
+    },
+    {
+      "id": "TAMPER-02",
+      "base_case": "W2-A07",
+      "tamper_kind": "WRONG_SOLID_IDENTITY",
+      "description": "Sai solid identity (solid notation in scene3d does not match planner DINH_CAT_CANH solid)."
+    },
+    {
+      "id": "TAMPER-03",
+      "base_case": "W2-A07",
+      "tamper_kind": "VERTEX_FROM_ANOTHER_SOLID",
+      "description": "Đỉnh thuộc solid khác (vertex edge references point from another solid)."
+    },
+    {
+      "id": "TAMPER-04",
+      "base_case": "W2-A07",
+      "tamper_kind": "CUT_VERTEX_OFF_EDGE",
+      "description": "Đỉnh cắt nằm ngoài cạnh (M shifted off line BB')."
+    },
+    {
+      "id": "TAMPER-05",
+      "base_case": "W2-A07",
+      "tamper_kind": "INTERPOLATION_T_OUTSIDE_0_1",
+      "description": "Nội suy t nằm ngoài [0,1] (M collinear with BB' at t = 5/4 > 1)."
+    },
+    {
+      "id": "TAMPER-06",
+      "base_case": "W2-A07",
+      "tamper_kind": "SAME_LABEL_MISMATCHED_COORDINATES",
+      "description": "Nhãn trùng nhưng tọa độ khác (A_prime xyz differs from section polygon vertex)."
+    },
+    {
+      "id": "TAMPER-07",
+      "base_case": "W2-A10",
+      "tamper_kind": "MISSING_VERTEX_IN_CYCLE",
+      "description": "Thiếu một đỉnh trong chu trình (4-vertex polygon with only 3 vertices in section.vertices)."
+    },
+    {
+      "id": "TAMPER-08",
+      "base_case": "W2-A07",
+      "tamper_kind": "DUPLICATE_VERTEX",
+      "description": "Duplicate vertex (A' and A′ / duplicate label in section.vertices)."
+    },
+    {
+      "id": "TAMPER-09",
+      "base_case": "W2-A10",
+      "tamper_kind": "WRONG_SECTION_TOPOLOGY_ORDER",
+      "description": "Sai thứ tự hoặc topology của section (bow-tie 4-cycle crossing non-adjacent prism faces)."
+    },
+    {
+      "id": "TAMPER-10",
+      "base_case": "W2-A07",
+      "tamper_kind": "CATEGORY_A_B_CERTIFICATE_MIXING",
+      "description": "Category A/B certificate mixing (Category A section carries ENGINE_DERIVED_SECTION / certificate_version)."
+    },
+    {
+      "id": "TAMPER-11",
+      "base_case": "W2-A07",
+      "tamper_kind": "FORGED_PROVENANCE_STATED",
+      "description": "Giả mạo stated/derived provenance (THROUGH_POINT_REUSE marked stated=True)."
+    },
+    {
+      "id": "TAMPER-12",
+      "base_case": "W2-A07",
+      "tamper_kind": "AREA_SQUARED_MISMATCH",
+      "description": "Area-squared không khớp oracle (kq_mg1 tampered to disagree with exact section polygon area_squared)."
+    }
+  ]
+}

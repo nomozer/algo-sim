@@ -1,0 +1,432 @@
+{
+  "task_id": "HYBRID_V2_W2_M5_ADAPTER4_CATEGORY_A_IDENTITY_REPAIR",
+  "oracles": {
+    "W2-A07": {
+      "solid": "ABC.A'B'C'",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "vertex": "A'"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "1/2"
+        }
+      ],
+      "area_squared": "1875/8"
+    },
+    "W2-A10": {
+      "solid": "ABCD.A'B'C'D'",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": null,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "vertex": "A'"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "8/9"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "5/9"
+        }
+      ],
+      "area_squared": "504"
+    },
+    "DEV-POS-03": {
+      "solid": "ABC.A'B'C'",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "vertex": "A'"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "91/100"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "3/4"
+        }
+      ],
+      "area_squared": "45"
+    },
+    "DEV-POS-04": {
+      "solid": "ABC.A'B'C'",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "vertex": "A'"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "91/100"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "3/4"
+        }
+      ],
+      "area_squared": "720"
+    },
+    "DEV-POS-05": {
+      "solid": "ABC.A'B'C'",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": null,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "vertex": "A'"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "3/4"
+        }
+      ],
+      "area_squared": "45"
+    },
+    "DEV-POS-06": {
+      "solid": "ABC.A'B'C'",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "91/100"
+        },
+        {
+          "vertex": "C'"
+        }
+      ],
+      "area_squared": "45"
+    },
+    "DEV-POS-07": {
+      "solid": "ABC.A'B'C'",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "vertex": "C'"
+        }
+      ],
+      "area_squared": "45"
+    },
+    "DEV-POS-08": {
+      "solid": "ABC.A'B'C'",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "vertex": "A'"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "1/2"
+        }
+      ],
+      "area_squared": "1875/8"
+    },
+    "DEV-POS-09": {
+      "solid": "ABCD.A'B'C'D'",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "vertex": "A'"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "8/9"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "5/9"
+        }
+      ],
+      "area_squared": "504"
+    },
+    "DEV-POS-10": {
+      "solid": "ABCD.A'B'C'D'",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "vertex": "A'"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "91/100"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "21/25"
+        }
+      ],
+      "area_squared": "2880"
+    },
+    "DEV-POS-11": {
+      "solid": "ABCD.A'B'C'D'",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "vertex": "A'"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "8/9"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "5/9"
+        }
+      ],
+      "area_squared": "14336/9"
+    },
+    "DEV-POS-12": {
+      "solid": "ABCD.A'B'C'D'",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "91/100"
+        },
+        {
+          "vertex": "B'"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "21/25"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "3/4"
+        }
+      ],
+      "area_squared": "180"
+    },
+    "DEV-POS-13": {
+      "solid": "ABCD.A'B'C'D'",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": null,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "21/25"
+        },
+        {
+          "vertex": "C'"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "91/100"
+        }
+      ],
+      "area_squared": "180"
+    },
+    "DEV-POS-14": {
+      "solid": "ABCD.A'B'C'D'",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "91/100"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "21/25"
+        },
+        {
+          "vertex": "D'"
+        }
+      ],
+      "area_squared": "180"
+    }
+  }
+}
