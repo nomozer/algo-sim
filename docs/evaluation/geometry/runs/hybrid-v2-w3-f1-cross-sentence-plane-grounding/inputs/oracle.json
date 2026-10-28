@@ -1,0 +1,5156 @@
+{
+  "schema_version": "w3-f1-development-oracle/1",
+  "task": "HYBRID_V2_W3_F1_CROSS_SENTENCE_PLANE_GROUNDING",
+  "cases": [
+    {
+      "id": "W3-B03",
+      "case_id": "W3-B03",
+      "solid": "S.EFG",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "361/884"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "19/2"
+        ],
+        [
+          "0",
+          "7",
+          "19/2"
+        ],
+        [
+          "3249/884",
+          "0",
+          "9937/884"
+        ]
+      ],
+      "area_squared": "1432809/7072",
+      "plane_equation": {
+        "normal": [
+          "9",
+          "0",
+          "-19"
+        ],
+        "d": "-361/2"
+      }
+    },
+    {
+      "id": "W3-B06",
+      "case_id": "W3-B06",
+      "solid": "A.BCD",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "A",
+            "D"
+          ],
+          "t": "2/7"
+        },
+        {
+          "edge": [
+            "D",
+            "B"
+          ],
+          "t": "5/7"
+        },
+        {
+          "edge": [
+            "C",
+            "D"
+          ],
+          "t": "2/7"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "30/7",
+          "115/7"
+        ],
+        [
+          "0",
+          "30/7",
+          "0"
+        ],
+        [
+          "40/7",
+          "30/7",
+          "0"
+        ]
+      ],
+      "area_squared": "5290000/2401",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-184",
+          "0"
+        ],
+        "d": "-5520/7"
+      }
+    },
+    {
+      "id": "W3-B09",
+      "case_id": "W3-B09",
+      "solid": "S.KLM",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "M"
+          ],
+          "t": "4/7"
+        },
+        {
+          "edge": [
+            "M",
+            "K"
+          ],
+          "t": "3/7"
+        },
+        {
+          "edge": [
+            "L",
+            "M"
+          ],
+          "t": "4/7"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "52/7",
+          "9"
+        ],
+        [
+          "0",
+          "52/7",
+          "0"
+        ],
+        [
+          "30/7",
+          "52/7",
+          "0"
+        ]
+      ],
+      "area_squared": "18225/49",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-210",
+          "0"
+        ],
+        "d": "-1560"
+      }
+    },
+    {
+      "id": "W3-B12",
+      "case_id": "W3-B12",
+      "solid": "S.EFGH",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "3/8"
+        },
+        {
+          "edge": [
+            "S",
+            "H"
+          ],
+          "t": "867/3464"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "867/3464"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "3/8"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "85/8"
+        ],
+        [
+          "0",
+          "2601/866",
+          "44149/3464"
+        ],
+        [
+          "6069/3464",
+          "2601/866",
+          "44149/3464"
+        ],
+        [
+          "21/8",
+          "0",
+          "85/8"
+        ]
+      ],
+      "area_squared": "1345351771449/20782780672",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "12",
+          "-17"
+        ],
+        "d": "-1445/8"
+      }
+    },
+    {
+      "id": "W3-B15",
+      "case_id": "W3-B15",
+      "solid": "A.BCDE",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "A",
+            "D"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "A",
+            "E"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "E",
+            "B"
+          ],
+          "t": "5/9"
+        },
+        {
+          "edge": [
+            "C",
+            "D"
+          ],
+          "t": "4/9"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "28/9",
+          "40/9",
+          "95/9"
+        ],
+        [
+          "0",
+          "40/9",
+          "95/9"
+        ],
+        [
+          "0",
+          "40/9",
+          "0"
+        ],
+        [
+          "7",
+          "40/9",
+          "0"
+        ]
+      ],
+      "area_squared": "74736025/26244",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-133",
+          "0"
+        ],
+        "d": "-5320/9"
+      }
+    },
+    {
+      "id": "W3-B18",
+      "case_id": "W3-B18",
+      "solid": "S.GHKL",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "K"
+          ],
+          "t": "3/7"
+        },
+        {
+          "edge": [
+            "S",
+            "L"
+          ],
+          "t": "3/7"
+        },
+        {
+          "edge": [
+            "L",
+            "G"
+          ],
+          "t": "4/7"
+        },
+        {
+          "edge": [
+            "H",
+            "K"
+          ],
+          "t": "3/7"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "27/7",
+          "48/7",
+          "92/7"
+        ],
+        [
+          "0",
+          "48/7",
+          "92/7"
+        ],
+        [
+          "0",
+          "48/7",
+          "0"
+        ],
+        [
+          "9",
+          "48/7",
+          "0"
+        ]
+      ],
+      "area_squared": "17139600/2401",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-207",
+          "0"
+        ],
+        "d": "-9936/7"
+      }
+    },
+    {
+      "id": "W3-B21",
+      "case_id": "W3-B21",
+      "solid": "DEF.D'E'F'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "4/5"
+        },
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "4/5"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "304/605"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "44/5"
+        ],
+        [
+          "5",
+          "0",
+          "44/5"
+        ],
+        [
+          "0",
+          "6",
+          "304/55"
+        ]
+      ],
+      "area_squared": "35325/121",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "6",
+          "11"
+        ],
+        "d": "484/5"
+      }
+    },
+    {
+      "id": "W3-B24",
+      "case_id": "W3-B24",
+      "solid": "GHK.G'H'K'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "H",
+            "K"
+          ],
+          "t": "3/8"
+        },
+        {
+          "edge": [
+            "H'",
+            "K'"
+          ],
+          "t": "3/8"
+        },
+        {
+          "edge": [
+            "K'",
+            "G'"
+          ],
+          "t": "5/8"
+        },
+        {
+          "edge": [
+            "K",
+            "G"
+          ],
+          "t": "5/8"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "5",
+          "33/8",
+          "0"
+        ],
+        [
+          "5",
+          "33/8",
+          "17"
+        ],
+        [
+          "0",
+          "33/8",
+          "17"
+        ],
+        [
+          "0",
+          "33/8",
+          "0"
+        ]
+      ],
+      "area_squared": "7225",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-136",
+          "0"
+        ],
+        "d": "-561"
+      }
+    },
+    {
+      "id": "W3-B27",
+      "case_id": "W3-B27",
+      "solid": "RST.R'S'T'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "T"
+          ],
+          "t": "4/11"
+        },
+        {
+          "edge": [
+            "T",
+            "R"
+          ],
+          "t": "7/11"
+        },
+        {
+          "edge": [
+            "T'",
+            "R'"
+          ],
+          "t": "7/11"
+        },
+        {
+          "edge": [
+            "S'",
+            "T'"
+          ],
+          "t": "4/11"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "7",
+          "52/11",
+          "0"
+        ],
+        [
+          "0",
+          "52/11",
+          "0"
+        ],
+        [
+          "0",
+          "52/11",
+          "24"
+        ],
+        [
+          "7",
+          "52/11",
+          "24"
+        ]
+      ],
+      "area_squared": "28224",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "264",
+          "0"
+        ],
+        "d": "1248"
+      }
+    },
+    {
+      "id": "W3-B30",
+      "case_id": "W3-B30",
+      "solid": "DEF.D'E'F'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "5/7"
+        },
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "795/1358"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "359/679"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "25/7",
+          "0",
+          "65/7"
+        ],
+        [
+          "10765/1358",
+          "0",
+          "10335/1358"
+        ],
+        [
+          "1795/679",
+          "6",
+          "4667/679"
+        ]
+      ],
+      "area_squared": "4372875/18818",
+      "plane_equation": {
+        "normal": [
+          "5",
+          "6",
+          "13"
+        ],
+        "d": "970/7"
+      }
+    },
+    {
+      "id": "W3-B33",
+      "case_id": "W3-B33",
+      "solid": "GHK.G'H'K'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "H",
+            "K"
+          ],
+          "t": "5/9"
+        },
+        {
+          "edge": [
+            "H'",
+            "K'"
+          ],
+          "t": "5/9"
+        },
+        {
+          "edge": [
+            "K'",
+            "G'"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "K",
+            "G"
+          ],
+          "t": "4/9"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "20/9",
+          "55/9",
+          "0"
+        ],
+        [
+          "65/9",
+          "55/9",
+          "14"
+        ],
+        [
+          "5",
+          "55/9",
+          "14"
+        ],
+        [
+          "0",
+          "55/9",
+          "0"
+        ]
+      ],
+      "area_squared": "78400/81",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-70",
+          "0"
+        ],
+        "d": "-3850/9"
+      }
+    },
+    {
+      "id": "W3-B36",
+      "case_id": "W3-B36",
+      "solid": "UVW.U'V'W'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "V",
+            "W"
+          ],
+          "t": "5/11"
+        },
+        {
+          "edge": [
+            "W",
+            "U"
+          ],
+          "t": "6/11"
+        },
+        {
+          "edge": [
+            "W'",
+            "U'"
+          ],
+          "t": "6/11"
+        },
+        {
+          "edge": [
+            "V'",
+            "W'"
+          ],
+          "t": "5/11"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "48/11",
+          "45/11",
+          "0"
+        ],
+        [
+          "0",
+          "45/11",
+          "0"
+        ],
+        [
+          "8",
+          "45/11",
+          "19"
+        ],
+        [
+          "136/11",
+          "45/11",
+          "19"
+        ]
+      ],
+      "area_squared": "831744/121",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "152",
+          "0"
+        ],
+        "d": "6840/11"
+      }
+    },
+    {
+      "id": "W3-B39",
+      "case_id": "W3-B39",
+      "solid": "EFGH.E'F'G'H'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "vertex": "E'"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "144/169"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "108/169"
+        },
+        {
+          "edge": [
+            "H",
+            "H'"
+          ],
+          "t": "133/169"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "13"
+        ],
+        [
+          "5",
+          "0",
+          "144/13"
+        ],
+        [
+          "5",
+          "6",
+          "108/13"
+        ],
+        [
+          "0",
+          "6",
+          "133/13"
+        ]
+      ],
+      "area_squared": "207000/169",
+      "plane_equation": {
+        "normal": [
+          "5",
+          "6",
+          "13"
+        ],
+        "d": "169"
+      }
+    },
+    {
+      "id": "W3-B42",
+      "case_id": "W3-B42",
+      "solid": "GHKL.G'H'K'L'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "H",
+            "K"
+          ],
+          "t": "3/13"
+        },
+        {
+          "edge": [
+            "H'",
+            "K'"
+          ],
+          "t": "3/13"
+        },
+        {
+          "edge": [
+            "L'",
+            "G'"
+          ],
+          "t": "10/13"
+        },
+        {
+          "edge": [
+            "L",
+            "G"
+          ],
+          "t": "10/13"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "8",
+          "33/13",
+          "0"
+        ],
+        [
+          "8",
+          "33/13",
+          "21"
+        ],
+        [
+          "0",
+          "33/13",
+          "21"
+        ],
+        [
+          "0",
+          "33/13",
+          "0"
+        ]
+      ],
+      "area_squared": "28224",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-168",
+          "0"
+        ],
+        "d": "-5544/13"
+      }
+    },
+    {
+      "id": "W3-B45",
+      "case_id": "W3-B45",
+      "solid": "CDEF.C'D'E'F'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "E"
+          ],
+          "t": "7/11"
+        },
+        {
+          "edge": [
+            "F",
+            "C"
+          ],
+          "t": "4/11"
+        },
+        {
+          "edge": [
+            "F'",
+            "C'"
+          ],
+          "t": "4/11"
+        },
+        {
+          "edge": [
+            "D'",
+            "E'"
+          ],
+          "t": "7/11"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "11",
+          "84/11",
+          "0"
+        ],
+        [
+          "0",
+          "84/11",
+          "0"
+        ],
+        [
+          "0",
+          "84/11",
+          "25"
+        ],
+        [
+          "11",
+          "84/11",
+          "25"
+        ]
+      ],
+      "area_squared": "75625",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "275",
+          "0"
+        ],
+        "d": "2100"
+      }
+    },
+    {
+      "id": "W3-B48",
+      "case_id": "W3-B48",
+      "solid": "EFGH.E'F'G'H'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "E",
+            "F"
+          ],
+          "t": "4/11"
+        },
+        {
+          "edge": [
+            "G",
+            "H"
+          ],
+          "t": "7/11"
+        },
+        {
+          "edge": [
+            "G'",
+            "H'"
+          ],
+          "t": "7/11"
+        },
+        {
+          "edge": [
+            "E'",
+            "F'"
+          ],
+          "t": "4/11"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "4",
+          "0",
+          "0"
+        ],
+        [
+          "4",
+          "11",
+          "0"
+        ],
+        [
+          "4",
+          "11",
+          "11"
+        ],
+        [
+          "4",
+          "0",
+          "11"
+        ]
+      ],
+      "area_squared": "14641",
+      "plane_equation": {
+        "normal": [
+          "11",
+          "0",
+          "0"
+        ],
+        "d": "44"
+      }
+    },
+    {
+      "id": "W3-B51",
+      "case_id": "W3-B51",
+      "solid": "GHKL.G'H'K'L'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "H",
+            "K"
+          ],
+          "t": "3/13"
+        },
+        {
+          "edge": [
+            "H'",
+            "K'"
+          ],
+          "t": "3/13"
+        },
+        {
+          "edge": [
+            "L'",
+            "G'"
+          ],
+          "t": "10/13"
+        },
+        {
+          "edge": [
+            "L",
+            "G"
+          ],
+          "t": "10/13"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "15",
+          "45/13",
+          "0"
+        ],
+        [
+          "15",
+          "45/13",
+          "15"
+        ],
+        [
+          "0",
+          "45/13",
+          "15"
+        ],
+        [
+          "0",
+          "45/13",
+          "0"
+        ]
+      ],
+      "area_squared": "50625",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-225",
+          "0"
+        ],
+        "d": "-10125/13"
+      }
+    },
+    {
+      "id": "W3-B54",
+      "case_id": "W3-B54",
+      "solid": "CDEF.C'D'E'F'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "E"
+          ],
+          "t": "6/13"
+        },
+        {
+          "edge": [
+            "F",
+            "C"
+          ],
+          "t": "7/13"
+        },
+        {
+          "edge": [
+            "F'",
+            "C'"
+          ],
+          "t": "7/13"
+        },
+        {
+          "edge": [
+            "D'",
+            "E'"
+          ],
+          "t": "6/13"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "21",
+          "126/13",
+          "0"
+        ],
+        [
+          "0",
+          "126/13",
+          "0"
+        ],
+        [
+          "0",
+          "126/13",
+          "21"
+        ],
+        [
+          "21",
+          "126/13",
+          "21"
+        ]
+      ],
+      "area_squared": "194481",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "441",
+          "0"
+        ],
+        "d": "55566/13"
+      }
+    },
+    {
+      "id": "W3-A03",
+      "case_id": "W3-A03",
+      "solid": "S.EFG",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "expected_category": "DINH_CAT_CANH",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "128/281"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "8"
+        ],
+        [
+          "0",
+          "11/2",
+          "8"
+        ],
+        [
+          "640/281",
+          "0",
+          "2448/281"
+        ]
+      ],
+      "area_squared": "12100/281",
+      "plane_equation": {
+        "normal": [
+          "5",
+          "0",
+          "-16"
+        ],
+        "d": "-128"
+      }
+    },
+    {
+      "id": "W3-A06",
+      "case_id": "W3-A06",
+      "solid": "S.EFGH",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "expected_category": "DINH_CAT_CANH",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "3/7"
+        },
+        {
+          "edge": [
+            "S",
+            "H"
+          ],
+          "t": "675/1918"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "135/434"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "75/203"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "60/7"
+        ],
+        [
+          "0",
+          "675/274",
+          "18645/1918"
+        ],
+        [
+          "405/217",
+          "135/62",
+          "4485/434"
+        ],
+        [
+          "450/203",
+          "0",
+          "1920/203"
+        ]
+      ],
+      "area_squared": "5868506953125/191816026808",
+      "plane_equation": {
+        "normal": [
+          "6",
+          "7",
+          "-15"
+        ],
+        "d": "-900/7"
+      }
+    },
+    {
+      "id": "W3-A09",
+      "case_id": "W3-A09",
+      "solid": "DEF.D'E'F'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "expected_category": "DINH_CAT_CANH",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "5/14"
+        },
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "5/14"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "5/14"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "95/14"
+        ],
+        [
+          "7",
+          "0",
+          "95/14"
+        ],
+        [
+          "0",
+          "10",
+          "95/14"
+        ]
+      ],
+      "area_squared": "1225",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "0",
+          "70"
+        ],
+        "d": "475"
+      }
+    },
+    {
+      "id": "W3-A12",
+      "case_id": "W3-A12",
+      "solid": "DEF.D'E'F'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "expected_category": "DINH_CAT_CANH",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "6/11"
+        },
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "1270/2651"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "6/11"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "24/11",
+          "0",
+          "90/11"
+        ],
+        [
+          "15684/2651",
+          "0",
+          "19050/2651"
+        ],
+        [
+          "24/11",
+          "7",
+          "90/11"
+        ]
+      ],
+      "area_squared": "44100/241",
+      "plane_equation": {
+        "normal": [
+          "4",
+          "0",
+          "15"
+        ],
+        "d": "1446/11"
+      }
+    },
+    {
+      "id": "W3-A15",
+      "case_id": "W3-A15",
+      "solid": "EFGH.E'F'G'H'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "expected_category": "DINH_CAT_CANH",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "4/15"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "4/15"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "4/15"
+        },
+        {
+          "edge": [
+            "H",
+            "H'"
+          ],
+          "t": "4/15"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "16/3"
+        ],
+        [
+          "7",
+          "0",
+          "16/3"
+        ],
+        [
+          "7",
+          "9",
+          "16/3"
+        ],
+        [
+          "0",
+          "9",
+          "16/3"
+        ]
+      ],
+      "area_squared": "3969",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "0",
+          "63"
+        ],
+        "d": "336"
+      }
+    },
+    {
+      "id": "W3-A18",
+      "case_id": "W3-A18",
+      "solid": "EFGH.E'F'G'H'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "expected_category": "DINH_CAT_CANH",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "2/17"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "2/17"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "2/17"
+        },
+        {
+          "edge": [
+            "H",
+            "H'"
+          ],
+          "t": "2/17"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "46/17"
+        ],
+        [
+          "23",
+          "0",
+          "46/17"
+        ],
+        [
+          "23",
+          "23",
+          "46/17"
+        ],
+        [
+          "0",
+          "23",
+          "46/17"
+        ]
+      ],
+      "area_squared": "279841",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "0",
+          "529"
+        ],
+        "d": "24334/17"
+      }
+    },
+    {
+      "id": "DEV-F1-B03",
+      "case_id": "W3-B03",
+      "solid": "S.EFG",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "361/884"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "19/2"
+        ],
+        [
+          "0",
+          "7",
+          "19/2"
+        ],
+        [
+          "3249/884",
+          "0",
+          "9937/884"
+        ]
+      ],
+      "area_squared": "1432809/7072",
+      "plane_equation": {
+        "normal": [
+          "9",
+          "0",
+          "-19"
+        ],
+        "d": "-361/2"
+      }
+    },
+    {
+      "id": "DEV-F1-B06",
+      "case_id": "W3-B06",
+      "solid": "A.BCD",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "A",
+            "D"
+          ],
+          "t": "2/7"
+        },
+        {
+          "edge": [
+            "D",
+            "B"
+          ],
+          "t": "5/7"
+        },
+        {
+          "edge": [
+            "C",
+            "D"
+          ],
+          "t": "2/7"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "30/7",
+          "115/7"
+        ],
+        [
+          "0",
+          "30/7",
+          "0"
+        ],
+        [
+          "40/7",
+          "30/7",
+          "0"
+        ]
+      ],
+      "area_squared": "5290000/2401",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-184",
+          "0"
+        ],
+        "d": "-5520/7"
+      }
+    },
+    {
+      "id": "DEV-F1-B09",
+      "case_id": "W3-B09",
+      "solid": "S.KLM",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "M"
+          ],
+          "t": "4/7"
+        },
+        {
+          "edge": [
+            "M",
+            "K"
+          ],
+          "t": "3/7"
+        },
+        {
+          "edge": [
+            "L",
+            "M"
+          ],
+          "t": "4/7"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "52/7",
+          "9"
+        ],
+        [
+          "0",
+          "52/7",
+          "0"
+        ],
+        [
+          "30/7",
+          "52/7",
+          "0"
+        ]
+      ],
+      "area_squared": "18225/49",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-210",
+          "0"
+        ],
+        "d": "-1560"
+      }
+    },
+    {
+      "id": "DEV-F1-B12",
+      "case_id": "W3-B12",
+      "solid": "S.EFGH",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "3/8"
+        },
+        {
+          "edge": [
+            "S",
+            "H"
+          ],
+          "t": "867/3464"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "867/3464"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "3/8"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "85/8"
+        ],
+        [
+          "0",
+          "2601/866",
+          "44149/3464"
+        ],
+        [
+          "6069/3464",
+          "2601/866",
+          "44149/3464"
+        ],
+        [
+          "21/8",
+          "0",
+          "85/8"
+        ]
+      ],
+      "area_squared": "1345351771449/20782780672",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "12",
+          "-17"
+        ],
+        "d": "-1445/8"
+      }
+    },
+    {
+      "id": "DEV-F1-B15",
+      "case_id": "W3-B15",
+      "solid": "A.BCDE",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "A",
+            "D"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "A",
+            "E"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "E",
+            "B"
+          ],
+          "t": "5/9"
+        },
+        {
+          "edge": [
+            "C",
+            "D"
+          ],
+          "t": "4/9"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "28/9",
+          "40/9",
+          "95/9"
+        ],
+        [
+          "0",
+          "40/9",
+          "95/9"
+        ],
+        [
+          "0",
+          "40/9",
+          "0"
+        ],
+        [
+          "7",
+          "40/9",
+          "0"
+        ]
+      ],
+      "area_squared": "74736025/26244",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-133",
+          "0"
+        ],
+        "d": "-5320/9"
+      }
+    },
+    {
+      "id": "DEV-F1-B18",
+      "case_id": "W3-B18",
+      "solid": "S.GHKL",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "K"
+          ],
+          "t": "3/7"
+        },
+        {
+          "edge": [
+            "S",
+            "L"
+          ],
+          "t": "3/7"
+        },
+        {
+          "edge": [
+            "L",
+            "G"
+          ],
+          "t": "4/7"
+        },
+        {
+          "edge": [
+            "H",
+            "K"
+          ],
+          "t": "3/7"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "27/7",
+          "48/7",
+          "92/7"
+        ],
+        [
+          "0",
+          "48/7",
+          "92/7"
+        ],
+        [
+          "0",
+          "48/7",
+          "0"
+        ],
+        [
+          "9",
+          "48/7",
+          "0"
+        ]
+      ],
+      "area_squared": "17139600/2401",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-207",
+          "0"
+        ],
+        "d": "-9936/7"
+      }
+    },
+    {
+      "id": "DEV-F1-B21",
+      "case_id": "W3-B21",
+      "solid": "DEF.D'E'F'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "4/5"
+        },
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "4/5"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "304/605"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "44/5"
+        ],
+        [
+          "5",
+          "0",
+          "44/5"
+        ],
+        [
+          "0",
+          "6",
+          "304/55"
+        ]
+      ],
+      "area_squared": "35325/121",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "6",
+          "11"
+        ],
+        "d": "484/5"
+      }
+    },
+    {
+      "id": "DEV-F1-B24",
+      "case_id": "W3-B24",
+      "solid": "GHK.G'H'K'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "H",
+            "K"
+          ],
+          "t": "3/8"
+        },
+        {
+          "edge": [
+            "H'",
+            "K'"
+          ],
+          "t": "3/8"
+        },
+        {
+          "edge": [
+            "K'",
+            "G'"
+          ],
+          "t": "5/8"
+        },
+        {
+          "edge": [
+            "K",
+            "G"
+          ],
+          "t": "5/8"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "5",
+          "33/8",
+          "0"
+        ],
+        [
+          "5",
+          "33/8",
+          "17"
+        ],
+        [
+          "0",
+          "33/8",
+          "17"
+        ],
+        [
+          "0",
+          "33/8",
+          "0"
+        ]
+      ],
+      "area_squared": "7225",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-136",
+          "0"
+        ],
+        "d": "-561"
+      }
+    },
+    {
+      "id": "DEV-F1-B27",
+      "case_id": "W3-B27",
+      "solid": "RST.R'S'T'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "T"
+          ],
+          "t": "4/11"
+        },
+        {
+          "edge": [
+            "T",
+            "R"
+          ],
+          "t": "7/11"
+        },
+        {
+          "edge": [
+            "T'",
+            "R'"
+          ],
+          "t": "7/11"
+        },
+        {
+          "edge": [
+            "S'",
+            "T'"
+          ],
+          "t": "4/11"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "7",
+          "52/11",
+          "0"
+        ],
+        [
+          "0",
+          "52/11",
+          "0"
+        ],
+        [
+          "0",
+          "52/11",
+          "24"
+        ],
+        [
+          "7",
+          "52/11",
+          "24"
+        ]
+      ],
+      "area_squared": "28224",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "264",
+          "0"
+        ],
+        "d": "1248"
+      }
+    },
+    {
+      "id": "DEV-F1-B30",
+      "case_id": "W3-B30",
+      "solid": "DEF.D'E'F'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "5/7"
+        },
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "795/1358"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "359/679"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "25/7",
+          "0",
+          "65/7"
+        ],
+        [
+          "10765/1358",
+          "0",
+          "10335/1358"
+        ],
+        [
+          "1795/679",
+          "6",
+          "4667/679"
+        ]
+      ],
+      "area_squared": "4372875/18818",
+      "plane_equation": {
+        "normal": [
+          "5",
+          "6",
+          "13"
+        ],
+        "d": "970/7"
+      }
+    },
+    {
+      "id": "DEV-F1-B33",
+      "case_id": "W3-B33",
+      "solid": "GHK.G'H'K'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "H",
+            "K"
+          ],
+          "t": "5/9"
+        },
+        {
+          "edge": [
+            "H'",
+            "K'"
+          ],
+          "t": "5/9"
+        },
+        {
+          "edge": [
+            "K'",
+            "G'"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "K",
+            "G"
+          ],
+          "t": "4/9"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "20/9",
+          "55/9",
+          "0"
+        ],
+        [
+          "65/9",
+          "55/9",
+          "14"
+        ],
+        [
+          "5",
+          "55/9",
+          "14"
+        ],
+        [
+          "0",
+          "55/9",
+          "0"
+        ]
+      ],
+      "area_squared": "78400/81",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-70",
+          "0"
+        ],
+        "d": "-3850/9"
+      }
+    },
+    {
+      "id": "DEV-F1-B36",
+      "case_id": "W3-B36",
+      "solid": "UVW.U'V'W'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "V",
+            "W"
+          ],
+          "t": "5/11"
+        },
+        {
+          "edge": [
+            "W",
+            "U"
+          ],
+          "t": "6/11"
+        },
+        {
+          "edge": [
+            "W'",
+            "U'"
+          ],
+          "t": "6/11"
+        },
+        {
+          "edge": [
+            "V'",
+            "W'"
+          ],
+          "t": "5/11"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "48/11",
+          "45/11",
+          "0"
+        ],
+        [
+          "0",
+          "45/11",
+          "0"
+        ],
+        [
+          "8",
+          "45/11",
+          "19"
+        ],
+        [
+          "136/11",
+          "45/11",
+          "19"
+        ]
+      ],
+      "area_squared": "831744/121",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "152",
+          "0"
+        ],
+        "d": "6840/11"
+      }
+    },
+    {
+      "id": "DEV-F1-B39",
+      "case_id": "W3-B39",
+      "solid": "EFGH.E'F'G'H'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "vertex": "E'"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "144/169"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "108/169"
+        },
+        {
+          "edge": [
+            "H",
+            "H'"
+          ],
+          "t": "133/169"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "13"
+        ],
+        [
+          "5",
+          "0",
+          "144/13"
+        ],
+        [
+          "5",
+          "6",
+          "108/13"
+        ],
+        [
+          "0",
+          "6",
+          "133/13"
+        ]
+      ],
+      "area_squared": "207000/169",
+      "plane_equation": {
+        "normal": [
+          "5",
+          "6",
+          "13"
+        ],
+        "d": "169"
+      }
+    },
+    {
+      "id": "DEV-F1-B42",
+      "case_id": "W3-B42",
+      "solid": "GHKL.G'H'K'L'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "H",
+            "K"
+          ],
+          "t": "3/13"
+        },
+        {
+          "edge": [
+            "H'",
+            "K'"
+          ],
+          "t": "3/13"
+        },
+        {
+          "edge": [
+            "L'",
+            "G'"
+          ],
+          "t": "10/13"
+        },
+        {
+          "edge": [
+            "L",
+            "G"
+          ],
+          "t": "10/13"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "8",
+          "33/13",
+          "0"
+        ],
+        [
+          "8",
+          "33/13",
+          "21"
+        ],
+        [
+          "0",
+          "33/13",
+          "21"
+        ],
+        [
+          "0",
+          "33/13",
+          "0"
+        ]
+      ],
+      "area_squared": "28224",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-168",
+          "0"
+        ],
+        "d": "-5544/13"
+      }
+    },
+    {
+      "id": "DEV-F1-B45",
+      "case_id": "W3-B45",
+      "solid": "CDEF.C'D'E'F'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "E"
+          ],
+          "t": "7/11"
+        },
+        {
+          "edge": [
+            "F",
+            "C"
+          ],
+          "t": "4/11"
+        },
+        {
+          "edge": [
+            "F'",
+            "C'"
+          ],
+          "t": "4/11"
+        },
+        {
+          "edge": [
+            "D'",
+            "E'"
+          ],
+          "t": "7/11"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "11",
+          "84/11",
+          "0"
+        ],
+        [
+          "0",
+          "84/11",
+          "0"
+        ],
+        [
+          "0",
+          "84/11",
+          "25"
+        ],
+        [
+          "11",
+          "84/11",
+          "25"
+        ]
+      ],
+      "area_squared": "75625",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "275",
+          "0"
+        ],
+        "d": "2100"
+      }
+    },
+    {
+      "id": "DEV-F1-B48",
+      "case_id": "W3-B48",
+      "solid": "EFGH.E'F'G'H'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "E",
+            "F"
+          ],
+          "t": "4/11"
+        },
+        {
+          "edge": [
+            "G",
+            "H"
+          ],
+          "t": "7/11"
+        },
+        {
+          "edge": [
+            "G'",
+            "H'"
+          ],
+          "t": "7/11"
+        },
+        {
+          "edge": [
+            "E'",
+            "F'"
+          ],
+          "t": "4/11"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "4",
+          "0",
+          "0"
+        ],
+        [
+          "4",
+          "11",
+          "0"
+        ],
+        [
+          "4",
+          "11",
+          "11"
+        ],
+        [
+          "4",
+          "0",
+          "11"
+        ]
+      ],
+      "area_squared": "14641",
+      "plane_equation": {
+        "normal": [
+          "11",
+          "0",
+          "0"
+        ],
+        "d": "44"
+      }
+    },
+    {
+      "id": "DEV-F1-B51",
+      "case_id": "W3-B51",
+      "solid": "GHKL.G'H'K'L'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "H",
+            "K"
+          ],
+          "t": "3/13"
+        },
+        {
+          "edge": [
+            "H'",
+            "K'"
+          ],
+          "t": "3/13"
+        },
+        {
+          "edge": [
+            "L'",
+            "G'"
+          ],
+          "t": "10/13"
+        },
+        {
+          "edge": [
+            "L",
+            "G"
+          ],
+          "t": "10/13"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "15",
+          "45/13",
+          "0"
+        ],
+        [
+          "15",
+          "45/13",
+          "15"
+        ],
+        [
+          "0",
+          "45/13",
+          "15"
+        ],
+        [
+          "0",
+          "45/13",
+          "0"
+        ]
+      ],
+      "area_squared": "50625",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-225",
+          "0"
+        ],
+        "d": "-10125/13"
+      }
+    },
+    {
+      "id": "DEV-F1-B54",
+      "case_id": "W3-B54",
+      "solid": "CDEF.C'D'E'F'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "E"
+          ],
+          "t": "6/13"
+        },
+        {
+          "edge": [
+            "F",
+            "C"
+          ],
+          "t": "7/13"
+        },
+        {
+          "edge": [
+            "F'",
+            "C'"
+          ],
+          "t": "7/13"
+        },
+        {
+          "edge": [
+            "D'",
+            "E'"
+          ],
+          "t": "6/13"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "21",
+          "126/13",
+          "0"
+        ],
+        [
+          "0",
+          "126/13",
+          "0"
+        ],
+        [
+          "0",
+          "126/13",
+          "21"
+        ],
+        [
+          "21",
+          "126/13",
+          "21"
+        ]
+      ],
+      "area_squared": "194481",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "441",
+          "0"
+        ],
+        "d": "55566/13"
+      }
+    },
+    {
+      "id": "DEV-F1-A03",
+      "case_id": "W3-A03",
+      "solid": "S.EFG",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "expected_category": "DINH_CAT_CANH",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "128/281"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "8"
+        ],
+        [
+          "0",
+          "11/2",
+          "8"
+        ],
+        [
+          "640/281",
+          "0",
+          "2448/281"
+        ]
+      ],
+      "area_squared": "12100/281",
+      "plane_equation": {
+        "normal": [
+          "5",
+          "0",
+          "-16"
+        ],
+        "d": "-128"
+      }
+    },
+    {
+      "id": "DEV-F1-A06",
+      "case_id": "W3-A06",
+      "solid": "S.EFGH",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "expected_category": "DINH_CAT_CANH",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "3/7"
+        },
+        {
+          "edge": [
+            "S",
+            "H"
+          ],
+          "t": "675/1918"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "135/434"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "75/203"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "60/7"
+        ],
+        [
+          "0",
+          "675/274",
+          "18645/1918"
+        ],
+        [
+          "405/217",
+          "135/62",
+          "4485/434"
+        ],
+        [
+          "450/203",
+          "0",
+          "1920/203"
+        ]
+      ],
+      "area_squared": "5868506953125/191816026808",
+      "plane_equation": {
+        "normal": [
+          "6",
+          "7",
+          "-15"
+        ],
+        "d": "-900/7"
+      }
+    },
+    {
+      "id": "DEV-F1-A09",
+      "case_id": "W3-A09",
+      "solid": "DEF.D'E'F'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "expected_category": "DINH_CAT_CANH",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "5/14"
+        },
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "5/14"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "5/14"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "95/14"
+        ],
+        [
+          "7",
+          "0",
+          "95/14"
+        ],
+        [
+          "0",
+          "10",
+          "95/14"
+        ]
+      ],
+      "area_squared": "1225",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "0",
+          "70"
+        ],
+        "d": "475"
+      }
+    },
+    {
+      "id": "DEV-F1-A12",
+      "case_id": "W3-A12",
+      "solid": "DEF.D'E'F'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "expected_category": "DINH_CAT_CANH",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "6/11"
+        },
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "1270/2651"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "6/11"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "24/11",
+          "0",
+          "90/11"
+        ],
+        [
+          "15684/2651",
+          "0",
+          "19050/2651"
+        ],
+        [
+          "24/11",
+          "7",
+          "90/11"
+        ]
+      ],
+      "area_squared": "44100/241",
+      "plane_equation": {
+        "normal": [
+          "4",
+          "0",
+          "15"
+        ],
+        "d": "1446/11"
+      }
+    },
+    {
+      "id": "DEV-F1-A15",
+      "case_id": "W3-A15",
+      "solid": "EFGH.E'F'G'H'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "expected_category": "DINH_CAT_CANH",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "4/15"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "4/15"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "4/15"
+        },
+        {
+          "edge": [
+            "H",
+            "H'"
+          ],
+          "t": "4/15"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "16/3"
+        ],
+        [
+          "7",
+          "0",
+          "16/3"
+        ],
+        [
+          "7",
+          "9",
+          "16/3"
+        ],
+        [
+          "0",
+          "9",
+          "16/3"
+        ]
+      ],
+      "area_squared": "3969",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "0",
+          "63"
+        ],
+        "d": "336"
+      }
+    },
+    {
+      "id": "DEV-F1-A18",
+      "case_id": "W3-A18",
+      "solid": "EFGH.E'F'G'H'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "expected_category": "DINH_CAT_CANH",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "2/17"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "2/17"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "2/17"
+        },
+        {
+          "edge": [
+            "H",
+            "H'"
+          ],
+          "t": "2/17"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "46/17"
+        ],
+        [
+          "23",
+          "0",
+          "46/17"
+        ],
+        [
+          "23",
+          "23",
+          "46/17"
+        ],
+        [
+          "0",
+          "23",
+          "46/17"
+        ]
+      ],
+      "area_squared": "279841",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "0",
+          "529"
+        ],
+        "d": "24334/17"
+      }
+    },
+    {
+      "id": "DEV-POS-01",
+      "case_id": "W3-B03",
+      "solid": "S.EFG",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "361/884"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "19/2"
+        ],
+        [
+          "0",
+          "7",
+          "19/2"
+        ],
+        [
+          "3249/884",
+          "0",
+          "9937/884"
+        ]
+      ],
+      "area_squared": "1432809/7072",
+      "plane_equation": {
+        "normal": [
+          "9",
+          "0",
+          "-19"
+        ],
+        "d": "-361/2"
+      }
+    },
+    {
+      "id": "DEV-POS-02",
+      "case_id": "W3-A03",
+      "solid": "S.EFG",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "expected_category": "DINH_CAT_CANH",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "128/281"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "8"
+        ],
+        [
+          "0",
+          "11/2",
+          "8"
+        ],
+        [
+          "640/281",
+          "0",
+          "2448/281"
+        ]
+      ],
+      "area_squared": "12100/281",
+      "plane_equation": {
+        "normal": [
+          "5",
+          "0",
+          "-16"
+        ],
+        "d": "-128"
+      }
+    },
+    {
+      "id": "DEV-POS-03",
+      "case_id": "W3-B15",
+      "solid": "A.BCDE",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "A",
+            "D"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "A",
+            "E"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "E",
+            "B"
+          ],
+          "t": "5/9"
+        },
+        {
+          "edge": [
+            "C",
+            "D"
+          ],
+          "t": "4/9"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "28/9",
+          "40/9",
+          "95/9"
+        ],
+        [
+          "0",
+          "40/9",
+          "95/9"
+        ],
+        [
+          "0",
+          "40/9",
+          "0"
+        ],
+        [
+          "7",
+          "40/9",
+          "0"
+        ]
+      ],
+      "area_squared": "74736025/26244",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-133",
+          "0"
+        ],
+        "d": "-5320/9"
+      }
+    },
+    {
+      "id": "DEV-POS-04",
+      "case_id": "W3-A09",
+      "solid": "DEF.D'E'F'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "expected_category": "DINH_CAT_CANH",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "5/14"
+        },
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "5/14"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "5/14"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "95/14"
+        ],
+        [
+          "7",
+          "0",
+          "95/14"
+        ],
+        [
+          "0",
+          "10",
+          "95/14"
+        ]
+      ],
+      "area_squared": "1225",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "0",
+          "70"
+        ],
+        "d": "475"
+      }
+    },
+    {
+      "id": "DEV-POS-05",
+      "case_id": "W3-B03",
+      "solid": "S.EFG",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "361/884"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "19/2"
+        ],
+        [
+          "0",
+          "7",
+          "19/2"
+        ],
+        [
+          "3249/884",
+          "0",
+          "9937/884"
+        ]
+      ],
+      "area_squared": "1432809/7072",
+      "plane_equation": {
+        "normal": [
+          "9",
+          "0",
+          "-19"
+        ],
+        "d": "-361/2"
+      }
+    },
+    {
+      "id": "DEV-POS-06",
+      "case_id": "W3-B15",
+      "solid": "A.BCDE",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "A",
+            "D"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "A",
+            "E"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "E",
+            "B"
+          ],
+          "t": "5/9"
+        },
+        {
+          "edge": [
+            "C",
+            "D"
+          ],
+          "t": "4/9"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "28/9",
+          "40/9",
+          "95/9"
+        ],
+        [
+          "0",
+          "40/9",
+          "95/9"
+        ],
+        [
+          "0",
+          "40/9",
+          "0"
+        ],
+        [
+          "7",
+          "40/9",
+          "0"
+        ]
+      ],
+      "area_squared": "74736025/26244",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-133",
+          "0"
+        ],
+        "d": "-5320/9"
+      }
+    },
+    {
+      "id": "DEV-POS-07",
+      "case_id": "W3-B45",
+      "solid": "CDEF.C'D'E'F'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "E"
+          ],
+          "t": "7/11"
+        },
+        {
+          "edge": [
+            "F",
+            "C"
+          ],
+          "t": "4/11"
+        },
+        {
+          "edge": [
+            "F'",
+            "C'"
+          ],
+          "t": "4/11"
+        },
+        {
+          "edge": [
+            "D'",
+            "E'"
+          ],
+          "t": "7/11"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "11",
+          "84/11",
+          "0"
+        ],
+        [
+          "0",
+          "84/11",
+          "0"
+        ],
+        [
+          "0",
+          "84/11",
+          "25"
+        ],
+        [
+          "11",
+          "84/11",
+          "25"
+        ]
+      ],
+      "area_squared": "75625",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "275",
+          "0"
+        ],
+        "d": "2100"
+      }
+    },
+    {
+      "id": "DEV-POS-08",
+      "case_id": "W3-B39",
+      "solid": "EFGH.E'F'G'H'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "vertex": "E'"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "144/169"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "108/169"
+        },
+        {
+          "edge": [
+            "H",
+            "H'"
+          ],
+          "t": "133/169"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "13"
+        ],
+        [
+          "5",
+          "0",
+          "144/13"
+        ],
+        [
+          "5",
+          "6",
+          "108/13"
+        ],
+        [
+          "0",
+          "6",
+          "133/13"
+        ]
+      ],
+      "area_squared": "207000/169",
+      "plane_equation": {
+        "normal": [
+          "5",
+          "6",
+          "13"
+        ],
+        "d": "169"
+      }
+    },
+    {
+      "id": "DEV-POS-09",
+      "case_id": "W3-B03",
+      "solid": "S.EFG",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "361/884"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "19/2"
+        ],
+        [
+          "0",
+          "7",
+          "19/2"
+        ],
+        [
+          "3249/884",
+          "0",
+          "9937/884"
+        ]
+      ],
+      "area_squared": "1432809/7072",
+      "plane_equation": {
+        "normal": [
+          "9",
+          "0",
+          "-19"
+        ],
+        "d": "-361/2"
+      }
+    },
+    {
+      "id": "DEV-POS-10",
+      "case_id": "W3-B21",
+      "solid": "DEF.D'E'F'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "4/5"
+        },
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "4/5"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "304/605"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "44/5"
+        ],
+        [
+          "5",
+          "0",
+          "44/5"
+        ],
+        [
+          "0",
+          "6",
+          "304/55"
+        ]
+      ],
+      "area_squared": "35325/121",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "6",
+          "11"
+        ],
+        "d": "484/5"
+      }
+    },
+    {
+      "id": "DEV-POS-11",
+      "case_id": "W3-A03",
+      "solid": "S.EFG",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "expected_category": "DINH_CAT_CANH",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "128/281"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "8"
+        ],
+        [
+          "0",
+          "11/2",
+          "8"
+        ],
+        [
+          "640/281",
+          "0",
+          "2448/281"
+        ]
+      ],
+      "area_squared": "12100/281",
+      "plane_equation": {
+        "normal": [
+          "5",
+          "0",
+          "-16"
+        ],
+        "d": "-128"
+      }
+    },
+    {
+      "id": "DEV-POS-12",
+      "case_id": "W3-A15",
+      "solid": "EFGH.E'F'G'H'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "expected_category": "DINH_CAT_CANH",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "4/15"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "4/15"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "4/15"
+        },
+        {
+          "edge": [
+            "H",
+            "H'"
+          ],
+          "t": "4/15"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "16/3"
+        ],
+        [
+          "7",
+          "0",
+          "16/3"
+        ],
+        [
+          "7",
+          "9",
+          "16/3"
+        ],
+        [
+          "0",
+          "9",
+          "16/3"
+        ]
+      ],
+      "area_squared": "3969",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "0",
+          "63"
+        ],
+        "d": "336"
+      }
+    },
+    {
+      "id": "DEV-POS-13",
+      "case_id": "W3-B03",
+      "solid": "S.EFG",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "361/884"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "19/2"
+        ],
+        [
+          "0",
+          "7",
+          "19/2"
+        ],
+        [
+          "3249/884",
+          "0",
+          "9937/884"
+        ]
+      ],
+      "area_squared": "1432809/7072",
+      "plane_equation": {
+        "normal": [
+          "9",
+          "0",
+          "-19"
+        ],
+        "d": "-361/2"
+      }
+    },
+    {
+      "id": "DEV-POS-14",
+      "case_id": "W3-B15",
+      "solid": "A.BCDE",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "A",
+            "D"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "A",
+            "E"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "E",
+            "B"
+          ],
+          "t": "5/9"
+        },
+        {
+          "edge": [
+            "C",
+            "D"
+          ],
+          "t": "4/9"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "28/9",
+          "40/9",
+          "95/9"
+        ],
+        [
+          "0",
+          "40/9",
+          "95/9"
+        ],
+        [
+          "0",
+          "40/9",
+          "0"
+        ],
+        [
+          "7",
+          "40/9",
+          "0"
+        ]
+      ],
+      "area_squared": "74736025/26244",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-133",
+          "0"
+        ],
+        "d": "-5320/9"
+      }
+    },
+    {
+      "id": "DEV-POS-15",
+      "case_id": "W3-B33",
+      "solid": "GHK.G'H'K'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "H",
+            "K"
+          ],
+          "t": "5/9"
+        },
+        {
+          "edge": [
+            "H'",
+            "K'"
+          ],
+          "t": "5/9"
+        },
+        {
+          "edge": [
+            "K'",
+            "G'"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "K",
+            "G"
+          ],
+          "t": "4/9"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "20/9",
+          "55/9",
+          "0"
+        ],
+        [
+          "65/9",
+          "55/9",
+          "14"
+        ],
+        [
+          "5",
+          "55/9",
+          "14"
+        ],
+        [
+          "0",
+          "55/9",
+          "0"
+        ]
+      ],
+      "area_squared": "78400/81",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-70",
+          "0"
+        ],
+        "d": "-3850/9"
+      }
+    },
+    {
+      "id": "DEV-POS-16",
+      "case_id": "W3-B45",
+      "solid": "CDEF.C'D'E'F'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "E"
+          ],
+          "t": "7/11"
+        },
+        {
+          "edge": [
+            "F",
+            "C"
+          ],
+          "t": "4/11"
+        },
+        {
+          "edge": [
+            "F'",
+            "C'"
+          ],
+          "t": "4/11"
+        },
+        {
+          "edge": [
+            "D'",
+            "E'"
+          ],
+          "t": "7/11"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "11",
+          "84/11",
+          "0"
+        ],
+        [
+          "0",
+          "84/11",
+          "0"
+        ],
+        [
+          "0",
+          "84/11",
+          "25"
+        ],
+        [
+          "11",
+          "84/11",
+          "25"
+        ]
+      ],
+      "area_squared": "75625",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "275",
+          "0"
+        ],
+        "d": "2100"
+      }
+    },
+    {
+      "id": "DEV-POS-17",
+      "case_id": "W3-B15",
+      "solid": "A.BCDE",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "A",
+            "D"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "A",
+            "E"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "E",
+            "B"
+          ],
+          "t": "5/9"
+        },
+        {
+          "edge": [
+            "C",
+            "D"
+          ],
+          "t": "4/9"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "28/9",
+          "40/9",
+          "95/9"
+        ],
+        [
+          "0",
+          "40/9",
+          "95/9"
+        ],
+        [
+          "0",
+          "40/9",
+          "0"
+        ],
+        [
+          "7",
+          "40/9",
+          "0"
+        ]
+      ],
+      "area_squared": "74736025/26244",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-133",
+          "0"
+        ],
+        "d": "-5320/9"
+      }
+    },
+    {
+      "id": "DEV-POS-18",
+      "case_id": "W3-B51",
+      "solid": "GHKL.G'H'K'L'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "H",
+            "K"
+          ],
+          "t": "3/13"
+        },
+        {
+          "edge": [
+            "H'",
+            "K'"
+          ],
+          "t": "3/13"
+        },
+        {
+          "edge": [
+            "L'",
+            "G'"
+          ],
+          "t": "10/13"
+        },
+        {
+          "edge": [
+            "L",
+            "G"
+          ],
+          "t": "10/13"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "15",
+          "45/13",
+          "0"
+        ],
+        [
+          "15",
+          "45/13",
+          "15"
+        ],
+        [
+          "0",
+          "45/13",
+          "15"
+        ],
+        [
+          "0",
+          "45/13",
+          "0"
+        ]
+      ],
+      "area_squared": "50625",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-225",
+          "0"
+        ],
+        "d": "-10125/13"
+      }
+    },
+    {
+      "id": "DEV-POS-19",
+      "case_id": "W3-B03",
+      "solid": "S.EFG",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_only",
+      "area_goal_id": null,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "361/884"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "19/2"
+        ],
+        [
+          "0",
+          "7",
+          "19/2"
+        ],
+        [
+          "3249/884",
+          "0",
+          "9937/884"
+        ]
+      ],
+      "area_squared": "1432809/7072",
+      "plane_equation": {
+        "normal": [
+          "9",
+          "0",
+          "-19"
+        ],
+        "d": "-361/2"
+      }
+    },
+    {
+      "id": "DEV-POS-20",
+      "case_id": "W3-B15",
+      "solid": "A.BCDE",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "area_only",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "A",
+            "D"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "A",
+            "E"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "E",
+            "B"
+          ],
+          "t": "5/9"
+        },
+        {
+          "edge": [
+            "C",
+            "D"
+          ],
+          "t": "4/9"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "28/9",
+          "40/9",
+          "95/9"
+        ],
+        [
+          "0",
+          "40/9",
+          "95/9"
+        ],
+        [
+          "0",
+          "40/9",
+          "0"
+        ],
+        [
+          "7",
+          "40/9",
+          "0"
+        ]
+      ],
+      "area_squared": "74736025/26244",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "-133",
+          "0"
+        ],
+        "d": "-5320/9"
+      }
+    },
+    {
+      "id": "DEV-POS-21",
+      "case_id": "W3-B21",
+      "solid": "DEF.D'E'F'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "4/5"
+        },
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "4/5"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "304/605"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "44/5"
+        ],
+        [
+          "5",
+          "0",
+          "44/5"
+        ],
+        [
+          "0",
+          "6",
+          "304/55"
+        ]
+      ],
+      "area_squared": "35325/121",
+      "plane_equation": {
+        "normal": [
+          "0",
+          "6",
+          "11"
+        ],
+        "d": "484/5"
+      }
+    },
+    {
+      "id": "DEV-POS-22",
+      "case_id": "W3-B39",
+      "solid": "EFGH.E'F'G'H'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "vertex": "E'"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "144/169"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "108/169"
+        },
+        {
+          "edge": [
+            "H",
+            "H'"
+          ],
+          "t": "133/169"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "0",
+          "0",
+          "13"
+        ],
+        [
+          "5",
+          "0",
+          "144/13"
+        ],
+        [
+          "5",
+          "6",
+          "108/13"
+        ],
+        [
+          "0",
+          "6",
+          "133/13"
+        ]
+      ],
+      "area_squared": "207000/169",
+      "plane_equation": {
+        "normal": [
+          "5",
+          "6",
+          "13"
+        ],
+        "d": "169"
+      }
+    },
+    {
+      "id": "DEV-POS-23",
+      "case_id": "W3-B30",
+      "solid": "DEF.D'E'F'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "ENGINE_DERIVED_SECTION",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "5/7"
+        },
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "795/1358"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "359/679"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "25/7",
+          "0",
+          "65/7"
+        ],
+        [
+          "10765/1358",
+          "0",
+          "10335/1358"
+        ],
+        [
+          "1795/679",
+          "6",
+          "4667/679"
+        ]
+      ],
+      "area_squared": "4372875/18818",
+      "plane_equation": {
+        "normal": [
+          "5",
+          "6",
+          "13"
+        ],
+        "d": "970/7"
+      }
+    },
+    {
+      "id": "DEV-POS-24",
+      "case_id": "W3-A12",
+      "solid": "DEF.D'E'F'",
+      "solid_id": "s1",
+      "section_id": "sec",
+      "expected_certificate_category": "DINH_CAT_CANH",
+      "expected_category": "DINH_CAT_CANH",
+      "question_type": "section_and_area",
+      "area_goal_id": "mg1",
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "6/11"
+        },
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "1270/2651"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "6/11"
+        }
+      ],
+      "polygon_3d": [
+        [
+          "24/11",
+          "0",
+          "90/11"
+        ],
+        [
+          "15684/2651",
+          "0",
+          "19050/2651"
+        ],
+        [
+          "24/11",
+          "7",
+          "90/11"
+        ]
+      ],
+      "area_squared": "44100/241",
+      "plane_equation": {
+        "normal": [
+          "4",
+          "0",
+          "15"
+        ],
+        "d": "1446/11"
+      }
+    },
+    {
+      "id": "DEV-NEG-01",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "negative_class": "question_references_undefined_plane"
+    },
+    {
+      "id": "DEV-NEG-02",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "negative_class": "plane_definition_missing_through_point"
+    },
+    {
+      "id": "DEV-NEG-03",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "negative_class": "plane_definition_missing_relation"
+    },
+    {
+      "id": "DEV-NEG-04",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "negative_class": "two_contradictory_definitions_of_same_plane"
+    },
+    {
+      "id": "DEV-NEG-05",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "negative_class": "two_distinct_planes_sharing_name_P"
+    },
+    {
+      "id": "DEV-NEG-06",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "negative_class": "question_references_wrong_plane"
+    },
+    {
+      "id": "DEV-NEG-07",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "negative_class": "source_uses_Q_payload_points_to_P"
+    },
+    {
+      "id": "DEV-NEG-08",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "negative_class": "plane_defined_on_solid_A_question_asks_solid_B"
+    },
+    {
+      "id": "DEV-NEG-09",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "expected_codes": [
+        "QUOTE_NOT_IN_SOURCE",
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "negative_class": "source_quote_not_in_problem_text"
+    },
+    {
+      "id": "DEV-NEG-10",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "negative_class": "payload_fabricates_through_point"
+    },
+    {
+      "id": "DEV-NEG-11",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "negative_class": "payload_changes_perpendicular_to_parallel_plane"
+    },
+    {
+      "id": "DEV-NEG-12",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "negative_class": "payload_changes_reference_line_or_plane"
+    },
+    {
+      "id": "DEV-NEG-13",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "expected_codes": [
+        "NOT_ASKED_IN_SOURCE",
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "negative_class": "question_asks_section_only_payload_adds_area"
+    },
+    {
+      "id": "DEV-NEG-14",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "negative_class": "question_asks_area_of_different_section"
+    },
+    {
+      "id": "DEV-NEG-15",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "negative_class": "ambiguous_pronoun_reference_mat_phang_do"
+    },
+    {
+      "id": "DEV-NEG-16",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "expected_codes": [
+        "CONDITIONAL_CLAUSE",
+        "NEGATED_CLAUSE"
+      ],
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "negative_class": "plane_premise_in_conditional_or_negated_clause"
+    },
+    {
+      "id": "DEV-NEG-17",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH",
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "negative_class": "reference_point_or_line_from_unrelated_solid"
+    },
+    {
+      "id": "DEV-NEG-18",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "negative_class": "source_symbol_vs_ir_identity_conflict"
+    },
+    {
+      "id": "DEV-NEG-19",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "negative_class": "swapped_primed_vertex_labels"
+    },
+    {
+      "id": "DEV-NEG-20",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH",
+        "SOURCE_PREMISE_UNREAD"
+      ],
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "negative_class": "mutated_source_span_after_definition_quote"
+    }
+  ]
+}
