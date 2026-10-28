@@ -121,10 +121,16 @@ def _normalize_non_plane_premises_for_isolated_f1(case: dict[str, Any]) -> dict[
         q = prem["quote"]
         new_q = q
         if prem["kind"] in ("rectangle", "right_angle", "perpendicular_line_plane", "segment_length"):
-            if new_q.startswith("thỏa mãn "):
+            if new_q.startswith("thỏa mãn đáy "):
+                new_q = "có đáy " + new_q[len("thỏa mãn đáy "):]
+            elif new_q.startswith("thỏa mãn "):
                 new_q = "biết " + new_q[len("thỏa mãn "):]
             if "ở " in new_q and prem["kind"] == "right_angle":
                 new_q = new_q.replace("ở ", "tại ")
+            if new_q.startswith("biết tam giác đáy ") and prem["kind"] == "right_angle":
+                verts = "".join(prem["args"]["vertices"])
+                right_at = prem["args"]["right_at"]
+                new_q = f"có đáy {verts} là tam giác vuông tại {right_at}"
             if new_q.startswith("với mặt đáy "):
                 new_q = "có đáy " + new_q[len("với mặt đáy "):]
             if new_q.startswith("biết mặt đáy "):
@@ -153,6 +159,21 @@ def _normalize_non_plane_premises_for_isolated_f1(case: dict[str, Any]) -> dict[
         if new_q != q:
             replace_quote(q, new_q)
 
+    if cid == "W3-A06":
+        # W3-A06 also has an out-of-scope non-plane RADICAL_DOMAIN_OVERFLOW on (6a, 7a, 15a) where p*q = 1.12567e24 > 10^24.
+        # In Slice B (isolated W3-F1), normalize lengths to (3a, 4a, 6a) while keeping W3-A06 verbatim in Slice A.
+        replace_quote("biết EF = 6a", "biết EF = 3a")
+        replace_quote("biết EH = 7a", "biết EH = 4a")
+        replace_quote("và cạnh SE = 15a", "và cạnh SE = 6a")
+        for x in p["premises"]:
+            if x["kind"] == "segment_length":
+                if x["args"]["segment"] == ["E", "F"]:
+                    x["args"]["value"] = "3a"
+                elif x["args"]["segment"] == ["E", "H"]:
+                    x["args"]["value"] = "4a"
+                elif x["args"]["segment"] == ["S", "E"]:
+                    x["args"]["value"] = "6a"
+
     if cid in ("W3-B48", "W3-B51", "W3-B54", "W3-A18"):
         # Cube premise normalization (avoid W3-F4 while keeping identical cube & edge length)
         sol = p["solids"][0]
@@ -173,6 +194,7 @@ def _normalize_non_plane_premises_for_isolated_f1(case: dict[str, Any]) -> dict[
             if x["kind"] in ("right_prism", "base_is_square", "segment_length"):
                 x["quote"] = cube_sent
 
+    c["problem_text"] = p["problem_text"]
     # Verify plane definition quote and question quote are 100% unchanged from Wave 3
     assert p["derived_sections"][0]["quote"] == sec_q
     assert p["simulation_goals"][-1]["quote"] == req_q
@@ -314,12 +336,19 @@ def _build_authored_positive_and_oracle(w3_cases: dict[str, dict], w3_oracles: d
 
     c12 = clone_from("W3-A15", "DEV-POS-12", "multi_intermediate_sentences_cat_a_cuboid_parallel_two_lines")
     p12 = c12["payload"]
-    s_sol12 = "Cho khối hộp chữ nhật EFGH.E'F'G'H' có đáy EFGH là hình chữ nhật."
     s_div12 = "Lấy điểm K trên cạnh EE' sao cho EK = 4/15 EE'."
     s_def12 = "Mặt phẳng (P) chứa K và song song với cả hai đường thẳng EF, EH, cắt các cạnh bên FF', GG', HH' lần lượt tại I, J, L."
     s_len12 = "Cho hình hộp chữ nhật EFGH.E'F'G'H' có đáy EFGH là hình chữ nhật, biết EF = 7, EH = 9, và EE' = 20."
     s_req12 = "Hãy xác định thiết diện của hình hộp chữ nhật EFGH.E'F'G'H' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện."
     p12["problem_text"] = f"{s_len12} {s_div12} {s_def12} {s_req12}"
+    p12["solids"][0]["quote"] = "Cho hình hộp chữ nhật EFGH.E'F'G'H'"
+    p12["simulation_goals"][0]["quote"] = "Cho hình hộp chữ nhật EFGH.E'F'G'H'"
+    p12["premises"][0]["quote"] = "Cho hình hộp chữ nhật EFGH.E'F'G'H'"
+    p12["premises"][1]["quote"] = "có đáy EFGH là hình chữ nhật"
+    p12["premises"][2]["quote"] = "biết EF = 7"
+    p12["premises"][3]["quote"] = "EH = 9"
+    p12["premises"][4]["quote"] = "và EE' = 20"
+    p12["premises"][5]["quote"] = s_div12[:-1]
     authored.append(c12)
 
     # 13-16: Renamed planes ((Q), (α), (β), (γ)) and point-first / introducer variations
@@ -404,6 +433,9 @@ def _build_authored_positive_and_oracle(w3_cases: dict[str, dict], w3_oracles: d
     s_cube18 = "Cho hình lập phương GHKL.G'H'K'L' có cạnh bằng 15a."
     s_req18 = "Hãy xác định thiết diện của hình lập phương GHKL.G'H'K'L' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện."
     p18["problem_text"] = f"{s_cube18} {s_def18} {s_div18} {s_req18}"
+    for x in p18["premises"]:
+        if x["kind"] == "divide_segment":
+            x["quote"] = s_div18[:-1]
     p18["derived_sections"][0]["quote"] = s_req18[:-1]
     authored.append(c18)
 
@@ -465,6 +497,9 @@ def _build_authored_positive_and_oracle(w3_cases: dict[str, dict], w3_oracles: d
 
     c24 = clone_from("W3-A12", "DEV-POS-24", "oblique_triangular_prism_cat_a_primed_vertex_cross_sentence")
     authored.append(c24)
+
+    for c_item in authored:
+        c_item["problem_text"] = c_item["payload"]["problem_text"]
 
     assert len(authored) == 24
     return authored, oracles
@@ -735,6 +770,21 @@ def build_development_and_oracle() -> tuple[dict[str, Any], dict[str, Any]]:
         slice_b.append(c_iso)
         o_iso = deepcopy(w3_oracles_by_id[cid])
         o_iso["id"] = c_iso["id"]
+        if cid == "W3-A06":
+            o_iso["boundary"] = [
+                {"edge": ["S", "E"], "t": "3/7"},
+                {"edge": ["S", "H"], "t": "27/91"},
+                {"edge": ["S", "G"], "t": "108/427"},
+                {"edge": ["S", "F"], "t": "12/35"},
+            ]
+            o_iso["polygon_3d"] = [
+                ["0", "0", "24/7"],
+                ["0", "108/91", "384/91"],
+                ["324/427", "432/427", "1914/427"],
+                ["36/35", "0", "138/35"],
+            ]
+            o_iso["area_squared"] = "987719184/618797725"
+            o_iso["plane_equation"] = {"normal": ["3", "4", "-6"], "d": "-144/7"}
         oracle_cases.append(o_iso)
 
     # Slice C: 24 newly authored positive cross-sentence plane grounding cases

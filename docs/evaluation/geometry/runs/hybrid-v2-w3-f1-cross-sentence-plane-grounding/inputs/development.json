@@ -3987,10 +3987,10 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Cho tứ diện A.BCD biết tam giác đáy BCD vuông tại B, biết AB vuông góc với mặt phẳng (BCD), với độ dài BC = 8a, cạnh BD = 15a, chiều cao AB = 23a. Trên cạnh BD lấy điểm M thỏa mãn BM = 2/7 BD. Mặt phẳng (R) đi qua M đồng thời song song với mặt phẳng (ABC). Hãy xác định thiết diện của hình chóp A.BCD khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+      "problem_text": "Cho tứ diện A.BCD có đáy BCD là tam giác vuông tại B, biết AB vuông góc với mặt phẳng (BCD), biết BC = 8a, cạnh BD = 15a, và AB = 23a. Lấy điểm M trên cạnh BD sao cho BM = 2/7 BD. Mặt phẳng (R) đi qua M đồng thời song song với mặt phẳng (ABC). Hãy xác định thiết diện của hình chóp A.BCD khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
-        "problem_text": "Cho tứ diện A.BCD biết tam giác đáy BCD vuông tại B, biết AB vuông góc với mặt phẳng (BCD), biết BC = 8a, cạnh BD = 15a, và AB = 23a. Lấy điểm M trên cạnh BD sao cho BM = 2/7 BD. Mặt phẳng (R) đi qua M đồng thời song song với mặt phẳng (ABC). Hãy xác định thiết diện của hình chóp A.BCD khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+        "problem_text": "Cho tứ diện A.BCD có đáy BCD là tam giác vuông tại B, biết AB vuông góc với mặt phẳng (BCD), biết BC = 8a, cạnh BD = 15a, và AB = 23a. Lấy điểm M trên cạnh BD sao cho BM = 2/7 BD. Mặt phẳng (R) đi qua M đồng thời song song với mặt phẳng (ABC). Hãy xác định thiết diện của hình chóp A.BCD khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
         "length_unit": "a",
         "solids": [
           {
@@ -4011,7 +4011,7 @@
               ],
               "right_at": "B"
             },
-            "quote": "biết tam giác đáy BCD vuông tại B",
+            "quote": "có đáy BCD là tam giác vuông tại B",
             "solid_id": "s1"
           },
           {
@@ -4142,7 +4142,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Trong không gian, cho hình chóp S.KLM có đáy KLM là tam giác vuông tại K, hình chiếu vuông góc của S trên mặt phẳng (KLM) trùng với K, biết KL = 10, KM = 13, và SK = 21. Lấy điểm N trên cạnh LM sao cho LN = 4/7 LM. Mặt phẳng (P) chứa N và song song với cả hai đường thẳng SK, KL. Hãy xác định thiết diện của hình chóp S.KLM khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
+      "problem_text": "Cho hình chóp S.KLM có đáy KLM là tam giác vuông tại K, hình chiếu vuông góc của S trên mặt phẳng (KLM) trùng với K, biết KL = 10, KM = 13, và SK = 21. Lấy điểm N trên cạnh LM sao cho LN = 4/7 LM. Mặt phẳng (P) chứa N và song song với cả hai đường thẳng SK, KL. Hãy xác định thiết diện của hình chóp S.KLM khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Cho hình chóp S.KLM có đáy KLM là tam giác vuông tại K, hình chiếu vuông góc của S trên mặt phẳng (KLM) trùng với K, biết KL = 10, KM = 13, và SK = 21. Lấy điểm N trên cạnh LM sao cho LN = 4/7 LM. Mặt phẳng (P) chứa N và song song với cả hai đường thẳng SK, KL. Hãy xác định thiết diện của hình chóp S.KLM khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
@@ -4298,10 +4298,10 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Xét hình chóp S.EFGH thỏa mãn đáy EFGH là hình chữ nhật, thỏa mãn SE ⊥ (EFGH), thỏa mãn EF = 7, biết EH = 12, và cạnh SE = 17. Trên đoạn SE chọn điểm I với SI = 3/8 SE. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh SH. Hãy xác định thiết diện của hình chóp S.EFGH khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+      "problem_text": "Xét hình chóp S.EFGH có đáy EFGH là hình chữ nhật, biết SE ⊥ (EFGH), biết EF = 7, biết EH = 12, và cạnh SE = 17. Lấy điểm I trên cạnh SE sao cho SI = 3/8 SE. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh SH. Hãy xác định thiết diện của hình chóp S.EFGH khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
-        "problem_text": "Xét hình chóp S.EFGH biết đáy EFGH là hình chữ nhật, biết SE ⊥ (EFGH), biết EF = 7, biết EH = 12, và cạnh SE = 17. Lấy điểm I trên cạnh SE sao cho SI = 3/8 SE. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh SH. Hãy xác định thiết diện của hình chóp S.EFGH khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+        "problem_text": "Xét hình chóp S.EFGH có đáy EFGH là hình chữ nhật, biết SE ⊥ (EFGH), biết EF = 7, biết EH = 12, và cạnh SE = 17. Lấy điểm I trên cạnh SE sao cho SI = 3/8 SE. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh SH. Hãy xác định thiết diện của hình chóp S.EFGH khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
         "length_unit": "1",
         "solids": [
           {
@@ -4322,7 +4322,7 @@
                 "H"
               ]
             },
-            "quote": "biết đáy EFGH là hình chữ nhật",
+            "quote": "có đáy EFGH là hình chữ nhật",
             "solid_id": "s1"
           },
           {
@@ -4609,7 +4609,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Trong không gian, cho hình chóp tứ giác S.GHKL biết mặt đáy GHKL là hình chữ nhật, biết SG vuông góc với mặt phẳng (GHKL), với độ dài GH = 9, cạnh GL = 16, chiều cao SG = 23. Trên cạnh GL lấy điểm M thỏa mãn GM = 3/7 GL. Mặt phẳng (R) chứa M và song song với cả hai đường thẳng SG, GH. Hãy xác định thiết diện của hình chóp S.GHKL khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+      "problem_text": "Cho hình chóp tứ giác S.GHKL có đáy GHKL là hình chữ nhật, biết SG vuông góc với mặt phẳng (GHKL), biết GH = 9, cạnh GL = 16, và SG = 23. Lấy điểm M trên cạnh GL sao cho GM = 3/7 GL. Mặt phẳng (R) chứa M và song song với cả hai đường thẳng SG, GH. Hãy xác định thiết diện của hình chóp S.GHKL khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Cho hình chóp tứ giác S.GHKL có đáy GHKL là hình chữ nhật, biết SG vuông góc với mặt phẳng (GHKL), biết GH = 9, cạnh GL = 16, và SG = 23. Lấy điểm M trên cạnh GL sao cho GM = 3/7 GL. Mặt phẳng (R) chứa M và song song với cả hai đường thẳng SG, GH. Hãy xác định thiết diện của hình chóp S.GHKL khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
@@ -4923,10 +4923,10 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Cho khối lăng trụ đứng GHK.G'H'K' thỏa mãn đáy GHK là tam giác vuông tại G, thỏa mãn GH = 8a, biết GK = 11a, và cạnh GG' = 17a. Trên đoạn GK chọn điểm L với GL = 3/8 GK. Mặt phẳng (R) đi qua L đồng thời song song với mặt phẳng (GHG'). Hãy xác định thiết diện của hình lăng trụ GHK.G'H'K' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+      "problem_text": "Cho khối lăng trụ đứng GHK.G'H'K' có đáy GHK là tam giác vuông tại G, biết GH = 8a, biết GK = 11a, và cạnh GG' = 17a. Lấy điểm L trên cạnh GK sao cho GL = 3/8 GK. Mặt phẳng (R) đi qua L đồng thời song song với mặt phẳng (GHG'). Hãy xác định thiết diện của hình lăng trụ GHK.G'H'K' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
-        "problem_text": "Cho khối lăng trụ đứng GHK.G'H'K' biết đáy GHK là tam giác vuông tại G, biết GH = 8a, biết GK = 11a, và cạnh GG' = 17a. Lấy điểm L trên cạnh GK sao cho GL = 3/8 GK. Mặt phẳng (R) đi qua L đồng thời song song với mặt phẳng (GHG'). Hãy xác định thiết diện của hình lăng trụ GHK.G'H'K' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+        "problem_text": "Cho khối lăng trụ đứng GHK.G'H'K' có đáy GHK là tam giác vuông tại G, biết GH = 8a, biết GK = 11a, và cạnh GG' = 17a. Lấy điểm L trên cạnh GK sao cho GL = 3/8 GK. Mặt phẳng (R) đi qua L đồng thời song song với mặt phẳng (GHG'). Hãy xác định thiết diện của hình lăng trụ GHK.G'H'K' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
         "length_unit": "a",
         "solids": [
           {
@@ -4964,7 +4964,7 @@
               ],
               "right_at": "G"
             },
-            "quote": "biết đáy GHK là tam giác vuông tại G",
+            "quote": "có đáy GHK là tam giác vuông tại G",
             "solid_id": "s1"
           },
           {
@@ -5079,7 +5079,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Xét hình lăng trụ đứng RST.R'S'T' với mặt đáy RST là tam giác vuông ở R, có số đo RS = 11, đoạn RT = 13, độ dài RR' = 24. Gọi U là điểm thuộc cạnh RT sao cho RU = 4/11 RT. Mặt phẳng (P) chứa U và song song với cả hai đường thẳng RR', RS. Hãy xác định thiết diện của hình lăng trụ RST.R'S'T' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
+      "problem_text": "Xét hình lăng trụ đứng RST.R'S'T' có đáy RST là tam giác vuông tại R, biết RS = 11, RT = 13, và RR' = 24. Lấy điểm U trên cạnh RT sao cho RU = 4/11 RT. Mặt phẳng (P) chứa U và song song với cả hai đường thẳng RR', RS. Hãy xác định thiết diện của hình lăng trụ RST.R'S'T' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Xét hình lăng trụ đứng RST.R'S'T' có đáy RST là tam giác vuông tại R, biết RS = 11, RT = 13, và RR' = 24. Lấy điểm U trên cạnh RT sao cho RU = 4/11 RT. Mặt phẳng (P) chứa U và song song với cả hai đường thẳng RR', RS. Hãy xác định thiết diện của hình lăng trụ RST.R'S'T' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
@@ -5238,10 +5238,10 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Xét khối lăng trụ DEF.D'E'F' biết tam giác đáy DEF vuông tại D, biết hình chiếu vuông góc của đỉnh D' lên mặt phẳng (DEF) là E, với độ dài DE = 5, cạnh DF = 6, chiều cao D'E = 13. Trên cạnh DD' lấy điểm I thỏa mãn DI = 5/7 DD'. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh DF'. Hãy xác định thiết diện của hình lăng trụ DEF.D'E'F' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+      "problem_text": "Xét khối lăng trụ DEF.D'E'F' có đáy DEF là tam giác vuông tại D, hình chiếu vuông góc của D' trên mặt phẳng (DEF) trùng với E, biết DE = 5, cạnh DF = 6, và D'E = 13. Lấy điểm I trên cạnh DD' sao cho DI = 5/7 DD'. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh DF'. Hãy xác định thiết diện của hình lăng trụ DEF.D'E'F' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
-        "problem_text": "Xét khối lăng trụ DEF.D'E'F' biết tam giác đáy DEF vuông tại D, hình chiếu vuông góc của D' trên mặt phẳng (DEF) trùng với E, biết DE = 5, cạnh DF = 6, và D'E = 13. Lấy điểm I trên cạnh DD' sao cho DI = 5/7 DD'. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh DF'. Hãy xác định thiết diện của hình lăng trụ DEF.D'E'F' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+        "problem_text": "Xét khối lăng trụ DEF.D'E'F' có đáy DEF là tam giác vuông tại D, hình chiếu vuông góc của D' trên mặt phẳng (DEF) trùng với E, biết DE = 5, cạnh DF = 6, và D'E = 13. Lấy điểm I trên cạnh DD' sao cho DI = 5/7 DD'. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh DF'. Hãy xác định thiết diện của hình lăng trụ DEF.D'E'F' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
         "length_unit": "1",
         "solids": [
           {
@@ -5262,7 +5262,7 @@
               ],
               "right_at": "D"
             },
-            "quote": "biết tam giác đáy DEF vuông tại D",
+            "quote": "có đáy DEF là tam giác vuông tại D",
             "solid_id": "s1"
           },
           {
@@ -5543,10 +5543,10 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Cho hình lăng trụ tam giác UVW.U'V'W' thỏa mãn đáy UVW là tam giác vuông tại U, chân đường cao kẻ từ U' đến mặt phẳng (UVW) là V, thỏa mãn UV = 8, biết UW = 9, và cạnh U'V = 19. Trên đoạn UW chọn điểm J với UJ = 5/11 UW. Mặt phẳng (R) chứa J và song song với cả hai đường thẳng UU', UV. Hãy xác định thiết diện của hình lăng trụ UVW.U'V'W' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+      "problem_text": "Cho hình lăng trụ tam giác UVW.U'V'W' có đáy UVW là tam giác vuông tại U, hình chiếu vuông góc của U' trên mặt phẳng (UVW) trùng với V, biết UV = 8, biết UW = 9, và cạnh U'V = 19. Lấy điểm J trên cạnh UW sao cho UJ = 5/11 UW. Mặt phẳng (R) chứa J và song song với cả hai đường thẳng UU', UV. Hãy xác định thiết diện của hình lăng trụ UVW.U'V'W' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
-        "problem_text": "Cho hình lăng trụ tam giác UVW.U'V'W' biết đáy UVW là tam giác vuông tại U, hình chiếu vuông góc của U' trên mặt phẳng (UVW) trùng với V, biết UV = 8, biết UW = 9, và cạnh U'V = 19. Lấy điểm J trên cạnh UW sao cho UJ = 5/11 UW. Mặt phẳng (R) chứa J và song song với cả hai đường thẳng UU', UV. Hãy xác định thiết diện của hình lăng trụ UVW.U'V'W' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+        "problem_text": "Cho hình lăng trụ tam giác UVW.U'V'W' có đáy UVW là tam giác vuông tại U, hình chiếu vuông góc của U' trên mặt phẳng (UVW) trùng với V, biết UV = 8, biết UW = 9, và cạnh U'V = 19. Lấy điểm J trên cạnh UW sao cho UJ = 5/11 UW. Mặt phẳng (R) chứa J và song song với cả hai đường thẳng UU', UV. Hãy xác định thiết diện của hình lăng trụ UVW.U'V'W' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
         "length_unit": "1",
         "solids": [
           {
@@ -5567,7 +5567,7 @@
               ],
               "right_at": "U"
             },
-            "quote": "biết đáy UVW là tam giác vuông tại U",
+            "quote": "có đáy UVW là tam giác vuông tại U",
             "solid_id": "s1"
           },
           {
@@ -5843,7 +5843,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Xét hình hộp chữ nhật GHKL.G'H'K'L' biết mặt đáy GHKL là hình chữ nhật, với độ dài GH = 8a, cạnh GL = 11a, chiều cao GG' = 21a. Trên cạnh GL lấy điểm I thỏa mãn GI = 3/13 GL. Mặt phẳng (R) đi qua I đồng thời song song với mặt phẳng (GHG'). Hãy xác định thiết diện của hình hộp chữ nhật GHKL.G'H'K'L' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+      "problem_text": "Xét hình hộp chữ nhật GHKL.G'H'K'L' có đáy GHKL là hình chữ nhật, biết GH = 8a, cạnh GL = 11a, và GG' = 21a. Lấy điểm I trên cạnh GL sao cho GI = 3/13 GL. Mặt phẳng (R) đi qua I đồng thời song song với mặt phẳng (GHG'). Hãy xác định thiết diện của hình hộp chữ nhật GHKL.G'H'K'L' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Xét hình hộp chữ nhật GHKL.G'H'K'L' có đáy GHKL là hình chữ nhật, biết GH = 8a, cạnh GL = 11a, và GG' = 21a. Lấy điểm I trên cạnh GL sao cho GI = 3/13 GL. Mặt phẳng (R) đi qua I đồng thời song song với mặt phẳng (GHG'). Hãy xác định thiết diện của hình hộp chữ nhật GHKL.G'H'K'L' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
@@ -6162,7 +6162,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Trong không gian, cho hình lập phương EFGH.E'F'G'H' với đáy EFGH là hình vuông cạnh bằng 11, cạnh bên EE' = 11. Trên đoạn EF chọn điểm I với EI = 4/11 EF. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh EF. Hãy xác định thiết diện của hình lập phương EFGH.E'F'G'H' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+      "problem_text": "Cho hình lập phương EFGH.E'F'G'H' có cạnh bằng 11. Lấy điểm I trên cạnh EF sao cho EI = 4/11 EF. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh EF. Hãy xác định thiết diện của hình lập phương EFGH.E'F'G'H' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Cho hình lập phương EFGH.E'F'G'H' có cạnh bằng 11. Lấy điểm I trên cạnh EF sao cho EI = 4/11 EF. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh EF. Hãy xác định thiết diện của hình lập phương EFGH.E'F'G'H' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
@@ -6296,7 +6296,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Cho hình lập phương GHKL.G'H'K'L' với đáy GHKL là hình vuông cạnh bằng 15a, cạnh bên GG' = 15a. Gọi I là điểm thuộc cạnh GL sao cho GI = 3/13 GL. Mặt phẳng (P) đi qua I đồng thời song song với mặt phẳng (GHG'). Hãy xác định thiết diện của hình lập phương GHKL.G'H'K'L' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
+      "problem_text": "Cho hình lập phương GHKL.G'H'K'L' có cạnh bằng 15a. Lấy điểm I trên cạnh GL sao cho GI = 3/13 GL. Mặt phẳng (P) đi qua I đồng thời song song với mặt phẳng (GHG'). Hãy xác định thiết diện của hình lập phương GHKL.G'H'K'L' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Cho hình lập phương GHKL.G'H'K'L' có cạnh bằng 15a. Lấy điểm I trên cạnh GL sao cho GI = 3/13 GL. Mặt phẳng (P) đi qua I đồng thời song song với mặt phẳng (GHG'). Hãy xác định thiết diện của hình lập phương GHKL.G'H'K'L' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
@@ -6431,7 +6431,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Cho khối lập phương CDEF.C'D'E'F' với đáy CDEF là hình vuông cạnh bằng 21, cạnh bên CC' = 21. Trên cạnh CF lấy điểm K thỏa mãn CK = 6/13 CF. Mặt phẳng (R) chứa K và song song với cả hai đường thẳng CC', CD. Hãy xác định thiết diện của hình lập phương CDEF.C'D'E'F' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+      "problem_text": "Cho hình lập phương CDEF.C'D'E'F' có cạnh bằng 21. Lấy điểm K trên cạnh CF sao cho CK = 6/13 CF. Mặt phẳng (R) chứa K và song song với cả hai đường thẳng CC', CD. Hãy xác định thiết diện của hình lập phương CDEF.C'D'E'F' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Cho hình lập phương CDEF.C'D'E'F' có cạnh bằng 21. Lấy điểm K trên cạnh CF sao cho CK = 6/13 CF. Mặt phẳng (R) chứa K và song song với cả hai đường thẳng CC', CD. Hãy xác định thiết diện của hình lập phương CDEF.C'D'E'F' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
@@ -6739,10 +6739,10 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Xét khối chóp S.EFGH thỏa mãn đáy EFGH là hình chữ nhật, thỏa mãn SE ⊥ (EFGH), thỏa mãn EF = 6a, biết EH = 7a, và cạnh SE = 15a. Trên đoạn SE chọn điểm I với SI = 3/7 SE. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh SG, cắt các cạnh bên SF, SG, SH lần lượt tại J, K, L. Hãy xác định thiết diện của hình chóp S.EFGH khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+      "problem_text": "Xét khối chóp S.EFGH có đáy EFGH là hình chữ nhật, biết SE ⊥ (EFGH), biết EF = 3a, biết EH = 4a, và cạnh SE = 6a. Lấy điểm I trên cạnh SE sao cho SI = 3/7 SE. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh SG, cắt các cạnh bên SF, SG, SH lần lượt tại J, K, L. Hãy xác định thiết diện của hình chóp S.EFGH khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
-        "problem_text": "Xét khối chóp S.EFGH biết đáy EFGH là hình chữ nhật, biết SE ⊥ (EFGH), biết EF = 6a, biết EH = 7a, và cạnh SE = 15a. Lấy điểm I trên cạnh SE sao cho SI = 3/7 SE. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh SG, cắt các cạnh bên SF, SG, SH lần lượt tại J, K, L. Hãy xác định thiết diện của hình chóp S.EFGH khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+        "problem_text": "Xét khối chóp S.EFGH có đáy EFGH là hình chữ nhật, biết SE ⊥ (EFGH), biết EF = 3a, biết EH = 4a, và cạnh SE = 6a. Lấy điểm I trên cạnh SE sao cho SI = 3/7 SE. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh SG, cắt các cạnh bên SF, SG, SH lần lượt tại J, K, L. Hãy xác định thiết diện của hình chóp S.EFGH khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
         "length_unit": "a",
         "solids": [
           {
@@ -6763,7 +6763,7 @@
                 "H"
               ]
             },
-            "quote": "biết đáy EFGH là hình chữ nhật",
+            "quote": "có đáy EFGH là hình chữ nhật",
             "solid_id": "s1"
           },
           {
@@ -6790,9 +6790,9 @@
                 "E",
                 "F"
               ],
-              "value": "6a"
+              "value": "3a"
             },
-            "quote": "biết EF = 6a",
+            "quote": "biết EF = 3a",
             "solid_id": "s1"
           },
           {
@@ -6802,9 +6802,9 @@
                 "E",
                 "H"
               ],
-              "value": "7a"
+              "value": "4a"
             },
-            "quote": "biết EH = 7a",
+            "quote": "biết EH = 4a",
             "solid_id": "s1"
           },
           {
@@ -6814,9 +6814,9 @@
                 "S",
                 "E"
               ],
-              "value": "15a"
+              "value": "6a"
             },
-            "quote": "và cạnh SE = 15a",
+            "quote": "và cạnh SE = 6a",
             "solid_id": "s1"
           },
           {
@@ -7092,10 +7092,10 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Cho hình lăng trụ tam giác DEF.D'E'F' biết tam giác đáy DEF vuông tại D, biết hình chiếu vuông góc của đỉnh D' lên mặt phẳng (DEF) là E, với độ dài DE = 4a, cạnh DF = 7a, chiều cao D'E = 15a. Trên cạnh DD' lấy điểm I thỏa mãn DI = 6/11 DD'. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh DD', cắt các cạnh bên EE', FF' lần lượt tại J, K. Hãy xác định thiết diện của hình lăng trụ DEF.D'E'F' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+      "problem_text": "Cho hình lăng trụ tam giác DEF.D'E'F' có đáy DEF là tam giác vuông tại D, hình chiếu vuông góc của D' trên mặt phẳng (DEF) trùng với E, biết DE = 4a, cạnh DF = 7a, và D'E = 15a. Lấy điểm I trên cạnh DD' sao cho DI = 6/11 DD'. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh DD', cắt các cạnh bên EE', FF' lần lượt tại J, K. Hãy xác định thiết diện của hình lăng trụ DEF.D'E'F' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
-        "problem_text": "Cho hình lăng trụ tam giác DEF.D'E'F' biết tam giác đáy DEF vuông tại D, hình chiếu vuông góc của D' trên mặt phẳng (DEF) trùng với E, biết DE = 4a, cạnh DF = 7a, và D'E = 15a. Lấy điểm I trên cạnh DD' sao cho DI = 6/11 DD'. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh DD', cắt các cạnh bên EE', FF' lần lượt tại J, K. Hãy xác định thiết diện của hình lăng trụ DEF.D'E'F' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+        "problem_text": "Cho hình lăng trụ tam giác DEF.D'E'F' có đáy DEF là tam giác vuông tại D, hình chiếu vuông góc của D' trên mặt phẳng (DEF) trùng với E, biết DE = 4a, cạnh DF = 7a, và D'E = 15a. Lấy điểm I trên cạnh DD' sao cho DI = 6/11 DD'. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh DD', cắt các cạnh bên EE', FF' lần lượt tại J, K. Hãy xác định thiết diện của hình lăng trụ DEF.D'E'F' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
         "length_unit": "a",
         "solids": [
           {
@@ -7116,7 +7116,7 @@
               ],
               "right_at": "D"
             },
-            "quote": "biết tam giác đáy DEF vuông tại D",
+            "quote": "có đáy DEF là tam giác vuông tại D",
             "solid_id": "s1"
           },
           {
@@ -7447,7 +7447,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Xét hình lập phương EFGH.E'F'G'H' với đáy EFGH là hình vuông cạnh bằng 23, cạnh bên EE' = 23. Trên đoạn EE' chọn điểm I với EI = 2/17 EE'. Mặt phẳng (R) chứa I và song song với cả hai đường thẳng EF, EH, cắt các cạnh bên FF', GG', HH' lần lượt tại J, K, L. Hãy xác định thiết diện của hình lập phương EFGH.E'F'G'H' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+      "problem_text": "Cho hình lập phương EFGH.E'F'G'H' có cạnh bằng 23. Lấy điểm I trên cạnh EE' sao cho EI = 2/17 EE'. Mặt phẳng (R) chứa I và song song với cả hai đường thẳng EF, EH, cắt các cạnh bên FF', GG', HH' lần lượt tại J, K, L. Hãy xác định thiết diện của hình lập phương EFGH.E'F'G'H' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Cho hình lập phương EFGH.E'F'G'H' có cạnh bằng 23. Lấy điểm I trên cạnh EE' sao cho EI = 2/17 EE'. Mặt phẳng (R) chứa I và song song với cả hai đường thẳng EF, EH, cắt các cạnh bên FF', GG', HH' lần lượt tại J, K, L. Hãy xác định thiết diện của hình lập phương EFGH.E'F'G'H' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
@@ -7610,7 +7610,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Trong không gian, cho hình chóp S.EFG với mặt đáy EFG là tam giác vuông ở E, đường thẳng SE vuông góc với mặt phẳng (EFG), có số đo EF = 9, đoạn EG = 14, độ dài SE = 19. Cho H là trung điểm của SE. Mặt phẳng (P) đi qua H đồng thời vuông góc với cạnh SF. Hãy xác định thiết diện của hình chóp S.EFG khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
+      "problem_text": "Trong không gian, cho hình chóp S.EFG với mặt đáy EFG là tam giác vuông ở E, đường thẳng SE vuông góc với mặt phẳng (EFG), có số đo EF = 9, đoạn EG = 14, độ dài SE = 19. Cho H là trung điểm của SE. Mặt phẳng (P) đi qua H đồng thời vuông góc với cạnh SF, hãy xác định thiết diện của hình chóp S.EFG khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Trong không gian, cho hình chóp S.EFG với mặt đáy EFG là tam giác vuông ở E, đường thẳng SE vuông góc với mặt phẳng (EFG), có số đo EF = 9, đoạn EG = 14, độ dài SE = 19. Cho H là trung điểm của SE. Mặt phẳng (P) đi qua H đồng thời vuông góc với cạnh SF, hãy xác định thiết diện của hình chóp S.EFG khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
@@ -7764,7 +7764,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Trong không gian, cho hình chóp S.EFG có đáy EFG là tam giác vuông tại E, cạnh bên SE vuông góc với mặt phẳng (EFG), biết EF = 5, EG = 11, và SE = 16. Cho M là trung điểm của SE. Mặt phẳng (P) đi qua M đồng thời vuông góc với cạnh SF, cắt các cạnh bên SF, SG lần lượt tại N, P. Hãy xác định thiết diện của hình chóp S.EFG khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
+      "problem_text": "Trong không gian, cho hình chóp S.EFG có đáy EFG là tam giác vuông tại E, cạnh bên SE vuông góc với mặt phẳng (EFG), biết EF = 5, EG = 11, và SE = 16. Cho M là trung điểm của SE. Mặt phẳng (P) đi qua M đồng thời vuông góc với cạnh SF, cắt các cạnh bên SF, SG lần lượt tại N, P, hãy xác định thiết diện của hình chóp S.EFG khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Trong không gian, cho hình chóp S.EFG có đáy EFG là tam giác vuông tại E, cạnh bên SE vuông góc với mặt phẳng (EFG), biết EF = 5, EG = 11, và SE = 16. Cho M là trung điểm của SE. Mặt phẳng (P) đi qua M đồng thời vuông góc với cạnh SF, cắt các cạnh bên SF, SG lần lượt tại N, P, hãy xác định thiết diện của hình chóp S.EFG khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
@@ -8884,7 +8884,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Trong không gian, cho hình chóp S.EFG với mặt đáy EFG là tam giác vuông ở E, đường thẳng SE vuông góc với mặt phẳng (EFG), có số đo EF = 9, đoạn EG = 14, độ dài SE = 19. Cho H là trung điểm của SE. Mặt phẳng (P) đi qua H đồng thời vuông góc với cạnh SF. Hãy xác định thiết diện của hình chóp S.EFG khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
+      "problem_text": "Cho hình chóp S.EFG có đáy EFG là tam giác vuông tại E. Gọi H là trung điểm của SE. Mặt phẳng (P) đi qua H đồng thời vuông góc với cạnh SF. Đường thẳng SE vuông góc với mặt phẳng (EFG). Biết EF = 9, EG = 14, và SE = 19. Hãy xác định thiết diện của hình chóp S.EFG khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Cho hình chóp S.EFG có đáy EFG là tam giác vuông tại E. Gọi H là trung điểm của SE. Mặt phẳng (P) đi qua H đồng thời vuông góc với cạnh SF. Đường thẳng SE vuông góc với mặt phẳng (EFG). Biết EF = 9, EG = 14, và SE = 19. Hãy xác định thiết diện của hình chóp S.EFG khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
@@ -9038,7 +9038,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Cho hình lăng trụ đứng DEF.D'E'F' có đáy DEF là tam giác vuông tại D, biết DE = 5, DF = 6, và DD' = 11. Lấy điểm I trên cạnh DD' sao cho DI = 4/5 DD'. Mặt phẳng (P) đi qua I đồng thời vuông góc với cạnh DF'. Hãy xác định thiết diện của hình lăng trụ DEF.D'E'F' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
+      "problem_text": "Cho hình lăng trụ đứng DEF.D'E'F' có đáy DEF là tam giác vuông tại D. Lấy điểm I trên cạnh DD' sao cho DI = 4/5 DD'. Mặt phẳng (P) đi qua I đồng thời vuông góc với cạnh DF'. Biết DE = 5, DF = 6, và DD' = 11. Hãy xác định thiết diện của hình lăng trụ DEF.D'E'F' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Cho hình lăng trụ đứng DEF.D'E'F' có đáy DEF là tam giác vuông tại D. Lấy điểm I trên cạnh DD' sao cho DI = 4/5 DD'. Mặt phẳng (P) đi qua I đồng thời vuông góc với cạnh DF'. Biết DE = 5, DF = 6, và DD' = 11. Hãy xác định thiết diện của hình lăng trụ DEF.D'E'F' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
@@ -9194,7 +9194,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Trong không gian, cho hình chóp S.EFG có đáy EFG là tam giác vuông tại E, cạnh bên SE vuông góc với mặt phẳng (EFG), biết EF = 5, EG = 11, và SE = 16. Cho M là trung điểm của SE. Mặt phẳng (P) đi qua M đồng thời vuông góc với cạnh SF, cắt các cạnh bên SF, SG lần lượt tại N, P. Hãy xác định thiết diện của hình chóp S.EFG khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
+      "problem_text": "Cho hình chóp S.EFG có đáy EFG là tam giác vuông tại E. Cho M là trung điểm của SE. Mặt phẳng (P) đi qua M đồng thời vuông góc với cạnh SF, cắt các cạnh bên SF, SG lần lượt tại N, P. Cạnh bên SE vuông góc với mặt phẳng (EFG). Biết EF = 5, EG = 11, và SE = 16. Hãy xác định thiết diện của hình chóp S.EFG khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Cho hình chóp S.EFG có đáy EFG là tam giác vuông tại E. Cho M là trung điểm của SE. Mặt phẳng (P) đi qua M đồng thời vuông góc với cạnh SF, cắt các cạnh bên SF, SG lần lượt tại N, P. Cạnh bên SE vuông góc với mặt phẳng (EFG). Biết EF = 5, EG = 11, và SE = 16. Hãy xác định thiết diện của hình chóp S.EFG khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
@@ -9365,7 +9365,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Cho khối hộp chữ nhật EFGH.E'F'G'H' có đáy EFGH là hình chữ nhật, biết EF = 7, EH = 9, và EE' = 20. Lấy điểm K trên cạnh EE' sao cho EK = 4/15 EE'. Mặt phẳng (P) chứa K và song song với cả hai đường thẳng EF, EH, cắt các cạnh bên FF', GG', HH' lần lượt tại I, J, L. Hãy xác định thiết diện của hình hộp chữ nhật EFGH.E'F'G'H' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
+      "problem_text": "Cho hình hộp chữ nhật EFGH.E'F'G'H' có đáy EFGH là hình chữ nhật, biết EF = 7, EH = 9, và EE' = 20. Lấy điểm K trên cạnh EE' sao cho EK = 4/15 EE'. Mặt phẳng (P) chứa K và song song với cả hai đường thẳng EF, EH, cắt các cạnh bên FF', GG', HH' lần lượt tại I, J, L. Hãy xác định thiết diện của hình hộp chữ nhật EFGH.E'F'G'H' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Cho hình hộp chữ nhật EFGH.E'F'G'H' có đáy EFGH là hình chữ nhật, biết EF = 7, EH = 9, và EE' = 20. Lấy điểm K trên cạnh EE' sao cho EK = 4/15 EE'. Mặt phẳng (P) chứa K và song song với cả hai đường thẳng EF, EH, cắt các cạnh bên FF', GG', HH' lần lượt tại I, J, L. Hãy xác định thiết diện của hình hộp chữ nhật EFGH.E'F'G'H' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
@@ -9375,7 +9375,7 @@
             "solid_id": "s1",
             "solid_type": "prism",
             "notation": "EFGH.E'F'G'H'",
-            "quote": "Cho khối hộp chữ nhật EFGH.E'F'G'H'"
+            "quote": "Cho hình hộp chữ nhật EFGH.E'F'G'H'"
           }
         ],
         "premises": [
@@ -9395,7 +9395,7 @@
                 "H'"
               ]
             },
-            "quote": "Cho khối hộp chữ nhật EFGH.E'F'G'H'",
+            "quote": "Cho hình hộp chữ nhật EFGH.E'F'G'H'",
             "solid_id": "s1"
           },
           {
@@ -9512,7 +9512,7 @@
             "kind": "construct_plane_section",
             "target_section_id": "sec",
             "target_solid_id": "s1",
-            "quote": "Hãy xác định thiết diện của hình hộp chữ nhật EFGH.E'F'G'H' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện"
+            "quote": "Cho hình hộp chữ nhật EFGH.E'F'G'H'"
           }
         ],
         "math_goals": [
@@ -9552,7 +9552,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Trong không gian, cho hình chóp S.EFG với mặt đáy EFG là tam giác vuông ở E, đường thẳng SE vuông góc với mặt phẳng (EFG), có số đo EF = 9, đoạn EG = 14, độ dài SE = 19. Cho H là trung điểm của SE. Mặt phẳng (P) đi qua H đồng thời vuông góc với cạnh SF. Hãy xác định thiết diện của hình chóp S.EFG khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
+      "problem_text": "Trong không gian, cho hình chóp S.EFG với mặt đáy EFG là tam giác vuông ở E, đường thẳng SE vuông góc với mặt phẳng (EFG), có số đo EF = 9, đoạn EG = 14, độ dài SE = 19. Cho H là trung điểm của SE. Qua H dựng mặt phẳng (α) đồng thời vuông góc với cạnh SF. Hãy xác định thiết diện của hình chóp S.EFG khi cắt bởi mặt phẳng (α) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Trong không gian, cho hình chóp S.EFG với mặt đáy EFG là tam giác vuông ở E, đường thẳng SE vuông góc với mặt phẳng (EFG), có số đo EF = 9, đoạn EG = 14, độ dài SE = 19. Cho H là trung điểm của SE. Qua H dựng mặt phẳng (α) đồng thời vuông góc với cạnh SF. Hãy xác định thiết diện của hình chóp S.EFG khi cắt bởi mặt phẳng (α) và tính diện tích của thiết diện.",
@@ -9706,7 +9706,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Xét khối chóp A.BCDE với tứ giác đáy BCDE là hình chữ nhật, đường thẳng AB vuông góc với mặt phẳng (BCDE), có số đo BC = 7a, đoạn BE = 10a, độ dài AB = 19a. Gọi F là điểm thuộc cạnh BE sao cho BF = 4/9 BE. Mặt phẳng (P) đi qua F đồng thời song song với mặt phẳng (ABC). Hãy xác định thiết diện của hình chóp A.BCDE khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
+      "problem_text": "Xét khối chóp A.BCDE với tứ giác đáy BCDE là hình chữ nhật, đường thẳng AB vuông góc với mặt phẳng (BCDE), có số đo BC = 7a, đoạn BE = 10a, độ dài AB = 19a. Gọi F là điểm thuộc cạnh BE sao cho BF = 4/9 BE. Thiết lập mặt phẳng (β) đi qua F đồng thời song song với mặt phẳng (ABC). Hãy xác định thiết diện của hình chóp A.BCDE khi cắt bởi mặt phẳng (β) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Xét khối chóp A.BCDE với tứ giác đáy BCDE là hình chữ nhật, đường thẳng AB vuông góc với mặt phẳng (BCDE), có số đo BC = 7a, đoạn BE = 10a, độ dài AB = 19a. Gọi F là điểm thuộc cạnh BE sao cho BF = 4/9 BE. Thiết lập mặt phẳng (β) đi qua F đồng thời song song với mặt phẳng (ABC). Hãy xác định thiết diện của hình chóp A.BCDE khi cắt bởi mặt phẳng (β) và tính diện tích của thiết diện.",
@@ -9863,7 +9863,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Trong không gian, cho hình lăng trụ tam giác GHK.G'H'K' có đáy GHK là tam giác vuông tại G, hình chiếu vuông góc của G' trên mặt phẳng (GHK) trùng với H, biết GH = 5a, GK = 11a, và G'H = 14a. Lấy điểm L trên cạnh GK sao cho GL = 5/9 GK. Mặt phẳng (P) đi qua L đồng thời song song với mặt phẳng (GHG'). Hãy xác định thiết diện của hình lăng trụ GHK.G'H'K' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
+      "problem_text": "Trong không gian, cho hình lăng trụ tam giác GHK.G'H'K' có đáy GHK là tam giác vuông tại G, hình chiếu vuông góc của G' trên mặt phẳng (GHK) trùng với H, biết GH = 5a, GK = 11a, và G'H = 14a. Lấy điểm L trên cạnh GK sao cho GL = 5/9 GK. Xét mặt phẳng (γ) đi qua L đồng thời song song với mặt phẳng (GHG'). Hãy xác định thiết diện của hình lăng trụ GHK.G'H'K' khi cắt bởi mặt phẳng (γ) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Trong không gian, cho hình lăng trụ tam giác GHK.G'H'K' có đáy GHK là tam giác vuông tại G, hình chiếu vuông góc của G' trên mặt phẳng (GHK) trùng với H, biết GH = 5a, GK = 11a, và G'H = 14a. Lấy điểm L trên cạnh GK sao cho GL = 5/9 GK. Xét mặt phẳng (γ) đi qua L đồng thời song song với mặt phẳng (GHG'). Hãy xác định thiết diện của hình lăng trụ GHK.G'H'K' khi cắt bởi mặt phẳng (γ) và tính diện tích của thiết diện.",
@@ -10017,7 +10017,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Xét khối hộp chữ nhật CDEF.C'D'E'F' có đáy CDEF là hình chữ nhật, biết CD = 11, CF = 12, và CC' = 25. Lấy điểm K trên cạnh CF sao cho CK = 7/11 CF. Mặt phẳng (P) chứa K và song song với cả hai đường thẳng CC', CD. Hãy xác định thiết diện của hình hộp chữ nhật CDEF.C'D'E'F' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
+      "problem_text": "Xét khối hộp chữ nhật CDEF.C'D'E'F' có đáy CDEF là hình chữ nhật, biết CD = 11, CF = 12, và CC' = 25. Lấy điểm K trên cạnh CF sao cho CK = 7/11 CF. Gọi (Q) là mặt phẳng chứa K đồng thời song song với cả hai đường thẳng CC', CD. Hãy xác định thiết diện của hình hộp chữ nhật CDEF.C'D'E'F' khi cắt bởi mặt phẳng (Q) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Xét khối hộp chữ nhật CDEF.C'D'E'F' có đáy CDEF là hình chữ nhật, biết CD = 11, CF = 12, và CC' = 25. Lấy điểm K trên cạnh CF sao cho CK = 7/11 CF. Gọi (Q) là mặt phẳng chứa K đồng thời song song với cả hai đường thẳng CC', CD. Hãy xác định thiết diện của hình hộp chữ nhật CDEF.C'D'E'F' khi cắt bởi mặt phẳng (Q) và tính diện tích của thiết diện.",
@@ -10179,7 +10179,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Xét khối chóp A.BCDE với tứ giác đáy BCDE là hình chữ nhật, đường thẳng AB vuông góc với mặt phẳng (BCDE), có số đo BC = 7a, đoạn BE = 10a, độ dài AB = 19a. Gọi F là điểm thuộc cạnh BE sao cho BF = 4/9 BE. Mặt phẳng (P) đi qua F đồng thời song song với mặt phẳng (ABC). Hãy xác định thiết diện của hình chóp A.BCDE khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
+      "problem_text": "Xét khối chóp A.BCDE. Gọi F là điểm thuộc cạnh BE sao cho BF = 4/9 BE. Mặt phẳng (P) đi qua F đồng thời song song với mặt phẳng (ABC). Cho khối chóp A.BCDE có đáy BCDE là hình chữ nhật, đường thẳng AB vuông góc với mặt phẳng (BCDE), biết BC = 7a, BE = 10a, và AB = 19a. Hãy xác định thiết diện của hình chóp A.BCDE khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Xét khối chóp A.BCDE. Gọi F là điểm thuộc cạnh BE sao cho BF = 4/9 BE. Mặt phẳng (P) đi qua F đồng thời song song với mặt phẳng (ABC). Cho khối chóp A.BCDE có đáy BCDE là hình chữ nhật, đường thẳng AB vuông góc với mặt phẳng (BCDE), biết BC = 7a, BE = 10a, và AB = 19a. Hãy xác định thiết diện của hình chóp A.BCDE khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
@@ -10336,7 +10336,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Cho hình lập phương GHKL.G'H'K'L' với đáy GHKL là hình vuông cạnh bằng 15a, cạnh bên GG' = 15a. Gọi I là điểm thuộc cạnh GL sao cho GI = 3/13 GL. Mặt phẳng (P) đi qua I đồng thời song song với mặt phẳng (GHG'). Hãy xác định thiết diện của hình lập phương GHKL.G'H'K'L' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
+      "problem_text": "Cho hình lập phương GHKL.G'H'K'L' có cạnh bằng 15a. Mặt phẳng (P) đi qua I đồng thời song song với mặt phẳng (GHG'). Gọi I là điểm thuộc cạnh GL sao cho GI = 3/13 GL. Hãy xác định thiết diện của hình lập phương GHKL.G'H'K'L' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Cho hình lập phương GHKL.G'H'K'L' có cạnh bằng 15a. Mặt phẳng (P) đi qua I đồng thời song song với mặt phẳng (GHG'). Gọi I là điểm thuộc cạnh GL sao cho GI = 3/13 GL. Hãy xác định thiết diện của hình lập phương GHKL.G'H'K'L' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
@@ -10405,7 +10405,7 @@
               ],
               "ratio": "3/13"
             },
-            "quote": "Lấy điểm I trên cạnh GL sao cho GI = 3/13 GL",
+            "quote": "Gọi I là điểm thuộc cạnh GL sao cho GI = 3/13 GL",
             "solid_id": "s1"
           }
         ],
@@ -10472,7 +10472,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Trong không gian, cho hình chóp S.EFG với mặt đáy EFG là tam giác vuông ở E, đường thẳng SE vuông góc với mặt phẳng (EFG), có số đo EF = 9, đoạn EG = 14, độ dài SE = 19. Cho H là trung điểm của SE. Mặt phẳng (P) đi qua H đồng thời vuông góc với cạnh SF. Hãy xác định thiết diện của hình chóp S.EFG khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
+      "problem_text": "Trong không gian, cho hình chóp S.EFG với mặt đáy EFG là tam giác vuông ở E, đường thẳng SE vuông góc với mặt phẳng (EFG), có số đo EF = 9, đoạn EG = 14, độ dài SE = 19. Cho H là trung điểm của SE. Mặt phẳng (P) đi qua H đồng thời vuông góc với cạnh SF. Hãy xác định thiết diện của hình chóp S.EFG khi cắt bởi mặt phẳng (P).",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Trong không gian, cho hình chóp S.EFG với mặt đáy EFG là tam giác vuông ở E, đường thẳng SE vuông góc với mặt phẳng (EFG), có số đo EF = 9, đoạn EG = 14, độ dài SE = 19. Cho H là trung điểm của SE. Mặt phẳng (P) đi qua H đồng thời vuông góc với cạnh SF. Hãy xác định thiết diện của hình chóp S.EFG khi cắt bởi mặt phẳng (P).",
@@ -10615,7 +10615,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Xét khối chóp A.BCDE với tứ giác đáy BCDE là hình chữ nhật, đường thẳng AB vuông góc với mặt phẳng (BCDE), có số đo BC = 7a, đoạn BE = 10a, độ dài AB = 19a. Gọi F là điểm thuộc cạnh BE sao cho BF = 4/9 BE. Mặt phẳng (P) đi qua F đồng thời song song với mặt phẳng (ABC). Hãy xác định thiết diện của hình chóp A.BCDE khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
+      "problem_text": "Xét khối chóp A.BCDE với tứ giác đáy BCDE là hình chữ nhật, đường thẳng AB vuông góc với mặt phẳng (BCDE), có số đo BC = 7a, đoạn BE = 10a, độ dài AB = 19a. Gọi F là điểm thuộc cạnh BE sao cho BF = 4/9 BE. Mặt phẳng (P) đi qua F đồng thời song song với mặt phẳng (ABC). Hãy tính diện tích thiết diện của hình chóp A.BCDE khi cắt bởi mặt phẳng (P).",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Xét khối chóp A.BCDE với tứ giác đáy BCDE là hình chữ nhật, đường thẳng AB vuông góc với mặt phẳng (BCDE), có số đo BC = 7a, đoạn BE = 10a, độ dài AB = 19a. Gọi F là điểm thuộc cạnh BE sao cho BF = 4/9 BE. Mặt phẳng (P) đi qua F đồng thời song song với mặt phẳng (ABC). Hãy tính diện tích thiết diện của hình chóp A.BCDE khi cắt bởi mặt phẳng (P).",
@@ -10771,7 +10771,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Cho hình lăng trụ đứng DEF.D'E'F' có đáy DEF là tam giác vuông tại D, biết DE = 5, DF = 6, và DD' = 11. Lấy điểm I trên cạnh DD' sao cho DI = 4/5 DD'. Mặt phẳng (P) đi qua I đồng thời vuông góc với cạnh DF'. Hãy xác định thiết diện của hình lăng trụ DEF.D'E'F' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
+      "problem_text": "Cho hình lăng trụ đứng DEF.D'E'F' có đáy DEF là tam giác vuông tại D, biết DE = 5, DF = 6, và DD' = 11. Lấy điểm I trên cạnh DD' sao cho DI = 4/5 DD'. Mặt phẳng (P) đi qua I đồng thời vuông góc với cạnh DF'. Hãy xác định thiết diện tạo bởi mặt phẳng (P) với hình lăng trụ DEF.D'E'F' và tính diện tích thiết diện đó.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Cho hình lăng trụ đứng DEF.D'E'F' có đáy DEF là tam giác vuông tại D, biết DE = 5, DF = 6, và DD' = 11. Lấy điểm I trên cạnh DD' sao cho DI = 4/5 DD'. Mặt phẳng (P) đi qua I đồng thời vuông góc với cạnh DF'. Hãy xác định thiết diện tạo bởi mặt phẳng (P) với hình lăng trụ DEF.D'E'F' và tính diện tích thiết diện đó.",
@@ -10927,7 +10927,7 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Cho khối hộp chữ nhật EFGH.E'F'G'H' với tứ giác đáy EFGH là hình chữ nhật, có số đo EF = 5, đoạn EH = 6, độ dài EE' = 13. Mặt phẳng (P) đi qua E' đồng thời vuông góc với cạnh EG'. Hãy xác định thiết diện của hình hộp chữ nhật EFGH.E'F'G'H' khi cắt bởi mặt phẳng (P) và tính diện tích của thiết diện.",
+      "problem_text": "Cho khối hộp chữ nhật EFGH.E'F'G'H' với tứ giác đáy EFGH là hình chữ nhật, có số đo EF = 5, đoạn EH = 6, độ dài EE' = 13. Mặt phẳng (P) đi qua E' đồng thời vuông góc với cạnh EG'. Hãy xác định thiết diện của hình hộp chữ nhật EFGH.E'F'G'H' cắt bởi mặt phẳng (P) và tính diện tích của nó.",
       "payload": {
         "schema_version": "typed-fact-next/2",
         "problem_text": "Cho khối hộp chữ nhật EFGH.E'F'G'H' với tứ giác đáy EFGH là hình chữ nhật, có số đo EF = 5, đoạn EH = 6, độ dài EE' = 13. Mặt phẳng (P) đi qua E' đồng thời vuông góc với cạnh EG'. Hãy xác định thiết diện của hình hộp chữ nhật EFGH.E'F'G'H' cắt bởi mặt phẳng (P) và tính diện tích của nó.",
@@ -11072,10 +11072,10 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Xét khối lăng trụ DEF.D'E'F' biết tam giác đáy DEF vuông tại D, biết hình chiếu vuông góc của đỉnh D' lên mặt phẳng (DEF) là E, với độ dài DE = 5, cạnh DF = 6, chiều cao D'E = 13. Trên cạnh DD' lấy điểm I thỏa mãn DI = 5/7 DD'. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh DF'. Hãy xác định thiết diện của hình lăng trụ DEF.D'E'F' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+      "problem_text": "Xét khối lăng trụ DEF.D'E'F' có đáy DEF là tam giác vuông tại D, hình chiếu vuông góc của D' trên mặt phẳng (DEF) trùng với E, biết DE = 5, cạnh DF = 6, và D'E = 13. Lấy điểm I trên cạnh DD' sao cho DI = 5/7 DD'. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh DF'. Hãy xác định thiết diện của hình lăng trụ DEF.D'E'F' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
-        "problem_text": "Xét khối lăng trụ DEF.D'E'F' biết tam giác đáy DEF vuông tại D, hình chiếu vuông góc của D' trên mặt phẳng (DEF) trùng với E, biết DE = 5, cạnh DF = 6, và D'E = 13. Lấy điểm I trên cạnh DD' sao cho DI = 5/7 DD'. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh DF'. Hãy xác định thiết diện của hình lăng trụ DEF.D'E'F' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+        "problem_text": "Xét khối lăng trụ DEF.D'E'F' có đáy DEF là tam giác vuông tại D, hình chiếu vuông góc của D' trên mặt phẳng (DEF) trùng với E, biết DE = 5, cạnh DF = 6, và D'E = 13. Lấy điểm I trên cạnh DD' sao cho DI = 5/7 DD'. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh DF'. Hãy xác định thiết diện của hình lăng trụ DEF.D'E'F' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
         "length_unit": "1",
         "solids": [
           {
@@ -11096,7 +11096,7 @@
               ],
               "right_at": "D"
             },
-            "quote": "biết tam giác đáy DEF vuông tại D",
+            "quote": "có đáy DEF là tam giác vuông tại D",
             "solid_id": "s1"
           },
           {
@@ -11225,10 +11225,10 @@
         "note": null
       },
       "gap_subclass": null,
-      "problem_text": "Cho hình lăng trụ tam giác DEF.D'E'F' biết tam giác đáy DEF vuông tại D, biết hình chiếu vuông góc của đỉnh D' lên mặt phẳng (DEF) là E, với độ dài DE = 4a, cạnh DF = 7a, chiều cao D'E = 15a. Trên cạnh DD' lấy điểm I thỏa mãn DI = 6/11 DD'. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh DD', cắt các cạnh bên EE', FF' lần lượt tại J, K. Hãy xác định thiết diện của hình lăng trụ DEF.D'E'F' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+      "problem_text": "Cho hình lăng trụ tam giác DEF.D'E'F' có đáy DEF là tam giác vuông tại D, hình chiếu vuông góc của D' trên mặt phẳng (DEF) trùng với E, biết DE = 4a, cạnh DF = 7a, và D'E = 15a. Lấy điểm I trên cạnh DD' sao cho DI = 6/11 DD'. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh DD', cắt các cạnh bên EE', FF' lần lượt tại J, K. Hãy xác định thiết diện của hình lăng trụ DEF.D'E'F' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
       "payload": {
         "schema_version": "typed-fact-next/2",
-        "problem_text": "Cho hình lăng trụ tam giác DEF.D'E'F' biết tam giác đáy DEF vuông tại D, hình chiếu vuông góc của D' trên mặt phẳng (DEF) trùng với E, biết DE = 4a, cạnh DF = 7a, và D'E = 15a. Lấy điểm I trên cạnh DD' sao cho DI = 6/11 DD'. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh DD', cắt các cạnh bên EE', FF' lần lượt tại J, K. Hãy xác định thiết diện của hình lăng trụ DEF.D'E'F' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
+        "problem_text": "Cho hình lăng trụ tam giác DEF.D'E'F' có đáy DEF là tam giác vuông tại D, hình chiếu vuông góc của D' trên mặt phẳng (DEF) trùng với E, biết DE = 4a, cạnh DF = 7a, và D'E = 15a. Lấy điểm I trên cạnh DD' sao cho DI = 6/11 DD'. Mặt phẳng (R) đi qua I đồng thời vuông góc với cạnh DD', cắt các cạnh bên EE', FF' lần lượt tại J, K. Hãy xác định thiết diện của hình lăng trụ DEF.D'E'F' khi cắt bởi mặt phẳng (R) và tính diện tích của thiết diện.",
         "length_unit": "a",
         "solids": [
           {
@@ -11249,7 +11249,7 @@
               ],
               "right_at": "D"
             },
-            "quote": "biết tam giác đáy DEF vuông tại D",
+            "quote": "có đáy DEF là tam giác vuông tại D",
             "solid_id": "s1"
           },
           {
