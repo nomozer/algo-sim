@@ -1,0 +1,7 @@
+{
+  "status": "VALID",
+  "terminal_declaration": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/candidate_divergence.json",
+  "sha256_lf": "7c553d92bc4f8fbaa6cef01eeedd0dab02ec0ffdbc33fea164931f0ebc911f82",
+  "product_commit": "a609c4871a75426db52eb8b7a7be8ba3460fcf8c",
+  "current_candidate_hash": "918d3404ac60e81d62c75f6bfb7067ea25a4e27c197e3584075edef42e441f72"
+}

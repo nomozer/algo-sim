@@ -1,0 +1,93 @@
+{
+  "status": "CLEANUP_COMPLETED",
+  "published_integration_sha": "0a89dcace74b38ed87f5ab95c82b5aeeba835410",
+  "first_push_three_way_sha": {
+    "main": "0a89dcace74b38ed87f5ab95c82b5aeeba835410",
+    "origin/main": "0a89dcace74b38ed87f5ab95c82b5aeeba835410",
+    "github_main": "0a89dcace74b38ed87f5ab95c82b5aeeba835410"
+  },
+  "worktrees": [
+    {
+      "worktree": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave3",
+      "head": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+      "branch": "research/hybrid-v2-independent-vietnamese-geometry-holdout-wave3",
+      "backup": {
+        "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\backups\\wave3-main-integration\\independent-section-holdout-wave3\\ignored-files.zip",
+        "sha256": "011f2875e79a3ae375c5eba14d415e9228021d6ef0bd5fd27d8b48faca61d19b",
+        "all_entries_verified": true
+      },
+      "ignored_files_preserved": 92,
+      "remove_exit_code": 0,
+      "remove_stdout": "",
+      "remove_stderr": "",
+      "residual_directory": false,
+      "registered_after": false,
+      "status": "REMOVED",
+      "branch_delete_exit_code": 0,
+      "branch_delete_stdout": "Deleted branch research/hybrid-v2-independent-vietnamese-geometry-holdout-wave3 (was 0943f0ee).",
+      "branch_delete_stderr": ""
+    },
+    {
+      "worktree": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\w3-f1-cross-sentence-plane-grounding",
+      "head": "85f819f02971f31b193dac9be7a56dbe79362e2a",
+      "branch": "research/hybrid-v2-w3-f1-cross-sentence-plane-grounding",
+      "backup": {
+        "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\backups\\wave3-main-integration\\w3-f1-cross-sentence-plane-grounding\\ignored-files.zip",
+        "sha256": "103ebff26b31a8f25a301ed655715d5aa80f88d3175fcdf69d1b183857252c69",
+        "all_entries_verified": true
+      },
+      "ignored_files_preserved": 679,
+      "remove_exit_code": 0,
+      "remove_stdout": "",
+      "remove_stderr": "",
+      "residual_directory": false,
+      "registered_after": false,
+      "status": "REMOVED",
+      "branch_delete_exit_code": 0,
+      "branch_delete_stdout": "Deleted branch research/hybrid-v2-w3-f1-cross-sentence-plane-grounding (was 85f819f0).",
+      "branch_delete_stderr": ""
+    },
+    {
+      "worktree": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\w3-f1-integration-verification",
+      "head": "b02b2c422e4049dc6ff0a94996f335424e7b02b9",
+      "branch": null,
+      "backup": {
+        "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\backups\\wave3-main-integration\\w3-f1-integration-verification\\ignored-files.zip",
+        "sha256": "2e109a2666f6427da29283d7f8e42d74ea198e0769cc3ac065dde96c011378ba",
+        "all_entries_verified": true
+      },
+      "ignored_files_preserved": 1,
+      "remove_exit_code": 0,
+      "remove_stdout": "",
+      "remove_stderr": "",
+      "residual_directory": false,
+      "registered_after": false,
+      "status": "REMOVED"
+    }
+  ],
+  "removed_worktrees": 3,
+  "removed_local_branches": 2,
+  "ignored_files_preserved": 772,
+  "root_dependency_verification": {
+    "status": "MATCH",
+    "files": {
+      "backend/.venv/Scripts/python.exe": "0b471133e110cfb53a061cad528ce8e517d7b9ac41a0a396c39ad795a487fc14",
+      "backend/.venv/pyvenv.cfg": "eb7ccfb6ab4a41fd8c7f3e33e2ce25ab477f0d1890bbb7261019e76a296a005a",
+      "frontend/node_modules/.package-lock.json": "81f9282b3b79b30298fae088cb31e3a82dec8421f6f60e012440262360baac05",
+      "frontend/node_modules/vite/package.json": "a1d0149fd986fd34b6d35503d2c0d8d9f743c4dbaaf94fbc11812bc84b05884d",
+      "frontend/node_modules/vitest/package.json": "caa41f04799bd42f3cfd100c4282e630d77ffc7deb1e7e4927794fcb7f137f34"
+    },
+    "python_executable": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "python_prefix": "D:\\Documents\\projects\\algo-sim\\backend\\.venv",
+    "dependencies_are_root_directories": true
+  },
+  "original_t3_worktree_at_preflight": "NOT_REGISTERED; no original detached b02b2c42 checkout was present. Created and removed w3-f1-integration-verification for independent frozen-candidate verification.",
+  "junctions": "NONE in cleanup worktrees; root dependency directories were ordinary directories and untouched",
+  "acl": "No blocker under normal user access; initial sandbox read restrictions resolved by scoped audit, no ACL modifications",
+  "residual_directories": [],
+  "protected_worktrees": "worktree D:/Documents/projects/algo-sim\nHEAD 0a89dcace74b38ed87f5ab95c82b5aeeba835410\nbranch refs/heads/main\n\nworktree D:/Documents/projects/algo-sim/.superpowers/worktrees/axo-v27-frontend-integration\nHEAD 3ea7f670b7b946bbbcc92ffdec5aa26ee5e8166a\nbranch refs/heads/feat/axo-v27-frontend-integration\n\nworktree D:/Documents/projects/algo-sim/.superpowers/worktrees/independent-section-holdout\nHEAD f7f177a626c33bb13aa40d3a904c82266ed8a276\nbranch refs/heads/research/hybrid-v2-independent-vietnamese-section-holdout\n\nworktree D:/Documents/projects/algo-sim/.superpowers/worktrees/s3d-hybrid-v2\nHEAD 3dcd6d9fbdc5627197537dc79c1e609ac3e03bea\nbranch refs/heads/research/scene3d-to-hybrid-v2-replacement\n\nworktree D:/Documents/projects/algo-sim/.superpowers/worktrees/s3d-hybrid-v2-codex\nHEAD e336e0dfee30968b27887bcf446d9ec7ad610f54\nbranch refs/heads/research/scene3d-hybrid-v2-codex\n\nworktree D:/Documents/projects/algo-sim/.superpowers/worktrees/scene3d-visual-correction\nHEAD 08929b893337e770649b9d854c8c71c4434edc29\nbranch refs/heads/research/scene3d-owner-math-visual-final\n\nworktree D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-hybrid-integration\nHEAD 13d28b844925ee0c9adb02698b54597c8f9d6eee\ndetached\n\n",
+  "unrelated_worktrees_modified_by_this_task": [],
+  "force_operations": 0,
+  "remote_branch_deletions": 0,
+  "final_evidence_commit_role": "SELF: closure publication commit; final exact SHA and three-way comparison emitted in session handoff"
+}

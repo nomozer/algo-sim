@@ -1,0 +1,17 @@
+{
+  "schema": "INTEGRATION_CLOSURE/1",
+  "task_code": "HYBRID_V2_WAVE3_EVIDENCE_W3_F1_MAIN_INTEGRATION",
+  "date": "2026-10-28",
+  "operational_status": "MERGED_PUSHED_VERIFIED_CLEANUP_COMPLETED",
+  "published_integration_sha": "0a89dcace74b38ed87f5ab95c82b5aeeba835410",
+  "closure_commit_role": "SELF; resolve main after final closure push, exact SHA in session handoff",
+  "files": {
+    "verification/post-cleanup/cleanup.json": "90c35657f6eb925f5b4a7d68a4e391aed3dbbef563adcc6b017d5825a61a8033",
+    "verification/post-cleanup/divergence.json": "ebfbd39083153d626ffa6a39b8d298f1ab57a73e4219ad2491d1e98a65ca6851",
+    "verification/post-cleanup/gates.json": "94c18567452072a6e6d05f316e7e54f1c904e34797ffb8566637183204f4ec4c",
+    "verification/post-cleanup/product-and-evidence.json": "51c7ec094f02cf144e2b29b91e2bc65e1ef8dbc8912805dd63ef35512279d73c",
+    "verification/post-cleanup/wave3-post-feedback-replay.json": "d8689009d1ac3c579645518d75e44ca8b6946f22fb745e32e24e2b95e2e9616f"
+  },
+  "product_changed": false,
+  "live_provider_calls": 0
+}

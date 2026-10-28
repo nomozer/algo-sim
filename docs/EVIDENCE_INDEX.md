@@ -2847,7 +2847,7 @@ CLASSIFICATION = DOCUMENTATION_CORRECTION_ONLY; authoritative W3-F2–F5 identit
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-wave3-main-integration/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-wave3-main-integration/
-CLASSIFICATION = INTEGRATION_VERIFICATION; Stage A 0943f0ee fast-forward; Stage B 1ee44b89 normal merge; 31 historical blobs preserved; 118 measured files freeze MATCH 918d3404; smoke 890 passed / 5 xfailed; post-feedback replay 29/72, 72/72, 62/72, 0/144. Push and cleanup closure recorded separately after execution.
+CLASSIFICATION = INTEGRATION_VERIFICATION; Stage A 0943f0ee fast-forward; Stage B 1ee44b89 normal merge; 31 historical blobs preserved; 118 measured files freeze MATCH 918d3404; smoke 890 passed / 5 xfailed; post-feedback replay 29/72, 72/72, 62/72, 0/144. Normal push verified three-way at 0a89dcac; cleanup completed (3 worktrees, 2 local branches; no ACL residuals). Closure: docs/evaluation/geometry/runs/hybrid-v2-wave3-main-integration/closure.md.
 VERIFICATION = verification/preflight-audit.json; verification/product-and-evidence.json; verification/smoke.json; verification/gates.json; verification/wave3-post-feedback-replay.json; review.md
 MODEL_REQUEST_COUNT = 0
 CORRECTS = NONE
