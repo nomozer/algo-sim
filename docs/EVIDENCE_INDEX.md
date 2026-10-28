@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_V2_W3_F2_RATIO_PROJECTION_LANGUAGE_GROUNDING
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/
+CLASSIFICATION = PRODUCT_REPAIR_DEVELOPMENT_EVALUATION; NOT_READY; Owner safety stop §15; authored ratio24/24, projection26/26, isolated1/1, historical20/21 served-correct; 22/24 negative refused, 21/24 locked reason match, 2 WRONG_SERVED from lost premise solid scope; no new frozen candidate or Full T3
+CODE_COMMIT = e9d5a9d73064a15b7702eb32c008835bc99fba6d (WIP, not approved); preregistration 90f58c4c6de102d58d971e890347e59f4bdc7bda; baseline main 996f114b3480efe1b0d075dd4342530aaa12ddae
+VERIFICATION = verification/preregistration.json; results/red-before.json; results/green-after.json (FAILED safety gate); results/tamper-results.json; verification/stop-condition.json; verification/baseline-foreign-scope-reproduction.json; verification/scope-and-evidence.json; verification/tiers.json; review.md; takeover.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_V2_W3_F1_CROSS_SENTENCE_PLANE_GROUNDING
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/report.md

@@ -1,0 +1,19 @@
+{
+  "schema": "W3_F2_BLOCKED_SCOPE_AND_EVIDENCE/1",
+  "main": "996f114b3480efe1b0d075dd4342530aaa12ddae",
+  "product_checkpoint": "e9d5a9d73064a15b7702eb32c008835bc99fba6d",
+  "preregistration_commit": "90f58c4c6de102d58d971e890347e59f4bdc7bda",
+  "preregistered_input_hashes": "MATCH",
+  "historical_git_blobs": "UNCHANGED",
+  "historical_checkout_lf_content": "MATCH",
+  "product_files_changed": [
+    "backend/app/simulation/geometry_functions/registry.py"
+  ],
+  "unfrozen_working_content_hash": [
+    "e8c58cf9a03a3ed24a5720969acd5a204b6c651800716f296ff13a59b77ef82e",
+    118
+  ],
+  "candidate": "NOT_CREATED_DUE_TO_SAFETY_STOP",
+  "full_t3": "NOT_RUN_DUE_TO_SAFETY_STOP",
+  "live_provider_calls": 0
+}

@@ -1,5 +1,9 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## W3-F2 ratio/projection source readers — local WIP NOT_READY (2026-10-29)
+
+`backend/app/simulation/geometry_functions/registry.py` (provisional /21): `_NOI_TY_SO` extends the existing `_TY_SO`/`_ty_so_khop` exact ratio reader; `_chan_duong_cao_dung_nguon` binds a whole explicit plane-altitude definition, reused by `construction_source_bound` and `_doc_phep_dung_cau_hoi`. Product checkpoint `e9d5a9d7` is **not accepted**: existing `typed_fact_next_bridge.py` loses `PremiseSpec.solid_id` for ratio/projection, causing two unsafe serves once the language gate admits those phrases. Do not use the old T3 receipt for this product. Covering test: `backend/tests/geometry/test_ratio_projection_language.py` (94 pass/3 fail); evidence/tool: `docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/` (`tools/evaluate_development.py`, preregistered exact geometry, `report.md`, `review.md`, `takeover.md`). No duplicated product module; no bridge/Planner/kernel/adapter change in this WIP.
+
 ## W3-F1 cross-sentence plane grounding (integrated on main under Owner GO, 2026-10-28)
 
 `backend/app/simulation/geometry_functions/typed_fact_next_bridge.py` (`_mat_fact`, `_v2_plane_def_quotes`),

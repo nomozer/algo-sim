@@ -1,0 +1,29 @@
+{
+  "schema": "W3_F2_STOP_CONDITION/1",
+  "status": "NOT_READY",
+  "owner_rule": "Owner GO \u00a715: stop if negative/tamper starts being served or any WRONG_SERVED",
+  "wrong_served_cases": [
+    {
+      "id": "DEV-NEG-08",
+      "code": null,
+      "served": true
+    },
+    {
+      "id": "DEV-NEG-23",
+      "code": null,
+      "served": true
+    }
+  ],
+  "failing_tests": [
+    "DEV-NEG-08",
+    "DEV-NEG-20",
+    "DEV-NEG-23"
+  ],
+  "targeted_test_summary": "94 passed, 3 failed",
+  "product_edits_stopped": true,
+  "freeze": "NOT_CREATED",
+  "t2": "NOT_RUN_DUE_TO_SAFETY_STOP",
+  "full_t3": "NOT_RUN_DUE_TO_SAFETY_STOP",
+  "wave3_replay": "NOT_RUN_DUE_TO_SAFETY_STOP",
+  "live_provider_calls": 0
+}

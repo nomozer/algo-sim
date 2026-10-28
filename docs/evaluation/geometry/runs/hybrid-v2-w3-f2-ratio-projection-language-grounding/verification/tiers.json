@@ -1,0 +1,43 @@
+{
+  "schema": "W3_F2_VERIFICATION_TIERS/1",
+  "status": "NOT_READY",
+  "t0": {
+    "baseline_identity": "PASS",
+    "baseline_freeze": "MATCH 118 files / 918d3404",
+    "baseline_f1_tests": "23 passed",
+    "scope": "Registry-only product diff",
+    "frozen_historical_evidence": "MATCH",
+    "preregistered_inputs": "MATCH",
+    "publication": {
+      "status": "PASS",
+      "range": "996f114b3480efe1b0d075dd4342530aaa12ddae..e9d5a9d73064a15b7702eb32c008835bc99fba6d",
+      "scanned": 22,
+      "messages": 2,
+      "violations": 0,
+      "note": "Final docs commit range must be scanned afterward; no push authorized."
+    },
+    "versions_cache_fixtures": "INCOMPLETE_AFTER_SAFETY_STOP",
+    "docs_information_architecture": "PASS"
+  },
+  "t1": {
+    "status": "FAIL",
+    "summary": "94 passed, 3 failed",
+    "failures": [
+      "DEV-NEG-08",
+      "DEV-NEG-20",
+      "DEV-NEG-23"
+    ],
+    "log": "verification/t1.log"
+  },
+  "independent_t1_and_f1": {
+    "status": "FAIL",
+    "reported_by": "/root/f2_safety_review",
+    "summary": "116 passed, 4 failed",
+    "f1_behavioral_tests": "22 passed",
+    "f1_version_pin": "FAIL: expects Registry /20, current provisional /21"
+  },
+  "t2": "NOT_RUN_DUE_TO_OWNER_SAFETY_STOP",
+  "full_t3": "NOT_RUN_DUE_TO_OWNER_SAFETY_STOP",
+  "candidate": "NOT_CREATED",
+  "live_provider_calls": 0
+}

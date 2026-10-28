@@ -1,0 +1,32 @@
+{
+  "classification": "BASELINE_MASKED_PROVENANCE_DEFECT_REPRODUCTION",
+  "baseline": "996f114b3480efe1b0d075dd4342530aaa12ddae",
+  "registry_version": "geometry-functions/20",
+  "module": "backend\\app\\simulation\\geometry_functions\\registry.py",
+  "product_modified": false,
+  "cases": [
+    {
+      "id": "DEV-NEG-08",
+      "canonical_baseline_status": "SERVED",
+      "canonical_baseline_code": null,
+      "foreign_premise_solid_ids": [
+        "foreign"
+      ],
+      "declared_solid_ids": [
+        "s1"
+      ]
+    },
+    {
+      "id": "DEV-NEG-23",
+      "canonical_baseline_status": "SERVED",
+      "canonical_baseline_code": null,
+      "foreign_premise_solid_ids": [
+        "foreign"
+      ],
+      "declared_solid_ids": [
+        "s1"
+      ]
+    }
+  ],
+  "live_provider_calls": 0
+}

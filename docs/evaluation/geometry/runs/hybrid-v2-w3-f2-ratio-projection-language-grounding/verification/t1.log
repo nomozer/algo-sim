@@ -1,0 +1,7 @@
+........................................................................ [ 74%]
+.......F...........F..F..                                                [100%]
+=========================== short test summary info ===========================
+FAILED backend\tests\geometry\test_ratio_projection_language.py::test_ratio_projection_language[DEV-NEG-08]
+FAILED backend\tests\geometry\test_ratio_projection_language.py::test_ratio_projection_language[DEV-NEG-20]
+FAILED backend\tests\geometry\test_ratio_projection_language.py::test_ratio_projection_language[DEV-NEG-23]
+3 failed, 94 passed in 4.05s
