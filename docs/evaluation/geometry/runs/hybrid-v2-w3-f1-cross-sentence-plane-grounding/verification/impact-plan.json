@@ -1,0 +1,180 @@
+{
+  "status": "IMPACT_GATE",
+  "changed": [
+    "backend/app/simulation/geometry_functions/planner.py",
+    "backend/app/simulation/geometry_functions/registry.py",
+    "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py",
+    "backend/scripts/export_hybrid_preview_fixtures.py",
+    "backend/tests/geometry/test_holdout_failure_repair.py",
+    "backend/tests/geometry/test_hybrid_backend_integration.py",
+    "backend/tests/geometry/test_typedfact_next_adapter3.py",
+    "backend/tests/geometry/test_w3_f1_cross_sentence_plane_grounding.py",
+    "backend/tests/geometry/test_wave3a_adapter3_integration.py",
+    "backend/tests/geometry/test_wave3a_volume_reasoning.py",
+    "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/architecture-decision.md",
+    "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/baseline-audit.md",
+    "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/candidate_divergence.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/inputs/development.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/inputs/oracle.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/plan.md",
+    "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/results/green-after.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/results/red-before.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/results/wave3-post-feedback-regression.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/tools/build_and_evaluate_w3_f1.py",
+    "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json"
+  ],
+  "patterns": [
+    "src/code-index-sync.test.ts"
+  ],
+  "pytest": true,
+  "docsOnly": false,
+  "reasons": [
+    {
+      "file": "backend/app/simulation/geometry_functions/planner.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/app/simulation/geometry_functions/registry.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/scripts/export_hybrid_preview_fixtures.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/tests/geometry/test_holdout_failure_repair.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/tests/geometry/test_hybrid_backend_integration.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/tests/geometry/test_typedfact_next_adapter3.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/tests/geometry/test_w3_f1_cross_sentence_plane_grounding.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/tests/geometry/test_wave3a_adapter3_integration.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/tests/geometry/test_wave3a_volume_reasoning.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/architecture-decision.md",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/baseline-audit.md",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/candidate_divergence.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/inputs/development.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/inputs/oracle.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/plan.md",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/results/green-after.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/results/red-before.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/results/wave3-post-feedback-regression.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/tools/build_and_evaluate_w3_f1.py",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    }
+  ]
+}

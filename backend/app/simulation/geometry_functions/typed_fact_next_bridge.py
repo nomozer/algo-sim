@@ -132,6 +132,11 @@ def _mat_fact(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2, solids: 
     f: dict[str, Any] = {"id": sec.section_id, "kind": "section", "role": "question" if asked else "premise",
                          "quotes": [sec.quote, *asked], "solid": solids[sec.target_solid_id].notation,
                          "point": _ref(sec.through_point), "plane_relation": rel}
+    if getattr(sec, "plane_name", None) is not None:
+        import re as _re
+        if not _re.fullmatch(r"(?:[A-Z][0-9]*'?|[α-ω]'?)", str(sec.plane_name)):
+            raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{sec.section_id}: tên mặt đã khai không khớp mặt được Source Gate xác minh", (sec.section_id,))
+        f["plane_name"] = sec.plane_name
     if rel == "parallel":
         f["points_b"] = _refs(sec.parallel_plane)
     elif rel == "perpendicular":
@@ -141,10 +146,53 @@ def _mat_fact(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2, solids: 
     return f
 
 
-def _section_fact_v2(sec: DerivedPlaneSectionSpecV2, solids: dict[str, Any], asked: list[str]) -> dict[str, Any]:
+def _v2_plane_def_quotes(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2, problem_text: str | None) -> list[str]:
+    """When a `/2` section carries a declared `plane_name` whose definition is in a separate declarative source sentence
+    from `sec.quote`, include that unique source sentence in the section fact's quotes so the Source Gate verifies both."""
+    ten = getattr(sec, "plane_name", None)
+    if not problem_text or not ten:
+        return []
+    import re
+    from .registry import (
+        _DIEM_TRUOC_HAI_DUONG,
+        _DIEM_TRUOC_SONG_SONG,
+        _DIEM_TRUOC_VUONG_DUONG,
+        _QUA_HAI_DUONG,
+        _QUA_SONG_SONG,
+        _QUA_VUONG_DUONG,
+        _bien_cau,
+        chuan_hoa,
+    )
+    cac_mau = (_QUA_SONG_SONG, _DIEM_TRUOC_SONG_SONG, _QUA_VUONG_DUONG, _DIEM_TRUOC_VUONG_DUONG,
+               _QUA_HAI_DUONG, _DIEM_TRUOC_HAI_DUONG)
+    qn = chuan_hoa(sec.quote)
+    if any(m["ten"] == ten for mau in cac_mau for m in mau.finditer(qn)):
+        return []
+    de = chuan_hoa(problem_text)
+    cands: list[str] = []
+    seen_spans: set[tuple[int, int]] = set()
+    for mau in cac_mau:
+        for m in mau.finditer(de):
+            if m["ten"] != ten:
+                continue
+            cs, ce = _bien_cau(de, m.start())
+            if (cs, ce) in seen_spans:
+                continue
+            sent = de[cs:ce].strip()
+            if re.match(r"^\s*(?:hãy\s+)?dựng", sent, re.IGNORECASE):
+                continue
+            seen_spans.add((cs, ce))
+            cands.append(sent)
+    return [cands[0]] if len(cands) == 1 else []
+
+
+def _section_fact_v2(sec: DerivedPlaneSectionSpecV2, solids: dict[str, Any], asked: list[str],
+                     problem_text: str | None = None) -> dict[str, Any]:
     """`/2`: stated intersections are the stated cuts (names aligned, None = stated but unnamed); the planner may derive
     the vertex of an UNSTATED lateral edge where a closed boundary is required (D6); a declared boundary is verified."""
     f = _mat_fact(sec, solids, asked)
+    if extra := _v2_plane_def_quotes(sec, problem_text):
+        f["quotes"] = list(dict.fromkeys([*extra, *f["quotes"]]))
     f["cut_edges"] = [_refs(s.edge) for s in sec.stated_intersections]
     if any(s.point for s in sec.stated_intersections):
         f["cut_points"] = [s.point for s in sec.stated_intersections]
@@ -287,7 +335,10 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         if g.kind == "construct_plane_section":
             asked.setdefault(g.target_section_id, []).append(g.quote)
     for sec in p.derived_sections:
-        facts.append(section_fact(sec, solids, asked.get(sec.section_id, [])))
+        facts.append(
+            section_fact(sec, solids, asked.get(sec.section_id, []), p.problem_text)
+            if v2 else section_fact(sec, solids, asked.get(sec.section_id, []))
+        )
 
     derived = {}
     for g in p.simulation_goals:

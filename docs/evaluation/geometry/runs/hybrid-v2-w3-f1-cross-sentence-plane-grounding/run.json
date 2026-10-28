@@ -1,0 +1,70 @@
+{
+  "run_id": "hybrid-v2-w3-f1-cross-sentence-plane-grounding",
+  "task_code": "HYBRID_V2_W3_F1_CROSS_SENTENCE_PLANE_GROUNDING",
+  "task_wave": 1,
+  "date": "2026-10-28",
+  "branch": "research/hybrid-v2-w3-f1-cross-sentence-plane-grounding",
+  "baseline": "e137623c4f674135a8d7884b78614c132eb78085",
+  "main_baseline": "e137623c4f674135a8d7884b78614c132eb78085",
+  "parent_product_commit": "73ca8d92e74059680ce53b99692af396df37a2f8",
+  "parent_t3_candidate": "b61f16995dfbe0110a639a2127d0fb5a9c3afde0",
+  "parent_freeze_hash": "1170ca163529dd40b57f4058826db92a6433359546aa2ad718712f38a538c10d",
+  "classification": "PRODUCT_REPAIR_WITH_POST_FEEDBACK_DEVELOPMENT_REGRESSION",
+  "historical_wave3_commit": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+  "status": "READY_FOR_OWNER_REVIEW",
+  "live_provider_calls": 0,
+  "default_mode": "LLM_ONLY",
+  "hybrid": "OPT_IN_ONLY",
+  "cache_version": 130,
+  "merge_push_cleanup": "NONE",
+  "product_commit": "a609c4871a75426db52eb8b7a7be8ba3460fcf8c",
+  "initial_product_commit": "c15eebe44eea5518e060699f0f7dda0fac7b9eec",
+  "test_and_artifacts_commit": "c8222e7d2a57a5cf1cb08ec225b76b0fa8faffc6",
+  "t3_candidate": "b02b2c422e4049dc6ff0a94996f335424e7b02b9",
+  "freeze_hash": "918d3404ac60e81d62c75f6bfb7067ea25a4e27c197e3584075edef42e441f72",
+  "versions": {
+    "registry": "geometry-functions/20",
+    "planner": "geometry-fact-planner/18",
+    "engine": "geometry-function-engine/14",
+    "adapter": "hybrid-simulation-adapter/4",
+    "certificate": "plane-section-certificate/1"
+  },
+  "product_files": [
+    "backend/app/simulation/geometry_functions/planner.py",
+    "backend/app/simulation/geometry_functions/registry.py",
+    "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py"
+  ],
+  "closed_findings": [
+    "W3-F1: SECTION_AND_AREA_COMPOUND_QUESTION_GROUNDING (0/24 remaining SOURCE_OBJECT_MISMATCH on Wave 3; 9/9 pure W3-F1 cases SERVED_CORRECT; 24/24 isolated W3-F1 cases SERVED_CORRECT; 24/24 authored cross-sentence positive cases SERVED_CORRECT; 20/20 mandatory tamper vectors fail-closed)"
+  ],
+  "w3_f1_development_corpus": {
+    "historical_w3_f1_pure_9_red": "0/9",
+    "historical_w3_f1_pure_9_green": "9/9",
+    "w3_f1_isolated_24_red": "0/24",
+    "w3_f1_isolated_24_green": "24/24 (18/18 P-B, 6/6 P-A)",
+    "authored_cross_sentence_positive_24_red": "0/24",
+    "authored_cross_sentence_positive_24_green": "24/24 (19/19 P-B, 5/5 P-A)",
+    "mandatory_negative_tamper_20_red": "20/20 refused (18/20 exact code)",
+    "mandatory_negative_tamper_20_green": "20/20 refused (20/20 category, 20/20 exact code)",
+    "wrong_served": 0
+  },
+  "wave3_post_feedback_regression": {
+    "evidence_classification": "POST_FEEDBACK_DEVELOPMENT_REGRESSION",
+    "not_an_independent_blind_holdout": true,
+    "historical_positive_served_correct": "20/72 (P-B 12/54, P-A 8/18, section_and_area 0/24)",
+    "post_feedback_positive_served_correct": "29/72 (P-B 18/54, P-A 11/18, section_and_area 9/24)",
+    "w3_f1_remaining_source_object_mismatch": 0,
+    "negative_refused": "72/72",
+    "negative_correct_reason": "62/72 (up from 60/72)",
+    "wrong_served": 0,
+    "learner_facing_source_identity_clean": "144/144"
+  },
+  "t3_verdict": "FULL_PRODUCT_GATE_PASS",
+  "t3_receipt": "verification/full-t3/receipt.json",
+  "t3_log_sha256": "885333241d4d723d73edad5b8f2e98ccf3da0700361fbe4eb974893037ddb2f7",
+  "post_t3_freeze": "MATCH",
+  "independent_review": "review.md",
+  "independent_reviewer_id": "fca2b9f1-95b8-4d68-b5a0-f702b1b75e48",
+  "independent_review_verdict": "APPROVED_NO_FINDINGS",
+  "final_branch_head_rule": "Final documentation commit containing report.md, handoff.md, review.md, run.json, and verification receipts; resolve the named branch. Exact SHA is emitted in session final handoff after commit (avoids self-reference)."
+}

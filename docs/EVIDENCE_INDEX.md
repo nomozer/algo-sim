@@ -1,5 +1,17 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_V2_W3_F1_CROSS_SENTENCE_PLANE_GROUNDING
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/
+CLASSIFICATION = PRODUCT_REPAIR_WITH_POST_FEEDBACK_DEVELOPMENT_REGRESSION; INTEGRATED_ON_MAIN under Owner GO; FULL_PRODUCT_GATE_PASS at b02b2c42 (12592 backend / 1417 frontend, freeze MATCH 918d3404…); independent review APPROVED_NO_FINDINGS (0 BLOCKER, 0 MAJOR, 0 MINOR, 0 NIT)
+CODE_COMMIT = a609c4871a75426db52eb8b7a7be8ba3460fcf8c; T3 candidate b02b2c422e4049dc6ff0a94996f335424e7b02b9; freeze 918d3404ac60e81d62c75f6bfb7067ea25a4e27c197e3584075edef42e441f72
+VERIFICATION = results/red-before.json; results/green-after.json (mandatory_negative_tamper_20); results/wave3-post-feedback-regression.json; verification/tiers.json; verification/full-t3/receipt.json; review.md; handoff.md; handoff-correction.md; verification/handoff-correction.json; verification/full-t3/original-log.gz
+MODEL_REQUEST_COUNT = 0
+CONTINUES = HYBRID_V2_W2_M5_POSTMERGE_CASE_IDENTITY_ADJUDICATION (main e137623c; historical Independent Vietnamese Geometry Holdout Wave 3 preserved untouched at 0943f0ee)
+CORRECTS = NONE
+CORRECTED_BY = docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/handoff-correction.md
+
 ## WAVE_ID = HYBRID_V2_INDEPENDENT_VIETNAMESE_GEOMETRY_HOLDOUT_WAVE3
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/report.md
@@ -2821,3 +2833,11 @@ W18_CONSTRUCTION_BINDING_AND_FOCUSED_ANNOTATIONS (w18 → READY_FOR_HUMAN_VISUAL
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
 - **APPROVAL (2026-10-09):** `frontend-freeze/APPROVAL.md` — the user's verbatim decision: integrate the temporary frontend baseline with exceptions (C1–C6 viewed, not approved; P1–P6 PENDING; UX debt OPEN/DEFERRED; W14 not visually approved; W05 23/24); fast-forward main + push allowed; branch deletion not allowed; next: missing-family expansion on the existing architecture, then OCR
+
+
+## W3-F1 handoff correction — 2026-10-28
+
+CORRECTS = docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/handoff.md §3
+CORRECTED_BY = docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/handoff-correction.md
+VERIFICATION = docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/verification/handoff-correction.json
+CLASSIFICATION = DOCUMENTATION_CORRECTION_ONLY; authoritative W3-F2–F5 identities retained; historical counts 24/14/10/3/1; replay-verified remaining false refusals 0/21/16/5/1; negative reason disagreement 10/72 is separate. Original mixed-newline T3 log preserved in verification/full-t3/original-log.gz without changing locked receipt.

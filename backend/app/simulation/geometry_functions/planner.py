@@ -45,7 +45,9 @@ from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, rende
 #: /16 (run `hybrid-v2-planner-generalization`): `MAT_VUONG_DUONG` anchors on prisms (two layers: base/top), not only pyramids.
 #: /17 (run `hybrid-v2-holdout-failure-repair`): M1 Greek/Latin `PlaneName` alignment, M2 single-solid height/altitude resolution,
 #: M5 bounded section-area question binding (`diện tích của nó` and grounded named section polygons).
-PLANNER_VERSION = "geometry-fact-planner/17"
+#: /18 (run `hybrid-v2-w3-f1-cross-sentence-plane-grounding`): propagate declared `plane_name` on all derived plane relations
+#: (`MAT_SONG_SONG`, `MAT_VUONG_DUONG`, `MAT_HAI_DUONG`) and distinguish unasked section-area goals (`NOT_ASKED_IN_SOURCE`).
+PLANNER_VERSION = "geometry-fact-planner/18"
 PlaneName = Annotated[
     str,
     BeforeValidator(lambda v: chuan_hoa(v) if isinstance(v, str) else v),
@@ -1009,6 +1011,10 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
         raise TuChoi("AMBIGUOUS_FACT", f"{f.id}: một câu hỏi diện tích nêu cả thiết diện lẫn một đa giác — tách hai câu hỏi", (f.id,))
     if n == "area" and f.plane_relation and not hoi_td and not f.negated and f.role == "question":
         hoi_td = _hoi_dien_tich_thiet_dien_phu(f, q, k, khoi_cua)
+        if not hoi_td:
+            if not any(re.search(r"diện\s+tích", x, re.IGNORECASE) for x in q):
+                raise TuChoi("NOT_ASKED_IN_SOURCE", f"{f.id}: nguồn không hỏi diện tích thiết diện", (f.id,))
+            raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{f.id}: câu hỏi diện tích không gọi đúng thiết diện đã khai", (f.id,))
     if n == "area" and f.plane_relation and hoi_td and not f.negated and f.role == "question":
         return _mat_qua_diem(f, q, k, phat, khoi_cua(f.solid, f).ten, "ask_section_area")
     if f.plane_relation:
@@ -1143,7 +1149,7 @@ def _mat_qua_diem(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: s
     if not two and m in ref:
         raise TuChoi("DERIVED_PLANE_IS_REFERENCE", f"{f.id}: {m} thuộc ({''.join(ref)}) — mặt qua {m} song song với nó là chính nó",
                      (f.id,))
-    khoa = ((khoi, m, f.plane_name, frozenset(frozenset(v) for v in directions)) if two else (khoi, m, frozenset(ref)))
+    khoa = ((khoi, m, f.plane_name, frozenset(frozenset(v) for v in directions)) if two else (khoi, m, f.plane_name, frozenset(ref)))
     d = k.derived_planes.get(khoa)
     if d is None:
         if len(k.derived_planes) >= MAX_DERIVED_PLANES:
@@ -1163,6 +1169,8 @@ def _mat_qua_diem(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: s
         d = {"labels": xs, "rule": rule, "goal": f.id, "constructs": cids, "targets": [], "point": m,
              "parallel_to": ref, "solid": khoi, "quotes": list(dict.fromkeys(q)), "provenance": "DERIVED",
              "binding": "AUXILIARY"}
+        if f.plane_name is not None:
+            d["plane_name"] = f.plane_name
         if two:
             d.update(lines=directions, plane_name=f.plane_name)
         k.derived_planes[khoa] = d
@@ -1209,7 +1217,7 @@ def _mat_vuong_duong(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn
     cung = next((i for i, t in enumerate(tang) if set(d) <= set(t) and set(t) - set(d)), None)
     moc = ([v for v in kh.day if v not in d][:2] if cung is None
            else [next(v for v in tang[cung] if v not in d), tang[1 - cung][0]])
-    khoa = (khoi, m, "perpendicular_line", frozenset(d))
+    khoa = (khoi, m, f.plane_name, "perpendicular_line", frozenset(d))
     dd = k.derived_planes.get(khoa)
     if dd is None:
         if len(k.derived_planes) >= MAX_DERIVED_PLANES:
@@ -1237,6 +1245,8 @@ def _mat_vuong_duong(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn
         dd = {"labels": xs, "feet": chan, "anchors": moc, "rule": MAT_VUONG_DUONG, "goal": f.id, "constructs": cids,
               "targets": [], "point": m, "perpendicular_to": d, "solid": khoi, "quotes": list(dict.fromkeys(q)),
               "provenance": "DERIVED", "binding": "AUXILIARY"}
+        if f.plane_name is not None:
+            dd["plane_name"] = f.plane_name
         k.derived_planes[khoa] = dd
         k.auxiliary.append(dd)
     dd["quotes"] = list(dict.fromkeys(dd["quotes"] + q))

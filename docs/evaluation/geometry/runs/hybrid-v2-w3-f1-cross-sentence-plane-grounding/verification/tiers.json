@@ -1,0 +1,10 @@
+{
+  "t0_impact_exit_code": 0,
+  "t0_publication_safety_exit_code": 0,
+  "t0_scope_status": "SOURCE_SCOPE_AND_RAW_EVIDENCE_IDENTITY_PASS",
+  "t0_cache_exit_code": 0,
+  "t0_preview_fixtures_verified": 41,
+  "t1_t2_exit_code": 0,
+  "t1_t2_summary": "795 passed, 5 xfailed in 120.86s (0:02:00)",
+  "live_provider_calls": 0
+}

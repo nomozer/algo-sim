@@ -1,6 +1,18 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
-## Independent Holdout Wave 3 evaluation harness & oracle (local evaluation, 2026-10-28)
+## W3-F1 cross-sentence plane grounding (integrated on main under Owner GO, 2026-10-28)
+
+`backend/app/simulation/geometry_functions/typed_fact_next_bridge.py` (`_mat_fact`, `_v2_plane_def_quotes`),
+`backend/app/simulation/geometry_functions/planner.py` (`geometry-fact-planner/18`: `_mat_qua_diem`, `_mat_vuong_duong`, `_cau_hoi`),
+and `backend/app/simulation/geometry_functions/registry.py` (`geometry-functions/20`: `mat_song_song_dung_nguon`, `_td_mat_truoc_khoi`,
+`_NOI_QUAN_HE_MAT`, `_QUA_HAI_DUONG`, `_DIEM_TRUOC_HAI_DUONG`, `_het_dinh_nghia`, `_ALL_PLANE_DEF_MAU`) implement Grounded
+Cross-Sentence Plane Reference Resolution for `MAT_SONG_SONG`, `MAT_HAI_DUONG`, and `MAT_VUONG_DUONG` together with compound
+`section_and_area` grounding. Enforces unique non-imperative plane-definition sentence binding across `_ALL_PLANE_DEF_MAU`,
+rejects missing/contradictory/duplicate plane definitions (`SOURCE_OBJECT_MISMATCH`) and unasked area goals (`NOT_ASKED_IN_SOURCE`),
+and closes `W3-F1` (`0/24` remaining `SOURCE_OBJECT_MISMATCH` on Holdout Wave 3). Tests: `backend/tests/geometry/test_w3_f1_cross_sentence_plane_grounding.py`.
+Run: `docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/`.
+
+## Independent Holdout Wave 3 evaluation harness & oracle (historical evaluation integrated on main, 2026-10-28)
 
 Run `docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/` (`INDEPENDENT_HOLDOUT_WAVE3_EXECUTED`, no product change, freeze `1170ca16…` MATCH):
 - `docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/evaluate_holdout_wave3.py`: preregistered Track A/B/C evaluator fixing the Wave 2 `W2-A10` polygon-index lookup defect via `_find_point_xyz` (`_norm_label` for `A'`, `A′`, `A_prime`), exact `Fraction` coordinate matching, Category B `ordinal` vs coordinate index consistency check, and strict non-zero fallback guard.

@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "HYBRID_V2_W3_F1_CROSS_SENTENCE_PLANE_GROUNDING",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "918d3404ac60e81d62c75f6bfb7067ea25a4e27c197e3584075edef42e441f72",
+  "current_product_commit": "a609c4871a75426db52eb8b7a7be8ba3460fcf8c",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Authorized W3-F1 cross-sentence plane grounding repair in Source Gate (Registry /20), Planner (/18), and TypedFactNext v2 bridge, resolving W3-F1 compound-question and cross-sentence plane reference false refusals while preserving Engine /14, Adapter /4, Certificate /1, and all historical evaluation records.",
+  "cache_version": 130,
+  "cache_version_hien_tai": 130,
+  "cache_decision": "NO_BUMP 130: default LLM_ONLY route unchanged, semantic cache lock MATCH, 41/41 stored preview fixtures verify; no provider/schema/IR change.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}
