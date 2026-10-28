@@ -1,0 +1,125 @@
+{
+  "historical_first_refusal_counts": {
+    "W3-F1": 24,
+    "W3-F2": 14,
+    "W3-F3": 10,
+    "W3-F4": 3,
+    "W3-F5": 1
+  },
+  "post_feedback_first_refusal_counts": {
+    "W3-F1": 0,
+    "W3-F2": 21,
+    "W3-F3": 16,
+    "W3-F4": 5,
+    "W3-F5": 1
+  },
+  "f1_transitions": {
+    "SERVED_CORRECT": [
+      "W3-B03",
+      "W3-B15",
+      "W3-B21",
+      "W3-B33",
+      "W3-B39",
+      "W3-B45",
+      "W3-A03",
+      "W3-A09",
+      "W3-A15"
+    ],
+    "W3-F2": [
+      "W3-B06",
+      "W3-B12",
+      "W3-B24",
+      "W3-B30",
+      "W3-B42",
+      "W3-A06",
+      "W3-A12"
+    ],
+    "W3-F3": [
+      "W3-B09",
+      "W3-B18",
+      "W3-B27",
+      "W3-B36",
+      "W3-B54",
+      "W3-A18"
+    ],
+    "W3-F4": [
+      "W3-B48",
+      "W3-B51"
+    ]
+  },
+  "post_feedback_cluster_membership": {
+    "W3-F1": [],
+    "W3-F2": [
+      "W3-B06",
+      "W3-B12",
+      "W3-B24",
+      "W3-B30",
+      "W3-B42",
+      "W3-A06",
+      "W3-A12",
+      "W3-B02",
+      "W3-B04",
+      "W3-B14",
+      "W3-B20",
+      "W3-B22",
+      "W3-B28",
+      "W3-B31",
+      "W3-B32",
+      "W3-B38",
+      "W3-B40",
+      "W3-B46",
+      "W3-A02",
+      "W3-A10",
+      "W3-A16"
+    ],
+    "W3-F3": [
+      "W3-B09",
+      "W3-B18",
+      "W3-B27",
+      "W3-B36",
+      "W3-B54",
+      "W3-A18",
+      "W3-B07",
+      "W3-B08",
+      "W3-B16",
+      "W3-B26",
+      "W3-B34",
+      "W3-B35",
+      "W3-B43",
+      "W3-B44",
+      "W3-B52",
+      "W3-B53"
+    ],
+    "W3-F4": [
+      "W3-B48",
+      "W3-B51",
+      "W3-B47",
+      "W3-B50",
+      "W3-A17"
+    ],
+    "W3-F5": [
+      "W3-B01"
+    ]
+  },
+  "schema": "W3_F1_HANDOFF_CORRECTION/1",
+  "task": "HYBRID_V2_WAVE3_EVIDENCE_W3_F1_MAIN_INTEGRATION",
+  "date": "2026-10-28",
+  "classification": "DOCUMENTATION_CORRECTION_ONLY",
+  "historical_source": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+  "w3_f1_source": "5e056179b39013cc7e3625dd862e66699071a52f",
+  "premerge_replay_per_case_match": true,
+  "premerge_replay_sha256": "d8689009d1ac3c579645518d75e44ca8b6946f22fb745e32e24e2b95e2e9616f",
+  "negative_reason_disagreement": {
+    "historical": 12,
+    "post_feedback": 10,
+    "not_a_positive_false_refusal_cluster": true
+  },
+  "raw_t3_log": {
+    "archive": "verification/full-t3/original-log.gz",
+    "archive_sha256": "97fdfda5c7a928268431d8997c10a58f754b991309a6ed374ebfeaa1b5efbfb2",
+    "uncompressed_sha256": "885333241d4d723d73edad5b8f2e98ccf3da0700361fbe4eb974893037ddb2f7",
+    "uncompressed_bytes": 167582,
+    "git_log_sha256_lf": "103d56849edcf2b956b8f88d0577f751ef6a146a54d81a80a3d111d9ca631623",
+    "original_mixed_newline_bytes_preserved": true
+  }
+}
