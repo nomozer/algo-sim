@@ -1,0 +1,5 @@
+....................................................................E... [ 57%]
+.....................................................                    [100%]
+=========================== short test summary info ===========================
+ERROR tests/geometry/test_hybrid_backend_integration.py::test_offline_v3_matrix_parity_on_combined_candidate
+124 passed, 1 error in 21.01s

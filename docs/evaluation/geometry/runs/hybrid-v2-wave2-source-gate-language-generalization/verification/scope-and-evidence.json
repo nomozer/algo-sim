@@ -1,0 +1,21 @@
+{
+  "status": "SOURCE_SCOPE_AND_RAW_EVIDENCE_IDENTITY_PASS",
+  "baseline": "d7a94d3cd4bbdea3df99e383bec78425fcc8bf1c",
+  "product_commit": "c6f6b64bda6473c175a32a7875a9dd9831ae7c6d",
+  "candidate": "b9e3d0966e14acb1d44f2f9c7cd7a3bf49ac54a9",
+  "product_files": [
+    "backend/app/simulation/geometry_functions/registry.py"
+  ],
+  "forbidden_layers_changed": [],
+  "historical_wave2_ref": "ecdc26b012c8ce80d53524a98dc75cdcb020079d",
+  "root_main": "d7a94d3cd4bbdea3df99e383bec78425fcc8bf1c",
+  "origin_main": "d7a94d3cd4bbdea3df99e383bec78425fcc8bf1c",
+  "locked_evidence_sha256": {
+    "inputs/development.json": "d5d8d8ac94071bcced3522fe8f4bc7b93313fe927a70c7c8902122902663d9fa",
+    "results/red-before.json": "09d3714405c957c4ddce7ef799c48c7d2d82d31be68139571a5c6bba02ffd82f",
+    "results/green-attempt1.json": "1298fe201a37abaf26207636700b55d35c1e5423f5af18d43dc628d2f1df314a",
+    "results/green-after.json": "452359c8ed2a5e71aae2fffa17fbfd9a441bf3b14c866a02da7578bd51af90a0"
+  },
+  "hash_policy": "LF canonical contents (Git checkout may use CRLF)",
+  "live_provider_calls": 0
+}

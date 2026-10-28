@@ -1,0 +1,70 @@
+{
+  "candidate": "b9e3d0966e14acb1d44f2f9c7cd7a3bf49ac54a9",
+  "product_commit": "c6f6b64bda6473c175a32a7875a9dd9831ae7c6d",
+  "freeze_hash": "8baf3205006d097efdd21087b9d52e85625fa1263e9125b418cf658ccac18d25",
+  "status": "NOT_READY_ACCEPTANCE_GATE_FAILED",
+  "tiers": {
+    "T0": {
+      "impact": "NONEMPTY_SELECTION_ONLY_DRY_RUN",
+      "scope": "PASS Registry-only product diff",
+      "pins": "PASS Registry19 + exact IDENTITY_DELTAS",
+      "publication": "PASS candidate43objects3messages0violations",
+      "actual_selected_tests": "Covered by broader T3; backend fails preserved DEV-1-3 acceptance test",
+      "receipts": [
+        "verification/impact-plan.json",
+        "verification/scope-and-evidence.json",
+        "verification/publication-candidate.log",
+        "verification/cache-and-fixtures.json"
+      ]
+    },
+    "T1": {
+      "status": "FAIL",
+      "passed": 570,
+      "failed": 1,
+      "failing_case": "DEV-1-3",
+      "reason": "Excluded W2-M4 radical domain ceiling; no waiver or changed expected outcome",
+      "independent_I1_two_line_passed": 218,
+      "supplemental_and_ratio_passed": 18,
+      "receipts": [
+        "verification/t1-t2.log",
+        "results/independent-final-checks.json"
+      ]
+    },
+    "T2": {
+      "status": "LEGACY_REGRESSION_PASS_NEW_DEVELOPMENT_ACCEPTANCE_NOT_MET",
+      "legacy_first_run_passed": 124,
+      "legacy_first_run_setup_errors": 1,
+      "setup_reason": "missing explicit basetemp parent; no product exception",
+      "setup_retry1_errors": 1,
+      "setup_retry2_passed": 1,
+      "category_A_B_and_source_regressions": "all existing tests in t1-t2 log passed; only new positive DEV-1-3 failed",
+      "frontend_files_passed": 83,
+      "frontend_tests_passed": 1417,
+      "build": "PASS",
+      "receipts": [
+        "verification/t2-legacy.log",
+        "verification/t2-legacy-retry.log",
+        "verification/t2-legacy-retry2.log",
+        "verification/full-t3/receipt.json"
+      ]
+    },
+    "T3": {
+      "status": "FULL_PRODUCT_GATE_FAIL",
+      "backend_passed": 12549,
+      "backend_failed": 1,
+      "backend_skipped": 1,
+      "backend_deselected": 2,
+      "backend_xfailed": 15,
+      "frontend_passed": 1417,
+      "build": "PASS",
+      "demo_replay": "5/5; reduced chain1/1",
+      "crash_checks": "6/6;0uncaught",
+      "source_before": "CLEAN",
+      "source_after": "CLEAN",
+      "post_freeze": "MATCH",
+      "receipt": "verification/full-t3/receipt.json",
+      "log_sha256": "38358b1a3ce1185ffa60995c1ca216e797345b4e2e89e313e114e4f0f6499476"
+    }
+  },
+  "live_provider_calls": 0
+}

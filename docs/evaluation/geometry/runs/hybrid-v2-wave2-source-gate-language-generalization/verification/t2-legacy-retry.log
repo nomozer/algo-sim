@@ -1,0 +1,4 @@
+E                                                                        [100%]
+=========================== short test summary info ===========================
+ERROR tests/geometry/test_hybrid_backend_integration.py::test_offline_v3_matrix_parity_on_combined_candidate
+1 error in 1.36s

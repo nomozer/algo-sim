@@ -4,10 +4,11 @@
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/
-CLASSIFICATION = POST_FEEDBACK_DEVELOPMENT_REGRESSION; NOT_READY (locked positive radical-ceiling refusal; verification in progress)
+CLASSIFICATION = POST_FEEDBACK_DEVELOPMENT_REGRESSION; NOT_READY_ACCEPTANCE_GATE_FAILED; Full T3 FAIL (sole DEV-1-3 radical-cap failure), freeze MATCH; independent review one open MAJOR
+CODE_COMMIT = c6f6b64bda6473c175a32a7875a9dd9831ae7c6d; T3 candidate b9e3d0966e14acb1d44f2f9c7cd7a3bf49ac54a9; freeze8baf3205006d097efdd21087b9d52e85625fa1263e9125b418cf658ccac18d25
 VERIFICATION = results/red-before.json; results/green-after.json (raw); results/development-adjudication.json; results/wave2-post-feedback-regression.json; verification/tiers.json; review.md
 MODEL_REQUEST_COUNT = 0
-CORRECTS = HYBRID_V2_INDEPENDENT_VIETNAMESE_SECTION_HOLDOUT_WAVE2 (three narrative errors only; correction-layer.md; original bytes and primary results unchanged)
+CORRECTS = HYBRID_V2_INDEPENDENT_VIETNAMESE_SECTION_HOLDOUT_WAVE2 (four narrative discrepancies; correction-layer.md and correction-addendum.md; original bytes and primary results unchanged)
 CORRECTED_BY = NONE
 
 ## WAVE_ID = HYBRID_V2_INDEPENDENT_VIETNAMESE_SECTION_HOLDOUT_WAVE2
@@ -17,7 +18,7 @@ HISTORICAL_SOURCE = git commit ecdc26b012c8ce80d53524a98dc75cdcb020079d, docs/ev
 CLASSIFICATION = INDEPENDENT_BLIND_HOLDOUT_WAVE2_ADJUDICATED: 5/48 positive served correct; 48/48 negatives refused; 0/96 genuine wrong-served
 VERIFICATION = docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/results/historical-integrity.json
 MODEL_REQUEST_COUNT = 0
-CORRECTED_BY = HYBRID_V2_WAVE2_SOURCE_GATE_LANGUAGE_GENERALIZATION (narrative Track B counts, handoff hash table, radical factorization only)
+CORRECTED_BY = HYBRID_V2_WAVE2_SOURCE_GATE_LANGUAGE_GENERALIZATION (narrative Track B counts, handoff hash table, radical factorization and stratum counts only)
 
 ## WAVE_ID = ROOT_CONSOLIDATION
 

@@ -1,0 +1,141 @@
+{
+  "schema": "SOURCE_GATE_HISTORICAL_INTEGRITY_ADDENDUM/1",
+  "date": "2026-10-28",
+  "reviewer": "independent_review",
+  "historical_commit": "ecdc26b012c8ce80d53524a98dc75cdcb020079d",
+  "corrects_documentation_only": [
+    "report.md sections6.2-6.4",
+    "handoff.md section5"
+  ],
+  "finding_id": "HIST-DOC-4",
+  "severity": "MINOR",
+  "finding": "Historical prose family/relation/question-type distributions differ from machine corpus and both scored summaries. Machine values are unchanged and authoritative.",
+  "counts": {
+    "family": {
+      "overall": {
+        "triangular_pyramid": 41,
+        "quadrilateral_pyramid": 14,
+        "right_triangular_prism": 11,
+        "oblique_triangular_prism": 7,
+        "cuboid": 11,
+        "cube": 8,
+        "other": 4
+      },
+      "positive": {
+        "triangular_pyramid": 9,
+        "quadrilateral_pyramid": 9,
+        "right_triangular_prism": 8,
+        "oblique_triangular_prism": 7,
+        "cuboid": 8,
+        "cube": 7
+      },
+      "negative": {
+        "triangular_pyramid": 32,
+        "right_triangular_prism": 3,
+        "quadrilateral_pyramid": 5,
+        "cuboid": 3,
+        "cube": 1,
+        "other": 4
+      }
+    },
+    "plane_relation": {
+      "overall": {
+        "perpendicular_line": 20,
+        "parallel_plane": 40,
+        "parallel_two_lines": 14,
+        "stated_intersections": 18,
+        "other": 4
+      },
+      "positive": {
+        "perpendicular_line": 12,
+        "parallel_plane": 12,
+        "parallel_two_lines": 12,
+        "stated_intersections": 12
+      },
+      "negative": {
+        "parallel_plane": 28,
+        "perpendicular_line": 8,
+        "parallel_two_lines": 2,
+        "other": 4,
+        "stated_intersections": 6
+      }
+    },
+    "question_type": {
+      "overall": {
+        "section_only": 50,
+        "area_only": 26,
+        "section_and_area": 17,
+        "other": 3
+      },
+      "positive": {
+        "section_only": 16,
+        "area_only": 16,
+        "section_and_area": 16
+      },
+      "negative": {
+        "section_only": 34,
+        "area_only": 10,
+        "other": 3,
+        "section_and_area": 1
+      }
+    }
+  },
+  "source_artifacts": [
+    {
+      "path": "inputs/holdout-wave2.json",
+      "git_lf_sha256": "e5676fd35b79eab1b29cf7a1647a5f80a5547ffdea077f15ea7b5e845555d479",
+      "historical_byte_sha256": "1104be2ad8d4c5c96363f3648bc3c57dfcef5af4334c714e9cc94fc466f38e2d",
+      "historical_bytes": 471848,
+      "git_lf_equivalent": true
+    },
+    {
+      "path": "results/scored-run-1/track-a.json",
+      "git_lf_sha256": "52d7a51157d551cb60404e285f19b2029f4d276d0fe786507b6781c54821d4ae",
+      "historical_byte_sha256": "eea9c5d88265bedaeccff06dc059ef39d60496d923f0c7a1426c4fa867c1e3eb",
+      "historical_bytes": 84233,
+      "git_lf_equivalent": true
+    },
+    {
+      "path": "results/scored-run-1/summary.json",
+      "git_lf_sha256": "47c356f748103e7577aebdb468506fec995c1679554b63ed0ea227ebed21ae0a",
+      "historical_byte_sha256": "7287aee2a166afc030ec68e69107762cbe636e0d13674d101740312667c7a512",
+      "historical_bytes": 31344,
+      "git_lf_equivalent": true
+    },
+    {
+      "path": "results/scored-run-2-harness-corrected/track-a.json",
+      "git_lf_sha256": "68a20af0b0656056071218cb92d3cb3f347b45bc4321017306ed51e7aad8bf8f",
+      "historical_byte_sha256": "2034468882f7e9663f81b033abb2bdc54d3139a9d871de8aa81dabb29463b6ec",
+      "historical_bytes": 84100,
+      "git_lf_equivalent": true
+    },
+    {
+      "path": "results/scored-run-2-harness-corrected/summary.json",
+      "git_lf_sha256": "15be688564b1673246c808902ca039f46ae20d46022ec4602a255fbdb0faf98b",
+      "historical_byte_sha256": "a3f6521fa227f12a51aaa52ecd4fc1bf7959c48d3ad6331f699c687faef68abc",
+      "historical_bytes": 31259,
+      "git_lf_equivalent": true
+    },
+    {
+      "path": "report.md",
+      "git_lf_sha256": "e55a3e4fe8b0620ecef64deab9120147a3a0a725f67ebb5360dcb2eaffb10861",
+      "historical_byte_sha256": "e55a3e4fe8b0620ecef64deab9120147a3a0a725f67ebb5360dcb2eaffb10861",
+      "historical_bytes": 22746,
+      "git_lf_equivalent": true
+    },
+    {
+      "path": "handoff.md",
+      "git_lf_sha256": "51c45d5442e59a2e826153a715121be5d6298d370ca3144e242753357390b511",
+      "historical_byte_sha256": "51c45d5442e59a2e826153a715121be5d6298d370ca3144e242753357390b511",
+      "historical_bytes": 20970,
+      "git_lf_equivalent": true
+    }
+  ],
+  "primary_outcomes_unchanged": true,
+  "historical_writes": 0,
+  "prior_audit_hashes_unchanged": {
+    "results/historical-integrity.json": "2298b6622b45cbba5ccca79aa86dc63a6b2a7cf116187d7cbf45b227551657fd",
+    "correction-layer.md": "f31c3df776fcf493f5d8aa9c36c6b564c11cd986cc9c228e8551ccbffb171b57"
+  },
+  "live_provider_calls": 0
+}

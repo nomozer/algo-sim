@@ -8,10 +8,50 @@
   "preregistration_commit": "6554d733203619dad9ea8c4c640fc80ee5782a34",
   "classification": "PRODUCT_REPAIR_WITH_POST_FEEDBACK_DEVELOPMENT_REGRESSION",
   "historical_source_commit": "ecdc26b012c8ce80d53524a98dc75cdcb020079d",
-  "status": "NOT_READY_VERIFICATION_IN_PROGRESS",
+  "status": "NOT_READY_ACCEPTANCE_GATE_FAILED",
   "live_provider_calls": 0,
   "default_mode": "LLM_ONLY",
   "hybrid": "OPT_IN_ONLY",
   "cache_version": 130,
-  "merge_push_cleanup": "NONE"
+  "merge_push_cleanup": "NONE",
+  "product_commit": "c6f6b64bda6473c175a32a7875a9dd9831ae7c6d",
+  "t3_candidate": "b9e3d0966e14acb1d44f2f9c7cd7a3bf49ac54a9",
+  "freeze_hash": "8baf3205006d097efdd21087b9d52e85625fa1263e9125b418cf658ccac18d25",
+  "versions": {
+    "registry": "geometry-functions/19",
+    "planner": "geometry-fact-planner/17",
+    "engine": "geometry-function-engine/14",
+    "adapter": "hybrid-simulation-adapter/4",
+    "certificate": "plane-section-certificate/1"
+  },
+  "product_files": [
+    "backend/app/simulation/geometry_functions/registry.py"
+  ],
+  "acceptance_blocker": "DEV-1-3: correct new development positive refused at excluded W2-M4 radical ceiling",
+  "development": {
+    "original_positive_served_correct": 23,
+    "original_positive_total": 24,
+    "genuine_negative_refused": 36,
+    "genuine_negative_total": 36,
+    "adjudicated_valid_mislabeled_negative_served_correct": 1,
+    "genuine_wrong_served": 0
+  },
+  "wave2_post_feedback": {
+    "served_correct": 45,
+    "positives": 48,
+    "negative_refusals": 48,
+    "negatives": 48,
+    "correct_refusal_reason": 36,
+    "reason_mismatches": 12,
+    "wrong_served": 0,
+    "exact_oracle_agreement": "45/45"
+  },
+  "final_branch_head_rule": "Final documentation commit containing report/handoff; resolve the named branch. Exact SHA is emitted in session final handoff after commit (avoids self-reference).",
+  "t3_verdict": "FULL_PRODUCT_GATE_FAIL",
+  "t3_receipt": "verification/full-t3/receipt.json",
+  "t3_log_sha256": "38358b1a3ce1185ffa60995c1ca216e797345b4e2e89e313e114e4f0f6499476",
+  "post_t3_freeze": "MATCH",
+  "independent_review": "review.md",
+  "open_major": "ACCEPTANCE-1: original locked positive DEV-1-3 remains refused at excluded W2-M4 radical ceiling",
+  "reproducibility_prerequisite": "Retain/fetch Wave2 commit ecdc26b012c8ce80d53524a98dc75cdcb020079d before evaluator/unit tests; shallow single-branch clones alone are insufficient."
 }

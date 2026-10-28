@@ -1,0 +1,2931 @@
+{
+  "schema": "SOURCE_GATE_INDEPENDENT_FINAL_CHECKS/1",
+  "date": "2026-10-28",
+  "reviewer": "independent_review",
+  "classification": "INDEPENDENT_CODE_AND_DEVELOPMENT_REVIEW_NOT_BLIND_HOLDOUT",
+  "product_commit": "c6f6b64bda6473c175a32a7875a9dd9831ae7c6d",
+  "candidate_commit": "b9e3d0966e14acb1d44f2f9c7cd7a3bf49ac54a9",
+  "measured_product_hash": "8baf3205006d097efdd21087b9d52e85625fa1263e9125b418cf658ccac18d25",
+  "identity_checks": {
+    "backend/app/simulation/geometry_functions/registry.py": {
+      "lf_sha256": "52da9bf26e896068c29abbbd7c4694315d255cf323265bf8d7b8cf39c28903b5",
+      "git_blob": "e0a741e8b6c7b6a78c8ba970939befcbe6314920",
+      "equals_candidate_git_lf": true
+    },
+    "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json": {
+      "lf_sha256": "21585dfcc20299cf615b9b9fa07c72002003185ce6144ea5d9bd560c7adc0ed4",
+      "git_blob": "f44d2ba8913210c35355323214ee07960cfb8e85",
+      "equals_candidate_git_lf": true
+    }
+  },
+  "committed_product_diff_sha256": "51030a2772a8d5693ff1d6318805b2c2c8f4d81ea410ece3762a473036fb0857",
+  "green_and_replay_product_diff_match": true,
+  "raw_locks": [
+    {
+      "path": "inputs/development.json",
+      "expected_lf_sha256": "d5d8d8ac94071bcced3522fe8f4bc7b93313fe927a70c7c8902122902663d9fa",
+      "actual_lf_sha256": "d5d8d8ac94071bcced3522fe8f4bc7b93313fe927a70c7c8902122902663d9fa",
+      "match": true
+    },
+    {
+      "path": "results/red-before.json",
+      "expected_lf_sha256": "09d3714405c957c4ddce7ef799c48c7d2d82d31be68139571a5c6bba02ffd82f",
+      "actual_lf_sha256": "09d3714405c957c4ddce7ef799c48c7d2d82d31be68139571a5c6bba02ffd82f",
+      "match": true
+    },
+    {
+      "path": "results/green-attempt1.json",
+      "expected_lf_sha256": "1298fe201a37abaf26207636700b55d35c1e5423f5af18d43dc628d2f1df314a",
+      "actual_lf_sha256": "1298fe201a37abaf26207636700b55d35c1e5423f5af18d43dc628d2f1df314a",
+      "match": true
+    },
+    {
+      "path": "results/green-after.json",
+      "expected_lf_sha256": "452359c8ed2a5e71aae2fffa17fbfd9a441bf3b14c866a02da7578bd51af90a0",
+      "actual_lf_sha256": "452359c8ed2a5e71aae2fffa17fbfd9a441bf3b14c866a02da7578bd51af90a0",
+      "match": true
+    }
+  ],
+  "oracle24": {
+    "method": "Fraction-only orthonormal coordinates; lateral-edge/constant-z intersection; polygon cross-product area vector. Reads declared metric facts, not product coordinates or product oracle.",
+    "product_imports_used_in_oracle": false,
+    "matches": 24,
+    "cases": [
+      {
+        "id": "DEV-1-1",
+        "independent_oracle": {
+          "area_squared": "2832489/16384",
+          "boundary": [
+            {
+              "edge": [
+                "S",
+                "A"
+              ],
+              "t": "3/8"
+            },
+            {
+              "edge": [
+                "S",
+                "B"
+              ],
+              "t": "3/8"
+            },
+            {
+              "edge": [
+                "S",
+                "C"
+              ],
+              "t": "3/8"
+            }
+          ],
+          "vertex_count": 3,
+          "plane_z": "45/8",
+          "metric_coordinates": {
+            "A": [
+              "0",
+              "0",
+              "0"
+            ],
+            "B": [
+              "11",
+              "0",
+              "0"
+            ],
+            "C": [
+              "0",
+              "17",
+              "0"
+            ],
+            "S": [
+              "0",
+              "0",
+              "9"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "0",
+              "0",
+              "45/8"
+            ],
+            [
+              "33/8",
+              "0",
+              "45/8"
+            ],
+            [
+              "0",
+              "51/8",
+              "45/8"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-1-2",
+        "independent_oracle": {
+          "area_squared": "4096/9",
+          "boundary": [
+            {
+              "edge": [
+                "S",
+                "A"
+              ],
+              "t": "4/9"
+            },
+            {
+              "edge": [
+                "S",
+                "B"
+              ],
+              "t": "4/9"
+            },
+            {
+              "edge": [
+                "S",
+                "C"
+              ],
+              "t": "4/9"
+            }
+          ],
+          "vertex_count": 3,
+          "plane_z": "50/9",
+          "metric_coordinates": {
+            "A": [
+              "0",
+              "0",
+              "0"
+            ],
+            "B": [
+              "12",
+              "0",
+              "0"
+            ],
+            "C": [
+              "0",
+              "18",
+              "0"
+            ],
+            "S": [
+              "0",
+              "0",
+              "10"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "0",
+              "0",
+              "50/9"
+            ],
+            [
+              "16/3",
+              "0",
+              "50/9"
+            ],
+            [
+              "0",
+              "8",
+              "50/9"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-1-3",
+        "independent_oracle": {
+          "area_squared": "38130625/58564",
+          "boundary": [
+            {
+              "edge": [
+                "T",
+                "E"
+              ],
+              "t": "5/11"
+            },
+            {
+              "edge": [
+                "T",
+                "F"
+              ],
+              "t": "5/11"
+            },
+            {
+              "edge": [
+                "T",
+                "G"
+              ],
+              "t": "5/11"
+            }
+          ],
+          "vertex_count": 3,
+          "plane_z": "6",
+          "metric_coordinates": {
+            "E": [
+              "0",
+              "0",
+              "0"
+            ],
+            "F": [
+              "13",
+              "0",
+              "0"
+            ],
+            "G": [
+              "0",
+              "19",
+              "0"
+            ],
+            "T": [
+              "0",
+              "0",
+              "11"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "0",
+              "0",
+              "6"
+            ],
+            [
+              "65/11",
+              "0",
+              "6"
+            ],
+            [
+              "0",
+              "95/11",
+              "6"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-1-4",
+        "independent_oracle": {
+          "area_squared": "12544/25",
+          "boundary": [
+            {
+              "edge": [
+                "S",
+                "A"
+              ],
+              "t": "2/5"
+            },
+            {
+              "edge": [
+                "S",
+                "B"
+              ],
+              "t": "2/5"
+            },
+            {
+              "edge": [
+                "S",
+                "C"
+              ],
+              "t": "2/5"
+            }
+          ],
+          "vertex_count": 3,
+          "plane_z": "36/5",
+          "metric_coordinates": {
+            "A": [
+              "0",
+              "0",
+              "0"
+            ],
+            "B": [
+              "14",
+              "0",
+              "0"
+            ],
+            "C": [
+              "0",
+              "20",
+              "0"
+            ],
+            "S": [
+              "0",
+              "0",
+              "12"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "0",
+              "0",
+              "36/5"
+            ],
+            [
+              "28/5",
+              "0",
+              "36/5"
+            ],
+            [
+              "0",
+              "8",
+              "36/5"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-2-1",
+        "independent_oracle": {
+          "area_squared": "2832489/4096",
+          "boundary": [
+            {
+              "edge": [
+                "S",
+                "A"
+              ],
+              "t": "3/8"
+            },
+            {
+              "edge": [
+                "S",
+                "B"
+              ],
+              "t": "3/8"
+            },
+            {
+              "edge": [
+                "S",
+                "C"
+              ],
+              "t": "3/8"
+            },
+            {
+              "edge": [
+                "S",
+                "D"
+              ],
+              "t": "3/8"
+            }
+          ],
+          "vertex_count": 4,
+          "plane_z": "45/8",
+          "metric_coordinates": {
+            "A": [
+              "0",
+              "0",
+              "0"
+            ],
+            "B": [
+              "11",
+              "0",
+              "0"
+            ],
+            "C": [
+              "11",
+              "17",
+              "0"
+            ],
+            "D": [
+              "0",
+              "17",
+              "0"
+            ],
+            "S": [
+              "0",
+              "0",
+              "9"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "0",
+              "0",
+              "45/8"
+            ],
+            [
+              "33/8",
+              "0",
+              "45/8"
+            ],
+            [
+              "33/8",
+              "51/8",
+              "45/8"
+            ],
+            [
+              "0",
+              "51/8",
+              "45/8"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-2-2",
+        "independent_oracle": {
+          "area_squared": "16384/9",
+          "boundary": [
+            {
+              "edge": [
+                "S",
+                "A"
+              ],
+              "t": "4/9"
+            },
+            {
+              "edge": [
+                "S",
+                "B"
+              ],
+              "t": "4/9"
+            },
+            {
+              "edge": [
+                "S",
+                "C"
+              ],
+              "t": "4/9"
+            },
+            {
+              "edge": [
+                "S",
+                "D"
+              ],
+              "t": "4/9"
+            }
+          ],
+          "vertex_count": 4,
+          "plane_z": "50/9",
+          "metric_coordinates": {
+            "A": [
+              "0",
+              "0",
+              "0"
+            ],
+            "B": [
+              "12",
+              "0",
+              "0"
+            ],
+            "C": [
+              "12",
+              "18",
+              "0"
+            ],
+            "D": [
+              "0",
+              "18",
+              "0"
+            ],
+            "S": [
+              "0",
+              "0",
+              "10"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "0",
+              "0",
+              "50/9"
+            ],
+            [
+              "16/3",
+              "0",
+              "50/9"
+            ],
+            [
+              "16/3",
+              "8",
+              "50/9"
+            ],
+            [
+              "0",
+              "8",
+              "50/9"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-2-3",
+        "independent_oracle": {
+          "area_squared": "38130625/14641",
+          "boundary": [
+            {
+              "edge": [
+                "T",
+                "E"
+              ],
+              "t": "5/11"
+            },
+            {
+              "edge": [
+                "T",
+                "F"
+              ],
+              "t": "5/11"
+            },
+            {
+              "edge": [
+                "T",
+                "G"
+              ],
+              "t": "5/11"
+            },
+            {
+              "edge": [
+                "T",
+                "H"
+              ],
+              "t": "5/11"
+            }
+          ],
+          "vertex_count": 4,
+          "plane_z": "6",
+          "metric_coordinates": {
+            "E": [
+              "0",
+              "0",
+              "0"
+            ],
+            "F": [
+              "13",
+              "0",
+              "0"
+            ],
+            "G": [
+              "13",
+              "19",
+              "0"
+            ],
+            "H": [
+              "0",
+              "19",
+              "0"
+            ],
+            "T": [
+              "0",
+              "0",
+              "11"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "0",
+              "0",
+              "6"
+            ],
+            [
+              "65/11",
+              "0",
+              "6"
+            ],
+            [
+              "65/11",
+              "95/11",
+              "6"
+            ],
+            [
+              "0",
+              "95/11",
+              "6"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-2-4",
+        "independent_oracle": {
+          "area_squared": "50176/25",
+          "boundary": [
+            {
+              "edge": [
+                "S",
+                "A"
+              ],
+              "t": "2/5"
+            },
+            {
+              "edge": [
+                "S",
+                "B"
+              ],
+              "t": "2/5"
+            },
+            {
+              "edge": [
+                "S",
+                "C"
+              ],
+              "t": "2/5"
+            },
+            {
+              "edge": [
+                "S",
+                "D"
+              ],
+              "t": "2/5"
+            }
+          ],
+          "vertex_count": 4,
+          "plane_z": "36/5",
+          "metric_coordinates": {
+            "A": [
+              "0",
+              "0",
+              "0"
+            ],
+            "B": [
+              "14",
+              "0",
+              "0"
+            ],
+            "C": [
+              "14",
+              "20",
+              "0"
+            ],
+            "D": [
+              "0",
+              "20",
+              "0"
+            ],
+            "S": [
+              "0",
+              "0",
+              "12"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "0",
+              "0",
+              "36/5"
+            ],
+            [
+              "28/5",
+              "0",
+              "36/5"
+            ],
+            [
+              "28/5",
+              "8",
+              "36/5"
+            ],
+            [
+              "0",
+              "8",
+              "36/5"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-3-1",
+        "independent_oracle": {
+          "area_squared": "34969/4",
+          "boundary": [
+            {
+              "edge": [
+                "A",
+                "A'"
+              ],
+              "t": "3/8"
+            },
+            {
+              "edge": [
+                "B",
+                "B'"
+              ],
+              "t": "3/8"
+            },
+            {
+              "edge": [
+                "C",
+                "C'"
+              ],
+              "t": "3/8"
+            }
+          ],
+          "vertex_count": 3,
+          "plane_z": "27/8",
+          "metric_coordinates": {
+            "A": [
+              "0",
+              "0",
+              "0"
+            ],
+            "B": [
+              "11",
+              "0",
+              "0"
+            ],
+            "C": [
+              "0",
+              "17",
+              "0"
+            ],
+            "A'": [
+              "0",
+              "0",
+              "9"
+            ],
+            "B'": [
+              "11",
+              "0",
+              "9"
+            ],
+            "C'": [
+              "0",
+              "17",
+              "9"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "0",
+              "0",
+              "27/8"
+            ],
+            [
+              "11",
+              "0",
+              "27/8"
+            ],
+            [
+              "0",
+              "17",
+              "27/8"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-3-2",
+        "independent_oracle": {
+          "area_squared": "11664",
+          "boundary": [
+            {
+              "edge": [
+                "A",
+                "A'"
+              ],
+              "t": "4/9"
+            },
+            {
+              "edge": [
+                "B",
+                "B'"
+              ],
+              "t": "4/9"
+            },
+            {
+              "edge": [
+                "C",
+                "C'"
+              ],
+              "t": "4/9"
+            }
+          ],
+          "vertex_count": 3,
+          "plane_z": "40/9",
+          "metric_coordinates": {
+            "A": [
+              "0",
+              "0",
+              "0"
+            ],
+            "B": [
+              "12",
+              "0",
+              "0"
+            ],
+            "C": [
+              "0",
+              "18",
+              "0"
+            ],
+            "A'": [
+              "0",
+              "0",
+              "10"
+            ],
+            "B'": [
+              "12",
+              "0",
+              "10"
+            ],
+            "C'": [
+              "0",
+              "18",
+              "10"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "0",
+              "0",
+              "40/9"
+            ],
+            [
+              "12",
+              "0",
+              "40/9"
+            ],
+            [
+              "0",
+              "18",
+              "40/9"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-3-3",
+        "independent_oracle": {
+          "area_squared": "61009/4",
+          "boundary": [
+            {
+              "edge": [
+                "E",
+                "E'"
+              ],
+              "t": "5/11"
+            },
+            {
+              "edge": [
+                "F",
+                "F'"
+              ],
+              "t": "5/11"
+            },
+            {
+              "edge": [
+                "G",
+                "G'"
+              ],
+              "t": "5/11"
+            }
+          ],
+          "vertex_count": 3,
+          "plane_z": "5",
+          "metric_coordinates": {
+            "E": [
+              "0",
+              "0",
+              "0"
+            ],
+            "F": [
+              "13",
+              "0",
+              "0"
+            ],
+            "G": [
+              "0",
+              "19",
+              "0"
+            ],
+            "E'": [
+              "0",
+              "0",
+              "11"
+            ],
+            "F'": [
+              "13",
+              "0",
+              "11"
+            ],
+            "G'": [
+              "0",
+              "19",
+              "11"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "0",
+              "0",
+              "5"
+            ],
+            [
+              "13",
+              "0",
+              "5"
+            ],
+            [
+              "0",
+              "19",
+              "5"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-3-4",
+        "independent_oracle": {
+          "area_squared": "19600",
+          "boundary": [
+            {
+              "edge": [
+                "A",
+                "A'"
+              ],
+              "t": "2/5"
+            },
+            {
+              "edge": [
+                "B",
+                "B'"
+              ],
+              "t": "2/5"
+            },
+            {
+              "edge": [
+                "C",
+                "C'"
+              ],
+              "t": "2/5"
+            }
+          ],
+          "vertex_count": 3,
+          "plane_z": "24/5",
+          "metric_coordinates": {
+            "A": [
+              "0",
+              "0",
+              "0"
+            ],
+            "B": [
+              "14",
+              "0",
+              "0"
+            ],
+            "C": [
+              "0",
+              "20",
+              "0"
+            ],
+            "A'": [
+              "0",
+              "0",
+              "12"
+            ],
+            "B'": [
+              "14",
+              "0",
+              "12"
+            ],
+            "C'": [
+              "0",
+              "20",
+              "12"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "0",
+              "0",
+              "24/5"
+            ],
+            [
+              "14",
+              "0",
+              "24/5"
+            ],
+            [
+              "0",
+              "20",
+              "24/5"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-4-1",
+        "independent_oracle": {
+          "area_squared": "34969/4",
+          "boundary": [
+            {
+              "edge": [
+                "A",
+                "A'"
+              ],
+              "t": "3/8"
+            },
+            {
+              "edge": [
+                "B",
+                "B'"
+              ],
+              "t": "3/8"
+            },
+            {
+              "edge": [
+                "C",
+                "C'"
+              ],
+              "t": "3/8"
+            }
+          ],
+          "vertex_count": 3,
+          "plane_z": "27/8",
+          "metric_coordinates": {
+            "A": [
+              "0",
+              "0",
+              "0"
+            ],
+            "B": [
+              "11",
+              "0",
+              "0"
+            ],
+            "C": [
+              "0",
+              "17",
+              "0"
+            ],
+            "A'": [
+              "11",
+              "0",
+              "9"
+            ],
+            "B'": [
+              "22",
+              "0",
+              "9"
+            ],
+            "C'": [
+              "11",
+              "17",
+              "9"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "33/8",
+              "0",
+              "27/8"
+            ],
+            [
+              "121/8",
+              "0",
+              "27/8"
+            ],
+            [
+              "33/8",
+              "17",
+              "27/8"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-4-2",
+        "independent_oracle": {
+          "area_squared": "11664",
+          "boundary": [
+            {
+              "edge": [
+                "A",
+                "A'"
+              ],
+              "t": "4/9"
+            },
+            {
+              "edge": [
+                "B",
+                "B'"
+              ],
+              "t": "4/9"
+            },
+            {
+              "edge": [
+                "C",
+                "C'"
+              ],
+              "t": "4/9"
+            }
+          ],
+          "vertex_count": 3,
+          "plane_z": "40/9",
+          "metric_coordinates": {
+            "A": [
+              "0",
+              "0",
+              "0"
+            ],
+            "B": [
+              "12",
+              "0",
+              "0"
+            ],
+            "C": [
+              "0",
+              "18",
+              "0"
+            ],
+            "A'": [
+              "12",
+              "0",
+              "10"
+            ],
+            "B'": [
+              "24",
+              "0",
+              "10"
+            ],
+            "C'": [
+              "12",
+              "18",
+              "10"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "16/3",
+              "0",
+              "40/9"
+            ],
+            [
+              "52/3",
+              "0",
+              "40/9"
+            ],
+            [
+              "16/3",
+              "18",
+              "40/9"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-4-3",
+        "independent_oracle": {
+          "area_squared": "61009/4",
+          "boundary": [
+            {
+              "edge": [
+                "E",
+                "E'"
+              ],
+              "t": "5/11"
+            },
+            {
+              "edge": [
+                "F",
+                "F'"
+              ],
+              "t": "5/11"
+            },
+            {
+              "edge": [
+                "G",
+                "G'"
+              ],
+              "t": "5/11"
+            }
+          ],
+          "vertex_count": 3,
+          "plane_z": "5",
+          "metric_coordinates": {
+            "E": [
+              "0",
+              "0",
+              "0"
+            ],
+            "F": [
+              "13",
+              "0",
+              "0"
+            ],
+            "G": [
+              "0",
+              "19",
+              "0"
+            ],
+            "E'": [
+              "13",
+              "0",
+              "11"
+            ],
+            "F'": [
+              "26",
+              "0",
+              "11"
+            ],
+            "G'": [
+              "13",
+              "19",
+              "11"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "65/11",
+              "0",
+              "5"
+            ],
+            [
+              "208/11",
+              "0",
+              "5"
+            ],
+            [
+              "65/11",
+              "19",
+              "5"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-4-4",
+        "independent_oracle": {
+          "area_squared": "19600",
+          "boundary": [
+            {
+              "edge": [
+                "A",
+                "A'"
+              ],
+              "t": "2/5"
+            },
+            {
+              "edge": [
+                "B",
+                "B'"
+              ],
+              "t": "2/5"
+            },
+            {
+              "edge": [
+                "C",
+                "C'"
+              ],
+              "t": "2/5"
+            }
+          ],
+          "vertex_count": 3,
+          "plane_z": "24/5",
+          "metric_coordinates": {
+            "A": [
+              "0",
+              "0",
+              "0"
+            ],
+            "B": [
+              "14",
+              "0",
+              "0"
+            ],
+            "C": [
+              "0",
+              "20",
+              "0"
+            ],
+            "A'": [
+              "14",
+              "0",
+              "12"
+            ],
+            "B'": [
+              "28",
+              "0",
+              "12"
+            ],
+            "C'": [
+              "14",
+              "20",
+              "12"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "28/5",
+              "0",
+              "24/5"
+            ],
+            [
+              "98/5",
+              "0",
+              "24/5"
+            ],
+            [
+              "28/5",
+              "20",
+              "24/5"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-5-1",
+        "independent_oracle": {
+          "area_squared": "34969",
+          "boundary": [
+            {
+              "edge": [
+                "A",
+                "A'"
+              ],
+              "t": "3/8"
+            },
+            {
+              "edge": [
+                "B",
+                "B'"
+              ],
+              "t": "3/8"
+            },
+            {
+              "edge": [
+                "C",
+                "C'"
+              ],
+              "t": "3/8"
+            },
+            {
+              "edge": [
+                "D",
+                "D'"
+              ],
+              "t": "3/8"
+            }
+          ],
+          "vertex_count": 4,
+          "plane_z": "27/8",
+          "metric_coordinates": {
+            "A": [
+              "0",
+              "0",
+              "0"
+            ],
+            "B": [
+              "11",
+              "0",
+              "0"
+            ],
+            "C": [
+              "11",
+              "17",
+              "0"
+            ],
+            "D": [
+              "0",
+              "17",
+              "0"
+            ],
+            "A'": [
+              "0",
+              "0",
+              "9"
+            ],
+            "B'": [
+              "11",
+              "0",
+              "9"
+            ],
+            "C'": [
+              "11",
+              "17",
+              "9"
+            ],
+            "D'": [
+              "0",
+              "17",
+              "9"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "0",
+              "0",
+              "27/8"
+            ],
+            [
+              "11",
+              "0",
+              "27/8"
+            ],
+            [
+              "11",
+              "17",
+              "27/8"
+            ],
+            [
+              "0",
+              "17",
+              "27/8"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-5-2",
+        "independent_oracle": {
+          "area_squared": "46656",
+          "boundary": [
+            {
+              "edge": [
+                "A",
+                "A'"
+              ],
+              "t": "4/9"
+            },
+            {
+              "edge": [
+                "B",
+                "B'"
+              ],
+              "t": "4/9"
+            },
+            {
+              "edge": [
+                "C",
+                "C'"
+              ],
+              "t": "4/9"
+            },
+            {
+              "edge": [
+                "D",
+                "D'"
+              ],
+              "t": "4/9"
+            }
+          ],
+          "vertex_count": 4,
+          "plane_z": "40/9",
+          "metric_coordinates": {
+            "A": [
+              "0",
+              "0",
+              "0"
+            ],
+            "B": [
+              "12",
+              "0",
+              "0"
+            ],
+            "C": [
+              "12",
+              "18",
+              "0"
+            ],
+            "D": [
+              "0",
+              "18",
+              "0"
+            ],
+            "A'": [
+              "0",
+              "0",
+              "10"
+            ],
+            "B'": [
+              "12",
+              "0",
+              "10"
+            ],
+            "C'": [
+              "12",
+              "18",
+              "10"
+            ],
+            "D'": [
+              "0",
+              "18",
+              "10"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "0",
+              "0",
+              "40/9"
+            ],
+            [
+              "12",
+              "0",
+              "40/9"
+            ],
+            [
+              "12",
+              "18",
+              "40/9"
+            ],
+            [
+              "0",
+              "18",
+              "40/9"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-5-3",
+        "independent_oracle": {
+          "area_squared": "61009",
+          "boundary": [
+            {
+              "edge": [
+                "E",
+                "E'"
+              ],
+              "t": "5/11"
+            },
+            {
+              "edge": [
+                "F",
+                "F'"
+              ],
+              "t": "5/11"
+            },
+            {
+              "edge": [
+                "G",
+                "G'"
+              ],
+              "t": "5/11"
+            },
+            {
+              "edge": [
+                "H",
+                "H'"
+              ],
+              "t": "5/11"
+            }
+          ],
+          "vertex_count": 4,
+          "plane_z": "5",
+          "metric_coordinates": {
+            "E": [
+              "0",
+              "0",
+              "0"
+            ],
+            "F": [
+              "13",
+              "0",
+              "0"
+            ],
+            "G": [
+              "13",
+              "19",
+              "0"
+            ],
+            "H": [
+              "0",
+              "19",
+              "0"
+            ],
+            "E'": [
+              "0",
+              "0",
+              "11"
+            ],
+            "F'": [
+              "13",
+              "0",
+              "11"
+            ],
+            "G'": [
+              "13",
+              "19",
+              "11"
+            ],
+            "H'": [
+              "0",
+              "19",
+              "11"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "0",
+              "0",
+              "5"
+            ],
+            [
+              "13",
+              "0",
+              "5"
+            ],
+            [
+              "13",
+              "19",
+              "5"
+            ],
+            [
+              "0",
+              "19",
+              "5"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-5-4",
+        "independent_oracle": {
+          "area_squared": "78400",
+          "boundary": [
+            {
+              "edge": [
+                "A",
+                "A'"
+              ],
+              "t": "2/5"
+            },
+            {
+              "edge": [
+                "B",
+                "B'"
+              ],
+              "t": "2/5"
+            },
+            {
+              "edge": [
+                "C",
+                "C'"
+              ],
+              "t": "2/5"
+            },
+            {
+              "edge": [
+                "D",
+                "D'"
+              ],
+              "t": "2/5"
+            }
+          ],
+          "vertex_count": 4,
+          "plane_z": "24/5",
+          "metric_coordinates": {
+            "A": [
+              "0",
+              "0",
+              "0"
+            ],
+            "B": [
+              "14",
+              "0",
+              "0"
+            ],
+            "C": [
+              "14",
+              "20",
+              "0"
+            ],
+            "D": [
+              "0",
+              "20",
+              "0"
+            ],
+            "A'": [
+              "0",
+              "0",
+              "12"
+            ],
+            "B'": [
+              "14",
+              "0",
+              "12"
+            ],
+            "C'": [
+              "14",
+              "20",
+              "12"
+            ],
+            "D'": [
+              "0",
+              "20",
+              "12"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "0",
+              "0",
+              "24/5"
+            ],
+            [
+              "14",
+              "0",
+              "24/5"
+            ],
+            [
+              "14",
+              "20",
+              "24/5"
+            ],
+            [
+              "0",
+              "20",
+              "24/5"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-6-1",
+        "independent_oracle": {
+          "area_squared": "14641",
+          "boundary": [
+            {
+              "edge": [
+                "A",
+                "A'"
+              ],
+              "t": "3/8"
+            },
+            {
+              "edge": [
+                "B",
+                "B'"
+              ],
+              "t": "3/8"
+            },
+            {
+              "edge": [
+                "C",
+                "C'"
+              ],
+              "t": "3/8"
+            },
+            {
+              "edge": [
+                "D",
+                "D'"
+              ],
+              "t": "3/8"
+            }
+          ],
+          "vertex_count": 4,
+          "plane_z": "33/8",
+          "metric_coordinates": {
+            "A": [
+              "0",
+              "0",
+              "0"
+            ],
+            "B": [
+              "11",
+              "0",
+              "0"
+            ],
+            "C": [
+              "11",
+              "11",
+              "0"
+            ],
+            "D": [
+              "0",
+              "11",
+              "0"
+            ],
+            "A'": [
+              "0",
+              "0",
+              "11"
+            ],
+            "B'": [
+              "11",
+              "0",
+              "11"
+            ],
+            "C'": [
+              "11",
+              "11",
+              "11"
+            ],
+            "D'": [
+              "0",
+              "11",
+              "11"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "0",
+              "0",
+              "33/8"
+            ],
+            [
+              "11",
+              "0",
+              "33/8"
+            ],
+            [
+              "11",
+              "11",
+              "33/8"
+            ],
+            [
+              "0",
+              "11",
+              "33/8"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-6-2",
+        "independent_oracle": {
+          "area_squared": "20736",
+          "boundary": [
+            {
+              "edge": [
+                "A",
+                "A'"
+              ],
+              "t": "4/9"
+            },
+            {
+              "edge": [
+                "B",
+                "B'"
+              ],
+              "t": "4/9"
+            },
+            {
+              "edge": [
+                "C",
+                "C'"
+              ],
+              "t": "4/9"
+            },
+            {
+              "edge": [
+                "D",
+                "D'"
+              ],
+              "t": "4/9"
+            }
+          ],
+          "vertex_count": 4,
+          "plane_z": "16/3",
+          "metric_coordinates": {
+            "A": [
+              "0",
+              "0",
+              "0"
+            ],
+            "B": [
+              "12",
+              "0",
+              "0"
+            ],
+            "C": [
+              "12",
+              "12",
+              "0"
+            ],
+            "D": [
+              "0",
+              "12",
+              "0"
+            ],
+            "A'": [
+              "0",
+              "0",
+              "12"
+            ],
+            "B'": [
+              "12",
+              "0",
+              "12"
+            ],
+            "C'": [
+              "12",
+              "12",
+              "12"
+            ],
+            "D'": [
+              "0",
+              "12",
+              "12"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "0",
+              "0",
+              "16/3"
+            ],
+            [
+              "12",
+              "0",
+              "16/3"
+            ],
+            [
+              "12",
+              "12",
+              "16/3"
+            ],
+            [
+              "0",
+              "12",
+              "16/3"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-6-3",
+        "independent_oracle": {
+          "area_squared": "28561",
+          "boundary": [
+            {
+              "edge": [
+                "E",
+                "E'"
+              ],
+              "t": "5/11"
+            },
+            {
+              "edge": [
+                "F",
+                "F'"
+              ],
+              "t": "5/11"
+            },
+            {
+              "edge": [
+                "G",
+                "G'"
+              ],
+              "t": "5/11"
+            },
+            {
+              "edge": [
+                "H",
+                "H'"
+              ],
+              "t": "5/11"
+            }
+          ],
+          "vertex_count": 4,
+          "plane_z": "65/11",
+          "metric_coordinates": {
+            "E": [
+              "0",
+              "0",
+              "0"
+            ],
+            "F": [
+              "13",
+              "0",
+              "0"
+            ],
+            "G": [
+              "13",
+              "13",
+              "0"
+            ],
+            "H": [
+              "0",
+              "13",
+              "0"
+            ],
+            "E'": [
+              "0",
+              "0",
+              "13"
+            ],
+            "F'": [
+              "13",
+              "0",
+              "13"
+            ],
+            "G'": [
+              "13",
+              "13",
+              "13"
+            ],
+            "H'": [
+              "0",
+              "13",
+              "13"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "0",
+              "0",
+              "65/11"
+            ],
+            [
+              "13",
+              "0",
+              "65/11"
+            ],
+            [
+              "13",
+              "13",
+              "65/11"
+            ],
+            [
+              "0",
+              "13",
+              "65/11"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      },
+      {
+        "id": "DEV-6-4",
+        "independent_oracle": {
+          "area_squared": "38416",
+          "boundary": [
+            {
+              "edge": [
+                "A",
+                "A'"
+              ],
+              "t": "2/5"
+            },
+            {
+              "edge": [
+                "B",
+                "B'"
+              ],
+              "t": "2/5"
+            },
+            {
+              "edge": [
+                "C",
+                "C'"
+              ],
+              "t": "2/5"
+            },
+            {
+              "edge": [
+                "D",
+                "D'"
+              ],
+              "t": "2/5"
+            }
+          ],
+          "vertex_count": 4,
+          "plane_z": "28/5",
+          "metric_coordinates": {
+            "A": [
+              "0",
+              "0",
+              "0"
+            ],
+            "B": [
+              "14",
+              "0",
+              "0"
+            ],
+            "C": [
+              "14",
+              "14",
+              "0"
+            ],
+            "D": [
+              "0",
+              "14",
+              "0"
+            ],
+            "A'": [
+              "0",
+              "0",
+              "14"
+            ],
+            "B'": [
+              "14",
+              "0",
+              "14"
+            ],
+            "C'": [
+              "14",
+              "14",
+              "14"
+            ],
+            "D'": [
+              "0",
+              "14",
+              "14"
+            ]
+          },
+          "section_coordinates": [
+            [
+              "0",
+              "0",
+              "28/5"
+            ],
+            [
+              "14",
+              "0",
+              "28/5"
+            ],
+            [
+              "14",
+              "14",
+              "28/5"
+            ],
+            [
+              "0",
+              "14",
+              "28/5"
+            ]
+          ]
+        },
+        "equals_locked_oracle": {
+          "area_squared": true,
+          "boundary": true,
+          "vertex_count": true
+        }
+      }
+    ]
+  },
+  "wave2_final_product_replay": {
+    "classification": "POST_FEEDBACK_DEVELOPMENT_REGRESSION",
+    "compared_fields": [
+      "outcome",
+      "served",
+      "code",
+      "route_status",
+      "adapter4_status",
+      "envelope_status",
+      "oracle_mismatches"
+    ],
+    "row_matches": 96,
+    "rows": [
+      {
+        "id": "W2-B01",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B02",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B03",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B04",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B05",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B06",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B07",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B08",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B09",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B10",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B11",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B12",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B13",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B14",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B15",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B16",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B17",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B18",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B19",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B20",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B21",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B22",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B23",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B24",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B25",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B26",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B27",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B28",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B29",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B30",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B31",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B32",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B33",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B34",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B35",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-B36",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-A01",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-A02",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-A03",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-A04",
+        "all_checked_fields_match": true,
+        "outcome": "FALSE_REFUSAL",
+        "code": "ENGINE_EXECUTION_FAILED"
+      },
+      {
+        "id": "W2-A05",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-A06",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-A07",
+        "all_checked_fields_match": true,
+        "outcome": "FALSE_REFUSAL",
+        "code": "PREVIEW_VALIDATION_FAILED"
+      },
+      {
+        "id": "W2-A08",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-A09",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-A10",
+        "all_checked_fields_match": true,
+        "outcome": "FALSE_REFUSAL",
+        "code": "PREVIEW_VALIDATION_FAILED"
+      },
+      {
+        "id": "W2-A11",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-A12",
+        "all_checked_fields_match": true,
+        "outcome": "SERVED_CORRECT",
+        "code": null
+      },
+      {
+        "id": "W2-N01",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "SOURCE_OBJECT_MISMATCH"
+      },
+      {
+        "id": "W2-N02",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "UNKNOWN_SOLID"
+      },
+      {
+        "id": "W2-N03",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "SOURCE_OBJECT_MISMATCH"
+      },
+      {
+        "id": "W2-N04",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "INCONSISTENT_FACTS"
+      },
+      {
+        "id": "W2-N05",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "NON_HOMOGENEOUS_LENGTHS"
+      },
+      {
+        "id": "W2-N06",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_REASON_DISAGREEMENT",
+        "code": "SOURCE_PREMISE_UNREAD"
+      },
+      {
+        "id": "W2-N07",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "SOURCE_OBJECT_MISMATCH"
+      },
+      {
+        "id": "W2-N08",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "SOURCE_OBJECT_MISMATCH"
+      },
+      {
+        "id": "W2-N09",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "SOURCE_OBJECT_MISMATCH"
+      },
+      {
+        "id": "W2-N10",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "CONDITIONAL_CLAUSE"
+      },
+      {
+        "id": "W2-N11",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "SOURCE_OBJECT_MISMATCH"
+      },
+      {
+        "id": "W2-N12",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "SOURCE_OBJECT_MISMATCH"
+      },
+      {
+        "id": "W2-N13",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "DUPLICATE_SECTION_ID"
+      },
+      {
+        "id": "W2-N14",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "SOURCE_OBJECT_MISMATCH"
+      },
+      {
+        "id": "W2-N15",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "SOURCE_OBJECT_MISMATCH"
+      },
+      {
+        "id": "W2-N16",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY"
+      },
+      {
+        "id": "W2-N17",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "SOURCE_OBJECT_MISMATCH"
+      },
+      {
+        "id": "W2-N18",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY"
+      },
+      {
+        "id": "W2-N19",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "QUOTE_NOT_IN_SOURCE"
+      },
+      {
+        "id": "W2-N20",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "SOURCE_OBJECT_MISMATCH"
+      },
+      {
+        "id": "W2-N21",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "SOURCE_OBJECT_MISMATCH"
+      },
+      {
+        "id": "W2-N22",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "BRIDGE_UNSUPPORTED_CURVED"
+      },
+      {
+        "id": "W2-N23",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_REASON_DISAGREEMENT",
+        "code": "UNGROUNDED_VALUE"
+      },
+      {
+        "id": "W2-N24",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "UNSUPPORTED_BASE_SHAPE"
+      },
+      {
+        "id": "W2-N25",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_REASON_DISAGREEMENT",
+        "code": "UNSUPPORTED_CAPABILITY"
+      },
+      {
+        "id": "W2-N26",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "MISSING_DIMENSION"
+      },
+      {
+        "id": "W2-N27",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "MISSING_DIMENSION"
+      },
+      {
+        "id": "W2-N28",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "UNDERDETERMINED_POINT"
+      },
+      {
+        "id": "W2-N29",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_REASON_DISAGREEMENT",
+        "code": "SOURCE_PREMISE_UNREAD"
+      },
+      {
+        "id": "W2-N30",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_REASON_DISAGREEMENT",
+        "code": "SOURCE_OBJECT_MISMATCH"
+      },
+      {
+        "id": "W2-N31",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "NEGATED_CLAUSE"
+      },
+      {
+        "id": "W2-N32",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "NEGATED_CLAUSE"
+      },
+      {
+        "id": "W2-N33",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "CONDITIONAL_CLAUSE"
+      },
+      {
+        "id": "W2-N34",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_REASON_DISAGREEMENT",
+        "code": "UNSUPPORTED_CAPABILITY"
+      },
+      {
+        "id": "W2-N35",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_REASON_DISAGREEMENT",
+        "code": "UNSUPPORTED_CAPABILITY"
+      },
+      {
+        "id": "W2-N36",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_REASON_DISAGREEMENT",
+        "code": "UNSUPPORTED_CAPABILITY"
+      },
+      {
+        "id": "W2-N37",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "SOURCE_OBJECT_MISMATCH"
+      },
+      {
+        "id": "W2-N38",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "SOURCE_OBJECT_MISMATCH"
+      },
+      {
+        "id": "W2-N39",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "SOURCE_OBJECT_MISMATCH"
+      },
+      {
+        "id": "W2-N40",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "SOURCE_OBJECT_MISMATCH"
+      },
+      {
+        "id": "W2-N41",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_REASON_DISAGREEMENT",
+        "code": "UNSUPPORTED_CAPABILITY"
+      },
+      {
+        "id": "W2-N42",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_REASON_DISAGREEMENT",
+        "code": "UNSUPPORTED_CAPABILITY"
+      },
+      {
+        "id": "W2-N43",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_REASON_DISAGREEMENT",
+        "code": "UNSUPPORTED_CAPABILITY"
+      },
+      {
+        "id": "W2-N44",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_REASON_DISAGREEMENT",
+        "code": "PREVIEW_RESULT_INVALID"
+      },
+      {
+        "id": "W2-N45",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "INCONSISTENT_FACTS"
+      },
+      {
+        "id": "W2-N46",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "DERIVED_PLANE_IS_REFERENCE"
+      },
+      {
+        "id": "W2-N47",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "PLANE_NOT_UNIQUE"
+      },
+      {
+        "id": "W2-N48",
+        "all_checked_fields_match": true,
+        "outcome": "REFUSED_CORRECT_REASON",
+        "code": "PLANE_TOUCHES_VERTEX"
+      }
+    ],
+    "overall": {
+      "n": 96,
+      "outcomes": {
+        "SERVED_CORRECT": 45,
+        "FALSE_REFUSAL": 3,
+        "REFUSED_CORRECT_REASON": 36,
+        "REFUSED_REASON_DISAGREEMENT": 12
+      },
+      "serve_cases": 48,
+      "served_correct": 45,
+      "served_correct_ci95": [
+        0.8316,
+        0.9785
+      ],
+      "false_refusals": 3,
+      "false_refusal_ci95": [
+        0.0215,
+        0.1684
+      ],
+      "wrong_served_on_serve_cases": 0,
+      "refuse_cases": 48,
+      "refuse_cases_refused": 48,
+      "refuse_cases_refused_ci95": [
+        0.9259,
+        1.0
+      ],
+      "refused_correct_reason": 36,
+      "reason_agreement_ci95": [
+        0.6122,
+        0.8508
+      ],
+      "wrong_served_on_refuse_cases": 0,
+      "wrong_served_total": 0,
+      "wrong_served_ci95": [
+        0.0,
+        0.0385
+      ],
+      "internal_exceptions": 0
+    },
+    "stored_replay_lf_sha256": "968db95c4c8bb3936274432749fdd79e17919ed72c4da971a6e3082eac1672cf"
+  },
+  "targeted_review_test_receipts": [
+    {
+      "command": "python -B -m pytest backend/tests/geometry/test_solid_kind_source_binding.py backend/tests/geometry/test_two_line_plane_section.py -q -p no:cacheprovider",
+      "passed": 218,
+      "failed": 0,
+      "seconds": 9.05
+    },
+    {
+      "command": "python -B -m pytest backend/tests/geometry/test_source_gate_language.py -q -p no:cacheprovider -k 'supplemental or inverted_ratio or mutated_operands'",
+      "passed": 18,
+      "failed": 0,
+      "deselected": 61,
+      "seconds": 1.64
+    }
+  ],
+  "additional_i1_controls": [
+    {
+      "id": "declaration-only-right",
+      "change": "Initial source declaration and its quotes only; section request remains generic; payload remains oblique",
+      "route_status": "REFUSED",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "adapter_status": "REFUSED"
+    },
+    {
+      "id": "declaration-only-wrong-kind",
+      "change": "Initial source declaration and its quotes only; section request remains generic; payload remains oblique",
+      "route_status": "REFUSED",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "adapter_status": "REFUSED"
+    }
+  ],
+  "unresolved_major": {
+    "id": "ACCEPTANCE-1",
+    "case": "DEV-1-3",
+    "reason": "Mathematically correct locked positive exceeds unchanged radical ceiling; original positive gate23/24 remains unmet. Engine/kernel repair excluded.",
+    "ready": false
+  },
+  "t3_verdict": "PENDING_AUTHORITATIVE_RECEIPT",
+  "live_provider_calls": 0,
+  "historical_writes": 0
+}
