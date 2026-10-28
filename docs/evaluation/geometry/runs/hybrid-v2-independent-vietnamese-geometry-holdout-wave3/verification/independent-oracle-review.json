@@ -1,0 +1,4548 @@
+{
+  "schema": "HOLDOUT_WAVE3_INDEPENDENT_ORACLE_REVIEW/1",
+  "task": "HYBRID_V2_INDEPENDENT_VIETNAMESE_GEOMETRY_HOLDOUT_WAVE3",
+  "status": "ORACLE_VERIFIED_BEFORE_EXECUTION",
+  "executed_before_product_run": true,
+  "product_imports_used": 0,
+  "product_routes_executed": 0,
+  "total_cases_verified": 144,
+  "positive_cases_verified": 72,
+  "negative_cases_verified": 72,
+  "discrepancies": [],
+  "sha256_checked": {
+    "holdout-wave3.json": "cf2d3fd759b6a94c4eae2545a4a409e50859ff28e861f797609b6a259fe4dee0",
+    "geometry.json": "a7c04b77211d85fc7912bbcc6ad34e83e864cf46ea5904e4ebc5e201b520b983",
+    "oracle_holdout_wave3.py": "aa156523cc6895d935fc6428995dad48a4684bfc60d96be89e51d41ef4b5c1c0",
+    "expected.json": "9cabeb19ae0d10e1112795097e7ed18e0b0b3aa7bc18700a9d60813a0cbcf9df",
+    "refusal-taxonomy.json": "b393995bbc11ae25f904052b597d9e89b9cf5adaaeaba468dcb2a27003319b00",
+    "inputs/holdout-wave3.json": "cf2d3fd759b6a94c4eae2545a4a409e50859ff28e861f797609b6a259fe4dee0",
+    "oracle/geometry.json": "a7c04b77211d85fc7912bbcc6ad34e83e864cf46ea5904e4ebc5e201b520b983",
+    "oracle/oracle_holdout_wave3.py": "aa156523cc6895d935fc6428995dad48a4684bfc60d96be89e51d41ef4b5c1c0",
+    "oracle/expected.json": "9cabeb19ae0d10e1112795097e7ed18e0b0b3aa7bc18700a9d60813a0cbcf9df"
+  },
+  "per_stratum_summary": {
+    "P-B": {
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "case_range": "W3-B01..W3-B54",
+      "case_count": 54,
+      "verified_count": 54,
+      "discrepancies": 0,
+      "families": {
+        "triangular_pyramid": 9,
+        "quadrilateral_pyramid": 9,
+        "right_triangular_prism": 9,
+        "oblique_triangular_prism": 9,
+        "cuboid": 9,
+        "cube": 9
+      },
+      "plane_relations": {
+        "perpendicular_line": 18,
+        "parallel_plane": 18,
+        "parallel_two_lines": 18
+      },
+      "question_types": {
+        "section_only": 18,
+        "area_only": 18,
+        "section_and_area": 18
+      },
+      "vertex_counts": {
+        "3": 18,
+        "4": 36
+      }
+    },
+    "P-A": {
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "expected_category": "DINH_CAT_CANH",
+      "case_range": "W3-A01..W3-A18",
+      "case_count": 18,
+      "verified_count": 18,
+      "discrepancies": 0,
+      "families": {
+        "triangular_pyramid": 3,
+        "quadrilateral_pyramid": 3,
+        "right_triangular_prism": 3,
+        "oblique_triangular_prism": 3,
+        "cuboid": 3,
+        "cube": 3
+      },
+      "plane_relations": {
+        "perpendicular_line": 11,
+        "parallel_plane": 5,
+        "parallel_two_lines": 2
+      },
+      "question_types": {
+        "section_only": 6,
+        "area_only": 6,
+        "section_and_area": 6
+      },
+      "vertex_counts": {
+        "3": 9,
+        "4": 9
+      },
+      "all_through_points_on_lateral_edge": true,
+      "all_remaining_lateral_edges_cut_strictly_interior": true
+    },
+    "N": {
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "case_range": "W3-N01..W3-N72",
+      "case_count": 72,
+      "verified_count": 72,
+      "discrepancies": 0,
+      "negative_class_count": 18,
+      "cases_per_negative_class": {
+        "contradictory_source_facts": 4,
+        "wrong_solid_kind": 4,
+        "wrong_solid_notation": 4,
+        "mixed_solid_operands": 4,
+        "missing_mandatory_premise": 4,
+        "unproven_parallel_or_perpendicular_relation": 4,
+        "ambiguous_source_labels": 4,
+        "wrong_ratio": 4,
+        "wrong_edge": 4,
+        "impossible_vertex": 4,
+        "invalid_section_declaration": 4,
+        "unsupported_geometry_capability": 4,
+        "conflicting_section_area_requests": 4,
+        "incorrect_stated_intersections": 4,
+        "category_a_b_semantic_contradictions": 4,
+        "primed_label_identity_ambiguity": 4,
+        "source_provenance_mismatch": 4,
+        "geometry_degeneration": 4
+      },
+      "all_classes_have_4_cases": true,
+      "internal_or_validation_in_acceptable_categories": 0,
+      "contract_representability_counts": {
+        "representable_with_explicit_gap": 64,
+        "intentionally_outside_supported_v2_capability": 8
+      }
+    }
+  },
+  "positive_cases": [
+    {
+      "id": "W3-B01",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "S.EFG",
+      "through_point": "H",
+      "stated_intersections_count": 0,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "3/11"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "3/11"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "1587/7678"
+        }
+      ],
+      "area_squared": "2614174641/40877672",
+      "area_display": "(51129*sqrt(698))/168916",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B02",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "S.MNP",
+      "through_point": "K",
+      "stated_intersections_count": 0,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "M"
+          ],
+          "t": "3/7"
+        },
+        {
+          "edge": [
+            "S",
+            "P"
+          ],
+          "t": "867/3206"
+        },
+        {
+          "edge": [
+            "S",
+            "N"
+          ],
+          "t": "3/7"
+        }
+      ],
+      "area_squared": "31648968/549829",
+      "area_display": "(3978*sqrt(458))/11221a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B03",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "S.EFG",
+      "through_point": "H",
+      "stated_intersections_count": 0,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "361/884"
+        }
+      ],
+      "area_squared": "1432809/7072",
+      "area_display": "(1197*sqrt(442))/1768",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B04",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "S.PQR",
+      "through_point": "I",
+      "stated_intersections_count": 0,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "P"
+          ],
+          "t": "3/8"
+        },
+        {
+          "edge": [
+            "S",
+            "Q"
+          ],
+          "t": "3/8"
+        },
+        {
+          "edge": [
+            "S",
+            "R"
+          ],
+          "t": "3/8"
+        }
+      ],
+      "area_squared": "88209/4096",
+      "area_display": "297/64a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B05",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "S.DEF",
+      "through_point": "J",
+      "stated_intersections_count": 0,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "D",
+            "E"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "E",
+            "F"
+          ],
+          "t": "5/9"
+        }
+      ],
+      "area_squared": "38130625/26244",
+      "area_display": "6175/162",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B06",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "A.BCD",
+      "through_point": "M",
+      "stated_intersections_count": 0,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "A",
+            "D"
+          ],
+          "t": "2/7"
+        },
+        {
+          "edge": [
+            "D",
+            "B"
+          ],
+          "t": "5/7"
+        },
+        {
+          "edge": [
+            "C",
+            "D"
+          ],
+          "t": "2/7"
+        }
+      ],
+      "area_squared": "5290000/2401",
+      "area_display": "2300/49a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B07",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "S.GHK",
+      "through_point": "L",
+      "stated_intersections_count": 0,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "5/8"
+        },
+        {
+          "edge": [
+            "S",
+            "H"
+          ],
+          "t": "5/8"
+        },
+        {
+          "edge": [
+            "S",
+            "K"
+          ],
+          "t": "5/8"
+        }
+      ],
+      "area_squared": "8555625/16384",
+      "area_display": "2925/128",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B08",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "S.BCD",
+      "through_point": "E",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "3/10"
+        },
+        {
+          "edge": [
+            "B",
+            "C"
+          ],
+          "t": "7/10"
+        },
+        {
+          "edge": [
+            "C",
+            "D"
+          ],
+          "t": "3/10"
+        },
+        {
+          "edge": [
+            "S",
+            "D"
+          ],
+          "t": "3/10"
+        }
+      ],
+      "area_squared": "2115477/400",
+      "area_display": "(63*sqrt(533))/20a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B09",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "S.KLM",
+      "through_point": "N",
+      "stated_intersections_count": 0,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "M"
+          ],
+          "t": "4/7"
+        },
+        {
+          "edge": [
+            "M",
+            "K"
+          ],
+          "t": "3/7"
+        },
+        {
+          "edge": [
+            "L",
+            "M"
+          ],
+          "t": "4/7"
+        }
+      ],
+      "area_squared": "18225/49",
+      "area_display": "135/7",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B10",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "S.ABCD",
+      "through_point": "A",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "vertex": "A"
+        },
+        {
+          "edge": [
+            "S",
+            "D"
+          ],
+          "t": "169/250"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "169/275"
+        },
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "169/194"
+        }
+      ],
+      "area_squared": "4817160208809/6468687500",
+      "area_display": "(2194803*sqrt(11))/266750",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B11",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "S.MNPQ",
+      "through_point": "K",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "M"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "S",
+            "Q"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "S",
+            "P"
+          ],
+          "t": "10/29"
+        },
+        {
+          "edge": [
+            "S",
+            "N"
+          ],
+          "t": "10/29"
+        }
+      ],
+      "area_squared": "50808384/609725",
+      "area_display": "(7128*sqrt(29))/4205a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B12",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "S.EFGH",
+      "through_point": "I",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "3/8"
+        },
+        {
+          "edge": [
+            "S",
+            "H"
+          ],
+          "t": "867/3464"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "867/3464"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "3/8"
+        }
+      ],
+      "area_squared": "1345351771449/20782780672",
+      "area_display": "(1159893*sqrt(433))/2999824",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B13",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "S.PQRT",
+      "through_point": "M",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "P"
+          ],
+          "t": "5/9"
+        },
+        {
+          "edge": [
+            "S",
+            "Q"
+          ],
+          "t": "5/9"
+        },
+        {
+          "edge": [
+            "S",
+            "R"
+          ],
+          "t": "5/9"
+        },
+        {
+          "edge": [
+            "S",
+            "T"
+          ],
+          "t": "5/9"
+        }
+      ],
+      "area_squared": "4840000/6561",
+      "area_display": "2200/81a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B14",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "S.KLMN",
+      "through_point": "H",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "L"
+          ],
+          "t": "2/7"
+        },
+        {
+          "edge": [
+            "K",
+            "L"
+          ],
+          "t": "2/7"
+        },
+        {
+          "edge": [
+            "M",
+            "N"
+          ],
+          "t": "5/7"
+        },
+        {
+          "edge": [
+            "S",
+            "M"
+          ],
+          "t": "2/7"
+        }
+      ],
+      "area_squared": "98903025/9604",
+      "area_display": "9945/98",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B15",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "A.BCDE",
+      "through_point": "F",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "A",
+            "D"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "A",
+            "E"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "E",
+            "B"
+          ],
+          "t": "5/9"
+        },
+        {
+          "edge": [
+            "C",
+            "D"
+          ],
+          "t": "4/9"
+        }
+      ],
+      "area_squared": "74736025/26244",
+      "area_display": "8645/162a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B16",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "S.BCDE",
+      "through_point": "G",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "3/11"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "3/11"
+        },
+        {
+          "edge": [
+            "S",
+            "D"
+          ],
+          "t": "3/11"
+        },
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "3/11"
+        }
+      ],
+      "area_squared": "492804/14641",
+      "area_display": "702/121",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B17",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "S.UVWX",
+      "through_point": "I",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "V"
+          ],
+          "t": "5/11"
+        },
+        {
+          "edge": [
+            "U",
+            "V"
+          ],
+          "t": "5/11"
+        },
+        {
+          "edge": [
+            "W",
+            "X"
+          ],
+          "t": "6/11"
+        },
+        {
+          "edge": [
+            "S",
+            "W"
+          ],
+          "t": "5/11"
+        }
+      ],
+      "area_squared": "171714816/14641",
+      "area_display": "13104/121a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B18",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "S.GHKL",
+      "through_point": "M",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "K"
+          ],
+          "t": "3/7"
+        },
+        {
+          "edge": [
+            "S",
+            "L"
+          ],
+          "t": "3/7"
+        },
+        {
+          "edge": [
+            "L",
+            "G"
+          ],
+          "t": "4/7"
+        },
+        {
+          "edge": [
+            "H",
+            "K"
+          ],
+          "t": "3/7"
+        }
+      ],
+      "area_squared": "17139600/2401",
+      "area_display": "4140/49",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B19",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "ABC.A'B'C'",
+      "through_point": "M",
+      "stated_intersections_count": 0,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "4/9"
+        }
+      ],
+      "area_squared": "400",
+      "area_display": "20",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B20",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "MNP.M'N'P'",
+      "through_point": "K",
+      "stated_intersections_count": 0,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "M",
+            "M'"
+          ],
+          "t": "3/4"
+        },
+        {
+          "edge": [
+            "N",
+            "N'"
+          ],
+          "t": "443/676"
+        },
+        {
+          "edge": [
+            "P",
+            "P'"
+          ],
+          "t": "3/4"
+        }
+      ],
+      "area_squared": "36260/169",
+      "area_display": "(14*sqrt(185))/13a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B21",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "DEF.D'E'F'",
+      "through_point": "I",
+      "stated_intersections_count": 0,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "4/5"
+        },
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "4/5"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "304/605"
+        }
+      ],
+      "area_squared": "35325/121",
+      "area_display": "(15*sqrt(157))/11",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B22",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "EFG.E'F'G'",
+      "through_point": "H",
+      "stated_intersections_count": 0,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "2/9"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "2/9"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "2/9"
+        }
+      ],
+      "area_squared": "3969/4",
+      "area_display": "63/2a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B23",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "PQR.P'Q'R'",
+      "through_point": "K",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "P",
+            "Q"
+          ],
+          "t": "5/9"
+        },
+        {
+          "edge": [
+            "Q",
+            "R"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "Q'",
+            "R'"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "P'",
+            "Q'"
+          ],
+          "t": "5/9"
+        }
+      ],
+      "area_squared": "976144/81",
+      "area_display": "988/9",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B24",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "GHK.G'H'K'",
+      "through_point": "L",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "H",
+            "K"
+          ],
+          "t": "3/8"
+        },
+        {
+          "edge": [
+            "H'",
+            "K'"
+          ],
+          "t": "3/8"
+        },
+        {
+          "edge": [
+            "K'",
+            "G'"
+          ],
+          "t": "5/8"
+        },
+        {
+          "edge": [
+            "K",
+            "G"
+          ],
+          "t": "5/8"
+        }
+      ],
+      "area_squared": "7225",
+      "area_display": "85a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B25",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "BCD.B'C'D'",
+      "through_point": "M",
+      "stated_intersections_count": 0,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "7/10"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "7/10"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "7/10"
+        }
+      ],
+      "area_squared": "1225",
+      "area_display": "35",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B26",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "KLM.K'L'M'",
+      "through_point": "N",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "K",
+            "L"
+          ],
+          "t": "3/11"
+        },
+        {
+          "edge": [
+            "K'",
+            "L'"
+          ],
+          "t": "3/11"
+        },
+        {
+          "edge": [
+            "L'",
+            "M'"
+          ],
+          "t": "8/11"
+        },
+        {
+          "edge": [
+            "L",
+            "M"
+          ],
+          "t": "8/11"
+        }
+      ],
+      "area_squared": "25600",
+      "area_display": "160a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B27",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "RST.R'S'T'",
+      "through_point": "U",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "T"
+          ],
+          "t": "4/11"
+        },
+        {
+          "edge": [
+            "T",
+            "R"
+          ],
+          "t": "7/11"
+        },
+        {
+          "edge": [
+            "T'",
+            "R'"
+          ],
+          "t": "7/11"
+        },
+        {
+          "edge": [
+            "S'",
+            "T'"
+          ],
+          "t": "4/11"
+        }
+      ],
+      "area_squared": "28224",
+      "area_display": "168",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B28",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "ABC.A'B'C'",
+      "through_point": "M",
+      "stated_intersections_count": 0,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "3/7"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "3/7"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "3/7"
+        }
+      ],
+      "area_squared": "1225/4",
+      "area_display": "35/2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B29",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "MNP.M'N'P'",
+      "through_point": "K",
+      "stated_intersections_count": 0,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "M",
+            "M'"
+          ],
+          "t": "3/5"
+        },
+        {
+          "edge": [
+            "N",
+            "N'"
+          ],
+          "t": "331/685"
+        },
+        {
+          "edge": [
+            "P",
+            "P'"
+          ],
+          "t": "3/5"
+        }
+      ],
+      "area_squared": "39204/137",
+      "area_display": "(198*sqrt(137))/137a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B30",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "DEF.D'E'F'",
+      "through_point": "I",
+      "stated_intersections_count": 0,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "5/7"
+        },
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "795/1358"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "359/679"
+        }
+      ],
+      "area_squared": "4372875/18818",
+      "area_display": "(195*sqrt(230))/194",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B31",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "EFG.E'F'G'",
+      "through_point": "H",
+      "stated_intersections_count": 0,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "2/5"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "2/5"
+        }
+      ],
+      "area_squared": "441",
+      "area_display": "21a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B32",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "PQR.P'Q'R'",
+      "through_point": "K",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "P",
+            "Q"
+          ],
+          "t": "3/8"
+        },
+        {
+          "edge": [
+            "Q",
+            "R"
+          ],
+          "t": "5/8"
+        },
+        {
+          "edge": [
+            "Q'",
+            "R'"
+          ],
+          "t": "5/8"
+        },
+        {
+          "edge": [
+            "P'",
+            "Q'"
+          ],
+          "t": "3/8"
+        }
+      ],
+      "area_squared": "8450",
+      "area_display": "65*sqrt(2)",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B33",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "GHK.G'H'K'",
+      "through_point": "L",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "H",
+            "K"
+          ],
+          "t": "5/9"
+        },
+        {
+          "edge": [
+            "H'",
+            "K'"
+          ],
+          "t": "5/9"
+        },
+        {
+          "edge": [
+            "K'",
+            "G'"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "K",
+            "G"
+          ],
+          "t": "4/9"
+        }
+      ],
+      "area_squared": "78400/81",
+      "area_display": "280/9a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B34",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "BCD.B'C'D'",
+      "through_point": "M",
+      "stated_intersections_count": 0,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "4/9"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "4/9"
+        }
+      ],
+      "area_squared": "1089",
+      "area_display": "33",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B35",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "KLM.K'L'M'",
+      "through_point": "N",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "K",
+            "L"
+          ],
+          "t": "2/7"
+        },
+        {
+          "edge": [
+            "K'",
+            "L'"
+          ],
+          "t": "2/7"
+        },
+        {
+          "edge": [
+            "L'",
+            "M'"
+          ],
+          "t": "5/7"
+        },
+        {
+          "edge": [
+            "L",
+            "M"
+          ],
+          "t": "5/7"
+        }
+      ],
+      "area_squared": "1476000/49",
+      "area_display": "(60*sqrt(410))/7a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B36",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "UVW.U'V'W'",
+      "through_point": "J",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "V",
+            "W"
+          ],
+          "t": "5/11"
+        },
+        {
+          "edge": [
+            "W",
+            "U"
+          ],
+          "t": "6/11"
+        },
+        {
+          "edge": [
+            "W'",
+            "U'"
+          ],
+          "t": "6/11"
+        },
+        {
+          "edge": [
+            "V'",
+            "W'"
+          ],
+          "t": "5/11"
+        }
+      ],
+      "area_squared": "831744/121",
+      "area_display": "912/11",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B37",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "ABCD.A'B'C'D'",
+      "through_point": "M",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "3/11"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "3/11"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "3/11"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "3/11"
+        }
+      ],
+      "area_squared": "1225",
+      "area_display": "35",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B38",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "MNPQ.M'N'P'Q'",
+      "through_point": "K",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "M",
+            "M'"
+          ],
+          "t": "5/7"
+        },
+        {
+          "edge": [
+            "N",
+            "N'"
+          ],
+          "t": "493/847"
+        },
+        {
+          "edge": [
+            "P",
+            "P'"
+          ],
+          "t": "493/847"
+        },
+        {
+          "edge": [
+            "Q",
+            "Q'"
+          ],
+          "t": "5/7"
+        }
+      ],
+      "area_squared": "54800/121",
+      "area_display": "(20*sqrt(137))/11a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B39",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "EFGH.E'F'G'H'",
+      "through_point": "E'",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "vertex": "E'"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "144/169"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "108/169"
+        },
+        {
+          "edge": [
+            "H",
+            "H'"
+          ],
+          "t": "133/169"
+        }
+      ],
+      "area_squared": "207000/169",
+      "area_display": "(30*sqrt(230))/13",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B40",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "PQRS.P'Q'R'S'",
+      "through_point": "I",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "P",
+            "P'"
+          ],
+          "t": "4/13"
+        },
+        {
+          "edge": [
+            "Q",
+            "Q'"
+          ],
+          "t": "4/13"
+        },
+        {
+          "edge": [
+            "R",
+            "R'"
+          ],
+          "t": "4/13"
+        },
+        {
+          "edge": [
+            "S",
+            "S'"
+          ],
+          "t": "4/13"
+        }
+      ],
+      "area_squared": "2916",
+      "area_display": "54a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B41",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "KLMN.K'L'M'N'",
+      "through_point": "H",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "K",
+            "L"
+          ],
+          "t": "5/13"
+        },
+        {
+          "edge": [
+            "M",
+            "N"
+          ],
+          "t": "8/13"
+        },
+        {
+          "edge": [
+            "M'",
+            "N'"
+          ],
+          "t": "8/13"
+        },
+        {
+          "edge": [
+            "K'",
+            "L'"
+          ],
+          "t": "5/13"
+        }
+      ],
+      "area_squared": "39204",
+      "area_display": "198",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B42",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "GHKL.G'H'K'L'",
+      "through_point": "I",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "H",
+            "K"
+          ],
+          "t": "3/13"
+        },
+        {
+          "edge": [
+            "H'",
+            "K'"
+          ],
+          "t": "3/13"
+        },
+        {
+          "edge": [
+            "L'",
+            "G'"
+          ],
+          "t": "10/13"
+        },
+        {
+          "edge": [
+            "L",
+            "G"
+          ],
+          "t": "10/13"
+        }
+      ],
+      "area_squared": "28224",
+      "area_display": "168a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B43",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "BCDE.B'C'D'E'",
+      "through_point": "M",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "6/13"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "6/13"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "6/13"
+        },
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "6/13"
+        }
+      ],
+      "area_squared": "9801",
+      "area_display": "99",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B44",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "UVWX.U'V'W'X'",
+      "through_point": "J",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "U",
+            "V"
+          ],
+          "t": "2/11"
+        },
+        {
+          "edge": [
+            "U'",
+            "V'"
+          ],
+          "t": "2/11"
+        },
+        {
+          "edge": [
+            "W'",
+            "X'"
+          ],
+          "t": "9/11"
+        },
+        {
+          "edge": [
+            "W",
+            "X"
+          ],
+          "t": "9/11"
+        }
+      ],
+      "area_squared": "64009",
+      "area_display": "253a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B45",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "CDEF.C'D'E'F'",
+      "through_point": "K",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "E"
+          ],
+          "t": "7/11"
+        },
+        {
+          "edge": [
+            "F",
+            "C"
+          ],
+          "t": "4/11"
+        },
+        {
+          "edge": [
+            "F'",
+            "C'"
+          ],
+          "t": "4/11"
+        },
+        {
+          "edge": [
+            "D'",
+            "E'"
+          ],
+          "t": "7/11"
+        }
+      ],
+      "area_squared": "75625",
+      "area_display": "275",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B46",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "ABCD.A'B'C'D'",
+      "through_point": "M",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "2/11"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "2/11"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "2/11"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "2/11"
+        }
+      ],
+      "area_squared": "2401",
+      "area_display": "49",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B47",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "MNPQ.M'N'P'Q'",
+      "through_point": "K",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "M",
+            "N"
+          ],
+          "t": "3/11"
+        },
+        {
+          "edge": [
+            "Q",
+            "M"
+          ],
+          "t": "8/11"
+        },
+        {
+          "edge": [
+            "Q'",
+            "M'"
+          ],
+          "t": "8/11"
+        },
+        {
+          "edge": [
+            "M'",
+            "N'"
+          ],
+          "t": "3/11"
+        }
+      ],
+      "area_squared": "118098/121",
+      "area_display": "(243*sqrt(2))/11a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B48",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "EFGH.E'F'G'H'",
+      "through_point": "I",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "E",
+            "F"
+          ],
+          "t": "4/11"
+        },
+        {
+          "edge": [
+            "G",
+            "H"
+          ],
+          "t": "7/11"
+        },
+        {
+          "edge": [
+            "G'",
+            "H'"
+          ],
+          "t": "7/11"
+        },
+        {
+          "edge": [
+            "E'",
+            "F'"
+          ],
+          "t": "4/11"
+        }
+      ],
+      "area_squared": "14641",
+      "area_display": "121",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B49",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "PQRS.P'Q'R'S'",
+      "through_point": "J",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "P",
+            "P'"
+          ],
+          "t": "5/11"
+        },
+        {
+          "edge": [
+            "Q",
+            "Q'"
+          ],
+          "t": "5/11"
+        },
+        {
+          "edge": [
+            "R",
+            "R'"
+          ],
+          "t": "5/11"
+        },
+        {
+          "edge": [
+            "S",
+            "S'"
+          ],
+          "t": "5/11"
+        }
+      ],
+      "area_squared": "28561",
+      "area_display": "169a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B50",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "KLMN.K'L'M'N'",
+      "through_point": "H",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "K",
+            "L"
+          ],
+          "t": "2/13"
+        },
+        {
+          "edge": [
+            "M",
+            "N"
+          ],
+          "t": "11/13"
+        },
+        {
+          "edge": [
+            "M'",
+            "N'"
+          ],
+          "t": "11/13"
+        },
+        {
+          "edge": [
+            "K'",
+            "L'"
+          ],
+          "t": "2/13"
+        }
+      ],
+      "area_squared": "38416",
+      "area_display": "196",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B51",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "GHKL.G'H'K'L'",
+      "through_point": "I",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "H",
+            "K"
+          ],
+          "t": "3/13"
+        },
+        {
+          "edge": [
+            "H'",
+            "K'"
+          ],
+          "t": "3/13"
+        },
+        {
+          "edge": [
+            "L'",
+            "G'"
+          ],
+          "t": "10/13"
+        },
+        {
+          "edge": [
+            "L",
+            "G"
+          ],
+          "t": "10/13"
+        }
+      ],
+      "area_squared": "50625",
+      "area_display": "225a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B52",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "BCDE.B'C'D'E'",
+      "through_point": "M",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "4/13"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "4/13"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "4/13"
+        },
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "4/13"
+        }
+      ],
+      "area_squared": "65536",
+      "area_display": "256",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B53",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "area_only",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "UVWX.U'V'W'X'",
+      "through_point": "J",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "U",
+            "V"
+          ],
+          "t": "5/13"
+        },
+        {
+          "edge": [
+            "U'",
+            "V'"
+          ],
+          "t": "5/13"
+        },
+        {
+          "edge": [
+            "W'",
+            "X'"
+          ],
+          "t": "8/13"
+        },
+        {
+          "edge": [
+            "W",
+            "X"
+          ],
+          "t": "8/13"
+        }
+      ],
+      "area_squared": "104976",
+      "area_display": "324a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-B54",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "expected_category": "ENGINE_DERIVED_SECTION",
+      "solid": "CDEF.C'D'E'F'",
+      "through_point": "K",
+      "stated_intersections_count": 0,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "E"
+          ],
+          "t": "6/13"
+        },
+        {
+          "edge": [
+            "F",
+            "C"
+          ],
+          "t": "7/13"
+        },
+        {
+          "edge": [
+            "F'",
+            "C'"
+          ],
+          "t": "7/13"
+        },
+        {
+          "edge": [
+            "D'",
+            "E'"
+          ],
+          "t": "6/13"
+        }
+      ],
+      "area_squared": "194481",
+      "area_display": "441",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-A01",
+      "stratum": "P-A",
+      "family": "triangular_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "expected_category": "DINH_CAT_CANH",
+      "solid": "S.ABC",
+      "through_point": "B",
+      "stated_intersections_count": 2,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "A"
+          ],
+          "t": "169/205"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "169/254"
+        },
+        {
+          "vertex": "B"
+        }
+      ],
+      "area_squared": "2128622769/10674350",
+      "area_display": "(46137*sqrt(254))/52070",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-A02",
+      "stratum": "P-A",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "expected_category": "DINH_CAT_CANH",
+      "solid": "S.MNP",
+      "through_point": "K",
+      "stated_intersections_count": 2,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "M"
+          ],
+          "t": "3/11"
+        },
+        {
+          "edge": [
+            "S",
+            "N"
+          ],
+          "t": "3/11"
+        },
+        {
+          "edge": [
+            "S",
+            "P"
+          ],
+          "t": "3/11"
+        }
+      ],
+      "area_squared": "142884/14641",
+      "area_display": "378/121a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-A03",
+      "stratum": "P-A",
+      "family": "triangular_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "expected_category": "DINH_CAT_CANH",
+      "solid": "S.EFG",
+      "through_point": "M",
+      "stated_intersections_count": 2,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "1/2"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "128/281"
+        }
+      ],
+      "area_squared": "12100/281",
+      "area_display": "(110*sqrt(281))/281",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-A04",
+      "stratum": "P-A",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "expected_category": "DINH_CAT_CANH",
+      "solid": "S.ABCD",
+      "through_point": "A",
+      "stated_intersections_count": 3,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "vertex": "A"
+        },
+        {
+          "edge": [
+            "S",
+            "D"
+          ],
+          "t": "225/289"
+        },
+        {
+          "edge": [
+            "S",
+            "C"
+          ],
+          "t": "225/314"
+        },
+        {
+          "edge": [
+            "S",
+            "B"
+          ],
+          "t": "9/10"
+        }
+      ],
+      "area_squared": "10589490450/13112797",
+      "area_display": "(72765*sqrt(314))/45373a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-A05",
+      "stratum": "P-A",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "expected_category": "DINH_CAT_CANH",
+      "solid": "S.MNPQ",
+      "through_point": "K",
+      "stated_intersections_count": 3,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "M"
+          ],
+          "t": "4/11"
+        },
+        {
+          "edge": [
+            "S",
+            "N"
+          ],
+          "t": "4/11"
+        },
+        {
+          "edge": [
+            "S",
+            "P"
+          ],
+          "t": "4/11"
+        },
+        {
+          "edge": [
+            "S",
+            "Q"
+          ],
+          "t": "4/11"
+        }
+      ],
+      "area_squared": "1016064/14641",
+      "area_display": "1008/121",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-A06",
+      "stratum": "P-A",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "expected_category": "DINH_CAT_CANH",
+      "solid": "S.EFGH",
+      "through_point": "I",
+      "stated_intersections_count": 3,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "S",
+            "E"
+          ],
+          "t": "3/7"
+        },
+        {
+          "edge": [
+            "S",
+            "H"
+          ],
+          "t": "675/1918"
+        },
+        {
+          "edge": [
+            "S",
+            "G"
+          ],
+          "t": "135/434"
+        },
+        {
+          "edge": [
+            "S",
+            "F"
+          ],
+          "t": "75/203"
+        }
+      ],
+      "area_squared": "5868506953125/191816026808",
+      "area_display": "(1083375*sqrt(310))/3448564a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-A07",
+      "stratum": "P-A",
+      "family": "right_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "expected_category": "DINH_CAT_CANH",
+      "solid": "ABC.A'B'C'",
+      "through_point": "B'",
+      "stated_intersections_count": 2,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "vertex": "B'"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "60/121"
+        },
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "96/121"
+        }
+      ],
+      "area_squared": "40950/121",
+      "area_display": "(15*sqrt(182))/11",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-A08",
+      "stratum": "P-A",
+      "family": "right_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "expected_category": "DINH_CAT_CANH",
+      "solid": "MNP.M'N'P'",
+      "through_point": "N",
+      "stated_intersections_count": 2,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "vertex": "N"
+        },
+        {
+          "edge": [
+            "M",
+            "M'"
+          ],
+          "t": "16/121"
+        },
+        {
+          "edge": [
+            "P",
+            "P'"
+          ],
+          "t": "65/121"
+        }
+      ],
+      "area_squared": "36456/121",
+      "area_display": "(14*sqrt(186))/11a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-A09",
+      "stratum": "P-A",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "expected_category": "DINH_CAT_CANH",
+      "solid": "DEF.D'E'F'",
+      "through_point": "K",
+      "stated_intersections_count": 2,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "5/14"
+        },
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "5/14"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "5/14"
+        }
+      ],
+      "area_squared": "1225",
+      "area_display": "35",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-A10",
+      "stratum": "P-A",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "expected_category": "DINH_CAT_CANH",
+      "solid": "ABC.A'B'C'",
+      "through_point": "A'",
+      "stated_intersections_count": 2,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "vertex": "A'"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "169/194"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "65/97"
+        }
+      ],
+      "area_squared": "4360200/9409",
+      "area_display": "(130*sqrt(258))/97a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-A11",
+      "stratum": "P-A",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "expected_category": "DINH_CAT_CANH",
+      "solid": "MNP.M'N'P'",
+      "through_point": "K",
+      "stated_intersections_count": 2,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "M",
+            "M'"
+          ],
+          "t": "3/14"
+        },
+        {
+          "edge": [
+            "N",
+            "N'"
+          ],
+          "t": "3/14"
+        },
+        {
+          "edge": [
+            "P",
+            "P'"
+          ],
+          "t": "3/14"
+        }
+      ],
+      "area_squared": "1521",
+      "area_display": "39",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-A12",
+      "stratum": "P-A",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "expected_category": "DINH_CAT_CANH",
+      "solid": "DEF.D'E'F'",
+      "through_point": "I",
+      "stated_intersections_count": 2,
+      "vertex_count": 3,
+      "boundary": [
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "6/11"
+        },
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "1270/2651"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "6/11"
+        }
+      ],
+      "area_squared": "44100/241",
+      "area_display": "(210*sqrt(241))/241a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-A13",
+      "stratum": "P-A",
+      "family": "cuboid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "expected_category": "DINH_CAT_CANH",
+      "solid": "ABCD.A'B'C'D'",
+      "through_point": "A'",
+      "stated_intersections_count": 3,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "vertex": "A'"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "153/169"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "8/13"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "120/169"
+        }
+      ],
+      "area_squared": "14112/13",
+      "area_display": "(84*sqrt(26))/13",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-A14",
+      "stratum": "P-A",
+      "family": "cuboid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "expected_category": "DINH_CAT_CANH",
+      "solid": "MNPQ.M'N'P'Q'",
+      "through_point": "M",
+      "stated_intersections_count": 3,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "vertex": "M"
+        },
+        {
+          "edge": [
+            "Q",
+            "Q'"
+          ],
+          "t": "64/289"
+        },
+        {
+          "edge": [
+            "P",
+            "P'"
+          ],
+          "t": "89/289"
+        },
+        {
+          "edge": [
+            "N",
+            "N'"
+          ],
+          "t": "25/289"
+        }
+      ],
+      "area_squared": "604800/289",
+      "area_display": "(120*sqrt(42))/17a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-A15",
+      "stratum": "P-A",
+      "family": "cuboid",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "expected_category": "DINH_CAT_CANH",
+      "solid": "EFGH.E'F'G'H'",
+      "through_point": "K",
+      "stated_intersections_count": 3,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "4/15"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "4/15"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "4/15"
+        },
+        {
+          "edge": [
+            "H",
+            "H'"
+          ],
+          "t": "4/15"
+        }
+      ],
+      "area_squared": "3969",
+      "area_display": "63",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-A16",
+      "stratum": "P-A",
+      "family": "cube",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "expected_category": "DINH_CAT_CANH",
+      "solid": "ABCD.A'B'C'D'",
+      "through_point": "M",
+      "stated_intersections_count": 3,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "A",
+            "A'"
+          ],
+          "t": "3/16"
+        },
+        {
+          "edge": [
+            "B",
+            "B'"
+          ],
+          "t": "3/16"
+        },
+        {
+          "edge": [
+            "C",
+            "C'"
+          ],
+          "t": "3/16"
+        },
+        {
+          "edge": [
+            "D",
+            "D'"
+          ],
+          "t": "3/16"
+        }
+      ],
+      "area_squared": "83521",
+      "area_display": "289",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-A17",
+      "stratum": "P-A",
+      "family": "cube",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "expected_category": "DINH_CAT_CANH",
+      "solid": "MNPQ.M'N'P'Q'",
+      "through_point": "K",
+      "stated_intersections_count": 3,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "M",
+            "M'"
+          ],
+          "t": "5/16"
+        },
+        {
+          "edge": [
+            "N",
+            "N'"
+          ],
+          "t": "5/16"
+        },
+        {
+          "edge": [
+            "P",
+            "P'"
+          ],
+          "t": "5/16"
+        },
+        {
+          "edge": [
+            "Q",
+            "Q'"
+          ],
+          "t": "5/16"
+        }
+      ],
+      "area_squared": "130321",
+      "area_display": "361a^2",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    },
+    {
+      "id": "W3-A18",
+      "stratum": "P-A",
+      "family": "cube",
+      "plane_relation": "parallel_two_lines",
+      "question_type": "section_and_area",
+      "expected_category": "DINH_CAT_CANH",
+      "solid": "EFGH.E'F'G'H'",
+      "through_point": "I",
+      "stated_intersections_count": 3,
+      "vertex_count": 4,
+      "boundary": [
+        {
+          "edge": [
+            "E",
+            "E'"
+          ],
+          "t": "2/17"
+        },
+        {
+          "edge": [
+            "F",
+            "F'"
+          ],
+          "t": "2/17"
+        },
+        {
+          "edge": [
+            "G",
+            "G'"
+          ],
+          "t": "2/17"
+        },
+        {
+          "edge": [
+            "H",
+            "H'"
+          ],
+          "t": "2/17"
+        }
+      ],
+      "area_squared": "279841",
+      "area_display": "529",
+      "premises_verified": true,
+      "isometry_verified": true,
+      "plane_equation_verified": true,
+      "edge_intersections_verified": true,
+      "convexity_and_cyclic_order_verified": true,
+      "lagrange_area_squared_verified": true
+    }
+  ],
+  "negative_cases": [
+    {
+      "id": "W3-N01",
+      "stratum": "N",
+      "negative_class": "contradictory_source_facts",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "CONTRADICTION",
+        "INPUT_INVALID",
+        "SOURCE_GROUNDING"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N02",
+      "stratum": "N",
+      "negative_class": "contradictory_source_facts",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "CONTRADICTION",
+        "GEOMETRY_DEGENERATE"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N03",
+      "stratum": "N",
+      "negative_class": "contradictory_source_facts",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "CONTRADICTION",
+        "GEOMETRY_DEGENERATE"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N04",
+      "stratum": "N",
+      "negative_class": "contradictory_source_facts",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "CONTRADICTION",
+        "GEOMETRY_DEGENERATE",
+        "SOURCE_GROUNDING"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N05",
+      "stratum": "N",
+      "negative_class": "wrong_solid_kind",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "INPUT_INVALID",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N06",
+      "stratum": "N",
+      "negative_class": "wrong_solid_kind",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "INPUT_INVALID",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N07",
+      "stratum": "N",
+      "negative_class": "wrong_solid_kind",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "INPUT_INVALID",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N08",
+      "stratum": "N",
+      "negative_class": "wrong_solid_kind",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "INPUT_INVALID",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N09",
+      "stratum": "N",
+      "negative_class": "wrong_solid_notation",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "INPUT_INVALID",
+        "SOURCE_GROUNDING"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N10",
+      "stratum": "N",
+      "negative_class": "wrong_solid_notation",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "INPUT_INVALID",
+        "SOURCE_GROUNDING"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N11",
+      "stratum": "N",
+      "negative_class": "wrong_solid_notation",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "INPUT_INVALID",
+        "SOURCE_GROUNDING"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N12",
+      "stratum": "N",
+      "negative_class": "wrong_solid_notation",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "INPUT_INVALID"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N13",
+      "stratum": "N",
+      "negative_class": "mixed_solid_operands",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "UNSUPPORTED_CAPABILITY",
+        "INPUT_INVALID",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "intentionally_outside_supported_v2_capability",
+      "gap_subclass": "unsupported_topology",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N14",
+      "stratum": "N",
+      "negative_class": "mixed_solid_operands",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "UNSUPPORTED_CAPABILITY",
+        "SOURCE_GROUNDING",
+        "INPUT_INVALID",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "intentionally_outside_supported_v2_capability",
+      "gap_subclass": "unsupported_topology",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N15",
+      "stratum": "N",
+      "negative_class": "mixed_solid_operands",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "INPUT_INVALID",
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N16",
+      "stratum": "N",
+      "negative_class": "mixed_solid_operands",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "INPUT_INVALID",
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N17",
+      "stratum": "N",
+      "negative_class": "missing_mandatory_premise",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "UNDERDETERMINED",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "missing_required_information",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N18",
+      "stratum": "N",
+      "negative_class": "missing_mandatory_premise",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "UNDERDETERMINED",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "missing_required_information",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N19",
+      "stratum": "N",
+      "negative_class": "missing_mandatory_premise",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "UNDERDETERMINED",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "missing_required_information",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N20",
+      "stratum": "N",
+      "negative_class": "missing_mandatory_premise",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "UNDERDETERMINED",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "missing_required_information",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N21",
+      "stratum": "N",
+      "negative_class": "unproven_parallel_or_perpendicular_relation",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "UNDERDETERMINED"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "missing_required_information",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N22",
+      "stratum": "N",
+      "negative_class": "unproven_parallel_or_perpendicular_relation",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "UNDERDETERMINED"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "missing_required_information",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N23",
+      "stratum": "N",
+      "negative_class": "unproven_parallel_or_perpendicular_relation",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "UNDERDETERMINED"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "missing_required_information",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N24",
+      "stratum": "N",
+      "negative_class": "unproven_parallel_or_perpendicular_relation",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N25",
+      "stratum": "N",
+      "negative_class": "ambiguous_source_labels",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "AMBIGUOUS",
+        "CONTRADICTION",
+        "INPUT_INVALID"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "ambiguous",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N26",
+      "stratum": "N",
+      "negative_class": "ambiguous_source_labels",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "AMBIGUOUS",
+        "CONTRADICTION",
+        "INPUT_INVALID",
+        "GEOMETRY_DEGENERATE"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "ambiguous",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N27",
+      "stratum": "N",
+      "negative_class": "ambiguous_source_labels",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "AMBIGUOUS",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "ambiguous",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N28",
+      "stratum": "N",
+      "negative_class": "ambiguous_source_labels",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "INPUT_INVALID",
+        "AMBIGUOUS",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "ambiguous",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N29",
+      "stratum": "N",
+      "negative_class": "wrong_ratio",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "INPUT_INVALID",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N30",
+      "stratum": "N",
+      "negative_class": "wrong_ratio",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "INPUT_INVALID",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N31",
+      "stratum": "N",
+      "negative_class": "wrong_ratio",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "INPUT_INVALID",
+        "SOURCE_GROUNDING",
+        "GEOMETRY_DEGENERATE"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N32",
+      "stratum": "N",
+      "negative_class": "wrong_ratio",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "INPUT_INVALID",
+        "SOURCE_GROUNDING",
+        "GEOMETRY_DEGENERATE"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N33",
+      "stratum": "N",
+      "negative_class": "wrong_edge",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "INPUT_INVALID",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N34",
+      "stratum": "N",
+      "negative_class": "wrong_edge",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "INPUT_INVALID",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N35",
+      "stratum": "N",
+      "negative_class": "wrong_edge",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "UNSUPPORTED_CAPABILITY",
+        "GEOMETRY_DEGENERATE",
+        "CONTRADICTION",
+        "SOURCE_GROUNDING"
+      ],
+      "contract_representability": "intentionally_outside_supported_v2_capability",
+      "gap_subclass": "unsupported_relation",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N36",
+      "stratum": "N",
+      "negative_class": "wrong_edge",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "UNSUPPORTED_CAPABILITY",
+        "GEOMETRY_DEGENERATE",
+        "CONTRADICTION",
+        "SOURCE_GROUNDING"
+      ],
+      "contract_representability": "intentionally_outside_supported_v2_capability",
+      "gap_subclass": "unsupported_relation",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N37",
+      "stratum": "N",
+      "negative_class": "impossible_vertex",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "INPUT_INVALID",
+        "SOURCE_GROUNDING",
+        "UNDERDETERMINED"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N38",
+      "stratum": "N",
+      "negative_class": "impossible_vertex",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "INPUT_INVALID",
+        "SOURCE_GROUNDING",
+        "UNDERDETERMINED"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N39",
+      "stratum": "N",
+      "negative_class": "impossible_vertex",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "INPUT_INVALID",
+        "SOURCE_GROUNDING",
+        "UNDERDETERMINED"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N40",
+      "stratum": "N",
+      "negative_class": "impossible_vertex",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "INPUT_INVALID",
+        "SOURCE_GROUNDING",
+        "UNDERDETERMINED"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N41",
+      "stratum": "N",
+      "negative_class": "invalid_section_declaration",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "INPUT_INVALID",
+        "UNDERDETERMINED"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "missing_required_information",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N42",
+      "stratum": "N",
+      "negative_class": "invalid_section_declaration",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "INPUT_INVALID",
+        "UNDERDETERMINED"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "missing_required_information",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N43",
+      "stratum": "N",
+      "negative_class": "invalid_section_declaration",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "INPUT_INVALID",
+        "UNDERDETERMINED"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "missing_required_information",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N44",
+      "stratum": "N",
+      "negative_class": "invalid_section_declaration",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "INPUT_INVALID",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N45",
+      "stratum": "N",
+      "negative_class": "unsupported_geometry_capability",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "contract_representability": "intentionally_outside_supported_v2_capability",
+      "gap_subclass": "unsupported_topology",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N46",
+      "stratum": "N",
+      "negative_class": "unsupported_geometry_capability",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "contract_representability": "intentionally_outside_supported_v2_capability",
+      "gap_subclass": "unsupported_topology",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N47",
+      "stratum": "N",
+      "negative_class": "unsupported_geometry_capability",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "contract_representability": "intentionally_outside_supported_v2_capability",
+      "gap_subclass": "unsupported_topology",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N48",
+      "stratum": "N",
+      "negative_class": "unsupported_geometry_capability",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "contract_representability": "intentionally_outside_supported_v2_capability",
+      "gap_subclass": "unsupported_relation",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N49",
+      "stratum": "N",
+      "negative_class": "conflicting_section_area_requests",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "INPUT_INVALID"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N50",
+      "stratum": "N",
+      "negative_class": "conflicting_section_area_requests",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "INPUT_INVALID",
+        "SOURCE_GROUNDING"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N51",
+      "stratum": "N",
+      "negative_class": "conflicting_section_area_requests",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "INPUT_INVALID",
+        "SOURCE_GROUNDING"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N52",
+      "stratum": "N",
+      "negative_class": "conflicting_section_area_requests",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "INPUT_INVALID"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N53",
+      "stratum": "N",
+      "negative_class": "incorrect_stated_intersections",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "GEOMETRY_DEGENERATE",
+        "CONTRADICTION",
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N54",
+      "stratum": "N",
+      "negative_class": "incorrect_stated_intersections",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "GEOMETRY_DEGENERATE",
+        "CONTRADICTION",
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N55",
+      "stratum": "N",
+      "negative_class": "incorrect_stated_intersections",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "GEOMETRY_DEGENERATE",
+        "CONTRADICTION",
+        "UNSUPPORTED_CAPABILITY"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N56",
+      "stratum": "N",
+      "negative_class": "incorrect_stated_intersections",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "GEOMETRY_DEGENERATE",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N57",
+      "stratum": "N",
+      "negative_class": "category_a_b_semantic_contradictions",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "AMBIGUOUS",
+        "CONTRADICTION",
+        "INPUT_INVALID",
+        "GEOMETRY_DEGENERATE"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N58",
+      "stratum": "N",
+      "negative_class": "category_a_b_semantic_contradictions",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "AMBIGUOUS",
+        "CONTRADICTION",
+        "INPUT_INVALID",
+        "GEOMETRY_DEGENERATE"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N59",
+      "stratum": "N",
+      "negative_class": "category_a_b_semantic_contradictions",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "INPUT_INVALID",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N60",
+      "stratum": "N",
+      "negative_class": "category_a_b_semantic_contradictions",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "AMBIGUOUS",
+        "CONTRADICTION",
+        "INPUT_INVALID",
+        "GEOMETRY_DEGENERATE"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N61",
+      "stratum": "N",
+      "negative_class": "primed_label_identity_ambiguity",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "INPUT_INVALID",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N62",
+      "stratum": "N",
+      "negative_class": "primed_label_identity_ambiguity",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "INPUT_INVALID",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N63",
+      "stratum": "N",
+      "negative_class": "primed_label_identity_ambiguity",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "INPUT_INVALID",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N64",
+      "stratum": "N",
+      "negative_class": "primed_label_identity_ambiguity",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "CONTRADICTION",
+        "GEOMETRY_DEGENERATE"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N65",
+      "stratum": "N",
+      "negative_class": "source_provenance_mismatch",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N66",
+      "stratum": "N",
+      "negative_class": "source_provenance_mismatch",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N67",
+      "stratum": "N",
+      "negative_class": "source_provenance_mismatch",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "UNDERDETERMINED"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N68",
+      "stratum": "N",
+      "negative_class": "source_provenance_mismatch",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "SOURCE_GROUNDING",
+        "UNDERDETERMINED"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N69",
+      "stratum": "N",
+      "negative_class": "geometry_degeneration",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "GEOMETRY_DEGENERATE",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N70",
+      "stratum": "N",
+      "negative_class": "geometry_degeneration",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "GEOMETRY_DEGENERATE",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N71",
+      "stratum": "N",
+      "negative_class": "geometry_degeneration",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "GEOMETRY_DEGENERATE",
+        "CONTRADICTION",
+        "UNDERDETERMINED"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    },
+    {
+      "id": "W3-N72",
+      "stratum": "N",
+      "negative_class": "geometry_degeneration",
+      "expected_disposition": "REFUSE",
+      "expected_category": null,
+      "acceptable_categories": [
+        "GEOMETRY_DEGENERATE",
+        "CONTRADICTION"
+      ],
+      "contract_representability": "representable_with_explicit_gap",
+      "gap_subclass": "contradictory",
+      "defect_verified": true
+    }
+  ]
+}

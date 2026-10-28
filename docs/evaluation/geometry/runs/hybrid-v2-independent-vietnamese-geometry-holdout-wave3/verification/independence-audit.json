@@ -1,0 +1,34 @@
+{
+  "schema": "HOLDOUT_WAVE3_INDEPENDENCE_AUDIT/1",
+  "curator_conversation_id": "206cf35f-d6b5-4ac4-a16a-38ae2ced52d1",
+  "transcript_source": "C:\\Users\\Bunny\\.gemini\\antigravity\\brain\\206cf35f-d6b5-4ac4-a16a-38ae2ced52d1\\.system_generated\\logs\\transcript_full.jsonl",
+  "independence_class": "AI_CURATED_PROCEDURAL_INDEPENDENCE",
+  "human_or_institutional_independence_claimed": false,
+  "total_tool_calls": 68,
+  "unique_files_read": [
+    "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave3\\AGENTS.md",
+    "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave3\\backend\\app\\simulation\\geometry_functions\\typed_fact_next.py",
+    "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave3\\docs\\RULES.md",
+    "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave3\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-geometry-holdout-wave3\\corpus-provenance.md",
+    "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave3\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-geometry-holdout-wave3\\curator-brief.md",
+    "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave3\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-geometry-holdout-wave3\\inputs\\holdout-wave3.json",
+    "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave3\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-geometry-holdout-wave3\\oracle\\_generate_wave3.py",
+    "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave3\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-geometry-holdout-wave3\\oracle\\geometry.json",
+    "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave3\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-geometry-holdout-wave3\\preregistration.md",
+    "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave3\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-geometry-holdout-wave3\\refusal-taxonomy.json",
+    "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave3\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-geometry-holdout-wave3\\scoring-contract.md",
+    "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave3\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-geometry-holdout-wave3\\supported-family-matrix.md"
+  ],
+  "nonexistent_read_attempts": [],
+  "unique_files_written": [
+    "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave3\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-geometry-holdout-wave3\\corpus-provenance.md",
+    "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave3\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-geometry-holdout-wave3\\curator-attestation.md",
+    "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave3\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-geometry-holdout-wave3\\oracle\\_generate_wave3.py",
+    "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave3\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-geometry-holdout-wave3\\oracle\\oracle_holdout_wave3.py"
+  ],
+  "commands_executed_count": 19,
+  "forbidden_reads": [],
+  "forbidden_commands": [],
+  "status": "HOLDOUT_INDEPENDENCE_ESTABLISHED",
+  "passed": true
+}
