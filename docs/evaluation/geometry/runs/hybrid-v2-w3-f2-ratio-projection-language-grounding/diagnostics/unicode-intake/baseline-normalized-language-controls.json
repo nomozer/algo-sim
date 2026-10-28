@@ -1,0 +1,438 @@
+{
+  "classification": "BASELINE_DIAGNOSTIC_ONLY",
+  "product_modified": false,
+  "cases": [
+    {
+      "id": "W3-B02",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "W3-B04",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "W3-B06",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "W3-B12",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "W3-B14",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "W3-B20",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "W3-B22",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "W3-B24",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "W3-B28",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "W3-B30",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "W3-B31",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "W3-B32",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "W3-B38",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "W3-B40",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "W3-B42",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "W3-B46",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "W3-A02",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "W3-A06",
+      "outcome": "FALSE_REFUSAL",
+      "code": "ENGINE_EXECUTION_FAILED",
+      "reason": "RadicalDomainError: căn thức 1125673687043559399375000 vượt trần 1000000000000 — từ chối thay vì treo"
+    },
+    {
+      "id": "W3-A10",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "W3-A12",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "W3-A16",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-ISOLATED-A06",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-01",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-02",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-03",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-04",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-05",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-06",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-07",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-08",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-09",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-10",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-11",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-12",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-13",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-14",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-15",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-16",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-17",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-18",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-19",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-20",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-21",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-22",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-23",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-RATIO-24",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-01",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-02",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-03",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-04",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-05",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-06",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-07",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-08",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-09",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-10",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-11",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-12",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-13",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-14",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-15",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-16",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-17",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-18",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-19",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-20",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-21",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-22",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-23",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-24",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-25",
+      "outcome": "SERVED_CORRECT",
+      "code": null,
+      "reason": null
+    },
+    {
+      "id": "DEV-PROJECTION-26",
+      "outcome": "FALSE_REFUSAL",
+      "code": "AUXILIARY_RULE_MISMATCH",
+      "reason": "mặt phụ qua X: lời gọi không khớp luật section(plane through point ∥ plane)"
+    }
+  ]
+}

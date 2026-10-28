@@ -1,0 +1,59 @@
+{
+  "classification": "PREREGISTERED_DEVELOPMENT_EVALUATION",
+  "baseline": "996f114b3480efe1b0d075dd4342530aaa12ddae",
+  "locked_before_product_modification": true,
+  "historical_f2_ids": [
+    "W3-B02",
+    "W3-B04",
+    "W3-B06",
+    "W3-B12",
+    "W3-B14",
+    "W3-B20",
+    "W3-B22",
+    "W3-B24",
+    "W3-B28",
+    "W3-B30",
+    "W3-B31",
+    "W3-B32",
+    "W3-B38",
+    "W3-B40",
+    "W3-B42",
+    "W3-B46",
+    "W3-A02",
+    "W3-A06",
+    "W3-A10",
+    "W3-A12",
+    "W3-A16"
+  ],
+  "historical_groups": {
+    "ratio_only": 17,
+    "projection_only": 2,
+    "combined": 2
+  },
+  "expected_slices": {
+    "historical_f2_verbatim": {
+      "source_bindings_pass": 21,
+      "served_correct": 20,
+      "known_independent_radical_refusal": 1
+    },
+    "authored_ratio": {
+      "served_correct": 24
+    },
+    "authored_projection": {
+      "served_correct": 26
+    },
+    "isolated_f2": {
+      "served_correct": 1
+    },
+    "mandatory_negative_tamper": {
+      "refused": 24,
+      "wrong_served": 0
+    }
+  },
+  "files_sha256_lf": {
+    "inputs/development.json": "cbf6926e159a9db9340fdb3fcc6b095a6eabd45e0aebc229f94b998ee7aeea26",
+    "inputs/oracle.json": "9c16b140c4c773c38cb12de15319f701e73949dc3ed256a40052400ab49e79c0",
+    "results/red-before.json": "5d9051055e48d530f0ba80807e648c5e46f7814a5ab7804037ab8a3fab5a5f01",
+    "verification/baseline-normalized-language-controls.json": "91e34810e21ec8e53cf7d427cd2dfba821c87607e1b7c463945741f340481825"
+  }
+}
