@@ -53,7 +53,7 @@ from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationEr
 #: quantifiers, section wording & 4-vertex coplanar solid planes, compound premise coverage, bounded section-area question binding).
 #: /20 (run `hybrid-v2-w3-f1-cross-sentence-plane-grounding`): W3-F1 cross-sentence plane definition grounding, `đồng thời`
 #: plane-relation connector, `cả hai` two-line quantifier, cut-clause + compound area request tails, and plane-name identity checks.
-REGISTRY_VERSION = "geometry-functions/20"
+REGISTRY_VERSION = "geometry-functions/21"
 
 
 class TuChoi(Exception):
@@ -459,7 +459,8 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
     _F("altitude", AltitudeArgs, "fact", "Đề nói một đoạn LÀ ĐƯỜNG CAO của khối (SA là đường cao của hình chóp S.ABC).",
        (("đường cao",), ("chóp", "tứ diện")), point_fields=("foot",)),
     _F("orthogonal_projection", OrthogonalProjectionArgs, "fact", "Đề nói hình chiếu vuông góc của một điểm lên một mặt "
-       "phẳng là một điểm.", (("hình chiếu",),), plane_fields=("plane",), point_fields=("image",)),
+       "phẳng là một điểm.", (("hình chiếu", "chân đường cao", "hạ đường cao", "kẻ đường cao"),),
+       plane_fields=("plane",), point_fields=("image",)),
     _F("orthogonal_projection_line", ProjectionLineArgs, "construct", "Dựng ảnh hình chiếu vuông góc của điểm lên đường thẳng.",
        (("hình chiếu",),), segment_fields=("line",), point_fields=("image",),
        planning=PlanningContract((PlanningTerm("Point", ("P",)), PlanningTerm("Line", ("L",))),
@@ -496,7 +497,7 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
     # Wave 2B: the point P = (1 − t)A + tB of segment [A, B], t = AP/AB — the IR's own `divide_segment` expression. Route B
     # only; the source must state the ratio in a closed equation the gate solves for t (`_ty_so_dung_nguon`).
     _F("divide_segment", DivideSegmentArgs, "construct", "Gọi một điểm chia đoạn theo tỉ số đề nêu (t = AP/AB).",
-       (("sao cho",),), provider_offered=False),
+       (("sao cho", "thỏa mãn", "với"),), provider_offered=False),
     _F("pyramid", PyramidArgs, "construct", "Khối chóp với đỉnh và đáy đã nêu.", (("chóp", "tứ diện"),)),
     _F("regular_pyramid", PyramidArgs, "construct", "Khối chóp ĐỀU: đáy đa giác đều, chân đường cao tại tâm đáy.",
        (("chóp", "tứ diện"), ("đều",))),
@@ -2072,7 +2073,8 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
         if c.fn in ("section", "ask_section_area", "intersection_line") and not mat_cat_dung_nguon(c, calls):
             raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: mặt phẳng / khối của {c.fn} không phải cái mà {c.quote!r} gọi tên",
                          (c.id,))
-        if c.fn == "orthogonal_projection" and c.args.point != c.args.image:
+        if c.fn == "orthogonal_projection" and (c.args.point != c.args.image or
+                _co_tu(c.quotes, ("chân đường cao", "hạ đường cao", "kẻ đường cao"))):
             if not construction_source_bound(c, de):
                 raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: vai trò ảnh và điểm chiếu không khớp nguồn", (c.id,))
         for f in c.spec.value_fields:
@@ -3420,18 +3422,20 @@ def _doc_muc_tieu_cau_hoi(de: str, a: int, b: int, dung: set[str]) -> list[tuple
             return spans
 
 
+_NOI_TY_SO = r"(?i:sao\s+cho|thỏa\s+mãn|với)"
+
 _CUM_DINH_NGHIA_DIEM = re.compile(
     # ratio point written without "là … điểm" ("Điểm M thuộc cạnh SA sao cho SM = 1/3 SA"): the same optional part as the
     # binding grammar `_TY_SO`, so a clause that grammar validated is read whole (run `typedfactnext-planner-bridge`)
-    rf"(?:(?:(?:gọi|lấy|cho|dựng|vẽ|xác định|tìm)\s+)?(?:điểm\s+)?{_P1}\s+(?:thuộc|nằm\s+trên|trên)\s+"
-    rf"(?:(?:cạnh|đoạn\s+thẳng|đoạn)\s+)?{_P1}{_P1}\s*,?\s*sao\s+cho\s+{_P1}{_P1}\s*=\s*(?:\d+(?:/\d+)?)?\s*{_P1}{_P1}[.\s]*$)|"
+    rf"(?:(?:(?:gọi|lấy|chọn|cho|dựng|vẽ|xác định|tìm)\s+)?(?:điểm\s+)?{_P1}\s+(?:thuộc|nằm\s+trên|trên)\s+"
+    rf"(?:(?:cạnh|đoạn\s+thẳng|đoạn)\s+)?{_P1}{_P1}\s*,?\s*{_NOI_TY_SO}\s+{_P1}{_P1}\s*=\s*(?:\d+(?:/\d+)?)?\s*{_P1}{_P1}[.\s]*$)|"
     rf"(?:(?:(?:gọi|lấy|cho|dựng|vẽ|xác định|tìm)\s+)?(?:điểm\s+)?{_P1}\s+(?:là|trùng\s+với)\s+"
     rf"(?:trung điểm(?:\s+của)?(?:\s+(?:đoạn(?:\s+thẳng)?|cạnh(?:\s+bên|\s+đáy)?))?\s+{_P1}{_P1}"
     rf"|trọng tâm(?:\s+của)?(?:\s+(?:tam giác|tứ giác|đa giác|mặt\s+đáy|đáy))?\s+\(?{_NHOM_NHAN}\)?"
     rf"|hình chiếu(?:\s+vuông góc)?\s+của\s+(?:điểm\s+|đỉnh\s+)?{_P1}\s+(?:lên|trên)\s+(?:{_MAT_TOAN_HANG}|(?:đường thẳng\s+|cạnh\s+)?{_P1}{_P1}|{_GIAO_TUYEN.pattern})"
     rf"|giao điểm\s+của\s+[^,.;!?]+"
     # ratio point (`divide_segment`, bound by `_TY_SO`): "M là điểm thuộc cạnh SA sao cho SM = 2MA"
-    rf"|(?:một\s+)?điểm\s+(?:thuộc|nằm\s+trên|trên)\s+(?:(?:cạnh|đoạn\s+thẳng|đoạn)\s+)?{_P1}{_P1}\s*,?\s*sao\s+cho\s+"
+    rf"|(?:một\s+)?điểm\s+(?:thuộc|nằm\s+trên|trên)\s+(?:(?:cạnh|đoạn\s+thẳng|đoạn)\s+)?{_P1}{_P1}\s*,?\s*{_NOI_TY_SO}\s+"
     rf"{_P1}{_P1}\s*=\s*(?:\d+(?:/\d+)?)?\s*{_P1}{_P1})"
     rf"|hình chiếu(?:\s+vuông góc)?\s+của\s+(?:điểm\s+|đỉnh\s+)?{_P1}\s+(?:lên|trên)\s+(?:{_MAT_TOAN_HANG}|(?:đường thẳng\s+|cạnh\s+)?{_P1}{_P1})\s+(?:là|trùng\s+với)\s+(?:(?:điểm|đỉnh|trọng tâm|trung điểm)\s+)?{_P1}(?:\s+của\s+(?:(?:cạnh(?:\s+bên|\s+đáy)?|đoạn(?:\s+thẳng)?|tam\s+giác|đáy)\s+)?(?:{_NHOM_NHAN}|{_P1}{_P1}))?)[.\s]*",
     re.IGNORECASE,
@@ -3459,7 +3463,8 @@ def _doc_phep_dung_cau_hoi(de: str, start: int, end: int, calls: tuple[LoiGoi, .
             for q in c.quotes:
                 if (vt := _vi_tri(de, q)) is not None and start <= vt[0] and vt[1] <= end:
                     if (_CUM_DINH_NGHIA_DIEM.fullmatch(de[vt[0]:vt[1]])
-                            or c.fn == "divide_segment" and _ty_so_tron_cau(c, de[vt[0]:vt[1]])):
+                            or c.fn == "divide_segment" and _ty_so_tron_cau(c, de[vt[0]:vt[1]])
+                            or c.fn == "orthogonal_projection" and _chan_duong_cao_dung_nguon(c, de[vt[0]:vt[1]])):
                         m_lead = re.search(r"(?<!\w)(?:gọi|lấy|cho)\s+$", de[start:vt[0]], re.IGNORECASE)
                         spans.append((start + m_lead.start() if m_lead else vt[0], vt[1]))
         elif c.fn == "intersection_line":
@@ -4430,7 +4435,7 @@ _TY_SO = re.compile(
     r"(?<![\w'])(?:(?P<p>[A-Z][0-9]*'?)(?![\w'])\s+(?:(?i:là)\s+(?:(?i:một)\s+)?(?i:điểm)\s+)?(?i:thuộc|nằm\s+trên|trên)\s+"
     r"(?:(?i:cạnh|đoạn\s+thẳng|đoạn)\s+)?(?P<x>[A-Z][0-9]*'?)(?P<y>[A-Z][0-9]*'?)(?![\w'])"
     r"|(?i:trên)\s+(?i:cạnh|đoạn\s+thẳng|đoạn)\s+(?P<ix>[A-Z][0-9]*'?)(?P<iy>[A-Z][0-9]*'?)(?![\w'])\s*,?\s+"
-    r"(?i:lấy)\s+(?:(?i:điểm)\s+)?(?P<ip>[A-Z][0-9]*'?)(?![\w']))\s*,?\s*(?i:sao\s+cho)\s+"
+    rf"(?i:lấy|chọn)\s+(?:(?i:điểm)\s+)?(?P<ip>[A-Z][0-9]*'?)(?![\w']))\s*,?\s*{_NOI_TY_SO}\s+"
     r"(?P<l>(?:[A-Z][0-9]*'?){2})(?![\w'])\s*=\s*(?P<k>\d+(?:/\d+)?)?\s*(?P<r>(?:[A-Z][0-9]*'?){2})(?![\w'])")
 
 
@@ -4468,9 +4473,37 @@ def _ty_so_khop(c: LoiGoi, s: str, pos: int = 0, endpos: int | None = None):
 
 def _ty_so_tron_cau(c: LoiGoi, s: str) -> bool:
     """The shared exact ratio reader consumes the whole premise, including its optional point introducer."""
-    return any(re.fullmatch(r"\s*(?:(?:gọi|lấy|cho)\s+)?(?:điểm\s+)?", s[:m.start()], re.I)
+    return any(re.fullmatch(r"\s*(?:(?:gọi|lấy|chọn|cho)\s+)?(?:điểm\s+)?", s[:m.start()], re.I)
                and re.fullmatch(r"[.\s]*", s[m.end():])
                for m in _ty_so_khop(c, s))
+
+
+def _chan_duong_cao_dung_nguon(c: LoiGoi, q: str) -> bool:
+    """An explicit plane altitude binds all three roles; a triangle/line or an unread tail binds nothing."""
+    point = rf"(?P<src>{_DIEM})(?![\w'])"
+    foot = rf"(?P<foot>{_DIEM})(?![\w'])"
+    plane = rf"(?i:mặt\s+phẳng)\s*\((?P<plane>(?:{_DIEM}){{3,}})\)"
+    source = rf"(?i:từ)\s+(?:(?i:điểm|đỉnh)\s+)?{point}\s+(?i:xuống|đến)\s+{plane}"
+    altitude = rf"(?i:chân\s+đường\s+cao)\s+(?:(?i:hạ|kẻ)\s+)?{source}"
+    forms = (rf"{foot}\s+(?i:là|trùng\s+với)\s+{altitude}",
+             rf"{altitude}\s+(?i:là|trùng\s+với)\s+(?:(?P<noun>(?i:điểm|đỉnh))\s+)?{foot}",
+             rf"(?i:hạ|kẻ)\s+(?i:đường\s+cao)\s+{source}\s+(?i:tại)\s+{foot}")
+    for form in forms:
+        m = re.fullmatch(rf"\s*(?:(?i:gọi|cho|biết|có)\s+)?{form}[.\s]*", chuan_hoa(q))
+        if not m:
+            continue
+        vertices = re.findall(_DIEM, m['plane'])
+        a = c.args
+        if (m['src'] != a.point or m['foot'] != a.image or len(set(vertices)) != len(vertices)
+                or set(vertices) != set(a.plane)):
+            continue
+        if (m.groupdict().get('noun') or '').lower() == 'đỉnh':
+            owners = [_nhan_khoi(k) for k in _GOI_NGUON.get()
+                      if k.fn in _KHOI_FN and {a.point, *vertices} <= _nhan_khoi(k)]
+            if len(owners) != 1 or a.image not in owners[0]:
+                continue
+        return True
+    return False
 
 
 def construction_source_bound(c: LoiGoi, de: str = "") -> bool:
@@ -4489,6 +4522,8 @@ def construction_source_bound(c: LoiGoi, de: str = "") -> bool:
         return any(_dinh_nghia_diem_dung_nguon(c, q, de) for q in c.quotes)
     if c.fn == "divide_segment":
         return any(_ty_so_dung_nguon(c, q) for q in c.quotes)
+    if c.fn == "orthogonal_projection" and _co_tu(c.quotes, ("chân đường cao", "hạ đường cao", "kẻ đường cao")):
+        return any(_chan_duong_cao_dung_nguon(c, q) for q in c.quotes)
     for q in c.quotes:
         if c.fn.startswith("intersect_line_"):
             pattern = rf"(?<![\w'])({point})\s+là\s+giao điểm\s+(?:của\s+)?{operand}\s+(?:và|với)\s+{operand}(?![\w'])"
