@@ -4,7 +4,7 @@
   "corrects": "docs/evaluation/geometry/runs/hybrid-v2-wave2-source-gate-language-generalization/candidate_divergence.json",
   "run_id": "thesis-final-20260908T160224Z",
   "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
-  "current_candidate_hash": "",
+  "current_candidate_hash": "8b94a5aa4a986e312ef423492b332bf25378868f6c9578767ba2ee7003c18369",
   "current_product_commit": "051224ee2740cbf5d55dd94633503db1f0050ada",
   "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
   "diverged": true,
