@@ -234,8 +234,27 @@ def _validate_sections(sections: list[dict], objects: dict[str, dict], result: K
     def name(value):
         return value.replace("″", "''").replace("′", "'").replace("’", "'")
 
-    dinh_cat_ids = {
-        d.get("goal")
+    from fractions import Fraction
+    from app.simulation.geometry.exact import Vec3
+    from app.simulation.geometry_functions.engine import _binh_phuong, ir_name
+
+    def point_of(label: Any) -> dict:
+        if not isinstance(label, str) or not label or "_prime" in label:
+            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        canon = name(label)
+        pt = objects.get(ir_name(canon))
+        if not isinstance(pt, dict) or pt.get("type") != "point3":
+            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        notation = pt.get("notation")
+        if notation is not None:
+            if name(str(notation)) != canon:
+                raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        elif pt.get("id") != label:
+            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        return pt
+
+    dinh_cat_by_id = {
+        d.get("goal"): d
         for d in ((result.planner or {}).get("auxiliary") or () if result is not None else ())
         if d.get("rule") == DINH_CAT_CANH
     }
@@ -247,35 +266,103 @@ def _validate_sections(sections: list[dict], objects: dict[str, dict], result: K
             raise PreviewInvalid("PREVIEW_RESULT_INVALID")
         ids.add(sid)
         is_cat_b = section.get("certificate_category") == "ENGINE_DERIVED_SECTION" or "certificate_version" in section
-        if sid in dinh_cat_ids and is_cat_b:
+        if sid in dinh_cat_by_id and is_cat_b:
             raise PreviewInvalid("PREVIEW_RESULT_INVALID")
         if is_cat_b:
             _validate_engine_derived_section(section, obj, objects, result, name)
             continue
+        d_aux = dinh_cat_by_id.get(sid)
+        if result is not None and d_aux is None:
+            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
         vertices = section["vertices"]
         labels = [v["label"] for v in vertices]
-        if len(labels) != len(set(labels)) or len(labels) != len(obj["polygon"]):
+        if len(labels) < 3 or len(labels) != len(set(labels)) or len(labels) != len(obj["polygon"]):
             raise PreviewInvalid("PREVIEW_RESULT_INVALID")
-        solid = next(o for o in objects.values() if o["type"] == "solid" and o["id"] in obj["depends"])
+        solids = [o for o in objects.values() if o.get("type") == "solid" and o["id"] in (obj.get("depends") or ())]
+        if len(solids) != 1:
+            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        solid = solids[0]
+        if d_aux is not None and d_aux.get("solid") and name(str(solid.get("notation") or "")) != name(str(d_aux["solid"])):
+            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        v_ids = solid.get("vertex_ids") or []
+        solid_verts_raw = solid.get("vertices") or []
+        faces_raw = solid.get("faces") or []
+        if len(v_ids) != len(solid_verts_raw) or len(v_ids) < 4 or not faces_raw:
+            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        faces = [tuple(int(i) for i in f) for f in faces_raw]
+        solid_edges = {
+            frozenset((v_ids[f[i]], v_ids[f[(i + 1) % len(f)]]))
+            for f in faces for i in range(len(f))
+        }
+        for idx_v, vid in enumerate(v_ids):
+            po = objects.get(vid, {})
+            if po.get("type") != "point3" or po.get("xyz") != solid_verts_raw[idx_v]:
+                raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        seen_pt_ids: set[str] = set()
+        seen_xyz: set[tuple[Fraction, Fraction, Fraction]] = set()
         for vertex in vertices:
-            point = objects[vertex["label"]]
-            if point["type"] != "point3" or vertex["provenance"] not in _NGUON_GOC.values():
+            point = point_of(vertex["label"])
+            if point["id"] in seen_pt_ids or point["xyz"] not in obj["polygon"]:
+                raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+            seen_pt_ids.add(point["id"])
+            pt_q = tuple(Fraction(c) for c in point["xyz"])
+            if pt_q in seen_xyz:
+                raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+            seen_xyz.add(pt_q)
+            if vertex["provenance"] not in _NGUON_GOC.values():
                 raise PreviewInvalid("PREVIEW_RESULT_INVALID")
             index = obj["polygon"].index(point["xyz"])
             source = obj["vertex_sources"][index]
-            edge = [next(o["id"] for o in objects.values() if o["type"] == "point3"
-                         and (o["id"] == label or name(o.get("notation") or "") == name(label)))
-                    for label in vertex["edge"]]
+            if not isinstance(vertex.get("edge"), list) or len(vertex["edge"]) != 2:
+                raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+            edge_pts = [point_of(lbl) for lbl in vertex["edge"]]
+            edge = [ep["id"] for ep in edge_pts]
+            if len(set(edge)) != 2 or frozenset(edge) not in solid_edges:
+                raise PreviewInvalid("PREVIEW_RESULT_INVALID")
             indices = source.get("solid_edge_vertex_indices")
-            if (len(edge) != 2 or (indices is not None and set(edge) != {solid["vertex_ids"][i] for i in indices})
-                    or (indices is None and solid["vertex_ids"][source["solid_vertex_index"]] not in edge)):
+            if (indices is not None and set(edge) != {solid["vertex_ids"][i] for i in indices}) or (
+                indices is None
+                and (point["id"] != solid["vertex_ids"][source["solid_vertex_index"]] or point["id"] not in edge)
+            ):
+                raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+            va = tuple(Fraction(c) for c in edge_pts[0]["xyz"])
+            vb = tuple(Fraction(c) for c in edge_pts[1]["xyz"])
+            axis = next((j for j in range(3) if vb[j] != va[j]), None)
+            if axis is None:
+                raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+            t_val = (pt_q[axis] - va[axis]) / (vb[axis] - va[axis])
+            if any((1 - t_val) * va[j] + t_val * vb[j] != pt_q[j] for j in range(3)):
+                raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+            if indices is None:
+                if t_val not in (Fraction(0), Fraction(1)):
+                    raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+            elif not (Fraction(0) < t_val < Fraction(1)):
                 raise PreviewInvalid("PREVIEW_RESULT_INVALID")
             provenance = vertex["provenance"]
             auxiliary = point.get("notation") is None and point.get("role") == "Điểm dựng phụ"
             if ((provenance in {"DERIVED_FRESH", "STATED_UNNAMED"} and not auxiliary)
                     or (provenance in {"SOURCE_NAMED", "THROUGH_POINT_REUSE"} and point.get("notation") is None)
+                    or (d_aux is not None and vertex["stated"] is not (frozenset(vertex["edge"]) in {frozenset(e) for e in (d_aux.get("stated_edges") or ())}))
                     or (provenance in {"SOURCE_NAMED", "STATED_UNNAMED"} and vertex["stated"] is not True)
                     or (provenance == "DERIVED_FRESH" and (vertex["stated"] is not False or point.get("origin") != "derived"))):
+                raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        v_sources = obj.get("vertex_sources") or []
+        if len(v_sources) != len(obj["polygon"]):
+            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        m = len(v_sources)
+        for i in range(m):
+            sc, sn = v_sources[i], v_sources[(i + 1) % m]
+            fc = {
+                fi for fi, f in enumerate(faces)
+                if (sc["solid_vertex_index"] in f if sc.get("solid_edge_vertex_indices") is None
+                    else set(sc["solid_edge_vertex_indices"]) <= set(f))
+            }
+            fn = {
+                fi for fi, f in enumerate(faces)
+                if (sn["solid_vertex_index"] in f if sn.get("solid_edge_vertex_indices") is None
+                    else set(sn["solid_edge_vertex_indices"]) <= set(f))
+            }
+            if not (fc & fn):
                 raise PreviewInvalid("PREVIEW_RESULT_INVALID")
         boundary, cert = section["boundary"], section["closure_certificate"]
         if boundary is None and cert is None:
@@ -284,8 +371,31 @@ def _validate_sections(sections: list[dict], objects: dict[str, dict], result: K
         elif (not cert or cert.get("verified") is not True or not cert.get("rule")
               or len(boundary) < 3 or len(boundary) != len(set(boundary)) or set(boundary) != set(labels)
               or not cycle(boundary, cert["boundary"])
-              or not cycle([objects[label]["xyz"] for label in boundary], obj["polygon"])):
+              or not cycle([point_of(label)["xyz"] for label in boundary], obj["polygon"])):
             raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        if result is not None and result.chart_metric is not None:
+            poly_pts = [Vec3(*(Fraction(c) for c in xyz)) for xyz in obj["polygon"]]
+            area_sq = _polygon_area_squared(poly_pts, result.chart_metric)
+            if cert and cert.get("area_squared") is not None and Fraction(cert["area_squared"]) != area_sq:
+                raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+            plane_obj = objects.get(f"mp_td_{sid}", {})
+            if plane_obj.get("type") == "plane3":
+                p_plane = tuple(Fraction(c) for c in plane_obj["point"])
+                n_plane = tuple(Fraction(c) for c in plane_obj["normal"])
+                offset = sum(a * b for a, b in zip(n_plane, p_plane))
+                for c in result.calls:
+                    if c.get("fn") != "ask_section_area":
+                        continue
+                    if name(str((c.get("args") or {}).get("solid") or "")) != name(str(solid.get("notation") or "")):
+                        continue
+                    c_plane = (c.get("args") or {}).get("plane") or []
+                    if c_plane and all(
+                        ir_name(name(p)) in objects
+                        and sum(a * b for a, b in zip(n_plane, (Fraction(x) for x in objects[ir_name(name(p))]["xyz"]))) == offset
+                        for p in c_plane
+                    ):
+                        if _binh_phuong(result.exec_result.final_memory.get(f"kq_{c['id']}")) != area_sq:
+                            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
     if len(ids) != sum(o["type"] == "section" for o in objects.values()):
         raise PreviewInvalid("PREVIEW_RESULT_INVALID")
 
