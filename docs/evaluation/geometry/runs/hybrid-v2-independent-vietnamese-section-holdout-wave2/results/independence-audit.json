@@ -1,0 +1,39 @@
+{
+  "schema": "HOLDOUT_WAVE2_INDEPENDENCE_AUDIT/1",
+  "curator_conversation_id": "317d3ae6-3a79-4d40-976e-f528d0124b31",
+  "transcript_source": "C:\\Users\\Bunny\\.gemini\\antigravity\\brain\\317d3ae6-3a79-4d40-976e-f528d0124b31\\.system_generated\\logs\\transcript_full.jsonl",
+  "independence_class": "AI_CURATED_PROCEDURAL_INDEPENDENCE",
+  "human_or_institutional_independence_claimed": false,
+  "total_tool_calls": 80,
+  "unique_files_read": [
+    "C:\\Users\\Bunny\\.gemini\\antigravity\\brain\\317d3ae6-3a79-4d40-976e-f528d0124b31\\scratch\\build_wave2_corpus.py",
+    "C:\\Users\\Bunny\\.gemini\\antigravity\\brain\\317d3ae6-3a79-4d40-976e-f528d0124b31\\scratch\\verify_wave2.py",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave2\\AGENTS.md",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave2\\backend\\app\\simulation\\geometry_functions\\typed_fact_next.py",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave2\\docs\\RULES.md",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave2\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-section-hold-wave2\\curator-brief.md",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave2\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-section-holdout-wave2\\corpus-provenance.md",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave2\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-section-holdout-wave2\\curator-attestation.md",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave2\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-section-holdout-wave2\\curator-brief.md",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave2\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-section-holdout-wave2\\preregistration.md",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave2\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-section-holdout-wave2\\scoring-contract.md",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave2\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-section-holdout-wave2\\supported-family-matrix.md",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave2\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-section-holdout-wave2\\tools\\refusal_taxonomy.json"
+  ],
+  "nonexistent_read_attempts": [
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave2\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-section-hold-wave2\\curator-brief.md"
+  ],
+  "unique_files_written": [
+    "C:\\Users\\Bunny\\.gemini\\antigravity\\brain\\317d3ae6-3a79-4d40-976e-f528d0124b31\\scratch\\build_wave2_corpus.py",
+    "C:\\Users\\Bunny\\.gemini\\antigravity\\brain\\317d3ae6-3a79-4d40-976e-f528d0124b31\\scratch\\generate_wave2_docs.py",
+    "C:\\Users\\Bunny\\.gemini\\antigravity\\brain\\317d3ae6-3a79-4d40-976e-f528d0124b31\\scratch\\verify_wave2.py",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave2\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-section-holdout-wave2\\corpus-provenance.md",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave2\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-section-holdout-wave2\\curator-attestation.md",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\independent-section-holdout-wave2\\docs\\evaluation\\geometry\\runs\\hybrid-v2-independent-vietnamese-section-holdout-wave2\\oracle\\oracle_holdout_wave2.py"
+  ],
+  "commands_executed_count": 18,
+  "forbidden_reads": [],
+  "forbidden_commands": [],
+  "status": "HOLDOUT_INDEPENDENCE_ESTABLISHED",
+  "passed": true
+}

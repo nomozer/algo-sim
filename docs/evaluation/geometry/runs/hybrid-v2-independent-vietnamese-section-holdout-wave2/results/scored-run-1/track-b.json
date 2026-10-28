@@ -1,0 +1,698 @@
+{
+  "schema": "HOLDOUT_WAVE2_TRACK_B/1",
+  "representability": {
+    "representable_without_loss": 61,
+    "contradictory": 10,
+    "ambiguous": 6,
+    "not_representable_by_current_contract": 6,
+    "unsupported_topology": 5,
+    "missing_required_information": 8
+  },
+  "by_disposition": {
+    "SERVE": {
+      "representable_without_loss": 48
+    },
+    "REFUSE": {
+      "representable_without_loss": 13,
+      "contradictory": 10,
+      "ambiguous": 6,
+      "not_representable_by_current_contract": 6,
+      "unsupported_topology": 5,
+      "missing_required_information": 8
+    }
+  },
+  "cases": [
+    {
+      "id": "W2-B01",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported triangular_pyramid with perpendicular_line (section_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B02",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported triangular_pyramid with perpendicular_line (area_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B03",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported triangular_pyramid with parallel_plane (section_and_area) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B04",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported triangular_pyramid with parallel_plane (section_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B05",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported triangular_pyramid with parallel_two_lines (area_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B06",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported triangular_pyramid with parallel_two_lines (section_and_area) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B07",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported quadrilateral_pyramid with perpendicular_line (area_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B08",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported quadrilateral_pyramid with perpendicular_line (section_and_area) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B09",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported quadrilateral_pyramid with parallel_plane (section_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B10",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported quadrilateral_pyramid with parallel_plane (area_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B11",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported quadrilateral_pyramid with parallel_two_lines (section_and_area) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B12",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported quadrilateral_pyramid with parallel_two_lines (section_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B13",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported right_triangular_prism with perpendicular_line (section_and_area) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B14",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported right_triangular_prism with perpendicular_line (section_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B15",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported right_triangular_prism with parallel_plane (area_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B16",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported right_triangular_prism with parallel_plane (section_and_area) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B17",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported right_triangular_prism with parallel_two_lines (section_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B18",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported right_triangular_prism with parallel_two_lines (area_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B19",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported oblique_triangular_prism with perpendicular_line (section_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B20",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported oblique_triangular_prism with perpendicular_line (area_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B21",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported oblique_triangular_prism with parallel_plane (section_and_area) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B22",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported oblique_triangular_prism with parallel_plane (section_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B23",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported oblique_triangular_prism with parallel_two_lines (area_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B24",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported oblique_triangular_prism with parallel_two_lines (section_and_area) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B25",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported cuboid with perpendicular_line (area_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B26",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported cuboid with perpendicular_line (section_and_area) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B27",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported cuboid with parallel_plane (section_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B28",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported cuboid with parallel_plane (area_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B29",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported cuboid with parallel_two_lines (section_and_area) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B30",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported cuboid with parallel_two_lines (section_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B31",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported cube with perpendicular_line (section_and_area) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B32",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported cube with perpendicular_line (section_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B33",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported cube with parallel_plane (area_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B34",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported cube with parallel_plane (section_and_area) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B35",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported cube with parallel_two_lines (section_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-B36",
+      "stratum": "P-B",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported cube with parallel_two_lines (area_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-A01",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported triangular_pyramid with stated_intersections (section_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-A02",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported triangular_pyramid with stated_intersections (area_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-A03",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported triangular_pyramid with stated_intersections (section_and_area) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-A04",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported quadrilateral_pyramid with stated_intersections (section_and_area) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-A05",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported quadrilateral_pyramid with stated_intersections (section_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-A06",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported quadrilateral_pyramid with stated_intersections (area_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-A07",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported right_triangular_prism with stated_intersections (area_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-A08",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported right_triangular_prism with stated_intersections (section_and_area) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-A09",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported oblique_triangular_prism with stated_intersections (section_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-A10",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported cuboid with stated_intersections (section_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-A11",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported cuboid with stated_intersections (area_only) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-A12",
+      "stratum": "P-A",
+      "expected_disposition": "SERVE",
+      "representability": "representable_without_loss",
+      "note": "Supported cube with stated_intersections (section_and_area) representable without loss in typed-fact-next/2."
+    },
+    {
+      "id": "W2-N01",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_without_loss",
+      "note": "Source problem is valid; payload corrupts solid notation."
+    },
+    {
+      "id": "W2-N02",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_without_loss",
+      "note": "Source problem is valid; payload corrupts prism notation."
+    },
+    {
+      "id": "W2-N03",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_without_loss",
+      "note": "Source problem is valid; payload declares wrong solid_type and notation."
+    },
+    {
+      "id": "W2-N04",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "contradictory",
+      "note": "Premises contradict each other: regular quadrilateral pyramid requires a square base."
+    },
+    {
+      "id": "W2-N05",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "contradictory",
+      "note": "Non-homogeneous length units in metric specification."
+    },
+    {
+      "id": "W2-N06",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "contradictory",
+      "note": "Base metric violates triangle inequality."
+    },
+    {
+      "id": "W2-N07",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_without_loss",
+      "note": "Source problem is valid; payload extracts wrong perpendicular line."
+    },
+    {
+      "id": "W2-N08",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_without_loss",
+      "note": "Source problem is valid; payload extracts wrong plane relation."
+    },
+    {
+      "id": "W2-N09",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_without_loss",
+      "note": "Source problem is valid; payload tampers with through_point and direction lines."
+    },
+    {
+      "id": "W2-N10",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_without_loss",
+      "note": "Source problem names plane (α); payload uses ungrounded plane_name 'β'."
+    },
+    {
+      "id": "W2-N11",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "ambiguous",
+      "note": "Question references plane (Q) whereas only plane (P) is defined."
+    },
+    {
+      "id": "W2-N12",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_without_loss",
+      "note": "Source problem uses anonymous plane; payload fabricates name 'γ'."
+    },
+    {
+      "id": "W2-N13",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "not_representable_by_current_contract",
+      "note": "Multi-plane problem with duplicate section IDs in payload."
+    },
+    {
+      "id": "W2-N14",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "not_representable_by_current_contract",
+      "note": "Two planes in problem text with mismatched plane quote binding."
+    },
+    {
+      "id": "W2-N15",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "not_representable_by_current_contract",
+      "note": "Multiple cutting planes in source text."
+    },
+    {
+      "id": "W2-N16",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "unsupported_topology",
+      "note": "Multiple solids with non-identity vertex bindings are outside supported single-solid scope."
+    },
+    {
+      "id": "W2-N17",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "not_representable_by_current_contract",
+      "note": "Derived solid construction is outside supported section-only simulation goals."
+    },
+    {
+      "id": "W2-N18",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "unsupported_topology",
+      "note": "Multi-solid scene is outside supported single-solid family matrix."
+    },
+    {
+      "id": "W2-N19",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_without_loss",
+      "note": "Source problem is valid; payload fabricates a non-existent quote."
+    },
+    {
+      "id": "W2-N20",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_without_loss",
+      "note": "Source problem is valid; payload extracts ungrounded numeric value."
+    },
+    {
+      "id": "W2-N21",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_without_loss",
+      "note": "Source problem is valid; payload fabricates section quote."
+    },
+    {
+      "id": "W2-N22",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "unsupported_topology",
+      "note": "Curved solids (cylinder, cone, sphere) are unsupported."
+    },
+    {
+      "id": "W2-N23",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "unsupported_topology",
+      "note": "Regular pentagon base requires irrational golden-ratio coordinates not in supported family matrix."
+    },
+    {
+      "id": "W2-N24",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "unsupported_topology",
+      "note": "Rhombus base without right angle is outside supported quadrilateral bases."
+    },
+    {
+      "id": "W2-N25",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "missing_required_information",
+      "note": "Missing base dimension EG."
+    },
+    {
+      "id": "W2-N26",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "missing_required_information",
+      "note": "Missing prism height AA'."
+    },
+    {
+      "id": "W2-N27",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "missing_required_information",
+      "note": "Missing cuboid width AD."
+    },
+    {
+      "id": "W2-N28",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "missing_required_information",
+      "note": "Apex S orientation relative to base (ABC) is underdetermined."
+    },
+    {
+      "id": "W2-N29",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "missing_required_information",
+      "note": "Position of through-point M on SA is underdetermined."
+    },
+    {
+      "id": "W2-N30",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "missing_required_information",
+      "note": "Foot H of altitude SH is underconstrained."
+    },
+    {
+      "id": "W2-N31",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "missing_required_information",
+      "note": "Negated premise cannot establish positive perpendicularity fact."
+    },
+    {
+      "id": "W2-N32",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "missing_required_information",
+      "note": "Negated midpoint statement cannot ground a midpoint premise."
+    },
+    {
+      "id": "W2-N33",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "ambiguous",
+      "note": "Hypothetical/conditional premise is not a categorical given."
+    },
+    {
+      "id": "W2-N34",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_without_loss",
+      "note": "Source problem is section_only; payload fabricates an area goal."
+    },
+    {
+      "id": "W2-N35",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "not_representable_by_current_contract",
+      "note": "Payload binds section area goal to a solid volume question."
+    },
+    {
+      "id": "W2-N36",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "not_representable_by_current_contract",
+      "note": "Question targets face SFG rather than the cutting-plane section."
+    },
+    {
+      "id": "W2-N37",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "contradictory",
+      "note": "Named section polygon IJKL contradicts 3-vertex triangular section IJK."
+    },
+    {
+      "id": "W2-N38",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "representable_without_loss",
+      "note": "Source problem is valid; payload fabricates cut-point label H."
+    },
+    {
+      "id": "W2-N39",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "contradictory",
+      "note": "Question references undefined polygon MNE."
+    },
+    {
+      "id": "W2-N40",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "ambiguous",
+      "note": "Anaphoric pronoun 'nó' is ambiguous / bound to base triangle BCD rather than section."
+    },
+    {
+      "id": "W2-N41",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "ambiguous",
+      "note": "Anaphoric reference 'mặt bên đó' is ambiguous and does not refer to the plane section."
+    },
+    {
+      "id": "W2-N42",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "ambiguous",
+      "note": "Ambiguous anaphoric noun phrase 'tam giác đó' without prior section identification."
+    },
+    {
+      "id": "W2-N43",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "contradictory",
+      "note": "Plane parallel to (EFG) cannot intersect base edge FG."
+    },
+    {
+      "id": "W2-N44",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "contradictory",
+      "note": "Incomplete stated lateral edge intersections on quadrilateral pyramid."
+    },
+    {
+      "id": "W2-N45",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "contradictory",
+      "note": "Stated cut point N on SB has conflicting ratio 1/4 vs 1/2."
+    },
+    {
+      "id": "W2-N46",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "contradictory",
+      "note": "Through-point A lies in reference plane (ABC), making the cutting plane coincide with a face."
+    },
+    {
+      "id": "W2-N47",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "ambiguous",
+      "note": "Two parallel direction lines AB and CD do not uniquely determine a cutting plane."
+    },
+    {
+      "id": "W2-N48",
+      "stratum": "N",
+      "expected_disposition": "REFUSE",
+      "representability": "contradictory",
+      "note": "Cutting plane intersects polyhedron only at apex S (degenerate 1-point intersection)."
+    }
+  ]
+}
