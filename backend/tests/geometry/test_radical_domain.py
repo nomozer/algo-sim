@@ -270,3 +270,64 @@ def test_is_exact_number_loai_bool():
     assert is_exact_number(F(1)) and is_exact_number(2) and is_exact_number(radical(1, 2))
     assert not is_exact_number(True) and not is_exact_number(False)
     assert not is_exact_number(1.5) and not is_exact_number("2")
+
+
+# ══ W2-M4: CHUẨN HOÁ CHÍNH XÁC TRƯỚC KHI ÁP TRẦN `MAX_RADICAND` ══════════
+def test_w2_m4_dev_1_3_va_w2_a04_chuan_hoa_chinh_xac():
+    """Hai ca bắt buộc `DEV-1-3` (`38130625/58564`) và `W2-A04`
+    (`253125000/485809`) có tích thô `p·q > 10¹²` nhưng sau khi rút thừa số
+    chính phương có căn thức chính tắc lần lượt là `1` và `2`."""
+    from app.simulation.geometry.radical import multiply
+
+    # DEV-1-3: 38130625 = 6175², 58564 = 242²
+    dev = sqrt_rational(F(38130625, 58564))
+    assert isinstance(dev, Fraction)
+    assert dev == F(6175, 242)
+    assert square(dev) == F(38130625, 58564)
+    assert radical(F(1, 58564), 2233081922500) == F(6175, 242)
+
+    # W2-A04: 253125000 = 11250² · 2, 485809 = 697²
+    w2 = sqrt_rational(F(253125000, 485809))
+    assert isinstance(w2, Radical)
+    assert (w2.he, w2.can, w2.mu) == (F(11250, 697), 2, 0)
+    assert display(w2) == "11250√2/697"
+    assert square(w2) == F(253125000, 485809)
+    assert radical(F(1, 485809), 122970403125000) == w2
+    assert multiply(F(2250, 697), sqrt_rational(50)) == w2
+
+
+def test_w2_m4_metamorphic_va_bien_max_radicand():
+    """Các đường đại số tương đương phải cho cùng một đối tượng chính tắc, và
+    các căn thức thực sự vượt `MAX_RADICAND` sau rút gọn vẫn phải fail-closed."""
+    from app.simulation.geometry.radical import multiply
+
+    p, q = 999983, 999979
+    r_rat = sqrt_rational(F(p * p, q * q))
+    assert isinstance(r_rat, Fraction) and r_rat == F(p, q)
+
+    r_irr = sqrt_rational(F(3 * p * p, q * q))
+    assert isinstance(r_irr, Radical) and (r_irr.he, r_irr.can) == (F(p, q), 3)
+    assert square(r_irr) == F(3 * p * p, q * q)
+
+    # Nhân hai căn thức có ước nguyên tố chung lớn: √(2p) · √(3p) = p√6
+    prod1 = multiply(sqrt_rational(2 * p), sqrt_rational(3 * p))
+    prod2 = radical(1, 6 * p * p)
+    prod3 = times_rational(sqrt_rational(6), p)
+    assert prod1 == prod2 == prod3 == radical(p, 6)
+    assert hash(prod1) == hash(prod2) == hash(prod3)
+
+    # Biên dưới/tại MAX_RADICAND
+    assert radical(1, MAX_RADICAND) == F(10**6)
+    assert radical(1, MAX_RADICAND - 1) == radical(3, 111111111111)
+    assert radical(1, 6 * (1000003**2)) == radical(1000003, 6)
+
+    # Thực sự vượt MAX_RADICAND sau khi rút gọn -> phải từ chối
+    for bad_can in [MAX_RADICAND + 1, 10**12 + 39, 4 * (10**12 + 39), 10**24 + 7]:
+        with pytest.raises(RadicalDomainError, match="vượt trần"):
+            radical(1, bad_can)
+    with pytest.raises(RadicalDomainError, match="vượt trần"):
+        sqrt_rational(F(1000003, 1000033))
+    with pytest.raises(RadicalDomainError, match="vượt trần"):
+        multiply(radical(1, 1000003), radical(1, 1000033))
+    with pytest.raises(RadicalDomainError, match="vượt trần"):
+        radical(0, MAX_RADICAND + 1)

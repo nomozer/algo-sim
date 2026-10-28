@@ -160,14 +160,22 @@ def is_exact_number(x: Any) -> bool:
 
 # ── DỰNG + CHUẨN HOÁ ──────────────────────────────────────────────────────
 def _tach_binh_phuong(n: int) -> tuple[int, int]:
-    """`n = k² · m` với `m` phi chính phương. Trả `(k, m)`.
+    """`n = k² · m` với `m` phi chính phương và `m <= MAX_RADICAND`. Trả `(k, m)`.
 
-    Chia thử tới `isqrt(n)`, rút hết mọi thừa số bình phương. Không cần sàng
-    nguyên tố: `n` ở đây nhỏ (xem `MAX_RADICAND`), và một cài đặt đọc hiểu được
-    đáng giá hơn vài micro giây ở tầng này.
+    Chia thử tới `cbrt(m)` kết hợp `math.isqrt(m)` sau mỗi ước nguyên tố: nếu
+    `m` không chính phương và không có ước nguyên tố `< d` mà `d³ > m` thì `m`
+    có tối đa hai thừa số nguyên tố (tính cả bội) và khác bình phương, nên `m`
+    chắc chắn phi chính phương. Nhờ vậy các biểu thức trung gian có thừa số
+    bình phương lớn (`DEV-1-3`, `W2-A04`) được chuẩn hoá chính xác về căn thức
+    phi chính phương nhỏ trước khi áp trần `MAX_RADICAND`, trong khi chi phí
+    chia thử vẫn bị chặn chặt.
     """
     if n <= 0:
         raise RadicalDomainError(f"căn thức phải dương, nhận {n}")
+    if n > MAX_RADICAND * MAX_RADICAND:
+        raise RadicalDomainError(
+            f"căn thức {n} vượt trần {MAX_RADICAND} — từ chối thay vì treo"
+        )
     # Đường tắt cho chính phương toàn phần — ca thường gặp nhất (`√4`, `√36`,
     # `√(p·q)` khi `p·q` chính phương). `isqrt` là SỐ HỌC NGUYÊN, và phép nhân
     # ngược lại là thứ biến nó thành một phép so BẰNG: `int(n**0.5)**2 == n`
@@ -175,14 +183,46 @@ def _tach_binh_phuong(n: int) -> tuple[int, int]:
     r = math.isqrt(n)
     if r * r == n:
         return r, 1
-    k, m = 1, n
-    d = 2
-    while d * d <= m:
-        while m % (d * d) == 0:
-            m //= d * d
-            k *= d
-        d += 1
-    return k, m
+    k, sf, m = 1, 1, n
+    if m % 2 == 0:
+        e = 0
+        while m % 2 == 0:
+            m //= 2
+            e += 1
+        k <<= e >> 1
+        if e & 1:
+            sf = 2
+        r = math.isqrt(m)
+        if r * r == m:
+            return k * r, sf
+    d = 3
+    while d * d * d <= m and d * d <= MAX_RADICAND:
+        if sf * d > MAX_RADICAND:
+            raise RadicalDomainError(
+                f"căn thức {n} vượt trần {MAX_RADICAND} — từ chối thay vì treo"
+            )
+        if m % d == 0:
+            e = 0
+            while m % d == 0:
+                m //= d
+                e += 1
+            if e >= 2:
+                k *= d ** (e >> 1)
+            if e & 1:
+                sf *= d
+                if sf > MAX_RADICAND:
+                    raise RadicalDomainError(
+                        f"căn thức {n} vượt trần {MAX_RADICAND} — từ chối thay vì treo"
+                    )
+            r = math.isqrt(m)
+            if r * r == m:
+                return k * r, sf
+        d += 2
+    if d * d * d <= m or m > MAX_RADICAND or sf * m > MAX_RADICAND:
+        raise RadicalDomainError(
+            f"căn thức {n} vượt trần {MAX_RADICAND} — từ chối thay vì treo"
+        )
+    return k, sf * m
 
 
 def radical(he: Fraction | int, can: int, mu: int = 0) -> ExactNumber:
@@ -211,15 +251,11 @@ def radical(he: Fraction | int, can: int, mu: int = 0) -> ExactNumber:
         )
     if can <= 0:
         raise RadicalDomainError(f"căn thức phải là số nguyên dương, nhận {can}")
-    if can > MAX_RADICAND:
-        raise RadicalDomainError(
-            f"căn thức {can} vượt trần {MAX_RADICAND} — từ chối thay vì treo"
-        )
+    k, m = _tach_binh_phuong(can)
     if he == 0:
         # `0·π·√5 = 0`. Số mũ π không cứu được một hệ số bằng 0, nên nhánh này
         # đứng TRƯỚC mọi phép xét `mu` — nếu không, hệ có hai cách viết số 0.
         return Fraction(0)
-    k, m = _tach_binh_phuong(can)
     if m == 1 and mu == 0:
         return he * k
     return Radical(he * k, m, mu)
@@ -237,7 +273,11 @@ def sqrt_rational(x: Fraction | int) -> ExactNumber:
     khỏi đường khoảng cách.
 
     Cách làm THẲNG (căn tử, căn mẫu riêng) thì hỏng: `√(3/4)` cần `√3/2`, mà
-    `√3` không rút ra khỏi tử được nếu chỉ nhìn tử một mình.
+    `√3` không rút ra khỏi tử được nếu chỉ nhìn tử một mình. Vì `Fraction(x)`
+    đã tối giản (`gcd(p, q) = 1`), ta tách bình phương `p = kp²·mp` và
+    `q = kq²·mq` riêng trước khi ghép `√(p/q) = (kp / (kq·mq))·√(mp·mq)` để
+    tránh nhân thổi phồng `p·q` vượt trần khi `p` hoặc `q` mang thừa số chính
+    phương lớn.
     """
     x = Fraction(x)
     if x < 0:
@@ -245,7 +285,9 @@ def sqrt_rational(x: Fraction | int) -> ExactNumber:
     if x == 0:
         return Fraction(0)
     p, q = x.numerator, x.denominator
-    return radical(Fraction(1, q), p * q)
+    kp, mp = _tach_binh_phuong(p)
+    kq, mq = _tach_binh_phuong(q)
+    return radical(Fraction(kp, kq * mq), mp * mq)
 
 
 # ── PHÉP TOÁN (chỉ những phép hình học thật sự cần) ───────────────────────
@@ -328,7 +370,8 @@ def multiply(a: ExactNumber, b: ExactNumber) -> ExactNumber:
     mb = b.mu if isinstance(b, Radical) else 0
     if ha == 0 or hb == 0:
         return Fraction(0)
-    return radical(ha * hb, ca * cb, ma + mb)
+    g = math.gcd(ca, cb)
+    return radical(ha * hb * g, (ca // g) * (cb // g), ma + mb)
 
 
 def add(a: ExactNumber, b: ExactNumber) -> ExactNumber:
