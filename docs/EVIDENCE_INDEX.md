@@ -1,16 +1,28 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_V2_W2_M5_POSTMERGE_CASE_IDENTITY_ADJUDICATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/correction-addendum.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/
+CLASSIFICATION = POSTMERGE_EVIDENCE_ADJUDICATION; EVIDENCE_CORRECTION_REQUIRED (product_regression_found = false); product unchanged at 73ca8d92 / T3 candidate b61f1699 / main 2c42f6cf (freeze MATCH 1170ca16…); independent review APPROVED_NO_FINDINGS
+CODE_COMMIT = 73ca8d92e74059680ce53b99692af396df37a2f8; T3 candidate b61f16995dfbe0110a639a2127d0fb5a9c3afde0; main 2c42f6cf23ddde89cc752e0ee6dfec6e4e230d3b; freeze 1170ca163529dd40b57f4058826db92a6433359546aa2ad718712f38a538c10d
+VERIFICATION = results/postmerge-case-identity-adjudication.json; tools/adjudicate_postmerge_case_identity.py; correction-addendum.md; review-postmerge-adjudication.md; verification/full-t3/receipt.json
+MODEL_REQUEST_COUNT = 0
+CONTINUES = HYBRID_V2_W2_M5_ADAPTER4_CATEGORY_A_IDENTITY_REPAIR
+CORRECTS = HYBRID_V2_W2_M5_ADAPTER4_CATEGORY_A_IDENTITY_REPAIR (additive correction of narrative prose W2-M5-DOC-1..4 in report.md, handoff.md, baseline-audit.md and post-merge conversational errata POSTMERGE-CHAT-1..5; confirms W2-A07 right triangular prism ABC.A'B'C' section MA'N cycle [M, A', N] area_squared = 1875/8 answer 25√6/4, W2-A10 cuboid ABCD.A'B'C'D' section by (Q) cycle [I, A', I2, I1] area_squared = 504, scorer bug at evaluate_holdout_wave2.py:184 on W2-A10 only, and Wave 2 corpus 96 = 36 Cat B + 12 Cat A + 48 Neg; original report.md and machine JSON bytes at 2c42f6cf preserved unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_V2_W2_M5_ADAPTER4_CATEGORY_A_IDENTITY_REPAIR
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/
-CLASSIFICATION = POST_FEEDBACK_DEVELOPMENT_REGRESSION; READY_FOR_OWNER_REVIEW; FULL_PRODUCT_GATE_PASS at b61f1699 (12569 backend / 1417 frontend, freeze MATCH); independent review APPROVED_NO_FINDINGS (0 BLOCKER, 0 MAJOR, 0 MINOR, 0 NIT)
+CLASSIFICATION = POST_FEEDBACK_DEVELOPMENT_REGRESSION; INTEGRATED_ON_MAIN at 2c42f6cf; FULL_PRODUCT_GATE_PASS at b61f1699 (12569 backend / 1417 frontend, freeze MATCH); independent review APPROVED_NO_FINDINGS (0 BLOCKER, 0 MAJOR, 0 MINOR, 0 NIT)
 CODE_COMMIT = 73ca8d92e74059680ce53b99692af396df37a2f8; T3 candidate b61f16995dfbe0110a639a2127d0fb5a9c3afde0; freeze 1170ca163529dd40b57f4058826db92a6433359546aa2ad718712f38a538c10d
-VERIFICATION = results/red-before.json; results/green-after.json; results/tamper-results.json; results/wave2-post-feedback-regression.json; results/w2-a10-scorer-adjudication-receipt.json; verification/tiers.json; verification/full-t3/receipt.json; review.md
+VERIFICATION = results/red-before.json; results/green-after.json; results/tamper-results.json; results/wave2-post-feedback-regression.json; results/w2-a10-scorer-adjudication-receipt.json; results/postmerge-case-identity-adjudication.json; verification/tiers.json; verification/full-t3/receipt.json; review.md; correction-addendum.md; review-postmerge-adjudication.md
 MODEL_REQUEST_COUNT = 0
 CONTINUES = HYBRID_V2_W2_M4_EXACT_RADICAL_NORMALIZATION
 CORRECTS = NONE
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_V2_W2_M5_POSTMERGE_CASE_IDENTITY_ADJUDICATION (additive correction-addendum.md for W2-M5-DOC-1..4 and post-merge conversational summary errata POSTMERGE-CHAT-1..5; original report.md and machine JSON bytes at 2c42f6cf preserved unchanged)
 
 ## WAVE_ID = HYBRID_V2_W2_M4_PREMERGE_EVIDENCE_RECONCILIATION
 

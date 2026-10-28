@@ -1,6 +1,6 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
-## W2-M5 Adapter /4 Category A identity repair (local research, 2026-10-28)
+## W2-M5 Adapter /4 Category A identity repair (integrated on main, 2026-10-28)
 
 `backend/app/ai/adapter4_route.py` (`_validate_sections`, `_polygon_area_squared`) canonicalizes Category A (`DINH_CAT_CANH`)
 section vertex, edge-endpoint, solid-vertex, and `declared_boundary` lookups into `scene3d["objects"]` via one-way `ir_name`

@@ -1,7 +1,7 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-**2026-10-28 — Hybrid V2 W2-M5 Adapter `/4` Category A identity repair, `READY_FOR_OWNER_REVIEW` (local, NOT merged/pushed):**
-isolated branch `research/hybrid-v2-w2-m5-adapter4-category-a-identity-repair` from `main` `eb661971`;
+**2026-10-28 — Hybrid V2 W2-M5 Adapter `/4` Category A identity repair, `INTEGRATED ON main` (`2c42f6cf`) + post-merge case identity adjudication (`correction-addendum.md`, isolated doc branch):**
+isolated branch `research/hybrid-v2-w2-m5-adapter4-category-a-identity-repair` from `main` `eb661971` (fast-forward integrated to `main` at `2c42f6cf`);
 `backend/app/ai/adapter4_route.py` only (canonicalizes Category A `DINH_CAT_CANH` primed-vertex lookups via `ir_name`,
 enforces strict Category A/B separation, exact `Fraction` segment parameter $t \in [0, 1]$, coplanarity/convexity and
 `final_memory` area² agreement, and closes `W2-M5` on `W2-A07` and `W2-A10` with `0` `_prime` leaks).
@@ -11,7 +11,7 @@ Wave 2 post-feedback regression (`POST_FEEDBACK_DEVELOPMENT_REGRESSION`): raw hi
 scorer-adjudicated **`48/48` (`100.0%`) positives `SERVED_CORRECT`** (`36/36` Category B, `12/12` Category A, `48/48` oracle),
 `48/48` negatives refused (`36/48` reason match), `0/96` wrong-served, `96/96` learner-facing source-identity clean.
 Versions Registry `/19`, Planner `/17`, Engine `/14`, Adapter `/4`, Certificate `/1`, Cache `130`/`LLM_ONLY`/Hybrid opt-in/live `0`.
-Product `73ca8d92`, candidate `b61f1699`, freeze `1170ca16…` (118 files). Full T3 `FULL_PRODUCT_GATE_PASS`: `12569` backend passed (`0` failed), `1417` frontend/build/demo `5`/crash `6` PASS; freeze MATCH. Independent review (`155dd101-7d6a-4edb-9606-b9b56b1bba45`) `APPROVED_NO_FINDINGS`. Run: `evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/`.
+Product `73ca8d92`, candidate `b61f1699`, freeze `1170ca16…` (118 files). Full T3 `FULL_PRODUCT_GATE_PASS`: `12569` backend passed (`0` failed), `1417` frontend/build/demo `5`/crash `6` PASS; freeze MATCH. Independent review (`155dd101-7d6a-4edb-9606-b9b56b1bba45`) + post-merge case identity adjudication (`correction-addendum.md`, `results/postmerge-case-identity-adjudication.json`, `review-postmerge-adjudication.md`) `APPROVED_NO_FINDINGS`. Run: `evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/`.
 
 **2026-10-28 — Hybrid V2 W2-M4 exact radical normalization, `INTEGRATED ON main` (`eb661971`):**
 isolated branch `research/hybrid-v2-w2-m4-exact-radical-normalization` from `d99f6149` (`main` = `d7a94d3c`);

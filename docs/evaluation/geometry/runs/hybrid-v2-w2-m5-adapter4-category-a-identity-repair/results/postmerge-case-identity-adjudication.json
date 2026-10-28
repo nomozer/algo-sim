@@ -1,0 +1,510 @@
+{
+  "task_id": "HYBRID_V2_W2_M5_POSTMERGE_CASE_IDENTITY_ADJUDICATION",
+  "final_status": "EVIDENCE_CORRECTION_REQUIRED",
+  "product_regression_found": false,
+  "section_1_preflight": {
+    "main_sha": "2c42f6cf23ddde89cc752e0ee6dfec6e4e230d3b",
+    "origin_main_sha": "2c42f6cf23ddde89cc752e0ee6dfec6e4e230d3b",
+    "remote_main_sha": "2c42f6cf23ddde89cc752e0ee6dfec6e4e230d3b",
+    "historical_holdout_wave2_sha": "ecdc26b012c8ce80d53524a98dc75cdcb020079d",
+    "premerge_main_sha": "eb661971847c034500862299c5091f1f3d2a2998",
+    "product_commit_sha": "73ca8d92e74059680ce53b99692af396df37a2f8",
+    "artifacts_commit_sha": "7aa538aecf2d31c40887b7c6ee52f7e8219ea0eb",
+    "frozen_t3_candidate_sha": "b61f16995dfbe0110a639a2127d0fb5a9c3afde0",
+    "product_diff_t3_to_main": [],
+    "product_diff_t3_to_head": [],
+    "product_files_modified_in_wave": [
+      "backend/app/ai/adapter4_route.py"
+    ],
+    "historical_holdout_wave2_diff": [],
+    "original_w2_m5_files_diff": [],
+    "measured_system_files": 118,
+    "measured_system_tree_hash": "1170ca163529dd40b57f4058826db92a6433359546aa2ad718712f38a538c10d",
+    "freeze_verify_stdout": "Candidate khớp bản đã đóng băng (mã sản phẩm: 118 file, 1170ca163529dd40…).",
+    "versions": {
+      "registry": "geometry-functions/19",
+      "planner": "geometry-fact-planner/17",
+      "engine": "geometry-function-engine/14",
+      "adapter": "hybrid-simulation-adapter/4",
+      "certificate": "plane-section-certificate/1",
+      "cache_version": 130,
+      "default_mode": "LLM_ONLY",
+      "hybrid_preview_enabled": false
+    },
+    "live_provider_calls": 0
+  },
+  "sections_2_and_3_case_identities": {
+    "holdout_wave2_inputs_sha256_lf": "e5676fd35b79eab1b29cf7a1647a5f80a5547ffdea077f15ea7b5e845555d479",
+    "holdout_wave2_expected_sha256_lf": "da70fe6a08530e49e7292782592a618c6268385adbb8958dbfb46f3693944efa",
+    "holdout_wave2_geometry_sha256_lf": "3bed9d0844a1084dce43b69cfd8dd73624a19090be901d97c48d83f996bd78ae",
+    "W2-A07": {
+      "frozen_case_sha256": "717ee585a0411ec67e2045ee4f71beb217088a0264eb649399bb4386d7999e73",
+      "input_payload_sha256": "ed8f11b8aa49478ee62bd6ce8c4a7e29e86865c336f5cd880edabbd2f3e23142",
+      "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại B, AB = 5, BC = 5 và cạnh bên AA' = 10. Mặt phẳng (α) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC' lần lượt tại M, N. Tính diện tích thiết diện của hình lăng trụ đứng ABC.A'B'C' cắt bởi mặt phẳng (α).",
+      "expected_solid": {
+        "solid_id": "s1",
+        "solid_type": "prism",
+        "family": "right_triangular_prism",
+        "notation": "ABC.A'B'C'",
+        "dimensions": {
+          "AB": "5",
+          "BC": "5",
+          "right_at": "B",
+          "AA'": "10"
+        },
+        "plane_spec": {
+          "plane_name": "α",
+          "kind": "through_point_perpendicular_line",
+          "through_point": "A'",
+          "perpendicular_line": [
+            "A",
+            "C'"
+          ]
+        }
+      },
+      "expected_polygon_oracle": [
+        [
+          "VERTEX",
+          "A'"
+        ],
+        [
+          "EDGE",
+          "B",
+          "B'",
+          "3/4"
+        ],
+        [
+          "EDGE",
+          "C",
+          "C'",
+          "1/2"
+        ]
+      ],
+      "actual_polygon_descriptors": [
+        [
+          "EDGE",
+          "B",
+          "B'",
+          "3/4"
+        ],
+        [
+          "VERTEX",
+          "A'"
+        ],
+        [
+          "EDGE",
+          "C",
+          "C'",
+          "1/2"
+        ]
+      ],
+      "actual_scene3d_section": {
+        "id": "td_sec",
+        "label": "Thiết diện MA′N",
+        "notation": "MA′N",
+        "polygon_normalized_prism_coords": [
+          [
+            "1",
+            "0",
+            "3/4"
+          ],
+          [
+            "0",
+            "0",
+            "1"
+          ],
+          [
+            "0",
+            "1",
+            "1/2"
+          ]
+        ],
+        "polygon_vertex_order": [
+          "M",
+          "A'",
+          "N"
+        ],
+        "euclidean_coords": {
+          "M": [
+            "5",
+            "0",
+            "15/2"
+          ],
+          "A'": [
+            "0",
+            "0",
+            "10"
+          ],
+          "N": [
+            "5",
+            "5",
+            "5"
+          ]
+        }
+      },
+      "cyclic_equivalence": {
+        "cyclic_equivalent": true,
+        "orientation": "reversed",
+        "shift": 1
+      },
+      "category_a_certificate": {
+        "section_id": "sec",
+        "boundary": null,
+        "vertices": [
+          {
+            "label": "A'",
+            "edge": [
+              "A",
+              "A'"
+            ],
+            "provenance": "THROUGH_POINT_REUSE",
+            "stated": false
+          },
+          {
+            "label": "M",
+            "edge": [
+              "B",
+              "B'"
+            ],
+            "provenance": "SOURCE_NAMED",
+            "stated": true
+          },
+          {
+            "label": "N",
+            "edge": [
+              "C",
+              "C'"
+            ],
+            "provenance": "SOURCE_NAMED",
+            "stated": true
+          }
+        ],
+        "closure_certificate": null,
+        "declared_boundary": null
+      },
+      "exact_oracle": {
+        "expected_certificate_category": "DINH_CAT_CANH",
+        "vertex_count": 3,
+        "area_squared": "1875/8",
+        "expected_answer": "25√6/4"
+      },
+      "product_response": {
+        "route_status": "SERVED",
+        "adapter4_status": "SERVED",
+        "envelope_status": "ok",
+        "answer_mg1": "25√6/4",
+        "area_squared": "1875/8",
+        "notation_A_prime": "A′"
+      },
+      "scorer_outcome": {
+        "raw_historical_scorer": "SERVED_CORRECT",
+        "adjudicated_scorer": "SERVED_CORRECT"
+      },
+      "discrepancy_classification": {
+        "conversational_postmerge_report_string": "section_37467f986437 (A, B, C, A′)",
+        "exists_in_product_or_fixtures_or_git": false,
+        "classification": "REPORT_RECORDING_ERROR_CONVERSATIONAL_ONLY",
+        "committed_report_prose_note": "report.md:32 wrote illustrative coordinates A'=[0,0,5], M=[6,0,15/4], N=[0,6,5/2] and polygon_A_prime_M_N; actual scene3d object is td_sec (notation MA′N) with normalized coords M=[1,0,3/4], A'=[0,0,1], N=[0,1,1/2] and Euclidean coords A'=[0,0,10], M=[5,0,15/2], N=[5,5,5] giving area_squared = 1875/8."
+      }
+    },
+    "W2-A10": {
+      "frozen_case_sha256": "3f1d5a6142b34b715032aca475ae7e97322b88c7bb08b1e2b077b2d11ec1b88a",
+      "input_payload_sha256": "922e49a272dd8a3836c52792d8ee60e8e5156a34ee4c895a25df8610b7feb85d",
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật với AB = 3a, AD = 6a và cạnh bên AA' = 9a. Mặt phẳng (Q) đi qua điểm A' và vuông góc với đường thẳng AC', cắt các cạnh bên BB', CC', DD'. Xác định thiết diện của hình hộp chữ nhật ABCD.A'B'C'D' cắt bởi mặt phẳng (Q).",
+      "expected_solid": {
+        "solid_id": "s1",
+        "solid_type": "prism",
+        "family": "cuboid",
+        "notation": "ABCD.A'B'C'D'",
+        "dimensions": {
+          "AB": "3a",
+          "AD": "6a",
+          "AA'": "9a",
+          "base_shape": "rectangle"
+        },
+        "plane_spec": {
+          "plane_name": "Q",
+          "kind": "through_point_perpendicular_line",
+          "through_point": "A'",
+          "perpendicular_line": [
+            "A",
+            "C'"
+          ]
+        }
+      },
+      "expected_polygon_oracle": [
+        [
+          "VERTEX",
+          "A'"
+        ],
+        [
+          "EDGE",
+          "B",
+          "B'",
+          "8/9"
+        ],
+        [
+          "EDGE",
+          "C",
+          "C'",
+          "4/9"
+        ],
+        [
+          "EDGE",
+          "D",
+          "D'",
+          "5/9"
+        ]
+      ],
+      "actual_polygon_descriptors": [
+        [
+          "EDGE",
+          "B",
+          "B'",
+          "8/9"
+        ],
+        [
+          "VERTEX",
+          "A'"
+        ],
+        [
+          "EDGE",
+          "D",
+          "D'",
+          "5/9"
+        ],
+        [
+          "EDGE",
+          "C",
+          "C'",
+          "4/9"
+        ]
+      ],
+      "actual_scene3d_section": {
+        "id": "td_sec",
+        "label": "Thiết diện bởi (Q)",
+        "notation": null,
+        "polygon_normalized_prism_coords": [
+          [
+            "1",
+            "0",
+            "8/9"
+          ],
+          [
+            "0",
+            "0",
+            "1"
+          ],
+          [
+            "0",
+            "1",
+            "5/9"
+          ],
+          [
+            "1",
+            "1",
+            "4/9"
+          ]
+        ],
+        "polygon_vertex_order": [
+          "I",
+          "A'",
+          "I2",
+          "I1"
+        ],
+        "euclidean_coords": {
+          "I": [
+            "3",
+            "0",
+            "8"
+          ],
+          "A'": [
+            "0",
+            "0",
+            "9"
+          ],
+          "I2": [
+            "0",
+            "6",
+            "5"
+          ],
+          "I1": [
+            "3",
+            "6",
+            "4"
+          ]
+        }
+      },
+      "cyclic_equivalence": {
+        "cyclic_equivalent": true,
+        "orientation": "reversed",
+        "shift": 2
+      },
+      "category_a_certificate": {
+        "section_id": "sec",
+        "boundary": null,
+        "vertices": [
+          {
+            "label": "A'",
+            "edge": [
+              "A",
+              "A'"
+            ],
+            "provenance": "THROUGH_POINT_REUSE",
+            "stated": false
+          },
+          {
+            "label": "I",
+            "edge": [
+              "B",
+              "B'"
+            ],
+            "provenance": "STATED_UNNAMED",
+            "stated": true
+          },
+          {
+            "label": "I1",
+            "edge": [
+              "C",
+              "C'"
+            ],
+            "provenance": "STATED_UNNAMED",
+            "stated": true
+          },
+          {
+            "label": "I2",
+            "edge": [
+              "D",
+              "D'"
+            ],
+            "provenance": "STATED_UNNAMED",
+            "stated": true
+          }
+        ],
+        "closure_certificate": null,
+        "declared_boundary": null
+      },
+      "exact_oracle": {
+        "expected_certificate_category": "DINH_CAT_CANH",
+        "vertex_count": 4,
+        "area_squared": "504",
+        "question_type": "section_only"
+      },
+      "product_response": {
+        "route_status": "SERVED",
+        "adapter4_status": "SERVED",
+        "envelope_status": "ok",
+        "answers": {},
+        "polygon_area_squared": "504",
+        "notation_A_prime": "A′"
+      },
+      "scorer_outcome": {
+        "raw_historical_scorer": "WRONG_SERVED (scorer primed-label lookup bug at evaluate_holdout_wave2.py:184)",
+        "adjudicated_scorer": "SERVED_CORRECT"
+      },
+      "discrepancy_classification": {
+        "conversational_postmerge_report_string": "section_fa8b24d27d9e (A, M, P, N)",
+        "exists_in_product_or_fixtures_or_git": false,
+        "classification": "REPORT_RECORDING_ERROR_CONVERSATIONAL_ONLY",
+        "committed_report_prose_note": "report.md:33 and handoff.md:25 summarized W2-A10 in prose as 'cube ABCD.A'B'C'D', edge a = 6, section (A'MN)' and 'polygon_I_A_prime_I2_I1'; actual frozen W2-A10 is a rectangular cuboid (AB=3a, AD=6a, AA'=9a, cutting plane (Q), section object td_sec 'Thiết diện bởi (Q)') with cycle [I, A', I2, I1] and exact area_squared = 504."
+      }
+    },
+    "repository_scan_for_conversational_hallucinations": {
+      "tokens_scanned": [
+        "section_37467f986437",
+        "37467f986437",
+        "section_fa8b24d27d9e",
+        "fa8b24d27d9e",
+        "(A, B, C, A′)",
+        "(A, B, C, A')",
+        "(A, M, P, N)",
+        "holdout_wave2_w2_a07_scorer_adjudication",
+        "holdout_wave2_after_w2_m5_raw"
+      ],
+      "hits_in_committed_repo": []
+    }
+  },
+  "section_4_scorer_adjudication": {
+    "affected_case_id": "W2-A10",
+    "unaffected_case_id": "W2-A07",
+    "why_w2_a07_passes_raw_scorer": "W2-A07 is a 3-vertex triangle {A', M, N}; every permutation of 3 elements is either a cyclic rotation or reversal of the 3-cycle, so even when A' falls back to poly_idx=0, [A', M, N] remains cyclically equivalent to [M, A', N].",
+    "why_w2_a10_fails_raw_scorer": "W2-A10 is a 4-vertex quadrilateral [I, A', I2, I1]; at evaluate_holdout_wave2.py:184, `v['label'] in objects_by_id` is False for \"A'\" (keyed by \"A_prime\"), so \"A'\" falls back to poly_idx=0 and collides with \"I\" (poly_idx=0), sorting into the bow-tie order [A', I, I2, I1] instead of [I, A', I2, I1].",
+    "committed_receipt_path": "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/results/w2-a10-scorer-adjudication-receipt.json",
+    "committed_receipt_sha256_lf": "66f2dd0c41842bc9db1b9d3ab634b929363217f665c3b831b0f16e70a415e074",
+    "committed_regression_path": "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/results/wave2-post-feedback-regression.json",
+    "committed_regression_sha256_lf": "b02c3333cc776036abda432365b59f1a5bad9a42d27aa375fb30b584c3843262",
+    "historical_scorer_modified": false
+  },
+  "section_5_corpus_denominators": {
+    "independent_holdout_wave2": {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-section-holdout-wave2/inputs/holdout-wave2.json",
+      "commit": "ecdc26b012c8ce80d53524a98dc75cdcb020079d",
+      "total_cases": 96,
+      "category_b_positives_P_B": 36,
+      "category_a_positives_P_A": 12,
+      "positive_total": 48,
+      "negatives_N": 48
+    },
+    "w2_m5_development_and_tamper_corpus": {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/inputs/development.json",
+      "commit": "2c42f6cf23ddde89cc752e0ee6dfec6e4e230d3b",
+      "total_cases": 26,
+      "positive_category_a_primed_cases": 14,
+      "mandatory_tamper_cases": 12
+    },
+    "holdout_wave1": {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-holdout-failure-repair/results/post-feedback-84-comparison.json",
+      "total_cases": 84,
+      "positive_total": 42,
+      "negative_total": 42
+    },
+    "erroneous_22_14_12_origin": {
+      "exists_in_any_repository_file": false,
+      "explanation": "In step 9929 (context compaction checkpoint), the summarizer conflated Wave 2's 48 positive cases with W2-M5's 14 positive development cases and 12 tamper cases (48 - 14 - 12 = 22) and fabricated a 48-case breakdown '22 Category A, 14 Category B, 12 Category C'. Category C does not exist in AlgoSim's section certificate taxonomy (only Category A DINH_CAT_CANH and Category B ENGINE_DERIVED_SECTION exist)."
+    }
+  },
+  "locked_w2_m5_evidence_inventory": {
+    "inputs/development.json": {
+      "bytes": 75403,
+      "sha256_raw": "5b2724c776a382a6d577c54492ede8f75ffd14f830557e60476da141071f61f8",
+      "sha256_lf": "83d8f088cd1d15717977918eacca645c4af5ac7aa7cea21c4ceb3f844cb75696",
+      "status": "MATCH"
+    },
+    "inputs/oracle.json": {
+      "bytes": 8511,
+      "sha256_raw": "64f446dd2d67bb792916a99b88dc70e5529b58d65f0bfa5053d0354395c6bd35",
+      "sha256_lf": "83137971fca1fc87e0cef6af10be164d8987eda5742db9c414a84af98002b40d",
+      "status": "MATCH"
+    },
+    "results/red-before.json": {
+      "bytes": 10411,
+      "sha256_raw": "f2188b084621627e0a3e8b97d1d3618df12035edfe6207263dd37c40107eadfa",
+      "sha256_lf": "b2453b541410e843dbd9b293d0fa3801e3541d85e83f9a95078431fc1d253262",
+      "status": "MATCH"
+    },
+    "results/green-after.json": {
+      "bytes": 10059,
+      "sha256_raw": "2d9b650ccb7047c6ff3c474cd6525ff71f8fe0fdb741e39ba9340065863507f6",
+      "sha256_lf": "6f4b7262964d83bb5585aa3bd6322ebe944c50177752fc5bd1e43b72017c81a5",
+      "status": "MATCH"
+    },
+    "results/tamper-results.json": {
+      "bytes": 4394,
+      "sha256_raw": "fdc2dba2d033d131979542d1c83c7801caf109904b9fdd90c5ce4575a1139e52",
+      "sha256_lf": "448b0db733cda02d50578aefb7e6e6de3581d7f5986ca783fd520a66ef2caf74",
+      "status": "MATCH"
+    },
+    "results/wave2-post-feedback-regression.json": {
+      "bytes": 127455,
+      "sha256_raw": "6b6bf3f064a96affbefec999677d5091bcaf52d39dff439109fe950476d57724",
+      "sha256_lf": "b02c3333cc776036abda432365b59f1a5bad9a42d27aa375fb30b584c3843262",
+      "status": "MATCH"
+    },
+    "results/w2-a10-scorer-adjudication-receipt.json": {
+      "bytes": 3419,
+      "sha256_raw": "913d53408dcb9b7b37f33a788efa3f7237093ab2f24291bf092150ae159b303c",
+      "sha256_lf": "66f2dd0c41842bc9db1b9d3ab634b929363217f665c3b831b0f16e70a415e074",
+      "status": "MATCH"
+    }
+  }
+}
