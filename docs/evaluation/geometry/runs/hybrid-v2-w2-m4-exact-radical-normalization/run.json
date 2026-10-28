@@ -1,6 +1,7 @@
 {
   "run_id": "hybrid-v2-w2-m4-exact-radical-normalization",
   "task_code": "HYBRID_V2_W2_M4_EXACT_RADICAL_NORMALIZATION",
+  "reconciliation_task_code": "HYBRID_V2_W2_M4_PREMERGE_EVIDENCE_RECONCILIATION",
   "task_wave": 1,
   "date": "2026-10-28",
   "branch": "research/hybrid-v2-w2-m4-exact-radical-normalization",
@@ -13,7 +14,7 @@
   "preregistration_commit": "574ad40ca446232bf54e8e26cda196eee943fcb3",
   "classification": "PRODUCT_REPAIR_WITH_POST_FEEDBACK_DEVELOPMENT_REGRESSION",
   "historical_source_commit": "ecdc26b012c8ce80d53524a98dc75cdcb020079d",
-  "status": "READY_FOR_OWNER_REVIEW",
+  "status": "PREMERGE_EVIDENCE_RECONCILED_READY_FOR_OWNER_GO",
   "live_provider_calls": 0,
   "default_mode": "LLM_ONLY",
   "hybrid": "OPT_IN_ONLY",
@@ -21,6 +22,7 @@
   "merge_push_cleanup": "NONE",
   "product_commit": "051224ee2740cbf5d55dd94633503db1f0050ada",
   "t3_candidate": "1e0c8db668bbe110f343a8a67cdeca465008c188",
+  "pre_reconciliation_head": "e78ecfe7a28cbe9de2754b08283b56d3829d1c1a",
   "freeze_hash": "8b94a5aa4a986e312ef423492b332bf25378868f6c9578767ba2ee7003c18369",
   "versions": {
     "registry": "geometry-functions/19",
@@ -57,8 +59,13 @@
     "supplemental_passed": "7/7"
   },
   "wave2_post_feedback": {
+    "historical_raw_served_correct": "3/48 (Category B 3/36, Category A 0/12, 2 harness-induced WRONG_SERVED on W2-A01/W2-A03)",
+    "historical_adjudicated_served_correct": "5/48 (Category B 3/36: W2-B08, W2-B12, W2-B14; Category A 2/12: W2-A01, W2-A03; 0/96 WRONG_SERVED)",
+    "source_gate_19_served_correct": "45/48 (Category B 36/36, Category A 9/12; 3 FALSE_REFUSAL: W2-A04, W2-A07, W2-A10)",
     "served_correct": 46,
     "positives": 48,
+    "category_b_served_correct": "36/36",
+    "category_a_served_correct": "10/12",
     "negative_refusals": 48,
     "negatives": 48,
     "correct_refusal_reason": 36,
@@ -70,11 +77,15 @@
       "W2-A10 (W2-M5 PREVIEW_VALIDATION_FAILED / CANNOT_BUILD_SOLIDS, out of scope)"
     ]
   },
-  "final_branch_head_rule": "Final documentation commit containing report/handoff/review/run.json; resolve the named branch. Exact SHA is emitted in session final handoff after commit (avoids self-reference).",
+  "corrected_by": "HYBRID_V2_W2_M4_PREMERGE_EVIDENCE_RECONCILIATION",
+  "correction_addendum": "correction-addendum.md",
+  "reconciliation_receipt": "results/premerge-evidence-reconciliation.json",
+  "reconciliation_review": "review-reconciliation.md",
+  "final_branch_head_rule": "Final documentation commit containing correction-addendum.md, results/premerge-evidence-reconciliation.json, and review-reconciliation.md; resolve the named branch. Exact SHA is emitted in session final handoff after commit (avoids self-reference).",
   "t3_verdict": "FULL_PRODUCT_GATE_PASS",
   "t3_receipt": "verification/full-t3/receipt.json",
   "t3_log_sha256": "57af94912561e1b06e3e9a4e363d80128814b755bf09232d367db048de4fcbc7",
   "post_t3_freeze": "MATCH",
   "independent_review": "review.md",
-  "reproducibility_prerequisite": "Retain/fetch Wave2 commit ecdc26b012c8ce80d53524a98dc75cdcb020079d before evaluator/unit tests; shallow single-branch clones alone are insufficient."
+  "reproducibility_prerequisite": "Retain/fetch Wave2 commit ecdc26b012c8ce80d53524a98dc75cdcb020079d before evaluator/unit tests; upon main integration, fast-forward main to research/hybrid-v2-w2-m4-exact-radical-normalization first and then merge ecdc26b012c8ce80d53524a98dc75cdcb020079d (--no-ff, path-disjoint) so single-branch clones of main contain ecdc26b0."
 }

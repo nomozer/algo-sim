@@ -1,6 +1,6 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-**2026-10-28 — Hybrid V2 W2-M4 exact radical normalization, `READY_FOR_OWNER_REVIEW` (local, NOT merged/pushed):**
+**2026-10-28 — Hybrid V2 W2-M4 exact radical normalization, `PREMERGE_EVIDENCE_RECONCILED_READY_FOR_OWNER_GO` (local, NOT merged/pushed):**
 isolated branch `research/hybrid-v2-w2-m4-exact-radical-normalization` from `d99f6149` (`main` = `d7a94d3c`);
 `backend/app/simulation/geometry/radical.py` only (normalizes square factors before `MAX_RADICAND = 10**12`,
 guards $n \le 10^{24}$ and $d^3 \le 10^{12}$, closes `ACCEPTANCE-1` on `DEV-1-3` and `W2-M4` on `W2-A04`).
@@ -8,7 +8,7 @@ Locked RED `0/2` E2E, `7/16` kernel, `1/6` metamorphic, `11/11` neg -> GREEN `2/
 Source Gate `/19` regression `24/24` original positives `SERVED_CORRECT` (`25/25` oracle, `36/36` genuine negatives refused, `0` wrong-served).
 Wave 2 post-feedback regression `46/48` positives `SERVED_CORRECT` (`46/46` oracle, `48/48` negatives refused, `0/96` wrong-served; `2` out-of-scope `W2-M5` refusals remain).
 Versions Registry `/19`, Planner `/17`, Engine `/14`, Adapter `/4`, Certificate `/1`, Cache `130`/`LLM_ONLY`/Hybrid opt-in/live `0`.
-Product `051224ee`, candidate `1e0c8db6`, freeze `8b94a5aa…` (118 files). Full T3 `FULL_PRODUCT_GATE_PASS`: `12552` backend passed (`0` failed), `1417` frontend/build/demo `5`/crash `6` PASS; freeze MATCH. Independent review `APPROVED_NO_FINDINGS`. Run: `evaluation/geometry/runs/hybrid-v2-w2-m4-exact-radical-normalization/`.
+Product `051224ee`, candidate `1e0c8db6`, freeze `8b94a5aa…` (118 files). Full T3 `FULL_PRODUCT_GATE_PASS`: `12552` backend passed (`0` failed), `1417` frontend/build/demo `5`/crash `6` PASS; freeze MATCH. Independent review + pre-merge evidence reconciliation (`correction-addendum.md`, `results/premerge-evidence-reconciliation.json`, `review-reconciliation.md`) `APPROVED_NO_FINDINGS`. Run: `evaluation/geometry/runs/hybrid-v2-w2-m4-exact-radical-normalization/`.
 
 **2026-10-28 — local Source Gate language repair, NOT_READY:** isolated branch
 `research/hybrid-v2-wave2-source-gate-language-generalization` from main `d7a94d3c`;

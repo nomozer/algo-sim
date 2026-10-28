@@ -1,16 +1,28 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_V2_W2_M4_PREMERGE_EVIDENCE_RECONCILIATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-w2-m4-exact-radical-normalization/correction-addendum.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-w2-m4-exact-radical-normalization/
+CLASSIFICATION = PREMERGE_EVIDENCE_RECONCILIATION; PREMERGE_EVIDENCE_RECONCILED_READY_FOR_OWNER_GO; product unchanged at 051224ee / T3 candidate 1e0c8db6 (freeze MATCH 8b94a5aa…); independent review APPROVED_NO_FINDINGS
+CODE_COMMIT = 051224ee2740cbf5d55dd94633503db1f0050ada; T3 candidate 1e0c8db668bbe110f343a8a67cdeca465008c188; freeze 8b94a5aa4a986e312ef423492b332bf25378868f6c9578767ba2ee7003c18369
+VERIFICATION = results/premerge-evidence-reconciliation.json; tools/reconcile_premerge_evidence.py; correction-addendum.md; review-reconciliation.md; verification/full-t3/receipt.json
+MODEL_REQUEST_COUNT = 0
+CONTINUES = HYBRID_V2_W2_M4_EXACT_RADICAL_NORMALIZATION
+CORRECTS = HYBRID_V2_W2_M4_EXACT_RADICAL_NORMALIZATION (additive correction of narrative counts W2-M4-DOC-1..5 in report.md, architecture-decision.md, baseline-audit.md, plan.md; confirms W2-A04 area_squared = 253125000/485809 and area = 11250*sqrt(2)/697 across oracle, product and independent Fraction recomputation; original report.md and machine JSON bytes at e78ecfe7 preserved unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_V2_W2_M4_EXACT_RADICAL_NORMALIZATION
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-w2-m4-exact-radical-normalization/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-w2-m4-exact-radical-normalization/
-CLASSIFICATION = POST_FEEDBACK_DEVELOPMENT_REGRESSION; READY_FOR_OWNER_REVIEW; FULL_PRODUCT_GATE_PASS at 1e0c8db6 (12552 backend / 1417 frontend, freeze MATCH); independent review APPROVED_NO_FINDINGS (0 BLOCKER, 0 MAJOR, 0 MINOR, 0 NIT)
+CLASSIFICATION = POST_FEEDBACK_DEVELOPMENT_REGRESSION; PREMERGE_EVIDENCE_RECONCILED_READY_FOR_OWNER_GO; FULL_PRODUCT_GATE_PASS at 1e0c8db6 (12552 backend / 1417 frontend, freeze MATCH); independent review APPROVED_NO_FINDINGS (0 BLOCKER, 0 MAJOR, 0 MINOR, 0 NIT)
 CODE_COMMIT = 051224ee2740cbf5d55dd94633503db1f0050ada; T3 candidate 1e0c8db668bbe110f343a8a67cdeca465008c188; freeze 8b94a5aa4a986e312ef423492b332bf25378868f6c9578767ba2ee7003c18369
-VERIFICATION = results/red-before.json; results/green-after.json; results/source-gate-regression.json; results/wave2-post-feedback-regression.json; verification/tiers.json; verification/full-t3/receipt.json; review.md
+VERIFICATION = results/red-before.json; results/green-after.json; results/source-gate-regression.json; results/wave2-post-feedback-regression.json; results/premerge-evidence-reconciliation.json; verification/tiers.json; verification/full-t3/receipt.json; review.md; correction-addendum.md; review-reconciliation.md
 MODEL_REQUEST_COUNT = 0
 CONTINUES = HYBRID_V2_WAVE2_SOURCE_GATE_LANGUAGE_GENERALIZATION
 CORRECTS = HYBRID_V2_WAVE2_SOURCE_GATE_LANGUAGE_GENERALIZATION (closes ACCEPTANCE-1 on DEV-1-3 and W2-M4 on W2-A04 via exact square-factor normalization in radical.py before enforcing MAX_RADICAND; parent wave bytes, test receipts and historical NOT_READY verdict preserved unchanged)
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_V2_W2_M4_PREMERGE_EVIDENCE_RECONCILIATION (additive correction-addendum.md for W2-M4-DOC-1..5 and W2-A04 conversational summary erratum; original report.md and machine JSON bytes at e78ecfe7 preserved unchanged)
 
 ## WAVE_ID = HYBRID_V2_WAVE2_SOURCE_GATE_LANGUAGE_GENERALIZATION
 
