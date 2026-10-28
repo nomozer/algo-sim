@@ -1,0 +1,1950 @@
+{
+  "baseline": "e137623c4f674135a8d7884b78614c132eb78085",
+  "wave3_head": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+  "w3_f1_original_head": "5e056179b39013cc7e3625dd862e66699071a52f",
+  "candidate": "b02b2c422e4049dc6ff0a94996f335424e7b02b9",
+  "hash_checks": [
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/authoritative_baseline/product_freeze_tree_sha256",
+      "sha256": "1170ca163529dd40b57f4058826db92a6433359546aa2ad718712f38a538c10d",
+      "kind": "measured_tree_checked_by_freeze_gate"
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/authoritative_baseline/evaluation_candidate_json_sha256",
+      "sha256": "f2d61622e489e804a4ddcb562269ba610eabcd890d5e54f855bf869b9a2af98e",
+      "matches": [
+        {
+          "path": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+          "revision": "e137623c4f674135a8d7884b78614c132eb78085",
+          "mode": "CRLF",
+          "bytes": 3603
+        },
+        {
+          "path": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+          "revision": "e137623c4f674135a8d7884b78614c132eb78085",
+          "mode": "original_worktree_raw",
+          "bytes": 3603
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/preregistration.md/sha256",
+      "sha256": "9abfe6298a2895c6f9711bc5d358aebdcf070fe46033fb856899835780ffbe52",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/preregistration.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 17814
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/preregistration.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 17814
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/preregistration.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 17814
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/preregistration.md/sha256_lf",
+      "sha256": "9abfe6298a2895c6f9711bc5d358aebdcf070fe46033fb856899835780ffbe52",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/preregistration.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 17814
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/preregistration.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 17814
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/preregistration.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 17814
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/supported-family-matrix.md/sha256",
+      "sha256": "d70cd13a342b1e3bf391e0f8421a014e7313b73d584ed524190effd375926031",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/supported-family-matrix.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 10017
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/supported-family-matrix.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 10017
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/supported-family-matrix.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 10017
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/supported-family-matrix.md/sha256_lf",
+      "sha256": "d70cd13a342b1e3bf391e0f8421a014e7313b73d584ed524190effd375926031",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/supported-family-matrix.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 10017
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/supported-family-matrix.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 10017
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/supported-family-matrix.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 10017
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/scoring-contract.md/sha256",
+      "sha256": "79fd67d0f09fecbee41db9caf83d32aeda90e043537214728753d11d4b218fab",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/scoring-contract.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 9474
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/scoring-contract.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 9474
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/scoring-contract.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 9474
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/scoring-contract.md/sha256_lf",
+      "sha256": "79fd67d0f09fecbee41db9caf83d32aeda90e043537214728753d11d4b218fab",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/scoring-contract.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 9474
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/scoring-contract.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 9474
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/scoring-contract.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 9474
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/refusal-taxonomy.json/sha256",
+      "sha256": "b393995bbc11ae25f904052b597d9e89b9cf5adaaeaba468dcb2a27003319b00",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/refusal-taxonomy.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 5049
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/refusal-taxonomy.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 5049
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/refusal-taxonomy.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 5049
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/refusal-taxonomy.json/sha256_lf",
+      "sha256": "b393995bbc11ae25f904052b597d9e89b9cf5adaaeaba468dcb2a27003319b00",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/refusal-taxonomy.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 5049
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/refusal-taxonomy.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 5049
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/refusal-taxonomy.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 5049
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/curator-brief.md/sha256",
+      "sha256": "e60307e0deb1925537e999179f2f967fd968d7678654448dc5216bbbc1829e0a",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/curator-brief.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 8996
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/curator-brief.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 8996
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/curator-brief.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 8996
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/curator-brief.md/sha256_lf",
+      "sha256": "e60307e0deb1925537e999179f2f967fd968d7678654448dc5216bbbc1829e0a",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/curator-brief.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 8996
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/curator-brief.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 8996
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/curator-brief.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 8996
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/evaluate_holdout_wave3.py/sha256",
+      "sha256": "eda4a853d376f8f616919a67062da548218450a4df1d888550e66bae56599a45",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/evaluate_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 35497
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/evaluate_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 35497
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/evaluate_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 35497
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/evaluate_holdout_wave3.py/sha256_lf",
+      "sha256": "eda4a853d376f8f616919a67062da548218450a4df1d888550e66bae56599a45",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/evaluate_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 35497
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/evaluate_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 35497
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/evaluate_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 35497
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/test_evaluate_holdout_wave3.py/sha256",
+      "sha256": "5179cb21b8a248e476ded0a181baa98249fa1a91f7ac3cbfdae836e9c2e51acc",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/test_evaluate_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 32102
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/test_evaluate_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 32102
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/test_evaluate_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 32102
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/test_evaluate_holdout_wave3.py/sha256_lf",
+      "sha256": "5179cb21b8a248e476ded0a181baa98249fa1a91f7ac3cbfdae836e9c2e51acc",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/test_evaluate_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 32102
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/test_evaluate_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 32102
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/test_evaluate_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 32102
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/scorer-qualification-receipt.json/sha256",
+      "sha256": "2f71f3ff7143d9e55cfd67f661963ca46acb8709450518e41845242518f11f4c",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/scorer-qualification-receipt.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "CRLF",
+          "bytes": 5237
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/scorer-qualification-receipt.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 5237
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/scorer-qualification-receipt.json/sha256_lf",
+      "sha256": "e3c545fb32728e467b127a45a5aec7f8a9fbb497cff41bdefe27e9117531b798",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/scorer-qualification-receipt.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 5100
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/scorer-qualification-receipt.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 5100
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/inputs/holdout-wave3.json/sha256",
+      "sha256": "cf2d3fd759b6a94c4eae2545a4a409e50859ff28e861f797609b6a259fe4dee0",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/inputs/holdout-wave3.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "CRLF",
+          "bytes": 748048
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/inputs/holdout-wave3.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 748048
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/inputs/holdout-wave3.json/sha256_lf",
+      "sha256": "a84e112afb148a67ff69d47d50e3c566c67438c156014790911e67cc13fcdd81",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/inputs/holdout-wave3.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 726720
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/inputs/holdout-wave3.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 726720
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/oracle/geometry.json/sha256",
+      "sha256": "a7c04b77211d85fc7912bbcc6ad34e83e864cf46ea5904e4ebc5e201b520b983",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/geometry.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "CRLF",
+          "bytes": 293326
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/geometry.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 293326
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/oracle/geometry.json/sha256_lf",
+      "sha256": "9a19f64ede10aae7f355357d61533c4c909209aa2cf59978420a1317ce05d62a",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/geometry.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 274365
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/geometry.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 274365
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/oracle/expected.json/sha256",
+      "sha256": "9cabeb19ae0d10e1112795097e7ed18e0b0b3aa7bc18700a9d60813a0cbcf9df",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/expected.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "CRLF",
+          "bytes": 177204
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/expected.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 177204
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/oracle/expected.json/sha256_lf",
+      "sha256": "254442ef80ec1e0f5ddd41d7508117e6970ce23d1605e101a7befb0967e9699a",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/expected.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 167405
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/expected.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 167405
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/oracle/oracle_holdout_wave3.py/sha256",
+      "sha256": "aa156523cc6895d935fc6428995dad48a4684bfc60d96be89e51d41ef4b5c1c0",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/oracle_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 17921
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/oracle_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 17921
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/oracle_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 17921
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/oracle/oracle_holdout_wave3.py/sha256_lf",
+      "sha256": "aa156523cc6895d935fc6428995dad48a4684bfc60d96be89e51d41ef4b5c1c0",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/oracle_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 17921
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/oracle_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 17921
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/oracle_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 17921
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/curator-attestation.md/sha256",
+      "sha256": "ba7179963ca3e6881180595e1a2327f267d44b115b9a24646dec07315e7e0ecd",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/curator-attestation.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 4718
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/curator-attestation.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 4718
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/curator-attestation.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 4718
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/curator-attestation.md/sha256_lf",
+      "sha256": "ba7179963ca3e6881180595e1a2327f267d44b115b9a24646dec07315e7e0ecd",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/curator-attestation.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 4718
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/curator-attestation.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 4718
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/curator-attestation.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 4718
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/corpus-provenance.md/sha256",
+      "sha256": "72d11a74dc05e24cdf2f99a6b12b952c261b529af4e016f4f2e005521c390169",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/corpus-provenance.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 10016
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/corpus-provenance.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 10016
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/corpus-provenance.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 10016
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/corpus-provenance.md/sha256_lf",
+      "sha256": "72d11a74dc05e24cdf2f99a6b12b952c261b529af4e016f4f2e005521c390169",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/corpus-provenance.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 10016
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/corpus-provenance.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 10016
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/corpus-provenance.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 10016
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/verification/deduplication-audit.json/sha256",
+      "sha256": "ce3a11849799b1942a7c41ea7ffa4e2776a2d611ed15fdce8d4524bed581873e",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/deduplication-audit.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "CRLF",
+          "bytes": 1016
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/deduplication-audit.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 1016
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/verification/deduplication-audit.json/sha256_lf",
+      "sha256": "21a22af974b8f9f6499cd8e5df20ebdae0ec1ccd52c6cf17dd20bb49bcd21307",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/deduplication-audit.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 986
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/deduplication-audit.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 986
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/verification/independence-audit.json/sha256",
+      "sha256": "f786348e04383ada8826e600655a00fac2a424ea4204e4cb3101a4f36f6f6eb3",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independence-audit.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "CRLF",
+          "bytes": 3916
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independence-audit.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 3916
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/verification/independence-audit.json/sha256_lf",
+      "sha256": "517f6572c7c5fbc2ee44b282d577bc7878a4fe69f86b6cab6f7cbac6d3a2eb0d",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independence-audit.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 3882
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independence-audit.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 3882
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/verification/independent-oracle-review.json/sha256",
+      "sha256": "69086bd1593def53676f27d9d9c48f1aeee8646b978240fcb63ae9ca8d478fdd",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independent-oracle-review.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "CRLF",
+          "bytes": 118227
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independent-oracle-review.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 118227
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/verification/independent-oracle-review.json/sha256_lf",
+      "sha256": "ae8f8eb2b2bd9f0b624aee66fafa4c342c877cbdbdcdd4d7b99f5e1bcd16d9fe",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independent-oracle-review.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 113679
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independent-oracle-review.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 113679
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/verification/independent-oracle-review.md/sha256",
+      "sha256": "7fbce0f686e9c356acf5cb04547dd537a8f611f102a7497df55c16132065af1f",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independent-oracle-review.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "CRLF",
+          "bytes": 41876
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independent-oracle-review.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 41876
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "field": "/files/verification/independent-oracle-review.md/sha256_lf",
+      "sha256": "f67c1b819fc43dfff59c228ddbde355b349a0815f38e6bf362e65f5730e9f4e9",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independent-oracle-review.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 41619
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independent-oracle-review.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 41619
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/run.json",
+      "field": "/measured_system/tree_hash",
+      "sha256": "1170ca163529dd40b57f4058826db92a6433359546aa2ad718712f38a538c10d",
+      "kind": "measured_tree_checked_by_freeze_gate"
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/run.json",
+      "field": "/scorer_qualification/receipt_sha256",
+      "sha256": "2f71f3ff7143d9e55cfd67f661963ca46acb8709450518e41845242518f11f4c",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/scorer-qualification-receipt.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "CRLF",
+          "bytes": 5237
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/scorer-qualification-receipt.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 5237
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/run.json",
+      "field": "/curator_independence/audit_sha256",
+      "sha256": "f786348e04383ada8826e600655a00fac2a424ea4204e4cb3101a4f36f6f6eb3",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independence-audit.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "CRLF",
+          "bytes": 3916
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independence-audit.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 3916
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/run.json",
+      "field": "/deduplication_audit/audit_sha256",
+      "sha256": "ce3a11849799b1942a7c41ea7ffa4e2776a2d611ed15fdce8d4524bed581873e",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/deduplication-audit.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "CRLF",
+          "bytes": 1016
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/deduplication-audit.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 1016
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/run.json",
+      "field": "/independent_pre_freeze_oracle_audit/audit_sha256",
+      "sha256": "69086bd1593def53676f27d9d9c48f1aeee8646b978240fcb63ae9ca8d478fdd",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independent-oracle-review.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "CRLF",
+          "bytes": 118227
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independent-oracle-review.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 118227
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/run.json",
+      "field": "/corpus_144/sha256/inputs/holdout-wave3.json",
+      "sha256": "cf2d3fd759b6a94c4eae2545a4a409e50859ff28e861f797609b6a259fe4dee0",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/inputs/holdout-wave3.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "CRLF",
+          "bytes": 748048
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/inputs/holdout-wave3.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 748048
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/run.json",
+      "field": "/corpus_144/sha256/oracle/geometry.json",
+      "sha256": "a7c04b77211d85fc7912bbcc6ad34e83e864cf46ea5904e4ebc5e201b520b983",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/geometry.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "CRLF",
+          "bytes": 293326
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/geometry.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 293326
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/run.json",
+      "field": "/corpus_144/sha256/oracle/oracle_holdout_wave3.py",
+      "sha256": "aa156523cc6895d935fc6428995dad48a4684bfc60d96be89e51d41ef4b5c1c0",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/oracle_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 17921
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/oracle_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 17921
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/oracle_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 17921
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/run.json",
+      "field": "/corpus_144/sha256/oracle/expected.json",
+      "sha256": "9cabeb19ae0d10e1112795097e7ed18e0b0b3aa7bc18700a9d60813a0cbcf9df",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/expected.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "CRLF",
+          "bytes": 177204
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/expected.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 177204
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/run.json",
+      "field": "/corpus_144/sha256/holdout-manifest.json",
+      "sha256": "2c7f459f92c53c854717272e620dfed619b335918fe9ba84642e08dd67d8fedf",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 8161
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 8161
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 8161
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/run.json",
+      "field": "/independent_review/sha256",
+      "sha256": "acdd214cf79dfcb18a603f9c21f185e65680e2d779f76f983de3f6156ca38a87",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/review.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 11873
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/review.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 11873
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/review.md",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 11873
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independent-oracle-review.json",
+      "field": "/sha256_checked/holdout-wave3.json",
+      "sha256": "cf2d3fd759b6a94c4eae2545a4a409e50859ff28e861f797609b6a259fe4dee0",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/inputs/holdout-wave3.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "CRLF",
+          "bytes": 748048
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/inputs/holdout-wave3.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 748048
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independent-oracle-review.json",
+      "field": "/sha256_checked/geometry.json",
+      "sha256": "a7c04b77211d85fc7912bbcc6ad34e83e864cf46ea5904e4ebc5e201b520b983",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/geometry.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "CRLF",
+          "bytes": 293326
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/geometry.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 293326
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independent-oracle-review.json",
+      "field": "/sha256_checked/oracle_holdout_wave3.py",
+      "sha256": "aa156523cc6895d935fc6428995dad48a4684bfc60d96be89e51d41ef4b5c1c0",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/oracle_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 17921
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/oracle_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 17921
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/oracle_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 17921
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independent-oracle-review.json",
+      "field": "/sha256_checked/expected.json",
+      "sha256": "9cabeb19ae0d10e1112795097e7ed18e0b0b3aa7bc18700a9d60813a0cbcf9df",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/expected.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "CRLF",
+          "bytes": 177204
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/expected.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 177204
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independent-oracle-review.json",
+      "field": "/sha256_checked/refusal-taxonomy.json",
+      "sha256": "b393995bbc11ae25f904052b597d9e89b9cf5adaaeaba468dcb2a27003319b00",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/refusal-taxonomy.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 5049
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/refusal-taxonomy.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 5049
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/refusal-taxonomy.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 5049
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independent-oracle-review.json",
+      "field": "/sha256_checked/inputs/holdout-wave3.json",
+      "sha256": "cf2d3fd759b6a94c4eae2545a4a409e50859ff28e861f797609b6a259fe4dee0",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/inputs/holdout-wave3.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "CRLF",
+          "bytes": 748048
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/inputs/holdout-wave3.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 748048
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independent-oracle-review.json",
+      "field": "/sha256_checked/oracle/geometry.json",
+      "sha256": "a7c04b77211d85fc7912bbcc6ad34e83e864cf46ea5904e4ebc5e201b520b983",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/geometry.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "CRLF",
+          "bytes": 293326
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/geometry.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 293326
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independent-oracle-review.json",
+      "field": "/sha256_checked/oracle/oracle_holdout_wave3.py",
+      "sha256": "aa156523cc6895d935fc6428995dad48a4684bfc60d96be89e51d41ef4b5c1c0",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/oracle_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 17921
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/oracle_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 17921
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/oracle_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 17921
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independent-oracle-review.json",
+      "field": "/sha256_checked/oracle/expected.json",
+      "sha256": "9cabeb19ae0d10e1112795097e7ed18e0b0b3aa7bc18700a9d60813a0cbcf9df",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/expected.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "CRLF",
+          "bytes": 177204
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/expected.json",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 177204
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/scorer-qualification-receipt.json",
+      "field": "/scorer_sha256_lf",
+      "sha256": "eda4a853d376f8f616919a67062da548218450a4df1d888550e66bae56599a45",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/evaluate_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 35497
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/evaluate_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 35497
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/evaluate_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 35497
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/scorer-qualification-receipt.json",
+      "field": "/qualification_tests_sha256_lf",
+      "sha256": "5179cb21b8a248e476ded0a181baa98249fa1a91f7ac3cbfdae836e9c2e51acc",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/test_evaluate_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "git_blob",
+          "bytes": 32102
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/test_evaluate_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "LF",
+          "bytes": 32102
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/test_evaluate_holdout_wave3.py",
+          "revision": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+          "mode": "original_worktree_raw",
+          "bytes": 32102
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/run.json",
+      "field": "/parent_freeze_hash",
+      "sha256": "1170ca163529dd40b57f4058826db92a6433359546aa2ad718712f38a538c10d",
+      "kind": "measured_tree_checked_by_freeze_gate"
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/run.json",
+      "field": "/freeze_hash",
+      "sha256": "918d3404ac60e81d62c75f6bfb7067ea25a4e27c197e3584075edef42e441f72",
+      "kind": "measured_tree_checked_by_freeze_gate"
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/run.json",
+      "field": "/t3_log_sha256",
+      "sha256": "885333241d4d723d73edad5b8f2e98ccf3da0700361fbe4eb974893037ddb2f7",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/verification/full-t3/full-t3.log",
+          "revision": "5e056179b39013cc7e3625dd862e66699071a52f",
+          "mode": "original_worktree_raw",
+          "bytes": 167582
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/verification/cache-and-fixtures.json",
+      "field": "/preview_fixtures/producer_now/source_fingerprint/measured_system_hash",
+      "sha256": "918d3404ac60e81d62c75f6bfb7067ea25a4e27c197e3584075edef42e441f72",
+      "kind": "measured_tree_checked_by_freeze_gate"
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/verification/full-t3/receipt.json",
+      "field": "/measured_system/tree_hash",
+      "sha256": "918d3404ac60e81d62c75f6bfb7067ea25a4e27c197e3584075edef42e441f72",
+      "kind": "measured_tree_checked_by_freeze_gate"
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/verification/full-t3/receipt.json",
+      "field": "/freeze_sha256_before",
+      "sha256": "cdd15a37d4b419bf7b0d7443306a890cdc7d602285ab31e8532c15ae9463a784",
+      "matches": [
+        {
+          "path": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+          "revision": "b02b2c422e4049dc6ff0a94996f335424e7b02b9",
+          "mode": "CRLF",
+          "bytes": 3603
+        },
+        {
+          "path": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+          "revision": "b02b2c422e4049dc6ff0a94996f335424e7b02b9",
+          "mode": "original_worktree_raw",
+          "bytes": 3603
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/verification/full-t3/receipt.json",
+      "field": "/freeze_sha256_after",
+      "sha256": "cdd15a37d4b419bf7b0d7443306a890cdc7d602285ab31e8532c15ae9463a784",
+      "matches": [
+        {
+          "path": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+          "revision": "b02b2c422e4049dc6ff0a94996f335424e7b02b9",
+          "mode": "CRLF",
+          "bytes": 3603
+        },
+        {
+          "path": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+          "revision": "b02b2c422e4049dc6ff0a94996f335424e7b02b9",
+          "mode": "original_worktree_raw",
+          "bytes": 3603
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/verification/full-t3/receipt.json",
+      "field": "/log/sha256",
+      "sha256": "885333241d4d723d73edad5b8f2e98ccf3da0700361fbe4eb974893037ddb2f7",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/verification/full-t3/full-t3.log",
+          "revision": "5e056179b39013cc7e3625dd862e66699071a52f",
+          "mode": "original_worktree_raw",
+          "bytes": 167582
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/verification/scope-and-evidence.json",
+      "field": "/locked_evidence_sha256_lf/inputs/development.json",
+      "sha256": "f76692679280e9165cc65724051fa9eceed9cdaea999ec8db1bd1fd07ebb0334",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/inputs/development.json",
+          "revision": "5e056179b39013cc7e3625dd862e66699071a52f",
+          "mode": "git_blob",
+          "bytes": 510723
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/inputs/development.json",
+          "revision": "5e056179b39013cc7e3625dd862e66699071a52f",
+          "mode": "LF",
+          "bytes": 510723
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/verification/scope-and-evidence.json",
+      "field": "/locked_evidence_sha256_lf/inputs/oracle.json",
+      "sha256": "f0a2e4190e54ec4feab8b57eae4e923b2f7c8062f0ce0436268f10801f5b9507",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/inputs/oracle.json",
+          "revision": "5e056179b39013cc7e3625dd862e66699071a52f",
+          "mode": "git_blob",
+          "bytes": 94858
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/inputs/oracle.json",
+          "revision": "5e056179b39013cc7e3625dd862e66699071a52f",
+          "mode": "LF",
+          "bytes": 94858
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/verification/scope-and-evidence.json",
+      "field": "/locked_evidence_sha256_lf/results/red-before.json",
+      "sha256": "332d508e7286883bbed660aa2a471888969e852cb82911e64cb31e497127dbe6",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/results/red-before.json",
+          "revision": "5e056179b39013cc7e3625dd862e66699071a52f",
+          "mode": "git_blob",
+          "bytes": 85988
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/results/red-before.json",
+          "revision": "5e056179b39013cc7e3625dd862e66699071a52f",
+          "mode": "LF",
+          "bytes": 85988
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/verification/scope-and-evidence.json",
+      "field": "/locked_evidence_sha256_lf/results/green-after.json",
+      "sha256": "83b25fe9ec285e9ee56573033084e7fba49f079df0a8e5983e6aca9740577c17",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/results/green-after.json",
+          "revision": "5e056179b39013cc7e3625dd862e66699071a52f",
+          "mode": "git_blob",
+          "bytes": 135948
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/results/green-after.json",
+          "revision": "5e056179b39013cc7e3625dd862e66699071a52f",
+          "mode": "LF",
+          "bytes": 135948
+        }
+      ]
+    },
+    {
+      "receipt": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/verification/scope-and-evidence.json",
+      "field": "/locked_evidence_sha256_lf/results/wave3-post-feedback-regression.json",
+      "sha256": "e83106a87afe887d1c8ecaccf9585b1a8cd9d12225af5c44e9eaa60f3e298eb0",
+      "matches": [
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/results/wave3-post-feedback-regression.json",
+          "revision": "5e056179b39013cc7e3625dd862e66699071a52f",
+          "mode": "git_blob",
+          "bytes": 154517
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/results/wave3-post-feedback-regression.json",
+          "revision": "5e056179b39013cc7e3625dd862e66699071a52f",
+          "mode": "LF",
+          "bytes": 154517
+        }
+      ]
+    }
+  ],
+  "historical_blobs": [
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/corpus-provenance.md",
+      "git_blob_sha256": "72d11a74dc05e24cdf2f99a6b12b952c261b529af4e016f4f2e005521c390169",
+      "disk_sha256": "72d11a74dc05e24cdf2f99a6b12b952c261b529af4e016f4f2e005521c390169",
+      "sha256_lf": "72d11a74dc05e24cdf2f99a6b12b952c261b529af4e016f4f2e005521c390169"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/curator-attestation.md",
+      "git_blob_sha256": "ba7179963ca3e6881180595e1a2327f267d44b115b9a24646dec07315e7e0ecd",
+      "disk_sha256": "ba7179963ca3e6881180595e1a2327f267d44b115b9a24646dec07315e7e0ecd",
+      "sha256_lf": "ba7179963ca3e6881180595e1a2327f267d44b115b9a24646dec07315e7e0ecd"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/curator-brief.md",
+      "git_blob_sha256": "e60307e0deb1925537e999179f2f967fd968d7678654448dc5216bbbc1829e0a",
+      "disk_sha256": "e60307e0deb1925537e999179f2f967fd968d7678654448dc5216bbbc1829e0a",
+      "sha256_lf": "e60307e0deb1925537e999179f2f967fd968d7678654448dc5216bbbc1829e0a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/handoff.md",
+      "git_blob_sha256": "c85e2d1f6bad9b21e1616d30e758bc0ad8bb0a4abee1c3af5b7e20bf6dc2b8d8",
+      "disk_sha256": "c85e2d1f6bad9b21e1616d30e758bc0ad8bb0a4abee1c3af5b7e20bf6dc2b8d8",
+      "sha256_lf": "c85e2d1f6bad9b21e1616d30e758bc0ad8bb0a4abee1c3af5b7e20bf6dc2b8d8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/holdout-manifest.json",
+      "git_blob_sha256": "2c7f459f92c53c854717272e620dfed619b335918fe9ba84642e08dd67d8fedf",
+      "disk_sha256": "2c7f459f92c53c854717272e620dfed619b335918fe9ba84642e08dd67d8fedf",
+      "sha256_lf": "2c7f459f92c53c854717272e620dfed619b335918fe9ba84642e08dd67d8fedf"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/inputs/holdout-wave3.json",
+      "git_blob_sha256": "a84e112afb148a67ff69d47d50e3c566c67438c156014790911e67cc13fcdd81",
+      "disk_sha256": "cf2d3fd759b6a94c4eae2545a4a409e50859ff28e861f797609b6a259fe4dee0",
+      "sha256_lf": "a84e112afb148a67ff69d47d50e3c566c67438c156014790911e67cc13fcdd81"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/expected.json",
+      "git_blob_sha256": "254442ef80ec1e0f5ddd41d7508117e6970ce23d1605e101a7befb0967e9699a",
+      "disk_sha256": "9cabeb19ae0d10e1112795097e7ed18e0b0b3aa7bc18700a9d60813a0cbcf9df",
+      "sha256_lf": "254442ef80ec1e0f5ddd41d7508117e6970ce23d1605e101a7befb0967e9699a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/geometry.json",
+      "git_blob_sha256": "9a19f64ede10aae7f355357d61533c4c909209aa2cf59978420a1317ce05d62a",
+      "disk_sha256": "a7c04b77211d85fc7912bbcc6ad34e83e864cf46ea5904e4ebc5e201b520b983",
+      "sha256_lf": "9a19f64ede10aae7f355357d61533c4c909209aa2cf59978420a1317ce05d62a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/oracle/oracle_holdout_wave3.py",
+      "git_blob_sha256": "aa156523cc6895d935fc6428995dad48a4684bfc60d96be89e51d41ef4b5c1c0",
+      "disk_sha256": "aa156523cc6895d935fc6428995dad48a4684bfc60d96be89e51d41ef4b5c1c0",
+      "sha256_lf": "aa156523cc6895d935fc6428995dad48a4684bfc60d96be89e51d41ef4b5c1c0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/plan.md",
+      "git_blob_sha256": "07247338a679cdec6710990e6be357ec58750d4420dc85baa854312508c56da8",
+      "disk_sha256": "07247338a679cdec6710990e6be357ec58750d4420dc85baa854312508c56da8",
+      "sha256_lf": "07247338a679cdec6710990e6be357ec58750d4420dc85baa854312508c56da8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/preregistration.md",
+      "git_blob_sha256": "9abfe6298a2895c6f9711bc5d358aebdcf070fe46033fb856899835780ffbe52",
+      "disk_sha256": "9abfe6298a2895c6f9711bc5d358aebdcf070fe46033fb856899835780ffbe52",
+      "sha256_lf": "9abfe6298a2895c6f9711bc5d358aebdcf070fe46033fb856899835780ffbe52"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/refusal-taxonomy.json",
+      "git_blob_sha256": "b393995bbc11ae25f904052b597d9e89b9cf5adaaeaba468dcb2a27003319b00",
+      "disk_sha256": "b393995bbc11ae25f904052b597d9e89b9cf5adaaeaba468dcb2a27003319b00",
+      "sha256_lf": "b393995bbc11ae25f904052b597d9e89b9cf5adaaeaba468dcb2a27003319b00"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/report.md",
+      "git_blob_sha256": "fef943612b42376b66d699fba927a11622bcf1bdf7bbe6211066e44aa45254e2",
+      "disk_sha256": "fef943612b42376b66d699fba927a11622bcf1bdf7bbe6211066e44aa45254e2",
+      "sha256_lf": "fef943612b42376b66d699fba927a11622bcf1bdf7bbe6211066e44aa45254e2"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/results/diagnostics.json",
+      "git_blob_sha256": "2bf27c3505e1b26f0163e4d72b27f87197d58d404ee216c36f7fc60c8e272ac4",
+      "disk_sha256": "2bf27c3505e1b26f0163e4d72b27f87197d58d404ee216c36f7fc60c8e272ac4",
+      "sha256_lf": "2bf27c3505e1b26f0163e4d72b27f87197d58d404ee216c36f7fc60c8e272ac4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/results/scored-run-1/summary.json",
+      "git_blob_sha256": "db71a90e4a323d516b784ac17c53dbbc4ae30764b4b239cf8296048d9bc35bef",
+      "disk_sha256": "ca864b72a893d8016f8d6cd6e63a4638d4c537e3709683bff7f838a043574a55",
+      "sha256_lf": "db71a90e4a323d516b784ac17c53dbbc4ae30764b4b239cf8296048d9bc35bef"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/results/scored-run-1/track-a.json",
+      "git_blob_sha256": "91abb308e18d7199359fbf5721234ab12fd4699cd5ab4c64a0d2b10d1bbe69bf",
+      "disk_sha256": "bf0ddd7a05e648acc62be36fc3e1da0d8cf62ec115198913a9bf08737039debb",
+      "sha256_lf": "91abb308e18d7199359fbf5721234ab12fd4699cd5ab4c64a0d2b10d1bbe69bf"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/results/scored-run-1/track-b.json",
+      "git_blob_sha256": "c801d3853bb9151a0996272e22c93c5cf33e8af591606252c464b8ac2ee0f1da",
+      "disk_sha256": "d358ce4cab25475b2600f065b016e0f86aac886bda5653bb23ed123fbdd5d7d7",
+      "sha256_lf": "c801d3853bb9151a0996272e22c93c5cf33e8af591606252c464b8ac2ee0f1da"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/results/statistical-summary.json",
+      "git_blob_sha256": "74b7cc6e1f3b01d60207ce197eeb60ff08e1e16f3f96e494c450d8e8d7ea5aad",
+      "disk_sha256": "74b7cc6e1f3b01d60207ce197eeb60ff08e1e16f3f96e494c450d8e8d7ea5aad",
+      "sha256_lf": "74b7cc6e1f3b01d60207ce197eeb60ff08e1e16f3f96e494c450d8e8d7ea5aad"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/review.md",
+      "git_blob_sha256": "acdd214cf79dfcb18a603f9c21f185e65680e2d779f76f983de3f6156ca38a87",
+      "disk_sha256": "acdd214cf79dfcb18a603f9c21f185e65680e2d779f76f983de3f6156ca38a87",
+      "sha256_lf": "acdd214cf79dfcb18a603f9c21f185e65680e2d779f76f983de3f6156ca38a87"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/run.json",
+      "git_blob_sha256": "86205f1977b242cf595583b7c760b71a08ab51fe2e7fe45b24fb63ea249f8590",
+      "disk_sha256": "86205f1977b242cf595583b7c760b71a08ab51fe2e7fe45b24fb63ea249f8590",
+      "sha256_lf": "86205f1977b242cf595583b7c760b71a08ab51fe2e7fe45b24fb63ea249f8590"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/scoring-contract.md",
+      "git_blob_sha256": "79fd67d0f09fecbee41db9caf83d32aeda90e043537214728753d11d4b218fab",
+      "disk_sha256": "79fd67d0f09fecbee41db9caf83d32aeda90e043537214728753d11d4b218fab",
+      "sha256_lf": "79fd67d0f09fecbee41db9caf83d32aeda90e043537214728753d11d4b218fab"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/supported-family-matrix.md",
+      "git_blob_sha256": "d70cd13a342b1e3bf391e0f8421a014e7313b73d584ed524190effd375926031",
+      "disk_sha256": "d70cd13a342b1e3bf391e0f8421a014e7313b73d584ed524190effd375926031",
+      "sha256_lf": "d70cd13a342b1e3bf391e0f8421a014e7313b73d584ed524190effd375926031"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/audit_curator_log.py",
+      "git_blob_sha256": "8516163e4f2b01d69edea8402ed914fa1a120248fdc7d0cdfd1be9c04c9e5eef",
+      "disk_sha256": "8516163e4f2b01d69edea8402ed914fa1a120248fdc7d0cdfd1be9c04c9e5eef",
+      "sha256_lf": "8516163e4f2b01d69edea8402ed914fa1a120248fdc7d0cdfd1be9c04c9e5eef"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/dedup_check_wave3.py",
+      "git_blob_sha256": "210890ce5935f14c019edabcdd51a601c57f9962a56ec07ffcd91bb836627218",
+      "disk_sha256": "210890ce5935f14c019edabcdd51a601c57f9962a56ec07ffcd91bb836627218",
+      "sha256_lf": "210890ce5935f14c019edabcdd51a601c57f9962a56ec07ffcd91bb836627218"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/evaluate_holdout_wave3.py",
+      "git_blob_sha256": "eda4a853d376f8f616919a67062da548218450a4df1d888550e66bae56599a45",
+      "disk_sha256": "eda4a853d376f8f616919a67062da548218450a4df1d888550e66bae56599a45",
+      "sha256_lf": "eda4a853d376f8f616919a67062da548218450a4df1d888550e66bae56599a45"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/tools/test_evaluate_holdout_wave3.py",
+      "git_blob_sha256": "5179cb21b8a248e476ded0a181baa98249fa1a91f7ac3cbfdae836e9c2e51acc",
+      "disk_sha256": "5179cb21b8a248e476ded0a181baa98249fa1a91f7ac3cbfdae836e9c2e51acc",
+      "sha256_lf": "5179cb21b8a248e476ded0a181baa98249fa1a91f7ac3cbfdae836e9c2e51acc"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/deduplication-audit.json",
+      "git_blob_sha256": "21a22af974b8f9f6499cd8e5df20ebdae0ec1ccd52c6cf17dd20bb49bcd21307",
+      "disk_sha256": "ce3a11849799b1942a7c41ea7ffa4e2776a2d611ed15fdce8d4524bed581873e",
+      "sha256_lf": "21a22af974b8f9f6499cd8e5df20ebdae0ec1ccd52c6cf17dd20bb49bcd21307"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independence-audit.json",
+      "git_blob_sha256": "517f6572c7c5fbc2ee44b282d577bc7878a4fe69f86b6cab6f7cbac6d3a2eb0d",
+      "disk_sha256": "f786348e04383ada8826e600655a00fac2a424ea4204e4cb3101a4f36f6f6eb3",
+      "sha256_lf": "517f6572c7c5fbc2ee44b282d577bc7878a4fe69f86b6cab6f7cbac6d3a2eb0d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independent-oracle-review.json",
+      "git_blob_sha256": "ae8f8eb2b2bd9f0b624aee66fafa4c342c877cbdbdcdd4d7b99f5e1bcd16d9fe",
+      "disk_sha256": "69086bd1593def53676f27d9d9c48f1aeee8646b978240fcb63ae9ca8d478fdd",
+      "sha256_lf": "ae8f8eb2b2bd9f0b624aee66fafa4c342c877cbdbdcdd4d7b99f5e1bcd16d9fe"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/independent-oracle-review.md",
+      "git_blob_sha256": "f67c1b819fc43dfff59c228ddbde355b349a0815f38e6bf362e65f5730e9f4e9",
+      "disk_sha256": "7fbce0f686e9c356acf5cb04547dd537a8f611f102a7497df55c16132065af1f",
+      "sha256_lf": "f67c1b819fc43dfff59c228ddbde355b349a0815f38e6bf362e65f5730e9f4e9"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-independent-vietnamese-geometry-holdout-wave3/verification/scorer-qualification-receipt.json",
+      "git_blob_sha256": "e3c545fb32728e467b127a45a5aec7f8a9fbb497cff41bdefe27e9117531b798",
+      "disk_sha256": "2f71f3ff7143d9e55cfd67f661963ca46acb8709450518e41845242518f11f4c",
+      "sha256_lf": "e3c545fb32728e467b127a45a5aec7f8a9fbb497cff41bdefe27e9117531b798"
+    }
+  ],
+  "status": "PASS",
+  "preregistration_chain": [
+    "e137623c4f674135a8d7884b78614c132eb78085",
+    "f438a62a3485ce9b8d687cb91102c366e6848960",
+    "53cba0c8a63ae3cf7c1b058b8b09f07046449f06",
+    "2332f7ad3d1a73733bbc720bcf36705c67bc2d6b",
+    "0943f0ee6bd2a2b297827e39fa7c07054d716ea9"
+  ],
+  "original_scored_run_publication_commits": [
+    "0943f0ee6bd2a2b297827e39fa7c07054d716ea9"
+  ],
+  "historical_first_refusal_counts": {
+    "W3-F1": 24,
+    "W3-F2": 14,
+    "W3-F3": 10,
+    "W3-F4": 3,
+    "W3-F5": 1
+  },
+  "post_feedback_first_refusal_counts": {
+    "W3-F1": 0,
+    "W3-F2": 21,
+    "W3-F3": 16,
+    "W3-F4": 5,
+    "W3-F5": 1
+  },
+  "f1_transitions": {
+    "SERVED_CORRECT": [
+      "W3-B03",
+      "W3-B15",
+      "W3-B21",
+      "W3-B33",
+      "W3-B39",
+      "W3-B45",
+      "W3-A03",
+      "W3-A09",
+      "W3-A15"
+    ],
+    "W3-F2": [
+      "W3-B06",
+      "W3-B12",
+      "W3-B24",
+      "W3-B30",
+      "W3-B42",
+      "W3-A06",
+      "W3-A12"
+    ],
+    "W3-F3": [
+      "W3-B09",
+      "W3-B18",
+      "W3-B27",
+      "W3-B36",
+      "W3-B54",
+      "W3-A18"
+    ],
+    "W3-F4": [
+      "W3-B48",
+      "W3-B51"
+    ]
+  },
+  "post_feedback_cluster_membership": {
+    "W3-F1": [],
+    "W3-F2": [
+      "W3-B06",
+      "W3-B12",
+      "W3-B24",
+      "W3-B30",
+      "W3-B42",
+      "W3-A06",
+      "W3-A12",
+      "W3-B02",
+      "W3-B04",
+      "W3-B14",
+      "W3-B20",
+      "W3-B22",
+      "W3-B28",
+      "W3-B31",
+      "W3-B32",
+      "W3-B38",
+      "W3-B40",
+      "W3-B46",
+      "W3-A02",
+      "W3-A10",
+      "W3-A16"
+    ],
+    "W3-F3": [
+      "W3-B09",
+      "W3-B18",
+      "W3-B27",
+      "W3-B36",
+      "W3-B54",
+      "W3-A18",
+      "W3-B07",
+      "W3-B08",
+      "W3-B16",
+      "W3-B26",
+      "W3-B34",
+      "W3-B35",
+      "W3-B43",
+      "W3-B44",
+      "W3-B52",
+      "W3-B53"
+    ],
+    "W3-F4": [
+      "W3-B48",
+      "W3-B51",
+      "W3-B47",
+      "W3-B50",
+      "W3-A17"
+    ],
+    "W3-F5": [
+      "W3-B01"
+    ]
+  },
+  "cluster_definitions": [
+    {
+      "cluster_id": "W3-F1",
+      "name": "SECTION_AND_AREA_COMPOUND_QUESTION_GROUNDING",
+      "layer": "SOURCE_GROUNDING (registry.py kiem_nguon)",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "count": 24,
+      "share_of_false_refusals": 0.4615,
+      "case_ids": [
+        "W3-B03",
+        "W3-B06",
+        "W3-B09",
+        "W3-B12",
+        "W3-B15",
+        "W3-B18",
+        "W3-B21",
+        "W3-B24",
+        "W3-B27",
+        "W3-B30",
+        "W3-B33",
+        "W3-B36",
+        "W3-B39",
+        "W3-B42",
+        "W3-B45",
+        "W3-B48",
+        "W3-B51",
+        "W3-B54",
+        "W3-A03",
+        "W3-A06",
+        "W3-A09",
+        "W3-A12",
+        "W3-A15",
+        "W3-A18"
+      ],
+      "root_cause": "In all 24 positive section_and_area problems, the cutting-plane definition sentence and the compound question sentence ('Hãy xác định thiết diện tạo bởi mặt phẳng (P) với hình ... và tính diện tích của thiết diện đó') are separate sentences. When derived_section.source.quote points to the question sentence, kiem_nguon rejects it with SOURCE_OBJECT_MISMATCH because the question sentence refers to plane (P) by name without repeating its through_point and parallel/perpendicular relation."
+    },
+    {
+      "cluster_id": "W3-F2",
+      "name": "DIVIDE_SEGMENT_AND_PROJECTION_KEYWORD_LEXICON",
+      "layer": "SOURCE_GROUNDING (registry.py kiem_nguon)",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "count": 14,
+      "share_of_false_refusals": 0.2692,
+      "case_ids": [
+        "W3-B02",
+        "W3-B04",
+        "W3-B14",
+        "W3-B20",
+        "W3-B22",
+        "W3-B28",
+        "W3-B31",
+        "W3-B32",
+        "W3-B38",
+        "W3-B40",
+        "W3-B46",
+        "W3-A02",
+        "W3-A10",
+        "W3-A16"
+      ],
+      "subclusters": {
+        "divide_segment_thoa_man_or_voi": [
+          "W3-B02",
+          "W3-B04",
+          "W3-B14",
+          "W3-B20",
+          "W3-B22",
+          "W3-B38",
+          "W3-B40",
+          "W3-B46",
+          "W3-A02",
+          "W3-A16"
+        ],
+        "orthogonal_projection_chan_duong_cao": [
+          "W3-B28",
+          "W3-B31",
+          "W3-B32",
+          "W3-A10"
+        ]
+      },
+      "root_cause": "10 cases use standard Vietnamese ratio connectors 'thỏa mãn' or 'với' instead of literal 'sao cho' for divide_segment; 4 oblique_triangular_prism cases state the altitude foot as 'chân đường cao kẻ/hạ từ ... đến/xuống mặt phẳng ... là ...' instead of literal 'hình chiếu'."
+    },
+    {
+      "cluster_id": "W3-F3",
+      "name": "PARALLEL_TWO_LINES_SLICE_GRAMMAR_COVERAGE",
+      "layer": "SOURCE_GROUNDING (registry.py kiem_nguon)",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "count": 10,
+      "share_of_false_refusals": 0.1923,
+      "case_ids": [
+        "W3-B07",
+        "W3-B08",
+        "W3-B16",
+        "W3-B26",
+        "W3-B34",
+        "W3-B35",
+        "W3-B43",
+        "W3-B44",
+        "W3-B52",
+        "W3-B53"
+      ],
+      "root_cause": "The full-text slice check on parallel_two_lines requires every premise quote and plane clause to match a narrow set of clause templates; multi-clause premise sentences or 'đồng thời song song với hai đường thẳng' trigger SOURCE_PREMISE_UNREAD."
+    },
+    {
+      "cluster_id": "W3-F4",
+      "name": "CUBE_BASE_SQUARE_EDGE_LENGTH_BINDING",
+      "layer": "SOURCE_GROUNDING (registry.py kiem_nguon)",
+      "code": "UNGROUNDED_VALUE",
+      "count": 3,
+      "share_of_false_refusals": 0.0577,
+      "case_ids": [
+        "W3-B47",
+        "W3-B50",
+        "W3-A17"
+      ],
+      "root_cause": "When a cube problem states the edge length via its base square ('biết mặt đáy MNPQ là hình vuông có cạnh bằng 9a'), kiem_nguon does not bind that value to segment_length(M, N) without 'hình lập phương ... có cạnh bằng' or 'MN = 9a'."
+    },
+    {
+      "cluster_id": "W3-F5",
+      "name": "GIA_SU_PREMISE_OPENER_CONDITIONAL_FALSE_POSITIVE",
+      "layer": "SOURCE_GROUNDING (registry.py kiem_nguon)",
+      "code": "CONDITIONAL_CLAUSE",
+      "count": 1,
+      "share_of_false_refusals": 0.0192,
+      "case_ids": [
+        "W3-B01"
+      ],
+      "root_cause": "W3-B01 introduces the point ratio with 'Giả sử H là điểm thuộc cạnh bên SE...' and the derived_section quote spans across that sentence, triggering the substring guard for 'giả sử' (CONDITIONAL_CLAUSE)."
+    }
+  ],
+  "post_feedback_summary": {
+    "total_cases": 144,
+    "positive_total": 72,
+    "positive_served_correct": 29,
+    "positive_false_refusal": 43,
+    "positive_wrong_served": 0,
+    "positive_by_stratum": {
+      "P-B": {
+        "total": 54,
+        "served_correct": 18,
+        "false_refusal": 36
+      },
+      "P-A": {
+        "total": 18,
+        "served_correct": 11,
+        "false_refusal": 7
+      }
+    },
+    "positive_by_question_type": {
+      "section_only": {
+        "total": 24,
+        "served_correct": 10,
+        "false_refusal": 14
+      },
+      "area_only": {
+        "total": 24,
+        "served_correct": 10,
+        "false_refusal": 14
+      },
+      "section_and_area": {
+        "total": 24,
+        "served_correct": 9,
+        "false_refusal": 15
+      }
+    },
+    "w3_f1_remaining_source_object_mismatch": 0,
+    "negative_total": 72,
+    "negative_refused": 72,
+    "negative_correct_reason": 62,
+    "negative_reason_disagreement": 10,
+    "negative_wrong_served": 0,
+    "overall_wrong_served": 0,
+    "machine_id_leak_cases": [],
+    "source_identity_leak_cases": []
+  },
+  "product_diff_candidate_to_final": [],
+  "wave3_product_changes": []
+}

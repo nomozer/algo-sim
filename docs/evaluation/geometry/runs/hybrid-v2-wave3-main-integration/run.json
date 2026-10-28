@@ -1,0 +1,36 @@
+{
+  "run_id": "hybrid-v2-wave3-main-integration",
+  "task_code": "HYBRID_V2_WAVE3_EVIDENCE_W3_F1_MAIN_INTEGRATION",
+  "task_wave": 1,
+  "date": "2026-10-28",
+  "baseline": "e137623c4f674135a8d7884b78614c132eb78085",
+  "stage_a": "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+  "stage_b": "1ee44b89dc593ebc544a4fd6af96f698ff2bf4d7",
+  "stage_b_parents": [
+    "0943f0ee6bd2a2b297827e39fa7c07054d716ea9",
+    "85f819f02971f31b193dac9be7a56dbe79362e2a"
+  ],
+  "product_commit": "a609c4871a75426db52eb8b7a7be8ba3460fcf8c",
+  "candidate": "b02b2c422e4049dc6ff0a94996f335424e7b02b9",
+  "freeze": "918d3404ac60e81d62c75f6bfb7067ea25a4e27c197e3584075edef42e441f72",
+  "measured_files": 118,
+  "status": "MERGED_VERIFIED_READY_TO_PUSH",
+  "live_provider_calls": 0,
+  "allow_live_ai": "0",
+  "default_mode": "LLM_ONLY",
+  "hybrid": "OPT_IN_ONLY",
+  "smoke_summary": [
+    "890 passed, 5 xfailed, 1 warning in 134.44s (0:02:14)"
+  ],
+  "classification": "INTEGRATION_VERIFICATION",
+  "evidence_commit_role": "SELF: commit introducing report.md and run.json; final closure commit resolved from main after push",
+  "artifact_sha256": {
+    "verification/gates.json": "d4cf29fc4ceaaed5b90997a819f73789467cd5ab6d165e68492b2f64133876b9",
+    "verification/preflight-audit.json": "87fda7012d2935c7367773c671befdcd742c8b52412386f7080378265c0af5a7",
+    "verification/product-and-evidence.json": "45db9a3ec7be3dbcf49272ca6cc4f9a89ce19f3496afebcfbdae4c325f6e5fd2",
+    "verification/smoke.json": "d7f429353a54c997923ca45924b97ca5acc4e585083a2a09847982375024573a",
+    "verification/smoke.log": "ec91e87b7b5341aeeea055d78981e08e2dd343e0244b5198d50f3f0a8274dcd3",
+    "verification/stage-a.json": "abb212a672c83d5a51cc05adc74d36d7540897b3b213151d4474091439eaf422",
+    "verification/wave3-post-feedback-replay.json": "d8689009d1ac3c579645518d75e44ca8b6946f22fb745e32e24e2b95e2e9616f"
+  }
+}

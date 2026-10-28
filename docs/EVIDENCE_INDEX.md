@@ -2841,3 +2841,14 @@ CORRECTS = docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-gr
 CORRECTED_BY = docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/handoff-correction.md
 VERIFICATION = docs/evaluation/geometry/runs/hybrid-v2-w3-f1-cross-sentence-plane-grounding/verification/handoff-correction.json
 CLASSIFICATION = DOCUMENTATION_CORRECTION_ONLY; authoritative W3-F2–F5 identities retained; historical counts 24/14/10/3/1; replay-verified remaining false refusals 0/21/16/5/1; negative reason disagreement 10/72 is separate. Original mixed-newline T3 log preserved in verification/full-t3/original-log.gz without changing locked receipt.
+
+
+## WAVE_ID = HYBRID_V2_WAVE3_EVIDENCE_W3_F1_MAIN_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-wave3-main-integration/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-wave3-main-integration/
+CLASSIFICATION = INTEGRATION_VERIFICATION; Stage A 0943f0ee fast-forward; Stage B 1ee44b89 normal merge; 31 historical blobs preserved; 118 measured files freeze MATCH 918d3404; smoke 890 passed / 5 xfailed; post-feedback replay 29/72, 72/72, 62/72, 0/144. Push and cleanup closure recorded separately after execution.
+VERIFICATION = verification/preflight-audit.json; verification/product-and-evidence.json; verification/smoke.json; verification/gates.json; verification/wave3-post-feedback-replay.json; review.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = NONE
+CORRECTED_BY = NONE
