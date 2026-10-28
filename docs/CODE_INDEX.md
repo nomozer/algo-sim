@@ -1,6 +1,15 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
-## W2-M4 exact radical normalization (local research, 2026-10-28)
+## W2-M5 Adapter /4 Category A identity repair (local research, 2026-10-28)
+
+`backend/app/ai/adapter4_route.py` (`_validate_sections`, `_polygon_area_squared`) canonicalizes Category A (`DINH_CAT_CANH`)
+section vertex, edge-endpoint, solid-vertex, and `declared_boundary` lookups into `scene3d["objects"]` via one-way `ir_name`
+while enforcing learner-facing `"A′"` notation (rejecting `"_prime"` leaks), strict Category A/B separation, exact `Fraction`
+edge collinearity parameter $t \in [0, 1]$, cyclic face adjacency, coplanarity/convexity, and `final_memory` area-squared
+agreement. Closes `W2-M5` on `W2-A07` and `W2-A10`. Tests: `backend/tests/geometry/test_w2_m5_adapter4_category_a_identity.py`.
+Run: `docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/`.
+
+## W2-M4 exact radical normalization (integrated on main, 2026-10-28)
 
 `backend/app/simulation/geometry/radical.py` normalizes square factors before enforcing `MAX_RADICAND = 10**12`
 in `radical(coeff, radicand)` (guarded by `MAX_UNREDUCED_RADICAND = 10**24` and bounded prime factor base $d^3 \le 10^{12}$

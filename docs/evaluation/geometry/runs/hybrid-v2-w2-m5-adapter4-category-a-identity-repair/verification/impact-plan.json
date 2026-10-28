@@ -1,0 +1,156 @@
+{
+  "status": "IMPACT_GATE",
+  "changed": [
+    "backend/app/ai/adapter4_route.py",
+    "backend/tests/geometry/test_w2_m5_adapter4_category_a_identity.py",
+    "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/architecture-decision.md",
+    "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/baseline-audit.md",
+    "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/candidate_divergence.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/inputs/development.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/inputs/oracle.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/plan.md",
+    "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/results/green-after.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/results/red-before.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/results/tamper-results.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/results/w2-a10-scorer-adjudication-receipt.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/results/wave2-post-feedback-regression.json",
+    "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/tools/build_and_evaluate_w2_m5.py",
+    "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/tools/run_regressions.py",
+    "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/tools/run_t0_t1_t2.py",
+    "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/tools/verify_candidate.py",
+    "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json"
+  ],
+  "patterns": [
+    "src/code-index-sync.test.ts"
+  ],
+  "pytest": true,
+  "docsOnly": false,
+  "reasons": [
+    {
+      "file": "backend/app/ai/adapter4_route.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "backend/tests/geometry/test_w2_m5_adapter4_category_a_identity.py",
+      "why": "Mã backend — chạy pytest",
+      "tests": [
+        "PYTEST"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/architecture-decision.md",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/baseline-audit.md",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/candidate_divergence.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/inputs/development.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/inputs/oracle.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/plan.md",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/results/green-after.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/results/red-before.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/results/tamper-results.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/results/w2-a10-scorer-adjudication-receipt.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/results/wave2-post-feedback-regression.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/tools/build_and_evaluate_w2_m5.py",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/tools/run_regressions.py",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/tools/run_t0_t1_t2.py",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/tools/verify_candidate.py",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    },
+    {
+      "file": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+      "why": "TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực",
+      "tests": [
+        "src/code-index-sync.test.ts"
+      ]
+    }
+  ]
+}

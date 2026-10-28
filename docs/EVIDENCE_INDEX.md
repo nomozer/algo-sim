@@ -1,5 +1,17 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_V2_W2_M5_ADAPTER4_CATEGORY_A_IDENTITY_REPAIR
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-w2-m5-adapter4-category-a-identity-repair/
+CLASSIFICATION = POST_FEEDBACK_DEVELOPMENT_REGRESSION; READY_FOR_OWNER_REVIEW; FULL_PRODUCT_GATE_PASS at b61f1699 (12569 backend / 1417 frontend, freeze MATCH); independent review APPROVED_NO_FINDINGS (0 BLOCKER, 0 MAJOR, 0 MINOR, 0 NIT)
+CODE_COMMIT = 73ca8d92e74059680ce53b99692af396df37a2f8; T3 candidate b61f16995dfbe0110a639a2127d0fb5a9c3afde0; freeze 1170ca163529dd40b57f4058826db92a6433359546aa2ad718712f38a538c10d
+VERIFICATION = results/red-before.json; results/green-after.json; results/tamper-results.json; results/wave2-post-feedback-regression.json; results/w2-a10-scorer-adjudication-receipt.json; verification/tiers.json; verification/full-t3/receipt.json; review.md
+MODEL_REQUEST_COUNT = 0
+CONTINUES = HYBRID_V2_W2_M4_EXACT_RADICAL_NORMALIZATION
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_V2_W2_M4_PREMERGE_EVIDENCE_RECONCILIATION
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-w2-m4-exact-radical-normalization/correction-addendum.md

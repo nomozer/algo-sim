@@ -1,0 +1,73 @@
+{
+  "run_id": "hybrid-v2-w2-m5-adapter4-category-a-identity-repair",
+  "task_code": "HYBRID_V2_W2_M5_ADAPTER4_CATEGORY_A_IDENTITY_REPAIR",
+  "task_wave": 1,
+  "date": "2026-10-28",
+  "branch": "research/hybrid-v2-w2-m5-adapter4-category-a-identity-repair",
+  "baseline": "eb661971847c034500862299c5091f1f3d2a2998",
+  "main_baseline": "eb661971847c034500862299c5091f1f3d2a2998",
+  "parent_product_commit": "051224ee2740cbf5d55dd94633503db1f0050ada",
+  "parent_t3_candidate": "1e0c8db668bbe110f343a8a67cdeca465008c188",
+  "parent_freeze_hash": "8b94a5aa4a986e312ef423492b332bf25378868f6c9578767ba2ee7003c18369",
+  "classification": "PRODUCT_REPAIR_WITH_POST_FEEDBACK_DEVELOPMENT_REGRESSION",
+  "historical_source_commit": "ecdc26b012c8ce80d53524a98dc75cdcb020079d",
+  "status": "READY_FOR_OWNER_REVIEW",
+  "live_provider_calls": 0,
+  "default_mode": "LLM_ONLY",
+  "hybrid": "OPT_IN_ONLY",
+  "cache_version": 130,
+  "merge_push_cleanup": "NONE",
+  "product_commit": "73ca8d92e74059680ce53b99692af396df37a2f8",
+  "test_and_artifacts_commit": "7aa538aecf2d31c40887b7c6ee52f7e8219ea0eb",
+  "t3_candidate": "b61f16995dfbe0110a639a2127d0fb5a9c3afde0",
+  "freeze_hash": "1170ca163529dd40b57f4058826db92a6433359546aa2ad718712f38a538c10d",
+  "versions": {
+    "registry": "geometry-functions/19",
+    "planner": "geometry-fact-planner/17",
+    "engine": "geometry-function-engine/14",
+    "adapter": "hybrid-simulation-adapter/4",
+    "certificate": "plane-section-certificate/1"
+  },
+  "product_files": [
+    "backend/app/ai/adapter4_route.py"
+  ],
+  "closed_findings": [
+    "W2-M5 (W2-A07): SERVED_CORRECT (Category A DINH_CAT_CANH, cycle [A', M, N], area_squared 1875/8, answer 25√6/4)",
+    "W2-M5 (W2-A10): SERVED_CORRECT (Category A DINH_CAT_CANH, section_only, cycle [I, A', I2, I1], area_squared 504)"
+  ],
+  "w2_m5_corpus": {
+    "positive_red": "0/14",
+    "positive_green": "14/14",
+    "positive_exact_oracle_agreement": "14/14",
+    "tamper_red": "12/12",
+    "tamper_green": "12/12"
+  },
+  "wave2_post_feedback": {
+    "historical_raw_served_correct": "3/48 (Category B 3/36, Category A 0/12, 2 harness-induced WRONG_SERVED on W2-A01/W2-A03)",
+    "historical_adjudicated_served_correct": "5/48 (Category B 3/36, Category A 2/12, 0/96 WRONG_SERVED)",
+    "source_gate_19_served_correct": "45/48 (Category B 36/36, Category A 9/12; 3 FALSE_REFUSAL: W2-A04, W2-A07, W2-A10)",
+    "w2_m4_served_correct": "46/48 (Category B 36/36, Category A 10/12; 2 FALSE_REFUSAL: W2-A07, W2-A10)",
+    "raw_historical_scorer_served_correct": "47/48 (1 scorer objects_by_id primed lookup bug on W2-A10 at evaluate_holdout_wave2.py:184)",
+    "served_correct": 48,
+    "positives": 48,
+    "category_b_served_correct": "36/36",
+    "category_a_served_correct": "12/12",
+    "false_refusals": 0,
+    "negative_refusals": 48,
+    "negatives": 48,
+    "correct_refusal_reason": 36,
+    "reason_mismatches": 12,
+    "wrong_served": 0,
+    "exact_oracle_agreement": "48/48",
+    "learner_facing_source_identity_clean": "96/96",
+    "scorer_adjudication_receipt": "results/w2-a10-scorer-adjudication-receipt.json"
+  },
+  "t3_verdict": "FULL_PRODUCT_GATE_PASS",
+  "t3_receipt": "verification/full-t3/receipt.json",
+  "t3_log_sha256": "b62158a63210a4a7b7905a6224e20c7386e9788eac45b3bd722579396745b824",
+  "post_t3_freeze": "MATCH",
+  "independent_review": "review.md",
+  "independent_reviewer_id": "155dd101-7d6a-4edb-9606-b9b56b1bba45",
+  "independent_review_verdict": "APPROVED_NO_FINDINGS",
+  "final_branch_head_rule": "Final documentation commit containing report.md, handoff.md, review.md, run.json, and verification receipts; resolve the named branch. Exact SHA is emitted in session final handoff after commit (avoids self-reference)."
+}

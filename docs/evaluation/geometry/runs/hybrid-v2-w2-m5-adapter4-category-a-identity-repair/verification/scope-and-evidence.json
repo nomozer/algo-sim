@@ -1,0 +1,23 @@
+{
+  "status": "SOURCE_SCOPE_AND_RAW_EVIDENCE_IDENTITY_PASS",
+  "baseline_head": "eb661971847c034500862299c5091f1f3d2a2998",
+  "main_head": "eb661971847c034500862299c5091f1f3d2a2998",
+  "origin_main_head": "eb661971847c034500862299c5091f1f3d2a2998",
+  "product_commit": "73ca8d92e74059680ce53b99692af396df37a2f8",
+  "candidate": "b61f16995dfbe0110a639a2127d0fb5a9c3afde0",
+  "product_files_changed": [
+    "backend/app/ai/adapter4_route.py"
+  ],
+  "forbidden_layers_changed": [],
+  "publication_safety_exit_code": 0,
+  "locked_evidence_sha256_lf": {
+    "inputs/development.json": "83d8f088cd1d15717977918eacca645c4af5ac7aa7cea21c4ceb3f844cb75696",
+    "inputs/oracle.json": "83137971fca1fc87e0cef6af10be164d8987eda5742db9c414a84af98002b40d",
+    "results/red-before.json": "b2453b541410e843dbd9b293d0fa3801e3541d85e83f9a95078431fc1d253262",
+    "results/green-after.json": "6f4b7262964d83bb5585aa3bd6322ebe944c50177752fc5bd1e43b72017c81a5",
+    "results/tamper-results.json": "448b0db733cda02d50578aefb7e6e6de3581d7f5986ca783fd520a66ef2caf74",
+    "results/wave2-post-feedback-regression.json": "b02c3333cc776036abda432365b59f1a5bad9a42d27aa375fb30b584c3843262",
+    "results/w2-a10-scorer-adjudication-receipt.json": "66f2dd0c41842bc9db1b9d3ab634b929363217f665c3b831b0f16e70a415e074"
+  },
+  "live_provider_calls": 0
+}
