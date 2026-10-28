@@ -1,0 +1,21 @@
+FFFFFF....FFFFF.FF.FFFF.F                                                [100%]
+=========================== short test summary info ===========================
+FAILED backend\tests\geometry\test_premise_scope_recovery.py::test_original_unknown_scope_never_served[False-DEV-NEG-08]
+FAILED backend\tests\geometry\test_premise_scope_recovery.py::test_original_unknown_scope_never_served[False-DEV-NEG-23]
+FAILED backend\tests\geometry\test_premise_scope_recovery.py::test_original_unknown_scope_never_served[True-DEV-NEG-08]
+FAILED backend\tests\geometry\test_premise_scope_recovery.py::test_original_unknown_scope_never_served[True-DEV-NEG-23]
+FAILED backend\tests\geometry\test_premise_scope_recovery.py::test_unknown_or_malformed_explicit_scope_is_not_optional[foreign-typed-fact-next/1]
+FAILED backend\tests\geometry\test_premise_scope_recovery.py::test_unknown_or_malformed_explicit_scope_is_not_optional[foreign-typed-fact-next/2]
+FAILED backend\tests\geometry\test_premise_scope_recovery.py::test_known_scope_cannot_borrow_other_solid_operands[premise0]
+FAILED backend\tests\geometry\test_premise_scope_recovery.py::test_known_scope_cannot_borrow_other_solid_operands[premise1]
+FAILED backend\tests\geometry\test_premise_scope_recovery.py::test_known_scope_cannot_borrow_other_solid_operands[premise2]
+FAILED backend\tests\geometry\test_premise_scope_recovery.py::test_same_local_labels_do_not_license_a_qualified_other_scope
+FAILED backend\tests\geometry\test_premise_scope_recovery.py::test_derived_point_ownership_follows_its_definition_not_a_consumers_scope
+FAILED backend\tests\geometry\test_premise_scope_recovery.py::test_absent_optional_scope_does_not_guess_between_solids
+FAILED backend\tests\geometry\test_premise_scope_recovery.py::test_explicit_valid_scope_survives_in_receipt_with_its_quote
+FAILED backend\tests\geometry\test_premise_scope_recovery.py::test_scope_safety_oracle_kills_bypass_and_default_scope_mutants[DEV-NEG-08-remove_validation]
+FAILED backend\tests\geometry\test_premise_scope_recovery.py::test_scope_safety_oracle_kills_bypass_and_default_scope_mutants[DEV-NEG-08-replace_with_default]
+FAILED backend\tests\geometry\test_premise_scope_recovery.py::test_scope_safety_oracle_kills_bypass_and_default_scope_mutants[DEV-NEG-23-remove_validation]
+FAILED backend\tests\geometry\test_premise_scope_recovery.py::test_scope_safety_oracle_kills_bypass_and_default_scope_mutants[DEV-NEG-23-replace_with_default]
+FAILED backend\tests\geometry\test_premise_scope_recovery.py::test_original_neg20_top_vertex_cannot_lie_on_non_degenerate_prism_base
+18 failed, 7 passed in 2.33s

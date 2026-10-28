@@ -1,0 +1,168 @@
+{
+  "checkpoint": "8dd515d84a9a249cefae065b72c0ee8829d7499d",
+  "status": "MATCH",
+  "receipt_hashes": 11,
+  "preregistration_hashes": 4,
+  "existing_run_files": [
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/architecture-decision.md",
+      "git_blob_sha256": "c8d8c837a719a5133991d120bf44e9285df655e73bc05f9707daa985936c4655",
+      "sha256_lf": "c8d8c837a719a5133991d120bf44e9285df655e73bc05f9707daa985936c4655"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/baseline-audit.md",
+      "git_blob_sha256": "dd08b4b054e4084398f1398df1ba8cace74a5b3bde5f08cc9214e3a7bc54eecc",
+      "sha256_lf": "dd08b4b054e4084398f1398df1ba8cace74a5b3bde5f08cc9214e3a7bc54eecc"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/capability-intake/inputs/development.json",
+      "git_blob_sha256": "abd694de2ac421127d4c2d6a5e38cb070501363f5073218fbb22aef73026e3c1",
+      "sha256_lf": "abd694de2ac421127d4c2d6a5e38cb070501363f5073218fbb22aef73026e3c1"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/capability-intake/inputs/oracle.json",
+      "git_blob_sha256": "1a1df738fe84c9487ffd46d7b1970ec96add9273108fb664b08694c673aed001",
+      "sha256_lf": "1a1df738fe84c9487ffd46d7b1970ec96add9273108fb664b08694c673aed001"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/capability-intake/red-before.json",
+      "git_blob_sha256": "7f0e1fde90e139c86ca853cb27dff6a3e4a533418a27a20784b64aef60280e66",
+      "sha256_lf": "7f0e1fde90e139c86ca853cb27dff6a3e4a533418a27a20784b64aef60280e66"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/intake/inputs/development.json",
+      "git_blob_sha256": "d18c77e2fbd6ddda24b762c9a08efc9b7532fbf51fd468b2f5b60dfc507e6ff8",
+      "sha256_lf": "d18c77e2fbd6ddda24b762c9a08efc9b7532fbf51fd468b2f5b60dfc507e6ff8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/intake/inputs/oracle.json",
+      "git_blob_sha256": "41853c64117a372ec9154c05fa6bb5384e4dc39ddf6cf962c18275282f996d51",
+      "sha256_lf": "41853c64117a372ec9154c05fa6bb5384e4dc39ddf6cf962c18275282f996d51"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/intake/red-before.json",
+      "git_blob_sha256": "d3d45cfdd0664d4b6018459172cd8ac34914ab1fbe258118c06649ac0489947a",
+      "sha256_lf": "d3d45cfdd0664d4b6018459172cd8ac34914ab1fbe258118c06649ac0489947a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/unicode-intake/baseline-normalized-language-controls.json",
+      "git_blob_sha256": "874e456cd45cea1d6a53981fe074f11634481f2a181aa6059336c4a32520df42",
+      "sha256_lf": "874e456cd45cea1d6a53981fe074f11634481f2a181aa6059336c4a32520df42"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/unicode-intake/inputs/development.json",
+      "git_blob_sha256": "af3b5f557bba736307587c5ea898e282468e004ea99661c9c1c5b036de5d2ea7",
+      "sha256_lf": "af3b5f557bba736307587c5ea898e282468e004ea99661c9c1c5b036de5d2ea7"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/unicode-intake/inputs/oracle.json",
+      "git_blob_sha256": "9c16b140c4c773c38cb12de15319f701e73949dc3ed256a40052400ab49e79c0",
+      "sha256_lf": "9c16b140c4c773c38cb12de15319f701e73949dc3ed256a40052400ab49e79c0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/unicode-intake/red-before.json",
+      "git_blob_sha256": "caef8256833b9ba9960353480e3bc1a47cf68b5745b9a7caf4a308217132e6b6",
+      "sha256_lf": "caef8256833b9ba9960353480e3bc1a47cf68b5745b9a7caf4a308217132e6b6"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/handoff.md",
+      "git_blob_sha256": "f88e1ae87bb491fed09597e6a80fe3b5653c5c358dae8ac49bb98257585eb62a",
+      "sha256_lf": "f88e1ae87bb491fed09597e6a80fe3b5653c5c358dae8ac49bb98257585eb62a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/inputs/development.json",
+      "git_blob_sha256": "cbf6926e159a9db9340fdb3fcc6b095a6eabd45e0aebc229f94b998ee7aeea26",
+      "sha256_lf": "cbf6926e159a9db9340fdb3fcc6b095a6eabd45e0aebc229f94b998ee7aeea26"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/inputs/oracle.json",
+      "git_blob_sha256": "9c16b140c4c773c38cb12de15319f701e73949dc3ed256a40052400ab49e79c0",
+      "sha256_lf": "9c16b140c4c773c38cb12de15319f701e73949dc3ed256a40052400ab49e79c0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/plan.md",
+      "git_blob_sha256": "abeff477e25d84fb7addab31ff5c01fa0e66ec2d6f196a66d7da645db0a086f4",
+      "sha256_lf": "abeff477e25d84fb7addab31ff5c01fa0e66ec2d6f196a66d7da645db0a086f4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/report.md",
+      "git_blob_sha256": "85338121e548845841cd5381c91640dd48f97b10bc7705efa5d5b3f4dc27185a",
+      "sha256_lf": "85338121e548845841cd5381c91640dd48f97b10bc7705efa5d5b3f4dc27185a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/green-after.json",
+      "git_blob_sha256": "0315765f15db1fb5be9f0e3265a2cba6bad2859d7ab2516031a6679472b2d021",
+      "sha256_lf": "0315765f15db1fb5be9f0e3265a2cba6bad2859d7ab2516031a6679472b2d021"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/red-before.json",
+      "git_blob_sha256": "5d9051055e48d530f0ba80807e648c5e46f7814a5ab7804037ab8a3fab5a5f01",
+      "sha256_lf": "5d9051055e48d530f0ba80807e648c5e46f7814a5ab7804037ab8a3fab5a5f01"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/red-tests.log",
+      "git_blob_sha256": "2769bd826d5147d7ba925853acc750eca9f498707aaf1cbf323f3d3d58c5ea3e",
+      "sha256_lf": "2769bd826d5147d7ba925853acc750eca9f498707aaf1cbf323f3d3d58c5ea3e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/tamper-results.json",
+      "git_blob_sha256": "f448078fbf72d395e2dac827bd928a22c9ac867b57ecd9ed44178179b1a064cd",
+      "sha256_lf": "f448078fbf72d395e2dac827bd928a22c9ac867b57ecd9ed44178179b1a064cd"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/review.md",
+      "git_blob_sha256": "85eb1a6223c8e23a8e64da72942ad038161f32446d1b7493f753d8f7b0ac967f",
+      "sha256_lf": "85eb1a6223c8e23a8e64da72942ad038161f32446d1b7493f753d8f7b0ac967f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/run.json",
+      "git_blob_sha256": "0c03e7a85ddaa73fa5b9530d5705f46e2c981f65e9d5d2e0f0728f62c7da6fc9",
+      "sha256_lf": "0c03e7a85ddaa73fa5b9530d5705f46e2c981f65e9d5d2e0f0728f62c7da6fc9"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/takeover.md",
+      "git_blob_sha256": "f68e1965d262d5b469d5545befbb87156fe0a0629d35f8ba3d52643b72c5705d",
+      "sha256_lf": "f68e1965d262d5b469d5545befbb87156fe0a0629d35f8ba3d52643b72c5705d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/tools/evaluate_development.py",
+      "git_blob_sha256": "9d4f26c90cf631f703374082e62b28b240d84838e9489a571f3ebbd5d62ec100",
+      "sha256_lf": "9d4f26c90cf631f703374082e62b28b240d84838e9489a571f3ebbd5d62ec100"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/baseline-foreign-scope-reproduction.json",
+      "git_blob_sha256": "b01f98f6d1d0ee6aa70c3a387be6d3c47ca6fd83317de06154bb7bdd58fd2e2b",
+      "sha256_lf": "b01f98f6d1d0ee6aa70c3a387be6d3c47ca6fd83317de06154bb7bdd58fd2e2b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/baseline-normalized-language-controls.json",
+      "git_blob_sha256": "91e34810e21ec8e53cf7d427cd2dfba821c87607e1b7c463945741f340481825",
+      "sha256_lf": "91e34810e21ec8e53cf7d427cd2dfba821c87607e1b7c463945741f340481825"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/preregistration.json",
+      "git_blob_sha256": "3ee1cf06c836a4ca9685d7eaaa6cfd999c1a0d9ea24dfe5ad26675935992ef2e",
+      "sha256_lf": "3ee1cf06c836a4ca9685d7eaaa6cfd999c1a0d9ea24dfe5ad26675935992ef2e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/scope-and-evidence.json",
+      "git_blob_sha256": "326f691c9ea507fc216a0ff8873ab15afb3311816dbdc265bf06508ff70e2b94",
+      "sha256_lf": "326f691c9ea507fc216a0ff8873ab15afb3311816dbdc265bf06508ff70e2b94"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/stop-condition.json",
+      "git_blob_sha256": "e61a7eaf5f2f1e6e0b3db9f4beaeb5a4b0deea4a233c70757e5582221169805f",
+      "sha256_lf": "e61a7eaf5f2f1e6e0b3db9f4beaeb5a4b0deea4a233c70757e5582221169805f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/t1.log",
+      "git_blob_sha256": "4c7d54c443256db7933ee55d51341d6f71d996841ad12bf23b56b5fe04670d15",
+      "sha256_lf": "4c7d54c443256db7933ee55d51341d6f71d996841ad12bf23b56b5fe04670d15"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/tiers.json",
+      "git_blob_sha256": "3a25fefb5b75086484ebdd32a8b1adb330c86a295f4e7d908095479ffb859fd6",
+      "sha256_lf": "3a25fefb5b75086484ebdd32a8b1adb330c86a295f4e7d908095479ffb859fd6"
+    }
+  ]
+}
