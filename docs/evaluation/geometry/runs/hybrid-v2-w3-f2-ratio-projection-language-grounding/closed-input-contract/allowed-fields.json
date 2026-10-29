@@ -1,0 +1,241 @@
+{
+  "schema": "CLOSED_INPUT_CONTRACT/1",
+  "allowed_fields": {
+    "math_goal": {
+      "volume_ratio": [
+        "denominator_solid_id",
+        "goal_id",
+        "kind",
+        "numerator_solid_id",
+        "quote"
+      ],
+      "residual_volume": [
+        "cut_solid_id",
+        "goal_id",
+        "kind",
+        "parent_solid_id",
+        "quote"
+      ],
+      "measurement": [
+        "goal_id",
+        "goal_type",
+        "kind",
+        "quote",
+        "solid_id",
+        "target"
+      ]
+    },
+    "simulation_goal": {
+      "construct_object": [
+        "goal_id",
+        "kind",
+        "quote",
+        "style_role",
+        "target_refs",
+        "target_solid_id"
+      ],
+      "construct_plane_section": [
+        "goal_id",
+        "kind",
+        "quote",
+        "style_role",
+        "target_refs",
+        "target_section_id",
+        "target_solid_id"
+      ],
+      "construct_derived_solid": [
+        "apex_ref",
+        "derived_solid_id",
+        "goal_id",
+        "kind",
+        "parent_solid_id",
+        "quote",
+        "style_role",
+        "target_refs",
+        "target_section_id"
+      ],
+      "highlight_geometry": [
+        "goal_id",
+        "kind",
+        "quote",
+        "style_role",
+        "target_refs",
+        "target_section_id",
+        "target_solid_id"
+      ],
+      "construction_sequence": [
+        "goal_id",
+        "kind",
+        "quote",
+        "style_role",
+        "target_refs",
+        "target_solid_id"
+      ]
+    },
+    "relation": {
+      "containment": [
+        "container_ref",
+        "kind",
+        "member_ref",
+        "quote",
+        "relation_id",
+        "section_id",
+        "solid_id"
+      ],
+      "shared_vertices": [
+        "kind",
+        "pairs",
+        "quote",
+        "relation_id",
+        "section_id",
+        "solid_a",
+        "solid_b",
+        "solid_id"
+      ],
+      "shared_faces": [
+        "face_a",
+        "face_b",
+        "kind",
+        "quote",
+        "relation_id",
+        "section_id",
+        "solid_a",
+        "solid_b",
+        "solid_id"
+      ],
+      "parallel": [
+        "entity_a",
+        "entity_b",
+        "kind",
+        "quote",
+        "relation_id",
+        "section_id",
+        "solid_a",
+        "solid_b",
+        "solid_id"
+      ],
+      "perpendicular": [
+        "entity_a",
+        "entity_b",
+        "kind",
+        "quote",
+        "relation_id",
+        "section_id",
+        "solid_a",
+        "solid_b",
+        "solid_id"
+      ],
+      "section_membership": [
+        "kind",
+        "member_refs",
+        "quote",
+        "relation_id",
+        "section_id",
+        "solid_id"
+      ],
+      "coordinate_frame": [
+        "anchor_refs",
+        "frame_id",
+        "kind",
+        "quote",
+        "relation_id",
+        "section_id",
+        "solid_id"
+      ]
+    }
+  },
+  "operand_shapes": {
+    "point": "ref",
+    "segment": "refs2=",
+    "line": "refs2=",
+    "line1": "refs2=",
+    "line2": "refs2=",
+    "plane": "refs3",
+    "plane1": "refs3",
+    "plane2": "refs3",
+    "polygon": "refs3",
+    "solid": "solid_name",
+    "solid_id": "id",
+    "section_id": "id"
+  },
+  "target_alternatives": {
+    "distance": [
+      [
+        "segment"
+      ],
+      [
+        "point",
+        "plane"
+      ],
+      [
+        "point",
+        "line"
+      ],
+      [
+        "line1",
+        "line2"
+      ],
+      [
+        "line",
+        "plane"
+      ],
+      [
+        "plane1",
+        "plane2"
+      ]
+    ],
+    "angle": [
+      [
+        "line",
+        "plane"
+      ],
+      [
+        "line1",
+        "line2"
+      ],
+      [
+        "plane1",
+        "plane2"
+      ]
+    ],
+    "volume": [
+      [
+        "solid"
+      ],
+      [
+        "solid_id"
+      ]
+    ],
+    "radius": [
+      [
+        "solid"
+      ],
+      [
+        "section_id"
+      ]
+    ],
+    "lateral_area": [
+      [
+        "solid"
+      ]
+    ],
+    "area": [
+      [
+        "polygon"
+      ],
+      [
+        "section_id"
+      ],
+      [
+        "solid"
+      ]
+    ]
+  },
+  "scope_keys": [
+    "solid",
+    "solid_id"
+  ],
+  "presence": "reject explicit inapplicable fields, including null/empty; absent defaults do not count",
+  "relation_scope_semantics": "solid_id and section_id are optional ownership assertions on every relation kind; section_id anchors the declared solid. Side scopes apply only to two-sided relations.",
+  "simulation_target_refs_semantics": "optional ownership assertions, not an instruction to filter or add scene objects; construct/highlight/sequence keep their existing presentation behavior"
+}

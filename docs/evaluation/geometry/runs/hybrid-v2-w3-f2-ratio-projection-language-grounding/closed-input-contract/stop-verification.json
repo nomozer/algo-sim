@@ -1,0 +1,24 @@
+{
+  "status": "NOT_READY",
+  "final_stopped_product_probe_summary": {
+    "total": 203,
+    "classes": {
+      "POS": 56,
+      "NEG": 147
+    },
+    "served_negative_probes": 0,
+    "internal_results": 0
+  },
+  "baseline_203_positive_losses": [],
+  "product_sha256_bytes": {
+    "app/simulation/geometry_functions/typed_fact_next.py": "2f501f5f7a5bbe8e37756a8d1215fc2da85ceb841d953d30fe70de45cbdb7d7f",
+    "app/simulation/geometry_functions/typed_fact_next_bridge.py": "10ed73b7374480756f8c372b3991ff73e521e9c16ff09704fd2380032f5a1d16",
+    "app/ai/adapter3_simulation.py": "99c88e5f22817fdb9ca2bdcb914672dab59370524a39a7855eadb2da3551c1d2"
+  },
+  "no_product_edits_after_gate_a": true,
+  "supplemental_new_control_failures": 4,
+  "nine_mandatory_mutants_killed": 9,
+  "late_fixture_qualification_gap": "source-control-analysis.json",
+  "git_checkpoint": "BLOCKED_INDEX_LOCK_PERMISSION_DENIED",
+  "later_stages": "NOT_RUN"
+}

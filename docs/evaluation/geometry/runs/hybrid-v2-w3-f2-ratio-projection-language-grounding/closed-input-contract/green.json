@@ -1,0 +1,38 @@
+{
+  "phase": "GREEN_ATTEMPT",
+  "status": "FAIL",
+  "head": "5e44d5da434b1d1a8fd98a0f1f4527f40de3c6ed",
+  "product_uncommitted": true,
+  "command": [
+    "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "backend/tests/geometry/test_closed_input_contract.py",
+    "backend/tests/geometry/test_scope_census_closure.py",
+    "backend/tests/geometry/test_unified_solid_scope.py",
+    "backend/tests/geometry/test_adapter3_fallback_safety.py",
+    "backend/tests/geometry/test_premise_scope_recovery.py",
+    "-q",
+    "--tb=no",
+    "-rA",
+    "--basetemp=D:/Documents/projects/algo-sim/.superpowers/f2/closed-input-gate-a-final-20261029"
+  ],
+  "exit_code": 1,
+  "summary": "4 failed, 630 passed, 6 skipped in 6.77s",
+  "failed": [
+    "backend\\tests\\geometry\\test_closed_input_contract.py::test_fresh_geometry_positive_scope_aliases[id]",
+    "backend\\tests\\geometry\\test_closed_input_contract.py::test_fresh_geometry_positive_scope_aliases[notation]",
+    "backend\\tests\\geometry\\test_closed_input_contract.py::test_fresh_geometry_positive_scope_aliases[nested_id]",
+    "backend\\tests\\geometry\\test_closed_input_contract.py::test_fresh_geometry_positive_scope_aliases[goal_id]"
+  ],
+  "log_sha256_lf": "059289300aa893fb49ce04712d618a152d6c654e5c07ca9907a6c299c05e6a82",
+  "product_sha256_lf": {
+    "backend/app/simulation/geometry_functions/typed_fact_next.py": "2f501f5f7a5bbe8e37756a8d1215fc2da85ceb841d953d30fe70de45cbdb7d7f",
+    "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py": "10ed73b7374480756f8c372b3991ff73e521e9c16ff09704fd2380032f5a1d16",
+    "backend/app/ai/adapter3_simulation.py": "99c88e5f22817fdb9ca2bdcb914672dab59370524a39a7855eadb2da3551c1d2"
+  },
+  "live_provider_calls": 0
+}

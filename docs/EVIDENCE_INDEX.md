@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_V2_W3_F2_CLOSED_INPUT_CONTRACT_AND_LEGACY_OWNERSHIP_SAFETY
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/
+CLASSIFICATION = DEVELOPMENT_SECURITY_REGRESSION; UNCOMMITTED_WIP; NOT_READY; Gate A FAIL (630 pass, 4 fail, 6 skipped); supplemental source-control qualification gap recorded; no later stages.
+CODE_COMMIT = NONE_NEW (HEAD 5e44d5da; sandbox index.lock permission denied)
+VERIFICATION = red.json; green.json; mutations.json; gates.json; coverage.json; schema-census-v3.json; stopped-product-probes.json; source-control-analysis.json; stop-verification.json; integrity.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_V2_W3_F2_SCOPE_CENSUS_CLOSURE_AND_HYPHENATED_ID_RECOVERY (partial input-surface extension; acceptance FAIL, not a completed correction)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_V2_W3_F2_SCOPE_CENSUS_CLOSURE_AND_HYPHENATED_ID_RECOVERY
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope-closure/report.md
@@ -9,7 +20,7 @@ CODE_COMMIT = 959e23a6fff0b9c9d363fca378c8617cd72fd36c, 1262fbd5b1d70237e82e9ee2
 VERIFICATION = schema-field-inventory.json; schema-field-inventory-v2.json; scope-entrypoint-coverage.json; red.json; red-f7.json; green.json; mutation-results.json; compatibility.json; gates.json; closure-review1-probes-final.out; pre-freeze-review.md; pre-freeze-review/
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_V2_W3_F2_UNIFIED_SOLID_SCOPE_VALIDATION (findings F1–F6 of unified-solid-scope/review.md; earlier files unchanged)
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_V2_W3_F2_CLOSED_INPUT_CONTRACT_AND_LEGACY_OWNERSHIP_SAFETY (closed-input-contract/report.md; partial, NOT_READY)
 
 ## WAVE_ID = HYBRID_V2_W3_F2_UNIFIED_SOLID_SCOPE_VALIDATION
 

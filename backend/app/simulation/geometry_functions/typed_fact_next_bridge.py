@@ -16,6 +16,8 @@ from .typed_fact_next import (
     _ARGS_LOI,
     _ARGS_GOC_VUONG,
     CONSTRUCTED_OUTPUTS,
+    measurement_operands,
+    measurement_scope,
     _derived_parents,
     resolve_solid_name,
     scope_records,
@@ -84,9 +86,10 @@ def _check_qualified_refs(value: Any, solids: dict[str, Any], owned: dict[str, s
             sid, label = parse_qualified_ref(value)
         except TypedFactNextValidationError as e:
             raise TuChoi(e.code, e.detail) from None
-        if sid not in solids:
+        if sid not in solids and not any(sid in scopes for scopes in (owned or {}).values()):
             raise TuChoi("UNKNOWN_SOLID_ID", f"tham chiếu tới khối chưa khai {sid!r}")
-        if label not in solids[sid].local_vertices() and sid not in (owned or {}).get(label, set()):
+        canonical = solids[sid].canonical_vertex(label) if sid in solids else label
+        if (sid not in solids or label not in solids[sid].local_vertices()) and sid not in (owned or {}).get(canonical, set()):
             raise TuChoi("UNKNOWN_VERTEX_REF", f"{value!r} không phải đỉnh của khối đã khai")
 
 
@@ -114,9 +117,23 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
     owners: dict[str, set[str]] = {}
     vertices: dict[str, set[str]] = {}
     for sid, solid in solids.items():
-        for label in solid.local_vertices():
+        for local in solid.local_vertices():
+            label = solid.canonical_vertex(local)
             owners.setdefault(label, set()).add(sid)
             vertices.setdefault(label, set()).add(sid)
+
+    def identity(ref, scope=None):
+        ns, label = parse_qualified_ref(ref)
+        solid = solids.get(ns or scope)
+        if solid is not None:
+            return solid.canonical_vertex(label)
+        identities = {s.canonical_vertex(label) for s in solids.values() if label in s.local_vertices()}
+        if len(identities) > 1:
+            raise TuChoi('AMBIGUOUS_REFERENCE', f'tham chiếu {ref!r} có nhiều danh tính')
+        return next(iter(identities), label)
+
+    def ref_owners(ref, scope=None):
+        return owners.get(identity(ref, scope), set())
     outputs = CONSTRUCTED_OUTPUTS
     new_names = {_ref(prem.args[outputs[prem.kind]]) for prem in p.premises
                  if prem.kind in outputs and outputs[prem.kind] in prem.args}
@@ -144,16 +161,20 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
                 raise TuChoi('UNKNOWN_SOLID_ID', f'{fid}: khối {explicit!r} chưa được khai báo', (fid,))
             if explicit is not None and sid is not None and explicit != sid:
                 raise TuChoi('SOURCE_OBJECT_MISMATCH', f'{fid}: toán hạng có scope khác premise', (fid,))
-            if explicit is not None and label not in vertices and label not in new_names:
+            if explicit is not None and identity(ref, sid) not in vertices and label not in new_names:
                 raise TuChoi('UNKNOWN_VERTEX_REF', f'{fid}: tham chiếu {ref!r} không được khai báo', (fid,))
         records.append((prem, fid, sid, refs))
     for sec in p.derived_sections:
         for cut in getattr(sec, 'stated_intersections', ()):
-            if cut.point and all(sec.target_solid_id in owners.get(_ref(x), set()) for x in cut.edge):
-                owners.setdefault(cut.point, set()).add(sec.target_solid_id)
+            if cut.point and all(sec.target_solid_id in ref_owners(x, sec.target_solid_id) for x in cut.edge):
+                owners.setdefault(identity(cut.point, sec.target_solid_id), set()).add(sec.target_solid_id)
 
-    def common(refs):
-        sets = [owners.get(_ref(ref), set()) & ({parse_qualified_ref(ref)[0]} if '::' in ref else set(solids))
+        for edge, point in getattr(sec, 'named_intersections', {}).items():
+            if all(sec.target_solid_id in ref_owners(x, sec.target_solid_id) for x in split_edge_key(edge)):
+                owners.setdefault(identity(point, sec.target_solid_id), set()).add(sec.target_solid_id)
+
+    def common(refs, scope=None):
+        sets = [ref_owners(ref, scope) & ({parse_qualified_ref(ref)[0]} if '::' in ref else set(solids))
                 for _key, ref in refs]
         return set.intersection(*sets) if sets else set()
 
@@ -164,10 +185,10 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
             output = outputs.get(prem.kind)
             if not output:
                 continue
-            candidates = common([(key, ref) for key, ref in refs if key != output])
+            candidates = common([(key, ref) for key, ref in refs if key != output], sid)
             if sid is not None:
                 candidates &= {sid}
-            label = _ref(prem.args[output])
+            label = identity(prem.args[output], sid)
             if label in vertices:
                 # A shared-face subsolid may name a point constructed on its parent's edge (e.g. a midpoint).
                 # A projection's existing foreign foot is not a fresh point definition.
@@ -180,9 +201,9 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
             break
     checked = []
     for prem, fid, sid, refs in records:
-        candidates = common(refs)
-        known = [owners.get(_ref(ref), set()) for _key, ref in refs if owners.get(_ref(ref))]
-        if sid is not None and any(sid not in owners.get(_ref(ref), set()) for _key, ref in refs):
+        candidates = common(refs, sid)
+        known = [ref_owners(ref, sid) for _key, ref in refs if ref_owners(ref, sid)]
+        if sid is not None and any(sid not in ref_owners(ref, sid) for _key, ref in refs):
             raise TuChoi('SOURCE_OBJECT_MISMATCH', f'{fid}: toán hạng/điểm dựng không thuộc phạm vi {sid!r}', (fid,))
         if sid is None and known and not set.intersection(*known):
             raise TuChoi('SOURCE_OBJECT_MISMATCH', f'{fid}: premise trộn thực thể của nhiều khối', (fid,))
@@ -198,14 +219,29 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
     # bound by the same constructed-point ownership: an unqualified operand owned only by other solids contradicts its
     # scope. Unowned labels (unnamed section points, undeclared names) stay the routes' own refusals.
     parents = _derived_parents(p)
+    sections = {sec.section_id: sec for sec in p.derived_sections}
+    for goal in p.simulation_goals:
+        if goal.kind != 'construct_derived_solid':
+            continue
+        sec = sections[goal.target_section_id]
+        members = [goal.apex_ref, sec.through_point, *getattr(sec, 'named_intersections', {}).values(),
+                   *(cut.point for cut in getattr(sec, 'stated_intersections', ()))]
+        for ref in members:
+            if ref and sec.target_solid_id in ref_owners(ref, sec.target_solid_id):
+                owners.setdefault(identity(ref, sec.target_solid_id), set()).add(goal.derived_solid_id)
     for kind, where, scope, refs, _strict in scope_records(p):
         base = parents.get(scope, scope)
-        if kind == 'premise' or base is None:
+        if kind == 'premise':
             continue
         for ref in refs:
             ns, label = parse_qualified_ref(ref)
-            if ns is None and owners.get(label) and base not in owners[label]:
-                raise TuChoi('SOURCE_OBJECT_MISMATCH', f'{where}: toán hạng {ref!r} không thuộc phạm vi {scope!r}', (where,))
+            own = ref_owners(ref, base)
+            claimed = ns or scope
+            if claimed is not None and own and claimed not in own:
+                raise TuChoi('SOURCE_OBJECT_MISMATCH', f'{where}: toán hạng {ref!r} không thuộc phạm vi {claimed!r}', (where,))
+            if kind == 'relation' and ns is None and not own:
+                raise TuChoi('UNKNOWN_VERTEX_REF', f'{where}: tham chiếu {ref!r} không được khai báo', (where,))
+    _check_qualified_refs(p.model_dump(), solids, owners)
     return checked
 
 
@@ -221,7 +257,7 @@ def _operand(t: dict[str, Any], key: str, n: int) -> list[str] | None:
 def _distance_question(g) -> dict[str, Any]:
     """`/2` distance target → the planner's existing question. Keys are exactly those the `/3` adapter already reads
     (`{point, plane}`, `{segment}`, `{line1, line2}`); anything else is refused, never guessed."""
-    t = g.target
+    t = measurement_operands(g)
     pts = partial(_operand, t)
     if set(t) == {"point", "plane"} and isinstance(t["point"], str) and (pl := pts("plane", 3)):
         return {"quantity": "distance", "points_a": [_ref(t["point"])], "points_b": pl}
@@ -246,7 +282,7 @@ def _angle_question(g) -> dict[str, Any]:
     """`/2` angle target → the planner's existing angle question (answer: cos² — exact). Keys are those `/3` reads
     (`{line, plane}`, `{line1, line2}`) plus `{plane1, plane2}` for the dihedral question the planner already has. Same
     arity rule as distance (`_operand`): a line is exactly two distinct labels, a plane three or more — never truncated."""
-    t = g.target
+    t = measurement_operands(g)
     pts = partial(_operand, t)
     if set(t) == {"line", "plane"} and (ln := pts("line", 2)) and (pl := pts("plane", 3)):
         return {"quantity": "angle", "points_a": ln, "points_b": pl}
@@ -374,6 +410,7 @@ def bridge_v2(raw: dict[str, Any]) -> dict[str, Any]:
 def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> dict[str, Any]:
     facts: list[dict[str, Any]] = []
     solids = {s.solid_id: s for s in p.solids}
+    scoped = _kiem_pham_vi_tien_de(p, solids)  # semantic ownership precedes every capability refusal/fallback
     for s in p.solids:
         if s.solid_type not in ("pyramid", "prism"):
             raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{s.solid_id}: khối {s.solid_type} chưa có trên planner", (s.solid_id,))
@@ -382,12 +419,6 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
                          "định danh điểm bằng nhãn", (s.solid_id,))
         facts.append({"id": s.solid_id, "kind": "solid", "role": "premise", "quotes": [s.quote], "solid": s.notation,
                       "solid_type": s.solid_type})
-    scoped = _kiem_pham_vi_tien_de(p, solids)
-    owned: dict[str, set[str]] = {}
-    for record in scoped:
-        for label in record['vertices']:
-            owned.setdefault(label, set()).update(record['resolved_solid_ids'])
-    _check_qualified_refs(p.model_dump(), solids, owned)
     theo_ten = {s.notation: f for s, f in zip(p.solids, facts)}
 
     for i, prem in enumerate(p.premises, 1):
@@ -512,10 +543,10 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif g.kind == "residual_volume":
             facts.append({**q, "quantity": "residual_volume",
                           "solid_refs": [solid_fact(g.parent_solid_id, g.goal_id), solid_fact(g.cut_solid_id, g.goal_id)]})
-        elif g.goal_type == "volume" and resolve_solid_name(p, g.target.get("solid") or g.solid_id) in solids:
+        elif g.goal_type == "volume" and measurement_scope(p, g) in solids:
             # F6: a notation / canonical alias names the same solid (validated by the schema policy, S2/S3)
             facts.append({**q, "quantity": "volume",
-                          "solid": solids[resolve_solid_name(p, g.target.get("solid") or g.solid_id)].notation})
+                          "solid": solids[measurement_scope(p, g)].notation})
         elif g.goal_type == "area" and "section_id" in g.target:
             sec = next((s for s in p.derived_sections if s.section_id == g.target["section_id"]), None)
             if sec is None:

@@ -1,0 +1,31 @@
+{
+  "A": "FAIL",
+  "B": "NOT_RUN_AFTER_GATE_A_FAILURE",
+  "C": "NOT_RUN_AFTER_GATE_A_FAILURE",
+  "D": "NOT_RUN_AFTER_GATE_A_FAILURE",
+  "A_detail": {
+    "tests": "4 failed, 630 passed, 6 skipped in 6.77s",
+    "failed_positive_controls": [
+      "backend\\tests\\geometry\\test_closed_input_contract.py::test_fresh_geometry_positive_scope_aliases[id]",
+      "backend\\tests\\geometry\\test_closed_input_contract.py::test_fresh_geometry_positive_scope_aliases[notation]",
+      "backend\\tests\\geometry\\test_closed_input_contract.py::test_fresh_geometry_positive_scope_aliases[nested_id]",
+      "backend\\tests\\geometry\\test_closed_input_contract.py::test_fresh_geometry_positive_scope_aliases[goal_id]"
+    ],
+    "baseline_203_probe_recheck": {
+      "total": 203,
+      "classes": {
+        "POS": 56,
+        "NEG": 147
+      },
+      "served_negative_probes": 0,
+      "internal_results": 0
+    },
+    "baseline_positive_losses": [],
+    "mandatory_mutation_tests_passed": 9,
+    "coverage": "coverage.json"
+  },
+  "stop": "NO_MORE_PRODUCT_EDITS; no review/freeze/replay/tiers/T3 until Owner decision",
+  "checkpoint_commit": "BLOCKED_BY_SANDBOX_INDEX_LOCK_PERMISSION",
+  "research_head": "5e44d5da434b1d1a8fd98a0f1f4527f40de3c6ed",
+  "status": "NOT_READY"
+}

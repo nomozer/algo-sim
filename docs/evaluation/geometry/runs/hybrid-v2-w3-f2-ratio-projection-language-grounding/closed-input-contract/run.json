@@ -1,0 +1,17 @@
+{
+  "task": "HYBRID_V2_W3_F2_CLOSED_INPUT_CONTRACT_AND_LEGACY_OWNERSHIP_SAFETY",
+  "date": "2026-10-29",
+  "head": "5e44d5da434b1d1a8fd98a0f1f4527f40de3c6ed",
+  "remote_sha_owner_supplied": "996f114b3480efe1b0d075dd4342530aaa12ddae",
+  "status": "NOT_READY",
+  "gate_a": "FAIL",
+  "live_provider_calls": 0,
+  "freeze": "NOT_RUN",
+  "tiers": "NOT_RUN",
+  "full_t3": "NOT_RUN",
+  "prior_three_audit_files_sha256_lf": {
+    "baseline-head.json": "056f82a5748c8a804f489d57e7fb4b3e2a32df6259c71669d9176ac53f2f735f",
+    "historical-byte-snapshot.json": "ea9fadf6745cf0db2c39bbaeaf81461ce0abe44628ca71e4c974ed96c7eb79e1",
+    "tools/audit_baseline.py": "3713a1a47b713b5e3e7ce2945f25965f76f7d770796e7d86a47575e0dee0e083"
+  }
+}

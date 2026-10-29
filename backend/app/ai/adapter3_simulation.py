@@ -66,6 +66,7 @@ from app.simulation.geometry_functions.typed_fact_next import (
     TypedFactNextValidationError,
     parse_qualified_ref,
     parse_typed_fact_next,
+    measurement_scope,
 )
 from app.simulation.semantic_program.formation import hoan_thien_dung_hinh
 from app.simulation.semantic_program.interpreter import SemanticProgramInterpreter
@@ -303,12 +304,12 @@ class _Adapter3Compiler:
             raise TuChoi(exc.code, exc.detail, (context_id,)) from None
 
         sid = explicit_sid or default_solid_id
-        if default_solid_id is not None and default_solid_id not in self.solid_specs:
+        if default_solid_id is not None and default_solid_id not in self.solid_canonical_name:
             raise TuChoi('UNKNOWN_SOLID_ID', f'{context_id}: khối {default_solid_id!r} chưa được khai báo', (context_id,))
         if explicit_sid is not None and default_solid_id is not None and explicit_sid != default_solid_id:
             raise TuChoi('SOURCE_OBJECT_MISMATCH', f'{context_id}: tham chiếu khác phạm vi khối đã khai', (context_id,))
         if explicit_sid is not None:
-            if explicit_sid not in self.solid_specs:
+            if explicit_sid not in self.solid_canonical_name:
                 raise TuChoi(
                     "UNKNOWN_SOLID_ID",
                     f"{context_id}: khối {explicit_sid!r} trong tham chiếu {ref!r} chưa được khai báo",
@@ -327,7 +328,7 @@ class _Adapter3Compiler:
             if label in self.solid_local_to_canonical.get(sid, {}):
                 return self.solid_local_to_canonical[sid][label]
             derived = self.derived_by_id.get(label)
-            if derived is not None and derived.parent_solid_id == sid:
+            if derived is not None and derived.provenance.get('parent_solid_id') == sid:
                 return derived.internal_symbol
             raise TuChoi('SOURCE_OBJECT_MISMATCH', f'{context_id}: đỉnh {label!r} không thuộc phạm vi {sid!r}', (context_id,))
 
@@ -1082,6 +1083,11 @@ class _Adapter3Compiler:
                 )
             c_name = f"{c_apex}.{''.join(cycle)}"
             self.solid_canonical_name[g.derived_solid_id] = c_name
+            members = {c_apex, *cycle}
+            # Derived scopes expose only their verified apex/boundary, not all vertices of the parent.
+            self.solid_local_to_canonical[g.derived_solid_id] = {
+                **{label: canonical for label, canonical in self.solid_local_to_canonical[parent_sid].items()
+                   if canonical in members}, **{point: point for point in members}}
             cid = self._next_call_id("dsolid")
             self.calls.append(
                 {
@@ -1152,7 +1158,7 @@ class _Adapter3Compiler:
                     self._resolve_solid_canonical_name(mg.cut_solid_id, mg.goal_id)
                 )
             elif mg.kind == "measurement":
-                sid = mg.solid_id
+                sid = measurement_scope(self.payload, mg)
                 t = mg.target
                 cid = self._next_call_id("ask")
                 math_call_ids[mg.goal_id] = cid
@@ -2645,13 +2651,11 @@ class _Adapter3Compiler:
             _verify_quote_in_problem(mg.quote, self.problem_text, mg.goal_id)
             if mg.kind == "measurement":
                 assert mg.goal_type is not None
-                if "solid" in mg.target:
-                    # F5: a notation alias names the same solid (the schema policy validated it, S2)
-                    t_sid = resolve_solid_name(self.payload, mg.target["solid"]) or str(mg.target["solid"])
-                    of_var = solid_meta[t_sid]["solid_var"]
-                elif "section_id" in mg.target:
-                    t_sec = str(mg.target["section_id"])
+                if "section_id" in mg.target:
+                    t_sec = mg.target["section_id"]
                     of_var = section_meta[t_sec]["sec_var"]
+                elif (t_sid := measurement_scope(self.payload, mg)) in solid_meta:
+                    of_var = solid_meta[t_sid]["solid_var"]
                 else:
                     raise TuChoi(
                         "INVALID_MATH_GOAL_TARGET",
@@ -3008,12 +3012,30 @@ class _Adapter3Compiler:
             calls=stmts,
         )
 
+    def _preflight_curved_relations(self) -> None:
+        """Consume only existing structural identity/frame semantics; never ignore a geometric assertion."""
+        solids = {solid.solid_id: solid for solid in self.payload.solids}
+        for relation in self.payload.relations:
+            _verify_quote_in_problem(relation.quote, self.problem_text, relation.relation_id)
+            if relation.kind == "shared_vertices":
+                for left, right in relation.pairs:
+                    sa, a = parse_qualified_ref(left)
+                    sb, b = parse_qualified_ref(right)
+                    if solids[sa].canonical_vertex(a) != solids[sb].canonical_vertex(b):
+                        raise TuChoi("SHARED_ENTITY_MISMATCH", f"{relation.relation_id}: hai đỉnh khác danh tính", (relation.relation_id,))
+            elif relation.kind == "coordinate_frame":
+                if relation.frame_id != "root" or solids[relation.solid_id].coordinate_frame_id != "root":
+                    raise TuChoi("COORDINATE_FRAME_DISCONNECTED", f"{relation.relation_id}: hệ tọa độ không nối với root", (relation.relation_id,))
+            else:
+                raise TuChoi("BRIDGE_UNSUPPORTED_RELATION", f"{relation.relation_id}: chưa kiểm chứng quan hệ {relation.kind} trên khối cong", (relation.relation_id,))
+
     def run(self) -> Adapter3SimulationResult:
         if any(s.solid_type not in ("pyramid", "prism") for s in self.payload.solids):
             from app.simulation.geometry_functions.typed_fact_next_bridge import _kiem_pham_vi_tien_de
             try:
                 # No Bridge/Source Gate reaches this route, and it reads no premise: validate their ownership first.
                 _kiem_pham_vi_tien_de(self.payload, {s.solid_id: s for s in self.payload.solids})
+                self._preflight_curved_relations()
                 res = self._run_curved_route()
                 if res.status == "SERVED":          # the planner has no curved solids: no shared gate verdict exists
                     res.source_verification = {"authority": LEGACY_SOURCE_AUTHORITY,

@@ -360,7 +360,7 @@ MUTANTS = {
     'foreign_scope_to_first_solid': (T, '_validate_declared_solid_scope',
         'refuse("UNKNOWN_SOLID_ID", where, f"khối {sid!r} chưa được khai báo")', 'return next(iter(solids))', curved_goal_foreign),
     'remove_goal_operand_ownership': (B, '_kiem_pham_vi_tien_de',
-        "if ns is None and owners.get(label) and base not in owners[label]:", 'if False:', goal_operand),
+        "if claimed is not None and own and claimed not in own:", 'if False:', goal_operand),
     'bypass_curved_prevalidation': (A._Adapter3Compiler, 'run',
         '_kiem_pham_vi_tien_de(self.payload, {s.solid_id: s for s in self.payload.solids})', 'pass', curved_ownership),
 }
@@ -370,7 +370,11 @@ MUTANTS = {
 def test_oracles_kill_unified_scope_mutants(monkeypatch, name):
     owner, fn, needle, replacement, oracle = MUTANTS[name]
     oracle()                                    # the oracle holds on the real code ...
-    mutate(monkeypatch, owner, fn, needle, replacement)
+    if name == 'remove_ratio_residual_refusal':
+        policy = T.KIND_ALLOWED_FIELDS['math_goal']
+        monkeypatch.setitem(policy, 'volume_ratio', [*policy['volume_ratio'], 'solid_id'])
+    else:
+        mutate(monkeypatch, owner, fn, needle, replacement)
     with pytest.raises(AssertionError):         # ... and fails on the mutant
         oracle()
 

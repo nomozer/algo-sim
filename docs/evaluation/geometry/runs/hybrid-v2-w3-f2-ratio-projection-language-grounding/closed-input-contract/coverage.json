@@ -1,0 +1,64 @@
+{
+  "status": "NOT_ACCEPTED_GATE_A_FAIL",
+  "fields_discovered": 187,
+  "unclassified_schema_paths": [],
+  "indirect_target_keys": [
+    "line",
+    "line1",
+    "line2",
+    "plane",
+    "plane1",
+    "plane2",
+    "point",
+    "polygon",
+    "section_id",
+    "segment",
+    "solid",
+    "solid_id"
+  ],
+  "unregistered_target_reads": [],
+  "kind_contracts": {
+    "math_goal": [
+      "measurement",
+      "residual_volume",
+      "volume_ratio"
+    ],
+    "simulation_goal": [
+      "construct_derived_solid",
+      "construct_object",
+      "construct_plane_section",
+      "construction_sequence",
+      "highlight_geometry"
+    ],
+    "relation": [
+      "containment",
+      "coordinate_frame",
+      "parallel",
+      "perpendicular",
+      "section_membership",
+      "shared_faces",
+      "shared_vertices"
+    ]
+  },
+  "allowed_kind_field_positive_cases": 106,
+  "validation_tests": [
+    "test_allowed_kind_fields_remain_valid",
+    "test_inapplicable_kind_fields_are_typed",
+    "test_unknown_kind_fields_are_typed",
+    "test_operand_shapes_fail_before_routes",
+    "test_required_preflight_cannot_be_bypassed",
+    "test_census_follows_helper_partial_and_keysets"
+  ],
+  "mapped_routes": [
+    "Adapter /3 polyhedral shared gate + legacy",
+    "Adapter /3 curved",
+    "Bridge /1 planner route",
+    "Bridge /2 Adapter /4"
+  ],
+  "preflight_dynamic_cases_passed": 6,
+  "exhaustiveness_claim": false,
+  "limitations": [
+    "Static analyzer is bounded and does not prove arbitrary Python dynamic key/call behavior.",
+    "Full all-route acceptance is blocked by four source-grammar positive controls."
+  ]
+}

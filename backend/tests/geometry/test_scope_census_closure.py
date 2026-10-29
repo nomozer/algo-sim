@@ -26,7 +26,7 @@ import scope_field_census as C
 RUNS = Path(__file__).resolve().parents[3] / 'docs/evaluation/geometry/runs'
 RUN = RUNS / 'hybrid-v2-w3-f2-ratio-projection-language-grounding'
 # v2 = preregistration-amendment-1 (F7 residual ancestry); v1 stays as the originally registered inventory.
-INVENTORY = json.loads((RUN / 'unified-solid-scope-closure/schema-field-inventory-v2.json').read_text(encoding='utf-8'))
+INVENTORY = json.loads((RUN / 'closed-input-contract/schema-census-v3.json').read_text(encoding='utf-8'))
 SUP = json.loads((RUN / 'inputs/recovery-supplementary.json').read_text(encoding='utf-8'))['control']
 A3DEV = {c['case_id']: c for c in json.loads((RUNS / 'typedfact-next-adapter3-simulation/corpus-dev.json').read_text(encoding='utf-8'))['cases']}
 SIM = {c['case_id']: c for c in json.loads((RUNS / 'simulation-coverage-visual-validation/corpus-dev.json').read_text(encoding='utf-8'))['cases']}
@@ -533,7 +533,11 @@ def assert_refused(r, code):
 def test_closure_mutants_are_killed(monkeypatch, name):
     owner, fn, needle, replacement, oracle = CLOSURE_MUTANTS[name]
     oracle()
-    mutate(monkeypatch, owner, fn, needle, replacement)
+    if name == 'remove_owner_decision_d_a':
+        policy = T.KIND_ALLOWED_FIELDS['simulation_goal']
+        monkeypatch.setitem(policy, 'construct_object', [*policy['construct_object'], 'parent_solid_id'])
+    else:
+        mutate(monkeypatch, owner, fn, needle, replacement)
     with pytest.raises(AssertionError):
         oracle()
 

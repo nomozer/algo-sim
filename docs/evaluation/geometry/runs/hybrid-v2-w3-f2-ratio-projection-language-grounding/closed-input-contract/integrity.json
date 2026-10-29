@@ -1,0 +1,15 @@
+{
+  "historical_files_compared_byte_for_byte": 24775,
+  "historical_changed": [],
+  "current_measured_product": [
+    "46f657c6bbbbad97efde79b7edeb43415f3b83799a8589acd885af9dc67cb49f",
+    118
+  ],
+  "product_uncommitted": true,
+  "freeze_not_updated": true,
+  "prior_three_audit_files_preserved": [
+    "baseline-head.json",
+    "historical-byte-snapshot.json",
+    "tools/audit_baseline.py"
+  ]
+}

@@ -63,8 +63,169 @@ def parse_qualified_ref(ref: str) -> tuple[str | None, str]:
     return m.group("solid_id"), m.group("label")
 
 
+# Closed input contract: the runtime authority; run-local JSON is its preregistered snapshot.
+KIND_ALLOWED_FIELDS = {'math_goal': {'volume_ratio': ['denominator_solid_id', 'goal_id', 'kind', 'numerator_solid_id', 'quote'],
+               'residual_volume': ['cut_solid_id', 'goal_id', 'kind', 'parent_solid_id', 'quote'],
+               'measurement': ['goal_id', 'goal_type', 'kind', 'quote', 'solid_id', 'target']},
+ 'simulation_goal': {'construct_object': ['goal_id',
+                                          'kind',
+                                          'quote',
+                                          'style_role',
+                                          'target_refs',
+                                          'target_solid_id'],
+                     'construct_plane_section': ['goal_id',
+                                                 'kind',
+                                                 'quote',
+                                                 'style_role',
+                                                 'target_refs',
+                                                 'target_section_id',
+                                                 'target_solid_id'],
+                     'construct_derived_solid': ['apex_ref',
+                                                 'derived_solid_id',
+                                                 'goal_id',
+                                                 'kind',
+                                                 'parent_solid_id',
+                                                 'quote',
+                                                 'style_role',
+                                                 'target_refs',
+                                                 'target_section_id'],
+                     'highlight_geometry': ['goal_id',
+                                            'kind',
+                                            'quote',
+                                            'style_role',
+                                            'target_refs',
+                                            'target_section_id',
+                                            'target_solid_id'],
+                     'construction_sequence': ['goal_id',
+                                               'kind',
+                                               'quote',
+                                               'style_role',
+                                               'target_refs',
+                                               'target_solid_id']},
+ 'relation': {'containment': ['container_ref',
+                              'kind',
+                              'member_ref',
+                              'quote',
+                              'relation_id',
+                              'section_id',
+                              'solid_id'],
+              'shared_vertices': ['kind',
+                                  'pairs',
+                                  'quote',
+                                  'relation_id',
+                                  'section_id',
+                                  'solid_a',
+                                  'solid_b',
+                                  'solid_id'],
+              'shared_faces': ['face_a',
+                               'face_b',
+                               'kind',
+                               'quote',
+                               'relation_id',
+                               'section_id',
+                               'solid_a',
+                               'solid_b',
+                               'solid_id'],
+              'parallel': ['entity_a',
+                           'entity_b',
+                           'kind',
+                           'quote',
+                           'relation_id',
+                           'section_id',
+                           'solid_a',
+                           'solid_b',
+                           'solid_id'],
+              'perpendicular': ['entity_a',
+                                'entity_b',
+                                'kind',
+                                'quote',
+                                'relation_id',
+                                'section_id',
+                                'solid_a',
+                                'solid_b',
+                                'solid_id'],
+              'section_membership': ['kind', 'member_refs', 'quote', 'relation_id', 'section_id', 'solid_id'],
+              'coordinate_frame': ['anchor_refs',
+                                   'frame_id',
+                                   'kind',
+                                   'quote',
+                                   'relation_id',
+                                   'section_id',
+                                   'solid_id']}}
+GOAL_OPERAND_SHAPES = {'point': 'ref',
+ 'segment': 'refs2=',
+ 'line': 'refs2=',
+ 'line1': 'refs2=',
+ 'line2': 'refs2=',
+ 'plane': 'refs3',
+ 'plane1': 'refs3',
+ 'plane2': 'refs3',
+ 'polygon': 'refs3',
+ 'solid': 'solid_name',
+ 'solid_id': 'id',
+ 'section_id': 'id'}
+GOAL_TARGET_ALTERNATIVES = {'distance': [['segment'],
+              ['point', 'plane'],
+              ['point', 'line'],
+              ['line1', 'line2'],
+              ['line', 'plane'],
+              ['plane1', 'plane2']],
+ 'angle': [['line', 'plane'], ['line1', 'line2'], ['plane1', 'plane2']],
+ 'volume': [['solid'], ['solid_id']],
+ 'radius': [['solid'], ['section_id']],
+ 'lateral_area': [['solid']],
+ 'area': [['polygon'], ['section_id'], ['solid']]}
+
+_KIND_GROUPS = {"MathGoalSpec": ("math_goal", "INVALID_MATH_GOAL"),
+                "SimulationGoalSpec": ("simulation_goal", "INVALID_SIMULATION_GOAL"),
+                "GeometricRelationSpec": ("relation", "INVALID_RELATION_SPEC")}
+
+
+def _validate_goal_target(goal) -> None:
+    target = goal.target
+    alternatives = GOAL_TARGET_ALTERNATIVES[goal.goal_type]
+    scopes = {"solid", "solid_id"}
+    allowed = set().union(*(set(a) for a in alternatives)) | scopes
+    if set(target) - allowed:
+        raise TypedFactNextValidationError("INVALID_MATH_GOAL", f"{goal.goal_id}: unexpected target keys {sorted(set(target) - allowed)}")
+    for key, value in target.items():
+        shape = GOAL_OPERAND_SHAPES[key]
+        valid = isinstance(value, str) and bool(value.strip()) if shape == "solid_name" else _hinh_dung(value, shape)
+        if not valid or shape.startswith("refs") and len(set(value)) != len(value):
+            raise TypedFactNextValidationError("INVALID_MATH_GOAL", f"{goal.goal_id}: malformed operand {key!r}, expected {shape}")
+    operands = set(target) - scopes
+    if operands:
+        valid = any(operands == set(a) for a in alternatives if not set(a) <= scopes)
+    else:
+        valid = bool(set(target) & scopes) and any(set(a) <= scopes for a in alternatives)
+    if not valid:
+        raise TypedFactNextValidationError("INVALID_MATH_GOAL", f"{goal.goal_id}: inapplicable target for {goal.goal_type}")
+
+
+def measurement_scope(p, goal) -> str | None:
+    """Resolve the ONE validated scope without deleting the original target/provenance."""
+    sections = {s.section_id: s.target_solid_id for s in p.derived_sections}
+    return (goal.solid_id or goal.target.get("solid_id") or resolve_solid_name(p, goal.target.get("solid"))
+            or sections.get(goal.target.get("section_id")))
+
+
+def measurement_operands(goal) -> dict[str, Any]:
+    """Validated geometric operands, separated from the scope assertions already checked by the schema."""
+    return {k: v for k, v in goal.target.items() if k not in ("solid", "solid_id")}
+
+
 class ClosedNextModel(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
+
+    @model_validator(mode="before")
+    @classmethod
+    def _closed_kind_fields(cls, value):
+        policy = _KIND_GROUPS.get(cls.__name__)  # S4: one per-kind field applicability authority
+        if policy and isinstance(value, dict) and value.get("kind") in KIND_ALLOWED_FIELDS[policy[0]]:
+            unexpected = set(value) - set(KIND_ALLOWED_FIELDS[policy[0]][value["kind"]])
+            if unexpected:
+                raise TypedFactNextValidationError(policy[1], f"{value['kind']}: inapplicable fields {sorted(unexpected)}")
+        return value
 
 
 class SolidSpec(ClosedNextModel):
@@ -539,6 +700,7 @@ class MathGoalSpec(ClosedNextModel):
                     "INVALID_MATH_GOAL",
                     f"Math goal {self.goal_id!r} ('measurement') requires 'goal_type' and 'target'.",
                 )
+            _validate_goal_target(self)
         return self
 
 
@@ -780,7 +942,7 @@ def scope_records(p: "TypedFactNextPayload") -> list[tuple[str, str, str | None,
             continue
         t = mg.target
         sec = sections.get(t["section_id"]) if isinstance(t.get("section_id"), str) else None
-        scope = mg.solid_id or t.get("solid_id") or resolve_solid_name(p, t.get("solid")) or (sec.target_solid_id if sec else None)
+        scope = measurement_scope(p, mg)
         refs = [x for k in GOAL_OPERAND_KEYS if k in t for x in (t[k] if isinstance(t[k], (list, tuple)) else [t[k]])]
         recs.append(("math_goal", mg.goal_id, scope, refs, False))
     return recs
@@ -855,10 +1017,6 @@ def _validate_declared_solid_scope(p: "TypedFactNextPayload", known: set[str]) -
             one_solid(r.relation_id, r.solid_id, r.container_ref)
     for g in p.simulation_goals:
         declared(g.parent_solid_id, g.goal_id)
-        if g.kind != "construct_derived_solid" and g.parent_solid_id is not None:            # S4 (Owner D-A)
-            refuse("INVALID_SIMULATION_GOAL", g.goal_id, f"{g.kind} không có parent_solid_id trong hợp đồng")
-        if g.kind == "construct_derived_solid" and g.target_solid_id is not None:            # S4
-            refuse("INVALID_SIMULATION_GOAL", g.goal_id, "construct_derived_solid không có target_solid_id trong hợp đồng")
         if g.target_section_id in sections:
             one_solid(g.goal_id, g.parent_solid_id if g.kind == "construct_derived_solid" else g.target_solid_id,
                       sections[g.target_section_id].target_solid_id)
@@ -873,8 +1031,6 @@ def _validate_declared_solid_scope(p: "TypedFactNextPayload", known: set[str]) -
                 refuse("UNKNOWN_VERTEX_REF", g.goal_id, f"{token!r} không chỉ tới đối tượng nào đã khai")
     for mg in p.math_goals:
         if mg.kind in ("volume_ratio", "residual_volume"):
-            if mg.solid_id is not None:                                                  # S4 (Owner decision A)
-                refuse("INVALID_MATH_GOAL", mg.goal_id, f"mục tiêu {mg.kind} không có phạm vi khối cấp mục tiêu")
             if mg.kind == "residual_volume" and mg.cut_solid_id in parents:              # S3: a derived cut's ancestry
                 one_solid(mg.goal_id, mg.parent_solid_id, parents[mg.cut_solid_id])
             continue
@@ -931,7 +1087,7 @@ def convert_v1_to_v2(raw: dict[str, Any], route: str | None) -> dict[str, Any]:
         raise TypedFactNextValidationError("ROUTE_LABEL_REQUIRED",
                                            f"`/1` cut_edges has no route-free meaning; route must be 'bridge' or 'adapter3', got {route!r}.")
     p = parse_typed_fact_next(raw)
-    out = p.model_dump(mode="json", exclude_none=True)
+    out = p.model_dump(mode="json", exclude_none=True, exclude_unset=True)
     out["schema_version"] = TYPED_FACT_NEXT_V2_SCHEMA_VERSION
     for sec, d in zip(p.derived_sections, out["derived_sections"]):
         named = {frozenset(parse_qualified_ref(x) for x in split_edge_key(k)): (list(split_edge_key(k)), v)
@@ -952,7 +1108,7 @@ def convert_v1_to_v2(raw: dict[str, Any], route: str | None) -> dict[str, Any]:
 
 def _parse(model: type[TypedFactNextPayload], raw: Any) -> TypedFactNextPayload:
     if type(raw) is model:                        # exact type: a `/2` model is never accepted as `/1` (subclass)
-        return raw
+        raw = raw.model_dump(exclude_unset=True)
     if not isinstance(raw, dict):
         raise TypedFactNextValidationError(
             "INVALID_TYPED_FACT_NEXT",

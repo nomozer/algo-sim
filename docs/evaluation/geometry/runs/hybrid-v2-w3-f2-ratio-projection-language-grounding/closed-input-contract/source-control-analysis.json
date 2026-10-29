@@ -1,0 +1,580 @@
+{
+  "classification": "SUPPLEMENTAL_POST_EDIT_CONTROL_QUALIFICATION_NOT_PREREGISTERED_RED",
+  "expected_when_authored": {
+    "status": "SERVED",
+    "exact_volume": "12"
+  },
+  "expected_outcomes_changed": false,
+  "local_main_sha": "996f114b3480efe1b0d075dd4342530aaa12ddae",
+  "main_comparison_authority": "exploratory existing clean main checkout, not detached authoritative verification",
+  "payloads": {
+    "id": {
+      "schema_version": "typed-fact-next/1",
+      "problem_text": "Cho hình chóp K.PQR có đáy PQR là tam giác vuông tại P, PQ = 3, PR = 4. KP vuông góc với (PQR) và KP = 6. Dựng hình chóp K.PQR. Tính thể tích hình chóp K.PQR.",
+      "solids": [
+        {
+          "solid_id": "alpha-1",
+          "solid_type": "pyramid",
+          "notation": "K.PQR",
+          "quote": "Cho hình chóp K.PQR"
+        }
+      ],
+      "premises": [
+        {
+          "kind": "base_is_right_triangle",
+          "solid_id": "alpha-1",
+          "args": {
+            "vertices": [
+              "P",
+              "Q",
+              "R"
+            ],
+            "right_at": "P"
+          },
+          "quote": "đáy PQR là tam giác vuông tại P"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "P",
+              "Q"
+            ],
+            "value": "3"
+          },
+          "quote": "PQ = 3"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "P",
+              "R"
+            ],
+            "value": "4"
+          },
+          "quote": "PR = 4"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "K",
+              "P"
+            ],
+            "value": "6"
+          },
+          "quote": "KP = 6"
+        },
+        {
+          "kind": "line_perp_plane",
+          "solid_id": "alpha-1",
+          "args": {
+            "line": [
+              "K",
+              "P"
+            ],
+            "plane": [
+              "P",
+              "Q",
+              "R"
+            ]
+          },
+          "quote": "KP vuông góc với (PQR)"
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "alpha-1",
+          "quote": "Dựng hình chóp K.PQR."
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "vol",
+          "kind": "measurement",
+          "goal_type": "volume",
+          "target": {
+            "solid": "alpha-1"
+          },
+          "quote": "Tính thể tích hình chóp K.PQR."
+        }
+      ]
+    },
+    "notation": {
+      "schema_version": "typed-fact-next/1",
+      "problem_text": "Cho hình chóp K.PQR có đáy PQR là tam giác vuông tại P, PQ = 3, PR = 4. KP vuông góc với (PQR) và KP = 6. Dựng hình chóp K.PQR. Tính thể tích hình chóp K.PQR.",
+      "solids": [
+        {
+          "solid_id": "alpha-1",
+          "solid_type": "pyramid",
+          "notation": "K.PQR",
+          "quote": "Cho hình chóp K.PQR"
+        }
+      ],
+      "premises": [
+        {
+          "kind": "base_is_right_triangle",
+          "solid_id": "alpha-1",
+          "args": {
+            "vertices": [
+              "P",
+              "Q",
+              "R"
+            ],
+            "right_at": "P"
+          },
+          "quote": "đáy PQR là tam giác vuông tại P"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "P",
+              "Q"
+            ],
+            "value": "3"
+          },
+          "quote": "PQ = 3"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "P",
+              "R"
+            ],
+            "value": "4"
+          },
+          "quote": "PR = 4"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "K",
+              "P"
+            ],
+            "value": "6"
+          },
+          "quote": "KP = 6"
+        },
+        {
+          "kind": "line_perp_plane",
+          "solid_id": "alpha-1",
+          "args": {
+            "line": [
+              "K",
+              "P"
+            ],
+            "plane": [
+              "P",
+              "Q",
+              "R"
+            ]
+          },
+          "quote": "KP vuông góc với (PQR)"
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "alpha-1",
+          "quote": "Dựng hình chóp K.PQR."
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "vol",
+          "kind": "measurement",
+          "goal_type": "volume",
+          "target": {
+            "solid": "K.PQR"
+          },
+          "quote": "Tính thể tích hình chóp K.PQR."
+        }
+      ]
+    },
+    "nested_id": {
+      "schema_version": "typed-fact-next/1",
+      "problem_text": "Cho hình chóp K.PQR có đáy PQR là tam giác vuông tại P, PQ = 3, PR = 4. KP vuông góc với (PQR) và KP = 6. Dựng hình chóp K.PQR. Tính thể tích hình chóp K.PQR.",
+      "solids": [
+        {
+          "solid_id": "alpha-1",
+          "solid_type": "pyramid",
+          "notation": "K.PQR",
+          "quote": "Cho hình chóp K.PQR"
+        }
+      ],
+      "premises": [
+        {
+          "kind": "base_is_right_triangle",
+          "solid_id": "alpha-1",
+          "args": {
+            "vertices": [
+              "P",
+              "Q",
+              "R"
+            ],
+            "right_at": "P"
+          },
+          "quote": "đáy PQR là tam giác vuông tại P"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "P",
+              "Q"
+            ],
+            "value": "3"
+          },
+          "quote": "PQ = 3"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "P",
+              "R"
+            ],
+            "value": "4"
+          },
+          "quote": "PR = 4"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "K",
+              "P"
+            ],
+            "value": "6"
+          },
+          "quote": "KP = 6"
+        },
+        {
+          "kind": "line_perp_plane",
+          "solid_id": "alpha-1",
+          "args": {
+            "line": [
+              "K",
+              "P"
+            ],
+            "plane": [
+              "P",
+              "Q",
+              "R"
+            ]
+          },
+          "quote": "KP vuông góc với (PQR)"
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "alpha-1",
+          "quote": "Dựng hình chóp K.PQR."
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "vol",
+          "kind": "measurement",
+          "goal_type": "volume",
+          "target": {
+            "solid_id": "alpha-1"
+          },
+          "quote": "Tính thể tích hình chóp K.PQR."
+        }
+      ]
+    },
+    "goal_id": {
+      "schema_version": "typed-fact-next/1",
+      "problem_text": "Cho hình chóp K.PQR có đáy PQR là tam giác vuông tại P, PQ = 3, PR = 4. KP vuông góc với (PQR) và KP = 6. Dựng hình chóp K.PQR. Tính thể tích hình chóp K.PQR.",
+      "solids": [
+        {
+          "solid_id": "alpha-1",
+          "solid_type": "pyramid",
+          "notation": "K.PQR",
+          "quote": "Cho hình chóp K.PQR"
+        }
+      ],
+      "premises": [
+        {
+          "kind": "base_is_right_triangle",
+          "solid_id": "alpha-1",
+          "args": {
+            "vertices": [
+              "P",
+              "Q",
+              "R"
+            ],
+            "right_at": "P"
+          },
+          "quote": "đáy PQR là tam giác vuông tại P"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "P",
+              "Q"
+            ],
+            "value": "3"
+          },
+          "quote": "PQ = 3"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "P",
+              "R"
+            ],
+            "value": "4"
+          },
+          "quote": "PR = 4"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "K",
+              "P"
+            ],
+            "value": "6"
+          },
+          "quote": "KP = 6"
+        },
+        {
+          "kind": "line_perp_plane",
+          "solid_id": "alpha-1",
+          "args": {
+            "line": [
+              "K",
+              "P"
+            ],
+            "plane": [
+              "P",
+              "Q",
+              "R"
+            ]
+          },
+          "quote": "KP vuông góc với (PQR)"
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "alpha-1",
+          "quote": "Dựng hình chóp K.PQR."
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "vol",
+          "kind": "measurement",
+          "goal_type": "volume",
+          "target": {
+            "solid": "alpha-1"
+          },
+          "quote": "Tính thể tích hình chóp K.PQR.",
+          "solid_id": "alpha-1"
+        }
+      ]
+    }
+  },
+  "local_main_results": {
+    "id": {
+      "a3": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_exact": {}
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_exact": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_exact": {}
+      }
+    },
+    "notation": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer_exact": {
+          "vol": {
+            "coef": "12",
+            "dim": 0,
+            "unit": null
+          }
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "vol: mục tiêu measurement/volume chưa có ánh xạ",
+        "answer_exact": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "vol: mục tiêu measurement/volume chưa có ánh xạ",
+        "answer_exact": {}
+      }
+    },
+    "nested_id": {
+      "a3": {
+        "status": "REFUSED",
+        "code": "UNKNOWN_SOLID_ID",
+        "reason": "vol: không tìm thấy khối ''",
+        "answer_exact": {}
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "vol: mục tiêu measurement/volume chưa có ánh xạ",
+        "answer_exact": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "vol: mục tiêu measurement/volume chưa có ánh xạ",
+        "answer_exact": {}
+      }
+    },
+    "goal_id": {
+      "a3": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_exact": {}
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_exact": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_exact": {}
+      }
+    }
+  },
+  "stopped_product_results": {
+    "id": {
+      "a3": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_exact": {}
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_exact": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_exact": {}
+      }
+    },
+    "notation": {
+      "a3": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_exact": {}
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_exact": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_exact": {}
+      }
+    },
+    "nested_id": {
+      "a3": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_exact": {}
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_exact": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_exact": {}
+      }
+    },
+    "goal_id": {
+      "a3": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_exact": {}
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_exact": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_exact": {}
+      }
+    }
+  },
+  "gate": "FAIL; no production edits after failure",
+  "interpretation": "These four new controls were added after the initial preregistered RED. They were not baseline-qualified first. The Source Gate refusal predates this product change. Do not silently turn them into passing controls or equate source-grammar capability with an N1-N7 ownership regression. Owner adjudication is required before continuation.",
+  "outside_scope_if_supported_verbatim": [
+    "backend/app/simulation/geometry_functions/registry.py request coverage reader around lines 2364-2397"
+  ]
+}

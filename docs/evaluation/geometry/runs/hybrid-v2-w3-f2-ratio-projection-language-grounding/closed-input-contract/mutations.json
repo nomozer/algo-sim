@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "mandatory_mutants_killed": 9,
+  "tests": [
+    "backend\\tests\\geometry\\test_closed_input_contract.py::test_mandatory_mutants_are_killed[operand_shape]",
+    "backend\\tests\\geometry\\test_closed_input_contract.py::test_mandatory_mutants_are_killed[string_iteration]",
+    "backend\\tests\\geometry\\test_closed_input_contract.py::test_mandatory_mutants_are_killed[kind_fields]",
+    "backend\\tests\\geometry\\test_closed_input_contract.py::test_mandatory_mutants_are_killed[closed_keys]",
+    "backend\\tests\\geometry\\test_closed_input_contract.py::test_mandatory_mutants_are_killed[s8_preflight]",
+    "backend\\tests\\geometry\\test_closed_input_contract.py::test_mandatory_mutants_are_killed[semantic_fallback]",
+    "backend\\tests\\geometry\\test_closed_input_contract.py::test_mandatory_mutants_are_killed[curved_existence]",
+    "backend\\tests\\geometry\\test_closed_input_contract.py::test_mandatory_mutants_are_killed[curved_relations]",
+    "backend\\tests\\geometry\\test_closed_input_contract.py::test_mandatory_mutants_are_killed[derived_resolution]"
+  ],
+  "source_log": "green-attempt.log",
+  "source_log_sha256_lf": "059289300aa893fb49ce04712d618a152d6c654e5c07ca9907a6c299c05e6a82",
+  "scope": "only the registered mutation oracles, not overall acceptance"
+}
