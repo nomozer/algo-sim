@@ -192,6 +192,17 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
             candidates = named
         checked.append({'premise_id':fid,'declared_solid_id':prem.solid_id,'resolved_solid_ids':sorted({sid} if sid else candidates),
                         'vertices':sorted({_ref(ref) for _key, ref in refs}),'quote':prem.quote})
+    # A measurement goal's declared scope binds its operands too; an operand owned only by other solids contradicts it.
+    # Unowned labels (section vertices, undeclared names) stay the routes' own refusals.
+    for g in p.math_goals:
+        if g.kind != 'measurement' or g.solid_id is None:
+            continue
+        for key in ('segment', 'point', 'plane', 'line', 'line1', 'line2', 'polygon'):
+            value = g.target.get(key)
+            for ref in (value if isinstance(value, (list, tuple)) else [value] if isinstance(value, str) else []):
+                if owners.get(_ref(ref)) and g.solid_id not in owners[_ref(ref)]:
+                    raise TuChoi('SOURCE_OBJECT_MISMATCH', f'{g.goal_id}: toán hạng {ref!r} không thuộc phạm vi {g.solid_id!r}',
+                                 (g.goal_id,))
     return checked
 
 
@@ -492,8 +503,6 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
 
     for g in p.math_goals:
         q = {"id": g.goal_id, "kind": "question", "role": "question", "quotes": [g.quote]}
-        if g.goal_type == "volume" and g.solid_id is not None:
-            _pham_vi_khoi(g.target.get("solid"), g.solid_id, solids, g.goal_id)
         if g.kind == "volume_ratio":
             facts.append({**q, "quantity": "volume_ratio",
                           "solid_refs": [solid_fact(g.numerator_solid_id, g.goal_id), solid_fact(g.denominator_solid_id, g.goal_id)]})

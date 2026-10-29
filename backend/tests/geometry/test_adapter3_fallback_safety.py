@@ -11,6 +11,7 @@ from app.ai import adapter3_simulation as A
 from app.ai.adapter4_route import run_typed_fact_next_v2_route
 from app.simulation.geometry_functions import typed_fact_next_bridge as B
 from app.simulation.geometry_functions.registry import TuChoi
+from app.simulation.geometry_functions.typed_fact_next import PremiseSpec
 
 RUN=Path(__file__).resolve().parents[3]/'docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding'
 SUP=json.loads((RUN/'inputs/recovery-supplementary.json').read_text(encoding='utf-8'))
@@ -126,9 +127,19 @@ def test_legacy_construction_output_cannot_create_or_borrow_foreign_ownership(ou
         'args':{'point':'S','image':output,'plane':list('ABCD')},
         'quote':f'Hình chiếu vuông góc của S lên mặt phẳng (ABCD) là {output}.'})
     p['problem_text']+=' '+p['premises'][-1]['quote']
-    c=compiler(p)
+    expected='UNKNOWN_SOLID_ID' if output.startswith('foreign') else 'SOURCE_OBJECT_MISMATCH'
+    if '::' in output:
+        # The unified scope policy now refuses the qualified declaration itself, with the same code ...
+        r=A.run_typed_fact_next_route(p);assert (r.status,r.code)==('REFUSED',expected)
+        # ... and the legacy producer-scope defence below it still holds when the schema is bypassed.
+        base=B.parse_typed_fact_next(control())
+        payload=base.model_copy(update={'problem_text':p['problem_text'],
+                                        'premises':(*base.premises,PremiseSpec.model_construct(**p['premises'][-1]))})
+        c=A._Adapter3Compiler(payload);c._compile_solids()
+    else:
+        c=compiler(p)
     with pytest.raises(TuChoi) as e:c._compile_premises()
-    assert e.value.code==('UNKNOWN_SOLID_ID' if output.startswith('foreign') else 'SOURCE_OBJECT_MISMATCH')
+    assert e.value.code==expected
 
 def test_optional_scope_constructed_point_inherits_verified_producer_scope():
     p=control()
@@ -181,7 +192,8 @@ def test_real_legacy_height_solid_must_agree_with_premise_scope(sid,named,code):
     if sid:prem['solid_id']=sid
     p['premises'].append(prem);p['problem_text']+=' '+quote
     with pytest.raises(TuChoi) as e:B.bridge(p)
-    assert e.value.code=='BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY'
+    # Valid inputs reach the genuine capability gap; a contradiction is refused before it by the unified policy (I7).
+    assert e.value.code==(code or 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY')
     refused_or_exact(A.run_typed_fact_next_route(p),code,c['oracle_exact'])
 
 @pytest.mark.parametrize('kind',['height','altitude'])
@@ -245,17 +257,18 @@ def test_solid_scope_oracles_kill_guard_removal(monkeypatch,owner,needle):
     assert source.count(needle)==1
     namespace=dict(vars(B if owner is B else A));exec(compile(source.replace(needle,'if False:'),'<solid-scope-mutant>','exec'),namespace)
     monkeypatch.setattr(owner,name,namespace[name])
-    if owner is not B:legacy_only(monkeypatch)
+    # The unified schema policy now refuses these inputs first, so the oracle exercises this defence-in-depth layer
+    # directly: named operand vs declared scope, same codes as before.
+    solids={s.solid_id:s for s in B.parse_typed_fact_next(control()).solids};c=compiler()
     def oracle():
-        for goal_sid,target,code in VOLUME_SCOPES[:2]:
-            p=control();g=p['math_goals'][0];g['target']={'solid':target};g['solid_id']=goal_sid
-            if owner is B:
-                try:B.bridge(p)
-                except TuChoi as e:
-                    assert e.code==code;continue
-                assert False,'conflicting goal scope accepted'
-            else:
-                r=A.run_typed_fact_next_route(p);assert (r.status,r.code)==('REFUSED',code)
+        for named,scope,code in (('s2','s1','SOURCE_OBJECT_MISMATCH'),('s1','foreign','UNKNOWN_SOLID_ID')):
+            try:
+                B._pham_vi_khoi(named,scope,solids,'g') if owner is B else c._scoped_solid_name(named,scope,'g')
+            except TuChoi as e:
+                assert e.code==code;continue
+            except Exception as e:
+                raise AssertionError(f'untyped failure {e!r}') from None
+            assert False,'conflicting scope accepted'
     with pytest.raises(AssertionError):oracle()
 
 @pytest.mark.parametrize('mutant',['remove_terminal_guard','remove_scope_guard','replace_scope_with_default','allow_global_lookup'])

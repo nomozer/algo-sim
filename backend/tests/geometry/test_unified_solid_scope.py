@@ -6,13 +6,14 @@ fixtures only; every mutation is built here, none is known to product code.
 from copy import deepcopy
 import json
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
 from app.ai import adapter3_simulation as A
 from app.ai.adapter4_route import run_typed_fact_next_v2_route
 from app.simulation.geometry_functions import typed_fact_next_bridge as B
-from app.simulation.geometry_functions.typed_fact_next import convert_v1_to_v2
+from app.simulation.geometry_functions.typed_fact_next import TypedFactNextValidationError, convert_v1_to_v2
 
 RUNS = Path(__file__).resolve().parents[3] / 'docs/evaluation/geometry/runs'
 RUN = RUNS / 'hybrid-v2-w3-f2-ratio-projection-language-grounding'
@@ -28,7 +29,10 @@ def sup(): return deepcopy(SUP)
 def a3(p): return A.run_typed_fact_next_route(deepcopy(p))
 def a4(p):
     q = deepcopy(p)
-    q = convert_v1_to_v2(q, 'adapter3') if q.get('derived_sections') else {**q, 'schema_version': 'typed-fact-next/2'}
+    try:      # `/1 → /2` conversion parses `/1` first: a schema refusal there is the same refusal Adapter /4 would give
+        q = convert_v1_to_v2(q, 'adapter3') if q.get('derived_sections') else {**q, 'schema_version': 'typed-fact-next/2'}
+    except TypedFactNextValidationError as e:
+        return SimpleNamespace(status='REFUSED', code=e.code, reason=e.detail)
     return run_typed_fact_next_v2_route(q)
 def outcome(r): return (r.status, r.code)
 def refused(code): return ('REFUSED', code)
@@ -278,6 +282,91 @@ def test_metamorphic_foreign_scope_is_never_served(index):
         slot = next(s for s in scope_slots(p) if s[0] == path)
         slot[1][slot[2]] = 'foreign'
         assert a3(p).status != 'SERVED', path
+
+
+# ── mutants: removing any rule must let an oracle below fail ────────────────────────────────────────────────────
+import inspect, textwrap  # noqa: E402
+from app.simulation.geometry_functions import typed_fact_next as T  # noqa: E402
+
+
+def mutate(monkeypatch, owner, name, needle, replacement):
+    source = textwrap.dedent(inspect.getsource(getattr(owner, name)))
+    assert source.count(needle) == 1, (name, needle)
+    module = T if owner is T else B if owner is B else A
+    namespace = dict(vars(module)); exec(compile(source.replace(needle, replacement), f'<{name}-mutant>', 'exec'), namespace)
+    monkeypatch.setattr(owner, name, namespace[name])
+
+
+def curved_goal_foreign():
+    p = cyl()['payload']; p['math_goals'][0]['solid_id'] = 'foreign'
+    assert outcome(a3(p)) == refused('UNKNOWN_SOLID_ID')
+
+
+def parent_other():
+    p = demo1(); other = deepcopy(p['solids'][0]); other['solid_id'] = 'zz'; p['solids'].append(other)
+    next(g for g in p['simulation_goals'] if g['kind'] == 'construct_derived_solid')['parent_solid_id'] = 'zz'
+    assert outcome(a3(p)) == refused('SOURCE_OBJECT_MISMATCH')
+
+
+def derived_volume_served():
+    p = demo1(); p['math_goals'].append({'goal_id': 'v_top', 'kind': 'measurement', 'goal_type': 'volume',
+                                         'solid_id': 's_top', 'target': {'solid': 's_top'}, 'quote': VQ})
+    assert a3(p).status == 'SERVED'
+
+
+def nested_target():
+    p = sup(); p['math_goals'][0]['target'] = {'solid': 's1', 'solid_id': 's2'}
+    assert outcome(a4(p)) == refused('SOURCE_OBJECT_MISMATCH')
+
+
+def ratio_scope():
+    _c, p = ratio_case('A3', 'A3-DEV-02'); next(g for g in p['math_goals'] if g['kind'] == 'volume_ratio')['solid_id'] = 'foreign'
+    assert outcome(a3(p)) == refused('INVALID_MATH_GOAL')
+
+
+def relation_side():
+    p = sup(); p['relations'] = [{'relation_id': 'r', 'quote': Q, 'kind': 'shared_faces', 'solid_a': 's1', 'solid_b': 's2',
+                                  'face_a': list('SAB'), 'face_b': list('SAB')}]
+    assert outcome(a4(p)) == refused('SOURCE_OBJECT_MISMATCH')
+
+
+def goal_operand():
+    assert outcome(a4(scoped_goal(DIST, 's2'))) == refused('SOURCE_OBJECT_MISMATCH')
+
+
+def curved_ownership():
+    p = cyl()['payload']; second_cylinder(p)
+    add_premise(p, {'kind': 'segment_length', 'solid_id': 'zz', 'args': {'segment': ['O', "O'"], 'value': '1'},
+                    'quote': p['solids'][0]['quote']})
+    assert outcome(a3(p)) == refused('SOURCE_OBJECT_MISMATCH')
+
+
+MUTANTS = {
+    'remove_declared_scope_existence': (T, '_validate_declared_solid_scope',
+        'if sid is not None and (not isinstance(sid, str) or sid not in known):', 'if False:', curved_goal_foreign),
+    'remove_cross_solid_comparison': (T, '_validate_declared_solid_scope', 'if len(found) > 1:', 'if False:', parent_other),
+    'drop_derived_solids': (T, '_validate_declared_solid_scope', 'solids = {s.solid_id: s for s in p.solids}',
+        'solids = {s.solid_id: s for s in p.solids}; known = set(solids)', derived_volume_served),
+    'remove_nested_target_scope': (T, '_validate_declared_solid_scope', 'nested = declared(t.get("solid_id"), mg.goal_id)',
+        'nested = None', nested_target),
+    'remove_ratio_residual_refusal': (T, '_validate_declared_solid_scope', 'if mg.solid_id is not None:', 'if False:', ratio_scope),
+    'remove_relation_sides': (T, '_validate_declared_solid_scope', 'if stray:', 'if False:', relation_side),
+    'foreign_scope_to_first_solid': (T, '_validate_declared_solid_scope',
+        'refuse("UNKNOWN_SOLID_ID", where, f"khối {sid!r} chưa được khai báo")', 'return next(iter(solids))', curved_goal_foreign),
+    'remove_goal_operand_ownership': (B, '_kiem_pham_vi_tien_de',
+        "if owners.get(_ref(ref)) and g.solid_id not in owners[_ref(ref)]:", 'if False:', goal_operand),
+    'bypass_curved_prevalidation': (A._Adapter3Compiler, 'run',
+        '_kiem_pham_vi_tien_de(self.payload, {s.solid_id: s for s in self.payload.solids})', 'pass', curved_ownership),
+}
+
+
+@pytest.mark.parametrize('name', MUTANTS)
+def test_oracles_kill_unified_scope_mutants(monkeypatch, name):
+    owner, fn, needle, replacement, oracle = MUTANTS[name]
+    oracle()                                    # the oracle holds on the real code ...
+    mutate(monkeypatch, owner, fn, needle, replacement)
+    with pytest.raises(AssertionError):         # ... and fails on the mutant
+        oracle()
 
 
 def owned_only_by(p, label, sid):

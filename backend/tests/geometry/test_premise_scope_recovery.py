@@ -112,6 +112,11 @@ def test_scope_safety_oracle_kills_bypass_and_default_scope_mutants(monkeypatch,
         premises=tuple(x.model_copy(update={'solid_id':next(iter(solids))}) if x.solid_id not in solids else x for x in payload.premises)
         return original(payload.model_copy(update={'premises':premises}),solids)
     monkeypatch.setattr(B,'_kiem_pham_vi_tien_de',broken)
+    # Unified solid scope (schema layer) now refuses the same declaration first, with the same code ...
+    r=run_typed_fact_next_v2_route(p);assert (r.status,r.code)==('REFUSED','UNKNOWN_SOLID_ID')
+    # ... so the original unsafe path is exposed only when both layers are removed.
+    from app.simulation.geometry_functions import typed_fact_next as T
+    monkeypatch.setattr(T,'_validate_declared_solid_scope',lambda _p,_known:None)
     assert run_typed_fact_next_v2_route(p).status=='SERVED', 'mutant must expose the original unsafe path'
 
 

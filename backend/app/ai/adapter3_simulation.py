@@ -3008,7 +3008,10 @@ class _Adapter3Compiler:
 
     def run(self) -> Adapter3SimulationResult:
         if any(s.solid_type not in ("pyramid", "prism") for s in self.payload.solids):
+            from app.simulation.geometry_functions.typed_fact_next_bridge import _kiem_pham_vi_tien_de
             try:
+                # No Bridge/Source Gate reaches this route, and it reads no premise: validate their ownership first.
+                _kiem_pham_vi_tien_de(self.payload, {s.solid_id: s for s in self.payload.solids})
                 res = self._run_curved_route()
                 if res.status == "SERVED":          # the planner has no curved solids: no shared gate verdict exists
                     res.source_verification = {"authority": LEGACY_SOURCE_AUTHORITY,

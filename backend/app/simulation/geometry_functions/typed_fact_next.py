@@ -667,7 +667,124 @@ class TypedFactNextPayload(ClosedNextModel):
                     "UNKNOWN_SOLID_ID",
                     f"Math goal {mg.goal_id!r} references unknown cut solid {mg.cut_solid_id!r}.",
                 )
+        _validate_declared_solid_scope(self, all_solid_ids)
         return self
+
+
+def _solid_aliases(solid: SolidSpec) -> set[str]:
+    """Names a solid answers to: its id, its notation and its notation with vertex bindings applied (Adapter /3's name)."""
+    names = {solid.solid_id, solid.notation}
+    if solid.solid_type == "pyramid":
+        apex, base = solid.apex_and_base()
+        names.add(f"{solid.canonical_vertex(apex)}.{''.join(map(solid.canonical_vertex, base))}")
+    elif solid.solid_type == "prism":
+        b1, b2 = solid.prism_bases()
+        names.add(f"{''.join(map(solid.canonical_vertex, b1))}.{''.join(map(solid.canonical_vertex, b2))}")
+    return names
+
+
+def _qualified_refs(value: Any) -> list[str]:
+    """Every `solid_id::LABEL` inside a value (edge keys `X-Y` split); quotes are text, not references."""
+    if isinstance(value, dict):
+        return [r for k, v in value.items() if k not in ("quote", "problem_text") for r in _qualified_refs(v)]
+    if isinstance(value, (list, tuple)):
+        return [r for v in value for r in _qualified_refs(v)]
+    if isinstance(value, str) and "::" in value:
+        return [part for part in value.split("-") if "::" in part]
+    return []
+
+
+def _validate_declared_solid_scope(p: "TypedFactNextPayload", known: set[str]) -> None:
+    """ONE declared-solid-scope policy (run `hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope`).
+
+    It runs inside the payload model, so every TypedFactNext route (Adapter /3 polyhedral and curved, Adapter /4, the
+    planner route) applies it before dispatch, capability refusal or fallback. It decides only what declarations prove:
+    R1 a declared scope exists; R2 a named solid resolves uniquely by id or notation; R3 all solids named by one object
+    agree; R4 ratio/residual goals carry no goal-level scope (Owner decision A); R5 a qualified reference's namespace
+    exists and equals its object's scope; R6 relation sides own their faces/anchors (Owner decision C). Absent optional
+    scope never fires a rule and is never replaced by a default. Constructed-point ownership is the Bridge's
+    (`_kiem_pham_vi_tien_de`)."""
+    solids = {s.solid_id: s for s in p.solids}
+    sections = {s.section_id: s for s in p.derived_sections}
+
+    def refuse(code: str, where: str, detail: str):
+        raise TypedFactNextValidationError(code, f"{where}: {detail}")
+
+    def declared(sid: Any, where: str) -> str | None:                                   # R1
+        if sid is not None and (not isinstance(sid, str) or sid not in known):
+            refuse("UNKNOWN_SOLID_ID", where, f"khối {sid!r} chưa được khai báo")
+        return sid
+
+    def named(name: Any, scope: str | None, where: str) -> str | None:                  # R2
+        if name is None:
+            return None
+        hits = [s for s, spec in solids.items() if name in _solid_aliases(spec)] or [n for n in known if n == name] \
+            if isinstance(name, str) else []
+        if len(hits) != 1:
+            refuse("UNKNOWN_SOLID_ID" if scope is not None else "UNKNOWN_SOLID", where,
+                   f"khối {name!r} không xác định duy nhất")
+        return hits[0]
+
+    def one_solid(where: str, *sids: str | None) -> str | None:                         # R3
+        found = {s for s in sids if s is not None}
+        if len(found) > 1:
+            refuse("SOURCE_OBJECT_MISMATCH", where, f"một đối tượng mang các khối khác nhau {sorted(found)}")
+        return next(iter(found), None)
+
+    def scoped(value: Any, scope: str | None, where: str) -> None:                      # R5
+        for ref in _qualified_refs(value):
+            ns = parse_qualified_ref(ref)[0]
+            declared(ns, where)
+            if scope is not None and ns != scope:
+                refuse("SOURCE_OBJECT_MISMATCH", where, f"tham chiếu {ref!r} khác phạm vi khối {scope!r}")
+
+    def owned(labels: tuple[str, ...], sid: str | None, where: str) -> None:            # R6
+        if sid in solids:
+            spec = solids[sid]
+            own = {*spec.local_vertices(), *map(spec.canonical_vertex, spec.local_vertices())}
+            stray = [x for x in labels if parse_qualified_ref(x)[1] not in own]
+            if stray:
+                refuse("SOURCE_OBJECT_MISMATCH", where, f"{stray} không phải đỉnh của khối {sid!r}")
+
+    for i, prem in enumerate(p.premises, 1):
+        where = f"p{i}"
+        scope = declared(prem.solid_id, where)
+        scope = one_solid(where, scope, named(prem.args.get("solid"), scope, where))
+        scoped(prem.args, scope, where)
+    for sec in p.derived_sections:
+        scoped(sec.model_dump(exclude={"section_id", "target_solid_id"}), sec.target_solid_id, sec.section_id)
+    for r in p.relations:
+        where = r.relation_id
+        if r.kind == "shared_faces":
+            for side, face in ((declared(r.solid_a, where), r.face_a), (declared(r.solid_b, where), r.face_b)):
+                scoped(face, side, where)
+                owned(face, side, where)
+        elif r.kind == "coordinate_frame":
+            frame = declared(r.solid_id, where)
+            scoped(r.anchor_refs, frame, where)
+            owned(r.anchor_refs, frame, where)
+        else:
+            for sid in (r.solid_id, r.solid_a, r.solid_b):
+                declared(sid, where)
+        scoped(r.model_dump(include={"container_ref", "member_ref", "pairs", "entity_a", "entity_b", "member_refs"}),
+               None, where)
+    for g in p.simulation_goals:
+        declared(g.parent_solid_id, g.goal_id)
+        if g.kind == "construct_derived_solid" and g.target_section_id in sections:
+            one_solid(g.goal_id, g.parent_solid_id, sections[g.target_section_id].target_solid_id)
+        scoped([g.apex_ref, *g.target_refs], None, g.goal_id)
+    for mg in p.math_goals:
+        if mg.kind in ("volume_ratio", "residual_volume"):
+            if mg.solid_id is not None:                                                  # R4
+                refuse("INVALID_MATH_GOAL", mg.goal_id, f"mục tiêu {mg.kind} không có phạm vi khối cấp mục tiêu")
+            continue
+        t = mg.target
+        scope = declared(mg.solid_id, mg.goal_id)
+        nested = declared(t.get("solid_id"), mg.goal_id)
+        sec = sections.get(t["section_id"]) if isinstance(t.get("section_id"), str) else None
+        scope = one_solid(mg.goal_id, scope, nested, named(t.get("solid"), scope or nested, mg.goal_id),
+                          sec.target_solid_id if sec else None)
+        scoped({k: v for k, v in t.items() if k not in ("solid", "solid_id", "section_id")}, scope, mg.goal_id)
 
 
 class TypedFactNextPayloadV2(TypedFactNextPayload):
