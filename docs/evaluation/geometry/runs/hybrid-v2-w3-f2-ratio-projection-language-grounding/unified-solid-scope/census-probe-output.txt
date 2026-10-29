@@ -1,0 +1,48 @@
+# census_probe.py on HEAD 3cdba8ebc91b9b03246caef7d1e95f0d3981f609 (product c4d7b759), ALLOW_LIVE_AI=0
+{"case": "demo1-pyramid-derived-section control", "a3": ["SERVED", null]}
+{"case": "NEW parent_solid_id=foreign (demo1-pyramid-derived-section)", "a3": ["REFUSED", "UNKNOWN_SOLID_ID"]}
+{"case": "NEW parent_solid_id=other (demo1-pyramid-derived-section)", "a3": ["SERVED", null]}
+{"case": "demo6b-curved-cone-frustum-cut control", "a3": ["SERVED", null]}
+{"case": "NEW parent_solid_id=foreign (demo6b-curved-cone-frustum-cut)", "a3": ["REFUSED", "ADAPTER_INTERNAL_ERROR"]}
+{"case": "NEW parent_solid_id=other (demo6b-curved-cone-frustum-cut)", "a3": ["REFUSED", "UNSUPPORTED_VOLUME_RATIO"]}
+{"case": "NEW highlight target_refs foreign::D (A3-DEV-02)", "a3": ["REFUSED", "UNKNOWN_SOLID_ID"]}
+{"case": "NEW shared_faces s1/s2 face SAB (not a face of T.ABCD)", "a3": ["REFUSED", "SOURCE_OBJECT_MISMATCH"], "a4": ["SERVED", null]}
+{"case": "NEW coordinate_frame s1 anchors s2::T", "a3": ["REFUSED", "SOURCE_OBJECT_MISMATCH"], "a4": ["SERVED", null]}
+{"case": "NEW premise solid_id=s1 with qualified s2::A", "a3": ["REFUSED", "SOURCE_OBJECT_MISMATCH"], "a4": ["REFUSED", "SOURCE_OBJECT_MISMATCH"]}
+{"case": "MINOR6 target.solid_id foreign", "a3": ["SERVED", null], "a4": ["SERVED", null]}
+{"case": "MAJOR2 curved premise solid_id=foreign", "a3": ["SERVED", null]}
+{"case": "MAJOR2 curved relation coordinate_frame foreign", "a3": ["SERVED", null]}
+{"case": "MAJOR2 curved target.solid foreign", "a3": ["REFUSED", "ADAPTER_INTERNAL_ERROR"]}
+# census_payloads.py
+{
+ "files": 28,
+ "counts": {
+  "payloads": 1234,
+  "premise.solid_id": 4411,
+  "premise.args.solid": 7,
+  "sim.parent_solid_id": 114,
+  "math.measurement.solid_id": 266,
+  "math.target.solid": 17,
+  "math.target.solid_id": 0,
+  "math.target.section_id": 526,
+  "math.volume_ratio.solid_id": 0,
+  "math.residual_volume.solid_id": 0,
+  "relation.solid_id": 11,
+  "relation.solid_a": 6,
+  "relation.solid_b": 6
+ },
+ "curved_payloads": 13,
+ "curved_with_premises_or_relations": [
+  [
+   "docs/evaluation/geometry/runs/hybrid-v2-adapter4-plane-section-certificate/inputs/development.json",
+   6,
+   0,
+   [
+    "midpoint",
+    "right_angle",
+    "right_prism",
+    "segment_length"
+   ]
+  ]
+ ]
+}

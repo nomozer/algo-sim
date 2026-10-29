@@ -1,0 +1,48 @@
+{
+  "schema": "SOLID_SCOPE_ENTRYPOINT_MATRIX/1",
+  "task": "HYBRID_V2_W3_F2_UNIFIED_SOLID_SCOPE_VALIDATION",
+  "baseline_head": "3cdba8ebc91b9b03246caef7d1e95f0d3981f609",
+  "baseline_product": "c4d7b759a9cb69ba5133dc8a05b10f45e7ff24ba",
+  "main": "996f114b3480efe1b0d075dd4342530aaa12ddae",
+  "entry_points": {
+    "E0": "typed_fact_next._parse -> TypedFactNextPayload._validate_payload (every entry point below parses here first)",
+    "E1a": "adapter3_simulation.run_typed_fact_next_route -> _Adapter3Compiler.run -> _run_curved_route (any non-polyhedral solid; NO Bridge, NO Source Gate)",
+    "E1b": "adapter3 -> _shared_source_gate -> bridge -> lap_ke_hoach -> kiem_nguon (semantic refusal terminal; allowlisted capability codes fall back)",
+    "E1c": "adapter3 legacy compile (_compile_solids/_compile_premises/_compile_derived_sections/_compile_derived_solids_and_goals/_validate_structural_relations)",
+    "E2": "adapter4_route.run_typed_fact_next_v2_route -> bridge_v2 -> chay_sau_cau_noi (no fallback)",
+    "E3": "function_route.run_typed_fact_next_planner_route -> bridge -> chay_sau_cau_noi (no fallback)",
+    "E4": "hybrid_offline -> E2",
+    "E5": "typed_fact_next_extraction -> parse_typed_fact_next_v2 (E0) -> E2",
+    "E6": "convert_v1_to_v2 -> parse_typed_fact_next (E0)"
+  },
+  "out_of_scope_entry_points": {
+    "hybrid_preview /api/preview/hybrid, function_route.run_function_route / run_fact_route (TypedFact)": "different contract without declared solid scope; planner refuses unknown solids (UNKNOWN_SOLID); not a TypedFactNext path",
+    "/api/analyze": "LLM_ONLY default, does not import TypedFactNext routes (locked by test_structured_geometry_relations.py::test_Y)"
+  },
+  "fields": [
+    {"id": "F01", "field": "SolidSpec.solid_id / notation / vertex_bindings", "owner": "solid identity (definition)", "current": "E0 DUPLICATE_SOLID_ID; notation shape", "bypass": "none", "guard": "source of aliases: id, notation, canonical notation (bindings applied, as Adapter3 names it)", "test": "alias positives"},
+    {"id": "F02", "field": "PremiseSpec.solid_id", "owner": "premise declared scope", "current": "E1b Bridge _kiem_pham_vi_tien_de (after solid-loop capability); E1c resolve_ref; E1a NONE (premises ignored)", "bypass": "FAIL-OPEN E1a (review #2)", "guard": "E0 existence (UNKNOWN_SOLID_ID); E1a runs the Bridge vertex-scope validator before _run_curved_route", "test": "MAJOR2 curved premise foreign / contradicted"},
+    {"id": "F03", "field": "PremiseSpec.args.solid (height, altitude; shape id)", "owner": "solid-valued operand", "current": "Bridge _pham_vi_khoi; Adapter3 _scoped_solid_name; E1a none", "bypass": "E1a", "guard": "E0: resolve by alias; vs declared scope -> SOURCE_OBJECT_MISMATCH; unknown with scope -> UNKNOWN_SOLID_ID; unknown without scope -> UNKNOWN_SOLID (locked planner code, N006)", "test": "existing H1, N006; curved height"},
+    {"id": "F04", "field": "premise ref operands (qualified sid::X and unqualified)", "owner": "vertex ownership incl. constructed points", "current": "Bridge _kiem_pham_vi_tien_de + _check_qualified_refs; Adapter3 resolve_ref / R_new", "bypass": "E1a", "guard": "E0 qualified namespace exists and equals declared scope; ownership: Bridge validator (also run on E1a)", "test": "existing NEG08/23, collisions; curved"},
+    {"id": "F05", "field": "DerivedSection.target_solid_id + section refs", "owner": "section's cut solid", "current": "E0 existence; Bridge _check_qualified_refs; Adapter3 resolve_ref", "bypass": "none found", "guard": "E0 qualified namespace equals target_solid_id", "test": "qualified section ref other solid"},
+    {"id": "F06", "field": "Relation.solid_a / solid_b (shared_faces) + face_a / face_b", "owner": "cross-solid relation sides", "current": "Adapter3 _validate_structural_relations; Bridge `continue` when faces identical; E1a ignored", "bypass": "FAIL-OPEN E2/E3 (review #4, NEW-2), E1a", "guard": "E0: sides exist (UNKNOWN_SOLID_ID); each face label is a vertex of its own side, qualified namespace equals that side (SOURCE_OBJECT_MISMATCH)", "test": "MINOR4 shared_faces foreign; face not of solid_b; valid shared face kept"},
+    {"id": "F07", "field": "Relation.solid_id (coordinate_frame) + anchor_refs", "owner": "frame owner", "current": "Adapter3 checks; Bridge skips frame_id root; E1a ignored", "bypass": "FAIL-OPEN E2/E3/E1a (review #4, NEW-2)", "guard": "E0: solid exists; anchors are vertices of solid_id, qualified namespace equals it", "test": "MINOR4 coordinate_frame foreign; anchors of other solid"},
+    {"id": "F08", "field": "Relation pairs / container_ref / member_ref / entity_a/b / member_refs (qualified refs)", "owner": "vertex refs", "current": "Bridge _check_qualified_refs; Adapter3 resolve_ref", "bypass": "E1a", "guard": "E0 qualified namespace exists", "test": "foreign namespace in relation ref"},
+    {"id": "F09", "field": "SimulationGoal.target_solid_id / target_section_id", "owner": "goal target", "current": "E0 existence", "bypass": "none", "guard": "unchanged", "test": "existing"},
+    {"id": "F10", "field": "SimulationGoal.parent_solid_id (construct_derived_solid)", "owner": "derived solid ancestry", "current": "NONE at E0; Bridge parent-or-section; Adapter3 legacy/curved read it directly", "bypass": "FAIL-OPEN NEW-1 (declared other solid SERVED, demo1); curved crash ADAPTER_INTERNAL_ERROR (NEW-3)", "guard": "E0: exists; equals the target section's target_solid_id (SOURCE_OBJECT_MISMATCH)", "test": "NEW-1 parent foreign / other solid, polyhedral and curved"},
+    {"id": "F11", "field": "SimulationGoal.apex_ref / target_refs (qualified refs)", "owner": "vertex refs", "current": "Adapter3 resolve_ref", "bypass": "none found (refused)", "guard": "E0 qualified namespace exists", "test": "highlight foreign::D"},
+    {"id": "F12", "field": "MathGoal.numerator/denominator/parent/cut_solid_id", "owner": "ratio/residual operands", "current": "E0 existence over primary+derived", "bypass": "none", "guard": "unchanged", "test": "ratio positives"},
+    {"id": "F13", "field": "MathGoal.solid_id on volume_ratio / residual_volume", "owner": "no defined meaning (Owner Decision A)", "current": "ignored everywhere", "bypass": "FAIL-OPEN all routes (review #3)", "guard": "E0: any explicit value -> INVALID_MATH_GOAL (0 of 1234 committed payloads use it)", "test": "MAJOR3 foreign / declared solid on ratio and residual"},
+    {"id": "F14", "field": "MathGoal.solid_id on measurement", "owner": "goal declared scope", "current": "Bridge volume only (primary solids); Adapter3 resolve_ref/_scoped_solid_name; E1a ignored", "bypass": "FAIL-OPEN E1a (review #2); false UNKNOWN_SOLID_ID for derived (review #5)", "guard": "E0: exists in primary+derived (UNKNOWN_SOLID_ID)", "test": "MAJOR2 curved goal foreign; MINOR5 derived"},
+    {"id": "F15", "field": "MathGoal.target.solid / target.solid_id / target.section_id", "owner": "goal object", "current": "Bridge target.solid ids only, target.solid_id ignored; Adapter3 target.solid_id read only for area", "bypass": "FAIL-OPEN target.solid_id (review #6); curved crash on unknown target (NEW-3)", "guard": "E0: every solid indicator of the goal (solid_id, target.solid, target.solid_id, section's solid) resolves to one solid; unknown -> UNKNOWN_SOLID_ID / UNKNOWN_SOLID; conflict -> SOURCE_OBJECT_MISMATCH", "test": "MINOR6 nested; H2/H3 existing; curved"},
+    {"id": "F16", "field": "MathGoal.target ref operands (segment/point/plane/line/line1/line2/polygon) vs goal solid_id", "owner": "vertex ownership", "current": "Adapter3 resolve_ref(x, sid); Bridge NONE", "bypass": "FAIL-OPEN E2/E3 (review #1)", "guard": "E0 qualified namespace equals goal scope; Bridge _kiem_pham_vi_tien_de: an operand provably owned only by other solids -> SOURCE_OBJECT_MISMATCH", "test": "MAJOR1 distance/angle s2/foreign, notation, A3/A4 agreement"},
+    {"id": "F17", "field": "constructed point ownership (midpoint, divide, projection, intersection outputs)", "owner": "producer scope", "current": "Bridge owners propagation; Adapter3 R_new", "bypass": "none found", "guard": "unchanged; reused for F16", "test": "goal on constructed point of correct / wrong solid"}
+  ],
+  "exception_handlers": {
+    "adapter3._shared_source_gate": "typed allowlists _LEGACY_BRIDGE_CAPABILITIES / _LEGACY_PLANNER_CAPABILITIES; everything else terminal (kept)",
+    "adapter3.run_typed_fact_next_route": "TypedFactNextValidationError -> REFUSED code; other Exception -> ADAPTER_INTERNAL_ERROR (fail-closed, but NEW-3 cases must refuse with a data code)",
+    "adapter4 / planner route": "TuChoi -> REFUSED; other Exception -> ROUTE_INTERNAL_ERROR; no fallback"
+  },
+  "findings_before_fix": ["review #1 MAJOR", "review #2 MAJOR", "review #3 MAJOR", "review #4 MINOR", "review #5 MINOR", "review #6 MINOR", "NEW-1 MAJOR parent_solid_id", "NEW-2 MAJOR contradictory relation sides on E2", "NEW-3 MINOR internal-error refusals on curved route"],
+  "evidence": "census-probe-output.txt (tools/census_probe.py, tools/census_payloads.py)"
+}

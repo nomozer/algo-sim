@@ -1,0 +1,236 @@
+......FFFFFF.F..FFFFFFFF....FFFFsFssFFFFsFssFFFFF.F....FFFFFF.......     [100%]
+================================== FAILURES ===================================
+E   AssertionError: (('REFUSED', 'SOURCE_OBJECT_MISMATCH'), ('SERVED', None))
+    assert ('REFUSED', '...ECT_MISMATCH') == ('SERVED', None)
+      
+      At index 0 diff: 'REFUSED' != 'SERVED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:48: AssertionError: (('REFUSED', 'SOURCE_OBJECT_MISMATCH'), ('SERVED', None))
+E   AssertionError: (('REFUSED', 'SOURCE_OBJECT_MISMATCH'), ('SERVED', None))
+    assert ('REFUSED', '...ECT_MISMATCH') == ('SERVED', None)
+      
+      At index 0 diff: 'REFUSED' != 'SERVED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:48: AssertionError: (('REFUSED', 'SOURCE_OBJECT_MISMATCH'), ('SERVED', None))
+E   AssertionError: (('REFUSED', 'UNKNOWN_SOLID_ID'), ('SERVED', None))
+    assert ('REFUSED', '...OWN_SOLID_ID') == ('SERVED', None)
+      
+      At index 0 diff: 'REFUSED' != 'SERVED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:48: AssertionError: (('REFUSED', 'UNKNOWN_SOLID_ID'), ('SERVED', None))
+E   AssertionError: (('REFUSED', 'UNKNOWN_SOLID_ID'), ('SERVED', None))
+    assert ('REFUSED', '...OWN_SOLID_ID') == ('SERVED', None)
+      
+      At index 0 diff: 'REFUSED' != 'SERVED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:48: AssertionError: (('REFUSED', 'UNKNOWN_SOLID_ID'), ('SERVED', None))
+E   AssertionError: (('REFUSED', 'SOURCE_OBJECT_MISMATCH'), ('SERVED', None))
+    assert ('REFUSED', '...ECT_MISMATCH') == ('SERVED', None)
+      
+      At index 0 diff: 'REFUSED' != 'SERVED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:48: AssertionError: (('REFUSED', 'SOURCE_OBJECT_MISMATCH'), ('SERVED', None))
+E   AssertionError: (('REFUSED', 'SOURCE_OBJECT_MISMATCH'), ('SERVED', None))
+    assert ('REFUSED', '...ECT_MISMATCH') == ('SERVED', None)
+      
+      At index 0 diff: 'REFUSED' != 'SERVED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:48: AssertionError: (('REFUSED', 'SOURCE_OBJECT_MISMATCH'), ('SERVED', None))
+E   AssertionError: (('REFUSED', 'SOURCE_OBJECT_MISMATCH'), ('SERVED', None))
+    assert ('REFUSED', '...ECT_MISMATCH') == ('SERVED', None)
+      
+      At index 0 diff: 'REFUSED' != 'SERVED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:48: AssertionError: (('REFUSED', 'SOURCE_OBJECT_MISMATCH'), ('SERVED', None))
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:141: AssertionError: assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:141: AssertionError: assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:141: AssertionError: assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+E   AssertionError: assert ('REFUSED', '...TERNAL_ERROR') == ('REFUSED', 'UNKNOWN_SOLID')
+      
+      At index 1 diff: 'ADAPTER_INTERNAL_ERROR' != 'UNKNOWN_SOLID'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:141: AssertionError: assert ('REFUSED', '...TERNAL_ERROR') == ('REFUSED', 'UNKNOWN_SOLID')
+E   AssertionError: assert ('REFUSED', '...BER_MISMATCH') == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 1 diff: 'SOURCE_NUMBER_MISMATCH' != 'SOURCE_OBJECT_MISMATCH'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:141: AssertionError: assert ('REFUSED', '...BER_MISMATCH') == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('REFUSED', '...BER_MISMATCH') == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 1 diff: 'SOURCE_NUMBER_MISMATCH' != 'SOURCE_OBJECT_MISMATCH'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:141: AssertionError: assert ('REFUSED', '...BER_MISMATCH') == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('REFUSED', '...BER_MISMATCH') == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 1 diff: 'SOURCE_NUMBER_MISMATCH' != 'SOURCE_OBJECT_MISMATCH'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:141: AssertionError: assert ('REFUSED', '...BER_MISMATCH') == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('SERVED' == 'SERVED'
+      
+        SERVED and [])
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:149: AssertionError: assert ('SERVED' == 'SERVED'
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:176: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:176: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:176: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:176: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:176: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:176: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:176: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:176: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:176: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:176: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:190: AssertionError: assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:190: AssertionError: assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:190: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:190: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:190: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E   assert 'UNKNOWN_SOLID_ID' != 'UNKNOWN_SOLID_ID'
+     +  where 'UNKNOWN_SOLID_ID' = KetQuaTuyen(status='REFUSED', code='UNKNOWN_SOLID_ID', reason="v_top: phạm vi khối 's_top' chưa được khai báo", failed... 'planner': {'version': None, 'bridge': {'version': 'typed-fact-next-bridge/2'}}}, targets=(), section_certificates=()).code
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:215: assert 'UNKNOWN_SOLID_ID' != 'UNKNOWN_SOLID_ID'
+E   AssertionError: KeyError: 'foreign'
+    assert ('REFUSED', '...TERNAL_ERROR') == ('REFUSED', '...OWN_SOLID_ID')
+      
+      At index 1 diff: 'ADAPTER_INTERNAL_ERROR' != 'UNKNOWN_SOLID_ID'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:232: AssertionError: KeyError: 'foreign'
+E   AssertionError: None
+    assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:232: AssertionError: None
+E   AssertionError: m_ratio: không xác định được tỉ lệ đồng dạng dọc trục
+    assert ('REFUSED', '...VOLUME_RATIO') == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 1 diff: 'UNSUPPORTED_VOLUME_RATIO' != 'SOURCE_OBJECT_MISMATCH'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:232: AssertionError: m_ratio: không xác định được tỉ lệ đồng dạng dọc trục
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:245: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:245: AssertionError: assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_unified_solid_scope.py:245: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_unified_solid_scope.py::test_goal_operands_must_belong_to_declared_goal_scope[s2-target3-expected3-distance]
+FAILED tests/geometry/test_unified_solid_scope.py::test_goal_operands_must_belong_to_declared_goal_scope[s2-target3-expected3-angle]
+FAILED tests/geometry/test_unified_solid_scope.py::test_goal_operands_must_belong_to_declared_goal_scope[foreign-target4-expected4-distance]
+FAILED tests/geometry/test_unified_solid_scope.py::test_goal_operands_must_belong_to_declared_goal_scope[foreign-target4-expected4-angle]
+FAILED tests/geometry/test_unified_solid_scope.py::test_goal_operands_must_belong_to_declared_goal_scope[s2-target5-expected5-distance]
+FAILED tests/geometry/test_unified_solid_scope.py::test_goal_operands_must_belong_to_declared_goal_scope[s2-target5-expected5-angle]
+FAILED tests/geometry/test_unified_solid_scope.py::test_constructed_point_goal_operand_keeps_producer_scope[s2-expected1]
+FAILED tests/geometry/test_unified_solid_scope.py::test_curved_scope_violations_refuse_before_the_curved_route[goal_foreign-UNKNOWN_SOLID_ID]
+FAILED tests/geometry/test_unified_solid_scope.py::test_curved_scope_violations_refuse_before_the_curved_route[premise_foreign-UNKNOWN_SOLID_ID]
+FAILED tests/geometry/test_unified_solid_scope.py::test_curved_scope_violations_refuse_before_the_curved_route[relation_foreign-UNKNOWN_SOLID_ID]
+FAILED tests/geometry/test_unified_solid_scope.py::test_curved_scope_violations_refuse_before_the_curved_route[target_foreign-UNKNOWN_SOLID]
+FAILED tests/geometry/test_unified_solid_scope.py::test_curved_scope_violations_refuse_before_the_curved_route[goal_other_vs_target-SOURCE_OBJECT_MISMATCH]
+FAILED tests/geometry/test_unified_solid_scope.py::test_curved_scope_violations_refuse_before_the_curved_route[premise_qualified_other-SOURCE_OBJECT_MISMATCH]
+FAILED tests/geometry/test_unified_solid_scope.py::test_curved_scope_violations_refuse_before_the_curved_route[premise_operands_of_other-SOURCE_OBJECT_MISMATCH]
+FAILED tests/geometry/test_unified_solid_scope.py::test_curved_route_runs_the_ownership_validator_first
+FAILED tests/geometry/test_unified_solid_scope.py::test_goal_level_solid_id_on_ratio_or_residual_is_refused[foreign-volume_ratio-A3-A3-DEV-02]
+FAILED tests/geometry/test_unified_solid_scope.py::test_goal_level_solid_id_on_ratio_or_residual_is_refused[foreign-volume_ratio-A3-A3-DEV-03]
+FAILED tests/geometry/test_unified_solid_scope.py::test_goal_level_solid_id_on_ratio_or_residual_is_refused[foreign-volume_ratio-A3-A3-DEV-09]
+FAILED tests/geometry/test_unified_solid_scope.py::test_goal_level_solid_id_on_ratio_or_residual_is_refused[foreign-volume_ratio-SIM-demo1-pyramid-derived-section]
+FAILED tests/geometry/test_unified_solid_scope.py::test_goal_level_solid_id_on_ratio_or_residual_is_refused[foreign-residual_volume-A3-A3-DEV-03]
+FAILED tests/geometry/test_unified_solid_scope.py::test_goal_level_solid_id_on_ratio_or_residual_is_refused[declared-volume_ratio-A3-A3-DEV-02]
+FAILED tests/geometry/test_unified_solid_scope.py::test_goal_level_solid_id_on_ratio_or_residual_is_refused[declared-volume_ratio-A3-A3-DEV-03]
+FAILED tests/geometry/test_unified_solid_scope.py::test_goal_level_solid_id_on_ratio_or_residual_is_refused[declared-volume_ratio-A3-A3-DEV-09]
+FAILED tests/geometry/test_unified_solid_scope.py::test_goal_level_solid_id_on_ratio_or_residual_is_refused[declared-volume_ratio-SIM-demo1-pyramid-derived-section]
+FAILED tests/geometry/test_unified_solid_scope.py::test_goal_level_solid_id_on_ratio_or_residual_is_refused[declared-residual_volume-A3-A3-DEV-03]
+FAILED tests/geometry/test_unified_solid_scope.py::test_relation_sides_are_validated_on_both_adapters[relation0-UNKNOWN_SOLID_ID]
+FAILED tests/geometry/test_unified_solid_scope.py::test_relation_sides_are_validated_on_both_adapters[relation1-UNKNOWN_SOLID_ID]
+FAILED tests/geometry/test_unified_solid_scope.py::test_relation_sides_are_validated_on_both_adapters[relation2-SOURCE_OBJECT_MISMATCH]
+FAILED tests/geometry/test_unified_solid_scope.py::test_relation_sides_are_validated_on_both_adapters[relation3-SOURCE_OBJECT_MISMATCH]
+FAILED tests/geometry/test_unified_solid_scope.py::test_relation_sides_are_validated_on_both_adapters[relation4-SOURCE_OBJECT_MISMATCH]
+FAILED tests/geometry/test_unified_solid_scope.py::test_volume_goal_on_derived_solid[s_top-True]
+FAILED tests/geometry/test_unified_solid_scope.py::test_derived_solid_parent_must_be_the_sections_solid[foreign-UNKNOWN_SOLID_ID-demo6b-curved-cone-frustum-cut]
+FAILED tests/geometry/test_unified_solid_scope.py::test_derived_solid_parent_must_be_the_sections_solid[other-SOURCE_OBJECT_MISMATCH-demo1-pyramid-derived-section]
+FAILED tests/geometry/test_unified_solid_scope.py::test_derived_solid_parent_must_be_the_sections_solid[other-SOURCE_OBJECT_MISMATCH-demo6b-curved-cone-frustum-cut]
+FAILED tests/geometry/test_unified_solid_scope.py::test_nested_target_solid_id_is_part_of_the_goal_scope[s1-target0-expected0]
+FAILED tests/geometry/test_unified_solid_scope.py::test_nested_target_solid_id_is_part_of_the_goal_scope[s1-target1-expected1]
+FAILED tests/geometry/test_unified_solid_scope.py::test_nested_target_solid_id_is_part_of_the_goal_scope[None-target2-expected2]
+SKIPPED [2] tests\geometry\test_unified_solid_scope.py:174: A3-DEV-02 has no residual_volume goal
+SKIPPED [2] tests\geometry\test_unified_solid_scope.py:174: A3-DEV-09 has no residual_volume goal
+SKIPPED [2] tests\geometry\test_unified_solid_scope.py:174: demo1-pyramid-derived-section has no residual_volume goal
+37 failed, 25 passed, 6 skipped in 2.57s
