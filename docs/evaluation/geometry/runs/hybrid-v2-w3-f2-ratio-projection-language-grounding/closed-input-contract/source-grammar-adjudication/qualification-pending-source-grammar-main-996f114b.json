@@ -1,0 +1,104 @@
+{
+  "backend": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\w3-f2-main-baseline-996f114b\\backend",
+  "head": "996f114b3480efe1b0d075dd4342530aaa12ddae",
+  "backend_app_dirty": false,
+  "controls": "pending-source-grammar-controls.json",
+  "controls_sha256_lf": "879129cfa7c368713e739abd9ef6c136c42c3449e0b7c5f3b2e2b97b6e22755a",
+  "live_provider_calls": 0,
+  "results": {
+    "id": {
+      "a3": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_coef": {},
+        "source_authority": null
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_coef": {},
+        "source_authority": null
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_coef": {},
+        "source_authority": null
+      }
+    },
+    "notation": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer_coef": {
+          "vol": "12"
+        },
+        "source_authority": "adapter3.substring_legacy"
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "vol: mục tiêu measurement/volume chưa có ánh xạ",
+        "answer_coef": {},
+        "source_authority": null
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "vol: mục tiêu measurement/volume chưa có ánh xạ",
+        "answer_coef": {},
+        "source_authority": null
+      }
+    },
+    "nested_id": {
+      "a3": {
+        "status": "REFUSED",
+        "code": "UNKNOWN_SOLID_ID",
+        "reason": "vol: không tìm thấy khối ''",
+        "answer_coef": {},
+        "source_authority": null
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "vol: mục tiêu measurement/volume chưa có ánh xạ",
+        "answer_coef": {},
+        "source_authority": null
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "vol: mục tiêu measurement/volume chưa có ánh xạ",
+        "answer_coef": {},
+        "source_authority": null
+      }
+    },
+    "goal_id": {
+      "a3": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_coef": {},
+        "source_authority": null
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_coef": {},
+        "source_authority": null
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "QUESTION_CONTEXT_UNSUPPORTED",
+        "reason": "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác",
+        "answer_coef": {},
+        "source_authority": null
+      }
+    }
+  }
+}

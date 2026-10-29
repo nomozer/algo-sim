@@ -1,0 +1,63 @@
+{
+  "manifest": "W3F2-CLOSED-INPUT-CONTRACT-ACCEPTANCE",
+  "version": 2,
+  "supersedes": {
+    "version": 1,
+    "defined_by": "closed-input-contract/green.json#command at research HEAD 5e44d5da (committed verbatim in 4b361c47)",
+    "v1_test_file": "backend/tests/geometry/test_closed_input_contract.py",
+    "v1_test_file_sha256_lf": "053f41f5ea54e47b4848112e98eba465932bf449958308bb32b8c9857ad4057a",
+    "v1_result": "4 failed, 630 passed, 6 skipped (green-attempt.log sha256_lf 059289300aa893fb49ce04712d618a152d6c654e5c07ca9907a6c299c05e6a82)",
+    "v1_receipts_unchanged": ["green.json", "green-attempt.log", "gates.json", "source-control-analysis.json", "report.md"]
+  },
+  "reason": "Owner adjudication 2026-10-30 (owner-adjudication-addendum.md): the four supplementary fresh-source controls are outside the current Source Gate grammar and were not preregistered; registry.py is out of scope.",
+  "moved_out_of_acceptance": {
+    "status": "PENDING_SOURCE_GRAMMAR_SUPPORT",
+    "nodes_v1": [
+      "backend/tests/geometry/test_closed_input_contract.py::test_fresh_geometry_positive_scope_aliases[id]",
+      "backend/tests/geometry/test_closed_input_contract.py::test_fresh_geometry_positive_scope_aliases[notation]",
+      "backend/tests/geometry/test_closed_input_contract.py::test_fresh_geometry_positive_scope_aliases[nested_id]",
+      "backend/tests/geometry/test_closed_input_contract.py::test_fresh_geometry_positive_scope_aliases[goal_id]"
+    ],
+    "inputs": "source-grammar-adjudication/pending-source-grammar-controls.json",
+    "inputs_sha256_lf": "879129cfa7c368713e739abd9ef6c136c42c3449e0b7c5f3b2e2b97b6e22755a",
+    "expected_unchanged": "SERVED with answer coef 12 on a3, pl, a4",
+    "diagnostics_nodes_v2": "backend/tests/geometry/source_grammar_pending_diagnostics.py::test_pending_source_grammar_control[id|notation|nested_id|goal_id]",
+    "diagnostics_command": "backend/.venv/Scripts/python.exe -B -m pytest -p no:cacheprovider backend/tests/geometry/source_grammar_pending_diagnostics.py -q -rA",
+    "counted_as_pass": false,
+    "claimed_product_supported": false
+  },
+  "added_to_acceptance": {
+    "nodes_v2": [
+      "backend/tests/geometry/test_closed_input_contract.py::test_supported_positive_controls_are_registered",
+      "backend/tests/geometry/test_closed_input_contract.py::test_supported_positive_scope_aliases[id]",
+      "backend/tests/geometry/test_closed_input_contract.py::test_supported_positive_scope_aliases[notation]",
+      "backend/tests/geometry/test_closed_input_contract.py::test_supported_positive_scope_aliases[nested_id]",
+      "backend/tests/geometry/test_closed_input_contract.py::test_supported_positive_scope_aliases[goal_id]"
+    ],
+    "inputs": "source-grammar-adjudication/supported-positive-controls.json",
+    "inputs_sha256_lf": "d40cd674190c5dce921beb3b4de36814c9318b2dfb1c0295396802b7392967c5",
+    "expected": {
+      "every_case": ["id", "notation", "nested_id", "goal_id"],
+      "every_route": ["a3", "pl", "a4"],
+      "status": "SERVED",
+      "answer_coef": {"vol": "12"},
+      "a3_source_authority": "registry.kiem_nguon"
+    },
+    "qualification_before_registration": {
+      "research_head_4b361c47": {
+        "receipt": "source-grammar-adjudication/qualification-supported-positive-head-4b361c47.json",
+        "sha256_lf": "627cfa12a210234e469dce0c4a1acf3712afb79bcdb605c72ec7513d7aef71b4",
+        "observed": "12/12 route cells SERVED 12; a3 authority registry.kiem_nguon"
+      },
+      "main_996f114b": {
+        "receipt": "source-grammar-adjudication/qualification-supported-positive-main-996f114b.json",
+        "sha256_lf": "8faa3262d5d994570e422bd394c22e4e2c31142d3299b624471f332bec9e4b53",
+        "observed": "id and goal_id SERVED 12 on a3/pl/a4 through registry.kiem_nguon; notation a3 SERVED 12 through adapter3.substring_legacy, pl/a4 BRIDGE_UNSUPPORTED_MEASUREMENT; nested_id a3 UNKNOWN_SOLID_ID, pl/a4 BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "interpretation": "main lacks the N1 scope-alias resolution for notation/nested_id on these routes (typed refusals, no wrong answer); the expected outcome is the N1 contract, not a main observation"
+      }
+    },
+    "rationale": "Same geometry and Fraction oracle 12 as the pending controls; wording follows the locked inputs/recovery-supplementary.json control, which the Source Gate reads. The a3 authority check ensures a pass is a Source Gate verdict, not the legacy substring authority."
+  },
+  "acceptance_command_v2": "backend/.venv/Scripts/python.exe -B -m pytest -p no:cacheprovider backend/tests/geometry/test_closed_input_contract.py backend/tests/geometry/test_scope_census_closure.py backend/tests/geometry/test_unified_solid_scope.py backend/tests/geometry/test_adapter3_fallback_safety.py backend/tests/geometry/test_premise_scope_recovery.py -q --tb=no -rA",
+  "unchanged": "all other v1 acceptance nodes, oracles, expected codes and locked corpora"
+}

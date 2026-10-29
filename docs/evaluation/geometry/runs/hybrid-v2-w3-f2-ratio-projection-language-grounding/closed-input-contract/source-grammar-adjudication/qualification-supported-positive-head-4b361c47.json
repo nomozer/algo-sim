@@ -1,0 +1,126 @@
+{
+  "backend": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\w3-f2-ratio-projection-language-grounding\\backend",
+  "head": "4b361c47ce484a95416ea336b1bdfb264138a005",
+  "backend_app_dirty": false,
+  "controls": "supported-positive-controls.json",
+  "controls_sha256_lf": "d40cd674190c5dce921beb3b4de36814c9318b2dfb1c0295396802b7392967c5",
+  "live_provider_calls": 0,
+  "results": {
+    "id": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer_coef": {
+          "vol": "12"
+        },
+        "source_authority": "registry.kiem_nguon"
+      },
+      "pl": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer_coef": {
+          "vol": "12"
+        },
+        "source_authority": null
+      },
+      "a4": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer_coef": {
+          "vol": "12"
+        },
+        "source_authority": null
+      }
+    },
+    "notation": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer_coef": {
+          "vol": "12"
+        },
+        "source_authority": "registry.kiem_nguon"
+      },
+      "pl": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer_coef": {
+          "vol": "12"
+        },
+        "source_authority": null
+      },
+      "a4": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer_coef": {
+          "vol": "12"
+        },
+        "source_authority": null
+      }
+    },
+    "nested_id": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer_coef": {
+          "vol": "12"
+        },
+        "source_authority": "registry.kiem_nguon"
+      },
+      "pl": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer_coef": {
+          "vol": "12"
+        },
+        "source_authority": null
+      },
+      "a4": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer_coef": {
+          "vol": "12"
+        },
+        "source_authority": null
+      }
+    },
+    "goal_id": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer_coef": {
+          "vol": "12"
+        },
+        "source_authority": "registry.kiem_nguon"
+      },
+      "pl": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer_coef": {
+          "vol": "12"
+        },
+        "source_authority": null
+      },
+      "a4": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer_coef": {
+          "vol": "12"
+        },
+        "source_authority": null
+      }
+    }
+  }
+}

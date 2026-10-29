@@ -1,0 +1,408 @@
+{
+  "registration": "W3F2-CIC-SUPPORTED-POSITIVE-CONTROLS/1",
+  "derived_from": "pending-source-grammar-controls.json (same solids, premises, goals, scopes)",
+  "changes": [
+    "problem_text: request sentence \"Dựng hình chóp K.PQR. Tính thể tích hình chóp K.PQR.\" -> \"Tính thể tích hình chóp K.PQR.\"",
+    "simulation_goals[0].quote: \"Dựng hình chóp K.PQR.\" -> \"Cho hình chóp K.PQR\" (the given clause)"
+  ],
+  "wording_source": "inputs/recovery-supplementary.json#control (locked; construct_object quotes the given clause, volume asked as \"Tính thể tích hình chóp S.ABCD.\")",
+  "oracle": {
+    "answer_coef": "12",
+    "derivation": "right triangle PQR at P: area = 3*4/2 = 6; KP ⊥ (PQR), KP = 6 is the height; V = 6*6/3 = 12 (Fraction)"
+  },
+  "cases": {
+    "id": {
+      "schema_version": "typed-fact-next/1",
+      "problem_text": "Cho hình chóp K.PQR có đáy PQR là tam giác vuông tại P, PQ = 3, PR = 4. KP vuông góc với (PQR) và KP = 6. Tính thể tích hình chóp K.PQR.",
+      "solids": [
+        {
+          "solid_id": "alpha-1",
+          "solid_type": "pyramid",
+          "notation": "K.PQR",
+          "quote": "Cho hình chóp K.PQR"
+        }
+      ],
+      "premises": [
+        {
+          "kind": "base_is_right_triangle",
+          "solid_id": "alpha-1",
+          "args": {
+            "vertices": [
+              "P",
+              "Q",
+              "R"
+            ],
+            "right_at": "P"
+          },
+          "quote": "đáy PQR là tam giác vuông tại P"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "P",
+              "Q"
+            ],
+            "value": "3"
+          },
+          "quote": "PQ = 3"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "P",
+              "R"
+            ],
+            "value": "4"
+          },
+          "quote": "PR = 4"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "K",
+              "P"
+            ],
+            "value": "6"
+          },
+          "quote": "KP = 6"
+        },
+        {
+          "kind": "line_perp_plane",
+          "solid_id": "alpha-1",
+          "args": {
+            "line": [
+              "K",
+              "P"
+            ],
+            "plane": [
+              "P",
+              "Q",
+              "R"
+            ]
+          },
+          "quote": "KP vuông góc với (PQR)"
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "alpha-1",
+          "quote": "Cho hình chóp K.PQR"
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "vol",
+          "kind": "measurement",
+          "goal_type": "volume",
+          "target": {
+            "solid": "alpha-1"
+          },
+          "quote": "Tính thể tích hình chóp K.PQR."
+        }
+      ]
+    },
+    "notation": {
+      "schema_version": "typed-fact-next/1",
+      "problem_text": "Cho hình chóp K.PQR có đáy PQR là tam giác vuông tại P, PQ = 3, PR = 4. KP vuông góc với (PQR) và KP = 6. Tính thể tích hình chóp K.PQR.",
+      "solids": [
+        {
+          "solid_id": "alpha-1",
+          "solid_type": "pyramid",
+          "notation": "K.PQR",
+          "quote": "Cho hình chóp K.PQR"
+        }
+      ],
+      "premises": [
+        {
+          "kind": "base_is_right_triangle",
+          "solid_id": "alpha-1",
+          "args": {
+            "vertices": [
+              "P",
+              "Q",
+              "R"
+            ],
+            "right_at": "P"
+          },
+          "quote": "đáy PQR là tam giác vuông tại P"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "P",
+              "Q"
+            ],
+            "value": "3"
+          },
+          "quote": "PQ = 3"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "P",
+              "R"
+            ],
+            "value": "4"
+          },
+          "quote": "PR = 4"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "K",
+              "P"
+            ],
+            "value": "6"
+          },
+          "quote": "KP = 6"
+        },
+        {
+          "kind": "line_perp_plane",
+          "solid_id": "alpha-1",
+          "args": {
+            "line": [
+              "K",
+              "P"
+            ],
+            "plane": [
+              "P",
+              "Q",
+              "R"
+            ]
+          },
+          "quote": "KP vuông góc với (PQR)"
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "alpha-1",
+          "quote": "Cho hình chóp K.PQR"
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "vol",
+          "kind": "measurement",
+          "goal_type": "volume",
+          "target": {
+            "solid": "K.PQR"
+          },
+          "quote": "Tính thể tích hình chóp K.PQR."
+        }
+      ]
+    },
+    "nested_id": {
+      "schema_version": "typed-fact-next/1",
+      "problem_text": "Cho hình chóp K.PQR có đáy PQR là tam giác vuông tại P, PQ = 3, PR = 4. KP vuông góc với (PQR) và KP = 6. Tính thể tích hình chóp K.PQR.",
+      "solids": [
+        {
+          "solid_id": "alpha-1",
+          "solid_type": "pyramid",
+          "notation": "K.PQR",
+          "quote": "Cho hình chóp K.PQR"
+        }
+      ],
+      "premises": [
+        {
+          "kind": "base_is_right_triangle",
+          "solid_id": "alpha-1",
+          "args": {
+            "vertices": [
+              "P",
+              "Q",
+              "R"
+            ],
+            "right_at": "P"
+          },
+          "quote": "đáy PQR là tam giác vuông tại P"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "P",
+              "Q"
+            ],
+            "value": "3"
+          },
+          "quote": "PQ = 3"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "P",
+              "R"
+            ],
+            "value": "4"
+          },
+          "quote": "PR = 4"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "K",
+              "P"
+            ],
+            "value": "6"
+          },
+          "quote": "KP = 6"
+        },
+        {
+          "kind": "line_perp_plane",
+          "solid_id": "alpha-1",
+          "args": {
+            "line": [
+              "K",
+              "P"
+            ],
+            "plane": [
+              "P",
+              "Q",
+              "R"
+            ]
+          },
+          "quote": "KP vuông góc với (PQR)"
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "alpha-1",
+          "quote": "Cho hình chóp K.PQR"
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "vol",
+          "kind": "measurement",
+          "goal_type": "volume",
+          "target": {
+            "solid_id": "alpha-1"
+          },
+          "quote": "Tính thể tích hình chóp K.PQR."
+        }
+      ]
+    },
+    "goal_id": {
+      "schema_version": "typed-fact-next/1",
+      "problem_text": "Cho hình chóp K.PQR có đáy PQR là tam giác vuông tại P, PQ = 3, PR = 4. KP vuông góc với (PQR) và KP = 6. Tính thể tích hình chóp K.PQR.",
+      "solids": [
+        {
+          "solid_id": "alpha-1",
+          "solid_type": "pyramid",
+          "notation": "K.PQR",
+          "quote": "Cho hình chóp K.PQR"
+        }
+      ],
+      "premises": [
+        {
+          "kind": "base_is_right_triangle",
+          "solid_id": "alpha-1",
+          "args": {
+            "vertices": [
+              "P",
+              "Q",
+              "R"
+            ],
+            "right_at": "P"
+          },
+          "quote": "đáy PQR là tam giác vuông tại P"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "P",
+              "Q"
+            ],
+            "value": "3"
+          },
+          "quote": "PQ = 3"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "P",
+              "R"
+            ],
+            "value": "4"
+          },
+          "quote": "PR = 4"
+        },
+        {
+          "kind": "segment_length",
+          "solid_id": "alpha-1",
+          "args": {
+            "segment": [
+              "K",
+              "P"
+            ],
+            "value": "6"
+          },
+          "quote": "KP = 6"
+        },
+        {
+          "kind": "line_perp_plane",
+          "solid_id": "alpha-1",
+          "args": {
+            "line": [
+              "K",
+              "P"
+            ],
+            "plane": [
+              "P",
+              "Q",
+              "R"
+            ]
+          },
+          "quote": "KP vuông góc với (PQR)"
+        }
+      ],
+      "simulation_goals": [
+        {
+          "goal_id": "draw",
+          "kind": "construct_object",
+          "target_solid_id": "alpha-1",
+          "quote": "Cho hình chóp K.PQR"
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "vol",
+          "kind": "measurement",
+          "goal_type": "volume",
+          "target": {
+            "solid": "alpha-1"
+          },
+          "quote": "Tính thể tích hình chóp K.PQR.",
+          "solid_id": "alpha-1"
+        }
+      ]
+    }
+  }
+}
