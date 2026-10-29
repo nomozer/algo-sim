@@ -1,0 +1,10 @@
+........................................................................ [ 16%]
+........................................................................ [ 33%]
+..............................................................F......... [ 50%]
+................xxxxx................................................... [ 66%]
+..F..................................................................... [ 83%]
+......................................................................   [100%]
+=========================== short test summary info ===========================
+FAILED backend\tests\geometry\test_typedfactnext_planner_bridge.py::test_bridge_preserves_input_constraints_or_refuses[unknown_local_vertex-UNKNOWN_VERTEX_REF]
+FAILED backend\tests\geometry\test_hybrid_backend_integration.py::test_version_constants_surface_fingerprints_and_historical_receipt_preservation
+2 failed, 423 passed, 5 xfailed in 27.96s

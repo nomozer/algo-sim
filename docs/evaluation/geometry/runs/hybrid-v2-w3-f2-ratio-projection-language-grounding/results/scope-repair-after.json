@@ -1,0 +1,74 @@
+{
+  "classification": "POST_FEEDBACK_DEVELOPMENT_SAFETY_REPRODUCTION",
+  "product_commit": "d9498f832d1c8379c6c2ce76858420ff14205b2f",
+  "input_sha256_lf": "943d630aa9784079d85b30e07c7c2a84f713f02c142376aa5a5783cfe7b09f21",
+  "live_provider_calls": 0,
+  "product_files_sha256_lf": {
+    "backend/app/ai/adapter3_simulation.py": "37a5c395bd480ea616d97a96e03b6d3a8efb5f9b33c18e84d416891ae695faf4",
+    "backend/app/simulation/geometry_functions/registry.py": "1904dc2016465ad8466433cce087b17ec6ac2018d703fa45f1667baf9c3f42c5",
+    "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py": "e2cbd2729af8f2789008170e4182cc030e3fb5bd63a9e4e7d52d861a94528d4c"
+  },
+  "gate_A": "FAIL",
+  "cases": [
+    {
+      "input": "control",
+      "expected": "SERVED",
+      "bridge": "ACCEPTED",
+      "adapter3": {
+        "status": "SERVED",
+        "code": null
+      },
+      "adapter4": {
+        "status": "SERVED",
+        "code": null
+      },
+      "adapter3_source_receipt": {
+        "authority": "registry.kiem_nguon"
+      }
+    },
+    {
+      "input": "invalid_scope",
+      "expected": "REFUSED",
+      "bridge": "SOURCE_OBJECT_MISMATCH",
+      "adapter3": {
+        "status": "SERVED",
+        "code": null
+      },
+      "adapter4": {
+        "status": "REFUSED",
+        "code": "SOURCE_OBJECT_MISMATCH"
+      },
+      "adapter3_source_receipt": {
+        "authority": "adapter3.substring_legacy",
+        "gate_unavailable": "SOURCE_OBJECT_MISMATCH"
+      }
+    }
+  ],
+  "wrong_served_adapter3": 1,
+  "original_scope_negatives": [
+    {
+      "id": "DEV-NEG-08",
+      "canonical": false,
+      "status": "REFUSED",
+      "code": "UNKNOWN_SOLID_ID"
+    },
+    {
+      "id": "DEV-NEG-08",
+      "canonical": true,
+      "status": "REFUSED",
+      "code": "UNKNOWN_SOLID_ID"
+    },
+    {
+      "id": "DEV-NEG-23",
+      "canonical": false,
+      "status": "REFUSED",
+      "code": "UNKNOWN_SOLID_ID"
+    },
+    {
+      "id": "DEV-NEG-23",
+      "canonical": true,
+      "status": "REFUSED",
+      "code": "UNKNOWN_SOLID_ID"
+    }
+  ]
+}

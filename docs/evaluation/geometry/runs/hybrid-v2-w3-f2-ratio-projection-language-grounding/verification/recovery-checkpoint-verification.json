@@ -1,0 +1,31 @@
+{
+  "status": "CHECKPOINT_INTEGRITY_MATCH_NOT_PRODUCT_ACCEPTANCE",
+  "product_commit": "d9498f832d1c8379c6c2ce76858420ff14205b2f",
+  "historical_files_verified": 32,
+  "new_result_and_log_hashes": "MATCH",
+  "product_files": "MATCH",
+  "adapter3_product_file": "UNCHANGED_FROM_MAIN",
+  "gate_A": "FAIL",
+  "verdict": "NOT_READY",
+  "documentation_tests": {
+    "initial": {
+      "passed": 39,
+      "failed": 3,
+      "warning": 1
+    },
+    "final": {
+      "passed": 41,
+      "failed": 1,
+      "remaining": "old candidate freeze verify-only mismatch"
+    },
+    "log_sha256_lf": "1530c8070b36b5de88548dbce74e7e808a8a4e27393d6c15a90c821a18959989"
+  },
+  "handoff_lines": 300,
+  "new_freeze": "NOT_CREATED",
+  "old_T3_inherited": false,
+  "final_report_sha256_lf": "6f81cce9bc69bc5cd02cad5ec008fe9c0755089852992e47f28c347a5b873c89",
+  "final_handoff_sha256_lf": "a0d34c7c532d021fd5bf236d49f776b3cf97aabbfd64add243a07dc0e9baa554",
+  "baseline_verification_class": "READ_ONLY_ROOT_MAIN_CONTROL_NOT_DETACHED_T3",
+  "root_main_commit": "996f114b3480efe1b0d075dd4342530aaa12ddae",
+  "live_provider_calls": 0
+}

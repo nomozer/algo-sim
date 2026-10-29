@@ -1,0 +1,4 @@
+...................F......................                               [100%]
+=========================== short test summary info ===========================
+FAILED backend\tests\geometry\test_docs_information_architecture.py::test_inv_20_candidate_and_cache_verify_only
+1 failed, 41 passed in 2.63s

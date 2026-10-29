@@ -1,0 +1,47 @@
+{
+  "classification": "POST_FEEDBACK_DEVELOPMENT_SAFETY_REPRODUCTION",
+  "product_commit": "996f114b3480efe1b0d075dd4342530aaa12ddae",
+  "input_sha256_lf": "943d630aa9784079d85b30e07c7c2a84f713f02c142376aa5a5783cfe7b09f21",
+  "live_provider_calls": 0,
+  "product_files_sha256_lf": {
+    "backend/app/ai/adapter3_simulation.py": "37a5c395bd480ea616d97a96e03b6d3a8efb5f9b33c18e84d416891ae695faf4",
+    "backend/app/simulation/geometry_functions/registry.py": "cc1bcc7df8afc74b01f00519244fcea5576ba64cae254c8ad2e7a0dd998c36f8",
+    "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py": "9002293064c124e420ef4c7d96da30eea467b2bea34ca02174b4f742d80d7c19"
+  },
+  "gate_A": "FAIL",
+  "cases": [
+    {
+      "input": "control",
+      "expected": "SERVED",
+      "bridge": "ACCEPTED",
+      "adapter3": {
+        "status": "SERVED",
+        "code": null
+      },
+      "adapter4": {
+        "status": "SERVED",
+        "code": null
+      },
+      "adapter3_source_receipt": {
+        "authority": "registry.kiem_nguon"
+      }
+    },
+    {
+      "input": "invalid_scope",
+      "expected": "REFUSED",
+      "bridge": "ACCEPTED",
+      "adapter3": {
+        "status": "SERVED",
+        "code": null
+      },
+      "adapter4": {
+        "status": "SERVED",
+        "code": null
+      },
+      "adapter3_source_receipt": {
+        "authority": "registry.kiem_nguon"
+      }
+    }
+  ],
+  "wrong_served_adapter3": 1
+}

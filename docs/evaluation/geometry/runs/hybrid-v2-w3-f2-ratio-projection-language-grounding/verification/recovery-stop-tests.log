@@ -1,0 +1,4 @@
+............................F                                            [100%]
+=========================== short test summary info ===========================
+FAILED backend\tests\geometry\test_premise_scope_recovery.py::test_adapter3_cannot_fallback_after_known_solid_scope_refusal
+1 failed, 28 passed in 1.71s

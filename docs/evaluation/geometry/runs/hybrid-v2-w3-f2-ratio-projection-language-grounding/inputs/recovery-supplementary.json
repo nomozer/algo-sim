@@ -1,0 +1,423 @@
+{
+  "classification": "POST_FEEDBACK_DEVELOPMENT_SAFETY_REPRODUCTION",
+  "control": {
+    "schema_version": "typed-fact-next/1",
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính thể tích hình chóp S.ABCD. Cho hình chóp T.ABCD. TA vuông góc với (ABCD). TA = 4.",
+    "length_unit": "1",
+    "solids": [
+      {
+        "solid_id": "s1",
+        "solid_type": "pyramid",
+        "notation": "S.ABCD",
+        "quote": "Cho hình chóp S.ABCD."
+      },
+      {
+        "solid_id": "s2",
+        "solid_type": "pyramid",
+        "notation": "T.ABCD",
+        "quote": "Cho hình chóp T.ABCD."
+      }
+    ],
+    "premises": [
+      {
+        "kind": "base_is_square",
+        "args": {
+          "vertices": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "side": "2"
+        },
+        "quote": "Đáy ABCD là hình vuông cạnh 2.",
+        "solid_id": "s1"
+      },
+      {
+        "kind": "perpendicular_line_plane",
+        "args": {
+          "line": [
+            "S",
+            "A"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "quote": "SA vuông góc với (ABCD).",
+        "solid_id": "s1"
+      },
+      {
+        "kind": "segment_length",
+        "args": {
+          "segment": [
+            "S",
+            "A"
+          ],
+          "value": "3"
+        },
+        "quote": "SA = 3.",
+        "solid_id": "s1"
+      },
+      {
+        "kind": "perpendicular_line_plane",
+        "solid_id": "s2",
+        "args": {
+          "line": [
+            "T",
+            "A"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "quote": "TA vuông góc với (ABCD)."
+      },
+      {
+        "kind": "segment_length",
+        "solid_id": "s2",
+        "args": {
+          "segment": [
+            "T",
+            "A"
+          ],
+          "value": "4"
+        },
+        "quote": "TA = 4."
+      }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+      {
+        "goal_id": "g",
+        "kind": "construct_object",
+        "target_solid_id": "s1",
+        "quote": "Cho hình chóp S.ABCD."
+      }
+    ],
+    "math_goals": [
+      {
+        "goal_id": "v",
+        "kind": "measurement",
+        "goal_type": "volume",
+        "solid_id": "s1",
+        "target": {
+          "solid": "s1"
+        },
+        "quote": "Tính thể tích hình chóp S.ABCD."
+      }
+    ]
+  },
+  "invalid_scope": {
+    "schema_version": "typed-fact-next/1",
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính thể tích hình chóp S.ABCD. Cho hình chóp T.ABCD. TA vuông góc với (ABCD). TA = 4.",
+    "length_unit": "1",
+    "solids": [
+      {
+        "solid_id": "s1",
+        "solid_type": "pyramid",
+        "notation": "S.ABCD",
+        "quote": "Cho hình chóp S.ABCD."
+      },
+      {
+        "solid_id": "s2",
+        "solid_type": "pyramid",
+        "notation": "T.ABCD",
+        "quote": "Cho hình chóp T.ABCD."
+      }
+    ],
+    "premises": [
+      {
+        "kind": "base_is_square",
+        "args": {
+          "vertices": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "side": "2"
+        },
+        "quote": "Đáy ABCD là hình vuông cạnh 2.",
+        "solid_id": "s1"
+      },
+      {
+        "kind": "perpendicular_line_plane",
+        "args": {
+          "line": [
+            "S",
+            "A"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "quote": "SA vuông góc với (ABCD).",
+        "solid_id": "s1"
+      },
+      {
+        "kind": "segment_length",
+        "args": {
+          "segment": [
+            "S",
+            "A"
+          ],
+          "value": "3"
+        },
+        "quote": "SA = 3.",
+        "solid_id": "s2"
+      },
+      {
+        "kind": "perpendicular_line_plane",
+        "solid_id": "s2",
+        "args": {
+          "line": [
+            "T",
+            "A"
+          ],
+          "plane": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "quote": "TA vuông góc với (ABCD)."
+      },
+      {
+        "kind": "segment_length",
+        "solid_id": "s2",
+        "args": {
+          "segment": [
+            "T",
+            "A"
+          ],
+          "value": "4"
+        },
+        "quote": "TA = 4."
+      }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+      {
+        "goal_id": "g",
+        "kind": "construct_object",
+        "target_solid_id": "s1",
+        "quote": "Cho hình chóp S.ABCD."
+      }
+    ],
+    "math_goals": [
+      {
+        "goal_id": "v",
+        "kind": "measurement",
+        "goal_type": "volume",
+        "solid_id": "s1",
+        "target": {
+          "solid": "s1"
+        },
+        "quote": "Tính thể tích hình chóp S.ABCD."
+      }
+    ]
+  },
+  "projection_witnesses": [
+    {
+      "schema_version": "typed-fact-next/2",
+      "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. A là chân đường cao hạ từ D xuống mặt phẳng (SBC). Tính thể tích hình chóp S.ABCD.",
+      "length_unit": "1",
+      "solids": [
+        {
+          "solid_id": "s1",
+          "solid_type": "pyramid",
+          "notation": "S.ABCD",
+          "quote": "Cho hình chóp S.ABCD."
+        }
+      ],
+      "premises": [
+        {
+          "kind": "base_is_square",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "side": "2"
+          },
+          "quote": "Đáy ABCD là hình vuông cạnh 2.",
+          "solid_id": "s1"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "args": {
+            "line": [
+              "S",
+              "A"
+            ],
+            "plane": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "quote": "SA vuông góc với (ABCD).",
+          "solid_id": "s1"
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "S",
+              "A"
+            ],
+            "value": "3"
+          },
+          "quote": "SA = 3.",
+          "solid_id": "s1"
+        },
+        {
+          "kind": "orthogonal_projection",
+          "args": {
+            "point": "D",
+            "image": "A",
+            "plane": [
+              "S",
+              "B",
+              "C"
+            ]
+          },
+          "quote": "A là chân đường cao hạ từ D xuống mặt phẳng (SBC).",
+          "solid_id": "s1"
+        }
+      ],
+      "derived_sections": [],
+      "relations": [],
+      "simulation_goals": [
+        {
+          "goal_id": "g",
+          "kind": "construct_object",
+          "target_solid_id": "s1",
+          "quote": "Cho hình chóp S.ABCD."
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "v",
+          "kind": "measurement",
+          "goal_type": "volume",
+          "solid_id": "s1",
+          "target": {
+            "solid": "s1"
+          },
+          "quote": "Tính thể tích hình chóp S.ABCD."
+        }
+      ]
+    },
+    {
+      "schema_version": "typed-fact-next/2",
+      "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. B là chân đường cao hạ từ D xuống mặt phẳng (SBC). Tính thể tích hình chóp S.ABCD.",
+      "length_unit": "1",
+      "solids": [
+        {
+          "solid_id": "s1",
+          "solid_type": "pyramid",
+          "notation": "S.ABCD",
+          "quote": "Cho hình chóp S.ABCD."
+        }
+      ],
+      "premises": [
+        {
+          "kind": "base_is_square",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "side": "2"
+          },
+          "quote": "Đáy ABCD là hình vuông cạnh 2.",
+          "solid_id": "s1"
+        },
+        {
+          "kind": "perpendicular_line_plane",
+          "args": {
+            "line": [
+              "S",
+              "A"
+            ],
+            "plane": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "quote": "SA vuông góc với (ABCD).",
+          "solid_id": "s1"
+        },
+        {
+          "kind": "segment_length",
+          "args": {
+            "segment": [
+              "S",
+              "A"
+            ],
+            "value": "3"
+          },
+          "quote": "SA = 3.",
+          "solid_id": "s1"
+        },
+        {
+          "kind": "orthogonal_projection",
+          "args": {
+            "point": "D",
+            "image": "B",
+            "plane": [
+              "S",
+              "B",
+              "C"
+            ]
+          },
+          "quote": "B là chân đường cao hạ từ D xuống mặt phẳng (SBC).",
+          "solid_id": "s1"
+        }
+      ],
+      "derived_sections": [],
+      "relations": [],
+      "simulation_goals": [
+        {
+          "goal_id": "g",
+          "kind": "construct_object",
+          "target_solid_id": "s1",
+          "quote": "Cho hình chóp S.ABCD."
+        }
+      ],
+      "math_goals": [
+        {
+          "goal_id": "v",
+          "kind": "measurement",
+          "goal_type": "volume",
+          "solid_id": "s1",
+          "target": {
+            "solid": "s1"
+          },
+          "quote": "Tính thể tích hình chóp S.ABCD."
+        }
+      ]
+    }
+  ]
+}

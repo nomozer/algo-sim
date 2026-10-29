@@ -1,0 +1,57 @@
+{
+  "product_commit": "d9498f832d1c8379c6c2ce76858420ff14205b2f",
+  "status": "NOT_READY",
+  "overlapping_runs_do_not_sum": true,
+  "T0": {
+    "status": "PARTIAL",
+    "ancestry": "MATCH",
+    "historical_evidence": "MATCH",
+    "publication": "NO_SECRETS_OR_RAW_MODEL_OUTPUT_ADDED",
+    "cache_and_41_fixtures": "NOT_FULLY_VERIFIED"
+  },
+  "T1": {
+    "status": "FAIL",
+    "runs": [
+      {
+        "label": "initial_F2_and_recovery",
+        "passed": 122,
+        "failed": 0,
+        "note": "Earlier recovery tree before compatibility changes"
+      },
+      {
+        "label": "nine_file_compatibility",
+        "passed": 423,
+        "failed": 2,
+        "xfailed": 5,
+        "failures": [
+          "qualified constructed point legacy expected refusal",
+          "changed product compared with old W3-F1 freeze"
+        ]
+      },
+      {
+        "label": "final_recovery",
+        "passed": 28,
+        "failed": 1,
+        "failure": "Adapter3 known-solid mismatch is SERVED after Bridge SOURCE_OBJECT_MISMATCH"
+      }
+    ]
+  },
+  "T2": {
+    "status": "NOT_RUN_GATE_A_STOP"
+  },
+  "Full_T3": {
+    "status": "NOT_RUN_GATE_A_STOP"
+  },
+  "full_144_Wave3_replay": {
+    "status": "NOT_RUN_GATE_A_STOP",
+    "actual_served_correct": "UNKNOWN"
+  },
+  "freeze": "NOT_CREATED",
+  "independent_candidate_review": "NOT_RUN_NO_CANDIDATE",
+  "logs_sha256_lf": {
+    "verification/recovery-initial-targeted-tests.log": "e626e527350411cd2fb336e620a24595befcc42211adc3c1c6083f475ba833ba",
+    "verification/recovery-compatibility-tests.log": "f5ba8db750ee1aaeb78fc6526f73571b45911aa5bfbd93019aee9c770fb6f3e1",
+    "verification/recovery-stop-tests.log": "e0fa4b771793478663aba14d40c89f70d03e0b183501b688d679c091fcde595c"
+  },
+  "live_provider_calls": 0
+}

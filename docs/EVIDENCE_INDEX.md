@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_V2_W3_F2_PROVENANCE_SAFETY_RECOVERY
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/final-report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/
+CLASSIFICATION = POST_FEEDBACK_DEVELOPMENT_SAFETY_REPRODUCTION; NOT_READY; Gate A FAIL: known-solid mismatch refused by Bridge/Adapter4 but Adapter3 falls back and serves; valid control serves; baseline also reproduces. Original NEG08/23 and canonical variants now refuse. Projection metric witnesses and original topology refusal provisional, no independent closure. No full Wave3 replay, new freeze or T2/T3.
+CODE_COMMIT = d9498f832d1c8379c6c2ce76858420ff14205b2f (WIP); recovery preregistration d2dec655c7de1eb40adb6ff16d297e3631ad0d67
+VERIFICATION = results/scope-repair-after.json; results/incidence-repair-after.json; results/tamper-retest-after.json; verification/adapter3-baseline-scope-reproduction.json; verification/safety-recovery.json; verification/tiers-after-recovery.json; review-safety-recovery.md; correction-addendum.md; final-handoff.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_V2_W3_F2_RATIO_PROJECTION_LANGUAGE_GROUNDING (append-only recovery; original failed receipts unchanged; expanded provenance validation remains blocked by Adapter3 semantics)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_V2_W3_F2_RATIO_PROJECTION_LANGUAGE_GROUNDING
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/report.md
@@ -9,7 +20,7 @@ CODE_COMMIT = e9d5a9d73064a15b7702eb32c008835bc99fba6d (WIP, not approved); prer
 VERIFICATION = verification/preregistration.json; results/red-before.json; results/green-after.json (FAILED safety gate); results/tamper-results.json; verification/stop-condition.json; verification/baseline-foreign-scope-reproduction.json; verification/scope-and-evidence.json; verification/tiers.json; review.md; takeover.md
 MODEL_REQUEST_COUNT = 0
 CORRECTS = NONE
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_V2_W3_F2_PROVENANCE_SAFETY_RECOVERY (same-run correction-addendum.md; original measurements unchanged)
 
 ## WAVE_ID = HYBRID_V2_W3_F1_CROSS_SENTENCE_PLANE_GROUNDING
 
