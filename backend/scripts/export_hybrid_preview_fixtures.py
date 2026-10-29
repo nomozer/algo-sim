@@ -321,6 +321,8 @@ IDENTITY_DELTAS = (
     {"run": "hybrid-v2-w3-f1-cross-sentence-plane-grounding",
      "versions": {"registry_version": ("geometry-functions/19", "geometry-functions/20"),
                   "planner_version": ("geometry-fact-planner/17", "geometry-fact-planner/18")}},
+    {"run": "hybrid-v2-w3-f2-ratio-projection-language-grounding",
+     "versions": {"registry_version": ("geometry-functions/20", "geometry-functions/21")}},
 )
 
 

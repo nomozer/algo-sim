@@ -2077,6 +2077,10 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
                 _co_tu(c.quotes, ("chân đường cao", "hạ đường cao", "kẻ đường cao"))):
             if not construction_source_bound(c, de):
                 raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: vai trò ảnh và điểm chiếu không khớp nguồn", (c.id,))
+            # A nondegenerate prism has disjoint parallel bases, even before its top coordinates can be placed.
+            if any(k.fn == 'prism' and ((set(c.args.plane) == set(k.args.base) and c.args.image in k.args.top)
+                    or (set(c.args.plane) == set(k.args.top) and c.args.image in k.args.base)) for k in calls):
+                raise TuChoi('INCONSISTENT_FACTS', f'{c.id}: chân chiếu thuộc mặt đối diện của lăng trụ, không nằm trên mặt nhận chiếu', (c.id,))
         for f in c.spec.value_fields:
             if (v := getattr(c.args, f)) is None:
                 continue

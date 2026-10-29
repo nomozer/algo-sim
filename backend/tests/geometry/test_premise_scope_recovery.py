@@ -130,15 +130,76 @@ def incidence_payload(foot='A'):
             'math_goals':[{'goal_id':'v','kind':'measurement','goal_type':'volume','solid_id':'s1','target':{'solid':'s1'},'quote':qs[5]}]}
 
 
-def test_fully_placed_projection_incidence_witness_reaches_geometric_verification():
+@pytest.mark.parametrize('foot',['A','B'])
+def test_fully_placed_projection_incidence_witness_reaches_geometric_verification(monkeypatch,foot):
     # Independent exact Euclidean frame: A=(0,0,0), B=(2,0,0), C=(2,2,0), D=(0,2,0), S=(0,0,3).
     # Plane SBC: 3x+2z=6. A has signed numerator -6, so cannot be its projection foot.
     assert 3*F(0)+2*F(0)-6 == -6
-    r=run_typed_fact_next_v2_route(incidence_payload())
+    from app.simulation.geometry_functions.engine import _Dung
+    inspected=[]
+    original=_Dung._construction_relation
+    def inspect(engine,call):
+        result=original(engine,call)
+        if call.fn=='orthogonal_projection':
+            assert set('ABCDS') <= set(engine.pts)
+            inspected.append({'fn':call.fn,'foot':call.args.image,'result':result})
+        return result
+    monkeypatch.setattr(_Dung,'_construction_relation',inspect)
+    if foot=='B':
+        # B lies on SBC, but (D-B)·(C-B)=4, so it is not a perpendicular foot.
+        assert 3*F(2)+2*F(0)-6 == 0 and F(2)*F(2)==4
+    r=run_typed_fact_next_v2_route(incidence_payload(foot))
     assert r.status=='REFUSED' and r.code=='INCONSISTENT_FACTS', (r.code,r.reason)
     assert r.code!='UNDERDETERMINED_POINT'
+    assert inspected and all(x['foot']==foot and not x['result'] for x in inspected)
+
+
+def test_explicit_shared_face_preserves_parent_constructed_point_ownership():
+    corpus=json.loads((RUN.parent/'typedfact-next-adapter3-simulation/corpus-dev.json').read_text(encoding='utf-8'))
+    payload=next(c['payload'] for c in corpus['cases'] if c['case_id']=='A3-DEV-08')
+    # Its later ratio question still must refuse; ownership validation must not disable that Source Gate.
+    translated=B.bridge(payload)
+    entry=next(x for x in translated['bridge']['validated_premise_scopes'] if x['premise_id']=='p4')
+    assert entry['declared_solid_id']=='root_pyr' and entry['resolved_solid_ids']==['root_pyr']
+    from app.ai.adapter3_simulation import run_typed_fact_next_route
+    result=run_typed_fact_next_route(payload)
+    assert (result.status,result.code)==('REFUSED','SOURCE_OBJECT_MISMATCH')
 
 
 def test_original_neg20_top_vertex_cannot_lie_on_non_degenerate_prism_base():
     row=DEV.evaluate_case(CASES['DEV-NEG-20'])
     assert row['matches_expected'] and row['code']=='INCONSISTENT_FACTS', (row['code'],row.get('reason'))
+
+
+def adapter3_cross_scope_payload(invalid=False):
+    """Two fully placed pyramids; SA belongs only to s1, with a valid volume question."""
+    p=incidence_payload()
+    p['schema_version']='typed-fact-next/1'
+    p['premises']=p['premises'][:-1]
+    p['problem_text']=p['problem_text'].replace('A là chân đường cao hạ từ D xuống mặt phẳng (SBC). ','')
+    p['solids'].append({'solid_id':'s2','solid_type':'pyramid','notation':'T.ABCD','quote':'Cho hình chóp T.ABCD.'})
+    p['premises'].extend([
+        {'kind':'perpendicular_line_plane','solid_id':'s2','args':{'line':['T','A'],'plane':list('ABCD')},
+         'quote':'TA vuông góc với (ABCD).'},
+        {'kind':'segment_length','solid_id':'s2','args':{'segment':['T','A'],'value':'4'},'quote':'TA = 4.'}])
+    p['problem_text']+=' Cho hình chóp T.ABCD. TA vuông góc với (ABCD). TA = 4.'
+    if invalid:
+        p['premises'][2]['solid_id']='s2'
+    return p
+
+
+def test_adapter3_valid_two_solid_control_is_served():
+    from app.ai.adapter3_simulation import run_typed_fact_next_route
+    p=adapter3_cross_scope_payload()
+    B.bridge(p)
+    assert run_typed_fact_next_route(p).status=='SERVED'
+
+
+def test_adapter3_cannot_fallback_after_known_solid_scope_refusal():
+    from app.ai.adapter3_simulation import run_typed_fact_next_route
+    p=adapter3_cross_scope_payload(invalid=True)
+    with pytest.raises(TuChoi) as e:B.bridge(p)
+    assert e.value.code=='SOURCE_OBJECT_MISMATCH'
+    result=run_typed_fact_next_route(p)
+    # Owner Gate A: rejecting the bridge's verdict must never reopen a served route.
+    assert result.status=='REFUSED', (result.status,result.code)
