@@ -1,0 +1,24 @@
+F1.pyr-1_pyr-2_qualified                                POS a3=REF/UNKNOWN_SOLID_ID pl=REF/UNKNOWN_SOLID_ID a4=REF/UNKNOWN_SOLID_ID  <<a3:FALSE_REFUSE(UNKNOWN_SOLID_ID),pl:FALSE_REFUSE(UNKNOWN_SOLID_ID),a4:FALSE_REFUSE(UNKNOWN_SOLID_ID)>>
+F1.pyr-1_scope_violation                                NEG a3=REF/UNKNOWN_SOLID_ID pl=REF/UNKNOWN_SOLID_ID a4=REF/UNKNOWN_SOLID_ID
+F2.perp_solid_id_s2_ops_s1_q                            NEG a3=REF/PLANE_NOT_IN_QUOTE pl=REF/PLANE_NOT_IN_QUOTE a4=REF/PLANE_NOT_IN_QUOTE
+F2.perp_solid_a_s2_ops_s1                               NEG a3=REF/PLANE_NOT_IN_QUOTE pl=REF/PLANE_NOT_IN_QUOTE a4=REF/PLANE_NOT_IN_QUOTE
+F2.shared_vertices_sides_s2_pair_s1                     NEG a3=SER/None pl=SER/None a4=SER/None  <<a3:SERVED!,pl:SERVED!,a4:SERVED!>>
+F2.perp_valid_control                                   POS a3=SER/None pl=SER/None a4=SER/None
+F3.highlight_s2_refs_s1                                 NEG a3=REF/SOURCE_OBJECT_MISMATCH pl=SER/None a4=SER/None  <<pl:SERVED!,a4:SERVED!>>
+F3.construct_object_parent_neq_target                   NEG a3=SER/None pl=SER/None a4=SER/None  <<a3:SERVED!,pl:SERVED!,a4:SERVED!>>
+F3.section_goal_target_other_solid                      NEG a3=REF/UNDERDETERMINED_POINT pl=REF/BRIDGE_UNSUPPORTED_RELATION a4=REF/BRIDGE_UNSUPPORTED_RELATION
+F3.derived_goal_target_solid_id                         NEG a3=REF/UNDERDETERMINED_POINT pl=REF/BRIDGE_UNSUPPORTED_RELATION a4=REF/BRIDGE_UNSUPPORTED_RELATION
+F4.cone_apex_other                                      NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+F4.cone_perp_contradicting                              NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+F4.cone_highlight_other_refs                            NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+F5.curved_target_notation_alias                         POS a3=REF/ADAPTER_INTERNAL_ERROR pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:INTERNAL>>
+F5.curved_section_id_int                                NEG a3=REF/ADAPTER_INTERNAL_ERROR pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:INTERNAL>>
+F5.curved_section_id_unknown                            NEG a3=REF/ADAPTER_INTERNAL_ERROR pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:INTERNAL>>
+F5.poly_target_point_dict                               NEG a3=REF/ADAPTER_INTERNAL_ERROR pl=REF/BRIDGE_UNSUPPORTED_MEASUREMENT a4=REF/INVALID_MATH_GOAL  <<a3:INTERNAL>>
+F6.dev10_base                                           POS a3=REF/SOURCE_OBJECT_MISMATCH pl=REF/SOURCE_OBJECT_MISMATCH a4=REF/SOURCE_OBJECT_MISMATCH  <<a3:FALSE_REFUSE(SOURCE_OBJECT_MISMATCH),pl:FALSE_REFUSE(SOURCE_OBJECT_MISMATCH),a4:FALSE_REFUSE(SOURCE_OBJECT_MISMATCH)>>
+F6.area_target_solid_notation                           POS a3=REF/UNKNOWN_SOLID_ID pl=REF/UNKNOWN_SOLID_ID a4=REF/UNKNOWN_SOLID_ID  <<a3:FALSE_REFUSE(UNKNOWN_SOLID_ID),pl:FALSE_REFUSE(UNKNOWN_SOLID_ID),a4:FALSE_REFUSE(UNKNOWN_SOLID_ID)>>
+F6.area_target_solid_id                                 POS a3=REF/SOURCE_OBJECT_MISMATCH pl=REF/SOURCE_OBJECT_MISMATCH a4=REF/SOURCE_OBJECT_MISMATCH
+F6.volume_goal_notation                                 POS a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_MEASUREMENT a4=REF/BRIDGE_UNSUPPORTED_MEASUREMENT
+F7.residual_parent_other                                NEG a3=REF/UNDERDETERMINED_POINT pl=REF/BRIDGE_CUT_EDGES_NOT_STATED a4=REF/SOURCE_OBJECT_MISMATCH
+F7.residual_valid_control                               POS a3=REF/UNDERDETERMINED_POINT pl=REF/BRIDGE_CUT_EDGES_NOT_STATED a4=REF/SOURCE_OBJECT_MISMATCH
+F7.ratio_cross_parent_valid                             POS a3=REF/UNDERDETERMINED_POINT pl=REF/BRIDGE_CUT_EDGES_NOT_STATED a4=REF/SOURCE_OBJECT_MISMATCH

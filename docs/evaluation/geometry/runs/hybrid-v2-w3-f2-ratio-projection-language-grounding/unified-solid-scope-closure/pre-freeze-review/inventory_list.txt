@@ -1,0 +1,185 @@
+TypedFactNextPayload.schema_version METADATA  no scope semantics
+TypedFactNextPayload.problem_text METADATA  no scope semantics
+TypedFactNextPayload.length_unit METADATA  no scope semantics
+TypedFactNextPayload.solids METADATA  container
+SolidSpec.solid_id SOLID_DEFINITION ['S5'] defines a scope; DUPLICATE_SOLID_ID; hyphens legal (S5 tokenizer)
+SolidSpec.solid_type METADATA  no scope semantics
+SolidSpec.center SOLID_DEFINITION  curved vertex label definition (ownership source)
+SolidSpec.apex_or_top SOLID_DEFINITION  curved vertex label definition
+SolidSpec.rim_point SOLID_DEFINITION  curved vertex label definition
+SolidSpec.radius METADATA  value
+SolidSpec.height METADATA  value
+SolidSpec.notation SOLID_DEFINITION  alias source (S2)
+SolidSpec.quote METADATA  no scope semantics
+SolidSpec.vertex_bindings SOLID_DEFINITION  canonical alias + vertex ownership source
+SolidSpec.coordinate_frame_id METADATA  frame id, not a solid
+TypedFactNextPayload.premises METADATA  container
+PremiseSpec.kind METADATA  no scope semantics
+PremiseSpec.args METADATA  container; keys classified by shape below
+PremiseSpec.quote METADATA  no scope semantics
+PremiseSpec.solid_id SOLID_SCOPE ['S1', 'S3', 'S5', 'S8'] 
+TypedFactNextPayload.derived_sections METADATA  container
+DerivedPlaneSectionSpec.section_id DEFINITION_ID  section id
+DerivedPlaneSectionSpec.plane_name METADATA  no scope semantics
+DerivedPlaneSectionSpec.target_solid_id SOLID_SCOPE ['S1', 'S5', 'S8'] 
+DerivedPlaneSectionSpec.plane_kind METADATA  no scope semantics
+DerivedPlaneSectionSpec.through_point VERTEX_REF ['S5', 'S7', 'S8'] 
+DerivedPlaneSectionSpec.distance_from_base METADATA  value
+DerivedPlaneSectionSpec.ratio_from_apex METADATA  value
+DerivedPlaneSectionSpec.equation_coeffs METADATA  values
+DerivedPlaneSectionSpec.section_shape METADATA  no scope semantics
+DerivedPlaneSectionSpec.parallel_plane VERTEX_REF ['S5', 'S7', 'S8'] 
+DerivedPlaneSectionSpec.perpendicular_line VERTEX_REF ['S5', 'S7', 'S8'] 
+DerivedPlaneSectionSpec.parallel_line_a VERTEX_REF ['S5', 'S7', 'S8'] 
+DerivedPlaneSectionSpec.parallel_line_b VERTEX_REF ['S5', 'S7', 'S8'] 
+DerivedPlaneSectionSpec.quote METADATA  no scope semantics
+DerivedPlaneSectionSpec.cut_edges VERTEX_REF ['S5', 'S7', 'S8'] 
+DerivedPlaneSectionSpec.named_intersections EDGE_KEY ['S5', 'S8'] 
+TypedFactNextPayload.relations METADATA  container
+GeometricRelationSpec.relation_id DEFINITION_ID  relation id
+GeometricRelationSpec.kind METADATA  no scope semantics
+GeometricRelationSpec.quote METADATA  no scope semantics
+GeometricRelationSpec.container_ref VERTEX_REF ['S5', 'S7', 'S8'] 
+GeometricRelationSpec.member_ref VERTEX_REF ['S5', 'S7', 'S8'] 
+GeometricRelationSpec.pairs VERTEX_REF ['S5', 'S7', 'S8'] 
+GeometricRelationSpec.solid_a SOLID_SCOPE ['S1', 'S3'] 
+GeometricRelationSpec.face_a VERTEX_REF ['S5', 'S7', 'S8'] 
+GeometricRelationSpec.solid_b SOLID_SCOPE ['S1', 'S3'] 
+GeometricRelationSpec.face_b VERTEX_REF ['S5', 'S7', 'S8'] 
+GeometricRelationSpec.entity_a VERTEX_REF ['S5', 'S7', 'S8'] 
+GeometricRelationSpec.entity_b VERTEX_REF ['S5', 'S7', 'S8'] 
+GeometricRelationSpec.solid_id SOLID_SCOPE ['S1', 'S3'] 
+GeometricRelationSpec.section_id SECTION_REF ['S9'] 
+GeometricRelationSpec.member_refs VERTEX_REF ['S5', 'S7', 'S8'] 
+GeometricRelationSpec.frame_id METADATA  frame id, not a solid
+GeometricRelationSpec.anchor_refs VERTEX_REF ['S5', 'S7', 'S8'] 
+TypedFactNextPayload.simulation_goals METADATA  container
+SimulationGoalSpec.goal_id DEFINITION_ID  goal id
+SimulationGoalSpec.kind METADATA  no scope semantics
+SimulationGoalSpec.quote METADATA  no scope semantics
+SimulationGoalSpec.target_solid_id SOLID_SCOPE ['S1', 'S3', 'S9'] 
+SimulationGoalSpec.target_section_id SECTION_REF ['S9'] 
+SimulationGoalSpec.derived_solid_id SOLID_DEFINITION  defines a derived solid; DUPLICATE_SOLID_ID
+SimulationGoalSpec.parent_solid_id SOLID_SCOPE ['S1', 'S3', 'S4'] 
+SimulationGoalSpec.apex_ref VERTEX_REF ['S5', 'S7', 'S8'] 
+SimulationGoalSpec.target_refs VERTEX_REF ['S5', 'S7', 'S8', 'S10'] 
+SimulationGoalSpec.style_role METADATA  no scope semantics
+TypedFactNextPayload.math_goals METADATA  container
+MathGoalSpec.goal_id DEFINITION_ID  goal id
+MathGoalSpec.kind METADATA  no scope semantics
+MathGoalSpec.quote METADATA  no scope semantics
+MathGoalSpec.numerator_solid_id SOLID_OPERAND ['S1'] 
+MathGoalSpec.denominator_solid_id SOLID_OPERAND ['S1'] 
+MathGoalSpec.parent_solid_id SOLID_OPERAND ['S1', 'S3'] 
+MathGoalSpec.cut_solid_id SOLID_OPERAND ['S1', 'S3'] 
+MathGoalSpec.goal_type METADATA  no scope semantics
+MathGoalSpec.target METADATA  container; keys classified below
+MathGoalSpec.solid_id SOLID_SCOPE ['S1', 'S3', 'S4'] 
+TypedFactNextPayloadV2.schema_version METADATA  no scope semantics
+TypedFactNextPayloadV2.problem_text METADATA  no scope semantics
+TypedFactNextPayloadV2.length_unit METADATA  no scope semantics
+TypedFactNextPayloadV2.solids METADATA  container
+TypedFactNextPayloadV2.premises METADATA  container
+TypedFactNextPayloadV2.derived_sections METADATA  container
+DerivedPlaneSectionSpecV2.section_id DEFINITION_ID  section id
+DerivedPlaneSectionSpecV2.plane_name METADATA  no scope semantics
+DerivedPlaneSectionSpecV2.target_solid_id SOLID_SCOPE ['S1', 'S5', 'S8'] 
+DerivedPlaneSectionSpecV2.plane_kind METADATA  no scope semantics
+DerivedPlaneSectionSpecV2.through_point VERTEX_REF ['S5', 'S7', 'S8'] 
+DerivedPlaneSectionSpecV2.distance_from_base METADATA  value
+DerivedPlaneSectionSpecV2.ratio_from_apex METADATA  value
+DerivedPlaneSectionSpecV2.equation_coeffs METADATA  values
+DerivedPlaneSectionSpecV2.section_shape METADATA  no scope semantics
+DerivedPlaneSectionSpecV2.parallel_plane VERTEX_REF ['S5', 'S7', 'S8'] 
+DerivedPlaneSectionSpecV2.perpendicular_line VERTEX_REF ['S5', 'S7', 'S8'] 
+DerivedPlaneSectionSpecV2.parallel_line_a VERTEX_REF ['S5', 'S7', 'S8'] 
+DerivedPlaneSectionSpecV2.parallel_line_b VERTEX_REF ['S5', 'S7', 'S8'] 
+DerivedPlaneSectionSpecV2.quote METADATA  no scope semantics
+DerivedPlaneSectionSpecV2.stated_intersections METADATA  container of StatedIntersectionSpec
+StatedIntersectionSpec.edge VERTEX_REF ['S5', 'S7', 'S8'] 
+StatedIntersectionSpec.point DEFINITION_ID  names a constructed section point (ownership source)
+StatedIntersectionSpec.quote METADATA  no scope semantics
+DerivedPlaneSectionSpecV2.declared_boundary VERTEX_REF ['S5', 'S7', 'S8'] 
+TypedFactNextPayloadV2.relations METADATA  container
+TypedFactNextPayloadV2.simulation_goals METADATA  container
+TypedFactNextPayloadV2.math_goals METADATA  container
+PremiseSpec.args[regular_pyramid].apex VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[regular_pyramid].base VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[right_prism].base VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[right_prism].top VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[regular_polygon].vertices VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[regular_polygon].side METADATA  value
+PremiseSpec.args[rectangle].vertices VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[segment_length].segment VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[segment_length].value METADATA  value
+PremiseSpec.args[height].value METADATA  value
+PremiseSpec.args[height].solid SOLID_OPERAND ['S2', 'S3'] 
+PremiseSpec.args[equal_length].segment_a VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[equal_length].segment_b VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[perpendicular_line_plane].line VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[perpendicular_line_plane].plane VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[perpendicular_lines].line1 VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[perpendicular_lines].line2 VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[face_perpendicular_base].face VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[face_perpendicular_base].base VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[altitude].apex VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[altitude].foot VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[altitude].solid SOLID_OPERAND ['S2', 'S3'] 
+PremiseSpec.args[midpoint].point VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[midpoint].segment VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[divide_segment].point VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[divide_segment].segment VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[divide_segment].ratio METADATA  value
+PremiseSpec.args[centroid].point VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[centroid].polygon VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[orthogonal_projection].point VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[orthogonal_projection].image VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[orthogonal_projection].plane VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[orthogonal_projection_line].point VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[orthogonal_projection_line].image VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[orthogonal_projection_line].line VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[intersect_line_line].point VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[intersect_line_line].line1 VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[intersect_line_line].line2 VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[intersect_line_plane].point VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[intersect_line_plane].line VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[intersect_line_plane].plane VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[base_is_square].vertices VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[base_is_square].side METADATA  value
+PremiseSpec.args[base_is_equilateral_triangle].vertices VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[base_is_equilateral_triangle].side METADATA  value
+PremiseSpec.args[base_is_regular_polygon].vertices VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[base_is_regular_polygon].side METADATA  value
+PremiseSpec.args[base_is_rectangle].vertices VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[equal_segments].segment_a VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[equal_segments].segment_b VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[line_perp_plane].line VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[line_perp_plane].plane VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[line_perp_line].line1 VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[line_perp_line].line2 VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[plane_perp_base].face VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[plane_perp_base].base VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[point_is_midpoint].point VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[point_is_midpoint].segment VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[point_divides_segment].point VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[point_divides_segment].segment VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[point_divides_segment].ratio METADATA  value
+PremiseSpec.args[point_is_centroid].point VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[point_is_centroid].polygon VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[point_is_foot].point VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[point_is_foot].image VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[point_is_foot].plane VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[right_angle#0].vertices VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[right_angle#0].right_at VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[right_angle#1].vertex VERTEX_REF ['S5', 'S7', 'S8'] 
+PremiseSpec.args[right_angle#1].rays VERTEX_REF ['S5', 'S7', 'S8'] 
+MathGoalSpec.target.line VERTEX_REF ['S5', 'S7', 'S8', 'S11'] 
+MathGoalSpec.target.line1 VERTEX_REF ['S5', 'S7', 'S8', 'S11'] 
+MathGoalSpec.target.line2 VERTEX_REF ['S5', 'S7', 'S8', 'S11'] 
+MathGoalSpec.target.plane VERTEX_REF ['S5', 'S7', 'S8', 'S11'] 
+MathGoalSpec.target.point VERTEX_REF ['S5', 'S7', 'S8', 'S11'] 
+MathGoalSpec.target.polygon VERTEX_REF ['S5', 'S7', 'S8', 'S11'] 
+MathGoalSpec.target.section_id SECTION_REF ['S9', 'S11'] 
+MathGoalSpec.target.segment VERTEX_REF ['S5', 'S7', 'S8', 'S11'] 
+MathGoalSpec.target.solid SOLID_OPERAND ['S2', 'S3'] 
+MathGoalSpec.target.solid_id SOLID_SCOPE ['S1', 'S3'] 

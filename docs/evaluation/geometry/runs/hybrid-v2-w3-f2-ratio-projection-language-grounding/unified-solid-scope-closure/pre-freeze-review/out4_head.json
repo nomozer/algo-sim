@@ -1,0 +1,630 @@
+[
+ {
+  "probe": "F1.pyr-1_pyr-2_qualified",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "SERVED",
+    null,
+    "",
+    {
+     "v": "4"
+    }
+   ],
+   "pl": [
+    "SERVED",
+    null,
+    "",
+    {
+     "v": "4"
+    }
+   ],
+   "a4": [
+    "SERVED",
+    null,
+    "",
+    {
+     "v": "4"
+    }
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F1.pyr-1_scope_violation",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "v: một đối tượng mang các khối khác nhau ['pyr-1', 'pyr-2']",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "v: một đối tượng mang các khối khác nhau ['pyr-1', 'pyr-2']",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "v: một đối tượng mang các khối khác nhau ['pyr-1', 'pyr-2']",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F2.perp_solid_id_s2_ops_s1_q",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "rr: tham chiếu 's1::S' khác phạm vi khối 's2'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "rr: tham chiếu 's1::S' khác phạm vi khối 's2'",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "rr: tham chiếu 's1::S' khác phạm vi khối 's2'",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F2.perp_solid_a_s2_ops_s1",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "rr: 'S' chỉ là đỉnh của khối khác, không thuộc 's2'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "rr: 'S' chỉ là đỉnh của khối khác, không thuộc 's2'",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "rr: 'S' chỉ là đỉnh của khối khác, không thuộc 's2'",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F2.shared_vertices_sides_s2_pair_s1",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "rr: tham chiếu 's1::A' khác phạm vi khối 's2'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "rr: tham chiếu 's1::A' khác phạm vi khối 's2'",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "rr: tham chiếu 's1::A' khác phạm vi khối 's2'",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F2.perp_valid_control",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "SERVED",
+    null,
+    "",
+    {
+     "v": "4"
+    }
+   ],
+   "pl": [
+    "SERVED",
+    null,
+    "",
+    {
+     "v": "4"
+    }
+   ],
+   "a4": [
+    "SERVED",
+    null,
+    "",
+    {
+     "v": "4"
+    }
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F3.highlight_s2_refs_s1",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "h: 'S' chỉ là đỉnh của khối khác, không thuộc 's2'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "h: 'S' chỉ là đỉnh của khối khác, không thuộc 's2'",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "h: 'S' chỉ là đỉnh của khối khác, không thuộc 's2'",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F3.construct_object_parent_neq_target",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "INVALID_SIMULATION_GOAL",
+    "g: construct_object không có parent_solid_id trong hợp đồng",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "INVALID_SIMULATION_GOAL",
+    "g: construct_object không có parent_solid_id trong hợp đồng",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "INVALID_SIMULATION_GOAL",
+    "g: construct_object không có parent_solid_id trong hợp đồng",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F3.section_goal_target_other_solid",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sim_section: một đối tượng mang các khối khác nhau ['main_pyramid', 'other']",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sim_section: một đối tượng mang các khối khác nhau ['main_pyramid', 'other']",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sim_section: một đối tượng mang các khối khác nhau ['main_pyramid', 'other']",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F3.derived_goal_target_solid_id",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "INVALID_SIMULATION_GOAL",
+    "sim_top_pyramid: construct_derived_solid không có target_solid_id trong hợp đồng",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "INVALID_SIMULATION_GOAL",
+    "sim_top_pyramid: construct_derived_solid không có target_solid_id trong hợp đồng",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "INVALID_SIMULATION_GOAL",
+    "sim_top_pyramid: construct_derived_solid không có target_solid_id trong hợp đồng",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F4.cone_apex_other",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sim_upper_cone: 'T' chỉ là đỉnh của khối khác, không thuộc 'cone_main'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sim_upper_cone: 'T' chỉ là đỉnh của khối khác, không thuộc 'cone_main'",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sim_upper_cone: 'T' chỉ là đỉnh của khối khác, không thuộc 'cone_main'",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F4.cone_perp_contradicting",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "rp: 'T' chỉ là đỉnh của khối khác, không thuộc 'cone_main'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "rp: 'T' chỉ là đỉnh của khối khác, không thuộc 'cone_main'",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "rp: 'T' chỉ là đỉnh của khối khác, không thuộc 'cone_main'",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F4.cone_highlight_other_refs",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "h: 'S' chỉ là đỉnh của khối khác, không thuộc 'cone_b'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "h: 'S' chỉ là đỉnh của khối khác, không thuộc 'cone_b'",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "h: 'S' chỉ là đỉnh của khối khác, không thuộc 'cone_b'",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F5.curved_target_notation_alias",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "SERVED",
+    null,
+    "",
+    {
+     "m_vol": "12π",
+     "m_lat": "15π",
+     "m_axial_area": "12",
+     "m_ratio": "1/8",
+     "m_frustum": "21π/2"
+    }
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cone_main: khối cone chưa có trên planner",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cone_main: khối cone chưa có trên planner",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F5.curved_section_id_int",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "INVALID_MATH_GOAL",
+    "m_axial_area: thiết diện 5 không phải định danh",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "INVALID_MATH_GOAL",
+    "m_axial_area: thiết diện 5 không phải định danh",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "INVALID_MATH_GOAL",
+    "m_axial_area: thiết diện 5 không phải định danh",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F5.curved_section_id_unknown",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "UNKNOWN_SECTION_ID",
+    "m_axial_area: thiết diện 'nope' chưa được khai báo",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "UNKNOWN_SECTION_ID",
+    "m_axial_area: thiết diện 'nope' chưa được khai báo",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "UNKNOWN_SECTION_ID",
+    "m_axial_area: thiết diện 'nope' chưa được khai báo",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F5.poly_target_point_dict",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "INVALID_MATH_GOAL",
+    "x: toán hạng 'point' không phải tham chiếu",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "INVALID_MATH_GOAL",
+    "x: toán hạng 'point' không phải tham chiếu",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "INVALID_MATH_GOAL",
+    "x: toán hạng 'point' không phải tham chiếu",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F6.dev10_base",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_prism: đề không nói thiết diện của ABC.A'B'C' với mặt phẳng qua M song song (ABC)",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_prism: đề không nói thiết diện của ABC.A'B'C' với mặt phẳng qua M song song (ABC)",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_prism: đề không nói thiết diện của ABC.A'B'C' với mặt phẳng qua M song song (ABC)",
+    null
+   ]
+  },
+  "flags": [
+   "a3:FALSE_REFUSE(SOURCE_OBJECT_MISMATCH)",
+   "pl:FALSE_REFUSE(SOURCE_OBJECT_MISMATCH)",
+   "a4:FALSE_REFUSE(SOURCE_OBJECT_MISMATCH)"
+  ]
+ },
+ {
+  "probe": "F6.area_target_solid_notation",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_prism: đề không nói thiết diện của ABC.A'B'C' với mặt phẳng qua M song song (ABC)",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_prism: đề không nói thiết diện của ABC.A'B'C' với mặt phẳng qua M song song (ABC)",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_prism: đề không nói thiết diện của ABC.A'B'C' với mặt phẳng qua M song song (ABC)",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F6.area_target_solid_id",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_prism: đề không nói thiết diện của ABC.A'B'C' với mặt phẳng qua M song song (ABC)",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_prism: đề không nói thiết diện của ABC.A'B'C' với mặt phẳng qua M song song (ABC)",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_prism: đề không nói thiết diện của ABC.A'B'C' với mặt phẳng qua M song song (ABC)",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F6.volume_goal_notation",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "SERVED",
+    null,
+    "",
+    {
+     "v": "4"
+    }
+   ],
+   "pl": [
+    "SERVED",
+    null,
+    "",
+    {
+     "v": "4"
+    }
+   ],
+   "a4": [
+    "SERVED",
+    null,
+    "",
+    {
+     "v": "4"
+    }
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F7.residual_parent_other",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "r: một đối tượng mang các khối khác nhau ['s_abcd', 't_abcd']",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "r: một đối tượng mang các khối khác nhau ['s_abcd', 't_abcd']",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "r: một đối tượng mang các khối khác nhau ['s_abcd', 't_abcd']",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F7.residual_valid_control",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "UNDERDETERMINED_POINT",
+    "không lời gọi nào xác định vị trí của ['T'] (thiếu quan hệ vuông góc / trung điểm / khối đều)",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_CUT_EDGES_NOT_STATED",
+    "sim_sub: thiết diện sec_alpha không nêu các cạnh bị cắt — bridge không suy ra cạnh nào bị cắt",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_alpha: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F7.ratio_cross_parent_valid",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "UNDERDETERMINED_POINT",
+    "không lời gọi nào xác định vị trí của ['T'] (thiếu quan hệ vuông góc / trung điểm / khối đều)",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_CUT_EDGES_NOT_STATED",
+    "sim_sub: thiết diện sec_alpha không nêu các cạnh bị cắt — bridge không suy ra cạnh nào bị cắt",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_alpha: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ]
+  },
+  "flags": []
+ }
+]

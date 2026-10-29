@@ -1,0 +1,4 @@
+F7x.two_primary_control                                 POS a3=SER/None pl=REF/BRIDGE_CUT_EDGES_NOT_STATED a4=REF/SOURCE_OBJECT_MISMATCH  <<a4:FALSE_REFUSE(SOURCE_OBJECT_MISMATCH)>>
+F7x.residual_parent_other_primary                       NEG a3=REF/SOURCE_OBJECT_MISMATCH pl=REF/SOURCE_OBJECT_MISMATCH a4=REF/SOURCE_OBJECT_MISMATCH
+F7x.residual_parent_other_hyphen_ids                    NEG a3=REF/SOURCE_OBJECT_MISMATCH pl=REF/SOURCE_OBJECT_MISMATCH a4=REF/SOURCE_OBJECT_MISMATCH
+F7x.residual_parent_own_control                         POS a3=SER/None pl=REF/BRIDGE_CUT_EDGES_NOT_STATED a4=REF/SOURCE_OBJECT_MISMATCH  <<a3:ANSWER_CHANGED>>

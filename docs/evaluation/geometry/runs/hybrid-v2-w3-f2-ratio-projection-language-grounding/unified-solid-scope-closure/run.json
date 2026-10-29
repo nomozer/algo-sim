@@ -1,0 +1,21 @@
+{
+  "task": "HYBRID_V2_W3_F2_SCOPE_CENSUS_CLOSURE_AND_HYPHENATED_ID_RECOVERY",
+  "date": "2026-10-29",
+  "classification": "POST_FEEDBACK_DEVELOPMENT_REGRESSION",
+  "verdict": "NOT_READY",
+  "stopped_at": "pre-freeze independent adversarial review (Owner GO §12)",
+  "main": "996f114b3480efe1b0d075dd4342530aaa12ddae",
+  "baseline_head": "eb19c0026c06376c60352056859b1224c5ca98da",
+  "red_commit": "38ddc2bc",
+  "f7_red_commit": "d352073a",
+  "product_commits": ["959e23a6fff0b9c9d363fca378c8617cd72fd36c", "1262fbd5b1d70237e82e9ee2dd724e3b0a0047a1"],
+  "frozen": false,
+  "census": {"field_paths": 185, "scope_bearing": 112, "inventory": "schema-field-inventory-v2.json"},
+  "findings_closed": ["F1", "F2", "F3", "F4", "F5", "F6", "F7"],
+  "findings_open": {"MAJOR": ["N1", "N2", "N3", "N4"], "MINOR": ["N5", "N6"], "note": ["N7"]},
+  "gates_on_registered_scope": {"A": "PASS", "B": "PASS", "C": "PASS (96/96)", "D": "PASS (875/0, fixtures 41/41, cache 130)"},
+  "not_run_by_contract": ["wave3 replay", "T0", "T1", "T2", "freeze", "Full T3", "final review"],
+  "live_provider_calls": 0,
+  "cache_version": 130,
+  "merge_push_cleanup": "none"
+}

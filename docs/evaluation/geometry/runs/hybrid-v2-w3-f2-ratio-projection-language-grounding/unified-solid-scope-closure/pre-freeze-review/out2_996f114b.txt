@@ -1,0 +1,64 @@
+B.dev01_base                                            POS a3=SER/None pl=REF/UNKNOWN_VERTEX_REF a4=REF/UNKNOWN_VERTEX_REF  <<pl:FALSE_REFUSE(UNKNOWN_VERTEX_REF),a4:FALSE_REFUSE(UNKNOWN_VERTEX_REF)>>
+B.demo1_base                                            POS a3=SER/None pl=REF/BRIDGE_CUT_EDGES_NOT_STATED a4=REF/SOURCE_OBJECT_MISMATCH  <<a4:FALSE_REFUSE(SOURCE_OBJECT_MISMATCH)>>
+B.dev07_base                                            POS a3=REF/SOURCE_OBJECT_MISMATCH pl=REF/SOURCE_OBJECT_MISMATCH a4=REF/SOURCE_OBJECT_MISMATCH  <<a3:FALSE_REFUSE(SOURCE_OBJECT_MISMATCH),pl:FALSE_REFUSE(SOURCE_OBJECT_MISMATCH),a4:FALSE_REFUSE(SOURCE_OBJECT_MISMATCH)>>
+B.dev02_base                                            POS a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY a4=REF/BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+K.dev01_ratio_target_solid_id_ghost                     NEG a3=SER/None pl=REF/UNKNOWN_VERTEX_REF a4=REF/UNKNOWN_VERTEX_REF  <<a3:SERVED!>>
+K.dev01_ratio_target_solid_other_notation               NEG a3=SER/None pl=REF/UNKNOWN_VERTEX_REF a4=REF/UNKNOWN_VERTEX_REF  <<a3:SERVED!>>
+K.dev01_ratio_goal_type_volume                          NEG a3=SER/None pl=REF/UNKNOWN_VERTEX_REF a4=REF/UNKNOWN_VERTEX_REF  <<a3:SERVED!>>
+K.dev01_ratio_with_parent_cut                           NEG a3=SER/None pl=REF/UNKNOWN_VERTEX_REF a4=REF/UNKNOWN_VERTEX_REF  <<a3:SERVED!>>
+K.dev01_ratio_target_segment_foreign                    NEG a3=SER/None pl=REF/UNKNOWN_VERTEX_REF a4=REF/UNKNOWN_VERTEX_REF  <<a3:SERVED!>>
+K.demo1_ratio_target_solid_id_ghost                     NEG a3=SER/None pl=REF/BRIDGE_CUT_EDGES_NOT_STATED a4=REF/SOURCE_OBJECT_MISMATCH  <<a3:SERVED!>>
+K.demo1_ratio_target_solid_other_notation               NEG a3=SER/None pl=REF/BRIDGE_CUT_EDGES_NOT_STATED a4=REF/SOURCE_OBJECT_MISMATCH  <<a3:SERVED!>>
+K.demo1_ratio_goal_type_volume                          NEG a3=SER/None pl=REF/BRIDGE_CUT_EDGES_NOT_STATED a4=REF/SOURCE_OBJECT_MISMATCH  <<a3:SERVED!>>
+K.demo1_ratio_with_parent_cut                           NEG a3=SER/None pl=REF/BRIDGE_CUT_EDGES_NOT_STATED a4=REF/SOURCE_OBJECT_MISMATCH  <<a3:SERVED!>>
+K.demo1_ratio_target_segment_foreign                    NEG a3=SER/None pl=REF/BRIDGE_CUT_EDGES_NOT_STATED a4=REF/SOURCE_OBJECT_MISMATCH  <<a3:SERVED!>>
+K.dev01_residual_with_denominator                       NEG a3=SER/None pl=REF/UNKNOWN_VERTEX_REF a4=REF/UNKNOWN_VERTEX_REF  <<a3:SERVED!>>
+K.dev01_residual_target_solid_ghost                     NEG a3=SER/None pl=REF/UNKNOWN_VERTEX_REF a4=REF/UNKNOWN_VERTEX_REF  <<a3:SERVED!>>
+K.dev01_measure_area_with_cut_solid                     NEG a3=SER/None pl=REF/UNKNOWN_VERTEX_REF a4=REF/UNKNOWN_VERTEX_REF  <<a3:SERVED!>>
+K.dev01_derived_goal_with_target_refs_ghost_solid_like  NEG a3=SER/None pl=REF/UNKNOWN_VERTEX_REF a4=REF/UNKNOWN_VERTEX_REF  <<a3:SERVED!>>
+K.dev01_section_goal_with_derived_solid_id              NEG a3=SER/None pl=REF/UNKNOWN_VERTEX_REF a4=REF/UNKNOWN_VERTEX_REF  <<a3:SERVED!>>
+K.dev01_section_goal_with_apex_ref_unknown              NEG a3=SER/None pl=REF/UNKNOWN_VERTEX_REF a4=REF/UNKNOWN_VERTEX_REF  <<a3:SERVED!>>
+S8.dev02_with_M_control                                 POS a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY a4=REF/BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+S8.dev02_measure_target_solid_id_pyr2_M                 NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY a4=REF/BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY  <<a3:SERVED!>>
+S8.dev02_measure_target_solid_pyr2_M                    NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY a4=REF/BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY  <<a3:SERVED!>>
+S8.dev02_measure_target_solid_pyr1_M_control            POS a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY a4=REF/BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY  <<a3:ANSWER_CHANGED>>
+S8.dev02_containment_whole_pyr2_member_M                NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY a4=REF/BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY  <<a3:SERVED!>>
+S8.dev02_containment_solid_pyr2_member_M                NEG a3=REF/INCONSISTENT_FACTS pl=REF/BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY a4=REF/BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+S8.dev02_perpendicular_solid_pyr2_entity_M              NEG a3=REF/INCONSISTENT_FACTS pl=REF/BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY a4=REF/BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+S8.dev02_highlight_target_pyr2_ref_M                    NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY a4=REF/BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY  <<a3:SERVED!>>
+S8.dev02_frame_pyr2_anchor_M                            NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY a4=REF/BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY  <<a3:SERVED!>>
+C.cone_base                                             POS a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED
+C.two_cones_control                                     POS a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED
+C.cone_volume_goal_scope_other_cone                     NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+C.cone_volume_target_solid_id_vs_solid                  NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+C.cone_volume_target_notation_alias                     POS a3=REF/ADAPTER_INTERNAL_ERROR pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:INTERNAL>>
+C.cone_volume_target_ghost                              NEG a3=REF/ADAPTER_INTERNAL_ERROR pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:INTERNAL>>
+C.cone_area_section_vs_solid_id                         NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+C.cone_area_unknown_section                             NEG a3=REF/ADAPTER_INTERNAL_ERROR pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:INTERNAL>>
+C.cone_derived_parent_other                             NEG a3=REF/MALFORMED_CURVED_SOLID pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED
+C.cone_derived_apex_other                               NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+C.cone_derived_apex_other_qualified                     NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+C.cone_derived_apex_unknown                             NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+C.cone_residual_parent_other                            NEG a3=REF/RESIDUAL_CONTAINMENT_UNPROVED pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED
+C.cone_ratio_goal_level_solid_id                        NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+C.cone_highlight_target_main_ref_T                      NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+C.cone_highlight_ref_q_nonvertex                        NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+C.cone_highlight_ref_q_other_vertex                     NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+C.cone_highlight_control                                POS a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED
+C.cone_relation_frame_anchor_other                      NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+C.cone_relation_parallel_sides                          NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+C.cone_relation_shared_vertices_nonvertex               NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+C.cone_relation_containment_member_unknown_q            NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+C.cone_section_goal_target_solid_other                  NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+C.cone_section_goal_parent_solid_id                     NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+C.cone_measure_with_parent_other                        NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+C.cone_premise_height_other                             NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+C.cone_premise_segment_q_other                          NEG a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:SERVED!>>
+C.cone_measure_str_segment_target_solid                 NEG a3=REF/INVALID_MATH_GOAL_TARGET pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED
+C.cyl_base                                              POS a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED
+C.two_cyl_hyphen_control                                POS a3=REF/ENGINE_IR_INVALID pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED
+C.cyl_volume_goal_hyphen_other                          NEG a3=REF/ENGINE_IR_INVALID pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED
+C.cyl_area_section_vs_goal_solid                        NEG a3=REF/ENGINE_IR_INVALID pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED
+C.cyl_section_target_hyphen_goal_mismatch               NEG a3=REF/ENGINE_IR_INVALID pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED
+C.cyl_highlight_q_hyphen_other                          NEG a3=REF/ENGINE_IR_INVALID pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED
+C.cyl_volume_target_notation_with_prime                 POS a3=REF/ADAPTER_INTERNAL_ERROR pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED  <<a3:INTERNAL>>

@@ -1,0 +1,125 @@
+[
+ {
+  "probe": "F7x.two_primary_control",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "SERVED",
+    null,
+    "",
+    {
+     "m_sec_area": "1",
+     "m_vol_ratio": "1/8"
+    }
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_CUT_EDGES_NOT_STATED",
+    "sim_sub: thiết diện sec_alpha không nêu các cạnh bị cắt — bridge không suy ra cạnh nào bị cắt",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_alpha: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ]
+  },
+  "flags": [
+   "a4:FALSE_REFUSE(SOURCE_OBJECT_MISMATCH)"
+  ]
+ },
+ {
+  "probe": "F7x.residual_parent_other_primary",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "SERVED",
+    null,
+    "",
+    {
+     "m_sec_area": "1",
+     "m_vol_ratio": "1/8",
+     "r": "5"
+    }
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_CUT_EDGES_NOT_STATED",
+    "sim_sub: thiết diện sec_alpha không nêu các cạnh bị cắt — bridge không suy ra cạnh nào bị cắt",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_alpha: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ]
+  },
+  "flags": [
+   "a3:SERVED!"
+  ]
+ },
+ {
+  "probe": "F7x.residual_parent_other_hyphen_ids",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "SERVED",
+    null,
+    "",
+    {
+     "m_sec_area": "1",
+     "m_vol_ratio": "1/8",
+     "r": "5"
+    }
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_CUT_EDGES_NOT_STATED",
+    "sim_sub: thiết diện sec_alpha không nêu các cạnh bị cắt — bridge không suy ra cạnh nào bị cắt",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_alpha: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ]
+  },
+  "flags": [
+   "a3:SERVED!"
+  ]
+ },
+ {
+  "probe": "F7x.residual_parent_own_control",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "SERVED",
+    null,
+    "",
+    {
+     "m_sec_area": "1",
+     "m_vol_ratio": "1/8",
+     "r": "7/3"
+    }
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_CUT_EDGES_NOT_STATED",
+    "sim_sub: thiết diện sec_alpha không nêu các cạnh bị cắt — bridge không suy ra cạnh nào bị cắt",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_alpha: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ]
+  },
+  "flags": [
+   "a3:ANSWER_CHANGED"
+  ]
+ }
+]

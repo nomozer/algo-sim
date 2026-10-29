@@ -1,0 +1,24 @@
+F1.pyr-1_pyr-2_qualified                                POS a3=SER/None pl=SER/None a4=SER/None
+F1.pyr-1_scope_violation                                NEG a3=REF/SOURCE_OBJECT_MISMATCH pl=REF/SOURCE_OBJECT_MISMATCH a4=REF/SOURCE_OBJECT_MISMATCH
+F2.perp_solid_id_s2_ops_s1_q                            NEG a3=REF/SOURCE_OBJECT_MISMATCH pl=REF/SOURCE_OBJECT_MISMATCH a4=REF/SOURCE_OBJECT_MISMATCH
+F2.perp_solid_a_s2_ops_s1                               NEG a3=REF/SOURCE_OBJECT_MISMATCH pl=REF/SOURCE_OBJECT_MISMATCH a4=REF/SOURCE_OBJECT_MISMATCH
+F2.shared_vertices_sides_s2_pair_s1                     NEG a3=REF/SOURCE_OBJECT_MISMATCH pl=REF/SOURCE_OBJECT_MISMATCH a4=REF/SOURCE_OBJECT_MISMATCH
+F2.perp_valid_control                                   POS a3=SER/None pl=SER/None a4=SER/None
+F3.highlight_s2_refs_s1                                 NEG a3=REF/SOURCE_OBJECT_MISMATCH pl=REF/SOURCE_OBJECT_MISMATCH a4=REF/SOURCE_OBJECT_MISMATCH
+F3.construct_object_parent_neq_target                   NEG a3=REF/INVALID_SIMULATION_GOAL pl=REF/INVALID_SIMULATION_GOAL a4=REF/INVALID_SIMULATION_GOAL
+F3.section_goal_target_other_solid                      NEG a3=REF/SOURCE_OBJECT_MISMATCH pl=REF/SOURCE_OBJECT_MISMATCH a4=REF/SOURCE_OBJECT_MISMATCH
+F3.derived_goal_target_solid_id                         NEG a3=REF/INVALID_SIMULATION_GOAL pl=REF/INVALID_SIMULATION_GOAL a4=REF/INVALID_SIMULATION_GOAL
+F4.cone_apex_other                                      NEG a3=REF/SOURCE_OBJECT_MISMATCH pl=REF/SOURCE_OBJECT_MISMATCH a4=REF/SOURCE_OBJECT_MISMATCH
+F4.cone_perp_contradicting                              NEG a3=REF/SOURCE_OBJECT_MISMATCH pl=REF/SOURCE_OBJECT_MISMATCH a4=REF/SOURCE_OBJECT_MISMATCH
+F4.cone_highlight_other_refs                            NEG a3=REF/SOURCE_OBJECT_MISMATCH pl=REF/SOURCE_OBJECT_MISMATCH a4=REF/SOURCE_OBJECT_MISMATCH
+F5.curved_target_notation_alias                         POS a3=SER/None pl=REF/BRIDGE_UNSUPPORTED_CURVED a4=REF/BRIDGE_UNSUPPORTED_CURVED
+F5.curved_section_id_int                                NEG a3=REF/INVALID_MATH_GOAL pl=REF/INVALID_MATH_GOAL a4=REF/INVALID_MATH_GOAL
+F5.curved_section_id_unknown                            NEG a3=REF/UNKNOWN_SECTION_ID pl=REF/UNKNOWN_SECTION_ID a4=REF/UNKNOWN_SECTION_ID
+F5.poly_target_point_dict                               NEG a3=REF/INVALID_MATH_GOAL pl=REF/INVALID_MATH_GOAL a4=REF/INVALID_MATH_GOAL
+F6.dev10_base                                           POS a3=REF/SOURCE_OBJECT_MISMATCH pl=REF/SOURCE_OBJECT_MISMATCH a4=REF/SOURCE_OBJECT_MISMATCH  <<a3:FALSE_REFUSE(SOURCE_OBJECT_MISMATCH),pl:FALSE_REFUSE(SOURCE_OBJECT_MISMATCH),a4:FALSE_REFUSE(SOURCE_OBJECT_MISMATCH)>>
+F6.area_target_solid_notation                           POS a3=REF/SOURCE_OBJECT_MISMATCH pl=REF/SOURCE_OBJECT_MISMATCH a4=REF/SOURCE_OBJECT_MISMATCH
+F6.area_target_solid_id                                 POS a3=REF/SOURCE_OBJECT_MISMATCH pl=REF/SOURCE_OBJECT_MISMATCH a4=REF/SOURCE_OBJECT_MISMATCH
+F6.volume_goal_notation                                 POS a3=SER/None pl=SER/None a4=SER/None
+F7.residual_parent_other                                NEG a3=REF/SOURCE_OBJECT_MISMATCH pl=REF/SOURCE_OBJECT_MISMATCH a4=REF/SOURCE_OBJECT_MISMATCH
+F7.residual_valid_control                               POS a3=REF/UNDERDETERMINED_POINT pl=REF/BRIDGE_CUT_EDGES_NOT_STATED a4=REF/SOURCE_OBJECT_MISMATCH
+F7.ratio_cross_parent_valid                             POS a3=REF/UNDERDETERMINED_POINT pl=REF/BRIDGE_CUT_EDGES_NOT_STATED a4=REF/SOURCE_OBJECT_MISMATCH

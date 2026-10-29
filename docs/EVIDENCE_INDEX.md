@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_V2_W3_F2_SCOPE_CENSUS_CLOSURE_AND_HYPHENATED_ID_RECOVERY
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope-closure/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope-closure/
+CLASSIFICATION = POST_FEEDBACK_DEVELOPMENT_REGRESSION; NOT_READY; F1–F7 closed, Gates A–D PASS on the registered scope (locked 96/96, compatibility 875/0, fixtures 41/41, cache 130, previous reviewer's 117 probes clean); pre-freeze adversarial review found pre-existing MAJOR N1–N4; no freeze, replay, T0–T2 or Full T3.
+CODE_COMMIT = 959e23a6fff0b9c9d363fca378c8617cd72fd36c, 1262fbd5b1d70237e82e9ee2dd724e3b0a0047a1 (not frozen); RED 38ddc2bc; F7 RED d352073a
+VERIFICATION = schema-field-inventory.json; schema-field-inventory-v2.json; scope-entrypoint-coverage.json; red.json; red-f7.json; green.json; mutation-results.json; compatibility.json; gates.json; closure-review1-probes-final.out; pre-freeze-review.md; pre-freeze-review/
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_V2_W3_F2_UNIFIED_SOLID_SCOPE_VALIDATION (findings F1–F6 of unified-solid-scope/review.md; earlier files unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_V2_W3_F2_UNIFIED_SOLID_SCOPE_VALIDATION
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/report.md
@@ -9,7 +20,7 @@ CODE_COMMIT = 9772ea3750a84f76fbee1e83057e919a5ef63e50; preregistration/RED 82eb
 VERIFICATION = solid-scope-census.md; solid-scope-entrypoint-matrix.json; red.json; green.json; mutations.json; gates.json; compatibility.json; wave3-post-feedback-regression.json; tiers.json; full-t3/receipt.json; review.md; review/
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_V2_W3_F2_ADAPTER3_SEMANTIC_FALLBACK_SAFETY_HARDENING (review-solid-scope.md findings; earlier files unchanged)
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_V2_W3_F2_SCOPE_CENSUS_CLOSURE_AND_HYPHENATED_ID_RECOVERY (unified-solid-scope-closure/report.md)
 
 ## WAVE_ID = HYBRID_V2_W3_F2_ADAPTER3_SEMANTIC_FALLBACK_SAFETY_HARDENING
 

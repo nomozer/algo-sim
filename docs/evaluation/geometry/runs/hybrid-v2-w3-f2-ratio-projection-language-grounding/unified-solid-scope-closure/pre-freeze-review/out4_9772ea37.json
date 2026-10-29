@@ -1,0 +1,681 @@
+[
+ {
+  "probe": "F1.pyr-1_pyr-2_qualified",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "UNKNOWN_SOLID_ID",
+    "p3: khối '1' chưa được khai báo",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "UNKNOWN_SOLID_ID",
+    "p3: khối '1' chưa được khai báo",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "UNKNOWN_SOLID_ID",
+    "p3: khối '1' chưa được khai báo",
+    null
+   ]
+  },
+  "flags": [
+   "a3:FALSE_REFUSE(UNKNOWN_SOLID_ID)",
+   "pl:FALSE_REFUSE(UNKNOWN_SOLID_ID)",
+   "a4:FALSE_REFUSE(UNKNOWN_SOLID_ID)"
+  ]
+ },
+ {
+  "probe": "F1.pyr-1_scope_violation",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "UNKNOWN_SOLID_ID",
+    "p3: khối '1' chưa được khai báo",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "UNKNOWN_SOLID_ID",
+    "p3: khối '1' chưa được khai báo",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "UNKNOWN_SOLID_ID",
+    "p3: khối '1' chưa được khai báo",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F2.perp_solid_id_s2_ops_s1_q",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "PLANE_NOT_IN_QUOTE",
+    "rr: mặt phẳng ['A', 'B', 'C'] không được nhắc trong 'SA vuông góc với (ABCD).'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "PLANE_NOT_IN_QUOTE",
+    "rr: mặt phẳng ['A', 'B', 'C'] không được nhắc trong 'SA vuông góc với (ABCD).'",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "PLANE_NOT_IN_QUOTE",
+    "rr: mặt phẳng ['A', 'B', 'C'] không được nhắc trong 'SA vuông góc với (ABCD).'",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F2.perp_solid_a_s2_ops_s1",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "PLANE_NOT_IN_QUOTE",
+    "rr: mặt phẳng ['A', 'B', 'C'] không được nhắc trong 'SA vuông góc với (ABCD).'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "PLANE_NOT_IN_QUOTE",
+    "rr: mặt phẳng ['A', 'B', 'C'] không được nhắc trong 'SA vuông góc với (ABCD).'",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "PLANE_NOT_IN_QUOTE",
+    "rr: mặt phẳng ['A', 'B', 'C'] không được nhắc trong 'SA vuông góc với (ABCD).'",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F2.shared_vertices_sides_s2_pair_s1",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "SERVED",
+    null,
+    "",
+    {
+     "v": "4"
+    }
+   ],
+   "pl": [
+    "SERVED",
+    null,
+    "",
+    {
+     "v": "4"
+    }
+   ],
+   "a4": [
+    "SERVED",
+    null,
+    "",
+    {
+     "v": "4"
+    }
+   ]
+  },
+  "flags": [
+   "a3:SERVED!",
+   "pl:SERVED!",
+   "a4:SERVED!"
+  ]
+ },
+ {
+  "probe": "F2.perp_valid_control",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "SERVED",
+    null,
+    "",
+    {
+     "v": "4"
+    }
+   ],
+   "pl": [
+    "SERVED",
+    null,
+    "",
+    {
+     "v": "4"
+    }
+   ],
+   "a4": [
+    "SERVED",
+    null,
+    "",
+    {
+     "v": "4"
+    }
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F3.highlight_s2_refs_s1",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "h: đỉnh 'S' không thuộc phạm vi 's2'",
+    null
+   ],
+   "pl": [
+    "SERVED",
+    null,
+    "",
+    {
+     "v": "4"
+    }
+   ],
+   "a4": [
+    "SERVED",
+    null,
+    "",
+    {
+     "v": "4"
+    }
+   ]
+  },
+  "flags": [
+   "pl:SERVED!",
+   "a4:SERVED!"
+  ]
+ },
+ {
+  "probe": "F3.construct_object_parent_neq_target",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "SERVED",
+    null,
+    "",
+    {
+     "v": "4"
+    }
+   ],
+   "pl": [
+    "SERVED",
+    null,
+    "",
+    {
+     "v": "4"
+    }
+   ],
+   "a4": [
+    "SERVED",
+    null,
+    "",
+    {
+     "v": "4"
+    }
+   ]
+  },
+  "flags": [
+   "a3:SERVED!",
+   "pl:SERVED!",
+   "a4:SERVED!"
+  ]
+ },
+ {
+  "probe": "F3.section_goal_target_other_solid",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "UNDERDETERMINED_POINT",
+    "không lời gọi nào xác định vị trí của ['T'] (thiếu quan hệ vuông góc / trung điểm / khối đều)",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_RELATION",
+    "rel_m_on_sa: quan hệ containment chưa diễn đạt được trong TypedFact",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_RELATION",
+    "rel_m_on_sa: quan hệ containment chưa diễn đạt được trong TypedFact",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F3.derived_goal_target_solid_id",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "UNDERDETERMINED_POINT",
+    "không lời gọi nào xác định vị trí của ['T'] (thiếu quan hệ vuông góc / trung điểm / khối đều)",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_RELATION",
+    "rel_m_on_sa: quan hệ containment chưa diễn đạt được trong TypedFact",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_RELATION",
+    "rel_m_on_sa: quan hệ containment chưa diễn đạt được trong TypedFact",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F4.cone_apex_other",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "SERVED",
+    null,
+    "",
+    {
+     "m_vol": "12π",
+     "m_lat": "15π",
+     "m_axial_area": "12",
+     "m_ratio": "1/8",
+     "m_frustum": "21π/2"
+    }
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cone_main: khối cone chưa có trên planner",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cone_main: khối cone chưa có trên planner",
+    null
+   ]
+  },
+  "flags": [
+   "a3:SERVED!"
+  ]
+ },
+ {
+  "probe": "F4.cone_perp_contradicting",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "SERVED",
+    null,
+    "",
+    {
+     "m_vol": "12π",
+     "m_lat": "15π",
+     "m_axial_area": "12",
+     "m_ratio": "1/8",
+     "m_frustum": "21π/2"
+    }
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cone_main: khối cone chưa có trên planner",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cone_main: khối cone chưa có trên planner",
+    null
+   ]
+  },
+  "flags": [
+   "a3:SERVED!"
+  ]
+ },
+ {
+  "probe": "F4.cone_highlight_other_refs",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "SERVED",
+    null,
+    "",
+    {
+     "m_vol": "12π",
+     "m_lat": "15π",
+     "m_axial_area": "12",
+     "m_ratio": "1/8",
+     "m_frustum": "21π/2"
+    }
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cone_main: khối cone chưa có trên planner",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cone_main: khối cone chưa có trên planner",
+    null
+   ]
+  },
+  "flags": [
+   "a3:SERVED!"
+  ]
+ },
+ {
+  "probe": "F5.curved_target_notation_alias",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "ADAPTER_INTERNAL_ERROR",
+    "KeyError: 'S.O'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cone_main: khối cone chưa có trên planner",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cone_main: khối cone chưa có trên planner",
+    null
+   ]
+  },
+  "flags": [
+   "a3:INTERNAL"
+  ]
+ },
+ {
+  "probe": "F5.curved_section_id_int",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "ADAPTER_INTERNAL_ERROR",
+    "KeyError: '5'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cone_main: khối cone chưa có trên planner",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cone_main: khối cone chưa có trên planner",
+    null
+   ]
+  },
+  "flags": [
+   "a3:INTERNAL"
+  ]
+ },
+ {
+  "probe": "F5.curved_section_id_unknown",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "ADAPTER_INTERNAL_ERROR",
+    "KeyError: 'nope'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cone_main: khối cone chưa có trên planner",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cone_main: khối cone chưa có trên planner",
+    null
+   ]
+  },
+  "flags": [
+   "a3:INTERNAL"
+  ]
+ },
+ {
+  "probe": "F5.poly_target_point_dict",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "ADAPTER_INTERNAL_ERROR",
+    "AttributeError: 'dict' object has no attribute 'strip'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT",
+    "x: mục tiêu measurement/distance chưa có ánh xạ",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "INVALID_MATH_GOAL",
+    "x: mục tiêu distance thiếu toán hạng hợp lệ",
+    null
+   ]
+  },
+  "flags": [
+   "a3:INTERNAL"
+  ]
+ },
+ {
+  "probe": "F6.dev10_base",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_prism: đề không nói thiết diện của ABC.A'B'C' với mặt phẳng qua M song song (ABC)",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_prism: đề không nói thiết diện của ABC.A'B'C' với mặt phẳng qua M song song (ABC)",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_prism: đề không nói thiết diện của ABC.A'B'C' với mặt phẳng qua M song song (ABC)",
+    null
+   ]
+  },
+  "flags": [
+   "a3:FALSE_REFUSE(SOURCE_OBJECT_MISMATCH)",
+   "pl:FALSE_REFUSE(SOURCE_OBJECT_MISMATCH)",
+   "a4:FALSE_REFUSE(SOURCE_OBJECT_MISMATCH)"
+  ]
+ },
+ {
+  "probe": "F6.area_target_solid_notation",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "UNKNOWN_SOLID_ID",
+    "m_prism_sec_area: khối \"ABC.A'B'C'\" không có",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "UNKNOWN_SOLID_ID",
+    "m_prism_sec_area: khối \"ABC.A'B'C'\" không có",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "UNKNOWN_SOLID_ID",
+    "m_prism_sec_area: khối \"ABC.A'B'C'\" không có",
+    null
+   ]
+  },
+  "flags": [
+   "a3:FALSE_REFUSE(UNKNOWN_SOLID_ID)",
+   "pl:FALSE_REFUSE(UNKNOWN_SOLID_ID)",
+   "a4:FALSE_REFUSE(UNKNOWN_SOLID_ID)"
+  ]
+ },
+ {
+  "probe": "F6.area_target_solid_id",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_prism: đề không nói thiết diện của ABC.A'B'C' với mặt phẳng qua M song song (ABC)",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_prism: đề không nói thiết diện của ABC.A'B'C' với mặt phẳng qua M song song (ABC)",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_prism: đề không nói thiết diện của ABC.A'B'C' với mặt phẳng qua M song song (ABC)",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F6.volume_goal_notation",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "SERVED",
+    null,
+    "",
+    {
+     "v": "4"
+    }
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT",
+    "v: mục tiêu measurement/volume chưa có ánh xạ",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT",
+    "v: mục tiêu measurement/volume chưa có ánh xạ",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F7.residual_parent_other",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "UNDERDETERMINED_POINT",
+    "không lời gọi nào xác định vị trí của ['T'] (thiếu quan hệ vuông góc / trung điểm / khối đều)",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_CUT_EDGES_NOT_STATED",
+    "sim_sub: thiết diện sec_alpha không nêu các cạnh bị cắt — bridge không suy ra cạnh nào bị cắt",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_alpha: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F7.residual_valid_control",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "UNDERDETERMINED_POINT",
+    "không lời gọi nào xác định vị trí của ['T'] (thiếu quan hệ vuông góc / trung điểm / khối đều)",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_CUT_EDGES_NOT_STATED",
+    "sim_sub: thiết diện sec_alpha không nêu các cạnh bị cắt — bridge không suy ra cạnh nào bị cắt",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_alpha: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "F7.ratio_cross_parent_valid",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "UNDERDETERMINED_POINT",
+    "không lời gọi nào xác định vị trí của ['T'] (thiếu quan hệ vuông góc / trung điểm / khối đều)",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_CUT_EDGES_NOT_STATED",
+    "sim_sub: thiết diện sec_alpha không nêu các cạnh bị cắt — bridge không suy ra cạnh nào bị cắt",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_alpha: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ]
+  },
+  "flags": []
+ }
+]

@@ -1,0 +1,559 @@
+[
+ {
+  "probe": "S8.sup_M_control",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "REQUEST_NOT_ANSWERED",
+    "đề còn yêu cầu ['độ dài MB'] mà không lời gọi nào trả lời — không trả lời một phần rồi coi như xong",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "REQUEST_NOT_ANSWERED",
+    "đề còn yêu cầu ['độ dài MB'] mà không lời gọi nào trả lời — không trả lời một phần rồi coi như xong",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "REQUEST_NOT_ANSWERED",
+    "đề còn yêu cầu ['độ dài MB'] mà không lời gọi nào trả lời — không trả lời một phần rồi coi như xong",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "S8.sup_M_frame_fallback_control",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "COORDINATE_FRAME_DISCONNECTED",
+    "s1: hệ tọa độ 'f1' tách rời hệ tọa độ gốc 'root'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+    "s1: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+    "s1: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "S8.sup_M_s2_identity_path",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "mm: toán hạng 'M' không thuộc phạm vi 's2'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "mm: toán hạng 'M' không thuộc phạm vi 's2'",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "mm: toán hạng 'M' không thuộc phạm vi 's2'",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "S8.sup_M_s2_fallback_path",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "COORDINATE_FRAME_DISCONNECTED",
+    "s1: hệ tọa độ 'f1' tách rời hệ tọa độ gốc 'root'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+    "s1: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+    "s1: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "S8.sup_M_s2_goal_level_fallback",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "mm: đỉnh 'M' không thuộc phạm vi 's2'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+    "s1: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+    "s1: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "S8.sup_M_s1_fallback_control",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "COORDINATE_FRAME_DISCONNECTED",
+    "s1: hệ tọa độ 'f1' tách rời hệ tọa độ gốc 'root'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+    "s1: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+    "s1: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "S8.sup_M_containment_whole_s2_fallback",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "COORDINATE_FRAME_DISCONNECTED",
+    "s1: hệ tọa độ 'f1' tách rời hệ tọa độ gốc 'root'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+    "s1: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+    "s1: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "S8.sup_M_containment_whole_s2_identity",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "rc: toán hạng 'M' không thuộc phạm vi 's2'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "rc: toán hạng 'M' không thuộc phạm vi 's2'",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "rc: toán hạng 'M' không thuộc phạm vi 's2'",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "M.str_segment_target_s1_fallback",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "COORDINATE_FRAME_DISCONNECTED",
+    "s1: hệ tọa độ 'f1' tách rời hệ tọa độ gốc 'root'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+    "s1: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+    "s1: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "B.demo5_base",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_hl: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_hl: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_hl: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ]
+  },
+  "flags": [
+   "a3:FALSE_REFUSE(SOURCE_OBJECT_MISMATCH)",
+   "pl:FALSE_REFUSE(SOURCE_OBJECT_MISMATCH)",
+   "a4:FALSE_REFUSE(SOURCE_OBJECT_MISMATCH)"
+  ]
+ },
+ {
+  "probe": "K.demo5_ratio_target_solid_id_ghost",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_hl: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_hl: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_hl: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "K.demo5_ratio_target_solid_ghost",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_hl: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_hl: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_hl: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "K.demo5_ratio_with_cut_solid",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_hl: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_hl: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_hl: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "K.demo5_highlight_with_derived_solid_id_ghost",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_hl: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_hl: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "sec_hl: đề không nói thiết diện của S.ABCD với mặt phẳng qua M song song (ABC)",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "C.two_cyl_underscore_control",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "ENGINE_IR_INVALID",
+    "IR khối cong sinh bởi Adapter /3 không qua thẩm định: Số lượng khai báo bộ nhớ vượt quá giới hạn (32).",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cyl: khối cylinder chưa có trên planner",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cyl: khối cylinder chưa có trên planner",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "C.two_cyl_hyphen",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "ENGINE_IR_INVALID",
+    "IR khối cong sinh bởi Adapter /3 không qua thẩm định: Số lượng khai báo bộ nhớ vượt quá giới hạn (32).",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cyl: khối cylinder chưa có trên planner",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cyl: khối cylinder chưa có trên planner",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "C.cone_single_hyphen_id",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "SERVED",
+    null,
+    "",
+    {
+     "m_vol": "12π",
+     "m_lat": "15π",
+     "m_axial_area": "12",
+     "m_ratio": "1/8",
+     "m_frustum": "21π/2"
+    }
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cone-main: khối cone chưa có trên planner",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cone-main: khối cone chưa có trên planner",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "C.cone_single_multi_hyphen_id",
+  "expect": "POS",
+  "got": {
+   "a3": [
+    "SERVED",
+    null,
+    "",
+    {
+     "m_vol": "12π",
+     "m_lat": "15π",
+     "m_axial_area": "12",
+     "m_ratio": "1/8",
+     "m_frustum": "21π/2"
+    }
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "S-O-cone: khối cone chưa có trên planner",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "S-O-cone: khối cone chưa có trên planner",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "C.cone_shared_vertices_apexes_claimed_equal",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "SERVED",
+    null,
+    "",
+    {
+     "m_vol": "12π",
+     "m_lat": "15π",
+     "m_axial_area": "12",
+     "m_ratio": "1/8",
+     "m_frustum": "21π/2"
+    }
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cone_main: khối cone chưa có trên planner",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cone_main: khối cone chưa có trên planner",
+    null
+   ]
+  },
+  "flags": [
+   "a3:SERVED!"
+  ]
+ },
+ {
+  "probe": "C.cone_containment_whole_main_member_T",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "rc: 'T' chỉ là đỉnh của khối khác, không thuộc 'cone_main'",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "rc: 'T' chỉ là đỉnh của khối khác, không thuộc 'cone_main'",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH",
+    "rc: 'T' chỉ là đỉnh của khối khác, không thuộc 'cone_main'",
+    null
+   ]
+  },
+  "flags": []
+ },
+ {
+  "probe": "C.cone_relation_quote_not_in_text",
+  "expect": "NEG",
+  "got": {
+   "a3": [
+    "SERVED",
+    null,
+    "",
+    {
+     "m_vol": "12π",
+     "m_lat": "15π",
+     "m_axial_area": "12",
+     "m_ratio": "1/8",
+     "m_frustum": "21π/2"
+    }
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cone_main: khối cone chưa có trên planner",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED",
+    "cone_main: khối cone chưa có trên planner",
+    null
+   ]
+  },
+  "flags": [
+   "a3:SERVED!"
+  ]
+ }
+]
