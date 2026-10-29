@@ -1,0 +1,18 @@
+2c84558d
+# T2 rerun of the build step: dist/assets is ACL-locked by an earlier Codex sandbox; vitest 1417/1417 and tsc -b already passed in unified-t2.log
+tsc exit 0
+vite v6.4.3 building for production...
+transforming...
+✓ 101 modules transformed.
+rendering chunks...
+computing gzip size...
+../.superpowers/f2/dist-t2/index.html                     0.60 kB │ gzip:   0.42 kB
+../.superpowers/f2/dist-t2/assets/index-oJe9R-iu.css     57.60 kB │ gzip:  10.46 kB
+../.superpowers/f2/dist-t2/assets/index-ChjMeNFQ.js   1,157.42 kB │ gzip: 299.33 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 2.24s
+vite exit 0

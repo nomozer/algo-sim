@@ -1,0 +1,29 @@
+2c84558d
+
+> algo-sim-frontend@0.1.0 test:domain:geometry
+> vitest run src/simulations/domains/geometry/
+
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/w3-f2-ratio-projection-language-grounding/frontend
+
+
+ Test Files  44 passed (44)
+      Tests  872 passed (872)
+   Start at  20:17:43
+   Duration  4.09s (transform 5.93s, setup 1.43s, import 14.76s, tests 8.57s, environment 6ms)
+
+exit 0
+
+> algo-sim-frontend@0.1.0 test:domain:semantic
+> vitest run src/simulations/domains/semantic/
+
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/w3-f2-ratio-projection-language-grounding/frontend
+
+
+ Test Files  1 passed (1)
+      Tests  24 passed (24)
+   Start at  20:17:48
+   Duration  241ms (transform 48ms, setup 36ms, import 33ms, tests 9ms, environment 0ms)
+
+exit 0

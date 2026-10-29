@@ -1,0 +1,17 @@
+{
+  "candidate": "2c84558d901134c78c3781f257047fe3ac09d7f2",
+  "product_commit": "9772ea3750a84f76fbee1e83057e919a5ef63e50",
+  "measured_system_hash": ["f0521dcd2423a9e67421fdf8490de224ab115ee3d1561160aad28e35c40a9504", 118],
+  "live_provider_calls": 0,
+  "order_note": "Frozen before T0-T2 on purpose: the previous cycle ran T0 before the freeze and every freeze-identity test was red by construction (verification/solid-scope-t0-impact-fail.log).",
+  "T0": {"command": "node frontend/scripts/impact.mjs --base main (executed, not --dry)", "verdict": "IMPACT_GATE_PASS",
+         "pytest": "12854 passed, 7 skipped, 2 deselected, 15 xfailed, 0 failed", "vitest": "3 passed", "log": "tier-t0.log", "log_sha256": "54b02f46719b881d908314f7ca494535d865501252a2bf99c3aa01ae7385039e"},
+  "T1": {"commands": ["npm run test:domain:geometry", "npm run test:domain:semantic"], "verdict": "DOMAIN_GATE_PASS",
+         "results": ["44 files / 872 tests passed", "1 file / 24 tests passed"],
+         "backend_scope_suites": "compatibility-tests.log: 788 passed, 0 failed (unified, negative/tamper, mutations, geometry, Bridge/Adapter, F1/F2)",
+         "log": "tier-t1.log", "log_sha256": "cc0e8e7642676e3afa68f3bd65e7088df999ea96f3a706e34bbc88ce65de6061"},
+  "T2": {"command": "npm run test:wave", "verdict": "WAVE_GATE_PASS",
+         "results": "vitest 83 files / 1417 passed; tsc -b exit 0; vite build OK",
+         "environment_note": "first run's vite step failed EPERM removing frontend/dist/assets (ACL from an earlier Codex sandbox, not product); typecheck and build re-run with --outDir .superpowers/f2/dist-t2, locked dir untouched",
+         "logs": ["tier-t2.log", "tier-t2-build.log"], "log_sha256": ["64499b18e62a060db511816377c4a545c5ff88657d9c62ba58b10e16da9bb3bc", "becbb739b403e52954e62babd87bccfac87600d4d8bc9f29ad5e82e18f0df6b2"]}
+}

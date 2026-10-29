@@ -1,0 +1,682 @@
+2c84558d
+T0 IMPACT GATE
+
+Đã đổi (153):
+  - backend/app/ai/adapter3_simulation.py
+  - backend/app/simulation/geometry_functions/registry.py
+  - backend/app/simulation/geometry_functions/typed_fact_next.py
+  - backend/app/simulation/geometry_functions/typed_fact_next_bridge.py
+  - backend/scripts/export_hybrid_preview_fixtures.py
+  - backend/tests/geometry/test_adapter3_fallback_safety.py
+  - backend/tests/geometry/test_holdout_failure_repair.py
+  - backend/tests/geometry/test_hybrid_backend_integration.py
+  - backend/tests/geometry/test_premise_scope_recovery.py
+  - backend/tests/geometry/test_ratio_projection_language.py
+  - backend/tests/geometry/test_typedfactnext_planner_bridge.py
+  - backend/tests/geometry/test_unified_solid_scope.py
+  … và 141 file nữa
+
+Lý do chọn:
+  backend/app/ai/adapter3_simulation.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/app/simulation/geometry_functions/registry.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/app/simulation/geometry_functions/typed_fact_next.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/app/simulation/geometry_functions/typed_fact_next_bridge.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/scripts/export_hybrid_preview_fixtures.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/tests/geometry/test_adapter3_fallback_safety.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/tests/geometry/test_holdout_failure_repair.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/tests/geometry/test_hybrid_backend_integration.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/tests/geometry/test_premise_scope_recovery.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/tests/geometry/test_ratio_projection_language.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/tests/geometry/test_typedfactnext_planner_bridge.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/tests/geometry/test_unified_solid_scope.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/tests/geometry/test_w3_f1_cross_sentence_plane_grounding.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/tests/geometry/test_wave3a_adapter3_integration.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/tests/geometry/test_wave3a_volume_reasoning.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  docs/AI_CONTEXT_BUNDLE.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/CODE_INDEX.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/CURRENT_STATE.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/EVIDENCE_INDEX.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/OPEN_ISSUES.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/adapter3-compatibility-results.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/adapter3-fallback-green.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/adapter3-fallback-mutation-results.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/adapter3-fallback-red.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/adapter3-fallback-safety-amendment.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/architecture-decision.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/baseline-audit.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/candidate_divergence.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/claude-final-handoff.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/codex-to-claude-takeover.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/correction-addendum.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/capability-intake/inputs/development.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/capability-intake/inputs/oracle.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/capability-intake/red-before.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/intake/inputs/development.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/intake/inputs/oracle.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/intake/red-before.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/unicode-intake/baseline-normalized-language-controls.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/unicode-intake/inputs/development.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/unicode-intake/inputs/oracle.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/unicode-intake/red-before.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/final-handoff.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/final-report.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/final-safety-gates.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/handoff.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/inputs/candidate_divergence.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/inputs/development.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/inputs/oracle.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/inputs/recovery-supplementary.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/plan.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/report.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/green-after.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/incidence-repair-after.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/red-before.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/red-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/scope-repair-after.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/tamper-results.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/tamper-retest-after.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/review-safety-recovery.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/review-solid-scope.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/review.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/run.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/safety-recovery-plan.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/scope-validation-design.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/solid-scope-final-safety-gates.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/solid-scope-recovery-report.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/solid-scope-safety-gates.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/takeover.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/tools/adapter3_fallback_evidence.py
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/tools/capture_safety_stop.py
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/tools/evaluate_development.py
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/tools/verify_adapter3_candidate.py
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/tools/verify_after_adapter3.py
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/tools/verify_after_solid_scope.py
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/architecture-decision.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/cache.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/census-probe-output.txt
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/compatibility-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/compatibility.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/frozen-evaluation-candidate.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/gates.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/green.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/green.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/mutations.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/preregistration.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/publication.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/red.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/red.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/solid-scope-census.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/solid-scope-entrypoint-matrix.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/test-adaptation-amendment.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/tools/census_payloads.py
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/tools/census_probe.py
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/tools/gates_and_replay.py
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/tools/record_phase.py
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/verification-41-fixtures.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/wave3-post-feedback-regression.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-41-fixtures.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-assertion-correction-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-baseline-scope-reproduction.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-cache.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-compat-repair-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-compat-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-compatibility-amendment.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-container-red-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-final-compat-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-green-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-impact.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-producer-red-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-publication.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-red-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-t2.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/baseline-foreign-scope-reproduction.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/baseline-normalized-language-controls.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/claude-solid-scope-red-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/frozen-adapter3-evaluation-candidate.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/frozen-solid-scope-evaluation-candidate.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/full-t3-solid-scope/full-t3.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/full-t3-solid-scope/receipt.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/full-t3/full-t3.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/gate-b-independent-review.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/pre-freeze-tiers.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/preregistration.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/prior-w3f1-evaluation-candidate.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-checkpoint-integrity.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-checkpoint-verification.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-compatibility-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-docs-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-initial-targeted-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-red-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-stop-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/review-solid-scope-repro.txt
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/safety-recovery.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/scope-and-evidence.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/solid-scope-41-fixtures.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/solid-scope-cache.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/solid-scope-compat-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/solid-scope-final-41-fixtures.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/solid-scope-final-cache.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/solid-scope-final-compat-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/solid-scope-final-green-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/solid-scope-green-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/solid-scope-t0-impact-fail.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/stop-condition.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/t1.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/tiers-after-recovery.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/tiers.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/wave3-post-feedback-regression-after-adapter3.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/wave3-post-feedback-regression-after-solid-scope-final.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/wave3-post-feedback-regression-after-solid-scope.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-unified-solid-scope/README.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-unified-solid-scope/candidate_divergence.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+
+Đã chọn: 2 đơn vị — 1 mẫu vitest + pytest
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/w3-f2-ratio-projection-language-grounding/frontend
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  20:07:52
+   Duration  287ms (transform 39ms, setup 39ms, import 22ms, tests 29ms, environment 0ms)
+
+........................................................................ [  0%]
+........................................................................ [  1%]
+........................................................................ [  1%]
+........................................................................ [  2%]
+........................................................................ [  2%]
+........................................................................ [  3%]
+........................................................................ [  3%]
+........................................................................ [  4%]
+........................................................................ [  5%]
+........................................................................ [  5%]
+........................................................................ [  6%]
+........................................................................ [  6%]
+........................................................................ [  7%]
+........................................................................ [  7%]
+........................................................................ [  8%]
+........................................................................ [  8%]
+........................................................................ [  9%]
+........................................................................ [ 10%]
+........................................................................ [ 10%]
+........................................................................ [ 11%]
+........................................................................ [ 11%]
+........................................................................ [ 12%]
+........................................................................ [ 12%]
+........................................................................ [ 13%]
+........................................................................ [ 13%]
+........................................................................ [ 14%]
+........................................................................ [ 15%]
+........................................................................ [ 15%]
+........................................................................ [ 16%]
+........................................................................ [ 16%]
+....................................................................xx.. [ 17%]
+........................................................................ [ 17%]
+........................................................................ [ 18%]
+........................................................................ [ 19%]
+........................................................................ [ 19%]
+........................................................................ [ 20%]
+........................................................................ [ 20%]
+........................................................................ [ 21%]
+........................................................................ [ 21%]
+........................................................................ [ 22%]
+........................................................................ [ 22%]
+........................................................................ [ 23%]
+........................................................................ [ 24%]
+........................................................................ [ 24%]
+........................................................................ [ 25%]
+........................................................................ [ 25%]
+........................................................................ [ 26%]
+........................................................................ [ 26%]
+........................................................................ [ 27%]
+...xxxx................................................................. [ 27%]
+........................................................................ [ 28%]
+...............x........................................................ [ 29%]
+........................................................................ [ 29%]
+........................................................................ [ 30%]
+........................................................................ [ 30%]
+...............................................x........................ [ 31%]
+........................................................................ [ 31%]
+........................................................................ [ 32%]
+........................................................................ [ 32%]
+........................................................................ [ 33%]
+........................................................................ [ 34%]
+........................................................................ [ 34%]
+........................................................................ [ 35%]
+........................................................................ [ 35%]
+........................................................................ [ 36%]
+........................................................................ [ 36%]
+........................................................................ [ 37%]
+........................................................................ [ 38%]
+........................................................................ [ 38%]
+...........................................................x............ [ 39%]
+........................................................................ [ 39%]
+........................................................................ [ 40%]
+........................................................................ [ 40%]
+........................................................................ [ 41%]
+........................................................................ [ 41%]
+........................................................................ [ 42%]
+........................................................................ [ 43%]
+........................................................................ [ 43%]
+........................................................................ [ 44%]
+........................................................................ [ 44%]
+........................................................................ [ 45%]
+........................................................................ [ 45%]
+........................................................................ [ 46%]
+........................................................................ [ 46%]
+........................................................................ [ 47%]
+........................................................................ [ 48%]
+........................................................................ [ 48%]
+........................................................................ [ 49%]
+........................................................................ [ 49%]
+........................................................................ [ 50%]
+........................................................................ [ 50%]
+........................................................................ [ 51%]
+........................................................................ [ 52%]
+........................................................................ [ 52%]
+........................................................................ [ 53%]
+........................................................................ [ 53%]
+........................................................................ [ 54%]
+........................................................................ [ 54%]
+........................................................................ [ 55%]
+........................................................................ [ 55%]
+........................................................................ [ 56%]
+........................................................................ [ 57%]
+........................................................................ [ 57%]
+........................................................................ [ 58%]
+........................................................................ [ 58%]
+........................................................................ [ 59%]
+........................................................................ [ 59%]
+........................................................................ [ 60%]
+........................................................................ [ 60%]
+........................................................................ [ 61%]
+........................................................................ [ 62%]
+........................................................................ [ 62%]
+........................................................................ [ 63%]
+........................................................................ [ 63%]
+........................................................................ [ 64%]
+........................................................................ [ 64%]
+........................................................................ [ 65%]
+........................................................................ [ 65%]
+........................................................................ [ 66%]
+........................................................................ [ 67%]
+........................................................................ [ 67%]
+........................................................................ [ 68%]
+.........................x.............................................. [ 68%]
+........................................................................ [ 69%]
+........................................................................ [ 69%]
+........................................................................ [ 70%]
+........................................................................ [ 71%]
+........................................................................ [ 71%]
+........................................................................ [ 72%]
+........................................................................ [ 72%]
+........................................................................ [ 73%]
+........................................................................ [ 73%]
+........................................................................ [ 74%]
+........................................................................ [ 74%]
+........................................................................ [ 75%]
+........................................................................ [ 76%]
+........................................................................ [ 76%]
+..........................................................xxxxx......... [ 77%]
+........................................................................ [ 77%]
+..................s.ss....s.ss.......................................... [ 78%]
+........................................................................ [ 78%]
+........................................................................ [ 79%]
+........................................................................ [ 79%]
+........................................................................ [ 80%]
+........................................................................ [ 81%]
+........................................................................ [ 81%]
+........................................................................ [ 82%]
+........................................................................ [ 82%]
+........................................................................ [ 83%]
+........................................................................ [ 83%]
+........................................................................ [ 84%]
+........................................................................ [ 84%]
+........................................................................ [ 85%]
+........................................................................ [ 86%]
+........................................................................ [ 86%]
+........................................................................ [ 87%]
+........................................................................ [ 87%]
+........................................................................ [ 88%]
+........................................................................ [ 88%]
+.....................s.................................................. [ 89%]
+........................................................................ [ 90%]
+........................................................................ [ 90%]
+........................................................................ [ 91%]
+........................................................................ [ 91%]
+........................................................................ [ 92%]
+........................................................................ [ 92%]
+........................................................................ [ 93%]
+........................................................................ [ 93%]
+........................................................................ [ 94%]
+........................................................................ [ 95%]
+........................................................................ [ 95%]
+........................................................................ [ 96%]
+........................................................................ [ 96%]
+........................................................................ [ 97%]
+........................................................................ [ 97%]
+........................................................................ [ 98%]
+........................................................................ [ 98%]
+........................................................................ [ 99%]
+............................................................             [100%]
+============================== warnings summary ===============================
+..\..\..\..\backend\.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+12854 passed, 7 skipped, 2 deselected, 15 xfailed, 1 warning in 571.53s (0:09:31)
+
+Kết quả: IMPACT_GATE_PASS
+Thời gian: 577.1s
+
+⚠️ IMPACT_GATE_PASS chỉ nói về tập vừa chọn. Nó KHÔNG thay được gate
+   sản phẩm đầy đủ (T3) — xem docs/TEST_TIERS.md.
+exit 0
