@@ -1,0 +1,61 @@
+{
+  "gate": "D",
+  "head": "6a208e131b51d9a5028320bd9abc25adad8ed3f3",
+  "product_commit": "717f8b2b1d284e3894af65190b13ba3619d5aff0",
+  "live_provider_calls": 0,
+  "status": "PRE_FREEZE_COMPATIBILITY_PASS; PUBLICATION_BLOCKED_PENDING_OWNER_EXCEPTION",
+  "overall_pass": false,
+  "cic_d1": "PASS: test_malformed_distance_target_is_refused[target8] and all 16 locked params (gate-d-locked-v2.log)",
+  "locked_v2_targeted": {
+    "summary": "232 passed in 5.99s",
+    "files": "backend/tests/geometry/test_typed_fact_next_v2*.py (5 files)",
+    "log": "gate-d-locked-v2.log",
+    "log_sha256_lf": "4b8cd4b28e7cecff8b1c24acb74421671c3a82423a59f0effefd9c987e5a5908"
+  },
+  "full_backend_pytest": {
+    "summary": "11 failed, 13427 passed, 7 skipped, 2 deselected, 15 xfailed, 2 warnings in 663.02s (0:11:03)",
+    "tree_clean_during_run": true,
+    "failed_all_PENDING_NEW_FREEZE": [
+      "tests/geometry/test_analyze_failure_cluster_diagnosis.py::test_tien_kiem_kho",
+      "tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[arbitrary-feature-branch-xyz]",
+      "tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[feat/rectangular-base-pyramid-compiler]",
+      "tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[hotfix/test-isolation-123]",
+      "tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[main]",
+      "tests/geometry/test_branch_independent_harness.py::test_precheck_accepts_detached_head[precheck]",
+      "tests/geometry/test_docs_information_architecture.py::test_inv_20_candidate_and_cache_verify_only",
+      "tests/geometry/test_docs_test_telemetry.py::test_inv_05_candidate_and_cache_verify_only",
+      "tests/geometry/test_hybrid_backend_integration.py::test_version_constants_surface_fingerprints_and_historical_receipt_preservation",
+      "tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI",
+      "tests/semantic_program/test_evaluation_candidate.py::test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang"
+    ],
+    "identical_failures_at_5e44d5da": true,
+    "previous_dirty_tree_failure": "test_holdout_readiness::test_bao_cao_da_sinh_va_KHONG_TROI passes on the clean tree",
+    "real_product_regressions": [],
+    "committed_digest": "gate-d-full-backend-pytest.summary.txt",
+    "raw_log": {
+      "path": ".superpowers/f2/cic-d1-full.log (ignored, not committed: contains a pytest thread-exception traceback)",
+      "sha256_bytes": "08c96390accc63ac0f9b3915ac1ea9626760d0725a972830f541676e7213b0ee"
+    }
+  },
+  "fixtures": {
+    "set": "docs/evaluation/geometry/runs/hybrid-v2-backend-generalization/fixtures-adapter-2-named-plane (current, referenced by tests)",
+    "verified": 41,
+    "problems": 0,
+    "receipt": "verification-41-fixtures.json",
+    "harness_note": "First checked the older sets fixtures-adapter-2 (12 problems) and fixtures-adapter-2-cache130 (4) by mistake; main 996f114b and 5e44d5da give the same problems on those older sets, so they are stale exports, not this product"
+  },
+  "cache": "NO_BUMP 130, identity lock MATCH (cache.log)",
+  "publication": {
+    "command": "backend/scripts/check_publication_safety.py --range 996f114b..HEAD",
+    "verdict": "BLOCKED",
+    "violations": 10,
+    "blobs": [
+      "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/gate-d-full-backend-pytest.log",
+      "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/gate-d-pre-patch-5e44d5da-identity-12.log"
+    ],
+    "introduced_by": "1490e3cd (this agent, previous layer)",
+    "this_cycle_adds_violations": false,
+    "proposal": "publication-exception-proposal.json",
+    "resolution": "Owner decision only (APPROVED_BY_USER on exact path/blob/sha256); history is not rewritten"
+  }
+}
