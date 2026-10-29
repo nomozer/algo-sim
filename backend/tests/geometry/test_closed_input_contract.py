@@ -292,7 +292,8 @@ def test_mandatory_mutants_are_killed(monkeypatch,name):
             F.mutate(monkeypatch,T,'_validate_goal_target',
                 'raise TypedFactNextValidationError("INVALID_MATH_GOAL", f"{goal.goal_id}: unexpected target keys {sorted(set(target) - allowed)}")','return')
     elif name=='s8_preflight':
-        oracle=lambda:test_legacy_constructed_ownership_precedes_capability('solid_id',False)
+        # CIC-D1 amendment (post-registration, n2-amendment.md): the superseded in-target form became schema-invalid
+        oracle=lambda:test_legacy_constructed_ownership_precedes_capability('goal',False)
         def mutate(): F.mutate(monkeypatch,B,'_bridge','scoped = _kiem_pham_vi_tien_de(p, solids)','scoped = []')
     elif name=='semantic_fallback':
         def semantic(*args,**kwargs):raise A.TuChoi('SOURCE_OBJECT_MISMATCH','semantic probe')

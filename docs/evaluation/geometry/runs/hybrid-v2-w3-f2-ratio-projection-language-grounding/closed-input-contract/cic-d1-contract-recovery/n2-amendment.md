@@ -36,6 +36,15 @@ Each negative proves the following:
 5. Adapter /3 `_shared_source_gate` raises instead of falling back to `LEGACY_SOURCE_AUTHORITY`.
 6. A `pyr2::M` that exists only in `pyr1` is never resolved globally.
 
+## Post-registration addendum (found by the first GREEN run, after the product edit)
+
+The mandatory mutant `s8_preflight` used the oracle `test_legacy_constructed_ownership_precedes_capability('solid_id', False)`.
+That is the superseded v1 in-target form, which is now `INVALID_MATH_GOAL` at the schema, so it cannot observe S8.
+The oracle now calls the still-valid `('goal', False)` form: goal-level `solid_id = pyr2`, expected
+`SOURCE_OBJECT_MISMATCH`, unchanged. This is an N2 reference and falls inside §4. It was missed at registration
+and is reported here, not folded silently into the registered SHA. The first GREEN attempt that showed it
+(`1 failed, 790 passed, 6 skipped`) is recorded in `green.json#attempts`.
+
 ## Also amended: `oracle_shape` (same suite, same reason)
 
 The `operand_shape` / `string_iteration` mutant oracle used `{solid_id: s1, segment: "SA"}`. Under the locked

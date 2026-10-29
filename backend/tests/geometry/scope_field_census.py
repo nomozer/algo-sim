@@ -71,7 +71,7 @@ def target_keys_in_source(source: str) -> set[str]:
                     return set().union(*(values(n) for n in node.elts)) if node.elts else set()
                 if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
                     if node.func.id == 'set' and node.args: return values(node.args[0])
-                    if node.func.id in returns_target or node.func.id == 'measurement_operands': return {target}
+                    if node.func.id in returns_target: return {target}
                 return set()
 
             for node in ast.walk(fn):

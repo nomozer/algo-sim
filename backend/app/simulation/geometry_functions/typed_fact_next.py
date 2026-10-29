@@ -194,8 +194,11 @@ def _validate_goal_target(goal) -> None:
         if not valid or shape.startswith("refs") and len(set(value)) != len(value):
             raise TypedFactNextValidationError("INVALID_MATH_GOAL", f"{goal.goal_id}: malformed operand {key!r}, expected {shape}")
     operands = set(target) - scopes
+    if operands and set(target) & scopes:   # CIC-D1 (locked V2 grammar): ownership is MathGoalSpec.solid_id, never a target key
+        raise TypedFactNextValidationError("INVALID_MATH_GOAL", f"{goal.goal_id}: scope keys {sorted(set(target) & scopes)} "
+                                           "beside target operands; declare the goal's solid_id")
     if operands:
-        valid = any(operands == set(a) for a in alternatives if not set(a) <= scopes)
+        valid = any(operands == set(a) for a in alternatives)
     else:
         valid = bool(set(target) & scopes) and any(set(a) <= scopes for a in alternatives)
     if not valid:
@@ -207,11 +210,6 @@ def measurement_scope(p, goal) -> str | None:
     sections = {s.section_id: s.target_solid_id for s in p.derived_sections}
     return (goal.solid_id or goal.target.get("solid_id") or resolve_solid_name(p, goal.target.get("solid"))
             or sections.get(goal.target.get("section_id")))
-
-
-def measurement_operands(goal) -> dict[str, Any]:
-    """Validated geometric operands, separated from the scope assertions already checked by the schema."""
-    return {k: v for k, v in goal.target.items() if k not in ("solid", "solid_id")}
 
 
 class ClosedNextModel(BaseModel):

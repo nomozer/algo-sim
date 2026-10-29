@@ -16,7 +16,6 @@ from .typed_fact_next import (
     _ARGS_LOI,
     _ARGS_GOC_VUONG,
     CONSTRUCTED_OUTPUTS,
-    measurement_operands,
     measurement_scope,
     _derived_parents,
     resolve_solid_name,
@@ -257,7 +256,7 @@ def _operand(t: dict[str, Any], key: str, n: int) -> list[str] | None:
 def _distance_question(g) -> dict[str, Any]:
     """`/2` distance target → the planner's existing question. Keys are exactly those the `/3` adapter already reads
     (`{point, plane}`, `{segment}`, `{line1, line2}`); anything else is refused, never guessed."""
-    t = measurement_operands(g)
+    t = g.target
     pts = partial(_operand, t)
     if set(t) == {"point", "plane"} and isinstance(t["point"], str) and (pl := pts("plane", 3)):
         return {"quantity": "distance", "points_a": [_ref(t["point"])], "points_b": pl}
@@ -282,7 +281,7 @@ def _angle_question(g) -> dict[str, Any]:
     """`/2` angle target → the planner's existing angle question (answer: cos² — exact). Keys are those `/3` reads
     (`{line, plane}`, `{line1, line2}`) plus `{plane1, plane2}` for the dihedral question the planner already has. Same
     arity rule as distance (`_operand`): a line is exactly two distinct labels, a plane three or more — never truncated."""
-    t = measurement_operands(g)
+    t = g.target
     pts = partial(_operand, t)
     if set(t) == {"line", "plane"} and (ln := pts("line", 2)) and (pl := pts("plane", 3)):
         return {"quantity": "angle", "points_a": ln, "points_b": pl}
