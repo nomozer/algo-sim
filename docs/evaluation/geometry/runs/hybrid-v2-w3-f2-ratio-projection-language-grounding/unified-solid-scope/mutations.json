@@ -1,0 +1,34 @@
+{
+  "head": "9772ea3750a84f76fbee1e83057e919a5ef63e50",
+  "product_commit": "9772ea3750a84f76fbee1e83057e919a5ef63e50",
+  "measured_system_hash": [
+    "f0521dcd2423a9e67421fdf8490de224ab115ee3d1561160aad28e35c40a9504",
+    118
+  ],
+  "live_provider_calls": 0,
+  "classification": "POST_FEEDBACK_DEVELOPMENT_REGRESSION",
+  "status": "PASS",
+  "killed": 17,
+  "source": "green.log (test_oracles_kill_unified_scope_mutants) + compatibility-tests.log",
+  "unified_mutants": [
+    "remove_declared_scope_existence",
+    "remove_cross_solid_comparison",
+    "drop_derived_solids",
+    "remove_nested_target_scope",
+    "remove_ratio_residual_refusal",
+    "remove_relation_sides",
+    "foreign_scope_to_first_solid",
+    "remove_goal_operand_ownership",
+    "bypass_curved_prevalidation"
+  ],
+  "retained_mutants": [
+    "remove_terminal_guard (semantic refusal → fallback)",
+    "remove_scope_guard",
+    "replace_scope_with_default",
+    "allow_global_lookup",
+    "bridge _pham_vi_khoi conflict / unknown",
+    "adapter3 _scoped_solid_name conflict / unknown (inner-or-scope)"
+  ],
+  "metamorphic": "test_metamorphic_foreign_scope_is_never_served (5 controls, every scope slot) and contradicting premise scope",
+  "method": "source mutation in an isolated monkeypatch namespace; oracle must hold on real code and fail on the mutant"
+}

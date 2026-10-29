@@ -1,0 +1,7 @@
+................................s.ss....s.ss............................ [ 93%]
+.....                                                                    [100%]
+=========================== short test summary info ===========================
+SKIPPED [2] backend\tests\geometry\test_unified_solid_scope.py:178: A3-DEV-02 has no residual_volume goal
+SKIPPED [2] backend\tests\geometry\test_unified_solid_scope.py:178: A3-DEV-09 has no residual_volume goal
+SKIPPED [2] backend\tests\geometry\test_unified_solid_scope.py:178: demo1-pyramid-derived-section has no residual_volume goal
+71 passed, 6 skipped in 2.27s

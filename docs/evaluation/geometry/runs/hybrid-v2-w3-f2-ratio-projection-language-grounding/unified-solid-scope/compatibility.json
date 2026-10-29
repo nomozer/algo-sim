@@ -1,0 +1,25 @@
+{
+  "head": "9772ea3750a84f76fbee1e83057e919a5ef63e50",
+  "product_commit": "9772ea3750a84f76fbee1e83057e919a5ef63e50",
+  "measured_system_hash": [
+    "f0521dcd2423a9e67421fdf8490de224ab115ee3d1561160aad28e35c40a9504",
+    118
+  ],
+  "live_provider_calls": 0,
+  "classification": "POST_FEEDBACK_DEVELOPMENT_REGRESSION",
+  "status": "PASS",
+  "tests_passed": 788,
+  "failed": 0,
+  "xfailed": 6,
+  "deselected": "version/freeze receipt check (needs new freeze; runs in Full T3)",
+  "fixtures_verified": 41,
+  "cache": "NO_BUMP 130, identity lock MATCH",
+  "publication": "PASS",
+  "versions": "Registry /21, Planner /18, engine /14, Adapter /3 and /4 tags, Bridge /1 /2 unchanged",
+  "test_adaptations": "test-adaptation-amendment.md",
+  "logs_sha256_lf": {
+    "compatibility-tests.log": "f6bf0a21872b4ae61a90c288900dbed9cabf51f0c7459ee0203c0621efe275d7",
+    "cache.log": "bb93a9e5f223d1304de98865873b4fe900f1b639b9b2a1c66bfa0981b63be5fb",
+    "publication.log": "92a292ff1a3afc1cbefd4408ad530dab59fa30c47b811f4e1e8b30a3eeab165e"
+  }
+}

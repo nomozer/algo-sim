@@ -1,0 +1,23 @@
+{
+  "phase": "green",
+  "head": "9772ea3750a84f76fbee1e83057e919a5ef63e50",
+  "dirty": false,
+  "classification": "POST_FEEDBACK_DEVELOPMENT_REGRESSION (development security tests)",
+  "live_provider_calls": 0,
+  "summary": "71 passed, 6 skipped in 2.27s",
+  "failed": [],
+  "test_file_sha256_lf": "bce0af7e5c19c852caa4e262b5b72cd7a8c8e38ffceac8b30a1e5959626d95f5",
+  "product_sha256_lf": {
+    "backend/app/simulation/geometry_functions/typed_fact_next.py": "8401993cf35c1fc3d8e0477f6ff948a3f7f8898b6c7af343b68da7437463cfd9",
+    "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py": "dd01562d5471858f72f2bc26363509014720037401424b10ccbd766ea388dd4e",
+    "backend/app/ai/adapter3_simulation.py": "64b12d90e9915d47bb3b91c4cc215de0600b84c5764b6c8a37f62e79d20637a2"
+  },
+  "inputs_sha256_lf": {
+    "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/inputs/recovery-supplementary.json": "943d630aa9784079d85b30e07c7c2a84f713f02c142376aa5a5783cfe7b09f21",
+    "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/inputs/development.json": "cbf6926e159a9db9340fdb3fcc6b095a6eabd45e0aebc229f94b998ee7aeea26",
+    "docs/evaluation/geometry/runs/typedfact-next-adapter3-simulation/corpus-dev.json": "ab9727fc73928a8659f26d3be30d8f4be09abf9a7a331944420059aeee8f34a1",
+    "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/corpus-dev.json": "7496572bf45d65bf5deb5ab21c9f0bdbb85b5bb9817ead92f7aadb5e7d0ffb8b"
+  },
+  "log": "green.log",
+  "log_sha256_lf": "6d6d47454c6459feba0558e52a4997b83599f4a1ffd90f364f39f83fd2e608ee"
+}

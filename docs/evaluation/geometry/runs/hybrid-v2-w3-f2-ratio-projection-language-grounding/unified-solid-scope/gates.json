@@ -1,0 +1,686 @@
+{
+  "head": "9772ea3750a84f76fbee1e83057e919a5ef63e50",
+  "product_commit": "9772ea3750a84f76fbee1e83057e919a5ef63e50",
+  "measured_system_hash": [
+    "f0521dcd2423a9e67421fdf8490de224ab115ee3d1561160aad28e35c40a9504",
+    118
+  ],
+  "live_provider_calls": 0,
+  "classification": "POST_FEEDBACK_DEVELOPMENT_REGRESSION",
+  "A": "PASS",
+  "B": "PASS",
+  "C": "PASS",
+  "D": "PASS",
+  "A_detail": {
+    "safety_matrix": [
+      {
+        "case": "review#1 distance s2",
+        "expected": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a3": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a4": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#1 distance foreign",
+        "expected": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "a3": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "a4": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#1 angle s2",
+        "expected": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a3": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a4": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#1 angle foreign",
+        "expected": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "a3": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "a4": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "control angle s1",
+        "expected": [
+          "SERVED",
+          null
+        ],
+        "a3": [
+          "SERVED",
+          null
+        ],
+        "a4": [
+          "SERVED",
+          null
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#2 curved goal foreign",
+        "expected": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "a3": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#2 curved premise foreign",
+        "expected": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "a3": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#2 curved premise operands of other solid",
+        "expected": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a3": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#2 curved relation foreign",
+        "expected": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "a3": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "control curved demo6a",
+        "expected": [
+          "SERVED",
+          null
+        ],
+        "a3": [
+          "SERVED",
+          null
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "control curved demo6b",
+        "expected": [
+          "SERVED",
+          null
+        ],
+        "a3": [
+          "SERVED",
+          null
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#3 A3-DEV-02 volume_ratio solid_id foreign",
+        "expected": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#3 A3-DEV-02 volume_ratio solid_id declared",
+        "expected": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#3 A3-DEV-03 volume_ratio solid_id foreign",
+        "expected": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#3 A3-DEV-03 volume_ratio solid_id declared",
+        "expected": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#3 A3-DEV-03 residual_volume solid_id foreign",
+        "expected": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#3 A3-DEV-03 residual_volume solid_id declared",
+        "expected": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#3 A3-DEV-09 volume_ratio solid_id foreign",
+        "expected": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#3 A3-DEV-09 volume_ratio solid_id declared",
+        "expected": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#3 demo1-pyramid-derived-section volume_ratio solid_id foreign",
+        "expected": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#3 demo1-pyramid-derived-section volume_ratio solid_id declared",
+        "expected": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "control A3-DEV-02",
+        "expected": [
+          "SERVED",
+          null
+        ],
+        "a3": [
+          "SERVED",
+          null
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "control A3-DEV-03",
+        "expected": [
+          "SERVED",
+          null
+        ],
+        "a3": [
+          "SERVED",
+          null
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "control A3-DEV-09",
+        "expected": [
+          "SERVED",
+          null
+        ],
+        "a3": [
+          "SERVED",
+          null
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "control demo1-pyramid-derived-section",
+        "expected": [
+          "SERVED",
+          null
+        ],
+        "a3": [
+          "SERVED",
+          null
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#4 shared_faces foreign",
+        "expected": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "a3": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "a4": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#4 coordinate_frame foreign",
+        "expected": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "a3": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "a4": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "NEW-2 shared_faces face not of solid_b",
+        "expected": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a3": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a4": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "NEW-2 frame anchors of other solid",
+        "expected": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a3": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a4": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "control valid shared face + frame",
+        "expected": [
+          "SERVED",
+          null
+        ],
+        "a3": [
+          "SERVED",
+          null
+        ],
+        "a4": [
+          "SERVED",
+          null
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#5 volume goal on undeclared derived",
+        "expected": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "a3": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "a4": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#5 control volume goal on declared derived (Adapter3)",
+        "expected": [
+          "SERVED",
+          null
+        ],
+        "a3": [
+          "SERVED",
+          null
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#6 nested target.solid_id s2",
+        "expected": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a3": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a4": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "review#6 nested target.solid_id foreign",
+        "expected": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "a3": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "a4": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "NEW-1 parent other (demo1)",
+        "expected": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a3": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "NEW-1 parent other (demo6b)",
+        "expected": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a3": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "NEW-3 curved parent foreign (no internal error)",
+        "expected": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "a3": [
+          "REFUSED",
+          "UNKNOWN_SOLID_ID"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "NEW-3 curved target foreign (no internal error)",
+        "expected": [
+          "REFUSED",
+          "UNKNOWN_SOLID"
+        ],
+        "a3": [
+          "REFUSED",
+          "UNKNOWN_SOLID"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "H1 legacy height pyr1 vs pyr2",
+        "expected": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a3": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "H2 volume goal s2 vs target s1",
+        "expected": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a3": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a4": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "H3 volume goal s1 vs target T.ABCD",
+        "expected": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a3": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a4": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "N006-type unscoped unknown solid name",
+        "expected": [
+          "REFUSED",
+          "UNKNOWN_SOLID"
+        ],
+        "a3": [
+          "REFUSED",
+          "UNKNOWN_SOLID"
+        ],
+        "a4": [
+          "REFUSED",
+          "UNKNOWN_SOLID"
+        ],
+        "pass": true,
+        "wrong_served": false
+      },
+      {
+        "case": "control supplementary",
+        "expected": [
+          "SERVED",
+          null
+        ],
+        "a3": [
+          "SERVED",
+          null
+        ],
+        "a4": [
+          "SERVED",
+          null
+        ],
+        "pass": true,
+        "wrong_served": false
+      }
+    ],
+    "wrong_served": 0,
+    "mandatory_negatives_refused": 33,
+    "controls_served": 10
+  },
+  "B_detail": "no kernel/engine/Registry change; incidence witnesses and Fraction oracle agreement re-run (compatibility suite, locked 96)",
+  "C_detail": {
+    "slices": {
+      "authored_projection": {
+        "total": 26,
+        "served_correct": 26,
+        "refused": 0,
+        "locked_code_match": 26
+      },
+      "authored_ratio": {
+        "total": 24,
+        "served_correct": 24,
+        "refused": 0,
+        "locked_code_match": 24
+      },
+      "historical_f2_verbatim": {
+        "total": 21,
+        "served_correct": 20,
+        "refused": 1,
+        "locked_code_match": 21
+      },
+      "isolated_f2": {
+        "total": 1,
+        "served_correct": 1,
+        "refused": 0,
+        "locked_code_match": 1
+      },
+      "mandatory_negative_tamper": {
+        "total": 24,
+        "served_correct": 0,
+        "refused": 24,
+        "locked_code_match": 24
+      }
+    },
+    "wrong_served_locked_96": 0
+  },
+  "D_detail": "compatibility.json",
+  "release_status": "NOT_YET_READY_PENDING_REPLAY_TIERS_FREEZE_T3_REVIEW"
+}
