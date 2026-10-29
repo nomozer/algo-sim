@@ -1,0 +1,19 @@
+FFFFFFFFFF.F....F.F.FF............................F                      [100%]
+=========================== short test summary info ===========================
+FAILED backend\tests\geometry\test_adapter3_fallback_safety.py::test_semantic_bridge_refusal_is_terminal_without_legacy_compile[SOURCE_OBJECT_MISMATCH]
+FAILED backend\tests\geometry\test_adapter3_fallback_safety.py::test_semantic_bridge_refusal_is_terminal_without_legacy_compile[UNKNOWN_SOLID_ID]
+FAILED backend\tests\geometry\test_adapter3_fallback_safety.py::test_semantic_bridge_refusal_is_terminal_without_legacy_compile[AMBIGUOUS_REFERENCE]
+FAILED backend\tests\geometry\test_adapter3_fallback_safety.py::test_semantic_bridge_refusal_is_terminal_without_legacy_compile[INCONSISTENT_FACTS]
+FAILED backend\tests\geometry\test_adapter3_fallback_safety.py::test_semantic_bridge_refusal_is_terminal_without_legacy_compile[BRIDGE_INCONSISTENT_SECTION]
+FAILED backend\tests\geometry\test_adapter3_fallback_safety.py::test_semantic_bridge_refusal_is_terminal_without_legacy_compile[UNCLASSIFIED_BRIDGE_FAILURE]
+FAILED backend\tests\geometry\test_adapter3_fallback_safety.py::test_planner_semantic_refusal_is_terminal
+FAILED backend\tests\geometry\test_adapter3_fallback_safety.py::test_explicit_scope_never_uses_global_or_conflicting_namespace[S-s2-SOURCE_OBJECT_MISMATCH]
+FAILED backend\tests\geometry\test_adapter3_fallback_safety.py::test_explicit_scope_never_uses_global_or_conflicting_namespace[S-foreign-UNKNOWN_SOLID_ID]
+FAILED backend\tests\geometry\test_adapter3_fallback_safety.py::test_explicit_scope_never_uses_global_or_conflicting_namespace[s1::S-s2-SOURCE_OBJECT_MISMATCH]
+FAILED backend\tests\geometry\test_adapter3_fallback_safety.py::test_constructed_point_cannot_be_borrowed_by_other_scope
+FAILED backend\tests\geometry\test_adapter3_fallback_safety.py::test_known_solid_scope_verdict_agrees_across_adapters
+FAILED backend\tests\geometry\test_adapter3_fallback_safety.py::test_unsupported_translation_still_checks_scope_and_source[scope]
+FAILED backend\tests\geometry\test_adapter3_fallback_safety.py::test_legacy_unsupported_cannot_mix_solid_operands[ratio]
+FAILED backend\tests\geometry\test_adapter3_fallback_safety.py::test_legacy_unsupported_cannot_mix_solid_operands[projection]
+FAILED backend\tests\geometry\test_premise_scope_recovery.py::test_adapter3_cannot_fallback_after_known_solid_scope_refusal
+16 failed, 35 passed in 2.69s

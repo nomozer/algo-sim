@@ -1,0 +1,275 @@
+{
+  "classification": "POST_FEEDBACK_DEVELOPMENT_SAFETY_REPRODUCTION",
+  "phase": "red",
+  "head": "a318a59856f22f856cbaf44be8b1068537550158",
+  "adapter3_sha256_lf": "37a5c395bd480ea616d97a96e03b6d3a8efb5f9b33c18e84d416891ae695faf4",
+  "input_sha256_lf": "943d630aa9784079d85b30e07c7c2a84f713f02c142376aa5a5783cfe7b09f21",
+  "identities": {
+    "s1": "S.ABCD",
+    "s2": "T.ABCD",
+    "offending_premise": "p3",
+    "segment": [
+      "S",
+      "A"
+    ],
+    "declared_scope": "s2",
+    "S_owners": [
+      "s1"
+    ]
+  },
+  "expected": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH"
+  },
+  "bridge_code": "SOURCE_OBJECT_MISMATCH",
+  "adapter3": {
+    "status": "SERVED",
+    "code": null
+  },
+  "adapter4": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH"
+  },
+  "boundary_events": [
+    {
+      "operation": "shared_source_gate",
+      "receipt": {
+        "authority": "adapter3.substring_legacy",
+        "gate_unavailable": "SOURCE_OBJECT_MISMATCH"
+      }
+    },
+    {
+      "operation": "legacy_compile_invoked"
+    },
+    {
+      "operation": "resolve_ref",
+      "ref": "S",
+      "declared_solid_id": "s2",
+      "result": "S"
+    },
+    {
+      "operation": "resolve_ref",
+      "ref": "A",
+      "declared_solid_id": "s2",
+      "result": "A"
+    }
+  ],
+  "first_failing_operation_red": "resolve_ref('S', 's2', 'p3') returns S after semantic rejection",
+  "prior_run_inventory": [
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/architecture-decision.md",
+      "sha256_lf": "c8d8c837a719a5133991d120bf44e9285df655e73bc05f9707daa985936c4655"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/baseline-audit.md",
+      "sha256_lf": "dd08b4b054e4084398f1398df1ba8cace74a5b3bde5f08cc9214e3a7bc54eecc"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/correction-addendum.md",
+      "sha256_lf": "039b73e8a086fcf2b1c7dd37da47bd0c7fb9635e39bb26f0a647b4a5b514bd07"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/capability-intake/inputs/development.json",
+      "sha256_lf": "abd694de2ac421127d4c2d6a5e38cb070501363f5073218fbb22aef73026e3c1"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/capability-intake/inputs/oracle.json",
+      "sha256_lf": "1a1df738fe84c9487ffd46d7b1970ec96add9273108fb664b08694c673aed001"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/capability-intake/red-before.json",
+      "sha256_lf": "7f0e1fde90e139c86ca853cb27dff6a3e4a533418a27a20784b64aef60280e66"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/intake/inputs/development.json",
+      "sha256_lf": "d18c77e2fbd6ddda24b762c9a08efc9b7532fbf51fd468b2f5b60dfc507e6ff8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/intake/inputs/oracle.json",
+      "sha256_lf": "41853c64117a372ec9154c05fa6bb5384e4dc39ddf6cf962c18275282f996d51"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/intake/red-before.json",
+      "sha256_lf": "d3d45cfdd0664d4b6018459172cd8ac34914ab1fbe258118c06649ac0489947a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/unicode-intake/baseline-normalized-language-controls.json",
+      "sha256_lf": "874e456cd45cea1d6a53981fe074f11634481f2a181aa6059336c4a32520df42"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/unicode-intake/inputs/development.json",
+      "sha256_lf": "af3b5f557bba736307587c5ea898e282468e004ea99661c9c1c5b036de5d2ea7"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/unicode-intake/inputs/oracle.json",
+      "sha256_lf": "9c16b140c4c773c38cb12de15319f701e73949dc3ed256a40052400ab49e79c0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/unicode-intake/red-before.json",
+      "sha256_lf": "caef8256833b9ba9960353480e3bc1a47cf68b5745b9a7caf4a308217132e6b6"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/final-handoff.md",
+      "sha256_lf": "a0d34c7c532d021fd5bf236d49f776b3cf97aabbfd64add243a07dc0e9baa554"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/final-report.md",
+      "sha256_lf": "6f81cce9bc69bc5cd02cad5ec008fe9c0755089852992e47f28c347a5b873c89"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/handoff.md",
+      "sha256_lf": "f88e1ae87bb491fed09597e6a80fe3b5653c5c358dae8ac49bb98257585eb62a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/inputs/development.json",
+      "sha256_lf": "cbf6926e159a9db9340fdb3fcc6b095a6eabd45e0aebc229f94b998ee7aeea26"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/inputs/oracle.json",
+      "sha256_lf": "9c16b140c4c773c38cb12de15319f701e73949dc3ed256a40052400ab49e79c0"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/inputs/recovery-supplementary.json",
+      "sha256_lf": "943d630aa9784079d85b30e07c7c2a84f713f02c142376aa5a5783cfe7b09f21"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/plan.md",
+      "sha256_lf": "abeff477e25d84fb7addab31ff5c01fa0e66ec2d6f196a66d7da645db0a086f4"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/report.md",
+      "sha256_lf": "85338121e548845841cd5381c91640dd48f97b10bc7705efa5d5b3f4dc27185a"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/green-after.json",
+      "sha256_lf": "0315765f15db1fb5be9f0e3265a2cba6bad2859d7ab2516031a6679472b2d021"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/incidence-repair-after.json",
+      "sha256_lf": "9efba2eec5c7f1c5c8fdc0fd56252e3224b9be896775593e68d3938b295c0b80"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/red-before.json",
+      "sha256_lf": "5d9051055e48d530f0ba80807e648c5e46f7814a5ab7804037ab8a3fab5a5f01"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/red-tests.log",
+      "sha256_lf": "2769bd826d5147d7ba925853acc750eca9f498707aaf1cbf323f3d3d58c5ea3e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/scope-repair-after.json",
+      "sha256_lf": "103fd5168ddf2835f48667998bf2ad6fbbc11bb43f7292578daf05bfea7ab7cb"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/tamper-results.json",
+      "sha256_lf": "f448078fbf72d395e2dac827bd928a22c9ac867b57ecd9ed44178179b1a064cd"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/tamper-retest-after.json",
+      "sha256_lf": "59d65f3229351c050334bf79ed27bd7fb43e232154deb03346fb9f1b7e454be8"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/review-safety-recovery.md",
+      "sha256_lf": "c8fe3a9cfb8014c609dff4a4f373db2b51be582d89486e36556591055004aa61"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/review.md",
+      "sha256_lf": "85eb1a6223c8e23a8e64da72942ad038161f32446d1b7493f753d8f7b0ac967f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/run.json",
+      "sha256_lf": "0c03e7a85ddaa73fa5b9530d5705f46e2c981f65e9d5d2e0f0728f62c7da6fc9"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/safety-recovery-plan.md",
+      "sha256_lf": "03070c65bf931f4f20eea243d155cbd3a190d23c2cf67b3843737b8abf714fc3"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/scope-validation-design.md",
+      "sha256_lf": "1bed96d8b6a97bb1a6df45be4addb3d87676ebe21182afef19f1a21eceee2863"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/takeover.md",
+      "sha256_lf": "f68e1965d262d5b469d5545befbb87156fe0a0629d35f8ba3d52643b72c5705d"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/tools/capture_safety_stop.py",
+      "sha256_lf": "404b393abf9a88289f26c284e252428716b41e4711b095ecf27796df6c4dce7f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/tools/evaluate_development.py",
+      "sha256_lf": "9d4f26c90cf631f703374082e62b28b240d84838e9489a571f3ebbd5d62ec100"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-baseline-scope-reproduction.json",
+      "sha256_lf": "bd77f20a5bd7276938adba8732a0c65d744bc936e8900ca068607f1f1496ee5f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/baseline-foreign-scope-reproduction.json",
+      "sha256_lf": "b01f98f6d1d0ee6aa70c3a387be6d3c47ca6fd83317de06154bb7bdd58fd2e2b"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/baseline-normalized-language-controls.json",
+      "sha256_lf": "91e34810e21ec8e53cf7d427cd2dfba821c87607e1b7c463945741f340481825"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/preregistration.json",
+      "sha256_lf": "3ee1cf06c836a4ca9685d7eaaa6cfd999c1a0d9ea24dfe5ad26675935992ef2e"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-checkpoint-integrity.json",
+      "sha256_lf": "a398e809a96e13563b1a42071ec4ed551ffd94748bbf9cec05a447a15d4a9912"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-checkpoint-verification.json",
+      "sha256_lf": "c34f82c96eff46d016a34d32617a1da640d84ab9d269e470eb393ba126a0d7c6"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-compatibility-tests.log",
+      "sha256_lf": "f5ba8db750ee1aaeb78fc6526f73571b45911aa5bfbd93019aee9c770fb6f3e1"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-docs-tests.log",
+      "sha256_lf": "1530c8070b36b5de88548dbce74e7e808a8a4e27393d6c15a90c821a18959989"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-initial-targeted-tests.log",
+      "sha256_lf": "e626e527350411cd2fb336e620a24595befcc42211adc3c1c6083f475ba833ba"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-red-tests.log",
+      "sha256_lf": "498386d649d0e391e326fa2e806a32634ab80333baaa1f0d4eb07923bada2858"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-stop-tests.log",
+      "sha256_lf": "e0fa4b771793478663aba14d40c89f70d03e0b183501b688d679c091fcde595c"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/safety-recovery.json",
+      "sha256_lf": "667d262d2a489161080540b0006f9c814f4f8263c19303fd77d751e85fbfaaa5"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/scope-and-evidence.json",
+      "sha256_lf": "326f691c9ea507fc216a0ff8873ab15afb3311816dbdc265bf06508ff70e2b94"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/stop-condition.json",
+      "sha256_lf": "e61a7eaf5f2f1e6e0b3db9f4beaeb5a4b0deea4a233c70757e5582221169805f"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/t1.log",
+      "sha256_lf": "4c7d54c443256db7933ee55d51341d6f71d996841ad12bf23b56b5fe04670d15"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/tiers-after-recovery.json",
+      "sha256_lf": "85ad96cf61cb6529bbb7665ffc23f846307e66f873e437876e571fc1ab8951f9"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/tiers.json",
+      "sha256_lf": "3a25fefb5b75086484ebdd32a8b1adb330c86a295f4e7d908095479ffb859fd6"
+    }
+  ],
+  "test_log": "verification/adapter3-red-tests.log",
+  "test_log_sha256_lf": "148e2a1a4a54a7fe90cbd617129598342d0c3b864bb31a1baa85d70817d4417d",
+  "live_provider_calls": 0
+}
