@@ -1,0 +1,16 @@
+{
+  "registration": "W3F2-CIC-D1/1",
+  "research_head_at_registration": "1490e3cd7d15363efce9b55319dce623cd0e23f4",
+  "controls_observed_at_red": "observed-head-1490e3cd.json",
+  "sha256_lf": {
+    "cases.json": "c3aa3de0accd57dc80135c0d401a8af8b4d35389b83cb43fcce79ed35fadd45d",
+    "observed-head-1490e3cd.json": "77468478179d0d5d95fc6f83aafca6574df29cb3c9d000c5161158a42a25d8d0",
+    "observed-main-996f114b.json": "050d271daabcd4aa54c7b6eeaaee0fe9a98e0559eb00b06cfad2a27f077f2dba",
+    "observed-pre-patch-5e44d5da.json": "39678f92d8e9049c28264cbe90c408dcc154940bf00faf5fcb250b9f7de51580",
+    "tools/cases.py": "4ee724c3b895c091bd93b724131baf0f3ad6c93ef8c2280fd7657e42a6f89dac"
+  },
+  "tests_sha256_lf": {
+    "backend/tests/geometry/test_cic_d1_locked_contract.py": "5882b341a76f87fed210c64272bdd591e4945d5d7ed06ce084acc53059f93bba",
+    "backend/tests/geometry/test_closed_input_contract.py": "1bc8fd2e858d65463953bd53dfcdaf39cb785bd8403be7b9cfa02194e253c3e7"
+  }
+}

@@ -1,0 +1,989 @@
+{
+  "backend": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\w3-f2-main-baseline-996f114b\\backend",
+  "head": "996f114b3480efe1b0d075dd4342530aaa12ddae",
+  "backend_app_dirty": false,
+  "cases_sha256_lf": "c3aa3de0accd57dc80135c0d401a8af8b4d35389b83cb43fcce79ed35fadd45d",
+  "live_provider_calls": 0,
+  "results": {
+    "F.distance_point_plane.solid": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "12",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/distance chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "INVALID_MATH_GOAL",
+        "reason": "q: mục tiêu distance thiếu toán hạng hợp lệ",
+        "answer": {}
+      }
+    },
+    "F.distance_point_plane.solid_id": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "12",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/distance chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "INVALID_MATH_GOAL",
+        "reason": "q: mục tiêu distance thiếu toán hạng hợp lệ",
+        "answer": {}
+      }
+    },
+    "F.distance_point_plane.solid_notation": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "12",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/distance chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "INVALID_MATH_GOAL",
+        "reason": "q: mục tiêu distance thiếu toán hạng hợp lệ",
+        "answer": {}
+      }
+    },
+    "F.distance_point_plane.solid_and_solid_id": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "12",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/distance chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "INVALID_MATH_GOAL",
+        "reason": "q: mục tiêu distance thiếu toán hạng hợp lệ",
+        "answer": {}
+      }
+    },
+    "C.distance_point_plane.no_scope": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "12",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/distance chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "12",
+            0,
+            null
+          ]
+        }
+      }
+    },
+    "C.distance_point_plane.goal_solid_id": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "12",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/distance chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "12",
+            0,
+            null
+          ]
+        }
+      }
+    },
+    "F.distance_segment.solid": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "2√61",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/distance chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "INVALID_MATH_GOAL",
+        "reason": "q: mục tiêu distance thiếu toán hạng hợp lệ",
+        "answer": {}
+      }
+    },
+    "F.distance_segment.solid_id": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "2√61",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/distance chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "INVALID_MATH_GOAL",
+        "reason": "q: mục tiêu distance thiếu toán hạng hợp lệ",
+        "answer": {}
+      }
+    },
+    "F.distance_segment.solid_notation": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "2√61",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/distance chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "INVALID_MATH_GOAL",
+        "reason": "q: mục tiêu distance thiếu toán hạng hợp lệ",
+        "answer": {}
+      }
+    },
+    "F.distance_segment.solid_and_solid_id": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "2√61",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/distance chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "INVALID_MATH_GOAL",
+        "reason": "q: mục tiêu distance thiếu toán hạng hợp lệ",
+        "answer": {}
+      }
+    },
+    "C.distance_segment.no_scope": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "2√61",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/distance chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "2√61",
+            0,
+            null
+          ]
+        }
+      }
+    },
+    "C.distance_segment.goal_solid_id": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "2√61",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/distance chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "2√61",
+            0,
+            null
+          ]
+        }
+      }
+    },
+    "F.angle_line_plane.solid": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "25/61",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/angle chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "INVALID_MATH_GOAL",
+        "reason": "q: mục tiêu angle thiếu toán hạng hợp lệ",
+        "answer": {}
+      }
+    },
+    "F.angle_line_plane.solid_id": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "25/61",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/angle chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "INVALID_MATH_GOAL",
+        "reason": "q: mục tiêu angle thiếu toán hạng hợp lệ",
+        "answer": {}
+      }
+    },
+    "F.angle_line_plane.solid_notation": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "25/61",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/angle chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "INVALID_MATH_GOAL",
+        "reason": "q: mục tiêu angle thiếu toán hạng hợp lệ",
+        "answer": {}
+      }
+    },
+    "F.angle_line_plane.solid_and_solid_id": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "25/61",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/angle chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "INVALID_MATH_GOAL",
+        "reason": "q: mục tiêu angle thiếu toán hạng hợp lệ",
+        "answer": {}
+      }
+    },
+    "C.angle_line_plane.no_scope": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "25/61",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/angle chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "25/61",
+            0,
+            null
+          ]
+        }
+      }
+    },
+    "C.angle_line_plane.goal_solid_id": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "25/61",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/angle chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "25/61",
+            0,
+            null
+          ]
+        }
+      }
+    },
+    "F.area_polygon.solid": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "24",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/area chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/area chưa có ánh xạ",
+        "answer": {}
+      }
+    },
+    "F.area_polygon.solid_id": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "24",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/area chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/area chưa có ánh xạ",
+        "answer": {}
+      }
+    },
+    "F.area_polygon.solid_notation": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "24",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/area chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/area chưa có ánh xạ",
+        "answer": {}
+      }
+    },
+    "F.area_polygon.solid_and_solid_id": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "24",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/area chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/area chưa có ánh xạ",
+        "answer": {}
+      }
+    },
+    "C.area_polygon.no_scope": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "24",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/area chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/area chưa có ánh xạ",
+        "answer": {}
+      }
+    },
+    "C.area_polygon.goal_solid_id": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "24",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/area chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/area chưa có ánh xạ",
+        "answer": {}
+      }
+    },
+    "C.volume.solid": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "288",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "288",
+            0,
+            null
+          ]
+        }
+      },
+      "a4": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "288",
+            0,
+            null
+          ]
+        }
+      }
+    },
+    "C.volume.solid_id": {
+      "a3": {
+        "status": "REFUSED",
+        "code": "UNKNOWN_SOLID_ID",
+        "reason": "q: không tìm thấy khối ''",
+        "answer": {}
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/volume chưa có ánh xạ",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+        "reason": "q: mục tiêu measurement/volume chưa có ánh xạ",
+        "answer": {}
+      }
+    },
+    "C.volume.solid_and_solid_id": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "288",
+            0,
+            null
+          ]
+        }
+      },
+      "pl": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "288",
+            0,
+            null
+          ]
+        }
+      },
+      "a4": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "q": [
+            "288",
+            0,
+            null
+          ]
+        }
+      }
+    },
+    "N2v2.goal_solid_id": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "m_vol_ratio": [
+            "1/2",
+            0,
+            null
+          ],
+          "m_vol_pyr1": [
+            "1/3",
+            3,
+            "a"
+          ],
+          "mb": [
+            "√5/2",
+            1,
+            "a"
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+        "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+        "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+        "answer": {}
+      }
+    },
+    "N2v2.goal_solid_id_qualified": {
+      "a3": {
+        "status": "REFUSED",
+        "code": "UNKNOWN_VERTEX_REF",
+        "reason": "mb: đỉnh 'M' không thuộc phạm vi khối 'pyr2'",
+        "answer": {}
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+        "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+        "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+        "answer": {}
+      }
+    },
+    "N2v2.qualified_namespace": {
+      "a3": {
+        "status": "REFUSED",
+        "code": "UNKNOWN_VERTEX_REF",
+        "reason": "mb: đỉnh 'M' không thuộc phạm vi khối 'pyr2'",
+        "answer": {}
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+        "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+        "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+        "answer": {}
+      }
+    },
+    "N2v2.control_own_point": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "m_vol_ratio": [
+            "1/2",
+            0,
+            null
+          ],
+          "m_vol_pyr1": [
+            "1/3",
+            3,
+            "a"
+          ],
+          "mb": [
+            "√5/2",
+            1,
+            "a"
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+        "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+        "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+        "answer": {}
+      }
+    },
+    "N2v1.target_solid_id.unqualified": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "m_vol_ratio": [
+            "1/2",
+            0,
+            null
+          ],
+          "m_vol_pyr1": [
+            "1/3",
+            3,
+            "a"
+          ],
+          "mb": [
+            "√5/2",
+            1,
+            "a"
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+        "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+        "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+        "answer": {}
+      }
+    },
+    "N2v1.target_solid_id.qualified": {
+      "a3": {
+        "status": "REFUSED",
+        "code": "UNKNOWN_VERTEX_REF",
+        "reason": "mb: đỉnh 'M' không thuộc phạm vi khối 'pyr2'",
+        "answer": {}
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+        "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+        "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+        "answer": {}
+      }
+    },
+    "N2v1.target_solid.unqualified": {
+      "a3": {
+        "status": "SERVED",
+        "code": null,
+        "reason": null,
+        "answer": {
+          "m_vol_ratio": [
+            "1/2",
+            0,
+            null
+          ],
+          "m_vol_pyr1": [
+            "1/3",
+            3,
+            "a"
+          ],
+          "mb": [
+            "√5/2",
+            1,
+            "a"
+          ]
+        }
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+        "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+        "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+        "answer": {}
+      }
+    },
+    "N2v1.target_solid.qualified": {
+      "a3": {
+        "status": "REFUSED",
+        "code": "UNKNOWN_VERTEX_REF",
+        "reason": "mb: đỉnh 'M' không thuộc phạm vi khối 'pyr2'",
+        "answer": {}
+      },
+      "pl": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+        "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+        "answer": {}
+      },
+      "a4": {
+        "status": "REFUSED",
+        "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+        "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+        "answer": {}
+      }
+    }
+  }
+}

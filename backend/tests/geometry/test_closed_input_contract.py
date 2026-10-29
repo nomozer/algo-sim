@@ -108,7 +108,9 @@ def legacy_m():
     return p
 
 
-@pytest.mark.parametrize('scope', ['goal','solid_id','solid'])
+# CIC-D1 amendment (cic-d1-contract-recovery/n2-amendment.md): the in-target `solid_id`/`solid` forms violate the locked
+# V2 target grammar; their ownership coverage moved to test_cic_d1_locked_contract.py (N2 v2), inputs kept in cases.json.
+@pytest.mark.parametrize('scope', ['goal'])
 @pytest.mark.parametrize('qualified', [False,True])
 def test_legacy_constructed_ownership_precedes_capability(scope, qualified):
     p = legacy_m(); g = {'goal_id':'foreign','kind':'measurement','goal_type':'distance','quote':'Tính độ dài MB.',
@@ -252,8 +254,9 @@ def test_required_preflight_cannot_be_bypassed(monkeypatch, route_name, curved):
 
 
 def oracle_shape():
+    # CIC-D1 amendment: scope moved from the target to the goal so the shape guard alone decides (code unchanged)
     p=F.sup(); p['math_goals']=[{'goal_id':'bad','kind':'measurement','goal_type':'distance','quote':F.Q,
-                                'target':{'solid_id':'s1','segment':'SA'}}]
+                                'solid_id':'s1','target':{'segment':'SA'}}]
     assert F.outcome(F.a3(p))==('REFUSED','INVALID_MATH_GOAL')
 
 

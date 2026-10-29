@@ -1,0 +1,5385 @@
+{
+  "registration": "W3F2-CIC-D1-CASES/1",
+  "locked_test": "backend/tests/geometry/test_typed_fact_next_v2_distance_bridge.py::test_malformed_distance_target_is_refused[target8]",
+  "control_rule": "CONTROL_UNCHANGED cases must give the same (status, code, answer) after the fix as at RED (research HEAD 1490e3cd)",
+  "cases": {
+    "F.distance_point_plane.solid": {
+      "class": "NEG_LOCKED_GRAMMAR",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A' đến mặt phẳng (ABC).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "target": {
+              "point": "A'",
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ],
+              "solid": "pr"
+            },
+            "quote": "Tính khoảng cách từ A' đến mặt phẳng (ABC)."
+          }
+        ]
+      },
+      "expected": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      }
+    },
+    "F.distance_point_plane.solid_id": {
+      "class": "NEG_LOCKED_GRAMMAR",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A' đến mặt phẳng (ABC).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "target": {
+              "point": "A'",
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ],
+              "solid_id": "pr"
+            },
+            "quote": "Tính khoảng cách từ A' đến mặt phẳng (ABC)."
+          }
+        ]
+      },
+      "expected": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      }
+    },
+    "F.distance_point_plane.solid_notation": {
+      "class": "NEG_LOCKED_GRAMMAR",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A' đến mặt phẳng (ABC).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "target": {
+              "point": "A'",
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ],
+              "solid": "ABC.A'B'C'"
+            },
+            "quote": "Tính khoảng cách từ A' đến mặt phẳng (ABC)."
+          }
+        ]
+      },
+      "expected": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      }
+    },
+    "F.distance_point_plane.solid_and_solid_id": {
+      "class": "NEG_LOCKED_GRAMMAR",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A' đến mặt phẳng (ABC).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "target": {
+              "point": "A'",
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ],
+              "solid": "pr",
+              "solid_id": "pr"
+            },
+            "quote": "Tính khoảng cách từ A' đến mặt phẳng (ABC)."
+          }
+        ]
+      },
+      "expected": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      }
+    },
+    "C.distance_point_plane.no_scope": {
+      "class": "CONTROL_UNCHANGED",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A' đến mặt phẳng (ABC).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "target": {
+              "point": "A'",
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Tính khoảng cách từ A' đến mặt phẳng (ABC)."
+          }
+        ]
+      }
+    },
+    "C.distance_point_plane.goal_solid_id": {
+      "class": "CONTROL_UNCHANGED",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A' đến mặt phẳng (ABC).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "target": {
+              "point": "A'",
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Tính khoảng cách từ A' đến mặt phẳng (ABC).",
+            "solid_id": "pr"
+          }
+        ]
+      }
+    },
+    "F.distance_segment.solid": {
+      "class": "NEG_LOCKED_GRAMMAR",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính độ dài B'C.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "target": {
+              "segment": [
+                "B'",
+                "C"
+              ],
+              "solid": "pr"
+            },
+            "quote": "Tính độ dài B'C."
+          }
+        ]
+      },
+      "expected": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      }
+    },
+    "F.distance_segment.solid_id": {
+      "class": "NEG_LOCKED_GRAMMAR",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính độ dài B'C.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "target": {
+              "segment": [
+                "B'",
+                "C"
+              ],
+              "solid_id": "pr"
+            },
+            "quote": "Tính độ dài B'C."
+          }
+        ]
+      },
+      "expected": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      }
+    },
+    "F.distance_segment.solid_notation": {
+      "class": "NEG_LOCKED_GRAMMAR",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính độ dài B'C.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "target": {
+              "segment": [
+                "B'",
+                "C"
+              ],
+              "solid": "ABC.A'B'C'"
+            },
+            "quote": "Tính độ dài B'C."
+          }
+        ]
+      },
+      "expected": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      }
+    },
+    "F.distance_segment.solid_and_solid_id": {
+      "class": "NEG_LOCKED_GRAMMAR",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính độ dài B'C.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "target": {
+              "segment": [
+                "B'",
+                "C"
+              ],
+              "solid": "pr",
+              "solid_id": "pr"
+            },
+            "quote": "Tính độ dài B'C."
+          }
+        ]
+      },
+      "expected": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      }
+    },
+    "C.distance_segment.no_scope": {
+      "class": "CONTROL_UNCHANGED",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính độ dài B'C.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "target": {
+              "segment": [
+                "B'",
+                "C"
+              ]
+            },
+            "quote": "Tính độ dài B'C."
+          }
+        ]
+      }
+    },
+    "C.distance_segment.goal_solid_id": {
+      "class": "CONTROL_UNCHANGED",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính độ dài B'C.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "target": {
+              "segment": [
+                "B'",
+                "C"
+              ]
+            },
+            "quote": "Tính độ dài B'C.",
+            "solid_id": "pr"
+          }
+        ]
+      }
+    },
+    "F.angle_line_plane.solid": {
+      "class": "NEG_LOCKED_GRAMMAR",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính góc giữa B'C và mặt phẳng (ABC).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "angle",
+            "target": {
+              "line": [
+                "B'",
+                "C"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ],
+              "solid": "pr"
+            },
+            "quote": "Tính góc giữa B'C và mặt phẳng (ABC)."
+          }
+        ]
+      },
+      "expected": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      }
+    },
+    "F.angle_line_plane.solid_id": {
+      "class": "NEG_LOCKED_GRAMMAR",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính góc giữa B'C và mặt phẳng (ABC).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "angle",
+            "target": {
+              "line": [
+                "B'",
+                "C"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ],
+              "solid_id": "pr"
+            },
+            "quote": "Tính góc giữa B'C và mặt phẳng (ABC)."
+          }
+        ]
+      },
+      "expected": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      }
+    },
+    "F.angle_line_plane.solid_notation": {
+      "class": "NEG_LOCKED_GRAMMAR",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính góc giữa B'C và mặt phẳng (ABC).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "angle",
+            "target": {
+              "line": [
+                "B'",
+                "C"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ],
+              "solid": "ABC.A'B'C'"
+            },
+            "quote": "Tính góc giữa B'C và mặt phẳng (ABC)."
+          }
+        ]
+      },
+      "expected": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      }
+    },
+    "F.angle_line_plane.solid_and_solid_id": {
+      "class": "NEG_LOCKED_GRAMMAR",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính góc giữa B'C và mặt phẳng (ABC).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "angle",
+            "target": {
+              "line": [
+                "B'",
+                "C"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ],
+              "solid": "pr",
+              "solid_id": "pr"
+            },
+            "quote": "Tính góc giữa B'C và mặt phẳng (ABC)."
+          }
+        ]
+      },
+      "expected": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      }
+    },
+    "C.angle_line_plane.no_scope": {
+      "class": "CONTROL_UNCHANGED",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính góc giữa B'C và mặt phẳng (ABC).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "angle",
+            "target": {
+              "line": [
+                "B'",
+                "C"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Tính góc giữa B'C và mặt phẳng (ABC)."
+          }
+        ]
+      }
+    },
+    "C.angle_line_plane.goal_solid_id": {
+      "class": "CONTROL_UNCHANGED",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính góc giữa B'C và mặt phẳng (ABC).",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "angle",
+            "target": {
+              "line": [
+                "B'",
+                "C"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Tính góc giữa B'C và mặt phẳng (ABC).",
+            "solid_id": "pr"
+          }
+        ]
+      }
+    },
+    "F.area_polygon.solid": {
+      "class": "NEG_LOCKED_GRAMMAR",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính diện tích tam giác ABC.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "area",
+            "target": {
+              "polygon": [
+                "A",
+                "B",
+                "C"
+              ],
+              "solid": "pr"
+            },
+            "quote": "Tính diện tích tam giác ABC."
+          }
+        ]
+      },
+      "expected": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      }
+    },
+    "F.area_polygon.solid_id": {
+      "class": "NEG_LOCKED_GRAMMAR",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính diện tích tam giác ABC.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "area",
+            "target": {
+              "polygon": [
+                "A",
+                "B",
+                "C"
+              ],
+              "solid_id": "pr"
+            },
+            "quote": "Tính diện tích tam giác ABC."
+          }
+        ]
+      },
+      "expected": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      }
+    },
+    "F.area_polygon.solid_notation": {
+      "class": "NEG_LOCKED_GRAMMAR",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính diện tích tam giác ABC.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "area",
+            "target": {
+              "polygon": [
+                "A",
+                "B",
+                "C"
+              ],
+              "solid": "ABC.A'B'C'"
+            },
+            "quote": "Tính diện tích tam giác ABC."
+          }
+        ]
+      },
+      "expected": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      }
+    },
+    "F.area_polygon.solid_and_solid_id": {
+      "class": "NEG_LOCKED_GRAMMAR",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính diện tích tam giác ABC.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "area",
+            "target": {
+              "polygon": [
+                "A",
+                "B",
+                "C"
+              ],
+              "solid": "pr",
+              "solid_id": "pr"
+            },
+            "quote": "Tính diện tích tam giác ABC."
+          }
+        ]
+      },
+      "expected": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      }
+    },
+    "C.area_polygon.no_scope": {
+      "class": "CONTROL_UNCHANGED",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính diện tích tam giác ABC.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "area",
+            "target": {
+              "polygon": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Tính diện tích tam giác ABC."
+          }
+        ]
+      }
+    },
+    "C.area_polygon.goal_solid_id": {
+      "class": "CONTROL_UNCHANGED",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính diện tích tam giác ABC.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "area",
+            "target": {
+              "polygon": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Tính diện tích tam giác ABC.",
+            "solid_id": "pr"
+          }
+        ]
+      }
+    },
+    "C.volume.solid": {
+      "class": "CONTROL_UNCHANGED",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "volume",
+            "target": {
+              "solid": "pr"
+            },
+            "quote": "Tính thể tích khối lăng trụ ABC.A'B'C'."
+          }
+        ]
+      }
+    },
+    "C.volume.solid_id": {
+      "class": "CONTROL_UNCHANGED",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "volume",
+            "target": {
+              "solid_id": "pr"
+            },
+            "quote": "Tính thể tích khối lăng trụ ABC.A'B'C'."
+          }
+        ]
+      }
+    },
+    "C.volume.solid_and_solid_id": {
+      "class": "CONTROL_UNCHANGED",
+      "payload": {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính thể tích khối lăng trụ ABC.A'B'C'.",
+        "length_unit": "1",
+        "solids": [
+          {
+            "solid_id": "pr",
+            "solid_type": "prism",
+            "notation": "ABC.A'B'C'",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "premises": [
+          {
+            "kind": "right_angle",
+            "args": {
+              "vertex": "A",
+              "rays": [
+                "B",
+                "C"
+              ]
+            },
+            "quote": "Đáy ABC là tam giác vuông tại A."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "6"
+            },
+            "quote": "AB = 6."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "8"
+            },
+            "quote": "AC = 8."
+          },
+          {
+            "kind": "right_prism",
+            "args": {
+              "base": [
+                "A",
+                "B",
+                "C"
+              ],
+              "top": [
+                "A'",
+                "B'",
+                "C'"
+              ]
+            },
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          },
+          {
+            "kind": "segment_length",
+            "args": {
+              "segment": [
+                "A",
+                "A'"
+              ],
+              "value": "12"
+            },
+            "quote": "AA' = 12."
+          }
+        ],
+        "simulation_goals": [
+          {
+            "goal_id": "draw",
+            "kind": "construct_object",
+            "target_solid_id": "pr",
+            "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "q",
+            "kind": "measurement",
+            "goal_type": "volume",
+            "target": {
+              "solid": "pr",
+              "solid_id": "pr"
+            },
+            "quote": "Tính thể tích khối lăng trụ ABC.A'B'C'."
+          }
+        ]
+      }
+    },
+    "N2v2.goal_solid_id": {
+      "class": "NEG_OWNERSHIP",
+      "payload": {
+        "length_unit": "a",
+        "math_goals": [
+          {
+            "denominator_solid_id": "pyr1",
+            "goal_id": "m_vol_ratio",
+            "kind": "volume_ratio",
+            "numerator_solid_id": "pyr2",
+            "quote": "tính tỉ số thể tích"
+          },
+          {
+            "goal_id": "m_vol_pyr1",
+            "goal_type": "volume",
+            "kind": "measurement",
+            "quote": "tính tỉ số thể tích",
+            "target": {
+              "solid": "pyr1"
+            }
+          },
+          {
+            "goal_id": "mb",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "quote": "Tính độ dài MB.",
+            "target": {
+              "segment": [
+                "M",
+                "B"
+              ]
+            },
+            "solid_id": "pyr2"
+          }
+        ],
+        "premises": [
+          {
+            "args": {
+              "right_at": "A",
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "base_is_right_triangle",
+            "quote": "chung mặt đáy ABC là tam giác vuông cân tại A",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "AB = AC = a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "AB = AC = a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "line": [
+                "pyr1::S",
+                "pyr1::A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "line_perp_plane",
+            "quote": "SA vuông góc với mặt phẳng (ABC)",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "pyr1::S",
+                "pyr1::A"
+              ],
+              "value": "2a"
+            },
+            "kind": "segment_length",
+            "quote": "SA = 2a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "point": "pyr1::D",
+              "segment": [
+                "pyr1::S",
+                "pyr1::A"
+              ]
+            },
+            "kind": "point_is_midpoint",
+            "quote": "D là trung điểm của SA ở khối thứ nhất",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "line": [
+                "pyr2::D",
+                "pyr2::A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "line_perp_plane",
+            "quote": "DA vuông góc với (ABC)",
+            "solid_id": "pyr2"
+          },
+          {
+            "args": {
+              "segment": [
+                "pyr2::D",
+                "pyr2::A"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "DA = a",
+            "solid_id": "pyr2"
+          },
+          {
+            "kind": "point_is_midpoint",
+            "solid_id": "pyr1",
+            "args": {
+              "point": "M",
+              "segment": [
+                "S",
+                "B"
+              ]
+            },
+            "quote": "Gọi M là trung điểm của SB."
+          }
+        ],
+        "problem_text": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC là tam giác vuông cân tại A với AB = AC = a. Biết SA vuông góc với mặt phẳng (ABC) và SA = 2a. Gọi D trên cạnh SA sao cho D là trung điểm của SA ở khối thứ nhất, còn đỉnh D của hình chóp D.ABC có DA vuông góc với (ABC) trên cùng nửa không gian và DA = a. Dựng hai khối chóp và tính tỉ số thể tích. Gọi M là trung điểm của SB. Tính độ dài MB.",
+        "relations": [
+          {
+            "kind": "shared_vertices",
+            "pairs": [
+              [
+                "pyr1::A",
+                "pyr2::A"
+              ],
+              [
+                "pyr1::B",
+                "pyr2::B"
+              ],
+              [
+                "pyr1::C",
+                "pyr2::C"
+              ]
+            ],
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_shared_v"
+          },
+          {
+            "face_a": [
+              "A",
+              "B",
+              "C"
+            ],
+            "face_b": [
+              "A",
+              "B",
+              "C"
+            ],
+            "kind": "shared_faces",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_shared_face",
+            "solid_a": "pyr1",
+            "solid_b": "pyr2"
+          },
+          {
+            "anchor_refs": [
+              "A",
+              "B",
+              "C"
+            ],
+            "frame_id": "root",
+            "kind": "coordinate_frame",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_frame_1",
+            "solid_id": "pyr1"
+          },
+          {
+            "anchor_refs": [
+              "A",
+              "B",
+              "C"
+            ],
+            "frame_id": "root",
+            "kind": "coordinate_frame",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_frame_2",
+            "solid_id": "pyr2"
+          }
+        ],
+        "schema_version": "typed-fact-next/1",
+        "simulation_goals": [
+          {
+            "goal_id": "sim_pyr1",
+            "kind": "construct_object",
+            "quote": "Dựng hai khối chóp",
+            "target_solid_id": "pyr1"
+          },
+          {
+            "goal_id": "sim_pyr2",
+            "kind": "construct_object",
+            "quote": "Dựng hai khối chóp",
+            "style_role": "shared_geometry",
+            "target_solid_id": "pyr2"
+          },
+          {
+            "goal_id": "sim_hl_d",
+            "kind": "highlight_geometry",
+            "quote": "Dựng hai khối chóp",
+            "style_role": "shared_geometry",
+            "target_refs": [
+              "pyr1::D",
+              "pyr2::D",
+              "pyr2"
+            ]
+          },
+          {
+            "goal_id": "sim_seq",
+            "kind": "construction_sequence",
+            "quote": "Dựng hai khối chóp"
+          }
+        ],
+        "solids": [
+          {
+            "notation": "S.ABC",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC",
+            "solid_id": "pyr1",
+            "solid_type": "pyramid",
+            "vertex_bindings": {
+              "A": "A",
+              "B": "B",
+              "C": "C",
+              "S": "S"
+            }
+          },
+          {
+            "notation": "D.ABC",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC",
+            "solid_id": "pyr2",
+            "solid_type": "pyramid",
+            "vertex_bindings": {
+              "A": "A",
+              "B": "B",
+              "C": "C",
+              "D": "D1"
+            }
+          }
+        ]
+      },
+      "expected": {
+        "a3": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "pl": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a4": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ]
+      }
+    },
+    "N2v2.goal_solid_id_qualified": {
+      "class": "NEG_OWNERSHIP",
+      "payload": {
+        "length_unit": "a",
+        "math_goals": [
+          {
+            "denominator_solid_id": "pyr1",
+            "goal_id": "m_vol_ratio",
+            "kind": "volume_ratio",
+            "numerator_solid_id": "pyr2",
+            "quote": "tính tỉ số thể tích"
+          },
+          {
+            "goal_id": "m_vol_pyr1",
+            "goal_type": "volume",
+            "kind": "measurement",
+            "quote": "tính tỉ số thể tích",
+            "target": {
+              "solid": "pyr1"
+            }
+          },
+          {
+            "goal_id": "mb",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "quote": "Tính độ dài MB.",
+            "target": {
+              "segment": [
+                "pyr2::M",
+                "B"
+              ]
+            },
+            "solid_id": "pyr2"
+          }
+        ],
+        "premises": [
+          {
+            "args": {
+              "right_at": "A",
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "base_is_right_triangle",
+            "quote": "chung mặt đáy ABC là tam giác vuông cân tại A",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "AB = AC = a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "AB = AC = a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "line": [
+                "pyr1::S",
+                "pyr1::A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "line_perp_plane",
+            "quote": "SA vuông góc với mặt phẳng (ABC)",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "pyr1::S",
+                "pyr1::A"
+              ],
+              "value": "2a"
+            },
+            "kind": "segment_length",
+            "quote": "SA = 2a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "point": "pyr1::D",
+              "segment": [
+                "pyr1::S",
+                "pyr1::A"
+              ]
+            },
+            "kind": "point_is_midpoint",
+            "quote": "D là trung điểm của SA ở khối thứ nhất",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "line": [
+                "pyr2::D",
+                "pyr2::A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "line_perp_plane",
+            "quote": "DA vuông góc với (ABC)",
+            "solid_id": "pyr2"
+          },
+          {
+            "args": {
+              "segment": [
+                "pyr2::D",
+                "pyr2::A"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "DA = a",
+            "solid_id": "pyr2"
+          },
+          {
+            "kind": "point_is_midpoint",
+            "solid_id": "pyr1",
+            "args": {
+              "point": "M",
+              "segment": [
+                "S",
+                "B"
+              ]
+            },
+            "quote": "Gọi M là trung điểm của SB."
+          }
+        ],
+        "problem_text": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC là tam giác vuông cân tại A với AB = AC = a. Biết SA vuông góc với mặt phẳng (ABC) và SA = 2a. Gọi D trên cạnh SA sao cho D là trung điểm của SA ở khối thứ nhất, còn đỉnh D của hình chóp D.ABC có DA vuông góc với (ABC) trên cùng nửa không gian và DA = a. Dựng hai khối chóp và tính tỉ số thể tích. Gọi M là trung điểm của SB. Tính độ dài MB.",
+        "relations": [
+          {
+            "kind": "shared_vertices",
+            "pairs": [
+              [
+                "pyr1::A",
+                "pyr2::A"
+              ],
+              [
+                "pyr1::B",
+                "pyr2::B"
+              ],
+              [
+                "pyr1::C",
+                "pyr2::C"
+              ]
+            ],
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_shared_v"
+          },
+          {
+            "face_a": [
+              "A",
+              "B",
+              "C"
+            ],
+            "face_b": [
+              "A",
+              "B",
+              "C"
+            ],
+            "kind": "shared_faces",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_shared_face",
+            "solid_a": "pyr1",
+            "solid_b": "pyr2"
+          },
+          {
+            "anchor_refs": [
+              "A",
+              "B",
+              "C"
+            ],
+            "frame_id": "root",
+            "kind": "coordinate_frame",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_frame_1",
+            "solid_id": "pyr1"
+          },
+          {
+            "anchor_refs": [
+              "A",
+              "B",
+              "C"
+            ],
+            "frame_id": "root",
+            "kind": "coordinate_frame",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_frame_2",
+            "solid_id": "pyr2"
+          }
+        ],
+        "schema_version": "typed-fact-next/1",
+        "simulation_goals": [
+          {
+            "goal_id": "sim_pyr1",
+            "kind": "construct_object",
+            "quote": "Dựng hai khối chóp",
+            "target_solid_id": "pyr1"
+          },
+          {
+            "goal_id": "sim_pyr2",
+            "kind": "construct_object",
+            "quote": "Dựng hai khối chóp",
+            "style_role": "shared_geometry",
+            "target_solid_id": "pyr2"
+          },
+          {
+            "goal_id": "sim_hl_d",
+            "kind": "highlight_geometry",
+            "quote": "Dựng hai khối chóp",
+            "style_role": "shared_geometry",
+            "target_refs": [
+              "pyr1::D",
+              "pyr2::D",
+              "pyr2"
+            ]
+          },
+          {
+            "goal_id": "sim_seq",
+            "kind": "construction_sequence",
+            "quote": "Dựng hai khối chóp"
+          }
+        ],
+        "solids": [
+          {
+            "notation": "S.ABC",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC",
+            "solid_id": "pyr1",
+            "solid_type": "pyramid",
+            "vertex_bindings": {
+              "A": "A",
+              "B": "B",
+              "C": "C",
+              "S": "S"
+            }
+          },
+          {
+            "notation": "D.ABC",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC",
+            "solid_id": "pyr2",
+            "solid_type": "pyramid",
+            "vertex_bindings": {
+              "A": "A",
+              "B": "B",
+              "C": "C",
+              "D": "D1"
+            }
+          }
+        ]
+      },
+      "expected": {
+        "a3": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "pl": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a4": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ]
+      }
+    },
+    "N2v2.qualified_namespace": {
+      "class": "NEG_OWNERSHIP",
+      "payload": {
+        "length_unit": "a",
+        "math_goals": [
+          {
+            "denominator_solid_id": "pyr1",
+            "goal_id": "m_vol_ratio",
+            "kind": "volume_ratio",
+            "numerator_solid_id": "pyr2",
+            "quote": "tính tỉ số thể tích"
+          },
+          {
+            "goal_id": "m_vol_pyr1",
+            "goal_type": "volume",
+            "kind": "measurement",
+            "quote": "tính tỉ số thể tích",
+            "target": {
+              "solid": "pyr1"
+            }
+          },
+          {
+            "goal_id": "mb",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "quote": "Tính độ dài MB.",
+            "target": {
+              "segment": [
+                "pyr2::M",
+                "B"
+              ]
+            }
+          }
+        ],
+        "premises": [
+          {
+            "args": {
+              "right_at": "A",
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "base_is_right_triangle",
+            "quote": "chung mặt đáy ABC là tam giác vuông cân tại A",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "AB = AC = a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "AB = AC = a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "line": [
+                "pyr1::S",
+                "pyr1::A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "line_perp_plane",
+            "quote": "SA vuông góc với mặt phẳng (ABC)",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "pyr1::S",
+                "pyr1::A"
+              ],
+              "value": "2a"
+            },
+            "kind": "segment_length",
+            "quote": "SA = 2a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "point": "pyr1::D",
+              "segment": [
+                "pyr1::S",
+                "pyr1::A"
+              ]
+            },
+            "kind": "point_is_midpoint",
+            "quote": "D là trung điểm của SA ở khối thứ nhất",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "line": [
+                "pyr2::D",
+                "pyr2::A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "line_perp_plane",
+            "quote": "DA vuông góc với (ABC)",
+            "solid_id": "pyr2"
+          },
+          {
+            "args": {
+              "segment": [
+                "pyr2::D",
+                "pyr2::A"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "DA = a",
+            "solid_id": "pyr2"
+          },
+          {
+            "kind": "point_is_midpoint",
+            "solid_id": "pyr1",
+            "args": {
+              "point": "M",
+              "segment": [
+                "S",
+                "B"
+              ]
+            },
+            "quote": "Gọi M là trung điểm của SB."
+          }
+        ],
+        "problem_text": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC là tam giác vuông cân tại A với AB = AC = a. Biết SA vuông góc với mặt phẳng (ABC) và SA = 2a. Gọi D trên cạnh SA sao cho D là trung điểm của SA ở khối thứ nhất, còn đỉnh D của hình chóp D.ABC có DA vuông góc với (ABC) trên cùng nửa không gian và DA = a. Dựng hai khối chóp và tính tỉ số thể tích. Gọi M là trung điểm của SB. Tính độ dài MB.",
+        "relations": [
+          {
+            "kind": "shared_vertices",
+            "pairs": [
+              [
+                "pyr1::A",
+                "pyr2::A"
+              ],
+              [
+                "pyr1::B",
+                "pyr2::B"
+              ],
+              [
+                "pyr1::C",
+                "pyr2::C"
+              ]
+            ],
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_shared_v"
+          },
+          {
+            "face_a": [
+              "A",
+              "B",
+              "C"
+            ],
+            "face_b": [
+              "A",
+              "B",
+              "C"
+            ],
+            "kind": "shared_faces",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_shared_face",
+            "solid_a": "pyr1",
+            "solid_b": "pyr2"
+          },
+          {
+            "anchor_refs": [
+              "A",
+              "B",
+              "C"
+            ],
+            "frame_id": "root",
+            "kind": "coordinate_frame",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_frame_1",
+            "solid_id": "pyr1"
+          },
+          {
+            "anchor_refs": [
+              "A",
+              "B",
+              "C"
+            ],
+            "frame_id": "root",
+            "kind": "coordinate_frame",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_frame_2",
+            "solid_id": "pyr2"
+          }
+        ],
+        "schema_version": "typed-fact-next/1",
+        "simulation_goals": [
+          {
+            "goal_id": "sim_pyr1",
+            "kind": "construct_object",
+            "quote": "Dựng hai khối chóp",
+            "target_solid_id": "pyr1"
+          },
+          {
+            "goal_id": "sim_pyr2",
+            "kind": "construct_object",
+            "quote": "Dựng hai khối chóp",
+            "style_role": "shared_geometry",
+            "target_solid_id": "pyr2"
+          },
+          {
+            "goal_id": "sim_hl_d",
+            "kind": "highlight_geometry",
+            "quote": "Dựng hai khối chóp",
+            "style_role": "shared_geometry",
+            "target_refs": [
+              "pyr1::D",
+              "pyr2::D",
+              "pyr2"
+            ]
+          },
+          {
+            "goal_id": "sim_seq",
+            "kind": "construction_sequence",
+            "quote": "Dựng hai khối chóp"
+          }
+        ],
+        "solids": [
+          {
+            "notation": "S.ABC",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC",
+            "solid_id": "pyr1",
+            "solid_type": "pyramid",
+            "vertex_bindings": {
+              "A": "A",
+              "B": "B",
+              "C": "C",
+              "S": "S"
+            }
+          },
+          {
+            "notation": "D.ABC",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC",
+            "solid_id": "pyr2",
+            "solid_type": "pyramid",
+            "vertex_bindings": {
+              "A": "A",
+              "B": "B",
+              "C": "C",
+              "D": "D1"
+            }
+          }
+        ]
+      },
+      "expected": {
+        "a3": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "pl": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a4": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ]
+      }
+    },
+    "N2v2.control_own_point": {
+      "class": "POS_OWNERSHIP_CONTROL",
+      "payload": {
+        "length_unit": "a",
+        "math_goals": [
+          {
+            "denominator_solid_id": "pyr1",
+            "goal_id": "m_vol_ratio",
+            "kind": "volume_ratio",
+            "numerator_solid_id": "pyr2",
+            "quote": "tính tỉ số thể tích"
+          },
+          {
+            "goal_id": "m_vol_pyr1",
+            "goal_type": "volume",
+            "kind": "measurement",
+            "quote": "tính tỉ số thể tích",
+            "target": {
+              "solid": "pyr1"
+            }
+          },
+          {
+            "goal_id": "mb",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "quote": "Tính độ dài MB.",
+            "target": {
+              "segment": [
+                "M",
+                "B"
+              ]
+            },
+            "solid_id": "pyr1"
+          }
+        ],
+        "premises": [
+          {
+            "args": {
+              "right_at": "A",
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "base_is_right_triangle",
+            "quote": "chung mặt đáy ABC là tam giác vuông cân tại A",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "AB = AC = a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "AB = AC = a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "line": [
+                "pyr1::S",
+                "pyr1::A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "line_perp_plane",
+            "quote": "SA vuông góc với mặt phẳng (ABC)",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "pyr1::S",
+                "pyr1::A"
+              ],
+              "value": "2a"
+            },
+            "kind": "segment_length",
+            "quote": "SA = 2a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "point": "pyr1::D",
+              "segment": [
+                "pyr1::S",
+                "pyr1::A"
+              ]
+            },
+            "kind": "point_is_midpoint",
+            "quote": "D là trung điểm của SA ở khối thứ nhất",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "line": [
+                "pyr2::D",
+                "pyr2::A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "line_perp_plane",
+            "quote": "DA vuông góc với (ABC)",
+            "solid_id": "pyr2"
+          },
+          {
+            "args": {
+              "segment": [
+                "pyr2::D",
+                "pyr2::A"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "DA = a",
+            "solid_id": "pyr2"
+          },
+          {
+            "kind": "point_is_midpoint",
+            "solid_id": "pyr1",
+            "args": {
+              "point": "M",
+              "segment": [
+                "S",
+                "B"
+              ]
+            },
+            "quote": "Gọi M là trung điểm của SB."
+          }
+        ],
+        "problem_text": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC là tam giác vuông cân tại A với AB = AC = a. Biết SA vuông góc với mặt phẳng (ABC) và SA = 2a. Gọi D trên cạnh SA sao cho D là trung điểm của SA ở khối thứ nhất, còn đỉnh D của hình chóp D.ABC có DA vuông góc với (ABC) trên cùng nửa không gian và DA = a. Dựng hai khối chóp và tính tỉ số thể tích. Gọi M là trung điểm của SB. Tính độ dài MB.",
+        "relations": [
+          {
+            "kind": "shared_vertices",
+            "pairs": [
+              [
+                "pyr1::A",
+                "pyr2::A"
+              ],
+              [
+                "pyr1::B",
+                "pyr2::B"
+              ],
+              [
+                "pyr1::C",
+                "pyr2::C"
+              ]
+            ],
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_shared_v"
+          },
+          {
+            "face_a": [
+              "A",
+              "B",
+              "C"
+            ],
+            "face_b": [
+              "A",
+              "B",
+              "C"
+            ],
+            "kind": "shared_faces",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_shared_face",
+            "solid_a": "pyr1",
+            "solid_b": "pyr2"
+          },
+          {
+            "anchor_refs": [
+              "A",
+              "B",
+              "C"
+            ],
+            "frame_id": "root",
+            "kind": "coordinate_frame",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_frame_1",
+            "solid_id": "pyr1"
+          },
+          {
+            "anchor_refs": [
+              "A",
+              "B",
+              "C"
+            ],
+            "frame_id": "root",
+            "kind": "coordinate_frame",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_frame_2",
+            "solid_id": "pyr2"
+          }
+        ],
+        "schema_version": "typed-fact-next/1",
+        "simulation_goals": [
+          {
+            "goal_id": "sim_pyr1",
+            "kind": "construct_object",
+            "quote": "Dựng hai khối chóp",
+            "target_solid_id": "pyr1"
+          },
+          {
+            "goal_id": "sim_pyr2",
+            "kind": "construct_object",
+            "quote": "Dựng hai khối chóp",
+            "style_role": "shared_geometry",
+            "target_solid_id": "pyr2"
+          },
+          {
+            "goal_id": "sim_hl_d",
+            "kind": "highlight_geometry",
+            "quote": "Dựng hai khối chóp",
+            "style_role": "shared_geometry",
+            "target_refs": [
+              "pyr1::D",
+              "pyr2::D",
+              "pyr2"
+            ]
+          },
+          {
+            "goal_id": "sim_seq",
+            "kind": "construction_sequence",
+            "quote": "Dựng hai khối chóp"
+          }
+        ],
+        "solids": [
+          {
+            "notation": "S.ABC",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC",
+            "solid_id": "pyr1",
+            "solid_type": "pyramid",
+            "vertex_bindings": {
+              "A": "A",
+              "B": "B",
+              "C": "C",
+              "S": "S"
+            }
+          },
+          {
+            "notation": "D.ABC",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC",
+            "solid_id": "pyr2",
+            "solid_type": "pyramid",
+            "vertex_bindings": {
+              "A": "A",
+              "B": "B",
+              "C": "C",
+              "D": "D1"
+            }
+          }
+        ]
+      },
+      "expected": {
+        "a3": [
+          "SERVED",
+          null
+        ],
+        "pl": [
+          "REFUSED",
+          "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY"
+        ],
+        "a4": [
+          "REFUSED",
+          "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY"
+        ]
+      },
+      "oracle": {
+        "goal": "mb",
+        "coef": "√5/2",
+        "dim": 1,
+        "unit": "a",
+        "derivation": "AB = a, SA = 2a, SA ⊥ (ABC) ⇒ SB² = a² + 4a² = 5a²; M midpoint of SB ⇒ MB = (√5/2)·a"
+      }
+    },
+    "N2v1.target_solid_id.unqualified": {
+      "class": "HISTORICAL_V1_SUPERSEDED",
+      "payload": {
+        "length_unit": "a",
+        "math_goals": [
+          {
+            "denominator_solid_id": "pyr1",
+            "goal_id": "m_vol_ratio",
+            "kind": "volume_ratio",
+            "numerator_solid_id": "pyr2",
+            "quote": "tính tỉ số thể tích"
+          },
+          {
+            "goal_id": "m_vol_pyr1",
+            "goal_type": "volume",
+            "kind": "measurement",
+            "quote": "tính tỉ số thể tích",
+            "target": {
+              "solid": "pyr1"
+            }
+          },
+          {
+            "goal_id": "mb",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "quote": "Tính độ dài MB.",
+            "target": {
+              "segment": [
+                "M",
+                "B"
+              ],
+              "solid_id": "pyr2"
+            }
+          }
+        ],
+        "premises": [
+          {
+            "args": {
+              "right_at": "A",
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "base_is_right_triangle",
+            "quote": "chung mặt đáy ABC là tam giác vuông cân tại A",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "AB = AC = a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "AB = AC = a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "line": [
+                "pyr1::S",
+                "pyr1::A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "line_perp_plane",
+            "quote": "SA vuông góc với mặt phẳng (ABC)",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "pyr1::S",
+                "pyr1::A"
+              ],
+              "value": "2a"
+            },
+            "kind": "segment_length",
+            "quote": "SA = 2a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "point": "pyr1::D",
+              "segment": [
+                "pyr1::S",
+                "pyr1::A"
+              ]
+            },
+            "kind": "point_is_midpoint",
+            "quote": "D là trung điểm của SA ở khối thứ nhất",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "line": [
+                "pyr2::D",
+                "pyr2::A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "line_perp_plane",
+            "quote": "DA vuông góc với (ABC)",
+            "solid_id": "pyr2"
+          },
+          {
+            "args": {
+              "segment": [
+                "pyr2::D",
+                "pyr2::A"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "DA = a",
+            "solid_id": "pyr2"
+          },
+          {
+            "kind": "point_is_midpoint",
+            "solid_id": "pyr1",
+            "args": {
+              "point": "M",
+              "segment": [
+                "S",
+                "B"
+              ]
+            },
+            "quote": "Gọi M là trung điểm của SB."
+          }
+        ],
+        "problem_text": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC là tam giác vuông cân tại A với AB = AC = a. Biết SA vuông góc với mặt phẳng (ABC) và SA = 2a. Gọi D trên cạnh SA sao cho D là trung điểm của SA ở khối thứ nhất, còn đỉnh D của hình chóp D.ABC có DA vuông góc với (ABC) trên cùng nửa không gian và DA = a. Dựng hai khối chóp và tính tỉ số thể tích. Gọi M là trung điểm của SB. Tính độ dài MB.",
+        "relations": [
+          {
+            "kind": "shared_vertices",
+            "pairs": [
+              [
+                "pyr1::A",
+                "pyr2::A"
+              ],
+              [
+                "pyr1::B",
+                "pyr2::B"
+              ],
+              [
+                "pyr1::C",
+                "pyr2::C"
+              ]
+            ],
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_shared_v"
+          },
+          {
+            "face_a": [
+              "A",
+              "B",
+              "C"
+            ],
+            "face_b": [
+              "A",
+              "B",
+              "C"
+            ],
+            "kind": "shared_faces",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_shared_face",
+            "solid_a": "pyr1",
+            "solid_b": "pyr2"
+          },
+          {
+            "anchor_refs": [
+              "A",
+              "B",
+              "C"
+            ],
+            "frame_id": "root",
+            "kind": "coordinate_frame",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_frame_1",
+            "solid_id": "pyr1"
+          },
+          {
+            "anchor_refs": [
+              "A",
+              "B",
+              "C"
+            ],
+            "frame_id": "root",
+            "kind": "coordinate_frame",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_frame_2",
+            "solid_id": "pyr2"
+          }
+        ],
+        "schema_version": "typed-fact-next/1",
+        "simulation_goals": [
+          {
+            "goal_id": "sim_pyr1",
+            "kind": "construct_object",
+            "quote": "Dựng hai khối chóp",
+            "target_solid_id": "pyr1"
+          },
+          {
+            "goal_id": "sim_pyr2",
+            "kind": "construct_object",
+            "quote": "Dựng hai khối chóp",
+            "style_role": "shared_geometry",
+            "target_solid_id": "pyr2"
+          },
+          {
+            "goal_id": "sim_hl_d",
+            "kind": "highlight_geometry",
+            "quote": "Dựng hai khối chóp",
+            "style_role": "shared_geometry",
+            "target_refs": [
+              "pyr1::D",
+              "pyr2::D",
+              "pyr2"
+            ]
+          },
+          {
+            "goal_id": "sim_seq",
+            "kind": "construction_sequence",
+            "quote": "Dựng hai khối chóp"
+          }
+        ],
+        "solids": [
+          {
+            "notation": "S.ABC",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC",
+            "solid_id": "pyr1",
+            "solid_type": "pyramid",
+            "vertex_bindings": {
+              "A": "A",
+              "B": "B",
+              "C": "C",
+              "S": "S"
+            }
+          },
+          {
+            "notation": "D.ABC",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC",
+            "solid_id": "pyr2",
+            "solid_type": "pyramid",
+            "vertex_bindings": {
+              "A": "A",
+              "B": "B",
+              "C": "C",
+              "D": "D1"
+            }
+          }
+        ]
+      },
+      "v1_expected": {
+        "a3": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "pl": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a4": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ]
+      },
+      "locked_contract_expected": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      }
+    },
+    "N2v1.target_solid_id.qualified": {
+      "class": "HISTORICAL_V1_SUPERSEDED",
+      "payload": {
+        "length_unit": "a",
+        "math_goals": [
+          {
+            "denominator_solid_id": "pyr1",
+            "goal_id": "m_vol_ratio",
+            "kind": "volume_ratio",
+            "numerator_solid_id": "pyr2",
+            "quote": "tính tỉ số thể tích"
+          },
+          {
+            "goal_id": "m_vol_pyr1",
+            "goal_type": "volume",
+            "kind": "measurement",
+            "quote": "tính tỉ số thể tích",
+            "target": {
+              "solid": "pyr1"
+            }
+          },
+          {
+            "goal_id": "mb",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "quote": "Tính độ dài MB.",
+            "target": {
+              "segment": [
+                "pyr2::M",
+                "B"
+              ],
+              "solid_id": "pyr2"
+            }
+          }
+        ],
+        "premises": [
+          {
+            "args": {
+              "right_at": "A",
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "base_is_right_triangle",
+            "quote": "chung mặt đáy ABC là tam giác vuông cân tại A",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "AB = AC = a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "AB = AC = a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "line": [
+                "pyr1::S",
+                "pyr1::A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "line_perp_plane",
+            "quote": "SA vuông góc với mặt phẳng (ABC)",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "pyr1::S",
+                "pyr1::A"
+              ],
+              "value": "2a"
+            },
+            "kind": "segment_length",
+            "quote": "SA = 2a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "point": "pyr1::D",
+              "segment": [
+                "pyr1::S",
+                "pyr1::A"
+              ]
+            },
+            "kind": "point_is_midpoint",
+            "quote": "D là trung điểm của SA ở khối thứ nhất",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "line": [
+                "pyr2::D",
+                "pyr2::A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "line_perp_plane",
+            "quote": "DA vuông góc với (ABC)",
+            "solid_id": "pyr2"
+          },
+          {
+            "args": {
+              "segment": [
+                "pyr2::D",
+                "pyr2::A"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "DA = a",
+            "solid_id": "pyr2"
+          },
+          {
+            "kind": "point_is_midpoint",
+            "solid_id": "pyr1",
+            "args": {
+              "point": "M",
+              "segment": [
+                "S",
+                "B"
+              ]
+            },
+            "quote": "Gọi M là trung điểm của SB."
+          }
+        ],
+        "problem_text": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC là tam giác vuông cân tại A với AB = AC = a. Biết SA vuông góc với mặt phẳng (ABC) và SA = 2a. Gọi D trên cạnh SA sao cho D là trung điểm của SA ở khối thứ nhất, còn đỉnh D của hình chóp D.ABC có DA vuông góc với (ABC) trên cùng nửa không gian và DA = a. Dựng hai khối chóp và tính tỉ số thể tích. Gọi M là trung điểm của SB. Tính độ dài MB.",
+        "relations": [
+          {
+            "kind": "shared_vertices",
+            "pairs": [
+              [
+                "pyr1::A",
+                "pyr2::A"
+              ],
+              [
+                "pyr1::B",
+                "pyr2::B"
+              ],
+              [
+                "pyr1::C",
+                "pyr2::C"
+              ]
+            ],
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_shared_v"
+          },
+          {
+            "face_a": [
+              "A",
+              "B",
+              "C"
+            ],
+            "face_b": [
+              "A",
+              "B",
+              "C"
+            ],
+            "kind": "shared_faces",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_shared_face",
+            "solid_a": "pyr1",
+            "solid_b": "pyr2"
+          },
+          {
+            "anchor_refs": [
+              "A",
+              "B",
+              "C"
+            ],
+            "frame_id": "root",
+            "kind": "coordinate_frame",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_frame_1",
+            "solid_id": "pyr1"
+          },
+          {
+            "anchor_refs": [
+              "A",
+              "B",
+              "C"
+            ],
+            "frame_id": "root",
+            "kind": "coordinate_frame",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_frame_2",
+            "solid_id": "pyr2"
+          }
+        ],
+        "schema_version": "typed-fact-next/1",
+        "simulation_goals": [
+          {
+            "goal_id": "sim_pyr1",
+            "kind": "construct_object",
+            "quote": "Dựng hai khối chóp",
+            "target_solid_id": "pyr1"
+          },
+          {
+            "goal_id": "sim_pyr2",
+            "kind": "construct_object",
+            "quote": "Dựng hai khối chóp",
+            "style_role": "shared_geometry",
+            "target_solid_id": "pyr2"
+          },
+          {
+            "goal_id": "sim_hl_d",
+            "kind": "highlight_geometry",
+            "quote": "Dựng hai khối chóp",
+            "style_role": "shared_geometry",
+            "target_refs": [
+              "pyr1::D",
+              "pyr2::D",
+              "pyr2"
+            ]
+          },
+          {
+            "goal_id": "sim_seq",
+            "kind": "construction_sequence",
+            "quote": "Dựng hai khối chóp"
+          }
+        ],
+        "solids": [
+          {
+            "notation": "S.ABC",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC",
+            "solid_id": "pyr1",
+            "solid_type": "pyramid",
+            "vertex_bindings": {
+              "A": "A",
+              "B": "B",
+              "C": "C",
+              "S": "S"
+            }
+          },
+          {
+            "notation": "D.ABC",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC",
+            "solid_id": "pyr2",
+            "solid_type": "pyramid",
+            "vertex_bindings": {
+              "A": "A",
+              "B": "B",
+              "C": "C",
+              "D": "D1"
+            }
+          }
+        ]
+      },
+      "v1_expected": {
+        "a3": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "pl": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a4": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ]
+      },
+      "locked_contract_expected": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      }
+    },
+    "N2v1.target_solid.unqualified": {
+      "class": "HISTORICAL_V1_SUPERSEDED",
+      "payload": {
+        "length_unit": "a",
+        "math_goals": [
+          {
+            "denominator_solid_id": "pyr1",
+            "goal_id": "m_vol_ratio",
+            "kind": "volume_ratio",
+            "numerator_solid_id": "pyr2",
+            "quote": "tính tỉ số thể tích"
+          },
+          {
+            "goal_id": "m_vol_pyr1",
+            "goal_type": "volume",
+            "kind": "measurement",
+            "quote": "tính tỉ số thể tích",
+            "target": {
+              "solid": "pyr1"
+            }
+          },
+          {
+            "goal_id": "mb",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "quote": "Tính độ dài MB.",
+            "target": {
+              "segment": [
+                "M",
+                "B"
+              ],
+              "solid": "pyr2"
+            }
+          }
+        ],
+        "premises": [
+          {
+            "args": {
+              "right_at": "A",
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "base_is_right_triangle",
+            "quote": "chung mặt đáy ABC là tam giác vuông cân tại A",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "AB = AC = a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "AB = AC = a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "line": [
+                "pyr1::S",
+                "pyr1::A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "line_perp_plane",
+            "quote": "SA vuông góc với mặt phẳng (ABC)",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "pyr1::S",
+                "pyr1::A"
+              ],
+              "value": "2a"
+            },
+            "kind": "segment_length",
+            "quote": "SA = 2a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "point": "pyr1::D",
+              "segment": [
+                "pyr1::S",
+                "pyr1::A"
+              ]
+            },
+            "kind": "point_is_midpoint",
+            "quote": "D là trung điểm của SA ở khối thứ nhất",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "line": [
+                "pyr2::D",
+                "pyr2::A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "line_perp_plane",
+            "quote": "DA vuông góc với (ABC)",
+            "solid_id": "pyr2"
+          },
+          {
+            "args": {
+              "segment": [
+                "pyr2::D",
+                "pyr2::A"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "DA = a",
+            "solid_id": "pyr2"
+          },
+          {
+            "kind": "point_is_midpoint",
+            "solid_id": "pyr1",
+            "args": {
+              "point": "M",
+              "segment": [
+                "S",
+                "B"
+              ]
+            },
+            "quote": "Gọi M là trung điểm của SB."
+          }
+        ],
+        "problem_text": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC là tam giác vuông cân tại A với AB = AC = a. Biết SA vuông góc với mặt phẳng (ABC) và SA = 2a. Gọi D trên cạnh SA sao cho D là trung điểm của SA ở khối thứ nhất, còn đỉnh D của hình chóp D.ABC có DA vuông góc với (ABC) trên cùng nửa không gian và DA = a. Dựng hai khối chóp và tính tỉ số thể tích. Gọi M là trung điểm của SB. Tính độ dài MB.",
+        "relations": [
+          {
+            "kind": "shared_vertices",
+            "pairs": [
+              [
+                "pyr1::A",
+                "pyr2::A"
+              ],
+              [
+                "pyr1::B",
+                "pyr2::B"
+              ],
+              [
+                "pyr1::C",
+                "pyr2::C"
+              ]
+            ],
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_shared_v"
+          },
+          {
+            "face_a": [
+              "A",
+              "B",
+              "C"
+            ],
+            "face_b": [
+              "A",
+              "B",
+              "C"
+            ],
+            "kind": "shared_faces",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_shared_face",
+            "solid_a": "pyr1",
+            "solid_b": "pyr2"
+          },
+          {
+            "anchor_refs": [
+              "A",
+              "B",
+              "C"
+            ],
+            "frame_id": "root",
+            "kind": "coordinate_frame",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_frame_1",
+            "solid_id": "pyr1"
+          },
+          {
+            "anchor_refs": [
+              "A",
+              "B",
+              "C"
+            ],
+            "frame_id": "root",
+            "kind": "coordinate_frame",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_frame_2",
+            "solid_id": "pyr2"
+          }
+        ],
+        "schema_version": "typed-fact-next/1",
+        "simulation_goals": [
+          {
+            "goal_id": "sim_pyr1",
+            "kind": "construct_object",
+            "quote": "Dựng hai khối chóp",
+            "target_solid_id": "pyr1"
+          },
+          {
+            "goal_id": "sim_pyr2",
+            "kind": "construct_object",
+            "quote": "Dựng hai khối chóp",
+            "style_role": "shared_geometry",
+            "target_solid_id": "pyr2"
+          },
+          {
+            "goal_id": "sim_hl_d",
+            "kind": "highlight_geometry",
+            "quote": "Dựng hai khối chóp",
+            "style_role": "shared_geometry",
+            "target_refs": [
+              "pyr1::D",
+              "pyr2::D",
+              "pyr2"
+            ]
+          },
+          {
+            "goal_id": "sim_seq",
+            "kind": "construction_sequence",
+            "quote": "Dựng hai khối chóp"
+          }
+        ],
+        "solids": [
+          {
+            "notation": "S.ABC",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC",
+            "solid_id": "pyr1",
+            "solid_type": "pyramid",
+            "vertex_bindings": {
+              "A": "A",
+              "B": "B",
+              "C": "C",
+              "S": "S"
+            }
+          },
+          {
+            "notation": "D.ABC",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC",
+            "solid_id": "pyr2",
+            "solid_type": "pyramid",
+            "vertex_bindings": {
+              "A": "A",
+              "B": "B",
+              "C": "C",
+              "D": "D1"
+            }
+          }
+        ]
+      },
+      "v1_expected": {
+        "a3": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "pl": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a4": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ]
+      },
+      "locked_contract_expected": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      }
+    },
+    "N2v1.target_solid.qualified": {
+      "class": "HISTORICAL_V1_SUPERSEDED",
+      "payload": {
+        "length_unit": "a",
+        "math_goals": [
+          {
+            "denominator_solid_id": "pyr1",
+            "goal_id": "m_vol_ratio",
+            "kind": "volume_ratio",
+            "numerator_solid_id": "pyr2",
+            "quote": "tính tỉ số thể tích"
+          },
+          {
+            "goal_id": "m_vol_pyr1",
+            "goal_type": "volume",
+            "kind": "measurement",
+            "quote": "tính tỉ số thể tích",
+            "target": {
+              "solid": "pyr1"
+            }
+          },
+          {
+            "goal_id": "mb",
+            "kind": "measurement",
+            "goal_type": "distance",
+            "quote": "Tính độ dài MB.",
+            "target": {
+              "segment": [
+                "pyr2::M",
+                "B"
+              ],
+              "solid": "pyr2"
+            }
+          }
+        ],
+        "premises": [
+          {
+            "args": {
+              "right_at": "A",
+              "vertices": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "base_is_right_triangle",
+            "quote": "chung mặt đáy ABC là tam giác vuông cân tại A",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "A",
+                "B"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "AB = AC = a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "A",
+                "C"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "AB = AC = a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "line": [
+                "pyr1::S",
+                "pyr1::A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "line_perp_plane",
+            "quote": "SA vuông góc với mặt phẳng (ABC)",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "segment": [
+                "pyr1::S",
+                "pyr1::A"
+              ],
+              "value": "2a"
+            },
+            "kind": "segment_length",
+            "quote": "SA = 2a",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "point": "pyr1::D",
+              "segment": [
+                "pyr1::S",
+                "pyr1::A"
+              ]
+            },
+            "kind": "point_is_midpoint",
+            "quote": "D là trung điểm của SA ở khối thứ nhất",
+            "solid_id": "pyr1"
+          },
+          {
+            "args": {
+              "line": [
+                "pyr2::D",
+                "pyr2::A"
+              ],
+              "plane": [
+                "A",
+                "B",
+                "C"
+              ]
+            },
+            "kind": "line_perp_plane",
+            "quote": "DA vuông góc với (ABC)",
+            "solid_id": "pyr2"
+          },
+          {
+            "args": {
+              "segment": [
+                "pyr2::D",
+                "pyr2::A"
+              ],
+              "value": "a"
+            },
+            "kind": "segment_length",
+            "quote": "DA = a",
+            "solid_id": "pyr2"
+          },
+          {
+            "kind": "point_is_midpoint",
+            "solid_id": "pyr1",
+            "args": {
+              "point": "M",
+              "segment": [
+                "S",
+                "B"
+              ]
+            },
+            "quote": "Gọi M là trung điểm của SB."
+          }
+        ],
+        "problem_text": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC là tam giác vuông cân tại A với AB = AC = a. Biết SA vuông góc với mặt phẳng (ABC) và SA = 2a. Gọi D trên cạnh SA sao cho D là trung điểm của SA ở khối thứ nhất, còn đỉnh D của hình chóp D.ABC có DA vuông góc với (ABC) trên cùng nửa không gian và DA = a. Dựng hai khối chóp và tính tỉ số thể tích. Gọi M là trung điểm của SB. Tính độ dài MB.",
+        "relations": [
+          {
+            "kind": "shared_vertices",
+            "pairs": [
+              [
+                "pyr1::A",
+                "pyr2::A"
+              ],
+              [
+                "pyr1::B",
+                "pyr2::B"
+              ],
+              [
+                "pyr1::C",
+                "pyr2::C"
+              ]
+            ],
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_shared_v"
+          },
+          {
+            "face_a": [
+              "A",
+              "B",
+              "C"
+            ],
+            "face_b": [
+              "A",
+              "B",
+              "C"
+            ],
+            "kind": "shared_faces",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_shared_face",
+            "solid_a": "pyr1",
+            "solid_b": "pyr2"
+          },
+          {
+            "anchor_refs": [
+              "A",
+              "B",
+              "C"
+            ],
+            "frame_id": "root",
+            "kind": "coordinate_frame",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_frame_1",
+            "solid_id": "pyr1"
+          },
+          {
+            "anchor_refs": [
+              "A",
+              "B",
+              "C"
+            ],
+            "frame_id": "root",
+            "kind": "coordinate_frame",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+            "relation_id": "rel_frame_2",
+            "solid_id": "pyr2"
+          }
+        ],
+        "schema_version": "typed-fact-next/1",
+        "simulation_goals": [
+          {
+            "goal_id": "sim_pyr1",
+            "kind": "construct_object",
+            "quote": "Dựng hai khối chóp",
+            "target_solid_id": "pyr1"
+          },
+          {
+            "goal_id": "sim_pyr2",
+            "kind": "construct_object",
+            "quote": "Dựng hai khối chóp",
+            "style_role": "shared_geometry",
+            "target_solid_id": "pyr2"
+          },
+          {
+            "goal_id": "sim_hl_d",
+            "kind": "highlight_geometry",
+            "quote": "Dựng hai khối chóp",
+            "style_role": "shared_geometry",
+            "target_refs": [
+              "pyr1::D",
+              "pyr2::D",
+              "pyr2"
+            ]
+          },
+          {
+            "goal_id": "sim_seq",
+            "kind": "construction_sequence",
+            "quote": "Dựng hai khối chóp"
+          }
+        ],
+        "solids": [
+          {
+            "notation": "S.ABC",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC",
+            "solid_id": "pyr1",
+            "solid_type": "pyramid",
+            "vertex_bindings": {
+              "A": "A",
+              "B": "B",
+              "C": "C",
+              "S": "S"
+            }
+          },
+          {
+            "notation": "D.ABC",
+            "quote": "Cho hai hình chóp S.ABC và D.ABC",
+            "solid_id": "pyr2",
+            "solid_type": "pyramid",
+            "vertex_bindings": {
+              "A": "A",
+              "B": "B",
+              "C": "C",
+              "D": "D1"
+            }
+          }
+        ]
+      },
+      "v1_expected": {
+        "a3": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "pl": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ],
+        "a4": [
+          "REFUSED",
+          "SOURCE_OBJECT_MISMATCH"
+        ]
+      },
+      "locked_contract_expected": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      }
+    }
+  }
+}

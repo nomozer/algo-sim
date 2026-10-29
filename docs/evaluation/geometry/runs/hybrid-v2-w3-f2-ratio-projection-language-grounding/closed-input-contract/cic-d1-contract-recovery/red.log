@@ -1,0 +1,843 @@
+.FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF....... [ 14%]
+........................................F...F........................... [ 28%]
+........................................................................ [ 42%]
+........................................................................ [ 56%]
+........................................................................ [ 70%]
+........................................................................ [ 84%]
+........................................................................ [ 98%]
+.F.......                                                                [100%]
+================================== FAILURES ===================================
+E   assert None == 'INVALID_MATH_GOAL'
+     +  where None = schema_code({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+     +    where {'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...} = v1({'schema_version': 'typed-fact-next/2', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:50: assert None == 'INVALID_MATH_GOAL'
+E   assert None == 'INVALID_MATH_GOAL'
+     +  where None = schema_code({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+     +    where {'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...} = v1({'schema_version': 'typed-fact-next/2', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:50: assert None == 'INVALID_MATH_GOAL'
+E   assert None == 'INVALID_MATH_GOAL'
+     +  where None = schema_code({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+     +    where {'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...} = v1({'schema_version': 'typed-fact-next/2', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:50: assert None == 'INVALID_MATH_GOAL'
+E   assert None == 'INVALID_MATH_GOAL'
+     +  where None = schema_code({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+     +    where {'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...} = v1({'schema_version': 'typed-fact-next/2', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:50: assert None == 'INVALID_MATH_GOAL'
+E   assert None == 'INVALID_MATH_GOAL'
+     +  where None = schema_code({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+     +    where {'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...} = v1({'schema_version': 'typed-fact-next/2', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:50: assert None == 'INVALID_MATH_GOAL'
+E   assert None == 'INVALID_MATH_GOAL'
+     +  where None = schema_code({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+     +    where {'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...} = v1({'schema_version': 'typed-fact-next/2', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:50: assert None == 'INVALID_MATH_GOAL'
+E   assert None == 'INVALID_MATH_GOAL'
+     +  where None = schema_code({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+     +    where {'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...} = v1({'schema_version': 'typed-fact-next/2', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:50: assert None == 'INVALID_MATH_GOAL'
+E   assert None == 'INVALID_MATH_GOAL'
+     +  where None = schema_code({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+     +    where {'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...} = v1({'schema_version': 'typed-fact-next/2', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:50: assert None == 'INVALID_MATH_GOAL'
+E   assert None == 'INVALID_MATH_GOAL'
+     +  where None = schema_code({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+     +    where {'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...} = v1({'schema_version': 'typed-fact-next/2', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:50: assert None == 'INVALID_MATH_GOAL'
+E   assert None == 'INVALID_MATH_GOAL'
+     +  where None = schema_code({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+     +    where {'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...} = v1({'schema_version': 'typed-fact-next/2', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:50: assert None == 'INVALID_MATH_GOAL'
+E   assert None == 'INVALID_MATH_GOAL'
+     +  where None = schema_code({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+     +    where {'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...} = v1({'schema_version': 'typed-fact-next/2', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:50: assert None == 'INVALID_MATH_GOAL'
+E   assert None == 'INVALID_MATH_GOAL'
+     +  where None = schema_code({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+     +    where {'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...} = v1({'schema_version': 'typed-fact-next/2', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:50: assert None == 'INVALID_MATH_GOAL'
+E   assert None == 'INVALID_MATH_GOAL'
+     +  where None = schema_code({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+     +    where {'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...} = v1({'schema_version': 'typed-fact-next/2', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:50: assert None == 'INVALID_MATH_GOAL'
+E   assert None == 'INVALID_MATH_GOAL'
+     +  where None = schema_code({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+     +    where {'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...} = v1({'schema_version': 'typed-fact-next/2', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:50: assert None == 'INVALID_MATH_GOAL'
+E   assert None == 'INVALID_MATH_GOAL'
+     +  where None = schema_code({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+     +    where {'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...} = v1({'schema_version': 'typed-fact-next/2', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:50: assert None == 'INVALID_MATH_GOAL'
+E   assert None == 'INVALID_MATH_GOAL'
+     +  where None = schema_code({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+     +    where {'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...} = v1({'schema_version': 'typed-fact-next/2', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:50: assert None == 'INVALID_MATH_GOAL'
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:56: AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E   assert (None == 'INVALID_MATH_GOAL')
+     +  where None = schema_code({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+     +    where {'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...} = v1({'schema_version': 'typed-fact-next/2', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:141: assert (None == 'INVALID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_cic_d1_locked_contract.py:146: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_typed_fact_next_v2_distance_bridge.py:147: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+=================================== PASSES ====================================
+=========================== short test summary info ===========================
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_cases_are_registered
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.distance_point_plane.no_scope-a3]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.distance_point_plane.no_scope-pl]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.distance_point_plane.no_scope-a4]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.distance_point_plane.goal_solid_id-a3]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.distance_point_plane.goal_solid_id-pl]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.distance_point_plane.goal_solid_id-a4]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.distance_segment.no_scope-a3]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.distance_segment.no_scope-pl]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.distance_segment.no_scope-a4]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.distance_segment.goal_solid_id-a3]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.distance_segment.goal_solid_id-pl]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.distance_segment.goal_solid_id-a4]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.angle_line_plane.no_scope-a3]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.angle_line_plane.no_scope-pl]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.angle_line_plane.no_scope-a4]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.angle_line_plane.goal_solid_id-a3]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.angle_line_plane.goal_solid_id-pl]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.angle_line_plane.goal_solid_id-a4]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.area_polygon.no_scope-a3]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.area_polygon.no_scope-pl]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.area_polygon.no_scope-a4]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.area_polygon.goal_solid_id-a3]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.area_polygon.goal_solid_id-pl]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.area_polygon.goal_solid_id-a4]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.volume.solid-a3]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.volume.solid-pl]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.volume.solid-a4]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.volume.solid_id-a3]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.volume.solid_id-pl]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.volume.solid_id-a4]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.volume.solid_and_solid_id-a3]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.volume.solid_and_solid_id-pl]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_valid_targets_keep_their_outcome[C.volume.solid_and_solid_id-a4]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_n2v2_ownership_refused_before_capability[N2v2.goal_solid_id-a3]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_n2v2_ownership_refused_before_capability[N2v2.goal_solid_id-pl]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_n2v2_ownership_refused_before_capability[N2v2.goal_solid_id-a4]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_n2v2_ownership_refused_before_capability[N2v2.goal_solid_id_qualified-a3]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_n2v2_ownership_refused_before_capability[N2v2.goal_solid_id_qualified-pl]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_n2v2_ownership_refused_before_capability[N2v2.goal_solid_id_qualified-a4]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_n2v2_ownership_refused_before_capability[N2v2.qualified_namespace-a3]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_n2v2_ownership_refused_before_capability[N2v2.qualified_namespace-pl]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_n2v2_ownership_refused_before_capability[N2v2.qualified_namespace-a4]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_n2v2_adapter3_gate_is_terminal_not_fallback[N2v2.goal_solid_id]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_n2v2_adapter3_gate_is_terminal_not_fallback[N2v2.goal_solid_id_qualified]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_n2v2_adapter3_gate_is_terminal_not_fallback[N2v2.qualified_namespace]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_n2v2_qualified_namespace_has_no_global_resolution
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_n2v2_valid_constructed_point_is_served_with_exact_oracle
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_cic_d1_mutants_are_killed[remove_s8]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_cic_d1_mutants_are_killed[capability_before_s8]
+PASSED backend\tests\geometry\test_cic_d1_locked_contract.py::test_cic_d1_mutants_are_killed[semantic_fallback]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[math_goal-volume_ratio-denominator_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[math_goal-volume_ratio-goal_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[math_goal-volume_ratio-kind]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[math_goal-volume_ratio-numerator_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[math_goal-volume_ratio-quote]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[math_goal-residual_volume-cut_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[math_goal-residual_volume-goal_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[math_goal-residual_volume-kind]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[math_goal-residual_volume-parent_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[math_goal-residual_volume-quote]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[math_goal-measurement-goal_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[math_goal-measurement-goal_type]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[math_goal-measurement-kind]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[math_goal-measurement-quote]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[math_goal-measurement-solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[math_goal-measurement-target]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_object-goal_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_object-kind]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_object-quote]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_object-style_role]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_object-target_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_object-target_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_plane_section-goal_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_plane_section-kind]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_plane_section-quote]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_plane_section-style_role]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_plane_section-target_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_plane_section-target_section_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_plane_section-target_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_derived_solid-apex_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_derived_solid-derived_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_derived_solid-goal_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_derived_solid-kind]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_derived_solid-parent_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_derived_solid-quote]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_derived_solid-style_role]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_derived_solid-target_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construct_derived_solid-target_section_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-highlight_geometry-goal_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-highlight_geometry-kind]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-highlight_geometry-quote]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-highlight_geometry-style_role]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-highlight_geometry-target_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-highlight_geometry-target_section_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-highlight_geometry-target_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construction_sequence-goal_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construction_sequence-kind]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construction_sequence-quote]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construction_sequence-style_role]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construction_sequence-target_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[simulation_goal-construction_sequence-target_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-containment-container_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-containment-kind]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-containment-member_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-containment-quote]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-containment-relation_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-containment-section_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-containment-solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-shared_vertices-kind]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-shared_vertices-pairs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-shared_vertices-quote]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-shared_vertices-relation_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-shared_vertices-section_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-shared_vertices-solid_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-shared_vertices-solid_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-shared_vertices-solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-shared_faces-face_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-shared_faces-face_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-shared_faces-kind]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-shared_faces-quote]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-shared_faces-relation_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-shared_faces-section_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-shared_faces-solid_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-shared_faces-solid_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-shared_faces-solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-parallel-entity_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-parallel-entity_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-parallel-kind]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-parallel-quote]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-parallel-relation_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-parallel-section_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-parallel-solid_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-parallel-solid_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-parallel-solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-perpendicular-entity_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-perpendicular-entity_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-perpendicular-kind]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-perpendicular-quote]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-perpendicular-relation_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-perpendicular-section_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-perpendicular-solid_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-perpendicular-solid_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-perpendicular-solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-section_membership-kind]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-section_membership-member_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-section_membership-quote]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-section_membership-relation_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-section_membership-section_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-section_membership-solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-coordinate_frame-anchor_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-coordinate_frame-frame_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-coordinate_frame-kind]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-coordinate_frame-quote]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-coordinate_frame-relation_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-coordinate_frame-section_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_allowed_kind_fields_remain_valid[relation-coordinate_frame-solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-math_goal-volume_ratio-parent_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-math_goal-volume_ratio-cut_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-math_goal-volume_ratio-goal_type]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-math_goal-volume_ratio-target]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-math_goal-volume_ratio-solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-math_goal-residual_volume-numerator_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-math_goal-residual_volume-denominator_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-math_goal-residual_volume-goal_type]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-math_goal-residual_volume-target]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-math_goal-residual_volume-solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-math_goal-measurement-numerator_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-math_goal-measurement-denominator_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-math_goal-measurement-parent_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-math_goal-measurement-cut_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-simulation_goal-construct_object-target_section_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-simulation_goal-construct_object-derived_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-simulation_goal-construct_object-parent_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-simulation_goal-construct_object-apex_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-simulation_goal-construct_plane_section-derived_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-simulation_goal-construct_plane_section-parent_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-simulation_goal-construct_plane_section-apex_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-simulation_goal-construct_derived_solid-target_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-simulation_goal-highlight_geometry-derived_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-simulation_goal-highlight_geometry-parent_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-simulation_goal-highlight_geometry-apex_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-simulation_goal-construction_sequence-target_section_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-simulation_goal-construction_sequence-derived_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-simulation_goal-construction_sequence-parent_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-simulation_goal-construction_sequence-apex_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-containment-pairs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-containment-solid_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-containment-face_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-containment-solid_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-containment-face_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-containment-entity_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-containment-entity_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-containment-member_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-containment-frame_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-containment-anchor_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-shared_vertices-container_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-shared_vertices-member_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-shared_vertices-face_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-shared_vertices-face_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-shared_vertices-entity_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-shared_vertices-entity_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-shared_vertices-member_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-shared_vertices-frame_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-shared_vertices-anchor_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-shared_faces-container_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-shared_faces-member_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-shared_faces-pairs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-shared_faces-entity_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-shared_faces-entity_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-shared_faces-member_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-shared_faces-frame_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-shared_faces-anchor_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-parallel-container_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-parallel-member_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-parallel-pairs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-parallel-face_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-parallel-face_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-parallel-member_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-parallel-frame_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-parallel-anchor_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-perpendicular-container_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-perpendicular-member_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-perpendicular-pairs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-perpendicular-face_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-perpendicular-face_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-perpendicular-member_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-perpendicular-frame_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-perpendicular-anchor_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-section_membership-container_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-section_membership-member_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-section_membership-pairs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-section_membership-solid_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-section_membership-face_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-section_membership-solid_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-section_membership-face_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-section_membership-entity_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-section_membership-entity_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-section_membership-frame_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-section_membership-anchor_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-coordinate_frame-container_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-coordinate_frame-member_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-coordinate_frame-pairs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-coordinate_frame-solid_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-coordinate_frame-face_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-coordinate_frame-solid_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-coordinate_frame-face_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-coordinate_frame-entity_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-coordinate_frame-entity_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[value-relation-coordinate_frame-member_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-math_goal-volume_ratio-parent_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-math_goal-volume_ratio-cut_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-math_goal-volume_ratio-goal_type]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-math_goal-volume_ratio-target]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-math_goal-volume_ratio-solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-math_goal-residual_volume-numerator_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-math_goal-residual_volume-denominator_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-math_goal-residual_volume-goal_type]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-math_goal-residual_volume-target]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-math_goal-residual_volume-solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-math_goal-measurement-numerator_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-math_goal-measurement-denominator_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-math_goal-measurement-parent_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-math_goal-measurement-cut_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-simulation_goal-construct_object-target_section_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-simulation_goal-construct_object-derived_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-simulation_goal-construct_object-parent_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-simulation_goal-construct_object-apex_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-simulation_goal-construct_plane_section-derived_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-simulation_goal-construct_plane_section-parent_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-simulation_goal-construct_plane_section-apex_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-simulation_goal-construct_derived_solid-target_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-simulation_goal-highlight_geometry-derived_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-simulation_goal-highlight_geometry-parent_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-simulation_goal-highlight_geometry-apex_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-simulation_goal-construction_sequence-target_section_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-simulation_goal-construction_sequence-derived_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-simulation_goal-construction_sequence-parent_solid_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-simulation_goal-construction_sequence-apex_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-containment-pairs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-containment-solid_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-containment-face_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-containment-solid_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-containment-face_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-containment-entity_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-containment-entity_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-containment-member_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-containment-frame_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-containment-anchor_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-shared_vertices-container_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-shared_vertices-member_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-shared_vertices-face_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-shared_vertices-face_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-shared_vertices-entity_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-shared_vertices-entity_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-shared_vertices-member_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-shared_vertices-frame_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-shared_vertices-anchor_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-shared_faces-container_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-shared_faces-member_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-shared_faces-pairs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-shared_faces-entity_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-shared_faces-entity_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-shared_faces-member_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-shared_faces-frame_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-shared_faces-anchor_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-parallel-container_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-parallel-member_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-parallel-pairs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-parallel-face_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-parallel-face_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-parallel-member_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-parallel-frame_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-parallel-anchor_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-perpendicular-container_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-perpendicular-member_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-perpendicular-pairs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-perpendicular-face_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-perpendicular-face_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-perpendicular-member_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-perpendicular-frame_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-perpendicular-anchor_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-section_membership-container_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-section_membership-member_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-section_membership-pairs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-section_membership-solid_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-section_membership-face_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-section_membership-solid_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-section_membership-face_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-section_membership-entity_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-section_membership-entity_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-section_membership-frame_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-section_membership-anchor_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-coordinate_frame-container_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-coordinate_frame-member_ref]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-coordinate_frame-pairs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-coordinate_frame-solid_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-coordinate_frame-face_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-coordinate_frame-solid_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-coordinate_frame-face_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-coordinate_frame-entity_a]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-coordinate_frame-entity_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_inapplicable_kind_fields_are_typed[null-relation-coordinate_frame-member_refs]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_unknown_kind_fields_are_typed[math_goal]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_unknown_kind_fields_are_typed[simulation_goal]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_unknown_kind_fields_are_typed[relation]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[string-point-S]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[string-segment-good1]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[string-line-good2]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[string-line1-good3]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[string-line2-good4]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[string-plane-good5]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[string-plane1-good6]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[string-plane2-good7]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[string-polygon-good8]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[object-point-S]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[object-segment-good1]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[object-line-good2]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[object-line1-good3]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[object-line2-good4]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[object-plane-good5]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[object-plane1-good6]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[object-plane2-good7]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[object-polygon-good8]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[empty-point-S]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[empty-segment-good1]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[empty-line-good2]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[empty-line1-good3]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[empty-line2-good4]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[empty-plane-good5]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[empty-plane1-good6]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[empty-plane2-good7]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[empty-polygon-good8]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[wrong_arity-point-S]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[wrong_arity-segment-good1]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[wrong_arity-line-good2]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[wrong_arity-line1-good3]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[wrong_arity-line2-good4]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[wrong_arity-plane-good5]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[wrong_arity-plane1-good6]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[wrong_arity-plane2-good7]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[wrong_arity-polygon-good8]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[null-point-S]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[null-segment-good1]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[null-line-good2]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[null-line1-good3]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[null-line2-good4]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[null-plane-good5]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[null-plane1-good6]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[null-plane2-good7]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_operand_shapes_fail_before_routes[null-polygon-good8]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_closed_target_keys_cannot_be_ignored[solid_b]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_closed_target_keys_cannot_be_ignored[solids]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_closed_target_keys_cannot_be_ignored[plane]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_closed_target_keys_cannot_be_ignored[parent]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_legacy_constructed_ownership_precedes_capability[False-goal]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_legacy_constructed_ownership_precedes_capability[True-goal]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_legacy_positive_keeps_exact_oracle
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_legacy_containment_ownership_precedes_capability
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_curved_unknown_qualified_label_is_terminal[shared_vertices]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_curved_unknown_qualified_label_is_terminal[containment]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_curved_unsupported_relation_is_not_ignored
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_curved_relation_missing_source_is_typed
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_curved_contradictory_identity_is_not_ignored
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_curved_positive_keeps_exact_answers
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_derived_highlight_positive_and_renaming
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_derived_highlight_foreign_scope_refuses
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_indirect_target_reads_are_in_census
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_census_follows_helper_partial_and_keysets
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_policy_snapshot_covers_all_actual_kind_fields
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_v1_conversion_preserves_explicit_presence
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_supported_positive_controls_are_registered
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_supported_positive_scope_aliases[id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_supported_positive_scope_aliases[notation]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_supported_positive_scope_aliases[nested_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_supported_positive_scope_aliases[goal_id]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_required_preflight_cannot_be_bypassed[False-a3]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_required_preflight_cannot_be_bypassed[False-pl]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_required_preflight_cannot_be_bypassed[False-a4]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_required_preflight_cannot_be_bypassed[True-a3]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_required_preflight_cannot_be_bypassed[True-pl]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_required_preflight_cannot_be_bypassed[True-a4]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_mandatory_mutants_are_killed[operand_shape]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_mandatory_mutants_are_killed[string_iteration]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_mandatory_mutants_are_killed[kind_fields]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_mandatory_mutants_are_killed[closed_keys]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_mandatory_mutants_are_killed[s8_preflight]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_mandatory_mutants_are_killed[semantic_fallback]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_mandatory_mutants_are_killed[curved_existence]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_mandatory_mutants_are_killed[curved_relations]
+PASSED backend\tests\geometry\test_closed_input_contract.py::test_mandatory_mutants_are_killed[derived_resolution]
+PASSED backend\tests\geometry\test_typed_fact_next_v2_distance_bridge.py::test_malformed_distance_target_is_refused[target0]
+PASSED backend\tests\geometry\test_typed_fact_next_v2_distance_bridge.py::test_malformed_distance_target_is_refused[target1]
+PASSED backend\tests\geometry\test_typed_fact_next_v2_distance_bridge.py::test_malformed_distance_target_is_refused[target2]
+PASSED backend\tests\geometry\test_typed_fact_next_v2_distance_bridge.py::test_malformed_distance_target_is_refused[target3]
+PASSED backend\tests\geometry\test_typed_fact_next_v2_distance_bridge.py::test_malformed_distance_target_is_refused[target4]
+PASSED backend\tests\geometry\test_typed_fact_next_v2_distance_bridge.py::test_malformed_distance_target_is_refused[target5]
+PASSED backend\tests\geometry\test_typed_fact_next_v2_distance_bridge.py::test_malformed_distance_target_is_refused[target6]
+PASSED backend\tests\geometry\test_typed_fact_next_v2_distance_bridge.py::test_malformed_distance_target_is_refused[target7]
+PASSED backend\tests\geometry\test_typed_fact_next_v2_distance_bridge.py::test_malformed_distance_target_is_refused[target9]
+PASSED backend\tests\geometry\test_typed_fact_next_v2_distance_bridge.py::test_malformed_distance_target_is_refused[target10]
+PASSED backend\tests\geometry\test_typed_fact_next_v2_distance_bridge.py::test_malformed_distance_target_is_refused[target11]
+PASSED backend\tests\geometry\test_typed_fact_next_v2_distance_bridge.py::test_malformed_distance_target_is_refused[target12]
+PASSED backend\tests\geometry\test_typed_fact_next_v2_distance_bridge.py::test_malformed_distance_target_is_refused[target13]
+PASSED backend\tests\geometry\test_typed_fact_next_v2_distance_bridge.py::test_malformed_distance_target_is_refused[target14]
+PASSED backend\tests\geometry\test_typed_fact_next_v2_distance_bridge.py::test_malformed_distance_target_is_refused[target15]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_fails_at_schema[F.distance_point_plane.solid]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_fails_at_schema[F.distance_point_plane.solid_id]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_fails_at_schema[F.distance_point_plane.solid_notation]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_fails_at_schema[F.distance_point_plane.solid_and_solid_id]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_fails_at_schema[F.distance_segment.solid]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_fails_at_schema[F.distance_segment.solid_id]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_fails_at_schema[F.distance_segment.solid_notation]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_fails_at_schema[F.distance_segment.solid_and_solid_id]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_fails_at_schema[F.angle_line_plane.solid]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_fails_at_schema[F.angle_line_plane.solid_id]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_fails_at_schema[F.angle_line_plane.solid_notation]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_fails_at_schema[F.angle_line_plane.solid_and_solid_id]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_fails_at_schema[F.area_polygon.solid]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_fails_at_schema[F.area_polygon.solid_id]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_fails_at_schema[F.area_polygon.solid_notation]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_fails_at_schema[F.area_polygon.solid_and_solid_id]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_point_plane.solid-a3]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_point_plane.solid-pl]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_point_plane.solid-a4]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_point_plane.solid_id-a3]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_point_plane.solid_id-pl]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_point_plane.solid_id-a4]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_point_plane.solid_notation-a3]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_point_plane.solid_notation-pl]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_point_plane.solid_notation-a4]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_point_plane.solid_and_solid_id-a3]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_point_plane.solid_and_solid_id-pl]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_point_plane.solid_and_solid_id-a4]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_segment.solid-a3]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_segment.solid-pl]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_segment.solid-a4]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_segment.solid_id-a3]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_segment.solid_id-pl]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_segment.solid_id-a4]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_segment.solid_notation-a3]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_segment.solid_notation-pl]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_segment.solid_notation-a4]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_segment.solid_and_solid_id-a3]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_segment.solid_and_solid_id-pl]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.distance_segment.solid_and_solid_id-a4]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.angle_line_plane.solid-a3]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.angle_line_plane.solid-pl]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.angle_line_plane.solid-a4]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.angle_line_plane.solid_id-a3]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.angle_line_plane.solid_id-pl]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.angle_line_plane.solid_id-a4]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.angle_line_plane.solid_notation-a3]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.angle_line_plane.solid_notation-pl]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.angle_line_plane.solid_notation-a4]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.angle_line_plane.solid_and_solid_id-a3]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.angle_line_plane.solid_and_solid_id-pl]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.angle_line_plane.solid_and_solid_id-a4]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.area_polygon.solid-a3]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.area_polygon.solid-pl]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.area_polygon.solid-a4]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.area_polygon.solid_id-a3]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.area_polygon.solid_id-pl]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.area_polygon.solid_id-a4]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.area_polygon.solid_notation-a3]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.area_polygon.solid_notation-pl]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.area_polygon.solid_notation-a4]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.area_polygon.solid_and_solid_id-a3]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.area_polygon.solid_and_solid_id-pl]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_scope_key_inside_geometric_target_refused_on_every_route[F.area_polygon.solid_and_solid_id-a4]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_cic_d1_mutants_are_killed[remove_closed_target_rule]
+FAILED backend\tests\geometry\test_cic_d1_locked_contract.py::test_cic_d1_mutants_are_killed[discard_target_scope_keys]
+FAILED backend\tests\geometry\test_typed_fact_next_v2_distance_bridge.py::test_malformed_distance_target_is_refused[target8]
+67 failed, 446 passed in 4.75s
