@@ -1,5 +1,6 @@
 """Preregistered N1–N7 oracles; see closed-input-contract/preregistration.md."""
 from copy import deepcopy
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -219,31 +220,24 @@ def test_v1_conversion_preserves_explicit_presence():
     assert F.a4(p).code != 'INVALID_MATH_GOAL'
 
 
-def fresh_pyramid():
-    return {'schema_version':'typed-fact-next/1', 'problem_text':
-        'Cho hình chóp K.PQR có đáy PQR là tam giác vuông tại P, PQ = 3, PR = 4. '
-        'KP vuông góc với (PQR) và KP = 6. Dựng hình chóp K.PQR. Tính thể tích hình chóp K.PQR.',
-        'solids':[{'solid_id':'alpha-1','solid_type':'pyramid','notation':'K.PQR','quote':'Cho hình chóp K.PQR'}],
-        'premises':[{'kind':'base_is_right_triangle','solid_id':'alpha-1','args':{'vertices':['P','Q','R'],'right_at':'P'},
-                     'quote':'đáy PQR là tam giác vuông tại P'},
-                    *[{'kind':'segment_length','solid_id':'alpha-1','args':{'segment':ends,'value':value},'quote':quote}
-                      for ends,value,quote in [(['P','Q'],'3','PQ = 3'),(['P','R'],'4','PR = 4'),(['K','P'],'6','KP = 6')]],
-                    {'kind':'line_perp_plane','solid_id':'alpha-1','args':{'line':['K','P'],'plane':['P','Q','R']},
-                     'quote':'KP vuông góc với (PQR)'}],
-        'simulation_goals':[{'goal_id':'draw','kind':'construct_object','target_solid_id':'alpha-1','quote':'Dựng hình chóp K.PQR.'}],
-        'math_goals':[{'goal_id':'vol','kind':'measurement','goal_type':'volume','target':{'solid':'alpha-1'},
-                       'quote':'Tính thể tích hình chóp K.PQR.'}]}
+# Acceptance manifest v2 (source-grammar-adjudication/amendment-1.md): the v1 fresh-source controls are
+# PENDING_SOURCE_GRAMMAR_SUPPORT (source_grammar_pending_diagnostics.py); these registered positives replace them.
+ADJ = OUT / 'source-grammar-adjudication'
+MANIFEST = json.loads((ADJ / 'acceptance-manifest.json').read_text(encoding='utf-8'))['added_to_acceptance']
+SUPPORTED = ADJ / 'supported-positive-controls.json'
 
 
-@pytest.mark.parametrize('scope', ['id','notation','nested_id','goal_id'])
-def test_fresh_geometry_positive_scope_aliases(scope):
-    p=fresh_pyramid(); goal=p['math_goals'][0]
-    if scope=='notation': goal['target']={'solid':'K.PQR'}
-    elif scope=='nested_id': goal['target']={'solid_id':'alpha-1'}
-    elif scope=='goal_id': goal['solid_id']='alpha-1'
-    for name,route in F.ROUTES.items():
-        r=route(p); assert r.status=='SERVED',(name,r.code,r.reason)
-        assert [x['coef'] for x in r.answer_exact.values()]==['12']
+def test_supported_positive_controls_are_registered():
+    assert hashlib.sha256(SUPPORTED.read_bytes().replace(b'\r\n', b'\n')).hexdigest() == MANIFEST['inputs_sha256_lf']
+
+
+@pytest.mark.parametrize('scope', MANIFEST['expected']['every_case'])
+def test_supported_positive_scope_aliases(scope):
+    want = MANIFEST['expected']; p = json.loads(SUPPORTED.read_text(encoding='utf-8'))['cases'][scope]
+    for name in want['every_route']:
+        r = F.ROUTES[name](p); assert r.status == want['status'], (name, r.code, r.reason)
+        assert {k: x['coef'] for k, x in r.answer_exact.items()} == want['answer_coef']
+    assert A.run_typed_fact_next_route(p).source_verification['authority'] == want['a3_source_authority']
 
 
 @pytest.mark.parametrize('route_name', ['a3','pl','a4'])

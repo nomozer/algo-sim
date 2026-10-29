@@ -1,0 +1,46 @@
+{
+  "gate": "A",
+  "manifest": "acceptance-manifest.json v2",
+  "head": "aa245717dc89607dadf27390143cb879408a2f8d",
+  "test_edit_uncommitted_at_run": true,
+  "product_files_unchanged_since": "4b361c47 (hashes = ../stop-verification.json)",
+  "live_provider_calls": 0,
+  "closed_input_contract_acceptance": {
+    "status": "PASS",
+    "summary": "635 passed, 6 skipped in 7.27s",
+    "failed": [],
+    "mandatory_mutants_killed": 9,
+    "supported_positive_nodes_passed": 5,
+    "skipped": "6 pre-existing (test_unified_solid_scope.py:178, cases without residual_volume goal), same as v1",
+    "reviewer_probes_203": {
+      "total": 203,
+      "classes": {
+        "POS": 56,
+        "NEG": 147
+      },
+      "served_negative_probes": 0,
+      "internal_results": 0,
+      "positive_losses_vs_baseline_head": [],
+      "changed_vs_stopped_product_probes": [],
+      "receipt": "../gate-a-v2-probes.json"
+    },
+    "log": "gate-a-v2-acceptance.log",
+    "log_sha256_lf": "f246aa1f0a14250a4c14000b020ef5216dc523ca65b5d87a55eef90f3cae0fc3"
+  },
+  "source_grammar_diagnostics": {
+    "status": "PENDING_SOURCE_GRAMMAR_SUPPORT",
+    "summary": "4 failed in 1.20s",
+    "failed": [
+      "backend\\tests\\geometry\\source_grammar_pending_diagnostics.py::test_pending_source_grammar_control[id]",
+      "backend\\tests\\geometry\\source_grammar_pending_diagnostics.py::test_pending_source_grammar_control[notation]",
+      "backend\\tests\\geometry\\source_grammar_pending_diagnostics.py::test_pending_source_grammar_control[nested_id]",
+      "backend\\tests\\geometry\\source_grammar_pending_diagnostics.py::test_pending_source_grammar_control[goal_id]"
+    ],
+    "observed_code": "QUESTION_CONTEXT_UNSUPPORTED (all 12 route cells)",
+    "counted_as_pass": false,
+    "claimed_product_supported": false,
+    "log": "gate-a-v2-source-grammar-diagnostics.log",
+    "log_sha256_lf": "141c03078c39204707cd497f91d4563b80e5b5302432af3b81339da97101be2c"
+  },
+  "not_combined": "The two results are separate; no aggregate pass count is reported."
+}
