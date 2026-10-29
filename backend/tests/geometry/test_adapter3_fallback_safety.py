@@ -226,6 +226,16 @@ def test_legacy_section_area_goal_scope_must_exist(monkeypatch,goal_sid):
     r=A.run_typed_fact_next_route(p)
     assert (r.status,r.code)==(('REFUSED','UNKNOWN_SOLID_ID') if goal_sid else ('SERVED',None))
 
+@pytest.mark.parametrize('sid,code',[('s1','UNKNOWN_SOLID_ID'),(None,'UNKNOWN_SOLID')])
+def test_unknown_named_solid_refuses_with_scope_or_planner_code(sid,code):
+    # Without a declared scope the Bridge makes no scope claim; the planner's locked UNKNOWN_SOLID stands (N006).
+    p=control();prem={'kind':'height','args':{'solid':'s99','value':'3'},'quote':'Chiều cao bằng 3.'}
+    if sid:prem['solid_id']=sid
+    p['premises'].append(prem);p['problem_text']+=' '+prem['quote']
+    r4=run_typed_fact_next_v2_route({**p,'schema_version':'typed-fact-next/2'})
+    assert (r4.status,r4.code)==('REFUSED',code)
+    assert A.run_typed_fact_next_route(p).status=='REFUSED'
+
 @pytest.mark.parametrize('owner,needle',[(B,'if sid is not None and sid != resolved[0]:'),(B,'if sid is not None and sid not in solids:'),
     (A._Adapter3Compiler,'if scope is not None and name != self.solid_canonical_name[scope]:'),
     (A._Adapter3Compiler,'if scope is not None and scope not in self.solid_canonical_name:')])

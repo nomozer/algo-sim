@@ -93,6 +93,8 @@ def _pham_vi_khoi(named: Any, sid: str | None, solids: dict[str, Any], fid: str)
         return sid
     resolved = [s for s, solid in solids.items() if named in (s, solid.notation)]
     if len(resolved) != 1:
+        if sid is None:     # no scope claim to contradict: the planner refuses the unknown solid (locked UNKNOWN_SOLID)
+            return None
         raise TuChoi("UNKNOWN_SOLID_ID", f"{fid}: khối {named!r} không xác định duy nhất", (fid,))
     if sid is not None and sid != resolved[0]:
         raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{fid}: khối trong toán hạng khác phạm vi đã khai", (fid,))
