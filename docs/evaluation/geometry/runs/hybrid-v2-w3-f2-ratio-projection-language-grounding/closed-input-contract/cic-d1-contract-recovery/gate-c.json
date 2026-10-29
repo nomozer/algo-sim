@@ -1,0 +1,41 @@
+{
+  "gate": "C",
+  "status": "PASS",
+  "head": "717f8b2b1d284e3894af65190b13ba3619d5aff0",
+  "total": 96,
+  "match": 96,
+  "wrong_served": 0,
+  "slices": {
+    "authored_projection": {
+      "total": 26,
+      "served_correct": 26,
+      "refused": 0,
+      "locked_code_match": 26
+    },
+    "authored_ratio": {
+      "total": 24,
+      "served_correct": 24,
+      "refused": 0,
+      "locked_code_match": 24
+    },
+    "historical_f2_verbatim": {
+      "total": 21,
+      "served_correct": 20,
+      "refused": 1,
+      "locked_code_match": 21
+    },
+    "isolated_f2": {
+      "total": 1,
+      "served_correct": 1,
+      "refused": 0,
+      "locked_code_match": 1
+    },
+    "mandatory_negative_tamper": {
+      "total": 24,
+      "served_correct": 0,
+      "refused": 24,
+      "locked_code_match": 24
+    }
+  },
+  "mismatches": []
+}

@@ -1,0 +1,390 @@
+{
+  "gate": "A",
+  "status": "PASS",
+  "head": "717f8b2b1d284e3894af65190b13ba3619d5aff0",
+  "live_provider_calls": 0,
+  "closed_input_contract_acceptance": {
+    "command": "acceptance-manifest v2 files + test_cic_d1_locked_contract.py",
+    "summary": "748 passed, 6 skipped in 8.98s",
+    "failed": [],
+    "log": "gate-a-acceptance.log",
+    "log_sha256_lf": "409468dda3613be5a55fc0954a266914baa32cffb4050247bb4c94f5bbce9498"
+  },
+  "reviewer_probes_203": {
+    "total": 203,
+    "classes": {
+      "POS": 56,
+      "NEG": 147
+    },
+    "served_negative_probes": 0,
+    "internal_results": 0,
+    "receipt": "../gate-a-cic-d1-probes.json",
+    "transitions_vs_gate_a_v2": [
+      {
+        "probe": "M.list_segment_target_solid_id_foreign",
+        "class": "NEG",
+        "before": {
+          "a3": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ],
+          "pl": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ],
+          "a4": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ]
+        },
+        "after": {
+          "a3": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "pl": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "a4": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ]
+        }
+      },
+      {
+        "probe": "D.measure_area_section_scope_derived",
+        "class": "POS",
+        "before": {
+          "a3": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ],
+          "pl": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ],
+          "a4": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ]
+        },
+        "after": {
+          "a3": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "pl": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "a4": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ]
+        }
+      },
+      {
+        "probe": "S8.dev02_measure_target_solid_id_pyr2_M",
+        "class": "NEG",
+        "before": {
+          "a3": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ],
+          "pl": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ],
+          "a4": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ]
+        },
+        "after": {
+          "a3": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "pl": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "a4": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ]
+        }
+      },
+      {
+        "probe": "S8.dev02_measure_target_solid_pyr2_M",
+        "class": "NEG",
+        "before": {
+          "a3": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ],
+          "pl": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ],
+          "a4": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ]
+        },
+        "after": {
+          "a3": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "pl": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "a4": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ]
+        }
+      },
+      {
+        "probe": "S8.dev02_measure_target_solid_pyr1_M_control",
+        "class": "POS",
+        "before": {
+          "a3": [
+            "SERVED",
+            null
+          ],
+          "pl": [
+            "REFUSED",
+            "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY"
+          ],
+          "a4": [
+            "REFUSED",
+            "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY"
+          ]
+        },
+        "after": {
+          "a3": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "pl": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "a4": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ]
+        }
+      },
+      {
+        "probe": "C.cone_area_section_vs_solid_id",
+        "class": "NEG",
+        "before": {
+          "a3": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ],
+          "pl": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ],
+          "a4": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ]
+        },
+        "after": {
+          "a3": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "pl": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "a4": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ]
+        }
+      },
+      {
+        "probe": "S8.sup_M_s2_identity_path",
+        "class": "NEG",
+        "before": {
+          "a3": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ],
+          "pl": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ],
+          "a4": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ]
+        },
+        "after": {
+          "a3": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "pl": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "a4": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ]
+        }
+      },
+      {
+        "probe": "S8.sup_M_s2_fallback_path",
+        "class": "NEG",
+        "before": {
+          "a3": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ],
+          "pl": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ],
+          "a4": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ]
+        },
+        "after": {
+          "a3": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "pl": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "a4": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ]
+        }
+      },
+      {
+        "probe": "S8.sup_M_s1_fallback_control",
+        "class": "POS",
+        "before": {
+          "a3": [
+            "REFUSED",
+            "COORDINATE_FRAME_DISCONNECTED"
+          ],
+          "pl": [
+            "REFUSED",
+            "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY"
+          ],
+          "a4": [
+            "REFUSED",
+            "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY"
+          ]
+        },
+        "after": {
+          "a3": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "pl": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "a4": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ]
+        }
+      },
+      {
+        "probe": "F6.area_target_solid_notation",
+        "class": "POS",
+        "before": {
+          "a3": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ],
+          "pl": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ],
+          "a4": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ]
+        },
+        "after": {
+          "a3": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "pl": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "a4": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ]
+        }
+      },
+      {
+        "probe": "F6.area_target_solid_id",
+        "class": "POS",
+        "before": {
+          "a3": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ],
+          "pl": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ],
+          "a4": [
+            "REFUSED",
+            "SOURCE_OBJECT_MISMATCH"
+          ]
+        },
+        "after": {
+          "a3": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "pl": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "a4": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ]
+        }
+      }
+    ],
+    "served_positive_loss": [
+      "S8.dev02_measure_target_solid_pyr1_M_control"
+    ],
+    "reclassification": "Every transition is an input with solid/solid_id inside a geometric target; all now REFUSED INVALID_MATH_GOAL. The one previously served POS probe uses {segment, solid: pyr1}, the form Owner rule CIC-D1-A declares invalid (not accepted because the solid exists and owns the operands). Its valid equivalent with goal-level solid_id is N2v2.control_own_point, SERVED (sqrt5/2)a. Recorded for the pre-freeze reviewer; not counted as a valid-positive loss."
+  },
+  "source_grammar_diagnostics": {
+    "status": "PENDING_SOURCE_GRAMMAR_SUPPORT",
+    "summary": "4 failed in 1.39s",
+    "counted_as_pass": false,
+    "log": "gate-a-source-grammar-diagnostics.log",
+    "log_sha256_lf": "4a31187555628b676ebef9858226e44fb3fcbbb264f13e1e46e6db5b518538fe"
+  },
+  "mutants": "mutation-results.json",
+  "not_combined": true
+}

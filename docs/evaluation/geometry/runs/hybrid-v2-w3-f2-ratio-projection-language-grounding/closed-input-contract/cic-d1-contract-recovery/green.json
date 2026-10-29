@@ -1,0 +1,88 @@
+{
+  "phase": "GREEN",
+  "head": "717f8b2b1d284e3894af65190b13ba3619d5aff0",
+  "product_commit": "717f8b2b1d284e3894af65190b13ba3619d5aff0",
+  "tree_clean": true,
+  "live_provider_calls": 0,
+  "command": "python -B -m pytest -p no:cacheprovider test_cic_d1_locked_contract.py test_closed_input_contract.py test_typed_fact_next_v2_distance_bridge.py test_scope_census_closure.py test_unified_solid_scope.py test_adapter3_fallback_safety.py test_premise_scope_recovery.py -q -rA",
+  "summary": "791 passed, 6 skipped in 9.17s",
+  "failed": [],
+  "log": "green.log",
+  "log_sha256_lf": "776070701023272587807053d01098032bc2ea15fd68f6a9c82966ba03a6f948",
+  "locked_target8": "PASS",
+  "locked_malformed_distance_params_passed": 16,
+  "attempts": [
+    {
+      "state": "uncommitted fix, before the s8_preflight oracle addendum",
+      "summary": "1 failed, 790 passed, 6 skipped",
+      "failed": [
+        "test_closed_input_contract.py::test_mandatory_mutants_are_killed[s8_preflight]"
+      ],
+      "cause": "oracle used the superseded in-target N2 form (n2-amendment.md post-registration addendum)",
+      "log": "not retained (console only)"
+    }
+  ],
+  "cases": {
+    "receipt": "observed-green-717f8b2b.json",
+    "neg_locked_grammar_refused_invalid": "16/16",
+    "controls_unchanged_vs_red": "11/11",
+    "historical_v1_n2_now": {
+      "N2v1.target_solid_id.unqualified": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      },
+      "N2v1.target_solid_id.qualified": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      },
+      "N2v1.target_solid.unqualified": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      },
+      "N2v1.target_solid.qualified": {
+        "a3": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "pl": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ],
+        "a4": [
+          "REFUSED",
+          "INVALID_MATH_GOAL"
+        ]
+      }
+    }
+  }
+}

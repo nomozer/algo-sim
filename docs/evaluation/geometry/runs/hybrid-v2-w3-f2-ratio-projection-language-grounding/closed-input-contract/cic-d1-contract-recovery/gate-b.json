@@ -1,0 +1,17 @@
+{
+  "gate": "B",
+  "status": "PASS",
+  "head": "717f8b2b1d284e3894af65190b13ba3619d5aff0",
+  "product_changed_since_5e44d5da": [
+    "backend/app/ai/adapter3_simulation.py",
+    "backend/app/simulation/geometry_functions/typed_fact_next.py",
+    "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py"
+  ],
+  "cic_d1_product_diff": [
+    "backend/app/simulation/geometry_functions/typed_fact_next.py   | 10 ++++------",
+    " .../simulation/geometry_functions/typed_fact_next_bridge.py    |  5 ++---",
+    " 2 files changed, 6 insertions(+), 9 deletions(-)"
+  ],
+  "unchanged": "registry.py, Planner, Engine, radical kernel, Adapter /4 product code (adapter4_route.py), frontend",
+  "adapter4_route_changed_vs_main": false
+}

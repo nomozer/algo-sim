@@ -1,0 +1,32 @@
+FFFF                                                                     [100%]
+================================== FAILURES ===================================
+E   AssertionError: ('a3', 'QUESTION_CONTEXT_UNSUPPORTED', "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác")
+    assert 'REFUSED' == 'SERVED'
+      
+      - SERVED
+      + REFUSED
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\source_grammar_pending_diagnostics.py:21: AssertionError: ('a3', 'QUESTION_CONTEXT_UNSUPPORTED', "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác")
+E   AssertionError: ('a3', 'QUESTION_CONTEXT_UNSUPPORTED', "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác")
+    assert 'REFUSED' == 'SERVED'
+      
+      - SERVED
+      + REFUSED
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\source_grammar_pending_diagnostics.py:21: AssertionError: ('a3', 'QUESTION_CONTEXT_UNSUPPORTED', "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác")
+E   AssertionError: ('a3', 'QUESTION_CONTEXT_UNSUPPORTED', "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác")
+    assert 'REFUSED' == 'SERVED'
+      
+      - SERVED
+      + REFUSED
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\source_grammar_pending_diagnostics.py:21: AssertionError: ('a3', 'QUESTION_CONTEXT_UNSUPPORTED', "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác")
+E   AssertionError: ('a3', 'QUESTION_CONTEXT_UNSUPPORTED', "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác")
+    assert 'REFUSED' == 'SERVED'
+      
+      - SERVED
+      + REFUSED
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\source_grammar_pending_diagnostics.py:21: AssertionError: ('a3', 'QUESTION_CONTEXT_UNSUPPORTED', "câu hỏi có phần chưa được đọc ('hình chóp K.PQR.') — có thể đổi đại lượng được hỏi; không trả lời một đại lượng khác")
+=========================== short test summary info ===========================
+FAILED backend\tests\geometry\source_grammar_pending_diagnostics.py::test_pending_source_grammar_control[id]
+FAILED backend\tests\geometry\source_grammar_pending_diagnostics.py::test_pending_source_grammar_control[notation]
+FAILED backend\tests\geometry\source_grammar_pending_diagnostics.py::test_pending_source_grammar_control[nested_id]
+FAILED backend\tests\geometry\source_grammar_pending_diagnostics.py::test_pending_source_grammar_control[goal_id]
+4 failed in 1.39s

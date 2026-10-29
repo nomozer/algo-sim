@@ -1,0 +1,119 @@
+{
+  "head": "717f8b2b1d284e3894af65190b13ba3619d5aff0",
+  "tests": "backend/tests/geometry/test_cic_d1_locked_contract.py",
+  "route_outcomes": {
+    "N2v2.goal_solid_id": {
+      "a3": [
+        "REFUSED",
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "pl": [
+        "REFUSED",
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "a4": [
+        "REFUSED",
+        "SOURCE_OBJECT_MISMATCH"
+      ]
+    },
+    "N2v2.goal_solid_id_qualified": {
+      "a3": [
+        "REFUSED",
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "pl": [
+        "REFUSED",
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "a4": [
+        "REFUSED",
+        "SOURCE_OBJECT_MISMATCH"
+      ]
+    },
+    "N2v2.qualified_namespace": {
+      "a3": [
+        "REFUSED",
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "pl": [
+        "REFUSED",
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "a4": [
+        "REFUSED",
+        "SOURCE_OBJECT_MISMATCH"
+      ]
+    },
+    "N2v2.control_own_point": {
+      "a3": [
+        "SERVED",
+        null
+      ],
+      "pl": [
+        "REFUSED",
+        "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY"
+      ],
+      "a4": [
+        "REFUSED",
+        "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY"
+      ]
+    }
+  },
+  "proofs": {
+    "1_schema_passes": "s8_raises() parses with parse_typed_fact_next before calling S8",
+    "2_s8_ran": "spy on typed_fact_next_bridge._kiem_pham_vi_tien_de entered on every route (test_n2v2_ownership_refused_before_capability)",
+    "3_s8_detects": "_kiem_pham_vi_tien_de raises SOURCE_OBJECT_MISMATCH directly; route reason names goal mb",
+    "4_semantic_before_capability": "the same shape with the own point refuses BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY on pl/a4 while the negatives refuse SOURCE_OBJECT_MISMATCH; mutant capability_before_s8 killed",
+    "5_no_fallback": "_shared_source_gate raises SOURCE_OBJECT_MISMATCH (no LEGACY_SOURCE_AUTHORITY); mutant semantic_fallback killed",
+    "6_no_global_resolution": "N2v2.qualified_namespace: pyr2::M (M only in pyr1) refused on every route"
+  },
+  "control": {
+    "case": "N2v2.control_own_point",
+    "a3": {
+      "status": "SERVED",
+      "code": null,
+      "reason": null,
+      "answer": {
+        "m_vol_ratio": [
+          "1/2",
+          0,
+          null
+        ],
+        "m_vol_pyr1": [
+          "1/3",
+          3,
+          "a"
+        ],
+        "mb": [
+          "√5/2",
+          1,
+          "a"
+        ]
+      }
+    },
+    "oracle": {
+      "goal": "mb",
+      "coef": "√5/2",
+      "dim": 1,
+      "unit": "a",
+      "derivation": "AB = a, SA = 2a, SA ⊥ (ABC) ⇒ SB² = a² + 4a² = 5a²; M midpoint of SB ⇒ MB = (√5/2)·a"
+    }
+  },
+  "passed_nodes": [
+    "test_n2v2_adapter3_gate_is_terminal_not_fallback[N2v2.goal_solid_id]",
+    "test_n2v2_adapter3_gate_is_terminal_not_fallback[N2v2.goal_solid_id_qualified]",
+    "test_n2v2_adapter3_gate_is_terminal_not_fallback[N2v2.qualified_namespace]",
+    "test_n2v2_ownership_refused_before_capability[N2v2.goal_solid_id-a3]",
+    "test_n2v2_ownership_refused_before_capability[N2v2.goal_solid_id-a4]",
+    "test_n2v2_ownership_refused_before_capability[N2v2.goal_solid_id-pl]",
+    "test_n2v2_ownership_refused_before_capability[N2v2.goal_solid_id_qualified-a3]",
+    "test_n2v2_ownership_refused_before_capability[N2v2.goal_solid_id_qualified-a4]",
+    "test_n2v2_ownership_refused_before_capability[N2v2.goal_solid_id_qualified-pl]",
+    "test_n2v2_ownership_refused_before_capability[N2v2.qualified_namespace-a3]",
+    "test_n2v2_ownership_refused_before_capability[N2v2.qualified_namespace-a4]",
+    "test_n2v2_ownership_refused_before_capability[N2v2.qualified_namespace-pl]",
+    "test_n2v2_qualified_namespace_has_no_global_resolution",
+    "test_n2v2_valid_constructed_point_is_served_with_exact_oracle"
+  ],
+  "green_log_sha256_lf": "776070701023272587807053d01098032bc2ea15fd68f6a9c82966ba03a6f948"
+}
