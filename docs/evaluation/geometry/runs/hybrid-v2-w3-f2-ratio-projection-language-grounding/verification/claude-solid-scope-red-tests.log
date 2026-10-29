@@ -1,0 +1,94 @@
+.............................FF...FFFFFFFF....FFFFF..F....               [100%]
+================================== FAILURES ===================================
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_adapter3_fallback_safety.py:173: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_adapter3_fallback_safety.py:173: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('REFUSED', '...ISTENT_FACTS') == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 1 diff: 'INCONSISTENT_FACTS' != 'SOURCE_OBJECT_MISMATCH'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_adapter3_fallback_safety.py:195: AssertionError: assert ('REFUSED', '...ISTENT_FACTS') == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('REFUSED', '...ITION_FAILED') == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 1 diff: 'PRECONDITION_FAILED' != 'SOURCE_OBJECT_MISMATCH'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_adapter3_fallback_safety.py:195: AssertionError: assert ('REFUSED', '...ITION_FAILED') == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_adapter3_fallback_safety.py:173: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_adapter3_fallback_safety.py:173: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_adapter3_fallback_safety.py:173: AssertionError: assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_adapter3_fallback_safety.py:173: AssertionError: assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_adapter3_fallback_safety.py:173: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_adapter3_fallback_safety.py:173: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E   Failed: DID NOT RAISE TuChoi
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_adapter3_fallback_safety.py:209: Failed: DID NOT RAISE TuChoi
+E   Failed: DID NOT RAISE TuChoi
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_adapter3_fallback_safety.py:209: Failed: DID NOT RAISE TuChoi
+E   AssertionError: assert 'BRIDGE_UNSUP...D_MEASUREMENT' == 'SOURCE_OBJECT_MISMATCH'
+      
+      - SOURCE_OBJECT_MISMATCH
+      + BRIDGE_UNSUPPORTED_MEASUREMENT
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_adapter3_fallback_safety.py:210: AssertionError: assert 'BRIDGE_UNSUP...D_MEASUREMENT' == 'SOURCE_OBJECT_MISMATCH'
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_adapter3_fallback_safety.py:173: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_adapter3_fallback_safety.py:173: AssertionError: assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_adapter3_fallback_safety.py:227: AssertionError: assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_adapter3_fallback_safety.py::test_real_legacy_height_solid_must_agree_with_premise_scope[pyr1-pyr2-SOURCE_OBJECT_MISMATCH]
+FAILED tests/geometry/test_adapter3_fallback_safety.py::test_real_legacy_height_solid_must_agree_with_premise_scope[pyr1-D.ABC-SOURCE_OBJECT_MISMATCH]
+FAILED tests/geometry/test_adapter3_fallback_safety.py::test_legacy_solid_operand_cannot_override_premise_scope[height]
+FAILED tests/geometry/test_adapter3_fallback_safety.py::test_legacy_solid_operand_cannot_override_premise_scope[altitude]
+FAILED tests/geometry/test_adapter3_fallback_safety.py::test_volume_goal_target_must_agree_with_goal_scope[s2-s1-SOURCE_OBJECT_MISMATCH-False]
+FAILED tests/geometry/test_adapter3_fallback_safety.py::test_volume_goal_target_must_agree_with_goal_scope[s2-s1-SOURCE_OBJECT_MISMATCH-True]
+FAILED tests/geometry/test_adapter3_fallback_safety.py::test_volume_goal_target_must_agree_with_goal_scope[foreign-s1-UNKNOWN_SOLID_ID-False]
+FAILED tests/geometry/test_adapter3_fallback_safety.py::test_volume_goal_target_must_agree_with_goal_scope[foreign-s1-UNKNOWN_SOLID_ID-True]
+FAILED tests/geometry/test_adapter3_fallback_safety.py::test_volume_goal_target_must_agree_with_goal_scope[s1-T.ABCD-SOURCE_OBJECT_MISMATCH-False]
+FAILED tests/geometry/test_adapter3_fallback_safety.py::test_volume_goal_target_must_agree_with_goal_scope[s1-T.ABCD-SOURCE_OBJECT_MISMATCH-True]
+FAILED tests/geometry/test_adapter3_fallback_safety.py::test_bridge_and_adapter4_refuse_conflicting_volume_goal_scope[s2-s1-SOURCE_OBJECT_MISMATCH]
+FAILED tests/geometry/test_adapter3_fallback_safety.py::test_bridge_and_adapter4_refuse_conflicting_volume_goal_scope[foreign-s1-UNKNOWN_SOLID_ID]
+FAILED tests/geometry/test_adapter3_fallback_safety.py::test_bridge_and_adapter4_refuse_conflicting_volume_goal_scope[s1-T.ABCD-SOURCE_OBJECT_MISMATCH]
+FAILED tests/geometry/test_adapter3_fallback_safety.py::test_real_legacy_volume_goal_scope[pyr2-SOURCE_OBJECT_MISMATCH]
+FAILED tests/geometry/test_adapter3_fallback_safety.py::test_real_legacy_volume_goal_scope[foreign-UNKNOWN_SOLID_ID]
+FAILED tests/geometry/test_adapter3_fallback_safety.py::test_legacy_section_area_goal_scope_must_exist[foreign]
+16 failed, 42 passed in 2.05s
