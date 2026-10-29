@@ -615,6 +615,7 @@ def test_bridge_refuses_what_typedfact_cannot_express(case, code):
         payload["derived_sections"][0].update(cut_edges=[], named_intersections={})
     r = run_typed_fact_next_planner_route(payload)
     assert (r.status, r.code) == ("REFUSED", code), (r.code, r.reason)
+    assert r.scene3d is None and not r.answers
 
 
 @pytest.mark.parametrize("case,code", [
@@ -649,7 +650,7 @@ def test_bridge_preserves_input_constraints_or_refuses(case, code):
     elif case == "unknown_qualifier":
         payload["derived_sections"][0]["through_point"] = "ghost::M"
     elif case == "unknown_local_vertex":
-        payload["derived_sections"][0]["through_point"] = "pyr::M"
+        payload["derived_sections"][0]["through_point"] = "pyr::Z"
     elif case == "unknown_named_edge_qualifier":
         payload["derived_sections"][0]["named_intersections"] = {"ghost::S-ghost::B": "N", "S-C": "P"}
     elif case == "contradictory_unit":
@@ -666,7 +667,16 @@ def test_bridge_preserves_input_constraints_or_refuses(case, code):
         payload["derived_sections"][0]["plane_name"] = "ABC" if case == "reference_plane_name" else "β"
     r = run_typed_fact_next_planner_route(payload)
     assert (r.status, r.code) == ("REFUSED", code), (r.code, r.reason)
-    assert r.scene3d is None and not r.answers
+
+
+def test_qualified_constructed_point_keeps_its_verified_producer_identity():
+    from app.ai.function_route import run_typed_fact_next_planner_route
+    payload = _next(NAMED.replace(" " + RATIO_Q, ""), [deepcopy(SEC)], [deepcopy(SEC_GOAL)])
+    control = run_typed_fact_next_planner_route(payload)
+    payload["derived_sections"][0]["through_point"] = "pyr::M"
+    qualified = run_typed_fact_next_planner_route(payload)
+    assert control.status == qualified.status == "SERVED"
+    assert qualified.points == control.points and qualified.trace == control.trace
 
 
 def test_bridge_accepts_matching_units_and_declared_qualified_vertices():

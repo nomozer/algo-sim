@@ -20,6 +20,7 @@ from .typed_fact_next import (
     TypedFactNextPayload,
     TypedFactNextValidationError,
     parse_qualified_ref,
+    split_vertex_chain,
     parse_typed_fact_next,
     parse_typed_fact_next_v2,
 )
@@ -58,6 +59,14 @@ def _check_qualified_refs(value: Any, solids: dict[str, Any], owned: dict[str, s
     if isinstance(value, dict):
         for key, item in value.items():
             if key not in ("quote", "problem_text", "solid") and not key.endswith("_id"):
+                if key == 'container_ref' and isinstance(item, str) and '::' in item:
+                    sid, chain = item.split('::', 1)
+                    try:
+                        refs = [f'{sid}::{label}' for label in split_vertex_chain(chain)]
+                    except TypedFactNextValidationError as e:
+                        raise TuChoi(e.code, e.detail) from None
+                    _check_qualified_refs(refs, solids, owned)
+                    continue
                 if key == "named_intersections":
                     for edge in item:
                         _check_qualified_refs(edge.split("-"), solids, owned)

@@ -153,6 +153,15 @@ def test_absent_ambiguous_scope_is_refused_with_reason():
     r=A.run_typed_fact_next_route(p)
     assert (r.status,r.code)==('REFUSED','AMBIGUOUS_REFERENCE')
 
+def test_qualified_containment_chain_is_typed_geometry_not_a_single_vertex():
+    solids={s.solid_id:s for s in B.parse_typed_fact_next(control()).solids}
+    B._check_qualified_refs({'container_ref':'s1::SA'},solids)
+    for value,code in [('foreign::SA','UNKNOWN_SOLID_ID'),('s1::TA','UNKNOWN_VERTEX_REF')]:
+        with pytest.raises(TuChoi) as e:B._check_qualified_refs({'container_ref':value},solids)
+        assert e.value.code==code
+    with pytest.raises(TuChoi) as e:B._check_qualified_refs({'point':'s1::SA'},solids)
+    assert e.value.code=='UNKNOWN_VERTEX_REF'
+
 @pytest.mark.parametrize('mutant',['remove_terminal_guard','remove_scope_guard','replace_scope_with_default','allow_global_lookup'])
 def test_safety_oracles_kill_semantic_and_scope_mutants(monkeypatch,mutant):
     if mutant=='remove_terminal_guard':

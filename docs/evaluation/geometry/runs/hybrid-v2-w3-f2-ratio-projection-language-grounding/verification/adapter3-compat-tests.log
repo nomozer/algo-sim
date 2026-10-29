@@ -1,0 +1,26 @@
+........................................................................ [ 11%]
+........................................................................ [ 22%]
+........................................................................ [ 34%]
+..............................F.....F.F...F.FF.F.FFxxxxx................ [ 45%]
+..........................................x............................. [ 57%]
+........................................................................ [ 68%]
+........................................................................ [ 80%]
+........................................................................ [ 91%]
+......................................................                   [100%]
+============================== warnings summary ===============================
+tests/geometry/test_hybrid_wave1_exact_certificates.py::test_all_12_served_hybrid_fixtures_certify_17_perpendicular_and_reject_24_oblique_segments
+  D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED backend\tests\geometry\test_typedfactnext_planner_bridge.py::test_qualified_constructed_point_keeps_its_verified_producer_identity
+FAILED backend\tests\geometry\test_typedfact_next_adapter3.py::test_slice_a_unnamed_section_vertices_and_derived_solid
+FAILED backend\tests\geometry\test_typedfact_next_adapter3.py::test_slice_a_refuses_plane_coincident_with_base
+FAILED backend\tests\geometry\test_typedfact_next_adapter3.py::test_adapter3_preview_envelope_compatibility
+FAILED backend\tests\geometry\test_typedfact_next_adapter3.py::test_slice_a_refuses_plane_not_unique_parallel_lines
+FAILED backend\tests\geometry\test_typedfact_next_adapter3.py::test_slice_a_refuses_plane_missing_lateral_edges
+FAILED backend\tests\geometry\test_typedfact_next_adapter3.py::test_p2_refuses_ungrounded_quote_and_mismatched_number
+FAILED backend\tests\geometry\test_typedfact_next_adapter3.py::test_p4_scene3d_topology_edges_surfaces_and_timeline
+FAILED backend\tests\geometry\test_typedfact_next_adapter3.py::test_p5_p6_development_corpus_and_demos_oracle
+9 failed, 615 passed, 1 deselected, 6 xfailed, 1 warning in 36.11s

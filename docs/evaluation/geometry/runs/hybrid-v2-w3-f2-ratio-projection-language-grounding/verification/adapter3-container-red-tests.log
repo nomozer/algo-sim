@@ -1,0 +1,4 @@
+F                                                                        [100%]
+=========================== short test summary info ===========================
+FAILED backend\tests\geometry\test_adapter3_fallback_safety.py::test_qualified_containment_chain_is_typed_geometry_not_a_single_vertex
+1 failed, 32 deselected in 1.03s
