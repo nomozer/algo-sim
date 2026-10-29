@@ -427,6 +427,16 @@ class _Adapter3Compiler:
             (context_id,),
         )
 
+    def _scoped_solid_name(self, named: str | None, scope: str | None, context_id: str) -> str:
+        """A solid-valued operand (id, canonical name or notation) never overrides the declared scope."""
+        if scope is not None and scope not in self.solid_canonical_name:
+            raise TuChoi("UNKNOWN_SOLID_ID", f"{context_id}: khối {scope!r} chưa được khai báo", (context_id,))
+        name = self._resolve_solid_canonical_name(named or scope or "", context_id)
+        if scope is not None and name != self.solid_canonical_name[scope]:
+            raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{context_id}: khối trong toán hạng khác phạm vi đã khai",
+                         (context_id,))
+        return name
+
     def _compile_premises(self) -> None:
         for idx, prem in enumerate(self.payload.premises, start=1):
             pid = f"p{idx}"
@@ -617,7 +627,7 @@ class _Adapter3Compiler:
                     }
                 )
             elif kind == "altitude":
-                solid_name = self._resolve_solid_canonical_name(a.get("solid") or sid or "", pid)
+                solid_name = self._scoped_solid_name(a.get("solid"), sid, pid)
                 apex = R(a["apex"])
                 foot = R_new(a["foot"])
                 self.calls.append(
@@ -629,7 +639,7 @@ class _Adapter3Compiler:
                     }
                 )
             elif kind == "height":
-                solid_name = self._resolve_solid_canonical_name(a.get("solid") or sid or "", pid)
+                solid_name = self._scoped_solid_name(a.get("solid"), sid, pid)
                 val = str(a["value"])
                 _verify_number_in_quote(val, prem.quote, pid)
                 self.calls.append(
@@ -1146,9 +1156,7 @@ class _Adapter3Compiler:
                 cid = self._next_call_id("ask")
                 math_call_ids[mg.goal_id] = cid
                 if mg.goal_type == "volume":
-                    sname = self._resolve_solid_canonical_name(
-                        t.get("solid") or sid or "", mg.goal_id
-                    )
+                    sname = self._scoped_solid_name(t.get("solid"), sid, mg.goal_id)
                     self.calls.append(
                         {
                             "id": cid,
@@ -1212,7 +1220,9 @@ class _Adapter3Compiler:
                                 f"{mg.goal_id}: không tìm thấy thiết diện {t['section_id']!r}",
                                 (mg.goal_id,),
                             )
-                        sname = self.solid_canonical_name[sec_spec.target_solid_id]
+                        # The goal's declared solid (Bridge order) must be the section's solid.
+                        sname = self._scoped_solid_name(sid or t.get("solid_id") or t.get("solid"),
+                                                        sec_spec.target_solid_id, mg.goal_id)
                         pl = list(self.section_plane_triples[sec_spec.section_id])
                         self.calls.append(
                             {

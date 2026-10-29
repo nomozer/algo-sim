@@ -226,6 +226,28 @@ def test_legacy_section_area_goal_scope_must_exist(monkeypatch,goal_sid):
     r=A.run_typed_fact_next_route(p)
     assert (r.status,r.code)==(('REFUSED','UNKNOWN_SOLID_ID') if goal_sid else ('SERVED',None))
 
+@pytest.mark.parametrize('owner,needle',[(B,'if sid is not None and sid != resolved[0]:'),(B,'if sid is not None and sid not in solids:'),
+    (A._Adapter3Compiler,'if scope is not None and name != self.solid_canonical_name[scope]:'),
+    (A._Adapter3Compiler,'if scope is not None and scope not in self.solid_canonical_name:')])
+def test_solid_scope_oracles_kill_guard_removal(monkeypatch,owner,needle):
+    name='_pham_vi_khoi' if owner is B else '_scoped_solid_name'
+    source=textwrap.dedent(inspect.getsource(getattr(owner,name)))
+    assert source.count(needle)==1
+    namespace=dict(vars(B if owner is B else A));exec(compile(source.replace(needle,'if False:'),'<solid-scope-mutant>','exec'),namespace)
+    monkeypatch.setattr(owner,name,namespace[name])
+    if owner is not B:legacy_only(monkeypatch)
+    def oracle():
+        for goal_sid,target,code in VOLUME_SCOPES[:2]:
+            p=control();g=p['math_goals'][0];g['target']={'solid':target};g['solid_id']=goal_sid
+            if owner is B:
+                try:B.bridge(p)
+                except TuChoi as e:
+                    assert e.code==code;continue
+                assert False,'conflicting goal scope accepted'
+            else:
+                r=A.run_typed_fact_next_route(p);assert (r.status,r.code)==('REFUSED',code)
+    with pytest.raises(AssertionError):oracle()
+
 @pytest.mark.parametrize('mutant',['remove_terminal_guard','remove_scope_guard','replace_scope_with_default','allow_global_lookup'])
 def test_safety_oracles_kill_semantic_and_scope_mutants(monkeypatch,mutant):
     if mutant=='remove_terminal_guard':

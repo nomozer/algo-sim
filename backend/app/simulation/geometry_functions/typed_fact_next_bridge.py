@@ -85,6 +85,20 @@ def _check_qualified_refs(value: Any, solids: dict[str, Any], owned: dict[str, s
             raise TuChoi("UNKNOWN_VERTEX_REF", f"{value!r} không phải đỉnh của khối đã khai")
 
 
+def _pham_vi_khoi(named: Any, sid: str | None, solids: dict[str, Any], fid: str) -> str | None:
+    """A solid-valued operand (id or notation) never overrides a declared scope; an explicit scope must exist."""
+    if sid is not None and sid not in solids:
+        raise TuChoi("UNKNOWN_SOLID_ID", f"{fid}: phạm vi khối {sid!r} chưa được khai báo", (fid,))
+    if named is None:
+        return sid
+    resolved = [s for s, solid in solids.items() if named in (s, solid.notation)]
+    if len(resolved) != 1:
+        raise TuChoi("UNKNOWN_SOLID_ID", f"{fid}: khối {named!r} không xác định duy nhất", (fid,))
+    if sid is not None and sid != resolved[0]:
+        raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{fid}: khối trong toán hạng khác phạm vi đã khai", (fid,))
+    return resolved[0]
+
+
 def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> list[dict[str, Any]]:
     """Prove single-solid premise ownership before translation erases scope; never default an explicit scope."""
     import re
@@ -113,16 +127,7 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
     records = []
     for i, prem in enumerate(p.premises, 1):
         fid = f"p{i}"
-        sid = prem.solid_id
-        if sid is not None and sid not in solids:
-            raise TuChoi("UNKNOWN_SOLID_ID", f"{fid}: phạm vi khối {sid!r} chưa được khai báo", (fid,))
-        if (named := prem.args.get('solid')) is not None:
-            resolved = [s for s, solid in solids.items() if named in (s, solid.notation)]
-            if len(resolved) != 1:
-                raise TuChoi("UNKNOWN_SOLID_ID", f"{fid}: khối {named!r} không xác định duy nhất", (fid,))
-            if sid is not None and sid != resolved[0]:
-                raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{fid}: khối trong toán hạng khác phạm vi premise", (fid,))
-            sid = resolved[0]
+        sid = _pham_vi_khoi(prem.args.get('solid'), prem.solid_id, solids, fid)
         # Reuse the schema's typed reference fields, not arbitrary strings or *_id keys.
         schema = _ARGS_LOI.get(prem.kind, {})
         if prem.kind in ('right_angle','base_is_right_triangle'):
@@ -485,6 +490,8 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
 
     for g in p.math_goals:
         q = {"id": g.goal_id, "kind": "question", "role": "question", "quotes": [g.quote]}
+        if g.goal_type == "volume" and g.solid_id is not None:
+            _pham_vi_khoi(g.target.get("solid"), g.solid_id, solids, g.goal_id)
         if g.kind == "volume_ratio":
             facts.append({**q, "quantity": "volume_ratio",
                           "solid_refs": [solid_fact(g.numerator_solid_id, g.goal_id), solid_fact(g.denominator_solid_id, g.goal_id)]})
