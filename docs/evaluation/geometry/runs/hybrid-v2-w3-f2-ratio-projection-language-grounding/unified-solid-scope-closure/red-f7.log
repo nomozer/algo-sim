@@ -1,0 +1,12 @@
+......................F................................................. [ 83%]
+..............                                                           [100%]
+================================== FAILURES ===================================
+E   AssertionError: (None, None)
+    assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:224: AssertionError: (None, None)
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_scope_census_closure.py::test_residual_cut_must_descend_from_parent[zz-SOURCE_OBJECT_MISMATCH]
+1 failed, 85 passed in 3.10s

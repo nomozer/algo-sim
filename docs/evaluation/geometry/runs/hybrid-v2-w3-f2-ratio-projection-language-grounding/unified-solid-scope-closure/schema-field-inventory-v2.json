@@ -1,0 +1,2401 @@
+{
+ "schema": "SCHEMA_FIELD_INVENTORY/1",
+ "generator": "backend/tests/geometry/scope_field_census.py + tools/build_inventory.py",
+ "scope_categories": [
+  "EDGE_KEY",
+  "SECTION_REF",
+  "SOLID_OPERAND",
+  "SOLID_SCOPE",
+  "VERTEX_REF"
+ ],
+ "kinds": {
+  "relation": [
+   "containment",
+   "shared_vertices",
+   "shared_faces",
+   "parallel",
+   "perpendicular",
+   "section_membership",
+   "coordinate_frame"
+  ],
+  "simulation_goal": [
+   "construct_object",
+   "construct_plane_section",
+   "construct_derived_solid",
+   "highlight_geometry",
+   "construction_sequence"
+  ],
+  "math_goal": [
+   "volume_ratio",
+   "residual_volume",
+   "measurement"
+  ]
+ },
+ "test_file": "backend/tests/geometry/test_scope_census_closure.py",
+ "fields": {
+  "TypedFactNextPayload.schema_version": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "<class 'str'>"
+  },
+  "TypedFactNextPayload.problem_text": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "<class 'str'>"
+  },
+  "TypedFactNextPayload.length_unit": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "typing.Optional[typing.Literal['1', 'a']]"
+  },
+  "TypedFactNextPayload.solids": {
+   "category": "METADATA",
+   "note": "container",
+   "annotation": "tuple[app.simulation.geometry_functions.typed_fact_next.SolidSpec, ...]"
+  },
+  "SolidSpec.solid_id": {
+   "category": "SOLID_DEFINITION",
+   "note": "defines a scope; DUPLICATE_SOLID_ID; hyphens legal (S5 tokenizer)",
+   "rules": [
+    "S5"
+   ],
+   "positive_test": "test_f1_hyphenated_ids_serve_on_every_route",
+   "negative_test": "test_f1_hyphenated_scope_violations_refuse",
+   "annotation": "<class 'str'>"
+  },
+  "SolidSpec.solid_type": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "typing.Literal['pyramid', 'prism', 'cylinder', 'cone', 'sphere', 'cone_frustum']"
+  },
+  "SolidSpec.center": {
+   "category": "SOLID_DEFINITION",
+   "note": "curved vertex label definition (ownership source)",
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "SolidSpec.apex_or_top": {
+   "category": "SOLID_DEFINITION",
+   "note": "curved vertex label definition",
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "SolidSpec.rim_point": {
+   "category": "SOLID_DEFINITION",
+   "note": "curved vertex label definition",
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "SolidSpec.radius": {
+   "category": "METADATA",
+   "note": "value",
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "SolidSpec.height": {
+   "category": "METADATA",
+   "note": "value",
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "SolidSpec.notation": {
+   "category": "SOLID_DEFINITION",
+   "note": "alias source (S2)",
+   "annotation": "<class 'str'>"
+  },
+  "SolidSpec.quote": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "<class 'str'>"
+  },
+  "SolidSpec.vertex_bindings": {
+   "category": "SOLID_DEFINITION",
+   "note": "canonical alias + vertex ownership source",
+   "annotation": "dict[typing.Annotated[str, BeforeValidator(func=<function _nhan at 0x0000026FECD81300>, json_schema_input_type=PydanticU"
+  },
+  "SolidSpec.coordinate_frame_id": {
+   "category": "METADATA",
+   "note": "frame id, not a solid",
+   "annotation": "<class 'str'>"
+  },
+  "TypedFactNextPayload.premises": {
+   "category": "METADATA",
+   "note": "container",
+   "annotation": "tuple[app.simulation.geometry_functions.typed_fact_next.PremiseSpec, ...]"
+  },
+  "PremiseSpec.kind": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "<class 'str'>"
+  },
+  "PremiseSpec.args": {
+   "category": "METADATA",
+   "note": "container; keys classified by shape below",
+   "annotation": "dict[str, typing.Any]"
+  },
+  "PremiseSpec.quote": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "<class 'str'>"
+  },
+  "PremiseSpec.solid_id": {
+   "category": "SOLID_SCOPE",
+   "owner": "premise",
+   "rules": [
+    "S1",
+    "S3",
+    "S5",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "TypedFactNextPayload.derived_sections": {
+   "category": "METADATA",
+   "note": "container",
+   "annotation": "tuple[app.simulation.geometry_functions.typed_fact_next.DerivedPlaneSectionSpec, ...]"
+  },
+  "DerivedPlaneSectionSpec.section_id": {
+   "category": "DEFINITION_ID",
+   "note": "section id",
+   "annotation": "<class 'str'>"
+  },
+  "DerivedPlaneSectionSpec.plane_name": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "<class 'str'>"
+  },
+  "DerivedPlaneSectionSpec.target_solid_id": {
+   "category": "SOLID_SCOPE",
+   "owner": "section",
+   "rules": [
+    "S1",
+    "S5",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_section_scope_controls_serve",
+   "negative_test": "test_section_scope_violations_refuse",
+   "refusal_codes": [
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "<class 'str'>"
+  },
+  "DerivedPlaneSectionSpec.plane_kind": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "typing.Literal['through_point_parallel_plane', 'through_point_perpendicular_line', 'through_point_parallel_two_lines', '"
+  },
+  "DerivedPlaneSectionSpec.through_point": {
+   "category": "VERTEX_REF",
+   "owner": "section target solid",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_section_scope_controls_serve",
+   "negative_test": "test_section_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "DerivedPlaneSectionSpec.distance_from_base": {
+   "category": "METADATA",
+   "note": "value",
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "DerivedPlaneSectionSpec.ratio_from_apex": {
+   "category": "METADATA",
+   "note": "value",
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "DerivedPlaneSectionSpec.equation_coeffs": {
+   "category": "METADATA",
+   "note": "values",
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_leng"
+  },
+  "DerivedPlaneSectionSpec.section_shape": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "typing.Optional[typing.Literal['polygon', 'circle', 'ellipse']]"
+  },
+  "DerivedPlaneSectionSpec.parallel_plane": {
+   "category": "VERTEX_REF",
+   "owner": "section target solid",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_section_scope_controls_serve",
+   "negative_test": "test_section_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_leng"
+  },
+  "DerivedPlaneSectionSpec.perpendicular_line": {
+   "category": "VERTEX_REF",
+   "owner": "section target solid",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_section_scope_controls_serve",
+   "negative_test": "test_section_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_leng"
+  },
+  "DerivedPlaneSectionSpec.parallel_line_a": {
+   "category": "VERTEX_REF",
+   "owner": "section target solid",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_section_scope_controls_serve",
+   "negative_test": "test_section_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_leng"
+  },
+  "DerivedPlaneSectionSpec.parallel_line_b": {
+   "category": "VERTEX_REF",
+   "owner": "section target solid",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_section_scope_controls_serve",
+   "negative_test": "test_section_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_leng"
+  },
+  "DerivedPlaneSectionSpec.quote": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "<class 'str'>"
+  },
+  "DerivedPlaneSectionSpec.cut_edges": {
+   "category": "VERTEX_REF",
+   "owner": "section target solid",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_section_scope_controls_serve",
+   "negative_test": "test_section_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, mi"
+  },
+  "DerivedPlaneSectionSpec.named_intersections": {
+   "category": "EDGE_KEY",
+   "owner": "section target solid (keys: U-V edges, hyphenated ids legal)",
+   "rules": [
+    "S5",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_f1_hyphenated_ids_serve_on_every_route",
+   "negative_test": "test_section_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_DERIVED_SECTION",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "dict[str, typing.Annotated[str, BeforeValidator(func=<function _nhan at 0x0000026FECD81300>, json_schema_input_type=Pyda"
+  },
+  "TypedFactNextPayload.relations": {
+   "category": "METADATA",
+   "note": "container",
+   "annotation": "tuple[app.simulation.geometry_functions.typed_fact_next.GeometricRelationSpec, ...]"
+  },
+  "GeometricRelationSpec.relation_id": {
+   "category": "DEFINITION_ID",
+   "note": "relation id",
+   "annotation": "<class 'str'>"
+  },
+  "GeometricRelationSpec.kind": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "typing.Literal['containment', 'shared_vertices', 'shared_faces', 'parallel', 'perpendicular', 'section_membership', 'coo"
+  },
+  "GeometricRelationSpec.quote": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "<class 'str'>"
+  },
+  "GeometricRelationSpec.container_ref": {
+   "category": "VERTEX_REF",
+   "owner": "relation solid_id (section_membership: the section solid)",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_relation_controls_serve",
+   "negative_test": "test_relation_scope_violations_refuse_every_kind",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "GeometricRelationSpec.member_ref": {
+   "category": "VERTEX_REF",
+   "owner": "relation solid_id (section_membership: the section solid)",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_relation_controls_serve",
+   "negative_test": "test_relation_scope_violations_refuse_every_kind",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "GeometricRelationSpec.pairs": {
+   "category": "VERTEX_REF",
+   "owner": "pair[0] side a, pair[1] side b",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_relation_controls_serve",
+   "negative_test": "test_relation_scope_violations_refuse_every_kind",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, mi"
+  },
+  "GeometricRelationSpec.solid_a": {
+   "category": "SOLID_SCOPE",
+   "owner": "relation (every kind)",
+   "rules": [
+    "S1",
+    "S3"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_relation_controls_serve",
+   "negative_test": "test_relation_scope_violations_refuse_every_kind",
+   "refusal_codes": [
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "GeometricRelationSpec.face_a": {
+   "category": "VERTEX_REF",
+   "owner": "relation side a (solid_a or solid_id)",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_relation_controls_serve",
+   "negative_test": "test_relation_scope_violations_refuse_every_kind",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_leng"
+  },
+  "GeometricRelationSpec.solid_b": {
+   "category": "SOLID_SCOPE",
+   "owner": "relation (every kind)",
+   "rules": [
+    "S1",
+    "S3"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_relation_controls_serve",
+   "negative_test": "test_relation_scope_violations_refuse_every_kind",
+   "refusal_codes": [
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "GeometricRelationSpec.face_b": {
+   "category": "VERTEX_REF",
+   "owner": "relation side b (solid_b or solid_id)",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_relation_controls_serve",
+   "negative_test": "test_relation_scope_violations_refuse_every_kind",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_leng"
+  },
+  "GeometricRelationSpec.entity_a": {
+   "category": "VERTEX_REF",
+   "owner": "relation side a (solid_a or solid_id)",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_relation_controls_serve",
+   "negative_test": "test_relation_scope_violations_refuse_every_kind",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_leng"
+  },
+  "GeometricRelationSpec.entity_b": {
+   "category": "VERTEX_REF",
+   "owner": "relation side b (solid_b or solid_id)",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_relation_controls_serve",
+   "negative_test": "test_relation_scope_violations_refuse_every_kind",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_leng"
+  },
+  "GeometricRelationSpec.solid_id": {
+   "category": "SOLID_SCOPE",
+   "owner": "relation (every kind)",
+   "rules": [
+    "S1",
+    "S3"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_relation_controls_serve",
+   "negative_test": "test_relation_scope_violations_refuse_every_kind",
+   "refusal_codes": [
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "GeometricRelationSpec.section_id": {
+   "category": "SECTION_REF",
+   "owner": "section_membership relation",
+   "rules": [
+    "S9"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_relation_controls_serve",
+   "negative_test": "test_relation_scope_violations_refuse_every_kind",
+   "refusal_codes": [
+    "UNKNOWN_SECTION_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "GeometricRelationSpec.member_refs": {
+   "category": "VERTEX_REF",
+   "owner": "relation solid_id (section_membership: the section solid)",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_relation_controls_serve",
+   "negative_test": "test_relation_scope_violations_refuse_every_kind",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_leng"
+  },
+  "GeometricRelationSpec.frame_id": {
+   "category": "METADATA",
+   "note": "frame id, not a solid",
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "GeometricRelationSpec.anchor_refs": {
+   "category": "VERTEX_REF",
+   "owner": "relation solid_id (section_membership: the section solid)",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_relation_controls_serve",
+   "negative_test": "test_relation_scope_violations_refuse_every_kind",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_leng"
+  },
+  "TypedFactNextPayload.simulation_goals": {
+   "category": "METADATA",
+   "note": "container",
+   "annotation": "tuple[app.simulation.geometry_functions.typed_fact_next.SimulationGoalSpec, ...]"
+  },
+  "SimulationGoalSpec.goal_id": {
+   "category": "DEFINITION_ID",
+   "note": "goal id",
+   "annotation": "<class 'str'>"
+  },
+  "SimulationGoalSpec.kind": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "typing.Literal['construct_object', 'construct_plane_section', 'construct_derived_solid', 'highlight_geometry', 'construc"
+  },
+  "SimulationGoalSpec.quote": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "<class 'str'>"
+  },
+  "SimulationGoalSpec.target_solid_id": {
+   "category": "SOLID_SCOPE",
+   "owner": "simulation goal (every kind)",
+   "rules": [
+    "S1",
+    "S3",
+    "S9"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_simulation_goal_controls_serve",
+   "negative_test": "test_simulation_goal_scope_violations_refuse_every_kind",
+   "refusal_codes": [
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "SimulationGoalSpec.target_section_id": {
+   "category": "SECTION_REF",
+   "owner": "simulation goal",
+   "rules": [
+    "S9"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_simulation_goal_controls_serve",
+   "negative_test": "test_simulation_goal_scope_violations_refuse_every_kind",
+   "refusal_codes": [
+    "UNKNOWN_SECTION_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "SimulationGoalSpec.derived_solid_id": {
+   "category": "SOLID_DEFINITION",
+   "note": "defines a derived solid; DUPLICATE_SOLID_ID",
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "SimulationGoalSpec.parent_solid_id": {
+   "category": "SOLID_SCOPE",
+   "owner": "construct_derived_solid only (Owner D-A)",
+   "rules": [
+    "S1",
+    "S3",
+    "S4"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_simulation_goal_controls_serve",
+   "negative_test": "test_parent_solid_id_outside_derived_solid_refused",
+   "refusal_codes": [
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH",
+    "INVALID_SIMULATION_GOAL"
+   ],
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "SimulationGoalSpec.apex_ref": {
+   "category": "VERTEX_REF",
+   "owner": "derived solid parent",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_simulation_goal_controls_serve",
+   "negative_test": "test_f4_curved_ownership_refuses",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "SimulationGoalSpec.target_refs": {
+   "category": "VERTEX_REF",
+   "owner": "simulation goal scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8",
+    "S10"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_simulation_goal_controls_serve",
+   "negative_test": "test_simulation_goal_scope_violations_refuse_every_kind",
+   "refusal_codes": [
+    "UNKNOWN_VERTEX_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_leng"
+  },
+  "SimulationGoalSpec.style_role": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "typing.Literal['primary', 'section', 'derived_solid', 'shared_geometry', 'auxiliary']"
+  },
+  "TypedFactNextPayload.math_goals": {
+   "category": "METADATA",
+   "note": "container",
+   "annotation": "tuple[app.simulation.geometry_functions.typed_fact_next.MathGoalSpec, ...]"
+  },
+  "MathGoalSpec.goal_id": {
+   "category": "DEFINITION_ID",
+   "note": "goal id",
+   "annotation": "<class 'str'>"
+  },
+  "MathGoalSpec.kind": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "typing.Literal['volume_ratio', 'residual_volume', 'measurement']"
+  },
+  "MathGoalSpec.quote": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "<class 'str'>"
+  },
+  "MathGoalSpec.numerator_solid_id": {
+   "category": "SOLID_OPERAND",
+   "owner": "ratio goal",
+   "rules": [
+    "S1"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_ratio_residual_controls_serve",
+   "negative_test": "test_ratio_residual_scope_refused",
+   "refusal_codes": [
+    "UNKNOWN_SOLID_ID"
+   ],
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "MathGoalSpec.denominator_solid_id": {
+   "category": "SOLID_OPERAND",
+   "owner": "ratio goal",
+   "rules": [
+    "S1"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_ratio_residual_controls_serve",
+   "negative_test": "test_ratio_residual_scope_refused",
+   "refusal_codes": [
+    "UNKNOWN_SOLID_ID"
+   ],
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "MathGoalSpec.parent_solid_id": {
+   "category": "SOLID_OPERAND",
+   "owner": "residual goal",
+   "rules": [
+    "S1",
+    "S3"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_ratio_residual_controls_serve",
+   "negative_test": "test_residual_cut_must_descend_from_parent",
+   "refusal_codes": [
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "MathGoalSpec.cut_solid_id": {
+   "category": "SOLID_OPERAND",
+   "owner": "residual goal",
+   "rules": [
+    "S1",
+    "S3"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_ratio_residual_controls_serve",
+   "negative_test": "test_residual_cut_must_descend_from_parent",
+   "refusal_codes": [
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "MathGoalSpec.goal_type": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "typing.Optional[typing.Literal['distance', 'angle', 'volume', 'radius', 'area', 'lateral_area']]"
+  },
+  "MathGoalSpec.target": {
+   "category": "METADATA",
+   "note": "container; keys classified below",
+   "annotation": "dict[str, typing.Any]"
+  },
+  "MathGoalSpec.solid_id": {
+   "category": "SOLID_SCOPE",
+   "owner": "measurement goal (ratio/residual: Owner decision A)",
+   "rules": [
+    "S1",
+    "S3",
+    "S4"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_measurement_scope_controls_serve",
+   "negative_test": "test_measurement_scope_violations_refuse",
+   "refusal_codes": [
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH",
+    "INVALID_MATH_GOAL"
+   ],
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "TypedFactNextPayloadV2.schema_version": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "<class 'str'>"
+  },
+  "TypedFactNextPayloadV2.problem_text": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "<class 'str'>"
+  },
+  "TypedFactNextPayloadV2.length_unit": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "typing.Optional[typing.Literal['1', 'a']]"
+  },
+  "TypedFactNextPayloadV2.solids": {
+   "category": "METADATA",
+   "note": "container",
+   "annotation": "tuple[app.simulation.geometry_functions.typed_fact_next.SolidSpec, ...]"
+  },
+  "TypedFactNextPayloadV2.premises": {
+   "category": "METADATA",
+   "note": "container",
+   "annotation": "tuple[app.simulation.geometry_functions.typed_fact_next.PremiseSpec, ...]"
+  },
+  "TypedFactNextPayloadV2.derived_sections": {
+   "category": "METADATA",
+   "note": "container",
+   "annotation": "tuple[app.simulation.geometry_functions.typed_fact_next.DerivedPlaneSectionSpecV2, ...]"
+  },
+  "DerivedPlaneSectionSpecV2.section_id": {
+   "category": "DEFINITION_ID",
+   "note": "section id",
+   "annotation": "<class 'str'>"
+  },
+  "DerivedPlaneSectionSpecV2.plane_name": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "<class 'str'>"
+  },
+  "DerivedPlaneSectionSpecV2.target_solid_id": {
+   "category": "SOLID_SCOPE",
+   "owner": "section",
+   "rules": [
+    "S1",
+    "S5",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_section_scope_controls_serve",
+   "negative_test": "test_section_scope_violations_refuse",
+   "refusal_codes": [
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "<class 'str'>"
+  },
+  "DerivedPlaneSectionSpecV2.plane_kind": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "typing.Literal['through_point_parallel_plane', 'through_point_perpendicular_line', 'through_point_parallel_two_lines', '"
+  },
+  "DerivedPlaneSectionSpecV2.through_point": {
+   "category": "VERTEX_REF",
+   "owner": "section target solid",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_section_scope_controls_serve",
+   "negative_test": "test_section_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "DerivedPlaneSectionSpecV2.distance_from_base": {
+   "category": "METADATA",
+   "note": "value",
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "DerivedPlaneSectionSpecV2.ratio_from_apex": {
+   "category": "METADATA",
+   "note": "value",
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "DerivedPlaneSectionSpecV2.equation_coeffs": {
+   "category": "METADATA",
+   "note": "values",
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_leng"
+  },
+  "DerivedPlaneSectionSpecV2.section_shape": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "typing.Optional[typing.Literal['polygon', 'circle', 'ellipse']]"
+  },
+  "DerivedPlaneSectionSpecV2.parallel_plane": {
+   "category": "VERTEX_REF",
+   "owner": "section target solid",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_section_scope_controls_serve",
+   "negative_test": "test_section_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_leng"
+  },
+  "DerivedPlaneSectionSpecV2.perpendicular_line": {
+   "category": "VERTEX_REF",
+   "owner": "section target solid",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_section_scope_controls_serve",
+   "negative_test": "test_section_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_leng"
+  },
+  "DerivedPlaneSectionSpecV2.parallel_line_a": {
+   "category": "VERTEX_REF",
+   "owner": "section target solid",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_section_scope_controls_serve",
+   "negative_test": "test_section_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_leng"
+  },
+  "DerivedPlaneSectionSpecV2.parallel_line_b": {
+   "category": "VERTEX_REF",
+   "owner": "section target solid",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_section_scope_controls_serve",
+   "negative_test": "test_section_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_leng"
+  },
+  "DerivedPlaneSectionSpecV2.quote": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "<class 'str'>"
+  },
+  "DerivedPlaneSectionSpecV2.stated_intersections": {
+   "category": "METADATA",
+   "note": "container of StatedIntersectionSpec",
+   "annotation": "tuple[app.simulation.geometry_functions.typed_fact_next.StatedIntersectionSpec, ...]"
+  },
+  "StatedIntersectionSpec.edge": {
+   "category": "VERTEX_REF",
+   "owner": "section target solid",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_section_scope_controls_serve",
+   "negative_test": "test_section_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_leng"
+  },
+  "StatedIntersectionSpec.point": {
+   "category": "DEFINITION_ID",
+   "note": "names a constructed section point (ownership source)",
+   "annotation": "typing.Optional[typing.Annotated[str, BeforeValidator(func=<function _nhan at 0x0000026FECD81300>, json_schema_input_typ"
+  },
+  "StatedIntersectionSpec.quote": {
+   "category": "METADATA",
+   "note": "no scope semantics",
+   "annotation": "<class 'str'>"
+  },
+  "DerivedPlaneSectionSpecV2.declared_boundary": {
+   "category": "VERTEX_REF",
+   "owner": "section target solid",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_section_scope_controls_serve",
+   "negative_test": "test_section_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, mi"
+  },
+  "TypedFactNextPayloadV2.relations": {
+   "category": "METADATA",
+   "note": "container",
+   "annotation": "tuple[app.simulation.geometry_functions.typed_fact_next.GeometricRelationSpec, ...]"
+  },
+  "TypedFactNextPayloadV2.simulation_goals": {
+   "category": "METADATA",
+   "note": "container",
+   "annotation": "tuple[app.simulation.geometry_functions.typed_fact_next.SimulationGoalSpec, ...]"
+  },
+  "TypedFactNextPayloadV2.math_goals": {
+   "category": "METADATA",
+   "note": "container",
+   "annotation": "tuple[app.simulation.geometry_functions.typed_fact_next.MathGoalSpec, ...]"
+  },
+  "PremiseSpec.args[regular_pyramid].apex": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "ref"
+  },
+  "PremiseSpec.args[regular_pyramid].base": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs3"
+  },
+  "PremiseSpec.args[right_prism].base": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs3"
+  },
+  "PremiseSpec.args[right_prism].top": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs3"
+  },
+  "PremiseSpec.args[regular_polygon].vertices": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs3"
+  },
+  "PremiseSpec.args[regular_polygon].side": {
+   "category": "METADATA",
+   "note": "value",
+   "shape": "value?"
+  },
+  "PremiseSpec.args[rectangle].vertices": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs4="
+  },
+  "PremiseSpec.args[segment_length].segment": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs2="
+  },
+  "PremiseSpec.args[segment_length].value": {
+   "category": "METADATA",
+   "note": "value",
+   "shape": "value"
+  },
+  "PremiseSpec.args[height].value": {
+   "category": "METADATA",
+   "note": "value",
+   "shape": "value"
+  },
+  "PremiseSpec.args[height].solid": {
+   "category": "SOLID_OPERAND",
+   "owner": "premise (height/altitude solid)",
+   "rules": [
+    "S2",
+    "S3"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "UNKNOWN_SOLID_ID",
+    "UNKNOWN_SOLID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "id?"
+  },
+  "PremiseSpec.args[equal_length].segment_a": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs2="
+  },
+  "PremiseSpec.args[equal_length].segment_b": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs2="
+  },
+  "PremiseSpec.args[perpendicular_line_plane].line": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs2="
+  },
+  "PremiseSpec.args[perpendicular_line_plane].plane": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs3"
+  },
+  "PremiseSpec.args[perpendicular_lines].line1": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs2="
+  },
+  "PremiseSpec.args[perpendicular_lines].line2": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs2="
+  },
+  "PremiseSpec.args[face_perpendicular_base].face": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs3"
+  },
+  "PremiseSpec.args[face_perpendicular_base].base": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs3"
+  },
+  "PremiseSpec.args[altitude].apex": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "ref"
+  },
+  "PremiseSpec.args[altitude].foot": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "ref"
+  },
+  "PremiseSpec.args[altitude].solid": {
+   "category": "SOLID_OPERAND",
+   "owner": "premise (height/altitude solid)",
+   "rules": [
+    "S2",
+    "S3"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "UNKNOWN_SOLID_ID",
+    "UNKNOWN_SOLID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "id?"
+  },
+  "PremiseSpec.args[midpoint].point": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "ref"
+  },
+  "PremiseSpec.args[midpoint].segment": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs2="
+  },
+  "PremiseSpec.args[divide_segment].point": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "ref"
+  },
+  "PremiseSpec.args[divide_segment].segment": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs2="
+  },
+  "PremiseSpec.args[divide_segment].ratio": {
+   "category": "METADATA",
+   "note": "value",
+   "shape": "value"
+  },
+  "PremiseSpec.args[centroid].point": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "ref"
+  },
+  "PremiseSpec.args[centroid].polygon": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs3"
+  },
+  "PremiseSpec.args[orthogonal_projection].point": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "ref"
+  },
+  "PremiseSpec.args[orthogonal_projection].image": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "ref"
+  },
+  "PremiseSpec.args[orthogonal_projection].plane": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs3"
+  },
+  "PremiseSpec.args[orthogonal_projection_line].point": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "ref"
+  },
+  "PremiseSpec.args[orthogonal_projection_line].image": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "ref"
+  },
+  "PremiseSpec.args[orthogonal_projection_line].line": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs2="
+  },
+  "PremiseSpec.args[intersect_line_line].point": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "ref"
+  },
+  "PremiseSpec.args[intersect_line_line].line1": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs2="
+  },
+  "PremiseSpec.args[intersect_line_line].line2": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs2="
+  },
+  "PremiseSpec.args[intersect_line_plane].point": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "ref"
+  },
+  "PremiseSpec.args[intersect_line_plane].line": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs2="
+  },
+  "PremiseSpec.args[intersect_line_plane].plane": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs3"
+  },
+  "PremiseSpec.args[base_is_square].vertices": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs3"
+  },
+  "PremiseSpec.args[base_is_square].side": {
+   "category": "METADATA",
+   "note": "value",
+   "shape": "value?"
+  },
+  "PremiseSpec.args[base_is_equilateral_triangle].vertices": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs3"
+  },
+  "PremiseSpec.args[base_is_equilateral_triangle].side": {
+   "category": "METADATA",
+   "note": "value",
+   "shape": "value?"
+  },
+  "PremiseSpec.args[base_is_regular_polygon].vertices": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs3"
+  },
+  "PremiseSpec.args[base_is_regular_polygon].side": {
+   "category": "METADATA",
+   "note": "value",
+   "shape": "value?"
+  },
+  "PremiseSpec.args[base_is_rectangle].vertices": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs4="
+  },
+  "PremiseSpec.args[equal_segments].segment_a": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs2="
+  },
+  "PremiseSpec.args[equal_segments].segment_b": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs2="
+  },
+  "PremiseSpec.args[line_perp_plane].line": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs2="
+  },
+  "PremiseSpec.args[line_perp_plane].plane": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs3"
+  },
+  "PremiseSpec.args[line_perp_line].line1": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs2="
+  },
+  "PremiseSpec.args[line_perp_line].line2": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs2="
+  },
+  "PremiseSpec.args[plane_perp_base].face": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs3"
+  },
+  "PremiseSpec.args[plane_perp_base].base": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs3"
+  },
+  "PremiseSpec.args[point_is_midpoint].point": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "ref"
+  },
+  "PremiseSpec.args[point_is_midpoint].segment": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs2="
+  },
+  "PremiseSpec.args[point_divides_segment].point": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "ref"
+  },
+  "PremiseSpec.args[point_divides_segment].segment": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs2="
+  },
+  "PremiseSpec.args[point_divides_segment].ratio": {
+   "category": "METADATA",
+   "note": "value",
+   "shape": "value"
+  },
+  "PremiseSpec.args[point_is_centroid].point": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "ref"
+  },
+  "PremiseSpec.args[point_is_centroid].polygon": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs3"
+  },
+  "PremiseSpec.args[point_is_foot].point": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "ref"
+  },
+  "PremiseSpec.args[point_is_foot].image": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "ref"
+  },
+  "PremiseSpec.args[point_is_foot].plane": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs3"
+  },
+  "PremiseSpec.args[right_angle#0].vertices": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs3="
+  },
+  "PremiseSpec.args[right_angle#0].right_at": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "ref"
+  },
+  "PremiseSpec.args[right_angle#1].vertex": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "ref"
+  },
+  "PremiseSpec.args[right_angle#1].rays": {
+   "category": "VERTEX_REF",
+   "owner": "premise scope",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_premise_scope_controls_serve",
+   "negative_test": "test_premise_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_QUALIFIED_REF",
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "shape": "refs2="
+  },
+  "MathGoalSpec.target.line": {
+   "category": "VERTEX_REF",
+   "owner": "measurement goal",
+   "rules": [
+    "S5",
+    "S7",
+    "S8",
+    "S11"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_measurement_scope_controls_serve",
+   "negative_test": "test_measurement_operand_violations_refuse",
+   "refusal_codes": [
+    "SOURCE_OBJECT_MISMATCH",
+    "UNKNOWN_SOLID_ID",
+    "INVALID_MATH_GOAL"
+   ],
+   "annotation": "Any"
+  },
+  "MathGoalSpec.target.line1": {
+   "category": "VERTEX_REF",
+   "owner": "measurement goal",
+   "rules": [
+    "S5",
+    "S7",
+    "S8",
+    "S11"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_measurement_scope_controls_serve",
+   "negative_test": "test_measurement_operand_violations_refuse",
+   "refusal_codes": [
+    "SOURCE_OBJECT_MISMATCH",
+    "UNKNOWN_SOLID_ID",
+    "INVALID_MATH_GOAL"
+   ],
+   "annotation": "Any"
+  },
+  "MathGoalSpec.target.line2": {
+   "category": "VERTEX_REF",
+   "owner": "measurement goal",
+   "rules": [
+    "S5",
+    "S7",
+    "S8",
+    "S11"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_measurement_scope_controls_serve",
+   "negative_test": "test_measurement_operand_violations_refuse",
+   "refusal_codes": [
+    "SOURCE_OBJECT_MISMATCH",
+    "UNKNOWN_SOLID_ID",
+    "INVALID_MATH_GOAL"
+   ],
+   "annotation": "Any"
+  },
+  "MathGoalSpec.target.plane": {
+   "category": "VERTEX_REF",
+   "owner": "measurement goal",
+   "rules": [
+    "S5",
+    "S7",
+    "S8",
+    "S11"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_measurement_scope_controls_serve",
+   "negative_test": "test_measurement_operand_violations_refuse",
+   "refusal_codes": [
+    "SOURCE_OBJECT_MISMATCH",
+    "UNKNOWN_SOLID_ID",
+    "INVALID_MATH_GOAL"
+   ],
+   "annotation": "Any"
+  },
+  "MathGoalSpec.target.point": {
+   "category": "VERTEX_REF",
+   "owner": "measurement goal",
+   "rules": [
+    "S5",
+    "S7",
+    "S8",
+    "S11"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_measurement_scope_controls_serve",
+   "negative_test": "test_measurement_operand_violations_refuse",
+   "refusal_codes": [
+    "SOURCE_OBJECT_MISMATCH",
+    "UNKNOWN_SOLID_ID",
+    "INVALID_MATH_GOAL"
+   ],
+   "annotation": "Any"
+  },
+  "MathGoalSpec.target.polygon": {
+   "category": "VERTEX_REF",
+   "owner": "measurement goal",
+   "rules": [
+    "S5",
+    "S7",
+    "S8",
+    "S11"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_measurement_scope_controls_serve",
+   "negative_test": "test_measurement_operand_violations_refuse",
+   "refusal_codes": [
+    "SOURCE_OBJECT_MISMATCH",
+    "UNKNOWN_SOLID_ID",
+    "INVALID_MATH_GOAL"
+   ],
+   "annotation": "Any"
+  },
+  "MathGoalSpec.target.section_id": {
+   "category": "SECTION_REF",
+   "owner": "measurement goal",
+   "rules": [
+    "S9",
+    "S11"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_measurement_scope_controls_serve",
+   "negative_test": "test_f5_malformed_targets_refuse_typed",
+   "refusal_codes": [
+    "UNKNOWN_SECTION_ID",
+    "INVALID_MATH_GOAL",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "Any"
+  },
+  "MathGoalSpec.target.segment": {
+   "category": "VERTEX_REF",
+   "owner": "measurement goal",
+   "rules": [
+    "S5",
+    "S7",
+    "S8",
+    "S11"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_measurement_scope_controls_serve",
+   "negative_test": "test_measurement_operand_violations_refuse",
+   "refusal_codes": [
+    "SOURCE_OBJECT_MISMATCH",
+    "UNKNOWN_SOLID_ID",
+    "INVALID_MATH_GOAL"
+   ],
+   "annotation": "Any"
+  },
+  "MathGoalSpec.target.solid": {
+   "category": "SOLID_OPERAND",
+   "owner": "measurement goal",
+   "rules": [
+    "S2",
+    "S3"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_measurement_scope_controls_serve",
+   "negative_test": "test_measurement_scope_violations_refuse",
+   "refusal_codes": [
+    "UNKNOWN_SOLID_ID",
+    "UNKNOWN_SOLID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "Any"
+  },
+  "MathGoalSpec.target.solid_id": {
+   "category": "SOLID_SCOPE",
+   "owner": "measurement goal",
+   "rules": [
+    "S1",
+    "S3"
+   ],
+   "entry_points": "adapter3(polyhedral, curved, legacy), adapter4, planner route, bridge",
+   "positive_test": "test_measurement_scope_controls_serve",
+   "negative_test": "test_measurement_scope_violations_refuse",
+   "refusal_codes": [
+    "UNKNOWN_SOLID_ID",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "Any"
+  }
+ },
+ "counts": {
+  "fields": 185,
+  "scope_bearing": 112
+ }
+}

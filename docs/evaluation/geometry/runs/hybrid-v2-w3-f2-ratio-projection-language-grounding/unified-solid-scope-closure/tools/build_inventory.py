@@ -119,6 +119,11 @@ SHAPES = {'ref': REF('premise scope', 'test_premise_scope_controls_serve', 'test
                   'test_premise_scope_violations_refuse', ['UNKNOWN_SOLID_ID', 'UNKNOWN_SOLID', 'SOURCE_OBJECT_MISMATCH']),
           'value': meta('value')}
 
+VERSION = sys.argv[1] if len(sys.argv) > 1 else ''      # '' = original; 'v2' = preregistration-amendment-1 (F7)
+if VERSION == 'v2':
+    for k in ('MathGoalSpec.parent_solid_id', 'MathGoalSpec.cut_solid_id'):
+        CLASS[k] = {**CLASS[k], 'rules': ['S1', 'S3'], 'negative_test': 'test_residual_cut_must_descend_from_parent',
+                    'refusal_codes': ['UNKNOWN_SOLID_ID', 'SOURCE_OBJECT_MISMATCH']}
 fields = C.field_paths(); kinds = C.kinds(); out = {}; missing = []
 for path, ann in fields.items():
     if path.startswith('PremiseSpec.args['):
@@ -134,6 +139,6 @@ assert not missing and not stale, {'unclassified': missing, 'stale': stale}
 doc = {'schema': 'SCHEMA_FIELD_INVENTORY/1', 'generator': 'backend/tests/geometry/scope_field_census.py + tools/build_inventory.py',
        'scope_categories': sorted(SCOPE), 'kinds': kinds, 'test_file': TEST, 'fields': out,
        'counts': {'fields': len(out), 'scope_bearing': sum(v['category'] in SCOPE for v in out.values())}}
-with (HERE / 'schema-field-inventory.json').open('x', encoding='utf-8', newline='\n') as f:
+with (HERE / f"schema-field-inventory{'-' + VERSION if VERSION else ''}.json").open('x', encoding='utf-8', newline='\n') as f:
     f.write(json.dumps(doc, ensure_ascii=False, indent=1) + '\n')
 print(json.dumps(doc['counts']))

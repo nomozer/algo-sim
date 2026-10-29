@@ -25,7 +25,8 @@ import scope_field_census as C
 
 RUNS = Path(__file__).resolve().parents[3] / 'docs/evaluation/geometry/runs'
 RUN = RUNS / 'hybrid-v2-w3-f2-ratio-projection-language-grounding'
-INVENTORY = json.loads((RUN / 'unified-solid-scope-closure/schema-field-inventory.json').read_text(encoding='utf-8'))
+# v2 = preregistration-amendment-1 (F7 residual ancestry); v1 stays as the originally registered inventory.
+INVENTORY = json.loads((RUN / 'unified-solid-scope-closure/schema-field-inventory-v2.json').read_text(encoding='utf-8'))
 SUP = json.loads((RUN / 'inputs/recovery-supplementary.json').read_text(encoding='utf-8'))['control']
 A3DEV = {c['case_id']: c for c in json.loads((RUNS / 'typedfact-next-adapter3-simulation/corpus-dev.json').read_text(encoding='utf-8'))['cases']}
 SIM = {c['case_id']: c for c in json.loads((RUNS / 'simulation-coverage-visual-validation/corpus-dev.json').read_text(encoding='utf-8'))['cases']}
@@ -208,6 +209,19 @@ def test_ratio_residual_scope_refused():
     p = deepcopy(A3DEV['A3-DEV-03']['payload'])
     next(g for g in p['math_goals'] if g['kind'] == 'volume_ratio')['numerator_solid_id'] = 'zz'
     assert outcome(a3(p)) == ('REFUSED', 'UNKNOWN_SOLID_ID')
+
+
+@pytest.mark.parametrize('parent,code', [('s_abcd', None), ('zz', 'SOURCE_OBJECT_MISMATCH')])
+def test_residual_cut_must_descend_from_parent(parent, code):
+    # F7 (preregistration-amendment-1): a residual's derived cut solid must be cut from the declared parent.
+    p = with_second_pyramid(demo1()); quote = next(g['quote'] for g in p['math_goals'] if g['kind'] == 'volume_ratio')
+    for kind, args, q in (('line_perp_plane', {'line': ['T', 'A'], 'plane': list('ABCD')}, 'TA vuông góc với (ABCD).'),
+                          ('segment_length', {'segment': ['T', 'A'], 'value': '3'}, 'TA = 3.')):
+        p['premises'].append({'kind': kind, 'solid_id': 'zz', 'args': args, 'quote': q}); p['problem_text'] += ' ' + q
+    p['math_goals'].append({'goal_id': 'res', 'kind': 'residual_volume', 'parent_solid_id': parent, 'cut_solid_id': 's_top',
+                            'quote': quote})
+    r = a3(p)
+    assert outcome(r) == (('SERVED', None) if code is None else ('REFUSED', code)), (r.code, r.reason)
 
 
 # ── F2: every relation kind ──────────────────────────────────────────────────────────────────────────────────────

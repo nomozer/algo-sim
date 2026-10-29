@@ -1,0 +1,27 @@
+{
+  "phase": "red-f7",
+  "head": "959e23a6fff0b9c9d363fca378c8617cd72fd36c",
+  "product_dirty": false,
+  "classification": "development security tests / POST_FEEDBACK_DEVELOPMENT_REGRESSION",
+  "live_provider_calls": 0,
+  "summary": "1 failed, 85 passed in 3.10s",
+  "failed": [
+    "test_residual_cut_must_descend_from_parent[zz-SOURCE_OBJECT_MISMATCH]"
+  ],
+  "baselines": {},
+  "regressions": {},
+  "test_file_sha256_lf": "459fd68f1c22f4f4cf3f5fea15fa929a90296449b26316b69678f6924542ba02",
+  "census_sha256_lf": "def67d033696a13e8306a07265397a6f08232f0673b48b50dd1eb5e7b23ca774",
+  "inputs_sha256_lf": {
+    "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/inputs/recovery-supplementary.json": "943d630aa9784079d85b30e07c7c2a84f713f02c142376aa5a5783cfe7b09f21",
+    "docs/evaluation/geometry/runs/typedfact-next-adapter3-simulation/corpus-dev.json": "ab9727fc73928a8659f26d3be30d8f4be09abf9a7a331944420059aeee8f34a1",
+    "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/corpus-dev.json": "7496572bf45d65bf5deb5ab21c9f0bdbb85b5bb9817ead92f7aadb5e7d0ffb8b",
+    "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope-closure/schema-field-inventory.json": "083ef31befe4cdc8e4eadf5c1921488f1a448ce531187c6a05733fbe1907a0c4"
+  },
+  "product_sha256_lf": {
+    "backend/app/simulation/geometry_functions/typed_fact_next.py": "8ba0b0a37a394bd37017acb1b8a4ef872b19980c5240eaa016bc747e5aeb55f6",
+    "backend/app/simulation/geometry_functions/typed_fact_next_bridge.py": "9fedad038ec6b75f100118267c08b779b554d316afd7d12bfb1e6c5f18dc9fb5",
+    "backend/app/ai/adapter3_simulation.py": "3d69365203a74126fbffe3fd02d880ce6656195ce5a29031fc65e18470aededb"
+  },
+  "log": "red-f7.log"
+}
