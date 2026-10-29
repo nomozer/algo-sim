@@ -424,6 +424,95 @@ def test_metamorphic_foreign_scope_never_served(name):
         assert a3(p).status != 'SERVED', (name, key)
 
 
+@pytest.mark.parametrize('fields,code', [
+    (dict(container_ref='s1', member_ref='T'), 'SOURCE_OBJECT_MISMATCH'),                  # T belongs to s2 only
+    (dict(container_ref='s1', member_ref='S', solid_id='s2'), 'SOURCE_OBJECT_MISMATCH'),    # container vs declared scope
+    (dict(container_ref='s1', member_ref='S'), None)])                                      # valid: base outcome kept
+def test_containment_whole_solid_container_scopes_its_members(fields, code):
+    p = relation('containment', **fields)
+    if code: refused_everywhere(p, code)
+    else: never_scope_refused(p, must_serve=('a3',))      # Bridge routes: containment is a capability refusal
+
+
+# ── mutants: every guard is load-bearing (oracle holds on real code, fails on the mutant) ────────────────────────
+def mutate(monkeypatch, owner, name, needle, replacement):
+    source = textwrap.dedent(inspect.getsource(getattr(owner, name)))
+    assert source.count(needle) == 1, (name, needle)
+    namespace = dict(vars(T if owner is T else B if owner is B else A))
+    exec(compile(source.replace(needle, replacement), f'<{name}-mutant>', 'exec'), namespace)
+    monkeypatch.setattr(owner, name, namespace[name])
+    # A source mutation changes every importer of the function: rebind the names the Bridge / Adapter /3 imported too.
+    for module in (B, A):
+        if owner is T and name in vars(module):
+            monkeypatch.setattr(module, name, namespace[name])
+
+
+def oracle_hyphen_edge_keys():
+    c, q = hyphen_dev07(); assert outcome(a3(q)) == outcome(a3(c['payload']))
+
+
+def oracle_qualified_scope():
+    assert outcome(a4(measurement('s2', point='s1::S', plane=list('ABCD')))) == ('REFUSED', 'SOURCE_OBJECT_MISMATCH')
+
+
+def oracle_relation_side():
+    assert outcome(a4(relation('shared_vertices', **RELATION_NEGATIVES['shared_vertices']))) == ('REFUSED', 'SOURCE_OBJECT_MISMATCH')
+
+
+def oracle_sim_goal_scope():
+    p = sim_goal(kind='highlight_geometry', target_solid_id='s2', target_refs=['S'])
+    assert outcome(a4(p)) == ('REFUSED', 'SOURCE_OBJECT_MISMATCH')
+
+
+def oracle_parent():       # a same-label copy: only the parent ↔ section agreement (S3) tells the solids apart
+    p = demo1(); other = deepcopy(p['solids'][0]); other['solid_id'] = 'zz'; p['solids'].append(other)
+    next(g for g in p['simulation_goals'] if g['kind'] == 'construct_derived_solid')['parent_solid_id'] = 'zz'
+    assert outcome(a3(p)) == ('REFUSED', 'SOURCE_OBJECT_MISMATCH')
+
+
+def oracle_highlight_token():
+    p = demo1(); p['simulation_goals'].append({'goal_id': 'h', 'kind': 'highlight_geometry', 'target_refs': ['Q9'],
+                                                'quote': p['simulation_goals'][0]['quote']})
+    assert outcome(a3(p)) == ('REFUSED', 'UNKNOWN_VERTEX_REF')
+
+
+def oracle_apex():
+    p = cones(); next(g for g in p['simulation_goals'] if g['kind'] == 'construct_derived_solid')['apex_ref'] = 'T'
+    assert outcome(a3(p)) == ('REFUSED', 'SOURCE_OBJECT_MISMATCH')
+
+
+def oracle_d_a():
+    p = sup(); p['simulation_goals'][0]['parent_solid_id'] = 's1'
+    assert outcome(a3(p)) == ('REFUSED', 'INVALID_SIMULATION_GOAL')
+
+
+CLOSURE_MUTANTS = {
+    'naive_hyphen_split': (T, 'split_edge_key', 'if len(cuts) != 1:', 'cuts = [text.find("-")]\n    if len(cuts) != 1:',
+                           oracle_hyphen_edge_keys),
+    'remove_qualified_scope_guard': (T, '_validate_declared_solid_scope', 'if scope is not None and ns not in family(scope):',
+                                     'if False:', oracle_qualified_scope),
+    'remove_relation_side_scope': (T, 'scope_records', 'r.solid_a or r.solid_id,', 'None,', oracle_relation_side),
+    'remove_sim_goal_target_scope': (T, 'scope_records', 'g.target_solid_id or (section.target_solid_id if section else None)',
+                                     'None', oracle_sim_goal_scope),
+    'remove_parent_validation': (T, '_validate_declared_solid_scope', 'if g.target_section_id in sections:', 'if False:', oracle_parent),
+    'remove_highlight_token_validation': (T, '_validate_declared_solid_scope',
+        'refuse("UNKNOWN_VERTEX_REF", g.goal_id, f"{token!r} không chỉ tới đối tượng nào đã khai")', 'pass', oracle_highlight_token),
+    'remove_apex_ownership': (T, 'scope_records', 'refs = [x for x in (g.apex_ref, *g.target_refs) if x and x not in ids]',
+                              'refs = [x for x in g.target_refs if x not in ids]', oracle_apex),
+    'remove_owner_decision_d_a': (T, '_validate_declared_solid_scope',
+        'if g.kind != "construct_derived_solid" and g.parent_solid_id is not None:', 'if False:', oracle_d_a),
+}
+
+
+@pytest.mark.parametrize('name', sorted(CLOSURE_MUTANTS))
+def test_closure_mutants_are_killed(monkeypatch, name):
+    owner, fn, needle, replacement, oracle = CLOSURE_MUTANTS[name]
+    oracle()
+    mutate(monkeypatch, owner, fn, needle, replacement)
+    with pytest.raises(AssertionError):
+        oracle()
+
+
 # ── coverage gate: every model field classified; every scope field mapped to rules, tests and product code ───────
 def test_census_inventory_complete():
     fields = C.field_paths(); inv = INVENTORY['fields']

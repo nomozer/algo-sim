@@ -285,7 +285,9 @@ def test_safety_oracles_kill_semantic_and_scope_mutants(monkeypatch,mutant):
         invoked=[];original=A._Adapter3Compiler._compile_solids
         def spy(c):invoked.append(True);return original(c)
         monkeypatch.setattr(A._Adapter3Compiler,'_compile_solids',spy)
-        A.run_typed_fact_next_route(deepcopy(SUP['invalid_scope']))
+        # A schema-valid payload reaches the gate (the declared-scope schema policy refuses `invalid_scope` earlier);
+        # the stubbed Bridge then returns the semantic refusal this guard must keep terminal.
+        A.run_typed_fact_next_route(control())
         with pytest.raises(AssertionError):assert not invoked,'legacy invoked after semantic refusal'
         return
     source=textwrap.dedent(inspect.getsource(A._Adapter3Compiler.resolve_ref))

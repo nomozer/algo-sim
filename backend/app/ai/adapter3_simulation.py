@@ -53,6 +53,7 @@ from app.simulation.geometry_functions.registry import (
 )
 from app.simulation.geometry_functions.typed_fact_next import (
     _ARGS_LOI,
+    resolve_solid_name,
     TYPED_FACT_NEXT_SCHEMA_VERSION,
     DerivedObjectIdentity,
     DerivedPlaneSectionSpec,
@@ -2645,7 +2646,8 @@ class _Adapter3Compiler:
             if mg.kind == "measurement":
                 assert mg.goal_type is not None
                 if "solid" in mg.target:
-                    t_sid = str(mg.target["solid"])
+                    # F5: a notation alias names the same solid (the schema policy validated it, S2)
+                    t_sid = resolve_solid_name(self.payload, mg.target["solid"]) or str(mg.target["solid"])
                     of_var = solid_meta[t_sid]["solid_var"]
                 elif "section_id" in mg.target:
                     t_sec = str(mg.target["section_id"])

@@ -15,6 +15,11 @@ from .registry import TuChoi
 from .typed_fact_next import (
     _ARGS_LOI,
     _ARGS_GOC_VUONG,
+    CONSTRUCTED_OUTPUTS,
+    _derived_parents,
+    resolve_solid_name,
+    scope_records,
+    split_edge_key,
     DerivedPlaneSectionSpec,
     DerivedPlaneSectionSpecV2,
     TypedFactNextPayload,
@@ -69,7 +74,7 @@ def _check_qualified_refs(value: Any, solids: dict[str, Any], owned: dict[str, s
                     continue
                 if key == "named_intersections":
                     for edge in item:
-                        _check_qualified_refs(edge.split("-"), solids, owned)
+                        _check_qualified_refs(split_edge_key(edge), solids, owned)
                 _check_qualified_refs(item, solids, owned)
     elif isinstance(value, (list, tuple)):
         for item in value:
@@ -112,10 +117,7 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
         for label in solid.local_vertices():
             owners.setdefault(label, set()).add(sid)
             vertices.setdefault(label, set()).add(sid)
-    outputs = {"midpoint":"point", "point_is_midpoint":"point", "divide_segment":"point",
-               "point_divides_segment":"point", "centroid":"point", "point_is_centroid":"point",
-               "intersect_line_line":"point", "intersect_line_plane":"point",
-               "orthogonal_projection":"image", "point_is_foot":"image", "orthogonal_projection_line":"image"}
+    outputs = CONSTRUCTED_OUTPUTS
     new_names = {_ref(prem.args[outputs[prem.kind]]) for prem in p.premises
                  if prem.kind in outputs and outputs[prem.kind] in prem.args}
     shared_faces = set()
@@ -192,17 +194,18 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
             candidates = named
         checked.append({'premise_id':fid,'declared_solid_id':prem.solid_id,'resolved_solid_ids':sorted({sid} if sid else candidates),
                         'vertices':sorted({_ref(ref) for _key, ref in refs}),'quote':prem.quote})
-    # A measurement goal's declared scope binds its operands too; an operand owned only by other solids contradicts it.
-    # Unowned labels (section vertices, undeclared names) stay the routes' own refusals.
-    for g in p.math_goals:
-        if g.kind != 'measurement' or g.solid_id is None:
+    # S8: every other scoped object of `scope_records` (sections, relation sides, simulation and measurement goals) is
+    # bound by the same constructed-point ownership: an unqualified operand owned only by other solids contradicts its
+    # scope. Unowned labels (unnamed section points, undeclared names) stay the routes' own refusals.
+    parents = _derived_parents(p)
+    for kind, where, scope, refs, _strict in scope_records(p):
+        base = parents.get(scope, scope)
+        if kind == 'premise' or base is None:
             continue
-        for key in ('segment', 'point', 'plane', 'line', 'line1', 'line2', 'polygon'):
-            value = g.target.get(key)
-            for ref in (value if isinstance(value, (list, tuple)) else [value] if isinstance(value, str) else []):
-                if owners.get(_ref(ref)) and g.solid_id not in owners[_ref(ref)]:
-                    raise TuChoi('SOURCE_OBJECT_MISMATCH', f'{g.goal_id}: toán hạng {ref!r} không thuộc phạm vi {g.solid_id!r}',
-                                 (g.goal_id,))
+        for ref in refs:
+            ns, label = parse_qualified_ref(ref)
+            if ns is None and owners.get(label) and base not in owners[label]:
+                raise TuChoi('SOURCE_OBJECT_MISMATCH', f'{where}: toán hạng {ref!r} không thuộc phạm vi {scope!r}', (where,))
     return checked
 
 
@@ -337,9 +340,9 @@ def _section_fact_v2(sec: DerivedPlaneSectionSpecV2, solids: dict[str, Any], ask
 def _section_fact(sec: DerivedPlaneSectionSpec, solids: dict[str, Any], asked: list[str]) -> dict[str, Any]:
     f = _mat_fact(sec, solids, asked)
     edges = [tuple(_refs(e)) for e in sec.cut_edges]
-    named = {frozenset(_refs(k.split("-"))): v for k, v in sec.named_intersections.items()}
+    named = {frozenset(_refs(split_edge_key(k))): v for k, v in sec.named_intersections.items()}
     if not edges and named:                              # the names the payload gives define the stated cuts, in its order
-        edges = [tuple(_refs(k.split("-"))) for k in sec.named_intersections]
+        edges = [tuple(_refs(split_edge_key(k))) for k in sec.named_intersections]
     if lac := [k for k in named if k not in {frozenset(e) for e in edges}]:
         raise TuChoi("BRIDGE_INCONSISTENT_SECTION", f"{sec.section_id}: giao điểm có tên trên cạnh không bị nêu là cắt {lac}",
                      (sec.section_id,))
@@ -509,14 +512,17 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif g.kind == "residual_volume":
             facts.append({**q, "quantity": "residual_volume",
                           "solid_refs": [solid_fact(g.parent_solid_id, g.goal_id), solid_fact(g.cut_solid_id, g.goal_id)]})
-        elif g.goal_type == "volume" and (g.target.get("solid") or g.solid_id) in solids:
-            facts.append({**q, "quantity": "volume", "solid": solids[g.target.get("solid") or g.solid_id].notation})
+        elif g.goal_type == "volume" and resolve_solid_name(p, g.target.get("solid") or g.solid_id) in solids:
+            # F6: a notation / canonical alias names the same solid (validated by the schema policy, S2/S3)
+            facts.append({**q, "quantity": "volume",
+                          "solid": solids[resolve_solid_name(p, g.target.get("solid") or g.solid_id)].notation})
         elif g.goal_type == "area" and "section_id" in g.target:
             sec = next((s for s in p.derived_sections if s.section_id == g.target["section_id"]), None)
             if sec is None:
                 raise TuChoi("INVALID_MATH_GOAL", f"{g.goal_id}: thiết diện {g.target['section_id']!r} không có trong dữ kiện", (g.goal_id,))
             g_solid = g.solid_id or g.target.get("solid_id") or g.target.get("solid")
             if g_solid is not None:
+                g_solid = resolve_solid_name(p, g_solid) or g_solid        # F6: notation alias of a declared solid
                 if g_solid not in solids:
                     raise TuChoi("UNKNOWN_SOLID_ID", f"{g.goal_id}: khối {g_solid!r} không có", (g.goal_id,))
                 if g_solid != sec.target_solid_id:

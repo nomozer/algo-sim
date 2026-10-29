@@ -316,11 +316,12 @@ class DerivedPlaneSectionSpec(_PlaneSectionBase):
         for u, v in self.cut_edges:
             parse_qualified_ref(u)
             parse_qualified_ref(v)
-        for key in self.named_intersections:                 # one edge "U-V" of two references, nothing else
-            ends = key.split("-")
-            if len(ends) != 2 or not all(_QUALIFIED_REF_RE.match(x.strip()) for x in ends):
+        for key in self.named_intersections:                 # one edge "U-V" of two references, nothing else (S5)
+            try:
+                split_edge_key(key)
+            except TypedFactNextValidationError:
                 raise TypedFactNextValidationError(
-                    "INVALID_DERIVED_SECTION", f"Section {self.section_id!r}: named intersection key {key!r} is not 'U-V'.")
+                    "INVALID_DERIVED_SECTION", f"Section {self.section_id!r}: named intersection key {key!r} is not 'U-V'.") from None
         return self
 
 
@@ -683,39 +684,134 @@ def _solid_aliases(solid: SolidSpec) -> set[str]:
     return names
 
 
-def _qualified_refs(value: Any) -> list[str]:
-    """Every `solid_id::LABEL` inside a value (edge keys `X-Y` split); quotes are text, not references."""
-    if isinstance(value, dict):
-        return [r for k, v in value.items() if k not in ("quote", "problem_text") for r in _qualified_refs(v)]
-    if isinstance(value, (list, tuple)):
-        return [r for v in value for r in _qualified_refs(v)]
-    if isinstance(value, str) and "::" in value:
-        return [part for part in value.split("-") if "::" in part]
-    return []
+#: Operand keys of a measurement goal `target` (S11). `plane1`/`plane2` are contract-level: no route reads them yet.
+GOAL_OPERAND_KEYS = ("segment", "point", "plane", "line", "line1", "line2", "polygon", "plane1", "plane2")
+#: The argument naming the point a premise constructs; that point inherits its producer's solid.
+CONSTRUCTED_OUTPUTS = {"midpoint": "point", "point_is_midpoint": "point", "divide_segment": "point",
+                       "point_divides_segment": "point", "centroid": "point", "point_is_centroid": "point",
+                       "intersect_line_line": "point", "intersect_line_plane": "point",
+                       "orthogonal_projection": "image", "point_is_foot": "image", "orthogonal_projection_line": "image"}
+
+
+def split_edge_key(key: str) -> tuple[str, str]:
+    """An `U-V` edge key → its two references (S5). Labels never contain `-`, solid ids may: the split is the unique `-`
+    with a reference on both sides; none or several refuse."""
+    text = key.strip()
+    cuts = [i for i, ch in enumerate(text) if ch == "-" and _QUALIFIED_REF_RE.match(text[:i].strip())
+            and _QUALIFIED_REF_RE.match(text[i + 1:].strip())]
+    if len(cuts) != 1:
+        raise TypedFactNextValidationError("INVALID_DERIVED_SECTION", f"edge key {key!r} is not 'U-V'")
+    return text[:cuts[0]].strip(), text[cuts[0] + 1:].strip()
+
+
+def _chain_refs(chain: str) -> list[str]:
+    """A containment chain `SA` or `solid_id::SA` → one reference per vertex (S5)."""
+    sid, sep, labels = chain.rpartition("::")
+    return [f"{sid}::{x}" if sep else x for x in split_vertex_chain(labels)]
+
+
+def resolve_solid_name(p: "TypedFactNextPayload", name: Any) -> str | None:
+    """The one solid (primary by id/notation/canonical notation, or declared derived id) a name denotes, else None."""
+    if not isinstance(name, str):
+        return None
+    hits = [s.solid_id for s in p.solids if name in _solid_aliases(s)]
+    hits += [g.derived_solid_id for g in p.simulation_goals if g.kind == "construct_derived_solid" and g.derived_solid_id == name]
+    return hits[0] if len(hits) == 1 else None
+
+
+def _derived_parents(p: "TypedFactNextPayload") -> dict[str, str]:
+    sections = {s.section_id: s.target_solid_id for s in p.derived_sections}
+    return {g.derived_solid_id: g.parent_solid_id or sections.get(g.target_section_id)
+            for g in p.simulation_goals if g.kind == "construct_derived_solid" and g.derived_solid_id}
+
+
+def constructed_names(p: "TypedFactNextPayload") -> set[str]:
+    """Labels the payload itself introduces as constructed points (premise outputs, named section points)."""
+    names = {parse_qualified_ref(prem.args[out])[1] for prem in p.premises
+             if (out := CONSTRUCTED_OUTPUTS.get(prem.kind)) and isinstance(prem.args.get(out), str)}
+    for sec in p.derived_sections:
+        names.update(getattr(sec, "named_intersections", {}).values())
+        names.update(s.point for s in getattr(sec, "stated_intersections", ()) if s.point)
+    return names
+
+
+def scope_records(p: "TypedFactNextPayload") -> list[tuple[str, str, str | None, list[str], bool]]:
+    """Every scoped object of a (validated) payload as `(kind, where, scope, references, strict)` — the ONE enumeration
+    the schema (S5/S6/S7) and the Bridge ownership check (S8) iterate. `strict`: every label must be a vertex of the scope."""
+    sections = {s.section_id: s for s in p.derived_sections}
+    parents = _derived_parents(p)
+    recs: list[tuple[str, str, str | None, list[str], bool]] = []
+    for i, prem in enumerate(p.premises, 1):
+        if prem.kind in ("right_angle", "base_is_right_triangle"):
+            shape = next((s for s in _ARGS_GOC_VUONG if set(prem.args) <= set(s)), {})
+        else:
+            shape = _ARGS_LOI.get(prem.kind, {})
+        refs =[r for key, s in shape.items() if s.startswith("ref") and key in prem.args
+                for r in (prem.args[key] if s.startswith("refs") else [prem.args[key]]) if isinstance(r, str)]
+        recs.append(("premise", f"p{i}", prem.solid_id or resolve_solid_name(p, prem.args.get("solid")), refs, False))
+    for sec in p.derived_sections:
+        refs = [x for x in (sec.through_point, *(sec.parallel_plane or ()), *(sec.perpendicular_line or ()),
+                            *(sec.parallel_line_a or ()), *(sec.parallel_line_b or ())) if x]
+        refs += [x for e in getattr(sec, "cut_edges", ()) for x in e]
+        refs += [x for k in getattr(sec, "named_intersections", {}) for x in split_edge_key(k)]
+        refs += [x for s in getattr(sec, "stated_intersections", ()) for x in s.edge]
+        refs += [x for e in (getattr(sec, "declared_boundary", None) or ()) for x in e]
+        recs.append(("section", sec.section_id, sec.target_solid_id, refs, False))
+    ids = {s.solid_id for s in p.solids} | set(parents) | set(sections)
+    for r in p.relations:
+        # A containment's container is a vertex chain or a whole solid (then it is the members' scope, not a reference).
+        whole = r.container_ref if r.container_ref in ids else None
+        single = r.solid_id or (sections[r.section_id].target_solid_id if r.section_id in sections else None) or whole
+        recs.append(("relation", r.relation_id, r.solid_a or r.solid_id,
+                     [*r.face_a, *r.entity_a, *(a for a, _b in r.pairs)], r.kind == "shared_faces"))
+        recs.append(("relation", r.relation_id, r.solid_b or r.solid_id,
+                     [*r.face_b, *r.entity_b, *(b for _a, b in r.pairs)], r.kind == "shared_faces"))
+        recs.append(("relation", r.relation_id, single,
+                     [*(_chain_refs(r.container_ref) if r.container_ref and not whole else ()),
+                      *([r.member_ref] if r.member_ref else ()), *r.member_refs, *r.anchor_refs], r.kind == "coordinate_frame"))
+    for g in p.simulation_goals:
+        section = sections.get(g.target_section_id)
+        scope = parents.get(g.derived_solid_id) if g.kind == "construct_derived_solid" else \
+            g.target_solid_id or (section.target_solid_id if section else None)
+        refs = [x for x in (g.apex_ref, *g.target_refs) if x and x not in ids]
+        recs.append(("simulation_goal", g.goal_id, scope, refs, False))
+    for mg in p.math_goals:
+        if mg.kind != "measurement":
+            continue
+        t = mg.target
+        sec = sections.get(t["section_id"]) if isinstance(t.get("section_id"), str) else None
+        scope = mg.solid_id or t.get("solid_id") or resolve_solid_name(p, t.get("solid")) or (sec.target_solid_id if sec else None)
+        refs = [x for k in GOAL_OPERAND_KEYS if k in t for x in (t[k] if isinstance(t[k], (list, tuple)) else [t[k]])]
+        recs.append(("math_goal", mg.goal_id, scope, refs, False))
+    return recs
 
 
 def _validate_declared_solid_scope(p: "TypedFactNextPayload", known: set[str]) -> None:
-    """ONE declared-solid-scope policy (run `hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope`).
+    """ONE declared-solid-scope policy (runs `.../unified-solid-scope` and `.../unified-solid-scope-closure`).
 
     It runs inside the payload model, so every TypedFactNext route (Adapter /3 polyhedral and curved, Adapter /4, the
-    planner route) applies it before dispatch, capability refusal or fallback. It decides only what declarations prove:
-    R1 a declared scope exists; R2 a named solid resolves uniquely by id or notation; R3 all solids named by one object
-    agree; R4 ratio/residual goals carry no goal-level scope (Owner decision A); R5 a qualified reference's namespace
-    exists and equals its object's scope; R6 relation sides own their faces/anchors (Owner decision C). Absent optional
-    scope never fires a rule and is never replaced by a default. Constructed-point ownership is the Bridge's
-    (`_kiem_pham_vi_tien_de`)."""
+    planner route) applies it before dispatch, capability refusal or fallback. It decides what declarations prove; rule
+    ids S1–S11 are listed in the run's `architecture-amendment.md` and are enforced field by field against the
+    mechanical census (`schema-field-inventory.json`). Absent optional scope never fires a rule and is never replaced
+    by a default. Ownership through constructed points is the Bridge's (`_kiem_pham_vi_tien_de`, S8)."""
     solids = {s.solid_id: s for s in p.solids}
     sections = {s.section_id: s for s in p.derived_sections}
+    parents = _derived_parents(p)
+    built = constructed_names(p)
+    owners_of: dict[str, set[str]] = {}
+    for sid, spec in solids.items():
+        for v in {*spec.local_vertices(), *map(spec.canonical_vertex, spec.local_vertices())}:
+            owners_of.setdefault(v, set()).add(sid)
 
     def refuse(code: str, where: str, detail: str):
         raise TypedFactNextValidationError(code, f"{where}: {detail}")
 
-    def declared(sid: Any, where: str) -> str | None:                                   # R1
+    def declared(sid: Any, where: str) -> str | None:                                   # S1
         if sid is not None and (not isinstance(sid, str) or sid not in known):
             refuse("UNKNOWN_SOLID_ID", where, f"khối {sid!r} chưa được khai báo")
         return sid
 
-    def named(name: Any, scope: str | None, where: str) -> str | None:                  # R2
+    def named(name: Any, scope: str | None, where: str) -> str | None:                  # S2
         if name is None:
             return None
         hits = [s for s, spec in solids.items() if name in _solid_aliases(spec)] or [n for n in known if n == name] \
@@ -725,66 +821,85 @@ def _validate_declared_solid_scope(p: "TypedFactNextPayload", known: set[str]) -
                    f"khối {name!r} không xác định duy nhất")
         return hits[0]
 
-    def one_solid(where: str, *sids: str | None) -> str | None:                         # R3
+    def one_solid(where: str, *sids: str | None) -> str | None:                         # S3
         found = {s for s in sids if s is not None}
         if len(found) > 1:
             refuse("SOURCE_OBJECT_MISMATCH", where, f"một đối tượng mang các khối khác nhau {sorted(found)}")
         return next(iter(found), None)
 
-    def scoped(value: Any, scope: str | None, where: str) -> None:                      # R5
-        for ref in _qualified_refs(value):
-            ns = parse_qualified_ref(ref)[0]
-            declared(ns, where)
-            if scope is not None and ns != scope:
-                refuse("SOURCE_OBJECT_MISMATCH", where, f"tham chiếu {ref!r} khác phạm vi khối {scope!r}")
+    def section_of(sec_id: Any, where: str, code: str = "UNKNOWN_SECTION_ID") -> str | None:   # S9
+        if sec_id is None:
+            return None
+        if not isinstance(sec_id, str):
+            refuse("INVALID_MATH_GOAL", where, f"thiết diện {sec_id!r} không phải định danh")      # S11
+        if sec_id not in sections:
+            refuse(code, where, f"thiết diện {sec_id!r} chưa được khai báo")
+        return sections[sec_id].target_solid_id
 
-    def owned(labels: tuple[str, ...], sid: str | None, where: str) -> None:            # R6
-        if sid in solids:
-            spec = solids[sid]
-            own = {*spec.local_vertices(), *map(spec.canonical_vertex, spec.local_vertices())}
-            stray = [x for x in labels if parse_qualified_ref(x)[1] not in own]
-            if stray:
-                refuse("SOURCE_OBJECT_MISMATCH", where, f"{stray} không phải đỉnh của khối {sid!r}")
+    def family(scope: str | None) -> set[str]:
+        return {scope, parents[scope]} if scope in parents else {scope}
 
     for i, prem in enumerate(p.premises, 1):
         where = f"p{i}"
         scope = declared(prem.solid_id, where)
-        scope = one_solid(where, scope, named(prem.args.get("solid"), scope, where))
-        scoped(prem.args, scope, where)
-    for sec in p.derived_sections:
-        scoped(sec.model_dump(exclude={"section_id", "target_solid_id"}), sec.target_solid_id, sec.section_id)
+        one_solid(where, scope, named(prem.args.get("solid"), scope, where))
     for r in p.relations:
-        where = r.relation_id
-        if r.kind == "shared_faces":
-            for side, face in ((declared(r.solid_a, where), r.face_a), (declared(r.solid_b, where), r.face_b)):
-                scoped(face, side, where)
-                owned(face, side, where)
-        elif r.kind == "coordinate_frame":
-            frame = declared(r.solid_id, where)
-            scoped(r.anchor_refs, frame, where)
-            owned(r.anchor_refs, frame, where)
-        else:
-            for sid in (r.solid_id, r.solid_a, r.solid_b):
-                declared(sid, where)
-        scoped(r.model_dump(include={"container_ref", "member_ref", "pairs", "entity_a", "entity_b", "member_refs"}),
-               None, where)
+        for sid in (r.solid_id, r.solid_a, r.solid_b):
+            declared(sid, r.relation_id)
+        if r.solid_id is not None:
+            one_solid(r.relation_id, r.solid_id, r.solid_a)
+            one_solid(r.relation_id, r.solid_id, r.solid_b)
+        if r.section_id is not None:
+            one_solid(r.relation_id, r.solid_id, section_of(r.section_id, r.relation_id))
+        if r.container_ref in known:                                                       # S3: whole-solid container
+            one_solid(r.relation_id, r.solid_id, r.container_ref)
     for g in p.simulation_goals:
         declared(g.parent_solid_id, g.goal_id)
-        if g.kind == "construct_derived_solid" and g.target_section_id in sections:
-            one_solid(g.goal_id, g.parent_solid_id, sections[g.target_section_id].target_solid_id)
-        scoped([g.apex_ref, *g.target_refs], None, g.goal_id)
+        if g.kind != "construct_derived_solid" and g.parent_solid_id is not None:            # S4 (Owner D-A)
+            refuse("INVALID_SIMULATION_GOAL", g.goal_id, f"{g.kind} không có parent_solid_id trong hợp đồng")
+        if g.kind == "construct_derived_solid" and g.target_solid_id is not None:            # S4
+            refuse("INVALID_SIMULATION_GOAL", g.goal_id, "construct_derived_solid không có target_solid_id trong hợp đồng")
+        if g.target_section_id in sections:
+            one_solid(g.goal_id, g.parent_solid_id if g.kind == "construct_derived_solid" else g.target_solid_id,
+                      sections[g.target_section_id].target_solid_id)
+        for token in g.target_refs:                                                        # S3/S9 for id tokens
+            if g.target_solid_id is not None and token in known and g.target_solid_id not in family(token):
+                refuse("SOURCE_OBJECT_MISMATCH", g.goal_id, f"{token!r} nằm ngoài phạm vi {g.target_solid_id!r}")
+            if g.target_solid_id is not None and token in sections and \
+                    sections[token].target_solid_id not in family(g.target_solid_id):
+                refuse("SOURCE_OBJECT_MISMATCH", g.goal_id, f"thiết diện {token!r} không thuộc {g.target_solid_id!r}")
+        for token in [x for x in (g.apex_ref, *g.target_refs) if x and x not in known and x not in sections]:   # S10
+            if not _QUALIFIED_REF_RE.match(token) or parse_qualified_ref(token)[1] not in {*owners_of, *built}:
+                refuse("UNKNOWN_VERTEX_REF", g.goal_id, f"{token!r} không chỉ tới đối tượng nào đã khai")
     for mg in p.math_goals:
         if mg.kind in ("volume_ratio", "residual_volume"):
-            if mg.solid_id is not None:                                                  # R4
+            if mg.solid_id is not None:                                                  # S4 (Owner decision A)
                 refuse("INVALID_MATH_GOAL", mg.goal_id, f"mục tiêu {mg.kind} không có phạm vi khối cấp mục tiêu")
             continue
         t = mg.target
+        for key in GOAL_OPERAND_KEYS:                                                    # S11
+            v = t.get(key)
+            if v is not None and not (isinstance(v, str) or isinstance(v, (list, tuple)) and all(isinstance(x, str) for x in v)):
+                refuse("INVALID_MATH_GOAL", mg.goal_id, f"toán hạng {key!r} không phải tham chiếu")
         scope = declared(mg.solid_id, mg.goal_id)
         nested = declared(t.get("solid_id"), mg.goal_id)
-        sec = sections.get(t["section_id"]) if isinstance(t.get("section_id"), str) else None
-        scope = one_solid(mg.goal_id, scope, nested, named(t.get("solid"), scope or nested, mg.goal_id),
-                          sec.target_solid_id if sec else None)
-        scoped({k: v for k, v in t.items() if k not in ("solid", "solid_id", "section_id")}, scope, mg.goal_id)
+        one_solid(mg.goal_id, scope, nested, named(t.get("solid"), scope or nested, mg.goal_id),
+                  section_of(t.get("section_id"), mg.goal_id))
+
+    for _kind, where, scope, refs, strict in scope_records(p):
+        for ref in refs:
+            ns, label = parse_qualified_ref(ref)                                         # S5 grammar
+            if ns is not None:
+                declared(ns, where)
+                if scope is not None and ns not in family(scope):                         # S5
+                    refuse("SOURCE_OBJECT_MISMATCH", where, f"tham chiếu {ref!r} khác phạm vi khối {scope!r}")
+            base = parents.get(scope, scope)
+            stray = [label] if strict and base in solids and base not in owners_of.get(label, set()) else []
+            if stray:                                                                    # S6
+                refuse("SOURCE_OBJECT_MISMATCH", where, f"{stray} không phải đỉnh của khối {base!r}")
+            if ns is None and base in solids and label in owners_of and base not in owners_of[label] \
+                    and label not in built:                                              # S7
+                refuse("SOURCE_OBJECT_MISMATCH", where, f"{label!r} chỉ là đỉnh của khối khác, không thuộc {base!r}")
 
 
 class TypedFactNextPayloadV2(TypedFactNextPayload):
@@ -817,7 +932,7 @@ def convert_v1_to_v2(raw: dict[str, Any], route: str | None) -> dict[str, Any]:
     out = p.model_dump(mode="json", exclude_none=True)
     out["schema_version"] = TYPED_FACT_NEXT_V2_SCHEMA_VERSION
     for sec, d in zip(p.derived_sections, out["derived_sections"]):
-        named = {frozenset(parse_qualified_ref(x) for x in k.split("-")): (k.split("-"), v)
+        named = {frozenset(parse_qualified_ref(x) for x in split_edge_key(k)): (list(split_edge_key(k)), v)
                  for k, v in sec.named_intersections.items()}
         if route == "bridge":
             edges = [list(e) for e in sec.cut_edges] or [ends for ends, _v in named.values()]

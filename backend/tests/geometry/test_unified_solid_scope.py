@@ -324,20 +324,26 @@ def ratio_scope():
     assert outcome(a3(p)) == refused('INVALID_MATH_GOAL')
 
 
-def relation_side():
+# Closure run (`unified-solid-scope-closure/test-adaptation-amendment.md`): the schema now also refuses labels owned only
+# by other solids (S7), so each oracle below uses a case that ONLY the guarded layer can decide.
+def relation_side():       # a face label that is no vertex of any solid: only the strict side check (S6) sees it
     p = sup(); p['relations'] = [{'relation_id': 'r', 'quote': Q, 'kind': 'shared_faces', 'solid_a': 's1', 'solid_b': 's2',
-                                  'face_a': list('SAB'), 'face_b': list('SAB')}]
+                                  'face_a': ['A', 'B', 'Q'], 'face_b': ['A', 'B', 'Q']}]
     assert outcome(a4(p)) == refused('SOURCE_OBJECT_MISMATCH')
 
 
-def goal_operand():
-    assert outcome(a4(scoped_goal(DIST, 's2'))) == refused('SOURCE_OBJECT_MISMATCH')
+def goal_operand():        # a constructed point of s1 under goal scope s2: only constructed-point ownership (S8) sees it
+    p = add_premise(sup(), {'kind': 'midpoint', 'solid_id': 's1', 'args': {'point': 'M', 'segment': ['S', 'A']},
+                            'quote': 'M là trung điểm của SA.'})
+    p = add_goal(p, {'goal_id': 'g2', 'kind': 'measurement', 'goal_type': 'distance', 'solid_id': 's2',
+                     'target': {'point': 'M', 'plane': list('ABCD')}, 'quote': 'Tính khoảng cách từ M đến (ABCD).'})
+    assert outcome(a4(p)) == refused('SOURCE_OBJECT_MISMATCH')
 
 
-def curved_ownership():
-    p = cyl()['payload']; second_cylinder(p)
-    add_premise(p, {'kind': 'segment_length', 'solid_id': 'zz', 'args': {'segment': ['O', "O'"], 'value': '1'},
-                    'quote': p['solids'][0]['quote']})
+def curved_ownership():    # constructed point of cyl used under zz: only the Bridge validator run before the curved route
+    p = cyl()['payload']; second_cylinder(p); q = p['solids'][0]['quote']
+    add_premise(p, {'kind': 'midpoint', 'solid_id': 'cyl', 'args': {'point': 'M', 'segment': ['O', "O'"]}, 'quote': q})
+    add_premise(p, {'kind': 'segment_length', 'solid_id': 'zz', 'args': {'segment': ['M', 'I'], 'value': '1'}, 'quote': q})
     assert outcome(a3(p)) == refused('SOURCE_OBJECT_MISMATCH')
 
 
@@ -354,7 +360,7 @@ MUTANTS = {
     'foreign_scope_to_first_solid': (T, '_validate_declared_solid_scope',
         'refuse("UNKNOWN_SOLID_ID", where, f"khối {sid!r} chưa được khai báo")', 'return next(iter(solids))', curved_goal_foreign),
     'remove_goal_operand_ownership': (B, '_kiem_pham_vi_tien_de',
-        "if owners.get(_ref(ref)) and g.solid_id not in owners[_ref(ref)]:", 'if False:', goal_operand),
+        "if ns is None and owners.get(label) and base not in owners[label]:", 'if False:', goal_operand),
     'bypass_curved_prevalidation': (A._Adapter3Compiler, 'run',
         '_kiem_pham_vi_tien_de(self.payload, {s.solid_id: s for s in self.payload.solids})', 'pass', curved_ownership),
 }
