@@ -1,0 +1,20 @@
+{
+  "head": "1181692107b01685548a17594c3685dce5cd0f12",
+  "product_commit": "1181692107b01685548a17594c3685dce5cd0f12",
+  "measured_system_hash": [
+    "06d867dd2688996c37088702bc2dcec39e214a40a94294cb00ef82c19139dc4d",
+    118
+  ],
+  "live_provider_calls": 0,
+  "classification": "POST_FEEDBACK_DEVELOPMENT_REGRESSION",
+  "A": "PASS",
+  "B": "PASS",
+  "C": "PASS",
+  "D": "PASS",
+  "wrong_served_locked_96": 0,
+  "gate_B_review": "verification/gate-b-independent-review.md",
+  "gate_B_review_sha256_lf": "66c4f7d69193f4bf65fb383ae97058ff100da1ad633b830499c302e7145b5aee",
+  "compatibility_sha256_lf": "01e1c18405852f6239a61b41d82698439253322b95a56e9a1dcafd590d473e31",
+  "mutation_sha256_lf": "8bed9a927e1e597b0e053bc1d1683cf0b759bcf79042864cf9a100defc7dcc95",
+  "release_status": "NOT_YET_READY_PENDING_FULL_REPLAY_T2_FREEZE_T3_FINAL_REVIEW"
+}

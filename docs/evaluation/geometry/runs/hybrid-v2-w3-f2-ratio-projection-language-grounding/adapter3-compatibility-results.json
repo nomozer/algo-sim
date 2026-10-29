@@ -1,0 +1,4671 @@
+{
+  "head": "1181692107b01685548a17594c3685dce5cd0f12",
+  "product_commit": "1181692107b01685548a17594c3685dce5cd0f12",
+  "measured_system_hash": [
+    "06d867dd2688996c37088702bc2dcec39e214a40a94294cb00ef82c19139dc4d",
+    118
+  ],
+  "live_provider_calls": 0,
+  "classification": "POST_FEEDBACK_DEVELOPMENT_REGRESSION",
+  "status": "PASS_BEHAVIORAL_GATES",
+  "tests": {
+    "passed": 619,
+    "failed": 0,
+    "xfailed": 6,
+    "deselected": 1,
+    "deferred": "live product vs old W3-F1 freeze, must pass after new freeze in Full T3"
+  },
+  "slices": {
+    "authored_projection": {
+      "total": 26,
+      "served_correct": 26,
+      "refused": 0,
+      "locked_code_match": 26
+    },
+    "authored_ratio": {
+      "total": 24,
+      "served_correct": 24,
+      "refused": 0,
+      "locked_code_match": 24
+    },
+    "historical_f2_verbatim": {
+      "total": 21,
+      "served_correct": 20,
+      "refused": 1,
+      "locked_code_match": 21
+    },
+    "isolated_f2": {
+      "total": 1,
+      "served_correct": 1,
+      "refused": 0,
+      "locked_code_match": 1
+    },
+    "mandatory_negative_tamper": {
+      "total": 24,
+      "served_correct": 0,
+      "refused": 24,
+      "locked_code_match": 24
+    }
+  },
+  "cases": [
+    {
+      "id": "W3-B02",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Hình chiếu của M lên SP",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Hình chiếu của N lên SP",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của K qua phép tịnh tiến theo HM",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H3",
+          "label": "H3",
+          "notation": "H3",
+          "origin": "derived",
+          "role": "Ảnh của K qua phép tịnh tiến theo H1N",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "area_squared": "31648968/549829",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "historical_f2_verbatim"
+    },
+    {
+      "id": "W3-B04",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của I qua phép tịnh tiến theo PQ",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của I qua phép tịnh tiến theo PR",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "historical_f2_verbatim"
+    },
+    {
+      "id": "W3-B06",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của M qua phép tịnh tiến theo AB",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của M qua phép tịnh tiến theo AC",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "area_squared": "5290000/2401",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "historical_f2_verbatim"
+    },
+    {
+      "id": "W3-B12",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Hình chiếu của E lên SH",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Hình chiếu của F lên SH",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H3",
+          "label": "H3",
+          "notation": "H3",
+          "origin": "derived",
+          "role": "Ảnh của I qua phép tịnh tiến theo H1E",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H4",
+          "label": "H4",
+          "notation": "H4",
+          "origin": "derived",
+          "role": "Ảnh của I qua phép tịnh tiến theo H2F",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "area_squared": "1345351771449/20782780672",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "historical_f2_verbatim"
+    },
+    {
+      "id": "W3-B14",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của H qua phép tịnh tiến theo SK",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của H qua phép tịnh tiến theo SN",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "area_squared": "98903025/9604",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "historical_f2_verbatim"
+    },
+    {
+      "id": "W3-B20",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Hình chiếu của N lên MN′",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Hình chiếu của P lên MN′",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của K qua phép tịnh tiến theo HN",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H3",
+          "label": "H3",
+          "notation": "H3",
+          "origin": "derived",
+          "role": "Ảnh của K qua phép tịnh tiến theo H1P",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "area_squared": "36260/169",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "historical_f2_verbatim"
+    },
+    {
+      "id": "W3-B22",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của H qua phép tịnh tiến theo EF",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của H qua phép tịnh tiến theo EG",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "historical_f2_verbatim"
+    },
+    {
+      "id": "W3-B24",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của L qua phép tịnh tiến theo GH",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của L qua phép tịnh tiến theo GG′",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "area_squared": "7225",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "historical_f2_verbatim"
+    },
+    {
+      "id": "W3-B28",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Hình chiếu của A lên A′B",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Hình chiếu của C lên A′B",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của M qua phép tịnh tiến theo HA",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H3",
+          "label": "H3",
+          "notation": "H3",
+          "origin": "derived",
+          "role": "Ảnh của M qua phép tịnh tiến theo H1C",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "historical_f2_verbatim"
+    },
+    {
+      "id": "W3-B30",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Hình chiếu của E lên DF′",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Hình chiếu của F lên DF′",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của I qua phép tịnh tiến theo HE",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H3",
+          "label": "H3",
+          "notation": "H3",
+          "origin": "derived",
+          "role": "Ảnh của I qua phép tịnh tiến theo H1F",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "area_squared": "4372875/18818",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "historical_f2_verbatim"
+    },
+    {
+      "id": "W3-B31",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của H qua phép tịnh tiến theo EF",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của H qua phép tịnh tiến theo EG",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "historical_f2_verbatim"
+    },
+    {
+      "id": "W3-B32",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của K qua phép tịnh tiến theo PR",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của K qua phép tịnh tiến theo PP′",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "area_squared": "8450",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "historical_f2_verbatim"
+    },
+    {
+      "id": "W3-B38",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Hình chiếu của N lên MN′",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Hình chiếu của P lên MN′",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của K qua phép tịnh tiến theo HN",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H3",
+          "label": "H3",
+          "notation": "H3",
+          "origin": "derived",
+          "role": "Ảnh của K qua phép tịnh tiến theo H1P",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "area_squared": "54800/121",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "historical_f2_verbatim"
+    },
+    {
+      "id": "W3-B40",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của I qua phép tịnh tiến theo PQ",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của I qua phép tịnh tiến theo PR",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "historical_f2_verbatim"
+    },
+    {
+      "id": "W3-B42",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của I qua phép tịnh tiến theo GH",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của I qua phép tịnh tiến theo GG′",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "area_squared": "28224",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "historical_f2_verbatim"
+    },
+    {
+      "id": "W3-B46",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Hình chiếu của B lên AA′",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Hình chiếu của C lên AA′",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của M qua phép tịnh tiến theo HB",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H3",
+          "label": "H3",
+          "notation": "H3",
+          "origin": "derived",
+          "role": "Ảnh của M qua phép tịnh tiến theo H1C",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "historical_f2_verbatim"
+    },
+    {
+      "id": "W3-A02",
+      "stratum": "P-A",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "area_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của K qua phép tịnh tiến theo MN",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của K qua phép tịnh tiến theo MP",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "DINH_CAT_CANH"
+      ],
+      "area_squared": "142884/14641",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "historical_f2_verbatim"
+    },
+    {
+      "id": "W3-A06",
+      "stratum": "P-A",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "ENGINE_EXECUTION_FAILED",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "ENGINE_EXECUTION_FAILED",
+      "subcode": "RADICAL_DOMAIN_OVERFLOW",
+      "reason": "RadicalDomainError: căn thức 1125673687043559399375000 vượt trần 1000000000000 — từ chối thay vì treo",
+      "refusal_layer": "route",
+      "category": "UNSUPPORTED_CAPABILITY",
+      "outcome": "FALSE_REFUSAL",
+      "matches_expected": true,
+      "known_independent_limit": "RADICAL_DOMAIN_CEILING",
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "historical_f2_verbatim"
+    },
+    {
+      "id": "W3-A10",
+      "stratum": "P-A",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Hình chiếu của B lên AC′",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Hình chiếu của C lên AC′",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của A′ qua phép tịnh tiến theo HB",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H3",
+          "label": "H3",
+          "notation": "H3",
+          "origin": "derived",
+          "role": "Ảnh của A′ qua phép tịnh tiến theo H1C",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "DINH_CAT_CANH"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "historical_f2_verbatim"
+    },
+    {
+      "id": "W3-A12",
+      "stratum": "P-A",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Hình chiếu của E lên DD′",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Hình chiếu của F lên DD′",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của I qua phép tịnh tiến theo HE",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H3",
+          "label": "H3",
+          "notation": "H3",
+          "origin": "derived",
+          "role": "Ảnh của I qua phép tịnh tiến theo H1F",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "DINH_CAT_CANH"
+      ],
+      "area_squared": "44100/241",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "historical_f2_verbatim"
+    },
+    {
+      "id": "W3-A16",
+      "stratum": "P-A",
+      "family": "cube",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của M qua phép tịnh tiến theo AB",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của M qua phép tịnh tiến theo AC",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "DINH_CAT_CANH"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "historical_f2_verbatim"
+    },
+    {
+      "id": "DEV-ISOLATED-A06",
+      "stratum": "P-A",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "perpendicular_line",
+      "question_type": "section_and_area",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Hình chiếu của E lên SG",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Hình chiếu của F lên SG",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H3",
+          "label": "H3",
+          "notation": "H3",
+          "origin": "derived",
+          "role": "Ảnh của I qua phép tịnh tiến theo H1E",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H4",
+          "label": "H4",
+          "notation": "H4",
+          "origin": "derived",
+          "role": "Ảnh của I qua phép tịnh tiến theo H2F",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "DINH_CAT_CANH"
+      ],
+      "area_squared": "24413481/3872600",
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "isolated_f2"
+    },
+    {
+      "id": "DEV-RATIO-01",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của V qua phép tịnh tiến theo WX",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của V qua phép tịnh tiến theo WY",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-02",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của W qua phép tịnh tiến theo XY",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của W qua phép tịnh tiến theo XZ",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-03",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của X qua phép tịnh tiến theo YZ",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của X qua phép tịnh tiến theo YA",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-04",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của Y qua phép tịnh tiến theo ZA",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của Y qua phép tịnh tiến theo ZB",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-05",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của Z qua phép tịnh tiến theo AB",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của Z qua phép tịnh tiến theo AC",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-06",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của A qua phép tịnh tiến theo BC",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của A qua phép tịnh tiến theo BD",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-07",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của B qua phép tịnh tiến theo CD",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của B qua phép tịnh tiến theo CE",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-08",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của C qua phép tịnh tiến theo DE",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của C qua phép tịnh tiến theo DF",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-09",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của G qua phép tịnh tiến theo DE",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của G qua phép tịnh tiến theo DF",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-10",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của H qua phép tịnh tiến theo EF",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của H qua phép tịnh tiến theo EG",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-11",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của I qua phép tịnh tiến theo FG",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của I qua phép tịnh tiến theo FH",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-12",
+      "stratum": "P-B",
+      "family": "right_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của J qua phép tịnh tiến theo GH",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của J qua phép tịnh tiến theo GI",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-13",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của K qua phép tịnh tiến theo HI",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của K qua phép tịnh tiến theo HJ",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-14",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của L qua phép tịnh tiến theo IJ",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của L qua phép tịnh tiến theo IK",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-15",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của M qua phép tịnh tiến theo JK",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của M qua phép tịnh tiến theo JL",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-16",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của N qua phép tịnh tiến theo KL",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của N qua phép tịnh tiến theo KM",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true,
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-17",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của L qua phép tịnh tiến theo MN",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của L qua phép tịnh tiến theo MO",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-18",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của M qua phép tịnh tiến theo NO",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của M qua phép tịnh tiến theo NP",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-19",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của N qua phép tịnh tiến theo OP",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của N qua phép tịnh tiến theo OQ",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-20",
+      "stratum": "P-B",
+      "family": "cuboid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của O qua phép tịnh tiến theo PQ",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của O qua phép tịnh tiến theo PR",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-21",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của P qua phép tịnh tiến theo QR",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của P qua phép tịnh tiến theo QS",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-22",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của Q qua phép tịnh tiến theo RS",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của Q qua phép tịnh tiến theo RT",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-23",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của R qua phép tịnh tiến theo ST",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của R qua phép tịnh tiến theo SU",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-RATIO-24",
+      "stratum": "P-B",
+      "family": "cube",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của S qua phép tịnh tiến theo TU",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của S qua phép tịnh tiến theo TV",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_ratio"
+    },
+    {
+      "id": "DEV-PROJECTION-01",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của V qua phép tịnh tiến theo WX",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của V qua phép tịnh tiến theo WY",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-02",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của W qua phép tịnh tiến theo XY",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của W qua phép tịnh tiến theo XZ",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-03",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của X qua phép tịnh tiến theo YZ",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của X qua phép tịnh tiến theo YA",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-04",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của Y qua phép tịnh tiến theo ZA",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của Y qua phép tịnh tiến theo ZB",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-05",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của Z qua phép tịnh tiến theo AB",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của Z qua phép tịnh tiến theo AC",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-06",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của A qua phép tịnh tiến theo BC",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của A qua phép tịnh tiến theo BD",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-07",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của B qua phép tịnh tiến theo CD",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của B qua phép tịnh tiến theo CE",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-08",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của C qua phép tịnh tiến theo DE",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của C qua phép tịnh tiến theo DF",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-09",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của G qua phép tịnh tiến theo DE",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của G qua phép tịnh tiến theo DF",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-10",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của H qua phép tịnh tiến theo EF",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của H qua phép tịnh tiến theo EG",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-11",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của I qua phép tịnh tiến theo FG",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của I qua phép tịnh tiến theo FH",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-12",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của J qua phép tịnh tiến theo GH",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của J qua phép tịnh tiến theo GI",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-13",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của H qua phép tịnh tiến theo IJ",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H2",
+          "label": "H2",
+          "notation": "H2",
+          "origin": "derived",
+          "role": "Ảnh của H qua phép tịnh tiến theo IK",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-14",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của I qua phép tịnh tiến theo JK",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của I qua phép tịnh tiến theo JL",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-15",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của J qua phép tịnh tiến theo KL",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của J qua phép tịnh tiến theo KM",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-16",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của K qua phép tịnh tiến theo LM",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của K qua phép tịnh tiến theo LN",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-17",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của L qua phép tịnh tiến theo MN",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của L qua phép tịnh tiến theo MO",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-18",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của M qua phép tịnh tiến theo NO",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của M qua phép tịnh tiến theo NP",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-19",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của N qua phép tịnh tiến theo OP",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của N qua phép tịnh tiến theo OQ",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-20",
+      "stratum": "P-B",
+      "family": "quadrilateral_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của O qua phép tịnh tiến theo PQ",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của O qua phép tịnh tiến theo PR",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-21",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của S qua phép tịnh tiến theo PQ",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của S qua phép tịnh tiến theo PR",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-22",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của T qua phép tịnh tiến theo QR",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của T qua phép tịnh tiến theo QS",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-23",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của U qua phép tịnh tiến theo RS",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của U qua phép tịnh tiến theo RT",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-24",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của V qua phép tịnh tiến theo ST",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của V qua phép tịnh tiến theo SU",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-25",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của W qua phép tịnh tiến theo TU",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của W qua phép tịnh tiến theo TV",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-PROJECTION-26",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": null,
+      "negative_origin": null,
+      "expected": "SERVE",
+      "acceptable_categories": [],
+      "served": true,
+      "route_status": "SERVED",
+      "route_code": null,
+      "adapter4_status": "SERVED",
+      "envelope_status": "ok",
+      "code": null,
+      "subcode": null,
+      "reason": null,
+      "refusal_layer": null,
+      "category": null,
+      "source_identity_leaks": [],
+      "machine_id_leaks": [],
+      "pedagogical_auxiliary_points": [
+        {
+          "id": "H",
+          "label": "H",
+          "notation": "H",
+          "origin": "derived",
+          "role": "Ảnh của X qua phép tịnh tiến theo UV",
+          "visibly_distinguished_from_given": true
+        },
+        {
+          "id": "H1",
+          "label": "H1",
+          "notation": "H1",
+          "origin": "derived",
+          "role": "Ảnh của X qua phép tịnh tiến theo UW",
+          "visibly_distinguished_from_given": true
+        }
+      ],
+      "r2_auxiliary_notation_observed": true,
+      "all_auxiliary_visibly_distinguished": true,
+      "certificate_category": [
+        "ENGINE_DERIVED_SECTION"
+      ],
+      "oracle_mismatches": [],
+      "outcome": "SERVED_CORRECT",
+      "matches_expected": true,
+      "source_relation_provenance": [
+        true,
+        true
+      ],
+      "slice": "authored_projection"
+    },
+    {
+      "id": "DEV-NEG-01",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "1",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "INVALID_RATIO",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "INVALID_RATIO",
+      "subcode": null,
+      "reason": "p6: tỉ số AP/AB = 7/2 phải nằm giữa 0 và 1 (điểm trong đoạn)",
+      "refusal_layer": "route",
+      "category": "INPUT_INVALID",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-02",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "2",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_OBJECT_MISMATCH",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "subcode": null,
+      "reason": "p6: vai trò điểm và toán hạng dựng không khớp nguồn",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-03",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "3",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_OBJECT_MISMATCH",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "subcode": null,
+      "reason": "p6: vai trò điểm và toán hạng dựng không khớp nguồn",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-04",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "4",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_OBJECT_MISMATCH",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "subcode": null,
+      "reason": "p6: vai trò điểm và toán hạng dựng không khớp nguồn",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-05",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "5",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SCHEMA_INVALID",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SCHEMA_INVALID",
+      "subcode": null,
+      "reason": "dữ kiện sai lược đồ: 1 validation error for TypedFact\nvalue\n  String should match pattern '^(?:\\d+(?:[.,]\\d+)?(?:/\\d+)?a?(?:√\\d+)?(?:/\\d+)?|a(?:√\\d+)?(?:/\\d+)?|√\\d+(?:/\\d+)?)$' [type=string_pattern_mismatch, input_value='-1/3', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_pattern_mismatch",
+      "refusal_layer": "route",
+      "category": "INPUT_INVALID",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-06",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "6",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "INVALID_RATIO",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "INVALID_RATIO",
+      "subcode": null,
+      "reason": "p6: tỉ số AP/AB = 4/3 phải nằm giữa 0 và 1 (điểm trong đoạn)",
+      "refusal_layer": "route",
+      "category": "INPUT_INVALID",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-07",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "7",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_PREMISE_UNREAD",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "subcode": null,
+      "reason": "giá trị trong tiền đề 'Trên đoạn BY chọn điểm X với BX = 2/7 BY, và BX = 1/2 BY.' không nằm trong quote của lời gọi mang giá trị ấy — không dùng mô hình cũ",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-08",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "8",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "UNKNOWN_SOLID_ID",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "UNKNOWN_SOLID_ID",
+      "subcode": null,
+      "reason": "p6: phạm vi khối 'foreign' chưa được khai báo",
+      "refusal_layer": "route",
+      "category": "INPUT_INVALID",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-09",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "9",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "QUOTE_NOT_IN_SOURCE",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "QUOTE_NOT_IN_SOURCE",
+      "subcode": null,
+      "reason": "p6: đoạn 'Gọi Z thuộc cạnh XY với XZ = 1/3 XY' không có nguyên văn trong đề",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-10",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "10",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_OBJECT_MISMATCH",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "subcode": null,
+      "reason": "p6: vai trò điểm và toán hạng dựng không khớp nguồn",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-11",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "11",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "CONDITIONAL_CLAUSE",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "CONDITIONAL_CLAUSE",
+      "subcode": null,
+      "reason": "p6: 'Nếu Trên đoạn BY chọn điểm X với BX = 2/7 BY' nằm trong mệnh đề điều kiện — không phải dữ kiện",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-12",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "12",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_OBJECT_MISMATCH",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "subcode": null,
+      "reason": "p6: vai trò điểm và toán hạng dựng không khớp nguồn",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-13",
+      "stratum": "P-B",
+      "family": "triangular_pyramid",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "13",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "PREDICATE_NOT_IN_QUOTE",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "PREDICATE_NOT_IN_QUOTE",
+      "subcode": null,
+      "reason": "p6: divide_segment cần một trong ['sao cho', 'thỏa mãn', 'với'] trong 'BX = 2/7 BY'",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-14",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "14",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "ROLE_NOT_IN_QUOTE",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "ROLE_NOT_IN_QUOTE",
+      "subcode": null,
+      "reason": "p2: điểm E (image) không được nhắc trong \"F là chân đường cao hạ từ E' xuống mặt phẳng (EFG)\"",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-15",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "15",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_OBJECT_MISMATCH",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "subcode": null,
+      "reason": "p2: vai trò ảnh và điểm chiếu không khớp nguồn",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-16",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "16",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "PLANE_NOT_IN_QUOTE",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "PLANE_NOT_IN_QUOTE",
+      "subcode": null,
+      "reason": "p2: mặt phẳng ['E', 'F', \"E'\"] không được nhắc trong \"F là chân đường cao hạ từ E' xuống mặt phẳng (EFG)\"",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-17",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "17",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "PLANE_NOT_IN_QUOTE",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "PLANE_NOT_IN_QUOTE",
+      "subcode": null,
+      "reason": "p2: mặt phẳng ['E', 'F', 'G'] không được nhắc trong \"F là chân đường cao hạ từ E' xuống đường thẳng EF\"",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-18",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "18",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "PLANE_NOT_IN_QUOTE",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "PLANE_NOT_IN_QUOTE",
+      "subcode": null,
+      "reason": "p2: mặt phẳng ['E', 'F', 'G'] không được nhắc trong \"F là chân đường cao của tam giác E'EF\"",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-19",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "19",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "NEGATED_CLAUSE",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "NEGATED_CLAUSE",
+      "subcode": null,
+      "reason": "p2: mệnh đề \"F không phải chân đường cao hạ từ E' xuống mặt phẳng (EFG)\" mang phủ định — không làm dữ kiện orthogonal_projection",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-20",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "20",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "INCONSISTENT_FACTS",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "INCONSISTENT_FACTS",
+      "subcode": null,
+      "reason": "p2: chân chiếu thuộc mặt đối diện của lăng trụ, không nằm trên mặt nhận chiếu",
+      "refusal_layer": "route",
+      "category": "CONTRADICTION",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-21",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "21",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_OBJECT_MISMATCH",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "subcode": null,
+      "reason": "p2: vai trò ảnh và điểm chiếu không khớp nguồn",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-22",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "22",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "SOURCE_OBJECT_MISMATCH",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "subcode": null,
+      "reason": "p2: vai trò ảnh và điểm chiếu không khớp nguồn",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-23",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "23",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "UNKNOWN_SOLID_ID",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "UNKNOWN_SOLID_ID",
+      "subcode": null,
+      "reason": "p2: phạm vi khối 'foreign' chưa được khai báo",
+      "refusal_layer": "route",
+      "category": "INPUT_INVALID",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    },
+    {
+      "id": "DEV-NEG-24",
+      "stratum": "P-B",
+      "family": "oblique_triangular_prism",
+      "plane_relation": "parallel_plane",
+      "question_type": "section_only",
+      "negative_class": "24",
+      "negative_origin": null,
+      "expected": "REFUSE",
+      "acceptable_categories": [],
+      "served": false,
+      "route_status": "REFUSED",
+      "route_code": "GOAL_CLAUSE_NOT_PREMISE",
+      "adapter4_status": "REFUSED",
+      "envelope_status": "unsupported",
+      "code": "GOAL_CLAUSE_NOT_PREMISE",
+      "subcode": null,
+      "reason": "p2: \"Chứng minh rằng F là chân đường cao hạ từ E' xuống mặt phẳng (EFG)\" là điều phải chứng minh, không phải dữ kiện",
+      "refusal_layer": "route",
+      "category": "SOURCE_GROUNDING",
+      "outcome": "REFUSED_REASON_DISAGREEMENT",
+      "matches_expected": true,
+      "source_relation_provenance": [],
+      "slice": "mandatory_negative_tamper"
+    }
+  ],
+  "fixtures_verified": 41,
+  "qualified_constructed_point": "same exact points/trace as unqualified; unknown Z still refuses",
+  "versions": {
+    "registry": "geometry-functions/21",
+    "planner": "geometry-fact-planner/18",
+    "engine": "geometry-function-engine/14",
+    "adapter3": "hybrid-simulation-adapter/3",
+    "bridge": "typed-fact-next-bridge/1 and /2; validated scope receipt /1",
+    "cache": "130"
+  },
+  "version_decision": "Registry /21 identifies new language; Adapter/Bridge tags retain compatible public contracts. Restored invalid-input rejection is not a new schema. Measured product hash disambiguates implementation; no unchanged-version identity is claimed as an unchanged product tree.",
+  "cache_decision": "No bump: Adapter3 and TypedFactNext planner routes are offline research, not wired into /api/analyze cached LLM_ONLY pipeline; Hybrid preview identity includes Registry /21. All 41 endpoint fixtures reproduce modulo declared identity deltas; source fingerprint explicitly differs.",
+  "log_sha256_lf": "860183e2e3b394da8f8866fb585fba1080b822953eeb02c1e5c1d063e35fbc70"
+}

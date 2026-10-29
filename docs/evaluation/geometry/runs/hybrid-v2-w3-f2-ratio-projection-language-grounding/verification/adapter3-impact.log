@@ -1,0 +1,241 @@
+T0 IMPACT GATE
+
+Đã đổi (73):
+  - backend/app/ai/adapter3_simulation.py
+  - backend/app/simulation/geometry_functions/registry.py
+  - backend/app/simulation/geometry_functions/typed_fact_next_bridge.py
+  - backend/scripts/export_hybrid_preview_fixtures.py
+  - backend/tests/geometry/test_adapter3_fallback_safety.py
+  - backend/tests/geometry/test_hybrid_backend_integration.py
+  - backend/tests/geometry/test_premise_scope_recovery.py
+  - backend/tests/geometry/test_ratio_projection_language.py
+  - backend/tests/geometry/test_w3_f1_cross_sentence_plane_grounding.py
+  - docs/AI_CONTEXT_BUNDLE.md
+  - docs/CODE_INDEX.md
+  - docs/CURRENT_STATE.md
+  … và 61 file nữa
+
+Lý do chọn:
+  backend/app/ai/adapter3_simulation.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/app/simulation/geometry_functions/registry.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/app/simulation/geometry_functions/typed_fact_next_bridge.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/scripts/export_hybrid_preview_fixtures.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/tests/geometry/test_adapter3_fallback_safety.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/tests/geometry/test_hybrid_backend_integration.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/tests/geometry/test_premise_scope_recovery.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/tests/geometry/test_ratio_projection_language.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/tests/geometry/test_w3_f1_cross_sentence_plane_grounding.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  docs/AI_CONTEXT_BUNDLE.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/CODE_INDEX.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/CURRENT_STATE.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/EVIDENCE_INDEX.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/OPEN_ISSUES.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/adapter3-fallback-red.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/adapter3-fallback-safety-amendment.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/architecture-decision.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/baseline-audit.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/correction-addendum.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/capability-intake/inputs/development.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/capability-intake/inputs/oracle.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/capability-intake/red-before.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/intake/inputs/development.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/intake/inputs/oracle.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/intake/red-before.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/unicode-intake/baseline-normalized-language-controls.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/unicode-intake/inputs/development.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/unicode-intake/inputs/oracle.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/unicode-intake/red-before.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/final-handoff.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/final-report.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/handoff.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/inputs/development.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/inputs/oracle.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/inputs/recovery-supplementary.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/plan.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/report.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/green-after.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/incidence-repair-after.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/red-before.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/red-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/scope-repair-after.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/tamper-results.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/tamper-retest-after.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/review-safety-recovery.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/review.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/run.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/safety-recovery-plan.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/scope-validation-design.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/takeover.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/tools/adapter3_fallback_evidence.py
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/tools/capture_safety_stop.py
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/tools/evaluate_development.py
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-assertion-correction-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-baseline-scope-reproduction.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-producer-red-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-red-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/baseline-foreign-scope-reproduction.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/baseline-normalized-language-controls.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/preregistration.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-checkpoint-integrity.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-checkpoint-verification.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-compatibility-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-docs-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-initial-targeted-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-red-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-stop-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/safety-recovery.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/scope-and-evidence.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/stop-condition.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/t1.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/tiers-after-recovery.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/tiers.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+
+Đã chọn: 2 đơn vị — 1 mẫu vitest + pytest
+
+(dry) IMPACT_GATE

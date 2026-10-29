@@ -1,0 +1,23 @@
+{
+  "head": "1181692107b01685548a17594c3685dce5cd0f12",
+  "product_commit": "1181692107b01685548a17594c3685dce5cd0f12",
+  "measured_system_hash": [
+    "06d867dd2688996c37088702bc2dcec39e214a40a94294cb00ef82c19139dc4d",
+    118
+  ],
+  "live_provider_calls": 0,
+  "classification": "POST_FEEDBACK_DEVELOPMENT_REGRESSION",
+  "status": "PASS",
+  "killed": 4,
+  "mutants": [
+    "remove_terminal_guard",
+    "remove_scope_guard",
+    "replace_scope_with_default",
+    "allow_global_lookup"
+  ],
+  "terminal_oracle": "no legacy compilation after semantic Bridge refusal, even with scoped resolver defense",
+  "resolver_oracle": "wrong-scope S under s2 must raise SOURCE_OBJECT_MISMATCH",
+  "method": "mutate actual function source in isolated pytest monkeypatch namespace; restore after each test",
+  "test_source_sha256_lf": "fd80129799b042d065a951695f14811f781a3819694a48bf55e80267049d5736",
+  "passing_run": "verification/adapter3-final-compat-tests.log"
+}

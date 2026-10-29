@@ -1,0 +1,22 @@
+
+> algo-sim-frontend@0.1.0 test:wave
+> vitest run && tsc -b && vite build
+
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/w3-f2-ratio-projection-language-grounding/frontend
+
+
+ Test Files  83 passed (83)
+      Tests  1417 passed (1417)
+   Start at  18:11:46
+   Duration  8.19s (transform 10.61s, setup 2.91s, import 24.30s, tests 18.28s, environment 17ms)
+
+vite v6.4.3 building for production...
+transforming...
+✓ 101 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                     0.60 kB │ gzip:   0.42 kB
+dist/assets/index-oJe9R-iu.css     57.60 kB │ gzip:  10.46 kB
+dist/assets/index-ChjMeNFQ.js   1,157.42 kB │ gzip: 299.33 kB
+✓ built in 3.27s

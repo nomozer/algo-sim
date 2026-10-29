@@ -1,0 +1,84 @@
+{
+  "product_commit": "1181692107b01685548a17594c3685dce5cd0f12",
+  "status": "T0_T1_T2_PASS_READY_TO_FREEZE",
+  "measured_system_hash": [
+    "06d867dd2688996c37088702bc2dcec39e214a40a94294cb00ef82c19139dc4d",
+    118
+  ],
+  "T0": {
+    "impact": "PASS",
+    "publication": "PASS",
+    "cache": "MATCH_130",
+    "fixtures": "41/41",
+    "prior_evidence": "53/53_MATCH"
+  },
+  "T1": {
+    "passed": 619,
+    "failed": 0,
+    "xfailed": 6,
+    "deferred_old_freeze_check": 1,
+    "reason": "Run after new freeze, not waived from Full T3"
+  },
+  "T2": {
+    "status": "PASS",
+    "test_files": 83,
+    "tests_passed": 1417,
+    "typecheck_build": "PASS"
+  },
+  "wave3_summary": {
+    "total_cases": 144,
+    "positive_total": 72,
+    "positive_served_correct": 50,
+    "positive_false_refusal": 22,
+    "positive_wrong_served": 0,
+    "positive_by_stratum": {
+      "P-B": {
+        "total": 54,
+        "served_correct": 35,
+        "false_refusal": 19
+      },
+      "P-A": {
+        "total": 18,
+        "served_correct": 15,
+        "false_refusal": 3
+      }
+    },
+    "positive_by_question_type": {
+      "section_only": {
+        "total": 24,
+        "served_correct": 19,
+        "false_refusal": 5
+      },
+      "area_only": {
+        "total": 24,
+        "served_correct": 16,
+        "false_refusal": 8
+      },
+      "section_and_area": {
+        "total": 24,
+        "served_correct": 15,
+        "false_refusal": 9
+      }
+    },
+    "w3_f1_remaining_source_object_mismatch": 0,
+    "negative_total": 72,
+    "negative_refused": 72,
+    "negative_correct_reason": 62,
+    "negative_reason_disagreement": 10,
+    "negative_wrong_served": 0,
+    "overall_wrong_served": 0,
+    "machine_id_leak_cases": [],
+    "source_identity_leak_cases": []
+  },
+  "wave3_note": "20 registered F2 positives newly served plus W3-B52 collateral source-unread transition; no claim of a general F3 repair. A06 remains radical-limited.",
+  "harness_path_correction": "Historical F1 helper old absolute worktree replaced at runtime with identical current-checkout locked run; no corpus/scorer changes.",
+  "old_candidate_hash": "918d3404ac60e81d62c75f6bfb7067ea25a4e27c197e3584075edef42e441f72",
+  "old_freeze_is_current": false,
+  "logs_sha256_lf": {
+    "verification/adapter3-t2.log": "7b2c01870ab7418b18eff97ba47b57ce4c9505058009a99532116ed996b24bfc",
+    "verification/adapter3-cache.log": "bb93a9e5f223d1304de98865873b4fe900f1b639b9b2a1c66bfa0981b63be5fb",
+    "verification/adapter3-publication.log": "0963d1a9598794c70f1e6ba99e8ebbb9098cf4a0405c6ca75a063b3875b037a6",
+    "verification/adapter3-impact.log": "409211a85c13cfdf27684a3472ce8515351ab8678fa8191e6ee55e1c0c2922c2"
+  },
+  "live_provider_calls": 0
+}
