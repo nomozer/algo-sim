@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_V2_W3_F2_UNIFIED_SOLID_SCOPE_VALIDATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/unified-solid-scope/
+CLASSIFICATION = POST_FEEDBACK_DEVELOPMENT_REGRESSION; NOT_READY; Gates B–D PASS, safety matrix 43/43, locked 96/96, Wave3 144 unchanged 0 wrong-served, T0–T2 executed, Full T3 PASS on candidate cd8de398; independent review: F1 false refusal of hyphenated solid ids (regression of this change) and F2–F4 pre-existing fail-open slots ⇒ Gate A FAIL.
+CODE_COMMIT = 9772ea3750a84f76fbee1e83057e919a5ef63e50; preregistration/RED 82ebf401; freeze 2c84558d901134c78c3781f257047fe3ac09d7f2; divergence docs/evaluation/geometry/runs/hybrid-v2-w3-f2-unified-solid-scope/candidate_divergence.json
+VERIFICATION = solid-scope-census.md; solid-scope-entrypoint-matrix.json; red.json; green.json; mutations.json; gates.json; compatibility.json; wave3-post-feedback-regression.json; tiers.json; full-t3/receipt.json; review.md; review/
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_V2_W3_F2_ADAPTER3_SEMANTIC_FALLBACK_SAFETY_HARDENING (review-solid-scope.md findings; earlier files unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_V2_W3_F2_ADAPTER3_SEMANTIC_FALLBACK_SAFETY_HARDENING
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/solid-scope-recovery-report.md
@@ -9,7 +20,7 @@ CODE_COMMIT = c4d7b759a9cb69ba5133dc8a05b10f45e7ff24ba (with 393864d1, f7dd5580,
 VERIFICATION = codex-to-claude-takeover.md; solid-scope-final-safety-gates.json; wave3-post-feedback-regression-after-solid-scope-final.json; verification/full-t3-solid-scope/receipt.json; verification/solid-scope-t0-impact-fail.log; review-solid-scope.md; verification/review-solid-scope-repro.txt
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_V2_W3_F2_PROVENANCE_SAFETY_RECOVERY (final-safety-gates.json Gate A and pre-freeze-tiers.json T0 claims; files unchanged)
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_V2_W3_F2_UNIFIED_SOLID_SCOPE_VALIDATION (unified-solid-scope/report.md)
 
 ## WAVE_ID = HYBRID_V2_W3_F2_PROVENANCE_SAFETY_RECOVERY
 

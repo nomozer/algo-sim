@@ -1,0 +1,21 @@
+{
+  "task": "HYBRID_V2_W3_F2_UNIFIED_SOLID_SCOPE_VALIDATION",
+  "date": "2026-10-29",
+  "classification": "POST_FEEDBACK_DEVELOPMENT_REGRESSION",
+  "verdict": "NOT_READY",
+  "main": "996f114b3480efe1b0d075dd4342530aaa12ddae",
+  "baseline_head": "3cdba8ebc91b9b03246caef7d1e95f0d3981f609",
+  "red_commit": "82ebf401",
+  "product_commit": "9772ea3750a84f76fbee1e83057e919a5ef63e50",
+  "freeze_commit": "2c84558d901134c78c3781f257047fe3ac09d7f2",
+  "t3_candidate": "cd8de3986d5d9103b7a9dbc8fb2311d05e5c44c9",
+  "measured_system": ["f0521dcd2423a9e67421fdf8490de224ab115ee3d1561160aad28e35c40a9504", 118],
+  "cache_version": 130,
+  "live_provider_calls": 0,
+  "gates": {"A": "FAIL (independent review F1-F4)", "B": "PASS", "C": "PASS", "D": "PASS"},
+  "wave3_replay": {"positive_served_correct": "50/72", "negative_refused": "72/72", "negative_correct_reason": "62/72", "wrong_served": 0},
+  "tiers": {"T0": "IMPACT_GATE_PASS", "T1": "DOMAIN_GATE_PASS", "T2": "WAVE_GATE_PASS"},
+  "full_t3": "FULL_PRODUCT_GATE_PASS",
+  "independent_review": "NOT_READY: F1 MAJOR regression (hyphenated ids), F2-F4 MAJOR pre-existing fail-open slots, F5-F6 MINOR",
+  "merge_push_cleanup": "none"
+}

@@ -1,0 +1,9 @@
+# implementer re-reproduction of review findings F1-F3 (ALLOW_LIVE_AI=0)
+## candidate HEAD 7c3d202d71cf39cdb579b4d5e8b747f9247eccd6 (product 9772ea37)
+{"case": "F1 hyphenated ids (valid control)", "a3": ["REFUSED", "UNKNOWN_SOLID_ID"], "pl": ["REFUSED", "UNKNOWN_SOLID_ID"], "a4": ["REFUSED", "UNKNOWN_SOLID_ID"]}
+{"case": "F2 perpendicular solid_id s2 with s1-only S", "a3": ["REFUSED", "SOURCE_OBJECT_MISMATCH"], "pl": ["SERVED", null], "a4": ["SERVED", null]}
+{"case": "F3 highlight target_solid_id s2 refs s1::S", "a3": ["REFUSED", "SOURCE_OBJECT_MISMATCH"], "pl": ["SERVED", null], "a4": ["SERVED", null]}
+## main 996f114b3480efe1b0d075dd4342530aaa12ddae
+{"case": "F1 hyphenated ids (valid control)", "a3": ["SERVED", null], "pl": ["SERVED", null], "a4": ["SERVED", null]}
+{"case": "F2 perpendicular solid_id s2 with s1-only S", "a3": ["SERVED", null], "pl": ["SERVED", null], "a4": ["SERVED", null]}
+{"case": "F3 highlight target_solid_id s2 refs s1::S", "a3": ["SERVED", null], "pl": ["SERVED", null], "a4": ["SERVED", null]}
