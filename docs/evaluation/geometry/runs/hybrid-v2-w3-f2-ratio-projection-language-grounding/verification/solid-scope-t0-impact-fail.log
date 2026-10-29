@@ -1,0 +1,930 @@
+T0 IMPACT GATE
+
+Đã đổi (101):
+  - backend/app/ai/adapter3_simulation.py
+  - backend/app/simulation/geometry_functions/registry.py
+  - backend/app/simulation/geometry_functions/typed_fact_next_bridge.py
+  - backend/scripts/export_hybrid_preview_fixtures.py
+  - backend/tests/geometry/test_adapter3_fallback_safety.py
+  - backend/tests/geometry/test_hybrid_backend_integration.py
+  - backend/tests/geometry/test_premise_scope_recovery.py
+  - backend/tests/geometry/test_ratio_projection_language.py
+  - backend/tests/geometry/test_typedfactnext_planner_bridge.py
+  - backend/tests/geometry/test_w3_f1_cross_sentence_plane_grounding.py
+  - docs/AI_CONTEXT_BUNDLE.md
+  - docs/CODE_INDEX.md
+  … và 89 file nữa
+
+Lý do chọn:
+  backend/app/ai/adapter3_simulation.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/app/simulation/geometry_functions/registry.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/app/simulation/geometry_functions/typed_fact_next_bridge.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/scripts/export_hybrid_preview_fixtures.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/tests/geometry/test_adapter3_fallback_safety.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/tests/geometry/test_hybrid_backend_integration.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/tests/geometry/test_premise_scope_recovery.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/tests/geometry/test_ratio_projection_language.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/tests/geometry/test_typedfactnext_planner_bridge.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  backend/tests/geometry/test_w3_f1_cross_sentence_plane_grounding.py
+    → Mã backend — chạy pytest
+    → PYTEST
+  docs/AI_CONTEXT_BUNDLE.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/CODE_INDEX.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/CURRENT_STATE.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/EVIDENCE_INDEX.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/OPEN_ISSUES.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/adapter3-compatibility-results.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/adapter3-fallback-green.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/adapter3-fallback-mutation-results.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/adapter3-fallback-red.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/adapter3-fallback-safety-amendment.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/architecture-decision.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/baseline-audit.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/candidate_divergence.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/codex-to-claude-takeover.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/correction-addendum.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/capability-intake/inputs/development.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/capability-intake/inputs/oracle.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/capability-intake/red-before.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/intake/inputs/development.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/intake/inputs/oracle.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/intake/red-before.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/unicode-intake/baseline-normalized-language-controls.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/unicode-intake/inputs/development.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/unicode-intake/inputs/oracle.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/diagnostics/unicode-intake/red-before.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/final-handoff.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/final-report.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/final-safety-gates.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/handoff.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/inputs/development.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/inputs/oracle.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/inputs/recovery-supplementary.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/plan.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/report.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/green-after.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/incidence-repair-after.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/red-before.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/red-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/scope-repair-after.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/tamper-results.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/results/tamper-retest-after.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/review-safety-recovery.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/review.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/run.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/safety-recovery-plan.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/scope-validation-design.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/takeover.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/tools/adapter3_fallback_evidence.py
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/tools/capture_safety_stop.py
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/tools/evaluate_development.py
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/tools/verify_adapter3_candidate.py
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/tools/verify_after_adapter3.py
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-41-fixtures.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-assertion-correction-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-baseline-scope-reproduction.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-cache.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-compat-repair-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-compat-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-compatibility-amendment.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-container-red-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-final-compat-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-green-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-impact.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-producer-red-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-publication.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-red-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/adapter3-t2.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/baseline-foreign-scope-reproduction.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/baseline-normalized-language-controls.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/claude-solid-scope-red-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/frozen-adapter3-evaluation-candidate.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/full-t3/full-t3.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/gate-b-independent-review.md
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/pre-freeze-tiers.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/preregistration.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/prior-w3f1-evaluation-candidate.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-checkpoint-integrity.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-checkpoint-verification.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-compatibility-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-docs-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-initial-targeted-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-red-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/recovery-stop-tests.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/safety-recovery.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/scope-and-evidence.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/stop-condition.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/t1.log
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/tiers-after-recovery.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/verification/tiers.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/wave3-post-feedback-regression-after-adapter3.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+  docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
+    → TÀI LIỆU — chạy guard chỉ mục, bỏ suite hiện thực
+    → src/code-index-sync.test.ts
+
+Đã chọn: 2 đơn vị — 1 mẫu vitest + pytest
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/w3-f2-ratio-projection-language-grounding/frontend
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  18:37:25
+   Duration  720ms (transform 41ms, setup 52ms, import 19ms, tests 30ms, environment 0ms)
+
+........................................................................ [  0%]
+........................................................................ [  1%]
+........................................................................ [  1%]
+..................................................F..................... [  2%]
+........................................................................ [  2%]
+........................................................................ [  3%]
+........................................................................ [  3%]
+........................................................................ [  4%]
+......................................FFFF...F.......................... [  5%]
+........................................................................ [  5%]
+........................................................................ [  6%]
+........................................................................ [  6%]
+........................................................................ [  7%]
+........................................................................ [  7%]
+........................................................................ [  8%]
+........................................................................ [  9%]
+........................................................................ [  9%]
+........................................................................ [ 10%]
+........................................................................ [ 10%]
+........................................................................ [ 11%]
+........................................................................ [ 11%]
+........................................................................ [ 12%]
+........................................................................ [ 12%]
+........................................................................ [ 13%]
+........................................................................ [ 14%]
+.....................F..........................F....................... [ 14%]
+........................................................................ [ 15%]
+........................................................................ [ 15%]
+........................................................................ [ 16%]
+........................................................................ [ 16%]
+..................................................................xx.... [ 17%]
+........................................................................ [ 18%]
+........................................................................ [ 18%]
+........................................................................ [ 19%]
+........................................................................ [ 19%]
+........................................................................ [ 20%]
+........................................................................ [ 20%]
+........................................................................ [ 21%]
+.............................................F.....................F.... [ 21%]
+........................................................................ [ 22%]
+.........................................................F.............. [ 23%]
+........................................................................ [ 23%]
+........................................................................ [ 24%]
+........................................................................ [ 24%]
+........................................................................ [ 25%]
+........................................................................ [ 25%]
+........................................................................ [ 26%]
+.......................................F................................ [ 27%]
+........................................................................ [ 27%]
+.xxxx................................................................... [ 28%]
+........................................................................ [ 28%]
+.............x.......................................................... [ 29%]
+........................................................................ [ 29%]
+........................................................................ [ 30%]
+........................................................................ [ 30%]
+.............................................x.......................... [ 31%]
+........................................................................ [ 32%]
+........................................................................ [ 32%]
+........................................................................ [ 33%]
+........................................................................ [ 33%]
+........................................................................ [ 34%]
+........................................................................ [ 34%]
+........................................................................ [ 35%]
+........................................................................ [ 36%]
+........................................................................ [ 36%]
+........................................................................ [ 37%]
+........................................................................ [ 37%]
+........................................................................ [ 38%]
+........................................................................ [ 38%]
+.........................................................x.............. [ 39%]
+........................................................................ [ 39%]
+........................................................................ [ 40%]
+........................................................................ [ 41%]
+........................................................................ [ 41%]
+........................................................................ [ 42%]
+........................................................................ [ 42%]
+........................................................................ [ 43%]
+........................................................................ [ 43%]
+........................................................................ [ 44%]
+........................................................................ [ 45%]
+........................................................................ [ 45%]
+........................................................................ [ 46%]
+........................................................................ [ 46%]
+........................................................................ [ 47%]
+........................................................................ [ 47%]
+........................................................................ [ 48%]
+........................................................................ [ 48%]
+........................................................................ [ 49%]
+........................................................................ [ 50%]
+........................................................................ [ 50%]
+........................................................................ [ 51%]
+........................................................................ [ 51%]
+........................................................................ [ 52%]
+........................................................................ [ 52%]
+........................................................................ [ 53%]
+........................................................................ [ 54%]
+........................................................................ [ 54%]
+........................................................................ [ 55%]
+........................................................................ [ 55%]
+........................................................................ [ 56%]
+........................................................................ [ 56%]
+........................................................................ [ 57%]
+........................................................................ [ 57%]
+........................................................................ [ 58%]
+........................................................................ [ 59%]
+........................................................................ [ 59%]
+........................................................................ [ 60%]
+........................................................................ [ 60%]
+........................................................................ [ 61%]
+........................................................................ [ 61%]
+........................................................................ [ 62%]
+........................................................................ [ 63%]
+........................................................................ [ 63%]
+........................................................................ [ 64%]
+........................................................................ [ 64%]
+........................................................................ [ 65%]
+........................................................................ [ 65%]
+........................................................................ [ 66%]
+........................................................................ [ 66%]
+........................................................................ [ 67%]
+........................................................................ [ 68%]
+........................................................................ [ 68%]
+.......................x................................................ [ 69%]
+........................................................................ [ 69%]
+........................................................................ [ 70%]
+........................................................................ [ 70%]
+........................................................................ [ 71%]
+........................................................................ [ 72%]
+........................................................................ [ 72%]
+........................................................................ [ 73%]
+........................................................................ [ 73%]
+..............................F......................................... [ 74%]
+........................................................................ [ 74%]
+........................................................................ [ 75%]
+........................................................................ [ 75%]
+........................................................................ [ 76%]
+........................................................................ [ 77%]
+........................................................xxxxx........... [ 77%]
+........................................................................ [ 78%]
+........................................................................ [ 78%]
+........................................................................ [ 79%]
+........................................................................ [ 79%]
+.....F..............F................................................... [ 80%]
+........................................................................ [ 81%]
+........................................................................ [ 81%]
+........................................................................ [ 82%]
+........................................................................ [ 82%]
+........................................................................ [ 83%]
+........................................................................ [ 83%]
+........................................................................ [ 84%]
+........................................................................ [ 84%]
+..............................................................F......... [ 85%]
+........................................................................ [ 86%]
+........................................................................ [ 86%]
+........................................................................ [ 87%]
+........................................................................ [ 87%]
+........................................................................ [ 88%]
+........................................................................ [ 88%]
+..............s......................................................... [ 89%]
+........................................................................ [ 90%]
+........................................................................ [ 90%]
+........................................................................ [ 91%]
+........................................................................ [ 91%]
+........................................................................ [ 92%]
+........................................................................ [ 92%]
+........................................................................ [ 93%]
+........................................................................ [ 93%]
+........................................................................ [ 94%]
+........................................................................ [ 95%]
+........................................................................ [ 95%]
+........................................................................ [ 96%]
+........................................................................ [ 96%]
+........................................................................ [ 97%]
+........................................................................ [ 97%]
+........................................................................ [ 98%]
+........................................................................ [ 99%]
+........................................................................ [ 99%]
+.....................................................                    [100%]
+================================== FAILURES ===================================
+_____________________________ test_tien_kiem_kho ______________________________
+
+    def test_tien_kiem_kho():
+        pk = D.precheck()
+        curr_branch = subprocess.run(["git", "branch", "--show-current"], cwd=D.REPO,
+                                     capture_output=True, text=True).stdout.strip()
+        assert pk["BRANCH"] in (curr_branch, "feat/photo-problem-to-scene", "HEAD")
+        is_ancestor = (subprocess.run(["git", "merge-base", "--is-ancestor", "12df583", pk["HEAD"]],
+                                      cwd=D.REPO).returncode == 0)
+        assert pk["HEAD"].startswith("12df583") or is_ancestor
+        is_main_ancestor = (subprocess.run(["git", "merge-base", "--is-ancestor", "085cae6", pk["MAIN"]],
+                                           cwd=D.REPO).returncode == 0)
+        assert pk["MAIN"].startswith("085cae6") or is_main_ancestor
+>       assert pk["CANDIDATE_VERIFY"] is True
+E       assert False is True
+
+tests\geometry\test_analyze_failure_cluster_diagnosis.py:55: AssertionError
+_____________ test_diagnose_precheck_independent_of_branch[main] ______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001FD736A3890>
+branch_name = 'main'
+
+    @pytest.mark.parametrize("branch_name", [
+        "main",
+        "feat/rectangular-base-pyramid-compiler",
+        "arbitrary-feature-branch-xyz",
+        "hotfix/test-isolation-123",
+    ])
+    def test_diagnose_precheck_independent_of_branch(monkeypatch, branch_name):
+        """precheck() của diagnose_analyze_failure_cluster chạy độc lập với branch."""
+        real_run = subprocess.run
+    
+        def fake_run(cmd, *a, **k):
+            if len(cmd) >= 3 and cmd[0] == "git" and cmd[1] == "branch" and cmd[2] == "--show-current":
+                return subprocess.CompletedProcess(cmd, 0, stdout=f"{branch_name}\n", stderr="")
+            return real_run(cmd, *a, **k)
+    
+        monkeypatch.setattr(subprocess, "run", fake_run)
+        pk = D.precheck()
+        assert pk["BRANCH"] == branch_name
+>       assert pk["PRECHECK_STATUS"] == "PASS"
+E       AssertionError: assert 'FAIL' == 'PASS'
+E         
+E         - PASS
+E         + FAIL
+
+tests\geometry\test_branch_independent_harness.py:47: AssertionError
+_ test_diagnose_precheck_independent_of_branch[feat/rectangular-base-pyramid-compiler] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001FD73691A60>
+branch_name = 'feat/rectangular-base-pyramid-compiler'
+
+    @pytest.mark.parametrize("branch_name", [
+        "main",
+        "feat/rectangular-base-pyramid-compiler",
+        "arbitrary-feature-branch-xyz",
+        "hotfix/test-isolation-123",
+    ])
+    def test_diagnose_precheck_independent_of_branch(monkeypatch, branch_name):
+        """precheck() của diagnose_analyze_failure_cluster chạy độc lập với branch."""
+        real_run = subprocess.run
+    
+        def fake_run(cmd, *a, **k):
+            if len(cmd) >= 3 and cmd[0] == "git" and cmd[1] == "branch" and cmd[2] == "--show-current":
+                return subprocess.CompletedProcess(cmd, 0, stdout=f"{branch_name}\n", stderr="")
+            return real_run(cmd, *a, **k)
+    
+        monkeypatch.setattr(subprocess, "run", fake_run)
+        pk = D.precheck()
+        assert pk["BRANCH"] == branch_name
+>       assert pk["PRECHECK_STATUS"] == "PASS"
+E       AssertionError: assert 'FAIL' == 'PASS'
+E         
+E         - PASS
+E         + FAIL
+
+tests\geometry\test_branch_independent_harness.py:47: AssertionError
+_ test_diagnose_precheck_independent_of_branch[arbitrary-feature-branch-xyz] __
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001FD71C1FF20>
+branch_name = 'arbitrary-feature-branch-xyz'
+
+    @pytest.mark.parametrize("branch_name", [
+        "main",
+        "feat/rectangular-base-pyramid-compiler",
+        "arbitrary-feature-branch-xyz",
+        "hotfix/test-isolation-123",
+    ])
+    def test_diagnose_precheck_independent_of_branch(monkeypatch, branch_name):
+        """precheck() của diagnose_analyze_failure_cluster chạy độc lập với branch."""
+        real_run = subprocess.run
+    
+        def fake_run(cmd, *a, **k):
+            if len(cmd) >= 3 and cmd[0] == "git" and cmd[1] == "branch" and cmd[2] == "--show-current":
+                return subprocess.CompletedProcess(cmd, 0, stdout=f"{branch_name}\n", stderr="")
+            return real_run(cmd, *a, **k)
+    
+        monkeypatch.setattr(subprocess, "run", fake_run)
+        pk = D.precheck()
+        assert pk["BRANCH"] == branch_name
+>       assert pk["PRECHECK_STATUS"] == "PASS"
+E       AssertionError: assert 'FAIL' == 'PASS'
+E         
+E         - PASS
+E         + FAIL
+
+tests\geometry\test_branch_independent_harness.py:47: AssertionError
+___ test_diagnose_precheck_independent_of_branch[hotfix/test-isolation-123] ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001FD71BD5F40>
+branch_name = 'hotfix/test-isolation-123'
+
+    @pytest.mark.parametrize("branch_name", [
+        "main",
+        "feat/rectangular-base-pyramid-compiler",
+        "arbitrary-feature-branch-xyz",
+        "hotfix/test-isolation-123",
+    ])
+    def test_diagnose_precheck_independent_of_branch(monkeypatch, branch_name):
+        """precheck() của diagnose_analyze_failure_cluster chạy độc lập với branch."""
+        real_run = subprocess.run
+    
+        def fake_run(cmd, *a, **k):
+            if len(cmd) >= 3 and cmd[0] == "git" and cmd[1] == "branch" and cmd[2] == "--show-current":
+                return subprocess.CompletedProcess(cmd, 0, stdout=f"{branch_name}\n", stderr="")
+            return real_run(cmd, *a, **k)
+    
+        monkeypatch.setattr(subprocess, "run", fake_run)
+        pk = D.precheck()
+        assert pk["BRANCH"] == branch_name
+>       assert pk["PRECHECK_STATUS"] == "PASS"
+E       AssertionError: assert 'FAIL' == 'PASS'
+E         
+E         - PASS
+E         + FAIL
+
+tests\geometry\test_branch_independent_harness.py:47: AssertionError
+________________ test_precheck_accepts_detached_head[precheck] ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001FD73693740>
+precheck = <function precheck at 0x000001FD699BB100>
+
+    @pytest.mark.parametrize("precheck", [D.precheck, R.run_precheck])
+    def test_precheck_accepts_detached_head(monkeypatch, precheck):
+        """Authoritative runs use a detached worktree: `git branch --show-current`
+        prints nothing there, and HEAD ancestry alone proves the base (w09)."""
+        real_run = subprocess.run
+    
+        def fake_run(cmd, *a, **k):
+            if len(cmd) >= 3 and cmd[0] == "git" and cmd[1] == "branch" and cmd[2] == "--show-current":
+                return subprocess.CompletedProcess(cmd, 0, stdout="\n", stderr="")
+            return real_run(cmd, *a, **k)
+    
+        monkeypatch.setattr(subprocess, "run", fake_run)
+>       assert precheck()["PRECHECK_STATUS"] == "PASS"
+E       AssertionError: assert 'FAIL' == 'PASS'
+E         
+E         - PASS
+E         + FAIL
+
+tests\geometry\test_branch_independent_harness.py:83: AssertionError
+_________________ test_inv_20_candidate_and_cache_verify_only _________________
+
+    def test_inv_20_candidate_and_cache_verify_only():
+        """20. Candidate và cache chỉ verify-only, không thay đổi."""
+        cand_cmd = subprocess.run(
+            [sys.executable, "backend/scripts/freeze_evaluation_candidate.py", "--verify"],
+            cwd=REPO, capture_output=True, text=True, env=dict(subprocess.os.environ, PYTHONUTF8="1")
+        )
+>       assert cand_cmd.returncode == 0
+E       AssertionError: assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe', 'backend/scripts/free...t_sha, measured_system.tree_hash\nNếu lệch vì một kết quả SEALED thì đây là VI PHẠM luật con dấu (§7.4).\n', stderr='').returncode
+
+tests\geometry\test_docs_information_architecture.py:197: AssertionError
+_________________ test_inv_05_candidate_and_cache_verify_only _________________
+
+    def test_inv_05_candidate_and_cache_verify_only():
+        """Kiểm tra candidate và cache khóa khớp ở chế độ verify-only."""
+        res = C.collect_candidate_cache_proof()
+        candidate = json.loads(
+            (REPO / "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json")
+            .read_text(encoding="utf-8")
+        )
+>       assert res["candidate_valid"] is True
+E       assert False is True
+
+tests\geometry\test_docs_test_telemetry.py:95: AssertionError
+_______________ test_versions_and_locked_typed_fact_json_schema _______________
+
+    def test_versions_and_locked_typed_fact_json_schema():
+        """M1: Runtime accepts Greek plane_name while TypedFact JSON schema hash stays locked."""
+>       assert REGISTRY_VERSION == "geometry-functions/20"
+E       AssertionError: assert 'geometry-functions/21' == 'geometry-functions/20'
+E         
+E         - geometry-functions/20
+E         ?                     ^
+E         + geometry-functions/21
+E         ?                     ^
+
+tests\geometry\test_holdout_failure_repair.py:58: AssertionError
+__________ test_development_corpus_negative_cases_fail_closed[N006] ___________
+
+case = {'id': 'N006', 'defect_family': 'M2', 'expected_status': 'REFUSED', 'expected_codes': ['UNKNOWN_SOLID'], ...}
+
+    @pytest.mark.parametrize("case", _NEG_CASES, ids=[c["id"] for c in _NEG_CASES])
+    def test_development_corpus_negative_cases_fail_closed(case: dict):
+        cid = case["id"]
+        r, resp, served, code = _eval_case(case["payload"])
+        assert not served, f"{cid} was unexpectedly SERVED!"
+>       assert code in case["expected_codes"], f"{cid} got {code}, expected one of {case['expected_codes']} ({r.reason})"
+E       AssertionError: N006 got UNKNOWN_SOLID_ID, expected one of ['UNKNOWN_SOLID'] (p3: khối 's99' không xác định duy nhất)
+E       assert 'UNKNOWN_SOLID_ID' in ['UNKNOWN_SOLID']
+
+tests\geometry\test_holdout_failure_repair.py:117: AssertionError
+_____________________ test_bao_cao_da_sinh_va_KHONG_TROI ______________________
+
+RP = <module 'report_holdout_readiness' from 'D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\w3-f2-ratio-projection-language-grounding\\backend\\scripts\\report_holdout_readiness.py'>
+
+    def test_bao_cao_da_sinh_va_KHONG_TROI(RP):
+        """Báo cáo mang băm và số đếm. Viết tay thì nó đúng đúng một lần."""
+        f = GEO / "PHASE7B_READINESS_REPORT.md"
+        assert f.exists(), "chưa sinh PHASE7B_READINESS_REPORT.md"
+        src = f.read_text(encoding="utf-8")
+        d = RP.thu_thap()
+        assert d["pool_hash"] in src, "báo cáo trôi khỏi pool — chạy lại script"
+        assert f"accepted`: {d['accepted']}/40" in src
+>       assert ("READY_FOR_PHASE7B:  NO" in src) == bool(RP.blockers(d))
+E       AssertionError: assert ('READY_FOR_PHASE7B:  NO' in '# PHASE 7B — BÁO CÁO SẴN SÀNG\n\n> Sinh bằng `scripts/report_holdout_readiness.py`. **0 API call.**\n> Mọi số dẫn từ ...ng: [`PHASE7B_READINESS.md`](PHASE7B_READINESS.md) và\n[`HOLDOUT_ACQUISITION_LOG.md`](HOLDOUT_ACQUISITION_LOG.md).\n\n') == True
+E        +  where True = bool(['CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch.'])
+E        +    where ['CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch.'] = <function blockers at 0x000001FD74790040>({'luc': '2026-10-29T11:40:44+00:00', 'git_sha': '393864d189c4f2e5cdd3b41ca277c7ca5177318e', 'cay_sach': False, 'cache_version': '130', ...})
+E        +      where <function blockers at 0x000001FD74790040> = <module 'report_holdout_readiness' from 'D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\w3-f2-ratio-projection-language-grounding\\backend\\scripts\\report_holdout_readiness.py'>.blockers
+
+tests\geometry\test_holdout_readiness.py:832: AssertionError
+_ test_version_constants_surface_fingerprints_and_historical_receipt_preservation _
+
+    def test_version_constants_surface_fingerprints_and_historical_receipt_preservation():
+        """P3, P4.8 & P4.9: Verify versions, surface fingerprints, LLM_ONLY default, and untouched v3 receipts."""
+        # /6, /7, /5 -> /7, /8, /6 (goal-directed-function-composition): ask_angle_lines, centroid + angle goal contracts.
+        # -> /8, /9, /7 (geometry-capability-expansion): divide_segment, MAT_VUONG_DUONG, right-angle chain, prism vector.
+        # composite-geometry: shared-face source check + constructed-base pyramids; provider schemas unchanged.
+        # -> /12, /12, /10 (typedfactnext-planner-bridge): cut-edge section vertices, derived pyramid; provider schemas unchanged.
+        # -> /13, /13, /11 (hybrid-contract-v2, owner D5): Meet contract, D6 derived vertices, closure certificate.
+        # -> registry /14, planner /15, engine /14 (hybrid-v2-nl-certificates-e2e): ask_distance_line_plane + ask_distance_planes
+        # (route B only, provider_offered=False), the base-side wording clause of the source gate.
+        # -> registry /15, planner /16 (hybrid-v2-planner-generalization): prism ⊥-plane anchors; bare solid words in section
+        # phrases, bound to the cut solid; provider schemas unchanged.
+        assert REGISTRY_VERSION == "geometry-functions/21"
+        # planner /14, engine /13 (hybrid-v2-backend-generalization): full > 3-label question planes, witness triple.
+        assert PLANNER_VERSION == "geometry-fact-planner/18"
+        # engine /11 -> /12 (claude-to-codex-takeover): skew-claim contradiction refusal on ask_distance_lines; registry/planner unchanged.
+        assert ENGINE_VERSION == "geometry-function-engine/14"
+        # 125 -> 126 (hybrid-offline-readiness-finalization): độ dài nguồn không đọc từ biểu thức/vectơ/giả định.
+        # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): segment3 đường cao mang perpendicular_witness.
+        # 127 -> 128 (visual-hybrid-final-corrections): tên hiển thị backend (mặt phẳng tên đề viết, chu trình thiết diện).
+        # 128 -> 129 (sphere-sample-source-authority): mặt phẳng cắt khối cong (đường tròn/elip giao) mang vai CONSTRUCT_CUTTING_OBJECT thay CONSTRUCT_AUXILIARY_GEOMETRY trong envelope phục vụ; row v128 thật vẫn HIT (runs/sphere-sample-source-authority/cache/decision.json).
+        assert main_module.CACHE_VERSION == "130"
+        assert main_module.semantic_route_mode() == "off"
+        assert RESPONSE_CONTRACT == "flat"
+        # Verify default production pipeline (`main.py` / `pipeline.py`) remains LLM_ONLY and does not wire Hybrid route
+        main_src = (ROOT / "backend/app/main.py").read_text(encoding="utf-8")
+        pipeline_src = (ROOT / "backend/app/ai/pipeline.py").read_text(encoding="utf-8")
+        assert "fact_extraction" not in main_src and "function_route" not in main_src
+        assert "fact_extraction" not in pipeline_src and "function_route" not in pipeline_src
+    
+        # Surface fingerprints must remain identical to locked evaluation pins
+        assert surface_fingerprint("flat") == "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a"
+        # research contract v3 only (flat, the default, is unchanged): described-point questions are generated from the
+        # Registry goal contracts (area, angle) in goal-directed-function-composition; was 90bf8f03…. Unchanged by
+        # geometry-capability-expansion (the ratio point_def stays out of v3 and of the frozen `flat` surface 485d3834…).
+        assert surface_fingerprint("v3") == "4bff35bbf690a9973b2b7834019b908d507bbbb4277928e36d12dcff657e226f"
+        assert function_calling.surface_fingerprint() == "7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25"
+    
+        typed_fact_sha = hashlib.sha256(
+            json.dumps(TypedFact.model_json_schema(), sort_keys=True, ensure_ascii=False).encode("utf-8")
+        ).hexdigest()
+        assert typed_fact_sha == "aa9d93eeac9f1659af8e5acd42af1904b7aaed674a8ab0f56f0c7dd8b2ad4ee8"
+    
+        decl_sha = hashlib.sha256(
+            json.dumps(registry.function_declarations(), sort_keys=True, ensure_ascii=False).encode("utf-8")
+        ).hexdigest()
+        assert decl_sha == "5ceb0f999d4d7c1ee37c02207ea6470a7f972a168d6c52fa597392934d86f169"
+    
+        # Historical receipts of semantic-extraction-v3-runtime-revision must remain bound to product SHA 6ba9033b...
+        v3_div = json.loads((V3_REV_RUN / "candidate_divergence.json").read_text(encoding="utf-8"))
+        assert v3_div["current_candidate_hash"] == "6ba9033bfca06d671cd27891e2dad06c7d44f365fed45527123c907d664b65ed"
+        inv = json.loads((V3_REV_RUN / "results/offline/invocations.json").read_text(encoding="utf-8"))
+        assert inv["status"] == "COMPLETE" and len(inv["invocations"]) == 8
+        for row in inv["invocations"]:
+            assert row["status"] == "PASS"
+            assert row["input_identity"]["product_sha256"] == "6ba9033bfca06d671cd27891e2dad06c7d44f365fed45527123c907d664b65ed"
+    
+        # The combined candidate's own receipt stays bound to ITS product hash (historical, immutable) ...
+        hbi = json.loads((RUNS_DIR / "hybrid-backend-integration/run.json").read_text(encoding="utf-8"))
+        assert (hbi["product_sha256"], hbi["measured_files"]) == (
+            "afab0a3ca3abfe3c3f7692d34be2aeadbd099b8d43b6543d8d234d19b5ef8443", 110)
+        # ... while the live tree must equal whichever candidate is frozen NOW. Run `hybrid-pre-main-hardening`: this used to
+        # pin afab0a3c literally, so every later product change (refrozen as a new candidate) read as a broken receipt.
+        fz = _load_module("_freeze_eval_cand_int", ROOT / "backend/scripts/freeze_evaluation_candidate.py")
+        combined_hash, file_count = fz.measured_system_hash()
+        frozen = json.loads(fz.OUT.read_text(encoding="utf-8"))["measured_system"]
+>       assert (combined_hash, file_count) == (frozen["tree_hash"], frozen["so_file"])
+E       AssertionError: assert ('5f18a8bd081...e99013f', 118) == ('06d867dd268...139dc4d', 118)
+E         
+E         At index 0 diff: '5f18a8bd0811eb1a21f92befa163f6ad8b47d1617359314c60de63fe0e99013f' != '06d867dd2688996c37088702bc2dcec39e214a40a94294cb00ef82c19139dc4d'
+E         Use -v to get more diff
+
+tests\geometry\test_hybrid_backend_integration.py:525: AssertionError
+_________________ test_C2b_candidate_hien_tai_phai_duoc_KHAI __________________
+
+nguong = {'policy_id': 'THESIS_FINAL_ACCEPTANCE', 'policy_version': '1.1.0', 'created_before_live_run': True, 'amendments': [{'...'1.1.0', 'from_version': '1.0.0', 'date': '2026-09-08', 'wave': 'THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT', ...}], ...}
+
+    def test_C2b_candidate_hien_tai_phai_duoc_KHAI(nguong):
+        """Mã sản phẩm được phép rời khỏi candidate đã đo — nhưng KHÔNG được rời
+        trong im lặng.
+    
+        Guard này thay đúng cái răng mà `test_C2` vừa nhả ra, và nó cắn theo cả hai
+        chiều: sửa `backend/app` mà quên khai ⇒ đỏ; khai một băm không phải băm
+        thật ⇒ cũng đỏ. Cái nó KHÔNG còn làm là cấm sửa mã — đó là chỗ guard cũ
+        vượt quá thẩm quyền của một cổng pre-registration.
+        """
+        import freeze_evaluation_candidate as F
+    
+        assert KHAI_LECH.exists(), (
+            "sửa `backend/app` sau lượt đo cuối thì phải KHAI ở "
+            f"{KHAI_LECH.relative_to(GOC).as_posix()}")
+        khai = json.loads(KHAI_LECH.read_text(encoding="utf-8"))
+        lock = json.loads((RA / "IDENTITY_LOCK.json").read_text(encoding="utf-8"))
+        he, _n = F.measured_system_hash()
+    
+        assert khai["run_candidate_hash"] == lock["CANDIDATE_HASH"], \
+            "văn bản khai trỏ sai lượt đo"
+>       assert khai["current_candidate_hash"] == he, (
+            "văn bản khai đã cũ — hệ hiện tại là "
+            f"{he[:16]}…, khai {str(khai['current_candidate_hash'])[:16]}…")
+E       AssertionError: văn bản khai đã cũ — hệ hiện tại là 5f18a8bd0811eb1a…, khai 06d867dd2688996c…
+E       assert '06d867dd2688...f82c19139dc4d' == '5f18a8bd0811...e63fe0e99013f'
+E         
+E         - 5f18a8bd0811eb1a21f92befa163f6ad8b47d1617359314c60de63fe0e99013f
+E         + 06d867dd2688996c37088702bc2dcec39e214a40a94294cb00ef82c19139dc4d
+
+tests\geometry\test_thesis_acceptance_matrix.py:349: AssertionError
+_______________ test_combined_version_identities_and_governance _______________
+
+    def test_combined_version_identities_and_governance() -> None:
+        """Verify version identities of Registry /13, Planner /13 (hybrid-contract-v2, owner D5), Engine /12
+        (claude-to-codex-takeover skew-claim refusal), Adapter /2 and /3."""
+>       assert REGISTRY_VERSION == "geometry-functions/20"
+E       AssertionError: assert 'geometry-functions/21' == 'geometry-functions/20'
+E         
+E         - geometry-functions/20
+E         ?                     ^
+E         + geometry-functions/21
+E         ?                     ^
+
+tests\geometry\test_wave3a_adapter3_integration.py:36: AssertionError
+___________ test_wave3a_version_and_surface_fingerprint_invariants ____________
+
+    def test_wave3a_version_and_surface_fingerprint_invariants():
+        # /13, /13, /11 since hybrid-contract-v2 (owner D5); engine /12 since claude-to-codex-takeover (skew-claim refusal).
+        # Wave 3A surface fingerprints below unchanged
+>       assert registry.REGISTRY_VERSION == "geometry-functions/20"
+E       AssertionError: assert 'geometry-functions/21' == 'geometry-functions/20'
+E         
+E         - geometry-functions/20
+E         ?                     ^
+E         + geometry-functions/21
+E         ?                     ^
+
+tests\geometry\test_wave3a_volume_reasoning.py:190: AssertionError
+______________ test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang ______________
+
+manifest = {'khai': 'Danh tính của hệ tại thời điểm ĐÓNG BĂNG để đánh giá. Không sửa file này vì kết quả SEALED — SEALED chỉ được...uc': '2026-10-29T11:14:44+00:00', 'commit': 'add9c04eaaea5b43dd9703daba4b3a294fca17b5', 'commit_ngan': 'add9c04e', ...}
+
+    def test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang(manifest):
+        fz = _freeze_module()
+        hien_tai, so_file = fz.measured_system_hash()
+>       assert manifest["measured_system"]["tree_hash"] == hien_tai, (
+            "MÃ SẢN PHẨM của hệ được đo đã đổi sau khi đóng băng candidate. Xem "
+            f"`git diff {manifest.get('commit_ngan')} HEAD -- "
+            + " ".join(fz.MEASURED_SYSTEM_PATHS) + "`. Đổi vì một case SEALED ⇒ VI "
+            "PHẠM luật con dấu (§7.4)."
+        )
+E       AssertionError: MÃ SẢN PHẨM của hệ được đo đã đổi sau khi đóng băng candidate. Xem `git diff add9c04e HEAD -- backend/app frontend/src/simulations/domains/semantic frontend/src/simulations/domains/semantic/semantic_program.schema.json`. Đổi vì một case SEALED ⇒ VI PHẠM luật con dấu (§7.4).
+E       assert '06d867dd2688...f82c19139dc4d' == '5f18a8bd0811...e63fe0e99013f'
+E         
+E         - 5f18a8bd0811eb1a21f92befa163f6ad8b47d1617359314c60de63fe0e99013f
+E         + 06d867dd2688996c37088702bc2dcec39e214a40a94294cb00ef82c19139dc4d
+
+tests\semantic_program\test_evaluation_candidate.py:151: AssertionError
+============================== warnings summary ===============================
+..\..\..\..\backend\.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_analyze_failure_cluster_diagnosis.py::test_tien_kiem_kho
+FAILED tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[main]
+FAILED tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[feat/rectangular-base-pyramid-compiler]
+FAILED tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[arbitrary-feature-branch-xyz]
+FAILED tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[hotfix/test-isolation-123]
+FAILED tests/geometry/test_branch_independent_harness.py::test_precheck_accepts_detached_head[precheck]
+FAILED tests/geometry/test_docs_information_architecture.py::test_inv_20_candidate_and_cache_verify_only
+FAILED tests/geometry/test_docs_test_telemetry.py::test_inv_05_candidate_and_cache_verify_only
+FAILED tests/geometry/test_holdout_failure_repair.py::test_versions_and_locked_typed_fact_json_schema
+FAILED tests/geometry/test_holdout_failure_repair.py::test_development_corpus_negative_cases_fail_closed[N006]
+FAILED tests/geometry/test_holdout_readiness.py::test_bao_cao_da_sinh_va_KHONG_TROI
+FAILED tests/geometry/test_hybrid_backend_integration.py::test_version_constants_surface_fingerprints_and_historical_receipt_preservation
+FAILED tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI
+FAILED tests/geometry/test_wave3a_adapter3_integration.py::test_combined_version_identities_and_governance
+FAILED tests/geometry/test_wave3a_volume_reasoning.py::test_wave3a_version_and_surface_fingerprint_invariants
+FAILED tests/semantic_program/test_evaluation_candidate.py::test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang
+16 failed, 12765 passed, 1 skipped, 2 deselected, 15 xfailed, 1 warning in 652.67s (0:10:52)
+
+Kết quả: IMPACT_GATE_FAIL
+Thời gian: 660.6s
+
+⚠️ IMPACT_GATE_PASS chỉ nói về tập vừa chọn. Nó KHÔNG thay được gate
+   sản phẩm đầy đủ (T3) — xem docs/TEST_TIERS.md.

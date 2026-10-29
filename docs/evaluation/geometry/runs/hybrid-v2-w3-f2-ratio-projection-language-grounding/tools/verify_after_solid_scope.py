@@ -1,6 +1,6 @@
 """Append-only gates and post-feedback replay after the solid-scope repair (Claude takeover); reuses the locked
 evaluators of `verify_after_adapter3.py`, writes only new file names, never overwrites an earlier receipt."""
-import argparse, copy, hashlib, importlib.util, json, os, socket, subprocess, sys
+import argparse, copy, hashlib, importlib.util, json, os, re, socket, subprocess, sys
 from pathlib import Path
 
 RUN = Path(__file__).resolve().parents[1]; ROOT = RUN.parents[4]
@@ -20,7 +20,9 @@ def copy_log(src, dst):
     with (RUN / dst).open('x', encoding='utf-8', newline='\n') as f: f.write(text)
     return digest(RUN / dst)
 
-parser = argparse.ArgumentParser(); parser.add_argument('phase', choices=['gates', 'replay']); args = parser.parse_args()
+parser = argparse.ArgumentParser(); parser.add_argument('phase', choices=['gates', 'replay'])
+parser.add_argument('--tag', default='', help="output suffix ('' = first round on 393864d1, e.g. '-final')")
+args = parser.parse_args(); T = args.tag
 dev = module('solid_scope_locked_development', RUN / 'tools/evaluate_development.py')
 fz = module('solid_scope_freeze_identity', ROOT / 'backend/scripts/freeze_evaluation_candidate.py')
 head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
@@ -67,22 +69,25 @@ if args.phase == 'gates':
         if name == 'A3-DEV-02 control': ok &= r3.answer_exact == a3['oracle_exact']
         row['pass'] = ok; boundary.append(row)
     assert all(r['pass'] for r in boundary), boundary
-    fixtures = load(ROOT / '.superpowers/f2/claude-41-fixtures.json')
+    fixtures = load(ROOT / f'.superpowers/f2/claude-41-fixtures{T}.json')
     assert fixtures['verified'] == 41 and fixtures['problems'] == []
-    write('verification/solid-scope-41-fixtures.json', fixtures)
+    write(f'verification/solid-scope{T}-41-fixtures.json', fixtures)
     logs = {dst: copy_log(src, dst) for src, dst in (
-        ('.superpowers/f2/claude-solid-scope-compat.log', 'verification/solid-scope-compat-tests.log'),
-        ('.superpowers/f2/claude-solid-scope-green2.log', 'verification/solid-scope-green-tests.log'),
-        ('.superpowers/f2/claude-cache.log', 'verification/solid-scope-cache.log'))}
-    assert '648 passed, 1 deselected, 6 xfailed' in (RUN / 'verification/solid-scope-compat-tests.log').read_text(encoding='utf-8')
-    assert '62 passed' in (RUN / 'verification/solid-scope-green-tests.log').read_text(encoding='utf-8')
-    write('solid-scope-safety-gates.json', {
+        (f'.superpowers/f2/claude-solid-scope-compat{T}.log', f'verification/solid-scope{T}-compat-tests.log'),
+        (f'.superpowers/f2/claude-solid-scope-{"green" + T if T else "green2"}.log', f'verification/solid-scope{T}-green-tests.log'),
+        (f'.superpowers/f2/claude-cache{T}.log', f'verification/solid-scope{T}-cache.log'))}
+    def summary(name):
+        text = (RUN / f'verification/solid-scope{T}-{name}-tests.log').read_text(encoding='utf-8')
+        m = re.search(r'^(\d+) passed(?:, 1 deselected, 6 xfailed)?', text, re.M); assert m and ' failed' not in m.group(0)
+        assert not re.search(r'^\d+ failed|^FAILED ', text, re.M); return int(m.group(1))
+    passed, green = summary('compat'), summary('green')
+    write(f'solid-scope{T}-safety-gates.json', {
         **identity, 'corrects': 'final-safety-gates.json (Gate A recorded PASS before the final-review MAJOR)',
         'A': 'PASS', 'B': 'PASS_UNAFFECTED', 'C': 'PASS', 'D': 'PASS',
         'B_note': 'No incidence/engine/Registry change since the independently adjudicated f7dd5580; witness tests rerun in the compat suite.',
         'boundary_matrix': boundary, 'slices': slices,
         'wrong_served_locked_96': sum(r['outcome'] == 'WRONG_SERVED' for r in rows),
-        'tests': {'passed': 648, 'failed': 0, 'xfailed': 6, 'deselected': 1,
+        'tests': {'passed': passed, 'failed': 0, 'xfailed': 6, 'deselected': 1, 'safety_file_passed': green,
                   'deferred': 'version/freeze receipt check needs the new freeze; runs in Full T3'},
         'mutants_killed': ['remove_terminal_guard', 'remove_scope_guard', 'replace_scope_with_default', 'allow_global_lookup',
                            'bridge_remove_operand_conflict', 'bridge_remove_unknown_scope',
@@ -93,7 +98,7 @@ if args.phase == 'gates':
         'release_status': 'NOT_YET_READY_PENDING_REPLAY_T0_T2_FREEZE_T3_FINAL_REVIEW'})
     print(json.dumps({'gates': 'A-D PASS', 'boundary': [(r['case'], r['pass']) for r in boundary], 'slices': slices}, ensure_ascii=False))
 else:
-    gates = load(RUN / 'solid-scope-safety-gates.json'); assert gates['A'] == 'PASS'
+    gates = load(RUN / f'solid-scope{T}-safety-gates.json'); assert gates['A'] == 'PASS'
     assert gates['measured_system_hash'] == list(fz.measured_system_hash())
     f1 = module('solid_scope_wave3_replay', dev.F1 / 'tools/build_and_evaluate_w3_f1.py')
     f1.WAVE3_WORKTREE = dev.HIST    # same correction as verify_after_adapter3.py: committed evidence in this checkout
@@ -109,6 +114,6 @@ else:
             if (r['outcome'], r['code']) != (old[r['id']]['outcome'], old[r['id']]['code'])]
     result['original_A06'] = {'classification': 'F2_LANGUAGE_GROUNDING_RESOLVED_BUT_DOWNSTREAM_RADICAL_LIMIT_REMAINS',
                               'actual': next(r for r in result['cases'] if r['id'] == 'W3-A06')}
-    write('wave3-post-feedback-regression-after-solid-scope.json', result)
+    write(f'wave3-post-feedback-regression-after-solid-scope{T}.json', result)
     print(json.dumps({'summary': result['post_feedback_regression_summary'],
                       'transitions_from_after_adapter3': result['transitions_from_after_adapter3']}, ensure_ascii=False))

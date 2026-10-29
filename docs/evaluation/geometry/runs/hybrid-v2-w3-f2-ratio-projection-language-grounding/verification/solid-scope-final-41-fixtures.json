@@ -1,0 +1,18 @@
+{
+  "verified": 41,
+  "problems": [],
+  "producer_now": {
+    "commit": "c4d7b759a9cb69ba5133dc8a05b10f45e7ff24ba",
+    "product_commit": "c4d7b759a9cb69ba5133dc8a05b10f45e7ff24ba",
+    "source_fingerprint": {
+      "measured_system_hash": "609931405d65aed5fc82a8002aa3bf43a5f17e7f93788cda94266c067042de13",
+      "files": 118,
+      "rule": "scripts/freeze_evaluation_candidate.py::measured_system_hash"
+    },
+    "adapter_version": "hybrid-preview-adapter/2",
+    "envelope_version": "hybrid-route-d-preview/1",
+    "backend_app_dirty": false,
+    "inputs_dirty": false
+  },
+  "same_source_fingerprint": false
+}

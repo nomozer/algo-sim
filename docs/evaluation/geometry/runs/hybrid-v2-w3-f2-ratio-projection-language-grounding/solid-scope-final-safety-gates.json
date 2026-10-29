@@ -1,0 +1,175 @@
+{
+  "head": "c4d7b759a9cb69ba5133dc8a05b10f45e7ff24ba",
+  "product_commit": "c4d7b759a9cb69ba5133dc8a05b10f45e7ff24ba",
+  "measured_system_hash": [
+    "609931405d65aed5fc82a8002aa3bf43a5f17e7f93788cda94266c067042de13",
+    118
+  ],
+  "live_provider_calls": 0,
+  "classification": "POST_FEEDBACK_DEVELOPMENT_REGRESSION",
+  "corrects": "final-safety-gates.json (Gate A recorded PASS before the final-review MAJOR)",
+  "A": "PASS",
+  "B": "PASS_UNAFFECTED",
+  "C": "PASS",
+  "D": "PASS",
+  "B_note": "No incidence/engine/Registry change since the independently adjudicated f7dd5580; witness tests rerun in the compat suite.",
+  "boundary_matrix": [
+    {
+      "case": "H1",
+      "expected": "SOURCE_OBJECT_MISMATCH",
+      "bridge": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+      "adapter3": [
+        "REFUSED",
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "pass": true
+    },
+    {
+      "case": "H2a",
+      "expected": "SOURCE_OBJECT_MISMATCH",
+      "bridge": "SOURCE_OBJECT_MISMATCH",
+      "adapter3": [
+        "REFUSED",
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "adapter4": [
+        "REFUSED",
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "pass": true
+    },
+    {
+      "case": "H2b",
+      "expected": "UNKNOWN_SOLID_ID",
+      "bridge": "UNKNOWN_SOLID_ID",
+      "adapter3": [
+        "REFUSED",
+        "UNKNOWN_SOLID_ID"
+      ],
+      "adapter4": [
+        "REFUSED",
+        "UNKNOWN_SOLID_ID"
+      ],
+      "pass": true
+    },
+    {
+      "case": "H2c",
+      "expected": "SOURCE_OBJECT_MISMATCH",
+      "bridge": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+      "adapter3": [
+        "REFUSED",
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "pass": true
+    },
+    {
+      "case": "H2d",
+      "expected": "UNKNOWN_SOLID_ID",
+      "bridge": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+      "adapter3": [
+        "REFUSED",
+        "UNKNOWN_SOLID_ID"
+      ],
+      "pass": true
+    },
+    {
+      "case": "H3",
+      "expected": "SOURCE_OBJECT_MISMATCH",
+      "bridge": "SOURCE_OBJECT_MISMATCH",
+      "adapter3": [
+        "REFUSED",
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "adapter4": [
+        "REFUSED",
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "pass": true
+    },
+    {
+      "case": "A3-DEV-02 control",
+      "expected": "SERVED",
+      "bridge": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+      "adapter3": [
+        "SERVED",
+        null
+      ],
+      "pass": true
+    },
+    {
+      "case": "supplementary control",
+      "expected": "SERVED",
+      "bridge": "OK",
+      "adapter3": [
+        "SERVED",
+        null
+      ],
+      "adapter4": [
+        "SERVED",
+        null
+      ],
+      "pass": true
+    }
+  ],
+  "slices": {
+    "authored_projection": {
+      "total": 26,
+      "served_correct": 26,
+      "refused": 0,
+      "locked_code_match": 26
+    },
+    "authored_ratio": {
+      "total": 24,
+      "served_correct": 24,
+      "refused": 0,
+      "locked_code_match": 24
+    },
+    "historical_f2_verbatim": {
+      "total": 21,
+      "served_correct": 20,
+      "refused": 1,
+      "locked_code_match": 21
+    },
+    "isolated_f2": {
+      "total": 1,
+      "served_correct": 1,
+      "refused": 0,
+      "locked_code_match": 1
+    },
+    "mandatory_negative_tamper": {
+      "total": 24,
+      "served_correct": 0,
+      "refused": 24,
+      "locked_code_match": 24
+    }
+  },
+  "wrong_served_locked_96": 0,
+  "tests": {
+    "passed": 717,
+    "failed": 0,
+    "xfailed": 6,
+    "deselected": 1,
+    "safety_file_passed": 64,
+    "deferred": "version/freeze receipt check needs the new freeze; runs in Full T3"
+  },
+  "mutants_killed": [
+    "remove_terminal_guard",
+    "remove_scope_guard",
+    "replace_scope_with_default",
+    "allow_global_lookup",
+    "bridge_remove_operand_conflict",
+    "bridge_remove_unknown_scope",
+    "adapter3_remove_operand_conflict",
+    "adapter3_remove_unknown_scope"
+  ],
+  "fixtures_verified": 41,
+  "cache_decision": "NO_BUMP 130: cache identity lock MATCH; cached LLM_ONLY path untouched.",
+  "versions": "unchanged (Registry /21, Planner /18, Adapter /3, Bridge /1 and /2): restored invalid-input refusal, no new schema or capability",
+  "logs_sha256_lf": {
+    "verification/solid-scope-final-compat-tests.log": "6c74b7f14ee8006ebcade75d9d04a4ab98dad16de21c17ee4a313aa69fca4c4f",
+    "verification/solid-scope-final-green-tests.log": "c3b52bc2ccc3e8b1befb5f6e6890111068843f64ba9b94f239e76b300fa5e9dc",
+    "verification/solid-scope-final-cache.log": "bb93a9e5f223d1304de98865873b4fe900f1b639b9b2a1c66bfa0981b63be5fb"
+  },
+  "test_source_sha256_lf": "6dea1a6a38c98f963450e65ecc714cc5453433af81fb69bcfdd729f4c3f5a301",
+  "release_status": "NOT_YET_READY_PENDING_REPLAY_T0_T2_FREEZE_T3_FINAL_REVIEW"
+}
