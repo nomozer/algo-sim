@@ -1,0 +1,210 @@
+{
+  "status": "NOT_READY",
+  "stop": "Gate D FAIL — MAJOR: locked negative code changed by this patch",
+  "head": "39cad680f593de0f4eba7dd2c0b3249d0f84d96b",
+  "live_provider_calls": 0,
+  "gate_a": "PASS (gate-a-v2.json; diagnostics PENDING reported separately)",
+  "gate_b": "PASS: product changed since 5e44d5da only in typed_fact_next.py, typed_fact_next_bridge.py, adapter3_simulation.py",
+  "gate_c": {
+    "status": "PASS",
+    "locked_96": "96/96 match, 0 wrong-served",
+    "slices": {
+      "authored_projection": "26/26",
+      "authored_ratio": "24/24",
+      "historical_f2_verbatim": "20 served + 1 locked refusal",
+      "isolated_f2": "1/1",
+      "mandatory_negative_tamper": "24/24 refused, locked codes"
+    }
+  },
+  "gate_d": {
+    "status": "FAIL",
+    "suite": "entire backend pytest, default markers",
+    "summary": "13 failed, 13312 passed, 7 skipped, 2 deselected, 15 xfailed, 2 warnings in 601.59s (0:10:01)",
+    "log": "gate-d-full-backend-pytest.log",
+    "log_sha256_lf": "1f9bb9a8c9054df6e500e8dd227d3c33b99b01ba07fc1819404dc626acc2205e",
+    "classification": {
+      "REGRESSION_LOCKED_CONTRACT": [
+        "tests/geometry/test_typed_fact_next_v2_distance_bridge.py::test_malformed_distance_target_is_refused[target8]"
+      ],
+      "STALE_FREEZE_IDENTITY_ALSO_FAILING_AT_5e44d5da": [
+        "tests/geometry/test_analyze_failure_cluster_diagnosis.py::test_tien_kiem_kho",
+        "tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[arbitrary-feature-branch-xyz]",
+        "tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[feat/rectangular-base-pyramid-compiler]",
+        "tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[hotfix/test-isolation-123]",
+        "tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[main]",
+        "tests/geometry/test_branch_independent_harness.py::test_precheck_accepts_detached_head[precheck]",
+        "tests/geometry/test_docs_information_architecture.py::test_inv_20_candidate_and_cache_verify_only",
+        "tests/geometry/test_docs_test_telemetry.py::test_inv_05_candidate_and_cache_verify_only",
+        "tests/geometry/test_hybrid_backend_integration.py::test_version_constants_surface_fingerprints_and_historical_receipt_preservation",
+        "tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI",
+        "tests/semantic_program/test_evaluation_candidate.py::test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang"
+      ],
+      "ENVIRONMENT_DIRTY_TREE": [
+        "tests/geometry/test_holdout_readiness.py::test_bao_cao_da_sinh_va_KHONG_TROI"
+      ]
+    },
+    "pre_patch_reference": {
+      "log": "gate-d-pre-patch-5e44d5da-identity-12.log",
+      "log_sha256_lf": "c17f5fa89524ab4b778a1bff5b8f11885e8f21a6c7a486918edcfc871185dac5",
+      "note": "the 12 non-distance failures re-run at detached 5e44d5da: 11 fail identically (product differs from frozen candidate f0521dcd); holdout readiness passes there"
+    },
+    "environment_note": "tests/geometry/test_holdout_readiness.py::test_bao_cao_da_sinh_va_KHONG_TROI: blocker \"CÂY LÀM VIỆC BẨN\" — tools/gates_v2.py was untracked while the suite ran; the test requires a clean tree (passes at clean 5e44d5da)"
+  },
+  "finding": {
+    "severity": "MAJOR",
+    "id": "CIC-D1",
+    "locked_test": "tests/geometry/test_typed_fact_next_v2_distance_bridge.py::test_malformed_distance_target_is_refused[target8] (since 82097186 \"require exact distinct operands for V2 distance targets\")",
+    "input": {
+      "point": "A'",
+      "plane": [
+        "A",
+        "B",
+        "C"
+      ],
+      "solid": "pr"
+    },
+    "expected_locked": [
+      "REFUSED",
+      "INVALID_MATH_GOAL"
+    ],
+    "observed": [
+      "SERVED",
+      null
+    ],
+    "main_996f114b": "16/16 pass",
+    "pre_patch_5e44d5da": "16/16 pass",
+    "cause": "typed_fact_next.py::_validate_goal_target admits scope keys {solid, solid_id} beside geometric operands (operand-grammar.md: scope keys accompany operands as validated ownership assertions); Adapter /4 previously refused them",
+    "route_matrix": {
+      "w3-f2-pre-cic-5e44d5da": {
+        "target8_solid_pr": {
+          "a4": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "a3": [
+            "SERVED",
+            null
+          ],
+          "pl": [
+            "REFUSED",
+            "BRIDGE_UNSUPPORTED_MEASUREMENT"
+          ]
+        },
+        "solid_id_pr": {
+          "a4": [
+            "REFUSED",
+            "INVALID_MATH_GOAL"
+          ],
+          "a3": [
+            "SERVED",
+            null
+          ],
+          "pl": [
+            "REFUSED",
+            "BRIDGE_UNSUPPORTED_MEASUREMENT"
+          ]
+        },
+        "solid_foreign": {
+          "a4": [
+            "REFUSED",
+            "UNKNOWN_SOLID"
+          ],
+          "a3": [
+            "REFUSED",
+            "UNKNOWN_SOLID"
+          ],
+          "pl": [
+            "REFUSED",
+            "UNKNOWN_SOLID"
+          ]
+        },
+        "control_no_scope": {
+          "a4": [
+            "SERVED",
+            null
+          ],
+          "a3": [
+            "SERVED",
+            null
+          ],
+          "pl": [
+            "REFUSED",
+            "BRIDGE_UNSUPPORTED_MEASUREMENT"
+          ]
+        }
+      },
+      "w3-f2-ratio-projection-language-grounding": {
+        "target8_solid_pr": {
+          "a4": [
+            "SERVED",
+            null
+          ],
+          "a3": [
+            "SERVED",
+            null
+          ],
+          "pl": [
+            "REFUSED",
+            "BRIDGE_UNSUPPORTED_MEASUREMENT"
+          ]
+        },
+        "solid_id_pr": {
+          "a4": [
+            "SERVED",
+            null
+          ],
+          "a3": [
+            "SERVED",
+            null
+          ],
+          "pl": [
+            "REFUSED",
+            "BRIDGE_UNSUPPORTED_MEASUREMENT"
+          ]
+        },
+        "solid_foreign": {
+          "a4": [
+            "REFUSED",
+            "UNKNOWN_SOLID"
+          ],
+          "a3": [
+            "REFUSED",
+            "UNKNOWN_SOLID"
+          ],
+          "pl": [
+            "REFUSED",
+            "UNKNOWN_SOLID"
+          ]
+        },
+        "control_no_scope": {
+          "a4": [
+            "SERVED",
+            null
+          ],
+          "a3": [
+            "SERVED",
+            null
+          ],
+          "pl": [
+            "REFUSED",
+            "BRIDGE_UNSUPPORTED_MEASUREMENT"
+          ]
+        }
+      }
+    },
+    "tool": "tools/probe_distance_scope.py",
+    "served_answer_wrong": false,
+    "foreign_scope": "still REFUSED UNKNOWN_SOLID on every route",
+    "conflict": "Preregistered N2 tests (test_legacy_constructed_ownership_precedes_capability[solid|solid_id]) rely on scope keys inside a distance target being ownership assertions (expect SOURCE_OBJECT_MISMATCH); the locked V2 distance contract refuses any scope key there. Both cannot hold; Owner adjudication required.",
+    "not_done": "no product edit, no expectation change, no xfail/skip"
+  },
+  "not_run": [
+    "independent pre-freeze adversarial review",
+    "Wave 3 replay",
+    "T0/T1/T2",
+    "new candidate freeze",
+    "Full T3",
+    "final review"
+  ],
+  "tooling_prepared_not_run": "tools/gates_v2.py (gates/replay phases; asserts only stale-freeze failures, so it refuses this state)"
+}

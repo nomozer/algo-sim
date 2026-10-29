@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_V2_W3_F2_CLOSED_INPUT_CONTRACT_SOURCE_GRAMMAR_ADJUDICATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/
+CLASSIFICATION = DEVELOPMENT_SECURITY_REGRESSION; NOT_READY; Gate A v2 acceptance PASS (635/0), source-grammar diagnostics PENDING (4, separate); Gate C 96/96; Gate D FAIL (CIC-D1 MAJOR, locked V2 distance target8).
+CODE_COMMIT = 4b361c47ce484a95416ea336b1bdfb264138a005 (verbatim checkpoint); tests 39cad680f593de0f4eba7dd2c0b3249d0f84d96b
+VERIFICATION = acceptance-manifest.json; qualification-*.json; gate-a-v2.json; gate-d-stop.json; gate-d-full-backend-pytest.log
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_V2_W3_F2_CLOSED_INPUT_CONTRACT_AND_LEGACY_OWNERSHIP_SAFETY (acceptance manifest v1 → v2 by Owner adjudication; v1 receipts unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_V2_W3_F2_CLOSED_INPUT_CONTRACT_AND_LEGACY_OWNERSHIP_SAFETY
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/report.md
@@ -9,7 +20,7 @@ CODE_COMMIT = NONE_NEW (HEAD 5e44d5da; sandbox index.lock permission denied)
 VERIFICATION = red.json; green.json; mutations.json; gates.json; coverage.json; schema-census-v3.json; stopped-product-probes.json; source-control-analysis.json; stop-verification.json; integrity.json
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_V2_W3_F2_SCOPE_CENSUS_CLOSURE_AND_HYPHENATED_ID_RECOVERY (partial input-surface extension; acceptance FAIL, not a completed correction)
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_V2_W3_F2_CLOSED_INPUT_CONTRACT_SOURCE_GRAMMAR_ADJUDICATION (acceptance manifest v2; NOT_READY)
 
 ## WAVE_ID = HYBRID_V2_W3_F2_SCOPE_CENSUS_CLOSURE_AND_HYPHENATED_ID_RECOVERY
 

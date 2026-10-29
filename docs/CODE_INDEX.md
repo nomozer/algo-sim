@@ -1,6 +1,10 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
-## Closed input contract — uncommitted WIP NOT_READY (2026-10-29)
+## Closed input contract — research NOT_READY (committed 2026-10-30)
+
+Acceptance manifest v2 (`closed-input-contract/source-grammar-adjudication/acceptance-manifest.json`): `test_closed_input_contract.py::test_supported_positive_scope_aliases` reads the SHA-registered `supported-positive-controls.json`; `backend/tests/geometry/source_grammar_pending_diagnostics.py` (explicit path only, not collected by default) holds the four `PENDING_SOURCE_GRAMMAR_SUPPORT` controls. Run tools `source-grammar-adjudication/tools/controls.py` (build/run qualification), `gates_v2.py` (gates/replay), `probe_distance_scope.py` (CIC-D1). Gate D stop: `_validate_goal_target` admits scope keys inside geometric targets, conflicting with locked V2 distance `target8`.
+
+### Earlier layer (2026-10-29, then uncommitted)
 
 `typed_fact_next.py`: `KIND_ALLOWED_FIELDS`, `GOAL_OPERAND_SHAPES`, `GOAL_TARGET_ALTERNATIVES`, `ClosedNextModel._closed_kind_fields`, `_validate_goal_target`, `measurement_scope`, `measurement_operands`. Bridge `_kiem_pham_vi_tien_de` now checks canonical/qualified ownership before capabilities; Adapter3 `_preflight_curved_relations` and derived scope map. Tests `test_closed_input_contract.py`, census `target_keys_in_source`, append-only `closed-input-contract/schema-census-v3.json`. Gate A FAIL on four supplemental source controls; no freeze/T3. Run `docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/report.md`. No new product module.
 
