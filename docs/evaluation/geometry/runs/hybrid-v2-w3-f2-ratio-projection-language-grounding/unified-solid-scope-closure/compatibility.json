@@ -1,0 +1,24 @@
+{
+  "head": "1262fbd5b1d70237e82e9ee2dd724e3b0a0047a1",
+  "product_commit": "1262fbd5b1d70237e82e9ee2dd724e3b0a0047a1",
+  "measured_system_hash": [
+    "fbd8c1da54dc3fbafe1c3b4603417fc8b8ed22f5a1d8297bfac521da7b584b31",
+    118
+  ],
+  "live_provider_calls": 0,
+  "classification": "POST_FEEDBACK_DEVELOPMENT_REGRESSION",
+  "status": "PASS",
+  "tests_passed": 875,
+  "failed": 0,
+  "xfailed": 6,
+  "deferred": "freeze-identity tests (stale until the new freeze) run in T0/T3",
+  "fixtures_verified": 41,
+  "cache": "NO_BUMP 130, identity lock MATCH",
+  "publication": "PASS",
+  "versions": "Registry /21, Planner /18, engine /14, Adapter /3 and /4 tags, Bridge /1 and /2 unchanged",
+  "logs_sha256_lf": {
+    "compatibility-tests.log": "3804e4422a60bb93fb8d7a47f6b4bfa57025e3aaebc65e5eb5476ecdc492db97",
+    "cache.log": "bb93a9e5f223d1304de98865873b4fe900f1b639b9b2a1c66bfa0981b63be5fb",
+    "publication.log": "cea06c30d8a3e016378158d041e93e6056e38a2ad5b776098e564eebe8931afb"
+  }
+}

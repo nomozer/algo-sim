@@ -1,0 +1,74 @@
+{
+  "head": "1262fbd5b1d70237e82e9ee2dd724e3b0a0047a1",
+  "product_commit": "1262fbd5b1d70237e82e9ee2dd724e3b0a0047a1",
+  "measured_system_hash": [
+    "fbd8c1da54dc3fbafe1c3b4603417fc8b8ed22f5a1d8297bfac521da7b584b31",
+    118
+  ],
+  "live_provider_calls": 0,
+  "classification": "POST_FEEDBACK_DEVELOPMENT_REGRESSION",
+  "A": "PASS",
+  "B": "PASS",
+  "C": "PASS",
+  "D": "PASS",
+  "A_detail": {
+    "closure_suite": "87 passed in 4.06s",
+    "previous_reviewer_probes": {
+      "total": 117,
+      "neg_served": 0,
+      "internal_errors": 0,
+      "adjudicated_valid": [
+        "C1.premise_unscoped_cross_namespace",
+        "SEC1.ratio_den_other_solid"
+      ]
+    },
+    "findings_closed": [
+      "F1",
+      "F2",
+      "F3",
+      "F4",
+      "F5",
+      "F6",
+      "F7"
+    ],
+    "coverage": "scope-entrypoint-coverage.json"
+  },
+  "B_detail": "no kernel/engine/Registry change; incidence witnesses and Fraction oracle agreement in compatibility suite and locked 96",
+  "C_detail": {
+    "slices": {
+      "authored_projection": {
+        "total": 26,
+        "served_correct": 26,
+        "refused": 0,
+        "locked_code_match": 26
+      },
+      "authored_ratio": {
+        "total": 24,
+        "served_correct": 24,
+        "refused": 0,
+        "locked_code_match": 24
+      },
+      "historical_f2_verbatim": {
+        "total": 21,
+        "served_correct": 20,
+        "refused": 1,
+        "locked_code_match": 21
+      },
+      "isolated_f2": {
+        "total": 1,
+        "served_correct": 1,
+        "refused": 0,
+        "locked_code_match": 1
+      },
+      "mandatory_negative_tamper": {
+        "total": 24,
+        "served_correct": 0,
+        "refused": 24,
+        "locked_code_match": 24
+      }
+    },
+    "wrong_served_locked_96": 0
+  },
+  "D_detail": "compatibility.json",
+  "release_status": "PENDING_PRE_FREEZE_ADVERSARIAL_REVIEW"
+}

@@ -1,0 +1,33 @@
+{
+  "head": "1262fbd5b1d70237e82e9ee2dd724e3b0a0047a1",
+  "product_commit": "1262fbd5b1d70237e82e9ee2dd724e3b0a0047a1",
+  "measured_system_hash": [
+    "fbd8c1da54dc3fbafe1c3b4603417fc8b8ed22f5a1d8297bfac521da7b584b31",
+    118
+  ],
+  "live_provider_calls": 0,
+  "classification": "POST_FEEDBACK_DEVELOPMENT_REGRESSION",
+  "status": "PASS",
+  "source": "green.log + compatibility-tests.log",
+  "closure_mutants": [
+    "naive_hyphen_split",
+    "remove_qualified_scope_guard",
+    "remove_relation_side_scope",
+    "remove_sim_goal_target_scope",
+    "remove_parent_validation",
+    "remove_highlight_token_validation",
+    "remove_apex_ownership",
+    "remove_owner_decision_d_a",
+    "remove_residual_ancestry"
+  ],
+  "retained_mutants": {
+    "unified (9)": "test_unified_solid_scope.py::test_oracles_kill_unified_scope_mutants incl. bypass_curved_prevalidation and foreign_scope_to_first_solid",
+    "fallback (4+4)": "test_adapter3_fallback_safety.py incl. remove_terminal_guard, replace_scope_with_default",
+    "premise scope (4)": "test_premise_scope_recovery.py"
+  },
+  "metamorphic": [
+    "test_metamorphic_hyphen_rename_preserves_answers (5 controls × 3 routes)",
+    "test_metamorphic_foreign_scope_never_served (5 controls, every scope slot)"
+  ],
+  "oracle_adaptations": "test-adaptation-amendment.md"
+}
