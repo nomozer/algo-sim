@@ -2,6 +2,8 @@
 from copy import deepcopy
 import json
 from pathlib import Path
+import inspect
+import textwrap
 
 import pytest
 
@@ -136,3 +138,53 @@ def test_optional_scope_constructed_point_inherits_verified_producer_scope():
     assert c.resolve_ref('M','s1')=='M'
     with pytest.raises(TuChoi) as e:c.resolve_ref('M','s2')
     assert e.value.code=='SOURCE_OBJECT_MISMATCH'
+
+def test_absent_unique_optional_scope_is_served_with_exact_answer():
+    p=control();p['solids']=p['solids'][:1];p['premises']=p['premises'][:3]
+    for prem in p['premises']:prem.pop('solid_id')
+    p['problem_text']=p['problem_text'].split(' Cho hình chóp T.ABCD.')[0]
+    r=A.run_typed_fact_next_route(p)
+    # With numeric lengths, dim is the exponent of a symbolic unit (none), not the physical quantity's degree.
+    assert r.status=='SERVED' and r.answer_exact['v']=={'coef':'4','dim':0,'unit':None}
+
+def test_absent_ambiguous_scope_is_refused_with_reason():
+    p=control()
+    p['premises'][0].pop('solid_id')
+    r=A.run_typed_fact_next_route(p)
+    assert (r.status,r.code)==('REFUSED','AMBIGUOUS_REFERENCE')
+
+@pytest.mark.parametrize('mutant',['remove_terminal_guard','remove_scope_guard','replace_scope_with_default','allow_global_lookup'])
+def test_safety_oracles_kill_semantic_and_scope_mutants(monkeypatch,mutant):
+    if mutant=='remove_terminal_guard':
+        source=inspect.getsource(A._shared_source_gate)
+        needle='if exc.code not in _LEGACY_BRIDGE_CAPABILITIES:'
+        assert source.count(needle)==1
+        source=source.replace(needle,'if False:')
+        namespace=dict(vars(A));exec(compile(source,'<terminal-guard-mutant>','exec'),namespace)
+        monkeypatch.setattr(A,'_shared_source_gate',namespace['_shared_source_gate'])
+        def refuse(_p):raise TuChoi('SOURCE_OBJECT_MISMATCH','typed refusal')
+        monkeypatch.setattr(B,'bridge',refuse)
+        invoked=[];original=A._Adapter3Compiler._compile_solids
+        def spy(c):invoked.append(True);return original(c)
+        monkeypatch.setattr(A._Adapter3Compiler,'_compile_solids',spy)
+        A.run_typed_fact_next_route(deepcopy(SUP['invalid_scope']))
+        with pytest.raises(AssertionError):assert not invoked,'legacy invoked after semantic refusal'
+        return
+    source=textwrap.dedent(inspect.getsource(A._Adapter3Compiler.resolve_ref))
+    needle='if sid is not None:'
+    assert source.count(needle)==1
+    if mutant=='remove_scope_guard':source=source.replace(needle,'if False:')
+    elif mutant=='allow_global_lookup':source=source.replace(needle,'if sid is not None and label not in self.unqualified_map:')
+    else:
+        needle='sid = explicit_sid or default_solid_id'
+        assert source.count(needle)==1
+        source=source.replace(needle,'sid = explicit_sid or next(iter(self.solid_specs))')
+    namespace=dict(vars(A));exec(compile(source,'<scope-mutant>','exec'),namespace)
+    monkeypatch.setattr(A._Adapter3Compiler,'resolve_ref',namespace['resolve_ref'])
+    c=compiler()
+    def refusal_oracle():
+        try:c.resolve_ref('S','s2','p3')
+        except TuChoi as e:
+            assert e.code=='SOURCE_OBJECT_MISMATCH';return
+        assert False,'foreign reference resolved'
+    with pytest.raises(AssertionError):refusal_oracle()

@@ -52,6 +52,7 @@ from app.simulation.geometry_functions.registry import (
     so_trong,
 )
 from app.simulation.geometry_functions.typed_fact_next import (
+    _ARGS_LOI,
     TYPED_FACT_NEXT_SCHEMA_VERSION,
     DerivedObjectIdentity,
     DerivedPlaneSectionSpec,
@@ -164,14 +165,22 @@ def _verify_number_in_quote(value_str: str, quote: str, context_id: str) -> None
 SOURCE_GATE_AUTHORITY = "registry.kiem_nguon"
 LEGACY_SOURCE_AUTHORITY = "adapter3.substring_legacy"
 
+# Capability gaps with an existing Adapter /3 implementation; semantic refusals are never fallback signals.
+_LEGACY_BRIDGE_CAPABILITIES = frozenset({
+    'BRIDGE_UNSUPPORTED_CURVED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY', 'BRIDGE_UNSUPPORTED_PLANE_KIND',
+    'BRIDGE_UNSUPPORTED_PREMISE', 'BRIDGE_UNSUPPORTED_RELATION', 'BRIDGE_UNSUPPORTED_DERIVED_SOLID',
+    'BRIDGE_CUT_EDGES_NOT_STATED', 'BRIDGE_UNSUPPORTED_MEASUREMENT',
+})
+_LEGACY_PLANNER_CAPABILITIES = frozenset({'UNSUPPORTED_CAPABILITY'})
+
 
 def _shared_source_gate(payload: TypedFactNextPayload) -> dict[str, Any]:
     """ONE source authority where it can read the payload (run `backend-hybrid-contract-unification`): the stated facts of
     a polyhedral payload reach the Registry Source Gate (`kiem_nguon`) through the pure bridge and the planner — the path of
     `run_typed_fact_next_planner_route` minus the engine — before Adapter /3 builds anything. A gate refusal is Adapter /3's
     refusal, with the gate's code. A payload the bridge / planner cannot express has NO gate verdict: Adapter /3 still runs
-    its legacy quote / number checks and the result says so (`LEGACY_SOURCE_AUTHORITY`) — whether that case must refuse
-    instead is an owner decision (`CONTRACT_DECISION_PROPOSAL.md`, decision D2)."""
+    its legacy identity / quote / number checks only for enumerated capability gaps. All semantic/provenance refusals
+    are terminal (Owner W3-F2 Adapter3 safety amendment); an unclassified refusal is never a fallback signal."""
     from app.simulation.geometry_functions.planner import lap_ke_hoach
     from app.simulation.geometry_functions.registry import kiem_nguon
     from app.simulation.geometry_functions.typed_fact_next_bridge import bridge
@@ -179,12 +188,16 @@ def _shared_source_gate(payload: TypedFactNextPayload) -> dict[str, Any]:
     try:
         facts = bridge(payload)["facts"]
     except TuChoi as exc:
+        if exc.code not in _LEGACY_BRIDGE_CAPABILITIES:
+            raise
         return {"authority": LEGACY_SOURCE_AUTHORITY, "gate_unavailable": exc.code}
     except (KeyError, TypeError):                        # bridge INPUT parsing only (run `hybrid-contract-v2`, P1)
         raise TuChoi("INVALID_TYPED_FACT_NEXT", "đối số giả thiết bị thiếu hoặc sai kiểu") from None
     try:
         k = lap_ke_hoach({"facts": facts}, payload.problem_text)    # a planner fault is ours: it reaches the boundary
     except TuChoi as exc:
+        if exc.code not in _LEGACY_PLANNER_CAPABILITIES:
+            raise
         return {"authority": LEGACY_SOURCE_AUTHORITY, "gate_unavailable": exc.code}
     read = tuple(q for g in (*k.goals, *k.negated) if g.get("call") for q in g["call"]["source"]["quotes"])
     kiem_nguon(doc_ke_hoach({"calls": k.calls}), payload.problem_text, tuple(k.auxiliary), read)
@@ -289,6 +302,10 @@ class _Adapter3Compiler:
             raise TuChoi(exc.code, exc.detail, (context_id,)) from None
 
         sid = explicit_sid or default_solid_id
+        if default_solid_id is not None and default_solid_id not in self.solid_specs:
+            raise TuChoi('UNKNOWN_SOLID_ID', f'{context_id}: khối {default_solid_id!r} chưa được khai báo', (context_id,))
+        if explicit_sid is not None and default_solid_id is not None and explicit_sid != default_solid_id:
+            raise TuChoi('SOURCE_OBJECT_MISMATCH', f'{context_id}: tham chiếu khác phạm vi khối đã khai', (context_id,))
         if explicit_sid is not None:
             if explicit_sid not in self.solid_specs:
                 raise TuChoi(
@@ -305,17 +322,13 @@ class _Adapter3Compiler:
                 )
             return smap[label]
 
-        # If default_solid_id is provided and label is bound in that solid, use it
-        if sid is not None and label in self.solid_local_to_canonical.get(sid, {}):
-            # Wait: if another solid ALSO binds `label` to a DIFFERENT canonical vertex and `explicit_sid` was NOT given,
-            # check whether the caller omitted solid_id on an ambiguous vertex!
-            if explicit_sid is None and len(self.unqualified_map.get(label, set())) > 1 and default_solid_id is None:
-                raise TuChoi(
-                    "AMBIGUOUS_REFERENCE",
-                    f"{context_id}: đỉnh {label!r} trùng tên giữa nhiều khối nhưng không chỉ rõ 'solid_id::{label}'",
-                    (context_id,),
-                )
-            return self.solid_local_to_canonical[sid][label]
+        if sid is not None:
+            if label in self.solid_local_to_canonical.get(sid, {}):
+                return self.solid_local_to_canonical[sid][label]
+            derived = self.derived_by_id.get(label)
+            if derived is not None and derived.parent_solid_id == sid:
+                return derived.internal_symbol
+            raise TuChoi('SOURCE_OBJECT_MISMATCH', f'{context_id}: đỉnh {label!r} không thuộc phạm vi {sid!r}', (context_id,))
 
         cands = self.unqualified_map.get(label, set())
         if len(cands) > 1:
@@ -433,6 +446,10 @@ class _Adapter3Compiler:
 
             def R_new(ref: str) -> str:
                 explicit_sid, label = parse_qualified_ref(ref)
+                if explicit_sid is not None and explicit_sid not in self.solid_specs:
+                    raise TuChoi('UNKNOWN_SOLID_ID', f'{pid}: khối của điểm dựng chưa được khai báo', (pid,))
+                if explicit_sid is not None and sid is not None and explicit_sid != sid:
+                    raise TuChoi('SOURCE_OBJECT_MISMATCH', f'{pid}: điểm dựng khác phạm vi premise', (pid,))
                 if label not in self.text_labels:
                     raise TuChoi(
                         "UNKNOWN_LABEL",
@@ -440,8 +457,26 @@ class _Adapter3Compiler:
                         (pid,),
                     )
                 target_sid = explicit_sid or sid
+                if target_sid is None:
+                    output = 'image' if kind in ('orthogonal_projection','point_is_foot','orthogonal_projection_line') else \
+                             'foot' if kind == 'altitude' else 'point'
+                    inputs = [r for key, shape in _ARGS_LOI[kind].items() if shape.startswith('ref') and key != output and key in a
+                              for r in (a[key] if shape.startswith('refs') else [a[key]])]
+                    owners = [{s for s, smap in self.solid_local_to_canonical.items()
+                               if smap.get(parse_qualified_ref(r)[1]) == self.resolve_ref(r, None, pid)
+                               and parse_qualified_ref(r)[0] in (None, s)} for r in inputs]
+                    common = set.intersection(*owners) if owners else set()
+                    if len(common) != 1:
+                        raise TuChoi('AMBIGUOUS_REFERENCE', f'{pid}: không xác định duy nhất khối của điểm dựng', (pid,))
+                    target_sid = next(iter(common))
                 if target_sid and label in self.solid_local_to_canonical.get(target_sid, {}):
                     return self.solid_local_to_canonical[target_sid][label]
+                foreign = {s for s, smap in self.solid_local_to_canonical.items() if smap.get(label) == label}
+                shared = kind in ('midpoint','point_is_midpoint','divide_segment','point_divides_segment','centroid','point_is_centroid') and any(
+                    rel.kind == 'shared_faces' and target_sid in (rel.solid_a, rel.solid_b)
+                    and foreign.intersection((rel.solid_a, rel.solid_b)) for rel in self.payload.relations)
+                if foreign and not shared:
+                    raise TuChoi('SOURCE_OBJECT_MISMATCH', f'{pid}: điểm dựng đã thuộc khối khác', (pid,))
                 self._bind_local_point(target_sid, label, label)
                 return label
 
