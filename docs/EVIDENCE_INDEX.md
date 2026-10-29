@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_V2_W3_F2_CIC_D1_LOCKED_CONTRACT_RECOVERY
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/
+CLASSIFICATION = DEVELOPMENT_SECURITY_REGRESSION; NOT_READY; Gates A–C PASS; D PRE_FREEZE_COMPATIBILITY_PASS + publication BLOCKED; pre-freeze review F1/F2 MAJOR; no freeze/T3.
+CODE_COMMIT = 717f8b2b1d284e3894af65190b13ba3619d5aff0
+VERIFICATION = registration.json; red.json; green.json; n2-ownership-proof.json; mutation-results.json; gate-a.json; gate-b.json; gate-c.json; gate-d.json; pre-freeze-review.md; pre-freeze-review/
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_V2_W3_F2_CLOSED_INPUT_CONTRACT_SOURCE_GRAMMAR_ADJUDICATION (CIC-D1); closed-input-contract/operand-grammar.md (scope keys beside operands, superseded — corrections.md)
+CORRECTED_BY = NONE (own corrections layer: corrections.md — contract-analysis.md, gate-d.json, n2-amendment.md)
+
 ## WAVE_ID = HYBRID_V2_W3_F2_CLOSED_INPUT_CONTRACT_SOURCE_GRAMMAR_ADJUDICATION
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/report.md
@@ -9,7 +20,7 @@ CODE_COMMIT = 4b361c47ce484a95416ea336b1bdfb264138a005 (verbatim checkpoint); te
 VERIFICATION = acceptance-manifest.json; qualification-*.json; gate-a-v2.json; gate-d-stop.json; gate-d-full-backend-pytest.log
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_V2_W3_F2_CLOSED_INPUT_CONTRACT_AND_LEGACY_OWNERSHIP_SAFETY (acceptance manifest v1 → v2 by Owner adjudication; v1 receipts unchanged)
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_V2_W3_F2_CIC_D1_LOCKED_CONTRACT_RECOVERY (CIC-D1 fixed in 717f8b2b; NOT_READY)
 
 ## WAVE_ID = HYBRID_V2_W3_F2_CLOSED_INPUT_CONTRACT_AND_LEGACY_OWNERSHIP_SAFETY
 

@@ -1,0 +1,10 @@
+== head
+G.distance.point_plane.plain dict SERVED None {'q': '12'} | model+ws SERVED None {'q': '12'} | sha_is_verbatim True
+G.distance.segment.plain dict SERVED None {'q': '2√61'} | model+ws SERVED None {'q': '2√61'} | sha_is_verbatim True
+G.angle.line_plane.goal_sid dict SERVED None {'q': 'cos²=25/61'} | model+ws SERVED None {'q': 'cos²=25/61'} | sha_is_verbatim True
+G.distance.line_plane.plain dict SERVED None {'q': '12'} | model+ws SERVED None {'q': '12'} | sha_is_verbatim True
+== pre
+G.distance.point_plane.plain dict SERVED None {'q': '12'} | model+ws SERVED None {'q': '12'} | sha_is_verbatim True
+G.distance.segment.plain dict SERVED None {'q': '2√61'} | model+ws SERVED None {'q': '2√61'} | sha_is_verbatim True
+G.angle.line_plane.goal_sid dict SERVED None {'q': 'cos²=25/61'} | model+ws SERVED None {'q': 'cos²=25/61'} | sha_is_verbatim True
+G.distance.line_plane.plain dict SERVED None {'q': '12'} | model+ws SERVED None {'q': '12'} | sha_is_verbatim True

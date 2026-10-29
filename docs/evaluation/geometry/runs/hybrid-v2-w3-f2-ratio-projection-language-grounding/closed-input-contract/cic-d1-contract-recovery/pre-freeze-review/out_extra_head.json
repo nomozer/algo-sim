@@ -1,0 +1,172 @@
+{
+ "E.a01.area.goal_top_sec": {
+  "a3": [
+   "REFUSED",
+   "SOURCE_OBJECT_MISMATCH",
+   null,
+   "math_sec_area: một đối tượng mang các khối khác nhau ['main_pyramid', 'top_pyramid']"
+  ],
+  "a4": [
+   "REFUSED",
+   "SOURCE_OBJECT_MISMATCH",
+   null,
+   "math_sec_area: một đối tượng mang các khối khác nhau ['main_pyramid', 'top_pyramid']"
+  ],
+  "pl": [
+   "REFUSED",
+   "SOURCE_OBJECT_MISMATCH",
+   null,
+   "math_sec_area: một đối tượng mang các khối khác nhau ['main_pyramid', 'top_pyramid']"
+  ],
+  "schema1": "SOURCE_OBJECT_MISMATCH",
+  "schema2": "SOURCE_OBJECT_MISMATCH"
+ },
+ "E.a01.vol.top_main": {
+  "a3": [
+   "REFUSED",
+   "SOURCE_OBJECT_MISMATCH",
+   null,
+   "q: một đối tượng mang các khối khác nhau ['main_pyramid', 'top_pyramid']"
+  ],
+  "a4": [
+   "REFUSED",
+   "SOURCE_OBJECT_MISMATCH",
+   null,
+   "q: một đối tượng mang các khối khác nhau ['main_pyramid', 'top_pyramid']"
+  ],
+  "pl": [
+   "REFUSED",
+   "SOURCE_OBJECT_MISMATCH",
+   null,
+   "q: một đối tượng mang các khối khác nhau ['main_pyramid', 'top_pyramid']"
+  ],
+  "schema1": "SOURCE_OBJECT_MISMATCH",
+  "schema2": "SOURCE_OBJECT_MISMATCH"
+ },
+ "E.n2.vol.goal1_solid_notation": {
+  "a3": [
+   "SERVED",
+   null,
+   {
+    "m_vol_pyr1": [
+     "1/3",
+     3,
+     "a"
+    ],
+    "m_vol_ratio": [
+     "1/2",
+     0,
+     null
+    ],
+    "mb": [
+     "√5/2",
+     1,
+     "a"
+    ]
+   },
+   ""
+  ],
+  "a4": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   null,
+   "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   null,
+   "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "E.n2.vol.goal2_notation1": {
+  "a3": [
+   "REFUSED",
+   "SOURCE_OBJECT_MISMATCH",
+   null,
+   "m_vol_pyr1: một đối tượng mang các khối khác nhau ['pyr1', 'pyr2']"
+  ],
+  "a4": [
+   "REFUSED",
+   "SOURCE_OBJECT_MISMATCH",
+   null,
+   "m_vol_pyr1: một đối tượng mang các khối khác nhau ['pyr1', 'pyr2']"
+  ],
+  "pl": [
+   "REFUSED",
+   "SOURCE_OBJECT_MISMATCH",
+   null,
+   "m_vol_pyr1: một đối tượng mang các khối khác nhau ['pyr1', 'pyr2']"
+  ],
+  "schema1": "SOURCE_OBJECT_MISMATCH",
+  "schema2": "SOURCE_OBJECT_MISMATCH"
+ },
+ "E.n2.vol.goal2_solid1": {
+  "a3": [
+   "REFUSED",
+   "SOURCE_OBJECT_MISMATCH",
+   null,
+   "m_vol_pyr1: một đối tượng mang các khối khác nhau ['pyr1', 'pyr2']"
+  ],
+  "a4": [
+   "REFUSED",
+   "SOURCE_OBJECT_MISMATCH",
+   null,
+   "m_vol_pyr1: một đối tượng mang các khối khác nhau ['pyr1', 'pyr2']"
+  ],
+  "pl": [
+   "REFUSED",
+   "SOURCE_OBJECT_MISMATCH",
+   null,
+   "m_vol_pyr1: một đối tượng mang các khối khác nhau ['pyr1', 'pyr2']"
+  ],
+  "schema1": "SOURCE_OBJECT_MISMATCH",
+  "schema2": "SOURCE_OBJECT_MISMATCH"
+ },
+ "E.n2.vol.id_only_goal2": {
+  "a3": [
+   "REFUSED",
+   "SOURCE_OBJECT_MISMATCH",
+   null,
+   "m_vol_pyr1: một đối tượng mang các khối khác nhau ['pyr1', 'pyr2']"
+  ],
+  "a4": [
+   "REFUSED",
+   "SOURCE_OBJECT_MISMATCH",
+   null,
+   "m_vol_pyr1: một đối tượng mang các khối khác nhau ['pyr1', 'pyr2']"
+  ],
+  "pl": [
+   "REFUSED",
+   "SOURCE_OBJECT_MISMATCH",
+   null,
+   "m_vol_pyr1: một đối tượng mang các khối khác nhau ['pyr1', 'pyr2']"
+  ],
+  "schema1": "SOURCE_OBJECT_MISMATCH",
+  "schema2": "SOURCE_OBJECT_MISMATCH"
+ },
+ "E.n2.vol.solid1_id2": {
+  "a3": [
+   "REFUSED",
+   "SOURCE_OBJECT_MISMATCH",
+   null,
+   "m_vol_pyr1: một đối tượng mang các khối khác nhau ['pyr1', 'pyr2']"
+  ],
+  "a4": [
+   "REFUSED",
+   "SOURCE_OBJECT_MISMATCH",
+   null,
+   "m_vol_pyr1: một đối tượng mang các khối khác nhau ['pyr1', 'pyr2']"
+  ],
+  "pl": [
+   "REFUSED",
+   "SOURCE_OBJECT_MISMATCH",
+   null,
+   "m_vol_pyr1: một đối tượng mang các khối khác nhau ['pyr1', 'pyr2']"
+  ],
+  "schema1": "SOURCE_OBJECT_MISMATCH",
+  "schema2": "SOURCE_OBJECT_MISMATCH"
+ }
+}

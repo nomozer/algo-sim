@@ -1,0 +1,32 @@
+........................................................................ [  9%]
+........................................................................ [ 18%]
+........................................................................ [ 27%]
+........................................................................ [ 36%]
+........................................................................ [ 45%]
+........................................................................ [ 54%]
+........................................................................ [ 63%]
+........................................................................ [ 72%]
+..........................................F
+================================== FAILURES ===================================
+___________ test_closure_mutants_are_killed[remove_apex_ownership] ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000022303C457F0>
+name = 'remove_apex_ownership'
+
+    @pytest.mark.parametrize('name', sorted(CLOSURE_MUTANTS))
+    def test_closure_mutants_are_killed(monkeypatch, name):
+        owner, fn, needle, replacement, oracle = CLOSURE_MUTANTS[name]
+        oracle()
+        if name == 'remove_owner_decision_d_a':
+            policy = T.KIND_ALLOWED_FIELDS['simulation_goal']
+            monkeypatch.setitem(policy, 'construct_object', [*policy['construct_object'], 'parent_solid_id'])
+        else:
+            mutate(monkeypatch, owner, fn, needle, replacement)
+>       with pytest.raises(AssertionError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE AssertionError
+
+tests\geometry\test_scope_census_closure.py:541: Failed
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 618 passed in 6.51s
+MUTANT identity_ignores_scope: pytest exit 1 -> KILLED

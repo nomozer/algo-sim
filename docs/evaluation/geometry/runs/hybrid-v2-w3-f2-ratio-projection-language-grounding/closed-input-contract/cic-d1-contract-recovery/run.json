@@ -1,0 +1,30 @@
+{
+  "task": "HYBRID_V2_W3_F2_CIC_D1_LOCKED_CONTRACT_RECOVERY",
+  "date": "2026-10-30",
+  "owner_option": "PRESERVE_LOCKED_V2_DISTANCE_TARGET_CONTRACT",
+  "status": "NOT_READY",
+  "stop_reason": "independent pre-freeze review: F1 MAJOR (target grammar widened for scope-only targets), F2 MAJOR (/1 vs /2 alias distinctness)",
+  "start_head": "1490e3cd7d15363efce9b55319dce623cd0e23f4",
+  "commits": {
+    "preregistration_red": "007063cc38e581b5f2b7c9e231e0abbc15a45d99",
+    "product_fix": "717f8b2b1d284e3894af65190b13ba3619d5aff0",
+    "green_gates_a_c": "6a208e131b51d9a5028320bd9abc25adad8ed3f3",
+    "gate_d": "6b4a975246fdc7b738f6d7b2c4152d4667693607"
+  },
+  "gates": {
+    "A": "PASS",
+    "B": "PASS",
+    "C": "PASS",
+    "D": "PRE_FREEZE_COMPATIBILITY_PASS; PUBLICATION_BLOCKED_PENDING_OWNER_EXCEPTION"
+  },
+  "source_grammar_diagnostics": "PENDING_SOURCE_GRAMMAR_SUPPORT (4)",
+  "pre_freeze_review": "NOT_READY",
+  "wave3_replay": "NOT_RUN",
+  "tiers": "NOT_RUN",
+  "freeze": "NOT_RUN",
+  "full_t3": "NOT_RUN",
+  "final_review": "NOT_RUN",
+  "live_provider_calls": 0,
+  "cache_version": 130,
+  "default_mode": "LLM_ONLY"
+}

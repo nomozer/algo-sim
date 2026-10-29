@@ -1,0 +1,268 @@
+{
+ "ALIAS.angle_line_alias": {
+  "a3": [
+   "REFUSED",
+   "DEGENERATE_POINTS",
+   null,
+   "DEGENERATE_POINTS: không dựng được đường thẳng qua hai điểm TRÙNG nhau"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu angle thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/angle chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "ALIAS.angle_lp_alias": {
+  "a3": [
+   "REFUSED",
+   "DEGENERATE_POINTS",
+   null,
+   "DEGENERATE_POINTS: không dựng được đường thẳng qua hai điểm TRÙNG nhau"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu angle thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/angle chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "ALIAS.angle_same_line": {
+  "a3": [
+   "SERVED",
+   null,
+   {
+    "q": [
+     "1",
+     0,
+     null
+    ]
+   },
+   ""
+  ],
+  "a4": [
+   "SERVED",
+   null,
+   {
+    "q": [
+     "1",
+     0,
+     null
+    ]
+   },
+   ""
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/angle chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "ALIAS.area_poly_alias": {
+  "a3": [
+   "REFUSED",
+   "COLLINEAR_POINTS",
+   null,
+   "COLLINEAR_POINTS: ba điểm THẲNG HÀNG (hoặc có hai điểm trùng) — không xác định được mặt phẳng"
+  ],
+  "a4": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/area chưa có ánh xạ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/area chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "ALIAS.lines_alias": {
+  "a3": [
+   "REFUSED",
+   "ENGINE_EXECUTION_FAILED",
+   null,
+   "GeometryError: DEGENERATE_POINTS: không dựng được đường thẳng qua hai điểm TRÙNG nhau"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "ALIAS.lp_alias": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "ALIAS.pt_line_alias": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "ALIAS.pt_plane_alias3": {
+  "a3": [
+   "REFUSED",
+   "ENGINE_EXECUTION_FAILED",
+   null,
+   "GeometryError: COLLINEAR_POINTS: ba điểm THẲNG HÀNG (hoặc có hai điểm trùng) — không xác định được mặt phẳng"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "ALIAS.seg_A'_prA'": {
+  "a3": [
+   "SERVED",
+   null,
+   {
+    "q": [
+     "0",
+     0,
+     null
+    ]
+   },
+   ""
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "ALIAS.seg_A_prA": {
+  "a3": [
+   "SERVED",
+   null,
+   {
+    "q": [
+     "0",
+     0,
+     null
+    ]
+   },
+   ""
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "ALIAS.seg_prA_prA": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'segment', expected refs2="
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'segment', expected refs2="
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'segment', expected refs2="
+  ],
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL"
+ }
+}

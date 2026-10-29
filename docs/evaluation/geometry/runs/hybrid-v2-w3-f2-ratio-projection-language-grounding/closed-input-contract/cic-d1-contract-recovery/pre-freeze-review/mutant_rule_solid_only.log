@@ -1,0 +1,18 @@
+..F
+================================== FAILURES ===================================
+_ test_scope_key_inside_geometric_target_fails_at_schema[F.distance_point_plane.solid_id] _
+
+case = 'F.distance_point_plane.solid_id'
+
+    @pytest.mark.parametrize('case', names('NEG_LOCKED_GRAMMAR'))
+    def test_scope_key_inside_geometric_target_fails_at_schema(case):
+        p = CASES[case]['payload']
+>       assert schema_code(p) == schema_code(v1(p)) == 'INVALID_MATH_GOAL'
+E       assert None == 'INVALID_MATH_GOAL'
+E        +  where None = schema_code({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+E        +    where {'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...} = v1({'schema_version': 'typed-fact-next/2', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...: [{'solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'."}], ...})
+
+tests\geometry\test_cic_d1_locked_contract.py:50: AssertionError
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 2 passed in 1.26s
+MUTANT rule_solid_only: pytest exit 1 -> KILLED

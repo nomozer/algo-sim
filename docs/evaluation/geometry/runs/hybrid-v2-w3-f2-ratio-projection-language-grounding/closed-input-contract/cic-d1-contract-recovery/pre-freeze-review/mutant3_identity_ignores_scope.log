@@ -1,0 +1,74 @@
+........................................................................ [  9%]
+........................................................................ [ 18%]
+........................................................................ [ 27%]
+........................................................................ [ 37%]
+........................................................................ [ 46%]
+........................................................................ [ 55%]
+........................................................................ [ 65%]
+........................................................................ [ 74%]
+............................................................s.ss....s.ss [ 83%]
+..............................F......................................... [ 93%]
+......................................................                   [100%]
+================================== FAILURES ===================================
+___ test_oracles_kill_unified_scope_mutants[remove_goal_operand_ownership] ____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000220D8E5C5F0>
+name = 'remove_goal_operand_ownership'
+
+    @pytest.mark.parametrize('name', MUTANTS)
+    def test_oracles_kill_unified_scope_mutants(monkeypatch, name):
+        owner, fn, needle, replacement, oracle = MUTANTS[name]
+        oracle()                                    # the oracle holds on the real code ...
+        if name == 'remove_ratio_residual_refusal':
+            policy = T.KIND_ALLOWED_FIELDS['math_goal']
+            monkeypatch.setitem(policy, 'volume_ratio', [*policy['volume_ratio'], 'solid_id'])
+        else:
+>           mutate(monkeypatch, owner, fn, needle, replacement)
+
+tests\geometry\test_unified_solid_scope.py:377: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\geometry\test_unified_solid_scope.py:293: in mutate
+    source = textwrap.dedent(inspect.getsource(getattr(owner, name)))
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\inspect.py:1285: in getsource
+    lines, lnum = getsourcelines(object)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\inspect.py:1267: in getsourcelines
+    lines, lnum = findsource(object)
+                  ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+object = <function _kiem_pham_vi_tien_de at 0x00000220D3DD79C0>
+
+    def findsource(object):
+        """Return the entire source file and starting line number for an object.
+    
+        The argument may be a module, class, method, function, traceback, frame,
+        or code object.  The source code is returned as a list of all the lines
+        in the file and the line number indexes a line in that list.  An OSError
+        is raised if the source code cannot be retrieved."""
+    
+        file = getsourcefile(object)
+        if file:
+            # Invalidate cache if needed.
+            linecache.checkcache(file)
+        else:
+            file = getfile(object)
+            # Allow filenames in form of "<something>" to pass through.
+            # `doctest` monkeypatches `linecache` module to enable
+            # inspection, so let `linecache.getlines` to be called.
+            if not (file.startswith('<') and file.endswith('>')):
+                raise OSError('source code not available')
+    
+        module = getmodule(object, file)
+        if module:
+            lines = linecache.getlines(file, module.__dict__)
+        else:
+            lines = linecache.getlines(file)
+        if not lines:
+>           raise OSError('could not get source code')
+E           OSError: could not get source code
+
+C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\inspect.py:1096: OSError
+1 failed, 767 passed, 6 skipped, 23 deselected in 5.54s
+MUTANT identity_ignores_scope: pytest exit 1 -> KILLED

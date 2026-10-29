@@ -1,0 +1,23 @@
+........................................................................ [  9%]
+........................................................................ [ 18%]
+........................................................................ [ 27%]
+........................................................................ [ 36%]
+........................................................................ [ 45%]
+........................................................................ [ 54%]
+.......................................F
+================================== FAILURES ===================================
+________________ test_derived_highlight_positive_and_renaming _________________
+
+    def test_derived_highlight_positive_and_renaming():
+        base=F.a3(F.demo1()); p=derived_highlight(); r=F.a3(p)
+>       assert r.status=='SERVED',(r.code,r.reason)
+E       AssertionError: ('SOURCE_OBJECT_MISMATCH', "highlight: toán hạng 'M' không thuộc phạm vi 's_top'")
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+tests\geometry\test_closed_input_contract.py:176: AssertionError
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 471 passed in 2.79s
+MUTANT derived_members_off: pytest exit 1 -> KILLED

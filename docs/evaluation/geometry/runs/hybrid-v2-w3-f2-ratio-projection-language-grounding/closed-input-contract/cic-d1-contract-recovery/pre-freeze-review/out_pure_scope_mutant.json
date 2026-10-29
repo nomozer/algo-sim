@@ -1,0 +1,134 @@
+{
+ "G.distance.only_solid": {
+  "a3": [
+   "REFUSED",
+   "SOURCE_QUOTE_NOT_FOUND",
+   null,
+   "q: trích dẫn \"Tính khoảng cách từ A' đến mặt phẳng (ABC).\" không xuất hiện nguyên văn trong đề bài"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "G.distance.only_solid_id": {
+  "a3": [
+   "REFUSED",
+   "SOURCE_QUOTE_NOT_FOUND",
+   null,
+   "q: trích dẫn \"Tính khoảng cách từ A' đến mặt phẳng (ABC).\" không xuất hiện nguyên văn trong đề bài"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "mut.angle.solid": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu angle cần ('line', 'plane') hoặc ('line1', 'line2')"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu angle thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/angle chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "mut.angle.solid_id": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu angle cần ('line', 'plane') hoặc ('line1', 'line2')"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu angle thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/angle chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "mut.distance.solid": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "mut.distance.solid_id": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ }
+}

@@ -1,0 +1,29 @@
+........................................................................ [  9%]
+..........................F
+================================== FAILURES ===================================
+____ test_n2v2_ownership_refused_before_capability[N2v2.goal_solid_id-a3] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002B94E721250>
+case = 'N2v2.goal_solid_id', rname = 'a3'
+
+    @pytest.mark.parametrize('rname', ROUTES)
+    @pytest.mark.parametrize('case', names('NEG_OWNERSHIP'))
+    def test_n2v2_ownership_refused_before_capability(monkeypatch, case, rname):
+        p = CASES[case]['payload']; entered = []; original = B._kiem_pham_vi_tien_de
+        def spy(*a, **k):
+            entered.append(True); return original(*a, **k)
+        monkeypatch.setattr(B, '_kiem_pham_vi_tien_de', spy)
+        r = route(rname, p)
+        assert entered                                                         # (2) S8 ran on this route
+        assert F.outcome(r) == ('REFUSED', 'SOURCE_OBJECT_MISMATCH') and answer(r) == {}, (r.code, r.reason)
+        assert 'mb' in (r.reason or '')                                        # the refusal names the measurement goal
+        monkeypatch.setattr(B, '_kiem_pham_vi_tien_de', original)
+>       assert s8_raises(p) == 'SOURCE_OBJECT_MISMATCH'                       # (3) S8 itself detects the foreign point
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert None == 'SOURCE_OBJECT_MISMATCH'
+E        +  where None = s8_raises({'length_unit': 'a', 'math_goals': [{'denominator_solid_id': 'pyr1', 'goal_id': 'm_vol_ratio', 'kind': 'volume_ratio',...nửa không gian và DA = a. Dựng hai khối chóp và tính tỉ số thể tích. Gọi M là trung điểm của SB. Tính độ dài MB.', ...})
+
+tests\geometry\test_cic_d1_locked_contract.py:89: AssertionError
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 98 passed, 23 deselected in 1.49s
+MUTANT claimed_scope_off: pytest exit 1 -> KILLED

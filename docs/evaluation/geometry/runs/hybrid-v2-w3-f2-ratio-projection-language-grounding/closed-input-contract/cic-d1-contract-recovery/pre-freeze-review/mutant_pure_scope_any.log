@@ -1,0 +1,65 @@
+........................................................................ [  9%]
+........................................F
+================================== FAILURES ===================================
+__________ test_cic_d1_mutants_are_killed[remove_closed_target_rule] __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001CB5510DF70>
+name = 'remove_closed_target_rule'
+
+    @pytest.mark.parametrize('name', CIC_D1_MUTANTS)
+    def test_cic_d1_mutants_are_killed(monkeypatch, name):
+        oracle, mutate = CIC_D1_MUTANTS[name]
+>       oracle(); mutate(monkeypatch)
+                  ^^^^^^^^^^^^^^^^^^^
+
+tests\geometry\test_cic_d1_locked_contract.py:175: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\geometry\test_cic_d1_locked_contract.py:158: in <lambda>
+    'remove_closed_target_rule': (oracle_closed_target, lambda mp: mutate_many(mp, T, '_validate_goal_target', [RULE])),
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\geometry\test_cic_d1_locked_contract.py:124: in mutate_many
+    source = textwrap.dedent(inspect.getsource(getattr(owner, name)))
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\inspect.py:1285: in getsource
+    lines, lnum = getsourcelines(object)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\inspect.py:1267: in getsourcelines
+    lines, lnum = findsource(object)
+                  ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+object = <function _validate_goal_target at 0x000001CB533B87C0>
+
+    def findsource(object):
+        """Return the entire source file and starting line number for an object.
+    
+        The argument may be a module, class, method, function, traceback, frame,
+        or code object.  The source code is returned as a list of all the lines
+        in the file and the line number indexes a line in that list.  An OSError
+        is raised if the source code cannot be retrieved."""
+    
+        file = getsourcefile(object)
+        if file:
+            # Invalidate cache if needed.
+            linecache.checkcache(file)
+        else:
+            file = getfile(object)
+            # Allow filenames in form of "<something>" to pass through.
+            # `doctest` monkeypatches `linecache` module to enable
+            # inspection, so let `linecache.getlines` to be called.
+            if not (file.startswith('<') and file.endswith('>')):
+                raise OSError('source code not available')
+    
+        module = getmodule(object, file)
+        if module:
+            lines = linecache.getlines(file, module.__dict__)
+        else:
+            lines = linecache.getlines(file)
+        if not lines:
+>           raise OSError('could not get source code')
+E           OSError: could not get source code
+
+C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\inspect.py:1096: OSError
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 112 passed in 2.15s
+MUTANT pure_scope_any: pytest exit 1 -> KILLED

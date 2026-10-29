@@ -1,0 +1,372 @@
+{
+ "L00": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "L01": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "L02": {
+  "a3": [
+   "REFUSED",
+   "SCHEMA_INVALID",
+   null,
+   "ask2 (ask_distance_point_plane): List should have at least 3 items after validation, not 2"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "L03": {
+  "a3": [
+   "REFUSED",
+   "SCHEMA_INVALID",
+   null,
+   "ask2 (ask_length): List should have at least 2 items after validation, not 1"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "L04": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "L05": {
+  "a3": [
+   "REFUSED",
+   "SCHEMA_INVALID",
+   null,
+   "ask2 (ask_distance_lines): List should have at least 2 items after validation, not 1"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "L06": {
+  "a3": [
+   "REFUSED",
+   "ADAPTER_INTERNAL_ERROR",
+   null,
+   "AttributeError: 'list' object has no attribute 'strip'"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "L07": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "L08": {
+  "a3": [
+   "SERVED",
+   null,
+   {
+    "q": [
+     "12",
+     0,
+     null
+    ]
+   },
+   ""
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "L09": {
+  "a3": [
+   "REFUSED",
+   "SCHEMA_INVALID",
+   null,
+   "ask2 (ask_length): List should have at most 2 items after validation, not 3"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "L10": {
+  "a3": [
+   "REFUSED",
+   "SCHEMA_INVALID",
+   null,
+   "ask2 (ask_distance_point_plane): List should have at most 3 items after validation, not 4"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "L11": {
+  "a3": [
+   "REFUSED",
+   "ENGINE_EXECUTION_FAILED",
+   null,
+   "GeometryError: COLLINEAR_POINTS: ba điểm THẲNG HÀNG (hoặc có hai điểm trùng) — không xác định được mặt phẳng"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "L12": {
+  "a3": [
+   "SERVED",
+   null,
+   {
+    "q": [
+     "0",
+     0,
+     null
+    ]
+   },
+   ""
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "L13": {
+  "a3": [
+   "SERVED",
+   null,
+   {
+    "q": [
+     "0",
+     0,
+     null
+    ]
+   },
+   ""
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "L14": {
+  "a3": [
+   "REFUSED",
+   "ENGINE_EXECUTION_FAILED",
+   null,
+   "GeometryError: DEGENERATE_POINTS: không dựng được đường thẳng qua hai điểm TRÙNG nhau"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "L15": {
+  "a3": [
+   "REFUSED",
+   "ENGINE_EXECUTION_FAILED",
+   null,
+   "GeometryError: DEGENERATE_POINTS: không dựng được đường thẳng qua hai điểm TRÙNG nhau"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ }
+}

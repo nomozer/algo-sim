@@ -1,0 +1,360 @@
+{
+ "L00": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: inapplicable target for distance"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: inapplicable target for distance"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: inapplicable target for distance"
+  ],
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL"
+ },
+ "L01": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: inapplicable target for distance"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: inapplicable target for distance"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: inapplicable target for distance"
+  ],
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL"
+ },
+ "L02": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'plane', expected refs3"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'plane', expected refs3"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'plane', expected refs3"
+  ],
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL"
+ },
+ "L03": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'segment', expected refs2="
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'segment', expected refs2="
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'segment', expected refs2="
+  ],
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL"
+ },
+ "L04": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: inapplicable target for distance"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: inapplicable target for distance"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: inapplicable target for distance"
+  ],
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL"
+ },
+ "L05": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'line1', expected refs2="
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'line1', expected refs2="
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'line1', expected refs2="
+  ],
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL"
+ },
+ "L06": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'point', expected ref"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'point', expected ref"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'point', expected ref"
+  ],
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL"
+ },
+ "L07": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: inapplicable target for distance"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: inapplicable target for distance"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: inapplicable target for distance"
+  ],
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL"
+ },
+ "L08": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: scope keys ['solid'] beside target operands; declare the goal's solid_id"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: scope keys ['solid'] beside target operands; declare the goal's solid_id"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: scope keys ['solid'] beside target operands; declare the goal's solid_id"
+  ],
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL"
+ },
+ "L09": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'segment', expected refs2="
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'segment', expected refs2="
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'segment', expected refs2="
+  ],
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL"
+ },
+ "L10": {
+  "a3": [
+   "REFUSED",
+   "SCHEMA_INVALID",
+   null,
+   "ask2 (ask_distance_point_plane): List should have at most 3 items after validation, not 4"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "L11": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'plane', expected refs3"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'plane', expected refs3"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'plane', expected refs3"
+  ],
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL"
+ },
+ "L12": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'segment', expected refs2="
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'segment', expected refs2="
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'segment', expected refs2="
+  ],
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL"
+ },
+ "L13": {
+  "a3": [
+   "SERVED",
+   null,
+   {
+    "q": [
+     "0",
+     0,
+     null
+    ]
+   },
+   ""
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: mục tiêu distance thiếu toán hạng hợp lệ"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   null,
+   "q: mục tiêu measurement/distance chưa có ánh xạ"
+  ],
+  "schema1": null,
+  "schema2": null
+ },
+ "L14": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'line1', expected refs2="
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'line1', expected refs2="
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'line1', expected refs2="
+  ],
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL"
+ },
+ "L15": {
+  "a3": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'line2', expected refs2="
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'line2', expected refs2="
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_MATH_GOAL",
+   null,
+   "q: malformed operand 'line2', expected refs2="
+  ],
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL"
+ }
+}

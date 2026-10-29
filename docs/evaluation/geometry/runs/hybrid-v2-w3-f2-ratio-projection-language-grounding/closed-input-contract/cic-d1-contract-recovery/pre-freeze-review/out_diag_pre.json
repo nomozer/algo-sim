@@ -1,0 +1,530 @@
+{
+ "hybrid-disabled-integration#0": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": null
+ },
+ "hybrid-disabled-integration#1": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": null
+ },
+ "hybrid-disabled-integration#10": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayloadV2\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/2'}, input_type=dict]\n    For further informati"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": "INVALID_TYPED_FACT_NEXT"
+ },
+ "hybrid-disabled-integration#11": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayloadV2\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/2'}, input_type=dict]\n    For further informati"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": "INVALID_TYPED_FACT_NEXT"
+ },
+ "hybrid-disabled-integration#2": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": null
+ },
+ "hybrid-disabled-integration#3": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": null
+ },
+ "hybrid-disabled-integration#4": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...n lượt tại N, P.'}],"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...n lượt tại N, P.'}],"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...n lượt tại N, P.'}],"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": null
+ },
+ "hybrid-disabled-integration#5": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...n lượt tại N, P.'}],"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...n lượt tại N, P.'}],"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...n lượt tại N, P.'}],"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": null
+ },
+ "hybrid-disabled-integration#6": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayloadV2\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/2'}, input_type=dict]\n    For further informati"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": "INVALID_TYPED_FACT_NEXT"
+ },
+ "hybrid-disabled-integration#7": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayloadV2\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/2'}, input_type=dict]\n    For further informati"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": "INVALID_TYPED_FACT_NEXT"
+ },
+ "hybrid-disabled-integration#8": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayloadV2\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/2'}, input_type=dict]\n    For further informati"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": "INVALID_TYPED_FACT_NEXT"
+ },
+ "hybrid-disabled-integration#9": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayloadV2\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/2'}, input_type=dict]\n    For further informati"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": "INVALID_TYPED_FACT_NEXT"
+ },
+ "hybrid-session4a-readiness#0": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": null
+ },
+ "hybrid-session4a-readiness#1": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": null
+ },
+ "hybrid-session4a-readiness#10": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayloadV2\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/2'}, input_type=dict]\n    For further informati"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": "INVALID_TYPED_FACT_NEXT"
+ },
+ "hybrid-session4a-readiness#11": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayloadV2\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/2'}, input_type=dict]\n    For further informati"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": "INVALID_TYPED_FACT_NEXT"
+ },
+ "hybrid-session4a-readiness#2": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": null
+ },
+ "hybrid-session4a-readiness#3": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...ượt tại N, P, Q.'}],"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": null
+ },
+ "hybrid-session4a-readiness#4": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...n lượt tại N, P.'}],"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...n lượt tại N, P.'}],"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...n lượt tại N, P.'}],"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": null
+ },
+ "hybrid-session4a-readiness#5": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...n lượt tại N, P.'}],"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...n lượt tại N, P.'}],"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "1 validation error for TypedFactNextPayload\nderived_sections.0.stated_intersections\n  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'edge': ['S', 'B'], 'po...n lượt tại N, P.'}],"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": null
+ },
+ "hybrid-session4a-readiness#6": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayloadV2\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/2'}, input_type=dict]\n    For further informati"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": "INVALID_TYPED_FACT_NEXT"
+ },
+ "hybrid-session4a-readiness#7": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayloadV2\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/2'}, input_type=dict]\n    For further informati"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": "INVALID_TYPED_FACT_NEXT"
+ },
+ "hybrid-session4a-readiness#8": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayloadV2\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/2'}, input_type=dict]\n    For further informati"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": "INVALID_TYPED_FACT_NEXT"
+ },
+ "hybrid-session4a-readiness#9": {
+  "a3": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "a4": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayloadV2\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/2'}, input_type=dict]\n    For further informati"
+  ],
+  "pl": [
+   "REFUSED",
+   "INVALID_TYPED_FACT_NEXT",
+   null,
+   "2 validation errors for TypedFactNextPayload\nproblem_text\n  Field required [type=missing, input_value={'facts': [{'id': 'f1', '...n': 'typed-fact-next/1'}, input_type=dict]\n    For further information"
+  ],
+  "schema1": "INVALID_TYPED_FACT_NEXT",
+  "schema2": "INVALID_TYPED_FACT_NEXT"
+ }
+}
