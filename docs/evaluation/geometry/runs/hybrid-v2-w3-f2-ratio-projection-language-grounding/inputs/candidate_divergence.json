@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "HYBRID_V2_W3_F2_ADAPTER3_SEMANTIC_FALLBACK_SAFETY_HARDENING (Claude takeover: solid-valued operand scope)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "609931405d65aed5fc82a8002aa3bf43a5f17e7f93788cda94266c067042de13",
+  "current_product_commit": "c4d7b759a9cb69ba5133dc8a05b10f45e7ff24ba",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Final-review MAJOR after the 6516d5d4 freeze: Adapter3 legacy fallback and Bridge volume goals let a solid-valued operand override or ignore the declared solid scope. Adapter3 and Bridge now refuse unknown declared scope (UNKNOWN_SOLID_ID) and conflicting operands (SOURCE_OBJECT_MISMATCH); an unscoped unknown solid name is again left to the planner's locked UNKNOWN_SOLID (N006). No Registry/Planner/kernel/default change; historical scored runs preserved.",
+  "cache_version": 130,
+  "cache_version_hien_tai": 130,
+  "cache_decision": "NO_BUMP 130: cached LLM_ONLY path unchanged; cache identity lock MATCH; 41/41 stored preview fixtures verify.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}
