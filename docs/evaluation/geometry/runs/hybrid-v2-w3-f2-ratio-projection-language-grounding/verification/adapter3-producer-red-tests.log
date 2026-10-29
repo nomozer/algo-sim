@@ -1,0 +1,7 @@
+FFFF                                                                     [100%]
+=========================== short test summary info ===========================
+FAILED backend\tests\geometry\test_adapter3_fallback_safety.py::test_legacy_construction_output_cannot_create_or_borrow_foreign_ownership[s2::M]
+FAILED backend\tests\geometry\test_adapter3_fallback_safety.py::test_legacy_construction_output_cannot_create_or_borrow_foreign_ownership[foreign::M]
+FAILED backend\tests\geometry\test_adapter3_fallback_safety.py::test_legacy_construction_output_cannot_create_or_borrow_foreign_ownership[T]
+FAILED backend\tests\geometry\test_adapter3_fallback_safety.py::test_optional_scope_constructed_point_inherits_verified_producer_scope
+4 failed, 22 deselected in 1.40s

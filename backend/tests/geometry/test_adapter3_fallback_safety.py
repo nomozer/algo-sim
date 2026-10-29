@@ -116,3 +116,23 @@ def test_legacy_unsupported_cannot_mix_solid_operands(monkeypatch,kind):
     p['premises'].append(prem);p['problem_text']+=' '+prem['quote']
     r=A.run_typed_fact_next_route(p)
     assert (r.status,r.code)==('REFUSED','SOURCE_OBJECT_MISMATCH')
+
+@pytest.mark.parametrize('output',['s2::M','foreign::M','T'])
+def test_legacy_construction_output_cannot_create_or_borrow_foreign_ownership(output):
+    p=control()
+    p['premises'].append({'kind':'orthogonal_projection','solid_id':'s1',
+        'args':{'point':'S','image':output,'plane':list('ABCD')},
+        'quote':f'Hình chiếu vuông góc của S lên mặt phẳng (ABCD) là {output}.'})
+    p['problem_text']+=' '+p['premises'][-1]['quote']
+    c=compiler(p)
+    with pytest.raises(TuChoi) as e:c._compile_premises()
+    assert e.value.code==('UNKNOWN_SOLID_ID' if output.startswith('foreign') else 'SOURCE_OBJECT_MISMATCH')
+
+def test_optional_scope_constructed_point_inherits_verified_producer_scope():
+    p=control()
+    p['premises'].append({'kind':'midpoint','args':{'point':'M','segment':['S','A']},'quote':'M là trung điểm của SA.'})
+    p['problem_text']+=' M là trung điểm của SA.'
+    c=compiler(p);c._compile_premises()
+    assert c.resolve_ref('M','s1')=='M'
+    with pytest.raises(TuChoi) as e:c.resolve_ref('M','s2')
+    assert e.value.code=='SOURCE_OBJECT_MISMATCH'
