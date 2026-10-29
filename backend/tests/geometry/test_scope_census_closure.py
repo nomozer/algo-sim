@@ -211,16 +211,20 @@ def test_ratio_residual_scope_refused():
     assert outcome(a3(p)) == ('REFUSED', 'UNKNOWN_SOLID_ID')
 
 
-@pytest.mark.parametrize('parent,code', [('s_abcd', None), ('zz', 'SOURCE_OBJECT_MISMATCH')])
-def test_residual_cut_must_descend_from_parent(parent, code):
-    # F7 (preregistration-amendment-1): a residual's derived cut solid must be cut from the declared parent.
+def residual(parent):
     p = with_second_pyramid(demo1()); quote = next(g['quote'] for g in p['math_goals'] if g['kind'] == 'volume_ratio')
     for kind, args, q in (('line_perp_plane', {'line': ['T', 'A'], 'plane': list('ABCD')}, 'TA vuông góc với (ABCD).'),
                           ('segment_length', {'segment': ['T', 'A'], 'value': '3'}, 'TA = 3.')):
         p['premises'].append({'kind': kind, 'solid_id': 'zz', 'args': args, 'quote': q}); p['problem_text'] += ' ' + q
     p['math_goals'].append({'goal_id': 'res', 'kind': 'residual_volume', 'parent_solid_id': parent, 'cut_solid_id': 's_top',
                             'quote': quote})
-    r = a3(p)
+    return a3(p)
+
+
+@pytest.mark.parametrize('parent,code', [('s_abcd', None), ('zz', 'SOURCE_OBJECT_MISMATCH')])
+def test_residual_cut_must_descend_from_parent(parent, code):
+    # F7 (preregistration-amendment-1): a residual's derived cut solid must be cut from the declared parent.
+    r = residual(parent)
     assert outcome(r) == (('SERVED', None) if code is None else ('REFUSED', code)), (r.code, r.reason)
 
 
@@ -515,7 +519,14 @@ CLOSURE_MUTANTS = {
                               'refs = [x for x in g.target_refs if x not in ids]', oracle_apex),
     'remove_owner_decision_d_a': (T, '_validate_declared_solid_scope',
         'if g.kind != "construct_derived_solid" and g.parent_solid_id is not None:', 'if False:', oracle_d_a),
+    'remove_residual_ancestry': (T, '_validate_declared_solid_scope',
+        'if mg.kind == "residual_volume" and mg.cut_solid_id in parents:', 'if False:',
+        lambda: assert_refused(residual('zz'), 'SOURCE_OBJECT_MISMATCH')),
 }
+
+
+def assert_refused(r, code):
+    assert outcome(r) == ('REFUSED', code), (r.code, r.reason)
 
 
 @pytest.mark.parametrize('name', sorted(CLOSURE_MUTANTS))

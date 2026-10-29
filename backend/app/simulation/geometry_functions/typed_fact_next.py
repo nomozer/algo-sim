@@ -875,6 +875,8 @@ def _validate_declared_solid_scope(p: "TypedFactNextPayload", known: set[str]) -
         if mg.kind in ("volume_ratio", "residual_volume"):
             if mg.solid_id is not None:                                                  # S4 (Owner decision A)
                 refuse("INVALID_MATH_GOAL", mg.goal_id, f"mục tiêu {mg.kind} không có phạm vi khối cấp mục tiêu")
+            if mg.kind == "residual_volume" and mg.cut_solid_id in parents:              # S3: a derived cut's ancestry
+                one_solid(mg.goal_id, mg.parent_solid_id, parents[mg.cut_solid_id])
             continue
         t = mg.target
         for key in GOAL_OPERAND_KEYS:                                                    # S11
