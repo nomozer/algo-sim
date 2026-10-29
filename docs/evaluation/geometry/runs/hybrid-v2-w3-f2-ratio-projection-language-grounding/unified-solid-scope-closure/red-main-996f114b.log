@@ -1,0 +1,312 @@
+FF.FFFF.FF.FFFFFFFF...FFFFFFFFFFFFFF..F.FFFFFFFFFFFFFFFF.FFFFF......FF.F [ 98%]
+F                                                                        [100%]
+================================== FAILURES ===================================
+E   AttributeError: module 'app.simulation.geometry_functions.typed_fact_next' has no attribute 'split_edge_key'
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:108: AttributeError: module 'app.simulation.geometry_functions.typed_fact_next' has no attribute 'split_edge_key'
+E   AssertionError: ('INVALID_DERIVED_SECTION', "Section 'sec_perp': named intersection key 'pyr-s-abc::S-pyr-s-abc::B' is not 'U-V'.")
+    assert ('REFUSED', '...IVED_SECTION') == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 1 diff: 'INVALID_DERIVED_SECTION' != 'SOURCE_OBJECT_MISMATCH'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:73: AssertionError: ('INVALID_DERIVED_SECTION', "Section 'sec_perp': named intersection key 'pyr-s-abc::S-pyr-s-abc::B' is not 'U-V'.")
+E   AssertionError: {'a3': ('REFUSED', 'UNGROUNDED_VALUE'), 'pl': ('REFUSED', 'UNGROUNDED_VALUE'), 'a4': ('REFUSED', 'UNGROUNDED_VALUE')}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237EBBC3300>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'UNGROUNDED_VALUE'), 'pl': ('REFUSED', 'UNGROUNDED_VALUE'), 'a4': ('REFUSED', 'UNGROUNDED_VALUE')}
+E   AssertionError: {'a3': ('REFUSED', 'UNKNOWN_SOLID_ID'), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237E86D6C00>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'UNKNOWN_SOLID_ID'), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+E   AssertionError: {'a3': ('SERVED', None), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237E8687BC0>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('SERVED', None), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+E   AssertionError: {'a3': ('SERVED', None), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237EBDBF4C0>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('SERVED', None), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+E   AssertionError: {'a3': ('REFUSED', 'UNKNOWN_SOLID_ID'), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237EBDBECE0>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'UNKNOWN_SOLID_ID'), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+E   AssertionError: {'a3': ('REFUSED', 'UNGROUNDED_VALUE'), 'pl': ('REFUSED', 'UNGROUNDED_VALUE'), 'a4': ('REFUSED', 'UNGROUNDED_VALUE')}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237EBD3BCA0>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'UNGROUNDED_VALUE'), 'pl': ('REFUSED', 'UNGROUNDED_VALUE'), 'a4': ('REFUSED', 'UNGROUNDED_VALUE')}
+E   AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 1 diff: 'UNDERDETERMINED_POINT' != 'SOURCE_OBJECT_MISMATCH'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:172: AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 1 diff: 'UNDERDETERMINED_POINT' != 'SOURCE_OBJECT_MISMATCH'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:172: AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 1 diff: 'UNDERDETERMINED_POINT' != 'SOURCE_OBJECT_MISMATCH'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:172: AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: ('pl', 'BRIDGE_UNSUPPORTED_MEASUREMENT', 'v: mục tiêu measurement/volume chưa có ánh xạ')
+    assert 'REFUSED' == 'SERVED'
+      
+      - SERVED
+      + REFUSED
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:64: AssertionError: ('pl', 'BRIDGE_UNSUPPORTED_MEASUREMENT', 'v: mục tiêu measurement/volume chưa có ánh xạ')
+E   AssertionError: {'a3': ('SERVED', None), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237EBDBDD20>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('SERVED', None), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+E   AssertionError: {'a3': ('SERVED', None), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237E869DA80>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('SERVED', None), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+E   AssertionError: {'a3': ('REFUSED', 'SCHEMA_INVALID'), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT'), 'a4': ('SERVED', None)}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237EBDBDEE0>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'SCHEMA_INVALID'), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT'), 'a4': ('SERVED', None)}
+E   AssertionError: {'a3': ('REFUSED', 'SCHEMA_INVALID'), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT'), 'a4': ('SERVED', None)}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237E8685E00>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'SCHEMA_INVALID'), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT'), 'a4': ('SERVED', None)}
+E   AssertionError: {'a3': ('SERVED', None), 'pl': ('REFUSED', 'UNKNOWN_VERTEX_REF'), 'a4': ('REFUSED', 'UNKNOWN_VERTEX_REF')}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237E8685FC0>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('SERVED', None), 'pl': ('REFUSED', 'UNKNOWN_VERTEX_REF'), 'a4': ('REFUSED', 'UNKNOWN_VERTEX_REF')}
+E   AssertionError: {'a3': ('SERVED', None), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237E869DB60>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('SERVED', None), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+E   AssertionError: {'a3': ('SERVED', None), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION'), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION')}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237EBDBD7E0>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('SERVED', None), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION'), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION')}
+E   AssertionError: {'a3': ('SERVED', None), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237E8687140>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('SERVED', None), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+E   AssertionError: {'a3': ('REFUSED', 'UNKNOWN_SECTION_ID'), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION'), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION')}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237EBDBD7E0>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'UNKNOWN_SECTION_ID'), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION'), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION')}
+E   AssertionError: {'a3': ('REFUSED', 'SHARED_ENTITY_MISMATCH'), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237EBD025E0>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'SHARED_ENTITY_MISMATCH'), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+E   AssertionError: {'a3': ('REFUSED', 'SHARED_ENTITY_MISMATCH'), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION'), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION')}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237EBD02EA0>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'SHARED_ENTITY_MISMATCH'), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION'), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION')}
+E   AssertionError: {'a3': ('SERVED', None), 'pl': ('REFUSED', 'UNKNOWN_VERTEX_REF'), 'a4': ('REFUSED', 'UNKNOWN_VERTEX_REF')}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237EBD01E00>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('SERVED', None), 'pl': ('REFUSED', 'UNKNOWN_VERTEX_REF'), 'a4': ('REFUSED', 'UNKNOWN_VERTEX_REF')}
+E   AssertionError: {'a3': ('REFUSED', 'UNKNOWN_SOLID_ID'), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237EBBC2DC0>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'UNKNOWN_SOLID_ID'), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+E   AssertionError: {'a3': ('SERVED', None), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION'), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION')}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237E869D000>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('SERVED', None), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION'), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION')}
+E   AssertionError: {'a3': ('SERVED', None), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237EBD03A00>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('SERVED', None), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+E   AssertionError: {'a3': ('REFUSED', 'UNKNOWN_SECTION_ID'), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION'), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION')}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237EBDBCD60>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'UNKNOWN_SECTION_ID'), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION'), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION')}
+E   AssertionError: {'a3': ('REFUSED', 'UNKNOWN_SOLID_ID'), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237EBD00F20>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'UNKNOWN_SOLID_ID'), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+E   AssertionError: {'a3': ('REFUSED', 'SHARED_ENTITY_MISMATCH'), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION'), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION')}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237EBD03300>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'SHARED_ENTITY_MISMATCH'), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION'), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION')}
+E   AssertionError: {'a3': ('SERVED', None), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237EBBC3760>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('SERVED', None), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+E   AssertionError: {'a3': ('SERVED', None), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x00000237E86D6C00>)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('SERVED', None), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+E   AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 1 diff: 'UNDERDETERMINED_POINT' != 'SOURCE_OBJECT_MISMATCH'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:305: AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 1 diff: 'UNDERDETERMINED_POINT' != 'SOURCE_OBJECT_MISMATCH'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:305: AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ULATION_GOAL')
+      
+      At index 1 diff: 'UNDERDETERMINED_POINT' != 'INVALID_SIMULATION_GOAL'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:305: AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ULATION_GOAL')
+E   AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...N_VERTEX_REF')
+      
+      At index 1 diff: 'UNDERDETERMINED_POINT' != 'UNKNOWN_VERTEX_REF'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:305: AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...N_VERTEX_REF')
+E   AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 1 diff: 'UNDERDETERMINED_POINT' != 'SOURCE_OBJECT_MISMATCH'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:305: AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ULATION_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:316: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ULATION_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ULATION_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:316: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ULATION_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ULATION_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:316: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ULATION_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ULATION_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:316: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ULATION_GOAL')
+E   AssertionError: ('pl', 'UNKNOWN_VERTEX_REF', "'s_abcd::M' không phải đỉnh của khối đã khai")
+    assert ('REFUSED', '...N_VERTEX_REF') == ('REFUSED', '...S_NOT_STATED')
+      
+      At index 1 diff: 'UNKNOWN_VERTEX_REF' != 'BRIDGE_CUT_EDGES_NOT_STATED'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:66: AssertionError: ('pl', 'UNKNOWN_VERTEX_REF', "'s_abcd::M' không phải đỉnh của khối đã khai")
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:355: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:355: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:355: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:355: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:355: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('REFUSED' == 'SERVED'
+      
+      - SERVED
+      + REFUSED)
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:368: AssertionError: assert ('REFUSED' == 'SERVED'
+E   AssertionError: assert ('REFUSED', '...TERNAL_ERROR') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'ADAPTER_INTERNAL_ERROR' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:379: AssertionError: assert ('REFUSED', '...TERNAL_ERROR') == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '...TERNAL_ERROR') == ('REFUSED', '...N_SECTION_ID')
+      
+      At index 1 diff: 'ADAPTER_INTERNAL_ERROR' != 'UNKNOWN_SECTION_ID'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:379: AssertionError: assert ('REFUSED', '...TERNAL_ERROR') == ('REFUSED', '...N_SECTION_ID')
+E   AssertionError: assert ('REFUSED', '...TERNAL_ERROR') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'ADAPTER_INTERNAL_ERROR' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:379: AssertionError: assert ('REFUSED', '...TERNAL_ERROR') == ('REFUSED', '...ID_MATH_GOAL')
+E   AttributeError: module 'app.simulation.geometry_functions.typed_fact_next' has no attribute 'GOAL_OPERAND_KEYS'
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:384: AttributeError: module 'app.simulation.geometry_functions.typed_fact_next' has no attribute 'GOAL_OPERAND_KEYS'
+E   AssertionError: ('A3-DEV-07', 'parent_solid_id')
+    assert 'SERVED' != 'SERVED'
+     +  where 'SERVED' = Adapter3SimulationResult(status='SERVED', code=None, reason=None, failed_calls=(), scene3d={'objects': [{'id': 'A', 'l...']}}, {'id': 'vcert9', 'fn': 'ask_volume', 'args': {'solid': 'S.MNP'}, 'source': {'quotes': ['Cho hình chóp S.ABC']}}]).status
+     +    where Adapter3SimulationResult(status='SERVED', code=None, reason=None, failed_calls=(), scene3d={'objects': [{'id': 'A', 'l...']}}, {'id': 'vcert9', 'fn': 'ask_volume', 'args': {'solid': 'S.MNP'}, 'source': {'quotes': ['Cho hình chóp S.ABC']}}]) = a3({'derived_sections': [{'named_intersections': {'S-B': 'N', 'S-C': 'P'}, 'parallel_plane': ['A', 'B', 'C'], 'plane_kind...gment': ['S', 'A']}, 'kind': 'point_is_midpoint', 'quote': 'Gọi M là trung điểm của SA', 'solid_id': 'pyr_sabc'}], ...})
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:424: AssertionError: ('A3-DEV-07', 'parent_solid_id')
+E   AssertionError: ('demo1', 'parent_solid_id')
+    assert 'SERVED' != 'SERVED'
+     +  where 'SERVED' = Adapter3SimulationResult(status='SERVED', code=None, reason=None, failed_calls=(), scene3d={'objects': [{'id': 'A', 'l...me', 'args': {'solid': 'S.MI1I2I3'}, 'source': {'quotes': ['Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2']}}]).status
+     +    where Adapter3SimulationResult(status='SERVED', code=None, reason=None, failed_calls=(), scene3d={'objects': [{'id': 'A', 'l...me', 'args': {'solid': 'S.MI1I2I3'}, 'source': {'quotes': ['Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2']}}]) = a3({'schema_version': 'typed-fact-next/1', 'problem_text': 'Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuô...nt', 'solid_id': 's_abcd', 'args': {'point': 'M', 'segment': ['S', 'A']}, 'quote': 'Gọi M là trung điểm của SA'}], ...})
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:424: AssertionError: ('demo1', 'parent_solid_id')
+E   AssertionError: ('sup', 'solid_id')
+    assert 'SERVED' != 'SERVED'
+     +  where 'SERVED' = Adapter3SimulationResult(status='SERVED', code=None, reason=None, failed_calls=(), scene3d={'objects': [{'id': 'A', 'l...: 'ask3', 'fn': 'ask_volume', 'args': {'solid': 'S.ABCD'}, 'source': {'quotes': ['Tính thể tích hình chóp S.ABCD.']}}]).status
+     +    where Adapter3SimulationResult(status='SERVED', code=None, reason=None, failed_calls=(), scene3d={'objects': [{'id': 'A', 'l...: 'ask3', 'fn': 'ask_volume', 'args': {'solid': 'S.ABCD'}, 'source': {'quotes': ['Tính thể tích hình chóp S.ABCD.']}}]) = a3({'schema_version': 'typed-fact-next/1', 'problem_text': 'Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông...p S.ABCD.'}, {'solid_id': 's2', 'solid_type': 'pyramid', 'notation': 'T.ABCD', 'quote': 'Cho hình chóp T.ABCD.'}], ...})
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:424: AssertionError: ('sup', 'solid_id')
+E   AssertionError: ('PremiseSpec.solid_id', 'S1')
+    assert None
+     +  where None = <function search at 0x00000237E507B100>('#\\s*S1\\b', '"""Versioned TypedFactNext (`typed-fact-next/1`) contract for simulation-first orchestration.\n\nCoexists with the fr... s.plane_name for s in p.derived_sections},\n                                       "problem_text": p.problem_text}}\n')
+     +    where <function search at 0x00000237E507B100> = re.search
+C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\34fa3070-05c5-442c-a739-1f3125cf30ff\scratchpad\closure-baselines-1\996f114b\backend\tests\geometry\test_scope_census_closure.py:439: AssertionError: ('PremiseSpec.solid_id', 'S1')
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_scope_census_closure.py::test_split_edge_key_grammar
+FAILED tests/geometry/test_scope_census_closure.py::test_f1_hyphenated_ids_serve_on_every_route
+FAILED tests/geometry/test_scope_census_closure.py::test_f1_hyphenated_scope_violations_refuse[<lambda>-SOURCE_OBJECT_MISMATCH0]
+FAILED tests/geometry/test_scope_census_closure.py::test_f1_hyphenated_scope_violations_refuse[<lambda>-UNKNOWN_SOLID_ID1]
+FAILED tests/geometry/test_scope_census_closure.py::test_f1_hyphenated_scope_violations_refuse[<lambda>-SOURCE_OBJECT_MISMATCH1]
+FAILED tests/geometry/test_scope_census_closure.py::test_f1_shared_label_ambiguity_stays_fail_closed
+FAILED tests/geometry/test_scope_census_closure.py::test_premise_scope_violations_refuse[<lambda>-UNKNOWN_SOLID_ID]
+FAILED tests/geometry/test_scope_census_closure.py::test_premise_scope_violations_refuse[<lambda>-SOURCE_OBJECT_MISMATCH]
+FAILED tests/geometry/test_scope_census_closure.py::test_section_scope_violations_refuse[through_point]
+FAILED tests/geometry/test_scope_census_closure.py::test_section_scope_violations_refuse[parallel_plane]
+FAILED tests/geometry/test_scope_census_closure.py::test_section_scope_violations_refuse[named_key]
+FAILED tests/geometry/test_scope_census_closure.py::test_measurement_scope_controls_serve
+FAILED tests/geometry/test_scope_census_closure.py::test_measurement_scope_violations_refuse[<lambda>-UNKNOWN_SOLID_ID]
+FAILED tests/geometry/test_scope_census_closure.py::test_measurement_scope_violations_refuse[<lambda>-SOURCE_OBJECT_MISMATCH]
+FAILED tests/geometry/test_scope_census_closure.py::test_measurement_operand_violations_refuse[target0]
+FAILED tests/geometry/test_scope_census_closure.py::test_measurement_operand_violations_refuse[target1]
+FAILED tests/geometry/test_scope_census_closure.py::test_relation_scope_violations_refuse_every_kind[contradicted-containment]
+FAILED tests/geometry/test_scope_census_closure.py::test_relation_scope_violations_refuse_every_kind[contradicted-coordinate_frame]
+FAILED tests/geometry/test_scope_census_closure.py::test_relation_scope_violations_refuse_every_kind[contradicted-parallel]
+FAILED tests/geometry/test_scope_census_closure.py::test_relation_scope_violations_refuse_every_kind[contradicted-perpendicular]
+FAILED tests/geometry/test_scope_census_closure.py::test_relation_scope_violations_refuse_every_kind[contradicted-section_membership]
+FAILED tests/geometry/test_scope_census_closure.py::test_relation_scope_violations_refuse_every_kind[contradicted-shared_faces]
+FAILED tests/geometry/test_scope_census_closure.py::test_relation_scope_violations_refuse_every_kind[contradicted-shared_vertices]
+FAILED tests/geometry/test_scope_census_closure.py::test_relation_scope_violations_refuse_every_kind[foreign-containment]
+FAILED tests/geometry/test_scope_census_closure.py::test_relation_scope_violations_refuse_every_kind[foreign-coordinate_frame]
+FAILED tests/geometry/test_scope_census_closure.py::test_relation_scope_violations_refuse_every_kind[foreign-parallel]
+FAILED tests/geometry/test_scope_census_closure.py::test_relation_scope_violations_refuse_every_kind[foreign-perpendicular]
+FAILED tests/geometry/test_scope_census_closure.py::test_relation_scope_violations_refuse_every_kind[foreign-section_membership]
+FAILED tests/geometry/test_scope_census_closure.py::test_relation_scope_violations_refuse_every_kind[foreign-shared_faces]
+FAILED tests/geometry/test_scope_census_closure.py::test_relation_scope_violations_refuse_every_kind[foreign-shared_vertices]
+FAILED tests/geometry/test_scope_census_closure.py::test_simulation_goal_scope_violations_refuse_every_kind[construct_object]
+FAILED tests/geometry/test_scope_census_closure.py::test_simulation_goal_scope_violations_refuse_every_kind[highlight_geometry]
+FAILED tests/geometry/test_scope_census_closure.py::test_section_and_derived_simulation_goals_refuse[plane_section_target_other_solid-SOURCE_OBJECT_MISMATCH]
+FAILED tests/geometry/test_scope_census_closure.py::test_section_and_derived_simulation_goals_refuse[derived_apex_other_solid-SOURCE_OBJECT_MISMATCH]
+FAILED tests/geometry/test_scope_census_closure.py::test_section_and_derived_simulation_goals_refuse[derived_target_solid_id-INVALID_SIMULATION_GOAL]
+FAILED tests/geometry/test_scope_census_closure.py::test_section_and_derived_simulation_goals_refuse[highlight_unknown_token-UNKNOWN_VERTEX_REF]
+FAILED tests/geometry/test_scope_census_closure.py::test_section_and_derived_simulation_goals_refuse[highlight_section_of_other_scope-SOURCE_OBJECT_MISMATCH]
+FAILED tests/geometry/test_scope_census_closure.py::test_parent_solid_id_outside_derived_solid_refused[construct_object]
+FAILED tests/geometry/test_scope_census_closure.py::test_parent_solid_id_outside_derived_solid_refused[construct_plane_section]
+FAILED tests/geometry/test_scope_census_closure.py::test_parent_solid_id_outside_derived_solid_refused[highlight_geometry]
+FAILED tests/geometry/test_scope_census_closure.py::test_parent_solid_id_outside_derived_solid_refused[construction_sequence]
+FAILED tests/geometry/test_scope_census_closure.py::test_simulation_goal_controls_serve
+FAILED tests/geometry/test_scope_census_closure.py::test_f4_curved_ownership_refuses[apex_other_cone]
+FAILED tests/geometry/test_scope_census_closure.py::test_f4_curved_ownership_refuses[apex_other_cone_qualified]
+FAILED tests/geometry/test_scope_census_closure.py::test_f4_curved_ownership_refuses[highlight_other_cone]
+FAILED tests/geometry/test_scope_census_closure.py::test_f4_curved_ownership_refuses[highlight_other_cone_qualified]
+FAILED tests/geometry/test_scope_census_closure.py::test_f4_curved_ownership_refuses[relation_operand_other_cone]
+FAILED tests/geometry/test_scope_census_closure.py::test_f5_curved_target_notation_alias_served
+FAILED tests/geometry/test_scope_census_closure.py::test_f5_malformed_targets_refuse_typed[curved-<lambda>-INVALID_MATH_GOAL]
+FAILED tests/geometry/test_scope_census_closure.py::test_f5_malformed_targets_refuse_typed[curved-<lambda>-UNKNOWN_SECTION_ID]
+FAILED tests/geometry/test_scope_census_closure.py::test_f5_malformed_targets_refuse_typed[poly-<lambda>-INVALID_MATH_GOAL]
+FAILED tests/geometry/test_scope_census_closure.py::test_f6_goal_operand_keys_cover_every_key_the_routes_read
+FAILED tests/geometry/test_scope_census_closure.py::test_metamorphic_foreign_scope_never_served[A3-DEV-07]
+FAILED tests/geometry/test_scope_census_closure.py::test_metamorphic_foreign_scope_never_served[demo1]
+FAILED tests/geometry/test_scope_census_closure.py::test_metamorphic_foreign_scope_never_served[sup]
+FAILED tests/geometry/test_scope_census_closure.py::test_census_inventory_complete
+56 failed, 17 passed in 4.89s

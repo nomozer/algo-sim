@@ -1,0 +1,196 @@
+FF.F.FF......FF.......F.FFF.F.........F.FF.FFFFFFF.FFFFF.FFFFFF......... [ 98%]
+F                                                                        [100%]
+================================== FAILURES ===================================
+E   AttributeError: module 'app.simulation.geometry_functions.typed_fact_next' has no attribute 'split_edge_key'
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:108: AttributeError: module 'app.simulation.geometry_functions.typed_fact_next' has no attribute 'split_edge_key'
+E   AssertionError: ('a3', 'UNKNOWN_SOLID_ID', "p3: khối '1' chưa được khai báo")
+    assert 'REFUSED' == 'SERVED'
+      
+      - SERVED
+      + REFUSED
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:120: AssertionError: ('a3', 'UNKNOWN_SOLID_ID', "p3: khối '1' chưa được khai báo")
+E   AssertionError: {'a3': ('REFUSED', 'UNKNOWN_SOLID_ID'), 'pl': ('REFUSED', 'UNKNOWN_SOLID_ID'), 'a4': ('REFUSED', 'UNKNOWN_SOLID_ID')}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x000002A63F7512A0>)
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'UNKNOWN_SOLID_ID'), 'pl': ('REFUSED', 'UNKNOWN_SOLID_ID'), 'a4': ('REFUSED', 'UNKNOWN_SOLID_ID')}
+E   AssertionError: {'a3': ('REFUSED', 'UNKNOWN_SOLID_ID'), 'pl': ('REFUSED', 'UNKNOWN_SOLID_ID'), 'a4': ('REFUSED', 'UNKNOWN_SOLID_ID')}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x000002A63F687220>)
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'UNKNOWN_SOLID_ID'), 'pl': ('REFUSED', 'UNKNOWN_SOLID_ID'), 'a4': ('REFUSED', 'UNKNOWN_SOLID_ID')}
+E   AssertionError: {'a3': ('REFUSED', 'UNKNOWN_SOLID_ID'), 'pl': ('REFUSED', 'UNKNOWN_SOLID_ID'), 'a4': ('REFUSED', 'UNKNOWN_SOLID_ID')}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x000002A641CB9000>)
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'UNKNOWN_SOLID_ID'), 'pl': ('REFUSED', 'UNKNOWN_SOLID_ID'), 'a4': ('REFUSED', 'UNKNOWN_SOLID_ID')}
+E   AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 1 diff: 'UNDERDETERMINED_POINT' != 'SOURCE_OBJECT_MISMATCH'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:172: AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: ('pl', 'BRIDGE_UNSUPPORTED_MEASUREMENT', 'v: mục tiêu measurement/volume chưa có ánh xạ')
+    assert 'REFUSED' == 'SERVED'
+      
+      - SERVED
+      + REFUSED
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:64: AssertionError: ('pl', 'BRIDGE_UNSUPPORTED_MEASUREMENT', 'v: mục tiêu measurement/volume chưa có ánh xạ')
+E   AssertionError: {'a3': ('REFUSED', 'SOURCE_OBJECT_MISMATCH'), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION'), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION')}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x000002A641D4B680>)
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'SOURCE_OBJECT_MISMATCH'), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION'), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION')}
+E   AssertionError: {'a3': ('REFUSED', 'SOURCE_OBJECT_MISMATCH'), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION'), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION')}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x000002A641D93220>)
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'SOURCE_OBJECT_MISMATCH'), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION'), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION')}
+E   AssertionError: {'a3': ('REFUSED', 'SOURCE_OBJECT_MISMATCH'), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x000002A641DD2B20>)
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'SOURCE_OBJECT_MISMATCH'), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+E   AssertionError: {'a3': ('REFUSED', 'UNKNOWN_SECTION_ID'), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION'), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION')}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x000002A641DD2A40>)
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'UNKNOWN_SECTION_ID'), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION'), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION')}
+E   AssertionError: {'a3': ('REFUSED', 'SHARED_ENTITY_MISMATCH'), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION'), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION')}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x000002A641D934C0>)
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'SHARED_ENTITY_MISMATCH'), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION'), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION')}
+E   AssertionError: {'a3': ('SERVED', None), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x000002A641E4FBC0>)
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('SERVED', None), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+E   AssertionError: {'a3': ('REFUSED', 'SOURCE_OBJECT_MISMATCH'), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+    assert False
+     +  where False = all(<generator object refused_everywhere.<locals>.<genexpr> at 0x000002A641ECA880>)
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:54: AssertionError: {'a3': ('REFUSED', 'SOURCE_OBJECT_MISMATCH'), 'pl': ('SERVED', None), 'a4': ('SERVED', None)}
+E   AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 1 diff: 'UNDERDETERMINED_POINT' != 'SOURCE_OBJECT_MISMATCH'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:305: AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ULATION_GOAL')
+      
+      At index 1 diff: 'UNDERDETERMINED_POINT' != 'INVALID_SIMULATION_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:305: AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ULATION_GOAL')
+E   AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...N_VERTEX_REF')
+      
+      At index 1 diff: 'UNDERDETERMINED_POINT' != 'UNKNOWN_VERTEX_REF'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:305: AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...N_VERTEX_REF')
+E   AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 1 diff: 'UNDERDETERMINED_POINT' != 'SOURCE_OBJECT_MISMATCH'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:305: AssertionError: assert ('REFUSED', '...RMINED_POINT') == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ULATION_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:316: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ULATION_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ULATION_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:316: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ULATION_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ULATION_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:316: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ULATION_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ULATION_GOAL')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:316: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ULATION_GOAL')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:355: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:355: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:355: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:355: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+      
+      At index 0 diff: 'SERVED' != 'REFUSED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:355: AssertionError: assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E   AssertionError: assert ('REFUSED' == 'SERVED'
+      
+      - SERVED
+      + REFUSED)
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:368: AssertionError: assert ('REFUSED' == 'SERVED'
+E   AssertionError: assert ('REFUSED', '...TERNAL_ERROR') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'ADAPTER_INTERNAL_ERROR' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:379: AssertionError: assert ('REFUSED', '...TERNAL_ERROR') == ('REFUSED', '...ID_MATH_GOAL')
+E   AssertionError: assert ('REFUSED', '...TERNAL_ERROR') == ('REFUSED', '...N_SECTION_ID')
+      
+      At index 1 diff: 'ADAPTER_INTERNAL_ERROR' != 'UNKNOWN_SECTION_ID'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:379: AssertionError: assert ('REFUSED', '...TERNAL_ERROR') == ('REFUSED', '...N_SECTION_ID')
+E   AssertionError: assert ('REFUSED', '...TERNAL_ERROR') == ('REFUSED', '...ID_MATH_GOAL')
+      
+      At index 1 diff: 'ADAPTER_INTERNAL_ERROR' != 'INVALID_MATH_GOAL'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:379: AssertionError: assert ('REFUSED', '...TERNAL_ERROR') == ('REFUSED', '...ID_MATH_GOAL')
+E   AttributeError: module 'app.simulation.geometry_functions.typed_fact_next' has no attribute 'GOAL_OPERAND_KEYS'
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:384: AttributeError: module 'app.simulation.geometry_functions.typed_fact_next' has no attribute 'GOAL_OPERAND_KEYS'
+E   AssertionError: ('UNKNOWN_SOLID_ID', "p4: khối '1' chưa được khai báo")
+    assert ('REFUSED', '...OWN_SOLID_ID') == ('SERVED', None)
+      
+      At index 0 diff: 'REFUSED' != 'SERVED'
+      Use -v to get more diff
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:73: AssertionError: ('UNKNOWN_SOLID_ID', "p4: khối '1' chưa được khai báo")
+E   AssertionError: ('PremiseSpec.solid_id', 'S1')
+    assert None
+     +  where None = <function search at 0x000002A63C0AB100>('#\\s*S1\\b', '"""Versioned TypedFactNext (`typed-fact-next/1`) contract for simulation-first orchestration.\n\nCoexists with the fr... s.plane_name for s in p.derived_sections},\n                                       "problem_text": p.problem_text}}\n')
+     +    where <function search at 0x000002A63C0AB100> = re.search
+D:\Documents\projects\algo-sim\.superpowers\worktrees\w3-f2-ratio-projection-language-grounding\backend\tests\geometry\test_scope_census_closure.py:439: AssertionError: ('PremiseSpec.solid_id', 'S1')
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_scope_census_closure.py::test_split_edge_key_grammar
+FAILED tests/geometry/test_scope_census_closure.py::test_f1_hyphenated_ids_serve_on_every_route
+FAILED tests/geometry/test_scope_census_closure.py::test_f1_hyphenated_scope_violations_refuse[<lambda>-SOURCE_OBJECT_MISMATCH0]
+FAILED tests/geometry/test_scope_census_closure.py::test_f1_hyphenated_scope_violations_refuse[<lambda>-SOURCE_OBJECT_MISMATCH1]
+FAILED tests/geometry/test_scope_census_closure.py::test_f1_shared_label_ambiguity_stays_fail_closed
+FAILED tests/geometry/test_scope_census_closure.py::test_section_scope_violations_refuse[named_key]
+FAILED tests/geometry/test_scope_census_closure.py::test_measurement_scope_controls_serve
+FAILED tests/geometry/test_scope_census_closure.py::test_relation_scope_violations_refuse_every_kind[contradicted-containment]
+FAILED tests/geometry/test_scope_census_closure.py::test_relation_scope_violations_refuse_every_kind[contradicted-parallel]
+FAILED tests/geometry/test_scope_census_closure.py::test_relation_scope_violations_refuse_every_kind[contradicted-perpendicular]
+FAILED tests/geometry/test_scope_census_closure.py::test_relation_scope_violations_refuse_every_kind[contradicted-section_membership]
+FAILED tests/geometry/test_scope_census_closure.py::test_relation_scope_violations_refuse_every_kind[contradicted-shared_vertices]
+FAILED tests/geometry/test_scope_census_closure.py::test_simulation_goal_scope_violations_refuse_every_kind[construct_object]
+FAILED tests/geometry/test_scope_census_closure.py::test_simulation_goal_scope_violations_refuse_every_kind[highlight_geometry]
+FAILED tests/geometry/test_scope_census_closure.py::test_section_and_derived_simulation_goals_refuse[plane_section_target_other_solid-SOURCE_OBJECT_MISMATCH]
+FAILED tests/geometry/test_scope_census_closure.py::test_section_and_derived_simulation_goals_refuse[derived_target_solid_id-INVALID_SIMULATION_GOAL]
+FAILED tests/geometry/test_scope_census_closure.py::test_section_and_derived_simulation_goals_refuse[highlight_unknown_token-UNKNOWN_VERTEX_REF]
+FAILED tests/geometry/test_scope_census_closure.py::test_section_and_derived_simulation_goals_refuse[highlight_section_of_other_scope-SOURCE_OBJECT_MISMATCH]
+FAILED tests/geometry/test_scope_census_closure.py::test_parent_solid_id_outside_derived_solid_refused[construct_object]
+FAILED tests/geometry/test_scope_census_closure.py::test_parent_solid_id_outside_derived_solid_refused[construct_plane_section]
+FAILED tests/geometry/test_scope_census_closure.py::test_parent_solid_id_outside_derived_solid_refused[highlight_geometry]
+FAILED tests/geometry/test_scope_census_closure.py::test_parent_solid_id_outside_derived_solid_refused[construction_sequence]
+FAILED tests/geometry/test_scope_census_closure.py::test_f4_curved_ownership_refuses[apex_other_cone]
+FAILED tests/geometry/test_scope_census_closure.py::test_f4_curved_ownership_refuses[apex_other_cone_qualified]
+FAILED tests/geometry/test_scope_census_closure.py::test_f4_curved_ownership_refuses[highlight_other_cone]
+FAILED tests/geometry/test_scope_census_closure.py::test_f4_curved_ownership_refuses[highlight_other_cone_qualified]
+FAILED tests/geometry/test_scope_census_closure.py::test_f4_curved_ownership_refuses[relation_operand_other_cone]
+FAILED tests/geometry/test_scope_census_closure.py::test_f5_curved_target_notation_alias_served
+FAILED tests/geometry/test_scope_census_closure.py::test_f5_malformed_targets_refuse_typed[curved-<lambda>-INVALID_MATH_GOAL]
+FAILED tests/geometry/test_scope_census_closure.py::test_f5_malformed_targets_refuse_typed[curved-<lambda>-UNKNOWN_SECTION_ID]
+FAILED tests/geometry/test_scope_census_closure.py::test_f5_malformed_targets_refuse_typed[poly-<lambda>-INVALID_MATH_GOAL]
+FAILED tests/geometry/test_scope_census_closure.py::test_f6_goal_operand_keys_cover_every_key_the_routes_read
+FAILED tests/geometry/test_scope_census_closure.py::test_metamorphic_hyphen_rename_preserves_answers[A3-DEV-02]
+FAILED tests/geometry/test_scope_census_closure.py::test_census_inventory_complete
+34 failed, 39 passed in 2.61s
