@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_V2_W3_F2_ADAPTER3_SEMANTIC_FALLBACK_SAFETY_HARDENING
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/solid-scope-recovery-report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/
+CLASSIFICATION = POST_FEEDBACK_DEVELOPMENT_REGRESSION; NOT_READY; Gates A–D PASS on product c4d7b759, locked 96/96, Wave3 144 0 wrong-served, Full T3 PASS on candidate 55bdd332; independent review then found three pre-existing MAJOR scope fail-open paths (Adapter4 distance/angle goal, Adapter3 curved route, ratio-goal solid_id) ⇒ Gate A FAIL. Codex pre-freeze T0 "PASS" was a --dry listing; real T0 exposed N006 and stale pins (fixed).
+CODE_COMMIT = c4d7b759a9cb69ba5133dc8a05b10f45e7ff24ba (with 393864d1, f7dd5580, 11816921); candidate 55bdd332e3e1042f104fff350be573b295e33a8b
+VERIFICATION = codex-to-claude-takeover.md; solid-scope-final-safety-gates.json; wave3-post-feedback-regression-after-solid-scope-final.json; verification/full-t3-solid-scope/receipt.json; verification/solid-scope-t0-impact-fail.log; review-solid-scope.md; verification/review-solid-scope-repro.txt
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_V2_W3_F2_PROVENANCE_SAFETY_RECOVERY (final-safety-gates.json Gate A and pre-freeze-tiers.json T0 claims; files unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_V2_W3_F2_PROVENANCE_SAFETY_RECOVERY
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/final-report.md
@@ -9,7 +20,7 @@ CODE_COMMIT = d9498f832d1c8379c6c2ce76858420ff14205b2f (WIP); recovery preregist
 VERIFICATION = results/scope-repair-after.json; results/incidence-repair-after.json; results/tamper-retest-after.json; verification/adapter3-baseline-scope-reproduction.json; verification/safety-recovery.json; verification/tiers-after-recovery.json; review-safety-recovery.md; correction-addendum.md; final-handoff.md
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_V2_W3_F2_RATIO_PROJECTION_LANGUAGE_GROUNDING (append-only recovery; original failed receipts unchanged; expanded provenance validation remains blocked by Adapter3 semantics)
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_V2_W3_F2_ADAPTER3_SEMANTIC_FALLBACK_SAFETY_HARDENING (same run, solid-scope-recovery-report.md)
 
 ## WAVE_ID = HYBRID_V2_W3_F2_RATIO_PROJECTION_LANGUAGE_GROUNDING
 

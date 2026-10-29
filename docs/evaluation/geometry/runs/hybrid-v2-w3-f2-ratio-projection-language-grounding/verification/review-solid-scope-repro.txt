@@ -1,0 +1,49 @@
+# Offline reproduction of review-solid-scope.md findings 1-3 (ALLOW_LIVE_AI=0, 0 provider calls)
+## research HEAD 96cd4c23ec7e219df0071d6aafc4f755d69cac15 (product c4d7b759)
+{"case": "F1 distance solid_id=s2", "a3": ["REFUSED", "SOURCE_OBJECT_MISMATCH"], "a4": ["SERVED", null]}
+{"case": "F1 angle solid_id=s2", "a3": ["REFUSED", "SOURCE_OBJECT_MISMATCH"], "a4": ["SERVED", null]}
+{"case": "F1 distance solid_id=foreign", "a3": ["REFUSED", "UNKNOWN_SOLID_ID"], "a4": ["SERVED", null]}
+{"case": "F1 angle solid_id=foreign", "a3": ["REFUSED", "UNKNOWN_SOLID_ID"], "a4": ["SERVED", null]}
+{"case": "F2 curved control", "a3": ["SERVED", null]}
+{"case": "F2 curved goal foreign", "a3": ["SERVED", null]}
+{"case": "F3 volume_ratio solid_id=foreign", "a3": ["SERVED", null]}
+## main 996f114b3480efe1b0d075dd4342530aaa12ddae
+{"case": "F1 distance solid_id=s2", "a3": ["REFUSED", "SCHEMA_INVALID"], "a4": ["SERVED", null]}
+{"case": "F1 angle solid_id=s2", "a3": ["SERVED", null], "a4": ["SERVED", null]}
+{"case": "F1 distance solid_id=foreign", "a3": ["REFUSED", "SCHEMA_INVALID"], "a4": ["SERVED", null]}
+{"case": "F1 angle solid_id=foreign", "a3": ["SERVED", null], "a4": ["SERVED", null]}
+{"case": "F2 curved control", "a3": ["SERVED", null]}
+{"case": "F2 curved goal foreign", "a3": ["SERVED", null]}
+{"case": "F3 volume_ratio solid_id=foreign", "a3": ["SERVED", null]}
+## probe source
+import copy, json, socket, sys
+from pathlib import Path
+socket.socket.connect = lambda *a, **k: (_ for _ in ()).throw(RuntimeError("offline"))
+sys.path.insert(0, ".")
+from app.ai.adapter3_simulation import run_typed_fact_next_route
+from app.ai.adapter4_route import run_typed_fact_next_v2_route
+
+RUNS = Path("../docs/evaluation/geometry/runs")
+SUP = json.loads((RUNS / "hybrid-v2-w3-f2-ratio-projection-language-grounding/inputs/recovery-supplementary.json").read_text(encoding="utf-8"))["control"]
+def show(name, p, v4=True):
+    r3 = run_typed_fact_next_route(copy.deepcopy(p)); out = {"case": name, "a3": [r3.status, r3.code]}
+    if v4:
+        r4 = run_typed_fact_next_v2_route({**copy.deepcopy(p), "schema_version": "typed-fact-next/2"}); out["a4"] = [r4.status, r4.code]
+    print(json.dumps(out, ensure_ascii=False))
+
+# F1: distance/angle goal with foreign/contradicting scope
+for sid in ["s2", "foreign"]:
+    for gt, tgt, q in [("distance", {"point": "S", "plane": list("ABCD")}, "Tính khoảng cách từ S đến (ABCD)."),
+                       ("angle", {"line": ["S", "C"], "plane": list("ABCD")}, "Tính góc giữa SC và (ABCD).")]:
+        p = copy.deepcopy(SUP); p["problem_text"] += " " + q
+        p["math_goals"].append({"goal_id": "g2", "kind": "measurement", "goal_type": gt, "solid_id": sid, "target": tgt, "quote": q})
+        show(f"F1 {gt} solid_id={sid}", p)
+# F2: curved route with foreign goal / premise scope
+cs = json.loads((RUNS / "simulation-coverage-visual-validation/corpus-dev.json").read_text(encoding="utf-8"))["cases"]
+c = next(x for x in cs if x.get("case_id", x.get("id")) == "demo6a-curved-cylinder-sections")
+p = copy.deepcopy(c["payload"]); show("F2 curved control", p, v4=False)
+q = copy.deepcopy(p); q["math_goals"][0]["solid_id"] = "foreign"; show("F2 curved goal foreign", q, v4=False)
+# F3: ratio goal with foreign scope
+A3 = json.loads((RUNS / "typedfact-next-adapter3-simulation/corpus-dev.json").read_text(encoding="utf-8"))["cases"]
+q = copy.deepcopy(next(x for x in A3 if x["case_id"] == "A3-DEV-02")["payload"]); q["math_goals"][0]["solid_id"] = "foreign"
+show("F3 volume_ratio solid_id=foreign", q, v4=False)
