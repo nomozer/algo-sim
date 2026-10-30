@@ -1,0 +1,27 @@
+{
+  "source_head": "a0fd2377",
+  "tree": "clean detached worktree .superpowers/worktrees/w3-f2-target-grammar-identity-compat (inside research worktree) at a0fd2377; clean before and after",
+  "product_unchanged_since": "dd17fbfb (Gate D product commit)",
+  "status": "T1_T2_PASS; T0_IMPACT_GATE_FAIL_ONLY_PENDING_NEW_FREEZE_11",
+  "T0": {
+    "command": "node scripts/impact.mjs --base 996f114b --json <local>",
+    "dry": false, "exit_code": 1, "label": "IMPACT_GATE_FAIL",
+    "selected": "pytest (backend changed) + src/code-index-sync.test.ts; 559 changed files vs main",
+    "vitest": "1 file, 3 passed",
+    "pytest": "11 failed, 15769 passed, 7 skipped, 2 deselected, 15 xfailed, 2 warnings in 662.07s",
+    "failed_nodes_identical_to_PENDING_NEW_FREEZE_11": true,
+    "note": "Not reported as IMPACT_GATE_PASS. The 11 are candidate-identity checks (CANDIDATE_MEASURED_SYSTEM_DRIFT); they can only pass after a new freeze, which is not authorized while publication is blocked.",
+    "log_sha256_bytes": "6e891b44f9aed2fa36023049e190d6499f26b45e95abc6fa78d21564bba8bf2f", "impact_json_sha256_bytes": "18468479d1ec856238185f5aab442a5b247f63f8e07d53fcba6ad48e37d6b8d0"
+  },
+  "T1": {
+    "geometry": {"command": "npm run test:domain:geometry", "exit_code": 0, "summary": "44 files, 872 passed", "log_sha256_bytes": "60da90859eba1d5d06c489aa6426069485915f7582c021b9f34bfeb254ecfeec"},
+    "semantic": {"command": "npm run test:domain:semantic", "exit_code": 0, "summary": "1 file, 24 passed", "log_sha256_bytes": "b7b179fa454170ccb3f40011588e604ff70d58007ac7551efb7d854a92f55083"},
+    "label": "DOMAIN_GATE_PASS",
+    "note": "0 frontend files changed vs main; backend domain covered by the full pytest in T0 and Gate D"
+  },
+  "T2": {"command": "npm run test:wave (vitest run && tsc -b && vite build)", "exit_code": 0,
+         "summary": "83 files, 1417 passed; tsc -b 0 errors; vite build OK", "label": "WAVE_GATE_PASS", "log_sha256_bytes": "3a1987c10948b716985fd9cbfd32c5a55ea74994b5cfba65daf2c708e6cca360"},
+  "raw_logs_local_only": ".superpowers/target-grammar-identity-recovery/{t0.log,t0-impact.json,t1-geometry.log,t1-semantic.log,t2.log}",
+  "not_claimed": "FULL_PRODUCT_GATE_PASS (T3 not run; freeze not authorized)",
+  "live_provider_calls": 0
+}

@@ -4,9 +4,9 @@
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/target-grammar-identity-recovery/f7-narrow-recovery/handoff.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/target-grammar-identity-recovery/f7-narrow-recovery/
-CLASSIFICATION = DEVELOPMENT_SECURITY_REGRESSION; continuation, no new wave; NOT_READY — PUBLICATION_BLOCKED; F7 fixed (typed BRIDGE_UNSUPPORTED_MEASUREMENT); R1/R2 TEST_GAP_CLOSED; R3 deferred minor; Gates A–C PASS; Gate D PRE_FREEZE_COMPATIBILITY_PASS (11 PENDING_NEW_FREEZE); independent review READY for gate (0 MAJOR); no replay/freeze/T3
+CLASSIFICATION = DEVELOPMENT_SECURITY_REGRESSION; continuation, no new wave; NOT_READY — PUBLICATION_BLOCKED; F7 fixed (typed BRIDGE_UNSUPPORTED_MEASUREMENT); R1/R2 TEST_GAP_CLOSED; R3 deferred minor; Gates A–C PASS; Gate D PRE_FREEZE_COMPATIBILITY_PASS (11 PENDING_NEW_FREEZE); independent review READY for gate (0 MAJOR); Wave 3 replay 50/72 · 72/72 · 62/72 · 0 wrong-served, 0 transitions; T1/T2 PASS, T0 FAIL only PENDING_NEW_FREEZE 11; no freeze/T3
 CODE_COMMIT = dd17fbfb8616c9b7ac325aa91c4dfec92577c64a
-VERIFICATION = root-cause.md; registration.json; registration-layer2.json; amendment.md; red.json; red-amended.json; green.json; gate-a.json; gate-b.json; gate-c.json; probes203.json; gate-d.json; freeze-cause-current.json; publication-assessment.md; independent-review.md; independent-review/
+VERIFICATION = technical-checkpoint.md; publication-exception-verification.json; publication-resolution-proposal.md; wave3-post-feedback-regression.json; tiers.json; root-cause.md; registration.json; registration-layer2.json; amendment.md; red.json; red-amended.json; green.json; gate-a.json; gate-b.json; gate-c.json; probes203.json; gate-d.json; freeze-cause-current.json; publication-assessment.md; independent-review.md; independent-review/
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_V2_W3_F2_TARGET_GRAMMAR_AND_CANONICAL_IDENTITY_RECOVERY (F7 limitation; R1/R2 test gaps; 8 F7 control cells re-pinned from internal error to typed capability refusal)
 CORRECTED_BY = NONE (own layers: amendment.md, registration-layer2.json)
