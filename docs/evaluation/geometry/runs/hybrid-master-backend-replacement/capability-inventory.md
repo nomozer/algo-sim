@@ -38,13 +38,46 @@ A cell is family × question type × plane kind. All 6 polyhedral families of th
 
 **Double count:** W3-A06 also appears verbatim in the development set (`historical_f2_verbatim`), so its cell counts it once per source.
 
+## Distance, angle and volume: one independent topology (`measurement-probe.json`)
+
+- **Producer:** `tools/measurement_probe.py`.
+- **Topology:** S.ABCD with a square base of side 2, SA ⊥ (ABCD) and SA = 2. The payloads, Vietnamese text and closed-form oracle (in the tool's docstring) were written by hand for this run; the answers were not read back from the engine.
+
+| question | /4 answer | oracle | outcome |
+|---|---|---|---|
+| d(A,(SBC)) | √2 | √2 | SERVED_CORRECT |
+| SC | 2√3 | 2√3 | SERVED_CORRECT |
+| d(AB, SC) | √2 | √2 | SERVED_CORRECT |
+| d(A, SC) | 2√6/3 | 2√6/3 | SERVED_CORRECT |
+| d(AD, (SBC)), AD ∥ (SBC) | √2 | √2 | SERVED_CORRECT |
+| d((SAB), (SCD)), planes meet | 0 | 0 | SERVED_CORRECT |
+| angle SC, (ABCD) | cos² 2/3 | 2/3 | SERVED_CORRECT |
+| angle SB, CD | cos² 1/2 | 1/2 | SERVED_CORRECT |
+| dihedral (SBC), (ABCD) | cos² 1/2 | 1/2 | SERVED_CORRECT |
+| V(S.ABCD) | 8/3 | 8/3 | SERVED_CORRECT |
+
+**Negative controls on the same solid:** 4/4 refused with no answer and no scene.
+
+| control | code |
+|---|---|
+| payload value that contradicts the text | `UNGROUNDED_VALUE` |
+| undeclared operand | `UNKNOWN_LABEL` |
+| question not in the source | `QUOTE_NOT_IN_SOURCE` |
+| degenerate plane | `INVALID_MATH_GOAL` |
+
+**State:** every listed question type is `SUPPORTED_END_TO_END` **on this topology only**. Breadth across the other families is NOT_MEASURED here. Earlier runs' locked suites cover more families, but they are not re-scored in this inventory.
+
 ## Not reconciled by this inventory
 
-These capabilities are served by /4 according to earlier runs but are **NOT_MEASURED here**, so this inventory makes no claim about them:
-- distance: point–plane, line–line, line–plane and plane–plane (`hybrid-b3-v2-distance-bridge`, `hybrid-v2-*`);
-- angles: line–plane, line–line and dihedral;
-- volume ratio and residual volume (planner bridge tests);
+**NOT_MEASURED here, so this inventory makes no claim about them:**
+- distance, angle and volume questions on families other than the one topology above;
+- volume ratio and residual volume, which have planner bridge tests only;
 - curved solids: refused by design on /4. Adapter /3 has curved capability, but /3 never counts as /4.
+
+**Task 2 step 3 decision:** no measured gap justifies a new primitive.
+- B01 and B34–36 are source-grammar gaps.
+- A06 is a kernel limit.
+- Curved solids and the pentagon base need certified curved geometry or nested radicals. Both are outside the exact kernel's current contract, so they stay refused.
 
 The plan forbids elevating /3 or prefilled support to /4. These rows must be measured on independently authored /4 gold payloads before any `SUPPORTED_*` claim.
 

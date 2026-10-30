@@ -52,6 +52,16 @@ This is the canonical mutable checkpoint for the one Master Epic. After compacti
 
 **W3-N47, re-checked:** this is not a taxonomy defect. The locked CIC-D1 order puts grounding before every capability exit, so N47 is kept as is. An independent height-phrasing probe found one fail-closed lexical gap ("chiều cao hình chóp" without "của"); it is recorded only.
 
-**Next exact action:** Task 2, part 2. Build independent /4 gold payloads, each with an exact closed-form oracle, for the distance, angle and volume rows. Record their states in `capability-inventory.md`.
+**Task 2, part 2: DONE** (`measurement-probe.json`, `tools/measurement_probe.py`)
+- Test solid: an independent S.ABCD, square base of side 2, SA ⊥ base, SA = 2, with a hand-written oracle.
+- Positives: 10/10 served correct. They cover 6 distance kinds, 3 angle kinds (cos²) and volume.
+- Negatives: 4/4 refused with typed codes.
+- Scope: one topology only. Other families are `NOT_MEASURED`.
+- No new primitive is justified by the measured gaps.
+
+**Next exact action:** Task 3, runtime unification. Keep it offline-only.
+1. Inventory production entry points, legacy synthesis calls, cache/policy identities and last consumers.
+2. Reassess the 20 `MIGRATION_CHECKLIST.md` gates against code and evidence.
+3. Production cutover is **blocked**: there is no authorized live-provider budget, and real-text extraction, differential correctness, latency and cost are required gates. The truthful verdict is `HYBRID_NOT_READY` until the Owner authorizes a budget.
 
 **Verdict so far:** `HYBRID_NOT_READY`. No production cutover and no legacy retirement is claimed.

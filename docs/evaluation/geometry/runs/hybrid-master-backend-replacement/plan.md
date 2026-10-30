@@ -26,10 +26,10 @@ Interfaces: immutable `SourceReference(path, spans)` records on `ExtractionResul
 
 ## Task 2: Recomposition and capability inventory
 
-- [ ] Reconcile planner/Registry/engine contracts against the master requirements, using existing contract-driven composition tests and fresh independently authored geometry controls.
-- [ ] Record family states as SUPPORTED_END_TO_END / SUPPORTED_WITH_LIMITS / REPRESENTABLE_ONLY / UNSUPPORTED with a route-specific meaning. Never elevate /3 or a prefilled payload to production /4 support.
-- [ ] Add reusable primitives only where a concrete unsupported goal and an independent exact oracle justify them; each new behavior follows RED/GREEN and source/engine tamper tests. Keep the existing bounded effect resolver.
-- [ ] Track gaps that need a contract extension, exact construction, or certified curved/multi-object behavior; preserve served regression capabilities.
+- [x] Reconcile planner/Registry/engine contracts against the master requirements, using existing contract-driven composition tests and fresh independently authored geometry controls (`tests/geometry` incl. composition suites GREEN; `measurement-probe.json` 10/10 + 4/4 negatives).
+- [x] Record family states as SUPPORTED_END_TO_END / SUPPORTED_WITH_LIMITS / REPRESENTABLE_ONLY / UNSUPPORTED with a route-specific meaning. Never elevate /3 or a prefilled payload to production /4 support (`capability-inventory.md`).
+- [x] Add reusable primitives only where a concrete unsupported goal and an independent exact oracle justify them; each new behavior follows RED/GREEN and source/engine tamper tests. Keep the existing bounded effect resolver. **Outcome: none justified by measured gaps (grammar, kernel limit, out-of-contract curved/nested radicals).**
+- [x] Track gaps that need a contract extension, exact construction, or certified curved/multi-object behavior; preserve served regression capabilities (gap table in `capability-inventory.md`; regression 0 transitions).
 
 ## Task 3: Runtime unification and migration
 
