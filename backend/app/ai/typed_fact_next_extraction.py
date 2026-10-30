@@ -22,10 +22,18 @@ class Extractor(Protocol):
 
 
 @dataclass(frozen=True)
+class SourceReference:
+    """Every exact half-open code-point occurrence of one extracted quote. Locates text; certifies no premise."""
+    path: tuple[str | int, ...]
+    spans: tuple[tuple[int, int], ...]
+
+
+@dataclass(frozen=True)
 class ExtractionResult:
     payload: TypedFactNextPayloadV2 | None
     code: str | None
     diagnostics: dict[str, Any]
+    source_references: tuple[SourceReference, ...] = ()
 
 
 class ReplayExtractor:
@@ -60,15 +68,29 @@ class TransportExtractor:
         return parse_response(body, {})
 
 
-def _check_quotes(value: Any, source_text: str) -> None:
+def _occurrences(source_text: str, quote: str) -> tuple[tuple[int, int], ...]:
+    spans, start = [], source_text.find(quote)
+    while start != -1:                                        # overlapping occurrences count too: none is chosen
+        spans.append((start, start + len(quote)))
+        start = source_text.find(quote, start + 1)
+    return tuple(spans)
+
+
+def _check_quotes(value: Any, source_text: str, path: tuple[str | int, ...] = (),
+                  found: list[SourceReference] | None = None) -> list[SourceReference]:
+    """Reject non-verbatim quotes; record raw (pre-normalization) occurrences in `found`."""
+    found = [] if found is None else found
     if isinstance(value, dict):
         for key, item in value.items():
-            if key == "quote" and (not isinstance(item, str) or not item or item not in source_text):
-                raise _TuChoiAI("QUOTE_NOT_IN_SOURCE", "quote is not verbatim source")
-            _check_quotes(item, source_text)
+            if key == "quote":
+                if not isinstance(item, str) or not item or item not in source_text:
+                    raise _TuChoiAI("QUOTE_NOT_IN_SOURCE", "quote is not verbatim source")
+                found.append(SourceReference((*path, key), _occurrences(source_text, item)))
+            _check_quotes(item, source_text, (*path, key), found)
     elif isinstance(value, (list, tuple)):
-        for item in value:
-            _check_quotes(item, source_text)
+        for index, item in enumerate(value):
+            _check_quotes(item, source_text, (*path, index), found)
+    return found
 
 
 def _check_premise_roles(payload: TypedFactNextPayloadV2, source_text: str) -> None:
@@ -101,7 +123,7 @@ def extract_typed_fact_next_v2(problem_text: str, extractor: Extractor) -> Extra
         # Validate before NonEmptyText strips whitespace in the canonical model.
         if raw.get("problem_text") != problem_text:
             return ExtractionResult(None, "REPLAY_SOURCE_IDENTITY_MISMATCH", diagnostics)
-        _check_quotes(raw, problem_text)
+        references = tuple(_check_quotes(raw, problem_text))
         payload = parse_typed_fact_next_v2(raw).model_copy(update={"problem_text": problem_text})
         _check_premise_roles(payload, problem_text)
     except (TypedFactNextValidationError, _TuChoiAI) as exc:
@@ -109,4 +131,4 @@ def extract_typed_fact_next_v2(problem_text: str, extractor: Extractor) -> Extra
     except Exception:
         return ExtractionResult(None, "EXTRACTOR_INTERNAL_ERROR", diagnostics)
     diagnostics["validation"] = "SCHEMA_AND_SOURCE_IDENTITY/QUOTE_VALID"
-    return ExtractionResult(payload, None, diagnostics)
+    return ExtractionResult(payload, None, diagnostics, references)

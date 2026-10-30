@@ -1,5 +1,6 @@
 """Source-only extraction boundary: replay and fake transport, never a provider call."""
 from copy import deepcopy
+from dataclasses import FrozenInstanceError
 import importlib.util
 import json
 
@@ -136,3 +137,68 @@ def test_transport_exception_does_not_leak_details():
     result = extract_typed_fact_next_v2(TEXT, TransportExtractor(transport))
     assert result.payload is None and result.code == "PROVIDER_ERROR"
     assert "private token" not in repr(result)
+
+
+def test_source_references_keep_all_occurrences_in_original_unicode_source():
+    from app.ai.typed_fact_next_extraction import ReplayExtractor, extract_typed_fact_next_v2
+
+    text = " \n" + TEXT + "\n " + TEXT
+    raw = payload(text)
+    result = extract_typed_fact_next_v2(text, ReplayExtractor({text: raw}))
+    assert result.code is None
+    references = {ref.path: ref for ref in result.source_references}
+    assert set(references) == {("solids", 0, "quote"), ("simulation_goals", 0, "quote")}
+    for path, quote in [(('solids', 0, 'quote'), raw['solids'][0]['quote']),
+                        (('simulation_goals', 0, 'quote'), raw['simulation_goals'][0]['quote'])]:
+        spans = references[path].spans
+        assert len(spans) == 2
+        assert [text[start:end] for start, end in spans] == [quote, quote]
+        assert spans[0][0] < spans[1][0]
+    assert references[("solids", 0, "quote")].spans[0][0] == 2
+
+
+def test_source_references_are_immutable_and_detached_from_extractor_output():
+    from app.ai.typed_fact_next_extraction import extract_typed_fact_next_v2
+
+    raw = payload()
+    class LocalExtractor:
+        def extract(self, source_text):
+            return raw
+
+    result = extract_typed_fact_next_v2(TEXT, LocalExtractor())
+    original = result.source_references
+    raw["solids"][0]["quote"] = "changed after extraction"
+    assert isinstance(original, tuple) and original
+    assert result.source_references == original
+    with pytest.raises(FrozenInstanceError):
+        original[0].spans = ()
+    assert all(isinstance(ref.spans, tuple) and isinstance(ref.path, tuple) for ref in original)
+
+
+def test_role_refusal_exposes_no_partial_source_reference_evidence():
+    from app.ai.typed_fact_next_extraction import ReplayExtractor, extract_typed_fact_next_v2
+
+    text = TEXT + " Chứng minh rằng SA vuông góc với (ABC)."
+    raw = payload(text)
+    raw["premises"] = [{"kind": "perpendicular_line_plane",
+                        "args": {"line": ["S", "A"], "plane": ["A", "B", "C"]},
+                        "quote": "SA vuông góc với (ABC)"}]
+    result = extract_typed_fact_next_v2(text, ReplayExtractor({text: raw}))
+    assert result.code == "GOAL_CLAUSE_NOT_PREMISE" and result.payload is None
+    assert result.source_references == ()
+
+
+def test_provider_cannot_supply_its_own_source_reference_certificate():
+    from app.ai.typed_fact_next_extraction import ReplayExtractor, extract_typed_fact_next_v2
+
+    raw = payload()
+    raw["source_references"] = [{"path": ["solids", 0, "quote"], "spans": [[0, len(TEXT)]]}]
+    result = extract_typed_fact_next_v2(TEXT, ReplayExtractor({TEXT: raw}))
+    assert result.code == "INVALID_TYPED_FACT_NEXT" and result.payload is None
+    assert result.source_references == ()
+
+
+def test_overlapping_occurrences_are_all_reported():
+    from app.ai.typed_fact_next_extraction import _occurrences
+
+    assert _occurrences("S.AAA", "AA") == ((2, 4), (3, 5))

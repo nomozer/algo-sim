@@ -1,16 +1,52 @@
 # ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT — current execution state
 
-This is the canonical mutable checkpoint for the one Master Epic. Resume from Git and this file after compaction; do not repeat valid W4 audits.
+This is the canonical mutable checkpoint for the one Master Epic. After compaction, resume from Git and this file. Do not repeat W4 audits that are still valid.
 
-- Branch: research/hybrid-master-backend-replacement.
-- Current HEAD/start baseline: f986e897bd266d06d4a9c5fa78c05463b7b247bf (W4 closure main, origin/main and live GitHub matched).
-- W4 first remote verification: 94055c98350289c54a2cf15311a20fbabf08f0d1; product61ade29e, candidate182a7785, measured118/54b5b565…; cache131/LLM_ONLY/live0. Durable receipts: ../geometry-generalization-and-pedagogical-construction/integration/.
-- Cleanup: SAFE_CLEANUP_COMPLETE_WITH_RETAINED_EXCEPTIONS; 16→12 registered worktrees before the new Master worktree; three verifier directories removed, W4 worktree unregistered but ACL residual retained; W4 branch deleted; Vite3017 stopped after live identity/zero-connection check; dirty/unmerged/uncertain evidence/backups preserved.
-- Architecture phase: existing-owner audit and master contract established; Task1 source references/identity unification next. Existing planner already searches Registry effects and reuses producers; no second planner will be built.
-- Completed components: W4 integration, remote verification, safe cleanup/exception inventory; read current runtime/extraction/bridge/planner contracts and callers. No Master product implementation yet.
-- Migration coverage: unchanged baseline. Hybrid /4 is local offline-replay opt-in; live understanding/production cutover NOT_MEASURED/NOT_READY.
-- Remaining legacy: /api/analyze default still uses pipeline LLM synthesis; old six-family compiler opt-in; Adapter /3 compatibility capabilities have not migrated to /4. No retirement yet.
-- Tests/evidence: W4 fresh160 tests, 144 replay rows identical (67/72,72/72,0 wrong-served), locked96/96, probes203 unchanged; post integration176 pass plus one sandbox-temp setup error rerun1 pass; docs42 pass and full docs audit PASS; original T0–T3 hashes verified, Full T3 not rerun for product-identical closure.
-- Open problems: canonical model lacks general standalone/composite coverage; /4 refuses curved/qualified identity cases by design; no live provider budget or independent live E2E/token/latency evidence; all 20 migration gates need current reconciliation. These are not permissions to invent support or cut over.
-- Next exact action: fresh-context design/feasibility check of contract/plan; write source-reference RED tests, run them, implement minimal extension in existing extraction and canonical resolver reuse, then targeted GREEN and checkpoint commit. Continue remaining plan tasks autonomously.
-- Final verdict so far: HYBRID_NOT_READY. No production cutover or legacy-retired claim.
+**Identity**
+- Branch: `research/hybrid-master-backend-replacement`, in worktree `.superpowers/worktrees/hybrid-master-backend-replacement`.
+- The worktree has no venv of its own; use the root `backend/.venv`.
+- Start baseline: `f986e897`. W4 closure: `main` = `origin/main` = live GitHub.
+- W4 first remote verification: `94055c98`.
+  - product `61ade29e`, candidate `182a7785`, measured 118 files `54b5b565…`;
+  - cache 131, `LLM_ONLY`, live 0;
+  - receipts in `../geometry-generalization-and-pedagogical-construction/integration/`.
+- Cleanup: `SAFE_CLEANUP_COMPLETE_WITH_RETAINED_EXCEPTIONS`. The root-local log of that step is in `.superpowers/master-hybrid-backend-replacement/`.
+
+**Commits**
+- `f5ae588b`: the master contract, plan and this checkpoint.
+
+**Task 1 — canonical source references and one identity authority: DONE** (receipt `task1-green.json`)
+- `typed_fact_next_extraction.py`: immutable `SourceReference(path, spans)` on `ExtractionResult.source_references`.
+  - It records every exact half-open code-point occurrence of each raw quote, overlapping ones included.
+  - It is collected by the existing quote walker before normalization and returned only after full validation; a refusal returns `()`.
+  - A provider cannot supply its own reference (`INVALID_TYPED_FACT_NEXT`). The provider schema and prompt are unchanged.
+- `typed_fact_next_bridge.py::_kiem_pham_vi_tien_de`: the private identity copy is deleted. The bridge delegates to `canonical_vertex_ref`, the sole authority, and keeps its `TuChoi` code translation.
+  - Root identities are unchanged.
+  - A derived-solid namespace now resolves through its parent chart.
+- Tests:
+  - RED, then GREEN, for 5 new extraction tests and 1 bridge authority test.
+  - One locked source-text mutant anchor was retargeted; the oracle and the fault (scope ignored) are unchanged.
+  - Targeted run: 14679 passed. The only failures are 11 pending-freeze checks plus 1 dirty-tree check.
+
+**Impact**
+- `CACHE_VERSION` stays 131: `/api/analyze` cannot reach these modules.
+- Model surface unchanged.
+- Candidate re-freeze is **pending**. It belongs to Task 4, in a separate commit.
+
+**State**
+- Migration coverage: unchanged baseline. Hybrid /4 is local offline-replay opt-in. Live understanding and production cutover are `NOT_MEASURED` / `NOT_READY`.
+- Remaining legacy, none retired yet:
+  - `/api/analyze` still uses LLM_ONLY synthesis by default;
+  - the old six-family compiler is still opt-in;
+  - Adapter /3 compatibility capabilities have not migrated to /4.
+- Open problems:
+  - the canonical model lacks general standalone and composite coverage;
+  - /4 refuses curved and qualified-identity cases by design;
+  - there is no live provider budget;
+  - all 20 migration gates need reconciling against the current code.
+
+**Next exact action:** Task 2, recomposition and capability inventory.
+1. Reconcile planner, Registry and engine against the contract, using the existing composition tests.
+2. Record family states (`SUPPORTED_END_TO_END` / `SUPPORTED_WITH_LIMITS` / `REPRESENTABLE_ONLY` / `UNSUPPORTED`) per route in `capability-inventory.md`.
+
+**Verdict so far:** `HYBRID_NOT_READY`. No production cutover and no legacy retirement is claimed.

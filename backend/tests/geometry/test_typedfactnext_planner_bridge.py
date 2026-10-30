@@ -680,6 +680,19 @@ def test_qualified_constructed_point_keeps_its_verified_producer_identity():
     assert qualified.points == control.points and qualified.trace == control.trace
 
 
+def test_bridge_ownership_resolves_identity_through_the_one_canonical_resolver(monkeypatch):
+    # Master contract: `canonical_vertex_ref` is the sole identity authority; the bridge keeps no private copy.
+    from app.ai.function_route import run_typed_fact_next_planner_route
+    from app.simulation.geometry_functions import typed_fact_next_bridge as B
+    real, calls = B.canonical_vertex_ref, []
+    monkeypatch.setattr(B, "canonical_vertex_ref", lambda p, ref, scope=None: calls.append(ref) or real(p, ref, scope))
+    payload = _next(NAMED.replace(" " + RATIO_Q, ""), [deepcopy(SEC)], [deepcopy(SEC_GOAL)])
+    payload["derived_sections"][0]["through_point"] = "pyr::M"
+    r = run_typed_fact_next_planner_route(payload)
+    assert r.status == "SERVED", (r.code, r.reason)
+    assert "pyr::M" in calls
+
+
 def test_bridge_accepts_matching_units_and_declared_qualified_vertices():
     from app.ai.function_route import run_typed_fact_next_planner_route
     payload = _next(NAMED.replace(" " + RATIO_Q, ""), [deepcopy(SEC)], [deepcopy(SEC_GOAL)])

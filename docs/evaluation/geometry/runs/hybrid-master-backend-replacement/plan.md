@@ -17,12 +17,12 @@ Files: extend `backend/app/ai/typed_fact_next_extraction.py` and `backend/app/si
 
 Interfaces: immutable `SourceReference(path, spans)` records on `ExtractionResult.source_references`; existing `extract_typed_fact_next_v2(text, extractor)` signature remains. `canonical_vertex_ref(payload, ref, scope)` remains the sole identity resolver; the bridge retains its typed refusal translation.
 
-- [ ] Write tests proving successful extraction supplies exact source offsets for all quote-bearing fields, repeated occurrences and Unicode/outer whitespace; refused extraction has no reference evidence; records cannot be mutated and raw later mutation does not affect them.
-- [ ] Run and observe RED for the missing reference API.
-- [ ] Extend the existing quote walker to collect immutable references while preserving its rejection semantics; return references only after full extraction validation. No provider schema or prompt change.
-- [ ] Replace the bridge's duplicate identity calculation with the existing canonical resolver, preserving code/detail translation. Verify qualified and derived identities through existing scope/identity suites; do not widen unsupported geometry.
-- [ ] GREEN: extraction, offline orchestration, bridge, ownership, locked identity and source-grounding suites. Measure offline extraction/grounding separately from live NLU.
-- [ ] Commit the bounded implementation and record cache/candidate/surface impact.
+- [x] Write tests proving successful extraction supplies exact source offsets for all quote-bearing fields, repeated occurrences and Unicode/outer whitespace; refused extraction has no reference evidence; records cannot be mutated and raw later mutation does not affect them.
+- [x] Run and observe RED for the missing reference API.
+- [x] Extend the existing quote walker to collect immutable references while preserving its rejection semantics; return references only after full extraction validation. No provider schema or prompt change.
+- [x] Replace the bridge's duplicate identity calculation with the existing canonical resolver, preserving code/detail translation. Verify qualified and derived identities through existing scope/identity suites; do not widen unsupported geometry.
+- [x] GREEN: extraction, offline orchestration, bridge, ownership, locked identity and source-grounding suites. Measure offline extraction/grounding separately from live NLU.
+- [x] Commit the bounded implementation and record cache/candidate/surface impact (`task1-green.json`).
 
 ## Task 2: Recomposition and capability inventory
 

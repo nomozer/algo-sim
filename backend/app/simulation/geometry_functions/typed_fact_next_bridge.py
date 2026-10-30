@@ -16,6 +16,7 @@ from .typed_fact_next import (
     _ARGS_LOI,
     _ARGS_GOC_VUONG,
     CONSTRUCTED_OUTPUTS,
+    canonical_vertex_ref,
     measurement_scope,
     _derived_parents,
     resolve_solid_name,
@@ -122,14 +123,10 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
             vertices.setdefault(label, set()).add(sid)
 
     def identity(ref, scope=None):
-        ns, label = parse_qualified_ref(ref)
-        solid = solids.get(ns or scope)
-        if solid is not None:
-            return solid.canonical_vertex(label)
-        identities = {s.canonical_vertex(label) for s in solids.values() if label in s.local_vertices()}
-        if len(identities) > 1:
-            raise TuChoi('AMBIGUOUS_REFERENCE', f'tham chiếu {ref!r} có nhiều danh tính')
-        return next(iter(identities), label)
+        try:
+            return canonical_vertex_ref(p, ref, scope)
+        except TypedFactNextValidationError as e:
+            raise TuChoi(e.code, e.detail) from None
 
     def ref_owners(ref, scope=None):
         return owners.get(identity(ref, scope), set())

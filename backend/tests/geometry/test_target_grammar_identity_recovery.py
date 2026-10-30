@@ -133,8 +133,9 @@ def test_s8_identity_scope_mutant_is_caught_by_behavior(monkeypatch):
     def oracle():
         assert D.s8_raises(p) is None
     oracle()
+    # Same fault (scope ignored) at the identity authority the bridge now delegates to (hybrid-master Task 1).
     D.mutate_many(monkeypatch,B,'_kiem_pham_vi_tien_de',[
-        ('solid = solids.get(ns or scope)', 'solid = solids.get(ns)')])
+        ('return canonical_vertex_ref(p, ref, scope)', 'return canonical_vertex_ref(p, ref)')])
     with pytest.raises(AssertionError): oracle()
 
 
