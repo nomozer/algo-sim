@@ -83,6 +83,7 @@ def run_hybrid_offline(problem_text: str, extractor: Extractor, *, policy: Route
         'planner': {'status': 'NOT_CERTIFIED'}, 'engine': {'status': 'NOT_CERTIFIED'},
         'failure_stage': None, 'failure_kind': None,
         'individual_source_gate_planner_engine_latency': 'UNKNOWN_NOT_INSTRUMENTED',
+        'source_references': [],   # offsets of every validated quote; locates text, certifies nothing (Source Gate does)
     }
 
     def finish(result: KetQuaTuyen, failure_stage: str | None = None,
@@ -125,6 +126,8 @@ def run_hybrid_offline(problem_text: str, extractor: Extractor, *, policy: Route
     extraction = extract_typed_fact_next_v2(source, extractor)
     receipt['stages'].append({'name': 'extraction', 'seconds': max(0.0, perf_counter() - before),
                               'code': extraction.code, 'validation': extraction.diagnostics})
+    receipt['source_references'] = [{'path': list(r.path), 'spans': [list(s) for s in r.spans]}
+                                    for r in extraction.source_references]
     stopped = interruption('extraction')
     if stopped is not None:
         return stopped

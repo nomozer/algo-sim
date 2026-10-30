@@ -28,6 +28,33 @@ def test_offline_orchestrator_exists():
     assert importlib.util.find_spec('app.ai.hybrid_offline') is not None
 
 
+def test_receipt_carries_exact_source_spans_for_every_quote_and_none_on_refused_extraction():
+    # Hybrid master Phase B: provenance survives into the execution receipt (offsets only, never the source text).
+    raw = deepcopy(next(c for c in CASES if c['id'] == 'PARA-0')['payload'])
+    source = raw['problem_text']
+    receipt = api().run_hybrid_offline(source, replay(raw), policy=enabled()).receipt
+    refs = receipt['source_references']
+    assert refs and all(r['spans'] for r in refs)
+    for r in refs:
+        value = raw
+        for step in r['path']:
+            value = value[step]
+        assert all(source[a:b] == value for a, b in r['spans'])
+    quotes = []
+    def walk(v):
+        if isinstance(v, dict):
+            quotes.extend(x for k, x in v.items() if k == 'quote')
+            [walk(x) for x in v.values()]
+        elif isinstance(v, list):
+            [walk(x) for x in v]
+    walk(raw)
+    assert len(refs) == len(quotes)
+    spoofed = deepcopy(raw)
+    spoofed['solids'][0]['quote'] = 'không có trong đề'
+    refused = api().run_hybrid_offline(source, replay(spoofed), policy=enabled()).receipt
+    assert refused['source_references'] == []
+
+
 def test_disabled_and_default_policy_never_invoke_extractor(monkeypatch):
     class Bomb:
         def extract(self, text):
