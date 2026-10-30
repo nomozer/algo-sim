@@ -30,7 +30,7 @@ def v2_input(p):
 
 
 def test_frozen_inputs_and_registered_alternatives():
-    assert hashlib.sha256((OUT / 'cases.json').read_bytes()).hexdigest() == REG['input_sha256']
+    assert hashlib.sha256((OUT / 'cases.json').read_bytes().replace(b'\r\n', b'\n')).hexdigest() == REG['input_sha256']
     assert {k: sorted(map(sorted, v)) for k,v in T.GOAL_TARGET_ALTERNATIVES.items()} == {
         k: sorted(v) for k,v in REG['registered_alternatives'].items()}
 
