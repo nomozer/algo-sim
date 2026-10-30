@@ -1,0 +1,20 @@
+{
+ "schema": "hybrid-master-backend-replacement/tiers/1",
+ "candidate_commit": "bf2c3eaa35dd091a95c212e1d323e60348d6286b",
+ "product_commit": "f5ad105345f01617613559326e22bf9221b12d93",
+ "measured_system": {"tree_hash": "44b02a623cf551647db05ec2fb456656ece9bf13d27339f6d775a2471413c7ac", "files": 118},
+ "cache_version": "131",
+ "default_mode": "LLM_ONLY",
+ "provider_calls": 0,
+ "T0": {"command": "cd frontend && node scripts/impact.mjs --base f986e897", "head": "bf2c3eaa", "verdict": "IMPACT_GATE_PASS",
+        "pytest": {"passed": 15929, "skipped": 7, "deselected": 2, "xfailed": 15, "failed": 0},
+        "log_sha256_local": "863f3667b3aa6f93e84487eac8d1126bee2111ae2af0f0f75f77c643cb194428",
+        "environment_note": "worktree backend/.venv and frontend/node_modules are junctions to the main checkout (gitignored)"},
+ "T1": {"verdict": "COVERED_BY_T2", "note": "T2 runs every vitest file, a superset of test:domain:geometry and test:domain:semantic"},
+ "T2": {"command": "cd frontend && npm run test:wave", "head": "bf2c3eaa", "verdict": "PASS",
+        "vitest": {"files": 84, "passed": 1424}, "tsc_and_build": "PASS",
+        "log_sha256_local": "dfece931834aa1545c1ed0c1e3d0587eba22375f143643a08c1fa03c15e7d4b7"},
+ "regression": {"receipt": "inventory-phase-d.json", "wave3": "67/72 served-correct, 72/72 refused, 62/72 reasons, 0 wrong-served, 0 transitions",
+                "locked96": "96/96", "probes203": "0 served negatives, 0 internal, 0 transitions"},
+ "T3": "see full-t3.json"
+}
