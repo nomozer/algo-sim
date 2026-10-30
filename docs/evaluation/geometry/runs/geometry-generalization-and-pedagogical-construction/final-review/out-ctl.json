@@ -1,0 +1,22 @@
+{
+ "K1.canon": [
+  "SERVED",
+  null,
+  "{'mg1': {'coef': '96/25', 'dim': 0, 'unit': None}}"
+ ],
+ "K2.voi_so_do": [
+  "SERVED",
+  null,
+  "{'mg1': {'coef': '96/25', 'dim': 0, 'unit': None}}"
+ ],
+ "K3.rp1_tg_day": [
+  "SERVED",
+  null,
+  "{'mg1': {'coef': '72', 'dim': 0, 'unit': None}}"
+ ],
+ "K4.cb1_voi": [
+  "SERVED",
+  null,
+  "{'mg1': {'coef': '64', 'dim': 0, 'unit': None}}"
+ ]
+}

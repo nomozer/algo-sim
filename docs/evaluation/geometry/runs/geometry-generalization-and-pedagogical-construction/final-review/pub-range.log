@@ -1,0 +1,2 @@
+VIOLATION rule=GOOGLE_API_KEY path=backend/tests/geometry/test_docs_information_architecture.py blob=24d45cd6304f1194340c27e043c402fca1762052 line=396 exception=PENDING_OWNER_DECISION
+SUMMARY scanned=161 messages=19 violations=1 pending_exception=1 verdict=BLOCKED

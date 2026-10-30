@@ -1,0 +1,515 @@
+{
+ "K1.canon": {
+  "derived_sections": [
+   {
+    "parallel_line_a": [
+     "D",
+     "E"
+    ],
+    "parallel_line_b": [
+     "D",
+     "F"
+    ],
+    "plane_kind": "through_point_parallel_two_lines",
+    "plane_name": "α",
+    "quote": "Gọi (α) là mặt phẳng qua K, song song với hai đường thẳng DE và DF",
+    "section_id": "sec",
+    "stated_intersections": [],
+    "target_solid_id": "s1",
+    "through_point": "K"
+   }
+  ],
+  "length_unit": "1",
+  "math_goals": [
+   {
+    "goal_id": "mg1",
+    "goal_type": "area",
+    "kind": "measurement",
+    "quote": "Hãy tính diện tích thiết diện tạo bởi mặt phẳng (α) với hình chóp S.DEF",
+    "solid_id": "s1",
+    "target": {
+     "section_id": "sec"
+    }
+   }
+  ],
+  "premises": [
+   {
+    "kind": "right_angle",
+    "args": {
+     "right_at": "D",
+     "vertices": [
+      "D",
+      "E",
+      "F"
+     ]
+    },
+    "quote": "có đáy DEF là tam giác vuông tại D",
+    "solid_id": "s1"
+   },
+   {
+    "kind": "perpendicular_line_plane",
+    "args": {
+     "line": [
+      "S",
+      "D"
+     ],
+     "plane": [
+      "D",
+      "E",
+      "F"
+     ]
+    },
+    "quote": "cạnh bên SD vuông góc với mặt phẳng (DEF)",
+    "solid_id": "s1"
+   },
+   {
+    "kind": "segment_length",
+    "args": {
+     "segment": [
+      "D",
+      "E"
+     ],
+     "value": "6"
+    },
+    "quote": "biết DE = 6",
+    "solid_id": "s1"
+   },
+   {
+    "kind": "segment_length",
+    "args": {
+     "segment": [
+      "D",
+      "F"
+     ],
+     "value": "8"
+    },
+    "quote": "DF = 8",
+    "solid_id": "s1"
+   },
+   {
+    "kind": "segment_length",
+    "args": {
+     "segment": [
+      "S",
+      "D"
+     ],
+     "value": "12"
+    },
+    "quote": "và SD = 12",
+    "solid_id": "s1"
+   },
+   {
+    "kind": "divide_segment",
+    "args": {
+     "point": "K",
+     "ratio": "2/5",
+     "segment": [
+      "S",
+      "E"
+     ]
+    },
+    "quote": "Lấy điểm K trên cạnh SE sao cho SK = 2/5 SE",
+    "solid_id": "s1"
+   }
+  ],
+  "problem_text": "Xét hình chóp S.DEF có đáy DEF là tam giác vuông tại D, cạnh bên SD vuông góc với mặt phẳng (DEF), biết DE = 6, DF = 8, và SD = 12. Lấy điểm K trên cạnh SE sao cho SK = 2/5 SE. Gọi (α) là mặt phẳng qua K, song song với hai đường thẳng DE và DF. Hãy tính diện tích thiết diện tạo bởi mặt phẳng (α) với hình chóp S.DEF.",
+  "relations": [],
+  "schema_version": "typed-fact-next/2",
+  "simulation_goals": [
+   {
+    "goal_id": "sg1",
+    "kind": "construct_object",
+    "quote": "Xét hình chóp S.DEF",
+    "target_solid_id": "s1"
+   }
+  ],
+  "solids": [
+   {
+    "notation": "S.DEF",
+    "quote": "Xét hình chóp S.DEF",
+    "solid_id": "s1",
+    "solid_type": "pyramid"
+   }
+  ]
+ },
+ "K2.voi_so_do": {
+  "derived_sections": [
+   {
+    "parallel_line_a": [
+     "D",
+     "E"
+    ],
+    "parallel_line_b": [
+     "D",
+     "F"
+    ],
+    "plane_kind": "through_point_parallel_two_lines",
+    "plane_name": "α",
+    "quote": "Gọi (α) là mặt phẳng qua K, song song với hai đường thẳng DE và DF",
+    "section_id": "sec",
+    "stated_intersections": [],
+    "target_solid_id": "s1",
+    "through_point": "K"
+   }
+  ],
+  "length_unit": "1",
+  "math_goals": [
+   {
+    "goal_id": "mg1",
+    "goal_type": "area",
+    "kind": "measurement",
+    "quote": "Hãy tính diện tích thiết diện tạo bởi mặt phẳng (α) với hình chóp S.DEF",
+    "solid_id": "s1",
+    "target": {
+     "section_id": "sec"
+    }
+   }
+  ],
+  "premises": [
+   {
+    "kind": "right_angle",
+    "args": {
+     "right_at": "D",
+     "vertices": [
+      "D",
+      "E",
+      "F"
+     ]
+    },
+    "quote": "với mặt đáy DEF là tam giác vuông ở D",
+    "solid_id": "s1"
+   },
+   {
+    "kind": "perpendicular_line_plane",
+    "args": {
+     "line": [
+      "S",
+      "D"
+     ],
+     "plane": [
+      "D",
+      "E",
+      "F"
+     ]
+    },
+    "quote": "đường thẳng SD vuông góc với mặt phẳng (DEF)",
+    "solid_id": "s1"
+   },
+   {
+    "kind": "segment_length",
+    "args": {
+     "segment": [
+      "D",
+      "E"
+     ],
+     "value": "6"
+    },
+    "quote": "có số đo DE = 6",
+    "solid_id": "s1"
+   },
+   {
+    "kind": "segment_length",
+    "args": {
+     "segment": [
+      "D",
+      "F"
+     ],
+     "value": "8"
+    },
+    "quote": "đoạn DF = 8",
+    "solid_id": "s1"
+   },
+   {
+    "kind": "segment_length",
+    "args": {
+     "segment": [
+      "S",
+      "D"
+     ],
+     "value": "12"
+    },
+    "quote": "độ dài SD = 12",
+    "solid_id": "s1"
+   },
+   {
+    "kind": "divide_segment",
+    "args": {
+     "point": "K",
+     "ratio": "2/5",
+     "segment": [
+      "S",
+      "E"
+     ]
+    },
+    "quote": "Lấy điểm K trên cạnh SE sao cho SK = 2/5 SE",
+    "solid_id": "s1"
+   }
+  ],
+  "problem_text": "Cho hình chóp S.DEF với mặt đáy DEF là tam giác vuông ở D, đường thẳng SD vuông góc với mặt phẳng (DEF), có số đo DE = 6, đoạn DF = 8, độ dài SD = 12. Lấy điểm K trên cạnh SE sao cho SK = 2/5 SE. Gọi (α) là mặt phẳng qua K, song song với hai đường thẳng DE và DF. Hãy tính diện tích thiết diện tạo bởi mặt phẳng (α) với hình chóp S.DEF.",
+  "relations": [],
+  "schema_version": "typed-fact-next/2",
+  "simulation_goals": [
+   {
+    "goal_id": "sg1",
+    "kind": "construct_object",
+    "quote": "Cho hình chóp S.DEF",
+    "target_solid_id": "s1"
+   }
+  ],
+  "solids": [
+   {
+    "notation": "S.DEF",
+    "quote": "Cho hình chóp S.DEF",
+    "solid_id": "s1",
+    "solid_type": "pyramid"
+   }
+  ]
+ },
+ "K3.rp1_tg_day": {
+  "derived_sections": [
+   {
+    "parallel_line_a": [
+     "D",
+     "D'"
+    ],
+    "parallel_line_b": [
+     "D",
+     "F"
+    ],
+    "plane_kind": "through_point_parallel_two_lines",
+    "plane_name": "γ",
+    "quote": "Gọi (γ) là mặt phẳng qua K, song song với hai đường thẳng DD' và DF",
+    "section_id": "sec",
+    "stated_intersections": [],
+    "target_solid_id": "s1",
+    "through_point": "K"
+   }
+  ],
+  "length_unit": "1",
+  "math_goals": [
+   {
+    "goal_id": "mg1",
+    "goal_type": "area",
+    "kind": "measurement",
+    "quote": "Hãy tính diện tích thiết diện tạo bởi mặt phẳng (γ) với hình lăng trụ DEF.D'E'F'",
+    "solid_id": "s1",
+    "target": {
+     "section_id": "sec"
+    }
+   }
+  ],
+  "premises": [
+   {
+    "kind": "right_prism",
+    "args": {
+     "base": [
+      "D",
+      "E",
+      "F"
+     ],
+     "top": [
+      "D'",
+      "E'",
+      "F'"
+     ]
+    },
+    "quote": "Cho hình lăng trụ đứng DEF.D'E'F'",
+    "solid_id": "s1"
+   },
+   {
+    "kind": "right_angle",
+    "args": {
+     "right_at": "D",
+     "vertices": [
+      "D",
+      "E",
+      "F"
+     ]
+    },
+    "quote": "biết tam giác đáy DEF vuông tại D",
+    "solid_id": "s1"
+   },
+   {
+    "kind": "segment_length",
+    "args": {
+     "segment": [
+      "D",
+      "E"
+     ],
+     "value": "5"
+    },
+    "quote": "với độ dài DE = 5",
+    "solid_id": "s1"
+   },
+   {
+    "kind": "segment_length",
+    "args": {
+     "segment": [
+      "D",
+      "F"
+     ],
+     "value": "12"
+    },
+    "quote": "cạnh DF = 12",
+    "solid_id": "s1"
+   },
+   {
+    "kind": "segment_length",
+    "args": {
+     "segment": [
+      "D",
+      "D'"
+     ],
+     "value": "9"
+    },
+    "quote": "chiều cao DD' = 9",
+    "solid_id": "s1"
+   },
+   {
+    "kind": "divide_segment",
+    "args": {
+     "point": "K",
+     "ratio": "1/3",
+     "segment": [
+      "D",
+      "E"
+     ]
+    },
+    "quote": "Lấy điểm K trên cạnh DE sao cho DK = 1/3 DE",
+    "solid_id": "s1"
+   }
+  ],
+  "problem_text": "Cho hình lăng trụ đứng DEF.D'E'F' biết tam giác đáy DEF vuông tại D, với độ dài DE = 5, cạnh DF = 12, chiều cao DD' = 9. Lấy điểm K trên cạnh DE sao cho DK = 1/3 DE. Gọi (γ) là mặt phẳng qua K, song song với hai đường thẳng DD' và DF. Hãy tính diện tích thiết diện tạo bởi mặt phẳng (γ) với hình lăng trụ DEF.D'E'F'.",
+  "relations": [],
+  "schema_version": "typed-fact-next/2",
+  "simulation_goals": [
+   {
+    "goal_id": "sg1",
+    "kind": "construct_object",
+    "quote": "Cho hình lăng trụ đứng DEF.D'E'F'",
+    "target_solid_id": "s1"
+   }
+  ],
+  "solids": [
+   {
+    "notation": "DEF.D'E'F'",
+    "quote": "Cho hình lăng trụ đứng DEF.D'E'F'",
+    "solid_id": "s1",
+    "solid_type": "prism"
+   }
+  ]
+ },
+ "K4.cb1_voi": {
+  "derived_sections": [
+   {
+    "parallel_line_a": [
+     "D",
+     "D'"
+    ],
+    "parallel_line_b": [
+     "D",
+     "G"
+    ],
+    "plane_kind": "through_point_parallel_two_lines",
+    "plane_name": "α",
+    "quote": "Gọi (α) là mặt phẳng qua K, song song với hai đường thẳng DD' và DG",
+    "section_id": "sec",
+    "stated_intersections": [],
+    "target_solid_id": "s1",
+    "through_point": "K"
+   }
+  ],
+  "length_unit": "1",
+  "math_goals": [
+   {
+    "goal_id": "mg1",
+    "goal_type": "area",
+    "kind": "measurement",
+    "quote": "Hãy tính diện tích thiết diện tạo bởi mặt phẳng (α) với hình lăng trụ DEFG.D'E'F'G'",
+    "solid_id": "s1",
+    "target": {
+     "section_id": "sec"
+    }
+   }
+  ],
+  "premises": [
+   {
+    "kind": "right_prism",
+    "args": {
+     "base": [
+      "D",
+      "E",
+      "F",
+      "G"
+     ],
+     "top": [
+      "D'",
+      "E'",
+      "F'",
+      "G'"
+     ]
+    },
+    "quote": "Cho khối lập phương DEFG.D'E'F'G'",
+    "solid_id": "s1"
+   },
+   {
+    "kind": "base_is_square",
+    "args": {
+     "side": "8",
+     "vertices": [
+      "D",
+      "E",
+      "F",
+      "G"
+     ]
+    },
+    "quote": "với đáy DEFG là hình vuông cạnh bằng 8",
+    "solid_id": "s1"
+   },
+   {
+    "kind": "segment_length",
+    "args": {
+     "segment": [
+      "D",
+      "D'"
+     ],
+     "value": "8"
+    },
+    "quote": "cạnh bên DD' = 8",
+    "solid_id": "s1"
+   },
+   {
+    "kind": "divide_segment",
+    "args": {
+     "point": "K",
+     "ratio": "3/8",
+     "segment": [
+      "D",
+      "E"
+     ]
+    },
+    "quote": "Lấy điểm K trên cạnh DE sao cho DK = 3/8 DE",
+    "solid_id": "s1"
+   }
+  ],
+  "problem_text": "Cho khối lập phương DEFG.D'E'F'G' với đáy DEFG là hình vuông cạnh bằng 8, cạnh bên DD' = 8. Lấy điểm K trên cạnh DE sao cho DK = 3/8 DE. Gọi (α) là mặt phẳng qua K, song song với hai đường thẳng DD' và DG. Hãy tính diện tích thiết diện tạo bởi mặt phẳng (α) với hình lăng trụ DEFG.D'E'F'G'.",
+  "relations": [],
+  "schema_version": "typed-fact-next/2",
+  "simulation_goals": [
+   {
+    "goal_id": "sg1",
+    "kind": "construct_object",
+    "quote": "Cho khối lập phương DEFG.D'E'F'G'",
+    "target_solid_id": "s1"
+   }
+  ],
+  "solids": [
+   {
+    "notation": "DEFG.D'E'F'G'",
+    "quote": "Cho khối lập phương DEFG.D'E'F'G'",
+    "solid_id": "s1",
+    "solid_type": "prism"
+   }
+  ]
+ }
+}

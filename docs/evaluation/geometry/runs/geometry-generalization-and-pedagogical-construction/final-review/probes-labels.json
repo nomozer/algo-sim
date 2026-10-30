@@ -1,0 +1,257 @@
+{
+ "A1.khi": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "trailing conditional after thỏa mãn"
+ },
+ "A2.neu": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "Trong không gian, nếu ..."
+ },
+ "A3.khong_thoa": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "negated thỏa mãn"
+ },
+ "A4.chua_biet": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "chưa biết"
+ },
+ "A5.khong_biet": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "không biết"
+ },
+ "A6.gia_su_thoa": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "giả sử thỏa mãn"
+ },
+ "A7.biet_neu": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "biết rằng nếu ... thì"
+ },
+ "A8.thoa_hoac": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "disjunction on DE"
+ },
+ "A9.thoa_xap_xi": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "approximate"
+ },
+ "A10.voi_day_khac": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "trailing reattribution"
+ },
+ "A11.trong_kg_mid": {
+  "label": "POS",
+  "base": "TP1.canon.area",
+  "note": "harmless mid-sentence prefix"
+ },
+ "A12.thoa_man_sau_so": {
+  "label": "POS",
+  "base": "TP1.canon.area",
+  "note": "odd but numerically consistent"
+ },
+ "A13.biet_gap": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "DE = 6 lần DK"
+ },
+ "A14.thoa_man_value_wrong": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "payload SD=13, text 12"
+ },
+ "A15.biet_sau": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "trailing modifier"
+ },
+ "A16.thoa_man_doi": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "trailing number-free opaque after thỏa mãn"
+ },
+ "B1.chieu_cao_DE": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "height role on base edge"
+ },
+ "B2.canh_ben_DF": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "lateral role on base edge"
+ },
+ "B3.chieu_cao_SE": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "height role on slanted lateral edge"
+ },
+ "B4.CHIEU_CAO_upper": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "case/space variant height on SE"
+ },
+ "B5.duong_cao_SE": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "đường cao role (not in _C_DOAN sv)"
+ },
+ "B6.chieu_cao_ES": {
+  "label": "POS",
+  "base": "TP1.canon.area",
+  "note": "height reversed label, true"
+ },
+ "B7.chieu_cao_chain": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "chain equality SD=SE=12 (false geometry)"
+ },
+ "B8.do_dai_chieu_cao": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "độ dài + chiều cao on SE"
+ },
+ "B9.chieu_cao_hinh_chop": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "chiều cao của hình chóp SE"
+ },
+ "B10.canh_day_SD": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "base-edge role on lateral edge"
+ },
+ "C1.tg_day_vuong_o_E": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "vuông ở E vs payload D"
+ },
+ "C2.tu_giac_day": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "tứ giác đáy on triangle"
+ },
+ "C3.vuong_can_o": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "vuông cân but DE != DF"
+ },
+ "C4.can_o_vuong_tai": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "cân ở E + vuông tại D (false claim)"
+ },
+ "C5.day_khong_vuong": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "negated right angle"
+ },
+ "C6.voi_day_unlabelled": {
+  "label": "POS",
+  "base": "TP1.canon.area",
+  "note": "unlabelled base"
+ },
+ "C7.vuong_o_label_of_other": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "vertex not in base"
+ },
+ "C8.tg_vuong_o_tai": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "ở + phrase"
+ },
+ "D1.so_do_goc": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "số đo góc"
+ },
+ "D2.so_do_do": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "degrees unit"
+ },
+ "D3.so_do_ratio": {
+  "label": "NEG",
+  "base": "TP1.canon.area",
+  "note": "DE = 6 DF"
+ },
+ "D4.so_do_frac": {
+  "label": "POS",
+  "base": "TP1.canon.area",
+  "note": "6/1"
+ },
+ "E1.cheo_chieu_cao": {
+  "label": "NEG",
+  "base": "RP1.canon.area",
+  "note": "prism not stated right; payload right"
+ },
+ "E2.chieu_cao_DE_prime": {
+  "label": "NEG",
+  "base": "RP1.canon.area",
+  "note": "height on diagonal DE'"
+ },
+ "E3.canh_ben_DE_prime": {
+  "label": "NEG",
+  "base": "RP1.canon.area",
+  "note": "lateral on face diagonal"
+ },
+ "E4.canh_ben_FF": {
+  "label": "POS",
+  "base": "RP1.canon.area",
+  "note": "true lateral FF'"
+ },
+ "E5.chieu_cao_DpEp": {
+  "label": "NEG",
+  "base": "RP1.canon.area",
+  "note": "height on top edge"
+ },
+ "E6.tg_day_tu_giac": {
+  "label": "NEG",
+  "base": "RP1.canon.area",
+  "note": "tứ giác đáy on triangle"
+ },
+ "E7.lap_phuong_tam_giac": {
+  "label": "NEG",
+  "base": "RP1.canon.area",
+  "note": "qualifier tứ giác"
+ },
+ "E8.chieu_cao_value_wrong": {
+  "label": "NEG",
+  "base": "RP1.canon.area",
+  "note": "payload 10 text 9"
+ },
+ "F1.lp_tg_day": {
+  "label": "NEG",
+  "base": "CB1.canon.area",
+  "note": "tam giác đáy DEFG (count mismatch)"
+ },
+ "F2.lp_side_wrong": {
+  "label": "NEG",
+  "base": "CB1.canon.area",
+  "note": "payload 9 text 8"
+ },
+ "F3.lp_side_ok": {
+  "label": "POS",
+  "base": "CB1.canon.area",
+  "note": "consistent"
+ },
+ "F4.lp_canh_ben_DE": {
+  "label": "NEG",
+  "base": "CB1.canon.area",
+  "note": "cạnh bên on base edge"
+ },
+ "F5.lp_day_other": {
+  "label": "POS?",
+  "base": "CB1.canon.area",
+  "note": "top face called đáy; values consistent"
+ }
+}

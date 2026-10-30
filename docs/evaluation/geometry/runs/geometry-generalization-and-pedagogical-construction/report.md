@@ -42,6 +42,7 @@ Adapter /3 a product path. Changes:
 | T0/T1/T2 | `tiers.json` | T0 `IMPACT_GATE_PASS` 15892/0; T1 879 + 24; T2 1424 + tsc + build |
 | Candidate | `frozen-evaluation-candidate.json`, `candidate_divergence.json` | Freeze `182a7785` (from `be686523`), product `61ade29e`, 118 files `54b5b565…`, cache 131 |
 | Full T3 | `full-t3.json` | **FULL_PRODUCT_GATE_PASS** on fresh detached `25028584` (attempt 2; attempt 1 invalid, environment, disclosed) |
+| Final independent review | `final-review.md`, `final-review/` | READY: 0 BLOCKER, 0 MAJOR; 2 MINOR disclosed; Wave 3 replay at HEAD reproduces case for case |
 | Publication | `publication-assessment.md` | Range: 1 pending synthetic-key exception, so **BLOCKED** pending the Owner. Head: 0 unexcepted (better than pre-W4 main) |
 
 ## Remaining limitations (not repaired; fail-closed)

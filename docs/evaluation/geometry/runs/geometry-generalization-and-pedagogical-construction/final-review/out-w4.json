@@ -1,0 +1,257 @@
+{
+ "A1.khi": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "A2.neu": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "A3.khong_thoa": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "A4.chua_biet": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "A5.khong_biet": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "A6.gia_su_thoa": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "A7.biet_neu": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "A8.thoa_hoac": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "A9.thoa_xap_xi": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "A10.voi_day_khac": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "A11.trong_kg_mid": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "A12.thoa_man_sau_so": [
+  "REFUSED",
+  "UNGROUNDED_VALUE",
+  null
+ ],
+ "A13.biet_gap": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "A14.thoa_man_value_wrong": [
+  "REFUSED",
+  "UNGROUNDED_VALUE",
+  null
+ ],
+ "A15.biet_sau": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "A16.thoa_man_doi": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "B1.chieu_cao_DE": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "B2.canh_ben_DF": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "B3.chieu_cao_SE": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "B4.CHIEU_CAO_upper": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "B5.duong_cao_SE": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "B6.chieu_cao_ES": [
+  "SERVED",
+  null,
+  "{'mg1': {'coef': '96/25', 'dim': 0, 'unit': None}}"
+ ],
+ "B7.chieu_cao_chain": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "B8.do_dai_chieu_cao": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "B9.chieu_cao_hinh_chop": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "B10.canh_day_SD": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "C1.tg_day_vuong_o_E": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "C2.tu_giac_day": [
+  "REFUSED",
+  "SOURCE_OBJECT_MISMATCH",
+  null
+ ],
+ "C3.vuong_can_o": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "C4.can_o_vuong_tai": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "C5.day_khong_vuong": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "C6.voi_day_unlabelled": [
+  "REFUSED",
+  "SOURCE_OBJECT_MISMATCH",
+  null
+ ],
+ "C7.vuong_o_label_of_other": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "C8.tg_vuong_o_tai": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "D1.so_do_goc": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "D2.so_do_do": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "D3.so_do_ratio": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "D4.so_do_frac": [
+  "SERVED",
+  null,
+  "{'mg1': {'coef': '96/25', 'dim': 0, 'unit': None}}"
+ ],
+ "E1.cheo_chieu_cao": [
+  "REFUSED",
+  "PREDICATE_NOT_IN_QUOTE",
+  null
+ ],
+ "E2.chieu_cao_DE_prime": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "E3.canh_ben_DE_prime": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "E4.canh_ben_FF": [
+  "SERVED",
+  null,
+  "{'mg1': {'coef': '72', 'dim': 0, 'unit': None}}"
+ ],
+ "E5.chieu_cao_DpEp": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "E6.tg_day_tu_giac": [
+  "REFUSED",
+  "SOURCE_OBJECT_MISMATCH",
+  null
+ ],
+ "E7.lap_phuong_tam_giac": [
+  "REFUSED",
+  "SOURCE_OBJECT_MISMATCH",
+  null
+ ],
+ "E8.chieu_cao_value_wrong": [
+  "REFUSED",
+  "UNGROUNDED_VALUE",
+  null
+ ],
+ "F1.lp_tg_day": [
+  "REFUSED",
+  "SOURCE_OBJECT_MISMATCH",
+  null
+ ],
+ "F2.lp_side_wrong": [
+  "REFUSED",
+  "UNGROUNDED_VALUE",
+  null
+ ],
+ "F3.lp_side_ok": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "F4.lp_canh_ben_DE": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ],
+ "F5.lp_day_other": [
+  "REFUSED",
+  "SOURCE_PREMISE_UNREAD",
+  null
+ ]
+}

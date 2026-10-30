@@ -7,7 +7,7 @@ Owner Master GO `ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION` (202
 | branch / worktree | `research/w4-geometry-pedagogy` · `.superpowers/worktrees/w4-geometry-pedagogy` (node_modules junction to root) |
 | base | `main` = `origin/main` = `e5dc3d28` (verified live 2026-10-30) |
 | baseline product / measured | `dd17fbfb` · 118 files `c4fb8613…` · cache 130 · LLM_ONLY · live 0 |
-| phase | Full T3 PASS (`25028584`); final independent review next; integration blocked on one Owner-approved publication exception |
+| phase | READY_FOR_OWNER_REVIEW: Full T3 PASS (`25028584`); final independent review READY (`final-review.md`); integration blocked on one Owner-approved publication exception |
 
 ## Phase B — first blocking layer of the 22 Wave 3 false refusals (receipt: `capability-matrix.md`)
 
@@ -41,6 +41,8 @@ All 22 stop in the Source Gate (none in Planner / exact geometry / Adapter / fro
 W3-B01 conditional reading of "Thiết lập mặt phẳng"; W3-B34/35/36 oblique prism ("hình chiếu … của đỉnh B' lên (BCD) là C",
 "khối lăng trụ tam giác"); W3-A06 radical bound (genuine limit). Not tuned on Wave 3 text.
 
+- Final independent review of `e5dc3d28..738ac241`: READY, 0 BLOCKER, 0 MAJOR, 2 MINOR disclosed (`final-review.md`).
+
 ## Next action
-Final independent review of `5bb29709`+docs. Then handoff. Integration needs the Owner to run the one-line approval command in
-`publication-assessment.md`; after that: range scan 0 → fast-forward main → post-integration checks → non-force push → 3-way SHA check.
+Owner: run the one-line approval command in `publication-assessment.md` (see `handoff.md`). After that: range scan 0 →
+fast-forward main → post-integration checks → non-force push → 3-way SHA check → safe cleanup.
