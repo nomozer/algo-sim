@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-f7-narrow-recovery/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "aa7451326723fbd0d21222296cab6e2e6d63eb4291a119478d015f47ed5515a3",
+  "current_product_commit": "e4e97758dbf5678e77d6967e65f4ac6bb24cf91d",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Owner Master GO ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION: the closed SG-3 clause grammar reads textbook premise connectors (registry.py), role-prefixed lengths are read only when the role is proved, and the shared Scene3D builder attaches an exactly verified 'why' to section-edge steps (scene3d.py). No Planner/kernel/Adapter capability change; historical scored runs preserved.",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "BUMP 130 -> 131: the LLM_ONLY served envelope gains certified section-edge justifications (tests/test_cache_section_justification_invalidation.py).",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}
