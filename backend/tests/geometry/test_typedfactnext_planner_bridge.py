@@ -693,6 +693,19 @@ def test_bridge_ownership_resolves_identity_through_the_one_canonical_resolver(m
     assert "pyr::M" in calls
 
 
+def test_derived_namespace_refusal_after_delegation_is_a_capability_code():
+    # Architecture review M-1: before Task 1 the bridge's private copy refused `top_pyramid::S` (two roots own `S`) as
+    # AMBIGUOUS_REFERENCE, contrary to the Owner-registered R2 oracle (a derived solid resolves through its parent).
+    # Delegating fixed that; the case is still refused, now as unsupported qualified identity. Pin the code and stage.
+    import test_measurement_dispatch_and_identity_order as M
+    cases = [k for k in M.names('R2_POSITIVE') if M.CASES[k]['expected_routes'] is None]
+    assert cases
+    for k in cases:
+        for route in ('pl', 'a4'):
+            r = M.F.ROUTES[route](deepcopy(M.CASES[k]['payload']))
+            assert (r.status, r.code) == ('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY'), (k, route, r.code)
+
+
 def test_bridge_accepts_matching_units_and_declared_qualified_vertices():
     from app.ai.function_route import run_typed_fact_next_planner_route
     payload = _next(NAMED.replace(" " + RATIO_Q, ""), [deepcopy(SEC)], [deepcopy(SEC_GOAL)])

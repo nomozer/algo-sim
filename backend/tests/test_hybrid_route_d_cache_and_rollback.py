@@ -200,6 +200,25 @@ def test_mutant_reusing_a_non_served_row_is_caught(env, monkeypatch):
     assert _post(raw["problem_text"]).json()["route_d"]["status"] == "REFUSED"   # the mutant serves the poisoned row
 
 
+def test_the_ops_script_can_delete_a_route_d_row_by_its_exact_text(env, monkeypatch):
+    # Architecture review M-4: `cache_clear.py --de` matched only the normalized LLM_ONLY key.
+    import importlib.util
+    import sys
+    from pathlib import Path
+
+    raw, path = env
+    assert _post(raw["problem_text"]).headers["x-algosim-cache"] == "miss"
+    key = H.prepare_local_replay(raw["problem_text"], str(path)).cache_key
+    spec = importlib.util.spec_from_file_location("cache_clear", Path(__file__).resolve().parents[1] / "scripts/cache_clear.py")
+    cc = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(cc)
+    monkeypatch.setattr(sys, "argv", ["cache_clear.py", "--de", raw["problem_text"]])
+    cc.main()
+    with SessionLocal() as s:
+        assert s.query(SimulationCache).filter_by(key=key).count() == 0
+    assert _post(raw["problem_text"]).headers["x-algosim-cache"] == "miss"
+
+
 # ── D-12: rollback is the routing switch, never a silent fallback ────────────────────────────────────────────────────
 
 def _fake_llm_only(monkeypatch, calls):

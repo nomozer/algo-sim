@@ -143,6 +143,7 @@
   - Chỉ lưu SERVED. MISS khi extraction ghi lại khác hoặc surface khác. Hàng không phải phản hồi SERVED ⇒ MISS và bị thay. Xung đột ghi đồng thời không làm hỏng phản hồi.
   - Hai mutant bị bắt.
   - Preview `/api/preview/hybrid` vẫn không cache.
+- **LUẬT BUMP (review kiến trúc M-2):** khoá tuyến D chỉ băm hằng phiên bản (`REGISTRY_VERSION`, `PLANNER_VERSION`, `ENGINE_VERSION`, hợp đồng, adapter, envelope), không băm mã. Vì vậy mọi sửa đổi đổi kết quả của kernel/engine/planner/adapter /4 **phải** bump hằng phiên bản tầng ấy (hoặc `CACHE_VERSION`) cùng commit, nếu không hàng SERVED cũ vẫn được phục vụ. Đây là cùng kỷ luật mà cache `LLM_ONLY` đang dựa vào.
 - **BLOCKER:** —. Surface hiện mang `provider_mode=INJECTED_OFFLINE_EXTRACTOR`; một transport live phải thêm định danh model + prompt/schema vào surface trước khi được ghi cache (kiểm ở D-11).
 - **NEXT_TEST:** khi có transport live: MISS khi đổi model/prompt.
 
