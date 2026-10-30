@@ -1,0 +1,254 @@
+{
+ "wave3_summary": {
+  "total_cases": 144,
+  "positive_total": 72,
+  "positive_served_correct": 67,
+  "positive_false_refusal": 5,
+  "positive_wrong_served": 0,
+  "positive_by_stratum": {
+   "P-B": {
+    "total": 54,
+    "served_correct": 50,
+    "false_refusal": 4
+   },
+   "P-A": {
+    "total": 18,
+    "served_correct": 17,
+    "false_refusal": 1
+   }
+  },
+  "positive_by_question_type": {
+   "section_only": {
+    "total": 24,
+    "served_correct": 22,
+    "false_refusal": 2
+   },
+   "area_only": {
+    "total": 24,
+    "served_correct": 23,
+    "false_refusal": 1
+   },
+   "section_and_area": {
+    "total": 24,
+    "served_correct": 22,
+    "false_refusal": 2
+   }
+  },
+  "w3_f1_remaining_source_object_mismatch": 0,
+  "negative_total": 72,
+  "negative_refused": 72,
+  "negative_correct_reason": 62,
+  "negative_reason_disagreement": 10,
+  "negative_wrong_served": 0,
+  "overall_wrong_served": 0,
+  "machine_id_leak_cases": [],
+  "source_identity_leak_cases": []
+ },
+ "wave3_transitions": [
+  {
+   "id": "W3-B07",
+   "before": [
+    "FALSE_REFUSAL",
+    "SOURCE_PREMISE_UNREAD"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  },
+  {
+   "id": "W3-B08",
+   "before": [
+    "FALSE_REFUSAL",
+    "SOURCE_PREMISE_UNREAD"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  },
+  {
+   "id": "W3-B09",
+   "before": [
+    "FALSE_REFUSAL",
+    "SOURCE_PREMISE_UNREAD"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  },
+  {
+   "id": "W3-B16",
+   "before": [
+    "FALSE_REFUSAL",
+    "SOURCE_PREMISE_UNREAD"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  },
+  {
+   "id": "W3-B18",
+   "before": [
+    "FALSE_REFUSAL",
+    "SOURCE_PREMISE_UNREAD"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  },
+  {
+   "id": "W3-B26",
+   "before": [
+    "FALSE_REFUSAL",
+    "SOURCE_PREMISE_UNREAD"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  },
+  {
+   "id": "W3-B27",
+   "before": [
+    "FALSE_REFUSAL",
+    "SOURCE_PREMISE_UNREAD"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  },
+  {
+   "id": "W3-B43",
+   "before": [
+    "FALSE_REFUSAL",
+    "SOURCE_PREMISE_UNREAD"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  },
+  {
+   "id": "W3-B44",
+   "before": [
+    "FALSE_REFUSAL",
+    "SOURCE_PREMISE_UNREAD"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  },
+  {
+   "id": "W3-B47",
+   "before": [
+    "FALSE_REFUSAL",
+    "UNGROUNDED_VALUE"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  },
+  {
+   "id": "W3-B48",
+   "before": [
+    "FALSE_REFUSAL",
+    "UNGROUNDED_VALUE"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  },
+  {
+   "id": "W3-B50",
+   "before": [
+    "FALSE_REFUSAL",
+    "UNGROUNDED_VALUE"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  },
+  {
+   "id": "W3-B51",
+   "before": [
+    "FALSE_REFUSAL",
+    "UNGROUNDED_VALUE"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  },
+  {
+   "id": "W3-B53",
+   "before": [
+    "FALSE_REFUSAL",
+    "SOURCE_PREMISE_UNREAD"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  },
+  {
+   "id": "W3-B54",
+   "before": [
+    "FALSE_REFUSAL",
+    "SOURCE_PREMISE_UNREAD"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  },
+  {
+   "id": "W3-A17",
+   "before": [
+    "FALSE_REFUSAL",
+    "UNGROUNDED_VALUE"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  },
+  {
+   "id": "W3-A18",
+   "before": [
+    "FALSE_REFUSAL",
+    "SOURCE_PREMISE_UNREAD"
+   ],
+   "after": [
+    "SERVED_CORRECT",
+    null
+   ]
+  }
+ ],
+ "locked96": {
+  "head": "8fe9f9a3365b311293348340d19d940e4f114c5c",
+  "product_uncommitted": false,
+  "live_provider_calls": 0,
+  "match": 96,
+  "total": 96,
+  "wrong_served": 0,
+  "mismatches": []
+ },
+ "probes203": {
+  "head": "8fe9f9a3365b311293348340d19d940e4f114c5c",
+  "product_uncommitted": false,
+  "live_provider_calls": 0,
+  "total": 203,
+  "served_negatives": [],
+  "internal": [],
+  "transitions_from_f7": []
+ }
+}
