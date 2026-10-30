@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "HYBRID_V2_W3_F2_F7_NARROW_RECOVERY_AND_FINAL_VERIFICATION",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-unified-solid-scope/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "c4fb8613800585ddd68a13f410e5c84755e64a8562c1604ed4b43b6e03c2fb8c",
+  "current_product_commit": "dd17fbfb8616c9b7ac325aa91c4dfec92577c64a",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Owner GOs HYBRID_V2_W3_F2_CIC_D1_LOCKED_CONTRACT_RECOVERY, ..._TARGET_GRAMMAR_AND_CANONICAL_IDENTITY_RECOVERY and W3-F2 F7 NARROW RECOVERY: closed registered target grammar and canonical operand identity at the TypedFactNext schema (typed_fact_next.py), and a typed BRIDGE_UNSUPPORTED_MEASUREMENT refusal for unmapped polyhedral radius/lateral_area in Adapter /3 (adapter3_simulation.py, +3 lines). No Registry/Planner/kernel/frontend/default change; historical scored runs preserved.",
+  "cache_version": 130,
+  "cache_version_hien_tai": 130,
+  "cache_decision": "NO_BUMP 130: the cached LLM_ONLY /api/analyze path does not import TypedFactNext routes; cache identity lock MATCH; 41/41 stored preview fixtures verify (f7-narrow-recovery/gate-d.json).",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}
