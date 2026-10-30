@@ -30,7 +30,8 @@ LEGACY = json.loads((Path(__file__).resolve().parents[2] / "docs/evaluation/geom
 CASES = {
     # + later bump 130 -> 131 (geometry-generalization-and-pedagogical-construction): its section edges now also carry an
     #   exactly verified "why" (`justification_text`, `details.justification`) — tested in test_section_edge_justification.py.
-    "p1_chop_thiet_dien_khoang_cach": ("annotation", "witness", "marker", "justification", "justification_text"),
+    "p1_chop_thiet_dien_khoang_cach": ("annotation", "witness", "marker", "justification", "justification_text",
+                                       "parallel_face_edge"),                     # geometry-layer fact behind the "why"
     "p4_hinh_tru_the_tich_va_xung_quanh": ("events", "formation"),
     "cube": None,
 }
