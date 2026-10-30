@@ -34,6 +34,22 @@
 
 **Tests:** 38/38.
 
-## Round 3
+## Round 3: re-verification of `cbab8fde` — `LIVE_EVALUATION_READINESS_REVIEW_READY`
 
-Pending.
+All round-2 items (N1, N2, M4, N3, m1, m2) are **CLOSED**, with evidence from new mock probes. 0 network calls, and no approval value was written.
+
+**Auxiliary-target check under the strict rule.** Of 38 served Hybrid replays with targets, 14 show several values of one kind (auxiliary volumes). All 14 ask only for a ratio or remaining volume, so `volume` is an unasked kind there: it is reported, not penalized. No legitimate answer is failed.
+
+**New, MINOR only:**
+
+| id | finding | disposition |
+|---|---|---|
+| n1 | Inferred, not observed: a problem asking for a volume **and** a ratio or remaining volume would make Hybrid's auxiliary volume targets fail the strict rule. This works only against Hybrid, so it cannot produce a false GO, and the lenient rule flags any reversal. | Authoring rule added: ask for those quantities in separate problems. |
+| n2 | Equal values listed twice in the oracle but shown once fail | Authoring rule added: write each distinct value once. |
+
+**The verdict covers the harness and protocol only.** The run remains blocked outside them:
+- `EVALUATOR_INDEPENDENCE` and `AUTHORING_INDEPENDENCE` are `NOT_ESTABLISHED`;
+- no corpus has been authored;
+- there is no Owner GO.
+
+No live result exists.

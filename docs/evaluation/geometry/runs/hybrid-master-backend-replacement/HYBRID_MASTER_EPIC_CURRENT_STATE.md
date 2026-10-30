@@ -123,11 +123,17 @@ The original next actions 2 and 3 of that stop were done in the second continuat
 - **Live-evaluation readiness review, first pass: `NOT_READY`** — 3 BLOCKER, 4 MAJOR.
   - The blockers were π dropped, curved solids treated as refuse, and missing `assign.*` producers.
   - All were verified and fixed in the harness, tests and protocol at `edbc54b7` (32 tests; `evaluation-readiness-review.md`). The implementer also found and fixed the missing production domain gate on the Hybrid arm.
-  - **Re-verification by the same reviewer: in progress.**
-- **Candidate:** still `bf2c3eaa` / `44b02a62…`. No product code has changed since the Full T3 PASS.
-- **Next:**
-  1. Record the re-verification. If any BLOCKER/MAJOR remains open, fix it and re-verify.
-  2. Then the single Owner GO (`owner-go-request.md`) is the real boundary. Without it: no live call, no cutover, no retirement.
+  - Round 2: `NOT_READY`, with 2 new BLOCKERs (proof requests treated as refuse; a lenient rule that scored a shown wrong value as correct), a regressed scan path, and an interrupted run reported as complete. All fixed at `cbab8fde`.
+  - **Round 3: `LIVE_EVALUATION_READINESS_REVIEW_READY`.** 0 BLOCKER, 0 MAJOR. The two MINORs are covered by authoring rules. Harness tests: 38.
+- **Candidate:** still `bf2c3eaa` / `44b02a62…`. No product code has changed since the Full T3 PASS. The deferred MINORs M-3 and M-4 (docstrings) wait for the next product change.
+- **Status:** `OFFLINE_BACKEND_READY_FOR_LIVE_EVALUATION`; overall `HYBRID_NOT_READY`.
+- **Next (the real boundary, an Owner decision):**
+  1. Give the GO in `owner-go-request.md`, including the paid project and confirmation of `gemini-2.5-flash` access.
+  2. Name an independent author, who writes the 60 problems.
+  3. Run `--manifest`; the Owner writes the approval file.
+  4. `--live`: the agent runs the whole evaluation without asking per request.
+
+  Without these: no live call, no cutover, no retirement.
 
 **Final status of the second continuation:**
 - Offline backend: **`OFFLINE_BACKEND_READY_FOR_LIVE_EVALUATION`**.

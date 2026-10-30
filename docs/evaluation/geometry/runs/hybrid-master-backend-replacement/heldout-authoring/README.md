@@ -31,7 +31,8 @@ A person who did not build or tune the system: the Owner, or a teacher the Owner
 
 - Compute every answer **by hand or with a CAS independent of this repository, before any system run.**
 - Write exact values: `"8/3"`, `"2√6/3"`, `"36π"`, `"√3/4"`. Never decimals: the harness refuses them. For `angle_cos_sq`, write cos² itself.
-- If two quantities of one kind are asked, list both.
+- List every quantity the problem asks, but write **each distinct value once**. If two asked distances are both 12, write `["12"]` (review n2).
+- Do not ask for a plain volume together with a volume ratio or remaining volume in the same problem. Systems may show auxiliary volumes as targets, and the strict rule would then fail a correct answer (review n1). Ask for them in separate problems.
 - Record the premise sentences that must be read, so failures can be attributed.
 
 ## Format and freeze
