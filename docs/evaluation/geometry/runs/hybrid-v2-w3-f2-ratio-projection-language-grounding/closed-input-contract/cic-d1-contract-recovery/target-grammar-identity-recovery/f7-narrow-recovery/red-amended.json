@@ -1,0 +1,10 @@
+{
+  "head": "ae81b65e",
+  "product_clean": true,
+  "summary": "27 failed, 214 passed in 2.65s",
+  "raw_log_local_only": ".superpowers/target-grammar-identity-recovery/f7-red-amended.log",
+  "raw_log_sha256_bytes": "c05a641a6dbf673b2b96aae98116f974b38c6fe6fb528f55c62e0794a3914293",
+  "failed_all_F7": true,
+  "R1_R2": "TEST_GAP_CLOSED (all behavioral and mutant oracles pass on unmodified product)",
+  "live_provider_calls": 0
+}

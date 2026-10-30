@@ -2564,7 +2564,7 @@
    ],
    "pl": [
     "REFUSED",
-    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+    "BRIDGE_CUT_EDGES_NOT_STATED"
    ]
   },
   "expected_schema": null,
@@ -2703,7 +2703,7 @@
    ],
    "pl": [
     "REFUSED",
-    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+    "BRIDGE_CUT_EDGES_NOT_STATED"
    ]
   },
   "expected_schema": null,
@@ -2842,7 +2842,7 @@
    ],
    "pl": [
     "REFUSED",
-    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+    "BRIDGE_CUT_EDGES_NOT_STATED"
    ]
   },
   "expected_schema": null,

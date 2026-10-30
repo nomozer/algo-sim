@@ -43,9 +43,11 @@ for k in ['V.radius.solid', 'V.radius.solid.goal_sid', 'V.radius.notation', 'V.r
     add('F7.prism.' + k[2:], 'F7', deepcopy(CASES[k]['payload']), f'cases.json:{k}', routes=refused(CAP))
 demo = CASES['S.demo1.area.section']['payload']
 py, sec = demo['solids'][0]['solid_id'], demo['derived_sections'][0]['section_id']
-add('F7.pyr.radius.solid', 'F7', goal('S.demo1.area.section', 'radius', {'solid': py}), 'S.demo1.area.section+radius', routes=refused(CAP))
-add('F7.pyr.radius.section_id', 'F7', goal('S.demo1.area.section', 'radius', {'section_id': sec}), 'S.demo1.area.section+radius(section)', routes=refused(CAP))
-add('F7.pyr.lateral_area.solid', 'F7', goal('S.demo1.area.section', 'lateral_area', {'solid': py}), 'S.demo1.area.section+lateral_area', routes=refused(CAP))
+# Amendment 1 (red.json): pl refuses this base earlier (existing oracle), so pl keeps the base outcome.
+PYR = {**refused(CAP), 'pl': [GREEN['S.demo1.area.section']['pl']['status'], GREEN['S.demo1.area.section']['pl']['code']]}
+add('F7.pyr.radius.solid', 'F7', goal('S.demo1.area.section', 'radius', {'solid': py}), 'S.demo1.area.section+radius', routes=PYR)
+add('F7.pyr.radius.section_id', 'F7', goal('S.demo1.area.section', 'radius', {'section_id': sec}), 'S.demo1.area.section+radius(section)', routes=PYR)
+add('F7.pyr.lateral_area.solid', 'F7', goal('S.demo1.area.section', 'lateral_area', {'solid': py}), 'S.demo1.area.section+lateral_area', routes=PYR)
 # Mixed goal list: one unsupported goal refuses the whole payload, no partial answers (all-or-nothing contract).
 top = CASES['D.top.vol']['payload']['solids'][0]['solid_id']
 add('F7.multi.pyr_vol_plus_radius', 'F7', goal('D.top.vol', 'radius', {'solid': top}, append=True), 'D.top.vol+radius', routes={'a3': ['REFUSED', CAP]})

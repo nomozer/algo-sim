@@ -101,7 +101,9 @@ def test_identity_before_namespace_mutant_is_caught(monkeypatch):
 
 # ---- R2: derived solids resolve to their own parent, never to another root ------------------------------------------
 def _r2():
-    return T.parse_typed_fact_next(deepcopy(CASES['R2.derived_vs_other_root']['payload']))
+    # Goal-free copy: a mutant must fail the identity assertions below, not abort inside payload parsing.
+    p = deepcopy(CASES['R2.derived_vs_other_root']['payload']); p['math_goals'] = []
+    return T.parse_typed_fact_next(p)
 
 
 def _ref(p, ref, scope=None):
