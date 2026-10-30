@@ -1284,6 +1284,9 @@ class _Adapter3Compiler:
                             f"{mg.goal_id}: mục tiêu angle cần ('line', 'plane') hoặc ('line1', 'line2')",
                             (mg.goal_id,),
                         )
+                else:  # F7: no polyhedral ask exists (radius, lateral_area); never leave an id without a call
+                    raise TuChoi("BRIDGE_UNSUPPORTED_MEASUREMENT", f"{mg.goal_id}: Adapter /3 chưa có phép đo "
+                                 f"{mg.goal_type} cho khối đa diện", (mg.goal_id,))
 
         existing_vol_solids = {
             c["args"]["solid"] for c in self.calls if c["fn"] == "ask_volume"

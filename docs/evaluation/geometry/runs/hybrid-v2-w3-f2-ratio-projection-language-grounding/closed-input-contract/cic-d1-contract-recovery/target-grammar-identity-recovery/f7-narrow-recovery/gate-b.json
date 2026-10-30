@@ -1,0 +1,7 @@
+{
+  "gate": "B",
+  "status": "PASS",
+  "product_changes_since_1b1a9ed2": ["backend/app/ai/adapter3_simulation.py (+3, terminal else in measurement dispatch)"],
+  "invariants": "No Registry, Planner, kernel, schema, API, Bridge or frontend change; no new capability; no except added; exact answers of all controls retained (test_served_controls_keep_exact_oracle).",
+  "cache_version": 130, "default_mode": "LLM_ONLY", "allow_live_ai": 0, "hybrid": "opt-in (unchanged)"
+}

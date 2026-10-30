@@ -1,0 +1,5474 @@
+{
+  "head": "415da75101ad20052ea044bce9cb1e2403ca8b03",
+  "live_provider_calls": 0,
+  "classification": "DEVELOPMENT_SECURITY_REGRESSION",
+  "summary": {
+    "total": 203,
+    "served_negatives": [],
+    "internal_results": []
+  },
+  "transitions": [],
+  "cases": [
+    {
+      "probe": "SUP.base",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "a4": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        }
+      },
+      "input_sha256": "2ddbebb601f5e77ac51ef2e6961e1eb2e2a7d2d11f9112f0d5aff3fae9348f09"
+    },
+    {
+      "probe": "SUP.dist_s1_list_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            },
+            "x1": {
+              "coef": "√17",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "ca3c8832f790a6631fd095352427a53e1014a4f7ec693530d8e1a1436e3ac5f5"
+    },
+    {
+      "probe": "M.str_segment_target_solid_id",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "ab27d71d4fc752865b5245ea9a55b44fd9f298e08b8156e5b1b68a16fe09d8f5"
+    },
+    {
+      "probe": "M.str_segment_target_solid",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "be207e9021c05fceecdfa1e315ebfec5673e8c6174b8dbf0eeba0d51ef20c6d7"
+    },
+    {
+      "probe": "M.str_segment_target_notation",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "cc7aceb87dccd8797d05533dec4c8055673f5cd411cba1c8ac5e4b8a6c2bd549"
+    },
+    {
+      "probe": "M.str_segment_goal_solid_id",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "658e135bc4f0b76e139ab7945d3b47c4f5785f1dbe524c2bd59e5e50bc5f9ba8"
+    },
+    {
+      "probe": "M.str_plane_point_target_solid_id",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "5fafb29b58db45daf891f7e377e781098aece5a55d327f2430719055f244cff7"
+    },
+    {
+      "probe": "M.str_line_angle_target_solid_id",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "e043ed2c685261c80baa8f1fcde11a92ebefc0be00d30160b63628f7a46f0811"
+    },
+    {
+      "probe": "M.str_polygon_area_target_solid_id",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "53f3025799c194b3eaea0b8c6e1adfdcc9336f46b971e3c1edf0d4da965f0081"
+    },
+    {
+      "probe": "M.list_segment_target_solid_id_foreign",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "4eb4957773d08ad72b8424c0d2e3fe8bd1c7a19d9ac5e602692b2e97617dbf4a"
+    },
+    {
+      "probe": "M.plane1_plane2_scope_s1_foreign",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "9f9cd919fdf3d1707c4f27920d521fe896b4c9a9d1ae130c3f422b5aa74a0d2a"
+    },
+    {
+      "probe": "M.plane1_plane2_scope_s1_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "d5dd8528f2e1cc3bfd87cd23d29eb70a7a083e057dae1a04c86ddb043b36ca65"
+    },
+    {
+      "probe": "M.qualified_nonvertex_same_ns",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "0abfcf112bee8e771267cc0e4574a70bf8ed91ca8b470982a3d30cf7927ed57e"
+    },
+    {
+      "probe": "M.segment_None_entry",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "99385c1268e2c50b143055aabdc318cf733412892d8143bf5899c0559762d499"
+    },
+    {
+      "probe": "M.target_solid_list",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "bb05c9466eedf0da4267b709467b20c2ae768cdd8643be011d3d41ede0ae8be2"
+    },
+    {
+      "probe": "M.target_solid_bool",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "051fb2b0657e8c4b6ff17ab6dd9e95196750b64a60b777c4ce93d6ff5b094012"
+    },
+    {
+      "probe": "M.target_solid_id_int",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "daab02543098a15b55111212cb5b4adfdbe62b72971aa9849926f95e63b6d985"
+    },
+    {
+      "probe": "M.target_section_id_dict",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "d5678a845dd2cb43b9630b00e984a7b288242f516b778321d57f02b68794f1de"
+    },
+    {
+      "probe": "M.target_solid_trailing_space",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "UNKNOWN_SOLID",
+        "schema2": "UNKNOWN_SOLID",
+        "a3": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SOLID",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SOLID",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SOLID",
+          "answer": null
+        }
+      },
+      "input_sha256": "be666f069820697492fc257cf95c6499c48b2ddbe5959a8878e298adb1403dd3"
+    },
+    {
+      "probe": "M.target_unknown_scope_key_ghost",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "e8660457caefccab0e56f5e19da66421375440786fa7479ba0cf54bf6a6c3c26"
+    },
+    {
+      "probe": "M.target_solids_list_key_ghost",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "55c73a3589a19ef760a16e1fafd251469b8f4d6301eac7745d6c7f4128538f4b"
+    },
+    {
+      "probe": "K.measure_with_parent_solid_id_other",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "ba9b2b652398b8b60dc74e34bbe6f386026ba59a3f1e052eea60ebdcc950e73e"
+    },
+    {
+      "probe": "K.measure_with_numerator_other",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "0d7d4ebd1da794fb925aee785c7a4b1fe23ba3594f0423d2b15a54e9757f5328"
+    },
+    {
+      "probe": "K.ratio_with_target_solid_id_ghost",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "010534c124362a7fe2d5bfb2955c4b3bbddff5d4f1bda95e2cd1ef9518cc8205"
+    },
+    {
+      "probe": "K.ratio_with_target_solid_other",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "dcc78cf12a4e4955d5872df459bb8b2d491f34b78d30a506f4fe59e6745cf4e9"
+    },
+    {
+      "probe": "K.ratio_with_parent_cut_ghostless",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "1bf012f7f76734357a0cce9aad85c93cddd93e99865563b8d2a6ab185a968322"
+    },
+    {
+      "probe": "K.residual_with_numerator",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "aaed8fe8e1b1477b5d748410652d9065bd425d2c8a021bb71a691cdeca046cd5"
+    },
+    {
+      "probe": "K.ratio_goal_type_with_target",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "ebb12e76f5e7e3044d2d6ce3496e1a6808ee254b0a34dc5276437fd90ff79456"
+    },
+    {
+      "probe": "K.construct_object_with_derived_solid_id",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_SIMULATION_GOAL",
+        "schema2": "INVALID_SIMULATION_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "5b75a2d4996f446e442bd1a56fc2910c9a06964cf408fe52045c39b4e6c50b1e"
+    },
+    {
+      "probe": "K.construct_object_with_apex_ref_foreign",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_SIMULATION_GOAL",
+        "schema2": "INVALID_SIMULATION_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "4d77dbc78be4db9d67408eecded308dd305653d0d053fccb5a8190bafbd201c1"
+    },
+    {
+      "probe": "K.construct_object_target_refs_foreign_solid",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "be3647511a9d19d241674bd83d634327a42e48f4cb180dcdb926022a8dcfbff1"
+    },
+    {
+      "probe": "K.construct_object_target_refs_foreign_label",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "3bf3eb0ec62fc84b5534d198b86791ee0c6ced3cde5daa7fe6a6cf98b898a5b6"
+    },
+    {
+      "probe": "K.sequence_target_solid_s2_refs_S",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "e6d104cda6bd66ae0f550280aa1329d7e546195bf11514e48925ac391b7039f6"
+    },
+    {
+      "probe": "K.highlight_target_s1_refs_s2_qualified",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "22ef6879122c6375a76cd29afe086cdb9f8826ad32add68a2ef6192b03a419ea"
+    },
+    {
+      "probe": "K.highlight_ref_unknown_label",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "UNKNOWN_VERTEX_REF",
+        "schema2": "UNKNOWN_VERTEX_REF",
+        "a3": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        }
+      },
+      "input_sha256": "cd47e507aedc55f1214f0c64a687e9673755fc878eddddc12d529a796412c357"
+    },
+    {
+      "probe": "K.highlight_ref_notation_alias",
+      "expected_class": "POS",
+      "got": {
+        "schema1": "UNKNOWN_VERTEX_REF",
+        "schema2": "UNKNOWN_VERTEX_REF",
+        "a3": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        }
+      },
+      "input_sha256": "1db766e2e8a9028261f9f8a554d22e9cd28c31b8b11f5844d9ff177b8e5439af"
+    },
+    {
+      "probe": "K.highlight_ref_cross_solid_unscoped_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "a4": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        }
+      },
+      "input_sha256": "8167a062925df13cac390ac4cd93bb86b73407498bed6c2a66b8eaa428cf9693"
+    },
+    {
+      "probe": "R.containment_solid_s1_member_s2_q",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "2dd27355e3bf9c161c6a7618e46926c1cf8930d3b9df3ef0e0eae247838193be"
+    },
+    {
+      "probe": "R.containment_whole_s2_vs_solid_s1",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "e92c736ebd15b994d86971b4c5e5393ceb2d222b0b33e699731330706a96d96e"
+    },
+    {
+      "probe": "R.containment_whole_s2_member_S",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "823e8e865f84fb700dbf5ce97273b4f77f5504594767357cf6f9cd40a1f18b72"
+    },
+    {
+      "probe": "R.containment_chain_foreign_unqualified",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "ab0ebe8bb4c5dbc8f975d4acfc776287d426f8915f9d775d96cf8a87e29d3875"
+    },
+    {
+      "probe": "R.containment_chain_qualified_other",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "86bc2dfa31ffd3d8615f5485d9e70bd5a8164a8b518ca05ce3eba9a21cbeb08d"
+    },
+    {
+      "probe": "R.containment_container_notation_alias",
+      "expected_class": "POS",
+      "got": {
+        "schema1": "INVALID_VERTEX_CHAIN",
+        "schema2": "INVALID_VERTEX_CHAIN",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_VERTEX_CHAIN",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_VERTEX_CHAIN",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_VERTEX_CHAIN",
+          "answer": null
+        }
+      },
+      "input_sha256": "6ce14059dcfec70c75e888eb8c8d6259fd13a36a1890b7975210c281f36b50e4"
+    },
+    {
+      "probe": "R.containment_container_unknown_id_like",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_VERTEX_CHAIN",
+        "schema2": "INVALID_VERTEX_CHAIN",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_VERTEX_CHAIN",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_VERTEX_CHAIN",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_VERTEX_CHAIN",
+          "answer": null
+        }
+      },
+      "input_sha256": "97442bcc970ff9f3a8f903711ddad9050d389a2805ef70727aeb20e6d9c9fe96"
+    },
+    {
+      "probe": "R.parallel_solid_a_s1_entity_T",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "e014e1bfb203636dbc2e8db90121407f8e81487d57f9120237088bfcb08997cf"
+    },
+    {
+      "probe": "R.parallel_solid_a_vs_solid_id",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "1385bd091b34f4d933233dd2fae5e81aa3c1081373309409ce3277b80c2be086"
+    },
+    {
+      "probe": "R.perpendicular_solid_id_s2_entity_S",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "04021299c774f587328ace308794db1a12e4376d9c2396777cbee89058928241"
+    },
+    {
+      "probe": "R.perpendicular_solid_ghost",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "UNKNOWN_SOLID_ID",
+        "schema2": "UNKNOWN_SOLID_ID",
+        "a3": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SOLID_ID",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SOLID_ID",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SOLID_ID",
+          "answer": null
+        }
+      },
+      "input_sha256": "7fd6fe40fd5804ddaae3475bb66e1547a58d113e55849c020e986ede277dea3c"
+    },
+    {
+      "probe": "R.perpendicular_section_id_ghost",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "UNKNOWN_SECTION_ID",
+        "schema2": "UNKNOWN_SECTION_ID",
+        "a3": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SECTION_ID",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SECTION_ID",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SECTION_ID",
+          "answer": null
+        }
+      },
+      "input_sha256": "2845027db4da001aa3922e77b647dbce4473e4ae138e242b4309dc3a4cf87028"
+    },
+    {
+      "probe": "R.perpendicular_valid_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "PREDICATE_NOT_IN_QUOTE",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "PREDICATE_NOT_IN_QUOTE",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "PREDICATE_NOT_IN_QUOTE",
+          "answer": null
+        }
+      },
+      "input_sha256": "66a2daeb98aabfd26e39ab9df6b7319c2692048fa2bea0ef371f291278ed9104"
+    },
+    {
+      "probe": "R.coordinate_frame_anchor_foreign",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "6c292770fe4a36adfba3aa58a7828133614e5673508b02c67566f416af96464a"
+    },
+    {
+      "probe": "R.coordinate_frame_anchor_q_other",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "115e6d5580cef295682bb495251776c24fde1ddb1363cc0c4947fae195914c5b"
+    },
+    {
+      "probe": "R.shared_faces_face_a_q_other",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "9780e7bcae4486ec61d5c2ac75ed4d3e0d5f3561557703a5822f7e061fb19812"
+    },
+    {
+      "probe": "R.shared_faces_face_b_not_of_b",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "a1b954b0974b35696be27549b3f946621c2f74687827b50353cdfb929d9b6187"
+    },
+    {
+      "probe": "R.shared_faces_valid_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "SHARED_ENTITY_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "a4": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        }
+      },
+      "input_sha256": "9c71fed0369c163d8a393c662a40fca162ddc0781dc681d2bd1e9dd4f496eed4"
+    },
+    {
+      "probe": "R.shared_vertices_nonvertex_q",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "99b0ca9b7587f6a755980656dd7283ccc9ec06133beb00425db34f6a961d9459"
+    },
+    {
+      "probe": "R.shared_vertices_solid_a_vs_pair",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "b5ccbffd785aed85ed18590616cc070f0013986ea9ffb3eaaf64e994e20a7a3e"
+    },
+    {
+      "probe": "R.shared_vertices_valid_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "a4": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        }
+      },
+      "input_sha256": "97f7a3ba32306befddc4d08208e919fee992f00002cc486babdab4712fece64f"
+    },
+    {
+      "probe": "R.section_membership_solid_ghost",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "UNKNOWN_SOLID_ID",
+        "schema2": "UNKNOWN_SOLID_ID",
+        "a3": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SOLID_ID",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SOLID_ID",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SOLID_ID",
+          "answer": null
+        }
+      },
+      "input_sha256": "f455f5725c572a4342deb62e66790fffa40487818fa7773fc63dcdf9f3c8aa5e"
+    },
+    {
+      "probe": "R.section_membership_member_unknown",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        }
+      },
+      "input_sha256": "c6c0ae80ce3a75021937adcaf5e6f445fedf98419572293ac2c892f900b3bf93"
+    },
+    {
+      "probe": "R.section_membership_solid_derived_child",
+      "expected_class": "POS",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "a10aa2ec33d73d7a931ccafb76511e8834adea19860a4d853bfce92d8c907fe8"
+    },
+    {
+      "probe": "R.containment_container_derived_child",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "math_vol_ratio": {
+              "coef": "1/8",
+              "dim": 0,
+              "unit": null
+            },
+            "math_res_vol": {
+              "coef": "7/12",
+              "dim": 3,
+              "unit": "a"
+            },
+            "math_sec_area": {
+              "coef": "1/4",
+              "dim": 2,
+              "unit": "a"
+            }
+          }
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_RELATION",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_RELATION",
+          "answer": null
+        }
+      },
+      "input_sha256": "85184a6b984c8b58c60a6359090f659ae5e3f7f8c7b278ffba7007b90e64ae9d"
+    },
+    {
+      "probe": "H.ids_like_edges_S-A_T-A",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "a4": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        }
+      },
+      "input_sha256": "ee2e099478495773e63abfa9bf1886391c80761484b800ed0787862358f80a08"
+    },
+    {
+      "probe": "H.ids_many_hyphens",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "a4": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        }
+      },
+      "input_sha256": "f651aab4fc7d56c8b1a68bbd742ec6deef05d4629da4bc6ac3932d8114505371"
+    },
+    {
+      "probe": "H.ids_equal_labels_S_T",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "a4": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        }
+      },
+      "input_sha256": "a2e0d701c049180f38d052ad9f8c6ffcc57792b424c7c3a816f903d4c72defd7"
+    },
+    {
+      "probe": "H.ids_trailing_hyphen",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "a4": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        }
+      },
+      "input_sha256": "e79751a34d4222cd65c11301eecb5812224cc1a26418a634924dcc95cfb96465"
+    },
+    {
+      "probe": "H.ids_like_edges_cross_scope",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "41eb9bbdaee2131975dade9a8c7615a219d6d66e92f909a3bb188db8dadd548f"
+    },
+    {
+      "probe": "H.ids_like_edges_qualified_foreign_ref",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "e7719df8ba6a67640ae0776ed1cb931edda509fe0418f9d7a828c884af0f4fc9"
+    },
+    {
+      "probe": "H.dotted_id_unqualified_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "a4": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        }
+      },
+      "input_sha256": "04352a78dbb542faacad2cb46e3c956d4c7226fc350f91848e31fae3f7eef61a"
+    },
+    {
+      "probe": "H.colon_id_unqualified_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "a4": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        }
+      },
+      "input_sha256": "84cc437a9ec866f3ead084129c02d4cdc0a12b859ea62e98d8d9e9d5b5a7e370"
+    },
+    {
+      "probe": "H.dev07_qualified_keys_uppercase_hyphen_id",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "6215e960ba968b21c17f7d8e7ed51c332a7d867b132490efb9e9604fc3998cd7"
+    },
+    {
+      "probe": "H.dev07_qualified_keys_id_S-B",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "afbf97801794cc045c9a67b61b573adaaafdac424ce64a64e9a7413ab6b6b85a"
+    },
+    {
+      "probe": "H.dev07_key_with_foreign_ns",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "UNKNOWN_SOLID_ID",
+        "schema2": "UNKNOWN_SOLID_ID",
+        "a3": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SOLID_ID",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SOLID_ID",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SOLID_ID",
+          "answer": null
+        }
+      },
+      "input_sha256": "4146c214e2d6dc4cc2b9e8faafb114049e5dfd224aeb922435476faa94a1d7c8"
+    },
+    {
+      "probe": "H.dev07_key_ambiguous_three_parts",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_DERIVED_SECTION",
+        "schema2": "INVALID_DERIVED_SECTION",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_DERIVED_SECTION",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_DERIVED_SECTION",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_DERIVED_SECTION",
+          "answer": null
+        }
+      },
+      "input_sha256": "3bf80ca8e9299ecfec86c3a8c1e8960da5ecb7b666ac090e914a52098f7381d6"
+    },
+    {
+      "probe": "D.d5_with_derived_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "m_ratio_st": {
+              "coef": "1/2",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_CUT_EDGES_NOT_STATED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "6069e93d41fd040b2c8c04c9c8216d7bafd33df2ba805769701a6fe1993818ff"
+    },
+    {
+      "probe": "D.residual_parent_other_implicit_parent",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "f6eed429688b6d1e967ebed0b628b6a1a1dbcac2aa2d14a9f0e153461ed4e54c"
+    },
+    {
+      "probe": "D.residual_parent_other_explicit",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "55ba894c2ac93489da303e9a20175d3ae1b107160708644e046e68b7082c82c3"
+    },
+    {
+      "probe": "D.residual_parent_is_cut_itself",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "1b8ee7235ffd079e50df764e514385d4eaf6ffc182c151b6b49e7ae65b028335"
+    },
+    {
+      "probe": "D.residual_primary_cut_not_contained",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "RESIDUAL_CONTAINMENT_UNPROVED",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_CUT_EDGES_NOT_STATED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "d191a14e16db91f69f87e535a503955af303829ec132b626d929e30b406f3b95"
+    },
+    {
+      "probe": "D.residual_parent_derived_cut_primary",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "RESIDUAL_CONTAINMENT_UNPROVED",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_CUT_EDGES_NOT_STATED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "a19a9bd66fc5a67af27e0fe48cea1f8220bca42983c53b9b1fbd206eed065ee2"
+    },
+    {
+      "probe": "D.residual_valid_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "m_ratio_st": {
+              "coef": "1/2",
+              "dim": 0,
+              "unit": null
+            },
+            "res": {
+              "coef": "7/3",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_CUT_EDGES_NOT_STATED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "9e76dfa84ffd3458422e804d34de5502a4b0d0b93fc0482bfef7a035824dd91a"
+    },
+    {
+      "probe": "D.derived_parent_vs_section_solid",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "74c666c5544ca0e4481311104676fa482d9f221910bc46c84405cc76c12a01e6"
+    },
+    {
+      "probe": "D.derived_apex_other_solid_T",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "314c7524b9f91b6a7fe9949e5d85a66b1394673da95dea1bb703f0de4685c451"
+    },
+    {
+      "probe": "D.derived_apex_other_solid_qualified",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "da7310c9d07beab6e8097941e6e626779bcadb4042aa9f35e40f849629d786c6"
+    },
+    {
+      "probe": "D.derived_target_refs_foreign",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "44fe9ba05e4b2c000a3a455d50d184d09eadcbc16dd3693a417cf3388c8845c7"
+    },
+    {
+      "probe": "D.highlight_target_pyr_t_ref_derived",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "4af8bce13a1f9d264e0f6707aaf7fba0f0efdaa2c9b632e7e061fbb01f052946"
+    },
+    {
+      "probe": "D.highlight_target_derived_ref_M",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "m_ratio_st": {
+              "coef": "1/2",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_CUT_EDGES_NOT_STATED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "7105132975e21d4931e273db4d994d23fae55f3cc522363258ab8959ebc44d07"
+    },
+    {
+      "probe": "D.measure_scope_derived_foreign_label",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "1b7b9bc7df00c394136d88c32798d12e045842b3b55a42ac5ae002672d4ecf1e"
+    },
+    {
+      "probe": "D.measure_area_section_scope_derived",
+      "expected_class": "POS",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "086c245a57c4f1b5df2b2476794309615d62054018081e08a933a04927a16f6b"
+    },
+    {
+      "probe": "D.ratio_derived_vs_other_primary_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "m_ratio_st": {
+              "coef": "1/2",
+              "dim": 0,
+              "unit": null
+            },
+            "rr": {
+              "coef": "1/16",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_CUT_EDGES_NOT_STATED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "16d7fdcc6c043ed80e86dbcff86b54b411b415d3e3832474f06eb59d356505be"
+    },
+    {
+      "probe": "B.dev01_base",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "math_vol_ratio": {
+              "coef": "1/8",
+              "dim": 0,
+              "unit": null
+            },
+            "math_res_vol": {
+              "coef": "7/12",
+              "dim": 3,
+              "unit": "a"
+            },
+            "math_sec_area": {
+              "coef": "1/4",
+              "dim": 2,
+              "unit": "a"
+            }
+          }
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_RELATION",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_RELATION",
+          "answer": null
+        }
+      },
+      "input_sha256": "8325f0cceb7e880fb269a094250856a6b1ee906812640f3552818285358b42e9"
+    },
+    {
+      "probe": "B.demo1_base",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "m_sec_area": {
+              "coef": "1",
+              "dim": 0,
+              "unit": null
+            },
+            "m_vol_ratio": {
+              "coef": "1/8",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_CUT_EDGES_NOT_STATED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "e2fd462acae1536c8a4ac7896ebf1f3ec8c1b81777cf6666de91f6e81c99a15d"
+    },
+    {
+      "probe": "B.dev07_base",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "f51f7e69b59280c03081a00f23ced4a7ccb4712ad11c5fccc3e68018d6432d9e"
+    },
+    {
+      "probe": "B.dev02_base",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "m_vol_ratio": {
+              "coef": "1/2",
+              "dim": 0,
+              "unit": null
+            },
+            "m_vol_pyr1": {
+              "coef": "1/3",
+              "dim": 3,
+              "unit": "a"
+            }
+          }
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+          "answer": null
+        }
+      },
+      "input_sha256": "b44fc2f860afce43c26568462916e8b08cba02431881357a6fc6f8440b9a8509"
+    },
+    {
+      "probe": "K.dev01_ratio_target_solid_id_ghost",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "9dc8efc615ad0b515440fa514c469a91707b1397dbb4314a2a2afe04a419358d"
+    },
+    {
+      "probe": "K.dev01_ratio_target_solid_other_notation",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "a8ff15cc26a52bf5403289524226ea294c34397ba42e037becdb678f1da3a340"
+    },
+    {
+      "probe": "K.dev01_ratio_goal_type_volume",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "38bac5133cef6af5991e7bc708ad0e1ba68c1649d45fc4df0f011f7cd6bc3f86"
+    },
+    {
+      "probe": "K.dev01_ratio_with_parent_cut",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "5edeba629c206e8e601858dbaa58cff41a17fba5ff214e1cb5cf5abae6ca5181"
+    },
+    {
+      "probe": "K.dev01_ratio_target_segment_foreign",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "e5293f08a55ddc68067e949531e6960d929322c25780e241b94407584870b239"
+    },
+    {
+      "probe": "K.demo1_ratio_target_solid_id_ghost",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "4f0ef054436bfa61cf8667103e18f7edefe286e9e26ba9ce25e9b6edb430684a"
+    },
+    {
+      "probe": "K.demo1_ratio_target_solid_other_notation",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "0a546f46af5891a470c7a5401c01ee7cb4a9e02d9f5bbda25f5e5af470affb1e"
+    },
+    {
+      "probe": "K.demo1_ratio_goal_type_volume",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "65b5715396381e32910db83527b0a8bf725ee2002f3a18b516a867beed6ff23a"
+    },
+    {
+      "probe": "K.demo1_ratio_with_parent_cut",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "37c55bc5512c82ed6d81d8dfc0ee2154eee0fa0cd80caca221067a8b07ea7267"
+    },
+    {
+      "probe": "K.demo1_ratio_target_segment_foreign",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "b31f7398c5b1d42e3dde2d6900b66cd8426f4bb413aae285b198a3864d244c4d"
+    },
+    {
+      "probe": "K.dev01_residual_with_denominator",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "910e081123a959222d94ced78be595bfabec4f59253a0c37439ee423f3d6fe5c"
+    },
+    {
+      "probe": "K.dev01_residual_target_solid_ghost",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "bf55e27f691964fa0115a21ca1caeb030040dd124f828bbe1205bf5ab71841df"
+    },
+    {
+      "probe": "K.dev01_measure_area_with_cut_solid",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "4305823a245a97e3feb79a84080cf43a35fb080461d7873d0662b3772081c58c"
+    },
+    {
+      "probe": "K.dev01_derived_goal_with_target_refs_ghost_solid_like",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "UNKNOWN_VERTEX_REF",
+        "schema2": "UNKNOWN_VERTEX_REF",
+        "a3": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        }
+      },
+      "input_sha256": "752d8e5a0bba346e6ed57a9f830b090a9a9b0a881ebb8da9cfa48e0947d8ded5"
+    },
+    {
+      "probe": "K.dev01_section_goal_with_derived_solid_id",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_SIMULATION_GOAL",
+        "schema2": "INVALID_SIMULATION_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "4cc0a605120e468f18461c58078dceaf28b9ff7728cc8afd8c95ec6817ae226a"
+    },
+    {
+      "probe": "K.dev01_section_goal_with_apex_ref_unknown",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_SIMULATION_GOAL",
+        "schema2": "INVALID_SIMULATION_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "84b813717bece7d9e802ef7a0148cea2fe05a91af174a5290cb4c2b5e7ae989f"
+    },
+    {
+      "probe": "S8.dev02_with_M_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "m_vol_ratio": {
+              "coef": "1/2",
+              "dim": 0,
+              "unit": null
+            },
+            "m_vol_pyr1": {
+              "coef": "1/3",
+              "dim": 3,
+              "unit": "a"
+            }
+          }
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+          "answer": null
+        }
+      },
+      "input_sha256": "1a4b8c744a7330d80f638014be614f97525a82e6edbd025014b34d5e87253191"
+    },
+    {
+      "probe": "S8.dev02_measure_target_solid_id_pyr2_M",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "6efb753747725cce9366885643918218c06d3ca0bb85c1a6e59b13c78bd392c4"
+    },
+    {
+      "probe": "S8.dev02_measure_target_solid_pyr2_M",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "239430d8a0d05c21b9133e0f845ff7b065a4d5a975fa5dea3cbb6221bd2175a9"
+    },
+    {
+      "probe": "S8.dev02_measure_target_solid_pyr1_M_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "78f7291a579f25cee80981ad90e6ff88356b8c8c431318bc6ee6bd11a74bd49a"
+    },
+    {
+      "probe": "S8.dev02_containment_whole_pyr2_member_M",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "cd3dc2e63ac77c2cba1b6b5556c42ebc4e51413fa19546a400a77dd22758e6d6"
+    },
+    {
+      "probe": "S8.dev02_containment_solid_pyr2_member_M",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "2a78a887bb04147b2fa9776ac06e68fecea30efc8391e9e3e0043861c21fb993"
+    },
+    {
+      "probe": "S8.dev02_perpendicular_solid_pyr2_entity_M",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "0e5661e31618c39e725f7dd8aace507e54498042903140c0b275a3ec02747e8d"
+    },
+    {
+      "probe": "S8.dev02_highlight_target_pyr2_ref_M",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "395e46b76b8f117407bb8ebf660a356b49401132dd5ceecb2c7b171fc68b839c"
+    },
+    {
+      "probe": "S8.dev02_frame_pyr2_anchor_M",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "ecc1f04dfe667e11fad6754f8d551da13dd16dbbe5fed6f8b186a85e70eb1b49"
+    },
+    {
+      "probe": "C.cone_base",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "m_vol": {
+              "coef": "12π",
+              "dim": 0,
+              "unit": null
+            },
+            "m_lat": {
+              "coef": "15π",
+              "dim": 0,
+              "unit": null
+            },
+            "m_axial_area": {
+              "coef": "12",
+              "dim": 0,
+              "unit": null
+            },
+            "m_ratio": {
+              "coef": "1/8",
+              "dim": 0,
+              "unit": null
+            },
+            "m_frustum": {
+              "coef": "21π/2",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        }
+      },
+      "input_sha256": "e991a651bcc9257e636aaf977b28589ce5c95919f376d8438b8d167ee41b8fa9"
+    },
+    {
+      "probe": "C.two_cones_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "m_vol": {
+              "coef": "12π",
+              "dim": 0,
+              "unit": null
+            },
+            "m_lat": {
+              "coef": "15π",
+              "dim": 0,
+              "unit": null
+            },
+            "m_axial_area": {
+              "coef": "12",
+              "dim": 0,
+              "unit": null
+            },
+            "m_ratio": {
+              "coef": "1/8",
+              "dim": 0,
+              "unit": null
+            },
+            "m_frustum": {
+              "coef": "21π/2",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        }
+      },
+      "input_sha256": "806f2fe90527ce1eab513acb01600099904d91fbff391b644a5ad7015a00759b"
+    },
+    {
+      "probe": "C.cone_volume_goal_scope_other_cone",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "45515b817cb5412ae48a2716f6f811baa81be1544938bfcb50a039de60800076"
+    },
+    {
+      "probe": "C.cone_volume_target_solid_id_vs_solid",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "5b4b35cde3d0f6a72b1a4692b799b5250dc9503042244074ecba1dcc20b7b28b"
+    },
+    {
+      "probe": "C.cone_volume_target_notation_alias",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "m_vol": {
+              "coef": "12π",
+              "dim": 0,
+              "unit": null
+            },
+            "m_lat": {
+              "coef": "15π",
+              "dim": 0,
+              "unit": null
+            },
+            "m_axial_area": {
+              "coef": "12",
+              "dim": 0,
+              "unit": null
+            },
+            "m_ratio": {
+              "coef": "1/8",
+              "dim": 0,
+              "unit": null
+            },
+            "m_frustum": {
+              "coef": "21π/2",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        }
+      },
+      "input_sha256": "d10c85a31b6388428b4cd320b4a160bef7ff7dad18678396ad1210c2cd60f932"
+    },
+    {
+      "probe": "C.cone_volume_target_ghost",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "UNKNOWN_SOLID",
+        "schema2": "UNKNOWN_SOLID",
+        "a3": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SOLID",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SOLID",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SOLID",
+          "answer": null
+        }
+      },
+      "input_sha256": "1de7d5116f743caf6f97b7ade102d8b5ccaea1b262874e0e30117a53cb4cc864"
+    },
+    {
+      "probe": "C.cone_area_section_vs_solid_id",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "c9869eef2d0f9973b9a5e9c69a4510acc0e054a3bc124b7dbed95caf579ca081"
+    },
+    {
+      "probe": "C.cone_area_unknown_section",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "UNKNOWN_SECTION_ID",
+        "schema2": "UNKNOWN_SECTION_ID",
+        "a3": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SECTION_ID",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SECTION_ID",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SECTION_ID",
+          "answer": null
+        }
+      },
+      "input_sha256": "e0052282f4242718b78b46cc9709ae91a4e14b037e9ba432de9e18fae7f9f651"
+    },
+    {
+      "probe": "C.cone_derived_parent_other",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "0afb5c7ee31489f145cb149a1e79e99446be7446f2d1e957d5137ea6800b0a51"
+    },
+    {
+      "probe": "C.cone_derived_apex_other",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "126c60cee19f13b48d3620a8627cfd87bdded1557cc22586d33dc17283cce937"
+    },
+    {
+      "probe": "C.cone_derived_apex_other_qualified",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "0a68ce47be50014ccdd64685506b850ecddf3a6345eb1016c9d670343d7264a0"
+    },
+    {
+      "probe": "C.cone_derived_apex_unknown",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "UNKNOWN_VERTEX_REF",
+        "schema2": "UNKNOWN_VERTEX_REF",
+        "a3": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        }
+      },
+      "input_sha256": "81059b89b920520f5e6b11159e4aabf9dc2230fbda98b8f294920ae05cd69203"
+    },
+    {
+      "probe": "C.cone_residual_parent_other",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "e7dcdb67d44c472a8e2d8163fa8a6a81a6432554e85b6bf806e8bbe747a0df2d"
+    },
+    {
+      "probe": "C.cone_ratio_goal_level_solid_id",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "78332bd09fe683a34db586195a435c6bc0c2e079353a1dfc13193b81df4c790e"
+    },
+    {
+      "probe": "C.cone_highlight_target_main_ref_T",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "7a44d2f76e894a808f35575914a73c31096e15deb55f96023b356d1424574497"
+    },
+    {
+      "probe": "C.cone_highlight_ref_q_nonvertex",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "UNKNOWN_VERTEX_REF",
+        "schema2": "UNKNOWN_VERTEX_REF",
+        "a3": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        }
+      },
+      "input_sha256": "8beb83c94c62f31cd17cd3fde78461f22fb3262990f1fde60de18877206e7bee"
+    },
+    {
+      "probe": "C.cone_highlight_ref_q_other_vertex",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "576e81a42943cc85075edb9cd7d335f6bc6fe7a96d53d5c8bcc1360b0dd704e6"
+    },
+    {
+      "probe": "C.cone_highlight_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "m_vol": {
+              "coef": "12π",
+              "dim": 0,
+              "unit": null
+            },
+            "m_lat": {
+              "coef": "15π",
+              "dim": 0,
+              "unit": null
+            },
+            "m_axial_area": {
+              "coef": "12",
+              "dim": 0,
+              "unit": null
+            },
+            "m_ratio": {
+              "coef": "1/8",
+              "dim": 0,
+              "unit": null
+            },
+            "m_frustum": {
+              "coef": "21π/2",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        }
+      },
+      "input_sha256": "37428a4bfbb60b5e42852b3afb239a0ce0daf70144bb1f0f15d3d564afc51bec"
+    },
+    {
+      "probe": "C.cone_relation_frame_anchor_other",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "152e8f7997be8ddd57e7af825462450c81301dc2a753be49e752947e960cbb6a"
+    },
+    {
+      "probe": "C.cone_relation_parallel_sides",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "355e1fedab47ce1f7e61be8f77f3b075c7e58d4ce48c6c5189f0c0b067629837"
+    },
+    {
+      "probe": "C.cone_relation_shared_vertices_nonvertex",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        }
+      },
+      "input_sha256": "7c0ee3451072d87357b27024930899cb32b8db33ce3766a35a3ae3f33ad8264b"
+    },
+    {
+      "probe": "C.cone_relation_containment_member_unknown_q",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_VERTEX_REF",
+          "answer": null
+        }
+      },
+      "input_sha256": "5acf46208c3d9c8a06166ba6f0b605588a4da55a64f33370c2bb0560b59153fe"
+    },
+    {
+      "probe": "C.cone_section_goal_target_solid_other",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "a4d9e7a823b2077fcd79bfc59ade6fd1e3cca78601e5a81f1e775de8511efa33"
+    },
+    {
+      "probe": "C.cone_section_goal_parent_solid_id",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_SIMULATION_GOAL",
+        "schema2": "INVALID_SIMULATION_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "0a8f488856f809780667812f9dc5de8f9920e4d2bda8915a2a415fa2f4a95c56"
+    },
+    {
+      "probe": "C.cone_measure_with_parent_other",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "d0d041e6eda6831dbb38cca0e17fb74bd0fc328bcfef7c715a36c2f048538056"
+    },
+    {
+      "probe": "C.cone_premise_height_other",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "e6226ee8736ae15a3d0f47e5012258b1a4f1b7b3df1d838a22b716f756c19d96"
+    },
+    {
+      "probe": "C.cone_premise_segment_q_other",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "609a6198466d82f1630ae487b9586818daae70402624e24633d5011203c2f9f1"
+    },
+    {
+      "probe": "C.cone_measure_str_segment_target_solid",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "1a4f7ae847acc41ac7a3516530ac2a3e150561d79310829c8a3bca6979214c4a"
+    },
+    {
+      "probe": "C.cyl_base",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "m_vol": {
+              "coef": "12π",
+              "dim": 0,
+              "unit": null
+            },
+            "m_lat": {
+              "coef": "12π",
+              "dim": 0,
+              "unit": null
+            },
+            "m_par_area": {
+              "coef": "4π",
+              "dim": 0,
+              "unit": null
+            },
+            "m_ax_area": {
+              "coef": "12",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        }
+      },
+      "input_sha256": "9c19153515a6fada0301d9c36ab7b00b101c662f5bba71b9874a9077c705cc34"
+    },
+    {
+      "probe": "C.two_cyl_hyphen_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "ENGINE_IR_INVALID",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        }
+      },
+      "input_sha256": "a8c6eb6e81031e7ac4c27466f3846c8794575e00430bbae7547966b36f9a1190"
+    },
+    {
+      "probe": "C.cyl_volume_goal_hyphen_other",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "c03dc1919b372cc93de7955644ffd6adb0cb828eab04b934f20da5f2fe485b42"
+    },
+    {
+      "probe": "C.cyl_area_section_vs_goal_solid",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "474a4adc8fba1feb11f9276d89c3d3d4cbbfc923f3dfea2fed7ab06706918e41"
+    },
+    {
+      "probe": "C.cyl_section_target_hyphen_goal_mismatch",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "688e5db04d07971184e5b0c8955aed16ab69c6729dec2c2650dd2cce7b0ce44a"
+    },
+    {
+      "probe": "C.cyl_highlight_q_hyphen_other",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "5f7a9aa022a3eb3b16cba7f3d46f7d7436a6d51d9ef5816fc9fc14c3ba120a27"
+    },
+    {
+      "probe": "C.cyl_volume_target_notation_with_prime",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "m_vol": {
+              "coef": "12π",
+              "dim": 0,
+              "unit": null
+            },
+            "m_lat": {
+              "coef": "12π",
+              "dim": 0,
+              "unit": null
+            },
+            "m_par_area": {
+              "coef": "4π",
+              "dim": 0,
+              "unit": null
+            },
+            "m_ax_area": {
+              "coef": "12",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        }
+      },
+      "input_sha256": "6ec629e3d0a76b12eb3ae245c9b1b65394066f9554bbcff474453fe0bbfed873"
+    },
+    {
+      "probe": "S8.sup_M_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "REQUEST_NOT_ANSWERED",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "REQUEST_NOT_ANSWERED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "REQUEST_NOT_ANSWERED",
+          "answer": null
+        }
+      },
+      "input_sha256": "18eeae41a8cefed95c6f04cfc14559ef0828010be2386056b134a7dc629cf19e"
+    },
+    {
+      "probe": "S8.sup_M_frame_fallback_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "COORDINATE_FRAME_DISCONNECTED",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+          "answer": null
+        }
+      },
+      "input_sha256": "5e52a13993318ff82e9277503ccb17ed51f02be1d0ae03b228c187316caa1016"
+    },
+    {
+      "probe": "S8.sup_M_s2_identity_path",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "6c42e5b417966f84aa30b7145cc505f23cb6ae8152fb0b57d669e1113c35eabe"
+    },
+    {
+      "probe": "S8.sup_M_s2_fallback_path",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "40021771365424ec60ea9973fdbbf2754551aabc8565627e2e8f286030a281f0"
+    },
+    {
+      "probe": "S8.sup_M_s2_goal_level_fallback",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "b9c9620fbeae5b2de4d531397392524775a54c30d983130a6e277c0dfef76368"
+    },
+    {
+      "probe": "S8.sup_M_s1_fallback_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "5440ee62d25654cbffc376ad272bfe816c0cd33429ab4a2a8ab9f0aa5e7f3dc9"
+    },
+    {
+      "probe": "S8.sup_M_containment_whole_s2_fallback",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "da52c9d524d460cc9927f5b6853a53b5f49775bbb6b5d4ad3680a03c90ba20c7"
+    },
+    {
+      "probe": "S8.sup_M_containment_whole_s2_identity",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "f95df35f05206441d8784e3865093bb869f265965a2e9eab56e2188d4653b450"
+    },
+    {
+      "probe": "M.str_segment_target_s1_fallback",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "d0bd36c2820e0b2ab6b9d672e02ae3ab7e74d720923b536e048ae8e5407ba6b3"
+    },
+    {
+      "probe": "B.demo5_base",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "05e2f8c0a7592be6dd7dbd0573a236d0ce54db76be67457bdf633157b0bda71d"
+    },
+    {
+      "probe": "K.demo5_ratio_target_solid_id_ghost",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "b8236a3b4b2c8f5d4453c65aa51cfe41ac3842728cd3303f92040589aae1366a"
+    },
+    {
+      "probe": "K.demo5_ratio_target_solid_ghost",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "b099bf3d14314c29153a271b99b7decf3a8fc6e3b235c043ed3e975942571f0c"
+    },
+    {
+      "probe": "K.demo5_ratio_with_cut_solid",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "c925c78da280973c0da2098508975cbbe685f0dc9c884b70691ab796647147c1"
+    },
+    {
+      "probe": "K.demo5_highlight_with_derived_solid_id_ghost",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_SIMULATION_GOAL",
+        "schema2": "INVALID_SIMULATION_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "c73e102d4ba0c5e2695fc37a2771965bcff5327afd123b9dac895a2668a4d4f3"
+    },
+    {
+      "probe": "C.two_cyl_underscore_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "ENGINE_IR_INVALID",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        }
+      },
+      "input_sha256": "020cec656dd1ab10db29a2af0366326dcf7fb86d5f37f657dbedff41e6912e39"
+    },
+    {
+      "probe": "C.two_cyl_hyphen",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "ENGINE_IR_INVALID",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        }
+      },
+      "input_sha256": "a8c6eb6e81031e7ac4c27466f3846c8794575e00430bbae7547966b36f9a1190"
+    },
+    {
+      "probe": "C.cone_single_hyphen_id",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "m_vol": {
+              "coef": "12π",
+              "dim": 0,
+              "unit": null
+            },
+            "m_lat": {
+              "coef": "15π",
+              "dim": 0,
+              "unit": null
+            },
+            "m_axial_area": {
+              "coef": "12",
+              "dim": 0,
+              "unit": null
+            },
+            "m_ratio": {
+              "coef": "1/8",
+              "dim": 0,
+              "unit": null
+            },
+            "m_frustum": {
+              "coef": "21π/2",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        }
+      },
+      "input_sha256": "dd2a10cb70087f9a64a24412eab3a333804137b1ae5b25f0413872973cb02dc3"
+    },
+    {
+      "probe": "C.cone_single_multi_hyphen_id",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "m_vol": {
+              "coef": "12π",
+              "dim": 0,
+              "unit": null
+            },
+            "m_lat": {
+              "coef": "15π",
+              "dim": 0,
+              "unit": null
+            },
+            "m_axial_area": {
+              "coef": "12",
+              "dim": 0,
+              "unit": null
+            },
+            "m_ratio": {
+              "coef": "1/8",
+              "dim": 0,
+              "unit": null
+            },
+            "m_frustum": {
+              "coef": "21π/2",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        }
+      },
+      "input_sha256": "2472bec9e213ab01afbee3e69d1ed78c066e705c7ac25fe16877a67c0b623b6f"
+    },
+    {
+      "probe": "C.cone_shared_vertices_apexes_claimed_equal",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "SHARED_ENTITY_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        }
+      },
+      "input_sha256": "1cffdf97ac401829a5018e8edca0ae17f189a1e4f64eb9ad04b89c340d9e1a70"
+    },
+    {
+      "probe": "C.cone_containment_whole_main_member_T",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "c8392a58e3b59b84820ceecd5ccaa65767a063eaa4ddd703b1c90dd9531408fc"
+    },
+    {
+      "probe": "C.cone_relation_quote_not_in_text",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_QUOTE_NOT_FOUND",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        }
+      },
+      "input_sha256": "1f00ecc14c62800d2b7601a1b6be2f4b64462647253f295f27d51f91a76ef747"
+    },
+    {
+      "probe": "F1.pyr-1_pyr-2_qualified",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "a4": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        }
+      },
+      "input_sha256": "b217d51a98c5a6b7bf8a4199d5d11bd8401d4cd802e6d26e46d04066e4ec9202"
+    },
+    {
+      "probe": "F1.pyr-1_scope_violation",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "a107ba1b6c9bebb250393c14fd206d2b6ec6ddcda5749899cd231fbd4940377e"
+    },
+    {
+      "probe": "F2.perp_solid_id_s2_ops_s1_q",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "3751207dc39b4fbd2fe34c77c2f52d539ced483ab727e02e6e3607c035bd78f4"
+    },
+    {
+      "probe": "F2.perp_solid_a_s2_ops_s1",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "6e459e0dbcedea213409bac964d6f303745aed35c2e79df4966d4fb2e12ca027"
+    },
+    {
+      "probe": "F2.shared_vertices_sides_s2_pair_s1",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "0347a0fedf5f01f86bcf517713dc3ef3286c7402ac8e3b21cedaed3f32c0e4cd"
+    },
+    {
+      "probe": "F2.perp_valid_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "a4": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        }
+      },
+      "input_sha256": "87f9743b543ffa5cf18da82436e892e924baccb292151999605728aa867ad196"
+    },
+    {
+      "probe": "F3.highlight_s2_refs_s1",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "7097477ec47c4b25628e130903036783d2d19287b5bcd2ccb07716f143b848fa"
+    },
+    {
+      "probe": "F3.construct_object_parent_neq_target",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_SIMULATION_GOAL",
+        "schema2": "INVALID_SIMULATION_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "b4c072234b0a1ca6f6c8c3af0f082edfe3030caac0dfb03fe5fbe95c2691dfbd"
+    },
+    {
+      "probe": "F3.section_goal_target_other_solid",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "2c2ff2313b98223f65307710fd53438a09b5ee44ec1a41c09b63d71fcac95328"
+    },
+    {
+      "probe": "F3.derived_goal_target_solid_id",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_SIMULATION_GOAL",
+        "schema2": "INVALID_SIMULATION_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_SIMULATION_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "9c182be71cd3f459a44ad70c1b00bda761231cc5ddba51daa6adb757d5fe6035"
+    },
+    {
+      "probe": "F4.cone_apex_other",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "126c60cee19f13b48d3620a8627cfd87bdded1557cc22586d33dc17283cce937"
+    },
+    {
+      "probe": "F4.cone_perp_contradicting",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "baa8e0039909c2643ade243271b690c13111ae16b3dfe87432849bf2a0b748be"
+    },
+    {
+      "probe": "F4.cone_highlight_other_refs",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "1b148726236854a88e50c0a7f316814e86d907e769fd8503444e5ba92d9ac364"
+    },
+    {
+      "probe": "F5.curved_target_notation_alias",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "m_vol": {
+              "coef": "12π",
+              "dim": 0,
+              "unit": null
+            },
+            "m_lat": {
+              "coef": "15π",
+              "dim": 0,
+              "unit": null
+            },
+            "m_axial_area": {
+              "coef": "12",
+              "dim": 0,
+              "unit": null
+            },
+            "m_ratio": {
+              "coef": "1/8",
+              "dim": 0,
+              "unit": null
+            },
+            "m_frustum": {
+              "coef": "21π/2",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_CURVED",
+          "answer": null
+        }
+      },
+      "input_sha256": "d10c85a31b6388428b4cd320b4a160bef7ff7dad18678396ad1210c2cd60f932"
+    },
+    {
+      "probe": "F5.curved_section_id_int",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "3e0a1edcc43c7566edc64d06dc36bb22549271ed90b561966e43801cf9664bec"
+    },
+    {
+      "probe": "F5.curved_section_id_unknown",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "UNKNOWN_SECTION_ID",
+        "schema2": "UNKNOWN_SECTION_ID",
+        "a3": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SECTION_ID",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SECTION_ID",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "UNKNOWN_SECTION_ID",
+          "answer": null
+        }
+      },
+      "input_sha256": "96a9897377df945175e495d8635bfe0e51986917ec35b3c9bd80d44c9cb192f2"
+    },
+    {
+      "probe": "F5.poly_target_point_dict",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "905d6a1933e52b92229d6dc186820ec0c4d969f765387fd82dff06cc78d3b4e8"
+    },
+    {
+      "probe": "F6.dev10_base",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "20c8261290b6a710483513bde545cd391722f03736ba7f4869ec95fbc56670ff"
+    },
+    {
+      "probe": "F6.area_target_solid_notation",
+      "expected_class": "POS",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "246012e6d2882ce67c1f4d03b5875c1806a805bc71c2cbd5a870e9705653f3db"
+    },
+    {
+      "probe": "F6.area_target_solid_id",
+      "expected_class": "POS",
+      "got": {
+        "schema1": "INVALID_MATH_GOAL",
+        "schema2": "INVALID_MATH_GOAL",
+        "a3": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "INVALID_MATH_GOAL",
+          "answer": null
+        }
+      },
+      "input_sha256": "046b05021442149b3a6597d3d6b223f12643dd9957aa8515f987e7aa7b93ba74"
+    },
+    {
+      "probe": "F6.volume_goal_notation",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "a4": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "v": {
+              "coef": "4",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        }
+      },
+      "input_sha256": "8a6f43ea0d805595422e083425038493fa3ec9eac08bed89d4ecc1f7776738b2"
+    },
+    {
+      "probe": "F7.residual_parent_other",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "10c957199bc0f9ec035d3e5513380e45fbb27678604eeb13d95c85634a57d256"
+    },
+    {
+      "probe": "F7.residual_valid_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "UNDERDETERMINED_POINT",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_CUT_EDGES_NOT_STATED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "099b0e0b055b62532080192bda273c3ffed18341128955625994db85606e60ee"
+    },
+    {
+      "probe": "F7.ratio_cross_parent_valid",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "REFUSED",
+          "code": "UNDERDETERMINED_POINT",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_CUT_EDGES_NOT_STATED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "ae44f3591b10d6653f2b53f9735f55b0226dc6407852cc492d29b0523184817e"
+    },
+    {
+      "probe": "F7x.two_primary_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "m_sec_area": {
+              "coef": "1",
+              "dim": 0,
+              "unit": null
+            },
+            "m_vol_ratio": {
+              "coef": "1/8",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_CUT_EDGES_NOT_STATED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "f23e0a01a537b77acadfa6a4bffaf7c6a0c774724fca6519191e9f42a6b47ff5"
+    },
+    {
+      "probe": "F7x.residual_parent_other_primary",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "5c151093a72adfdcee298040f69c698af1309450a378d96484ac221e1c0ed6c6"
+    },
+    {
+      "probe": "F7x.residual_parent_other_hyphen_ids",
+      "expected_class": "NEG",
+      "got": {
+        "schema1": "SOURCE_OBJECT_MISMATCH",
+        "schema2": "SOURCE_OBJECT_MISMATCH",
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "576b394cd8e82ae1f3e6ba6509fc258f63e3634cf03970c2ee7c07e4559fdab8"
+    },
+    {
+      "probe": "F7x.residual_parent_own_control",
+      "expected_class": "POS",
+      "got": {
+        "schema1": null,
+        "schema2": null,
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "m_sec_area": {
+              "coef": "1",
+              "dim": 0,
+              "unit": null
+            },
+            "m_vol_ratio": {
+              "coef": "1/8",
+              "dim": 0,
+              "unit": null
+            },
+            "r": {
+              "coef": "7/3",
+              "dim": 0,
+              "unit": null
+            }
+          }
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_CUT_EDGES_NOT_STATED",
+          "answer": null
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": null
+        }
+      },
+      "input_sha256": "7b0d5456e871045978c03e0b037494bfc8887c175eb8d681db9796e4d7b30b59"
+    }
+  ]
+}

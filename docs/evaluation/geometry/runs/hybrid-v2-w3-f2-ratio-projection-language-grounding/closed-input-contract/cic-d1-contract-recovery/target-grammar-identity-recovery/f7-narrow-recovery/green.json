@@ -1,0 +1,10 @@
+{
+  "phase": "GREEN",
+  "source_parent_head": "415da75101ad20052ea044bce9cb1e2403ca8b03",
+  "source_was_uncommitted_during_targeted_runs": true,
+  "product_change": {"file": "backend/app/ai/adapter3_simulation.py", "lines_added": 3, "sha256_lf": "10f2e55857d66e8eb710696235cf832ee83bc1b9b96116cdc527dad54d943bc6"},
+  "new_suite": {"command": "python -B -m pytest -p no:cacheprovider tests/geometry/test_measurement_dispatch_and_identity_order.py -q --tb=short -rf",
+                "summary": "241 passed in 2.39s", "log_sha256_bytes": "b8a9c5144e22198d19e3aa509928daf1df8225cff7fa24f80cfe3240d5157bf0"},
+  "superseded_pins": "8 F7 control cells in test_target_grammar_identity_recovery pinned ADAPTER_INTERNAL_ERROR from observed-red.json; re-pinned to REFUSED BRIDGE_UNSUPPORTED_MEASUREMENT (Owner D1). The first combined run failed exactly these 8 (f7-gate-a-combined.log: 8 failed, 3191 passed).",
+  "live_provider_calls": 0
+}

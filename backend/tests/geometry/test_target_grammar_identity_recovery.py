@@ -72,7 +72,10 @@ def test_registered_controls_keep_schema_and_exact_route_outcomes(case):
     assert D.schema_code(p) == before['schema1']
     for name in ['a3','pl','a4']:
         r = F.ROUTES[name](deepcopy(p))
-        assert (r.status, r.code) == (before[name]['status'], before[name]['code']), (case,name,r.reason)
+        expected = (before[name]['status'], before[name]['code'])
+        if expected[1] == 'ADAPTER_INTERNAL_ERROR':   # the 8 F7 cells; Owner D1 re-pins them (f7-narrow-recovery)
+            expected = ('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT')
+        assert (r.status, r.code) == expected, (case,name,r.reason)
         if r.status == 'SERVED':
             assert r.answer_exact == before[name]['answer']
 
