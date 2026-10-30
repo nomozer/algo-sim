@@ -1,0 +1,14 @@
+{
+  "phase": "F slice 1 GREEN (premise-sentence generalization)",
+  "parent_head": "0bcfed143a5c160176690e0882f893c025dbf2e4",
+  "product_change": "backend/app/simulation/geometry_functions/registry.py: 6 regex lines (_HINH, _C_DAY, _C_DOAN, _C_NOI, _C_DAU, m_tai)",
+  "dev_corpus": "VARIANT 42/42, CANON 18/18, NEGATIVE 10/10 (tools/evaluate_dev.py)",
+  "new_tests": "tests/geometry/test_premise_sentence_generalization.py: 68 passed (metamorphic corpus, clause parses, unread-number negatives, 7 behavioural mutants)",
+  "wave3": "regression-green1.json / wave3-green1.json: 67/72 positives served-correct (+17 vs 50), 72/72 negatives refused, 62/72 correct reasons, 0 wrong-served; 17 transitions all FALSE_REFUSAL -> SERVED_CORRECT",
+  "locked96": "96/96, 0 wrong-served",
+  "probes203": "0 served negatives, 0 internal, 0 transitions",
+  "full_backend_uncommitted_tree": {"summary": "12 failed, 15768 passed, 7 skipped, 2 deselected, 15 xfailed, 2 warnings in 627.08s (0:10:27)",
+    "failures": "11 freeze-identity tests (product changed; pending new freeze) + test_holdout_readiness::test_bao_cao_da_sinh_va_KHONG_TROI (blocker 'CÂY LÀM VIỆC BẨN': tree was dirty during the run)",
+    "log_local_only": ".superpowers/w4-logs/full-backend-green1.log", "sha256": "e2feafa6e84cf49fa269e49ee8dfc2e24217d835b3f1e3f404cd10f2ba0e2c32"},
+  "live_provider_calls": 0
+}

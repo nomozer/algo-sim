@@ -928,12 +928,12 @@ def _so_nhom(g: str) -> str:
             r"(?:\s*\((?:đơn\s+vị[^()]*|cm|dm|mm|m|đvđd)\))?")
 
 
-_HINH = (rf"(?:tam\s+giác(?:\s+(?:đều|vuông\s+cân|vuông|cân))?(?:\s+tại\s+{_L1})?|hình\s+vuông|hình\s+chữ\s+nhật|hình\s+thoi|"
+_HINH = (rf"(?:tam\s+giác(?:\s+(?:đều|vuông\s+cân|vuông|cân))?(?:\s+(?:tại|ở)\s+{_L1})?|hình\s+vuông|hình\s+chữ\s+nhật|hình\s+thoi|"
          rf"lục\s+giác\s+đều|hình\s+thang(?:\s+vuông)?(?:\s+tại\s+{_L1}(?:\s+và\s+{_L1})?)?)")
 _C_KHOI = re.compile(rf"(?:(?:cho|xét)\s+)?(?:một\s+)?(?:(?:hình|khối)\s+)?(?P<kn>chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)"
                      rf"(?P<km>(?:\s+(?:đứng|đều|xiên|tam\s+giác|tứ\s+giác|ngũ\s+giác|lục\s+giác|chữ\s+nhật))*)"
                      rf"\s+(?P<k>{_NHAN}(?:\.{_NHAN})?)(?![\w'])", re.IGNORECASE)
-_C_DAY = re.compile(rf"(?:có\s+)?(?:mặt\s+)?đáy(?:\s+(?P<d>{_NHAN}))?\s+(?:là\s+(?:một\s+)?{_HINH}(?:\s+(?P<d2>{_NHAN}))?(?:\s+vuông(?:\s+cân)?\s+tại\s+{_L1})?|đều|vuông(?:\s+cân)?\s+tại\s+{_L1})(?![\w'])"
+_C_DAY = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:mặt|tứ\s+giác|tam\s+giác)\s+)?đáy(?:\s+(?P<d>{_NHAN}))?\s+(?:là\s+(?:một\s+)?{_HINH}(?:\s+(?P<d2>{_NHAN}))?(?:\s+vuông(?:\s+cân)?\s+(?:tại|ở)\s+{_L1})?|đều|vuông(?:\s+cân)?\s+(?:tại|ở)\s+{_L1})(?![\w'])"
                     rf"(?:(?:\s*,\s*|\s+)(?:(?:và|với)\s+)?(?:có\s+)?(?:(?:các|mọi|mỗi)\s+)?(?:độ\s+dài\s+)?cạnh\s*(?:(?:bằng|=|là)\s*)?{_so_nhom('ds')})?", re.IGNORECASE)
 _C_VAI = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:các|mọi|mỗi)\s+)?(?:độ\s+dài\s+(?:(?:các|mọi|mỗi)\s+)?)?(?P<vai>cạnh\s+đáy|cạnh\s+bên|chiều\s+cao|đường\s+cao|cạnh)(?:\s+của\s+(?:(?:hình|khối)\s+)?"
                     rf"(?P<qn>chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)(?:\s+(?P<ql>{_NHAN}(?:\.{_NHAN})?))?)?"
@@ -956,7 +956,7 @@ _C_DIEM = re.compile(rf"(?:gọi\s+)?{_L1}\s+là\s+(?:(?:trung\s+điểm|tâm|tr
 _C_CHIEU = re.compile(rf"(?:(?:gọi\s+)?{_L1}\s+(?:là|trùng\s+với)\s+hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}"
                       rf"|hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}\s+(?:là|trùng\s+với)\s+(?:(?:điểm|đỉnh|trung\s+điểm|trọng\s+tâm)\s+)?{_L1}(?:\s+của\s+{_DOI_TUONG_NHAN})?)"
                       rf"(?![\w'])(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
-_C_DOAN = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:các\s+)?kích\s+thước\s+)?(?:độ\s+dài\s+(?:của\s+)?)?(?:(?:cạnh\s+bên|cạnh|đoạn(?:\s+thẳng)?|đường\s+chéo)\s+)?"
+_C_DOAN = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:các\s+)?kích\s+thước\s+)?(?:độ\s+dài\s+(?:của\s+)?)?(?:(?:cạnh\s+bên|cạnh|đoạn(?:\s+thẳng)?|đường\s+chéo|số\s+đo|chiều\s+cao)\s+)?"
                      rf"(?P<seg>{_L1}{_L1})(?![\w'])"
                      rf"(?:\s*=\s*{_L1}{_L1}(?![\w']))*\s*(?:=|bằng|(?:có\s+)?độ\s+dài(?:\s+bằng)?)\s*{_so_nhom('ss')}",
                      re.IGNORECASE)
@@ -964,7 +964,7 @@ _C_VUONG = re.compile(rf"(?:(?:có|với|biết)\s+)?(?:(?:cạnh\s+bên|cạnh|
                       rf"(?:mặt\s+phẳng\s+|mp\s*)?(?:\({_NHAN}\)|{_L1}{_L1}\s+và\s+{_L1}{_L1}(?![\w'])(?!\s*(?:=|bằng))|{_NHAN}(?![\w'])"
                       rf"|(?:mặt\s+(?:phẳng\s+)?)?đáy(?!\w))", re.IGNORECASE)
 #: "cạnh CD" (a named edge) continues its clause; only a role "cạnh" ("… cạnh 2", "… cạnh bên") opens a new one
-_C_NOI = re.compile(rf"\s*[,;]\s*(?:và\s+)?|\s+và\s+|\s+(?=có\s|với\s+(?:(?:(?:các|mọi|mỗi)\s+)?(?:cạnh|chiều\s+cao|đường\s+cao|độ\s+dài|đoạn(?:\s+thẳng)?|đường\s+chéo|kích\s+thước)(?!\w)|{_L1}{_L1}(?![\w']))"
+_C_NOI = re.compile(rf"\s*[,;]\s*(?:và\s+)?|\s+và\s+|\s+(?=biết\s|th[ỏo]a\s+mãn\s|với\s+(?:(?:mặt|tứ\s+giác|tam\s+giác)\s+)?đáy(?!\w)|có\s|với\s+(?:(?:(?:các|mọi|mỗi)\s+)?(?:cạnh|chiều\s+cao|đường\s+cao|độ\s+dài|đoạn(?:\s+thẳng)?|đường\s+chéo|kích\s+thước)(?!\w)|{_L1}{_L1}(?![\w']))"
                     rf"|(?:(?:các|mọi|mỗi)\s+)?cạnh\s+(?!{_L1}{_L1}(?![\w'])))", re.IGNORECASE)
 #: Number-free CLOSED premise clauses (review round 4): a face ⊥ a face, the shape of a named triangle/face (optionally
 #: lying in a plane ⊥ the base), equal named segments. They bind nothing; they only keep their sentence parseable.
@@ -976,7 +976,7 @@ _C_MAT = re.compile(rf"(?:{_MAT_NHAN}\s+(?:và\s+)?(?:nằm\s+trong\s+mặt\s+ph
                     rf"(?:\s+(?:và\s+)?(?:nằm\s+)?trong\s+mặt\s+phẳng\s+vuông\s+góc\s+với\s+{_MAT_DICH})?"
                     rf"|{_L1}{_L1}(?:\s*=\s*{_L1}{_L1})+(?![\w'])(?!\s*=))"
                     rf"(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
-_C_DAU = re.compile(r"\s*(?:biết\s+(?:rằng\s+)?)?", re.IGNORECASE)
+_C_DAU = re.compile(r"\s*(?:trong\s+không\s+gian\s*,\s*)?(?:(?:biết(?:\s+rằng)?|th[ỏo]a\s+mãn)\s+)?", re.IGNORECASE)
 _C_HET = re.compile(r"\s*[.;]?\s*")
 _C_HOI = re.compile(r"(?:hãy\s+)?(?:tính|tìm|xác\s+định|hỏi)(?!\w)", re.IGNORECASE)
 #: A named polygon with its side ("Tam giác ABC đều cạnh 2"): the side belongs to THAT polygon (labelled binding); like any
@@ -4639,7 +4639,7 @@ def _cau_tien_de_dong_hop_le(s: str, s_start: int, de: str, calls: tuple[LoiGoi,
                             v == want for seg in _canh_cua(verts) for v, _cid in _nguon_do_dai_cuc_bo(calls, list(seg))):
                         return False
             elif "vuông" in txt and "hình thang" not in txt:
-                m_tai = re.search(rf"tại\s+(?P<v>{_L1})(?![\w'])", m.group(), re.IGNORECASE)
+                m_tai = re.search(rf"(?:tại|ở)\s+(?P<v>{_L1})(?![\w'])", m.group(), re.IGNORECASE)
                 if m["ds"] is not None or not m_tai or len(verts) != 3 or m_tai["v"] not in verts:
                     return False
                 v = m_tai["v"]
