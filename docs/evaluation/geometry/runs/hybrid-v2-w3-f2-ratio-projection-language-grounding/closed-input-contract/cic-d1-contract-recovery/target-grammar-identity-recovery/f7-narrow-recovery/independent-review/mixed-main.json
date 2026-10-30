@@ -1,0 +1,93 @@
+{
+ "radius.pr": {
+  "schema": null,
+  "a3": [
+   "REFUSED",
+   "MISSING_CURVED_DIMENSION",
+   "pr: thiếu tham số 'radius' của khối cong"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_CURVED",
+   "cyl: khối cylinder chưa có trên planner"
+  ]
+ },
+ "lateral.pr": {
+  "schema": null,
+  "a3": [
+   "REFUSED",
+   "MISSING_CURVED_DIMENSION",
+   "pr: thiếu tham số 'radius' của khối cong"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_CURVED",
+   "cyl: khối cylinder chưa có trên planner"
+  ]
+ },
+ "volume.pr": {
+  "schema": null,
+  "a3": [
+   "REFUSED",
+   "MISSING_CURVED_DIMENSION",
+   "pr: thiếu tham số 'radius' của khối cong"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_CURVED",
+   "cyl: khối cylinder chưa có trên planner"
+  ]
+ },
+ "radius.cyl": {
+  "schema": null,
+  "a3": [
+   "REFUSED",
+   "MISSING_CURVED_DIMENSION",
+   "pr: thiếu tham số 'radius' của khối cong"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_CURVED",
+   "cyl: khối cylinder chưa có trên planner"
+  ]
+ },
+ "distance.prism_seg": {
+  "schema": null,
+  "a3": [
+   "REFUSED",
+   "MISSING_CURVED_DIMENSION",
+   "pr: thiếu tham số 'radius' của khối cong"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_CURVED",
+   "cyl: khối cylinder chưa có trên planner"
+  ]
+ },
+ "area.pr": {
+  "schema": null,
+  "a3": [
+   "REFUSED",
+   "MISSING_CURVED_DIMENSION",
+   "pr: thiếu tham số 'radius' của khối cong"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_CURVED",
+   "cyl: khối cylinder chưa có trên planner"
+  ]
+ },
+ "angle.pr": {
+  "schema": null,
+  "a3": [
+   "REFUSED",
+   "MISSING_CURVED_DIMENSION",
+   "pr: thiếu tham số 'radius' của khối cong"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_CURVED",
+   "cyl: khối cylinder chưa có trên planner"
+  ]
+ }
+}

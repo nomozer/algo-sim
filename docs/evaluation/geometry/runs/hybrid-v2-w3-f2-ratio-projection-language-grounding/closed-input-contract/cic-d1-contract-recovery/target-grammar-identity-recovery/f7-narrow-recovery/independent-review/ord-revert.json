@@ -1,0 +1,254 @@
+{
+ "radius.contradiction_BC11": {
+  "a3": [
+   "REFUSED",
+   "INCONSISTENT_FACTS"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ],
+  "a4": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ]
+ },
+ "radius.premise_quote_absent": {
+  "a3": [
+   "REFUSED",
+   "SOURCE_QUOTE_NOT_FOUND"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ],
+  "a4": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ]
+ },
+ "radius.goal_quote_absent": {
+  "a3": [
+   "REFUSED",
+   "SOURCE_QUOTE_NOT_FOUND"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ],
+  "a4": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ]
+ },
+ "radius.number_mismatch": {
+  "a3": [
+   "REFUSED",
+   "SOURCE_NUMBER_MISMATCH"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ],
+  "a4": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ]
+ },
+ "radius.unit_mismatch": {
+  "a3": [
+   "REFUSED",
+   "ADAPTER_INTERNAL_ERROR"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ],
+  "a4": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ]
+ },
+ "radius.plain": {
+  "a3": [
+   "REFUSED",
+   "ADAPTER_INTERNAL_ERROR"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ],
+  "a4": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ]
+ },
+ "lateral.contradiction_BC11": {
+  "a3": [
+   "REFUSED",
+   "INCONSISTENT_FACTS"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ],
+  "a4": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ]
+ },
+ "lateral.premise_quote_absent": {
+  "a3": [
+   "REFUSED",
+   "SOURCE_QUOTE_NOT_FOUND"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ],
+  "a4": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ]
+ },
+ "lateral.goal_quote_absent": {
+  "a3": [
+   "REFUSED",
+   "SOURCE_QUOTE_NOT_FOUND"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ],
+  "a4": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ]
+ },
+ "lateral.number_mismatch": {
+  "a3": [
+   "REFUSED",
+   "SOURCE_NUMBER_MISMATCH"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ],
+  "a4": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ]
+ },
+ "lateral.unit_mismatch": {
+  "a3": [
+   "REFUSED",
+   "ADAPTER_INTERNAL_ERROR"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ],
+  "a4": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ]
+ },
+ "lateral.plain": {
+  "a3": [
+   "REFUSED",
+   "ADAPTER_INTERNAL_ERROR"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ],
+  "a4": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ]
+ },
+ "control_distance.contradiction_BC11": {
+  "a3": [
+   "REFUSED",
+   "INCONSISTENT_FACTS"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ],
+  "a4": [
+   "REFUSED",
+   "INCONSISTENT_FACTS"
+  ]
+ },
+ "control_distance.premise_quote_absent": {
+  "a3": [
+   "REFUSED",
+   "SOURCE_QUOTE_NOT_FOUND"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ],
+  "a4": [
+   "REFUSED",
+   "QUOTE_NOT_IN_SOURCE"
+  ]
+ },
+ "control_distance.goal_quote_absent": {
+  "a3": [
+   "REFUSED",
+   "SOURCE_QUOTE_NOT_FOUND"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ],
+  "a4": [
+   "REFUSED",
+   "QUOTE_NOT_IN_SOURCE"
+  ]
+ },
+ "control_distance.number_mismatch": {
+  "a3": [
+   "REFUSED",
+   "SOURCE_NUMBER_MISMATCH"
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ],
+  "a4": [
+   "REFUSED",
+   "UNGROUNDED_VALUE"
+  ]
+ },
+ "control_distance.unit_mismatch": {
+  "a3": [
+   "SERVED",
+   null
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ],
+  "a4": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_LENGTH_UNIT"
+  ]
+ },
+ "control_distance.plain": {
+  "a3": [
+   "SERVED",
+   null
+  ],
+  "pl": [
+   "REFUSED",
+   "BRIDGE_UNSUPPORTED_MEASUREMENT"
+  ],
+  "a4": [
+   "SERVED",
+   null
+  ]
+ }
+}

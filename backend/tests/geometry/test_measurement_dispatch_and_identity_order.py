@@ -100,9 +100,11 @@ def test_identity_before_namespace_mutant_is_caught(monkeypatch):
 
 
 # ---- R2: derived solids resolve to their own parent, never to another root ------------------------------------------
-def _r2():
+def _r2(parent_last=False):
     # Goal-free copy: a mutant must fail the identity assertions below, not abort inside payload parsing.
     p = deepcopy(CASES['R2.derived_vs_other_root']['payload']); p['math_goals'] = []
+    if parent_last:   # review RV-1: the parent must not win merely by being solids[0]
+        p['solids'].reverse()
     return T.parse_typed_fact_next(p)
 
 
@@ -114,13 +116,13 @@ def _ref(p, ref, scope=None):
 
 
 def _r2_identity_oracle():
-    p = _r2()
-    main = _ref(p, 'main_pyramid::S')
-    assert main != 'AMBIGUOUS_REFERENCE'
-    assert _ref(p, 'top_pyramid::S') == main
-    assert _ref(p, 'S', 'top_pyramid') == main
-    assert _ref(p, 'other::S') not in (main, 'AMBIGUOUS_REFERENCE')
-    assert _ref(p, 'S') == 'AMBIGUOUS_REFERENCE'
+    for p in (_r2(), _r2(parent_last=True)):
+        main = _ref(p, 'main_pyramid::S')
+        assert main != 'AMBIGUOUS_REFERENCE'
+        assert _ref(p, 'top_pyramid::S') == main
+        assert _ref(p, 'S', 'top_pyramid') == main
+        assert _ref(p, 'other::S') not in (main, 'AMBIGUOUS_REFERENCE')
+        assert _ref(p, 'S') == 'AMBIGUOUS_REFERENCE'
     assert D.schema_code(CASES['R2.derived_alias_of_parent']['payload']) == 'INVALID_MATH_GOAL'
     assert D.schema_code(CASES['R2.derived_scoped_constructed']['payload']) is None
 
@@ -137,10 +139,16 @@ def test_schema_valid_two_root_fixture_is_never_served(case):
         assert r.status == 'REFUSED' and not any(getattr(r, f, None) for f in ('answers', 'answer_exact', 'scene3d'))
 
 
-@pytest.mark.parametrize('needle,replacement', [('ns = parents.get(ns, ns)', 'ns = ns'),
-                                                ('parents.get(scope, scope)', 'scope')])
-def test_derived_parent_mutants_are_caught(monkeypatch, needle, replacement):
+FIRST_ROOT = '(p.solids[0].solid_id if {0} in parents else {0})'
+
+
+@pytest.mark.parametrize('pairs', [[('ns = parents.get(ns, ns)', 'ns = ns')],
+                                   [('parents.get(scope, scope)', 'scope')],
+                                   [('ns = parents.get(ns, ns)', 'ns = ' + FIRST_ROOT.format('ns')),   # review RV-1
+                                    ('parents.get(scope, scope)', FIRST_ROOT.format('scope'))]],
+                         ids=['ignore_ns_parent', 'ignore_scope_parent', 'first_root_as_parent'])
+def test_derived_parent_mutants_are_caught(monkeypatch, pairs):
     _r2_identity_oracle()
-    D.mutate_many(monkeypatch, T, 'canonical_vertex_ref', [(needle, replacement)])
+    D.mutate_many(monkeypatch, T, 'canonical_vertex_ref', pairs)
     with pytest.raises(AssertionError):
         _r2_identity_oracle()

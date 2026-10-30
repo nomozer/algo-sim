@@ -1,0 +1,6328 @@
+{
+ "CTRL.D.top.vol": {
+  "class": "CONTROL",
+  "expected_a3_answer": {
+   "math_res_vol": {
+    "coef": "7/12",
+    "dim": 3,
+    "unit": "a"
+   },
+   "math_sec_area": {
+    "coef": "1/4",
+    "dim": 2,
+    "unit": "a"
+   },
+   "math_vol_ratio": {
+    "coef": "1/8",
+    "dim": 0,
+    "unit": null
+   },
+   "q": {
+    "coef": "1/12",
+    "dim": 3,
+    "unit": "a"
+   }
+  },
+  "expected_routes": {
+   "a3": [
+    "SERVED",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_RELATION"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_RELATION"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "parallel_plane": [
+      "A",
+      "B",
+      "C"
+     ],
+     "plane_kind": "through_point_parallel_plane",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD",
+     "section_id": "sec_alpha",
+     "target_solid_id": "main_pyramid",
+     "through_point": "M"
+    }
+   ],
+   "length_unit": "a",
+   "math_goals": [
+    {
+     "denominator_solid_id": "main_pyramid",
+     "goal_id": "math_vol_ratio",
+     "kind": "volume_ratio",
+     "numerator_solid_id": "top_pyramid",
+     "quote": "tính tỉ số thể tích"
+    },
+    {
+     "cut_solid_id": "top_pyramid",
+     "goal_id": "math_res_vol",
+     "kind": "residual_volume",
+     "parent_solid_id": "main_pyramid",
+     "quote": "thể tích phần còn lại"
+    },
+    {
+     "goal_id": "math_sec_area",
+     "goal_type": "area",
+     "kind": "measurement",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)",
+     "target": {
+      "section_id": "sec_alpha"
+     }
+    },
+    {
+     "goal_id": "q",
+     "goal_type": "volume",
+     "kind": "measurement",
+     "quote": "Tính thể tích khối đa diện.",
+     "target": {
+      "solid": "top_pyramid"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "side": "a",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "base_is_square",
+     "quote": "đáy ABCD là hình vuông cạnh a",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "line_perp_plane",
+     "quote": "SA vuông góc với đáy (ABCD)",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "2a"
+     },
+     "kind": "segment_length",
+     "quote": "SA = 2a",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "point": "M",
+      "segment": [
+       "S",
+       "A"
+      ]
+     },
+     "kind": "point_is_midpoint",
+     "quote": "Gọi M là trung điểm của SA",
+     "solid_id": "main_pyramid"
+    }
+   ],
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy (ABCD) và SA = 2a. Gọi M là trung điểm của SA. Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD. Dựng thiết diện của hình chóp cắt bởi (α), khối chóp cắt bởi (α) chứa đỉnh S, tính tỉ số thể tích và thể tích phần còn lại. Tính thể tích khối đa diện.",
+   "relations": [
+    {
+     "container_ref": "main_pyramid::SA",
+     "kind": "containment",
+     "member_ref": "M",
+     "quote": "Gọi M là trung điểm của SA",
+     "relation_id": "rel_m_on_sa"
+    },
+    {
+     "kind": "section_membership",
+     "member_refs": [
+      "M"
+     ],
+     "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD)",
+     "relation_id": "rel_m_in_sec",
+     "section_id": "sec_alpha"
+    }
+   ],
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_solid",
+     "kind": "construct_object",
+     "quote": "Cho hình chóp S.ABCD",
+     "target_solid_id": "main_pyramid"
+    },
+    {
+     "goal_id": "sim_section",
+     "kind": "construct_plane_section",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)",
+     "style_role": "section",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "apex_ref": "S",
+     "derived_solid_id": "top_pyramid",
+     "goal_id": "sim_top_pyramid",
+     "kind": "construct_derived_solid",
+     "parent_solid_id": "main_pyramid",
+     "quote": "khối chóp cắt bởi (α) chứa đỉnh S",
+     "style_role": "derived_solid",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "goal_id": "sim_highlight",
+     "kind": "highlight_geometry",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)",
+     "style_role": "section",
+     "target_refs": [
+      "sec_alpha",
+      "top_pyramid",
+      "M"
+     ]
+    },
+    {
+     "goal_id": "sim_sequence",
+     "kind": "construction_sequence",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "S.ABCD",
+     "quote": "Cho hình chóp S.ABCD",
+     "solid_id": "main_pyramid",
+     "solid_type": "pyramid"
+    }
+   ]
+  },
+  "source": "cases.json:D.top.vol"
+ },
+ "CTRL.G.distance.segment.plain": {
+  "class": "CONTROL",
+  "expected_a3_answer": {
+   "q": {
+    "coef": "2√61",
+    "dim": 0,
+    "unit": null
+   }
+  },
+  "expected_routes": {
+   "a3": [
+    "SERVED",
+    null
+   ],
+   "a4": [
+    "SERVED",
+    null
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "distance",
+     "kind": "measurement",
+     "quote": "Tính độ dài B'C.",
+     "target": {
+      "segment": [
+       "B'",
+       "C"
+      ]
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính độ dài B'C.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    }
+   ]
+  },
+  "source": "cases.json:G.distance.segment.plain"
+ },
+ "CTRL.K.cone.lateral_area.solid": {
+  "class": "CONTROL",
+  "expected_a3_answer": {
+   "q": {
+    "coef": "15π",
+    "dim": 0,
+    "unit": null
+   }
+  },
+  "expected_routes": {
+   "a3": [
+    "SERVED",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "plane_kind": "parallel_to_base_at_ratio",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) song song với đáy cắt trục SO theo tỉ lệ 1/2 tính từ đỉnh S",
+     "ratio_from_apex": "1/2",
+     "section_id": "sec_cut",
+     "section_shape": "circle",
+     "target_solid_id": "cone_main"
+    },
+    {
+     "plane_kind": "axial_section",
+     "plane_name": "β",
+     "quote": "Xét thêm thiết diện qua trục SAB",
+     "section_id": "sec_axial",
+     "section_shape": "polygon",
+     "target_solid_id": "cone_main"
+    }
+   ],
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "lateral_area",
+     "kind": "measurement",
+     "quote": "diện tích xung quanh hình nón",
+     "target": {
+      "solid": "cone_main"
+     }
+    }
+   ],
+   "problem_text": "Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4. Mặt phẳng (α) song song với đáy cắt trục SO theo tỉ lệ 1/2 tính từ đỉnh S, chia hình nón thành hình nón nhỏ đỉnh S và hình nón cụt. Xét thêm thiết diện qua trục SAB. Tính thể tích, diện tích xung quanh hình nón, diện tích thiết diện qua trục, tỉ số thể tích và thể tích khối nón cụt.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_cone",
+     "kind": "construct_object",
+     "quote": "Cho hình nón tròn xoay đỉnh S, tâm đáy O",
+     "target_solid_id": "cone_main"
+    },
+    {
+     "goal_id": "sim_cut",
+     "kind": "construct_plane_section",
+     "quote": "Mặt phẳng (α) song song với đáy cắt trục SO theo tỉ lệ 1/2 tính từ đỉnh S",
+     "target_section_id": "sec_cut"
+    },
+    {
+     "apex_ref": "S",
+     "derived_solid_id": "cone_upper",
+     "goal_id": "sim_upper_cone",
+     "kind": "construct_derived_solid",
+     "parent_solid_id": "cone_main",
+     "quote": "chia hình nón thành hình nón nhỏ đỉnh S và hình nón cụt",
+     "target_section_id": "sec_cut"
+    }
+   ],
+   "solids": [
+    {
+     "apex_or_top": "S",
+     "center": "O",
+     "height": "4",
+     "notation": "S.O",
+     "quote": "Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4",
+     "radius": "3",
+     "rim_point": "A",
+     "solid_id": "cone_main",
+     "solid_type": "cone"
+    }
+   ]
+  },
+  "source": "cases.json:K.cone.lateral_area.solid"
+ },
+ "CTRL.K.cone.radius.solid": {
+  "class": "CONTROL",
+  "expected_a3_answer": {
+   "q": {
+    "coef": "3",
+    "dim": 0,
+    "unit": null
+   }
+  },
+  "expected_routes": {
+   "a3": [
+    "SERVED",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "plane_kind": "parallel_to_base_at_ratio",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) song song với đáy cắt trục SO theo tỉ lệ 1/2 tính từ đỉnh S",
+     "ratio_from_apex": "1/2",
+     "section_id": "sec_cut",
+     "section_shape": "circle",
+     "target_solid_id": "cone_main"
+    },
+    {
+     "plane_kind": "axial_section",
+     "plane_name": "β",
+     "quote": "Xét thêm thiết diện qua trục SAB",
+     "section_id": "sec_axial",
+     "section_shape": "polygon",
+     "target_solid_id": "cone_main"
+    }
+   ],
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "radius",
+     "kind": "measurement",
+     "quote": "Tính bán kính.",
+     "target": {
+      "solid": "cone_main"
+     }
+    }
+   ],
+   "problem_text": "Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4. Mặt phẳng (α) song song với đáy cắt trục SO theo tỉ lệ 1/2 tính từ đỉnh S, chia hình nón thành hình nón nhỏ đỉnh S và hình nón cụt. Xét thêm thiết diện qua trục SAB. Tính thể tích, diện tích xung quanh hình nón, diện tích thiết diện qua trục, tỉ số thể tích và thể tích khối nón cụt. Tính bán kính.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_cone",
+     "kind": "construct_object",
+     "quote": "Cho hình nón tròn xoay đỉnh S, tâm đáy O",
+     "target_solid_id": "cone_main"
+    },
+    {
+     "goal_id": "sim_cut",
+     "kind": "construct_plane_section",
+     "quote": "Mặt phẳng (α) song song với đáy cắt trục SO theo tỉ lệ 1/2 tính từ đỉnh S",
+     "target_section_id": "sec_cut"
+    },
+    {
+     "apex_ref": "S",
+     "derived_solid_id": "cone_upper",
+     "goal_id": "sim_upper_cone",
+     "kind": "construct_derived_solid",
+     "parent_solid_id": "cone_main",
+     "quote": "chia hình nón thành hình nón nhỏ đỉnh S và hình nón cụt",
+     "target_section_id": "sec_cut"
+    }
+   ],
+   "solids": [
+    {
+     "apex_or_top": "S",
+     "center": "O",
+     "height": "4",
+     "notation": "S.O",
+     "quote": "Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4",
+     "radius": "3",
+     "rim_point": "A",
+     "solid_id": "cone_main",
+     "solid_type": "cone"
+    }
+   ]
+  },
+  "source": "cases.json:K.cone.radius.solid"
+ },
+ "CTRL.K.cone.volume.solid": {
+  "class": "CONTROL",
+  "expected_a3_answer": {
+   "q": {
+    "coef": "12π",
+    "dim": 0,
+    "unit": null
+   }
+  },
+  "expected_routes": {
+   "a3": [
+    "SERVED",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "plane_kind": "parallel_to_base_at_ratio",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) song song với đáy cắt trục SO theo tỉ lệ 1/2 tính từ đỉnh S",
+     "ratio_from_apex": "1/2",
+     "section_id": "sec_cut",
+     "section_shape": "circle",
+     "target_solid_id": "cone_main"
+    },
+    {
+     "plane_kind": "axial_section",
+     "plane_name": "β",
+     "quote": "Xét thêm thiết diện qua trục SAB",
+     "section_id": "sec_axial",
+     "section_shape": "polygon",
+     "target_solid_id": "cone_main"
+    }
+   ],
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "volume",
+     "kind": "measurement",
+     "quote": "Tính thể tích",
+     "target": {
+      "solid": "cone_main"
+     }
+    }
+   ],
+   "problem_text": "Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4. Mặt phẳng (α) song song với đáy cắt trục SO theo tỉ lệ 1/2 tính từ đỉnh S, chia hình nón thành hình nón nhỏ đỉnh S và hình nón cụt. Xét thêm thiết diện qua trục SAB. Tính thể tích, diện tích xung quanh hình nón, diện tích thiết diện qua trục, tỉ số thể tích và thể tích khối nón cụt.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_cone",
+     "kind": "construct_object",
+     "quote": "Cho hình nón tròn xoay đỉnh S, tâm đáy O",
+     "target_solid_id": "cone_main"
+    },
+    {
+     "goal_id": "sim_cut",
+     "kind": "construct_plane_section",
+     "quote": "Mặt phẳng (α) song song với đáy cắt trục SO theo tỉ lệ 1/2 tính từ đỉnh S",
+     "target_section_id": "sec_cut"
+    },
+    {
+     "apex_ref": "S",
+     "derived_solid_id": "cone_upper",
+     "goal_id": "sim_upper_cone",
+     "kind": "construct_derived_solid",
+     "parent_solid_id": "cone_main",
+     "quote": "chia hình nón thành hình nón nhỏ đỉnh S và hình nón cụt",
+     "target_section_id": "sec_cut"
+    }
+   ],
+   "solids": [
+    {
+     "apex_or_top": "S",
+     "center": "O",
+     "height": "4",
+     "notation": "S.O",
+     "quote": "Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4",
+     "radius": "3",
+     "rim_point": "A",
+     "solid_id": "cone_main",
+     "solid_type": "cone"
+    }
+   ]
+  },
+  "source": "cases.json:K.cone.volume.solid"
+ },
+ "CTRL.K.cyl.lateral_area.solid": {
+  "class": "CONTROL",
+  "expected_a3_answer": {
+   "q": {
+    "coef": "12π",
+    "dim": 0,
+    "unit": null
+   }
+  },
+  "expected_routes": {
+   "a3": [
+    "SERVED",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "distance_from_base": "1",
+     "plane_kind": "parallel_to_base_at_distance",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) song song với đáy cách đáy một khoảng 1 cắt hình trụ theo thiết diện đường tròn",
+     "section_id": "sec_parallel",
+     "section_shape": "circle",
+     "target_solid_id": "cyl"
+    },
+    {
+     "plane_kind": "axial_section",
+     "plane_name": "β",
+     "quote": "xét thêm thiết diện qua trục qua A",
+     "section_id": "sec_axial",
+     "section_shape": "polygon",
+     "target_solid_id": "cyl"
+    }
+   ],
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "lateral_area",
+     "kind": "measurement",
+     "quote": "diện tích xung quanh hình trụ",
+     "target": {
+      "solid": "cyl"
+     }
+    }
+   ],
+   "problem_text": "Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3. Mặt phẳng (α) song song với đáy cách đáy một khoảng 1 cắt hình trụ theo thiết diện đường tròn, và xét thêm thiết diện qua trục qua A. Tính thể tích, diện tích xung quanh hình trụ, diện tích thiết diện tròn và thiết diện qua trục.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_cyl",
+     "kind": "construct_object",
+     "quote": "Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O'",
+     "target_solid_id": "cyl"
+    },
+    {
+     "goal_id": "sim_sec_par",
+     "kind": "construct_plane_section",
+     "quote": "Mặt phẳng (α) song song với đáy cách đáy một khoảng 1 cắt hình trụ theo thiết diện đường tròn",
+     "target_section_id": "sec_parallel"
+    },
+    {
+     "goal_id": "sim_sec_ax",
+     "kind": "construct_plane_section",
+     "quote": "xét thêm thiết diện qua trục qua A",
+     "target_section_id": "sec_axial"
+    }
+   ],
+   "solids": [
+    {
+     "apex_or_top": "O'",
+     "center": "O",
+     "height": "3",
+     "notation": "O.O'",
+     "quote": "Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3",
+     "radius": "2",
+     "rim_point": "A",
+     "solid_id": "cyl",
+     "solid_type": "cylinder"
+    }
+   ]
+  },
+  "source": "cases.json:K.cyl.lateral_area.solid"
+ },
+ "CTRL.K.cyl.radius.solid": {
+  "class": "CONTROL",
+  "expected_a3_answer": {
+   "q": {
+    "coef": "2",
+    "dim": 0,
+    "unit": null
+   }
+  },
+  "expected_routes": {
+   "a3": [
+    "SERVED",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "distance_from_base": "1",
+     "plane_kind": "parallel_to_base_at_distance",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) song song với đáy cách đáy một khoảng 1 cắt hình trụ theo thiết diện đường tròn",
+     "section_id": "sec_parallel",
+     "section_shape": "circle",
+     "target_solid_id": "cyl"
+    },
+    {
+     "plane_kind": "axial_section",
+     "plane_name": "β",
+     "quote": "xét thêm thiết diện qua trục qua A",
+     "section_id": "sec_axial",
+     "section_shape": "polygon",
+     "target_solid_id": "cyl"
+    }
+   ],
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "radius",
+     "kind": "measurement",
+     "quote": "Tính bán kính.",
+     "target": {
+      "solid": "cyl"
+     }
+    }
+   ],
+   "problem_text": "Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3. Mặt phẳng (α) song song với đáy cách đáy một khoảng 1 cắt hình trụ theo thiết diện đường tròn, và xét thêm thiết diện qua trục qua A. Tính thể tích, diện tích xung quanh hình trụ, diện tích thiết diện tròn và thiết diện qua trục. Tính bán kính.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_cyl",
+     "kind": "construct_object",
+     "quote": "Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O'",
+     "target_solid_id": "cyl"
+    },
+    {
+     "goal_id": "sim_sec_par",
+     "kind": "construct_plane_section",
+     "quote": "Mặt phẳng (α) song song với đáy cách đáy một khoảng 1 cắt hình trụ theo thiết diện đường tròn",
+     "target_section_id": "sec_parallel"
+    },
+    {
+     "goal_id": "sim_sec_ax",
+     "kind": "construct_plane_section",
+     "quote": "xét thêm thiết diện qua trục qua A",
+     "target_section_id": "sec_axial"
+    }
+   ],
+   "solids": [
+    {
+     "apex_or_top": "O'",
+     "center": "O",
+     "height": "3",
+     "notation": "O.O'",
+     "quote": "Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3",
+     "radius": "2",
+     "rim_point": "A",
+     "solid_id": "cyl",
+     "solid_type": "cylinder"
+    }
+   ]
+  },
+  "source": "cases.json:K.cyl.radius.solid"
+ },
+ "CTRL.K.cyl.volume.solid": {
+  "class": "CONTROL",
+  "expected_a3_answer": {
+   "q": {
+    "coef": "12π",
+    "dim": 0,
+    "unit": null
+   }
+  },
+  "expected_routes": {
+   "a3": [
+    "SERVED",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "distance_from_base": "1",
+     "plane_kind": "parallel_to_base_at_distance",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) song song với đáy cách đáy một khoảng 1 cắt hình trụ theo thiết diện đường tròn",
+     "section_id": "sec_parallel",
+     "section_shape": "circle",
+     "target_solid_id": "cyl"
+    },
+    {
+     "plane_kind": "axial_section",
+     "plane_name": "β",
+     "quote": "xét thêm thiết diện qua trục qua A",
+     "section_id": "sec_axial",
+     "section_shape": "polygon",
+     "target_solid_id": "cyl"
+    }
+   ],
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "volume",
+     "kind": "measurement",
+     "quote": "Tính thể tích",
+     "target": {
+      "solid": "cyl"
+     }
+    }
+   ],
+   "problem_text": "Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3. Mặt phẳng (α) song song với đáy cách đáy một khoảng 1 cắt hình trụ theo thiết diện đường tròn, và xét thêm thiết diện qua trục qua A. Tính thể tích, diện tích xung quanh hình trụ, diện tích thiết diện tròn và thiết diện qua trục.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_cyl",
+     "kind": "construct_object",
+     "quote": "Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O'",
+     "target_solid_id": "cyl"
+    },
+    {
+     "goal_id": "sim_sec_par",
+     "kind": "construct_plane_section",
+     "quote": "Mặt phẳng (α) song song với đáy cách đáy một khoảng 1 cắt hình trụ theo thiết diện đường tròn",
+     "target_section_id": "sec_parallel"
+    },
+    {
+     "goal_id": "sim_sec_ax",
+     "kind": "construct_plane_section",
+     "quote": "xét thêm thiết diện qua trục qua A",
+     "target_section_id": "sec_axial"
+    }
+   ],
+   "solids": [
+    {
+     "apex_or_top": "O'",
+     "center": "O",
+     "height": "3",
+     "notation": "O.O'",
+     "quote": "Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3",
+     "radius": "2",
+     "rim_point": "A",
+     "solid_id": "cyl",
+     "solid_type": "cylinder"
+    }
+   ]
+  },
+  "source": "cases.json:K.cyl.volume.solid"
+ },
+ "CTRL.K.sph.lateral_area.solid": {
+  "class": "CONTROL",
+  "expected_a3_answer": {
+   "q": {
+    "coef": "100π",
+    "dim": 0,
+    "unit": null
+   }
+  },
+  "expected_routes": {
+   "a3": [
+    "SERVED",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "equation_coeffs": [
+      "0",
+      "0",
+      "1",
+      "-3"
+     ],
+     "plane_kind": "plane_equation",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) có phương trình z - 3 = 0 cắt mặt cầu theo một đường tròn giao tuyến",
+     "section_id": "sec_sph",
+     "section_shape": "circle",
+     "target_solid_id": "sph"
+    }
+   ],
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "lateral_area",
+     "kind": "measurement",
+     "quote": "diện tích mặt cầu",
+     "target": {
+      "solid": "sph"
+     }
+    }
+   ],
+   "problem_text": "Cho mặt cầu (S) tâm I bán kính R = 5. Mặt phẳng (α) có phương trình z - 3 = 0 cắt mặt cầu theo một đường tròn giao tuyến. Tính thể tích khối cầu, diện tích mặt cầu, bán kính và diện tích đường tròn giao tuyến.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_sph",
+     "kind": "construct_object",
+     "quote": "Cho mặt cầu (S) tâm I bán kính R = 5",
+     "target_solid_id": "sph"
+    },
+    {
+     "goal_id": "sim_sec",
+     "kind": "construct_plane_section",
+     "quote": "Mặt phẳng (α) có phương trình z - 3 = 0 cắt mặt cầu theo một đường tròn giao tuyến",
+     "target_section_id": "sec_sph"
+    }
+   ],
+   "solids": [
+    {
+     "center": "I",
+     "notation": "(S)",
+     "quote": "Cho mặt cầu (S) tâm I bán kính R = 5",
+     "radius": "5",
+     "solid_id": "sph",
+     "solid_type": "sphere"
+    }
+   ]
+  },
+  "source": "cases.json:K.sph.lateral_area.solid"
+ },
+ "CTRL.K.sph.radius.solid": {
+  "class": "CONTROL",
+  "expected_a3_answer": {
+   "q": {
+    "coef": "5",
+    "dim": 0,
+    "unit": null
+   }
+  },
+  "expected_routes": {
+   "a3": [
+    "SERVED",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "equation_coeffs": [
+      "0",
+      "0",
+      "1",
+      "-3"
+     ],
+     "plane_kind": "plane_equation",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) có phương trình z - 3 = 0 cắt mặt cầu theo một đường tròn giao tuyến",
+     "section_id": "sec_sph",
+     "section_shape": "circle",
+     "target_solid_id": "sph"
+    }
+   ],
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "radius",
+     "kind": "measurement",
+     "quote": "bán kính",
+     "target": {
+      "solid": "sph"
+     }
+    }
+   ],
+   "problem_text": "Cho mặt cầu (S) tâm I bán kính R = 5. Mặt phẳng (α) có phương trình z - 3 = 0 cắt mặt cầu theo một đường tròn giao tuyến. Tính thể tích khối cầu, diện tích mặt cầu, bán kính và diện tích đường tròn giao tuyến.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_sph",
+     "kind": "construct_object",
+     "quote": "Cho mặt cầu (S) tâm I bán kính R = 5",
+     "target_solid_id": "sph"
+    },
+    {
+     "goal_id": "sim_sec",
+     "kind": "construct_plane_section",
+     "quote": "Mặt phẳng (α) có phương trình z - 3 = 0 cắt mặt cầu theo một đường tròn giao tuyến",
+     "target_section_id": "sec_sph"
+    }
+   ],
+   "solids": [
+    {
+     "center": "I",
+     "notation": "(S)",
+     "quote": "Cho mặt cầu (S) tâm I bán kính R = 5",
+     "radius": "5",
+     "solid_id": "sph",
+     "solid_type": "sphere"
+    }
+   ]
+  },
+  "source": "cases.json:K.sph.radius.solid"
+ },
+ "CTRL.K.sph.volume.solid": {
+  "class": "CONTROL",
+  "expected_a3_answer": {
+   "q": {
+    "coef": "500π/3",
+    "dim": 0,
+    "unit": null
+   }
+  },
+  "expected_routes": {
+   "a3": [
+    "SERVED",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "equation_coeffs": [
+      "0",
+      "0",
+      "1",
+      "-3"
+     ],
+     "plane_kind": "plane_equation",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) có phương trình z - 3 = 0 cắt mặt cầu theo một đường tròn giao tuyến",
+     "section_id": "sec_sph",
+     "section_shape": "circle",
+     "target_solid_id": "sph"
+    }
+   ],
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "volume",
+     "kind": "measurement",
+     "quote": "Tính thể tích khối cầu",
+     "target": {
+      "solid": "sph"
+     }
+    }
+   ],
+   "problem_text": "Cho mặt cầu (S) tâm I bán kính R = 5. Mặt phẳng (α) có phương trình z - 3 = 0 cắt mặt cầu theo một đường tròn giao tuyến. Tính thể tích khối cầu, diện tích mặt cầu, bán kính và diện tích đường tròn giao tuyến.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_sph",
+     "kind": "construct_object",
+     "quote": "Cho mặt cầu (S) tâm I bán kính R = 5",
+     "target_solid_id": "sph"
+    },
+    {
+     "goal_id": "sim_sec",
+     "kind": "construct_plane_section",
+     "quote": "Mặt phẳng (α) có phương trình z - 3 = 0 cắt mặt cầu theo một đường tròn giao tuyến",
+     "target_section_id": "sec_sph"
+    }
+   ],
+   "solids": [
+    {
+     "center": "I",
+     "notation": "(S)",
+     "quote": "Cho mặt cầu (S) tâm I bán kính R = 5",
+     "radius": "5",
+     "solid_id": "sph",
+     "solid_type": "sphere"
+    }
+   ]
+  },
+  "source": "cases.json:K.sph.volume.solid"
+ },
+ "CTRL.S.demo1.area.section": {
+  "class": "CONTROL",
+  "expected_a3_answer": {
+   "q": {
+    "coef": "1",
+    "dim": 0,
+    "unit": null
+   }
+  },
+  "expected_routes": {
+   "a3": [
+    "SERVED",
+    null
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_CUT_EDGES_NOT_STATED"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "parallel_plane": [
+      "A",
+      "B",
+      "C"
+     ],
+     "plane_kind": "through_point_parallel_plane",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) đi qua M và song song với mặt phẳng (ABCD) cắt SB, SC, SD",
+     "section_id": "sec_alpha",
+     "target_solid_id": "s_abcd",
+     "through_point": "M"
+    }
+   ],
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "area",
+     "kind": "measurement",
+     "quote": "Tính diện tích thiết diện",
+     "target": {
+      "section_id": "sec_alpha"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "side": "2",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "base_is_square",
+     "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2",
+     "solid_id": "s_abcd"
+    },
+    {
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "line_perp_plane",
+     "quote": "SA vuông góc với đáy",
+     "solid_id": "s_abcd"
+    },
+    {
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "2"
+     },
+     "kind": "segment_length",
+     "quote": "SA = 2",
+     "solid_id": "s_abcd"
+    },
+    {
+     "args": {
+      "point": "M",
+      "segment": [
+       "S",
+       "A"
+      ]
+     },
+     "kind": "point_is_midpoint",
+     "quote": "Gọi M là trung điểm của SA",
+     "solid_id": "s_abcd"
+    }
+   ],
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với đáy và SA = 2. Gọi M là trung điểm của SA. Mặt phẳng (α) đi qua M và song song với mặt phẳng (ABCD) cắt SB, SC, SD. Tính diện tích thiết diện và tỉ số thể tích khối chóp cắt bởi (α) so với S.ABCD.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_solid",
+     "kind": "construct_object",
+     "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2",
+     "target_solid_id": "s_abcd"
+    },
+    {
+     "goal_id": "sim_sec",
+     "kind": "construct_plane_section",
+     "quote": "Mặt phẳng (α) đi qua M và song song với mặt phẳng (ABCD) cắt SB, SC, SD",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "apex_ref": "S",
+     "derived_solid_id": "s_top",
+     "goal_id": "sim_sub",
+     "kind": "construct_derived_solid",
+     "parent_solid_id": "s_abcd",
+     "quote": "khối chóp cắt bởi (α) so với S.ABCD",
+     "target_section_id": "sec_alpha"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "S.ABCD",
+     "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2",
+     "solid_id": "s_abcd",
+     "solid_type": "pyramid"
+    }
+   ]
+  },
+  "source": "cases.json:S.demo1.area.section"
+ },
+ "F7.multi.prism_distance_plus_lateral": {
+  "class": "F7",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "distance",
+     "kind": "measurement",
+     "quote": "Tính độ dài B'C.",
+     "target": {
+      "segment": [
+       "B'",
+       "C"
+      ]
+     }
+    },
+    {
+     "goal_id": "qx",
+     "goal_type": "lateral_area",
+     "kind": "measurement",
+     "quote": "Tính độ dài B'C.",
+     "target": {
+      "solid": "pr"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính độ dài B'C.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    }
+   ]
+  },
+  "source": "G.distance.segment.plain+lateral_area"
+ },
+ "F7.multi.pyr_vol_plus_radius": {
+  "class": "F7",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "parallel_plane": [
+      "A",
+      "B",
+      "C"
+     ],
+     "plane_kind": "through_point_parallel_plane",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD",
+     "section_id": "sec_alpha",
+     "target_solid_id": "main_pyramid",
+     "through_point": "M"
+    }
+   ],
+   "length_unit": "a",
+   "math_goals": [
+    {
+     "denominator_solid_id": "main_pyramid",
+     "goal_id": "math_vol_ratio",
+     "kind": "volume_ratio",
+     "numerator_solid_id": "top_pyramid",
+     "quote": "tính tỉ số thể tích"
+    },
+    {
+     "cut_solid_id": "top_pyramid",
+     "goal_id": "math_res_vol",
+     "kind": "residual_volume",
+     "parent_solid_id": "main_pyramid",
+     "quote": "thể tích phần còn lại"
+    },
+    {
+     "goal_id": "math_sec_area",
+     "goal_type": "area",
+     "kind": "measurement",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)",
+     "target": {
+      "section_id": "sec_alpha"
+     }
+    },
+    {
+     "goal_id": "q",
+     "goal_type": "volume",
+     "kind": "measurement",
+     "quote": "Tính thể tích khối đa diện.",
+     "target": {
+      "solid": "top_pyramid"
+     }
+    },
+    {
+     "goal_id": "qx",
+     "goal_type": "radius",
+     "kind": "measurement",
+     "quote": "tính tỉ số thể tích",
+     "target": {
+      "solid": "main_pyramid"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "side": "a",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "base_is_square",
+     "quote": "đáy ABCD là hình vuông cạnh a",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "line_perp_plane",
+     "quote": "SA vuông góc với đáy (ABCD)",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "2a"
+     },
+     "kind": "segment_length",
+     "quote": "SA = 2a",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "point": "M",
+      "segment": [
+       "S",
+       "A"
+      ]
+     },
+     "kind": "point_is_midpoint",
+     "quote": "Gọi M là trung điểm của SA",
+     "solid_id": "main_pyramid"
+    }
+   ],
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy (ABCD) và SA = 2a. Gọi M là trung điểm của SA. Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD. Dựng thiết diện của hình chóp cắt bởi (α), khối chóp cắt bởi (α) chứa đỉnh S, tính tỉ số thể tích và thể tích phần còn lại. Tính thể tích khối đa diện.",
+   "relations": [
+    {
+     "container_ref": "main_pyramid::SA",
+     "kind": "containment",
+     "member_ref": "M",
+     "quote": "Gọi M là trung điểm của SA",
+     "relation_id": "rel_m_on_sa"
+    },
+    {
+     "kind": "section_membership",
+     "member_refs": [
+      "M"
+     ],
+     "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD)",
+     "relation_id": "rel_m_in_sec",
+     "section_id": "sec_alpha"
+    }
+   ],
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_solid",
+     "kind": "construct_object",
+     "quote": "Cho hình chóp S.ABCD",
+     "target_solid_id": "main_pyramid"
+    },
+    {
+     "goal_id": "sim_section",
+     "kind": "construct_plane_section",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)",
+     "style_role": "section",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "apex_ref": "S",
+     "derived_solid_id": "top_pyramid",
+     "goal_id": "sim_top_pyramid",
+     "kind": "construct_derived_solid",
+     "parent_solid_id": "main_pyramid",
+     "quote": "khối chóp cắt bởi (α) chứa đỉnh S",
+     "style_role": "derived_solid",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "goal_id": "sim_highlight",
+     "kind": "highlight_geometry",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)",
+     "style_role": "section",
+     "target_refs": [
+      "sec_alpha",
+      "top_pyramid",
+      "M"
+     ]
+    },
+    {
+     "goal_id": "sim_sequence",
+     "kind": "construction_sequence",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "S.ABCD",
+     "quote": "Cho hình chóp S.ABCD",
+     "solid_id": "main_pyramid",
+     "solid_type": "pyramid"
+    }
+   ]
+  },
+  "source": "D.top.vol+radius"
+ },
+ "F7.prism.lateral_area.notation": {
+  "class": "F7",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "lateral_area",
+     "kind": "measurement",
+     "quote": "Tính diện tích xung quanh.",
+     "target": {
+      "solid": "ABC.A'B'C'"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính diện tích xung quanh.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    }
+   ]
+  },
+  "source": "cases.json:V.lateral_area.notation"
+ },
+ "F7.prism.lateral_area.notation.goal_sid": {
+  "class": "F7",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "lateral_area",
+     "kind": "measurement",
+     "quote": "Tính diện tích xung quanh.",
+     "solid_id": "pr",
+     "target": {
+      "solid": "ABC.A'B'C'"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính diện tích xung quanh.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    }
+   ]
+  },
+  "source": "cases.json:V.lateral_area.notation.goal_sid"
+ },
+ "F7.prism.lateral_area.solid": {
+  "class": "F7",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "lateral_area",
+     "kind": "measurement",
+     "quote": "Tính diện tích xung quanh.",
+     "target": {
+      "solid": "pr"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính diện tích xung quanh.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    }
+   ]
+  },
+  "source": "cases.json:V.lateral_area.solid"
+ },
+ "F7.prism.lateral_area.solid.goal_sid": {
+  "class": "F7",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "lateral_area",
+     "kind": "measurement",
+     "quote": "Tính diện tích xung quanh.",
+     "solid_id": "pr",
+     "target": {
+      "solid": "pr"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính diện tích xung quanh.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    }
+   ]
+  },
+  "source": "cases.json:V.lateral_area.solid.goal_sid"
+ },
+ "F7.prism.radius.notation": {
+  "class": "F7",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "radius",
+     "kind": "measurement",
+     "quote": "Tính bán kính.",
+     "target": {
+      "solid": "ABC.A'B'C'"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính bán kính.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    }
+   ]
+  },
+  "source": "cases.json:V.radius.notation"
+ },
+ "F7.prism.radius.notation.goal_sid": {
+  "class": "F7",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "radius",
+     "kind": "measurement",
+     "quote": "Tính bán kính.",
+     "solid_id": "pr",
+     "target": {
+      "solid": "ABC.A'B'C'"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính bán kính.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    }
+   ]
+  },
+  "source": "cases.json:V.radius.notation.goal_sid"
+ },
+ "F7.prism.radius.solid": {
+  "class": "F7",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "radius",
+     "kind": "measurement",
+     "quote": "Tính bán kính.",
+     "target": {
+      "solid": "pr"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính bán kính.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    }
+   ]
+  },
+  "source": "cases.json:V.radius.solid"
+ },
+ "F7.prism.radius.solid.goal_sid": {
+  "class": "F7",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "radius",
+     "kind": "measurement",
+     "quote": "Tính bán kính.",
+     "solid_id": "pr",
+     "target": {
+      "solid": "pr"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính bán kính.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    }
+   ]
+  },
+  "source": "cases.json:V.radius.solid.goal_sid"
+ },
+ "F7.pyr.lateral_area.solid": {
+  "class": "F7",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_CUT_EDGES_NOT_STATED"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "parallel_plane": [
+      "A",
+      "B",
+      "C"
+     ],
+     "plane_kind": "through_point_parallel_plane",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) đi qua M và song song với mặt phẳng (ABCD) cắt SB, SC, SD",
+     "section_id": "sec_alpha",
+     "target_solid_id": "s_abcd",
+     "through_point": "M"
+    }
+   ],
+   "math_goals": [
+    {
+     "goal_id": "qx",
+     "goal_type": "lateral_area",
+     "kind": "measurement",
+     "quote": "Tính diện tích thiết diện",
+     "target": {
+      "solid": "s_abcd"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "side": "2",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "base_is_square",
+     "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2",
+     "solid_id": "s_abcd"
+    },
+    {
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "line_perp_plane",
+     "quote": "SA vuông góc với đáy",
+     "solid_id": "s_abcd"
+    },
+    {
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "2"
+     },
+     "kind": "segment_length",
+     "quote": "SA = 2",
+     "solid_id": "s_abcd"
+    },
+    {
+     "args": {
+      "point": "M",
+      "segment": [
+       "S",
+       "A"
+      ]
+     },
+     "kind": "point_is_midpoint",
+     "quote": "Gọi M là trung điểm của SA",
+     "solid_id": "s_abcd"
+    }
+   ],
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với đáy và SA = 2. Gọi M là trung điểm của SA. Mặt phẳng (α) đi qua M và song song với mặt phẳng (ABCD) cắt SB, SC, SD. Tính diện tích thiết diện và tỉ số thể tích khối chóp cắt bởi (α) so với S.ABCD.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_solid",
+     "kind": "construct_object",
+     "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2",
+     "target_solid_id": "s_abcd"
+    },
+    {
+     "goal_id": "sim_sec",
+     "kind": "construct_plane_section",
+     "quote": "Mặt phẳng (α) đi qua M và song song với mặt phẳng (ABCD) cắt SB, SC, SD",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "apex_ref": "S",
+     "derived_solid_id": "s_top",
+     "goal_id": "sim_sub",
+     "kind": "construct_derived_solid",
+     "parent_solid_id": "s_abcd",
+     "quote": "khối chóp cắt bởi (α) so với S.ABCD",
+     "target_section_id": "sec_alpha"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "S.ABCD",
+     "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2",
+     "solid_id": "s_abcd",
+     "solid_type": "pyramid"
+    }
+   ]
+  },
+  "source": "S.demo1.area.section+lateral_area"
+ },
+ "F7.pyr.radius.section_id": {
+  "class": "F7",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_CUT_EDGES_NOT_STATED"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "parallel_plane": [
+      "A",
+      "B",
+      "C"
+     ],
+     "plane_kind": "through_point_parallel_plane",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) đi qua M và song song với mặt phẳng (ABCD) cắt SB, SC, SD",
+     "section_id": "sec_alpha",
+     "target_solid_id": "s_abcd",
+     "through_point": "M"
+    }
+   ],
+   "math_goals": [
+    {
+     "goal_id": "qx",
+     "goal_type": "radius",
+     "kind": "measurement",
+     "quote": "Tính diện tích thiết diện",
+     "target": {
+      "section_id": "sec_alpha"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "side": "2",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "base_is_square",
+     "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2",
+     "solid_id": "s_abcd"
+    },
+    {
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "line_perp_plane",
+     "quote": "SA vuông góc với đáy",
+     "solid_id": "s_abcd"
+    },
+    {
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "2"
+     },
+     "kind": "segment_length",
+     "quote": "SA = 2",
+     "solid_id": "s_abcd"
+    },
+    {
+     "args": {
+      "point": "M",
+      "segment": [
+       "S",
+       "A"
+      ]
+     },
+     "kind": "point_is_midpoint",
+     "quote": "Gọi M là trung điểm của SA",
+     "solid_id": "s_abcd"
+    }
+   ],
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với đáy và SA = 2. Gọi M là trung điểm của SA. Mặt phẳng (α) đi qua M và song song với mặt phẳng (ABCD) cắt SB, SC, SD. Tính diện tích thiết diện và tỉ số thể tích khối chóp cắt bởi (α) so với S.ABCD.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_solid",
+     "kind": "construct_object",
+     "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2",
+     "target_solid_id": "s_abcd"
+    },
+    {
+     "goal_id": "sim_sec",
+     "kind": "construct_plane_section",
+     "quote": "Mặt phẳng (α) đi qua M và song song với mặt phẳng (ABCD) cắt SB, SC, SD",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "apex_ref": "S",
+     "derived_solid_id": "s_top",
+     "goal_id": "sim_sub",
+     "kind": "construct_derived_solid",
+     "parent_solid_id": "s_abcd",
+     "quote": "khối chóp cắt bởi (α) so với S.ABCD",
+     "target_section_id": "sec_alpha"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "S.ABCD",
+     "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2",
+     "solid_id": "s_abcd",
+     "solid_type": "pyramid"
+    }
+   ]
+  },
+  "source": "S.demo1.area.section+radius(section)"
+ },
+ "F7.pyr.radius.solid": {
+  "class": "F7",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "a4": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_MEASUREMENT"
+   ],
+   "pl": [
+    "REFUSED",
+    "BRIDGE_CUT_EDGES_NOT_STATED"
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "parallel_plane": [
+      "A",
+      "B",
+      "C"
+     ],
+     "plane_kind": "through_point_parallel_plane",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) đi qua M và song song với mặt phẳng (ABCD) cắt SB, SC, SD",
+     "section_id": "sec_alpha",
+     "target_solid_id": "s_abcd",
+     "through_point": "M"
+    }
+   ],
+   "math_goals": [
+    {
+     "goal_id": "qx",
+     "goal_type": "radius",
+     "kind": "measurement",
+     "quote": "Tính diện tích thiết diện",
+     "target": {
+      "solid": "s_abcd"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "side": "2",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "base_is_square",
+     "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2",
+     "solid_id": "s_abcd"
+    },
+    {
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "line_perp_plane",
+     "quote": "SA vuông góc với đáy",
+     "solid_id": "s_abcd"
+    },
+    {
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "2"
+     },
+     "kind": "segment_length",
+     "quote": "SA = 2",
+     "solid_id": "s_abcd"
+    },
+    {
+     "args": {
+      "point": "M",
+      "segment": [
+       "S",
+       "A"
+      ]
+     },
+     "kind": "point_is_midpoint",
+     "quote": "Gọi M là trung điểm của SA",
+     "solid_id": "s_abcd"
+    }
+   ],
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với đáy và SA = 2. Gọi M là trung điểm của SA. Mặt phẳng (α) đi qua M và song song với mặt phẳng (ABCD) cắt SB, SC, SD. Tính diện tích thiết diện và tỉ số thể tích khối chóp cắt bởi (α) so với S.ABCD.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_solid",
+     "kind": "construct_object",
+     "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2",
+     "target_solid_id": "s_abcd"
+    },
+    {
+     "goal_id": "sim_sec",
+     "kind": "construct_plane_section",
+     "quote": "Mặt phẳng (α) đi qua M và song song với mặt phẳng (ABCD) cắt SB, SC, SD",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "apex_ref": "S",
+     "derived_solid_id": "s_top",
+     "goal_id": "sim_sub",
+     "kind": "construct_derived_solid",
+     "parent_solid_id": "s_abcd",
+     "quote": "khối chóp cắt bởi (α) so với S.ABCD",
+     "target_section_id": "sec_alpha"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "S.ABCD",
+     "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2",
+     "solid_id": "s_abcd",
+     "solid_type": "pyramid"
+    }
+   ]
+  },
+  "source": "S.demo1.area.section+radius"
+ },
+ "F7NEG.lateral_area.solid_id": {
+  "class": "F7_NEGATIVE",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ],
+   "a4": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ],
+   "pl": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ]
+  },
+  "expected_schema": "INVALID_MATH_GOAL",
+  "note": "",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "lateral_area",
+     "kind": "measurement",
+     "quote": "Tính diện tích xung quanh.",
+     "target": {
+      "solid_id": "pr"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính diện tích xung quanh.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    }
+   ]
+  },
+  "source": "cases.json:V.lateral_area.solid_id"
+ },
+ "F7NEG.lateral_area.unknown": {
+  "class": "F7_NEGATIVE",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "UNKNOWN_SOLID"
+   ],
+   "a4": [
+    "REFUSED",
+    "UNKNOWN_SOLID"
+   ],
+   "pl": [
+    "REFUSED",
+    "UNKNOWN_SOLID"
+   ]
+  },
+  "expected_schema": "UNKNOWN_SOLID",
+  "note": "",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "lateral_area",
+     "kind": "measurement",
+     "quote": "Tính diện tích xung quanh.",
+     "target": {
+      "solid": "zz"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính diện tích xung quanh.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    }
+   ]
+  },
+  "source": "cases.json:V.lateral_area.unknown"
+ },
+ "F7NEG.radius.both": {
+  "class": "F7_NEGATIVE",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ],
+   "a4": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ],
+   "pl": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ]
+  },
+  "expected_schema": "INVALID_MATH_GOAL",
+  "note": "",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "radius",
+     "kind": "measurement",
+     "quote": "Tính bán kính.",
+     "target": {
+      "solid": "pr",
+      "solid_id": "pr"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính bán kính.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    }
+   ]
+  },
+  "source": "cases.json:V.radius.both"
+ },
+ "F7NEG.radius.malformed_blank": {
+  "class": "F7_NEGATIVE",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ],
+   "a4": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ],
+   "pl": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ]
+  },
+  "expected_schema": "INVALID_MATH_GOAL",
+  "note": "",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "qx",
+     "goal_type": "radius",
+     "kind": "measurement",
+     "quote": "Tính bán kính.",
+     "target": {
+      "solid": "  "
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính bán kính.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    }
+   ]
+  },
+  "source": "V.radius.solid blank operand"
+ },
+ "F7NEG.radius.solid_id": {
+  "class": "F7_NEGATIVE",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ],
+   "a4": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ],
+   "pl": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ]
+  },
+  "expected_schema": "INVALID_MATH_GOAL",
+  "note": "",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "radius",
+     "kind": "measurement",
+     "quote": "Tính bán kính.",
+     "target": {
+      "solid_id": "pr"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính bán kính.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    }
+   ]
+  },
+  "source": "cases.json:V.radius.solid_id"
+ },
+ "F7NEG.radius.unknown": {
+  "class": "F7_NEGATIVE",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "UNKNOWN_SOLID"
+   ],
+   "a4": [
+    "REFUSED",
+    "UNKNOWN_SOLID"
+   ],
+   "pl": [
+    "REFUSED",
+    "UNKNOWN_SOLID"
+   ]
+  },
+  "expected_schema": "UNKNOWN_SOLID",
+  "note": "",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "radius",
+     "kind": "measurement",
+     "quote": "Tính bán kính.",
+     "target": {
+      "solid": "zz"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính bán kính.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    }
+   ]
+  },
+  "source": "cases.json:V.radius.unknown"
+ },
+ "F7NEG.radius.unknown.goal_sid": {
+  "class": "F7_NEGATIVE",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "UNKNOWN_SOLID_ID"
+   ],
+   "a4": [
+    "REFUSED",
+    "UNKNOWN_SOLID_ID"
+   ],
+   "pl": [
+    "REFUSED",
+    "UNKNOWN_SOLID_ID"
+   ]
+  },
+  "expected_schema": "UNKNOWN_SOLID_ID",
+  "note": "",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "q",
+     "goal_type": "radius",
+     "kind": "measurement",
+     "quote": "Tính bán kính.",
+     "solid_id": "pr",
+     "target": {
+      "solid": "zz"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính bán kính.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    }
+   ]
+  },
+  "source": "cases.json:V.radius.unknown.goal_sid"
+ },
+ "LIMIT.prism.area.solid": {
+  "class": "LIMIT",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ]
+  },
+  "expected_schema": null,
+  "note": "pre-existing typed refusal, recorded limitation, not changed",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "qx",
+     "goal_type": "area",
+     "kind": "measurement",
+     "quote": "Tính bán kính.",
+     "target": {
+      "solid": "pr"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính bán kính.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    }
+   ]
+  },
+  "source": "V.radius.solid+area(solid)"
+ },
+ "LIMIT.pyr.area.solid": {
+  "class": "LIMIT",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ]
+  },
+  "expected_schema": null,
+  "note": "pre-existing typed refusal, recorded limitation, not changed",
+  "payload": {
+   "derived_sections": [
+    {
+     "parallel_plane": [
+      "A",
+      "B",
+      "C"
+     ],
+     "plane_kind": "through_point_parallel_plane",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) đi qua M và song song với mặt phẳng (ABCD) cắt SB, SC, SD",
+     "section_id": "sec_alpha",
+     "target_solid_id": "s_abcd",
+     "through_point": "M"
+    }
+   ],
+   "math_goals": [
+    {
+     "goal_id": "qx",
+     "goal_type": "area",
+     "kind": "measurement",
+     "quote": "Tính diện tích thiết diện",
+     "target": {
+      "solid": "s_abcd"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "side": "2",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "base_is_square",
+     "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2",
+     "solid_id": "s_abcd"
+    },
+    {
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "line_perp_plane",
+     "quote": "SA vuông góc với đáy",
+     "solid_id": "s_abcd"
+    },
+    {
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "2"
+     },
+     "kind": "segment_length",
+     "quote": "SA = 2",
+     "solid_id": "s_abcd"
+    },
+    {
+     "args": {
+      "point": "M",
+      "segment": [
+       "S",
+       "A"
+      ]
+     },
+     "kind": "point_is_midpoint",
+     "quote": "Gọi M là trung điểm của SA",
+     "solid_id": "s_abcd"
+    }
+   ],
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với đáy và SA = 2. Gọi M là trung điểm của SA. Mặt phẳng (α) đi qua M và song song với mặt phẳng (ABCD) cắt SB, SC, SD. Tính diện tích thiết diện và tỉ số thể tích khối chóp cắt bởi (α) so với S.ABCD.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_solid",
+     "kind": "construct_object",
+     "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2",
+     "target_solid_id": "s_abcd"
+    },
+    {
+     "goal_id": "sim_sec",
+     "kind": "construct_plane_section",
+     "quote": "Mặt phẳng (α) đi qua M và song song với mặt phẳng (ABCD) cắt SB, SC, SD",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "apex_ref": "S",
+     "derived_solid_id": "s_top",
+     "goal_id": "sim_sub",
+     "kind": "construct_derived_solid",
+     "parent_solid_id": "s_abcd",
+     "quote": "khối chóp cắt bởi (α) so với S.ABCD",
+     "target_section_id": "sec_alpha"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "S.ABCD",
+     "quote": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2",
+     "solid_id": "s_abcd",
+     "solid_type": "pyramid"
+    }
+   ]
+  },
+  "source": "S.demo1.area.section+area(solid)"
+ },
+ "R1.foreign_owner_repeat": {
+  "class": "R1",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "a4": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "pl": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ]
+  },
+  "expected_schema": "SOURCE_OBJECT_MISMATCH",
+  "note": "",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "rv",
+     "goal_type": "distance",
+     "kind": "measurement",
+     "quote": "Tính độ dài AB.",
+     "solid_id": "other",
+     "target": {
+      "segment": [
+       "pr::B",
+       "B"
+      ]
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A' đến mặt phẳng (ABC). Tính độ dài AA. Tính độ dài AB.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    },
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "other",
+     "solid_type": "prism",
+     "vertex_bindings": {
+      "A": "X"
+     }
+    }
+   ]
+  },
+  "source": "probes:F2.two.pr_vs_other_B"
+ },
+ "R1.pyr.pyr1D_vs_S": {
+  "class": "R1_POSITIVE",
+  "expected_a3_answer": {
+   "rv": {
+    "coef": "1",
+    "dim": 1,
+    "unit": "a"
+   }
+  },
+  "expected_routes": {
+   "a3": [
+    "SERVED",
+    null
+   ]
+  },
+  "expected_schema": null,
+  "note": "distinct identities sharing a label (pyr1D_vs_pyr2D) / valid multi-solid reference",
+  "payload": {
+   "length_unit": "a",
+   "math_goals": [
+    {
+     "goal_id": "rv",
+     "goal_type": "distance",
+     "kind": "measurement",
+     "quote": "Tính độ dài AB.",
+     "target": {
+      "segment": [
+       "pyr1::D",
+       "pyr1::S"
+      ]
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "right_at": "A",
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "kind": "base_is_right_triangle",
+     "quote": "chung mặt đáy ABC là tam giác vuông cân tại A",
+     "solid_id": "pyr1"
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "a"
+     },
+     "kind": "segment_length",
+     "quote": "AB = AC = a",
+     "solid_id": "pyr1"
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "a"
+     },
+     "kind": "segment_length",
+     "quote": "AB = AC = a",
+     "solid_id": "pyr1"
+    },
+    {
+     "args": {
+      "line": [
+       "pyr1::S",
+       "pyr1::A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "kind": "line_perp_plane",
+     "quote": "SA vuông góc với mặt phẳng (ABC)",
+     "solid_id": "pyr1"
+    },
+    {
+     "args": {
+      "segment": [
+       "pyr1::S",
+       "pyr1::A"
+      ],
+      "value": "2a"
+     },
+     "kind": "segment_length",
+     "quote": "SA = 2a",
+     "solid_id": "pyr1"
+    },
+    {
+     "args": {
+      "point": "pyr1::D",
+      "segment": [
+       "pyr1::S",
+       "pyr1::A"
+      ]
+     },
+     "kind": "point_is_midpoint",
+     "quote": "D là trung điểm của SA ở khối thứ nhất",
+     "solid_id": "pyr1"
+    },
+    {
+     "args": {
+      "line": [
+       "pyr2::D",
+       "pyr2::A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "kind": "line_perp_plane",
+     "quote": "DA vuông góc với (ABC)",
+     "solid_id": "pyr2"
+    },
+    {
+     "args": {
+      "segment": [
+       "pyr2::D",
+       "pyr2::A"
+      ],
+      "value": "a"
+     },
+     "kind": "segment_length",
+     "quote": "DA = a",
+     "solid_id": "pyr2"
+    },
+    {
+     "args": {
+      "point": "M",
+      "segment": [
+       "S",
+       "B"
+      ]
+     },
+     "kind": "point_is_midpoint",
+     "quote": "Gọi M là trung điểm của SB.",
+     "solid_id": "pyr1"
+    }
+   ],
+   "problem_text": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC là tam giác vuông cân tại A với AB = AC = a. Biết SA vuông góc với mặt phẳng (ABC) và SA = 2a. Gọi D trên cạnh SA sao cho D là trung điểm của SA ở khối thứ nhất, còn đỉnh D của hình chóp D.ABC có DA vuông góc với (ABC) trên cùng nửa không gian và DA = a. Dựng hai khối chóp và tính tỉ số thể tích. Gọi M là trung điểm của SB. Tính độ dài MB. Tính độ dài AA. Tính độ dài AB.",
+   "relations": [
+    {
+     "kind": "shared_vertices",
+     "pairs": [
+      [
+       "pyr1::A",
+       "pyr2::A"
+      ],
+      [
+       "pyr1::B",
+       "pyr2::B"
+      ],
+      [
+       "pyr1::C",
+       "pyr2::C"
+      ]
+     ],
+     "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+     "relation_id": "rel_shared_v"
+    },
+    {
+     "face_a": [
+      "A",
+      "B",
+      "C"
+     ],
+     "face_b": [
+      "A",
+      "B",
+      "C"
+     ],
+     "kind": "shared_faces",
+     "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+     "relation_id": "rel_shared_face",
+     "solid_a": "pyr1",
+     "solid_b": "pyr2"
+    },
+    {
+     "anchor_refs": [
+      "A",
+      "B",
+      "C"
+     ],
+     "frame_id": "root",
+     "kind": "coordinate_frame",
+     "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+     "relation_id": "rel_frame_1",
+     "solid_id": "pyr1"
+    },
+    {
+     "anchor_refs": [
+      "A",
+      "B",
+      "C"
+     ],
+     "frame_id": "root",
+     "kind": "coordinate_frame",
+     "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+     "relation_id": "rel_frame_2",
+     "solid_id": "pyr2"
+    }
+   ],
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_pyr1",
+     "kind": "construct_object",
+     "quote": "Dựng hai khối chóp",
+     "target_solid_id": "pyr1"
+    },
+    {
+     "goal_id": "sim_pyr2",
+     "kind": "construct_object",
+     "quote": "Dựng hai khối chóp",
+     "style_role": "shared_geometry",
+     "target_solid_id": "pyr2"
+    },
+    {
+     "goal_id": "sim_hl_d",
+     "kind": "highlight_geometry",
+     "quote": "Dựng hai khối chóp",
+     "style_role": "shared_geometry",
+     "target_refs": [
+      "pyr1::D",
+      "pyr2::D",
+      "pyr2"
+     ]
+    },
+    {
+     "goal_id": "sim_seq",
+     "kind": "construction_sequence",
+     "quote": "Dựng hai khối chóp"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "S.ABC",
+     "quote": "Cho hai hình chóp S.ABC và D.ABC",
+     "solid_id": "pyr1",
+     "solid_type": "pyramid",
+     "vertex_bindings": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "S": "S"
+     }
+    },
+    {
+     "notation": "D.ABC",
+     "quote": "Cho hai hình chóp S.ABC và D.ABC",
+     "solid_id": "pyr2",
+     "solid_type": "pyramid",
+     "vertex_bindings": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D1"
+     }
+    }
+   ]
+  },
+  "source": "probes:F2.pyr.pyr1D_vs_S"
+ },
+ "R1.pyr.pyr1D_vs_pyr2D": {
+  "class": "R1_POSITIVE",
+  "expected_a3_answer": {
+   "rv": {
+    "coef": "0",
+    "dim": 1,
+    "unit": "a"
+   }
+  },
+  "expected_routes": {
+   "a3": [
+    "SERVED",
+    null
+   ]
+  },
+  "expected_schema": null,
+  "note": "distinct identities sharing a label (pyr1D_vs_pyr2D) / valid multi-solid reference",
+  "payload": {
+   "length_unit": "a",
+   "math_goals": [
+    {
+     "goal_id": "rv",
+     "goal_type": "distance",
+     "kind": "measurement",
+     "quote": "Tính độ dài AB.",
+     "target": {
+      "segment": [
+       "pyr1::D",
+       "pyr2::D"
+      ]
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "right_at": "A",
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "kind": "base_is_right_triangle",
+     "quote": "chung mặt đáy ABC là tam giác vuông cân tại A",
+     "solid_id": "pyr1"
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "a"
+     },
+     "kind": "segment_length",
+     "quote": "AB = AC = a",
+     "solid_id": "pyr1"
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "a"
+     },
+     "kind": "segment_length",
+     "quote": "AB = AC = a",
+     "solid_id": "pyr1"
+    },
+    {
+     "args": {
+      "line": [
+       "pyr1::S",
+       "pyr1::A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "kind": "line_perp_plane",
+     "quote": "SA vuông góc với mặt phẳng (ABC)",
+     "solid_id": "pyr1"
+    },
+    {
+     "args": {
+      "segment": [
+       "pyr1::S",
+       "pyr1::A"
+      ],
+      "value": "2a"
+     },
+     "kind": "segment_length",
+     "quote": "SA = 2a",
+     "solid_id": "pyr1"
+    },
+    {
+     "args": {
+      "point": "pyr1::D",
+      "segment": [
+       "pyr1::S",
+       "pyr1::A"
+      ]
+     },
+     "kind": "point_is_midpoint",
+     "quote": "D là trung điểm của SA ở khối thứ nhất",
+     "solid_id": "pyr1"
+    },
+    {
+     "args": {
+      "line": [
+       "pyr2::D",
+       "pyr2::A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "kind": "line_perp_plane",
+     "quote": "DA vuông góc với (ABC)",
+     "solid_id": "pyr2"
+    },
+    {
+     "args": {
+      "segment": [
+       "pyr2::D",
+       "pyr2::A"
+      ],
+      "value": "a"
+     },
+     "kind": "segment_length",
+     "quote": "DA = a",
+     "solid_id": "pyr2"
+    },
+    {
+     "args": {
+      "point": "M",
+      "segment": [
+       "S",
+       "B"
+      ]
+     },
+     "kind": "point_is_midpoint",
+     "quote": "Gọi M là trung điểm của SB.",
+     "solid_id": "pyr1"
+    }
+   ],
+   "problem_text": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC là tam giác vuông cân tại A với AB = AC = a. Biết SA vuông góc với mặt phẳng (ABC) và SA = 2a. Gọi D trên cạnh SA sao cho D là trung điểm của SA ở khối thứ nhất, còn đỉnh D của hình chóp D.ABC có DA vuông góc với (ABC) trên cùng nửa không gian và DA = a. Dựng hai khối chóp và tính tỉ số thể tích. Gọi M là trung điểm của SB. Tính độ dài MB. Tính độ dài AA. Tính độ dài AB.",
+   "relations": [
+    {
+     "kind": "shared_vertices",
+     "pairs": [
+      [
+       "pyr1::A",
+       "pyr2::A"
+      ],
+      [
+       "pyr1::B",
+       "pyr2::B"
+      ],
+      [
+       "pyr1::C",
+       "pyr2::C"
+      ]
+     ],
+     "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+     "relation_id": "rel_shared_v"
+    },
+    {
+     "face_a": [
+      "A",
+      "B",
+      "C"
+     ],
+     "face_b": [
+      "A",
+      "B",
+      "C"
+     ],
+     "kind": "shared_faces",
+     "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+     "relation_id": "rel_shared_face",
+     "solid_a": "pyr1",
+     "solid_b": "pyr2"
+    },
+    {
+     "anchor_refs": [
+      "A",
+      "B",
+      "C"
+     ],
+     "frame_id": "root",
+     "kind": "coordinate_frame",
+     "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+     "relation_id": "rel_frame_1",
+     "solid_id": "pyr1"
+    },
+    {
+     "anchor_refs": [
+      "A",
+      "B",
+      "C"
+     ],
+     "frame_id": "root",
+     "kind": "coordinate_frame",
+     "quote": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC",
+     "relation_id": "rel_frame_2",
+     "solid_id": "pyr2"
+    }
+   ],
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_pyr1",
+     "kind": "construct_object",
+     "quote": "Dựng hai khối chóp",
+     "target_solid_id": "pyr1"
+    },
+    {
+     "goal_id": "sim_pyr2",
+     "kind": "construct_object",
+     "quote": "Dựng hai khối chóp",
+     "style_role": "shared_geometry",
+     "target_solid_id": "pyr2"
+    },
+    {
+     "goal_id": "sim_hl_d",
+     "kind": "highlight_geometry",
+     "quote": "Dựng hai khối chóp",
+     "style_role": "shared_geometry",
+     "target_refs": [
+      "pyr1::D",
+      "pyr2::D",
+      "pyr2"
+     ]
+    },
+    {
+     "goal_id": "sim_seq",
+     "kind": "construction_sequence",
+     "quote": "Dựng hai khối chóp"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "S.ABC",
+     "quote": "Cho hai hình chóp S.ABC và D.ABC",
+     "solid_id": "pyr1",
+     "solid_type": "pyramid",
+     "vertex_bindings": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "S": "S"
+     }
+    },
+    {
+     "notation": "D.ABC",
+     "quote": "Cho hai hình chóp S.ABC và D.ABC",
+     "solid_id": "pyr2",
+     "solid_type": "pyramid",
+     "vertex_bindings": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D1"
+     }
+    }
+   ]
+  },
+  "source": "probes:F2.pyr.pyr1D_vs_pyr2D"
+ },
+ "R1.same_point_alias": {
+  "class": "R1",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ],
+   "a4": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ],
+   "pl": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ]
+  },
+  "expected_schema": "INVALID_MATH_GOAL",
+  "note": "",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "rv",
+     "goal_type": "distance",
+     "kind": "measurement",
+     "quote": "Tính độ dài AB.",
+     "solid_id": "pr",
+     "target": {
+      "segment": [
+       "pr::B",
+       "B"
+      ]
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A' đến mặt phẳng (ABC). Tính độ dài AA. Tính độ dài AB.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    },
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "other",
+     "solid_type": "prism",
+     "vertex_bindings": {
+      "A": "X"
+     }
+    }
+   ]
+  },
+  "source": "probes:F2.two.pr_vs_other_B"
+ },
+ "R1.unknown_ns_repeat": {
+  "class": "R1",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "UNKNOWN_SOLID_ID"
+   ],
+   "a4": [
+    "REFUSED",
+    "UNKNOWN_SOLID_ID"
+   ],
+   "pl": [
+    "REFUSED",
+    "UNKNOWN_SOLID_ID"
+   ]
+  },
+  "expected_schema": "UNKNOWN_SOLID_ID",
+  "note": "",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "rv",
+     "goal_type": "distance",
+     "kind": "measurement",
+     "quote": "Tính độ dài AB.",
+     "target": {
+      "segment": [
+       "ghost::A",
+       "A"
+      ]
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A' đến mặt phẳng (ABC). Tính độ dài AA. Tính độ dài AB.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    }
+   ]
+  },
+  "source": "probes:F2.ws.tab"
+ },
+ "R1.unknown_ns_repeat_rev": {
+  "class": "R1",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "UNKNOWN_SOLID_ID"
+   ],
+   "a4": [
+    "REFUSED",
+    "UNKNOWN_SOLID_ID"
+   ],
+   "pl": [
+    "REFUSED",
+    "UNKNOWN_SOLID_ID"
+   ]
+  },
+  "expected_schema": "UNKNOWN_SOLID_ID",
+  "note": "",
+  "payload": {
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "rv",
+     "goal_type": "distance",
+     "kind": "measurement",
+     "quote": "Tính độ dài AB.",
+     "target": {
+      "segment": [
+       "A",
+       "ghost::A"
+      ]
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "rays": [
+       "B",
+       "C"
+      ],
+      "vertex": "A"
+     },
+     "kind": "right_angle",
+     "quote": "Đáy ABC là tam giác vuông tại A."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "6"
+     },
+     "kind": "segment_length",
+     "quote": "AB = 6."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "8"
+     },
+     "kind": "segment_length",
+     "quote": "AC = 8."
+    },
+    {
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     "kind": "right_prism",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'."
+    },
+    {
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "12"
+     },
+     "kind": "segment_length",
+     "quote": "AA' = 12."
+    }
+   ],
+   "problem_text": "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. AA' = 12. Tính khoảng cách từ A' đến mặt phẳng (ABC). Tính độ dài AA. Tính độ dài AB.",
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "draw",
+     "kind": "construct_object",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "target_solid_id": "pr"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "ABC.A'B'C'",
+     "quote": "Cho lăng trụ đứng ABC.A'B'C'.",
+     "solid_id": "pr",
+     "solid_type": "prism"
+    }
+   ]
+  },
+  "source": "probes:F2.ws.tab"
+ },
+ "R2.derived_alias_of_parent": {
+  "class": "R2",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ],
+   "a4": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ],
+   "pl": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ]
+  },
+  "expected_schema": "INVALID_MATH_GOAL",
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "parallel_plane": [
+      "A",
+      "B",
+      "C"
+     ],
+     "plane_kind": "through_point_parallel_plane",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD",
+     "section_id": "sec_alpha",
+     "target_solid_id": "main_pyramid",
+     "through_point": "M"
+    }
+   ],
+   "length_unit": "a",
+   "math_goals": [
+    {
+     "goal_id": "rv",
+     "goal_type": "distance",
+     "kind": "measurement",
+     "quote": "Tính độ dài AB.",
+     "target": {
+      "segment": [
+       "top_pyramid::S",
+       "main_pyramid::S"
+      ]
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "side": "a",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "base_is_square",
+     "quote": "đáy ABCD là hình vuông cạnh a",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "line_perp_plane",
+     "quote": "SA vuông góc với đáy (ABCD)",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "2a"
+     },
+     "kind": "segment_length",
+     "quote": "SA = 2a",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "point": "M",
+      "segment": [
+       "S",
+       "A"
+      ]
+     },
+     "kind": "point_is_midpoint",
+     "quote": "Gọi M là trung điểm của SA",
+     "solid_id": "main_pyramid"
+    }
+   ],
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy (ABCD) và SA = 2a. Gọi M là trung điểm của SA. Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD. Dựng thiết diện của hình chóp cắt bởi (α), khối chóp cắt bởi (α) chứa đỉnh S, tính tỉ số thể tích và thể tích phần còn lại. Tính độ dài AA. Tính độ dài AB.",
+   "relations": [
+    {
+     "container_ref": "main_pyramid::SA",
+     "kind": "containment",
+     "member_ref": "M",
+     "quote": "Gọi M là trung điểm của SA",
+     "relation_id": "rel_m_on_sa"
+    },
+    {
+     "kind": "section_membership",
+     "member_refs": [
+      "M"
+     ],
+     "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD)",
+     "relation_id": "rel_m_in_sec",
+     "section_id": "sec_alpha"
+    }
+   ],
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_solid",
+     "kind": "construct_object",
+     "quote": "Cho hình chóp S.ABCD",
+     "target_solid_id": "main_pyramid"
+    },
+    {
+     "goal_id": "sim_section",
+     "kind": "construct_plane_section",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)",
+     "style_role": "section",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "apex_ref": "S",
+     "derived_solid_id": "top_pyramid",
+     "goal_id": "sim_top_pyramid",
+     "kind": "construct_derived_solid",
+     "parent_solid_id": "main_pyramid",
+     "quote": "khối chóp cắt bởi (α) chứa đỉnh S",
+     "style_role": "derived_solid",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "goal_id": "sim_highlight",
+     "kind": "highlight_geometry",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)",
+     "style_role": "section",
+     "target_refs": [
+      "sec_alpha",
+      "top_pyramid",
+      "M"
+     ]
+    },
+    {
+     "goal_id": "sim_sequence",
+     "kind": "construction_sequence",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "S.ABCD",
+     "quote": "Cho hình chóp S.ABCD",
+     "solid_id": "main_pyramid",
+     "solid_type": "pyramid"
+    },
+    {
+     "notation": "S.EFG",
+     "quote": "Cho hình chóp S.ABCD",
+     "solid_id": "other",
+     "solid_type": "pyramid",
+     "vertex_bindings": {
+      "S": "T"
+     }
+    }
+   ]
+  },
+  "source": "probes:F2.der.ctrl_SM_top + root other"
+ },
+ "R2.derived_qualified_constructed": {
+  "class": "R2_POSITIVE",
+  "expected_a3_answer": null,
+  "expected_routes": null,
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "parallel_plane": [
+      "A",
+      "B",
+      "C"
+     ],
+     "plane_kind": "through_point_parallel_plane",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD",
+     "section_id": "sec_alpha",
+     "target_solid_id": "main_pyramid",
+     "through_point": "M"
+    }
+   ],
+   "length_unit": "a",
+   "math_goals": [
+    {
+     "goal_id": "rv",
+     "goal_type": "distance",
+     "kind": "measurement",
+     "quote": "Tính độ dài AB.",
+     "target": {
+      "segment": [
+       "top_pyramid::S",
+       "M"
+      ]
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "side": "a",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "base_is_square",
+     "quote": "đáy ABCD là hình vuông cạnh a",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "line_perp_plane",
+     "quote": "SA vuông góc với đáy (ABCD)",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "2a"
+     },
+     "kind": "segment_length",
+     "quote": "SA = 2a",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "point": "M",
+      "segment": [
+       "S",
+       "A"
+      ]
+     },
+     "kind": "point_is_midpoint",
+     "quote": "Gọi M là trung điểm của SA",
+     "solid_id": "main_pyramid"
+    }
+   ],
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy (ABCD) và SA = 2a. Gọi M là trung điểm của SA. Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD. Dựng thiết diện của hình chóp cắt bởi (α), khối chóp cắt bởi (α) chứa đỉnh S, tính tỉ số thể tích và thể tích phần còn lại. Tính độ dài AA. Tính độ dài AB.",
+   "relations": [
+    {
+     "container_ref": "main_pyramid::SA",
+     "kind": "containment",
+     "member_ref": "M",
+     "quote": "Gọi M là trung điểm của SA",
+     "relation_id": "rel_m_on_sa"
+    },
+    {
+     "kind": "section_membership",
+     "member_refs": [
+      "M"
+     ],
+     "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD)",
+     "relation_id": "rel_m_in_sec",
+     "section_id": "sec_alpha"
+    }
+   ],
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_solid",
+     "kind": "construct_object",
+     "quote": "Cho hình chóp S.ABCD",
+     "target_solid_id": "main_pyramid"
+    },
+    {
+     "goal_id": "sim_section",
+     "kind": "construct_plane_section",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)",
+     "style_role": "section",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "apex_ref": "S",
+     "derived_solid_id": "top_pyramid",
+     "goal_id": "sim_top_pyramid",
+     "kind": "construct_derived_solid",
+     "parent_solid_id": "main_pyramid",
+     "quote": "khối chóp cắt bởi (α) chứa đỉnh S",
+     "style_role": "derived_solid",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "goal_id": "sim_highlight",
+     "kind": "highlight_geometry",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)",
+     "style_role": "section",
+     "target_refs": [
+      "sec_alpha",
+      "top_pyramid",
+      "M"
+     ]
+    },
+    {
+     "goal_id": "sim_sequence",
+     "kind": "construction_sequence",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "S.ABCD",
+     "quote": "Cho hình chóp S.ABCD",
+     "solid_id": "main_pyramid",
+     "solid_type": "pyramid"
+    },
+    {
+     "notation": "S.EFG",
+     "quote": "Cho hình chóp S.ABCD",
+     "solid_id": "other",
+     "solid_type": "pyramid",
+     "vertex_bindings": {
+      "S": "T"
+     }
+    }
+   ]
+  },
+  "source": "probes:F2.der.ctrl_SM_top + root other"
+ },
+ "R2.derived_scoped_constructed": {
+  "class": "R2_POSITIVE",
+  "expected_a3_answer": null,
+  "expected_routes": null,
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "parallel_plane": [
+      "A",
+      "B",
+      "C"
+     ],
+     "plane_kind": "through_point_parallel_plane",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD",
+     "section_id": "sec_alpha",
+     "target_solid_id": "main_pyramid",
+     "through_point": "M"
+    }
+   ],
+   "length_unit": "a",
+   "math_goals": [
+    {
+     "goal_id": "rv",
+     "goal_type": "distance",
+     "kind": "measurement",
+     "quote": "Tính độ dài AB.",
+     "solid_id": "top_pyramid",
+     "target": {
+      "segment": [
+       "S",
+       "M"
+      ]
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "side": "a",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "base_is_square",
+     "quote": "đáy ABCD là hình vuông cạnh a",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "line_perp_plane",
+     "quote": "SA vuông góc với đáy (ABCD)",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "2a"
+     },
+     "kind": "segment_length",
+     "quote": "SA = 2a",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "point": "M",
+      "segment": [
+       "S",
+       "A"
+      ]
+     },
+     "kind": "point_is_midpoint",
+     "quote": "Gọi M là trung điểm của SA",
+     "solid_id": "main_pyramid"
+    }
+   ],
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy (ABCD) và SA = 2a. Gọi M là trung điểm của SA. Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD. Dựng thiết diện của hình chóp cắt bởi (α), khối chóp cắt bởi (α) chứa đỉnh S, tính tỉ số thể tích và thể tích phần còn lại. Tính độ dài AA. Tính độ dài AB.",
+   "relations": [
+    {
+     "container_ref": "main_pyramid::SA",
+     "kind": "containment",
+     "member_ref": "M",
+     "quote": "Gọi M là trung điểm của SA",
+     "relation_id": "rel_m_on_sa"
+    },
+    {
+     "kind": "section_membership",
+     "member_refs": [
+      "M"
+     ],
+     "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD)",
+     "relation_id": "rel_m_in_sec",
+     "section_id": "sec_alpha"
+    }
+   ],
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_solid",
+     "kind": "construct_object",
+     "quote": "Cho hình chóp S.ABCD",
+     "target_solid_id": "main_pyramid"
+    },
+    {
+     "goal_id": "sim_section",
+     "kind": "construct_plane_section",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)",
+     "style_role": "section",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "apex_ref": "S",
+     "derived_solid_id": "top_pyramid",
+     "goal_id": "sim_top_pyramid",
+     "kind": "construct_derived_solid",
+     "parent_solid_id": "main_pyramid",
+     "quote": "khối chóp cắt bởi (α) chứa đỉnh S",
+     "style_role": "derived_solid",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "goal_id": "sim_highlight",
+     "kind": "highlight_geometry",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)",
+     "style_role": "section",
+     "target_refs": [
+      "sec_alpha",
+      "top_pyramid",
+      "M"
+     ]
+    },
+    {
+     "goal_id": "sim_sequence",
+     "kind": "construction_sequence",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "S.ABCD",
+     "quote": "Cho hình chóp S.ABCD",
+     "solid_id": "main_pyramid",
+     "solid_type": "pyramid"
+    },
+    {
+     "notation": "S.EFG",
+     "quote": "Cho hình chóp S.ABCD",
+     "solid_id": "other",
+     "solid_type": "pyramid",
+     "vertex_bindings": {
+      "S": "T"
+     }
+    }
+   ]
+  },
+  "source": "probes:F2.der.ctrl_SM_top + root other"
+ },
+ "R2.derived_vs_other_root": {
+  "class": "R2_POSITIVE",
+  "expected_a3_answer": null,
+  "expected_routes": null,
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "parallel_plane": [
+      "A",
+      "B",
+      "C"
+     ],
+     "plane_kind": "through_point_parallel_plane",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD",
+     "section_id": "sec_alpha",
+     "target_solid_id": "main_pyramid",
+     "through_point": "M"
+    }
+   ],
+   "length_unit": "a",
+   "math_goals": [
+    {
+     "goal_id": "rv",
+     "goal_type": "distance",
+     "kind": "measurement",
+     "quote": "Tính độ dài AB.",
+     "target": {
+      "segment": [
+       "top_pyramid::S",
+       "other::S"
+      ]
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "side": "a",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "base_is_square",
+     "quote": "đáy ABCD là hình vuông cạnh a",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "line_perp_plane",
+     "quote": "SA vuông góc với đáy (ABCD)",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "2a"
+     },
+     "kind": "segment_length",
+     "quote": "SA = 2a",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "point": "M",
+      "segment": [
+       "S",
+       "A"
+      ]
+     },
+     "kind": "point_is_midpoint",
+     "quote": "Gọi M là trung điểm của SA",
+     "solid_id": "main_pyramid"
+    }
+   ],
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy (ABCD) và SA = 2a. Gọi M là trung điểm của SA. Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD. Dựng thiết diện của hình chóp cắt bởi (α), khối chóp cắt bởi (α) chứa đỉnh S, tính tỉ số thể tích và thể tích phần còn lại. Tính độ dài AA. Tính độ dài AB.",
+   "relations": [
+    {
+     "container_ref": "main_pyramid::SA",
+     "kind": "containment",
+     "member_ref": "M",
+     "quote": "Gọi M là trung điểm của SA",
+     "relation_id": "rel_m_on_sa"
+    },
+    {
+     "kind": "section_membership",
+     "member_refs": [
+      "M"
+     ],
+     "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD)",
+     "relation_id": "rel_m_in_sec",
+     "section_id": "sec_alpha"
+    }
+   ],
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_solid",
+     "kind": "construct_object",
+     "quote": "Cho hình chóp S.ABCD",
+     "target_solid_id": "main_pyramid"
+    },
+    {
+     "goal_id": "sim_section",
+     "kind": "construct_plane_section",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)",
+     "style_role": "section",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "apex_ref": "S",
+     "derived_solid_id": "top_pyramid",
+     "goal_id": "sim_top_pyramid",
+     "kind": "construct_derived_solid",
+     "parent_solid_id": "main_pyramid",
+     "quote": "khối chóp cắt bởi (α) chứa đỉnh S",
+     "style_role": "derived_solid",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "goal_id": "sim_highlight",
+     "kind": "highlight_geometry",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)",
+     "style_role": "section",
+     "target_refs": [
+      "sec_alpha",
+      "top_pyramid",
+      "M"
+     ]
+    },
+    {
+     "goal_id": "sim_sequence",
+     "kind": "construction_sequence",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "S.ABCD",
+     "quote": "Cho hình chóp S.ABCD",
+     "solid_id": "main_pyramid",
+     "solid_type": "pyramid"
+    },
+    {
+     "notation": "S.EFG",
+     "quote": "Cho hình chóp S.ABCD",
+     "solid_id": "other",
+     "solid_type": "pyramid",
+     "vertex_bindings": {
+      "S": "T"
+     }
+    }
+   ]
+  },
+  "source": "probes:F2.der.ctrl_SM_top + root other"
+ },
+ "R2.scoped_alias_of_parent": {
+  "class": "R2",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ],
+   "a4": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ],
+   "pl": [
+    "REFUSED",
+    "INVALID_MATH_GOAL"
+   ]
+  },
+  "expected_schema": "INVALID_MATH_GOAL",
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "parallel_plane": [
+      "A",
+      "B",
+      "C"
+     ],
+     "plane_kind": "through_point_parallel_plane",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD",
+     "section_id": "sec_alpha",
+     "target_solid_id": "main_pyramid",
+     "through_point": "M"
+    }
+   ],
+   "length_unit": "a",
+   "math_goals": [
+    {
+     "goal_id": "rv",
+     "goal_type": "distance",
+     "kind": "measurement",
+     "quote": "Tính độ dài AB.",
+     "solid_id": "top_pyramid",
+     "target": {
+      "segment": [
+       "S",
+       "main_pyramid::S"
+      ]
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "side": "a",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "base_is_square",
+     "quote": "đáy ABCD là hình vuông cạnh a",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "line_perp_plane",
+     "quote": "SA vuông góc với đáy (ABCD)",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "2a"
+     },
+     "kind": "segment_length",
+     "quote": "SA = 2a",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "point": "M",
+      "segment": [
+       "S",
+       "A"
+      ]
+     },
+     "kind": "point_is_midpoint",
+     "quote": "Gọi M là trung điểm của SA",
+     "solid_id": "main_pyramid"
+    }
+   ],
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy (ABCD) và SA = 2a. Gọi M là trung điểm của SA. Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD. Dựng thiết diện của hình chóp cắt bởi (α), khối chóp cắt bởi (α) chứa đỉnh S, tính tỉ số thể tích và thể tích phần còn lại. Tính độ dài AA. Tính độ dài AB.",
+   "relations": [
+    {
+     "container_ref": "main_pyramid::SA",
+     "kind": "containment",
+     "member_ref": "M",
+     "quote": "Gọi M là trung điểm của SA",
+     "relation_id": "rel_m_on_sa"
+    },
+    {
+     "kind": "section_membership",
+     "member_refs": [
+      "M"
+     ],
+     "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD)",
+     "relation_id": "rel_m_in_sec",
+     "section_id": "sec_alpha"
+    }
+   ],
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_solid",
+     "kind": "construct_object",
+     "quote": "Cho hình chóp S.ABCD",
+     "target_solid_id": "main_pyramid"
+    },
+    {
+     "goal_id": "sim_section",
+     "kind": "construct_plane_section",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)",
+     "style_role": "section",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "apex_ref": "S",
+     "derived_solid_id": "top_pyramid",
+     "goal_id": "sim_top_pyramid",
+     "kind": "construct_derived_solid",
+     "parent_solid_id": "main_pyramid",
+     "quote": "khối chóp cắt bởi (α) chứa đỉnh S",
+     "style_role": "derived_solid",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "goal_id": "sim_highlight",
+     "kind": "highlight_geometry",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)",
+     "style_role": "section",
+     "target_refs": [
+      "sec_alpha",
+      "top_pyramid",
+      "M"
+     ]
+    },
+    {
+     "goal_id": "sim_sequence",
+     "kind": "construction_sequence",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "S.ABCD",
+     "quote": "Cho hình chóp S.ABCD",
+     "solid_id": "main_pyramid",
+     "solid_type": "pyramid"
+    },
+    {
+     "notation": "S.EFG",
+     "quote": "Cho hình chóp S.ABCD",
+     "solid_id": "other",
+     "solid_type": "pyramid",
+     "vertex_bindings": {
+      "S": "T"
+     }
+    }
+   ]
+  },
+  "source": "probes:F2.der.ctrl_SM_top + root other"
+ },
+ "R2.single_root_control": {
+  "class": "R2_POSITIVE",
+  "expected_a3_answer": {
+   "rv": {
+    "coef": "1",
+    "dim": 1,
+    "unit": "a"
+   }
+  },
+  "expected_routes": {
+   "a3": [
+    "SERVED",
+    null
+   ]
+  },
+  "expected_schema": null,
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "parallel_plane": [
+      "A",
+      "B",
+      "C"
+     ],
+     "plane_kind": "through_point_parallel_plane",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD",
+     "section_id": "sec_alpha",
+     "target_solid_id": "main_pyramid",
+     "through_point": "M"
+    }
+   ],
+   "length_unit": "a",
+   "math_goals": [
+    {
+     "goal_id": "rv",
+     "goal_type": "distance",
+     "kind": "measurement",
+     "quote": "Tính độ dài AB.",
+     "solid_id": "top_pyramid",
+     "target": {
+      "segment": [
+       "S",
+       "M"
+      ]
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "side": "a",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "base_is_square",
+     "quote": "đáy ABCD là hình vuông cạnh a",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "line_perp_plane",
+     "quote": "SA vuông góc với đáy (ABCD)",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "2a"
+     },
+     "kind": "segment_length",
+     "quote": "SA = 2a",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "point": "M",
+      "segment": [
+       "S",
+       "A"
+      ]
+     },
+     "kind": "point_is_midpoint",
+     "quote": "Gọi M là trung điểm của SA",
+     "solid_id": "main_pyramid"
+    }
+   ],
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy (ABCD) và SA = 2a. Gọi M là trung điểm của SA. Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD. Dựng thiết diện của hình chóp cắt bởi (α), khối chóp cắt bởi (α) chứa đỉnh S, tính tỉ số thể tích và thể tích phần còn lại. Tính độ dài AA. Tính độ dài AB.",
+   "relations": [
+    {
+     "container_ref": "main_pyramid::SA",
+     "kind": "containment",
+     "member_ref": "M",
+     "quote": "Gọi M là trung điểm của SA",
+     "relation_id": "rel_m_on_sa"
+    },
+    {
+     "kind": "section_membership",
+     "member_refs": [
+      "M"
+     ],
+     "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD)",
+     "relation_id": "rel_m_in_sec",
+     "section_id": "sec_alpha"
+    }
+   ],
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_solid",
+     "kind": "construct_object",
+     "quote": "Cho hình chóp S.ABCD",
+     "target_solid_id": "main_pyramid"
+    },
+    {
+     "goal_id": "sim_section",
+     "kind": "construct_plane_section",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)",
+     "style_role": "section",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "apex_ref": "S",
+     "derived_solid_id": "top_pyramid",
+     "goal_id": "sim_top_pyramid",
+     "kind": "construct_derived_solid",
+     "parent_solid_id": "main_pyramid",
+     "quote": "khối chóp cắt bởi (α) chứa đỉnh S",
+     "style_role": "derived_solid",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "goal_id": "sim_highlight",
+     "kind": "highlight_geometry",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)",
+     "style_role": "section",
+     "target_refs": [
+      "sec_alpha",
+      "top_pyramid",
+      "M"
+     ]
+    },
+    {
+     "goal_id": "sim_sequence",
+     "kind": "construction_sequence",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "S.ABCD",
+     "quote": "Cho hình chóp S.ABCD",
+     "solid_id": "main_pyramid",
+     "solid_type": "pyramid"
+    }
+   ]
+  },
+  "source": "probes:F2.der.ctrl_SM_top"
+ },
+ "R2.unscoped_ambiguous": {
+  "class": "R2",
+  "expected_a3_answer": null,
+  "expected_routes": {
+   "a3": [
+    "REFUSED",
+    "AMBIGUOUS_REFERENCE"
+   ],
+   "a4": [
+    "REFUSED",
+    "AMBIGUOUS_REFERENCE"
+   ],
+   "pl": [
+    "REFUSED",
+    "AMBIGUOUS_REFERENCE"
+   ]
+  },
+  "expected_schema": "AMBIGUOUS_REFERENCE",
+  "note": "",
+  "payload": {
+   "derived_sections": [
+    {
+     "parallel_plane": [
+      "A",
+      "B",
+      "C"
+     ],
+     "plane_kind": "through_point_parallel_plane",
+     "plane_name": "α",
+     "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD",
+     "section_id": "sec_alpha",
+     "target_solid_id": "main_pyramid",
+     "through_point": "M"
+    }
+   ],
+   "length_unit": "a",
+   "math_goals": [
+    {
+     "goal_id": "rv",
+     "goal_type": "distance",
+     "kind": "measurement",
+     "quote": "Tính độ dài AB.",
+     "target": {
+      "segment": [
+       "S",
+       "M"
+      ]
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "side": "a",
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "base_is_square",
+     "quote": "đáy ABCD là hình vuông cạnh a",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "kind": "line_perp_plane",
+     "quote": "SA vuông góc với đáy (ABCD)",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "2a"
+     },
+     "kind": "segment_length",
+     "quote": "SA = 2a",
+     "solid_id": "main_pyramid"
+    },
+    {
+     "args": {
+      "point": "M",
+      "segment": [
+       "S",
+       "A"
+      ]
+     },
+     "kind": "point_is_midpoint",
+     "quote": "Gọi M là trung điểm của SA",
+     "solid_id": "main_pyramid"
+    }
+   ],
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy (ABCD) và SA = 2a. Gọi M là trung điểm của SA. Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD. Dựng thiết diện của hình chóp cắt bởi (α), khối chóp cắt bởi (α) chứa đỉnh S, tính tỉ số thể tích và thể tích phần còn lại. Tính độ dài AA. Tính độ dài AB.",
+   "relations": [
+    {
+     "container_ref": "main_pyramid::SA",
+     "kind": "containment",
+     "member_ref": "M",
+     "quote": "Gọi M là trung điểm của SA",
+     "relation_id": "rel_m_on_sa"
+    },
+    {
+     "kind": "section_membership",
+     "member_refs": [
+      "M"
+     ],
+     "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD)",
+     "relation_id": "rel_m_in_sec",
+     "section_id": "sec_alpha"
+    }
+   ],
+   "schema_version": "typed-fact-next/1",
+   "simulation_goals": [
+    {
+     "goal_id": "sim_solid",
+     "kind": "construct_object",
+     "quote": "Cho hình chóp S.ABCD",
+     "target_solid_id": "main_pyramid"
+    },
+    {
+     "goal_id": "sim_section",
+     "kind": "construct_plane_section",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)",
+     "style_role": "section",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "apex_ref": "S",
+     "derived_solid_id": "top_pyramid",
+     "goal_id": "sim_top_pyramid",
+     "kind": "construct_derived_solid",
+     "parent_solid_id": "main_pyramid",
+     "quote": "khối chóp cắt bởi (α) chứa đỉnh S",
+     "style_role": "derived_solid",
+     "target_section_id": "sec_alpha"
+    },
+    {
+     "goal_id": "sim_highlight",
+     "kind": "highlight_geometry",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)",
+     "style_role": "section",
+     "target_refs": [
+      "sec_alpha",
+      "top_pyramid",
+      "M"
+     ]
+    },
+    {
+     "goal_id": "sim_sequence",
+     "kind": "construction_sequence",
+     "quote": "Dựng thiết diện của hình chóp cắt bởi (α)"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "S.ABCD",
+     "quote": "Cho hình chóp S.ABCD",
+     "solid_id": "main_pyramid",
+     "solid_type": "pyramid"
+    },
+    {
+     "notation": "S.EFG",
+     "quote": "Cho hình chóp S.ABCD",
+     "solid_id": "other",
+     "solid_type": "pyramid",
+     "vertex_bindings": {
+      "S": "T"
+     }
+    }
+   ]
+  },
+  "source": "probes:F2.der.ctrl_SM_top + root other"
+ }
+}

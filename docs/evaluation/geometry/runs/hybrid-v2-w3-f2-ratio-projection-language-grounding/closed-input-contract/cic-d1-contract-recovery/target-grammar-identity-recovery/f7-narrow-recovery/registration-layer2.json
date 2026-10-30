@@ -1,0 +1,11 @@
+{
+  "layer": 2,
+  "corrects": "registration.json at 415da751 (review RV-3): builder hash was not updated with the amended builder",
+  "input_sha256": "aa4e2774882ae086c654862f213275ea91257e0b7e28b6236f966fe8f31996d2",
+  "builder_sha256_lf_at_415da751": "20081b24365386e9a65500e3e1ac0b3bda23a33d9817313c24ce35a4387c7844",
+  "builder_reproduces_input": "independent reviewer rebuild reproduced aa4e2774… exactly",
+  "test_file_sha256_lf_after_RV1": "e5fc0a122aaae8f29ea701ee41f1aa3faf1f9f695b84df5f2750580b58e54801",
+  "test_changes_after_GREEN": "RV-1 only: R2 identity oracle also runs with the parent solid last; first-root mutant added. Same frozen inputs; test-only.",
+  "note": "registration.json and cases.json were amended in place in 415da751; their preregistered bytes stay at ae81b65e. Future amendments are new layers.",
+  "live_provider_calls": 0
+}

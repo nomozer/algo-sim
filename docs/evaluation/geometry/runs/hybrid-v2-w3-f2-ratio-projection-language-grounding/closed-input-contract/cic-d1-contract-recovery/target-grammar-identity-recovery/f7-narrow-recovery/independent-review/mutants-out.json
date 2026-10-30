@@ -1,0 +1,96 @@
+{
+ "summary": {
+  "baseline": 0,
+  "R2_first_root": 0,
+  "R2_last_root": 10,
+  "R1_identity_first": 15,
+  "F7_silent_drop": 26,
+  "F7_semantic_code": 13,
+  "F7_mask_instead_of_dispatch": 0,
+  "own_tests_vs_mask_plus_else": {
+   "test_unmapped_measurement_mutant_returns_the_internal_error": "FAIL Failed",
+   "planted": "PASS"
+  }
+ },
+ "detail": {
+  "baseline": [],
+  "R2_first_root": [],
+  "R2_last_root": [
+   "route[R2.derived_alias_of_parent-a3]: AssertionError ('R2.derived_alias_of_parent', 'a3', \"tham chiếu 'top_pyramid::S' có nhiều danh tính\")",
+   "route[R2.derived_alias_of_parent-a4]: AssertionError ('R2.derived_alias_of_parent', 'a4', \"tham chiếu 'top_pyramid::S' có nhiều danh tính\")",
+   "route[R2.derived_alias_of_parent-pl]: AssertionError ('R2.derived_alias_of_parent', 'pl', \"tham chiếu 'top_pyramid::S' có nhiều danh tính\")",
+   "schema[R2.derived_alias_of_parent]: AssertionError ",
+   "schema[R2.derived_vs_other_root]: AssertionError ",
+   "route[R2.scoped_alias_of_parent-a3]: AssertionError ('R2.scoped_alias_of_parent', 'a3', \"other: đỉnh 'E' trong 'S.EFG' không có trong đề bài\")",
+   "route[R2.scoped_alias_of_parent-a4]: AssertionError ('R2.scoped_alias_of_parent', 'a4', 'other: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn')",
+   "route[R2.scoped_alias_of_parent-pl]: AssertionError ('R2.scoped_alias_of_parent', 'pl', 'other: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn')",
+   "schema[R2.scoped_alias_of_parent]: AssertionError ",
+   "r2_identity: AssertionError "
+  ],
+  "R1_identity_first": [
+   "route[R1.foreign_owner_repeat-a3]: AssertionError ('R1.foreign_owner_repeat', 'a3', \"rv: repeated identity in 'segment'\")",
+   "route[R1.foreign_owner_repeat-a4]: AssertionError ('R1.foreign_owner_repeat', 'a4', \"rv: repeated identity in 'segment'\")",
+   "route[R1.foreign_owner_repeat-pl]: AssertionError ('R1.foreign_owner_repeat', 'pl', \"rv: repeated identity in 'segment'\")",
+   "schema[R1.foreign_owner_repeat]: AssertionError ",
+   "route[R1.unknown_ns_repeat-a3]: AssertionError ('R1.unknown_ns_repeat', 'a3', \"rv: repeated identity in 'segment'\")",
+   "route[R1.unknown_ns_repeat-a4]: AssertionError ('R1.unknown_ns_repeat', 'a4', \"rv: repeated identity in 'segment'\")",
+   "route[R1.unknown_ns_repeat-pl]: AssertionError ('R1.unknown_ns_repeat', 'pl', \"rv: repeated identity in 'segment'\")",
+   "schema[R1.unknown_ns_repeat]: AssertionError ",
+   "route[R1.unknown_ns_repeat_rev-a3]: AssertionError ('R1.unknown_ns_repeat_rev', 'a3', \"rv: repeated identity in 'segment'\")",
+   "route[R1.unknown_ns_repeat_rev-a4]: AssertionError ('R1.unknown_ns_repeat_rev', 'a4', \"rv: repeated identity in 'segment'\")",
+   "route[R1.unknown_ns_repeat_rev-pl]: AssertionError ('R1.unknown_ns_repeat_rev', 'pl', \"rv: repeated identity in 'segment'\")",
+   "schema[R1.unknown_ns_repeat_rev]: AssertionError ",
+   "r1[R1.foreign_owner_repeat]: AssertionError ",
+   "r1[R1.unknown_ns_repeat]: AssertionError ",
+   "r1[R1.unknown_ns_repeat_rev]: AssertionError "
+  ],
+  "F7_silent_drop": [
+   "route[F7.multi.prism_distance_plus_lateral-a3]: AssertionError ('F7.multi.prism_distance_plus_lateral', 'a3', \"KeyError: 'qx'\")",
+   "nointernal[F7.multi.prism_distance_plus_lateral]: AssertionError ('F7.multi.prism_distance_plus_lateral', 'a3')",
+   "route[F7.multi.pyr_vol_plus_radius-a3]: AssertionError ('F7.multi.pyr_vol_plus_radius', 'a3', \"KeyError: 'qx'\")",
+   "nointernal[F7.multi.pyr_vol_plus_radius]: AssertionError ('F7.multi.pyr_vol_plus_radius', 'a3')",
+   "route[F7.prism.lateral_area.notation-a3]: AssertionError ('F7.prism.lateral_area.notation', 'a3', \"KeyError: 'q'\")",
+   "nointernal[F7.prism.lateral_area.notation]: AssertionError ('F7.prism.lateral_area.notation', 'a3')",
+   "route[F7.prism.lateral_area.notation.goal_sid-a3]: AssertionError ('F7.prism.lateral_area.notation.goal_sid', 'a3', \"KeyError: 'q'\")",
+   "nointernal[F7.prism.lateral_area.notation.goal_sid]: AssertionError ('F7.prism.lateral_area.notation.goal_sid', 'a3')",
+   "route[F7.prism.lateral_area.solid-a3]: AssertionError ('F7.prism.lateral_area.solid', 'a3', \"KeyError: 'q'\")",
+   "nointernal[F7.prism.lateral_area.solid]: AssertionError ('F7.prism.lateral_area.solid', 'a3')",
+   "route[F7.prism.lateral_area.solid.goal_sid-a3]: AssertionError ('F7.prism.lateral_area.solid.goal_sid', 'a3', \"KeyError: 'q'\")",
+   "nointernal[F7.prism.lateral_area.solid.goal_sid]: AssertionError ('F7.prism.lateral_area.solid.goal_sid', 'a3')",
+   "route[F7.prism.radius.notation-a3]: AssertionError ('F7.prism.radius.notation', 'a3', \"KeyError: 'q'\")",
+   "nointernal[F7.prism.radius.notation]: AssertionError ('F7.prism.radius.notation', 'a3')",
+   "route[F7.prism.radius.notation.goal_sid-a3]: AssertionError ('F7.prism.radius.notation.goal_sid', 'a3', \"KeyError: 'q'\")",
+   "nointernal[F7.prism.radius.notation.goal_sid]: AssertionError ('F7.prism.radius.notation.goal_sid', 'a3')",
+   "route[F7.prism.radius.solid-a3]: AssertionError ('F7.prism.radius.solid', 'a3', \"KeyError: 'q'\")",
+   "nointernal[F7.prism.radius.solid]: AssertionError ('F7.prism.radius.solid', 'a3')",
+   "route[F7.prism.radius.solid.goal_sid-a3]: AssertionError ('F7.prism.radius.solid.goal_sid', 'a3', \"KeyError: 'q'\")",
+   "nointernal[F7.prism.radius.solid.goal_sid]: AssertionError ('F7.prism.radius.solid.goal_sid', 'a3')",
+   "route[F7.pyr.lateral_area.solid-a3]: AssertionError ('F7.pyr.lateral_area.solid', 'a3', \"KeyError: 'qx'\")",
+   "nointernal[F7.pyr.lateral_area.solid]: AssertionError ('F7.pyr.lateral_area.solid', 'a3')",
+   "route[F7.pyr.radius.section_id-a3]: AssertionError ('F7.pyr.radius.section_id', 'a3', \"KeyError: 'qx'\")",
+   "nointernal[F7.pyr.radius.section_id]: AssertionError ('F7.pyr.radius.section_id', 'a3')",
+   "route[F7.pyr.radius.solid-a3]: AssertionError ('F7.pyr.radius.solid', 'a3', \"KeyError: 'qx'\")",
+   "nointernal[F7.pyr.radius.solid]: AssertionError ('F7.pyr.radius.solid', 'a3')"
+  ],
+  "F7_semantic_code": [
+   "route[F7.multi.prism_distance_plus_lateral-a3]: AssertionError ('F7.multi.prism_distance_plus_lateral', 'a3', 'qx: Adapter /3 chưa có phép đo lateral_area cho khối đa diện')",
+   "route[F7.multi.pyr_vol_plus_radius-a3]: AssertionError ('F7.multi.pyr_vol_plus_radius', 'a3', 'qx: Adapter /3 chưa có phép đo radius cho khối đa diện')",
+   "route[F7.prism.lateral_area.notation-a3]: AssertionError ('F7.prism.lateral_area.notation', 'a3', 'q: Adapter /3 chưa có phép đo lateral_area cho khối đa diện')",
+   "route[F7.prism.lateral_area.notation.goal_sid-a3]: AssertionError ('F7.prism.lateral_area.notation.goal_sid', 'a3', 'q: Adapter /3 chưa có phép đo lateral_area cho khối đa diện')",
+   "route[F7.prism.lateral_area.solid-a3]: AssertionError ('F7.prism.lateral_area.solid', 'a3', 'q: Adapter /3 chưa có phép đo lateral_area cho khối đa diện')",
+   "route[F7.prism.lateral_area.solid.goal_sid-a3]: AssertionError ('F7.prism.lateral_area.solid.goal_sid', 'a3', 'q: Adapter /3 chưa có phép đo lateral_area cho khối đa diện')",
+   "route[F7.prism.radius.notation-a3]: AssertionError ('F7.prism.radius.notation', 'a3', 'q: Adapter /3 chưa có phép đo radius cho khối đa diện')",
+   "route[F7.prism.radius.notation.goal_sid-a3]: AssertionError ('F7.prism.radius.notation.goal_sid', 'a3', 'q: Adapter /3 chưa có phép đo radius cho khối đa diện')",
+   "route[F7.prism.radius.solid-a3]: AssertionError ('F7.prism.radius.solid', 'a3', 'q: Adapter /3 chưa có phép đo radius cho khối đa diện')",
+   "route[F7.prism.radius.solid.goal_sid-a3]: AssertionError ('F7.prism.radius.solid.goal_sid', 'a3', 'q: Adapter /3 chưa có phép đo radius cho khối đa diện')",
+   "route[F7.pyr.lateral_area.solid-a3]: AssertionError ('F7.pyr.lateral_area.solid', 'a3', 'qx: Adapter /3 chưa có phép đo lateral_area cho khối đa diện')",
+   "route[F7.pyr.radius.section_id-a3]: AssertionError ('F7.pyr.radius.section_id', 'a3', 'qx: Adapter /3 chưa có phép đo radius cho khối đa diện')",
+   "route[F7.pyr.radius.solid-a3]: AssertionError ('F7.pyr.radius.solid', 'a3', 'qx: Adapter /3 chưa có phép đo radius cho khối đa diện')"
+  ],
+  "F7_mask_instead_of_dispatch": [],
+  "own_tests_vs_mask_plus_else": {
+   "test_unmapped_measurement_mutant_returns_the_internal_error": "FAIL Failed",
+   "planted": "PASS"
+  }
+ }
+}

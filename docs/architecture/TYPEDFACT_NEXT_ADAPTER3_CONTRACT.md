@@ -101,8 +101,12 @@ Owner decisions CIC-D1 and F1/F2 recovery supersede the scope-key statement in t
 Each alternative is an exact set: redundant `solid, solid_id`, or any scope key beside geometric operands, is
 `INVALID_MATH_GOAL`. Goal-level `solid_id` asserts ownership. Schema validity does not promise route capability;
 in particular registered `volume {solid_id}` stays valid independently of historical curved-route support.
-Polyhedral `radius`/`lateral_area` (prism, pyramid) have no route capability: a3, pl and a4 refuse them as
-`BRIDGE_UNSUPPORTED_MEASUREMENT`, the whole payload, before any answer (F7; previously an a3 internal error).
+Polyhedral `radius`/`lateral_area` (prism, pyramid) have no route capability: when no earlier refusal applies
+(provenance, schema/ownership, or a route's earlier capability gate), a3, pl and a4 refuse the whole payload as
+`BRIDGE_UNSUPPORTED_MEASUREMENT` before any answer (F7; previously an a3 internal error). Engine-level data checks
+run after this point on a3, as they already did on pl/a4. Other registered alternatives without an a3 branch
+(`distance {point,line}|{line,plane}|{plane1,plane2}`, `angle {plane1,plane2}`, polyhedral `area {solid}`) are still
+refused on a3 as `INVALID_MATH_GOAL` — a known code inconsistency, fail-closed, not repaired (outside F7).
 
 Every segment/line has exactly two distinct resolved identities; every plane/polygon has at least three, with no
 repeated identity. The payload schema resolves qualified references and declared vertex bindings before checking
