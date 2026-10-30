@@ -1,0 +1,1317 @@
+REVIEW_MUTANT applied: M_f1_volume_solid_id_everywhere
+.........................................................................................................................................................................................................................................................................................................................FF......FF....FF......FF....FF......FF...........F.......F.....F.............F.......F.....F.............F.......F.....F.....................................................................................................................................................................................................................................................................................................................................................................FF....FF......FF....FF......FF...........F.......F.....F.............F.......F.....F.............F.......F.....F.............................................................................................................................................................................................................................................................................................................................................................FF......FF....FF......FF....FF......FF...........F.......F.....F.............F.......F.....F.............F.......F.....F.............................................................................................................................................................................................................................................................................................................................................................FF......FF....FF......FF....FF......FF...........F.......F.....F.............F.......F.....F.............F.......F.....F..............................................................................................................................................................................................................................................................................................................................................................................
+================================== FAILURES ===================================
+_____ test_unregistered_target_fails_at_schema_boundary[V.area.solid_id] ______
+
+case = 'V.area.solid_id'
+
+    @pytest.mark.parametrize('case', names('F1'))
+    def test_unregistered_target_fails_at_schema_boundary(case):
+        p = CASES[case]['payload']
+        # Child model only: downstream geometry/capability refusal cannot kill this oracle.
+>       assert C.child_code(T.MathGoalSpec, p['math_goals'][-1]) == 'INVALID_MATH_GOAL'
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function child_code at 0x0000025A9F81B100>(<class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'>, {'goal_id': 'q', 'kind': 'measurement', 'goal_type': 'area', 'target': {'solid_id': 'pr'}, ...})
+E        +    where <function child_code at 0x0000025A9F81B100> = C.child_code
+E        +    and   <class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'> = T.MathGoalSpec
+
+tests\geometry\test_target_grammar_identity_recovery.py:42: AssertionError
+_ test_unregistered_target_fails_at_schema_boundary[V.area.solid_id.goal_sid] _
+
+case = 'V.area.solid_id.goal_sid'
+
+    @pytest.mark.parametrize('case', names('F1'))
+    def test_unregistered_target_fails_at_schema_boundary(case):
+        p = CASES[case]['payload']
+        # Child model only: downstream geometry/capability refusal cannot kill this oracle.
+>       assert C.child_code(T.MathGoalSpec, p['math_goals'][-1]) == 'INVALID_MATH_GOAL'
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function child_code at 0x0000025A9F81B100>(<class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'>, {'goal_id': 'q', 'kind': 'measurement', 'goal_type': 'area', 'target': {'solid_id': 'pr'}, ...})
+E        +    where <function child_code at 0x0000025A9F81B100> = C.child_code
+E        +    and   <class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'> = T.MathGoalSpec
+
+tests\geometry\test_target_grammar_identity_recovery.py:42: AssertionError
+____ test_unregistered_target_fails_at_schema_boundary[V.area.unknown_id] _____
+
+case = 'V.area.unknown_id'
+
+    @pytest.mark.parametrize('case', names('F1'))
+    def test_unregistered_target_fails_at_schema_boundary(case):
+        p = CASES[case]['payload']
+        # Child model only: downstream geometry/capability refusal cannot kill this oracle.
+>       assert C.child_code(T.MathGoalSpec, p['math_goals'][-1]) == 'INVALID_MATH_GOAL'
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function child_code at 0x0000025A9F81B100>(<class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'>, {'goal_id': 'q', 'kind': 'measurement', 'goal_type': 'area', 'target': {'solid_id': 'zz'}, ...})
+E        +    where <function child_code at 0x0000025A9F81B100> = C.child_code
+E        +    and   <class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'> = T.MathGoalSpec
+
+tests\geometry\test_target_grammar_identity_recovery.py:42: AssertionError
+_ test_unregistered_target_fails_at_schema_boundary[V.area.unknown_id.goal_sid] _
+
+case = 'V.area.unknown_id.goal_sid'
+
+    @pytest.mark.parametrize('case', names('F1'))
+    def test_unregistered_target_fails_at_schema_boundary(case):
+        p = CASES[case]['payload']
+        # Child model only: downstream geometry/capability refusal cannot kill this oracle.
+>       assert C.child_code(T.MathGoalSpec, p['math_goals'][-1]) == 'INVALID_MATH_GOAL'
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function child_code at 0x0000025A9F81B100>(<class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'>, {'goal_id': 'q', 'kind': 'measurement', 'goal_type': 'area', 'target': {'solid_id': 'zz'}, ...})
+E        +    where <function child_code at 0x0000025A9F81B100> = C.child_code
+E        +    and   <class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'> = T.MathGoalSpec
+
+tests\geometry\test_target_grammar_identity_recovery.py:42: AssertionError
+____ test_unregistered_target_fails_at_schema_boundary[V.radius.solid_id] _____
+
+case = 'V.radius.solid_id'
+
+    @pytest.mark.parametrize('case', names('F1'))
+    def test_unregistered_target_fails_at_schema_boundary(case):
+        p = CASES[case]['payload']
+        # Child model only: downstream geometry/capability refusal cannot kill this oracle.
+>       assert C.child_code(T.MathGoalSpec, p['math_goals'][-1]) == 'INVALID_MATH_GOAL'
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function child_code at 0x0000025A9F81B100>(<class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'>, {'goal_id': 'q', 'kind': 'measurement', 'goal_type': 'radius', 'target': {'solid_id': 'pr'}, ...})
+E        +    where <function child_code at 0x0000025A9F81B100> = C.child_code
+E        +    and   <class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'> = T.MathGoalSpec
+
+tests\geometry\test_target_grammar_identity_recovery.py:42: AssertionError
+_ test_unregistered_target_fails_at_schema_boundary[V.radius.solid_id.goal_sid] _
+
+case = 'V.radius.solid_id.goal_sid'
+
+    @pytest.mark.parametrize('case', names('F1'))
+    def test_unregistered_target_fails_at_schema_boundary(case):
+        p = CASES[case]['payload']
+        # Child model only: downstream geometry/capability refusal cannot kill this oracle.
+>       assert C.child_code(T.MathGoalSpec, p['math_goals'][-1]) == 'INVALID_MATH_GOAL'
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function child_code at 0x0000025A9F81B100>(<class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'>, {'goal_id': 'q', 'kind': 'measurement', 'goal_type': 'radius', 'target': {'solid_id': 'pr'}, ...})
+E        +    where <function child_code at 0x0000025A9F81B100> = C.child_code
+E        +    and   <class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'> = T.MathGoalSpec
+
+tests\geometry\test_target_grammar_identity_recovery.py:42: AssertionError
+___ test_unregistered_target_fails_at_schema_boundary[V.radius.unknown_id] ____
+
+case = 'V.radius.unknown_id'
+
+    @pytest.mark.parametrize('case', names('F1'))
+    def test_unregistered_target_fails_at_schema_boundary(case):
+        p = CASES[case]['payload']
+        # Child model only: downstream geometry/capability refusal cannot kill this oracle.
+>       assert C.child_code(T.MathGoalSpec, p['math_goals'][-1]) == 'INVALID_MATH_GOAL'
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function child_code at 0x0000025A9F81B100>(<class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'>, {'goal_id': 'q', 'kind': 'measurement', 'goal_type': 'radius', 'target': {'solid_id': 'zz'}, ...})
+E        +    where <function child_code at 0x0000025A9F81B100> = C.child_code
+E        +    and   <class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'> = T.MathGoalSpec
+
+tests\geometry\test_target_grammar_identity_recovery.py:42: AssertionError
+_ test_unregistered_target_fails_at_schema_boundary[V.radius.unknown_id.goal_sid] _
+
+case = 'V.radius.unknown_id.goal_sid'
+
+    @pytest.mark.parametrize('case', names('F1'))
+    def test_unregistered_target_fails_at_schema_boundary(case):
+        p = CASES[case]['payload']
+        # Child model only: downstream geometry/capability refusal cannot kill this oracle.
+>       assert C.child_code(T.MathGoalSpec, p['math_goals'][-1]) == 'INVALID_MATH_GOAL'
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function child_code at 0x0000025A9F81B100>(<class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'>, {'goal_id': 'q', 'kind': 'measurement', 'goal_type': 'radius', 'target': {'solid_id': 'zz'}, ...})
+E        +    where <function child_code at 0x0000025A9F81B100> = C.child_code
+E        +    and   <class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'> = T.MathGoalSpec
+
+tests\geometry\test_target_grammar_identity_recovery.py:42: AssertionError
+_ test_unregistered_target_fails_at_schema_boundary[V.lateral_area.solid_id] __
+
+case = 'V.lateral_area.solid_id'
+
+    @pytest.mark.parametrize('case', names('F1'))
+    def test_unregistered_target_fails_at_schema_boundary(case):
+        p = CASES[case]['payload']
+        # Child model only: downstream geometry/capability refusal cannot kill this oracle.
+>       assert C.child_code(T.MathGoalSpec, p['math_goals'][-1]) == 'INVALID_MATH_GOAL'
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function child_code at 0x0000025A9F81B100>(<class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'>, {'goal_id': 'q', 'kind': 'measurement', 'goal_type': 'lateral_area', 'target': {'solid_id': 'pr'}, ...})
+E        +    where <function child_code at 0x0000025A9F81B100> = C.child_code
+E        +    and   <class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'> = T.MathGoalSpec
+
+tests\geometry\test_target_grammar_identity_recovery.py:42: AssertionError
+_ test_unregistered_target_fails_at_schema_boundary[V.lateral_area.solid_id.goal_sid] _
+
+case = 'V.lateral_area.solid_id.goal_sid'
+
+    @pytest.mark.parametrize('case', names('F1'))
+    def test_unregistered_target_fails_at_schema_boundary(case):
+        p = CASES[case]['payload']
+        # Child model only: downstream geometry/capability refusal cannot kill this oracle.
+>       assert C.child_code(T.MathGoalSpec, p['math_goals'][-1]) == 'INVALID_MATH_GOAL'
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function child_code at 0x0000025A9F81B100>(<class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'>, {'goal_id': 'q', 'kind': 'measurement', 'goal_type': 'lateral_area', 'target': {'solid_id': 'pr'}, ...})
+E        +    where <function child_code at 0x0000025A9F81B100> = C.child_code
+E        +    and   <class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'> = T.MathGoalSpec
+
+tests\geometry\test_target_grammar_identity_recovery.py:42: AssertionError
+_ test_unregistered_target_fails_at_schema_boundary[V.lateral_area.unknown_id] _
+
+case = 'V.lateral_area.unknown_id'
+
+    @pytest.mark.parametrize('case', names('F1'))
+    def test_unregistered_target_fails_at_schema_boundary(case):
+        p = CASES[case]['payload']
+        # Child model only: downstream geometry/capability refusal cannot kill this oracle.
+>       assert C.child_code(T.MathGoalSpec, p['math_goals'][-1]) == 'INVALID_MATH_GOAL'
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function child_code at 0x0000025A9F81B100>(<class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'>, {'goal_id': 'q', 'kind': 'measurement', 'goal_type': 'lateral_area', 'target': {'solid_id': 'zz'}, ...})
+E        +    where <function child_code at 0x0000025A9F81B100> = C.child_code
+E        +    and   <class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'> = T.MathGoalSpec
+
+tests\geometry\test_target_grammar_identity_recovery.py:42: AssertionError
+_ test_unregistered_target_fails_at_schema_boundary[V.lateral_area.unknown_id.goal_sid] _
+
+case = 'V.lateral_area.unknown_id.goal_sid'
+
+    @pytest.mark.parametrize('case', names('F1'))
+    def test_unregistered_target_fails_at_schema_boundary(case):
+        p = CASES[case]['payload']
+        # Child model only: downstream geometry/capability refusal cannot kill this oracle.
+>       assert C.child_code(T.MathGoalSpec, p['math_goals'][-1]) == 'INVALID_MATH_GOAL'
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function child_code at 0x0000025A9F81B100>(<class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'>, {'goal_id': 'q', 'kind': 'measurement', 'goal_type': 'lateral_area', 'target': {'solid_id': 'zz'}, ...})
+E        +    where <function child_code at 0x0000025A9F81B100> = C.child_code
+E        +    and   <class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'> = T.MathGoalSpec
+
+tests\geometry\test_target_grammar_identity_recovery.py:42: AssertionError
+_ test_unregistered_target_fails_at_schema_boundary[K.cyl.lateral_area.solid_id] _
+
+case = 'K.cyl.lateral_area.solid_id'
+
+    @pytest.mark.parametrize('case', names('F1'))
+    def test_unregistered_target_fails_at_schema_boundary(case):
+        p = CASES[case]['payload']
+        # Child model only: downstream geometry/capability refusal cannot kill this oracle.
+>       assert C.child_code(T.MathGoalSpec, p['math_goals'][-1]) == 'INVALID_MATH_GOAL'
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function child_code at 0x0000025A9F81B100>(<class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'>, {'goal_id': 'q', 'kind': 'measurement', 'goal_type': 'lateral_area', 'target': {'solid_id': 'cyl'}, ...})
+E        +    where <function child_code at 0x0000025A9F81B100> = C.child_code
+E        +    and   <class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'> = T.MathGoalSpec
+
+tests\geometry\test_target_grammar_identity_recovery.py:42: AssertionError
+__ test_unregistered_target_fails_at_schema_boundary[K.cyl.radius.solid_id] ___
+
+case = 'K.cyl.radius.solid_id'
+
+    @pytest.mark.parametrize('case', names('F1'))
+    def test_unregistered_target_fails_at_schema_boundary(case):
+        p = CASES[case]['payload']
+        # Child model only: downstream geometry/capability refusal cannot kill this oracle.
+>       assert C.child_code(T.MathGoalSpec, p['math_goals'][-1]) == 'INVALID_MATH_GOAL'
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function child_code at 0x0000025A9F81B100>(<class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'>, {'goal_id': 'q', 'kind': 'measurement', 'goal_type': 'radius', 'target': {'solid_id': 'cyl'}, ...})
+E        +    where <function child_code at 0x0000025A9F81B100> = C.child_code
+E        +    and   <class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'> = T.MathGoalSpec
+
+tests\geometry\test_target_grammar_identity_recovery.py:42: AssertionError
+___ test_unregistered_target_fails_at_schema_boundary[K.cyl.area.solid_id] ____
+
+case = 'K.cyl.area.solid_id'
+
+    @pytest.mark.parametrize('case', names('F1'))
+    def test_unregistered_target_fails_at_schema_boundary(case):
+        p = CASES[case]['payload']
+        # Child model only: downstream geometry/capability refusal cannot kill this oracle.
+>       assert C.child_code(T.MathGoalSpec, p['math_goals'][-1]) == 'INVALID_MATH_GOAL'
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function child_code at 0x0000025A9F81B100>(<class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'>, {'goal_id': 'q', 'kind': 'measurement', 'goal_type': 'area', 'target': {'solid_id': 'cyl'}, ...})
+E        +    where <function child_code at 0x0000025A9F81B100> = C.child_code
+E        +    and   <class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'> = T.MathGoalSpec
+
+tests\geometry\test_target_grammar_identity_recovery.py:42: AssertionError
+_ test_unregistered_target_fails_at_schema_boundary[K.cone.lateral_area.solid_id] _
+
+case = 'K.cone.lateral_area.solid_id'
+
+    @pytest.mark.parametrize('case', names('F1'))
+    def test_unregistered_target_fails_at_schema_boundary(case):
+        p = CASES[case]['payload']
+        # Child model only: downstream geometry/capability refusal cannot kill this oracle.
+>       assert C.child_code(T.MathGoalSpec, p['math_goals'][-1]) == 'INVALID_MATH_GOAL'
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function child_code at 0x0000025A9F81B100>(<class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'>, {'goal_id': 'q', 'kind': 'measurement', 'goal_type': 'lateral_area', 'target': {'solid_id': 'cone_main'}, ...})
+E        +    where <function child_code at 0x0000025A9F81B100> = C.child_code
+E        +    and   <class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'> = T.MathGoalSpec
+
+tests\geometry\test_target_grammar_identity_recovery.py:42: AssertionError
+__ test_unregistered_target_fails_at_schema_boundary[K.cone.radius.solid_id] __
+
+case = 'K.cone.radius.solid_id'
+
+    @pytest.mark.parametrize('case', names('F1'))
+    def test_unregistered_target_fails_at_schema_boundary(case):
+        p = CASES[case]['payload']
+        # Child model only: downstream geometry/capability refusal cannot kill this oracle.
+>       assert C.child_code(T.MathGoalSpec, p['math_goals'][-1]) == 'INVALID_MATH_GOAL'
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function child_code at 0x0000025A9F81B100>(<class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'>, {'goal_id': 'q', 'kind': 'measurement', 'goal_type': 'radius', 'target': {'solid_id': 'cone_main'}, ...})
+E        +    where <function child_code at 0x0000025A9F81B100> = C.child_code
+E        +    and   <class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'> = T.MathGoalSpec
+
+tests\geometry\test_target_grammar_identity_recovery.py:42: AssertionError
+___ test_unregistered_target_fails_at_schema_boundary[K.cone.area.solid_id] ___
+
+case = 'K.cone.area.solid_id'
+
+    @pytest.mark.parametrize('case', names('F1'))
+    def test_unregistered_target_fails_at_schema_boundary(case):
+        p = CASES[case]['payload']
+        # Child model only: downstream geometry/capability refusal cannot kill this oracle.
+>       assert C.child_code(T.MathGoalSpec, p['math_goals'][-1]) == 'INVALID_MATH_GOAL'
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function child_code at 0x0000025A9F81B100>(<class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'>, {'goal_id': 'q', 'kind': 'measurement', 'goal_type': 'area', 'target': {'solid_id': 'cone_main'}, ...})
+E        +    where <function child_code at 0x0000025A9F81B100> = C.child_code
+E        +    and   <class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'> = T.MathGoalSpec
+
+tests\geometry\test_target_grammar_identity_recovery.py:42: AssertionError
+_ test_unregistered_target_fails_at_schema_boundary[K.sph.lateral_area.solid_id] _
+
+case = 'K.sph.lateral_area.solid_id'
+
+    @pytest.mark.parametrize('case', names('F1'))
+    def test_unregistered_target_fails_at_schema_boundary(case):
+        p = CASES[case]['payload']
+        # Child model only: downstream geometry/capability refusal cannot kill this oracle.
+>       assert C.child_code(T.MathGoalSpec, p['math_goals'][-1]) == 'INVALID_MATH_GOAL'
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function child_code at 0x0000025A9F81B100>(<class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'>, {'goal_id': 'q', 'kind': 'measurement', 'goal_type': 'lateral_area', 'target': {'solid_id': 'sph'}, ...})
+E        +    where <function child_code at 0x0000025A9F81B100> = C.child_code
+E        +    and   <class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'> = T.MathGoalSpec
+
+tests\geometry\test_target_grammar_identity_recovery.py:42: AssertionError
+__ test_unregistered_target_fails_at_schema_boundary[K.sph.radius.solid_id] ___
+
+case = 'K.sph.radius.solid_id'
+
+    @pytest.mark.parametrize('case', names('F1'))
+    def test_unregistered_target_fails_at_schema_boundary(case):
+        p = CASES[case]['payload']
+        # Child model only: downstream geometry/capability refusal cannot kill this oracle.
+>       assert C.child_code(T.MathGoalSpec, p['math_goals'][-1]) == 'INVALID_MATH_GOAL'
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function child_code at 0x0000025A9F81B100>(<class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'>, {'goal_id': 'q', 'kind': 'measurement', 'goal_type': 'radius', 'target': {'solid_id': 'sph'}, ...})
+E        +    where <function child_code at 0x0000025A9F81B100> = C.child_code
+E        +    and   <class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'> = T.MathGoalSpec
+
+tests\geometry\test_target_grammar_identity_recovery.py:42: AssertionError
+___ test_unregistered_target_fails_at_schema_boundary[K.sph.area.solid_id] ____
+
+case = 'K.sph.area.solid_id'
+
+    @pytest.mark.parametrize('case', names('F1'))
+    def test_unregistered_target_fails_at_schema_boundary(case):
+        p = CASES[case]['payload']
+        # Child model only: downstream geometry/capability refusal cannot kill this oracle.
+>       assert C.child_code(T.MathGoalSpec, p['math_goals'][-1]) == 'INVALID_MATH_GOAL'
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function child_code at 0x0000025A9F81B100>(<class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'>, {'goal_id': 'q', 'kind': 'measurement', 'goal_type': 'area', 'target': {'solid_id': 'sph'}, ...})
+E        +    where <function child_code at 0x0000025A9F81B100> = C.child_code
+E        +    and   <class 'app.simulation.geometry_functions.typed_fact_next.MathGoalSpec'> = T.MathGoalSpec
+
+tests\geometry\test_target_grammar_identity_recovery.py:42: AssertionError
+______ test_invalid_targets_are_terminal_on_routes[a3-V.area.unknown_id] ______
+
+case = 'V.area.unknown_id', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...OWN_SOLID_ID') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'UNKNOWN_SOLID_ID' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[a3-V.area.unknown_id.goal_sid] __
+
+case = 'V.area.unknown_id.goal_sid', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...OWN_SOLID_ID') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'UNKNOWN_SOLID_ID' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+______ test_invalid_targets_are_terminal_on_routes[a3-V.radius.solid_id] ______
+
+case = 'V.radius.solid_id', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...TERNAL_ERROR') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'ADAPTER_INTERNAL_ERROR' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[a3-V.radius.solid_id.goal_sid] __
+
+case = 'V.radius.solid_id.goal_sid', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...TERNAL_ERROR') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'ADAPTER_INTERNAL_ERROR' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_____ test_invalid_targets_are_terminal_on_routes[a3-V.radius.unknown_id] _____
+
+case = 'V.radius.unknown_id', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...OWN_SOLID_ID') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'UNKNOWN_SOLID_ID' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[a3-V.radius.unknown_id.goal_sid] _
+
+case = 'V.radius.unknown_id.goal_sid', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...OWN_SOLID_ID') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'UNKNOWN_SOLID_ID' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+___ test_invalid_targets_are_terminal_on_routes[a3-V.lateral_area.solid_id] ___
+
+case = 'V.lateral_area.solid_id', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...TERNAL_ERROR') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'ADAPTER_INTERNAL_ERROR' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[a3-V.lateral_area.solid_id.goal_sid] _
+
+case = 'V.lateral_area.solid_id.goal_sid', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...TERNAL_ERROR') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'ADAPTER_INTERNAL_ERROR' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+__ test_invalid_targets_are_terminal_on_routes[a3-V.lateral_area.unknown_id] __
+
+case = 'V.lateral_area.unknown_id', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...OWN_SOLID_ID') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'UNKNOWN_SOLID_ID' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[a3-V.lateral_area.unknown_id.goal_sid] _
+
+case = 'V.lateral_area.unknown_id.goal_sid', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...OWN_SOLID_ID') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'UNKNOWN_SOLID_ID' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[a3-K.cyl.lateral_area.solid_id] _
+
+case = 'K.cyl.lateral_area.solid_id', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 0 diff: 'SERVED' != 'REFUSED'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+____ test_invalid_targets_are_terminal_on_routes[a3-K.cyl.radius.solid_id] ____
+
+case = 'K.cyl.radius.solid_id', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 0 diff: 'SERVED' != 'REFUSED'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_____ test_invalid_targets_are_terminal_on_routes[a3-K.cyl.area.solid_id] _____
+
+case = 'K.cyl.area.solid_id', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...OPERAND_TYPE') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'GEOMETRY_OPERAND_TYPE' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[a3-K.cone.lateral_area.solid_id] _
+
+case = 'K.cone.lateral_area.solid_id', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 0 diff: 'SERVED' != 'REFUSED'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+___ test_invalid_targets_are_terminal_on_routes[a3-K.cone.radius.solid_id] ____
+
+case = 'K.cone.radius.solid_id', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 0 diff: 'SERVED' != 'REFUSED'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+____ test_invalid_targets_are_terminal_on_routes[a3-K.cone.area.solid_id] _____
+
+case = 'K.cone.area.solid_id', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...OPERAND_TYPE') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'GEOMETRY_OPERAND_TYPE' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[a3-K.sph.lateral_area.solid_id] _
+
+case = 'K.sph.lateral_area.solid_id', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 0 diff: 'SERVED' != 'REFUSED'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+____ test_invalid_targets_are_terminal_on_routes[a3-K.sph.radius.solid_id] ____
+
+case = 'K.sph.radius.solid_id', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 0 diff: 'SERVED' != 'REFUSED'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_____ test_invalid_targets_are_terminal_on_routes[a3-K.sph.area.solid_id] _____
+
+case = 'K.sph.area.solid_id', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...OPERAND_TYPE') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'GEOMETRY_OPERAND_TYPE' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_______ test_invalid_targets_are_terminal_on_routes[pl-V.area.solid_id] _______
+
+case = 'V.area.solid_id', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+__ test_invalid_targets_are_terminal_on_routes[pl-V.area.solid_id.goal_sid] ___
+
+case = 'V.area.solid_id.goal_sid', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+______ test_invalid_targets_are_terminal_on_routes[pl-V.area.unknown_id] ______
+
+case = 'V.area.unknown_id', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...OWN_SOLID_ID') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'UNKNOWN_SOLID_ID' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[pl-V.area.unknown_id.goal_sid] __
+
+case = 'V.area.unknown_id.goal_sid', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...OWN_SOLID_ID') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'UNKNOWN_SOLID_ID' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+______ test_invalid_targets_are_terminal_on_routes[pl-V.radius.solid_id] ______
+
+case = 'V.radius.solid_id', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[pl-V.radius.solid_id.goal_sid] __
+
+case = 'V.radius.solid_id.goal_sid', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_____ test_invalid_targets_are_terminal_on_routes[pl-V.radius.unknown_id] _____
+
+case = 'V.radius.unknown_id', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...OWN_SOLID_ID') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'UNKNOWN_SOLID_ID' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[pl-V.radius.unknown_id.goal_sid] _
+
+case = 'V.radius.unknown_id.goal_sid', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...OWN_SOLID_ID') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'UNKNOWN_SOLID_ID' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+___ test_invalid_targets_are_terminal_on_routes[pl-V.lateral_area.solid_id] ___
+
+case = 'V.lateral_area.solid_id', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[pl-V.lateral_area.solid_id.goal_sid] _
+
+case = 'V.lateral_area.solid_id.goal_sid', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+__ test_invalid_targets_are_terminal_on_routes[pl-V.lateral_area.unknown_id] __
+
+case = 'V.lateral_area.unknown_id', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...OWN_SOLID_ID') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'UNKNOWN_SOLID_ID' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[pl-V.lateral_area.unknown_id.goal_sid] _
+
+case = 'V.lateral_area.unknown_id.goal_sid', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...OWN_SOLID_ID') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'UNKNOWN_SOLID_ID' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[pl-K.cyl.lateral_area.solid_id] _
+
+case = 'K.cyl.lateral_area.solid_id', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...ORTED_CURVED') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_CURVED' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+____ test_invalid_targets_are_terminal_on_routes[pl-K.cyl.radius.solid_id] ____
+
+case = 'K.cyl.radius.solid_id', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...ORTED_CURVED') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_CURVED' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_____ test_invalid_targets_are_terminal_on_routes[pl-K.cyl.area.solid_id] _____
+
+case = 'K.cyl.area.solid_id', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...ORTED_CURVED') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_CURVED' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[pl-K.cone.lateral_area.solid_id] _
+
+case = 'K.cone.lateral_area.solid_id', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...ORTED_CURVED') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_CURVED' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+___ test_invalid_targets_are_terminal_on_routes[pl-K.cone.radius.solid_id] ____
+
+case = 'K.cone.radius.solid_id', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...ORTED_CURVED') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_CURVED' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+____ test_invalid_targets_are_terminal_on_routes[pl-K.cone.area.solid_id] _____
+
+case = 'K.cone.area.solid_id', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...ORTED_CURVED') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_CURVED' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[pl-K.sph.lateral_area.solid_id] _
+
+case = 'K.sph.lateral_area.solid_id', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...ORTED_CURVED') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_CURVED' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+____ test_invalid_targets_are_terminal_on_routes[pl-K.sph.radius.solid_id] ____
+
+case = 'K.sph.radius.solid_id', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...ORTED_CURVED') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_CURVED' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_____ test_invalid_targets_are_terminal_on_routes[pl-K.sph.area.solid_id] _____
+
+case = 'K.sph.area.solid_id', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...ORTED_CURVED') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_CURVED' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_______ test_invalid_targets_are_terminal_on_routes[a4-V.area.solid_id] _______
+
+case = 'V.area.solid_id', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+__ test_invalid_targets_are_terminal_on_routes[a4-V.area.solid_id.goal_sid] ___
+
+case = 'V.area.solid_id.goal_sid', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+______ test_invalid_targets_are_terminal_on_routes[a4-V.area.unknown_id] ______
+
+case = 'V.area.unknown_id', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...OWN_SOLID_ID') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'UNKNOWN_SOLID_ID' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[a4-V.area.unknown_id.goal_sid] __
+
+case = 'V.area.unknown_id.goal_sid', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...OWN_SOLID_ID') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'UNKNOWN_SOLID_ID' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+______ test_invalid_targets_are_terminal_on_routes[a4-V.radius.solid_id] ______
+
+case = 'V.radius.solid_id', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[a4-V.radius.solid_id.goal_sid] __
+
+case = 'V.radius.solid_id.goal_sid', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_____ test_invalid_targets_are_terminal_on_routes[a4-V.radius.unknown_id] _____
+
+case = 'V.radius.unknown_id', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...OWN_SOLID_ID') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'UNKNOWN_SOLID_ID' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[a4-V.radius.unknown_id.goal_sid] _
+
+case = 'V.radius.unknown_id.goal_sid', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...OWN_SOLID_ID') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'UNKNOWN_SOLID_ID' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+___ test_invalid_targets_are_terminal_on_routes[a4-V.lateral_area.solid_id] ___
+
+case = 'V.lateral_area.solid_id', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[a4-V.lateral_area.solid_id.goal_sid] _
+
+case = 'V.lateral_area.solid_id.goal_sid', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '..._MEASUREMENT') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_MEASUREMENT' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+__ test_invalid_targets_are_terminal_on_routes[a4-V.lateral_area.unknown_id] __
+
+case = 'V.lateral_area.unknown_id', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...OWN_SOLID_ID') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'UNKNOWN_SOLID_ID' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[a4-V.lateral_area.unknown_id.goal_sid] _
+
+case = 'V.lateral_area.unknown_id.goal_sid', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...OWN_SOLID_ID') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'UNKNOWN_SOLID_ID' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[a4-K.cyl.lateral_area.solid_id] _
+
+case = 'K.cyl.lateral_area.solid_id', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...ORTED_CURVED') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_CURVED' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+____ test_invalid_targets_are_terminal_on_routes[a4-K.cyl.radius.solid_id] ____
+
+case = 'K.cyl.radius.solid_id', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...ORTED_CURVED') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_CURVED' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_____ test_invalid_targets_are_terminal_on_routes[a4-K.cyl.area.solid_id] _____
+
+case = 'K.cyl.area.solid_id', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...ORTED_CURVED') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_CURVED' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[a4-K.cone.lateral_area.solid_id] _
+
+case = 'K.cone.lateral_area.solid_id', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...ORTED_CURVED') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_CURVED' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+___ test_invalid_targets_are_terminal_on_routes[a4-K.cone.radius.solid_id] ____
+
+case = 'K.cone.radius.solid_id', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...ORTED_CURVED') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_CURVED' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+____ test_invalid_targets_are_terminal_on_routes[a4-K.cone.area.solid_id] _____
+
+case = 'K.cone.area.solid_id', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...ORTED_CURVED') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_CURVED' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[a4-K.sph.lateral_area.solid_id] _
+
+case = 'K.sph.lateral_area.solid_id', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...ORTED_CURVED') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_CURVED' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+____ test_invalid_targets_are_terminal_on_routes[a4-K.sph.radius.solid_id] ____
+
+case = 'K.sph.radius.solid_id', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...ORTED_CURVED') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_CURVED' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_____ test_invalid_targets_are_terminal_on_routes[a4-K.sph.area.solid_id] _____
+
+case = 'K.sph.area.solid_id', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...ORTED_CURVED') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_CURVED' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_unregistered_target_fails_at_schema_boundary[V.area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_unregistered_target_fails_at_schema_boundary[V.area.solid_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_unregistered_target_fails_at_schema_boundary[V.area.unknown_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_unregistered_target_fails_at_schema_boundary[V.area.unknown_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_unregistered_target_fails_at_schema_boundary[V.radius.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_unregistered_target_fails_at_schema_boundary[V.radius.solid_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_unregistered_target_fails_at_schema_boundary[V.radius.unknown_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_unregistered_target_fails_at_schema_boundary[V.radius.unknown_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_unregistered_target_fails_at_schema_boundary[V.lateral_area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_unregistered_target_fails_at_schema_boundary[V.lateral_area.solid_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_unregistered_target_fails_at_schema_boundary[V.lateral_area.unknown_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_unregistered_target_fails_at_schema_boundary[V.lateral_area.unknown_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_unregistered_target_fails_at_schema_boundary[K.cyl.lateral_area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_unregistered_target_fails_at_schema_boundary[K.cyl.radius.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_unregistered_target_fails_at_schema_boundary[K.cyl.area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_unregistered_target_fails_at_schema_boundary[K.cone.lateral_area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_unregistered_target_fails_at_schema_boundary[K.cone.radius.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_unregistered_target_fails_at_schema_boundary[K.cone.area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_unregistered_target_fails_at_schema_boundary[K.sph.lateral_area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_unregistered_target_fails_at_schema_boundary[K.sph.radius.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_unregistered_target_fails_at_schema_boundary[K.sph.area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-V.area.unknown_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-V.area.unknown_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-V.radius.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-V.radius.solid_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-V.radius.unknown_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-V.radius.unknown_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-V.lateral_area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-V.lateral_area.solid_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-V.lateral_area.unknown_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-V.lateral_area.unknown_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-K.cyl.lateral_area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-K.cyl.radius.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-K.cyl.area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-K.cone.lateral_area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-K.cone.radius.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-K.cone.area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-K.sph.lateral_area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-K.sph.radius.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-K.sph.area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-V.area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-V.area.solid_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-V.area.unknown_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-V.area.unknown_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-V.radius.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-V.radius.solid_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-V.radius.unknown_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-V.radius.unknown_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-V.lateral_area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-V.lateral_area.solid_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-V.lateral_area.unknown_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-V.lateral_area.unknown_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-K.cyl.lateral_area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-K.cyl.radius.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-K.cyl.area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-K.cone.lateral_area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-K.cone.radius.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-K.cone.area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-K.sph.lateral_area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-K.sph.radius.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-K.sph.area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-V.area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-V.area.solid_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-V.area.unknown_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-V.area.unknown_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-V.radius.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-V.radius.solid_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-V.radius.unknown_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-V.radius.unknown_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-V.lateral_area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-V.lateral_area.solid_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-V.lateral_area.unknown_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-V.lateral_area.unknown_id.goal_sid]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-K.cyl.lateral_area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-K.cyl.radius.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-K.cyl.area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-K.cone.lateral_area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-K.cone.radius.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-K.cone.area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-K.sph.lateral_area.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-K.sph.radius.solid_id]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-K.sph.area.solid_id]
+82 failed, 2124 passed, 11 deselected in 6.98s

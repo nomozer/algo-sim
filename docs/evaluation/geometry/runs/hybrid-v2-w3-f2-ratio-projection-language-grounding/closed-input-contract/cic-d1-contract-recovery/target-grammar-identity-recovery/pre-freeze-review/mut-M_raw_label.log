@@ -1,0 +1,124 @@
+REVIEW_MUTANT applied: M_raw_label
+........................................................................................................................................................................................................................................................................................................................................................................................................................................................................FF...................................................................................................................................................................................................................................................................................................................................................................................................................................................................................F....................................................................................................................................................................................................................................................................................................................................................................................................................................................................................F....................................................................................................................................................................................................................................................................................................................................................................................................................................................................................F..........................F.....................................................................................................................................................................................................F...F.................................................................................................................
+================================== FAILURES ===================================
+_____ test_namespace_identity_is_validated_before_dispatch[I.bound_alias] _____
+
+case = 'I.bound_alias'
+
+    @pytest.mark.parametrize('case', names('F2'))
+    def test_namespace_identity_is_validated_before_dispatch(case):
+        p, code = CASES[case]['payload'], CASES[case]['expected_schema']
+>       assert D.schema_code(p) == code
+E       assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function schema_code at 0x000001D86034A2A0>({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...solid_id': 'pr', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'.", ...}], ...})
+E        +    where <function schema_code at 0x000001D86034A2A0> = D.schema_code
+
+tests\geometry\test_target_grammar_identity_recovery.py:50: AssertionError
+______ test_namespace_identity_is_validated_before_dispatch[I.ambiguous] ______
+
+case = 'I.ambiguous'
+
+    @pytest.mark.parametrize('case', names('F2'))
+    def test_namespace_identity_is_validated_before_dispatch(case):
+        p, code = CASES[case]['payload'], CASES[case]['expected_schema']
+>       assert D.schema_code(p) == code
+E       assert None == 'AMBIGUOUS_REFERENCE'
+E        +  where None = <function schema_code at 0x000001D86034A2A0>({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...id_id': 'other', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'.", ...}], ...})
+E        +    where <function schema_code at 0x000001D86034A2A0> = D.schema_code
+
+tests\geometry\test_target_grammar_identity_recovery.py:50: AssertionError
+________ test_invalid_targets_are_terminal_on_routes[a3-I.bound_alias] ________
+
+case = 'I.bound_alias', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', 'UNKNOWN_LABEL') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'UNKNOWN_LABEL' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+________ test_invalid_targets_are_terminal_on_routes[pl-I.bound_alias] ________
+
+case = 'I.bound_alias', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...IED_IDENTITY') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+________ test_invalid_targets_are_terminal_on_routes[a4-I.bound_alias] ________
+
+case = 'I.bound_alias', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...IED_IDENTITY') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+___________ test_identity_refusal_on_direct_v2_route[I.bound_alias] ___________
+
+case = 'I.bound_alias'
+
+    @pytest.mark.parametrize('case', names('F2'))
+    def test_identity_refusal_on_direct_v2_route(case):
+        c = CASES[case]
+>       assert F.outcome(run_typed_fact_next_v2_route(v2_input(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...IED_IDENTITY') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:64: AssertionError
+_ test_registered_controls_keep_schema_and_exact_route_outcomes[I.different_solids_same_label] _
+
+case = 'I.different_solids_same_label'
+
+    @pytest.mark.parametrize('case', names('CONTROL') + names('IDENTITY_CONTROL'))
+    def test_registered_controls_keep_schema_and_exact_route_outcomes(case):
+        c = CASES[case]
+        before = json.loads((OUT / 'observed-red.json').read_text(encoding='utf-8'))['results'][case]
+        p = c['payload']
+>       assert D.schema_code(p) == before['schema1']
+E       assert 'INVALID_MATH_GOAL' == None
+E        +  where 'INVALID_MATH_GOAL' = <function schema_code at 0x000001D86034A2A0>({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...id_id': 'other', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'.", ...}], ...})
+E        +    where <function schema_code at 0x000001D86034A2A0> = D.schema_code
+
+tests\geometry\test_target_grammar_identity_recovery.py:72: AssertionError
+______ test_identity_control_passes_schema_without_display_name_merging _______
+
+    def test_identity_control_passes_schema_without_display_name_merging():
+        for case in names('IDENTITY_CONTROL'):
+>           assert D.schema_code(CASES[case]['payload']) is None, case
+E           AssertionError: I.different_solids_same_label
+E           assert 'INVALID_MATH_GOAL' is None
+E            +  where 'INVALID_MATH_GOAL' = <function schema_code at 0x000001D86034A2A0>({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...id_id': 'other', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'.", ...}], ...})
+E            +    where <function schema_code at 0x000001D86034A2A0> = D.schema_code
+
+tests\geometry\test_target_grammar_identity_recovery.py:88: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_namespace_identity_is_validated_before_dispatch[I.bound_alias]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_namespace_identity_is_validated_before_dispatch[I.ambiguous]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-I.bound_alias]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-I.bound_alias]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-I.bound_alias]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_identity_refusal_on_direct_v2_route[I.bound_alias]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_registered_controls_keep_schema_and_exact_route_outcomes[I.different_solids_same_label]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_identity_control_passes_schema_without_display_name_merging
+8 failed, 2198 passed, 11 deselected in 6.10s

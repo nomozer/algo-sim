@@ -1,0 +1,48 @@
+{
+ "pyr1D_vs_pyr2D_DA3a": [
+  "SERVED",
+  null,
+  {
+   "coef": "2",
+   "dim": 1,
+   "unit": "a"
+  },
+  ""
+ ],
+ "prism.radius.a3": [
+  "REFUSED",
+  "ADAPTER_INTERNAL_ERROR",
+  false,
+  false
+ ],
+ "prism.radius.pl": [
+  "REFUSED",
+  "BRIDGE_UNSUPPORTED_MEASUREMENT",
+  false,
+  false
+ ],
+ "prism.lateral_area.a3": [
+  "REFUSED",
+  "ADAPTER_INTERNAL_ERROR",
+  false,
+  false
+ ],
+ "prism.lateral_area.pl": [
+  "REFUSED",
+  "BRIDGE_UNSUPPORTED_MEASUREMENT",
+  false,
+  false
+ ],
+ "prism.area.a3": [
+  "REFUSED",
+  "INVALID_MATH_GOAL",
+  false,
+  false
+ ],
+ "prism.area.pl": [
+  "REFUSED",
+  "BRIDGE_UNSUPPORTED_MEASUREMENT",
+  false,
+  false
+ ]
+}

@@ -1,0 +1,313 @@
+REVIEW_MUTANT applied: M_unscoped_only
+..........................................................................................................................................................................................................................................................................................................................................................................................................................................................................F.FFF................................................................................................................................................................................................................................................................................................................................................................................................................................................................................F.FFF................................................................................................................................................................................................................................................................................................................................................................................................................................................................................F.FFF................................................................................................................................................................................................................................................................................................................................................................................................................................................................................F.FFF......................F.FFF.....................................................................................................................................................................................................................................................................................................................
+================================== FAILURES ===================================
+_ test_namespace_identity_is_validated_before_dispatch[I.scoped_nonidentity] __
+
+case = 'I.scoped_nonidentity'
+
+    @pytest.mark.parametrize('case', names('F2'))
+    def test_namespace_identity_is_validated_before_dispatch(case):
+        p, code = CASES[case]['payload'], CASES[case]['expected_schema']
+>       assert D.schema_code(p) == code
+E       assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function schema_code at 0x000002156DB6A2A0>({'schema_version': 'typed-fact-next/1', 'problem_text': "Cho lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A...id_id': 'other', 'solid_type': 'prism', 'notation': "ABC.A'B'C'", 'quote': "Cho lăng trụ đứng ABC.A'B'C'.", ...}], ...})
+E        +    where <function schema_code at 0x000002156DB6A2A0> = D.schema_code
+
+tests\geometry\test_target_grammar_identity_recovery.py:50: AssertionError
+__ test_namespace_identity_is_validated_before_dispatch[I.constructed_alias] __
+
+case = 'I.constructed_alias'
+
+    @pytest.mark.parametrize('case', names('F2'))
+    def test_namespace_identity_is_validated_before_dispatch(case):
+        p, code = CASES[case]['payload'], CASES[case]['expected_schema']
+>       assert D.schema_code(p) == code
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function schema_code at 0x000002156DB6A2A0>({'length_unit': 'a', 'math_goals': [{'goal_id': 'identity', 'kind': 'measurement', 'goal_type': 'distance', 'target': ...à DA = a. Dựng hai khối chóp và tính tỉ số thể tích. Gọi M là trung điểm của SB. Tính độ dài MB. Tính độ dài AA.', ...})
+E        +    where <function schema_code at 0x000002156DB6A2A0> = D.schema_code
+
+tests\geometry\test_target_grammar_identity_recovery.py:50: AssertionError
+_ test_namespace_identity_is_validated_before_dispatch[I.derived_apex_alias] __
+
+case = 'I.derived_apex_alias'
+
+    @pytest.mark.parametrize('case', names('F2'))
+    def test_namespace_identity_is_validated_before_dispatch(case):
+        p, code = CASES[case]['payload'], CASES[case]['expected_schema']
+>       assert D.schema_code(p) == code
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function schema_code at 0x000002156DB6A2A0>({'derived_sections': [{'parallel_plane': ['A', 'B', 'C'], 'plane_kind': 'through_point_parallel_plane', 'plane_name': ...t': ['S', 'A']}, 'kind': 'point_is_midpoint', 'quote': 'Gọi M là trung điểm của SA', 'solid_id': 'main_pyramid'}], ...})
+E        +    where <function schema_code at 0x000002156DB6A2A0> = D.schema_code
+
+tests\geometry\test_target_grammar_identity_recovery.py:50: AssertionError
+_ test_namespace_identity_is_validated_before_dispatch[I.derived_constructed_alias] _
+
+case = 'I.derived_constructed_alias'
+
+    @pytest.mark.parametrize('case', names('F2'))
+    def test_namespace_identity_is_validated_before_dispatch(case):
+        p, code = CASES[case]['payload'], CASES[case]['expected_schema']
+>       assert D.schema_code(p) == code
+E       AssertionError: assert None == 'INVALID_MATH_GOAL'
+E        +  where None = <function schema_code at 0x000002156DB6A2A0>({'derived_sections': [{'parallel_plane': ['A', 'B', 'C'], 'plane_kind': 'through_point_parallel_plane', 'plane_name': ...t': ['S', 'A']}, 'kind': 'point_is_midpoint', 'quote': 'Gọi M là trung điểm của SA', 'solid_id': 'main_pyramid'}], ...})
+E        +    where <function schema_code at 0x000002156DB6A2A0> = D.schema_code
+
+tests\geometry\test_target_grammar_identity_recovery.py:50: AssertionError
+____ test_invalid_targets_are_terminal_on_routes[a3-I.scoped_nonidentity] _____
+
+case = 'I.scoped_nonidentity', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...US_REFERENCE') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'AMBIGUOUS_REFERENCE' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_____ test_invalid_targets_are_terminal_on_routes[a3-I.constructed_alias] _____
+
+case = 'I.constructed_alias', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 0 diff: 'SERVED' != 'REFUSED'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+____ test_invalid_targets_are_terminal_on_routes[a3-I.derived_apex_alias] _____
+
+case = 'I.derived_apex_alias', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 0 diff: 'SERVED' != 'REFUSED'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[a3-I.derived_constructed_alias] _
+
+case = 'I.derived_constructed_alias', route = 'a3'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('SERVED', None) == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 0 diff: 'SERVED' != 'REFUSED'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+____ test_invalid_targets_are_terminal_on_routes[pl-I.scoped_nonidentity] _____
+
+case = 'I.scoped_nonidentity', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...US_REFERENCE') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'AMBIGUOUS_REFERENCE' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_____ test_invalid_targets_are_terminal_on_routes[pl-I.constructed_alias] _____
+
+case = 'I.constructed_alias', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...IED_IDENTITY') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+____ test_invalid_targets_are_terminal_on_routes[pl-I.derived_apex_alias] _____
+
+case = 'I.derived_apex_alias', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...TED_RELATION') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_RELATION' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[pl-I.derived_constructed_alias] _
+
+case = 'I.derived_constructed_alias', route = 'pl'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...TED_RELATION') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_RELATION' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+____ test_invalid_targets_are_terminal_on_routes[a4-I.scoped_nonidentity] _____
+
+case = 'I.scoped_nonidentity', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...US_REFERENCE') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'AMBIGUOUS_REFERENCE' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_____ test_invalid_targets_are_terminal_on_routes[a4-I.constructed_alias] _____
+
+case = 'I.constructed_alias', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...IED_IDENTITY') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+____ test_invalid_targets_are_terminal_on_routes[a4-I.derived_apex_alias] _____
+
+case = 'I.derived_apex_alias', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...TED_RELATION') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_RELATION' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_ test_invalid_targets_are_terminal_on_routes[a4-I.derived_constructed_alias] _
+
+case = 'I.derived_constructed_alias', route = 'a4'
+
+    @pytest.mark.parametrize('case', names('F1') + names('F2'))
+    @pytest.mark.parametrize('route', ['a3','pl','a4'])
+    def test_invalid_targets_are_terminal_on_routes(case, route):
+        c = CASES[case]
+>       assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...TED_RELATION') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_RELATION' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:58: AssertionError
+_______ test_identity_refusal_on_direct_v2_route[I.scoped_nonidentity] ________
+
+case = 'I.scoped_nonidentity'
+
+    @pytest.mark.parametrize('case', names('F2'))
+    def test_identity_refusal_on_direct_v2_route(case):
+        c = CASES[case]
+>       assert F.outcome(run_typed_fact_next_v2_route(v2_input(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...US_REFERENCE') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'AMBIGUOUS_REFERENCE' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:64: AssertionError
+________ test_identity_refusal_on_direct_v2_route[I.constructed_alias] ________
+
+case = 'I.constructed_alias'
+
+    @pytest.mark.parametrize('case', names('F2'))
+    def test_identity_refusal_on_direct_v2_route(case):
+        c = CASES[case]
+>       assert F.outcome(run_typed_fact_next_v2_route(v2_input(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...IED_IDENTITY') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:64: AssertionError
+_______ test_identity_refusal_on_direct_v2_route[I.derived_apex_alias] ________
+
+case = 'I.derived_apex_alias'
+
+    @pytest.mark.parametrize('case', names('F2'))
+    def test_identity_refusal_on_direct_v2_route(case):
+        c = CASES[case]
+>       assert F.outcome(run_typed_fact_next_v2_route(v2_input(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...TED_RELATION') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_RELATION' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:64: AssertionError
+____ test_identity_refusal_on_direct_v2_route[I.derived_constructed_alias] ____
+
+case = 'I.derived_constructed_alias'
+
+    @pytest.mark.parametrize('case', names('F2'))
+    def test_identity_refusal_on_direct_v2_route(case):
+        c = CASES[case]
+>       assert F.outcome(run_typed_fact_next_v2_route(v2_input(c['payload']))) == ('REFUSED', c['expected_schema'])
+E       AssertionError: assert ('REFUSED', '...TED_RELATION') == ('REFUSED', '...ID_MATH_GOAL')
+E         
+E         At index 1 diff: 'BRIDGE_UNSUPPORTED_RELATION' != 'INVALID_MATH_GOAL'
+E         Use -v to get more diff
+
+tests\geometry\test_target_grammar_identity_recovery.py:64: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_namespace_identity_is_validated_before_dispatch[I.scoped_nonidentity]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_namespace_identity_is_validated_before_dispatch[I.constructed_alias]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_namespace_identity_is_validated_before_dispatch[I.derived_apex_alias]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_namespace_identity_is_validated_before_dispatch[I.derived_constructed_alias]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-I.scoped_nonidentity]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-I.constructed_alias]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-I.derived_apex_alias]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a3-I.derived_constructed_alias]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-I.scoped_nonidentity]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-I.constructed_alias]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-I.derived_apex_alias]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[pl-I.derived_constructed_alias]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-I.scoped_nonidentity]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-I.constructed_alias]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-I.derived_apex_alias]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_invalid_targets_are_terminal_on_routes[a4-I.derived_constructed_alias]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_identity_refusal_on_direct_v2_route[I.scoped_nonidentity]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_identity_refusal_on_direct_v2_route[I.constructed_alias]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_identity_refusal_on_direct_v2_route[I.derived_apex_alias]
+FAILED tests/geometry/test_target_grammar_identity_recovery.py::test_identity_refusal_on_direct_v2_route[I.derived_constructed_alias]
+20 failed, 2186 passed, 11 deselected in 7.03s

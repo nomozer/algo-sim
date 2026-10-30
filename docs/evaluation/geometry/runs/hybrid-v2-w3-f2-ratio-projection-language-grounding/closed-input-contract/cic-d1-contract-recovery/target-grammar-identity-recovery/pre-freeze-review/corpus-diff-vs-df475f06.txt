@@ -1,0 +1,7 @@
+1999 {(False, 'None', 'INVALID_MATH_GOAL'): 57, (False, 'SOURCE_OBJECT_MISMATCH', 'INVALID_MATH_GOAL'): 2, (False, 'UNKNOWN_SOLID_ID', 'INVALID_MATH_GOAL'): 26, (True, 'None', 'INVALID_MATH_GOAL'): 42, (True, 'UNKNOWN_SOLID_ID', 'INVALID_MATH_GOAL'): 14, (True, 'None', 'AMBIGUOUS_REFERENCE'): 1}
+('geometry\\runs\\hybrid-v2-w3-f2-ratio-projection-language-grounding\\closed-input-contract\\cic-d1-contract-recovery\\cases.json', 'None', 'INVALID_MATH_GOAL')
+('geometry\\runs\\hybrid-v2-w3-f2-ratio-projection-language-grounding\\closed-input-contract\\cic-d1-contract-recovery\\pre-freeze-review\\cases_alias.json', 'None', 'INVALID_MATH_GOAL')
+('geometry\\runs\\hybrid-v2-w3-f2-ratio-projection-language-grounding\\closed-input-contract\\cic-d1-contract-recovery\\pre-freeze-review\\cases_extra.json', 'SOURCE_OBJECT_MISMATCH', 'INVALID_MATH_GOAL')
+('geometry\\runs\\hybrid-v2-w3-f2-ratio-projection-language-grounding\\closed-input-contract\\cic-d1-contract-recovery\\pre-freeze-review\\cases_locked16.json', 'None', 'INVALID_MATH_GOAL')
+('geometry\\runs\\hybrid-v2-w3-f2-ratio-projection-language-grounding\\closed-input-contract\\cic-d1-contract-recovery\\pre-freeze-review\\cases_probe.json', 'None', 'INVALID_MATH_GOAL')
+('geometry\\runs\\hybrid-v2-w3-f2-ratio-projection-language-grounding\\closed-input-contract\\cic-d1-contract-recovery\\pre-freeze-review\\cases_probe.json', 'UNKNOWN_SOLID_ID', 'INVALID_MATH_GOAL')

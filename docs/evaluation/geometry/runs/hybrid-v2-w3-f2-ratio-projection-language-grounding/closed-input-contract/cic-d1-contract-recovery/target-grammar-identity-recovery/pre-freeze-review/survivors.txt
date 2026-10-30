@@ -1,0 +1,34 @@
+ghost_repeat             HEAD                         schema=UNKNOWN_SOLID_ID routes={'a3': ('REFUSED', 'UNKNOWN_SOLID_ID', None), 'pl': ('REFUSED', 'UNKNOWN_SOLID_ID', None), 'a4': ('REFUSED', 'UNKNOWN_SOLID_ID')}
+ghost_repeat             M_no_derived_parent_ns       schema=UNKNOWN_SOLID_ID routes={'a3': ('REFUSED', 'UNKNOWN_SOLID_ID', None), 'pl': ('REFUSED', 'UNKNOWN_SOLID_ID', None), 'a4': ('REFUSED', 'UNKNOWN_SOLID_ID')}
+ghost_repeat             M_no_derived_parent_scope    schema=UNKNOWN_SOLID_ID routes={'a3': ('REFUSED', 'UNKNOWN_SOLID_ID', None), 'pl': ('REFUSED', 'UNKNOWN_SOLID_ID', None), 'a4': ('REFUSED', 'UNKNOWN_SOLID_ID')}
+ghost_repeat             M_identity_before_scope      schema=INVALID_MATH_GOAL routes={'a3': ('REFUSED', 'INVALID_MATH_GOAL', None), 'pl': ('REFUSED', 'INVALID_MATH_GOAL', None), 'a4': ('REFUSED', 'INVALID_MATH_GOAL')}
+
+ghost_repeat_rev         HEAD                         schema=UNKNOWN_SOLID_ID routes={'a3': ('REFUSED', 'UNKNOWN_SOLID_ID', None), 'pl': ('REFUSED', 'UNKNOWN_SOLID_ID', None), 'a4': ('REFUSED', 'UNKNOWN_SOLID_ID')}
+ghost_repeat_rev         M_no_derived_parent_ns       schema=UNKNOWN_SOLID_ID routes={'a3': ('REFUSED', 'UNKNOWN_SOLID_ID', None), 'pl': ('REFUSED', 'UNKNOWN_SOLID_ID', None), 'a4': ('REFUSED', 'UNKNOWN_SOLID_ID')}
+ghost_repeat_rev         M_no_derived_parent_scope    schema=UNKNOWN_SOLID_ID routes={'a3': ('REFUSED', 'UNKNOWN_SOLID_ID', None), 'pl': ('REFUSED', 'UNKNOWN_SOLID_ID', None), 'a4': ('REFUSED', 'UNKNOWN_SOLID_ID')}
+ghost_repeat_rev         M_identity_before_scope      schema=INVALID_MATH_GOAL routes={'a3': ('REFUSED', 'INVALID_MATH_GOAL', None), 'pl': ('REFUSED', 'INVALID_MATH_GOAL', None), 'a4': ('REFUSED', 'INVALID_MATH_GOAL')}
+
+foreign_repeat_scoped    HEAD                         schema=SOURCE_OBJECT_MISMATCH routes={'a3': ('REFUSED', 'SOURCE_OBJECT_MISMATCH', None), 'pl': ('REFUSED', 'SOURCE_OBJECT_MISMATCH', None), 'a4': ('REFUSED', 'SOURCE_OBJECT_MISMATCH')}
+foreign_repeat_scoped    M_no_derived_parent_ns       schema=SOURCE_OBJECT_MISMATCH routes={'a3': ('REFUSED', 'SOURCE_OBJECT_MISMATCH', None), 'pl': ('REFUSED', 'SOURCE_OBJECT_MISMATCH', None), 'a4': ('REFUSED', 'SOURCE_OBJECT_MISMATCH')}
+foreign_repeat_scoped    M_no_derived_parent_scope    schema=SOURCE_OBJECT_MISMATCH routes={'a3': ('REFUSED', 'SOURCE_OBJECT_MISMATCH', None), 'pl': ('REFUSED', 'SOURCE_OBJECT_MISMATCH', None), 'a4': ('REFUSED', 'SOURCE_OBJECT_MISMATCH')}
+foreign_repeat_scoped    M_identity_before_scope      schema=INVALID_MATH_GOAL routes={'a3': ('REFUSED', 'INVALID_MATH_GOAL', None), 'pl': ('REFUSED', 'INVALID_MATH_GOAL', None), 'a4': ('REFUSED', 'INVALID_MATH_GOAL')}
+
+der2_pos_scoped_SM       HEAD                         schema=None routes={'a3': ('REFUSED', 'UNKNOWN_LABEL', None), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY', None), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY')}
+der2_pos_scoped_SM       M_no_derived_parent_ns       schema=None routes={'a3': ('REFUSED', 'UNKNOWN_LABEL', None), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY', None), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY')}
+der2_pos_scoped_SM       M_no_derived_parent_scope    schema=AMBIGUOUS_REFERENCE routes={'a3': ('REFUSED', 'AMBIGUOUS_REFERENCE', None), 'pl': ('REFUSED', 'AMBIGUOUS_REFERENCE', None), 'a4': ('REFUSED', 'AMBIGUOUS_REFERENCE')}
+der2_pos_scoped_SM       M_identity_before_scope      schema=None routes={'a3': ('REFUSED', 'UNKNOWN_LABEL', None), 'pl': ('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY', None), 'a4': ('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY')}
+
+der2_pos_qual_SM         HEAD                         schema=None routes={'a3': ('REFUSED', 'AMBIGUOUS_REFERENCE', None), 'pl': ('REFUSED', 'AMBIGUOUS_REFERENCE', None), 'a4': ('REFUSED', 'AMBIGUOUS_REFERENCE')}
+der2_pos_qual_SM         M_no_derived_parent_ns       schema=AMBIGUOUS_REFERENCE routes={'a3': ('REFUSED', 'AMBIGUOUS_REFERENCE', None), 'pl': ('REFUSED', 'AMBIGUOUS_REFERENCE', None), 'a4': ('REFUSED', 'AMBIGUOUS_REFERENCE')}
+der2_pos_qual_SM         M_no_derived_parent_scope    schema=None routes={'a3': ('REFUSED', 'AMBIGUOUS_REFERENCE', None), 'pl': ('REFUSED', 'AMBIGUOUS_REFERENCE', None), 'a4': ('REFUSED', 'AMBIGUOUS_REFERENCE')}
+der2_pos_qual_SM         M_identity_before_scope      schema=None routes={'a3': ('REFUSED', 'AMBIGUOUS_REFERENCE', None), 'pl': ('REFUSED', 'AMBIGUOUS_REFERENCE', None), 'a4': ('REFUSED', 'AMBIGUOUS_REFERENCE')}
+
+der2_neg_qual_alias      HEAD                         schema=INVALID_MATH_GOAL routes={'a3': ('REFUSED', 'INVALID_MATH_GOAL', None), 'pl': ('REFUSED', 'INVALID_MATH_GOAL', None), 'a4': ('REFUSED', 'INVALID_MATH_GOAL')}
+der2_neg_qual_alias      M_no_derived_parent_ns       schema=AMBIGUOUS_REFERENCE routes={'a3': ('REFUSED', 'AMBIGUOUS_REFERENCE', None), 'pl': ('REFUSED', 'AMBIGUOUS_REFERENCE', None), 'a4': ('REFUSED', 'AMBIGUOUS_REFERENCE')}
+der2_neg_qual_alias      M_no_derived_parent_scope    schema=INVALID_MATH_GOAL routes={'a3': ('REFUSED', 'INVALID_MATH_GOAL', None), 'pl': ('REFUSED', 'INVALID_MATH_GOAL', None), 'a4': ('REFUSED', 'INVALID_MATH_GOAL')}
+der2_neg_qual_alias      M_identity_before_scope      schema=INVALID_MATH_GOAL routes={'a3': ('REFUSED', 'INVALID_MATH_GOAL', None), 'pl': ('REFUSED', 'INVALID_MATH_GOAL', None), 'a4': ('REFUSED', 'INVALID_MATH_GOAL')}
+
+der2_neg_scoped_alias    HEAD                         schema=INVALID_MATH_GOAL routes={'a3': ('REFUSED', 'INVALID_MATH_GOAL', None), 'pl': ('REFUSED', 'INVALID_MATH_GOAL', None), 'a4': ('REFUSED', 'INVALID_MATH_GOAL')}
+der2_neg_scoped_alias    M_no_derived_parent_ns       schema=INVALID_MATH_GOAL routes={'a3': ('REFUSED', 'INVALID_MATH_GOAL', None), 'pl': ('REFUSED', 'INVALID_MATH_GOAL', None), 'a4': ('REFUSED', 'INVALID_MATH_GOAL')}
+der2_neg_scoped_alias    M_no_derived_parent_scope    schema=AMBIGUOUS_REFERENCE routes={'a3': ('REFUSED', 'AMBIGUOUS_REFERENCE', None), 'pl': ('REFUSED', 'AMBIGUOUS_REFERENCE', None), 'a4': ('REFUSED', 'AMBIGUOUS_REFERENCE')}
+der2_neg_scoped_alias    M_identity_before_scope      schema=INVALID_MATH_GOAL routes={'a3': ('REFUSED', 'INVALID_MATH_GOAL', None), 'pl': ('REFUSED', 'INVALID_MATH_GOAL', None), 'a4': ('REFUSED', 'INVALID_MATH_GOAL')}

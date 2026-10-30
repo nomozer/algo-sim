@@ -11,6 +11,7 @@
   "F2": "CLOSED_TARGETED_GREEN",
   "technical_compatibility": "PRE_FREEZE_COMPATIBILITY_PASS (gate-d.json, clean detached 5c4b743f; 11 failures all PENDING_NEW_FREEZE, baseline-matched)",
   "F7": "UNRESOLVED (prism-f7-*.json, reproduced on main, pre-CIC and HEAD)",
-  "independent_review": "PENDING",
+  "independent_review": "READY_FOR_GATE (0 BLOCKER, 0 MAJOR, 3 MINOR fail-closed, 5 NOTE; pre-freeze-review.md)",
+  "freeze_t3": "NOT_RUN (publication blocked)",
   "live_provider_calls": 0
 }

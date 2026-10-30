@@ -1,0 +1,487 @@
+F1.pr.distance.point_line_plane            head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.point_line_plane            main s1=None s2=None | a3 S:=12 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.point_line_plane            pre  s1=None s2=None | a3 S:=12 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F1.pr.distance.point_line_plane.gsid       head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.point_line_plane.gsid       main s1=None s2=None | a3 S:=12 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.point_line_plane.gsid       pre  s1=None s2=None | a3 S:=12 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F1.pr.distance.segment_line1_line2         head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.segment_line1_line2         main s1=None s2=None | a3 S:=6 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.segment_line1_line2         pre  s1=None s2=None | a3 S:=6 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F1.pr.distance.segment_line1_line2.gsid    head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.segment_line1_line2.gsid    main s1=None s2=None | a3 S:=6 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.segment_line1_line2.gsid    pre  s1=None s2=None | a3 S:=6 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F1.pr.distance.plane_plane1_plane2         head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.plane_plane1_plane2         main s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.plane_plane1_plane2         pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F1.pr.distance.plane_plane1_plane2.gsid    head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.plane_plane1_plane2.gsid    main s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.plane_plane1_plane2.gsid    pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F1.pr.distance.point_plane1                head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.point_plane1                main s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.point_plane1                pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F1.pr.distance.point_plane1.gsid           head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.point_plane1.gsid           main s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.point_plane1.gsid           pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F1.pr.distance.line_line1                  head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.line_line1                  main s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.line_line1                  pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F1.pr.distance.line_line1.gsid             head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.line_line1.gsid             main s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.line_line1.gsid             pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F1.pr.distance.polygon                     head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.polygon                     main s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.polygon                     pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F1.pr.distance.polygon.gsid                head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.polygon.gsid                main s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.polygon.gsid                pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F1.pr.distance.point_only                  head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.point_only                  main s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.point_only                  pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F1.pr.distance.point_only.gsid             head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.point_only.gsid             main s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F1.pr.distance.point_only.gsid             pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F1.pr.angle.point_line                     head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.angle.point_line                     main s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F1.pr.angle.point_line                     pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F1.pr.angle.point_line.gsid                head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.angle.point_line.gsid                main s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F1.pr.angle.point_line.gsid                pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F1.pr.angle.line_plane_point               head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.angle.line_plane_point               main s1=None s2=None | a3 S:=1/5 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F1.pr.angle.line_plane_point               pre  s1=None s2=None | a3 S:=1/5 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F1.pr.angle.line_plane_point.gsid          head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.angle.line_plane_point.gsid          main s1=None s2=None | a3 S:=1/5 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F1.pr.angle.line_plane_point.gsid          pre  s1=None s2=None | a3 S:=1/5 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F1.pr.angle.polygon                        head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.angle.polygon                        main s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F1.pr.angle.polygon                        pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F1.pr.angle.polygon.gsid                   head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.angle.polygon.gsid                   main s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F1.pr.angle.polygon.gsid                   pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F1.pr.area.segment                         head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.area.segment                         main s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+F1.pr.area.segment                         pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+
+F1.pr.area.segment.gsid                    head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.area.segment.gsid                    main s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+F1.pr.area.segment.gsid                    pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+
+F1.pr.area.polygon_point                   head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.area.polygon_point                   main s1=None s2=None | a3 S:=24 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+F1.pr.area.polygon_point                   pre  s1=None s2=None | a3 S:=24 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+
+F1.pr.area.polygon_point.gsid              head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.area.polygon_point.gsid              main s1=None s2=None | a3 S:=24 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+F1.pr.area.polygon_point.gsid              pre  s1=None s2=None | a3 S:=24 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+
+F1.pr.volume.polygon                       head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.volume.polygon                       main s1=None s2=None | a3 R:UNKNOWN_SOLID_ID | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+F1.pr.volume.polygon                       pre  s1=None s2=None | a3 R:UNKNOWN_SOLID_ID | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+
+F1.pr.volume.polygon.gsid                  head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.volume.polygon.gsid                  main s1=None s2=None | a3 R:SOURCE_OBJECT_MISMATCH | pl R:SOURCE_OBJECT_MISMATCH | a4 R:SOURCE_OBJECT_MISMATCH
+F1.pr.volume.polygon.gsid                  pre  s1=None s2=None | a3 R:SOURCE_OBJECT_MISMATCH | pl R:SOURCE_OBJECT_MISMATCH | a4 R:SOURCE_OBJECT_MISMATCH
+
+F1.pr.volume.solid_polygon                 head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.volume.solid_polygon                 main s1=None s2=None | a3 R:SOURCE_OBJECT_MISMATCH | pl R:SOURCE_OBJECT_MISMATCH | a4 R:SOURCE_OBJECT_MISMATCH
+F1.pr.volume.solid_polygon                 pre  s1=None s2=None | a3 R:SOURCE_OBJECT_MISMATCH | pl R:SOURCE_OBJECT_MISMATCH | a4 R:SOURCE_OBJECT_MISMATCH
+
+F1.pr.volume.solid_polygon.gsid            head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.volume.solid_polygon.gsid            main s1=None s2=None | a3 R:SOURCE_OBJECT_MISMATCH | pl R:SOURCE_OBJECT_MISMATCH | a4 R:SOURCE_OBJECT_MISMATCH
+F1.pr.volume.solid_polygon.gsid            pre  s1=None s2=None | a3 R:SOURCE_OBJECT_MISMATCH | pl R:SOURCE_OBJECT_MISMATCH | a4 R:SOURCE_OBJECT_MISMATCH
+
+F1.pr.lateral_area.polygon                 head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.lateral_area.polygon                 main s1=None s2=None | a3 R:ADAPTER_INTERNAL_ERROR | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+F1.pr.lateral_area.polygon                 pre  s1=None s2=None | a3 R:ADAPTER_INTERNAL_ERROR | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+
+F1.pr.lateral_area.polygon.gsid            head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.lateral_area.polygon.gsid            main s1=None s2=None | a3 R:ADAPTER_INTERNAL_ERROR | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+F1.pr.lateral_area.polygon.gsid            pre  s1=None s2=None | a3 R:ADAPTER_INTERNAL_ERROR | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+
+F1.pr.radius.polygon                       head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.radius.polygon                       main s1=None s2=None | a3 R:ADAPTER_INTERNAL_ERROR | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+F1.pr.radius.polygon                       pre  s1=None s2=None | a3 R:ADAPTER_INTERNAL_ERROR | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+
+F1.pr.radius.polygon.gsid                  head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.radius.polygon.gsid                  main s1=None s2=None | a3 R:ADAPTER_INTERNAL_ERROR | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+F1.pr.radius.polygon.gsid                  pre  s1=None s2=None | a3 R:ADAPTER_INTERNAL_ERROR | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+
+F1.pr.key.Solid_case                       head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.key.Solid_case                       main s1=None s2=None | a3 R:UNKNOWN_SOLID_ID | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+F1.pr.key.Solid_case                       pre  s1=None s2=None | a3 R:UNKNOWN_SOLID_ID | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+
+F1.pr.key.Solid_case.gsid                  head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.key.Solid_case.gsid                  main s1=None s2=None | a3 R:SOURCE_OBJECT_MISMATCH | pl R:SOURCE_OBJECT_MISMATCH | a4 R:SOURCE_OBJECT_MISMATCH
+F1.pr.key.Solid_case.gsid                  pre  s1=None s2=None | a3 R:SOURCE_OBJECT_MISMATCH | pl R:SOURCE_OBJECT_MISMATCH | a4 R:SOURCE_OBJECT_MISMATCH
+
+F1.pr.key.solid_space                      head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.key.solid_space                      main s1=None s2=None | a3 R:UNKNOWN_SOLID_ID | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+F1.pr.key.solid_space                      pre  s1=None s2=None | a3 R:UNKNOWN_SOLID_ID | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+
+F1.pr.key.solid_space.gsid                 head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.key.solid_space.gsid                 main s1=None s2=None | a3 R:SOURCE_OBJECT_MISMATCH | pl R:SOURCE_OBJECT_MISMATCH | a4 R:SOURCE_OBJECT_MISMATCH
+F1.pr.key.solid_space.gsid                 pre  s1=None s2=None | a3 R:SOURCE_OBJECT_MISMATCH | pl R:SOURCE_OBJECT_MISMATCH | a4 R:SOURCE_OBJECT_MISMATCH
+
+F1.pr.key.section                          head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.key.section                          main s1=None s2=None | a3 R:UNKNOWN_SOLID_ID | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+F1.pr.key.section                          pre  s1=None s2=None | a3 R:UNKNOWN_SOLID_ID | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:BRIDGE_UNSUPPORTED_MEASUREMENT
+
+F1.pr.key.section.gsid                     head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.pr.key.section.gsid                     main s1=None s2=None | a3 R:SOURCE_OBJECT_MISMATCH | pl R:SOURCE_OBJECT_MISMATCH | a4 R:SOURCE_OBJECT_MISMATCH
+F1.pr.key.section.gsid                     pre  s1=None s2=None | a3 R:SOURCE_OBJECT_MISMATCH | pl R:SOURCE_OBJECT_MISMATCH | a4 R:SOURCE_OBJECT_MISMATCH
+
+F1.cyl.radius.solid_id.gsid                head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.cyl.radius.solid_id.gsid                main s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.cyl.radius.solid_id.gsid                pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.cyl.radius.solid+solid_id.gsid          head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.cyl.radius.solid+solid_id.gsid          main s1=None s2=None | a3 S:=2 | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.cyl.radius.solid+solid_id.gsid          pre  s1=None s2=None | a3 S:=2 | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.cyl.lateral_area.solid_id.gsid          head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.cyl.lateral_area.solid_id.gsid          main s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.cyl.lateral_area.solid_id.gsid          pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.cyl.lateral_area.solid+solid_id.gsid    head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.cyl.lateral_area.solid+solid_id.gsid    main s1=None s2=None | a3 S:=12π | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.cyl.lateral_area.solid+solid_id.gsid    pre  s1=None s2=None | a3 S:=12π | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.cyl.area.solid_id.gsid                  head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.cyl.area.solid_id.gsid                  main s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.cyl.area.solid_id.gsid                  pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.cyl.area.solid+solid_id.gsid            head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.cyl.area.solid+solid_id.gsid            main s1=None s2=None | a3 R:GEOMETRY_OPERAND_TYPE | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.cyl.area.solid+solid_id.gsid            pre  s1=None s2=None | a3 R:GEOMETRY_OPERAND_TYPE | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.cyl.volume.solid+solid_id.gsid          head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.cyl.volume.solid+solid_id.gsid          main s1=None s2=None | a3 S:=12π | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.cyl.volume.solid+solid_id.gsid          pre  s1=None s2=None | a3 S:=12π | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+CTRL.cyl.volume.solid_id                   head s1=None s2=None | a3 S:=12π | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+CTRL.cyl.volume.solid_id                   main s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+CTRL.cyl.volume.solid_id                   pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+CTRL.cyl.volume.solid_id.gsid              head s1=None s2=None | a3 S:=12π | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+CTRL.cyl.volume.solid_id.gsid              main s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+CTRL.cyl.volume.solid_id.gsid              pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+CTRL.cyl.radius.solid                      head s1=None s2=None | a3 S:=2 | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+CTRL.cyl.radius.solid                      main s1=None s2=None | a3 S:=2 | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+CTRL.cyl.radius.solid                      pre  s1=None s2=None | a3 S:=2 | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.cone.radius.solid_id.gsid               head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.cone.radius.solid_id.gsid               main s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.cone.radius.solid_id.gsid               pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.cone.radius.solid+solid_id.gsid         head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.cone.radius.solid+solid_id.gsid         main s1=None s2=None | a3 S:=3 | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.cone.radius.solid+solid_id.gsid         pre  s1=None s2=None | a3 S:=3 | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.cone.lateral_area.solid_id.gsid         head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.cone.lateral_area.solid_id.gsid         main s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.cone.lateral_area.solid_id.gsid         pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.cone.lateral_area.solid+solid_id.gsid   head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.cone.lateral_area.solid+solid_id.gsid   main s1=None s2=None | a3 S:=15π | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.cone.lateral_area.solid+solid_id.gsid   pre  s1=None s2=None | a3 S:=15π | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.cone.area.solid_id.gsid                 head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.cone.area.solid_id.gsid                 main s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.cone.area.solid_id.gsid                 pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.cone.area.solid+solid_id.gsid           head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.cone.area.solid+solid_id.gsid           main s1=None s2=None | a3 R:GEOMETRY_OPERAND_TYPE | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.cone.area.solid+solid_id.gsid           pre  s1=None s2=None | a3 R:GEOMETRY_OPERAND_TYPE | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.cone.volume.solid+solid_id.gsid         head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.cone.volume.solid+solid_id.gsid         main s1=None s2=None | a3 S:=12π | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.cone.volume.solid+solid_id.gsid         pre  s1=None s2=None | a3 S:=12π | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+CTRL.cone.volume.solid_id                  head s1=None s2=None | a3 S:=12π | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+CTRL.cone.volume.solid_id                  main s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+CTRL.cone.volume.solid_id                  pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+CTRL.cone.volume.solid_id.gsid             head s1=None s2=None | a3 S:=12π | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+CTRL.cone.volume.solid_id.gsid             main s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+CTRL.cone.volume.solid_id.gsid             pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+CTRL.cone.radius.solid                     head s1=None s2=None | a3 S:=3 | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+CTRL.cone.radius.solid                     main s1=None s2=None | a3 S:=3 | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+CTRL.cone.radius.solid                     pre  s1=None s2=None | a3 S:=3 | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.sph.radius.solid_id.gsid                head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.sph.radius.solid_id.gsid                main s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.sph.radius.solid_id.gsid                pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.sph.radius.solid+solid_id.gsid          head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.sph.radius.solid+solid_id.gsid          main s1=None s2=None | a3 S:=5 | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.sph.radius.solid+solid_id.gsid          pre  s1=None s2=None | a3 S:=5 | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.sph.lateral_area.solid_id.gsid          head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.sph.lateral_area.solid_id.gsid          main s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.sph.lateral_area.solid_id.gsid          pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.sph.lateral_area.solid+solid_id.gsid    head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.sph.lateral_area.solid+solid_id.gsid    main s1=None s2=None | a3 S:=100π | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.sph.lateral_area.solid+solid_id.gsid    pre  s1=None s2=None | a3 S:=100π | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.sph.area.solid_id.gsid                  head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.sph.area.solid_id.gsid                  main s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.sph.area.solid_id.gsid                  pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.sph.area.solid+solid_id.gsid            head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.sph.area.solid+solid_id.gsid            main s1=None s2=None | a3 R:GEOMETRY_OPERAND_TYPE | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.sph.area.solid+solid_id.gsid            pre  s1=None s2=None | a3 R:GEOMETRY_OPERAND_TYPE | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.sph.volume.solid+solid_id.gsid          head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.sph.volume.solid+solid_id.gsid          main s1=None s2=None | a3 S:=500π/3 | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.sph.volume.solid+solid_id.gsid          pre  s1=None s2=None | a3 S:=500π/3 | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+CTRL.sph.volume.solid_id                   head s1=None s2=None | a3 S:=500π/3 | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+CTRL.sph.volume.solid_id                   main s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+CTRL.sph.volume.solid_id                   pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+CTRL.sph.volume.solid_id.gsid              head s1=None s2=None | a3 S:=500π/3 | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+CTRL.sph.volume.solid_id.gsid              main s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+CTRL.sph.volume.solid_id.gsid              pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+CTRL.sph.radius.solid                      head s1=None s2=None | a3 S:=5 | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+CTRL.sph.radius.solid                      main s1=None s2=None | a3 S:=5 | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+CTRL.sph.radius.solid                      pre  s1=None s2=None | a3 S:=5 | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.cyl.distance.solid_id                   head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.cyl.distance.solid_id                   main s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.cyl.distance.solid_id                   pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F1.cyl.radius.section_id+solid             head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F1.cyl.radius.section_id+solid             main s1=None s2=None | a3 S:=2 | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F1.cyl.radius.section_id+solid             pre  s1=None s2=None | a3 S:=2 | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F2.ws.tab                                  head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.ws.tab                                  main s1=None s2=None | a3 S:=0 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F2.ws.tab                                  pre  s1=None s2=None | a3 S:=0 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F2.ws.nbsp                                 head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.ws.nbsp                                 main s1=None s2=None | a3 S:=0 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F2.ws.nbsp                                 pre  s1=None s2=None | a3 S:=0 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F2.ws.newline_q                            head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.ws.newline_q                            main s1=None s2=None | a3 S:=0 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F2.ws.newline_q                            pre  s1=None s2=None | a3 S:=0 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F2.ws.both_qualified                       head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.ws.both_qualified                       main s1=None s2=None | a3 S:=0 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F2.ws.both_qualified                       pre  s1=None s2=None | a3 S:=0 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F2.ws.em_space                             head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.ws.em_space                             main s1=None s2=None | a3 S:=0 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+F2.ws.em_space                             pre  s1=None s2=None | a3 S:=0 | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:INVALID_MATH_GOAL
+
+F2.bind.scoped_canonical                   head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.bind.scoped_canonical                   main s1=None s2=None | a3 R:UNKNOWN_LABEL | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.bind.scoped_canonical                   pre  s1=None s2=None | a3 R:SOURCE_OBJECT_MISMATCH | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.bind.scoped_canonical_rev               head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.bind.scoped_canonical_rev               main s1=None s2=None | a3 R:UNKNOWN_LABEL | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.bind.scoped_canonical_rev               pre  s1=None s2=None | a3 R:SOURCE_OBJECT_MISMATCH | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.bind.plane4                             head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.bind.plane4                             main s1=None s2=None | a3 R:UNKNOWN_LABEL | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.bind.plane4                             pre  s1=None s2=None | a3 R:UNKNOWN_LABEL | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.bind.polygon4                           head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.bind.polygon4                           main s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.bind.polygon4                           pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.bind.line1                              head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.bind.line1                              main s1=None s2=None | a3 R:UNKNOWN_LABEL | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.bind.line1                              pre  s1=None s2=None | a3 R:UNKNOWN_LABEL | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.bind.distinct_ctrl                      head s1=None s2=None | a3 R:UNKNOWN_LABEL | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.bind.distinct_ctrl                      main s1=None s2=None | a3 R:UNKNOWN_LABEL | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.bind.distinct_ctrl                      pre  s1=None s2=None | a3 R:UNKNOWN_LABEL | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.bind.distinct_ctrl_scoped               head s1=None s2=None | a3 S:=6 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.bind.distinct_ctrl_scoped               main s1=None s2=None | a3 S:=6 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.bind.distinct_ctrl_scoped               pre  s1=None s2=None | a3 S:=6 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.ns.upper                                head s1=UNKNOWN_SOLID_ID s2=UNKNOWN_SOLID_ID | a3 R:UNKNOWN_SOLID_ID | pl R:UNKNOWN_SOLID_ID | a4 R:UNKNOWN_SOLID_ID
+F2.ns.upper                                main s1=None s2=None | a3 R:UNKNOWN_SOLID_ID | pl R:UNKNOWN_SOLID_ID | a4 R:UNKNOWN_SOLID_ID
+F2.ns.upper                                pre  s1=UNKNOWN_SOLID_ID s2=UNKNOWN_SOLID_ID | a3 R:UNKNOWN_SOLID_ID | pl R:UNKNOWN_SOLID_ID | a4 R:UNKNOWN_SOLID_ID
+
+F2.der.qual_parent_vs_unq                  head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.der.qual_parent_vs_unq                  main s1=None s2=None | a3 S:=0a^1 | pl R:UNKNOWN_VERTEX_REF | a4 R:UNKNOWN_VERTEX_REF
+F2.der.qual_parent_vs_unq                  pre  s1=None s2=None | a3 R:UNKNOWN_SOLID_ID | pl R:BRIDGE_UNSUPPORTED_RELATION | a4 R:BRIDGE_UNSUPPORTED_RELATION
+
+F2.der.qual_parent_vs_qual_der             head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.der.qual_parent_vs_qual_der             main s1=None s2=None | a3 R:UNKNOWN_SOLID_ID | pl R:UNKNOWN_VERTEX_REF | a4 R:UNKNOWN_VERTEX_REF
+F2.der.qual_parent_vs_qual_der             pre  s1=None s2=None | a3 R:UNKNOWN_SOLID_ID | pl R:UNKNOWN_SOLID_ID | a4 R:UNKNOWN_SOLID_ID
+
+F2.der.qual_both_der_M                     head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.der.qual_both_der_M                     main s1=None s2=None | a3 R:UNKNOWN_SOLID_ID | pl R:UNKNOWN_VERTEX_REF | a4 R:UNKNOWN_VERTEX_REF
+F2.der.qual_both_der_M                     pre  s1=None s2=None | a3 R:UNKNOWN_SOLID_ID | pl R:UNKNOWN_SOLID_ID | a4 R:UNKNOWN_SOLID_ID
+
+F2.der.unscoped_S_vs_der                   head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.der.unscoped_S_vs_der                   main s1=None s2=None | a3 R:UNKNOWN_SOLID_ID | pl R:UNKNOWN_VERTEX_REF | a4 R:UNKNOWN_VERTEX_REF
+F2.der.unscoped_S_vs_der                   pre  s1=None s2=None | a3 R:UNKNOWN_SOLID_ID | pl R:UNKNOWN_SOLID_ID | a4 R:UNKNOWN_SOLID_ID
+
+F2.der.plane_alias                         head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.der.plane_alias                         main s1=None s2=None | a3 R:ENGINE_EXECUTION_FAILED | pl R:UNKNOWN_VERTEX_REF | a4 R:UNKNOWN_VERTEX_REF
+F2.der.plane_alias                         pre  s1=None s2=None | a3 R:UNKNOWN_SOLID_ID | pl R:BRIDGE_UNSUPPORTED_RELATION | a4 R:BRIDGE_UNSUPPORTED_RELATION
+
+F2.der.ctrl_SB_main                        head s1=None s2=None | a3 S:=√5a^1 | pl R:BRIDGE_UNSUPPORTED_RELATION | a4 R:BRIDGE_UNSUPPORTED_RELATION
+F2.der.ctrl_SB_main                        main s1=None s2=None | a3 S:=√5a^1 | pl R:UNKNOWN_VERTEX_REF | a4 R:UNKNOWN_VERTEX_REF
+F2.der.ctrl_SB_main                        pre  s1=None s2=None | a3 S:=√5a^1 | pl R:BRIDGE_UNSUPPORTED_RELATION | a4 R:BRIDGE_UNSUPPORTED_RELATION
+
+F2.der.ctrl_SM_top                         head s1=None s2=None | a3 S:=1a^1 | pl R:BRIDGE_UNSUPPORTED_RELATION | a4 R:BRIDGE_UNSUPPORTED_RELATION
+F2.der.ctrl_SM_top                         main s1=None s2=None | a3 S:=1a^1 | pl R:UNKNOWN_VERTEX_REF | a4 R:UNKNOWN_VERTEX_REF
+F2.der.ctrl_SM_top                         pre  s1=None s2=None | a3 R:UNKNOWN_SOLID_ID | pl R:BRIDGE_UNSUPPORTED_RELATION | a4 R:BRIDGE_UNSUPPORTED_RELATION
+
+F2.pyr.D1_vs_pyr2D                         head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.pyr.D1_vs_pyr2D                         main s1=None s2=None | a3 R:UNKNOWN_LABEL | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.pyr.D1_vs_pyr2D                         pre  s1=None s2=None | a3 R:UNKNOWN_LABEL | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.pyr.D_unscoped_vs_pyr2D                 head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.pyr.D_unscoped_vs_pyr2D                 main s1=None s2=None | a3 R:AMBIGUOUS_REFERENCE | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.pyr.D_unscoped_vs_pyr2D                 pre  s1=None s2=None | a3 R:AMBIGUOUS_REFERENCE | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.pyr.pyr1D_vs_pyr2D                      head s1=None s2=None | a3 S:=0a^1 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.pyr.pyr1D_vs_pyr2D                      main s1=None s2=None | a3 S:=0a^1 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.pyr.pyr1D_vs_pyr2D                      pre  s1=None s2=None | a3 S:=0a^1 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.pyr.D_unscoped_vs_pyr1D                 head s1=None s2=None | a3 R:AMBIGUOUS_REFERENCE | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.pyr.D_unscoped_vs_pyr1D                 main s1=None s2=None | a3 R:AMBIGUOUS_REFERENCE | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.pyr.D_unscoped_vs_pyr1D                 pre  s1=None s2=None | a3 R:AMBIGUOUS_REFERENCE | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.pyr.D_unscoped_vs_S                     head s1=None s2=None | a3 R:AMBIGUOUS_REFERENCE | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.pyr.D_unscoped_vs_S                     main s1=None s2=None | a3 R:AMBIGUOUS_REFERENCE | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.pyr.D_unscoped_vs_S                     pre  s1=None s2=None | a3 R:AMBIGUOUS_REFERENCE | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.pyr.pyr1D_vs_S                          head s1=None s2=None | a3 S:=1a^1 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.pyr.pyr1D_vs_S                          main s1=None s2=None | a3 S:=1a^1 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.pyr.pyr1D_vs_S                          pre  s1=None s2=None | a3 S:=1a^1 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.pyr.scoped1_D_vs_S                      head s1=None s2=None | a3 S:=1a^1 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.pyr.scoped1_D_vs_S                      main s1=None s2=None | a3 S:=1a^1 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.pyr.scoped1_D_vs_S                      pre  s1=None s2=None | a3 S:=1a^1 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.pyr.scoped2_D_vs_A                      head s1=None s2=None | a3 S:=1a^1 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.pyr.scoped2_D_vs_A                      main s1=None s2=None | a3 S:=1a^1 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.pyr.scoped2_D_vs_A                      pre  s1=None s2=None | a3 S:=1a^1 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.pyr.scoped2_D_vs_D1                     head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.pyr.scoped2_D_vs_D1                     main s1=None s2=None | a3 R:UNKNOWN_LABEL | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.pyr.scoped2_D_vs_D1                     pre  s1=None s2=None | a3 R:SOURCE_OBJECT_MISMATCH | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.pyr.shared_A                            head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.pyr.shared_A                            main s1=None s2=None | a3 S:=0a^1 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.pyr.shared_A                            pre  s1=None s2=None | a3 S:=0a^1 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.pyr.shared_B_C                          head s1=None s2=None | a3 S:=√2a^1 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.pyr.shared_B_C                          main s1=None s2=None | a3 S:=√2a^1 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.pyr.shared_B_C                          pre  s1=None s2=None | a3 S:=√2a^1 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.pyr.M_vs_pyr1M                          head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.pyr.M_vs_pyr1M                          main s1=None s2=None | a3 S:=0a^1 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.pyr.M_vs_pyr1M                          pre  s1=None s2=None | a3 S:=0a^1 | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.pyr.S_vs_D1                             head s1=None s2=None | a3 R:UNKNOWN_LABEL | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.pyr.S_vs_D1                             main s1=None s2=None | a3 R:UNKNOWN_LABEL | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.pyr.S_vs_D1                             pre  s1=None s2=None | a3 R:UNKNOWN_LABEL | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.cyl.center_alias                        head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.cyl.center_alias                        main s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F2.cyl.center_alias                        pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F2.cyl.center_ctrl                         head s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F2.cyl.center_ctrl                         main s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F2.cyl.center_ctrl                         pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F2.cyl.rim_ctrl                            head s1=None s2=None | a3 R:ENGINE_IR_INVALID | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F2.cyl.rim_ctrl                            main s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F2.cyl.rim_ctrl                            pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F2.cone.apex_alias                         head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.cone.apex_alias                         main s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F2.cone.apex_alias                         pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F2.cone.apex_ctrl                          head s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F2.cone.apex_ctrl                          main s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+F2.cone.apex_ctrl                          pre  s1=None s2=None | a3 R:INVALID_MATH_GOAL_TARGET | pl R:BRIDGE_UNSUPPORTED_CURVED | a4 R:BRIDGE_UNSUPPORTED_CURVED
+
+F2.two.pr_vs_other_B                       head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.two.pr_vs_other_B                       main s1=None s2=None | a3 R:AMBIGUOUS_REFERENCE | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.two.pr_vs_other_B                       pre  s1=None s2=None | a3 R:AMBIGUOUS_REFERENCE | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.two.X_vs_otherA                         head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.two.X_vs_otherA                         main s1=None s2=None | a3 R:AMBIGUOUS_REFERENCE | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.two.X_vs_otherA                         pre  s1=None s2=None | a3 R:AMBIGUOUS_REFERENCE | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.two.point_ambiguous                     head s1=None s2=None | a3 R:AMBIGUOUS_REFERENCE | pl R:AMBIGUOUS_REFERENCE | a4 R:AMBIGUOUS_REFERENCE
+F2.two.point_ambiguous                     main s1=None s2=None | a3 R:AMBIGUOUS_REFERENCE | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.two.point_ambiguous                     pre  s1=None s2=None | a3 R:AMBIGUOUS_REFERENCE | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.two.point_ambiguous_seg_ok              head s1=None s2=None | a3 R:AMBIGUOUS_REFERENCE | pl R:AMBIGUOUS_REFERENCE | a4 R:AMBIGUOUS_REFERENCE
+F2.two.point_ambiguous_seg_ok              main s1=None s2=None | a3 R:AMBIGUOUS_REFERENCE | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.two.point_ambiguous_seg_ok              pre  s1=None s2=None | a3 R:AMBIGUOUS_REFERENCE | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.noninj.scoped_AB                        head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.noninj.scoped_AB                        main s1=None s2=None | a3 R:INVALID_VERTEX_BINDING | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.noninj.scoped_AB                        pre  s1=None s2=None | a3 R:INVALID_VERTEX_BINDING | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.noninj.unscoped_AC                      head s1=None s2=None | a3 R:INVALID_VERTEX_BINDING | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.noninj.unscoped_AC                      main s1=None s2=None | a3 R:INVALID_VERTEX_BINDING | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.noninj.unscoped_AC                      pre  s1=None s2=None | a3 R:INVALID_VERTEX_BINDING | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.noninj.unscoped_BC                      head s1=None s2=None | a3 R:INVALID_VERTEX_BINDING | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.noninj.unscoped_BC                      main s1=None s2=None | a3 R:INVALID_VERTEX_BINDING | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.noninj.unscoped_BC                      pre  s1=None s2=None | a3 R:INVALID_VERTEX_BINDING | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.sv.S_vs_pyr2D                           head s1=None s2=None | a3 R:SHARED_ENTITY_MISMATCH | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.sv.S_vs_pyr2D                           main s1=None s2=None | a3 R:SHARED_ENTITY_MISMATCH | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.sv.S_vs_pyr2D                           pre  s1=None s2=None | a3 R:SHARED_ENTITY_MISMATCH | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.cb.D1_vs_pyr2D                          head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.cb.D1_vs_pyr2D                          main s1=None s2=None | a3 R:INCONSISTENT_FACTS | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.cb.D1_vs_pyr2D                          pre  s1=None s2=None | a3 R:INCONSISTENT_FACTS | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.cb.pyr1D1_vs_pyr2D                      head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.cb.pyr1D1_vs_pyr2D                      main s1=None s2=None | a3 R:INCONSISTENT_FACTS | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.cb.pyr1D1_vs_pyr2D                      pre  s1=None s2=None | a3 R:INCONSISTENT_FACTS | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.cb.D1_vs_S_scoped1                      head s1=None s2=None | a3 R:INCONSISTENT_FACTS | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.cb.D1_vs_S_scoped1                      main s1=None s2=None | a3 R:INCONSISTENT_FACTS | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.cb.D1_vs_S_scoped1                      pre  s1=None s2=None | a3 R:INCONSISTENT_FACTS | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.cx.X_vs_prA                             head s1=INVALID_MATH_GOAL s2=INVALID_MATH_GOAL | a3 R:INVALID_MATH_GOAL | pl R:INVALID_MATH_GOAL | a4 R:INVALID_MATH_GOAL
+F2.cx.X_vs_prA                             main s1=None s2=None | a3 R:INCONSISTENT_FACTS | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.cx.X_vs_prA                             pre  s1=None s2=None | a3 R:INCONSISTENT_FACTS | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+F2.cx.X_vs_B                               head s1=None s2=None | a3 R:INCONSISTENT_FACTS | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.cx.X_vs_B                               main s1=None s2=None | a3 R:INCONSISTENT_FACTS | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+F2.cx.X_vs_B                               pre  s1=None s2=None | a3 R:INCONSISTENT_FACTS | pl R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY | a4 R:BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+
+OBS.premise_dup_segment                    head s1=None s2=None | a3 R:INCONSISTENT_FACTS | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:REQUEST_NOT_ANSWERED
+OBS.premise_dup_segment                    main s1=None s2=None | a3 R:INCONSISTENT_FACTS | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:REQUEST_NOT_ANSWERED
+OBS.premise_dup_segment                    pre  s1=None s2=None | a3 R:INCONSISTENT_FACTS | pl R:BRIDGE_UNSUPPORTED_MEASUREMENT | a4 R:REQUEST_NOT_ANSWERED

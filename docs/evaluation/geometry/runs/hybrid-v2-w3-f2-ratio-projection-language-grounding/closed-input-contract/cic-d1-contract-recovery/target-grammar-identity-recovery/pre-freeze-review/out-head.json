@@ -1,0 +1,2839 @@
+{
+ "F1.pr.distance.point_line_plane": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  }
+ },
+ "F1.pr.distance.point_line_plane.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  }
+ },
+ "F1.pr.distance.segment_line1_line2": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  }
+ },
+ "F1.pr.distance.segment_line1_line2.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  }
+ },
+ "F1.pr.distance.plane_plane1_plane2": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  }
+ },
+ "F1.pr.distance.plane_plane1_plane2.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  }
+ },
+ "F1.pr.distance.point_plane1": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  }
+ },
+ "F1.pr.distance.point_plane1.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  }
+ },
+ "F1.pr.distance.line_line1": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  }
+ },
+ "F1.pr.distance.line_line1.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  }
+ },
+ "F1.pr.distance.polygon": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  }
+ },
+ "F1.pr.distance.polygon.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  }
+ },
+ "F1.pr.distance.point_only": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  }
+ },
+ "F1.pr.distance.point_only.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  }
+ },
+ "F1.pr.angle.point_line": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['point']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['point']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['point']",
+   "leak": false
+  }
+ },
+ "F1.pr.angle.point_line.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['point']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['point']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['point']",
+   "leak": false
+  }
+ },
+ "F1.pr.angle.line_plane_point": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['point']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['point']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['point']",
+   "leak": false
+  }
+ },
+ "F1.pr.angle.line_plane_point.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['point']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['point']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['point']",
+   "leak": false
+  }
+ },
+ "F1.pr.angle.polygon": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  }
+ },
+ "F1.pr.angle.polygon.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  }
+ },
+ "F1.pr.area.segment": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['segment']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['segment']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['segment']",
+   "leak": false
+  }
+ },
+ "F1.pr.area.segment.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['segment']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['segment']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['segment']",
+   "leak": false
+  }
+ },
+ "F1.pr.area.polygon_point": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['point']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['point']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['point']",
+   "leak": false
+  }
+ },
+ "F1.pr.area.polygon_point.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['point']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['point']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['point']",
+   "leak": false
+  }
+ },
+ "F1.pr.volume.polygon": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  }
+ },
+ "F1.pr.volume.polygon.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  }
+ },
+ "F1.pr.volume.solid_polygon": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  }
+ },
+ "F1.pr.volume.solid_polygon.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  }
+ },
+ "F1.pr.lateral_area.polygon": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  }
+ },
+ "F1.pr.lateral_area.polygon.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  }
+ },
+ "F1.pr.radius.polygon": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  }
+ },
+ "F1.pr.radius.polygon.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  }
+ },
+ "F1.pr.key.Solid_case": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['Solid']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['Solid']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['Solid']",
+   "leak": false
+  }
+ },
+ "F1.pr.key.Solid_case.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['Solid']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['Solid']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['Solid']",
+   "leak": false
+  }
+ },
+ "F1.pr.key.solid_space": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['solid ']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['solid ']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['solid ']",
+   "leak": false
+  }
+ },
+ "F1.pr.key.solid_space.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['solid ']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['solid ']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['solid ']",
+   "leak": false
+  }
+ },
+ "F1.pr.key.section": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['section']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['section']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['section']",
+   "leak": false
+  }
+ },
+ "F1.pr.key.section.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['section']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['section']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['section']",
+   "leak": false
+  }
+ },
+ "F1.cyl.radius.solid_id.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for radius",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for radius",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for radius",
+   "leak": false
+  }
+ },
+ "F1.cyl.radius.solid+solid_id.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for radius",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for radius",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for radius",
+   "leak": false
+  }
+ },
+ "F1.cyl.lateral_area.solid_id.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for lateral_area",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for lateral_area",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for lateral_area",
+   "leak": false
+  }
+ },
+ "F1.cyl.lateral_area.solid+solid_id.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for lateral_area",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for lateral_area",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for lateral_area",
+   "leak": false
+  }
+ },
+ "F1.cyl.area.solid_id.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for area",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for area",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for area",
+   "leak": false
+  }
+ },
+ "F1.cyl.area.solid+solid_id.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for area",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for area",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for area",
+   "leak": false
+  }
+ },
+ "F1.cyl.volume.solid+solid_id.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for volume",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for volume",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for volume",
+   "leak": false
+  }
+ },
+ "CTRL.cyl.volume.solid_id": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "rv": {
+     "coef": "12π",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "answers": {
+    "rv": "12π"
+   }
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "cyl: khối cylinder chưa có trên planner",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "cyl: khối cylinder chưa có trên planner",
+   "leak": false
+  }
+ },
+ "CTRL.cyl.volume.solid_id.gsid": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "rv": {
+     "coef": "12π",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "answers": {
+    "rv": "12π"
+   }
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "cyl: khối cylinder chưa có trên planner",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "cyl: khối cylinder chưa có trên planner",
+   "leak": false
+  }
+ },
+ "CTRL.cyl.radius.solid": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "rv": {
+     "coef": "2",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "answers": {
+    "rv": "2"
+   }
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "cyl: khối cylinder chưa có trên planner",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "cyl: khối cylinder chưa có trên planner",
+   "leak": false
+  }
+ },
+ "F1.cone.radius.solid_id.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for radius",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for radius",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for radius",
+   "leak": false
+  }
+ },
+ "F1.cone.radius.solid+solid_id.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for radius",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for radius",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for radius",
+   "leak": false
+  }
+ },
+ "F1.cone.lateral_area.solid_id.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for lateral_area",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for lateral_area",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for lateral_area",
+   "leak": false
+  }
+ },
+ "F1.cone.lateral_area.solid+solid_id.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for lateral_area",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for lateral_area",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for lateral_area",
+   "leak": false
+  }
+ },
+ "F1.cone.area.solid_id.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for area",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for area",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for area",
+   "leak": false
+  }
+ },
+ "F1.cone.area.solid+solid_id.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for area",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for area",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for area",
+   "leak": false
+  }
+ },
+ "F1.cone.volume.solid+solid_id.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for volume",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for volume",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for volume",
+   "leak": false
+  }
+ },
+ "CTRL.cone.volume.solid_id": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "rv": {
+     "coef": "12π",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "answers": {
+    "rv": "12π"
+   }
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "cone_main: khối cone chưa có trên planner",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "cone_main: khối cone chưa có trên planner",
+   "leak": false
+  }
+ },
+ "CTRL.cone.volume.solid_id.gsid": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "rv": {
+     "coef": "12π",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "answers": {
+    "rv": "12π"
+   }
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "cone_main: khối cone chưa có trên planner",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "cone_main: khối cone chưa có trên planner",
+   "leak": false
+  }
+ },
+ "CTRL.cone.radius.solid": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "rv": {
+     "coef": "3",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "answers": {
+    "rv": "3"
+   }
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "cone_main: khối cone chưa có trên planner",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "cone_main: khối cone chưa có trên planner",
+   "leak": false
+  }
+ },
+ "F1.sph.radius.solid_id.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for radius",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for radius",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for radius",
+   "leak": false
+  }
+ },
+ "F1.sph.radius.solid+solid_id.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for radius",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for radius",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for radius",
+   "leak": false
+  }
+ },
+ "F1.sph.lateral_area.solid_id.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for lateral_area",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for lateral_area",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for lateral_area",
+   "leak": false
+  }
+ },
+ "F1.sph.lateral_area.solid+solid_id.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for lateral_area",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for lateral_area",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for lateral_area",
+   "leak": false
+  }
+ },
+ "F1.sph.area.solid_id.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for area",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for area",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for area",
+   "leak": false
+  }
+ },
+ "F1.sph.area.solid+solid_id.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for area",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for area",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for area",
+   "leak": false
+  }
+ },
+ "F1.sph.volume.solid+solid_id.gsid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for volume",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for volume",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for volume",
+   "leak": false
+  }
+ },
+ "CTRL.sph.volume.solid_id": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "rv": {
+     "coef": "500π/3",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "answers": {
+    "rv": "500π/3"
+   }
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "sph: khối sphere chưa có trên planner",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "sph: khối sphere chưa có trên planner",
+   "leak": false
+  }
+ },
+ "CTRL.sph.volume.solid_id.gsid": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "rv": {
+     "coef": "500π/3",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "answers": {
+    "rv": "500π/3"
+   }
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "sph: khối sphere chưa có trên planner",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "sph: khối sphere chưa có trên planner",
+   "leak": false
+  }
+ },
+ "CTRL.sph.radius.solid": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "rv": {
+     "coef": "5",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "answers": {
+    "rv": "5"
+   }
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "sph: khối sphere chưa có trên planner",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "sph: khối sphere chưa có trên planner",
+   "leak": false
+  }
+ },
+ "F1.cyl.distance.solid_id": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: inapplicable target for distance",
+   "leak": false
+  }
+ },
+ "F1.cyl.radius.section_id+solid": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: scope keys ['solid'] beside target operands; declare the goal's solid_id",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: scope keys ['solid'] beside target operands; declare the goal's solid_id",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: scope keys ['solid'] beside target operands; declare the goal's solid_id",
+   "leak": false
+  }
+ },
+ "F2.ws.tab": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.ws.nbsp": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.ws.newline_q": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.ws.both_qualified": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.ws.em_space": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.bind.scoped_canonical": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.bind.scoped_canonical_rev": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.bind.plane4": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'plane'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'plane'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'plane'",
+   "leak": false
+  }
+ },
+ "F2.bind.polygon4": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: unexpected target keys ['polygon']",
+   "leak": false
+  }
+ },
+ "F2.bind.line1": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'line1'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'line1'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'line1'",
+   "leak": false
+  }
+ },
+ "F2.bind.distinct_ctrl": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "REFUSED",
+   "code": "UNKNOWN_LABEL",
+   "reason": "rv: đỉnh 'X' chưa được khai báo trong khối hoặc giả thiết nào",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pr: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pr: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  }
+ },
+ "F2.bind.distinct_ctrl_scoped": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "rv": {
+     "coef": "6",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "answers": {
+    "rv": "6"
+   }
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pr: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pr: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  }
+ },
+ "F2.ns.upper": {
+  "schema1": "UNKNOWN_SOLID_ID",
+  "schema2": "UNKNOWN_SOLID_ID",
+  "a3": {
+   "status": "REFUSED",
+   "code": "UNKNOWN_SOLID_ID",
+   "reason": "rv: khối 'PR' chưa được khai báo",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "UNKNOWN_SOLID_ID",
+   "reason": "rv: khối 'PR' chưa được khai báo",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "UNKNOWN_SOLID_ID",
+   "reason": "rv: khối 'PR' chưa được khai báo",
+   "leak": false
+  }
+ },
+ "F2.der.qual_parent_vs_unq": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.der.qual_parent_vs_qual_der": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.der.qual_both_der_M": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.der.unscoped_S_vs_der": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.der.plane_alias": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'plane'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'plane'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'plane'",
+   "leak": false
+  }
+ },
+ "F2.der.ctrl_SB_main": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "rv": {
+     "coef": "√5",
+     "dim": 1,
+     "unit": "a"
+    }
+   },
+   "answers": {
+    "rv": "a√5"
+   }
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_RELATION",
+   "reason": "rel_m_on_sa: quan hệ containment chưa diễn đạt được trong TypedFact",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_RELATION",
+   "reason": "rel_m_on_sa: quan hệ containment chưa diễn đạt được trong TypedFact",
+   "leak": false
+  }
+ },
+ "F2.der.ctrl_SM_top": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "rv": {
+     "coef": "1",
+     "dim": 1,
+     "unit": "a"
+    }
+   },
+   "answers": {
+    "rv": "a"
+   }
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_RELATION",
+   "reason": "rel_m_on_sa: quan hệ containment chưa diễn đạt được trong TypedFact",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_RELATION",
+   "reason": "rel_m_on_sa: quan hệ containment chưa diễn đạt được trong TypedFact",
+   "leak": false
+  }
+ },
+ "F2.pyr.D1_vs_pyr2D": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.pyr.D_unscoped_vs_pyr2D": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.pyr.pyr1D_vs_pyr2D": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "rv": {
+     "coef": "0",
+     "dim": 1,
+     "unit": "a"
+    }
+   },
+   "answers": {
+    "rv": "0a"
+   }
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  }
+ },
+ "F2.pyr.D_unscoped_vs_pyr1D": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "REFUSED",
+   "code": "AMBIGUOUS_REFERENCE",
+   "reason": "rv: tham chiếu không định danh khối 'D' nhập nhằng giữa các đỉnh ['D', 'D1']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  }
+ },
+ "F2.pyr.D_unscoped_vs_S": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "REFUSED",
+   "code": "AMBIGUOUS_REFERENCE",
+   "reason": "rv: tham chiếu không định danh khối 'D' nhập nhằng giữa các đỉnh ['D', 'D1']",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  }
+ },
+ "F2.pyr.pyr1D_vs_S": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "rv": {
+     "coef": "1",
+     "dim": 1,
+     "unit": "a"
+    }
+   },
+   "answers": {
+    "rv": "a"
+   }
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  }
+ },
+ "F2.pyr.scoped1_D_vs_S": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "rv": {
+     "coef": "1",
+     "dim": 1,
+     "unit": "a"
+    }
+   },
+   "answers": {
+    "rv": "a"
+   }
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  }
+ },
+ "F2.pyr.scoped2_D_vs_A": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "rv": {
+     "coef": "1",
+     "dim": 1,
+     "unit": "a"
+    }
+   },
+   "answers": {
+    "rv": "a"
+   }
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  }
+ },
+ "F2.pyr.scoped2_D_vs_D1": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.pyr.shared_A": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.pyr.shared_B_C": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "rv": {
+     "coef": "√2",
+     "dim": 1,
+     "unit": "a"
+    }
+   },
+   "answers": {
+    "rv": "a√2"
+   }
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  }
+ },
+ "F2.pyr.M_vs_pyr1M": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.pyr.S_vs_D1": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "REFUSED",
+   "code": "UNKNOWN_LABEL",
+   "reason": "rv: đỉnh 'D1' chưa được khai báo trong khối hoặc giả thiết nào",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  }
+ },
+ "F2.cyl.center_alias": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.cyl.center_ctrl": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL_TARGET",
+   "reason": "rv: phép đo khối cong cần 'solid' hoặc 'section_id'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "cyl: khối cylinder chưa có trên planner",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "cyl: khối cylinder chưa có trên planner",
+   "leak": false
+  }
+ },
+ "F2.cyl.rim_ctrl": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "REFUSED",
+   "code": "ENGINE_IR_INVALID",
+   "reason": "IR khối cong sinh bởi Adapter /3 không qua thẩm định: Phép đo 'distance' cần HAI đối tượng: thiếu `wrt`. Chỉ volume, area, radius, lateral_area đo trên một đối ",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "cyl: khối cylinder chưa có trên planner",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "cyl: khối cylinder chưa có trên planner",
+   "leak": false
+  }
+ },
+ "F2.cone.apex_alias": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.cone.apex_ctrl": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL_TARGET",
+   "reason": "rv: phép đo khối cong cần 'solid' hoặc 'section_id'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "cone_main: khối cone chưa có trên planner",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "reason": "cone_main: khối cone chưa có trên planner",
+   "leak": false
+  }
+ },
+ "F2.two.pr_vs_other_B": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.two.X_vs_otherA": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.two.point_ambiguous": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "REFUSED",
+   "code": "AMBIGUOUS_REFERENCE",
+   "reason": "tham chiếu 'A' có nhiều danh tính",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "AMBIGUOUS_REFERENCE",
+   "reason": "tham chiếu 'A' có nhiều danh tính",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "AMBIGUOUS_REFERENCE",
+   "reason": "tham chiếu 'A' có nhiều danh tính",
+   "leak": false
+  }
+ },
+ "F2.two.point_ambiguous_seg_ok": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "REFUSED",
+   "code": "AMBIGUOUS_REFERENCE",
+   "reason": "tham chiếu 'A' có nhiều danh tính",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "AMBIGUOUS_REFERENCE",
+   "reason": "tham chiếu 'A' có nhiều danh tính",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "AMBIGUOUS_REFERENCE",
+   "reason": "tham chiếu 'A' có nhiều danh tính",
+   "leak": false
+  }
+ },
+ "F2.noninj.scoped_AB": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.noninj.unscoped_AC": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_VERTEX_BINDING",
+   "reason": "pr: hai đỉnh cục bộ ánh xạ vào cùng một đỉnh chính tắc",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pr: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pr: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  }
+ },
+ "F2.noninj.unscoped_BC": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_VERTEX_BINDING",
+   "reason": "pr: hai đỉnh cục bộ ánh xạ vào cùng một đỉnh chính tắc",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pr: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pr: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  }
+ },
+ "F2.sv.S_vs_pyr2D": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "REFUSED",
+   "code": "SHARED_ENTITY_MISMATCH",
+   "reason": "rel_shared_v: hai đỉnh khai báo chung ('pyr1::S' -> 'S', 'pyr2::D' -> 'D1') không ánh xạ về cùng một điểm chính tắc",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  }
+ },
+ "F2.cb.D1_vs_pyr2D": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.cb.pyr1D1_vs_pyr2D": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.cb.D1_vs_S_scoped1": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "REFUSED",
+   "code": "INCONSISTENT_FACTS",
+   "reason": "dữ kiện mâu thuẫn với phần còn lại của đề: p10 'Gọi D1 là trung điểm của SC.'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pyr2: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  }
+ },
+ "F2.cx.X_vs_prA": {
+  "schema1": "INVALID_MATH_GOAL",
+  "schema2": "INVALID_MATH_GOAL",
+  "a3": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "reason": "rv: repeated identity in 'segment'",
+   "leak": false
+  }
+ },
+ "F2.cx.X_vs_B": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "REFUSED",
+   "code": "INCONSISTENT_FACTS",
+   "reason": "dữ kiện mâu thuẫn với phần còn lại của đề: p6 'Gọi X là trung điểm BC.'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pr: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "reason": "pr: hai điểm khác nhau mang cùng nhãn — TypedFact định danh điểm bằng nhãn",
+   "leak": false
+  }
+ },
+ "OBS.premise_dup_segment": {
+  "schema1": null,
+  "schema2": null,
+  "a3": {
+   "status": "REFUSED",
+   "code": "INCONSISTENT_FACTS",
+   "reason": "dữ kiện mâu thuẫn với phần còn lại của đề: p6 'AA = 5.'",
+   "leak": false
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+   "reason": "rv: mục tiêu measurement/distance chưa có ánh xạ",
+   "leak": false
+  },
+  "a4": {
+   "status": "REFUSED",
+   "code": "REQUEST_NOT_ANSWERED",
+   "reason": "đề còn yêu cầu [\"khoảng cách từ A' đến mặt phẳng (ABC)\"] mà không lời gọi nào trả lời — không trả lời một phần rồi coi như xong",
+   "leak": false
+  }
+ }
+}

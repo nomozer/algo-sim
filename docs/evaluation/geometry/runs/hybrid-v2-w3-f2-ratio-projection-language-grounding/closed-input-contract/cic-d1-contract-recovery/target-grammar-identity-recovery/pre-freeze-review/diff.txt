@@ -1,0 +1,837 @@
+F1.pr.distance.point_line_plane          vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.point_line_plane          vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.point_line_plane          vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "12", "dim": 0, "unit": null}}
+F1.pr.distance.point_line_plane          vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.point_line_plane          vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.point_line_plane          vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.point_line_plane          vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "12", "dim": 0, "unit": null}}
+F1.pr.distance.point_line_plane          vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.point_line_plane.gsid     vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.point_line_plane.gsid     vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.point_line_plane.gsid     vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "12", "dim": 0, "unit": null}}
+F1.pr.distance.point_line_plane.gsid     vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.point_line_plane.gsid     vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.point_line_plane.gsid     vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.point_line_plane.gsid     vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "12", "dim": 0, "unit": null}}
+F1.pr.distance.point_line_plane.gsid     vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.segment_line1_line2       vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.segment_line1_line2       vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.segment_line1_line2       vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "6", "dim": 0, "unit": null}}
+F1.pr.distance.segment_line1_line2       vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.segment_line1_line2       vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.segment_line1_line2       vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.segment_line1_line2       vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "6", "dim": 0, "unit": null}}
+F1.pr.distance.segment_line1_line2       vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.segment_line1_line2.gsid  vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.segment_line1_line2.gsid  vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.segment_line1_line2.gsid  vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "6", "dim": 0, "unit": null}}
+F1.pr.distance.segment_line1_line2.gsid  vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.segment_line1_line2.gsid  vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.segment_line1_line2.gsid  vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.segment_line1_line2.gsid  vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "6", "dim": 0, "unit": null}}
+F1.pr.distance.segment_line1_line2.gsid  vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.plane_plane1_plane2       vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.plane_plane1_plane2       vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.plane_plane1_plane2       vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.plane_plane1_plane2       vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.plane_plane1_plane2       vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.plane_plane1_plane2       vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.plane_plane1_plane2.gsid  vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.plane_plane1_plane2.gsid  vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.plane_plane1_plane2.gsid  vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.plane_plane1_plane2.gsid  vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.plane_plane1_plane2.gsid  vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.plane_plane1_plane2.gsid  vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.point_plane1              vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.point_plane1              vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.point_plane1              vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.point_plane1              vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.point_plane1              vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.point_plane1              vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.point_plane1.gsid         vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.point_plane1.gsid         vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.point_plane1.gsid         vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.point_plane1.gsid         vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.point_plane1.gsid         vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.point_plane1.gsid         vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.line_line1                vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.line_line1                vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.line_line1                vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.line_line1                vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.line_line1                vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.line_line1                vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.line_line1.gsid           vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.line_line1.gsid           vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.line_line1.gsid           vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.line_line1.gsid           vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.line_line1.gsid           vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.line_line1.gsid           vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.polygon                   vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.polygon                   vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.polygon                   vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.polygon                   vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.polygon                   vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.polygon                   vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.polygon.gsid              vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.polygon.gsid              vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.polygon.gsid              vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.polygon.gsid              vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.polygon.gsid              vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.polygon.gsid              vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.point_only                vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.point_only                vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.point_only                vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.point_only                vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.point_only                vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.point_only                vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.point_only.gsid           vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.point_only.gsid           vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.distance.point_only.gsid           vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.distance.point_only.gsid           vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.point_only.gsid           vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.distance.point_only.gsid           vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.angle.point_line                   vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.angle.point_line                   vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.angle.point_line                   vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.angle.point_line                   vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.angle.point_line                   vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.angle.point_line                   vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.angle.point_line.gsid              vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.angle.point_line.gsid              vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.angle.point_line.gsid              vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.angle.point_line.gsid              vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.angle.point_line.gsid              vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.angle.point_line.gsid              vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.angle.line_plane_point             vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.angle.line_plane_point             vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.angle.line_plane_point             vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "1/5", "dim": 0, "unit": null}}
+F1.pr.angle.line_plane_point             vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.angle.line_plane_point             vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.angle.line_plane_point             vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.angle.line_plane_point             vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "1/5", "dim": 0, "unit": null}}
+F1.pr.angle.line_plane_point             vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.angle.line_plane_point.gsid        vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.angle.line_plane_point.gsid        vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.angle.line_plane_point.gsid        vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "1/5", "dim": 0, "unit": null}}
+F1.pr.angle.line_plane_point.gsid        vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.angle.line_plane_point.gsid        vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.angle.line_plane_point.gsid        vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.angle.line_plane_point.gsid        vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "1/5", "dim": 0, "unit": null}}
+F1.pr.angle.line_plane_point.gsid        vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.angle.polygon                      vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.angle.polygon                      vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.angle.polygon                      vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.angle.polygon                      vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.angle.polygon                      vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.angle.polygon                      vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.angle.polygon.gsid                 vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.angle.polygon.gsid                 vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.angle.polygon.gsid                 vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.angle.polygon.gsid                 vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.angle.polygon.gsid                 vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.angle.polygon.gsid                 vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.area.segment                       vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.area.segment                       vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.area.segment                       vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.area.segment                       vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.area.segment                       vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.area.segment                       vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.area.segment                       vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.area.segment                       vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.area.segment.gsid                  vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.area.segment.gsid                  vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.area.segment.gsid                  vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.area.segment.gsid                  vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.area.segment.gsid                  vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.area.segment.gsid                  vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.area.segment.gsid                  vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.area.segment.gsid                  vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.area.polygon_point                 vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.area.polygon_point                 vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.area.polygon_point                 vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "24", "dim": 0, "unit": null}}
+F1.pr.area.polygon_point                 vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.area.polygon_point                 vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.area.polygon_point                 vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.area.polygon_point                 vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.area.polygon_point                 vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "24", "dim": 0, "unit": null}}
+F1.pr.area.polygon_point                 vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.area.polygon_point                 vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.area.polygon_point.gsid            vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.area.polygon_point.gsid            vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.area.polygon_point.gsid            vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "24", "dim": 0, "unit": null}}
+F1.pr.area.polygon_point.gsid            vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.area.polygon_point.gsid            vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.area.polygon_point.gsid            vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.area.polygon_point.gsid            vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.area.polygon_point.gsid            vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "24", "dim": 0, "unit": null}}
+F1.pr.area.polygon_point.gsid            vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.area.polygon_point.gsid            vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.volume.polygon                     vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.volume.polygon                     vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.volume.polygon                     vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F1.pr.volume.polygon                     vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.volume.polygon                     vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.volume.polygon                     vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.volume.polygon                     vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.volume.polygon                     vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F1.pr.volume.polygon                     vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.volume.polygon                     vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.volume.polygon.gsid                vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.volume.polygon.gsid                vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.volume.polygon.gsid                vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.volume.polygon.gsid                vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.volume.polygon.gsid                vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.volume.polygon.gsid                vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.volume.polygon.gsid                vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.volume.polygon.gsid                vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.volume.polygon.gsid                vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.volume.polygon.gsid                vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.volume.solid_polygon               vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.volume.solid_polygon               vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.volume.solid_polygon               vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.volume.solid_polygon               vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.volume.solid_polygon               vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.volume.solid_polygon               vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.volume.solid_polygon               vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.volume.solid_polygon               vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.volume.solid_polygon               vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.volume.solid_polygon               vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.volume.solid_polygon.gsid          vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.volume.solid_polygon.gsid          vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.volume.solid_polygon.gsid          vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.volume.solid_polygon.gsid          vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.volume.solid_polygon.gsid          vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.volume.solid_polygon.gsid          vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.volume.solid_polygon.gsid          vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.volume.solid_polygon.gsid          vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.volume.solid_polygon.gsid          vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.volume.solid_polygon.gsid          vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.lateral_area.polygon               vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.lateral_area.polygon               vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.lateral_area.polygon               vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'ADAPTER_INTERNAL_ERROR') ans=
+F1.pr.lateral_area.polygon               vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.lateral_area.polygon               vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.lateral_area.polygon               vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.lateral_area.polygon               vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.lateral_area.polygon               vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'ADAPTER_INTERNAL_ERROR') ans=
+F1.pr.lateral_area.polygon               vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.lateral_area.polygon               vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.lateral_area.polygon.gsid          vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.lateral_area.polygon.gsid          vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.lateral_area.polygon.gsid          vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'ADAPTER_INTERNAL_ERROR') ans=
+F1.pr.lateral_area.polygon.gsid          vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.lateral_area.polygon.gsid          vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.lateral_area.polygon.gsid          vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.lateral_area.polygon.gsid          vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.lateral_area.polygon.gsid          vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'ADAPTER_INTERNAL_ERROR') ans=
+F1.pr.lateral_area.polygon.gsid          vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.lateral_area.polygon.gsid          vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.radius.polygon                     vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.radius.polygon                     vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.radius.polygon                     vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'ADAPTER_INTERNAL_ERROR') ans=
+F1.pr.radius.polygon                     vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.radius.polygon                     vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.radius.polygon                     vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.radius.polygon                     vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.radius.polygon                     vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'ADAPTER_INTERNAL_ERROR') ans=
+F1.pr.radius.polygon                     vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.radius.polygon                     vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.radius.polygon.gsid                vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.radius.polygon.gsid                vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.radius.polygon.gsid                vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'ADAPTER_INTERNAL_ERROR') ans=
+F1.pr.radius.polygon.gsid                vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.radius.polygon.gsid                vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.radius.polygon.gsid                vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.radius.polygon.gsid                vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.radius.polygon.gsid                vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'ADAPTER_INTERNAL_ERROR') ans=
+F1.pr.radius.polygon.gsid                vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.radius.polygon.gsid                vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.key.Solid_case                     vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.key.Solid_case                     vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.key.Solid_case                     vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F1.pr.key.Solid_case                     vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.key.Solid_case                     vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.key.Solid_case                     vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.key.Solid_case                     vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.key.Solid_case                     vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F1.pr.key.Solid_case                     vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.key.Solid_case                     vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.key.Solid_case.gsid                vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.key.Solid_case.gsid                vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.key.Solid_case.gsid                vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.key.Solid_case.gsid                vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.key.Solid_case.gsid                vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.key.Solid_case.gsid                vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.key.Solid_case.gsid                vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.key.Solid_case.gsid                vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.key.Solid_case.gsid                vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.key.Solid_case.gsid                vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.key.solid_space                    vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.key.solid_space                    vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.key.solid_space                    vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F1.pr.key.solid_space                    vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.key.solid_space                    vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.key.solid_space                    vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.key.solid_space                    vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.key.solid_space                    vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F1.pr.key.solid_space                    vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.key.solid_space                    vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.key.solid_space.gsid               vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.key.solid_space.gsid               vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.key.solid_space.gsid               vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.key.solid_space.gsid               vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.key.solid_space.gsid               vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.key.solid_space.gsid               vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.key.solid_space.gsid               vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.key.solid_space.gsid               vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.key.solid_space.gsid               vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.key.solid_space.gsid               vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.key.section                        vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.key.section                        vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.key.section                        vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F1.pr.key.section                        vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.key.section                        vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.key.section                        vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.key.section                        vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.key.section                        vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F1.pr.key.section                        vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.key.section                        vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F1.pr.key.section.gsid                   vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.pr.key.section.gsid                   vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.pr.key.section.gsid                   vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.key.section.gsid                   vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.key.section.gsid                   vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.key.section.gsid                   vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.pr.key.section.gsid                   vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.pr.key.section.gsid                   vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.key.section.gsid                   vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.pr.key.section.gsid                   vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F1.cyl.radius.solid_id.gsid              vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.cyl.radius.solid_id.gsid              vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.cyl.radius.solid_id.gsid              vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.cyl.radius.solid_id.gsid              vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.radius.solid_id.gsid              vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.radius.solid_id.gsid              vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.cyl.radius.solid_id.gsid              vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.cyl.radius.solid_id.gsid              vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.cyl.radius.solid_id.gsid              vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.radius.solid_id.gsid              vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.radius.solid+solid_id.gsid        vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.cyl.radius.solid+solid_id.gsid        vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.cyl.radius.solid+solid_id.gsid        vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "2", "dim": 0, "unit": null}}
+F1.cyl.radius.solid+solid_id.gsid        vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.radius.solid+solid_id.gsid        vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.radius.solid+solid_id.gsid        vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.cyl.radius.solid+solid_id.gsid        vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.cyl.radius.solid+solid_id.gsid        vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "2", "dim": 0, "unit": null}}
+F1.cyl.radius.solid+solid_id.gsid        vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.radius.solid+solid_id.gsid        vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.lateral_area.solid_id.gsid        vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.cyl.lateral_area.solid_id.gsid        vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.cyl.lateral_area.solid_id.gsid        vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.cyl.lateral_area.solid_id.gsid        vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.lateral_area.solid_id.gsid        vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.lateral_area.solid_id.gsid        vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.cyl.lateral_area.solid_id.gsid        vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.cyl.lateral_area.solid_id.gsid        vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.cyl.lateral_area.solid_id.gsid        vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.lateral_area.solid_id.gsid        vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.lateral_area.solid+solid_id.gsid  vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.cyl.lateral_area.solid+solid_id.gsid  vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.cyl.lateral_area.solid+solid_id.gsid  vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "12\u03c0", "dim": 0, "unit": null}}
+F1.cyl.lateral_area.solid+solid_id.gsid  vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.lateral_area.solid+solid_id.gsid  vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.lateral_area.solid+solid_id.gsid  vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.cyl.lateral_area.solid+solid_id.gsid  vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.cyl.lateral_area.solid+solid_id.gsid  vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "12\u03c0", "dim": 0, "unit": null}}
+F1.cyl.lateral_area.solid+solid_id.gsid  vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.lateral_area.solid+solid_id.gsid  vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.area.solid_id.gsid                vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.cyl.area.solid_id.gsid                vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.cyl.area.solid_id.gsid                vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.cyl.area.solid_id.gsid                vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.area.solid_id.gsid                vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.area.solid_id.gsid                vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.cyl.area.solid_id.gsid                vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.cyl.area.solid_id.gsid                vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.cyl.area.solid_id.gsid                vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.area.solid_id.gsid                vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.area.solid+solid_id.gsid          vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.cyl.area.solid+solid_id.gsid          vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.cyl.area.solid+solid_id.gsid          vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'GEOMETRY_OPERAND_TYPE') ans=
+F1.cyl.area.solid+solid_id.gsid          vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.area.solid+solid_id.gsid          vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.area.solid+solid_id.gsid          vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.cyl.area.solid+solid_id.gsid          vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.cyl.area.solid+solid_id.gsid          vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'GEOMETRY_OPERAND_TYPE') ans=
+F1.cyl.area.solid+solid_id.gsid          vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.area.solid+solid_id.gsid          vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.volume.solid+solid_id.gsid        vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.cyl.volume.solid+solid_id.gsid        vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.cyl.volume.solid+solid_id.gsid        vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "12\u03c0", "dim": 0, "unit": null}}
+F1.cyl.volume.solid+solid_id.gsid        vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.volume.solid+solid_id.gsid        vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.volume.solid+solid_id.gsid        vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.cyl.volume.solid+solid_id.gsid        vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.cyl.volume.solid+solid_id.gsid        vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "12\u03c0", "dim": 0, "unit": null}}
+F1.cyl.volume.solid+solid_id.gsid        vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.volume.solid+solid_id.gsid        vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+CTRL.cyl.volume.solid_id                 vs main: a3 NEWLY_SERVED head=('SERVED', None) main=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+CTRL.cyl.volume.solid_id                 vs pre: a3 NEWLY_SERVED head=('SERVED', None) pre=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+CTRL.cyl.volume.solid_id.gsid            vs main: a3 NEWLY_SERVED head=('SERVED', None) main=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+CTRL.cyl.volume.solid_id.gsid            vs pre: a3 NEWLY_SERVED head=('SERVED', None) pre=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.cone.radius.solid_id.gsid             vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.cone.radius.solid_id.gsid             vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.cone.radius.solid_id.gsid             vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.cone.radius.solid_id.gsid             vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.radius.solid_id.gsid             vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.radius.solid_id.gsid             vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.cone.radius.solid_id.gsid             vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.cone.radius.solid_id.gsid             vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.cone.radius.solid_id.gsid             vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.radius.solid_id.gsid             vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.radius.solid+solid_id.gsid       vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.cone.radius.solid+solid_id.gsid       vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.cone.radius.solid+solid_id.gsid       vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "3", "dim": 0, "unit": null}}
+F1.cone.radius.solid+solid_id.gsid       vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.radius.solid+solid_id.gsid       vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.radius.solid+solid_id.gsid       vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.cone.radius.solid+solid_id.gsid       vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.cone.radius.solid+solid_id.gsid       vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "3", "dim": 0, "unit": null}}
+F1.cone.radius.solid+solid_id.gsid       vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.radius.solid+solid_id.gsid       vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.lateral_area.solid_id.gsid       vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.cone.lateral_area.solid_id.gsid       vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.cone.lateral_area.solid_id.gsid       vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.cone.lateral_area.solid_id.gsid       vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.lateral_area.solid_id.gsid       vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.lateral_area.solid_id.gsid       vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.cone.lateral_area.solid_id.gsid       vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.cone.lateral_area.solid_id.gsid       vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.cone.lateral_area.solid_id.gsid       vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.lateral_area.solid_id.gsid       vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.lateral_area.solid+solid_id.gsid vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.cone.lateral_area.solid+solid_id.gsid vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.cone.lateral_area.solid+solid_id.gsid vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "15\u03c0", "dim": 0, "unit": null}}
+F1.cone.lateral_area.solid+solid_id.gsid vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.lateral_area.solid+solid_id.gsid vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.lateral_area.solid+solid_id.gsid vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.cone.lateral_area.solid+solid_id.gsid vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.cone.lateral_area.solid+solid_id.gsid vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "15\u03c0", "dim": 0, "unit": null}}
+F1.cone.lateral_area.solid+solid_id.gsid vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.lateral_area.solid+solid_id.gsid vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.area.solid_id.gsid               vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.cone.area.solid_id.gsid               vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.cone.area.solid_id.gsid               vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.cone.area.solid_id.gsid               vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.area.solid_id.gsid               vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.area.solid_id.gsid               vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.cone.area.solid_id.gsid               vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.cone.area.solid_id.gsid               vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.cone.area.solid_id.gsid               vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.area.solid_id.gsid               vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.area.solid+solid_id.gsid         vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.cone.area.solid+solid_id.gsid         vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.cone.area.solid+solid_id.gsid         vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'GEOMETRY_OPERAND_TYPE') ans=
+F1.cone.area.solid+solid_id.gsid         vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.area.solid+solid_id.gsid         vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.area.solid+solid_id.gsid         vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.cone.area.solid+solid_id.gsid         vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.cone.area.solid+solid_id.gsid         vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'GEOMETRY_OPERAND_TYPE') ans=
+F1.cone.area.solid+solid_id.gsid         vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.area.solid+solid_id.gsid         vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.volume.solid+solid_id.gsid       vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.cone.volume.solid+solid_id.gsid       vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.cone.volume.solid+solid_id.gsid       vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "12\u03c0", "dim": 0, "unit": null}}
+F1.cone.volume.solid+solid_id.gsid       vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.volume.solid+solid_id.gsid       vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.volume.solid+solid_id.gsid       vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.cone.volume.solid+solid_id.gsid       vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.cone.volume.solid+solid_id.gsid       vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "12\u03c0", "dim": 0, "unit": null}}
+F1.cone.volume.solid+solid_id.gsid       vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cone.volume.solid+solid_id.gsid       vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+CTRL.cone.volume.solid_id                vs main: a3 NEWLY_SERVED head=('SERVED', None) main=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+CTRL.cone.volume.solid_id                vs pre: a3 NEWLY_SERVED head=('SERVED', None) pre=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+CTRL.cone.volume.solid_id.gsid           vs main: a3 NEWLY_SERVED head=('SERVED', None) main=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+CTRL.cone.volume.solid_id.gsid           vs pre: a3 NEWLY_SERVED head=('SERVED', None) pre=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.sph.radius.solid_id.gsid              vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.sph.radius.solid_id.gsid              vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.sph.radius.solid_id.gsid              vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.sph.radius.solid_id.gsid              vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.radius.solid_id.gsid              vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.radius.solid_id.gsid              vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.sph.radius.solid_id.gsid              vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.sph.radius.solid_id.gsid              vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.sph.radius.solid_id.gsid              vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.radius.solid_id.gsid              vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.radius.solid+solid_id.gsid        vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.sph.radius.solid+solid_id.gsid        vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.sph.radius.solid+solid_id.gsid        vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "5", "dim": 0, "unit": null}}
+F1.sph.radius.solid+solid_id.gsid        vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.radius.solid+solid_id.gsid        vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.radius.solid+solid_id.gsid        vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.sph.radius.solid+solid_id.gsid        vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.sph.radius.solid+solid_id.gsid        vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "5", "dim": 0, "unit": null}}
+F1.sph.radius.solid+solid_id.gsid        vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.radius.solid+solid_id.gsid        vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.lateral_area.solid_id.gsid        vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.sph.lateral_area.solid_id.gsid        vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.sph.lateral_area.solid_id.gsid        vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.sph.lateral_area.solid_id.gsid        vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.lateral_area.solid_id.gsid        vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.lateral_area.solid_id.gsid        vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.sph.lateral_area.solid_id.gsid        vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.sph.lateral_area.solid_id.gsid        vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.sph.lateral_area.solid_id.gsid        vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.lateral_area.solid_id.gsid        vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.lateral_area.solid+solid_id.gsid  vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.sph.lateral_area.solid+solid_id.gsid  vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.sph.lateral_area.solid+solid_id.gsid  vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "100\u03c0", "dim": 0, "unit": null}}
+F1.sph.lateral_area.solid+solid_id.gsid  vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.lateral_area.solid+solid_id.gsid  vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.lateral_area.solid+solid_id.gsid  vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.sph.lateral_area.solid+solid_id.gsid  vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.sph.lateral_area.solid+solid_id.gsid  vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "100\u03c0", "dim": 0, "unit": null}}
+F1.sph.lateral_area.solid+solid_id.gsid  vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.lateral_area.solid+solid_id.gsid  vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.area.solid_id.gsid                vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.sph.area.solid_id.gsid                vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.sph.area.solid_id.gsid                vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.sph.area.solid_id.gsid                vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.area.solid_id.gsid                vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.area.solid_id.gsid                vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.sph.area.solid_id.gsid                vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.sph.area.solid_id.gsid                vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.sph.area.solid_id.gsid                vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.area.solid_id.gsid                vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.area.solid+solid_id.gsid          vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.sph.area.solid+solid_id.gsid          vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.sph.area.solid+solid_id.gsid          vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'GEOMETRY_OPERAND_TYPE') ans=
+F1.sph.area.solid+solid_id.gsid          vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.area.solid+solid_id.gsid          vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.area.solid+solid_id.gsid          vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.sph.area.solid+solid_id.gsid          vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.sph.area.solid+solid_id.gsid          vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'GEOMETRY_OPERAND_TYPE') ans=
+F1.sph.area.solid+solid_id.gsid          vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.area.solid+solid_id.gsid          vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.volume.solid+solid_id.gsid        vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.sph.volume.solid+solid_id.gsid        vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.sph.volume.solid+solid_id.gsid        vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "500\u03c0/3", "dim": 0, "unit": null}}
+F1.sph.volume.solid+solid_id.gsid        vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.volume.solid+solid_id.gsid        vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.volume.solid+solid_id.gsid        vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.sph.volume.solid+solid_id.gsid        vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.sph.volume.solid+solid_id.gsid        vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "500\u03c0/3", "dim": 0, "unit": null}}
+F1.sph.volume.solid+solid_id.gsid        vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.sph.volume.solid+solid_id.gsid        vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+CTRL.sph.volume.solid_id                 vs main: a3 NEWLY_SERVED head=('SERVED', None) main=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+CTRL.sph.volume.solid_id                 vs pre: a3 NEWLY_SERVED head=('SERVED', None) pre=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+CTRL.sph.volume.solid_id.gsid            vs main: a3 NEWLY_SERVED head=('SERVED', None) main=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+CTRL.sph.volume.solid_id.gsid            vs pre: a3 NEWLY_SERVED head=('SERVED', None) pre=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.cyl.distance.solid_id                 vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.cyl.distance.solid_id                 vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.cyl.distance.solid_id                 vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.cyl.distance.solid_id                 vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.distance.solid_id                 vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.distance.solid_id                 vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.cyl.distance.solid_id                 vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.cyl.distance.solid_id                 vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F1.cyl.distance.solid_id                 vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.distance.solid_id                 vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.radius.section_id+solid           vs main: schema1 head=INVALID_MATH_GOAL main=None
+F1.cyl.radius.section_id+solid           vs main: schema2 head=INVALID_MATH_GOAL main=None
+F1.cyl.radius.section_id+solid           vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "2", "dim": 0, "unit": null}}
+F1.cyl.radius.section_id+solid           vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.radius.section_id+solid           vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.radius.section_id+solid           vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F1.cyl.radius.section_id+solid           vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F1.cyl.radius.section_id+solid           vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "2", "dim": 0, "unit": null}}
+F1.cyl.radius.section_id+solid           vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F1.cyl.radius.section_id+solid           vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F2.ws.tab                                vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.ws.tab                                vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.ws.tab                                vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "0", "dim": 0, "unit": null}}
+F2.ws.tab                                vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F2.ws.tab                                vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.ws.tab                                vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.ws.tab                                vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "0", "dim": 0, "unit": null}}
+F2.ws.tab                                vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F2.ws.nbsp                               vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.ws.nbsp                               vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.ws.nbsp                               vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "0", "dim": 0, "unit": null}}
+F2.ws.nbsp                               vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F2.ws.nbsp                               vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.ws.nbsp                               vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.ws.nbsp                               vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "0", "dim": 0, "unit": null}}
+F2.ws.nbsp                               vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F2.ws.newline_q                          vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.ws.newline_q                          vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.ws.newline_q                          vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "0", "dim": 0, "unit": null}}
+F2.ws.newline_q                          vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F2.ws.newline_q                          vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.ws.newline_q                          vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.ws.newline_q                          vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "0", "dim": 0, "unit": null}}
+F2.ws.newline_q                          vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F2.ws.both_qualified                     vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.ws.both_qualified                     vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.ws.both_qualified                     vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "0", "dim": 0, "unit": null}}
+F2.ws.both_qualified                     vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F2.ws.both_qualified                     vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.ws.both_qualified                     vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.ws.both_qualified                     vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "0", "dim": 0, "unit": null}}
+F2.ws.both_qualified                     vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F2.ws.em_space                           vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.ws.em_space                           vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.ws.em_space                           vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "0", "dim": 0, "unit": null}}
+F2.ws.em_space                           vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F2.ws.em_space                           vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.ws.em_space                           vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.ws.em_space                           vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "0", "dim": 0, "unit": null}}
+F2.ws.em_space                           vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT') ans=
+F2.bind.scoped_canonical                 vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.bind.scoped_canonical                 vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.bind.scoped_canonical                 vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_LABEL') ans=
+F2.bind.scoped_canonical                 vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.bind.scoped_canonical                 vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.bind.scoped_canonical                 vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.bind.scoped_canonical                 vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.bind.scoped_canonical                 vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F2.bind.scoped_canonical                 vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.bind.scoped_canonical                 vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.bind.scoped_canonical_rev             vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.bind.scoped_canonical_rev             vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.bind.scoped_canonical_rev             vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_LABEL') ans=
+F2.bind.scoped_canonical_rev             vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.bind.scoped_canonical_rev             vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.bind.scoped_canonical_rev             vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.bind.scoped_canonical_rev             vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.bind.scoped_canonical_rev             vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F2.bind.scoped_canonical_rev             vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.bind.scoped_canonical_rev             vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.bind.plane4                           vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.bind.plane4                           vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.bind.plane4                           vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_LABEL') ans=
+F2.bind.plane4                           vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.bind.plane4                           vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.bind.plane4                           vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.bind.plane4                           vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.bind.plane4                           vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'UNKNOWN_LABEL') ans=
+F2.bind.plane4                           vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.bind.plane4                           vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.bind.polygon4                         vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.bind.polygon4                         vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.bind.polygon4                         vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.bind.polygon4                         vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.bind.polygon4                         vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.bind.polygon4                         vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.bind.polygon4                         vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.bind.polygon4                         vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.bind.line1                            vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.bind.line1                            vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.bind.line1                            vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_LABEL') ans=
+F2.bind.line1                            vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.bind.line1                            vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.bind.line1                            vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.bind.line1                            vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.bind.line1                            vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'UNKNOWN_LABEL') ans=
+F2.bind.line1                            vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.bind.line1                            vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.ns.upper                              vs main: schema1 head=UNKNOWN_SOLID_ID main=None
+F2.ns.upper                              vs main: schema2 head=UNKNOWN_SOLID_ID main=None
+F2.der.qual_parent_vs_unq                vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.der.qual_parent_vs_unq                vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.der.qual_parent_vs_unq                vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "0", "dim": 1, "unit": "a"}}
+F2.der.qual_parent_vs_unq                vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_VERTEX_REF') ans=
+F2.der.qual_parent_vs_unq                vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_VERTEX_REF') ans=
+F2.der.qual_parent_vs_unq                vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.der.qual_parent_vs_unq                vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.der.qual_parent_vs_unq                vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F2.der.qual_parent_vs_unq                vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION') ans=
+F2.der.qual_parent_vs_unq                vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION') ans=
+F2.der.qual_parent_vs_qual_der           vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.der.qual_parent_vs_qual_der           vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.der.qual_parent_vs_qual_der           vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F2.der.qual_parent_vs_qual_der           vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_VERTEX_REF') ans=
+F2.der.qual_parent_vs_qual_der           vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_VERTEX_REF') ans=
+F2.der.qual_parent_vs_qual_der           vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.der.qual_parent_vs_qual_der           vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.der.qual_parent_vs_qual_der           vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F2.der.qual_parent_vs_qual_der           vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F2.der.qual_parent_vs_qual_der           vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F2.der.qual_both_der_M                   vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.der.qual_both_der_M                   vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.der.qual_both_der_M                   vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F2.der.qual_both_der_M                   vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_VERTEX_REF') ans=
+F2.der.qual_both_der_M                   vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_VERTEX_REF') ans=
+F2.der.qual_both_der_M                   vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.der.qual_both_der_M                   vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.der.qual_both_der_M                   vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F2.der.qual_both_der_M                   vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F2.der.qual_both_der_M                   vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F2.der.unscoped_S_vs_der                 vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.der.unscoped_S_vs_der                 vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.der.unscoped_S_vs_der                 vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F2.der.unscoped_S_vs_der                 vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_VERTEX_REF') ans=
+F2.der.unscoped_S_vs_der                 vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_VERTEX_REF') ans=
+F2.der.unscoped_S_vs_der                 vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.der.unscoped_S_vs_der                 vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.der.unscoped_S_vs_der                 vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F2.der.unscoped_S_vs_der                 vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F2.der.unscoped_S_vs_der                 vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F2.der.plane_alias                       vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.der.plane_alias                       vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.der.plane_alias                       vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'ENGINE_EXECUTION_FAILED') ans=
+F2.der.plane_alias                       vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_VERTEX_REF') ans=
+F2.der.plane_alias                       vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_VERTEX_REF') ans=
+F2.der.plane_alias                       vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.der.plane_alias                       vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.der.plane_alias                       vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F2.der.plane_alias                       vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION') ans=
+F2.der.plane_alias                       vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION') ans=
+F2.der.ctrl_SB_main                      vs main: pl CHANGED head=('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION') main=('REFUSED', 'UNKNOWN_VERTEX_REF') ans=
+F2.der.ctrl_SB_main                      vs main: a4 CHANGED head=('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION') main=('REFUSED', 'UNKNOWN_VERTEX_REF') ans=
+F2.der.ctrl_SM_top                       vs main: pl CHANGED head=('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION') main=('REFUSED', 'UNKNOWN_VERTEX_REF') ans=
+F2.der.ctrl_SM_top                       vs main: a4 CHANGED head=('REFUSED', 'BRIDGE_UNSUPPORTED_RELATION') main=('REFUSED', 'UNKNOWN_VERTEX_REF') ans=
+F2.der.ctrl_SM_top                       vs pre: a3 NEWLY_SERVED head=('SERVED', None) pre=('REFUSED', 'UNKNOWN_SOLID_ID') ans=
+F2.pyr.D1_vs_pyr2D                       vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.pyr.D1_vs_pyr2D                       vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.pyr.D1_vs_pyr2D                       vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_LABEL') ans=
+F2.pyr.D1_vs_pyr2D                       vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.pyr.D1_vs_pyr2D                       vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.pyr.D1_vs_pyr2D                       vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.pyr.D1_vs_pyr2D                       vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.pyr.D1_vs_pyr2D                       vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'UNKNOWN_LABEL') ans=
+F2.pyr.D1_vs_pyr2D                       vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.pyr.D1_vs_pyr2D                       vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.pyr.D_unscoped_vs_pyr2D               vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.pyr.D_unscoped_vs_pyr2D               vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.pyr.D_unscoped_vs_pyr2D               vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'AMBIGUOUS_REFERENCE') ans=
+F2.pyr.D_unscoped_vs_pyr2D               vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.pyr.D_unscoped_vs_pyr2D               vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.pyr.D_unscoped_vs_pyr2D               vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.pyr.D_unscoped_vs_pyr2D               vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.pyr.D_unscoped_vs_pyr2D               vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'AMBIGUOUS_REFERENCE') ans=
+F2.pyr.D_unscoped_vs_pyr2D               vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.pyr.D_unscoped_vs_pyr2D               vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.pyr.scoped2_D_vs_D1                   vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.pyr.scoped2_D_vs_D1                   vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.pyr.scoped2_D_vs_D1                   vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'UNKNOWN_LABEL') ans=
+F2.pyr.scoped2_D_vs_D1                   vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.pyr.scoped2_D_vs_D1                   vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.pyr.scoped2_D_vs_D1                   vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.pyr.scoped2_D_vs_D1                   vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.pyr.scoped2_D_vs_D1                   vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'SOURCE_OBJECT_MISMATCH') ans=
+F2.pyr.scoped2_D_vs_D1                   vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.pyr.scoped2_D_vs_D1                   vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.pyr.shared_A                          vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.pyr.shared_A                          vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.pyr.shared_A                          vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "0", "dim": 1, "unit": "a"}}
+F2.pyr.shared_A                          vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.pyr.shared_A                          vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.pyr.shared_A                          vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.pyr.shared_A                          vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.pyr.shared_A                          vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "0", "dim": 1, "unit": "a"}}
+F2.pyr.shared_A                          vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.pyr.shared_A                          vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.pyr.M_vs_pyr1M                        vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.pyr.M_vs_pyr1M                        vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.pyr.M_vs_pyr1M                        vs main: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') main=('SERVED', None) ans={"rv": {"coef": "0", "dim": 1, "unit": "a"}}
+F2.pyr.M_vs_pyr1M                        vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.pyr.M_vs_pyr1M                        vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.pyr.M_vs_pyr1M                        vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.pyr.M_vs_pyr1M                        vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.pyr.M_vs_pyr1M                        vs pre: a3 NEWLY_REFUSED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('SERVED', None) ans={"rv": {"coef": "0", "dim": 1, "unit": "a"}}
+F2.pyr.M_vs_pyr1M                        vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.pyr.M_vs_pyr1M                        vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.cyl.center_alias                      vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.cyl.center_alias                      vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.cyl.center_alias                      vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F2.cyl.center_alias                      vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F2.cyl.center_alias                      vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F2.cyl.center_alias                      vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.cyl.center_alias                      vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.cyl.center_alias                      vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F2.cyl.center_alias                      vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F2.cyl.center_alias                      vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F2.cyl.rim_ctrl                          vs main: a3 CHANGED head=('REFUSED', 'ENGINE_IR_INVALID') main=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F2.cyl.rim_ctrl                          vs pre: a3 CHANGED head=('REFUSED', 'ENGINE_IR_INVALID') pre=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F2.cone.apex_alias                       vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.cone.apex_alias                       vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.cone.apex_alias                       vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F2.cone.apex_alias                       vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F2.cone.apex_alias                       vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F2.cone.apex_alias                       vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.cone.apex_alias                       vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.cone.apex_alias                       vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'INVALID_MATH_GOAL_TARGET') ans=
+F2.cone.apex_alias                       vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F2.cone.apex_alias                       vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_CURVED') ans=
+F2.two.pr_vs_other_B                     vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.two.pr_vs_other_B                     vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.two.pr_vs_other_B                     vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'AMBIGUOUS_REFERENCE') ans=
+F2.two.pr_vs_other_B                     vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.two.pr_vs_other_B                     vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.two.pr_vs_other_B                     vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.two.pr_vs_other_B                     vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.two.pr_vs_other_B                     vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'AMBIGUOUS_REFERENCE') ans=
+F2.two.pr_vs_other_B                     vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.two.pr_vs_other_B                     vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.two.X_vs_otherA                       vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.two.X_vs_otherA                       vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.two.X_vs_otherA                       vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'AMBIGUOUS_REFERENCE') ans=
+F2.two.X_vs_otherA                       vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.two.X_vs_otherA                       vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.two.X_vs_otherA                       vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.two.X_vs_otherA                       vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.two.X_vs_otherA                       vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'AMBIGUOUS_REFERENCE') ans=
+F2.two.X_vs_otherA                       vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.two.X_vs_otherA                       vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.two.point_ambiguous                   vs main: pl CHANGED head=('REFUSED', 'AMBIGUOUS_REFERENCE') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.two.point_ambiguous                   vs main: a4 CHANGED head=('REFUSED', 'AMBIGUOUS_REFERENCE') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.two.point_ambiguous                   vs pre: pl CHANGED head=('REFUSED', 'AMBIGUOUS_REFERENCE') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.two.point_ambiguous                   vs pre: a4 CHANGED head=('REFUSED', 'AMBIGUOUS_REFERENCE') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.two.point_ambiguous_seg_ok            vs main: pl CHANGED head=('REFUSED', 'AMBIGUOUS_REFERENCE') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.two.point_ambiguous_seg_ok            vs main: a4 CHANGED head=('REFUSED', 'AMBIGUOUS_REFERENCE') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.two.point_ambiguous_seg_ok            vs pre: pl CHANGED head=('REFUSED', 'AMBIGUOUS_REFERENCE') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.two.point_ambiguous_seg_ok            vs pre: a4 CHANGED head=('REFUSED', 'AMBIGUOUS_REFERENCE') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.noninj.scoped_AB                      vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.noninj.scoped_AB                      vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.noninj.scoped_AB                      vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'INVALID_VERTEX_BINDING') ans=
+F2.noninj.scoped_AB                      vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.noninj.scoped_AB                      vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.noninj.scoped_AB                      vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.noninj.scoped_AB                      vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.noninj.scoped_AB                      vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'INVALID_VERTEX_BINDING') ans=
+F2.noninj.scoped_AB                      vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.noninj.scoped_AB                      vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.cb.D1_vs_pyr2D                        vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.cb.D1_vs_pyr2D                        vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.cb.D1_vs_pyr2D                        vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'INCONSISTENT_FACTS') ans=
+F2.cb.D1_vs_pyr2D                        vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.cb.D1_vs_pyr2D                        vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.cb.D1_vs_pyr2D                        vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.cb.D1_vs_pyr2D                        vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.cb.D1_vs_pyr2D                        vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'INCONSISTENT_FACTS') ans=
+F2.cb.D1_vs_pyr2D                        vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.cb.D1_vs_pyr2D                        vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.cb.pyr1D1_vs_pyr2D                    vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.cb.pyr1D1_vs_pyr2D                    vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.cb.pyr1D1_vs_pyr2D                    vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'INCONSISTENT_FACTS') ans=
+F2.cb.pyr1D1_vs_pyr2D                    vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.cb.pyr1D1_vs_pyr2D                    vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.cb.pyr1D1_vs_pyr2D                    vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.cb.pyr1D1_vs_pyr2D                    vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.cb.pyr1D1_vs_pyr2D                    vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'INCONSISTENT_FACTS') ans=
+F2.cb.pyr1D1_vs_pyr2D                    vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.cb.pyr1D1_vs_pyr2D                    vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.cx.X_vs_prA                           vs main: schema1 head=INVALID_MATH_GOAL main=None
+F2.cx.X_vs_prA                           vs main: schema2 head=INVALID_MATH_GOAL main=None
+F2.cx.X_vs_prA                           vs main: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'INCONSISTENT_FACTS') ans=
+F2.cx.X_vs_prA                           vs main: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.cx.X_vs_prA                           vs main: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') main=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.cx.X_vs_prA                           vs pre: schema1 head=INVALID_MATH_GOAL pre=None
+F2.cx.X_vs_prA                           vs pre: schema2 head=INVALID_MATH_GOAL pre=None
+F2.cx.X_vs_prA                           vs pre: a3 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'INCONSISTENT_FACTS') ans=
+F2.cx.X_vs_prA                           vs pre: pl CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+F2.cx.X_vs_prA                           vs pre: a4 CHANGED head=('REFUSED', 'INVALID_MATH_GOAL') pre=('REFUSED', 'BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY') ans=
+LEAK_OR_EXCEPTION: []
+NEWLY_SERVED_COUNT: 13

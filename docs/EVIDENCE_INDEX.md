@@ -4,8 +4,8 @@
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/target-grammar-identity-recovery/technical-checks.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/target-grammar-identity-recovery/
-CLASSIFICATION = DEVELOPMENT_SECURITY_REGRESSION; continuation of CIC-D1, no new wave; NOT_READY; F1/F2 targeted GREEN; clean compatibility/review pending; publication BLOCKED_PENDING_OWNER_DECISION; F7 prism internal error unresolved.
-VERIFICATION = registration.json; red.json; green.json; mutation-results.json; probes203.json; gate-a.json; gate-b.json; gate-c.json; locked-v2.json; publication-risk.json
+CLASSIFICATION = DEVELOPMENT_SECURITY_REGRESSION; continuation of CIC-D1, no new wave; NOT_READY; F1/F2 targeted GREEN; Gate D PRE_FREEZE_COMPATIBILITY_PASS; independent pre-freeze review READY for that gate (0 MAJOR, 3 MINOR fail-closed); no freeze/T3; publication BLOCKED_PENDING_OWNER_DECISION; F7 prism internal error unresolved.
+VERIFICATION = registration.json; red.json; green.json; mutation-results.json; probes203.json; gate-a.json; gate-b.json; gate-c.json; locked-v2.json; publication-risk.json; gate-d.json; clean-compatibility-supplement.json; s8-proof-current.json; historical-integrity-after.json; pre-freeze-review.md; pre-freeze-review/; handoff.md
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_V2_W3_F2_CIC_D1_LOCKED_CONTRACT_RECOVERY (F1/F2 and F3–F11 correction layer); historical closed-input-contract/operand-grammar.md is superseded by architecture/TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md §5
 CORRECTED_BY = NONE
