@@ -1,51 +1,42 @@
 # Held-out authoring package (for an independent author)
 
-**Status:**
-- `AUTHORING_INDEPENDENCE = NOT_ESTABLISHED`.
-- No author has been named, and the implementer has written **no** case.
-- This folder holds instructions and a template only. It must stay free of real cases until the author delivers them.
+**Status:** `AUTHORING_INDEPENDENCE = NOT_ESTABLISHED`. No author has been named, and the implementer has written **no** case. This folder holds instructions and a template only.
 
 ## Who may author
 
 A person who did not build or tune the system: the Owner, or a teacher the Owner nominates.
-- **Must not:** be the implementer or an AI agent of this repository.
-- **Must not:** look at system outputs for any draft case before the corpus is frozen.
-- **Must:** be named in the Owner GO.
+- Not the implementer, and not an AI agent of this repository.
+- They must not see system outputs for any draft case before the corpus is frozen.
+- They must be named in the Owner GO.
 
-## What to write: 60 problems
+## What to write: 60 problems (protocol §2)
 
-**45 expected-serve:**
-- Natural Vietnamese grade 11–12 solid-geometry problems.
-- Each asks for exact quantities of kind `distance` (lengths count as distances), `angle_cos_sq` (the cosine squared of an angle), `volume`, `area`, `lateral_area` or `radius`.
-- Spread over pyramids, prisms, cuboids and cubes, and over section, distance, angle and volume questions. Give at least 3 per stratum, or the stratum is reported as `INSUFFICIENT_N`.
+**45 expected-serve.** These are natural Vietnamese grade 11–12 solid-geometry problems.
+- Each asks at least one exact quantity. Problems that only ask to construct are excluded.
+- Kinds:
+  - `distance` (lengths count as distances);
+  - `angle_cos_sq` (cos² of an angle) or `angle_cos`;
+  - `volume`, `area`, `lateral_area`, `radius`;
+  - `volume_ratio`, `residual_volume`.
+- Spread the problems over pyramids, prisms, cuboids, cubes **and curved solids**: spheres, cylinders and cones, with π answers. Also spread them over section-with-measure, distance, angle and volume questions. Each stratum needs at least 3 problems, or it is reported as `INSUFFICIENT_N`.
 
-**15 expected-refuse:**
-- 3 out of domain (not solid geometry);
-- 3 curved solids;
-- 3 with contradictory data;
-- 3 with missing data;
-- 3 "chứng minh" (prove) requests.
+**15 expected-refuse.** Give each a `refusal_class` of `OUT_OF_DOMAIN`, `CONTRADICTORY_DATA`, `MISSING_DATA` or `PROOF_REQUEST` (3–4 each).
 
 **Exclude:**
-- Any text copied or adapted from `docs/evaluation/**`, `backend/tests/**` or the frontend samples; the freeze script scans for this.
-- Images.
-- Answers needing nested radicals.
+- symbolic units such as "cạnh a"; use numbers;
+- images;
+- any text copied or adapted from this repository.
 
 ## Oracle rules
 
 - Compute every answer **by hand or with a CAS independent of this repository, before any system run.**
-- Write the **square** of each exact value, as a rational string (for example `"8/3"` for 2√6/3). For `angle_cos_sq`, write cos² itself.
-- If a problem asks for two quantities of the same kind, list both values.
-- For expected-refuse cases, list `acceptable_refusal_codes`. The implementer supplies the code vocabulary from `hybrid_preview.classify_refusal` and the LLM_ONLY `error_code` taxonomy. This is a classification aid only and gives no hint of answers.
-- Note the premise sentences that must be read (source-grounded premise classification), so failures can be attributed.
+- Write exact values: `"8/3"`, `"2√6/3"`, `"36π"`, `"√3/4"`. For `angle_cos_sq`, write cos² itself.
+- If two quantities of one kind are asked, list both.
+- Record the premise sentences that must be read, so failures can be attributed.
 
-## Format
+## Format and freeze
 
-Use `corpus-template.json`, one object per case. Do not include a `dry_run` field: live runs read text only.
-
-## Freeze (before any run)
-
-1. Run `backend/scripts/run_paired_route_evaluation.py --corpus corpus.json --manifest`. It validates the corpus (unique ids and texts, oracle present, kinds known, refusal codes present) and prints `corpus_sha256` with the runtime identity.
-2. Put `corpus_sha256` and the author's name in the Owner approval file and in an amendment to `../live-evaluation-protocol.md`.
-3. After the first live request, the corpus is immutable. Errata go to an amendment and are reported, never silently fixed.
-4. Every case observed in a run becomes development data afterwards. A later blind run needs a new corpus.
+1. Fill in `corpus-template.json`. Do not include a `dry_run` field.
+2. Run `backend/scripts/run_paired_route_evaluation.py --corpus corpus.json --manifest`. It validates the corpus, prints `corpus_sha256` and the runtime identity, and runs the contamination scan. An exact match fails. Near matches are listed for the author to check.
+3. Put the corpus hash, the author's name, the harness hash and the measured-system hash in the Owner approval file. Record them in a protocol amendment as well.
+4. After the first live request the corpus is immutable. Errata go to an amendment and are reported. Every observed case becomes development data for later runs; a new blind run needs a new corpus.

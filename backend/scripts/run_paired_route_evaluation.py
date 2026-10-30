@@ -1,21 +1,23 @@
 # -*- coding: utf-8 -*-
 """Paired LLM_ONLY vs Hybrid evaluation harness — protocol: `docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
-live-evaluation-protocol.md`.
+live-evaluation-protocol.md` (pre-registered rules are cited as §n).
 
 ONE scorer for both arms: the learner-visible target quantities of the served envelope (`scene3d` objects of type
-`quantity` in display group `target`), keyed by their producer kind and compared as multisets of exact squared values —
-never by model-chosen names. Offline by default: `--dry-run` reads recorded arm outputs from the corpus and proves only
-scoring, accounting and statistics (MEASUREMENT_CLASS = OFFLINE_DETERMINISTIC_FIXTURE_TEST). `--live` refuses before any
-request unless ALLOW_LIVE_AI=1, GEMINI_API_KEY and an Owner approval file bound to the corpus hash and caps; then every
-HTTP request of BOTH arms passes `CostCappedBudget` first (request count AND accounted spend + per-request ceiling).
+`quantity` in display group `target`), keyed by producer kind, compared as EXACT numbers (`radical.from_json`, π kept)
+against an oracle written with `radical.parse_exact` (e.g. "36π", "2√6/3") — never by model-chosen names.
+Offline by default: `--dry-run` reads recorded arm outputs and proves only scoring, accounting and statistics
+(MEASUREMENT_CLASS = OFFLINE_DETERMINISTIC_FIXTURE_TEST). `--live` refuses before any request unless ALLOW_LIVE_AI=1,
+GEMINI_API_KEY and an Owner approval file bound to the corpus, measured-system and harness hashes and the caps; then every
+HTTP request of BOTH arms first reserves the exact payload's provable ceiling in `CostCappedBudget`.
 
     cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe scripts/run_paired_route_evaluation.py \
-        --corpus <corpus.json> --out <rows.json> --dry-run          # or --manifest / --live --approval-file <owner.json>
+        --corpus <corpus.json> --out <rows.jsonl> --dry-run          # or --manifest / --live --approval-file <owner.json>
 """
 from __future__ import annotations
 
 import argparse
 import asyncio
+import collections
 import hashlib
 import json
 import math
@@ -23,16 +25,27 @@ import os
 import re
 import sys
 import time
-from fractions import Fraction
+import unicodedata
 from pathlib import Path
 from typing import Any
 
 BACKEND = Path(__file__).resolve().parents[1]
+REPO = BACKEND.parent
 sys.path.insert(0, str(BACKEND))
 
-#: scene3d producer → oracle kind. `measure.distance` covers lengths and distances (both are a distance of two objects).
-KINDS = {"measure.distance": "distance", "measure.angle_cos_sq": "angle_cos_sq", "measure.volume": "volume",
-         "measure.area": "area", "measure.lateral_area": "lateral_area", "measure.radius": "radius"}
+#: scene3d producer → oracle kind (§4). `measure.distance` covers lengths and distances.
+KINDS = {"measure.distance": "distance", "measure.angle_cos_sq": "angle_cos_sq", "measure.angle_cos": "angle_cos",
+         "measure.volume": "volume", "measure.area": "area", "measure.lateral_area": "lateral_area",
+         "measure.radius": "radius", "assign.volume_ratio": "volume_ratio", "assign.residual_volume": "residual_volume"}
+#: Pre-registered refusal classes (§2, §4). Curved solids are NOT a refusal class: LLM_ONLY serves them in production.
+REFUSAL_CLASSES = ("OUT_OF_DOMAIN", "CONTRADICTORY_DATA", "MISSING_DATA", "PROOF_REQUEST")
+#: Hybrid failures of the TRANSPORT/PROVIDER (infrastructure, §4); every other non-served outcome — including a
+#: truncated or invalid model output — counts as "not served" in both arms, because LLM_ONLY cannot tell those apart
+#: either (its invalid outputs are re-asked and end as `geometry_generation_failed`).
+HYBRID_INFRASTRUCTURE = {"PROVIDER_ERROR", "PROVIDER_BLOCKED", "PROVIDER_REFUSED", "LIVE_AI_DISABLED",
+                         "HYBRID_DEADLINE_EXCEEDED", "HYBRID_CANCELLED", "EXTRACTOR_INTERNAL_ERROR"}
+PROVIDER_BLOCK = {"PROVIDER_BLOCKED", "PROVIDER_REFUSED"}
+ARM_ORDER_SEED = "hybrid-master-paired/2026-10-31"     # §3: per-case arm order, fixed before any corpus exists
 PROMPT_FRAMING_RESERVE = 4096          # same conservative estimator as `run_hybrid_ab_pilot.reserve_payload`
 MODEL_OUTPUT_LIMIT = 65536             # gemini-2.5-flash, thinking included (provider-facts.md, read 2026-10-31)
 #: Hybrid's cooperative deadline in the live harness: all transport attempts × the per-attempt timeout. The offline
@@ -46,80 +59,88 @@ class LiveRefused(RuntimeError):
     """The live path is not authorized or the corpus is invalid; raised BEFORE any request."""
 
 
+def sha256_bytes(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
 def sha256_file(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    return sha256_bytes(path.read_bytes())
+
+
+def _norm(text: str) -> str:
+    return " ".join(unicodedata.normalize("NFC", text).lower().split())
+
+
+def parse_oracle(value: str):
+    from app.simulation.geometry.radical import parse_exact
+    x = parse_exact(value)
+    if x is None:
+        raise LiveRefused(f"oracle value {value!r} is not an exact number (radical.parse_exact grammar)")
+    return x
 
 
 # ── corpus and identity ──────────────────────────────────────────────────────────────────────────────────────────────
 
 def validate_corpus(corpus: dict[str, Any]) -> None:
-    """Refuse a corpus that cannot be scored fairly: duplicate ids or texts (a duplicate request), an expected-serve
-    case without an exact oracle, an unknown oracle kind, or an expected-refuse case without acceptable codes."""
+    """Refuse a corpus that cannot be scored fairly (§2): duplicate ids or (normalized) texts, an expected-serve case
+    without an exact oracle over known kinds (construction-only problems are excluded), or an expected-refuse case
+    without one pre-registered refusal class."""
     cases = corpus.get("cases")
     if not isinstance(cases, list) or not cases:
         raise LiveRefused("corpus has no cases")
     ids = [c.get("id") for c in cases]
-    texts = [c.get("problem_text") for c in cases]
+    texts = [_norm(c["problem_text"]) for c in cases if isinstance(c.get("problem_text"), str)]
+    if len(texts) != len(cases) or any(not t for t in texts):
+        raise LiveRefused("every case needs a non-empty problem text")
     if len(set(ids)) != len(ids) or len(set(texts)) != len(texts):
         raise LiveRefused("duplicate case id or problem text")
     for c in cases:
-        if not isinstance(c.get("problem_text"), str) or not c["problem_text"].strip():
-            raise LiveRefused(f"{c.get('id')}: empty problem text")
         if c.get("expect") == "SERVE":
             oracle = c.get("oracle") or {}
-            if not oracle or set(oracle) - set(KINDS.values()):
+            if not oracle or set(oracle) - set(KINDS.values()) or not all(oracle.values()):
                 raise LiveRefused(f"{c['id']}: expected-serve case needs an oracle over {sorted(set(KINDS.values()))}")
             for values in oracle.values():
-                [Fraction(v) for v in values]
+                [parse_oracle(v) for v in values]
         elif c.get("expect") == "REFUSE":
-            if not c.get("acceptable_refusal_codes"):
-                raise LiveRefused(f"{c['id']}: expected-refuse case needs acceptable_refusal_codes")
+            if c.get("refusal_class") not in REFUSAL_CLASSES:
+                raise LiveRefused(f"{c['id']}: expected-refuse case needs refusal_class in {REFUSAL_CLASSES}")
         else:
             raise LiveRefused(f"{c.get('id')}: expect must be SERVE or REFUSE")
 
 
-#: Opened material a held-out text must not come from (heldout-authoring/README.md).
-CONTAMINATION_ROOTS = ("docs/evaluation", "backend/tests", "frontend/src/data")
+#: Opened material a held-out text must not come from: the whole repository, minus build/vendor trees (§2).
+_SKIP_DIRS = {".git", "node_modules", ".venv", "dist", "__pycache__", ".superpowers", ".playwright-mcp"}
+_TEXT_SUFFIXES = {".json", ".jsonl", ".md", ".py", ".ts", ".tsx", ".mjs", ".js", ".txt", ".html", ".csv"}
+_ESCAPE = re.compile(r"\\u([0-9a-fA-F]{4})")
 
 
-def _norm(text: str) -> str:
-    return " ".join(text.lower().split())
-
-
-def contamination_scan(corpus: dict[str, Any], repo: Path = BACKEND.parent) -> dict[str, list[str]]:
-    """`{case id: [files containing its normalized problem text]}` over opened material. JSON files are decoded first
-    (many store Vietnamese as \\u escapes), so a copy is found whatever the escaping."""
-    wanted = {c["id"]: _norm(c["problem_text"]) for c in corpus["cases"]}
-    hits: dict[str, list[str]] = {}
-
-    def strings(v: Any):
-        if isinstance(v, str):
-            yield v
-        elif isinstance(v, dict):
-            for x in v.values():
-                yield from strings(x)
-        elif isinstance(v, list):
-            for x in v:
-                yield from strings(x)
-
-    for root in CONTAMINATION_ROOTS:
-        for path in (repo / root).rglob("*"):
-            if not path.is_file() or path.suffix not in (".json", ".md", ".py", ".ts", ".tsx", ".txt", ".jsonl"):
-                continue
-            try:
-                raw = path.read_text(encoding="utf-8")
-            except (UnicodeDecodeError, OSError):
-                continue
-            text = raw
-            if path.suffix == ".json":
-                try:
-                    text = "\n".join(strings(json.loads(raw)))
-                except ValueError:
-                    pass
-            haystack = _norm(text)
-            for cid, needle in wanted.items():
-                if needle and needle in haystack:
-                    hits.setdefault(cid, []).append(path.relative_to(repo).as_posix())
+def contamination_scan(corpus: dict[str, Any], repo: Path = REPO, exclude: Path | None = None,
+                       shingle: int = 8) -> dict[str, dict[str, list[str]]]:
+    """`{case id: {"exact": [files], "near": [files sharing ≥ half of its 8-word shingles]}}` over the repository.
+    Text is NFC-normalized, lower-cased, whitespace-collapsed, with `\\uXXXX` escapes decoded (JSON and source
+    literals). LIMITS (stated, not hidden): a paraphrase, a changed number inside every shingle, or a literal split
+    across source lines is NOT detected; independence still rests on the author."""
+    exact = {c["id"]: _norm(c["problem_text"]) for c in corpus["cases"]}
+    grams: dict[str, set[str]] = {}
+    for cid, text in exact.items():
+        words = text.split()
+        grams[cid] = {" ".join(words[i:i + shingle]) for i in range(max(1, len(words) - shingle + 1))}
+    hits: dict[str, dict[str, list[str]]] = {}
+    for path in repo.rglob("*"):
+        if (not path.is_file() or path.suffix not in _TEXT_SUFFIXES or _SKIP_DIRS & set(path.parts)
+                or (exclude is not None and path.resolve() == exclude.resolve())):
+            continue
+        try:
+            raw = path.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            continue
+        haystack = _norm(_ESCAPE.sub(lambda m: chr(int(m.group(1), 16)), raw))
+        rel = path.relative_to(repo).as_posix()
+        for cid, needle in exact.items():
+            if needle in haystack:
+                hits.setdefault(cid, {"exact": [], "near": []})["exact"].append(rel)
+            elif sum(g in haystack for g in grams[cid]) * 2 >= len(grams[cid]):
+                hits.setdefault(cid, {"exact": [], "near": []})["near"].append(rel)
     return hits
 
 
@@ -137,42 +158,55 @@ def runtime_identity() -> dict[str, str]:
             "model": gemini.MODEL, "skills_sha256": skills.hexdigest(), "harness_sha256": sha256_file(Path(__file__))}
 
 
-# ── scoring ──────────────────────────────────────────────────────────────────────────────────────────────────────────
+# ── scoring (§4) ─────────────────────────────────────────────────────────────────────────────────────────────────────
 
-def exact_squared(exact: dict[str, Any]) -> Fraction:
-    if exact.get("kind") == "rational":
-        return Fraction(exact["value"]) ** 2
-    if exact.get("kind") == "radical":
-        return Fraction(exact["coefficient"]) ** 2 * Fraction(exact["radicand"])
-    raise ValueError(f"unsupported exact form {exact!r}")
-
-
-def served_quantities(envelope: dict[str, Any] | None) -> dict[str, list[Fraction]]:
-    """Target quantities the learner sees, by kind, as sorted squared exact values (cos² is compared as is). An unknown
-    producer is kept under its own name so it can never silently satisfy an oracle kind."""
-    out: dict[str, list[Fraction]] = {}
+def served_quantities(envelope: dict[str, Any] | None) -> dict[str, list]:
+    """Target quantities the learner sees, by kind, as exact numbers (π kept). Unknown producers keep their own name
+    so they can never satisfy an oracle kind; an unreadable exact form raises (→ SCORER_ERROR, never a guess)."""
+    from app.simulation.geometry.radical import from_json
+    out: dict[str, list] = {}
     for o in ((envelope or {}).get("scene3d") or {}).get("objects", []):
         if o.get("type") == "quantity" and "target" in (o.get("display_group") or []) and o.get("exact"):
-            kind = KINDS.get(o.get("producer"), str(o.get("producer")))
-            value = Fraction(o["exact"]["value"]) if kind == "angle_cos_sq" else exact_squared(o["exact"])
-            out.setdefault(kind, []).append(value)
-    return {k: sorted(v) for k, v in out.items()}
+            out.setdefault(KINDS.get(o.get("producer"), str(o.get("producer"))), []).append(from_json(o["exact"]))
+    return out
 
 
-def score(case: dict[str, Any], envelope: dict[str, Any] | None) -> dict[str, Any]:
+def _contains(served: list, wanted: list) -> bool:
+    left = collections.Counter(map(str, served))
+    need = collections.Counter(map(str, wanted))
+    return all(left[k] >= n for k, n in need.items())
+
+
+def refusal_class(arm: str, envelope: dict[str, Any] | None, code: str | None) -> str:
+    """Pre-registered arm → class map (§4). What an arm does not state is `UNSPECIFIC`, never a guess."""
+    env = envelope or {}
+    if env.get("failure_category") in ("out_of_scope", "not_simulation_suitable"):
+        return "OUT_OF_DOMAIN"
+    if arm == "HYBRID" and code:
+        from app.ai.hybrid_preview import classify_refusal
+        return {"INVALID_DATA": "CONTRADICTORY_DATA", "MISSING_DATA": "MISSING_DATA",
+                "INCONCLUSIVE": "PROOF_REQUEST"}.get(classify_refusal(code).group, "UNSPECIFIC")
+    return "UNSPECIFIC"
+
+
+def score(case: dict[str, Any], envelope: dict[str, Any] | None, arm: str = "HYBRID") -> dict[str, Any]:
+    """Primary rule (§4): served-correct ⇔ served ∧ expected-serve ∧ every oracle value is among the served targets of
+    its kind. Sensitivity rule `served_correct_strict`: additionally no other value of an asked kind is shown."""
     served = bool(envelope) and envelope.get("status") == "ok" and bool((envelope.get("scene3d") or {}).get("objects"))
     got = served_quantities(envelope) if served else {}
     expect_serve = case["expect"] == "SERVE"
-    oracle = {k: sorted(Fraction(v) for v in vs) for k, vs in (case.get("oracle") or {}).items()}
-    correct = served and expect_serve and got == oracle          # an extra or missing served target is not correct
+    oracle = {k: [parse_oracle(v) for v in vs] for k, vs in (case.get("oracle") or {}).items()}
+    correct = served and expect_serve and all(_contains(got.get(k, []), v) for k, v in oracle.items())
+    extra = {k: [str(x) for x in got.get(k, []) if str(x) not in set(map(str, v))] for k, v in oracle.items()}
+    extra = {k: v for k, v in extra.items() if v}
     code = (envelope or {}).get("error_code") or (envelope or {}).get("reason_code")
-    return {"served": served, "served_correct": correct,
-            "wrong_served": served and not correct,
-            "false_refusal": expect_serve and not served,
-            "refusal_reason_correct": (not expect_serve and not served
-                                       and code in case.get("acceptable_refusal_codes", [])),
-            "refusal_code": None if served else code,
-            "served_quantities": {k: [str(x) for x in v] for k, v in got.items()}}
+    klass = None if served else refusal_class(arm, envelope, code)
+    return {"served": served, "served_correct": correct, "served_correct_strict": correct and not extra,
+            "wrong_served": served and not correct, "false_refusal": expect_serve and not served,
+            "refusal_reason_correct": not expect_serve and not served and klass == case.get("refusal_class"),
+            "refusal_code": None if served else code, "refusal_class": klass, "extra_same_kind_values": extra,
+            "served_quantities": {k: [str(x) for x in v] for k, v in got.items()},
+            "stage_reached": (envelope or {}).get("stage_reached")}
 
 
 def wilson(k: int, n: int, z: float = 1.959964) -> tuple[float, float] | None:
@@ -186,7 +220,7 @@ def wilson(k: int, n: int, z: float = 1.959964) -> tuple[float, float] | None:
 
 
 def mcnemar_exact(b: int, c: int) -> float:
-    """Two-sided exact binomial p-value on the discordant pairs (b: only arm 1 right, c: only arm 2 right)."""
+    """Two-sided exact binomial p-value on the discordant pairs (b: only arm 1 has it, c: only arm 2)."""
     n = b + c
     if n == 0:
         return 1.0
@@ -203,9 +237,10 @@ def _quantile(xs: list[float], q: float) -> float | None:
 
 
 def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
-    arms = sorted({r["arm"] for r in rows})
+    """Denominators (§4): served-correct over expected-serve cases; wrong-served over all cases; technical failures
+    count as not served-correct and are reported separately; refusals of negatives exclude technical failures."""
     out: dict[str, Any] = {}
-    for arm in arms:
+    for arm in sorted({r["arm"] for r in rows}):
         rs = [r for r in rows if r["arm"] == arm]
         pos = [r for r in rs if r["expect"] == "SERVE"]
         neg = [r for r in rs if r["expect"] != "SERVE"]
@@ -213,13 +248,18 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
         ok = sum(r["served_correct"] for r in rs)
         unknown = any(u == "UNKNOWN" for u in usd)
         out[arm] = {
-            "n": len(rs), "served_correct": ok, "served_correct_ci95": wilson(ok, len(pos)),
+            "n": len(rs), "expected_serve": len(pos), "served_correct": ok,
+            "served_correct_ci95": wilson(ok, len(pos)),
+            "served_correct_strict": sum(r["served_correct_strict"] for r in rs),
             "wrong_served": sum(r["wrong_served"] for r in rs),
             "wrong_served_ci95": wilson(sum(r["wrong_served"] for r in rs), len(rs)),
             "false_refusal": sum(r["false_refusal"] for r in pos),
-            "negatives_refused": sum(not r["served"] for r in neg), "negatives": len(neg),
+            "negatives": len(neg), "negatives_refused": sum(not r["served"] and not r["technical_failure"] for r in neg),
+            "negatives_technical": sum(r["technical_failure"] for r in neg),
             "refusal_reason_correct": sum(r["refusal_reason_correct"] for r in neg),
             "technical_failures": sum(r["technical_failure"] for r in rs),
+            "scorer_errors": sum(r.get("outcome") == "SCORER_ERROR" for r in rs),
+            "repair_attempts": sum(r["repair_attempts"] for r in rs if isinstance(r["repair_attempts"], int)),
             "latency_median_s": _quantile([r["latency_s"] for r in rs], 0.5),
             "latency_p90_s": _quantile([r["latency_s"] for r in rs], 0.9),
             "usd_total": "UNKNOWN" if unknown else sum(usd),
@@ -229,12 +269,19 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
     if rows:                   # always reported, so a run stopped inside its first arm still names its unpaired cases
         a, b = "HYBRID", "LLM_ONLY"
         by = {(r["case_id"], r["arm"]): r for r in rows}
-        ids = sorted({i for i, _ in by if (i, a) in by and (i, b) in by})    # a stopped run may leave one arm only
-        only_a = sum(by[i, a]["served_correct"] and not by[i, b]["served_correct"] for i in ids)
-        only_b = sum(by[i, b]["served_correct"] and not by[i, a]["served_correct"] for i in ids)
+        ids = sorted({i for i, _ in by if (i, a) in by and (i, b) in by})
+
+        def disc(field):
+            return (sum(by[i, a][field] and not by[i, b][field] for i in ids),
+                    sum(by[i, b][field] and not by[i, a][field] for i in ids))
+
+        (oa, ob), (wa, wb) = disc("served_correct"), disc("wrong_served")
         out["paired"] = {"arms": [a, b], "complete_pairs": len(ids),
                          "unpaired_cases": sorted({r["case_id"] for r in rows} - set(ids)),
-                         f"only_{a}": only_a, f"only_{b}": only_b, "mcnemar_p": mcnemar_exact(only_a, only_b)}
+                         f"served_correct_only_{a}": oa, f"served_correct_only_{b}": ob,
+                         "served_correct_mcnemar_p": mcnemar_exact(oa, ob),
+                         f"wrong_served_only_{a}": wa, f"wrong_served_only_{b}": wb,
+                         "wrong_served_mcnemar_p": mcnemar_exact(wa, wb)}
     return out
 
 
@@ -249,40 +296,51 @@ def authorize_live(corpus_path: Path, approval_path: Path | None) -> dict[str, A
     approval = json.loads(approval_path.read_text(encoding="utf-8"))
     if approval.get("owner_decision") != "APPROVED_BY_USER":
         raise LiveRefused("approval is not APPROVED_BY_USER")
-    return check_approval_terms(corpus_path, approval)
+    return check_approval_terms(corpus_path.read_bytes(), approval)
 
 
-def check_approval_terms(corpus_path: Path, approval: dict[str, Any]) -> dict[str, Any]:
-    """The approved terms themselves (tests exercise this directly — automation never writes an approval value)."""
-    if approval.get("corpus_sha256") != sha256_file(corpus_path):
+def check_approval_terms(corpus_bytes: bytes, approval: dict[str, Any]) -> dict[str, Any]:
+    """The approved terms themselves, against the EXACT corpus bytes that will be run (tests exercise this directly —
+    automation never writes an approval value)."""
+    if approval.get("corpus_sha256") != sha256_bytes(corpus_bytes):
         raise LiveRefused("corpus hash differs from the approved one")
     for key in ("max_requests", "max_usd", "input_usd_per_million", "output_usd_per_million", "model",
-                "llm_only_output_reservation_tokens"):
+                "llm_only_output_reservation_tokens", "measured_system", "harness_sha256"):
         if key not in approval:
             raise LiveRefused(f"approval lacks {key}")
-    from app.ai import gemini
-    if approval["model"] != gemini.MODEL:
-        raise LiveRefused("model differs from the approved one")
+    identity = runtime_identity()
+    for key in ("model", "measured_system", "harness_sha256"):
+        if approval[key] != identity[key]:
+            raise LiveRefused(f"{key} differs from the approved one")
     if int(approval["llm_only_output_reservation_tokens"]) < MODEL_OUTPUT_LIMIT:
         raise LiveRefused("LLM_ONLY sets no output cap: the reservation must be at least the model output limit")
-    corpus = json.loads(corpus_path.read_text(encoding="utf-8"))
+    corpus = json.loads(corpus_bytes.decode("utf-8"))
     validate_corpus(corpus)
     worst = worst_case_request_usd(corpus, approval)
     if approval["max_requests"] * worst > approval["max_usd"]:
-        raise LiveRefused(f"max_requests × worst-case request cost ({approval['max_requests']} × {worst:.4f} USD) "
+        raise LiveRefused(f"max_requests × estimated request cost ({approval['max_requests']} × {worst:.4f} USD) "
                           f"exceeds max_usd {approval['max_usd']}")
     return approval
 
 
 def worst_case_request_usd(corpus: dict[str, Any], approval: dict[str, Any]) -> float:
-    """Conservative per-request ceiling: 1 char ≥ 1 token plus framing for input; output at the approved reservation,
-    which must cover the model's own limit because the LLM_ONLY arm sets no `maxOutputTokens` (thinking included)."""
+    """Planning ESTIMATE only (the enforced bound is `request_ceiling_usd` of each exact payload)."""
     from app.ai.function_calling import MAX_OUTPUT_TOKENS as HYBRID_OUTPUT_CAP
 
     longest = max(len(c["problem_text"]) for c in corpus["cases"])
     prompt = max(MEASURED_OVERHEAD_CHARS.values()) + 3 * longest + PROMPT_FRAMING_RESERVE
     output = max(HYBRID_OUTPUT_CAP, int(approval["llm_only_output_reservation_tokens"]))
     return prompt * approval["input_usd_per_million"] / 1e6 + output * approval["output_usd_per_million"] / 1e6
+
+
+def request_ceiling_usd(payload: Any, approval: dict[str, Any]) -> float:
+    """Ceiling of ONE request from the exact payload about to be sent: input tokens ≤ UTF-8 bytes of the whole request
+    JSON (system instruction and schema included; byte-fallback tokenization — an assumption, stated in the protocol),
+    output tokens ≤ the request's own `maxOutputTokens`, else the model limit (thinking included)."""
+    body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+    cap = ((payload or {}).get("generationConfig") or {}).get("maxOutputTokens") if isinstance(payload, dict) else None
+    out = min(int(cap), MODEL_OUTPUT_LIMIT) if isinstance(cap, int) and cap > 0 else MODEL_OUTPUT_LIMIT
+    return len(body) * approval["input_usd_per_million"] / 1e6 + out * approval["output_usd_per_million"] / 1e6
 
 
 def usd(usage: dict[str, dict[str, int]], approval: dict[str, Any] | None) -> float | str:
@@ -293,21 +351,11 @@ def usd(usage: dict[str, dict[str, int]], approval: dict[str, Any] | None) -> fl
     return tin * approval["input_usd_per_million"] / 1e6 + tout * approval["output_usd_per_million"] / 1e6
 
 
-def request_ceiling_usd(payload: Any, approval: dict[str, Any]) -> float:
-    """PROVABLE ceiling of ONE request, from the exact payload about to be sent: input tokens ≤ UTF-8 bytes of the
-    request JSON (byte-fallback tokenization: every token covers ≥ 1 byte), output tokens ≤ the request's own
-    `maxOutputTokens`, else the model limit (thinking included, provider-facts.md)."""
-    body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
-    cap = ((payload or {}).get("generationConfig") or {}).get("maxOutputTokens") if isinstance(payload, dict) else None
-    out = min(int(cap), MODEL_OUTPUT_LIMIT) if isinstance(cap, int) and cap > 0 else MODEL_OUTPUT_LIMIT
-    return len(body) * approval["input_usd_per_million"] / 1e6 + out * approval["output_usd_per_million"] / 1e6
-
-
 def _cost_capped_budget(approval: dict[str, Any]):
     """`gemini.ApiBudget` (the request cap `call_gemini` and `live_transport` already honour) plus a USD guard applied to
-    the EXACT payload right before it is sent (`reserve`, called by the send interceptor of `evaluate`): spend of
-    finished arms + this arm's reported usage + every sent request without reported usage at its own ceiling + the
-    next request's ceiling must stay ≤ max_usd. A sent request cannot be un-billed; this bound makes that irrelevant."""
+    the EXACT payload right before it is sent (`reserve`, called by `_guard_sends`): spend of finished arms + this arm's
+    reported usage + every sent request without reported usage at its own ceiling + the next request's ceiling must stay
+    ≤ max_usd. Requests are sequential (one arm at a time, `run_pipeline` awaits each call)."""
     from app.ai import gemini
     from app.ai.telemetry import usage_report
 
@@ -316,6 +364,7 @@ def _cost_capped_budget(approval: dict[str, Any]):
             super().__init__(max_api_calls=int(approval["max_requests"]))
             self.spent_before_arm = 0.0
             self.arm_ceilings: list[float] = []
+            self.arm_start_requests = 0
             self.stop_reason: str | None = None
 
         def start_arm(self, spent: float) -> None:
@@ -346,8 +395,8 @@ def _cost_capped_budget(approval: dict[str, Any]):
 
 
 def _guard_sends(budget, approval: dict[str, Any]):
-    """Wrap both HTTP send points (`httpx.post` of the Hybrid transport, `httpx.AsyncClient.post` of `call_gemini`) so
-    every request reserves its exact ceiling first. Returns an undo function; behaviour is otherwise unchanged."""
+    """Wrap the only two send points in `app` (`httpx.post` of `live_transport`, `httpx.AsyncClient.post` of
+    `call_gemini`) so every request reserves its exact ceiling first. Returns an undo function."""
     import httpx
 
     sync_post, async_post = httpx.post, httpx.AsyncClient.post
@@ -370,12 +419,21 @@ def _guard_sends(budget, approval: dict[str, Any]):
 # ── arms ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
 def run_hybrid(text: str, extractor, deadline_s: float = 15.0) -> tuple[dict[str, Any] | None, dict[str, Any]]:
+    """The production opt-in path minus HTTP: the same domain gate as `/api/analyze` (`main._ngoai_pham_vi`), then
+    `run_hybrid_offline`."""
     from app.ai.hybrid_offline import hybrid_offline_policy, run_hybrid_offline
+    from app.main import _ngoai_pham_vi
+
+    out_of_scope = _ngoai_pham_vi(text)
+    if out_of_scope is not None:
+        return out_of_scope, {"hybrid_code": out_of_scope.get("error_code"), "source_references": []}
     result = run_hybrid_offline(text, extractor, policy=hybrid_offline_policy({"HYBRID_ROUTE_D_PREVIEW": "1"}),
                                 timeout_seconds=deadline_s)
-    return result.response.get("envelope"), {"source_references": result.receipt["source_references"],
-                                              "failure_kind": result.receipt["failure_kind"],
-                                              "hybrid_code": result.receipt.get("code")}
+    stages = {s["name"]: s for s in result.receipt["stages"]}
+    return result.response.get("envelope"), {
+        "source_references": result.receipt["source_references"], "hybrid_code": result.receipt.get("code"),
+        "extraction_valid": "extraction" in stages and stages["extraction"]["code"] is None,
+        "source_grounding": result.receipt["source_gate"]["status"]}
 
 
 async def run_llm_only(text: str, api_key: str) -> dict[str, Any]:
@@ -385,8 +443,7 @@ async def run_llm_only(text: str, api_key: str) -> dict[str, Any]:
 
 def hybrid_transport(api_key: str, sleep=time.sleep):
     """The existing `function_calling.live_transport` (key in a header, `ApiBudget` before each send, usage recorded),
-    with the SAME transient-retry policy and per-attempt timeout as `gemini.call_gemini`, so both arms get the same
-    reliability treatment. Each retry is a new budgeted request."""
+    with the SAME transient-retry policy and per-attempt timeout as `gemini.call_gemini`."""
     import httpx
 
     from app.ai import gemini
@@ -411,6 +468,11 @@ def hybrid_transport(api_key: str, sleep=time.sleep):
     return send
 
 
+def arm_order(case_id: str) -> tuple[str, str]:
+    first = int(hashlib.sha256(f"{ARM_ORDER_SEED}:{case_id}".encode()).hexdigest(), 16) % 2
+    return ("HYBRID", "LLM_ONLY") if first == 0 else ("LLM_ONLY", "HYBRID")
+
+
 # ── run ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
 def main(argv: list[str] | None = None) -> int:
@@ -420,16 +482,16 @@ def main(argv: list[str] | None = None) -> int:
     mode = p.add_mutually_exclusive_group(required=True)
     mode.add_argument("--dry-run", action="store_true")
     mode.add_argument("--live", action="store_true")
-    mode.add_argument("--manifest", action="store_true", help="validate the corpus and print its hash; no run")
+    mode.add_argument("--manifest", action="store_true", help="validate the corpus, scan for contamination; no run")
     p.add_argument("--approval-file", type=Path)
     a = p.parse_args(argv)
     if a.manifest:
         corpus = json.loads(a.corpus.read_text(encoding="utf-8"))
         validate_corpus(corpus)
-        hits = contamination_scan(corpus)
+        hits = contamination_scan(corpus, exclude=a.corpus)
         print(json.dumps({"corpus_sha256": sha256_file(a.corpus), "runtime_identity": runtime_identity(),
-                          "contaminated_cases": hits}, ensure_ascii=False, indent=1))
-        return 1 if hits else 0
+                          "contamination": hits}, ensure_ascii=False, indent=1))
+        return 1 if any(h["exact"] for h in hits.values()) else 0
     if a.out is None:
         p.error("--out is required for a run")
     approval = authorize_live(a.corpus, a.approval_file) if a.live else None
@@ -439,27 +501,42 @@ def main(argv: list[str] | None = None) -> int:
 
 
 def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None, *, sleep=time.sleep) -> dict[str, Any]:
-    """`approval is None` ⇒ dry run from recorded arm outputs; otherwise live under the approved terms. A stopped run is
-    final and reported as such; the output file is never overwritten."""
+    """`approval is None` ⇒ dry run from recorded arm outputs; otherwise live under the approved terms, re-checked here
+    against the exact corpus bytes that are run. The JSONL output is created BEFORE the first request and every row is
+    flushed as it completes, so a crash or a stop never loses a paid result; it is never overwritten."""
     from app.ai import gemini
     from app.ai.telemetry import reset_usage, usage_report
     from app.ai.typed_fact_next_extraction import ReplayExtractor, TransportExtractor
 
     live = approval is not None
-    corpus = json.loads(corpus_path.read_text(encoding="utf-8"))
+    corpus_bytes = corpus_path.read_bytes()
+    if live:
+        check_approval_terms(corpus_bytes, approval)
+    corpus = json.loads(corpus_bytes.decode("utf-8"))
     validate_corpus(corpus)
     identity = runtime_identity()
+    sink = out_path.open("x", encoding="utf-8", newline="\n")
+
+    def emit(record: dict[str, Any]) -> None:
+        sink.write(json.dumps(record, ensure_ascii=False, default=str) + "\n")
+        sink.flush()
+
+    emit({"type": "header", "measurement_class": "PREREGISTERED_LIVE_PAIRED_EVALUATION" if live
+          else "OFFLINE_DETERMINISTIC_FIXTURE_TEST", "corpus_sha256": sha256_bytes(corpus_bytes),
+          "runtime_identity": identity, "arm_order_seed": ARM_ORDER_SEED})
     budget = _cost_capped_budget(approval) if live else None
     gemini.set_budget(budget)
     undo_guard = _guard_sends(budget, approval) if live else (lambda: None)
     rows: list[dict[str, Any]] = []
-    spent, technical_streak, stop_reason = 0.0, 0, None
+    spent, technical_streak, stop_reason, stopped_arms = 0.0, 0, None, {}
     try:
         for case in corpus["cases"]:
             if live and runtime_identity() != identity:
                 stop_reason = "IDENTITY_CHANGED"
                 break
-            for arm in ("HYBRID", "LLM_ONLY"):
+            for arm in arm_order(case["id"]):
+                if arm in stopped_arms:
+                    continue
                 reset_usage()
                 if budget is not None:
                     budget.start_arm(spent)
@@ -481,32 +558,45 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
                             deadline_s=HYBRID_LIVE_DEADLINE_S)
                     else:
                         envelope = asyncio.run(run_llm_only(case["problem_text"], os.environ["GEMINI_API_KEY"]))
-                    technical = extra.get("failure_kind") == "TECHNICAL_FAILURE"
+                    technical = arm == "HYBRID" and extra.get("hybrid_code") in HYBRID_INFRASTRUCTURE
                 except gemini.BudgetExceeded:
                     technical = True
                 except Exception as exc:  # noqa: BLE001 — recorded as infrastructure, never as a model/geometry result
                     technical, extra = True, {"exception": type(exc).__name__}
                 usage = usage_report()
                 upper = budget.arm_upper() if budget is not None else "UNKNOWN"
-                row = {"case_id": case["id"], "arm": arm, "expect": case["expect"],
+                program_calls = (usage.get("semantic_program") or {}).get("calls") if usage else None
+                row = {"type": "row", "case_id": case["id"], "arm": arm, "expect": case["expect"],
                        "latency_s": time.perf_counter() - start, "usage": usage or "UNKNOWN",
                        "requests_with_usage": sum(v.get("calls", 0) for v in usage.values()) if usage else "UNKNOWN",
                        "http_requests": (budget.http_requests - budget.arm_start_requests) if budget else 0,
-                       "usd": usd(usage, approval), "usd_upper": upper, "technical_failure": technical,
-                       **score(case, envelope), **extra}
+                       "repair_attempts": 0 if arm == "HYBRID" else (max(0, program_calls - 1)
+                                                                     if isinstance(program_calls, int) else "UNKNOWN"),
+                       "usd": usd(usage, approval), "usd_upper": upper, "technical_failure": technical, **extra}
+                try:
+                    row.update(score(case, envelope, arm), outcome="SCORED")
+                except Exception as exc:  # noqa: BLE001 — never lose a paid row to a scorer bug
+                    row.update(served=False, served_correct=False, served_correct_strict=False, wrong_served=False,
+                               false_refusal=False, refusal_reason_correct=False, outcome="SCORER_ERROR",
+                               scorer_error=type(exc).__name__)
                 if technical:          # an infrastructure failure is never scored as a model or geometry outcome
                     row.update(false_refusal=False, refusal_reason_correct=False)
                 rows.append(row)
+                emit(row)
                 spent += upper if isinstance(upper, float) else 0.0
                 technical_streak = technical_streak + 1 if technical else 0
+                if row["served"] and case["expect"] != "SERVE":
+                    stopped_arms[arm] = "SERVED_EXPECTED_REFUSAL"          # §5.1: stop THAT arm, report it
                 if budget is not None and budget.aborted:
-                    stop_reason = budget.stop_reason or "REQUEST_CAP"   # TransportExtractor wraps BudgetExceeded
-                elif row["served"] and case["expect"] != "SERVE":
-                    stop_reason = "SERVED_EXPECTED_REFUSAL"
+                    stop_reason = budget.stop_reason or "REQUEST_CAP"       # TransportExtractor wraps BudgetExceeded
+                elif extra.get("hybrid_code") in PROVIDER_BLOCK:
+                    stop_reason = "PROVIDER_BLOCK"
                 elif live and spent >= 0.8 * approval["max_usd"]:
                     stop_reason = "USD_80_PERCENT"
                 elif technical_streak >= 3:
                     stop_reason = "INFRASTRUCTURE_STREAK"
+                elif len(stopped_arms) == 2:
+                    stop_reason = "BOTH_ARMS_STOPPED"
                 if stop_reason:
                     break
             if stop_reason:
@@ -514,15 +604,14 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
     finally:
         undo_guard()
         gemini.set_budget(None)
-    out = {"measurement_class": "PREREGISTERED_LIVE_PAIRED_EVALUATION" if live
-           else "OFFLINE_DETERMINISTIC_FIXTURE_TEST",
-           "corpus_sha256": sha256_file(corpus_path), "runtime_identity": identity, "stop_reason": stop_reason,
-           "completed": stop_reason is None, "http_requests": budget.http_requests if budget else 0,
-           "spent_upper_usd": spent if live else 0.0, "rows": rows, "summary": summarize(rows)}
-    with out_path.open("x", encoding="utf-8", newline="\n") as f:
-        json.dump(out, f, ensure_ascii=False, indent=1, default=str)
-        f.write("\n")
-    return out
+        out = {"type": "summary", "stop_reason": stop_reason, "stopped_arms": stopped_arms,
+               "completed": stop_reason is None and not stopped_arms,
+               "http_requests": budget.http_requests if budget else 0, "spent_upper_usd": spent if live else 0.0,
+               "summary": summarize(rows)}
+        emit(out)
+        sink.close()
+    return {**out, "measurement_class": "PREREGISTERED_LIVE_PAIRED_EVALUATION" if live
+            else "OFFLINE_DETERMINISTIC_FIXTURE_TEST", "runtime_identity": identity, "rows": rows}
 
 
 if __name__ == "__main__":

@@ -1,6 +1,20 @@
 # Live harness status — `backend/scripts/run_paired_route_evaluation.py`
 
-**Locks:** `backend/tests/test_paired_route_evaluation.py`, 27 tests, offline. The live path runs against a **mock provider**: `httpx.post` / `httpx.AsyncClient.post` are replaced, and the conftest transport guard still blocks the real network. A mock run is never live evidence.
+**Locks:** `backend/tests/test_paired_route_evaluation.py`, 32 tests, offline.
+
+**Revised 2026-10-31** after the readiness review (`evaluation-readiness-review.md`):
+- exact-number oracles with π;
+- `assign.*` producers;
+- the pre-registered asked-target rule;
+- per-arm stop;
+- a unified technical rule;
+- streamed JSONL with `SCORER_ERROR`;
+- seeded order;
+- the production domain gate on Hybrid;
+- the approval bound to the measured-system and harness hashes;
+- a whole-repo contamination scan with near-match reporting.
+
+Rows below that predate this revision are superseded where they conflict. The live path runs against a **mock provider**: `httpx.post` / `httpx.AsyncClient.post` are replaced, and the conftest transport guard still blocks the real network. A mock run is never live evidence.
 
 | item | state | test |
 |---|---|---|

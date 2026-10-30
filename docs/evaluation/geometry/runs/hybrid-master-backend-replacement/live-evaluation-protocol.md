@@ -1,137 +1,159 @@
-# Paired LLM_ONLY vs Hybrid live evaluation — protocol draft (NOT YET PRE-REGISTERED)
+# Paired LLM_ONLY vs Hybrid live evaluation — protocol (DRAFT, closed for pre-registration)
 
-- **Status:** `DRAFT_AWAITING_OWNER_GO`. No live call has been made.
-- **Pre-registration:** this file becomes the pre-registration when the Owner GO fixes the corpus hash and the budget. After that it is frozen; any change becomes an amendment file and does not edit this one.
+**Status:** `DRAFT_AWAITING_OWNER_GO`. No live call has been made.
 
-## 1. Measurement metadata (actual values, not aspirations)
+**How it becomes binding:** the Owner GO fixes three things: the corpus hash, the author, and the budget. From then on this file is the pre-registration. Later changes go into amendment files; this file is not edited.
 
-| field | value for the planned run | why |
-|---|---|---|
-| `MEASUREMENT_CLASS` | `PREREGISTERED_LIVE_PAIRED_EVALUATION` (planned). Everything in this run so far is `OFFLINE_DETERMINISTIC_FIXTURE_TEST` or `DEVELOPMENT_DIAGNOSTIC`. | No offline result is live evidence. |
-| `HELD_OUT_CLAIM` | `NEW_UNOPENED_SET_REQUIRED`. Wave 3, the W3-F2 development set, the W4 dev corpus and every corpus already in `docs/evaluation/` are **excluded as held-out**, because they have been opened and tuned against. | D-04 |
-| `EVALUATOR_INDEPENDENCE` | `NOT_ESTABLISHED`. Implementation and evaluation are by the same agent family. An independent author must be named in the GO; otherwise every result is labelled `IMPLEMENTER_AUTHORED_DIAGNOSTIC`. | Owner rule: an implementer-made set is never an independent blind holdout. |
-| `AUTHORING_INDEPENDENCE` | `NOT_ESTABLISHED` until a named human author (or the Owner) writes the problems and oracles without seeing system outputs. | |
+**Executable form:** every rule below is implemented in `backend/scripts/run_paired_route_evaluation.py`, the harness. The approval binds that harness's hash, so the rules cannot change silently.
+
+*Revision 2026-10-31.* This version closes the independent readiness review: B1–B3 and M1–M4 in `evaluation-readiness-review.md`. It changes the following from the previous draft:
+- Curved solids are no longer an expected-refusal class.
+- Oracles are exact numbers with π kept, not squared rationals.
+- The refusal reason is a pre-registered class, not a raw error code.
+- The asked-target rule, the technical-failure rule and the denominators are now fixed.
+
+## 1. Measurement metadata (actual values)
+
+| field | value |
+|---|---|
+| `MEASUREMENT_CLASS` | `PREREGISTERED_LIVE_PAIRED_EVALUATION` for the planned run. Everything done so far is `OFFLINE_DETERMINISTIC_FIXTURE_TEST` or `DEVELOPMENT_DIAGNOSTIC`. |
+| `HELD_OUT_CLAIM` | `NEW_UNOPENED_SET_REQUIRED`. Every corpus already in the repository is excluded as held-out. |
+| `EVALUATOR_INDEPENDENCE` | `NOT_ESTABLISHED` until a named person who is not the implementer authors the set. Otherwise every result is an `IMPLEMENTER_AUTHORED_DIAGNOSTIC` and cannot satisfy D-13. |
+| `AUTHORING_INDEPENDENCE` | `NOT_ESTABLISHED` (the same condition). |
 
 ## 2. Corpus
 
-**Inclusion:**
-- Vietnamese grade 11–12 solid-geometry problems.
-- Each problem asks for at least one exact quantity of kind `volume`, `area`, `distance`, `angle` (cos²) or `length`, or is a section/area question.
-- Families: the polyhedral families of `capability-inventory.md` plus deliberately out-of-scope items.
+The authoring rules are in `heldout-authoring/README.md`.
 
-**Exclusion:**
-- Any text that appears in `docs/evaluation/**` or `backend/tests/**`; this is checked by exact and normalized substring scan before freezing.
-- Images.
-- Problems whose answer needs nested radicals, unless they are labelled as expected refusals.
+**Composition: 60 problems.**
+- **45 expected-serve:** each asks at least one exact quantity. Problems that only ask for a construction are excluded. Curved solids are **allowed** as expected-serve, with π oracles, because LLM_ONLY serves them in production. If Hybrid refuses them, that is a measured capability loss.
+- **15 expected-refuse:** `refusal_class` is one of `OUT_OF_DOMAIN`, `CONTRADICTORY_DATA`, `MISSING_DATA`, `PROOF_REQUEST` (3–4 each).
+- **Numbers:** numeric data only. Symbolic units such as "cạnh a" are excluded, because the arms report unit coefficients differently.
 
-**Composition (proposed):**
-- 60 problems: 45 expected-serve and 15 expected-refuse.
-- The 15 expected-refuse are balanced across: out-of-scope domain, curved solid, contradictory data, missing data, and a request to prove.
-- Stratified by family and question kind. Every stratum has at least 3 problems or is reported as `INSUFFICIENT_N`.
+**Oracle.**
+- Each answer is written by the author before any run, by hand or with a CAS independent of the repository.
+- Values are exact, written in the `radical.parse_exact` grammar (`8/3`, `2√6/3`, `36π`), keyed by kind: `distance` (lengths are distances), `angle_cos_sq`, `angle_cos`, `volume`, `area`, `lateral_area`, `radius`, `volume_ratio`, `residual_volume`.
+- No model output may enter it.
 
-**Oracle:**
-- Written by the author by hand (or with a CAS independent of this repo) **before** any system run.
-- Exact value stored as squared rationals, keyed by `(case, kind)`. Both arms are scored through kind, because model-chosen names differ (`run_thesis_final_acceptance.py::_song_anh_witness`).
-- For expected-refuse cases, the oracle gives the refusal class instead.
-- The oracle is never derived from either arm's output. A corpus hash and an oracle hash are written to this protocol before the first call.
+**Integrity**, checked before any request:
+- unique ids;
+- unique texts after normalization (NFC, case, whitespace);
+- an oracle on every expected-serve case;
+- a pre-registered refusal class on every expected-refuse case.
 
-**Freeze:** `corpus.json` and `oracle.json` hashes go into the GO. They are not edited after any result is seen; errata go to an amendment and are reported.
+**Contamination scan** (`--manifest`):
+- **What it scans:** the whole repository except `.git`, vendor and build trees, and the corpus file itself.
+- **Normalization:** NFC, case and whitespace normalization, with `\uXXXX` escapes decoded.
+- **Exact match** blocks the run.
+- **8-word shingle overlap** of at least 50% is reported for review.
+- **Not detected:** paraphrase, a changed number in every shingle, and literals split across source lines. Independence rests on the author.
 
-## 3. Arms (same input text, same order randomization)
+## 3. Arms and order
 
-| arm | code path | requests per problem (measured offline) | prompt payload, measured |
+- **LLM_ONLY:** production `run_pipeline` with the default `RoutePolicy`. That is `semantic_analyze` (1 call), then `semantic_program` (up to 3 calls).
+- **HYBRID:** the production opt-in path minus HTTP. It runs the same domain gate as `/api/analyze` (`main._ngoai_pham_vi`), then `run_hybrid_offline` with `TransportExtractor`.
+- **Order:** each case runs both arms in a seeded order, `arm_order` with seed `hybrid-master-paired/2026-10-31`. Requests are sequential.
+
+### Production equivalence (verified against code; confirmed by the readiness review)
+
+| setting | LLM_ONLY | HYBRID | note |
 |---|---|---|---|
-| `LLM_ONLY` | production `run_pipeline` with the default `RoutePolicy`: `semantic_analyze` (1), then `semantic_program` (≤ `MAX_SEMANTIC_PROGRAM_ATTEMPTS` = 3) | 2–4 logical calls; each may retry transient HTTP errors up to `gemini.MAX_ATTEMPTS` = 4 | analyze 11 782 chars (schema sent); program 13 169 chars + contract facts per attempt (IR schema **not** sent: `$ref`) |
-| `HYBRID` | `hybrid_offline.run_hybrid_offline` with `TransportExtractor` (provider schema = `TypedFactNextPayloadV2`), then the /4 route | 1 logical call | 8 297 chars (schema sent) |
+| Model | `gemini.MODEL` | same | `gemini-2.5-flash`; access must be checked (`provider-facts.md`) |
+| Prompt and schema | `app/ai/skills/*.md`; analyze schema sent; IR schema **not** sent (`$ref`) | `TransportExtractor` instruction + `TypedFactNextPayloadV2` schema | both hashed in `runtime_identity` |
+| Output cap | **none**; model limit 65 536, thinking included | 8192 | production as is; no cap added to the control arm |
+| Temperature | 0.1 | 0.0 | production as is |
+| Retry and timeout | transient 429/5xx, 4 attempts, backoff, 120 s per attempt | same (`hybrid_transport`) | |
+| End-to-end deadline | none | 480 s (`HYBRID_LIVE_DEADLINE_S`) | Before cutover, the production live Hybrid deadline must be set to this measured value. |
+| Cache | none (`run_pipeline` called directly) | none | |
+| Cost accounting | `usageMetadata`; a request without usage is charged at its ceiling | same | |
 
-**Model:** `gemini-2.5-flash`, the production default `GEMINI_MODEL`, for both arms.
+## 4. Scoring (one scorer, both arms)
 
-### Production equivalence (verified against code, 2026-10-31)
+**What is read:** the learner-visible `scene3d` objects of type `quantity` in display group `target`, keyed by producer kind. Values are compared as exact numbers (`radical.from_json`). An unreadable exact form gives `SCORER_ERROR`; it is never guessed.
 
-| setting | LLM_ONLY (production `call_gemini`) | Hybrid (harness transport) | equivalent? |
-|---|---|---|---|
-| Model | `gemini.MODEL` | same `gemini.MODEL` | yes |
-| Prompt identity | `app/ai/skills/*.md` (hashed into `runtime_identity.skills_sha256`) | `TransportExtractor` system instruction + `TypedFactNextPayloadV2` schema | Each arm uses its own production prompt; the hash is recorded. |
-| JSON schema | analyze schema is sent; the IR schema is **not** sent (`$ref`) | provider schema is sent | production as is |
-| Output cap | **none** (`maxOutputTokens` absent; the model limit is 65 536, thinking included) | `maxOutputTokens` 8192 (`function_calling.MAX_OUTPUT_TOKENS`) | Kept as production. **No cap is added to LLM_ONLY**, because adding one would change the control arm. |
-| Temperature | 0.1 | 0.0 (`function_calling.TEMPERATURE`) | production as is |
-| Retry | transient 429/5xx, `MAX_ATTEMPTS` = 4, exponential backoff | **same policy** (`hybrid_transport`) | yes |
-| Per-attempt timeout | 120 s | 120 s | yes |
-| End-to-end deadline | none | `HYBRID_LIVE_DEADLINE_S` = 480 s. The offline route's 15 s default would cut live extraction. | Harness setting. **Before any cutover, the production Hybrid live deadline must be set to the measured value.** |
-| Cache | `run_pipeline` is called directly, so there is no API cache | `run_hybrid_offline` is called directly, so there is no cache | yes (both uncached) |
-| Key handling | URL query (`call_gemini`) | `x-goog-api-key` header (`live_transport`) | Cost-neutral. The key is never written to receipts. |
-| Cost accounting | `usageMetadata` via `telemetry.record_usage`; a request without usage is charged at the ceiling | same | yes |
+**Per-case fields:**
 
-*Correction 2026-10-31: the earlier draft said Hybrid caps output at 3072 and called the temperature `fact_extraction.TEMPERATURE`. The code values are 8192 and 0.0. The worst-case budget is unchanged, because LLM_ONLY's 65 536 dominates.*
+| field | definition |
+|---|---|
+| `served` | envelope `status == ok` with scene objects |
+| `served_correct` (**primary**) | served, expected-serve, and every oracle value is present among the served targets of its kind (multiset inclusion) |
+| `served_correct_strict` (**sensitivity**) | primary, and no other value of an asked kind is shown. Cases where the two differ are listed for blind adjudication. |
+| `wrong_served` | served and not `served_correct`; this includes any served expected-refuse case |
+| `false_refusal` | expected-serve and not served, excluding technical failures |
+| `refusal_reason_correct` | the arm's class equals the case's `refusal_class` |
 
-**Budget reservation vs actual use.** Reservations are ceilings used only to **block** requests: input is taken as 1 char ≥ 1 token, plus framing; output at 65 536 tokens. Reported spend is computed from actual `usageMetadata`. Both appear in every row (`usd`, `usd_upper`).
+**Refusal class per arm (fixed map):**
+- **Both arms:** `failure_category ∈ {out_of_scope, not_simulation_suitable}` → `OUT_OF_DOMAIN`.
+- **Hybrid:** `classify_refusal(code).group`, with `INVALID_DATA` → `CONTRADICTORY_DATA`, `MISSING_DATA` → `MISSING_DATA`, `INCONCLUSIVE` → `PROOF_REQUEST`.
+- **Anything else in either arm:** `UNSPECIFIC`, which is never correct. LLM_ONLY's `geometry_generation_failed` states no reason, and that is recorded as such.
 
-## 4. Scoring (per case, per arm; every dimension recorded separately)
+**Technical (infrastructure) failure, one rule for both arms:**
+- **Counts as technical:**
+  - transport or HTTP errors after retries;
+  - a deadline or budget stop;
+  - a provider block or refusal;
+  - an exception raised out of the arm.
+- **Not technical:** a truncated or invalid model output. In LLM_ONLY it ends as `geometry_generation_failed`; in Hybrid it is `RESPONSE_TRUNCATED` / `JSON_INVALID`. Both count as **not served**.
+- **How technical failures are scored:** they count as not `served_correct`, are never counted as false refusals or as refused negatives, and are reported separately.
 
-**Per-case dimensions:**
-- `extraction_valid`: Hybrid: `ExtractionResult.code is None`. LLM_ONLY: a `RequestContract` was produced.
-- `source_grounding`: Hybrid: receipt `source_references` cover every quote and the Source Gate verified. LLM_ONLY: grounding gate passed.
-- `served`, `served_correct`: every oracle `(kind → value²)` matches exactly.
-- `wrong_served`: served while any oracle value mismatches, or an expected-refuse case was served.
-- `false_refusal`, `refusal_reason_correct`: the refusal class is in the oracle's acceptable classes, using `hybrid_preview.classify_refusal` groups and the LLM_ONLY `error_code` taxonomy.
-- `scene_valid`: Hybrid: /4 `route_d.status == SERVED` with validated `scene3d`. LLM_ONLY: envelope `status == ok` with `scene3d`.
-- `latency_s`: wall time of the arm, excluding queueing.
-- Usage, read from provider `usageMetadata` through `app.ai.telemetry`:
-  - `input_tokens`, `output_tokens`, `thinking_tokens`, `cached_tokens`;
-  - `requests`, `http_attempts`, `repair_attempts`.
-- Schema/system overhead, as payload chars minus problem chars.
-- `usd`: computed from the usage at the prices fixed in the GO.
+**Denominators:**
+- served-correct: over expected-serve cases;
+- wrong-served: over all cases;
+- refusal-reason accuracy: over expected-refuse cases.
 
-**Missing usage:** recorded as `UNKNOWN`, never 0.
+**Other per-case data:**
+- latency;
+- usage (input, output, thinking and cached tokens);
+- HTTP requests;
+- `repair_attempts` (LLM_ONLY: `semantic_program` calls − 1; Hybrid: 0);
+- `usd` (actual) and `usd_upper` (ceiling);
+- for Hybrid: `extraction_valid`, `source_grounding` and source spans. LLM_ONLY exposes only `stage_reached`; its extraction and grounding are **not observable** separately.
 
-**Per-arm aggregates:**
-- Rates with Wilson 95% intervals.
-- A paired exact McNemar test on `served_correct` and on `wrong_served`.
-- Median and p90 latency.
-- Tokens and USD per problem, and per served-correct problem.
+**Per arm:**
+- rates with Wilson 95% intervals;
+- the number of technical failures and scorer errors;
+- latency median and p90;
+- USD total, upper bound, and per served-correct.
 
-**Fake extractors and replay** measure the deterministic tail only. They are never reported as provider quality.
+**Paired:** exact McNemar on complete pairs, for `served_correct` and for `wrong_served`. Unpaired cases from a stopped run are listed, not scored as pairs.
 
-## 5. Early-stop rules (checked after every case)
+**Stored per row (JSONL, flushed as each row completes):**
+- the served target values, refusal code and class, and stage;
+- usage, latency and cost;
+- the Hybrid source spans.
 
-1. Any `wrong_served` on an expected-refuse case in either arm: stop that arm; report it as a safety finding.
-2. Accounted spend reaches 80% of the approved USD cap, or the request cap is reached: stop both arms at the case boundary.
-3. Three consecutive transport or technical failures, or a provider block or safety refusal: stop and report `INFRASTRUCTURE`. This is not counted as a model failure.
-4. A corpus or oracle hash mismatch, or a code-identity change (candidate hash, prompt fingerprint, `CACHE_VERSION`): stop before the next call.
-5. **Carried forward from `hybrid-ab-pilot-readiness`:** a pre-request reservation cannot stop provider billing after a request is sent.
-   - **How the cap is enforced:** before **every** HTTP request of either arm, `CostCappedBudget` checks that accounted spend (requests without usage charged at the ceiling), plus the next request at the ceiling, stays ≤ `max_usd`. It also checks the request count.
-   - **Why the cap holds:** the per-request ceiling is a true bound, since provider output is capped at 65 536 tokens including thinking (`provider-facts.md`). Total spend therefore cannot exceed `max_usd`.
-   - **Provider-side caps** (prepay, project spend cap) are a second line only, because they can overshoot by about 10 minutes of usage.
-6. **Defaults without a GO:** `MAX_AUTHORIZED_LIVE_REQUESTS = 0` and `MAX_AUTHORIZED_LIVE_SPEND_USD = 0`. `--live` refuses without an Owner-written approval file.
+This is enough to re-score. Full model responses are not stored.
 
-## 6. Data sent to the provider and privacy
+## 5. Early stop (checked after each arm; spend checked before every request)
 
-**Sent:** only the problem text, plus each arm's system prompt and schema, to Google Gemini `generativelanguage.googleapis.com/v1beta` with the Owner's API key.
+1. **An arm serves an expected-refuse case:** that arm stops (`stopped_arms`) and the event is reported as a safety finding. The other arm continues.
+2. **Spend:** accounted spend reaches 80% of `max_usd` (`USD_80_PERCENT`).
+3. **Caps:** the request cap is reached (`REQUEST_CAP`), or the next request's exact ceiling would exceed `max_usd` (`COST_CEILING`).
+4. **Infrastructure:** 3 consecutive technical failures (`INFRASTRUCTURE_STREAK`), or a provider block or refusal (`PROVIDER_BLOCK`).
+5. **Identity:** a change in the measured system, cache version, model, prompt files or harness (`IDENTITY_CHANGED`).
 
-**Not sent:** images, learner data, account data, cookies or repository content.
+**Hard cap.** Before every HTTP request of either arm, `CostCappedBudget` checks this inequality on the **exact payload**:
 
-**Corpus content:** authored problems only, with no personal data.
+> spend so far (requests without usage counted at their own ceiling) + the next request's ceiling ≤ `max_usd`
 
-**Storage:**
-- Responses are stored locally in the run directory.
-- Request and response bodies are stored only as hashes plus the decoded structured output.
-- API keys and headers are never written (the pilot's redaction rule is reused).
-- Provider-side retention follows the Owner's Gemini API terms. The Owner confirms this in the GO.
+- **Input bound:** input tokens are taken as at most the UTF-8 bytes of the whole request JSON, including system instruction and schema. This is an assumption: byte-fallback tokenization.
+- **Output bound:** output is bounded by the request cap, or else by 65 536 tokens including thinking, as documented by the provider.
+- **Second line:** a provider prepay balance or spend cap is recommended. It can overshoot by about 10 minutes of usage, so it is not the primary cap.
+- **Defaults without a GO:** `MAX_AUTHORIZED_LIVE_REQUESTS = 0` and `MAX_AUTHORIZED_LIVE_SPEND_USD = 0`.
 
-## 7. GO / NO-GO criteria for Hybrid production (pre-registered)
+## 6. Data and privacy
 
-Hybrid may become the production default (D-13) only if **all** of these hold on the frozen held-out set:
+**Sent:** only problem texts, plus each arm's prompt and schema. The run uses a **paid** Gemini project; the free tier allows product use and human review of the content (`provider-facts.md`). Keys and headers are never written.
 
-1. Hybrid `wrong_served` = 0, and its upper 95% bound is ≤ the LLM_ONLY observed rate.
-2. Hybrid `served_correct` is not worse than LLM_ONLY: the McNemar test does not favour LLM_ONLY at α = 0.05, and the point-estimate difference is ≥ −5 pp.
-3. Expected-refuse cases: Hybrid refuses 100%, and its refusal-reason accuracy is ≥ LLM_ONLY's.
-4. Hybrid median latency ≤ LLM_ONLY's, and its p90 ≤ 1.5 × LLM_ONLY's.
-5. Hybrid USD per served-correct problem ≤ LLM_ONLY's.
-6. Infrastructure failures ≤ 5% per arm.
-7. `EVALUATOR_INDEPENDENCE` and `AUTHORING_INDEPENDENCE` are established. Otherwise the result is a diagnostic and **cannot** satisfy D-13.
+## 7. GO / NO-GO for Hybrid production (pre-registered)
 
-Failing any criterion means NO-GO. The report states which criterion failed; thresholds are never re-tuned after results.
+Every criterion must hold on the frozen held-out set:
+1. Hybrid `wrong_served` is 0, and its Wilson upper bound is ≤ the LLM_ONLY observed rate.
+2. `served_correct` (primary) is not worse: the McNemar test does not favour LLM_ONLY at α = 0.05, and the difference is ≥ −5 pp. The strict sensitivity rule is reported, and any reversal is flagged.
+3. Hybrid refuses 100% of expected-refuse cases, with technical failures excluded and reported. Its refusal-reason accuracy is ≥ LLM_ONLY's.
+4. Hybrid latency: median ≤ LLM_ONLY's, and p90 ≤ 1.5× LLM_ONLY's.
+5. Hybrid USD per served-correct ≤ LLM_ONLY's.
+6. Technical failures are ≤ 5% per arm, and there are 0 scorer errors.
+7. `EVALUATOR_INDEPENDENCE` and `AUTHORING_INDEPENDENCE` are established.
 
-## 8. Harness state
-
-See `live-harness-status.md`. The run is not started until every harness item there is `READY`.
+Any failure is a NO-GO, reported with the failing criterion. Thresholds are never re-tuned. The 60 problems cover only the strata they sample; they are not evidence about all of grade 11–12 geometry.
