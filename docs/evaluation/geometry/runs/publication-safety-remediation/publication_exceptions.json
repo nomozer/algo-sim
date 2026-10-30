@@ -441,6 +441,23 @@
    "verification": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/target-grammar-identity-recovery/f7-narrow-recovery/publication-exception-verification.json",
    "owner_go": "HYBRID_V2_W3_F2_PUBLICATION_EXCEPTION_AND_FINAL_VERIFICATION (2026-10-30): Owner accepted the local-path disclosure for exactly this blob; the approval value is written by the Owner, not by the agent.",
    "owner_decision": "APPROVED_BY_USER"
+  },
+  {
+   "path": "backend/tests/geometry/test_docs_information_architecture.py",
+   "blob": "24d45cd6304f1194340c27e043c402fca1762052",
+   "sha256": "b74ee7c7a077f189574389acd714cb8faf9f76b3502b1b22c4c25b0898a4512d",
+   "bytes": 20710,
+   "rules": [
+    "GOOGLE_API_KEY"
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "HISTORY_ONLY",
+   "first_commit": "039fa606",
+   "first_commit_date": "2026-10-30",
+   "already_public_on_origin_main": false,
+   "verification": "docs/evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction/publication-assessment.md: the only finding is line 396, the deliberately fake key of test_fi_14_secret_leak_rejected — byte-identical to the line already on origin/main (blob 0f726dfb, line 395); the file at the tip no longer carries the literal (00d09f3b).",
+   "owner_go": "ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION: the approval value is written by the Owner, not by the agent.",
+   "owner_decision": "PENDING_OWNER_DECISION"
   }
  ]
 }

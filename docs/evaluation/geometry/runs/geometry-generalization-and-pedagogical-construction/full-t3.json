@@ -1,0 +1,16 @@
+{
+  "candidate_commit": "25028584f5c199e1c1f4d5000765f9fd833441df",
+  "frozen_at": "be686523 (freeze commit 182a7785)", "product_commit": "61ade29e",
+  "measured_system": {"so_file": 118, "tree_hash": "54b5b565ef65a8e9…"},
+  "worktree": "fresh detached .superpowers/worktrees/w4-final-t3-25028584 (node_modules junction to main checkout); clean before and after",
+  "command": "cd frontend && node scripts/full-gate.mjs",
+  "attempt_1": {"status": "INVALID — not counted", "reason": "started in the previous session; its shell was lost when that session ended, the process ran on detached (no exit code) and two pytest nodes failed with OSError [WinError 1455] 'paging file is too small' while spawning subprocesses (test_completion_runner_repair::test_G4…, test_completion_measurement_repair_post_safety::test_R1_B…[registry_v2_sha256] via a failed git subprocess). Both pass in T0 at the same commit and in attempt 2. Log kept local: .superpowers/w4-logs/full-t3-attempt1-env-fail.log", "log_sha256_bytes": "9752b615a3f76f26ca3f35d5d5c42a3d3b4d4b2b5e5acab77d28697994ba72d3"},
+  "attempt_2": {"started_utc": "2026-10-30T12:12:50Z", "finished_utc": "2026-10-30T12:22:41Z", "exit_code": 0, "verdict": "FULL_PRODUCT_GATE_PASS",
+    "steps": {"pytest_full_backend": "15892 passed, 7 skipped, 2 deselected, 15 xfailed, 0 failed", "vitest_full_frontend": "84 files, 1424 passed",
+              "typecheck_and_build": "PASS", "thesis_demo_replay": "DEMO_REPLAY_PASS 5/5, REDUCED_CHAIN 1/1", "demo_crash_surface": "6/6, 0 thrown (500)"},
+    "log_local_only": ".superpowers/w4-logs/full-t3b.log", "log_sha256_bytes": "84d0da863c102b247530ae6431800fbad26a3e645a932ba6f4c4446aebd17272", "traceback_lines": 0},
+  "post_t3": {"freeze_verify": "Candidate khớp bản đã đóng băng (mã sản phẩm: 118 file, 54b5b565ef65a8e9…).", "evaluation_candidate_sha256_before": "d241d2cf481d5b82c5665cf4cdb27e261a095f4d17ca627fdd4b5820ecf12674",
+              "evaluation_candidate_sha256_after": "d241d2cf481d5b82c5665cf4cdb27e261a095f4d17ca627fdd4b5820ecf12674", "tree_clean_after": true},
+  "after_t3_test_only_commit": "00d09f3b builds the synthetic FI-14 key at runtime (test file only; tests/geometry/test_docs_information_architecture.py re-run: 42 passed)",
+  "live_provider_calls": 0
+}
