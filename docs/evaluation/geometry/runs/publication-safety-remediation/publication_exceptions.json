@@ -457,7 +457,7 @@
    "already_public_on_origin_main": false,
    "verification": "docs/evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction/publication-assessment.md: the only finding is line 396, the deliberately fake key of test_fi_14_secret_leak_rejected — byte-identical to the line already on origin/main (blob 0f726dfb, line 395); the file at the tip no longer carries the literal (00d09f3b).",
    "owner_go": "ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION: the approval value is written by the Owner, not by the agent.",
-   "owner_decision": "PENDING_OWNER_DECISION"
+   "owner_decision": "APPROVED_BY_USER"
   }
  ]
 }
