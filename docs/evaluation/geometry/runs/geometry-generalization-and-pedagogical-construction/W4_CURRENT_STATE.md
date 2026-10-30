@@ -7,7 +7,7 @@ Owner Master GO `ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION` (202
 | branch / worktree | `research/w4-geometry-pedagogy` · `.superpowers/worktrees/w4-geometry-pedagogy` (node_modules junction to root) |
 | base | `main` = `origin/main` = `e5dc3d28` (verified live 2026-10-30) |
 | baseline product / measured | `dd17fbfb` · 118 files `c4fb8613…` · cache 130 · LLM_ONLY · live 0 |
-| phase | A (audit, delegated read-only) + B (gap classification) → F (source grammar) RED next |
+| phase | F slice 1 GREEN at `01b74e39` (product `registry.py` +6 regex lines); next: Phases C–E (construction steps, pedagogy, Scene3D) |
 
 ## Phase B — first blocking layer of the 22 Wave 3 false refusals (receipt: `capability-matrix.md`)
 
@@ -20,5 +20,16 @@ All 22 stop in the Source Gate (none in Planner / exact geometry / Adapter / fro
 | conditional clause (W3-B01) | 1 | `vai_tro_ok` CONDITIONAL_CLAUSE | "Thiết lập mặt phẳng (P) …" read as conditional — to examine |
 | radical overflow (W3-A06) | 1 | exact kernel RadicalDomainError | radical bound 1e12 — genuine limit, keep refusal |
 
+## Completed
+- `0bcfed14` RED preregistration (70-case independent corpus; variants 6/42 at baseline).
+- `01b74e39` GREEN: closed SG-3 grammar reads textbook connectors. Dev 42/42 · 18/18 · 10/10; Wave 3 **67/72** served-correct
+  (+17), 72/72 negatives, 62/72 reasons, 0 wrong-served; locked 96/96; 203 probes unchanged; full backend 15768 passed, only
+  11 pending-freeze + 1 dirty-tree check failing (receipts `green1.json`, `regression-green1.json`).
+
+## Remaining Wave 3 false refusals (5)
+W3-B01 conditional reading of "Thiết lập mặt phẳng"; W3-B34/35/36 oblique prism ("hình chiếu … của đỉnh B' lên (BCD) là C",
+"khối lăng trụ tam giác"); W3-A06 radical bound (genuine limit). Not tuned on Wave 3 text.
+
 ## Next action
-Preregister independent metamorphic dev corpus (`tools/build_dev_cases.py`), run RED on baseline, then extend the closed SG-3 grammar.
+Phase A audit result → Phases C–E: verify the step/scene/explanation pipeline for newly served hybrid outputs; improve
+step navigation and explanation traceability reusing existing abstractions.
