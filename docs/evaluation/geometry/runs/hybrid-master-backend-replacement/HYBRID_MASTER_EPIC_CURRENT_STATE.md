@@ -72,7 +72,31 @@ This is the canonical mutable checkpoint for the one Master Epic. After compacti
   - OPEN: D-10 (frontend-owned).
   - BLOCKED: D-04/11/13.
 
-**STOP boundary reached:** production cutover and LLM_ONLY retirement need a live-provider budget, a new pre-registered held-out set, and a paired differential, latency and cost run (D-04, D-11, GATE-16). The contract says "No live budget is currently authorized."
+**Continuation 2026-10-31 (Owner Master GO "complete offline architecture")**
+
+**Phase A (`e9c9b8e9`): D-02 and D-12 PROVED offline.**
+- The existing declared `/api/analyze` opt-in (`HYBRID_V2_LOCAL=offline-replay` + loopback) is extended, not duplicated.
+- Route D cache key: exact source + recorded extraction + surface. `ROUTE_D_CACHE_POLICY` gives two-way isolation. Only SERVED results are stored; a poisoned row is a MISS; a write race is handled.
+- Rollback = the switch. LLM_ONLY bytes are identical. There is no silent fallback.
+- Typed refusals for missing, contradictory, ownership, ambiguous, unsupported, geometry, deadline and adapter faults.
+- The runtime call trace shows extraction → /4 route → adapter /4.
+- Tests: `test_hybrid_route_d_cache_and_rollback.py`, 23 tests including 2 mutants.
+
+**Phase B (`f5ad1053`): `architecture-consolidation.md`.**
+- Call graph and overlap audit: one interpreter and kernel; three program producers; the preview flat contract is a locked input contract, not a duplicate authority.
+- Source spans now reach the execution receipt.
+- Recomposition evidence: shared primitives across topologies, no duplicate producers, shallow decomposition (`recomposition-evidence.json`).
+- No planner change: no failing case shows an abstraction gap.
+- Ledger corrected: the first version missed the pre-existing opt-in branch.
+
+**Phase C:**
+- `live-evaluation-protocol.md`: pre-registration draft. `MEASUREMENT_CLASS`, `HELD_OUT_CLAIM` = new set required, `EVALUATOR_INDEPENDENCE` and `AUTHORING_INDEPENDENCE` = NOT_ESTABLISHED.
+- Harness `backend/scripts/run_paired_route_evaluation.py` + `tests/test_paired_route_evaluation.py`: `READY_FOR_LIVE_MEASUREMENT` (`live-harness-status.md`).
+- `owner-go-request.md`: the single consolidated GO.
+- Offline measurement finding: LLM_ONLY production sends no `maxOutputTokens`, and its program request omits the IR schema (`$ref`).
+- Finding for D-10: Hybrid target quantities lack `annotation.kind` for line–plane/plane–plane distance and angles. Presentation only; not fixed.
+
+**STOP boundary reached (first continuation):** production cutover and LLM_ONLY retirement need a live-provider budget, a new pre-registered held-out set, and a paired differential, latency and cost run (D-04, D-11, GATE-16). The contract says "No live budget is currently authorized."
 
 **Next exact action:**
 1. Ask the Owner for a scoped live GO; the required fields are listed in `migration-ledger.md`.
