@@ -58,3 +58,31 @@ historical receipts and referenced baseline evidence. Uncertain worktrees are re
 Reused: publication scanner, freeze verifier, existing T3/review/post-integration receipts and affected test suites.
 Created product modules: none. Duplicate implementation and dependency-cycle risk: none; no product code changed.
 Future workflow proposal is `workflow-proposal.md`, not an applied global security change.
+
+## Closure after first verified push
+
+`REMOTE_VERIFIED`: non-force `git push origin main:main` advanced remote from `996f114b` to
+`4d304992397793d0aa8062809d0249d046b6a058`. Independent live ls-remote, local main and origin/main all matched.
+The exact committed tip was scanned: range 697 blobs / 60 messages / 0 violations PASS; head 26,356 blobs /
+105 findings / 104 pending BLOCKED, exact baseline metadata match. Post-push freeze verifier MATCH.
+Machine receipt and worktree dispositions: `closure.json`.
+
+Cleanup inventoried eight existing W3-F2 worktrees plus this session's detached verifier. Six node_modules junctions
+all target the main checkout and were left untouched. The pre-CIC worktree contained only 58 Python cache files
+and one generated database; its database was backed up and hash-verified before successful official Git removal,
+without force. The session's verifier had its own copied documentation and generated database backed up and
+hash-verified, its own tracked changes restored and copied untracked files removed only after preservation.
+Git worktree remove then unregistered it but reported Invalid argument while deleting the directory; the residual
+directory was retained. The seven other original worktrees were retained for evidence, baseline or uncertain
+ignored content (including unreadable cache directories). No branch, backup or historical receipt was deleted.
+Backups and preservation manifest are under `.superpowers/backups/w3-f2-publication-closure/`.
+
+This final documentation commit is part of the same Owner-authorized integration closure, with no product change.
+Before publishing it, repeat range/head and exact-baseline comparison; remote must still equal this task's own
+verified first-push SHA above. Any unrelated update stops publication. The original comparison baseline stays
+`996f114b`. Final documentation-tip SHA is read back after its non-force push and recorded locally in
+`.superpowers/backups/w3-f2-publication-closure/final-remote-verification.json` to avoid a self-referencing commit.
+
+Final integration verdict: W3-F2 integrated and remote verified; historical publication debt remains open;
+cleanup complete for proven-safe removals, with the disclosed retained worktrees/residual. No global security
+reduction or Hybrid enablement. The workflow proposal remains a proposal.

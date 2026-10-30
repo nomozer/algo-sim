@@ -4,8 +4,8 @@
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/integration/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/integration/
-CLASSIFICATION = INTEGRATION_VERIFICATION; scoped Owner publication supersession; technical candidate unchanged; final remote status in report and local read-back receipt
-VERIFICATION = publication-comparison.json; key-vector-verification.json; verification.json; run.json; workflow-proposal.md
+CLASSIFICATION = INTEGRATION_VERIFICATION; REMOTE_VERIFIED first push 4d304992; scoped Owner publication supersession; technical candidate unchanged; closure.json records cleanup, report gives final documentation-tip read-back location
+VERIFICATION = publication-comparison.json; key-vector-verification.json; verification.json; closure.json; run.json; workflow-proposal.md
 CODE_COMMIT = dd17fbfb8616c9b7ac325aa91c4dfec92577c64a
 CANDIDATE_COMMIT = 4e7fe91d8990d4ef2856204d2b8aaa652f41ea24
 MODEL_REQUEST_COUNT = 0
