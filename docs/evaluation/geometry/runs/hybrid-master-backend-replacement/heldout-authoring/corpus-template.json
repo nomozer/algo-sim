@@ -1,0 +1,23 @@
+{
+ "schema": "hybrid-master-paired-heldout/1",
+ "author": "TO_BE_NAMED_BY_OWNER",
+ "authoring_independence": "NOT_ESTABLISHED",
+ "written_before_any_system_run": null,
+ "cases": [
+  {
+   "id": "<unique id>",
+   "problem_text": "<Vietnamese problem text, exactly as a student would read it>",
+   "expect": "SERVE",
+   "oracle": {"distance": ["<value squared, rational string>"]},
+   "premise_sentences": ["<sentences that must be read>"],
+   "stratum": {"family": "<pyramid|prism|cuboid|cube|...>", "question": "<section|distance|angle|volume|area>"}
+  },
+  {
+   "id": "<unique id>",
+   "problem_text": "<Vietnamese problem text>",
+   "expect": "REFUSE",
+   "acceptable_refusal_codes": ["<code from the supplied vocabulary>"],
+   "refusal_class": "<out_of_domain|curved|contradictory|missing_data|proof_request>"
+  }
+ ]
+}

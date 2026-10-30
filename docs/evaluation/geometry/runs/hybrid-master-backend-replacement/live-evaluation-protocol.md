@@ -44,12 +44,27 @@
 | `LLM_ONLY` | production `run_pipeline` with the default `RoutePolicy`: `semantic_analyze` (1), then `semantic_program` (≤ `MAX_SEMANTIC_PROGRAM_ATTEMPTS` = 3) | 2–4 logical calls; each may retry transient HTTP errors up to `gemini.MAX_ATTEMPTS` = 4 | analyze 11 782 chars (schema sent); program 13 169 chars + contract facts per attempt (IR schema **not** sent: `$ref`) |
 | `HYBRID` | `hybrid_offline.run_hybrid_offline` with `TransportExtractor` (provider schema = `TypedFactNextPayloadV2`), then the /4 route | 1 logical call | 8 297 chars (schema sent) |
 
-**Model:** `gemini-2.5-flash`, the production default `GEMINI_MODEL`, for both arms. Temperature is each arm's production value (0.1 / `fact_extraction.TEMPERATURE`).
+**Model:** `gemini-2.5-flash`, the production default `GEMINI_MODEL`, for both arms.
 
-**Output cap:**
-- Hybrid caps output at 3072.
-- **LLM_ONLY production sends no `maxOutputTokens`.**
-- The protocol keeps production behavior (no cap added). The budget must therefore reserve LLM_ONLY output at the model's own maximum, which the Owner verifies at GO time from the provider documentation.
+### Production equivalence (verified against code, 2026-10-31)
+
+| setting | LLM_ONLY (production `call_gemini`) | Hybrid (harness transport) | equivalent? |
+|---|---|---|---|
+| Model | `gemini.MODEL` | same `gemini.MODEL` | yes |
+| Prompt identity | `app/ai/skills/*.md` (hashed into `runtime_identity.skills_sha256`) | `TransportExtractor` system instruction + `TypedFactNextPayloadV2` schema | Each arm uses its own production prompt; the hash is recorded. |
+| JSON schema | analyze schema is sent; the IR schema is **not** sent (`$ref`) | provider schema is sent | production as is |
+| Output cap | **none** (`maxOutputTokens` absent; the model limit is 65 536, thinking included) | `maxOutputTokens` 8192 (`function_calling.MAX_OUTPUT_TOKENS`) | Kept as production. **No cap is added to LLM_ONLY**, because adding one would change the control arm. |
+| Temperature | 0.1 | 0.0 (`function_calling.TEMPERATURE`) | production as is |
+| Retry | transient 429/5xx, `MAX_ATTEMPTS` = 4, exponential backoff | **same policy** (`hybrid_transport`) | yes |
+| Per-attempt timeout | 120 s | 120 s | yes |
+| End-to-end deadline | none | `HYBRID_LIVE_DEADLINE_S` = 480 s. The offline route's 15 s default would cut live extraction. | Harness setting. **Before any cutover, the production Hybrid live deadline must be set to the measured value.** |
+| Cache | `run_pipeline` is called directly, so there is no API cache | `run_hybrid_offline` is called directly, so there is no cache | yes (both uncached) |
+| Key handling | URL query (`call_gemini`) | `x-goog-api-key` header (`live_transport`) | Cost-neutral. The key is never written to receipts. |
+| Cost accounting | `usageMetadata` via `telemetry.record_usage`; a request without usage is charged at the ceiling | same | yes |
+
+*Correction 2026-10-31: the earlier draft said Hybrid caps output at 3072 and called the temperature `fact_extraction.TEMPERATURE`. The code values are 8192 and 0.0. The worst-case budget is unchanged, because LLM_ONLY's 65 536 dominates.*
+
+**Budget reservation vs actual use.** Reservations are ceilings used only to **block** requests: input is taken as 1 char ≥ 1 token, plus framing; output at 65 536 tokens. Reported spend is computed from actual `usageMetadata`. Both appear in every row (`usd`, `usd_upper`).
 
 ## 4. Scoring (per case, per arm; every dimension recorded separately)
 
@@ -83,7 +98,11 @@
 2. Accounted spend reaches 80% of the approved USD cap, or the request cap is reached: stop both arms at the case boundary.
 3. Three consecutive transport or technical failures, or a provider block or safety refusal: stop and report `INFRASTRUCTURE`. This is not counted as a model failure.
 4. A corpus or oracle hash mismatch, or a code-identity change (candidate hash, prompt fingerprint, `CACHE_VERSION`): stop before the next call.
-5. **Carried forward from `hybrid-ab-pilot-readiness`:** a pre-request reservation cannot stop provider billing after a request is sent. The approved cap is therefore enforced by the conservative reservation, and the residual overspend risk is stated in the GO, not hidden.
+5. **Carried forward from `hybrid-ab-pilot-readiness`:** a pre-request reservation cannot stop provider billing after a request is sent.
+   - **How the cap is enforced:** before **every** HTTP request of either arm, `CostCappedBudget` checks that accounted spend (requests without usage charged at the ceiling), plus the next request at the ceiling, stays ≤ `max_usd`. It also checks the request count.
+   - **Why the cap holds:** the per-request ceiling is a true bound, since provider output is capped at 65 536 tokens including thinking (`provider-facts.md`). Total spend therefore cannot exceed `max_usd`.
+   - **Provider-side caps** (prepay, project spend cap) are a second line only, because they can overshoot by about 10 minutes of usage.
+6. **Defaults without a GO:** `MAX_AUTHORIZED_LIVE_REQUESTS = 0` and `MAX_AUTHORIZED_LIVE_SPEND_USD = 0`. `--live` refuses without an Owner-written approval file.
 
 ## 6. Data sent to the provider and privacy
 
