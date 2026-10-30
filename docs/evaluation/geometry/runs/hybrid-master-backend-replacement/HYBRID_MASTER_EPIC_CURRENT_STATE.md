@@ -59,9 +59,24 @@ This is the canonical mutable checkpoint for the one Master Epic. After compacti
 - Scope: one topology only. Other families are `NOT_MEASURED`.
 - No new primitive is justified by the measured gaps.
 
-**Next exact action:** Task 3, runtime unification. Keep it offline-only.
-1. Inventory production entry points, legacy synthesis calls, cache/policy identities and last consumers.
-2. Reassess the 20 `MIGRATION_CHECKLIST.md` gates against code and evidence.
-3. Production cutover is **blocked**: there is no authorized live-provider budget, and real-text extraction, differential correctness, latency and cost are required gates. The truthful verdict is `HYBRID_NOT_READY` until the Owner authorizes a budget.
+**Task 3, offline inventory: DONE** (`migration-ledger.md`)
+- Production has three orchestrators:
+  - LLM_ONLY synthesis, the default for `/api/analyze`;
+  - compiler C, opt-in and disabled;
+  - Route D, offline replay plus operator preview.
+- `/api/analyze` cannot reach /4 (D-01 lock).
+- The ledger records last consumers. Only the bridge's private identity copy has been removed.
+- Gate reassessment:
+  - PROVED: D-01/03/05/06/09; D-07/08 for preview only.
+  - PARTIAL: D-02/12.
+  - OPEN: D-10 (frontend-owned).
+  - BLOCKED: D-04/11/13.
+
+**STOP boundary reached:** production cutover and LLM_ONLY retirement need a live-provider budget, a new pre-registered held-out set, and a paired differential, latency and cost run (D-04, D-11, GATE-16). The contract says "No live budget is currently authorized."
+
+**Next exact action:**
+1. Ask the Owner for a scoped live GO; the required fields are listed in `migration-ledger.md`.
+2. Offline work that can continue meanwhile: D-02 Route D cache identity; D-12 rollback tests; an opt-in `/api/analyze` Hybrid route behind a declared gate, off by default, with LLM_ONLY byte-identical.
+3. Candidate re-freeze, T0–T3 and the final review come only before an integration.
 
 **Verdict so far:** `HYBRID_NOT_READY`. No production cutover and no legacy retirement is claimed.
