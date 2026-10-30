@@ -70,6 +70,9 @@ describe("W4 · điều hướng bước bằng bàn phím trong trình phát", 
     expect(src).toMatch(/e\.preventDefault\(\);\n\s*setDangPhat\(false\);\n\s*setStep\(f\);/);
     // thanh kéo (input range) và ô chọn tự xử lý phím của chúng — không giành phím; trình phát không có ô nhập văn bản
     expect(src).toMatch(/t\.closest\("input, select"\)\) return;/);
+    // review M2: the floating panel's drag handle consumes arrows (preventDefault) — the player must not also step
+    expect(src).toMatch(/if \(e\.defaultPrevented \|\|/);
+    expect(nguon("./scene3d-floating-panel.tsx")).toMatch(/preventDefault\(\)/);
   });
 
   it("Home/End rơi đúng neo bước đầu/cuối của cảnh thật", () => {

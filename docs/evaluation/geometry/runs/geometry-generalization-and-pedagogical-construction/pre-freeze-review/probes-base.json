@@ -1,0 +1,278 @@
+{
+ "c1_height_SE_pyr": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+ },
+ "c1_height_SE_pyr_section": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+ },
+ "c2_height_SF_canon_style": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+ },
+ "c3_height_DEp_prism": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+ },
+ "c4_height_EF_prism_base": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+ },
+ "c5_height_SE_quad": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+ },
+ "c6_sodo_SE": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+ },
+ "d1_can_o_E_vuong_o_D": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+ },
+ "d1b_can_tai_E_vuong_tai_D": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+ },
+ "d2_vuong_o_E_payload_D": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+ },
+ "d3_tgday_vuong_o_E_payload_D": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+ },
+ "d4_prism_vuong_o_F_payload_D": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+ },
+ "f1_tugiac_day_3v": {
+  "status": "REFUSED",
+  "code": "SOURCE_OBJECT_MISMATCH",
+  "answer": null,
+  "reason": "'Cho hình chóp S.DEF với tứ giác đáy DEF là ': hình nêu số đỉnh khác đa giác nó gọi tên"
+ },
+ "f2_tgday_4v_rect": {
+  "status": "REFUSED",
+  "code": "SOURCE_OBJECT_MISMATCH",
+  "answer": null,
+  "reason": "' hình chóp tứ giác S.DEFG với tam giác đáy DEFG là': hình nêu số đỉnh khác đa giác nó gọi tên"
+ },
+ "f3_tugiac_day_vuong_tai": {
+  "status": "REFUSED",
+  "code": "SOURCE_OBJECT_MISMATCH",
+  "answer": null,
+  "reason": "'hình chóp tam giác S.DEF biết tứ giác đáy DEF vuô': hình nêu số đỉnh khác đa giác nó gọi tên"
+ },
+ "f4_chop_tamgiac_4v": {
+  "status": "REFUSED",
+  "code": "SOURCE_OBJECT_MISMATCH",
+  "answer": null,
+  "reason": "'hình chóp tam giác S.DEFG': tên khối nêu số đỉnh đáy khác nhãn của nó"
+ },
+ "f5_tgday_hinhvuong": {
+  "status": "REFUSED",
+  "code": "SOURCE_OBJECT_MISMATCH",
+  "answer": null,
+  "reason": "\" lập phương DEFG.D'E'F'G' với tam giác đáy DEFG là\": hình nêu số đỉnh khác đa giác nó gọi tên"
+ },
+ "f6_tgday_rect_cuboid": {
+  "status": "REFUSED",
+  "code": "SOURCE_OBJECT_MISMATCH",
+  "answer": null,
+  "reason": "\"ộp chữ nhật DEFG.D'E'F'G' với tam giác đáy DEFG là\": hình nêu số đỉnh khác đa giác nó gọi tên"
+ },
+ "f7_lp_tugiac_day_prism3": {
+  "status": "REFUSED",
+  "code": "SOURCE_OBJECT_MISMATCH",
+  "answer": null,
+  "reason": "\"lăng trụ đứng DEF.D'E'F' biết tứ giác đáy DEF vuô\": hình nêu số đỉnh khác đa giác nó gọi tên"
+ },
+ "b1_thoaman_neu": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+ },
+ "b2_biet_hoac": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+ },
+ "b3_voi_mat_day_gia_su": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+ },
+ "b4_biet_rang_neu": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+ },
+ "b5_thoaman_khi": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+ },
+ "b6_trong_kg_gia_su": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+ },
+ "b7_thoaman_khong": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+ },
+ "b8_biet_DE_khac": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+ },
+ "b9_neu_biet": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+ },
+ "b10_thoaman_mid_hoac": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+ },
+ "b11_trong_kg_twice": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+ },
+ "b12_voi_day_sau_so": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+ },
+ "b13_biet_sau_so_no_comma": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+ },
+ "b14_thoa_man_trailing": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+ },
+ "a1_value_swap_DE_DF": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+ },
+ "a2_chain_eq": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+ },
+ "a3_chain_eq_SE": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+ },
+ "a4_cube_side_on_top": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+ },
+ "a5_sodo_angle_word": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+ },
+ "a6_chieu_cao_of_face": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+ },
+ "ctl_TP1_canon": {
+  "status": "SERVED",
+  "code": null,
+  "answer": {
+   "mg1": {
+    "coef": "96/25",
+    "dim": 0,
+    "unit": null
+   }
+  },
+  "reason": ""
+ },
+ "ctl_TP1_tg_day": {
+  "status": "REFUSED",
+  "code": "SOURCE_PREMISE_UNREAD",
+  "answer": null,
+  "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+ },
+ "ctl_RP1_canon": {
+  "status": "SERVED",
+  "code": null,
+  "answer": {
+   "mg1": {
+    "coef": "72",
+    "dim": 0,
+    "unit": null
+   }
+  },
+  "reason": ""
+ },
+ "ctl_QP1_canon": {
+  "status": "SERVED",
+  "code": null,
+  "answer": {
+   "mg1": {
+    "coef": "4125/64",
+    "dim": 0,
+    "unit": null
+   }
+  },
+  "reason": ""
+ }
+}

@@ -1,0 +1,2 @@
+1 {'theorem': 'PARALLEL_LINE_PLANE_INTERSECTION', 'plane': '(α)', 'line': 'AD', 'face': 'ADHE', 'verified_exact': True, 'text': 'Vì (α) song song với AD và AD nằm trong mặt (ADHE), nên giao tuyến của (α) với mặt (ADHE) song song với AD.'}
+0 {'theorem': 'PARALLEL_LINE_PLANE_INTERSECTION', 'plane': '(α)', 'line': 'BC', 'face': 'ABCD', 'verified_exact': True, 'text': 'Vì (α) song song với BC và BC nằm trong mặt (ABCD), nên giao tuyến của (α) với mặt (ABCD) song song với BC.'}

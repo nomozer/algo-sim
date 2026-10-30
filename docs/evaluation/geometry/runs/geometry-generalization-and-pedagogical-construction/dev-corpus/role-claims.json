@@ -1,0 +1,550 @@
+{
+ "RC.height_not_perpendicular_pyr3": {
+  "class": "NEGATIVE",
+  "payload": {
+   "derived_sections": [
+    {
+     "parallel_line_a": [
+      "S",
+      "P"
+     ],
+     "parallel_line_b": [
+      "P",
+      "R"
+     ],
+     "plane_kind": "through_point_parallel_two_lines",
+     "plane_name": "β",
+     "quote": "Gọi (β) là mặt phẳng qua N, song song với hai đường thẳng SP và PR",
+     "section_id": "sec",
+     "stated_intersections": [],
+     "target_solid_id": "s1",
+     "through_point": "N"
+    }
+   ],
+   "length_unit": "a",
+   "math_goals": [
+    {
+     "goal_id": "mg1",
+     "goal_type": "area",
+     "kind": "measurement",
+     "quote": "Hãy tính diện tích thiết diện tạo bởi mặt phẳng (β) với hình chóp S.PQR",
+     "solid_id": "s1",
+     "target": {
+      "section_id": "sec"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "right_at": "P",
+      "vertices": [
+       "P",
+       "Q",
+       "R"
+      ]
+     },
+     "kind": "right_angle",
+     "quote": "biết tam giác đáy PQR vuông tại P",
+     "solid_id": "s1"
+    },
+    {
+     "args": {
+      "line": [
+       "S",
+       "P"
+      ],
+      "plane": [
+       "P",
+       "Q",
+       "R"
+      ]
+     },
+     "kind": "perpendicular_line_plane",
+     "quote": "cạnh bên SP vuông góc với mặt phẳng (PQR)",
+     "solid_id": "s1"
+    },
+    {
+     "args": {
+      "segment": [
+       "P",
+       "Q"
+      ],
+      "value": "5a"
+     },
+     "kind": "segment_length",
+     "quote": "với độ dài PQ = 5a",
+     "solid_id": "s1"
+    },
+    {
+     "args": {
+      "segment": [
+       "P",
+       "R"
+      ],
+      "value": "9a"
+     },
+     "kind": "segment_length",
+     "quote": "cạnh PR = 9a",
+     "solid_id": "s1"
+    },
+    {
+     "args": {
+      "segment": [
+       "S",
+       "Q"
+      ],
+      "value": "15a"
+     },
+     "kind": "segment_length",
+     "quote": "chiều cao SQ = 15a",
+     "solid_id": "s1"
+    },
+    {
+     "args": {
+      "point": "N",
+      "ratio": "3/7",
+      "segment": [
+       "S",
+       "Q"
+      ]
+     },
+     "kind": "divide_segment",
+     "quote": "Lấy điểm N trên cạnh SQ sao cho SN = 3/7 SQ",
+     "solid_id": "s1"
+    }
+   ],
+   "problem_text": "Trong không gian, cho hình chóp tam giác S.PQR biết tam giác đáy PQR vuông tại P, cạnh bên SP vuông góc với mặt phẳng (PQR), với độ dài PQ = 5a, cạnh PR = 9a, chiều cao SQ = 15a. Lấy điểm N trên cạnh SQ sao cho SN = 3/7 SQ. Gọi (β) là mặt phẳng qua N, song song với hai đường thẳng SP và PR. Hãy tính diện tích thiết diện tạo bởi mặt phẳng (β) với hình chóp S.PQR.",
+   "relations": [],
+   "schema_version": "typed-fact-next/2",
+   "simulation_goals": [
+    {
+     "goal_id": "sg1",
+     "kind": "construct_object",
+     "quote": "Trong không gian, cho hình chóp tam giác S.PQR",
+     "target_solid_id": "s1"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "S.PQR",
+     "quote": "Trong không gian, cho hình chóp tam giác S.PQR",
+     "solid_id": "s1",
+     "solid_type": "pyramid"
+    }
+   ]
+  }
+ },
+ "RC.height_not_perpendicular_pyr4": {
+  "class": "NEGATIVE",
+  "payload": {
+   "derived_sections": [
+    {
+     "parallel_line_a": [
+      "S",
+      "D"
+     ],
+     "parallel_line_b": [
+      "D",
+      "G"
+     ],
+     "plane_kind": "through_point_parallel_two_lines",
+     "plane_name": "α",
+     "quote": "Gọi (α) là mặt phẳng qua K, song song với hai đường thẳng SD và DG",
+     "section_id": "sec",
+     "stated_intersections": [],
+     "target_solid_id": "s1",
+     "through_point": "K"
+    }
+   ],
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "mg1",
+     "goal_type": "area",
+     "kind": "measurement",
+     "quote": "Hãy tính diện tích thiết diện tạo bởi mặt phẳng (α) với hình chóp S.DEFG",
+     "solid_id": "s1",
+     "target": {
+      "section_id": "sec"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "vertices": [
+       "D",
+       "E",
+       "F",
+       "G"
+      ]
+     },
+     "kind": "rectangle",
+     "quote": "thỏa mãn đáy DEFG là hình chữ nhật",
+     "solid_id": "s1"
+    },
+    {
+     "args": {
+      "line": [
+       "S",
+       "D"
+      ],
+      "plane": [
+       "D",
+       "E",
+       "F",
+       "G"
+      ]
+     },
+     "kind": "perpendicular_line_plane",
+     "quote": "thỏa mãn SD ⊥ (DEFG)",
+     "solid_id": "s1"
+    },
+    {
+     "args": {
+      "segment": [
+       "D",
+       "E"
+      ],
+      "value": "7"
+     },
+     "kind": "segment_length",
+     "quote": "thỏa mãn DE = 7",
+     "solid_id": "s1"
+    },
+    {
+     "args": {
+      "segment": [
+       "D",
+       "G"
+      ],
+      "value": "10"
+     },
+     "kind": "segment_length",
+     "quote": "biết DG = 10",
+     "solid_id": "s1"
+    },
+    {
+     "args": {
+      "segment": [
+       "S",
+       "E"
+      ],
+      "value": "17"
+     },
+     "kind": "segment_length",
+     "quote": "và chiều cao SE = 17",
+     "solid_id": "s1"
+    },
+    {
+     "args": {
+      "point": "K",
+      "ratio": "3/8",
+      "segment": [
+       "D",
+       "E"
+      ]
+     },
+     "kind": "divide_segment",
+     "quote": "Lấy điểm K trên cạnh DE sao cho DK = 3/8 DE",
+     "solid_id": "s1"
+    }
+   ],
+   "problem_text": "Cho hình chóp tứ giác S.DEFG thỏa mãn đáy DEFG là hình chữ nhật, thỏa mãn SD ⊥ (DEFG), thỏa mãn DE = 7, biết DG = 10, và chiều cao SE = 17. Lấy điểm K trên cạnh DE sao cho DK = 3/8 DE. Gọi (α) là mặt phẳng qua K, song song với hai đường thẳng SD và DG. Hãy tính diện tích thiết diện tạo bởi mặt phẳng (α) với hình chóp S.DEFG.",
+   "relations": [],
+   "schema_version": "typed-fact-next/2",
+   "simulation_goals": [
+    {
+     "goal_id": "sg1",
+     "kind": "construct_object",
+     "quote": "Cho hình chóp tứ giác S.DEFG",
+     "target_solid_id": "s1"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "S.DEFG",
+     "quote": "Cho hình chóp tứ giác S.DEFG",
+     "solid_id": "s1",
+     "solid_type": "pyramid"
+    }
+   ]
+  }
+ },
+ "RC.height_proved": {
+  "class": "VARIANT",
+  "oracle": "QP1.canon.area",
+  "payload": {
+   "derived_sections": [
+    {
+     "parallel_line_a": [
+      "S",
+      "D"
+     ],
+     "parallel_line_b": [
+      "D",
+      "G"
+     ],
+     "plane_kind": "through_point_parallel_two_lines",
+     "plane_name": "α",
+     "quote": "Gọi (α) là mặt phẳng qua K, song song với hai đường thẳng SD và DG",
+     "section_id": "sec",
+     "stated_intersections": [],
+     "target_solid_id": "s1",
+     "through_point": "K"
+    }
+   ],
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "mg1",
+     "goal_type": "area",
+     "kind": "measurement",
+     "quote": "Hãy tính diện tích thiết diện tạo bởi mặt phẳng (α) với hình chóp S.DEFG",
+     "solid_id": "s1",
+     "target": {
+      "section_id": "sec"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "vertices": [
+       "D",
+       "E",
+       "F",
+       "G"
+      ]
+     },
+     "kind": "rectangle",
+     "quote": "thỏa mãn đáy DEFG là hình chữ nhật",
+     "solid_id": "s1"
+    },
+    {
+     "args": {
+      "line": [
+       "S",
+       "D"
+      ],
+      "plane": [
+       "D",
+       "E",
+       "F",
+       "G"
+      ]
+     },
+     "kind": "perpendicular_line_plane",
+     "quote": "thỏa mãn SD ⊥ (DEFG)",
+     "solid_id": "s1"
+    },
+    {
+     "args": {
+      "segment": [
+       "D",
+       "E"
+      ],
+      "value": "7"
+     },
+     "kind": "segment_length",
+     "quote": "thỏa mãn DE = 7",
+     "solid_id": "s1"
+    },
+    {
+     "args": {
+      "segment": [
+       "D",
+       "G"
+      ],
+      "value": "10"
+     },
+     "kind": "segment_length",
+     "quote": "biết DG = 10",
+     "solid_id": "s1"
+    },
+    {
+     "args": {
+      "segment": [
+       "S",
+       "D"
+      ],
+      "value": "15"
+     },
+     "kind": "segment_length",
+     "quote": "và chiều cao SD = 15",
+     "solid_id": "s1"
+    },
+    {
+     "args": {
+      "point": "K",
+      "ratio": "3/8",
+      "segment": [
+       "D",
+       "E"
+      ]
+     },
+     "kind": "divide_segment",
+     "quote": "Lấy điểm K trên cạnh DE sao cho DK = 3/8 DE",
+     "solid_id": "s1"
+    }
+   ],
+   "problem_text": "Cho hình chóp tứ giác S.DEFG thỏa mãn đáy DEFG là hình chữ nhật, thỏa mãn SD ⊥ (DEFG), thỏa mãn DE = 7, biết DG = 10, và chiều cao SD = 15. Lấy điểm K trên cạnh DE sao cho DK = 3/8 DE. Gọi (α) là mặt phẳng qua K, song song với hai đường thẳng SD và DG. Hãy tính diện tích thiết diện tạo bởi mặt phẳng (α) với hình chóp S.DEFG.",
+   "relations": [],
+   "schema_version": "typed-fact-next/2",
+   "simulation_goals": [
+    {
+     "goal_id": "sg1",
+     "kind": "construct_object",
+     "quote": "Cho hình chóp tứ giác S.DEFG",
+     "target_solid_id": "s1"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "S.DEFG",
+     "quote": "Cho hình chóp tứ giác S.DEFG",
+     "solid_id": "s1",
+     "solid_type": "pyramid"
+    }
+   ]
+  }
+ },
+ "RC.lateral_edge_is_base_side": {
+  "class": "NEGATIVE",
+  "payload": {
+   "derived_sections": [
+    {
+     "parallel_line_a": [
+      "S",
+      "D"
+     ],
+     "parallel_line_b": [
+      "D",
+      "G"
+     ],
+     "plane_kind": "through_point_parallel_two_lines",
+     "plane_name": "α",
+     "quote": "Gọi (α) là mặt phẳng qua K, song song với hai đường thẳng SD và DG",
+     "section_id": "sec",
+     "stated_intersections": [],
+     "target_solid_id": "s1",
+     "through_point": "K"
+    }
+   ],
+   "length_unit": "1",
+   "math_goals": [
+    {
+     "goal_id": "mg1",
+     "goal_type": "area",
+     "kind": "measurement",
+     "quote": "Hãy tính diện tích thiết diện tạo bởi mặt phẳng (α) với hình chóp S.DEFG",
+     "solid_id": "s1",
+     "target": {
+      "section_id": "sec"
+     }
+    }
+   ],
+   "premises": [
+    {
+     "args": {
+      "vertices": [
+       "D",
+       "E",
+       "F",
+       "G"
+      ]
+     },
+     "kind": "rectangle",
+     "quote": "thỏa mãn đáy DEFG là hình chữ nhật",
+     "solid_id": "s1"
+    },
+    {
+     "args": {
+      "line": [
+       "S",
+       "D"
+      ],
+      "plane": [
+       "D",
+       "E",
+       "F",
+       "G"
+      ]
+     },
+     "kind": "perpendicular_line_plane",
+     "quote": "thỏa mãn SD ⊥ (DEFG)",
+     "solid_id": "s1"
+    },
+    {
+     "args": {
+      "segment": [
+       "D",
+       "E"
+      ],
+      "value": "7"
+     },
+     "kind": "segment_length",
+     "quote": "thỏa mãn DE = 7",
+     "solid_id": "s1"
+    },
+    {
+     "args": {
+      "segment": [
+       "D",
+       "G"
+      ],
+      "value": "10"
+     },
+     "kind": "segment_length",
+     "quote": "biết cạnh bên DG = 10",
+     "solid_id": "s1"
+    },
+    {
+     "args": {
+      "segment": [
+       "S",
+       "D"
+      ],
+      "value": "15"
+     },
+     "kind": "segment_length",
+     "quote": "và cạnh SD = 15",
+     "solid_id": "s1"
+    },
+    {
+     "args": {
+      "point": "K",
+      "ratio": "3/8",
+      "segment": [
+       "D",
+       "E"
+      ]
+     },
+     "kind": "divide_segment",
+     "quote": "Lấy điểm K trên cạnh DE sao cho DK = 3/8 DE",
+     "solid_id": "s1"
+    }
+   ],
+   "problem_text": "Cho hình chóp tứ giác S.DEFG thỏa mãn đáy DEFG là hình chữ nhật, thỏa mãn SD ⊥ (DEFG), thỏa mãn DE = 7, biết cạnh bên DG = 10, và cạnh SD = 15. Lấy điểm K trên cạnh DE sao cho DK = 3/8 DE. Gọi (α) là mặt phẳng qua K, song song với hai đường thẳng SD và DG. Hãy tính diện tích thiết diện tạo bởi mặt phẳng (α) với hình chóp S.DEFG.",
+   "relations": [],
+   "schema_version": "typed-fact-next/2",
+   "simulation_goals": [
+    {
+     "goal_id": "sg1",
+     "kind": "construct_object",
+     "quote": "Cho hình chóp tứ giác S.DEFG",
+     "target_solid_id": "s1"
+    }
+   ],
+   "solids": [
+    {
+     "notation": "S.DEFG",
+     "quote": "Cho hình chóp tứ giác S.DEFG",
+     "solid_id": "s1",
+     "solid_type": "pyramid"
+    }
+   ]
+  }
+ }
+}

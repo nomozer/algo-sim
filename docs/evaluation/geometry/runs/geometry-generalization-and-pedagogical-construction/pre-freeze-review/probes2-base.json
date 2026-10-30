@@ -1,0 +1,188 @@
+{
+ "c5_QP1_thoa_man_chieu_cao_SE": {
+  "a4": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "SCHEMA_VERSION_MISMATCH",
+   "answer": null,
+   "reason": "Expected schema_version='typed-fact-next/1', got 'typed-fact-next/2'."
+  },
+  "a3": {
+   "status": "REFUSED",
+   "code": "SCHEMA_VERSION_MISMATCH",
+   "answer": null,
+   "reason": "Expected schema_version='typed-fact-next/1', got 'typed-fact-next/2'."
+  }
+ },
+ "c5b_QP1_voi_so_do_chieu_cao_SE": {
+  "a4": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "SCHEMA_VERSION_MISMATCH",
+   "answer": null,
+   "reason": "Expected schema_version='typed-fact-next/1', got 'typed-fact-next/2'."
+  },
+  "a3": {
+   "status": "REFUSED",
+   "code": "SCHEMA_VERSION_MISMATCH",
+   "answer": null,
+   "reason": "Expected schema_version='typed-fact-next/1', got 'typed-fact-next/2'."
+  }
+ },
+ "c5c_QP1_canon_co_chieu_cao_SG": {
+  "a4": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường"
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "SCHEMA_VERSION_MISMATCH",
+   "answer": null,
+   "reason": "Expected schema_version='typed-fact-next/1', got 'typed-fact-next/2'."
+  },
+  "a3": {
+   "status": "REFUSED",
+   "code": "SCHEMA_VERSION_MISMATCH",
+   "answer": null,
+   "reason": "Expected schema_version='typed-fact-next/1', got 'typed-fact-next/2'."
+  }
+ },
+ "c9_TP2_tg_day_chieu_cao_SQ": {
+  "a4": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "SCHEMA_VERSION_MISMATCH",
+   "answer": null,
+   "reason": "Expected schema_version='typed-fact-next/1', got 'typed-fact-next/2'."
+  },
+  "a3": {
+   "status": "REFUSED",
+   "code": "SCHEMA_VERSION_MISMATCH",
+   "answer": null,
+   "reason": "Expected schema_version='typed-fact-next/1', got 'typed-fact-next/2'."
+  }
+ },
+ "c9b_TP2_tg_day_chieu_cao_SR": {
+  "a4": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "SCHEMA_VERSION_MISMATCH",
+   "answer": null,
+   "reason": "Expected schema_version='typed-fact-next/1', got 'typed-fact-next/2'."
+  },
+  "a3": {
+   "status": "REFUSED",
+   "code": "SCHEMA_VERSION_MISMATCH",
+   "answer": null,
+   "reason": "Expected schema_version='typed-fact-next/1', got 'typed-fact-next/2'."
+  }
+ },
+ "c7_QP1_no_perp_chieu_cao_SE": {
+  "a4": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "SCHEMA_VERSION_MISMATCH",
+   "answer": null,
+   "reason": "Expected schema_version='typed-fact-next/1', got 'typed-fact-next/2'."
+  },
+  "a3": {
+   "status": "REFUSED",
+   "code": "SCHEMA_VERSION_MISMATCH",
+   "answer": null,
+   "reason": "Expected schema_version='typed-fact-next/1', got 'typed-fact-next/2'."
+  }
+ },
+ "ctl_QP1_chieu_cao_SD": {
+  "a4": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "SCHEMA_VERSION_MISMATCH",
+   "answer": null,
+   "reason": "Expected schema_version='typed-fact-next/1', got 'typed-fact-next/2'."
+  },
+  "a3": {
+   "status": "REFUSED",
+   "code": "SCHEMA_VERSION_MISMATCH",
+   "answer": null,
+   "reason": "Expected schema_version='typed-fact-next/1', got 'typed-fact-next/2'."
+  }
+ },
+ "ctl_QP1_canon": {
+  "a4": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "mg1": {
+     "coef": "4125/64",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "reason": ""
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "SCHEMA_VERSION_MISMATCH",
+   "answer": null,
+   "reason": "Expected schema_version='typed-fact-next/1', got 'typed-fact-next/2'."
+  },
+  "a3": {
+   "status": "REFUSED",
+   "code": "SCHEMA_VERSION_MISMATCH",
+   "answer": null,
+   "reason": "Expected schema_version='typed-fact-next/1', got 'typed-fact-next/2'."
+  }
+ },
+ "ctl_TP2_tg_day": {
+  "a4": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường"
+  },
+  "pl": {
+   "status": "REFUSED",
+   "code": "SCHEMA_VERSION_MISMATCH",
+   "answer": null,
+   "reason": "Expected schema_version='typed-fact-next/1', got 'typed-fact-next/2'."
+  },
+  "a3": {
+   "status": "REFUSED",
+   "code": "SCHEMA_VERSION_MISMATCH",
+   "answer": null,
+   "reason": "Expected schema_version='typed-fact-next/1', got 'typed-fact-next/2'."
+  }
+ }
+}

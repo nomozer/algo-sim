@@ -74,13 +74,13 @@ def test_justifications_are_emitted_where_the_theorem_applies_and_only_there():
 
 
 def _synthetic(edge_in_plane: bool):
-    """Unit square face ABCD (z=0) of a solid; the cutting plane is z = 0 ⇒ the section edge AB lies ON the face edge AB
-    (in the plane: no parallel-line theorem applies), or the plane is y = 1/2 ⇒ edge parallel to AB, off the plane."""
+    """Unit square face ABCD (z=0) of a solid. Cutting plane y = 0 ⇒ the section edge lies ON the face edge AB, which is
+    IN the plane (so "(α) ∥ AB" would be false; CD ∥ AB off the plane is the valid witness); or y = 1/2 ⇒ edge ∥ AB."""
     pts = {'A': ['0', '0', '0'], 'B': ['1', '0', '0'], 'C': ['1', '1', '0'], 'D': ['0', '1', '0']}
     by = {k: {'id': k, 'type': 'point3', 'notation': k} for k in pts}
     by['k'] = {'id': 'k', 'type': 'solid', 'vertex_ids': list(pts), 'vertices': list(pts.values()), 'faces': [[0, 1, 2, 3]]}
     if edge_in_plane:
-        by['p'] = {'id': 'p', 'type': 'plane3', 'notation': '(α)', 'point': ['0', '0', '0'], 'normal': ['0', '0', '1']}
+        by['p'] = {'id': 'p', 'type': 'plane3', 'notation': '(α)', 'point': ['0', '0', '0'], 'normal': ['0', '1', '0']}
         step = {'face_index': 0, 'a': ['0', '0', '0'], 'b': ['1', '0', '0']}
     else:
         by['p'] = {'id': 'p', 'type': 'plane3', 'notation': '(α)', 'point': ['0', '1/2', '0'], 'normal': ['0', '1', '0']}
@@ -89,15 +89,28 @@ def _synthetic(edge_in_plane: bool):
     return {'details': {'canh': 0}}, sec, by
 
 
-def test_edge_lying_in_the_cutting_plane_gets_no_parallel_claim():
-    assert S._ly_do_canh_thiet_dien(*_synthetic(edge_in_plane=True)) is None
+def test_edge_lying_in_the_cutting_plane_is_never_the_witness():
+    j = S._ly_do_canh_thiet_dien(*_synthetic(edge_in_plane=True))
+    assert j is None or j['line'] != 'AB'                                          # AB ⊂ (α): never "(α) ∥ AB"
     j = S._ly_do_canh_thiet_dien(*_synthetic(edge_in_plane=False))
     assert j and j['line'] in ('AB', 'CD') and j['verified_exact']
 
 
+def test_inconsistent_face_index_gets_no_claim():
+    # review M1: the step names face 0 (z = 0) but its edge lies at z = 1 — the face index is not trusted
+    e, sec, by = _synthetic(edge_in_plane=False)
+    sec['steps'][0].update(a=['0', '1/2', '1'], b=['1', '1/2', '1'])
+    assert S._ly_do_canh_thiet_dien(e, sec, by) is None
+    # the cutting plane parallel to the face (z = 1 vs face z = 0): no intersection line, no claim
+    e, sec, by = _synthetic(edge_in_plane=False)
+    by['p'].update(point=['0', '0', '1'], normal=['0', '0', '1'])
+    sec['steps'][0].update(a=['0', '1/2', '1'], b=['1', '1/2', '1'])
+    assert S._ly_do_canh_thiet_dien(e, sec, by) is None
+
+
 def test_off_plane_mutant_is_caught_on_the_in_plane_edge(monkeypatch):
     _mutant(monkeypatch, 'if any(cheo(d, hieu(y, x))) or not vo(n, hieu(x, p0)):', 'if any(cheo(d, hieu(y, x))):')
-    assert S._ly_do_canh_thiet_dien(*_synthetic(edge_in_plane=True)) is not None   # the mutant claims (α) ∥ AB ⊂ (α)
+    assert S._ly_do_canh_thiet_dien(*_synthetic(edge_in_plane=True))['line'] == 'AB'   # the mutant claims (α) ∥ AB ⊂ (α)
 
 
 def _mutant(monkeypatch, old, new):

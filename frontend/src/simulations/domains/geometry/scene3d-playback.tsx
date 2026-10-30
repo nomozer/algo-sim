@@ -257,7 +257,8 @@ export function Scene3DPlayer({
      tự xử lý phím của chúng; mọi phím ở đây dừng phát tự động (người học đã cầm lái). */
   const phimBuoc = (e: KeyboardEvent<HTMLDivElement>) => {
     const t = e.target as HTMLElement;
-    if (e.altKey || e.ctrlKey || e.metaKey || t.closest("input, select")) return;
+    // Review M2: a child that already handled the key (the panel's drag handle moves the panel) keeps it.
+    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || t.closest("input, select")) return;
     const di: Record<string, ((s: number) => number) | undefined> = {
       ArrowLeft: (s) => prevGeometryStep(scene, s),
       ArrowRight: (s) => nextGeometryStep(scene, s),

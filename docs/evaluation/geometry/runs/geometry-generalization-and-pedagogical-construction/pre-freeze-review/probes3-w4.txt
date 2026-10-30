@@ -1,0 +1,54 @@
+c5_QP1_thoa_man_chieu_cao_SE pl REFUSED INVALID_TYPED_FACT_NEXT 1 validation error for TypedFactNextPayload
+derived_sections.0.stated_intersections
+  Extr
+c5_QP1_thoa_man_chieu_cao_SE a3 REFUSED INVALID_TYPED_FACT_NEXT 1 validation error for TypedFactNextPayload
+derived_sections.0.stated_intersections
+  Extr
+c5b_QP1_voi_so_do_chieu_cao_SE pl REFUSED INVALID_TYPED_FACT_NEXT 1 validation error for TypedFactNextPayload
+derived_sections.0.stated_intersections
+  Extr
+c5b_QP1_voi_so_do_chieu_cao_SE a3 REFUSED INVALID_TYPED_FACT_NEXT 1 validation error for TypedFactNextPayload
+derived_sections.0.stated_intersections
+  Extr
+c5c_QP1_canon_co_chieu_cao_SG pl REFUSED INVALID_TYPED_FACT_NEXT 1 validation error for TypedFactNextPayload
+derived_sections.0.stated_intersections
+  Extr
+c5c_QP1_canon_co_chieu_cao_SG a3 REFUSED INVALID_TYPED_FACT_NEXT 1 validation error for TypedFactNextPayload
+derived_sections.0.stated_intersections
+  Extr
+c9_TP2_tg_day_chieu_cao_SQ pl REFUSED INVALID_TYPED_FACT_NEXT 1 validation error for TypedFactNextPayload
+derived_sections.0.stated_intersections
+  Extr
+c9_TP2_tg_day_chieu_cao_SQ a3 REFUSED INVALID_TYPED_FACT_NEXT 1 validation error for TypedFactNextPayload
+derived_sections.0.stated_intersections
+  Extr
+c9b_TP2_tg_day_chieu_cao_SR pl REFUSED INVALID_TYPED_FACT_NEXT 1 validation error for TypedFactNextPayload
+derived_sections.0.stated_intersections
+  Extr
+c9b_TP2_tg_day_chieu_cao_SR a3 REFUSED INVALID_TYPED_FACT_NEXT 1 validation error for TypedFactNextPayload
+derived_sections.0.stated_intersections
+  Extr
+c7_QP1_no_perp_chieu_cao_SE pl REFUSED INVALID_TYPED_FACT_NEXT 1 validation error for TypedFactNextPayload
+derived_sections.0.stated_intersections
+  Extr
+c7_QP1_no_perp_chieu_cao_SE a3 REFUSED INVALID_TYPED_FACT_NEXT 1 validation error for TypedFactNextPayload
+derived_sections.0.stated_intersections
+  Extr
+ctl_QP1_chieu_cao_SD pl REFUSED INVALID_TYPED_FACT_NEXT 1 validation error for TypedFactNextPayload
+derived_sections.0.stated_intersections
+  Extr
+ctl_QP1_chieu_cao_SD a3 REFUSED INVALID_TYPED_FACT_NEXT 1 validation error for TypedFactNextPayload
+derived_sections.0.stated_intersections
+  Extr
+ctl_QP1_canon pl REFUSED INVALID_TYPED_FACT_NEXT 1 validation error for TypedFactNextPayload
+derived_sections.0.stated_intersections
+  Extr
+ctl_QP1_canon a3 REFUSED INVALID_TYPED_FACT_NEXT 1 validation error for TypedFactNextPayload
+derived_sections.0.stated_intersections
+  Extr
+ctl_TP2_tg_day pl REFUSED INVALID_TYPED_FACT_NEXT 1 validation error for TypedFactNextPayload
+derived_sections.0.stated_intersections
+  Extr
+ctl_TP2_tg_day a3 REFUSED INVALID_TYPED_FACT_NEXT 1 validation error for TypedFactNextPayload
+derived_sections.0.stated_intersections
+  Extr

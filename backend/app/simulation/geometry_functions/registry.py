@@ -956,7 +956,7 @@ _C_DIEM = re.compile(rf"(?:gọi\s+)?{_L1}\s+là\s+(?:(?:trung\s+điểm|tâm|tr
 _C_CHIEU = re.compile(rf"(?:(?:gọi\s+)?{_L1}\s+(?:là|trùng\s+với)\s+hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}"
                       rf"|hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}\s+(?:là|trùng\s+với)\s+(?:(?:điểm|đỉnh|trung\s+điểm|trọng\s+tâm)\s+)?{_L1}(?:\s+của\s+{_DOI_TUONG_NHAN})?)"
                       rf"(?![\w'])(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
-_C_DOAN = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:các\s+)?kích\s+thước\s+)?(?:độ\s+dài\s+(?:của\s+)?)?(?:(?:cạnh\s+bên|cạnh|đoạn(?:\s+thẳng)?|đường\s+chéo|số\s+đo|chiều\s+cao)\s+)?"
+_C_DOAN = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:các\s+)?kích\s+thước\s+)?(?:độ\s+dài\s+(?:của\s+)?)?(?:(?P<sv>cạnh\s+bên|chiều\s+cao)\s+|(?:cạnh|đoạn(?:\s+thẳng)?|đường\s+chéo|số\s+đo)\s+)?"
                      rf"(?P<seg>{_L1}{_L1})(?![\w'])"
                      rf"(?:\s*=\s*{_L1}{_L1}(?![\w']))*\s*(?:=|bằng|(?:có\s+)?độ\s+dài(?:\s+bằng)?)\s*{_so_nhom('ss')}",
                      re.IGNORECASE)
@@ -986,6 +986,30 @@ _C_DAGIAC = re.compile(rf"(?:tam\s+giác|hình\s+vuông|lục\s+giác)\s+(?P<p>{
                        rf"{_so_nhom('ps')}", re.IGNORECASE)
 _DANH_VAI = re.compile(r"(?<!\w)(?:cạnh|chiều\s+cao|đường\s+cao)(?!\w)", re.IGNORECASE)
 _KHOI_FN = ("pyramid", "regular_pyramid", "prism")
+
+
+def _vai_doan_ok(m: re.Match, khoi: LoiGoi | None, calls: tuple[LoiGoi, ...]) -> bool:
+    """W4 review B1: a role prefix of a labelled length ("chiều cao XY", "cạnh bên XY") is a CLAIM about XY. It is read
+    only when the bound solid and its validated calls prove it — height: XY ⊥ the base (the `dcao` predicate) or a lateral
+    edge of a RIGHT prism; lateral edge: apex–base vertex / base vertex–its top vertex. Unproved ⇒ the clause is unread."""
+    vai = re.sub(r"\s+", " ", (m["sv"] or "").lower())
+    if not vai:
+        return True
+    seg = re.findall(r"[A-Z][0-9]*'?", m["seg"])
+    if khoi is None or len(set(seg)) != 2:
+        return False
+    if khoi.fn in ("pyramid", "regular_pyramid"):
+        canh_ben = khoi.args.apex in seg and set(seg) - {khoi.args.apex} <= set(khoi.args.base)
+    else:
+        canh_ben = any({b, t} == set(seg) for b, t in zip(khoi.args.base, getattr(khoi.args, "top", None) or []))
+    if vai == "cạnh bên":
+        return canh_ben
+    base = set(khoi.args.base)
+    return (khoi.fn == "prism" and bool(getattr(khoi.args, "right", False)) and canh_ben) or any(
+        (d.fn == "perpendicular_line_plane" and set(d.args.line) == set(seg) and set(d.args.plane) <= base)
+        or (d.fn == "altitude" and {d.args.apex, d.args.foot} == set(seg))
+        or (d.fn == "orthogonal_projection" and {d.args.point, d.args.image} == set(seg) and set(d.args.plane) <= base)
+        for d in calls)
 
 
 def _nhan_khoi(k: LoiGoi) -> set[str]:
@@ -1060,7 +1084,7 @@ def _lien_ket_cau(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) -> dict[in
                     nhan = re.findall(r"[A-Z][0-9]*'?", day) if day else (list(khoi.args.base) if khoi else [])
                     if not nhan or _so_dinh_khop(m.group(), len(nhan)):  # "Đáy ABCD là tam giác đều cạnh 2" binds nothing
                         out[x + m.start("ds")] = ("side", frozenset(nhan))
-                elif kind == "doan":
+                elif kind == "doan" and _vai_doan_ok(m, khoi, calls):
                     out[x + m.start("ss")] = ("seg", frozenset(re.findall(r"[A-Z][0-9]*'?", m["seg"])))
                 elif kind == "vai" and not mo and _cua_khop(m, khoi):
                     out[x + m.start("vs")] = ("vai", re.sub(r"\s+", " ", m["vai"].lower()), khoi, moi)
@@ -4692,6 +4716,8 @@ def _cau_tien_de_dong_hop_le(s: str, s_start: int, de: str, calls: tuple[LoiGoi,
                 else:
                     return False
         elif kind == "doan":
+            if not _vai_doan_ok(m, khoi, calls):
+                return False
             segs = [p for _x, _y, parts in _tu_nhan(m.group()[:m.start("ss") - m.start()]) for p in parts if len(p) == 2]
             want = _doc_nhom(m["ss"])
             if not segs or want is None:

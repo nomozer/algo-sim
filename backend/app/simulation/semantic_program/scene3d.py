@@ -829,7 +829,12 @@ def _ly_do_canh_thiet_dien(e: dict[str, Any], sec: dict[str, Any],
     cheo = lambda u, v: (u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0])  # noqa: E731
     vo = lambda u, v: sum(x * y for x, y in zip(u, v))                         # noqa: E731
     d = hieu(b, a)
-    if not any(d) or vo(n, hieu(a, p0)) or vo(n, hieu(b, p0)):
+    if not any(d) or vo(n, hieu(a, p0)) or vo(n, hieu(b, p0)) or len(pts) < 3:
+        return None
+    # Review M1: do not trust `face_index` — the edge must lie IN that face's plane, which must actually cut (α).
+    nm = cheo(hieu(pts[1], pts[0]), hieu(pts[2], pts[0]))
+    if (not any(nm) or not any(cheo(nm, n)) or any(vo(nm, hieu(p, pts[0])) for p in pts)
+            or vo(nm, hieu(a, pts[0])) or vo(nm, hieu(b, pts[0]))):
         return None
     ten = _ten_diem_khoi(solid, by_id)
     mat_ten = "".join(ten[j] for j in face)

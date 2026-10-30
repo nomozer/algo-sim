@@ -76,7 +76,7 @@ MUTANTS = {
                          'TP1.thoa_man.area'),
     'no_space_lead': ('_C_DAU', r'''(?:trong\s+không\s+gian\s*,\s*)?''', '', 'TP1.tg_day.area'),
     'no_thoa_man': ('_C_DAU', r'''(?:(?:biết(?:\s+rằng)?|th[ỏo]a\s+mãn)\s+)?''', r'''(?:biết\s+(?:rằng\s+)?)?''', 'QP1.thoa_man.area'),
-    'no_so_do': ('_C_DOAN', r'''|số\s+đo|chiều\s+cao)''', ')', 'TP1.voi_so_do.area'),
+    'no_so_do': ('_C_DOAN', r'''|số\s+đo)''', ')', 'TP1.voi_so_do.area'),
     'no_o_synonym': ('_C_DAY', r'''(?:tại|ở)''', 'tại', 'RP1.voi_so_do.area'),
     'no_base_prefix': ('_C_DAY', r'''(?:(?:có|với)\s+)?(?:(?:mặt|tứ\s+giác|tam\s+giác)\s+)?đáy''', r'''(?:có\s+)?(?:mặt\s+)?đáy''',
                        'RP1.tg_day.area'),
@@ -91,6 +91,35 @@ def test_each_grammar_extension_is_load_bearing(monkeypatch, mutant):
     assert rx.pattern.count(old) >= 1, (mutant, 'anchor missing')
     monkeypatch.setattr(R, attr, re.compile(rx.pattern.replace(old, new), rx.flags))
     assert run(cid)[0] == 'REFUSED', mutant
+
+
+# Amendment (pre-freeze review B1): a role prefix is a claim. Negatives whose payload AGREES with the wrong reading.
+ROLE = json.loads((RUN / 'dev-corpus/role-claims.json').read_text(encoding='utf-8'))
+ROLE_SHA256 = '24a10004fca5d42134471157ba2726222842c58dfabb51db2e35fd83d5776527'
+
+
+def run_role(cid):
+    r = run_typed_fact_next_v2_route(deepcopy(ROLE[cid]['payload']))
+    return r.status, r.code, (r.answer_exact if r.status == 'SERVED' else None)
+
+
+def test_role_claim_corpus_frozen():
+    assert hashlib.sha256((RUN / 'dev-corpus/role-claims.json').read_bytes().replace(b'\r\n', b'\n')).hexdigest() == ROLE_SHA256
+
+
+@pytest.mark.parametrize('cid', sorted(k for k, c in ROLE.items() if c['class'] == 'NEGATIVE'))
+def test_unproved_role_claim_is_never_served(cid):
+    status, code, answer = run_role(cid)
+    assert status == 'REFUSED' and answer is None, (status, code)
+
+
+def test_proved_height_gives_the_canonical_answer():
+    assert run_role('RC.height_proved') == run(ROLE['RC.height_proved']['oracle'])
+
+
+def test_role_check_is_load_bearing(monkeypatch):
+    monkeypatch.setattr(R, '_vai_doan_ok', lambda m, khoi, calls: True)
+    assert run_role('RC.height_not_perpendicular_pyr3')[0] == 'SERVED'      # the B1 defect returns without the check
 
 
 def test_right_angle_vertex_reads_o_as_tai(monkeypatch):
