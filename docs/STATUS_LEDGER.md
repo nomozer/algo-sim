@@ -1,5 +1,7 @@
 # STATUS_LEDGER.md — SỔ TRẠNG THÁI SẢN PHẨM
 
+**LOCAL 2026-10-30 — W3-F2 final verification (latest):** research/hybrid-v2-w3-f2-ratio-projection-language-grounding; product dd17fbfb, candidate 4e7fe91d (118 files, c4fb8613…), CACHE_VERSION 130, LLM_ONLY, Full T3 PASS; READY_FOR_OWNER_REVIEW, not merged. `evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/target-grammar-identity-recovery/f7-narrow-recovery/final-handoff.md`.
+
 **LOCAL 2026-10-24 — Visual–Hybrid final corrections (latest):** integration/hybrid-visual-candidate; product af670aa6 (backend display identity, diagnostics UI, samples), candidate a636a0e5 (118 files, 8be63267…), CACHE_VERSION 128, Full T3 PASS at a084c180. Official Visual suite FAIL with 2 product findings (owner decision); independent review PENDING; human visual approval NOT_GRANTED; local main unchanged and NOT ready for GO. Handoff: `evaluation/geometry/runs/visual-hybrid-final-corrections/FINAL_OWNER_HANDOFF.md`.
 
 **LOCAL 2026-10-24 — Visual–Hybrid integration:** integration/hybrid-visual-candidate, merge 78e88470 of Hybrid B1/B2 (97d59bf9) with the Scene3D SGK visual port (7f90d9b3) + frontend label-authority fix; product a9d05dda, candidate aec7b183 (118 files, d22d27e7…), Full T3 PASS at b99afd32. Default LLM_ONLY, cache127, Hybrid NO-GO unchanged. No main merge/push/live. Owner gate: `evaluation/geometry/runs/visual-hybrid-integration/FINAL_OWNER_HANDOFF.md`.
