@@ -1,0 +1,29 @@
+{
+  "candidate_commit": "4e7fe91d8990d4ef2856204d2b8aaa652f41ea24",
+  "frozen_at_commit": "a12cbb0d2c7996c08403956ffd73d066bce766bc",
+  "product_commit": "dd17fbfb8616c9b7ac325aa91c4dfec92577c64a",
+  "measured_system": {"so_file": 118, "tree_hash": "c4fb8613800585ddd68a13f410e5c84755e64a8562c1604ed4b43b6e03c2fb8c"},
+  "worktree": "fresh detached .superpowers/worktrees/w3-f2-f7-final-t3-4e7fe91d (node_modules junction to main checkout); clean before and after",
+  "command": "cd frontend && node scripts/full-gate.mjs",
+  "python": "active_venv 3.12 (main checkout backend/.venv)",
+  "started_utc": "2026-10-30T07:35:34Z", "finished_utc": "2026-10-30T07:46:57Z",
+  "exit_code": 0,
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "steps": {
+    "pytest_full_backend": "15780 passed, 7 skipped, 2 deselected, 15 xfailed, 1 warning in 643.32s (0 failed; the 11 freeze-identity tests included)",
+    "vitest_full_frontend": "83 files, 1417 passed",
+    "typecheck_and_production_build": "PASS",
+    "thesis_demo_replay": "DEMO_REPLAY_PASS 5/5, REDUCED_CHAIN 1/1",
+    "demo_crash_surface": "6/6 boundaries as expected, 0 thrown (500)"
+  },
+  "post_t3": {
+    "freeze_verify": {"exit_code": 0, "stdout": "Candidate khớp bản đã đóng băng (mã sản phẩm: 118 file, c4fb8613800585dd…)."},
+    "evaluation_candidate_sha256_before": "8de56ec29cf733fbbf7fcecc20a76abb2e5e7b2f0639b180950d08eef3acbc0b",
+    "evaluation_candidate_sha256_after": "8de56ec29cf733fbbf7fcecc20a76abb2e5e7b2f0639b180950d08eef3acbc0b",
+    "publication_range_996f114b_to_candidate": "SUMMARY scanned=651 messages=57 violations=0 pending_exception=0 verdict=PASS"
+  },
+  "freeze_identity_tests_11_on_working_tree_before_commit": "11 passed (identical node set to PENDING_NEW_FREEZE)",
+  "log": {"local_only": ".superpowers/target-grammar-identity-recovery/full-t3.log", "sha256_bytes": "a7322abcf44a5171159a4637470c2b23f80d809ffb6618ca91c026310e828c3b", "bytes": 23655, "traceback_lines": 0},
+  "head_scan_note": "check_publication_safety --head is BLOCKED identically on main 996f114b and this branch (105 violations, 104 pending registry entries, 1 GOOGLE_API_KEY pattern in backend/tests/geometry/test_docs_information_architecture.py blob 0f726dfb, same blob on main). Pre-existing, not introduced by this branch, outside this GO.",
+  "live_provider_calls": 0
+}
