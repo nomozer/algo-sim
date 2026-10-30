@@ -393,7 +393,9 @@ def test_fi_14_secret_leak_rejected():
     """FI-14: Secret-shaped value trong handoff/artifact phải bị bắt."""
     test_f = REPO / "docs" / "_temp_fi14_secret.md"
     try:
-        test_f.write_text("API_KEY = AIzaSyFakeSecretKeyForTestingPurpose12345", encoding="utf-8")
+        # Ghép chuỗi (như `check_publication_safety.py`): giá trị ghi ra lúc chạy KHÔNG đổi, nhưng nguồn không mang một
+        # dòng khớp luật GOOGLE_API_KEY của cổng publication (khoá giả có chủ đích, không phải bí mật thật).
+        test_f.write_text("API_KEY = " + "AIza" + "SyFakeSecretKeyForTestingPurpose12345", encoding="utf-8")
         res = A.audit_secret_scan(REPO, [test_f])
         assert res["valid"] is False
         assert res["leak_count"] == 1
