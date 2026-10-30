@@ -1,0 +1,19 @@
+{
+  "run_id": "hybrid-v2-w3-f2-ratio-projection-language-grounding",
+  "continuation_id": "autonomous-integration",
+  "task_wave": 1,
+  "date": "2026-10-30",
+  "branch": "main",
+  "classification": "INTEGRATION_VERIFICATION",
+  "local_start": "15a8e1ac327e7ec5197ebe5d08330afb444b9571",
+  "remote_baseline": "996f114b3480efe1b0d075dd4342530aaa12ddae",
+  "candidate": "4e7fe91d8990d4ef2856204d2b8aaa652f41ea24",
+  "product": "dd17fbfb8616c9b7ac325aa91c4dfec92577c64a",
+  "measured_system_hash": "c4fb8613800585ddd68a13f410e5c84755e64a8562c1604ed4b43b6e03c2fb8c",
+  "owner_authority": "Direct request: OWNER DECISION — ALGOSIM AUTONOMOUS INTEGRATION POLICY, 2026-10-30",
+  "product_change": false,
+  "cache_change": false,
+  "provider_requests": 0,
+  "status": "TECHNICAL_READY_PENDING_FINAL_PUBLICATION_CHECKS",
+  "report": "report.md"
+}

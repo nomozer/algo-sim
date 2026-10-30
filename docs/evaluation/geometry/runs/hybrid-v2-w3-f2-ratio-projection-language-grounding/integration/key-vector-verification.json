@@ -1,0 +1,71 @@
+{
+  "vectors": [
+    {
+      "rule": "GOOGLE_API_KEY",
+      "path": "backend/tests/geometry/test_docs_information_architecture.py",
+      "blob": "0f726dfb72db7e11c55a583b535e7db77919af01",
+      "line": 395,
+      "exception": null,
+      "blob_sha256": "e046adaa7d29ba1c1021924278950be75a0e317e24a217d8379e2d5c12d58691",
+      "literal_sha256": "20351f635542fb46c8c6f45104725e819ac871f4b2d226205b9730be2294a268",
+      "baseline_identical": true,
+      "classification": "EXPLICIT_TESTING_SENTINEL_LOCAL_FAULT_INJECTION",
+      "usage": "Temporary markdown -> local secret scanner -> assertion -> finally deletion; no provider call.",
+      "provider_requests": 0
+    },
+    {
+      "rule": "GOOGLE_API_KEY",
+      "path": "backend/tests/geometry/test_multicase_benchmark.py",
+      "blob": "454e1f9ae10ee60dbca86fd71f6d74eb73bd9d77",
+      "line": 40,
+      "exception": "PENDING_OWNER_DECISION",
+      "blob_sha256": "270466d23ba2606b9800cbf35191b3ea7480353f2de023974675bbe82348cbac",
+      "literal_sha256": "25877fcbaef53f9a4fd318a3134bd746e83d2ccc874da235eef02785bc04b6b5",
+      "baseline_identical": true,
+      "classification": "EXPLICIT_FAKE_KEY_CONSTANT_FOR_MOCK_TRANSPORT_TESTS",
+      "usage": "KEY_GIA fixture, httpx.MockTransport, BoKhuBiMat redactor and ChanMangThat network guard.",
+      "provider_requests": 0
+    },
+    {
+      "rule": "GOOGLE_API_KEY",
+      "path": "backend/tests/geometry/test_structured_relation_analyze_live_runner.py",
+      "blob": "59a92e47b766f9d75353eec1019f24d86cd64dc5",
+      "line": 36,
+      "exception": "PENDING_OWNER_DECISION",
+      "blob_sha256": "d10588dd87ebaf235bde9318c807e694e7c7e09d01efc3a797ec04ac95cf94f6",
+      "literal_sha256": "25877fcbaef53f9a4fd318a3134bd746e83d2ccc874da235eef02785bc04b6b5",
+      "baseline_identical": true,
+      "classification": "EXPLICIT_FAKE_KEY_CONSTANT_FOR_MOCK_TRANSPORT_TESTS",
+      "usage": "KEY_GIA fixture, httpx.MockTransport, BoKhuBiMat redactor and ChanMangThat network guard.",
+      "provider_requests": 0
+    },
+    {
+      "rule": "GOOGLE_API_KEY",
+      "path": "backend/tests/geometry/test_structured_relation_revalidation.py",
+      "blob": "a46e4d510dfe483cf39732727a38c114a5637a41",
+      "line": 38,
+      "exception": "PENDING_OWNER_DECISION",
+      "blob_sha256": "91743a992e6c896633c8c9d18ad6e492cb8eff8445f9e42ee679064df8139610",
+      "literal_sha256": "25877fcbaef53f9a4fd318a3134bd746e83d2ccc874da235eef02785bc04b6b5",
+      "baseline_identical": true,
+      "classification": "EXPLICIT_FAKE_KEY_CONSTANT_FOR_MOCK_TRANSPORT_TESTS",
+      "usage": "KEY_GIA fixture, httpx.MockTransport, BoKhuBiMat redactor and ChanMangThat network guard.",
+      "provider_requests": 0
+    },
+    {
+      "rule": "GOOGLE_API_KEY",
+      "path": "backend/tests/test_curved_acceptance_manifest.py",
+      "blob": "a8143fce1ad21a3a90d737ec08a415e3ac01cd51",
+      "line": 433,
+      "exception": "PENDING_OWNER_DECISION",
+      "blob_sha256": "78628af245ea4ed811d3f9c4f7bee0204d5c943d5e85ec2412a12536ca3cbff7",
+      "literal_sha256": "19334cf62379e1585a510ec7860efebdef66d7a070f04d6ae724db6a01cfdf16",
+      "baseline_identical": true,
+      "classification": "DETERMINISTIC_INTERLEAVED_ALPHABET_DIGIT_SECRET_SCAN_VECTOR",
+      "usage": "Ordered alphabet letters alternate with cycling decimal digits; literal passed only to local quet_bi_mat assertion in gia_lap test.",
+      "provider_requests": 0
+    }
+  ],
+  "provider_requests": 0,
+  "conclusion": "All five baseline Google-key patterns are static synthetic test vectors; no provider validity probe made."
+}

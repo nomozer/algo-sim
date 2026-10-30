@@ -1,0 +1,29 @@
+{
+  "candidate": "4e7fe91d8990d4ef2856204d2b8aaa652f41ea24",
+  "product": "dd17fbfb8616c9b7ac325aa91c4dfec92577c64a",
+  "full_t3_reused_by_identity": true,
+  "t3_log_sha256": "a7322abcf44a5171159a4637470c2b23f80d809ffb6618ca91c026310e828c3b",
+  "t3_log_bytes": 23655,
+  "t3_receipt_sha256_git_lf": "5db96e1624731029172e31c2c9d867f01d6e3d20de3d2702f8611f55cd2f253d",
+  "fresh_detached_freeze_verify": "MATCH",
+  "fresh_affected_tests_before_docs_copy": {
+    "passed": 54,
+    "seconds": 21.16,
+    "exit_code": 0
+  },
+  "post_integration_receipt_sha256": "204a54e5f174f80713b9c0188468469d053ffee089d740e0d914b55d0a944cca",
+  "provider_requests": 0,
+  "policy_docs_recheck": {
+    "passed": 42,
+    "seconds": 4.38,
+    "exit_code": 0,
+    "log_sha256": "6181a3218fcf6029b8c532f20b5fd73dbb06755784984b55ed22b5a7583063c3",
+    "note": "Reran after replacing rather than extending the 300-line handoff. Initial docs-only check had two failures from that line limit, now resolved."
+  },
+  "final_docs_recheck": {
+    "passed": 42,
+    "seconds": 4.75,
+    "exit_code": 0,
+    "log_sha256": "cb04df78a127a513a9e4cd938679f6a1eb7ddf2c530d00007f9595137a85b214"
+  }
+}

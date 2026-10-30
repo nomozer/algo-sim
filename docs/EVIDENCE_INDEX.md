@@ -1,5 +1,18 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## CONTINUATION_ID = HYBRID_V2_W3_F2_AUTONOMOUS_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/integration/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/integration/
+CLASSIFICATION = INTEGRATION_VERIFICATION; scoped Owner publication supersession; technical candidate unchanged; final remote status in report and local read-back receipt
+VERIFICATION = publication-comparison.json; key-vector-verification.json; verification.json; run.json; workflow-proposal.md
+CODE_COMMIT = dd17fbfb8616c9b7ac325aa91c4dfec92577c64a
+CANDIDATE_COMMIT = 4e7fe91d8990d4ef2856204d2b8aaa652f41ea24
+MODEL_REQUEST_COUNT = 0
+CORRECTS = living status docs that still described W3-F2 as not on main after local fast-forward; policy supersession is recorded separately, not a rewrite of research evidence
+CORRECTED_BY = NONE
+
+
 ## CONTINUATION_ID = HYBRID_V2_W3_F2_F7_NARROW_RECOVERY_AND_FINAL_SAFETY_PREPARATION
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/target-grammar-identity-recovery/f7-narrow-recovery/final-handoff.md
