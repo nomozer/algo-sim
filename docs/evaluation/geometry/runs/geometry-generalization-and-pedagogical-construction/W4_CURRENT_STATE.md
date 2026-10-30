@@ -7,7 +7,7 @@ Owner Master GO `ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION` (202
 | branch / worktree | `research/w4-geometry-pedagogy` · `.superpowers/worktrees/w4-geometry-pedagogy` (node_modules junction to root) |
 | base | `main` = `origin/main` = `e5dc3d28` (verified live 2026-10-30) |
 | baseline product / measured | `dd17fbfb` · 118 files `c4fb8613…` · cache 130 · LLM_ONLY · live 0 |
-| phase | F slice 1 GREEN at `01b74e39` (product `registry.py` +6 regex lines); next: Phases C–E (construction steps, pedagogy, Scene3D) |
+| phase | pre-freeze independent review running (HEAD after `0e555bad`); then docs write-back → freeze → T0–T2 → Full T3 → final review → integration |
 
 ## Phase B — first blocking layer of the 22 Wave 3 false refusals (receipt: `capability-matrix.md`)
 
@@ -26,10 +26,16 @@ All 22 stop in the Source Gate (none in Planner / exact geometry / Adapter / fro
   (+17), 72/72 negatives, 62/72 reasons, 0 wrong-served; locked 96/96; 203 probes unchanged; full backend 15768 passed, only
   11 pending-freeze + 1 dirty-tree check failing (receipts `green1.json`, `regression-green1.json`).
 
+- `039fa606` pedagogy: certified "Vì sao" for section-edge steps (shared scene builder), keyboard ←/→/Home/End, CACHE 130→131.
+- `8fe9f9a3` rubric + real-browser UI evidence + regenerated offline samples; proxies 100/108 edge steps justified.
+- `0e555bad` regression after pedagogy: Wave 3 67/72, 72/72, 62/72, 0 wrong-served, 0 leaks; locked 96/96; probes unchanged.
+- `capability-matrix.md`: the 22 cases, first blocking layer, capability, location, risk, W4 result.
+
 ## Remaining Wave 3 false refusals (5)
 W3-B01 conditional reading of "Thiết lập mặt phẳng"; W3-B34/35/36 oblique prism ("hình chiếu … của đỉnh B' lên (BCD) là C",
 "khối lăng trụ tam giác"); W3-A06 radical bound (genuine limit). Not tuned on Wave 3 text.
 
 ## Next action
-Phase A audit result → Phases C–E: verify the step/scene/explanation pipeline for newly served hybrid outputs; improve
-step navigation and explanation traceability reusing existing abstractions.
+Wait for the pre-freeze adversarial review (scratch `w4-review/`). On READY: write back EVIDENCE_INDEX / CURRENT_STATE /
+AI_CONTEXT_BUNDLE / STATUS_LEDGER, commit, freeze candidate (separate commit, new divergence layer), T0/T1/T2, Full T3 in a
+fresh detached worktree, final independent review, conditional integration under the scoped W4 publication decision.
