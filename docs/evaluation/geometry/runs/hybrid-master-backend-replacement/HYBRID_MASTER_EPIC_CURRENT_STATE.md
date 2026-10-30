@@ -107,7 +107,22 @@ The original next actions 2 and 3 of that stop were done in the second continuat
 - Publication range `f986e897..HEAD`: PASS. 0 `Co-Authored-By` trailers.
 - This worktree keeps two gitignored junctions, `backend/.venv` and `frontend/node_modules`, pointing to the main checkout. Remove them with `[IO.Directory]::Delete` before removing the worktree.
 
-**Final status of this continuation:**
+**Third continuation (Owner GO "independent review → live readiness → cutover → retirement"), in progress:**
+- **`d9615cdb`, harness hardening (scripts/tests/docs only; the candidate is unchanged and still verifies):**
+  - per-request hard USD cap on the exact payload for both arms;
+  - production-equivalent Hybrid transport (`live_transport`, the same retry and 120 s timeout as `call_gemini`, a 480 s deadline);
+  - corpus integrity checks and a contamination scan;
+  - an identity stop;
+  - mock-provider tests for every failure mode (27 tests).
+- **Provider facts verified** against Google docs (`provider-facts.md`): 2.5 access is limited to past users; a paid tier is required for privacy; output 65 536 including thinking; no instant provider-side hard cap.
+- **`heldout-authoring/` package:** no cases and no author written.
+- **Independent architecture review:** launched; **interrupted by the session usage limit** before reporting. Resume that reviewer, or relaunch one with the same brief (scope `f986e897..cc2d56b9` plus the harness). Its result goes to `architecture-review.md`.
+- **Next:**
+  1. Finish the architecture review and fix any BLOCKER/MAJOR, re-freezing if product code changes.
+  2. Run the evaluation-readiness review (protocol, harness, cost guard), with its result in `evaluation-readiness-review.md`.
+  3. Then report the single Owner GO.
+
+**Final status of the second continuation:**
 - Offline backend: **`OFFLINE_BACKEND_READY_FOR_LIVE_EVALUATION`**.
 - Overall: **`HYBRID_NOT_READY`**. There has been no live measurement and no cutover; LLM_ONLY is not retired. Nothing is merged or pushed: this epic has no publication or integration authorization yet.
 
