@@ -13,6 +13,17 @@ CORRECTS = living W4 status that still said publication blocked/not integrated; 
 CORRECTED_BY = NONE
 
 
+## WAVE_ID = ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/HYBRID_MASTER_EPIC_CURRENT_STATE.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = OFFLINE_DETERMINISTIC_FIXTURE_TEST + DEVELOPMENT_DIAGNOSTIC (no live measurement); research branch research/hybrid-master-backend-replacement from main f986e897; D-02/D-12 PROVED offline; Wave 3 replay unchanged (67/72, 72/72, 0 wrong-served, 0 transitions); candidate bf2c3eaa (118 files 44b02a62…); T0/T2/Full T3 PASS; live paired evaluation READY but NOT RUN (Owner GO pending)
+CODE_COMMIT = f5ad105345f01617613559326e22bf9221b12d93
+VERIFICATION = task1-green.json; capability-inventory.md; inventory-task2.json; measurement-probe.json; migration-ledger.md; architecture-consolidation.md; recomposition-evidence.json; inventory-phase-d.json; live-evaluation-protocol.md; live-harness-status.md; owner-go-request.md; frozen-evaluation-candidate.json; candidate_divergence.json; tiers.json; full-t3.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION (candidate divergence chain only)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION
 
 REPORT = docs/evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction/report.md

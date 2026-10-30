@@ -98,9 +98,25 @@ This is the canonical mutable checkpoint for the one Master Epic. After compacti
 
 **STOP boundary reached (first continuation):** production cutover and LLM_ONLY retirement need a live-provider budget, a new pre-registered held-out set, and a paired differential, latency and cost run (D-04, D-11, GATE-16). The contract says "No live budget is currently authorized."
 
-**Next exact action:**
-1. Ask the Owner for a scoped live GO; the required fields are listed in `migration-ledger.md`.
-2. Offline work that can continue meanwhile: D-02 Route D cache identity; D-12 rollback tests; an opt-in `/api/analyze` Hybrid route behind a declared gate, off by default, with LLM_ONLY byte-identical.
-3. Candidate re-freeze, T0–T3 and the final review come only before an integration.
+The original next actions 2 and 3 of that stop were done in the second continuation; see the Phase A–D entries.
 
-**Verdict so far:** `HYBRID_NOT_READY`. No production cutover and no legacy retirement is claimed.
+**Phase D (second continuation), gates:**
+- Regression at HEAD, against the W4 baseline: 0 transitions (`inventory-phase-d.json`).
+- Candidate frozen in its own commit, `bf2c3eaa`: product `f5ad1053`, 118 files `44b02a62…`, cache 131 (no bump; LLM_ONLY bytes identical). New divergence layer in `candidate_divergence.json`.
+- T0 `IMPACT_GATE_PASS` (15929/0); T2 PASS (1424 vitest, tsc, build); **Full T3 `FULL_PRODUCT_GATE_PASS`**, attempt 1, on fresh detached `hm-final-t3-bf2c3eaa`, which has since been removed cleanly (`tiers.json`, `full-t3.json`).
+- Publication range `f986e897..HEAD`: PASS. 0 `Co-Authored-By` trailers.
+- This worktree keeps two gitignored junctions, `backend/.venv` and `frontend/node_modules`, pointing to the main checkout. Remove them with `[IO.Directory]::Delete` before removing the worktree.
+
+**Final status of this continuation:**
+- Offline backend: **`OFFLINE_BACKEND_READY_FOR_LIVE_EVALUATION`**.
+- Overall: **`HYBRID_NOT_READY`**. There has been no live measurement and no cutover; LLM_ONLY is not retired. Nothing is merged or pushed: this epic has no publication or integration authorization yet.
+
+**Remaining gates:**
+- D-04, D-11, D-13 and GATE-13/15/16/20: live and human measurements.
+- D-10: frontend presentation, including the missing `annotation.kind` on some Hybrid quantities.
+- An independent architecture review before any cutover or integration.
+
+**Next exact action:**
+1. The Owner decides on `owner-go-request.md` and names an independent author for the held-out set.
+2. With a GO: freeze the corpus and oracle hashes into the protocol, then run `backend/scripts/run_paired_route_evaluation.py --live` under the approved terms.
+3. Without a GO: no further offline item in this epic is blocked. Optional: an independent architecture review of `f986e897..HEAD` before an integration request.
