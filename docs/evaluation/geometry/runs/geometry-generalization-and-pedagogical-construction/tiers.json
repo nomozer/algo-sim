@@ -1,0 +1,13 @@
+{
+  "candidate": "freeze 182a7785 (frozen at be686523, product 61ade29e, 118 files 54b5b565…), T0 at 25028584 (+ test-only commit)",
+  "order_note": "Run AFTER the freeze so the 11 freeze-identity tests are exercised for real. An earlier T0 at 550b4b3c found 4 real failures (scene3d imported fractions; mutant anchor collision; p1 scene pin; preview fixtures) — fixed in 61ade29e/be686523, re-frozen; a second T0 at 182a7785 found 1 (p1 legacy-row path) — fixed test-only in 25028584. Earlier logs kept local: t0.log, t0b.log.",
+  "T0": {"command": "node scripts/impact.mjs --base e5dc3d28", "head": "25028584", "exit_code": 0, "label": "IMPACT_GATE_PASS",
+         "pytest": "15892 passed, 7 skipped, 2 deselected, 15 xfailed, 0 failed", "vitest": "1424 passed",
+         "log_sha256_bytes": "1646ede297ca5cbb872b14ece45a35da5eb57ea8bc5248b75922a90a96f596f0"},
+  "T1": {"head": "182a7785 (same product)", "geometry": {"exit_code": 0, "summary": "45 files, 879 passed", "log_sha256_bytes": "fe54929cc25519e518a0b64612539a273e023d6e5b3e9151ea2081fe9a21febc"},
+         "semantic": {"exit_code": 0, "summary": "1 file, 24 passed", "log_sha256_bytes": "43f7dfa283e56944572e769ef50c2cd05757715048e1fd03e51bffe8d092e75e"}, "label": "DOMAIN_GATE_PASS"},
+  "T2": {"head": "182a7785 (same product)", "command": "npm run test:wave", "exit_code": 0, "summary": "84 files, 1424 passed; tsc -b 0 errors; vite build OK",
+         "label": "WAVE_GATE_PASS", "log_sha256_bytes": "94d04aeb58ea4c0dbeb6fde4d5cfb17c31e714f1f249b9643fe56b5ff1cca796"},
+  "raw_logs_local_only": ".superpowers/w4-logs/",
+  "live_provider_calls": 0
+}
