@@ -7,7 +7,7 @@ Owner Master GO `ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION` (202
 | branch / worktree | `research/w4-geometry-pedagogy` · `.superpowers/worktrees/w4-geometry-pedagogy` (node_modules junction to root) |
 | base | `main` = `origin/main` = `e5dc3d28` (verified live 2026-10-30) |
 | baseline product / measured | `dd17fbfb` · 118 files `c4fb8613…` · cache 130 · LLM_ONLY · live 0 |
-| phase | pre-freeze independent review running (HEAD after `0e555bad`); then docs write-back → freeze → T0–T2 → Full T3 → final review → integration |
+| phase | Full T3 PASS (`25028584`); final independent review next; integration blocked on one Owner-approved publication exception |
 
 ## Phase B — first blocking layer of the 22 Wave 3 false refusals (receipt: `capability-matrix.md`)
 
@@ -31,11 +31,16 @@ All 22 stop in the Source Gate (none in Planner / exact geometry / Adapter / fro
 - `0e555bad` regression after pedagogy: Wave 3 67/72, 72/72, 62/72, 0 wrong-served, 0 leaks; locked 96/96; probes unchanged.
 - `capability-matrix.md`: the 22 cases, first blocking layer, capability, location, risk, W4 result.
 
+- `e4e97758` B1 fix (role-prefixed lengths proved), re-verified READY; `61ade29e` scene3d geometry-free (fact computed in
+  simulation_state); `be686523` preview fixtures re-exported to this run; `182a7785` re-freeze (118 files `54b5b565…`).
+- T0 `IMPACT_GATE_PASS` 15892/0 at `25028584`; T1 879+24; T2 1424+tsc+build (`tiers.json`).
+- Full T3 FULL_PRODUCT_GATE_PASS on fresh detached `25028584` (attempt 2; attempt 1 invalid, environment) (`full-t3.json`).
+- `00d09f3b` synthetic FI-14 key built at runtime; range scan: 1 PENDING exception (`publication-assessment.md`).
+
 ## Remaining Wave 3 false refusals (5)
 W3-B01 conditional reading of "Thiết lập mặt phẳng"; W3-B34/35/36 oblique prism ("hình chiếu … của đỉnh B' lên (BCD) là C",
 "khối lăng trụ tam giác"); W3-A06 radical bound (genuine limit). Not tuned on Wave 3 text.
 
 ## Next action
-Wait for the pre-freeze adversarial review (scratch `w4-review/`). On READY: write back EVIDENCE_INDEX / CURRENT_STATE /
-AI_CONTEXT_BUNDLE / STATUS_LEDGER, commit, freeze candidate (separate commit, new divergence layer), T0/T1/T2, Full T3 in a
-fresh detached worktree, final independent review, conditional integration under the scoped W4 publication decision.
+Final independent review of `5bb29709`+docs. Then handoff. Integration needs the Owner to run the one-line approval command in
+`publication-assessment.md`; after that: range scan 0 → fast-forward main → post-integration checks → non-force push → 3-way SHA check.

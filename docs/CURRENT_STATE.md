@@ -1,5 +1,7 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+**LOCAL RESEARCH 2026-10-30 — W4 geometry generalization + pedagogical construction: READY_FOR_OWNER_REVIEW (publication blocked).** Branch `research/w4-geometry-pedagogy` from `e5dc3d28`. Wave 3 post-feedback 50 → **67/72** served-correct, 72/72 negatives, 0 wrong-served; locked 96/96; 203 probes unchanged. Certified section-edge "Vì sao" + keyboard step navigation; CACHE_VERSION 131. Candidate `182a7785` (product `61ade29e`, 118 files `54b5b565…`), Full T3 FULL_PRODUCT_GATE_PASS. Remaining: one Owner-approved exception for a synthetic test key blob. See `evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction/report.md`. Previous layer below:
+
 **INTEGRATION 2026-10-30 — W3-F2 REMOTE_VERIFIED at first push `4d304992` (from `996f114b`).** Non-force publication under the narrow Owner supersession in `evaluation/geometry/runs/publication-safety-remediation/REMOTE_PUBLICATION_SECURITY_DECISION.md` §4; HEAD remains BLOCKED due to identical historical baseline debt. Closure, cleanup limitations and final documentation-tip read-back location: `evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/integration/report.md`. Product/candidate unchanged (`dd17fbfb` / `4e7fe91d`, 118 files `c4fb8613…`); historical research status lines below predate integration.
 
 

@@ -1,5 +1,7 @@
 # STATUS_LEDGER.md — SỔ TRẠNG THÁI SẢN PHẨM
 
+**LOCAL 2026-10-30 — W4 geometry generalization + pedagogy (latest):** research/w4-geometry-pedagogy; product 61ade29e, candidate 182a7785 (118 files, 54b5b565…), CACHE_VERSION 131, LLM_ONLY, Full T3 PASS; Wave 3 67/72, 0 wrong-served; READY_FOR_OWNER_REVIEW, publication pending one exception. `evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction/report.md`.
+
 **LOCAL 2026-10-30 — W3-F2 final verification (latest):** research/hybrid-v2-w3-f2-ratio-projection-language-grounding; product dd17fbfb, candidate 4e7fe91d (118 files, c4fb8613…), CACHE_VERSION 130, LLM_ONLY, Full T3 PASS; READY_FOR_OWNER_REVIEW, not merged. `evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/target-grammar-identity-recovery/f7-narrow-recovery/final-handoff.md`.
 
 **LOCAL 2026-10-24 — Visual–Hybrid final corrections (latest):** integration/hybrid-visual-candidate; product af670aa6 (backend display identity, diagnostics UI, samples), candidate a636a0e5 (118 files, 8be63267…), CACHE_VERSION 128, Full T3 PASS at a084c180. Official Visual suite FAIL with 2 product findings (owner decision); independent review PENDING; human visual approval NOT_GRANTED; local main unchanged and NOT ready for GO. Handoff: `evaluation/geometry/runs/visual-hybrid-final-corrections/FINAL_OWNER_HANDOFF.md`.
