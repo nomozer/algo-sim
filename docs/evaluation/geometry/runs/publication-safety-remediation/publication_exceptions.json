@@ -407,6 +407,40 @@
    "first_commit_date": "2026-10-04T22:52:48+07:00",
    "already_public_on_origin_main": true,
    "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/gate-d-full-backend-pytest.log",
+   "blob": "395896a0a850d77fab2be0062023d01154c2b9ef",
+   "sha256": "1f9bb9a8c9054df6e500e8dd227d3c33b99b01ba07fc1819404dc626acc2205e",
+   "bytes": 24497,
+   "rules": [
+    "PY_TRACEBACK"
+   ],
+   "category": "RAW_PYTHON_TRACEBACK_IN_LOG",
+   "scope": "HISTORY_AND_TIP",
+   "first_commit": "1490e3cd7d15363efce9b55319dce623cd0e23f4",
+   "first_commit_date": "2026-10-30T01:09:21+07:00",
+   "already_public_on_origin_main": false,
+   "verification": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/target-grammar-identity-recovery/f7-narrow-recovery/publication-exception-verification.json",
+   "owner_go": "HYBRID_V2_W3_F2_PUBLICATION_EXCEPTION_AND_FINAL_VERIFICATION (2026-10-30): Owner accepted the local-path disclosure for exactly this blob; the approval value is written by the Owner, not by the agent.",
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/gate-d-pre-patch-5e44d5da-identity-12.log",
+   "blob": "21a012bb06690aeb64cfd87ab97c4e2f35aa9d7a",
+   "sha256": "c17f5fa89524ab4b778a1bff5b8f11885e8f21a6c7a486918edcfc871185dac5",
+   "bytes": 2981,
+   "rules": [
+    "PY_TRACEBACK"
+   ],
+   "category": "RAW_PYTHON_TRACEBACK_IN_LOG",
+   "scope": "HISTORY_AND_TIP",
+   "first_commit": "1490e3cd7d15363efce9b55319dce623cd0e23f4",
+   "first_commit_date": "2026-10-30T01:09:21+07:00",
+   "already_public_on_origin_main": false,
+   "verification": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/target-grammar-identity-recovery/f7-narrow-recovery/publication-exception-verification.json",
+   "owner_go": "HYBRID_V2_W3_F2_PUBLICATION_EXCEPTION_AND_FINAL_VERIFICATION (2026-10-30): Owner accepted the local-path disclosure for exactly this blob; the approval value is written by the Owner, not by the agent.",
+   "owner_decision": "PENDING_OWNER_DECISION"
   }
  ]
 }

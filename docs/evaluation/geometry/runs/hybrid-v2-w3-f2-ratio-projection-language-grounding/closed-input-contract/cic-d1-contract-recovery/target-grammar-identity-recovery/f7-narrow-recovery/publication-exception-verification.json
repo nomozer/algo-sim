@@ -1,0 +1,25 @@
+{
+  "owner_go": "HYBRID_V2_W3_F2_PUBLICATION_EXCEPTION_AND_FINAL_VERIFICATION",
+  "head": "bc4a0ecc",
+  "method": "git cat-file of each blob; scanner's own findings_in; additional pattern counts; masked structure only (no values copied)",
+  "entries": [
+    {"path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/gate-d-full-backend-pytest.log",
+     "blob": "395896a0a850d77fab2be0062023d01154c2b9ef", "sha256": "1f9bb9a8c9054df6e500e8dd227d3c33b99b01ba07fc1819404dc626acc2205e", "bytes": 24497},
+    {"path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/gate-d-pre-patch-5e44d5da-identity-12.log",
+     "blob": "21a012bb06690aeb64cfd87ab97c4e2f35aa9d7a", "sha256": "c17f5fa89524ab4b778a1bff5b8f11885e8f21a6c7a486918edcfc871185dac5", "bytes": 2981}
+  ],
+  "owner_conditions": {
+    "1_added_in_commit_1490e3cd": true,
+    "2_exact_paths": true,
+    "3_blob_and_sha256_and_bytes_match_proposal": true,
+    "4_scanner_findings_only_PY_TRACEBACK": "true (5 each: lines 281,282,284,286,289 and 6,7,9,11,14); stdlib threading/subprocess/cp1252 frames",
+    "5_no_credentials_tokens_keys": "true (scanner credential rules 0; key/secret/token/bearer/password words 0; long tokens = test identifiers, git hex, one worktree directory name)",
+    "6_no_additional_sensitive_data": "true: email 0, IPv4 0, URL host only docs.pytest.org; 4 profile paths per log, one account only (the reported Windows profile), all to the standard Python 3.12 install (threading.py, subprocess.py, encodings/cp1252.py); remaining absolute paths are repository paths",
+    "7_scope_exact_no_wildcard": "true: scanner keys (path, blob) and also requires sha256 + rule; entries list rules [PY_TRACEBACK] only"
+  },
+  "blob_at_HEAD_same_as_first_commit": true,
+  "registry_change": "two entries appended with owner_decision PENDING_OWNER_DECISION (34 lines added, 0 removed). AGENTS.md §4 and the scanner policy: the approval value is written by the Owner, never by an agent.",
+  "scan_with_pending_entries": {"command": "python -B backend/scripts/check_publication_safety.py --range 996f114b..HEAD", "exit_code": 1,
+    "summary": "SUMMARY scanned=637 messages=53 violations=10 pending_exception=10 verdict=BLOCKED", "violations_outside_the_two_blobs": 0},
+  "live_provider_calls": 0
+}
