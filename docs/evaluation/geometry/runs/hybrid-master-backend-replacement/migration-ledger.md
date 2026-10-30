@@ -29,6 +29,20 @@ So there are **three** orchestrators today:
 | bridge private identity copy | `typed_fact_next.py::canonical_vertex_ref` | none | `test_bridge_ownership_resolves_identity_through_the_one_canonical_resolver` + identity suites (3384 passed) | **REMOVED** (Task 1, `7bf0a3ab`) |
 | Route D "never cached" special case on `/api/analyze` | Route D cache identity (`prepare_local_replay.cache_key` + `ROUTE_D_CACHE_POLICY`) | — | `test_hybrid_route_d_cache_and_rollback.py`, `test_hybrid_v2_local_analyze.py` | **REPLACED** (Phase A, `e9c9b8e9`) |
 
+## Retirement status (Owner vocabulary, 2026-10-31)
+
+| component | status | reason |
+|---|---|---|
+| Bridge private identity copy | `RETIRED` | Replaced by `canonical_vertex_ref`. The architecture review found the only behavior change (M-1), which aligns with the Owner-registered R2 oracle and is pinned. |
+| Route D "never cached" special case | `RETIRED` | Replaced by the Route D cache identity (D-02). |
+| LLM_ONLY program synthesis (`stage_semantic_program`) | `PENDING_PARITY` | The production default. Retire only after the live paired GO criteria pass (protocol §7) and cutover. |
+| Compiler C (`geometry_compiler/`) | `PENDING_PARITY` | Opt-in and disabled. No corpus exists in both `RequestContract` and TypedFactNext form; a parity corpus is needed before removal. |
+| Adapter /3 (`run_typed_fact_next_route`, `adapter3_simulation.py`) | `RETAINED_WITH_REASON` | The only curved-solid owner. /4 refuses curved solids and qualified multi-solid identity by design (confirmed again by the architecture review). |
+| Preview flat-facts contract (`/api/preview/hybrid`) | `RETAINED_WITH_REASON` | A locked operator/frontend contract with 41 fixtures, sharing the same downstream. It is not a duplicate authority. |
+| `function_calling.py` | `RETAINED_WITH_REASON` | A live library dependency (`_openapi`, `live_transport` used by the harness). |
+
+`LEGACY_RETIRED` is **not** claimed: LLM_ONLY is still the active production path.
+
 ## Gate reassessment (`docs/MIGRATION_CHECKLIST.md`)
 
 **Route D gates (D-01…D-13)** are the gates relevant to Hybrid replacement.
