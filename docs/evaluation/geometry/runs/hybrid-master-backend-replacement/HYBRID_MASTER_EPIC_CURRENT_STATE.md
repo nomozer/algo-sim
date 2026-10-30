@@ -116,11 +116,18 @@ The original next actions 2 and 3 of that stop were done in the second continuat
   - mock-provider tests for every failure mode (27 tests).
 - **Provider facts verified** against Google docs (`provider-facts.md`): 2.5 access is limited to past users; a paid tier is required for privacy; output 65 536 including thinking; no instant provider-side hard cap.
 - **`heldout-authoring/` package:** no cases and no author written.
-- **Independent architecture review:** launched; **interrupted by the session usage limit** before reporting. Resume that reviewer, or relaunch one with the same brief (scope `f986e897..cc2d56b9` plus the harness). Its result goes to `architecture-review.md`.
+- **Independent architecture review: `INDEPENDENT_BACKEND_ARCHITECTURE_REVIEW_READY`** — 0 BLOCKER, 0 MAJOR, 4 MINOR (`architecture-review.md`, `c14189d6`).
+  - Closed: M-1 (pinned test), M-2 (bump rule in D-02), and the M-4 ops script.
+  - Deferred to the next product change: M-3 (a doubly-faulted adapter returns 500) and the M-4 docstrings. Any `backend/app` edit invalidates the candidate and T3.
+- **Ledger:** retirement statuses are in `migration-ledger.md` (`934ad0c0`).
+- **Live-evaluation readiness review, first pass: `NOT_READY`** — 3 BLOCKER, 4 MAJOR.
+  - The blockers were π dropped, curved solids treated as refuse, and missing `assign.*` producers.
+  - All were verified and fixed in the harness, tests and protocol at `edbc54b7` (32 tests; `evaluation-readiness-review.md`). The implementer also found and fixed the missing production domain gate on the Hybrid arm.
+  - **Re-verification by the same reviewer: in progress.**
+- **Candidate:** still `bf2c3eaa` / `44b02a62…`. No product code has changed since the Full T3 PASS.
 - **Next:**
-  1. Finish the architecture review and fix any BLOCKER/MAJOR, re-freezing if product code changes.
-  2. Run the evaluation-readiness review (protocol, harness, cost guard), with its result in `evaluation-readiness-review.md`.
-  3. Then report the single Owner GO.
+  1. Record the re-verification. If any BLOCKER/MAJOR remains open, fix it and re-verify.
+  2. Then the single Owner GO (`owner-go-request.md`) is the real boundary. Without it: no live call, no cutover, no retirement.
 
 **Final status of the second continuation:**
 - Offline backend: **`OFFLINE_BACKEND_READY_FOR_LIVE_EVALUATION`**.
