@@ -54,6 +54,7 @@ The plan forbids elevating /3 or prefilled support to /4. These rows must be mea
 |---|---|---|---|
 | W3-B34/35/36: oblique-prism projection phrasing | source grammar (SG-3 two-line slice) | `registry._kiem_nguon_dong` | Extend only with an independent dev corpus; never tune on Wave 3 text |
 | W3-B01: "Thiết lập mặt phẳng" read as conditional | premise-role classifier | `registry._vai_tro_tai` | Same rule |
-| W3-N47: pentagonal pyramid refused as `UNGROUNDED_VALUE` | refusal taxonomy | `planner`/bridge capability check order | Capability refusal must precede value grounding (contract: unified refusal boundary) |
+| W3-N47: pentagonal pyramid refused as `UNGROUNDED_VALUE` | **not a defect** (re-checked) | bridge `_kiem_pham_vi_tien_de`, CIC-D1 | The locked order puts semantic grounding before every capability exit (`test_capability_exit_cannot_bypass_semantic_validation`). Reordering would weaken that guard, so it is kept. The gate fails because the sentence names "ngũ giác đều", which it cannot read, so the height number stays unbound. |
+| "chiều cao hình chóp bằng h" (without "của") | source-grammar coverage, fail-closed | `registry` SG-3 | Independent probe `tools/height_phrasing_probe.py`. "chiều cao (của hình/khối chóp) bằng 4" is served with the oracle answers (square side 6 at SM = SA/3 gives area 4; equilateral side 6 gives √3); the form without "của" is refused `UNGROUNDED_VALUE`. Recorded only, because it is not a safety gap. |
 | W3-A06: radical bound | genuine limit | `geometry/radical.py` | Keep the refusal |
 | distance/angle/volume rows | measurement gap | this run | Independent /4 gold payloads plus an exact oracle |

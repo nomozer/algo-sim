@@ -50,8 +50,8 @@ This is the canonical mutable checkpoint for the one Master Epic. After compacti
 - Section and area questions: 49 cells `SUPPORTED_END_TO_END`, 2 `SUPPORTED_WITH_LIMITS` (A06 radical bound; B01 conditional reading), 3 `REPRESENTABLE_ONLY` (B34–36). Curved solids are `UNSUPPORTED` with the correct code.
 - Distance, angle and volume rows are `NOT_MEASURED` in this inventory.
 
-**Next exact action:** Task 2, part 2.
-1. Fix the refusal-taxonomy gap first: W3-N47, the pentagonal pyramid, must be refused with a capability code, not `UNGROUNDED_VALUE`. Use RED/GREEN on an independent payload; Wave 3 text is not used for tuning.
-2. Then build independent /4 gold payloads, with an exact oracle, for the distance, angle and volume rows.
+**W3-N47, re-checked:** this is not a taxonomy defect. The locked CIC-D1 order puts grounding before every capability exit, so N47 is kept as is. An independent height-phrasing probe found one fail-closed lexical gap ("chiều cao hình chóp" without "của"); it is recorded only.
+
+**Next exact action:** Task 2, part 2. Build independent /4 gold payloads, each with an exact closed-form oracle, for the distance, angle and volume rows. Record their states in `capability-inventory.md`.
 
 **Verdict so far:** `HYBRID_NOT_READY`. No production cutover and no legacy retirement is claimed.
