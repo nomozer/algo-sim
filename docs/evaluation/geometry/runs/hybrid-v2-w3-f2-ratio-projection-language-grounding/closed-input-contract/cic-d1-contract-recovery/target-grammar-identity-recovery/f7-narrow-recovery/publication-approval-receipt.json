@@ -1,0 +1,16 @@
+{
+  "owner_go": "HYBRID_V2_W3_F2_PUBLICATION_EXCEPTION_AND_FINAL_VERIFICATION",
+  "approval_written_by": "Owner (PowerShell command run by the Owner; publication-resolution-proposal.md option 1). The agent did not write the approval value (AGENTS.md:49).",
+  "registry": "docs/evaluation/geometry/runs/publication-safety-remediation/publication_exceptions.json",
+  "semantic_diff_vs_7f5d197a": [
+    {"index": 27, "blob": "395896a0a850d77fab2be0062023d01154c2b9ef", "field": "owner_decision", "from": "PENDING_OWNER_DECISION", "to": "APPROVED_BY_USER"},
+    {"index": 28, "blob": "21a012bb06690aeb64cfd87ab97c4e2f35aa9d7a", "field": "owner_decision", "from": "PENDING_OWNER_DECISION", "to": "APPROVED_BY_USER"}
+  ],
+  "other_fields_or_entries_changed": 0,
+  "text_diff": "2 insertions, 2 deletions (no reformatting)",
+  "approved_entries_total": 2,
+  "scan_full_range": {"command": "python -B backend/scripts/check_publication_safety.py --range 996f114b..HEAD", "exit_code": 0,
+                      "summary": "SUMMARY scanned=645 messages=55 violations=0 pending_exception=0 verdict=PASS",
+                      "before_approval": "10 violations, all on these two blobs (publication-exception-verification.json)"},
+  "live_provider_calls": 0
+}

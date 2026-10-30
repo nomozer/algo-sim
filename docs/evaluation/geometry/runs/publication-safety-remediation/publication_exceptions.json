@@ -423,7 +423,7 @@
    "already_public_on_origin_main": false,
    "verification": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/target-grammar-identity-recovery/f7-narrow-recovery/publication-exception-verification.json",
    "owner_go": "HYBRID_V2_W3_F2_PUBLICATION_EXCEPTION_AND_FINAL_VERIFICATION (2026-10-30): Owner accepted the local-path disclosure for exactly this blob; the approval value is written by the Owner, not by the agent.",
-   "owner_decision": "PENDING_OWNER_DECISION"
+   "owner_decision": "APPROVED_BY_USER"
   },
   {
    "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/gate-d-pre-patch-5e44d5da-identity-12.log",
@@ -440,7 +440,7 @@
    "already_public_on_origin_main": false,
    "verification": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/target-grammar-identity-recovery/f7-narrow-recovery/publication-exception-verification.json",
    "owner_go": "HYBRID_V2_W3_F2_PUBLICATION_EXCEPTION_AND_FINAL_VERIFICATION (2026-10-30): Owner accepted the local-path disclosure for exactly this blob; the approval value is written by the Owner, not by the agent.",
-   "owner_decision": "PENDING_OWNER_DECISION"
+   "owner_decision": "APPROVED_BY_USER"
   }
  ]
 }
