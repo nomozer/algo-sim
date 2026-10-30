@@ -1,0 +1,28 @@
+{
+  "gate": "D",
+  "source_head": "dd17fbfb8616c9b7ac325aa91c4dfec92577c64a",
+  "product_commit": "dd17fbfb8616c9b7ac325aa91c4dfec92577c64a",
+  "compatibility": "PRE_FREEZE_COMPATIBILITY_PASS",
+  "overall_pass": false,
+  "publication": "BLOCKED_PENDING_OWNER_DECISION",
+  "full_backend": {
+    "command": "python -B -m pytest -p no:cacheprovider --basetemp D:/Documents/projects/algo-sim/.superpowers/f7-full-temp -q --tb=short -rA",
+    "cwd": "clean detached worktree .superpowers/worktrees/w3-f2-target-grammar-identity-compat (inside the research worktree) at dd17fbfb, backend/",
+    "exit_code": 1,
+    "summary": "11 failed, 15768 passed, 7 skipped, 2 deselected, 15 xfailed, 2 warnings in 939.24s (0:15:39)",
+    "tree_clean_before": true,
+    "tree_clean_after": true,
+    "raw_log_local_only": ".superpowers/target-grammar-identity-recovery/f7-full-backend.log",
+    "raw_log_sha256_bytes": "6e5185d90cc167d48a5c5f297d25bdc5db07a3bea71df27d5538f90b4b765501",
+    "failed_nodes_identical_to_prior_PENDING_NEW_FREEZE_11": true,
+    "PENDING_NEW_FREEZE_not_counted_as_pass": 11,
+    "unexplained_failures": [],
+    "warnings": "2: starlette httpx deprecation; the known stdlib cp1252 reader-thread warning under test_inv_20 (log kept local, not committed)"
+  },
+  "freeze_cause": "freeze-cause-current.json (only CANDIDATE_VERIFY fails; CANDIDATE_MEASURED_SYSTEM_DRIFT; candidate not written)",
+  "locked_v2_targeted": {"files": 6, "summary": "232 passed in 5.33s", "log_sha256_bytes": "2f4f7d8052f6f2383f7345b76c0e510b86bf457c568b1494260ea2357a18d77b"},
+  "fixtures": {"command": "python -B scripts/export_hybrid_preview_fixtures.py --verify ../docs/evaluation/geometry/runs/hybrid-v2-backend-generalization/fixtures-adapter-2-named-plane", "exit_code": 0, "verified": 41, "problems": []},
+  "cache": "MATCH 130 (backend/app/main.py)",
+  "warning": "Backend compatibility only; not Full T3, not an overall Gate D PASS.",
+  "live_provider_calls": 0
+}

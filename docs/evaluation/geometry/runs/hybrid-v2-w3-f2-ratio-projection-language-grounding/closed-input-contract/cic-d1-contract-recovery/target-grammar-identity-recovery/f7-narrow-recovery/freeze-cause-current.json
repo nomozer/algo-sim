@@ -1,0 +1,25 @@
+{
+  "head": "dd17fbfb8616c9b7ac325aa91c4dfec92577c64a",
+  "precheck_status": "FAIL",
+  "reported_checks": {
+    "SOURCE_TREE_DIRTY_ONLY_USER_FAVICON": true,
+    "NO_STAGED_FILES": true,
+    "CANDIDATE_VERIFY": false,
+    "CACHE_IDENTITY_VERIFY": true,
+    "MANIFEST_LF_MATCH": true,
+    "GROUND_TRUTH_LF_MATCH": true,
+    "REGISTRY_V1_LF_MATCH": true,
+    "REGISTRY_V2_LF_MATCH": true
+  },
+  "only_reported_failing_check": [
+    "CANDIDATE_VERIFY"
+  ],
+  "frozen_measured_tree_hash": "f0521dcd2423a9e67421fdf8490de224ab115ee3d1561160aad28e35c40a9504",
+  "current_measured_tree_hash": "c4fb8613800585ddd68a13f410e5c84755e64a8562c1604ed4b43b6e03c2fb8c",
+  "measured_files": 118,
+  "verify_exit_code": 1,
+  "verify_stdout_sha256": "c0ee772578169529b716ee310878b38f04aacb9c95419ed8f3f15e126c952c91",
+  "cause": "CANDIDATE_MEASURED_SYSTEM_DRIFT",
+  "candidate_written": false,
+  "live_provider_calls": 0
+}
