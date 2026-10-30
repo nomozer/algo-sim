@@ -1,0 +1,7 @@
+ctl_canh_ben_SA_3 SERVED None {'mg1': {'coef': '3√2/2', 'dim': 0, 'unit': None}}
+ctl_SA_3 SERVED None {'mg1': {'coef': '3√2/2', 'dim': 0, 'unit': None}}
+atk_chieu_cao_SA_3 REFUSED SOURCE_PREMISE_UNREAD quote tiền đề ghép chưa được đọc độc lập trên lát hai đường
+atk_so_do_SA_3 SERVED None {'mg1': {'coef': '3√2/2', 'dim': 0, 'unit': None}}
+canh_ben_DG_quad REFUSED SOURCE_PREMISE_UNREAD 
+duong_cheo_DG_quad SERVED None {'mg1': {'coef': '4125/64', 'dim': 0, 'unit': None}}
+chieu_cao_DG_quad REFUSED SOURCE_PREMISE_UNREAD 

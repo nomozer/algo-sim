@@ -30,3 +30,29 @@
 - Wave 3: still **67/72** served-correct, 72/72 negatives, 62/72 reasons, 0 wrong-served, 0 leaks.
 - Locked 96/96; 203 probes unchanged.
 - Dev corpus 42/42 · 18/18 · 10/10; new grammar tests 74 passed; justification tests 35 passed.
+
+## Re-verification of the fix commit `e4e97758`: READY
+
+The same reviewer re-ran its earlier probes against the clean committed tree and added 34 new attacks aimed at
+`_vai_doan_ok`. None was served wrongly, and all 34 are also refused on base. The new attacks covered:
+- circular ⊥ quotes;
+- an oblique prism declared with a right-prism payload;
+- "cạnh bên" or "chiều cao" on a cube top edge or a face diagonal;
+- chained or combined prefixes;
+- height claims outside the prefix;
+- a height foot H that is not a base vertex;
+- right-prism base edges;
+- multi-solid payloads, which fail closed.
+
+Genuine heights are still served with the canonical answers ("chiều cao SH", "D'D", "EE'"). M1 is closed: 427/427 real
+justifications are unchanged and the synthetic inconsistent face returns no claim. M2 is closed by code review.
+
+**N-a:** `regression-green3.json` was measured with the product uncommitted. The reviewer re-ran the same gates at clean
+`e4e97758` and got the same results case for case: 67/72, 72/72, 62/72, 0 wrong-served, locked 96/96, 203 probes unchanged.
+
+**Remaining NOTEs, not fixed:**
+- "đường chéo XY" is not role-checked; this is pre-existing on base.
+- "chiều cao XY" accepts any validated XY ⊥ base, even when X is not the apex. The bound length is still correct.
+
+**N-d:** the B1 fix needs no further cache bump. The registry is not reached from `/api/analyze`, and M1 leaves all real
+justifications unchanged.
