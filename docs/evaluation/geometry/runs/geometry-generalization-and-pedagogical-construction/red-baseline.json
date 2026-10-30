@@ -1,0 +1,583 @@
+{
+ "head": "e5dc3d28b8ff1a5bf34e1e7637a020f20e921c31",
+ "dirty_product": false,
+ "summary": {
+  "VARIANT": [
+   6,
+   42
+  ],
+  "CANON": [
+   18,
+   18
+  ],
+  "NEGATIVE": [
+   10,
+   10
+  ]
+ },
+ "rows": {
+  "CB1.biet_mat_day.area": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+   "pass": false
+  },
+  "CB1.biet_mat_day.section": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+   "pass": false
+  },
+  "CB1.canon.area": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "mg1": {
+     "coef": "64",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "reason": "",
+   "pass": true
+  },
+  "CB1.canon.section": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {},
+   "reason": "",
+   "pass": true
+  },
+  "CB1.voi_day.area": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "pass": false
+  },
+  "CB1.voi_day.section": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "pass": false
+  },
+  "CB2.biet_mat_day.area": {
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "answer": null,
+   "reason": "p2: 'biết mặt đáy PQRT là hình vuông có cạnh bằng 10a' không gắn 10a với vai trò của ô này trong một câu đọc trọn",
+   "pass": false
+  },
+  "CB2.biet_mat_day.section": {
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "answer": null,
+   "reason": "p2: 'biết mặt đáy PQRT là hình vuông có cạnh bằng 10a' không gắn 10a với vai trò của ô này trong một câu đọc trọn",
+   "pass": false
+  },
+  "CB2.canon.area": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "mg1": {
+     "coef": "100",
+     "dim": 2,
+     "unit": "a"
+    }
+   },
+   "reason": "",
+   "pass": true
+  },
+  "CB2.canon.section": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {},
+   "reason": "",
+   "pass": true
+  },
+  "CB2.voi_day.area": {
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "answer": null,
+   "reason": "p2: 'với đáy PQRT là hình vuông cạnh bằng 10a' không gắn 10a với vai trò của ô này trong một câu đọc trọn",
+   "pass": false
+  },
+  "CB2.voi_day.section": {
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "answer": null,
+   "reason": "p2: 'với đáy PQRT là hình vuông cạnh bằng 10a' không gắn 10a với vai trò của ô này trong một câu đọc trọn",
+   "pass": false
+  },
+  "HB1.canon.area": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "mg1": {
+     "coef": "135",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "reason": "",
+   "pass": true
+  },
+  "HB1.canon.section": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {},
+   "reason": "",
+   "pass": true
+  },
+  "HB1.thoa_man.area": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+   "pass": false
+  },
+  "HB1.thoa_man.section": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+   "pass": false
+  },
+  "HB1.voi_so_do.area": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "pass": false
+  },
+  "HB1.voi_so_do.section": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "pass": false
+  },
+  "N.conditional": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+   "pass": true
+  },
+  "N.cube_side": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+   "pass": true
+  },
+  "N.cube_side_voi": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "pass": true
+  },
+  "N.disjunction": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+   "pass": true
+  },
+  "N.qualifier": {
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answer": null,
+   "reason": "'hình chóp tứ giác S.DEF': tên khối nêu số đỉnh đáy khác nhãn của nó",
+   "pass": true
+  },
+  "N.value": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+   "pass": true
+  },
+  "N.value_cuboid": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+   "pass": true
+  },
+  "N.value_prism": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+   "pass": true
+  },
+  "N.wrong_height": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "pass": true
+  },
+  "N.wrong_right_vertex": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "pass": true
+  },
+  "QP1.canon.area": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "mg1": {
+     "coef": "4125/64",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "reason": "",
+   "pass": true
+  },
+  "QP1.canon.section": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {},
+   "reason": "",
+   "pass": true
+  },
+  "QP1.thoa_man.area": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+   "pass": false
+  },
+  "QP1.thoa_man.section": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+   "pass": false
+  },
+  "QP1.voi_so_do.area": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "pass": false
+  },
+  "QP1.voi_so_do.section": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "pass": false
+  },
+  "RP1.canon.area": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "mg1": {
+     "coef": "72",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "reason": "",
+   "pass": true
+  },
+  "RP1.canon.section": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {},
+   "reason": "",
+   "pass": true
+  },
+  "RP1.tg_day.area": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "pass": false
+  },
+  "RP1.tg_day.section": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "pass": false
+  },
+  "RP1.voi_so_do.area": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+   "pass": false
+  },
+  "RP1.voi_so_do.section": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+   "pass": false
+  },
+  "RP2.canon.area": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "mg1": {
+     "coef": "539/9",
+     "dim": 2,
+     "unit": "a"
+    }
+   },
+   "reason": "",
+   "pass": true
+  },
+  "RP2.canon.section": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {},
+   "reason": "",
+   "pass": true
+  },
+  "RP2.tg_day.area": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "pass": false
+  },
+  "RP2.tg_day.section": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "pass": false
+  },
+  "RP2.voi_so_do.area": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+   "pass": false
+  },
+  "RP2.voi_so_do.section": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+   "pass": false
+  },
+  "TP1.canon.area": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "mg1": {
+     "coef": "96/25",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "reason": "",
+   "pass": true
+  },
+  "TP1.canon.section": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {},
+   "reason": "",
+   "pass": true
+  },
+  "TP1.tg_day.area": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "pass": false
+  },
+  "TP1.tg_day.section": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "pass": false
+  },
+  "TP1.thoa_man.area": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+   "pass": false
+  },
+  "TP1.thoa_man.section": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+   "pass": false
+  },
+  "TP1.voi_so_do.area": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "pass": false
+  },
+  "TP1.voi_so_do.section": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "pass": false
+  },
+  "TP2.canon.area": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "mg1": {
+     "coef": "144/7",
+     "dim": 2,
+     "unit": "a"
+    }
+   },
+   "reason": "",
+   "pass": true
+  },
+  "TP2.canon.section": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {},
+   "reason": "",
+   "pass": true
+  },
+  "TP2.tg_day.area": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "pass": false
+  },
+  "TP2.tg_day.section": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "pass": false
+  },
+  "TP2.thoa_man.area": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+   "pass": false
+  },
+  "TP2.thoa_man.section": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề chưa nằm trọn trong văn phạm lát hai đường",
+   "pass": false
+  },
+  "TP2.voi_so_do.area": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "pass": false
+  },
+  "TP2.voi_so_do.section": {
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answer": null,
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "pass": false
+  },
+  "TP3.canon.area": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "mg1": {
+     "coef": "12√5/5",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "reason": "",
+   "pass": true
+  },
+  "TP3.canon.section": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {},
+   "reason": "",
+   "pass": true
+  },
+  "TP3.tg_day.area": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "mg1": {
+     "coef": "12√5/5",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "reason": "",
+   "pass": true
+  },
+  "TP3.tg_day.section": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {},
+   "reason": "",
+   "pass": true
+  },
+  "TP3.thoa_man.area": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "mg1": {
+     "coef": "12√5/5",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "reason": "",
+   "pass": true
+  },
+  "TP3.thoa_man.section": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {},
+   "reason": "",
+   "pass": true
+  },
+  "TP3.voi_so_do.area": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "mg1": {
+     "coef": "12√5/5",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "reason": "",
+   "pass": true
+  },
+  "TP3.voi_so_do.section": {
+   "status": "SERVED",
+   "code": null,
+   "answer": {},
+   "reason": "",
+   "pass": true
+  }
+ },
+ "live_provider_calls": 0
+}
