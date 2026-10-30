@@ -1,0 +1,48 @@
+{
+  "phase": "RED",
+  "head": "df475f06e62de48ffe01536fe196cecb7459188b",
+  "command": "python -B -m pytest -p no:cacheprovider tests/geometry/test_target_grammar_identity_recovery.py -q --tb=no -rN",
+  "summary": "337 failed, 1734 passed in 8.83s",
+  "exit_code": 1,
+  "raw_log_sha256_bytes": "ceba9f043c42319cd70c4a9d94997d22f2cc08e8dc08d834f28a03a215d18c5a",
+  "raw_log_local_only": ".superpowers/target-grammar-identity-recovery/red-raw.log",
+  "expected_missing_product_functions": [
+    "canonical_vertex_ref",
+    "_validate_goal_identities"
+  ],
+  "tests_sha256_lf": "dccf3ee6b1a17344614a261dfef3f8f404b4c5986803737f56a13226c7f61dee",
+  "source_history": {
+    "996f114b": {
+      "source_sha256": "e6484d7fded9d8e4190fd170027b523cbce053aff0d875beb859afac21a581d5",
+      "has_target_validator": false
+    },
+    "5e44d5da": {
+      "source_sha256": "85e4498bb77c48de0517a3663890ac4eac38a4ba6ed648a5e961327ece3191c6",
+      "has_target_validator": false
+    },
+    "df475f06": {
+      "source_sha256": "3c1d4aed229e9c35b5701c1aafc0aeb99c5a529ad7dae8af7516556d0e5b0d6b",
+      "has_target_validator": true
+    }
+  },
+  "unexpected_schema_acceptance": {
+    "red": {
+      "F1": 43,
+      "F2_missing_refusal": 21
+    },
+    "main": {
+      "F1": 441,
+      "F2_missing_refusal": 27
+    },
+    "pre": {
+      "F1": 295,
+      "F2_missing_refusal": 25
+    }
+  },
+  "receipts_sha256_bytes": {
+    "red": "1c814f2b045521fcb8b8eca770687319e9d741c56f2ee322159d491cc83b465c",
+    "main": "9caa0295c34660083139ba0f3bcb8ec49dbdf7e5e3c39957799aa1d1950a73d8",
+    "pre": "458762b1890db410953627a127aa8a1d20bb4c2fb6b2f18f0e147ce309a1866c"
+  },
+  "live_provider_calls": 0
+}

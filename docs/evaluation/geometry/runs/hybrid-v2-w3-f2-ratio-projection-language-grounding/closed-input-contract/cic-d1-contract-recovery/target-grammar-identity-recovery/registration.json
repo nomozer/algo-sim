@@ -1,0 +1,82 @@
+{
+  "task": "HYBRID_V2_W3_F2_TARGET_GRAMMAR_AND_CANONICAL_IDENTITY_RECOVERY",
+  "baseline": "df475f06e62de48ffe01536fe196cecb7459188b",
+  "input_sha256": "5f94f71ec4304af41b17783d91ad46e87dbc53e466a8ff8978762e1683ba130d",
+  "registered_alternatives": {
+    "distance": [
+      [
+        "segment"
+      ],
+      [
+        "plane",
+        "point"
+      ],
+      [
+        "line",
+        "point"
+      ],
+      [
+        "line1",
+        "line2"
+      ],
+      [
+        "line",
+        "plane"
+      ],
+      [
+        "plane1",
+        "plane2"
+      ]
+    ],
+    "angle": [
+      [
+        "line",
+        "plane"
+      ],
+      [
+        "line1",
+        "line2"
+      ],
+      [
+        "plane1",
+        "plane2"
+      ]
+    ],
+    "area": [
+      [
+        "polygon"
+      ],
+      [
+        "section_id"
+      ],
+      [
+        "solid"
+      ]
+    ],
+    "volume": [
+      [
+        "solid"
+      ],
+      [
+        "solid_id"
+      ]
+    ],
+    "radius": [
+      [
+        "solid"
+      ],
+      [
+        "section_id"
+      ]
+    ],
+    "lateral_area": [
+      [
+        "solid"
+      ]
+    ]
+  },
+  "oracle": "F1/F2 expected_schema in cases; CONTROL route outcome frozen in observed-red.json except disclosed F2 invalid aliases; registered volume solid_id retained",
+  "live_provider_calls": 0,
+  "publication": "BLOCKED_PENDING_OWNER_DECISION",
+  "tests_sha256_lf": "dccf3ee6b1a17344614a261dfef3f8f404b4c5986803737f56a13226c7f61dee"
+}
