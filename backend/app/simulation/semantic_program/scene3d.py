@@ -32,6 +32,7 @@ nổi. Đó là một quyết định kiến trúc riêng, chưa được ra —
 """
 from __future__ import annotations
 
+from fractions import Fraction
 from typing import Any
 
 #: Loại đối tượng ngữ nghĩa → **loại hình vẽ**. Chỉ nói *vẽ bằng hình gì*, không
@@ -801,6 +802,50 @@ def _cau_canh_thiet_dien(e: dict[str, Any], sec: dict[str, Any],
     return f"Trên mặt {mat_ten}, {noi}" if mat_ten else noi[:1].upper() + noi[1:]
 
 
+def _ly_do_canh_thiet_dien(e: dict[str, Any], sec: dict[str, Any],
+                           by_id: dict[str, dict[str, Any]]) -> dict[str, Any] | None:
+    """W4 · Vì sao của một cạnh thiết diện, chỉ khi KIỂM ĐƯỢC CHÍNH XÁC (toạ độ hữu tỉ, khung affine — song song bất
+    biến affine): cạnh XY của chính mặt đó cùng phương với giao tuyến và X không thuộc mặt phẳng cắt ⇒ XY ∥ (α), XY ⊂
+    mặt ⇒ giao tuyến ∥ XY. Không kiểm được ⇒ không có lời giải thích nào (không bao giờ nói điều chưa chứng nhận)."""
+    k = (e.get("details") or {}).get("canh")
+    buoc = sec.get("steps") or []
+    loai = {by_id.get(d, {}).get("type"): by_id.get(d) for d in sec.get("depends") or []}
+    solid, plane = loai.get("solid"), loai.get("plane3")
+    if not isinstance(k, int) or k >= len(buoc) or solid is None or plane is None:
+        return None
+    mat = buoc[k].get("face_index")
+    faces, verts = solid.get("faces") or [], solid.get("vertices") or []
+    try:
+        q = lambda v: tuple(Fraction(str(x)) for x in v)                     # noqa: E731
+        a, b = q(buoc[k]["a"]), q(buoc[k]["b"])
+        p0, n = q(plane["point"]), q(plane["normal"])
+        face = faces[mat] if isinstance(mat, int) and mat < len(faces) else None
+        pts = [q(verts[i]) for i in face] if face else None
+    except (KeyError, TypeError, ValueError, ZeroDivisionError, IndexError):
+        return None
+    if not pts:
+        return None
+    hieu = lambda u, v: tuple(x - y for x, y in zip(u, v))                   # noqa: E731
+    cheo = lambda u, v: (u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0])  # noqa: E731
+    vo = lambda u, v: sum(x * y for x, y in zip(u, v))                         # noqa: E731
+    d = hieu(b, a)
+    if not any(d) or vo(n, hieu(a, p0)) or vo(n, hieu(b, p0)):
+        return None
+    ten = _ten_diem_khoi(solid, by_id)
+    mat_ten = "".join(ten[j] for j in face)
+    for i in range(len(face)):
+        x, y = pts[i], pts[(i + 1) % len(face)]
+        if any(cheo(d, hieu(y, x))) or not vo(n, hieu(x, p0)):
+            continue
+        canh = f"{ten[face[i]]}{ten[face[(i + 1) % len(face)]]}"
+        mp = plane.get("notation") or "mặt phẳng cắt"
+        return {"theorem": "PARALLEL_LINE_PLANE_INTERSECTION", "plane": mp, "line": canh, "face": mat_ten,
+                "verified_exact": True,
+                "text": (f"Vì {mp} song song với {canh} và {canh} nằm trong mặt ({mat_ten}), "
+                         f"nên giao tuyến của {mp} với mặt ({mat_ten}) song song với {canh}.")}
+    return None
+
+
 def _cau_thiet_dien(sec: dict[str, Any], by_id: dict[str, dict[str, Any]]) -> str:
     n = len(sec.get("polygon") or [])
     hinh = _TEN_DA_GIAC.get(n, f"đa giác {n} đỉnh")
@@ -868,6 +913,9 @@ def _ke_lai(events: list[dict[str, Any]], objects: list[dict[str, Any]]) -> None
                                  else _cau_thiet_dien(o, by_id))
             if e.get("action") == "EXTEND" and (ten_buoc := _nhan_canh_thiet_dien(e, o, by_id)):
                 e["display_label"] = ten_buoc
+            if e.get("action") == "EXTEND" and (ly_do := _ly_do_canh_thiet_dien(e, o, by_id)):
+                e["justification_text"] = ly_do.pop("text")
+                e.setdefault("details", {})["justification"] = ly_do
         elif o is not None and o.get("notation_assigned") and e.get("action") in ("CREATE", "MEASURE"):
             # Tên trình bày `(α)` (display_names) — câu đặt tên một lần, ở chính bước dựng ra vật.
             cau = f"Gọi {o['notation']} là {_giua_cau(o['label'])}."

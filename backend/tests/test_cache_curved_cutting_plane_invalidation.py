@@ -66,7 +66,7 @@ def llm(monkeypatch):
 
 
 def test_cache_version_is_current():
-    assert main_module.CACHE_VERSION == "130"
+    assert main_module.CACHE_VERSION == "131"  # later bump: geometry-generalization-and-pedagogical-construction
     assert LEGACY["written_by_cache_version"] == "128"
 
 
@@ -88,7 +88,7 @@ def test_legacy_v128_row_misses_and_only_the_cutting_plane_role_changes(ca, llm)
                               policy_version=legacy["policy_version"]))
         s.commit()
         assert _cache_lookup(s, key, ident) is None                     # the genuine v128 row is not a valid hit
-    assert ident == "130"
+    assert ident == "131"
 
     client = TestClient(app)
     fresh = client.post("/api/analyze", json={"input": {"type": "text", "content": text}})
@@ -111,7 +111,7 @@ def test_legacy_v128_row_misses_and_only_the_cutting_plane_role_changes(ca, llm)
 
     with SessionLocal() as s:
         rows = s.query(SimulationCache).filter_by(key=key).all()
-        assert [r.policy_version for r in rows] == ["130"]               # overwritten in place, no duplicate
+        assert [r.policy_version for r in rows] == ["131"]               # overwritten in place, no duplicate
     hit = client.post("/api/analyze", json={"input": {"type": "text", "content": text}}).json()
     assert (hit["cached"], hit["source"]) == (True, "exact_cache")
     assert _canon(hit) == _canon(fresh)

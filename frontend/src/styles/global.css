@@ -3290,6 +3290,15 @@ html {
   line-height: 1.5;
 }
 
+/* W4: «Vì sao» của bước đang xem — quan hệ backend đã kiểm chính xác, tách khỏi lời kể. */
+.geo3d-cac-buoc-vi-sao {
+  margin: var(--sp-xs) 0 0;
+  padding-left: var(--sp-sm);
+  color: var(--ink-secondary);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
 /* Chỉ cho trình đọc màn hình: lời kể của bước, nằm trong khung nhìn (aria-live)
    nên người dùng bàn phím nghe được ngay tại đó. */
 .geo3d-sr {

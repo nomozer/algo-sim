@@ -1,5 +1,6 @@
-import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import {
+  geometryJustificationsAt,
   geometryNarrationAt,
   PLAYBACK_INTERVAL_MS,
   anchorOfGeometryStep,
@@ -240,12 +241,35 @@ export function Scene3DPlayer({
   /* D4 (regular-triangular-pyramid-w01): lời kể chỉ hiện khi nói THÊM điều tiêu đề chưa nói — bước dữ kiện lấy chính
      lời kể làm tiêu đề, và hai dòng trùng chữ là một dòng đọc hai lần. */
   const loiKe = geometryNarrationAt(scene, step);
+  /* W4: VÌ SAO của bước — chỉ những quan hệ backend đã kiểm chính xác (song song của giao tuyến…). */
+  const lyDo = geometryJustificationsAt(scene, step);
   const mucBuoc = (b: (typeof dsBuoc)[number]) => (
     <>
       {nutBuoc(b)}
       {b.index === buocHinh && loiKe.trim() !== b.label.trim() && <p className="geo3d-cac-buoc-mo-ta">{loiKe}</p>}
+      {b.index === buocHinh && lyDo.length > 0 && (
+        <p className="geo3d-cac-buoc-vi-sao"><strong>Vì sao: </strong>{lyDo.join(" ")}</p>
+      )}
     </>
   );
+
+  /* W4: điều hướng bước bằng bàn phím trong trình phát — ←/→ bước trước/sau, Home/End đầu/cuối. Thanh kéo và ô nhập
+     tự xử lý phím của chúng; mọi phím ở đây dừng phát tự động (người học đã cầm lái). */
+  const phimBuoc = (e: KeyboardEvent<HTMLDivElement>) => {
+    const t = e.target as HTMLElement;
+    if (e.altKey || e.ctrlKey || e.metaKey || t.closest("input, select")) return;
+    const di: Record<string, ((s: number) => number) | undefined> = {
+      ArrowLeft: (s) => prevGeometryStep(scene, s),
+      ArrowRight: (s) => nextGeometryStep(scene, s),
+      Home: () => anchorOfGeometryStep(scene, 0),
+      End: () => anchorOfGeometryStep(scene, tong - 1),
+    };
+    const f = di[e.key];
+    if (!f) return;
+    e.preventDefault();
+    setDangPhat(false);
+    setStep(f);
+  };
 
   const xemLai = () => {
     datTrangThai(0, true);
@@ -267,7 +291,7 @@ export function Scene3DPlayer({
   }, [buocHinh, moBuoc]);
 
   return (
-    <div ref={playerRef} className="geo3d-player">
+    <div ref={playerRef} className="geo3d-player" onKeyDown={phimBuoc}>
       <Scene3DWorkspace
         scene={scene}
         step={step}

@@ -511,6 +511,8 @@ export interface SceneEvent {
   depends: string[];
   explanation: string;
   learner_text?: string;
+  /** W4 · Vì sao của bước, chỉ khi backend KIỂM CHÍNH XÁC được quan hệ nó nêu (`details.justification`). */
+  justification_text?: string;
   display_label?: string;
   semantic_kind?: FormationSemanticKind;
   diagnostics?: string[];
@@ -1684,6 +1686,18 @@ export function geometryHighlightedAt(scene: Scene3D, step: number): string[] {
   if (isLastGeometryStep(scene, step)) return [];
   const g = geometryTimeline(scene)[geometryStepOf(scene, step)];
   return [...new Set((g?.construction ?? []).flatMap((k) => highlightedAt(scene, k)))];
+}
+
+/** W4 · Các lý do đã kiểm chứng của bước dựng chứa `step` (mọi sự kiện của đoạn), không trùng, qua cùng bộ lọc rò
+ *  định danh với lời kể. Rỗng khi backend không chứng nhận được quan hệ nào — không bao giờ tự suy ra ở frontend. */
+export function geometryJustificationsAt(scene: Scene3D, step: number): string[] {
+  const g = geometryTimeline(scene)[geometryStepOf(scene, step)];
+  if (!g) return [];
+  const ra = scene.events
+    .filter((e) => e.step_index >= g.start && e.step_index <= g.end)
+    .map((e) => e.justification_text?.trim() ?? "")
+    .filter((t) => t && learnerTextIsSafe(scene, t));
+  return [...new Set(ra)];
 }
 
 /** Lời kể của bước dựng — lời của sự kiện dựng đầu đoạn. */

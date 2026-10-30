@@ -838,7 +838,7 @@ MISSING_KEY_MSG = (
 #       `CurvedSolid(…)` trong lời kể; mặt phẳng không tên gọi `(α)` khi đề không viết tên nào chưa hiện; tên khai nhiều
 #       điểm `(ABCD)` kiểm đồng phẳng thay vì rút thành `(ABC)`. Row v129 THẬT của 6 ca phát lại vẫn HIT
 #       (`runs/scene3d-to-hybrid-v2-replacement/cache/decision.json`); 2 ca đa diện đối chứng trùng byte.
-CACHE_VERSION = "130"
+CACHE_VERSION = "131"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

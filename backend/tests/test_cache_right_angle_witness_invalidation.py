@@ -28,7 +28,9 @@ LEGACY = json.loads((Path(__file__).resolve().parents[2] / "docs/evaluation/geom
                      / "scene3d-to-hybrid-v2-replacement/cache/legacy-v129-rows.json").read_text(encoding="utf-8"))
 #: case → the only kind of path allowed to differ between the v129 row and the fresh v130 envelope.
 CASES = {
-    "p1_chop_thiet_dien_khoang_cach": ("annotation", "witness", "marker"),
+    # + later bump 130 -> 131 (geometry-generalization-and-pedagogical-construction): its section edges now also carry an
+    #   exactly verified "why" (`justification_text`, `details.justification`) — tested in test_section_edge_justification.py.
+    "p1_chop_thiet_dien_khoang_cach": ("annotation", "witness", "marker", "justification", "justification_text"),
     "p4_hinh_tru_the_tich_va_xung_quanh": ("events", "formation"),
     "cube": None,
 }
@@ -71,7 +73,7 @@ def llm(monkeypatch):
 
 
 def test_cache_version_is_130():
-    assert main_module.CACHE_VERSION == "130"
+    assert main_module.CACHE_VERSION == "131"  # later bump: geometry-generalization-and-pedagogical-construction
     assert LEGACY["written_by_cache_version"] == "129"
 
 
@@ -93,7 +95,7 @@ def test_legacy_v129_row_misses_and_only_the_registered_paths_change(ca, llm):
                               policy_version=legacy["policy_version"]))
         s.commit()
         assert _cache_lookup(s, key, ident) is None                     # the genuine v129 row is not a valid hit
-    assert ident == "130"
+    assert ident == "131"
 
     client = TestClient(app)
     fresh = client.post("/api/analyze", json={"input": {"type": "text", "content": text}})
@@ -111,7 +113,7 @@ def test_legacy_v129_row_misses_and_only_the_registered_paths_change(ca, llm):
 
     with SessionLocal() as s:
         rows = s.query(SimulationCache).filter_by(key=key).all()
-        assert [r.policy_version for r in rows] == ["130"]               # overwritten in place, no duplicate
+        assert [r.policy_version for r in rows] == ["131"]               # overwritten in place, no duplicate
     hit = client.post("/api/analyze", json={"input": {"type": "text", "content": text}}).json()
     assert (hit["cached"], hit["source"]) == (True, "exact_cache")
     assert _canon(hit) == _canon(fresh)
