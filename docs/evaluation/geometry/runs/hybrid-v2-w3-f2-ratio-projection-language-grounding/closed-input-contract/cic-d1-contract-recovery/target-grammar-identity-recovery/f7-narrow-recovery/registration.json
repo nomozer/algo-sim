@@ -1,0 +1,12 @@
+{
+  "task": "HYBRID_V2_W3_F2_TARGET_GRAMMAR_AND_CANONICAL_IDENTITY_RECOVERY / F7 narrow + R1/R2 test-only",
+  "baseline": "1b1a9ed2a48da1715b2a35b871c5633dd53680c3",
+  "input_sha256": "82dbaddfc89c6e562073a0abf35debd98747236619f1bd92df11e654698a310a",
+  "cases": 47,
+  "builder_sha256_lf": "aae48a19988cef06b1ef2891400eb597ca39f21f19b27efd5a7ef98a7802cf9f",
+  "initial_test_file": "backend/tests/geometry/test_measurement_dispatch_and_identity_order.py",
+  "initial_test_sha256_lf": "7f60374107ac1211b410c5883d8f21250d3efb5074dd674f6d77bbb4bee73503",
+  "capability_refusal_code": "BRIDGE_UNSUPPORTED_MEASUREMENT",
+  "expected_source": "contract + existing exact oracle (observed-green.json, reviewer out-head.json); never the runtime under test",
+  "live_provider_calls": 0
+}
