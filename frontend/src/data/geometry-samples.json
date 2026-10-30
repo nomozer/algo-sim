@@ -1216,9 +1216,17 @@
         ],
         "khoi": "chop",
         "mat_phang": "mp",
-        "thiet_dien": "thiet_dien"
+        "thiet_dien": "thiet_dien",
+        "justification": {
+         "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+         "plane": "(MNP)",
+         "line": "AB",
+         "face": "ABS",
+         "verified_exact": true
+        }
        },
-       "learner_text": "Trên mặt ABS, nối giao điểm thuộc cạnh BS với giao điểm thuộc cạnh AS."
+       "learner_text": "Trên mặt ABS, nối giao điểm thuộc cạnh BS với giao điểm thuộc cạnh AS.",
+       "justification_text": "Vì (MNP) song song với AB và AB nằm trong mặt (ABS), nên giao tuyến của (MNP) với mặt (ABS) song song với AB."
       },
       {
        "step_index": 7,
@@ -1246,9 +1254,17 @@
         ],
         "khoi": "chop",
         "mat_phang": "mp",
-        "thiet_dien": "thiet_dien"
+        "thiet_dien": "thiet_dien",
+        "justification": {
+         "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+         "plane": "(MNP)",
+         "line": "DA",
+         "face": "DAS",
+         "verified_exact": true
+        }
        },
-       "learner_text": "Trên mặt DAS, nối giao điểm thuộc cạnh AS với giao điểm thuộc cạnh DS."
+       "learner_text": "Trên mặt DAS, nối giao điểm thuộc cạnh AS với giao điểm thuộc cạnh DS.",
+       "justification_text": "Vì (MNP) song song với DA và DA nằm trong mặt (DAS), nên giao tuyến của (MNP) với mặt (DAS) song song với DA."
       },
       {
        "step_index": 8,
@@ -1276,9 +1292,17 @@
         ],
         "khoi": "chop",
         "mat_phang": "mp",
-        "thiet_dien": "thiet_dien"
+        "thiet_dien": "thiet_dien",
+        "justification": {
+         "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+         "plane": "(MNP)",
+         "line": "CD",
+         "face": "CDS",
+         "verified_exact": true
+        }
        },
-       "learner_text": "Trên mặt CDS, nối giao điểm thuộc cạnh DS với giao điểm thuộc cạnh CS."
+       "learner_text": "Trên mặt CDS, nối giao điểm thuộc cạnh DS với giao điểm thuộc cạnh CS.",
+       "justification_text": "Vì (MNP) song song với CD và CD nằm trong mặt (CDS), nên giao tuyến của (MNP) với mặt (CDS) song song với CD."
       },
       {
        "step_index": 9,
@@ -1306,9 +1330,17 @@
         ],
         "khoi": "chop",
         "mat_phang": "mp",
-        "thiet_dien": "thiet_dien"
+        "thiet_dien": "thiet_dien",
+        "justification": {
+         "theorem": "PARALLEL_LINE_PLANE_INTERSECTION",
+         "plane": "(MNP)",
+         "line": "BC",
+         "face": "BCS",
+         "verified_exact": true
+        }
        },
-       "learner_text": "Trên mặt BCS, nối giao điểm thuộc cạnh CS với giao điểm thuộc cạnh BS."
+       "learner_text": "Trên mặt BCS, nối giao điểm thuộc cạnh CS với giao điểm thuộc cạnh BS.",
+       "justification_text": "Vì (MNP) song song với BC và BC nằm trong mặt (BCS), nên giao tuyến của (MNP) với mặt (BCS) song song với BC."
       },
       {
        "step_index": 10,
