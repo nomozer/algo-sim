@@ -1,0 +1,20 @@
+{
+  "schema": "w4-remote-verification/1",
+  "classification": "W4_REMOTE_VERIFIED",
+  "checked_utc": "2026-10-30T16:01:18.5395753Z",
+  "local_main": "94055c98350289c54a2cf15311a20fbabf08f0d1",
+  "origin_main": "94055c98350289c54a2cf15311a20fbabf08f0d1",
+  "github_remote_main": "94055c98350289c54a2cf15311a20fbabf08f0d1",
+  "three_way_match": true,
+  "push": "git push origin main:main (non-force)",
+  "product_commit": "61ade29e11d41417ff10efdcb4dd1e19cb69e910",
+  "candidate_freeze_commit": "182a7785",
+  "measured_tree_hash": "54b5b565ef65a8e9a8faee5a63a19aca14749bc0edce2bf054b6846be322043c",
+  "measured_files": 118,
+  "cache_version": 131,
+  "default_mode": "LLM_ONLY",
+  "live_provider_calls": 0,
+  "publication_range": "PASS",
+  "publication_head": "BLOCKED: 104 historical pending findings, exact identity unchanged; zero unexcepted",
+  "owner_registry_edit_verified": true
+}

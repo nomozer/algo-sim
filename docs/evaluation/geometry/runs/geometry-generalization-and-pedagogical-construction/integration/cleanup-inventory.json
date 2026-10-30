@@ -1,0 +1,214 @@
+{
+  "schema": "hybrid-master-repository-cleanup/1",
+  "classification": "SAFE_CLEANUP_COMPLETE_WITH_RETAINED_EXCEPTIONS",
+  "baseline": "W4_REMOTE_VERIFIED 94055c98350289c54a2cf15311a20fbabf08f0d1",
+  "before_registered_worktrees": 16,
+  "after_registered_worktrees": 12,
+  "removals": [
+    {
+      "name": "w3-f2-f7-final-t3-4e7fe91d",
+      "head": "4e7fe91d8990d4ef2856204d2b8aaa652f41ea24",
+      "exit_code": 0,
+      "residual_exists": false,
+      "status": "REMOVED"
+    },
+    {
+      "name": "w3-f2-main-baseline-996f114b",
+      "head": "996f114b3480efe1b0d075dd4342530aaa12ddae",
+      "exit_code": 0,
+      "residual_exists": false,
+      "status": "REMOVED"
+    },
+    {
+      "name": "w4-final-t3-25028584",
+      "head": "25028584f5c199e1c1f4d5000765f9fd833441df",
+      "exit_code": 0,
+      "residual_exists": false,
+      "status": "REMOVED"
+    },
+    {
+      "name": "w4-geometry-pedagogy",
+      "head": "94055c98350289c54a2cf15311a20fbabf08f0d1",
+      "exit_code": 255,
+      "residual_exists": true,
+      "status": "RETAIN_RESIDUAL_NO_FORCE"
+    }
+  ],
+  "remaining_worktrees": [
+    {
+      "worktree": ".",
+      "head": "94055c98350289c54a2cf15311a20fbabf08f0d1",
+      "status_count": 7,
+      "disposition": "ACTIVE_MAIN; pre-existing untracked .playwright-mcp preserved"
+    },
+    {
+      "worktree": ".superpowers\\worktrees\\axo-v27-frontend-integration",
+      "head": "cfebc14da6ff98d3582790003a605b45a2ef0256",
+      "status_count": 3,
+      "disposition": "RETAIN_USER_TRACKED_OR_UNTRACKED_CHANGES"
+    },
+    {
+      "worktree": ".superpowers\\worktrees\\independent-section-holdout",
+      "head": "f7f177a626c33bb13aa40d3a904c82266ed8a276",
+      "status_count": 0,
+      "disposition": "RETAIN_UNMERGED_HISTORY"
+    },
+    {
+      "worktree": ".superpowers\\worktrees\\s3d-hybrid-v2",
+      "head": "3dcd6d9fbdc5627197537dc79c1e609ac3e03bea",
+      "status_count": 108,
+      "disposition": "RETAIN_USER_TRACKED_OR_UNTRACKED_CHANGES"
+    },
+    {
+      "worktree": ".superpowers\\worktrees\\s3d-hybrid-v2-codex",
+      "head": "e336e0dfee30968b27887bcf446d9ec7ad610f54",
+      "status_count": 69,
+      "disposition": "RETAIN_USER_TRACKED_OR_UNTRACKED_CHANGES"
+    },
+    {
+      "worktree": ".superpowers\\worktrees\\scene3d-visual-correction",
+      "head": "08929b893337e770649b9d854c8c71c4434edc29",
+      "status_count": 470,
+      "disposition": "RETAIN_USER_TRACKED_OR_UNTRACKED_CHANGES"
+    },
+    {
+      "worktree": ".superpowers\\worktrees\\visual-hybrid-integration",
+      "head": "13d28b844925ee0c9adb02698b54597c8f9d6eee",
+      "status_count": 210,
+      "disposition": "RETAIN_USER_TRACKED_OR_UNTRACKED_CHANGES"
+    },
+    {
+      "worktree": ".superpowers\\worktrees\\w3-f2-adapter3-t3",
+      "head": "6516d5d46379a4d4f251c4fa29e6a16191a79ca6",
+      "status_count": 0,
+      "disposition": "RETAIN_LOCAL_EVIDENCE_OR_ACCESS_ERRORS_OR_NESTED_WORKTREE; see cleanup-candidates.json"
+    },
+    {
+      "worktree": ".superpowers\\worktrees\\w3-f2-ratio-projection-language-grounding",
+      "head": "15a8e1ac327e7ec5197ebe5d08330afb444b9571",
+      "status_count": 0,
+      "disposition": "RETAIN_LOCAL_EVIDENCE_OR_ACCESS_ERRORS_OR_NESTED_WORKTREE; see cleanup-candidates.json"
+    },
+    {
+      "worktree": ".superpowers\\worktrees\\w3-f2-ratio-projection-language-grounding\\.superpowers\\worktrees\\w3-f2-target-grammar-identity-compat",
+      "head": "a0fd23776610cf5a9a0763ff76b26938f668aa2f",
+      "status_count": 0,
+      "disposition": "RETAIN_LOCAL_EVIDENCE_OR_ACCESS_ERRORS_OR_NESTED_WORKTREE; see cleanup-candidates.json"
+    },
+    {
+      "worktree": ".superpowers\\worktrees\\w3-f2-solid-scope-t3",
+      "head": "55bdd332e3e1042f104fff350be573b295e33a8b",
+      "status_count": 0,
+      "disposition": "RETAIN_LOCAL_EVIDENCE_OR_ACCESS_ERRORS_OR_NESTED_WORKTREE; see cleanup-candidates.json"
+    },
+    {
+      "worktree": ".superpowers\\worktrees\\w3-f2-unified-scope-t3",
+      "head": "cd8de3986d5d9103b7a9dbc8fb2311d05e5c44c9",
+      "status_count": 0,
+      "disposition": "RETAIN_LOCAL_EVIDENCE_OR_ACCESS_ERRORS_OR_NESTED_WORKTREE; see cleanup-candidates.json"
+    }
+  ],
+  "unregistered_residuals": [
+    {
+      "path": ".superpowers\\worktrees\\.superpowers",
+      "inspection": "SHALLOW_INSPECTION_ONLY",
+      "child_count": 1,
+      "disposition": "RETAIN_UNREGISTERED_RESIDUAL_UNVERIFIED_CONTENT_OR_ACL; no forced deletion"
+    },
+    {
+      "path": ".superpowers\\worktrees\\hybrid-backend-continuation-verify",
+      "inspection": "SHALLOW_INSPECTION_ONLY",
+      "child_count": 1,
+      "disposition": "RETAIN_UNREGISTERED_RESIDUAL_UNVERIFIED_CONTENT_OR_ACL; no forced deletion"
+    },
+    {
+      "path": ".superpowers\\worktrees\\hybrid-primary-b1-b2-offline",
+      "inspection": "SHALLOW_INSPECTION_ONLY",
+      "child_count": 10,
+      "disposition": "RETAIN_UNREGISTERED_RESIDUAL_UNVERIFIED_CONTENT_OR_ACL; no forced deletion"
+    },
+    {
+      "path": ".superpowers\\worktrees\\hybrid-session4a-readiness",
+      "inspection": "SHALLOW_INSPECTION_ONLY",
+      "child_count": 2,
+      "disposition": "RETAIN_UNREGISTERED_RESIDUAL_UNVERIFIED_CONTENT_OR_ACL; no forced deletion"
+    },
+    {
+      "path": ".superpowers\\worktrees\\hybrid-session4a-s3-verify",
+      "inspection": "SHALLOW_INSPECTION_ONLY",
+      "child_count": 1,
+      "disposition": "RETAIN_UNREGISTERED_RESIDUAL_UNVERIFIED_CONTENT_OR_ACL; no forced deletion"
+    },
+    {
+      "path": ".superpowers\\worktrees\\hybrid-session5-offline-consumer",
+      "inspection": "SHALLOW_INSPECTION_ONLY",
+      "child_count": 9,
+      "disposition": "RETAIN_UNREGISTERED_RESIDUAL_UNVERIFIED_CONTENT_OR_ACL; no forced deletion"
+    },
+    {
+      "path": ".superpowers\\worktrees\\planner-generalization",
+      "inspection": "SHALLOW_INSPECTION_ONLY",
+      "child_count": 8,
+      "disposition": "RETAIN_UNREGISTERED_RESIDUAL_UNVERIFIED_CONTENT_OR_ACL; no forced deletion"
+    },
+    {
+      "path": ".superpowers\\worktrees\\ratio-projection-publication-verification",
+      "inspection": "SHALLOW_INSPECTION_ONLY",
+      "child_count": 8,
+      "disposition": "RETAIN_UNREGISTERED_RESIDUAL_UNVERIFIED_CONTENT_OR_ACL; no forced deletion"
+    },
+    {
+      "path": ".superpowers\\worktrees\\scene3d-codex-takeover",
+      "inspection": "SHALLOW_INSPECTION_ONLY",
+      "child_count": 8,
+      "disposition": "RETAIN_UNREGISTERED_RESIDUAL_UNVERIFIED_CONTENT_OR_ACL; no forced deletion"
+    },
+    {
+      "path": ".superpowers\\worktrees\\source-gate-language-generalization",
+      "inspection": "SHALLOW_INSPECTION_ONLY",
+      "child_count": 10,
+      "disposition": "RETAIN_UNREGISTERED_RESIDUAL_UNVERIFIED_CONTENT_OR_ACL; no forced deletion"
+    },
+    {
+      "path": ".superpowers\\worktrees\\source-gate-language-t3",
+      "inspection": "SHALLOW_INSPECTION_ONLY",
+      "child_count": 10,
+      "disposition": "RETAIN_UNREGISTERED_RESIDUAL_UNVERIFIED_CONTENT_OR_ACL; no forced deletion"
+    },
+    {
+      "path": ".superpowers\\worktrees\\w4-geometry-pedagogy",
+      "inspection": "SHALLOW_INSPECTION_ONLY",
+      "child_count": 0,
+      "disposition": "RETAIN_UNREGISTERED_RESIDUAL_UNVERIFIED_CONTENT_OR_ACL; no forced deletion"
+    },
+    {
+      "path": ".superpowers\\worktrees\\windows-watchdog-recovery",
+      "inspection": "SHALLOW_INSPECTION_ONLY",
+      "child_count": 10,
+      "disposition": "RETAIN_UNREGISTERED_RESIDUAL_UNVERIFIED_CONTENT_OR_ACL; no forced deletion"
+    }
+  ],
+  "deleted_local_branches": [
+    "research/w4-geometry-pedagogy"
+  ],
+  "remaining_local_branches": [
+    "feat/axo-v27-frontend-integration",
+    "feat/real-model-pilot-tooling",
+    "main",
+    "research/compact-geometry-dsl",
+    "research/hybrid-next-architecture-gap-audit",
+    "research/hybrid-semantic-extraction-v2",
+    "research/hybrid-v2-independent-vietnamese-section-holdout",
+    "research/hybrid-v2-w3-f2-ratio-projection-language-grounding",
+    "research/nl-to-scene3d-e2e-readiness",
+    "research/scene3d-hybrid-v2-codex",
+    "research/scene3d-owner-math-visual-final",
+    "research/scene3d-to-hybrid-v2-replacement"
+  ],
+  "process_cleanup": "Vite PID9616 stopped after current identity and zero established connections verified",
+  "preservation": "Generated DBs copied with SHA-256 verification to .superpowers/backups/master-hybrid-backend-replacement-cleanup; historical tracked evidence remains unchanged in Git; dirty/unmerged worktrees, backups and root user data preserved",
+  "deletion_policy": "No force, no ACL rewrite, no global git clean; only exact checked paths passed to Git. W4 residual retained after Permission denied.",
+  "root_generated_assets": "Active node_modules, .venv, DB, .env/.secrets, backups, prior local logs retained; cache removal limited to removed verified worktrees.",
+  "architecture_docs": "Single current ARCHITECTURE_MAP retained; stale living status headings corrected in closure write-back; historical research reports untouched.",
+  "next_phase": "HYBRID_ARCHITECTURE_AUDIT_AND_MASTER_CONTRACT"
+}

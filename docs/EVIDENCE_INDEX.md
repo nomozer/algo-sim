@@ -1,5 +1,17 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## CONTINUATION_ID = W4_MAIN_INTEGRATION_AND_REPOSITORY_CLEANUP
+
+REPORT = docs/evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction/integration/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction/integration/
+CLASSIFICATION = W4_REMOTE_VERIFIED at 94055c98350289c54a2cf15311a20fbabf08f0d1; fast-forward, non-force push, three-way SHA match; scoped Owner-written exception verified; range PASS, head BLOCKED with 104 unchanged historical pending findings and zero unexcepted
+VERIFICATION = remote-verification.json; verification.json; cleanup-inventory.json
+CODE_COMMIT = 61ade29e11d41417ff10efdcb4dd1e19cb69e910
+CANDIDATE_COMMIT = 182a7785
+MODEL_REQUEST_COUNT = 0
+CORRECTS = living W4 status that still said publication blocked/not integrated; original research reports and receipts unchanged
+CORRECTED_BY = NONE
+
 
 ## WAVE_ID = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION
 

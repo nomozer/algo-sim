@@ -1,6 +1,6 @@
 # STATUS_LEDGER.md — SỔ TRẠNG THÁI SẢN PHẨM
 
-**LOCAL 2026-10-30 — W4 geometry generalization + pedagogy (latest):** research/w4-geometry-pedagogy; product 61ade29e, candidate 182a7785 (118 files, 54b5b565…), CACHE_VERSION 131, LLM_ONLY, Full T3 PASS; Wave 3 67/72, 0 wrong-served; READY_FOR_OWNER_REVIEW, publication pending one exception. `evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction/report.md`.
+**CURRENT 2026-10-30 — W4_REMOTE_VERIFIED:** main/origin/main/live GitHub matched `94055c98`; Owner-written synthetic-vector exception verified; range PASS, head BLOCKED with 104 identical historical pending findings, zero unexcepted. Product61ade29e/candidate182a7785/cache131/LLM_ONLY/live0 unchanged. Safe cleanup 16→12 registered worktrees; three directories removed, W4 ACL residual retained, merged W4 branch deleted; all uncertain data preserved. Continue the authorized backend-only Master Hybrid Epic. Closure: `evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction/integration/report.md`. Earlier dated snapshots below are historical.
 
 **LOCAL 2026-10-30 — W3-F2 final verification (latest):** research/hybrid-v2-w3-f2-ratio-projection-language-grounding; product dd17fbfb, candidate 4e7fe91d (118 files, c4fb8613…), CACHE_VERSION 130, LLM_ONLY, Full T3 PASS; READY_FOR_OWNER_REVIEW, not merged. `evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/target-grammar-identity-recovery/f7-narrow-recovery/final-handoff.md`.
 

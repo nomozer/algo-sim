@@ -71,7 +71,7 @@ không có script nào resolve tag này, và không bị di chuyển/xoá trong 
 
 ### 2b. Phân định các chế độ kiến trúc
 
-1. **Tuyến sản phẩm đang chạy mặc định (`AS-IS: DEFAULT_MODE = LLM_ONLY`, `CACHE_VERSION = 127`):**
+1. **Tuyến sản phẩm đang chạy mặc định (`AS-IS: DEFAULT_MODE = LLM_ONLY`; cache đọc tại `backend/app/main.py`, trạng thái tích hợp ở `CURRENT_STATE.md`):**
    - Đề bài qua Analyze LLM tạo `RequestContract`.
    - `stage_semantic_program` gọi Gemini để tổng hợp `SemanticProgramSpec`.
    - Cổng tất định kiểm định tĩnh, thực thi sinh timeline, kiểm tra ràng buộc nguồn/chứng chỉ giả định và nghĩa vụ trực quan.

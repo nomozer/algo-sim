@@ -1,0 +1,109 @@
+{
+  "schema": "w4-integration-verification/1",
+  "source_head": "a0a4fdd49929058cda625fe9d50eee8054e4dd86",
+  "integration_head": "94055c98350289c54a2cf15311a20fbabf08f0d1",
+  "fresh_detached_checks": {
+    "wave3_all_144_cases_identical_to_final_review": true,
+    "positive_correct_67": true,
+    "negative_refused_72": true,
+    "wrong_served_zero": true,
+    "locked96": true,
+    "probes203": true,
+    "targeted_tests_160": true,
+    "detached_head_matches": true,
+    "detached_tracked_untracked_clean": true
+  },
+  "fresh_artifact_sha256": {
+    "targeted-tests.log": "1231875da37d2337da7c065f81a62fbc2200947aa0c8ca3f29bae53ab2bb217d",
+    "fresh-regression\\wave3-preintegration.json": "48b830486be8fb4203e1f86e1ad45f400c9604b74d958cbe84ddf6454e8cf4c4",
+    "fresh-regression\\regression-preintegration.json": "e272f56d4467cef15c6047097a8e3a67ea15932978b0854cf965bea9ca6bdfe2",
+    "w4-receipt-verification.json": "83b394bb6fff41490d072ecebe3c84dcbc08a0c53904122e219599977f487d32"
+  },
+  "historical_log_hash_checks": {
+    "t0c.log": {
+      "exists": true,
+      "expected": "1646ede297ca5cbb872b14ece45a35da5eb57ea8bc5248b75922a90a96f596f0",
+      "actual": "1646ede297ca5cbb872b14ece45a35da5eb57ea8bc5248b75922a90a96f596f0",
+      "match": true
+    },
+    "t1b-geometry.log": {
+      "exists": true,
+      "expected": "fe54929cc25519e518a0b64612539a273e023d6e5b3e9151ea2081fe9a21febc",
+      "actual": "fe54929cc25519e518a0b64612539a273e023d6e5b3e9151ea2081fe9a21febc",
+      "match": true
+    },
+    "t1b-semantic.log": {
+      "exists": true,
+      "expected": "43f7dfa283e56944572e769ef50c2cd05757715048e1fd03e51bffe8d092e75e",
+      "actual": "43f7dfa283e56944572e769ef50c2cd05757715048e1fd03e51bffe8d092e75e",
+      "match": true
+    },
+    "t2b.log": {
+      "exists": true,
+      "expected": "94d04aeb58ea4c0dbeb6fde4d5cfb17c31e714f1f249b9643fe56b5ff1cca796",
+      "actual": "94d04aeb58ea4c0dbeb6fde4d5cfb17c31e714f1f249b9643fe56b5ff1cca796",
+      "match": true
+    },
+    "full-t3b.log": {
+      "exists": true,
+      "expected": "84d0da863c102b247530ae6431800fbad26a3e645a932ba6f4c4446aebd17272",
+      "actual": "84d0da863c102b247530ae6431800fbad26a3e645a932ba6f4c4446aebd17272",
+      "match": true
+    },
+    "freeze-84c61334": {
+      "manifest_sha256": "f987ca6ac5589ea7d8e21375c9ee19b1469dabc54ef3f7c33d7daddd5fca94eb",
+      "product": "e4e97758dbf5678e77d6967e65f4ac6bb24cf91d",
+      "tree_hash": "aa7451326723fbd0d21222296cab6e2e6d63eb4291a119478d015f47ed5515a3"
+    },
+    "freeze-182a7785": {
+      "manifest_sha256": "91aeadce4c41fa113d892c6f5beab2d338f0bc8d95b94b1ff0214871143dbe5f",
+      "product": "61ade29e11d41417ff10efdcb4dd1e19cb69e910",
+      "tree_hash": "54b5b565ef65a8e9a8faee5a63a19aca14749bc0edce2bf054b6846be322043c"
+    },
+    "freeze-a0a4fdd4": {
+      "manifest_sha256": "91aeadce4c41fa113d892c6f5beab2d338f0bc8d95b94b1ff0214871143dbe5f",
+      "product": "61ade29e11d41417ff10efdcb4dd1e19cb69e910",
+      "tree_hash": "54b5b565ef65a8e9a8faee5a63a19aca14749bc0edce2bf054b6846be322043c"
+    }
+  },
+  "synthetic_vector_verification": {
+    "blob": "24d45cd6304f1194340c27e043c402fca1762052",
+    "sha256": "b74ee7c7a077f189574389acd714cb8faf9f76b3502b1b22c4c25b0898a4512d",
+    "bytes": 20710,
+    "registry_hash_match": true,
+    "line_identical_to_pre_w4_main": true,
+    "test_function_present": true
+  },
+  "owner_edit_verified": {
+    "exactly_one_semantic_value": true,
+    "diff_insertions": 1,
+    "diff_deletions": 1,
+    "approval_commit": "94055c98350289c54a2cf15311a20fbabf08f0d1"
+  },
+  "post_integration": [
+    {
+      "check": "post-freeze",
+      "exit_code": 0,
+      "summary": "Candidate kh\u1edbp b\u1ea3n \u0111\u00e3 \u0111\u00f3ng b\u0103ng (m\u00e3 s\u1ea3n ph\u1ea9m: 118 file, 54b5b565ef65a8e9\u2026)."
+    },
+    {
+      "check": "post-range",
+      "exit_code": 0,
+      "summary": "SUMMARY scanned=184 messages=21 violations=0 pending_exception=0 verdict=PASS"
+    },
+    {
+      "check": "post-head",
+      "exit_code": 1,
+      "summary": "SUMMARY scanned=26486 messages=0 violations=104 pending_exception=104 verdict=BLOCKED"
+    }
+  ],
+  "head_findings_exactly_unchanged": true,
+  "post_tests": {
+    "initial_passed": 176,
+    "initial_environment_setup_errors": 1,
+    "environment_error_node_rerun_passed": 1,
+    "product_failures": 0
+  },
+  "full_t3_rerun": false,
+  "live_provider_calls": 0
+}
