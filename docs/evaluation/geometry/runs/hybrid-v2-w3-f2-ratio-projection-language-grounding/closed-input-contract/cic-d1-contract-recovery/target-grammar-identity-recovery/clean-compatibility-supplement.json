@@ -1,0 +1,44 @@
+{
+  "source_head": "5c4b743f517f55ba31a91c6e14ce9f571528c2fe",
+  "product_commit": "6a09c06afcb247b71a5af11a49aa2dc6a31d3f46",
+  "tree_clean_before_and_after": true,
+  "targeted_v2": {
+    "command": "python -B -m pytest -p no:cacheprovider tests/geometry/test_typed_fact_next_v2_angle_bridge.py tests/geometry/test_typed_fact_next_v2_distance_bridge.py tests/geometry/test_typed_fact_next_v2_line_plane_distance.py tests/geometry/test_typed_fact_next_v2_named_plane.py tests/geometry/test_typed_fact_next_v2_point_line_distance.py tests/geometry/test_hybrid_contract_v2.py -q --tb=short -rN",
+    "files": [
+      "tests/geometry/test_typed_fact_next_v2_angle_bridge.py",
+      "tests/geometry/test_typed_fact_next_v2_distance_bridge.py",
+      "tests/geometry/test_typed_fact_next_v2_line_plane_distance.py",
+      "tests/geometry/test_typed_fact_next_v2_named_plane.py",
+      "tests/geometry/test_typed_fact_next_v2_point_line_distance.py",
+      "tests/geometry/test_hybrid_contract_v2.py"
+    ],
+    "summary": "232 passed in 4.59s",
+    "exit_code": 0,
+    "log_sha256_bytes": "ad0fee7d9bb8a2516fcc79367366c2639da2a570b958bb187872b084b9eef909"
+  },
+  "fixtures": {
+    "command": "python -B scripts/export_hybrid_preview_fixtures.py --verify ../docs/evaluation/geometry/runs/hybrid-v2-backend-generalization/fixtures-adapter-2-named-plane",
+    "exit_code": 0,
+    "result": {
+      "verified": 41,
+      "problems": [],
+      "producer_now": {
+        "commit": "5c4b743f517f55ba31a91c6e14ce9f571528c2fe",
+        "product_commit": "6a09c06afcb247b71a5af11a49aa2dc6a31d3f46",
+        "source_fingerprint": {
+          "measured_system_hash": "c03efa7a630864274e03e0df062b536e7a3d9523a9b9720b4d93dd510d5aeb58",
+          "files": 118,
+          "rule": "scripts/freeze_evaluation_candidate.py::measured_system_hash"
+        },
+        "adapter_version": "hybrid-preview-adapter/2",
+        "envelope_version": "hybrid-route-d-preview/1",
+        "backend_app_dirty": false,
+        "inputs_dirty": false
+      },
+      "same_source_fingerprint": false
+    }
+  },
+  "s8_proof": "s8-proof-current.json",
+  "gates": "Gate D pre-freeze compatibility only; overall false while publication blocked and F7 unresolved.",
+  "live_provider_calls": 0
+}

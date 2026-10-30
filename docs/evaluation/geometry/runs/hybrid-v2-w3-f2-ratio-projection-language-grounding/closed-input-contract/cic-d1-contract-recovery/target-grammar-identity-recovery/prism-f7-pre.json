@@ -1,0 +1,39 @@
+{
+  "head": "5e44d5da434b1d1a8fd98a0f1f4527f40de3c6ed",
+  "live_provider_calls": 0,
+  "finding": "F7_UNRESOLVED",
+  "cases": [
+    {
+      "case": "V.radius.solid",
+      "status": "REFUSED",
+      "code": "ADAPTER_INTERNAL_ERROR",
+      "error_type": "KeyError",
+      "missing_key": "ask2",
+      "reason_sha256": "d2ec466c3b91bf38deb572f3112a3a703ec72e1ccefafb669e1889b451487227"
+    },
+    {
+      "case": "V.radius.notation",
+      "status": "REFUSED",
+      "code": "ADAPTER_INTERNAL_ERROR",
+      "error_type": "KeyError",
+      "missing_key": "ask2",
+      "reason_sha256": "d2ec466c3b91bf38deb572f3112a3a703ec72e1ccefafb669e1889b451487227"
+    },
+    {
+      "case": "V.lateral_area.solid",
+      "status": "REFUSED",
+      "code": "ADAPTER_INTERNAL_ERROR",
+      "error_type": "KeyError",
+      "missing_key": "ask2",
+      "reason_sha256": "d2ec466c3b91bf38deb572f3112a3a703ec72e1ccefafb669e1889b451487227"
+    },
+    {
+      "case": "V.lateral_area.notation",
+      "status": "REFUSED",
+      "code": "ADAPTER_INTERNAL_ERROR",
+      "error_type": "KeyError",
+      "missing_key": "ask2",
+      "reason_sha256": "d2ec466c3b91bf38deb572f3112a3a703ec72e1ccefafb669e1889b451487227"
+    }
+  ]
+}

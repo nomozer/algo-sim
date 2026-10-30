@@ -1,0 +1,71 @@
+{
+  "command": "python -B backend/scripts/check_publication_safety.py --range 996f114b..HEAD",
+  "head": "5c4b743f517f55ba31a91c6e14ce9f571528c2fe",
+  "exit_code": 1,
+  "summary": "SUMMARY scanned=519 messages=46 violations=10 pending_exception=0 verdict=BLOCKED",
+  "log_sha256_bytes": "dcc9e7ac11717736a33b1042f58cd7276b87b960c5dfe4d14218584faaff545f",
+  "violations": [
+    {
+      "rule": "PY_TRACEBACK",
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/gate-d-full-backend-pytest.log",
+      "blob": "395896a0a850d77fab2be0062023d01154c2b9ef",
+      "line": "281"
+    },
+    {
+      "rule": "PY_TRACEBACK",
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/gate-d-full-backend-pytest.log",
+      "blob": "395896a0a850d77fab2be0062023d01154c2b9ef",
+      "line": "282"
+    },
+    {
+      "rule": "PY_TRACEBACK",
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/gate-d-full-backend-pytest.log",
+      "blob": "395896a0a850d77fab2be0062023d01154c2b9ef",
+      "line": "284"
+    },
+    {
+      "rule": "PY_TRACEBACK",
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/gate-d-full-backend-pytest.log",
+      "blob": "395896a0a850d77fab2be0062023d01154c2b9ef",
+      "line": "286"
+    },
+    {
+      "rule": "PY_TRACEBACK",
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/gate-d-full-backend-pytest.log",
+      "blob": "395896a0a850d77fab2be0062023d01154c2b9ef",
+      "line": "289"
+    },
+    {
+      "rule": "PY_TRACEBACK",
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/gate-d-pre-patch-5e44d5da-identity-12.log",
+      "blob": "21a012bb06690aeb64cfd87ab97c4e2f35aa9d7a",
+      "line": "6"
+    },
+    {
+      "rule": "PY_TRACEBACK",
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/gate-d-pre-patch-5e44d5da-identity-12.log",
+      "blob": "21a012bb06690aeb64cfd87ab97c4e2f35aa9d7a",
+      "line": "7"
+    },
+    {
+      "rule": "PY_TRACEBACK",
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/gate-d-pre-patch-5e44d5da-identity-12.log",
+      "blob": "21a012bb06690aeb64cfd87ab97c4e2f35aa9d7a",
+      "line": "9"
+    },
+    {
+      "rule": "PY_TRACEBACK",
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/gate-d-pre-patch-5e44d5da-identity-12.log",
+      "blob": "21a012bb06690aeb64cfd87ab97c4e2f35aa9d7a",
+      "line": "11"
+    },
+    {
+      "rule": "PY_TRACEBACK",
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/gate-d-pre-patch-5e44d5da-identity-12.log",
+      "blob": "21a012bb06690aeb64cfd87ab97c4e2f35aa9d7a",
+      "line": "14"
+    }
+  ],
+  "new_cycle_violations": 0,
+  "status": "BLOCKED_PENDING_OWNER_DECISION"
+}

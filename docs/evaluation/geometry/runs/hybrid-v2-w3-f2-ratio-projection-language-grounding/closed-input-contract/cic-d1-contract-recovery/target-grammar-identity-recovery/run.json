@@ -9,6 +9,8 @@
   "publication": "BLOCKED_PENDING_OWNER_DECISION",
   "F1": "CLOSED_TARGETED_GREEN",
   "F2": "CLOSED_TARGETED_GREEN",
-  "technical_compatibility": "PENDING_CLEAN_TREE_RUN",
+  "technical_compatibility": "PRE_FREEZE_COMPATIBILITY_PASS (gate-d.json, clean detached 5c4b743f; 11 failures all PENDING_NEW_FREEZE, baseline-matched)",
+  "F7": "UNRESOLVED (prism-f7-*.json, reproduced on main, pre-CIC and HEAD)",
+  "independent_review": "PENDING",
   "live_provider_calls": 0
 }

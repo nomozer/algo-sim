@@ -1,0 +1,25 @@
+{
+  "head": "5c4b743f517f55ba31a91c6e14ce9f571528c2fe",
+  "precheck_status": "FAIL",
+  "reported_checks": {
+    "SOURCE_TREE_DIRTY_ONLY_USER_FAVICON": true,
+    "NO_STAGED_FILES": true,
+    "CANDIDATE_VERIFY": false,
+    "CACHE_IDENTITY_VERIFY": true,
+    "MANIFEST_LF_MATCH": true,
+    "GROUND_TRUTH_LF_MATCH": true,
+    "REGISTRY_V1_LF_MATCH": true,
+    "REGISTRY_V2_LF_MATCH": true
+  },
+  "only_reported_failing_check": [
+    "CANDIDATE_VERIFY"
+  ],
+  "frozen_measured_tree_hash": "f0521dcd2423a9e67421fdf8490de224ab115ee3d1561160aad28e35c40a9504",
+  "current_measured_tree_hash": "c03efa7a630864274e03e0df062b536e7a3d9523a9b9720b4d93dd510d5aeb58",
+  "measured_files": 118,
+  "verify_exit_code": 1,
+  "verify_stdout_sha256": "69d4d2f6eeaaba0184f7c4c63b051b08cc137f1c66b44ba5c96bf89a7d86c4b5",
+  "cause": "CANDIDATE_MEASURED_SYSTEM_DRIFT",
+  "candidate_written": false,
+  "live_provider_calls": 0
+}

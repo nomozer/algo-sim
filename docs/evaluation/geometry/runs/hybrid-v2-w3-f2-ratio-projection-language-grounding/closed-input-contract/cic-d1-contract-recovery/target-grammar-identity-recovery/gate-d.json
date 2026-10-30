@@ -1,0 +1,54 @@
+{
+  "gate": "D",
+  "source_head": "5c4b743f517f55ba31a91c6e14ce9f571528c2fe",
+  "product_commit": "6a09c06afcb247b71a5af11a49aa2dc6a31d3f46",
+  "compatibility": "PRE_FREEZE_COMPATIBILITY_PASS",
+  "overall_pass": false,
+  "publication": "BLOCKED_PENDING_OWNER_DECISION",
+  "full_backend": {
+    "command": "python -B -m pytest -p no:cacheprovider --basetemp D:/Documents/projects/algo-sim/.superpowers/target-grammar-identity-full-temp -q --tb=short -rA",
+    "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\w3-f2-ratio-projection-language-grounding\\.superpowers\\worktrees\\w3-f2-target-grammar-identity-compat\\backend",
+    "exit_code": 1,
+    "summary": "11 failed, 15527 passed, 7 skipped, 2 deselected, 15 xfailed, 1 warning in 873.72s (0:14:33)",
+    "tree_clean_before": true,
+    "tree_clean_after": true,
+    "raw_log_local_only": ".superpowers/target-grammar-identity-recovery/full-backend.log",
+    "raw_log_sha256_bytes": "1a1f8af9ff2bed1db1f74559a5687db0fc49f6760968b5d640531a3e77ce1a65",
+    "PENDING_NEW_FREEZE": [
+      "tests/geometry/test_analyze_failure_cluster_diagnosis.py::test_tien_kiem_kho",
+      "tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[arbitrary-feature-branch-xyz]",
+      "tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[feat/rectangular-base-pyramid-compiler]",
+      "tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[hotfix/test-isolation-123]",
+      "tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[main]",
+      "tests/geometry/test_branch_independent_harness.py::test_precheck_accepts_detached_head[precheck]",
+      "tests/geometry/test_docs_information_architecture.py::test_inv_20_candidate_and_cache_verify_only",
+      "tests/geometry/test_docs_test_telemetry.py::test_inv_05_candidate_and_cache_verify_only",
+      "tests/geometry/test_hybrid_backend_integration.py::test_version_constants_surface_fingerprints_and_historical_receipt_preservation",
+      "tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI",
+      "tests/semantic_program/test_evaluation_candidate.py::test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang"
+    ],
+    "unexplained_failures": [],
+    "warning": "This is backend compatibility, not Full T3 and not an overall Gate D PASS."
+  },
+  "baseline_11": {
+    "head": "5e44d5da434b1d1a8fd98a0f1f4527f40de3c6ed",
+    "failed_nodes_match": true,
+    "raw_log_sha256_bytes": "a7806f625f0a2600f7ffb97afe38c463a44f2b6f562b99c2f07ef50757a8e754",
+    "cause_receipts": [
+      "freeze-cause-current.json",
+      "freeze-cause-baseline.json"
+    ],
+    "cause_by_group": {
+      "diagnosis_and_branch_precheck_6": "candidate verification alone fails; all other reported checks true",
+      "docs_IA_and_telemetry_2": "freeze --verify refuses stale measured-system identity",
+      "hybrid_backend_integration_1": "measured-system tuple differs from frozen tuple",
+      "thesis_acceptance_1": "declared divergence hash is stale",
+      "semantic_candidate_1": "live measured-system hash differs from frozen manifest"
+    }
+  },
+  "locked_v2_targeted": "locked-v2.json (six explicitly listed files, 232 tests; all included again in full backend)",
+  "cache": "MATCH 130, cache.json",
+  "fixtures": "41/41, fixtures41.json",
+  "known_F7": "UNRESOLVED; separate from compatibility suite pass, not hidden by baseline attribution",
+  "live_provider_calls": 0
+}

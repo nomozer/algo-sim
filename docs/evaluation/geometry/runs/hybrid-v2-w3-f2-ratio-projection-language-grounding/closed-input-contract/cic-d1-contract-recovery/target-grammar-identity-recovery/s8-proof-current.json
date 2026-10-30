@@ -1,0 +1,136 @@
+{
+  "source_head": "5c4b743f517f55ba31a91c6e14ce9f571528c2fe",
+  "product_commit": "6a09c06afcb247b71a5af11a49aa2dc6a31d3f46",
+  "live_provider_calls": 0,
+  "current_route_results": {
+    "N2v2.goal_solid_id": {
+      "schema": null,
+      "s8": "SOURCE_OBJECT_MISMATCH",
+      "routes": {
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": {},
+          "has_scene": false
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": {},
+          "has_scene": false
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": {},
+          "has_scene": false
+        }
+      }
+    },
+    "N2v2.goal_solid_id_qualified": {
+      "schema": null,
+      "s8": "SOURCE_OBJECT_MISMATCH",
+      "routes": {
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": {},
+          "has_scene": false
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": {},
+          "has_scene": false
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": {},
+          "has_scene": false
+        }
+      }
+    },
+    "N2v2.qualified_namespace": {
+      "schema": null,
+      "s8": "SOURCE_OBJECT_MISMATCH",
+      "routes": {
+        "a3": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": {},
+          "has_scene": false
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": {},
+          "has_scene": false
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "SOURCE_OBJECT_MISMATCH",
+          "answer": {},
+          "has_scene": false
+        }
+      }
+    },
+    "N2v2.control_own_point": {
+      "schema": null,
+      "s8": null,
+      "routes": {
+        "a3": {
+          "status": "SERVED",
+          "code": null,
+          "answer": {
+            "m_vol_ratio": [
+              "1/2",
+              0,
+              null
+            ],
+            "m_vol_pyr1": [
+              "1/3",
+              3,
+              "a"
+            ],
+            "mb": [
+              "√5/2",
+              1,
+              "a"
+            ]
+          },
+          "has_scene": true
+        },
+        "pl": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+          "answer": {},
+          "has_scene": false
+        },
+        "a4": {
+          "status": "REFUSED",
+          "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+          "answer": {},
+          "has_scene": false
+        }
+      }
+    }
+  },
+  "fresh_full_backend_provenance_tests": [
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_n2v2_ownership_refused_before_capability[N2v2.goal_solid_id-a3]",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_n2v2_ownership_refused_before_capability[N2v2.goal_solid_id-pl]",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_n2v2_ownership_refused_before_capability[N2v2.goal_solid_id-a4]",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_n2v2_ownership_refused_before_capability[N2v2.goal_solid_id_qualified-a3]",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_n2v2_ownership_refused_before_capability[N2v2.goal_solid_id_qualified-pl]",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_n2v2_ownership_refused_before_capability[N2v2.goal_solid_id_qualified-a4]",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_n2v2_ownership_refused_before_capability[N2v2.qualified_namespace-a3]",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_n2v2_ownership_refused_before_capability[N2v2.qualified_namespace-pl]",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_n2v2_ownership_refused_before_capability[N2v2.qualified_namespace-a4]",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_n2v2_adapter3_gate_is_terminal_not_fallback[N2v2.goal_solid_id]",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_n2v2_adapter3_gate_is_terminal_not_fallback[N2v2.goal_solid_id_qualified]",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_n2v2_adapter3_gate_is_terminal_not_fallback[N2v2.qualified_namespace]",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_n2v2_qualified_namespace_has_no_global_resolution",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_n2v2_valid_constructed_point_is_served_with_exact_oracle"
+  ],
+  "prior_proof_sha256_lf": "e7def6d5eac816fe54e998ed82ab76a02cb9e7ba1b21a08afd6e8db3da7a806d"
+}

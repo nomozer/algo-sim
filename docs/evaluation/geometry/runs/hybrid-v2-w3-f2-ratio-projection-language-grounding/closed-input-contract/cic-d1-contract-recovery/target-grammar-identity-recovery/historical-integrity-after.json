@@ -1,0 +1,13 @@
+{
+  "source_head": "5c4b743f517f55ba31a91c6e14ce9f571528c2fe",
+  "original_snapshot_sha256_bytes": "ee0eb6bf40de7d24ada327816286c280a4142217e237b222aa3caaef2fb58b96",
+  "checked_previous_run_files": 392,
+  "byte_changes": [],
+  "modified_deleted_renamed_historical_evaluation_paths": [],
+  "locked_v2_distance_test_changed": false,
+  "product_paths_changed": [
+    "backend/app/simulation/geometry_functions/typed_fact_next.py"
+  ],
+  "historical_commits_rewritten": false,
+  "no_merge_push_cleanup": true
+}
