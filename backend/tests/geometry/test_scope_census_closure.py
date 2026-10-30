@@ -190,7 +190,7 @@ def test_measurement_scope_controls_serve():
 
 @pytest.mark.parametrize('mutation,code', [
     (lambda p: p['math_goals'][0].__setitem__('solid_id', 'zz'), 'UNKNOWN_SOLID_ID'),
-    (lambda p: p['math_goals'][0].__setitem__('target', {'solid': 's1', 'solid_id': 's2'}), 'SOURCE_OBJECT_MISMATCH')])
+    (lambda p: p['math_goals'][0].__setitem__('target', {'solid': 's1', 'solid_id': 's2'}), 'INVALID_MATH_GOAL')])
 def test_measurement_scope_violations_refuse(mutation, code):
     p = sup(); mutation(p); refused_everywhere(p, code)
 

@@ -1,0 +1,6 @@
+{
+  "command": "python -B backend/scripts/lock_cache_identity.py --verify",
+  "exit_code": 0,
+  "summary": "Khoá khớp · CACHE_VERSION 130 · môi trường b1714b566e25c912…",
+  "sha256_bytes": "9855122c5190c95d211da49ababd12093e70839811164576acc5c98e00823027"
+}

@@ -1,0 +1,64 @@
+{
+  "phase": "GREEN",
+  "source_parent_head": "c9cf9e9273a8b29788ca6bbb856a199d333bd03e",
+  "source_was_uncommitted_during_targeted_runs": true,
+  "product_sha256_lf": {
+    "backend/app/simulation/geometry_functions/typed_fact_next.py": "5e071b9baace032ddb8951033bd28b53e86ff751d4ab3f4b3f507c2a2f2e9aee"
+  },
+  "validation": {
+    "F1_schema_pass": true,
+    "F2_schema_pass": true,
+    "registered_controls_unchanged": true
+  },
+  "frozen_input_sha256_bytes": "5f94f71ec4304af41b17783d91ad46e87dbc53e466a8ff8978762e1683ba130d",
+  "combined_suite": {
+    "command": "python -B -m pytest -p no:cacheprovider tests/geometry/test_target_grammar_identity_recovery.py tests/geometry/test_cic_d1_locked_contract.py tests/geometry/test_closed_input_contract.py tests/geometry/test_scope_census_closure.py tests/geometry/test_unified_solid_scope.py tests/geometry/test_adapter3_fallback_safety.py tests/geometry/test_premise_scope_recovery.py tests/geometry/test_typedfactnext_planner_bridge.py tests/geometry/test_typed_fact_next_v2_distance_bridge.py -q --tb=short -rA",
+    "exit_code": 0,
+    "summary": "2957 passed, 6 skipped in 20.49s",
+    "local_log": ".superpowers/target-grammar-identity-recovery/green-combined-attempt1.log",
+    "log_sha256_lf": "addb29ae94e8310b56bd6bda99a33954c0463a7669fd823ffa278fab64b522ad"
+  },
+  "cross_solid_policy": {
+    "command": "python -B -m pytest -p no:cacheprovider tests/geometry/test_target_grammar_identity_recovery.py::test_cross_solid_policy_does_not_override_declared_ownership -q --tb=short",
+    "summary": "1 passed in 1.31s",
+    "exit_code": 0
+  },
+  "retained_internal_results": [
+    [
+      "V.radius.solid",
+      "a3"
+    ],
+    [
+      "V.radius.solid.goal_sid",
+      "a3"
+    ],
+    [
+      "V.radius.notation",
+      "a3"
+    ],
+    [
+      "V.radius.notation.goal_sid",
+      "a3"
+    ],
+    [
+      "V.lateral_area.solid",
+      "a3"
+    ],
+    [
+      "V.lateral_area.solid.goal_sid",
+      "a3"
+    ],
+    [
+      "V.lateral_area.notation",
+      "a3"
+    ],
+    [
+      "V.lateral_area.notation.goal_sid",
+      "a3"
+    ]
+  ],
+  "new_internal_results": [],
+  "F1": "CLOSED",
+  "F2": "CLOSED",
+  "live_provider_calls": 0
+}

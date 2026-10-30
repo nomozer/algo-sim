@@ -1,0 +1,29 @@
+{
+  "gate": "A",
+  "closed_input_contract_acceptance": "PASS",
+  "overall_known_input_safety": "NOT_PASS_F7_PRISM_INTERNAL_ERROR_UNRESOLVED",
+  "suite": {
+    "command": "python -B -m pytest -p no:cacheprovider tests/geometry/test_target_grammar_identity_recovery.py tests/geometry/test_cic_d1_locked_contract.py tests/geometry/test_closed_input_contract.py tests/geometry/test_scope_census_closure.py tests/geometry/test_unified_solid_scope.py tests/geometry/test_adapter3_fallback_safety.py tests/geometry/test_premise_scope_recovery.py tests/geometry/test_typedfactnext_planner_bridge.py tests/geometry/test_typed_fact_next_v2_distance_bridge.py -q --tb=short -rA",
+    "exit_code": 0,
+    "summary": "2957 passed, 6 skipped in 20.49s",
+    "local_log": ".superpowers/target-grammar-identity-recovery/green-combined-attempt1.log",
+    "log_sha256_lf": "addb29ae94e8310b56bd6bda99a33954c0463a7669fd823ffa278fab64b522ad"
+  },
+  "probes203": "probes203.json",
+  "new_F1_F2_coverage": {
+    "F1_schema_pass": true,
+    "F2_schema_pass": true,
+    "registered_controls_unchanged": true
+  },
+  "source_grammar_diagnostics": {
+    "status": "PENDING_SOURCE_GRAMMAR_SUPPORT",
+    "counted_as_pass": false,
+    "command": "python -B -m pytest -p no:cacheprovider tests/geometry/source_grammar_pending_diagnostics.py -q --tb=no -rN",
+    "exit_code": 1,
+    "summary": "4 failed in 1.23s",
+    "local_log": ".superpowers/target-grammar-identity-recovery/diagnostics.log",
+    "log_sha256_lf": "f0048a8def19e7d2d32b80349c561cf0061f11b5020f8568f418f6972349d787"
+  },
+  "known_F7": "Registered prism radius/lateral_area solid/notation remain internal errors; reproduced on main/pre/HEAD, no new internal result introduced.",
+  "mutants": "mutation-results.json"
+}

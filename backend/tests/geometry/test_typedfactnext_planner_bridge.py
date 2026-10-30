@@ -667,6 +667,7 @@ def test_bridge_preserves_input_constraints_or_refuses(case, code):
         payload["derived_sections"][0]["plane_name"] = "ABC" if case == "reference_plane_name" else "β"
     r = run_typed_fact_next_planner_route(payload)
     assert (r.status, r.code) == ("REFUSED", code), (r.code, r.reason)
+    assert r.scene3d is None and not r.answers
 
 
 def test_qualified_constructed_point_keeps_its_verified_producer_identity():

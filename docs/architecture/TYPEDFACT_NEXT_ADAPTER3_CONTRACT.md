@@ -83,3 +83,32 @@ Adapter `/3` never guesses, approximates, or falls back to unverified coordinate
 - `COORDINATE_FRAME_DISCONNECTED`: Multiple solids cannot be embedded in a single verified root coordinate frame.
 - `SECTION_NOT_CLOSED_ON_LATERAL_EDGES` / `DEGENERATE_DERIVED_SECTION`: Cutting plane does not intersect the required lateral edges on $(0, 1]$ or produces fewer than 3 distinct non-collinear vertices.
 - Plus all existing Source Gate, Planner, and Engine refusal codes (`SOURCE_QUOTE_NOT_FOUND`, `UNDERDETERMINED_GROUND_SET`, `INCONSISTENT_FACTS`, `AMBIGUOUS_TOPOLOGY`, etc.).
+
+## 5. Current closed measurement target contract (`/1` and `/2`)
+
+Owner decisions CIC-D1 and F1/F2 recovery supersede the scope-key statement in the historical
+`closed-input-contract/operand-grammar.md`. The runtime authority is `typed_fact_next.py::GOAL_TARGET_ALTERNATIVES`.
+
+| measurement | exact alternative key sets |
+|---|---|
+| distance | `segment`; `point, plane`; `point, line`; `line1, line2`; `line, plane`; `plane1, plane2` |
+| angle | `line, plane`; `line1, line2`; `plane1, plane2` |
+| volume | `solid`; `solid_id` |
+| radius | `solid`; `section_id` |
+| lateral_area | `solid` |
+| area | `polygon`; `section_id`; `solid` |
+
+Each alternative is an exact set: redundant `solid, solid_id`, or any scope key beside geometric operands, is
+`INVALID_MATH_GOAL`. Goal-level `solid_id` asserts ownership. Schema validity does not promise route capability;
+in particular registered `volume {solid_id}` stays valid independently of historical curved-route support.
+
+Every segment/line has exactly two distinct resolved identities; every plane/polygon has at least three, with no
+repeated identity. The payload schema resolves qualified references and declared vertex bindings before checking
+distinctness. Root-chart symbols, rather than display names or coordinates, define equality. An ambiguous unqualified
+binding is `AMBIGUOUS_REFERENCE`; malformed or unregistered operand grammar is refused without adding aliases.
+Constructed points and derived lineage still require the existing ownership/existence preflight (S8) before capability
+translation or fallback. A schema comparison does not grant ownership, create points or equate coordinates.
+
+Unscoped measurements may combine uniquely resolved identities from the verified common chart. Premise compilation
+requires a common owning solid. Neither policy permits an explicit namespace or ownership claim to borrow a foreign
+point. Provider emission of explicit null in an inapplicable field remains unmeasured offline.

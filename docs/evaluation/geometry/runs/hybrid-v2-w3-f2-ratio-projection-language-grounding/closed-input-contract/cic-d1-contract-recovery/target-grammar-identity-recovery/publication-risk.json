@@ -1,0 +1,103 @@
+{
+  "audit": "READ_ONLY_HISTORICAL_BLOBS",
+  "history_modified": false,
+  "registry_modified": false,
+  "publication_status": "BLOCKED_PENDING_OWNER_DECISION",
+  "entries": [
+    {
+      "historical_commit": "1490e3cd7d15363efce9b55319dce623cd0e23f4",
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/gate-d-full-backend-pytest.log",
+      "blob": "395896a0a850d77fab2be0062023d01154c2b9ef",
+      "sha256_bytes": "1f9bb9a8c9054df6e500e8dd227d3c33b99b01ba07fc1819404dc626acc2205e",
+      "bytes": 24497,
+      "matches_proposal": true,
+      "traceback_type": "pytest unhandled subprocess reader-thread exception; Windows cp1252 UnicodeDecodeError",
+      "traceback_frame_basenames": [
+        "cp1252.py",
+        "subprocess.py",
+        "threading.py"
+      ],
+      "product_exception_stack_present": false,
+      "scanner_findings": [
+        {
+          "rule": "PY_TRACEBACK",
+          "line": 281
+        },
+        {
+          "rule": "PY_TRACEBACK",
+          "line": 282
+        },
+        {
+          "rule": "PY_TRACEBACK",
+          "line": 284
+        },
+        {
+          "rule": "PY_TRACEBACK",
+          "line": 286
+        },
+        {
+          "rule": "PY_TRACEBACK",
+          "line": 289
+        }
+      ],
+      "credential_rule_findings": [],
+      "private_absolute_path_occurrences": 10,
+      "private_paths_present": true,
+      "profile_username_in_paths": true,
+      "other_sensitive_fields": "No credential, token, private key, email or personal payload observed in contextual review; regex scan alone is not proof of absence.",
+      "narrowness": "Exact path/blob/content digest and PY_TRACEBACK rule are narrow; no wildcard exception proposed.",
+      "technical_justification": "Low-risk standard-library diagnostic, not model output; proposal omits local-profile and repository-path disclosure.",
+      "recommendation": "Keep pending. Owner may consider an exact-blob exception only after explicitly accepting local path/profile disclosure; do not approve the proposal under a claim of no private paths.",
+      "status": "BLOCKED_PENDING_OWNER_DECISION"
+    },
+    {
+      "historical_commit": "1490e3cd7d15363efce9b55319dce623cd0e23f4",
+      "path": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/source-grammar-adjudication/gate-d-pre-patch-5e44d5da-identity-12.log",
+      "blob": "21a012bb06690aeb64cfd87ab97c4e2f35aa9d7a",
+      "sha256_bytes": "c17f5fa89524ab4b778a1bff5b8f11885e8f21a6c7a486918edcfc871185dac5",
+      "bytes": 2981,
+      "matches_proposal": true,
+      "traceback_type": "pytest unhandled subprocess reader-thread exception; Windows cp1252 UnicodeDecodeError",
+      "traceback_frame_basenames": [
+        "cp1252.py",
+        "subprocess.py",
+        "threading.py"
+      ],
+      "product_exception_stack_present": false,
+      "scanner_findings": [
+        {
+          "rule": "PY_TRACEBACK",
+          "line": 6
+        },
+        {
+          "rule": "PY_TRACEBACK",
+          "line": 7
+        },
+        {
+          "rule": "PY_TRACEBACK",
+          "line": 9
+        },
+        {
+          "rule": "PY_TRACEBACK",
+          "line": 11
+        },
+        {
+          "rule": "PY_TRACEBACK",
+          "line": 14
+        }
+      ],
+      "credential_rule_findings": [],
+      "private_absolute_path_occurrences": 7,
+      "private_paths_present": true,
+      "profile_username_in_paths": true,
+      "other_sensitive_fields": "No credential, token, private key, email or personal payload observed in contextual review; regex scan alone is not proof of absence.",
+      "narrowness": "Exact path/blob/content digest and PY_TRACEBACK rule are narrow; no wildcard exception proposed.",
+      "technical_justification": "Low-risk standard-library diagnostic, not model output; proposal omits local-profile and repository-path disclosure.",
+      "recommendation": "Keep pending. Owner may consider an exact-blob exception only after explicitly accepting local path/profile disclosure; do not approve the proposal under a claim of no private paths.",
+      "status": "BLOCKED_PENDING_OWNER_DECISION"
+    }
+  ],
+  "without_history_rewrite": "An Owner-authorized exact exception can resolve the scanner gate but does not redact historical paths. A separately authorized sanitized source export can omit history; it is not a pass for publication of this branch history.",
+  "full_history_without_path_disclosure": "NOT_POSSIBLE_WITH_CURRENT_BLOBS",
+  "live_provider_calls": 0
+}

@@ -1,5 +1,15 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## CONTINUATION_ID = HYBRID_V2_W3_F2_TARGET_GRAMMAR_AND_CANONICAL_IDENTITY_RECOVERY
+
+REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/target-grammar-identity-recovery/technical-checks.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/target-grammar-identity-recovery/
+CLASSIFICATION = DEVELOPMENT_SECURITY_REGRESSION; continuation of CIC-D1, no new wave; NOT_READY; F1/F2 targeted GREEN; clean compatibility/review pending; publication BLOCKED_PENDING_OWNER_DECISION; F7 prism internal error unresolved.
+VERIFICATION = registration.json; red.json; green.json; mutation-results.json; probes203.json; gate-a.json; gate-b.json; gate-c.json; locked-v2.json; publication-risk.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_V2_W3_F2_CIC_D1_LOCKED_CONTRACT_RECOVERY (F1/F2 and F3–F11 correction layer); historical closed-input-contract/operand-grammar.md is superseded by architecture/TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md §5
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_V2_W3_F2_CIC_D1_LOCKED_CONTRACT_RECOVERY
 
 REPORT = docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/report.md
@@ -9,7 +19,7 @@ CODE_COMMIT = 717f8b2b1d284e3894af65190b13ba3619d5aff0
 VERIFICATION = registration.json; red.json; green.json; n2-ownership-proof.json; mutation-results.json; gate-a.json; gate-b.json; gate-c.json; gate-d.json; pre-freeze-review.md; pre-freeze-review/
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_V2_W3_F2_CLOSED_INPUT_CONTRACT_SOURCE_GRAMMAR_ADJUDICATION (CIC-D1); closed-input-contract/operand-grammar.md (scope keys beside operands, superseded — corrections.md)
-CORRECTED_BY = NONE (own corrections layer: corrections.md — contract-analysis.md, gate-d.json, n2-amendment.md)
+CORRECTED_BY = HYBRID_V2_W3_F2_TARGET_GRAMMAR_AND_CANONICAL_IDENTITY_RECOVERY (continuation; historical own corrections.md retained)
 
 ## WAVE_ID = HYBRID_V2_W3_F2_CLOSED_INPUT_CONTRACT_SOURCE_GRAMMAR_ADJUDICATION
 

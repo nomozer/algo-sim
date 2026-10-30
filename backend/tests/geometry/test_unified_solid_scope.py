@@ -238,9 +238,9 @@ def test_derived_solid_parent_must_be_the_sections_solid(cid, parent, code):
 
 # ── MINOR 6: nested target scope ───────────────────────────────────────────────────────────────────────────────
 @pytest.mark.parametrize('goal_sid,target,expected', [
-    ('s1', {'solid': 's1', 'solid_id': 's2'}, refused('SOURCE_OBJECT_MISMATCH')),
+    ('s1', {'solid': 's1', 'solid_id': 's2'}, refused('INVALID_MATH_GOAL')),
     ('s1', {'solid_id': 'foreign'}, refused('UNKNOWN_SOLID_ID')),
-    (None, {'solid': 'T.ABCD', 'solid_id': 's1'}, refused('SOURCE_OBJECT_MISMATCH')),
+    (None, {'solid': 'T.ABCD', 'solid_id': 's1'}, refused('INVALID_MATH_GOAL')),
     ('s1', {'solid_id': 's1'}, SERVED)])
 def test_nested_target_solid_id_is_part_of_the_goal_scope(goal_sid, target, expected):
     p = sup(); g = p['math_goals'][0]; g['target'] = target
@@ -315,7 +315,8 @@ def derived_volume_served():
 
 
 def nested_target():
-    p = sup(); p['math_goals'][0]['target'] = {'solid': 's1', 'solid_id': 's2'}
+    # Owner F1: isolate nested ownership using the registered singleton form, not redundant invalid keys.
+    p = sup(); p['math_goals'][0].update(solid_id='s1', target={'solid_id': 's2'})
     assert outcome(a4(p)) == refused('SOURCE_OBJECT_MISMATCH')
 
 

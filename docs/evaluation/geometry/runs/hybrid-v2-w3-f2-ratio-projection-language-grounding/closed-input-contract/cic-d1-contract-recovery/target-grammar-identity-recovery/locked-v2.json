@@ -1,0 +1,7 @@
+{
+  "command": "python -B -m pytest -p no:cacheprovider tests/geometry/test_typed_fact_next_v2_angle_bridge.py tests/geometry/test_typed_fact_next_v2_distance_bridge.py tests/geometry/test_typed_fact_next_v2_line_plane_distance.py tests/geometry/test_typed_fact_next_v2_named_plane.py tests/geometry/test_typed_fact_next_v2_point_line_distance.py tests/geometry/test_hybrid_contract_v2.py -q --tb=short -rA",
+  "exit_code": 0,
+  "summary": "232 passed in 5.63s",
+  "local_log": ".superpowers/target-grammar-identity-recovery/locked-v2.log",
+  "log_sha256_lf": "c5d5f09ed8bf20133efca71e9b41b8ad6392da933f27131d46cf8249039f8f98"
+}

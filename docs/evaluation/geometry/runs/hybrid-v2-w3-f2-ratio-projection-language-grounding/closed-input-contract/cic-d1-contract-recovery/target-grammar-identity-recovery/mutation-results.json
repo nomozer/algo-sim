@@ -1,0 +1,83 @@
+{
+  "status": "PASS",
+  "behavioral_method": "Each oracle holds on original runtime, then fails an assertion with the fault applied; source text is used only to apply existing mutants, never as kill evidence.",
+  "new_schema_oracles": [
+    "PASSED tests/geometry/test_target_grammar_identity_recovery.py::test_scope_only_mutant_is_caught_by_schema_behavior",
+    "PASSED tests/geometry/test_target_grammar_identity_recovery.py::test_canonical_distinctness_mutant_is_caught_at_schema",
+    "PASSED tests/geometry/test_target_grammar_identity_recovery.py::test_identity_scope_mutant_loses_valid_binding_at_schema"
+  ],
+  "new_ownership_oracles": [
+    "PASSED tests/geometry/test_target_grammar_identity_recovery.py::test_s8_mutant_is_caught_by_preflight_behavior",
+    "PASSED tests/geometry/test_target_grammar_identity_recovery.py::test_s8_identity_scope_mutant_is_caught_by_behavior"
+  ],
+  "new_route_order_oracles": [
+    "PASSED tests/geometry/test_target_grammar_identity_recovery.py::test_capability_exit_cannot_bypass_semantic_validation"
+  ],
+  "mandatory_9": [
+    "PASSED tests/geometry/test_closed_input_contract.py::test_mandatory_mutants_are_killed[operand_shape]",
+    "PASSED tests/geometry/test_closed_input_contract.py::test_mandatory_mutants_are_killed[string_iteration]",
+    "PASSED tests/geometry/test_closed_input_contract.py::test_mandatory_mutants_are_killed[kind_fields]",
+    "PASSED tests/geometry/test_closed_input_contract.py::test_mandatory_mutants_are_killed[closed_keys]",
+    "PASSED tests/geometry/test_closed_input_contract.py::test_mandatory_mutants_are_killed[s8_preflight]",
+    "PASSED tests/geometry/test_closed_input_contract.py::test_mandatory_mutants_are_killed[semantic_fallback]",
+    "PASSED tests/geometry/test_closed_input_contract.py::test_mandatory_mutants_are_killed[curved_existence]",
+    "PASSED tests/geometry/test_closed_input_contract.py::test_mandatory_mutants_are_killed[curved_relations]",
+    "PASSED tests/geometry/test_closed_input_contract.py::test_mandatory_mutants_are_killed[derived_resolution]"
+  ],
+  "cic_d1_5": [
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_cic_d1_mutants_are_killed[remove_closed_target_rule]",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_cic_d1_mutants_are_killed[remove_s8]",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_cic_d1_mutants_are_killed[capability_before_s8]",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_cic_d1_mutants_are_killed[semantic_fallback]",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_cic_d1_mutants_are_killed[discard_target_scope_keys]"
+  ],
+  "all_passed_mutation_nodes": [
+    "PASSED tests/geometry/test_target_grammar_identity_recovery.py::test_scope_only_mutant_is_caught_by_schema_behavior",
+    "PASSED tests/geometry/test_target_grammar_identity_recovery.py::test_canonical_distinctness_mutant_is_caught_at_schema",
+    "PASSED tests/geometry/test_target_grammar_identity_recovery.py::test_identity_scope_mutant_loses_valid_binding_at_schema",
+    "PASSED tests/geometry/test_target_grammar_identity_recovery.py::test_s8_mutant_is_caught_by_preflight_behavior",
+    "PASSED tests/geometry/test_target_grammar_identity_recovery.py::test_s8_identity_scope_mutant_is_caught_by_behavior",
+    "PASSED tests/geometry/test_target_grammar_identity_recovery.py::test_capability_exit_cannot_bypass_semantic_validation",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_cic_d1_mutants_are_killed[remove_closed_target_rule]",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_cic_d1_mutants_are_killed[remove_s8]",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_cic_d1_mutants_are_killed[capability_before_s8]",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_cic_d1_mutants_are_killed[semantic_fallback]",
+    "PASSED tests/geometry/test_cic_d1_locked_contract.py::test_cic_d1_mutants_are_killed[discard_target_scope_keys]",
+    "PASSED tests/geometry/test_closed_input_contract.py::test_mandatory_mutants_are_killed[operand_shape]",
+    "PASSED tests/geometry/test_closed_input_contract.py::test_mandatory_mutants_are_killed[string_iteration]",
+    "PASSED tests/geometry/test_closed_input_contract.py::test_mandatory_mutants_are_killed[kind_fields]",
+    "PASSED tests/geometry/test_closed_input_contract.py::test_mandatory_mutants_are_killed[closed_keys]",
+    "PASSED tests/geometry/test_closed_input_contract.py::test_mandatory_mutants_are_killed[s8_preflight]",
+    "PASSED tests/geometry/test_closed_input_contract.py::test_mandatory_mutants_are_killed[semantic_fallback]",
+    "PASSED tests/geometry/test_closed_input_contract.py::test_mandatory_mutants_are_killed[curved_existence]",
+    "PASSED tests/geometry/test_closed_input_contract.py::test_mandatory_mutants_are_killed[curved_relations]",
+    "PASSED tests/geometry/test_closed_input_contract.py::test_mandatory_mutants_are_killed[derived_resolution]",
+    "PASSED tests/geometry/test_scope_census_closure.py::test_closure_mutants_are_killed[naive_hyphen_split]",
+    "PASSED tests/geometry/test_scope_census_closure.py::test_closure_mutants_are_killed[remove_apex_ownership]",
+    "PASSED tests/geometry/test_scope_census_closure.py::test_closure_mutants_are_killed[remove_highlight_token_validation]",
+    "PASSED tests/geometry/test_scope_census_closure.py::test_closure_mutants_are_killed[remove_owner_decision_d_a]",
+    "PASSED tests/geometry/test_scope_census_closure.py::test_closure_mutants_are_killed[remove_parent_validation]",
+    "PASSED tests/geometry/test_scope_census_closure.py::test_closure_mutants_are_killed[remove_qualified_scope_guard]",
+    "PASSED tests/geometry/test_scope_census_closure.py::test_closure_mutants_are_killed[remove_relation_side_scope]",
+    "PASSED tests/geometry/test_scope_census_closure.py::test_closure_mutants_are_killed[remove_residual_ancestry]",
+    "PASSED tests/geometry/test_scope_census_closure.py::test_closure_mutants_are_killed[remove_sim_goal_target_scope]",
+    "PASSED tests/geometry/test_unified_solid_scope.py::test_oracles_kill_unified_scope_mutants[remove_declared_scope_existence]",
+    "PASSED tests/geometry/test_unified_solid_scope.py::test_oracles_kill_unified_scope_mutants[remove_cross_solid_comparison]",
+    "PASSED tests/geometry/test_unified_solid_scope.py::test_oracles_kill_unified_scope_mutants[drop_derived_solids]",
+    "PASSED tests/geometry/test_unified_solid_scope.py::test_oracles_kill_unified_scope_mutants[remove_nested_target_scope]",
+    "PASSED tests/geometry/test_unified_solid_scope.py::test_oracles_kill_unified_scope_mutants[remove_ratio_residual_refusal]",
+    "PASSED tests/geometry/test_unified_solid_scope.py::test_oracles_kill_unified_scope_mutants[remove_relation_sides]",
+    "PASSED tests/geometry/test_unified_solid_scope.py::test_oracles_kill_unified_scope_mutants[foreign_scope_to_first_solid]",
+    "PASSED tests/geometry/test_unified_solid_scope.py::test_oracles_kill_unified_scope_mutants[remove_goal_operand_ownership]",
+    "PASSED tests/geometry/test_unified_solid_scope.py::test_oracles_kill_unified_scope_mutants[bypass_curved_prevalidation]",
+    "PASSED tests/geometry/test_adapter3_fallback_safety.py::test_safety_oracles_kill_semantic_and_scope_mutants[remove_terminal_guard]",
+    "PASSED tests/geometry/test_adapter3_fallback_safety.py::test_safety_oracles_kill_semantic_and_scope_mutants[remove_scope_guard]",
+    "PASSED tests/geometry/test_adapter3_fallback_safety.py::test_safety_oracles_kill_semantic_and_scope_mutants[replace_scope_with_default]",
+    "PASSED tests/geometry/test_adapter3_fallback_safety.py::test_safety_oracles_kill_semantic_and_scope_mutants[allow_global_lookup]",
+    "PASSED tests/geometry/test_premise_scope_recovery.py::test_scope_safety_oracle_kills_bypass_and_default_scope_mutants[DEV-NEG-08-remove_validation]",
+    "PASSED tests/geometry/test_premise_scope_recovery.py::test_scope_safety_oracle_kills_bypass_and_default_scope_mutants[DEV-NEG-08-replace_with_default]",
+    "PASSED tests/geometry/test_premise_scope_recovery.py::test_scope_safety_oracle_kills_bypass_and_default_scope_mutants[DEV-NEG-23-remove_validation]",
+    "PASSED tests/geometry/test_premise_scope_recovery.py::test_scope_safety_oracle_kills_bypass_and_default_scope_mutants[DEV-NEG-23-replace_with_default]"
+  ],
+  "source_log_sha256_lf": "addb29ae94e8310b56bd6bda99a33954c0463a7669fd823ffa278fab64b522ad"
+}

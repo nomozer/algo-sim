@@ -200,7 +200,7 @@ def _validate_goal_target(goal) -> None:
     if operands:
         valid = any(operands == set(a) for a in alternatives)
     else:
-        valid = bool(set(target) & scopes) and any(set(a) <= scopes for a in alternatives)
+        valid = any(set(target) == set(a) for a in alternatives)
     if not valid:
         raise TypedFactNextValidationError("INVALID_MATH_GOAL", f"{goal.goal_id}: inapplicable target for {goal.goal_type}")
 
@@ -829,6 +829,7 @@ class TypedFactNextPayload(ClosedNextModel):
                     f"Math goal {mg.goal_id!r} references unknown cut solid {mg.cut_solid_id!r}.",
                 )
         _validate_declared_solid_scope(self, all_solid_ids)
+        _validate_goal_identities(self)
         return self
 
 
@@ -883,6 +884,33 @@ def _derived_parents(p: "TypedFactNextPayload") -> dict[str, str]:
     sections = {s.section_id: s.target_solid_id for s in p.derived_sections}
     return {g.derived_solid_id: g.parent_solid_id or sections.get(g.target_section_id)
             for g in p.simulation_goals if g.kind == "construct_derived_solid" and g.derived_solid_id}
+
+
+def canonical_vertex_ref(p: "TypedFactNextPayload", ref: str, scope: str | None = None) -> str:
+    """Declared root-chart identity only; constructed/derived membership is still proved by S8 before capability."""
+    ns, label = parse_qualified_ref(ref)
+    solids = {s.solid_id: s for s in p.solids}
+    parents = _derived_parents(p)
+    ns = parents.get(ns, ns)
+    solid = solids.get(ns or parents.get(scope, scope))
+    if solid is not None:
+        return solid.canonical_vertex(label)
+    identities = {s.canonical_vertex(label) for s in p.solids if label in s.local_vertices()}
+    if len(identities) > 1:
+        raise TypedFactNextValidationError("AMBIGUOUS_REFERENCE", f"tham chiếu {ref!r} có nhiều danh tính")
+    return next(iter(identities), label)
+
+
+def _validate_goal_identities(p: "TypedFactNextPayload") -> None:
+    for goal in p.math_goals:
+        if goal.kind != "measurement":
+            continue
+        scope = measurement_scope(p, goal)
+        for key, refs in goal.target.items():
+            if GOAL_OPERAND_SHAPES[key].startswith("refs"):
+                identities = [canonical_vertex_ref(p, ref, scope) for ref in refs]
+                if len(set(identities)) != len(identities):
+                    raise TypedFactNextValidationError("INVALID_MATH_GOAL", f"{goal.goal_id}: repeated identity in {key!r}")
 
 
 def constructed_names(p: "TypedFactNextPayload") -> set[str]:

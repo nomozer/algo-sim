@@ -1,0 +1,14 @@
+{
+  "task": "HYBRID_V2_W3_F2_TARGET_GRAMMAR_AND_CANONICAL_IDENTITY_RECOVERY",
+  "continuation_of": "HYBRID_V2_W3_F2_CIC_D1_LOCKED_CONTRACT_RECOVERY",
+  "new_wave": false,
+  "date": "2026-10-30",
+  "start_head": "df475f06e62de48ffe01536fe196cecb7459188b",
+  "preregistration_commit": "c9cf9e9273a8b29788ca6bbb856a199d333bd03e",
+  "status": "NOT_READY",
+  "publication": "BLOCKED_PENDING_OWNER_DECISION",
+  "F1": "CLOSED_TARGETED_GREEN",
+  "F2": "CLOSED_TARGETED_GREEN",
+  "technical_compatibility": "PENDING_CLEAN_TREE_RUN",
+  "live_provider_calls": 0
+}

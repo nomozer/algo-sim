@@ -7,6 +7,7 @@ import pytest
 
 from app.simulation.geometry_functions import typed_fact_next as T
 from app.simulation.geometry_functions import typed_fact_next_bridge as B
+from app.ai.adapter4_route import run_typed_fact_next_v2_route
 import test_scope_census_closure as F
 import test_cic_d1_locked_contract as D
 import test_closed_input_contract as C
@@ -55,6 +56,12 @@ def test_namespace_identity_is_validated_before_dispatch(case):
 def test_invalid_targets_are_terminal_on_routes(case, route):
     c = CASES[case]
     assert F.outcome(F.ROUTES[route](deepcopy(c['payload']))) == ('REFUSED', c['expected_schema'])
+
+
+@pytest.mark.parametrize('case', names('F2'))
+def test_identity_refusal_on_direct_v2_route(case):
+    c = CASES[case]
+    assert F.outcome(run_typed_fact_next_v2_route(v2_input(c['payload']))) == ('REFUSED', c['expected_schema'])
 
 
 @pytest.mark.parametrize('case', names('CONTROL') + names('IDENTITY_CONTROL'))
@@ -116,8 +123,37 @@ def test_s8_mutant_is_caught_by_preflight_behavior(monkeypatch):
     with pytest.raises(AssertionError): oracle()
 
 
+def test_s8_identity_scope_mutant_is_caught_by_behavior(monkeypatch):
+    p = deepcopy(CASES['I.different_solids_same_label']['payload'])
+    p['premises'] = []
+    p['math_goals'][0].update(solid_id='other', target={'segment':['A','B']})
+    def oracle():
+        assert D.s8_raises(p) is None
+    oracle()
+    D.mutate_many(monkeypatch,B,'_kiem_pham_vi_tien_de',[
+        ('solid = solids.get(ns or scope)', 'solid = solids.get(ns)')])
+    with pytest.raises(AssertionError): oracle()
+
+
 def test_capability_exit_cannot_bypass_semantic_validation(monkeypatch):
     # Existing CIC-D1 route-layer mutant and oracle independently exercise ordering.
     oracle, mutate = D.CIC_D1_MUTANTS['capability_before_s8']
     oracle(); mutate(monkeypatch)
     with pytest.raises(AssertionError): oracle()
+
+
+def test_cross_solid_policy_does_not_override_declared_ownership():
+    p = F.sup()
+    g = {'goal_id':'cross','kind':'measurement','goal_type':'distance',
+         'target':{'segment':['s1::S','s2::T']},'quote':'Tính độ dài ST.'}
+    p['math_goals'] = [g]; p['problem_text'] += ' ' + g['quote']
+    # An unscoped measurement may combine resolved identities in the common chart.
+    assert D.s8_raises(p) is None
+    for sid in ['s1','s2']:
+        scoped = deepcopy(p); scoped['math_goals'][0]['solid_id'] = sid
+        F.refused_everywhere(scoped,'SOURCE_OBJECT_MISMATCH')
+    # Premise compilation requires one owning solid; cross-solid premises remain refused.
+    p['math_goals'] = []
+    p['premises'].append({'kind':'segment_length','args':{'segment':['s1::S','s2::T'],'value':'1'},
+                          'quote':'Tính độ dài ST.'})
+    F.refused_everywhere(p,'SOURCE_OBJECT_MISMATCH')

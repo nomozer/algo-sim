@@ -1,0 +1,11 @@
+{
+  "gate": "B",
+  "status": "PASS",
+  "product_changes_since_continuation_baseline": [
+    "backend/app/simulation/geometry_functions/typed_fact_next.py"
+  ],
+  "invariants": "No Registry, kernel, engine, Planner capability, Adapter or frontend changes; exact registered answer controls retained.",
+  "cache_version": 130,
+  "default_mode": "LLM_ONLY",
+  "allow_live_ai": 0
+}
