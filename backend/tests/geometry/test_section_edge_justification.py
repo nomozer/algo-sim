@@ -15,6 +15,7 @@ import pytest
 
 from app.ai.adapter4_route import run_typed_fact_next_v2_route
 from app.simulation.semantic_program import scene3d as S
+from app.simulation.semantic_program import simulation_state as G
 
 RUN = Path(__file__).resolve().parents[3] / 'docs/evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction'
 CASES = json.loads((RUN / 'dev-corpus/cases.json').read_text(encoding='utf-8'))
@@ -74,51 +75,62 @@ def test_justifications_are_emitted_where_the_theorem_applies_and_only_there():
 
 
 def _synthetic(edge_in_plane: bool):
-    """Unit square face ABCD (z=0) of a solid. Cutting plane y = 0 ⇒ the section edge lies ON the face edge AB, which is
-    IN the plane (so "(α) ∥ AB" would be false; CD ∥ AB off the plane is the valid witness); or y = 1/2 ⇒ edge ∥ AB."""
-    pts = {'A': ['0', '0', '0'], 'B': ['1', '0', '0'], 'C': ['1', '1', '0'], 'D': ['0', '1', '0']}
-    by = {k: {'id': k, 'type': 'point3', 'notation': k} for k in pts}
-    by['k'] = {'id': 'k', 'type': 'solid', 'vertex_ids': list(pts), 'vertices': list(pts.values()), 'faces': [[0, 1, 2, 3]]}
+    """Geometry-layer objects: unit square face ABCD (z=0). Cutting plane y = 0 ⇒ the section edge lies ON the face edge
+    AB, which is IN the plane (so "(α) ∥ AB" would be false; CD ∥ AB off the plane is the valid witness); or y = 1/2."""
+    solid = {'id': 'k', 'type': 'solid', 'sources': list('ABCD'),
+             'vertices': [['0', '0', '0'], ['1', '0', '0'], ['1', '1', '0'], ['0', '1', '0']], 'faces': [[0, 1, 2, 3]]}
     if edge_in_plane:
-        by['p'] = {'id': 'p', 'type': 'plane3', 'notation': '(α)', 'point': ['0', '0', '0'], 'normal': ['0', '1', '0']}
+        plane = {'id': 'p', 'type': 'plane3', 'point': ['0', '0', '0'], 'normal': ['0', '1', '0']}
         step = {'face_index': 0, 'a': ['0', '0', '0'], 'b': ['1', '0', '0']}
     else:
-        by['p'] = {'id': 'p', 'type': 'plane3', 'notation': '(α)', 'point': ['0', '1/2', '0'], 'normal': ['0', '1', '0']}
+        plane = {'id': 'p', 'type': 'plane3', 'point': ['0', '1/2', '0'], 'normal': ['0', '1', '0']}
         step = {'face_index': 0, 'a': ['0', '1/2', '0'], 'b': ['1', '1/2', '0']}
-    sec = {'id': 's', 'type': 'section', 'depends': ['k', 'p'], 'steps': [step]}
-    return {'details': {'canh': 0}}, sec, by
+    return [solid, plane, {'id': 's', 'type': 'section', 'sources': ['k', 'p'], 'steps': [step]}]
+
+
+def _edge(objects):
+    G._canh_song_song_thiet_dien(objects)
+    return objects[2]['steps'][0].get('parallel_face_edge')
 
 
 def test_edge_lying_in_the_cutting_plane_is_never_the_witness():
-    j = S._ly_do_canh_thiet_dien(*_synthetic(edge_in_plane=True))
-    assert j is None or j['line'] != 'AB'                                          # AB ⊂ (α): never "(α) ∥ AB"
-    j = S._ly_do_canh_thiet_dien(*_synthetic(edge_in_plane=False))
-    assert j and j['line'] in ('AB', 'CD') and j['verified_exact']
+    assert _edge(_synthetic(edge_in_plane=True)) in (None, [2, 3])                # never AB = [0, 1]: AB ⊂ (α)
+    assert _edge(_synthetic(edge_in_plane=False)) in ([0, 1], [2, 3])
 
 
 def test_inconsistent_face_index_gets_no_claim():
     # review M1: the step names face 0 (z = 0) but its edge lies at z = 1 — the face index is not trusted
-    e, sec, by = _synthetic(edge_in_plane=False)
-    sec['steps'][0].update(a=['0', '1/2', '1'], b=['1', '1/2', '1'])
-    assert S._ly_do_canh_thiet_dien(e, sec, by) is None
+    o = _synthetic(edge_in_plane=False)
+    o[2]['steps'][0].update(a=['0', '1/2', '1'], b=['1', '1/2', '1'])
+    assert _edge(o) is None
     # the cutting plane parallel to the face (z = 1 vs face z = 0): no intersection line, no claim
-    e, sec, by = _synthetic(edge_in_plane=False)
-    by['p'].update(point=['0', '0', '1'], normal=['0', '0', '1'])
-    sec['steps'][0].update(a=['0', '1/2', '1'], b=['1', '1/2', '1'])
-    assert S._ly_do_canh_thiet_dien(e, sec, by) is None
+    o = _synthetic(edge_in_plane=False)
+    o[1].update(point=['0', '0', '1'], normal=['0', '0', '1'])
+    o[2]['steps'][0].update(a=['0', '1/2', '1'], b=['1', '1/2', '1'])
+    assert _edge(o) is None
+
+
+def test_presentation_layer_carries_but_never_computes():
+    # scene3d imports no geometry (test_scene3d.py); without the geometry layer's fact it says nothing
+    sec = {'id': 's', 'type': 'section', 'depends': ['k', 'p'], 'steps': [{'face_index': 0, 'a': [], 'b': []}]}
+    by = {'k': {'id': 'k', 'type': 'solid', 'vertex_ids': list('ABCD'), 'faces': [[0, 1, 2, 3]]},
+          'p': {'id': 'p', 'type': 'plane3', 'notation': '(α)'}, **{c: {'id': c, 'notation': c} for c in 'ABCD'}}
+    assert S._ly_do_canh_thiet_dien({'details': {'canh': 0}}, sec, by) is None
+    sec['steps'][0]['parallel_face_edge'] = [2, 3]
+    assert S._ly_do_canh_thiet_dien({'details': {'canh': 0}}, sec, by)['line'] == 'CD'
 
 
 def test_off_plane_mutant_is_caught_on_the_in_plane_edge(monkeypatch):
     _mutant(monkeypatch, 'if any(cheo(d, hieu(y, x))) or not vo(n, hieu(x, p0)):', 'if any(cheo(d, hieu(y, x))):')
-    assert S._ly_do_canh_thiet_dien(*_synthetic(edge_in_plane=True))['line'] == 'AB'   # the mutant claims (α) ∥ AB ⊂ (α)
+    assert _edge(_synthetic(edge_in_plane=True)) == [0, 1]                        # the mutant claims (α) ∥ AB ⊂ (α)
 
 
 def _mutant(monkeypatch, old, new):
-    src = textwrap.dedent(inspect.getsource(S._ly_do_canh_thiet_dien))
+    src = textwrap.dedent(inspect.getsource(G._canh_song_song_thiet_dien))
     assert src.count(old) == 1, old
-    ns = dict(vars(S))
+    ns = dict(vars(G))
     exec(compile(src.replace(old, new), '<mutant>', 'exec'), ns)
-    monkeypatch.setattr(S, '_ly_do_canh_thiet_dien', ns['_ly_do_canh_thiet_dien'])
+    monkeypatch.setattr(G, '_canh_song_song_thiet_dien', ns['_canh_song_song_thiet_dien'])
 
 
 def test_dropping_the_parallel_check_is_caught(monkeypatch):

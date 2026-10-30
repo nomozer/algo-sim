@@ -992,8 +992,8 @@ def _vai_doan_ok(m: re.Match, khoi: LoiGoi | None, calls: tuple[LoiGoi, ...]) ->
     """W4 review B1: a role prefix of a labelled length ("chiều cao XY", "cạnh bên XY") is a CLAIM about XY. It is read
     only when the bound solid and its validated calls prove it — height: XY ⊥ the base (the `dcao` predicate) or a lateral
     edge of a RIGHT prism; lateral edge: apex–base vertex / base vertex–its top vertex. Unproved ⇒ the clause is unread."""
-    vai = re.sub(r"\s+", " ", (m["sv"] or "").lower())
-    if not vai:
+    vai_tro = re.sub(r"\s+", " ", (m["sv"] or "").lower())
+    if not vai_tro:
         return True
     seg = re.findall(r"[A-Z][0-9]*'?", m["seg"])
     if khoi is None or len(set(seg)) != 2:
@@ -1002,7 +1002,7 @@ def _vai_doan_ok(m: re.Match, khoi: LoiGoi | None, calls: tuple[LoiGoi, ...]) ->
         canh_ben = khoi.args.apex in seg and set(seg) - {khoi.args.apex} <= set(khoi.args.base)
     else:
         canh_ben = any({b, t} == set(seg) for b, t in zip(khoi.args.base, getattr(khoi.args, "top", None) or []))
-    if vai == "cạnh bên":
+    if vai_tro == "cạnh bên":
         return canh_ben
     base = set(khoi.args.base)
     return (khoi.fn == "prism" and bool(getattr(khoi.args, "right", False)) and canh_ben) or any(

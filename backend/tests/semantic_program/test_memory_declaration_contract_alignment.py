@@ -109,7 +109,10 @@ FINAL_MEMORY_START = {CA_P1: "1d51ffe0e24b07d19c107f787d39e599ceb02f377e915d2858
 # scene3d-to-hybrid-v2-replacement (CACHE 130): p1's d(S, BD) witness points its in-line side at B (`u_to: B`, was
 # ae2c0df6…); p6's ellipse step `explanation` no longer prints the internal `Ellipse3(…)` repr (was fda73422…). Those
 # are the only changes (`runs/scene3d-to-hybrid-v2-replacement/cache/decision.json`).
-SCENE_START = {CA_P1: "9f41c8144ccc49018d7464a40e254aed02ba72135141dd906c3d5a7bb0500a95",
+# geometry-generalization-and-pedagogical-construction (CACHE 131): p1's four section edges gain an exactly verified
+# "why" — `steps[k].parallel_face_edge` (geometry layer), `justification_text` + `details.justification` (events).
+# Removing exactly those 12 entries reproduces the previous hash 9f41c814… (17 objects, final_memory unchanged).
+SCENE_START = {CA_P1: "1f73219b4a3f79eff4db039789dea5190b366d227fe031a78f2c7e0be7c21d89",
                # sphere-sample-source-authority (CACHE 129): the ellipse cutting plane is CONSTRUCT_CUTTING_OBJECT, not
                # CONSTRUCT_AUXILIARY_GEOMETRY — those two role entries are the only change (was 6e6967dc…).
                CA_P6: "7f3e6be013924d64ee4f47783face67b4d980e1b13bd41f0d252d4ca4ca6b183"}

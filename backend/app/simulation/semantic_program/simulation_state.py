@@ -808,6 +808,7 @@ def build_simulation_state(
     # quyền với bước bổ sung. `scene3d` chỉ chở và hợp theo bước.
     gan_vai_tro_dung(scene["objects"], spec, contract)
     _ky_hieu_dien_tich_thiet_dien(scene["objects"], contract)
+    _canh_song_song_thiet_dien(scene["objects"])
     # W17 §15.4: chủ thể của từng đại lượng — tầng ngữ nghĩa quyết (toán hạng phép đo, hoặc đoạn
     # đề gọi tên kiểm bằng khoảng cách chính xác); lớp chiếu này chỉ chở.
     so_do, chan_doan_so_do = gan_so_do(spec, exec_result.final_memory, contract, scene["objects"],
@@ -842,6 +843,48 @@ def build_simulation_state(
         "khai": "Trạng thái TRUNG GIAN cho renderer. Mọi số là chuỗi phân số "
                 "CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối cùng.",
     }
+
+
+def _canh_song_song_thiet_dien(objects: list[dict[str, Any]]) -> None:
+    """W4 · dữ kiện hình học cho «Vì sao» của từng cạnh thiết diện, kiểm CHÍNH XÁC (hữu tỉ, khung affine — song song
+    và thuộc là bất biến affine, pháp tuyến `Plane3` là đối vectơ): cạnh XY của chính mặt chứa cạnh thiết diện cùng
+    phương với nó và X ngoài mặt phẳng cắt ⇒ XY ∥ (α), XY ⊂ mặt ⇒ giao tuyến ∥ XY. Không tin `face_index` mù (review
+    M1): cạnh phải nằm trong mặt phẳng của mặt ấy, mặt phẳng và không song song với (α). Toạ độ vô tỉ ⇒ bỏ qua."""
+    by_id = {o["id"]: o for o in objects}
+    for sec in objects:
+        if sec.get("type") != "section":
+            continue
+        nguon = [by_id.get(x) for x in sec.get("sources") or []]
+        solid = next((o for o in nguon if o and o.get("type") == "solid"), None)
+        plane = next((o for o in nguon if o and o.get("type") == "plane3"), None)
+        if solid is None or plane is None:
+            continue
+        try:
+            q = lambda v: tuple(Fraction(str(x)) for x in v)                     # noqa: E731
+            verts = [q(v) for v in solid["vertices"]]
+            p0, n = q(plane["point"]), q(plane["normal"])
+            buoc = [(st, q(st["a"]), q(st["b"])) for st in sec.get("steps") or []]
+        except (KeyError, TypeError, ValueError, ZeroDivisionError):
+            continue
+        hieu = lambda u, v: tuple(x - y for x, y in zip(u, v))                   # noqa: E731
+        cheo = lambda u, v: (u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0])  # noqa: E731
+        vo = lambda u, v: sum(x * y for x, y in zip(u, v))                         # noqa: E731
+        for st, a, b in buoc:
+            mat = st.get("face_index")
+            face = solid["faces"][mat] if isinstance(mat, int) and 0 <= mat < len(solid["faces"]) else None
+            if not face or len(face) < 3:
+                continue
+            pts = [verts[i] for i in face]
+            d, nm = hieu(b, a), cheo(hieu(pts[1], pts[0]), hieu(pts[2], pts[0]))
+            if (not any(d) or not any(nm) or not any(cheo(nm, n)) or vo(n, hieu(a, p0)) or vo(n, hieu(b, p0))
+                    or any(vo(nm, hieu(x, pts[0])) for x in (*pts, a, b))):
+                continue
+            for i in range(len(face)):
+                x, y = pts[i], pts[(i + 1) % len(face)]
+                if any(cheo(d, hieu(y, x))) or not vo(n, hieu(x, p0)):
+                    continue
+                st["parallel_face_edge"] = [face[i], face[(i + 1) % len(face)]]
+                break
 
 
 def _ky_hieu_dien_tich_thiet_dien(objects: list[dict[str, Any]], contract: Any) -> None:
