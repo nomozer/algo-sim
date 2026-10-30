@@ -45,8 +45,13 @@ This is the canonical mutable checkpoint for the one Master Epic. After compacti
   - there is no live provider budget;
   - all 20 migration gates need reconciling against the current code.
 
-**Next exact action:** Task 2, recomposition and capability inventory.
-1. Reconcile planner, Registry and engine against the contract, using the existing composition tests.
-2. Record family states (`SUPPORTED_END_TO_END` / `SUPPORTED_WITH_LIMITS` / `REPRESENTABLE_ONLY` / `UNSUPPORTED`) per route in `capability-inventory.md`.
+**Task 2, part 1 — measured /4 inventory: DONE** (`capability-inventory.md`, `inventory-task2.json`, `wave3-task2.json`)
+- Regression after Task 1, against the W4 baseline: Wave 3 67/72, 72/72 refused, 62/72 reasons, 0 wrong-served, **0 transitions**; locked 96/96; 203 probes unchanged.
+- Section and area questions: 49 cells `SUPPORTED_END_TO_END`, 2 `SUPPORTED_WITH_LIMITS` (A06 radical bound; B01 conditional reading), 3 `REPRESENTABLE_ONLY` (B34–36). Curved solids are `UNSUPPORTED` with the correct code.
+- Distance, angle and volume rows are `NOT_MEASURED` in this inventory.
+
+**Next exact action:** Task 2, part 2.
+1. Fix the refusal-taxonomy gap first: W3-N47, the pentagonal pyramid, must be refused with a capability code, not `UNGROUNDED_VALUE`. Use RED/GREEN on an independent payload; Wave 3 text is not used for tuning.
+2. Then build independent /4 gold payloads, with an exact oracle, for the distance, angle and volume rows.
 
 **Verdict so far:** `HYBRID_NOT_READY`. No production cutover and no legacy retirement is claimed.
