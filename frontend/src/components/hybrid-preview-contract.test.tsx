@@ -42,7 +42,8 @@ import { buildObject3D } from "../simulations/domains/geometry/scene3d-view";
 
 const RUNS_DIR = join(__dirname, "..", "..", "..", "docs", "evaluation", "geometry", "runs");
 // Run `hybrid-v2-backend-generalization`: H03 now names its base plane (ABCD); earlier bundles stay as evidence.
-const FIXTURES_DIR = join(RUNS_DIR, "hybrid-v2-backend-generalization", "fixtures-adapter-2-named-plane");
+// W4 (CACHE 131): bundle re-exported with certified section-edge justifications; the named-plane bundle is kept as evidence.
+const FIXTURES_DIR = join(RUNS_DIR, "geometry-generalization-and-pedagogical-construction", "fixtures-adapter-2-section-justification");
 
 interface ManifestRow {
   id: string;

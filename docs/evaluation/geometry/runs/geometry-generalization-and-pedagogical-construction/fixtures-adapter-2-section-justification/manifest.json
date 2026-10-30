@@ -1,0 +1,697 @@
+{
+ "count": 41,
+ "fixtures": [
+  {
+   "covers": [
+    "served",
+    "auxiliary_points"
+   ],
+   "expected": {
+    "envelope_status": "ok",
+    "http_status": 200
+   },
+   "file": "served-pyramid-midpoint-area-AB.json",
+   "id": "served-pyramid-midpoint-area-AB",
+   "kind": "served",
+   "response_sha256": "cd9ef2f5e8b92c007d81fd8aa9e02185c7aed6354a906c60e9493963a9e10aa3",
+   "sha256": "21aa39ba91d2236ed1cd7e2815288ea88f736e6e5a7f8c567f617c8009212f1c"
+  },
+  {
+   "covers": [
+    "served",
+    "multi_goal",
+    "auxiliary_points"
+   ],
+   "expected": {
+    "envelope_status": "ok",
+    "http_status": 200
+   },
+   "file": "served-pyramid-shared-midpoint-area-and-distance.json",
+   "id": "served-pyramid-shared-midpoint-area-and-distance",
+   "kind": "served",
+   "response_sha256": "fef81d30e323c929d548bf5173f0845fdb5724ca4bd4a90642a3c8fd0be3d3f5",
+   "sha256": "c1abf5c29ae5afbfb7206a5e1b55e385c101c48dde1bd097e4a2db1ae65ff541"
+  },
+  {
+   "covers": [
+    "served",
+    "auxiliary_points",
+    "object:line3"
+   ],
+   "expected": {
+    "envelope_status": "ok",
+    "http_status": 200
+   },
+   "file": "served-pyramid-projection-and-unnamed-midpoint-area.json",
+   "id": "served-pyramid-projection-and-unnamed-midpoint-area",
+   "kind": "served",
+   "response_sha256": "03e3a7574306e094ae118708baceb57008f44317b94def1491ff7e1d3dbafb83",
+   "sha256": "15062a4eb9c12432729be54cd7eb0cc58409c460d7c4cba83a20c265091ce2f1"
+  },
+  {
+   "covers": [
+    "served",
+    "multi_goal",
+    "symbolic_length_unit"
+   ],
+   "expected": {
+    "envelope_status": "ok",
+    "http_status": 200
+   },
+   "file": "served-H01_CUBE.json",
+   "id": "served-H01_CUBE",
+   "kind": "served",
+   "response_sha256": "8edcaa0c611bc9848f99d11460f26b0256bbe743bbfcc49343f89be287040ccb",
+   "sha256": "df895f7b9a05650cb78d663006f6e0fa823f8797eebcfc124967014c1333ac32"
+  },
+  {
+   "covers": [
+    "served",
+    "multi_goal",
+    "symbolic_length_unit"
+   ],
+   "expected": {
+    "envelope_status": "ok",
+    "http_status": 200
+   },
+   "file": "served-H02_CUBOID_DISTANCE.json",
+   "id": "served-H02_CUBOID_DISTANCE",
+   "kind": "served",
+   "response_sha256": "f5bd0b5adb488d06a4a242e1ae5ea9b616bae4e0b27f0685c4719298b4c00066",
+   "sha256": "8df0c1cc782b9bf208e77bbd330493bd39305bbb033dc76cfa35d01e34764021"
+  },
+  {
+   "covers": [
+    "served",
+    "multi_goal",
+    "symbolic_length_unit",
+    "object:line3"
+   ],
+   "expected": {
+    "envelope_status": "ok",
+    "http_status": 200
+   },
+   "file": "served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS.json",
+   "id": "served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS",
+   "kind": "served",
+   "response_sha256": "273a90df53bf5ace81dabc76307529fa8a907dad75a1249d8b590078c7200e77",
+   "sha256": "4677908012b02ab953ace345b3248d1425ae1578f60a8a4ece4c5229e82c5eea"
+  },
+  {
+   "covers": [
+    "served",
+    "symbolic_length_unit",
+    "goal_observation"
+   ],
+   "expected": {
+    "envelope_status": "ok",
+    "http_status": 200
+   },
+   "file": "served-H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED.json",
+   "id": "served-H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED",
+   "kind": "served",
+   "response_sha256": "24285500f2c25c24a7eda3eb5bdb767bbcb775ebeaee3c596fb1f4c2db910dc9",
+   "sha256": "5ddbbdcec5720ebb22e8bbbe66f980c3550781807ab81943738aaab65cffb7fa"
+  },
+  {
+   "covers": [
+    "served",
+    "symbolic_length_unit",
+    "object:line3"
+   ],
+   "expected": {
+    "envelope_status": "ok",
+    "http_status": 200
+   },
+   "file": "served-H11_SKEW_DISTANCE_COMPOSITION.json",
+   "id": "served-H11_SKEW_DISTANCE_COMPOSITION",
+   "kind": "served",
+   "response_sha256": "5998e8a9cfc873551f74d1f509d0fedbaf3d971953e7a76360f467e18a7494d8",
+   "sha256": "7d8dce518aa4075182f5b3081c0701e7f4e9601d0b499a8ddd18668f8a073ff7"
+  },
+  {
+   "covers": [
+    "served",
+    "multi_goal",
+    "symbolic_length_unit",
+    "object:line3"
+   ],
+   "expected": {
+    "envelope_status": "ok",
+    "http_status": 200
+   },
+   "file": "served-H12_PROJECTION_MIDPOINT_ANGLE.json",
+   "id": "served-H12_PROJECTION_MIDPOINT_ANGLE",
+   "kind": "served",
+   "response_sha256": "4f6a71db4e111777e29374a38e7aea9a6e2e9caf8b93cb264dd6bb16a90be3eb",
+   "sha256": "1cc2aec7543a95f1f4fa13b059ab37cba6b5f31ec6e64703705ff9758e4a33f1"
+  },
+  {
+   "covers": [
+    "served",
+    "symbolic_length_unit"
+   ],
+   "expected": {
+    "envelope_status": "ok",
+    "http_status": 200
+   },
+   "file": "served-H14_REGULAR_TETRAHEDRON.json",
+   "id": "served-H14_REGULAR_TETRAHEDRON",
+   "kind": "served",
+   "response_sha256": "691115ec6964312a8ebd56d82e65840f3882622c9848498d19c28f53679151a1",
+   "sha256": "b4deb86de93c3f1d6c65c8a1ad7407504225ed6afce24b8de031bc10661a84a4"
+  },
+  {
+   "covers": [
+    "served",
+    "object:section"
+   ],
+   "expected": {
+    "envelope_status": "ok",
+    "http_status": 200
+   },
+   "file": "served-section-MAB-trapezoid.json",
+   "id": "served-section-MAB-trapezoid",
+   "kind": "served",
+   "response_sha256": "6d3d30ef2752f32e5736f1f5146e79203d88a58f4e7b989e4a3d447cfcef7472",
+   "sha256": "30dcb4926b7c39da5dcf58c7cf4be8693100553b7e08650d836d2e3aa7a25ae9"
+  },
+  {
+   "covers": [
+    "served",
+    "object:line3"
+   ],
+   "expected": {
+    "envelope_status": "ok",
+    "http_status": 200
+   },
+   "file": "served-intersection-SAB-SCD.json",
+   "id": "served-intersection-SAB-SCD",
+   "kind": "served",
+   "response_sha256": "6f20225f96d2a6fc41aa36a0e2455b289ce511addc9523934aa33a546b5eb305",
+   "sha256": "6857343ccfb040bfc04b1b6383ba318d07a59d0e694cbb35ee662cb4432c9fea"
+  },
+  {
+   "covers": [
+    "refusal"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "capability_gap",
+    "http_status": 200,
+    "reason_code": "UNSUPPORTED_CAPABILITY",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-capability-unsupported.json",
+   "id": "refusal-capability-unsupported",
+   "kind": "refusal",
+   "response_sha256": "4529925bd9a075f5aa50ba84e1e8de79cd0615cced858d1d8bda51674072df94",
+   "sha256": "ad22729fdea4c31038ebe35fb371361df11affbbb196442076707863889e0a68"
+  },
+  {
+   "covers": [
+    "refusal"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "capability_gap",
+    "http_status": 200,
+    "reason_code": "CONDITIONAL_CLAUSE",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-capability-conditional.json",
+   "id": "refusal-capability-conditional",
+   "kind": "refusal",
+   "response_sha256": "a4dca3abc00928b344e71117ac1762089dedef74fa2347eeb489c39125243ac1",
+   "sha256": "7bae2c798b02fcb1b5b7551af661d08abf9dfb15d516e123fa8b183685843d10"
+  },
+  {
+   "covers": [
+    "refusal"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "capability_gap",
+    "http_status": 200,
+    "reason_code": "NEGATED_CLAUSE",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-capability-negated-question.json",
+   "id": "refusal-capability-negated-question",
+   "kind": "refusal",
+   "response_sha256": "9c81082df40956b065ebdc1bdba28da289c8d93f8e275fd6d883a2d9831e86cf",
+   "sha256": "3d4eec431d127808f8021be49b3d964d97ef4550b0169d77f685da2d1683cea9"
+  },
+  {
+   "covers": [
+    "refusal"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "capability_gap",
+    "http_status": 200,
+    "reason_code": "OUT_OF_SCOPE",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-capability-escape-unsupported.json",
+   "id": "refusal-capability-escape-unsupported",
+   "kind": "refusal",
+   "response_sha256": "7b50d37cd73e59bdc8831cbe6eadebbd37a40efd5ac856aac2f1b348a6cb0e53",
+   "sha256": "84d0dd20cb7778e4d77546b4ceafd434021ac62bdafd1531746dee9d587524e9"
+  },
+  {
+   "covers": [
+    "refusal"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "insufficient_specification",
+    "http_status": 200,
+    "reason_code": "MISSING_DIMENSION",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-missing-dimension.json",
+   "id": "refusal-missing-dimension",
+   "kind": "refusal",
+   "response_sha256": "f54c4362af6202787491199a9b4e01ed9f66b682e4fb7ac9eb9566ba8cc7a633",
+   "sha256": "47eb0347343ae6cc406dc5a0ea7d822b484383fe5c9a1c2e0d151942d84ee3f2"
+  },
+  {
+   "covers": [
+    "refusal"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "insufficient_specification",
+    "http_status": 200,
+    "reason_code": "UNDERDETERMINED_POINT",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-missing-underdetermined.json",
+   "id": "refusal-missing-underdetermined",
+   "kind": "refusal",
+   "response_sha256": "a5b34613873369693a416e98e2f7bdd34ef2bbe665316931ed34c048ec239869",
+   "sha256": "09df65f373cda21eda4ad5a37b2621122a181f2085da4de3514323c14b847af1"
+  },
+  {
+   "covers": [
+    "refusal"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "insufficient_specification",
+    "http_status": 200,
+    "reason_code": "AMBIGUOUS_FACT",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-missing-ambiguous.json",
+   "id": "refusal-missing-ambiguous",
+   "kind": "refusal",
+   "response_sha256": "45de73e36438adcdb2aafbf5a99db69bdd13d68e5d369af3097dfe2e5e94aab1",
+   "sha256": "1a1a58c01654f59e9443764ef2aed696a84cb500581400c92b8b800e1acc6b62"
+  },
+  {
+   "covers": [
+    "refusal"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "geometry_generation_failed",
+    "http_status": 200,
+    "reason_code": "INCONSISTENT_FACTS",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-invalid-contradiction.json",
+   "id": "refusal-invalid-contradiction",
+   "kind": "refusal",
+   "response_sha256": "14fb8d254d2b4ea2257b5955f7f20a203146df49528195c41c955706473f878d",
+   "sha256": "bbf4f0260e09de03610eebd459ed5a45e82fc73e697115cec9e13eebd2236038"
+  },
+  {
+   "covers": [
+    "refusal"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "geometry_generation_failed",
+    "http_status": 200,
+    "reason_code": "COLLINEAR_POINTS",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-invalid-collinear.json",
+   "id": "refusal-invalid-collinear",
+   "kind": "refusal",
+   "response_sha256": "60c2210d2074520af7acbf2e2b14aaadc2165c1c19d342765a4ece840a7172ae",
+   "sha256": "9592dca22059136c00964b594f2dfa5c4dee69772765e463c16e605683bc94eb"
+  },
+  {
+   "covers": [
+    "refusal"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "geometry_generation_failed",
+    "http_status": 200,
+    "reason_code": "NON_POSITIVE_LENGTH",
+    "refusal_cause": "SOURCE"
+   },
+   "file": "refusal-invalid-zero-length.json",
+   "id": "refusal-invalid-zero-length",
+   "kind": "refusal",
+   "response_sha256": "b41da9f9ab5e476f8dfde47e112ece919cc09a2df0c4911595084262b5e35904",
+   "sha256": "4e24bf16f31527cceab701d868599bae8c7623ed5f03f338a7e9a100bbd4da9d"
+  },
+  {
+   "covers": [
+    "refusal"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "geometry_generation_failed",
+    "http_status": 200,
+    "reason_code": "NON_POSITIVE_LENGTH",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-invalid-zero-not-in-text.json",
+   "id": "refusal-invalid-zero-not-in-text",
+   "kind": "refusal",
+   "response_sha256": "15258c9a1dd1af4ff38be7c73ebfa785cac9d426ebb86c0f006b9cbd605ff48c",
+   "sha256": "be641144df5548ad4e86488d06c8cb5ae1bfea6e7569e4de4977b47d9a558cf9"
+  },
+  {
+   "covers": [
+    "refusal"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "verification_gap",
+    "http_status": 200,
+    "reason_code": "SOURCE_OBJECT_MISMATCH",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-source-object-mismatch.json",
+   "id": "refusal-source-object-mismatch",
+   "kind": "refusal",
+   "response_sha256": "99e24a8e8cff4edddaf2d1a9afd3ebb739d685805273938009b756267c7bd657",
+   "sha256": "f7680e6a38ca3ed4d90201e0a2b61b9fb2ccf8e214d293e1a0aa662106a6a8fe"
+  },
+  {
+   "covers": [
+    "refusal"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "verification_gap",
+    "http_status": 200,
+    "reason_code": "GOAL_CLAUSE_NOT_PREMISE",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-source-goal-as-premise.json",
+   "id": "refusal-source-goal-as-premise",
+   "kind": "refusal",
+   "response_sha256": "37fe2bbdb43340e7f909a5b409dff70eae234609d4ed075076b7e42fe3e5c9ed",
+   "sha256": "b6cb780f276b190f55073e7629e5d3e8869cd4713c1c76760f06c4bed985a88c"
+  },
+  {
+   "covers": [
+    "refusal"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "verification_gap",
+    "http_status": 200,
+    "reason_code": "REQUEST_NOT_ANSWERED",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-source-request-unanswered.json",
+   "id": "refusal-source-request-unanswered",
+   "kind": "refusal",
+   "response_sha256": "13e7dd5bf4e863cf4d598311faedf347c8e89261caabdffa67cfd57ab338cfb0",
+   "sha256": "c340ee11d232697bf2b3ade5040d22dc27f1c7adead7e1cd2307799dc816f9a6"
+  },
+  {
+   "covers": [
+    "refusal",
+    "injected_fault"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "verification_gap",
+    "http_status": 200,
+    "reason_code": "PREVIEW_RESULT_INVALID",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-result-kernel-check.json",
+   "id": "refusal-result-kernel-check",
+   "kind": "refusal",
+   "response_sha256": "b40ae2998ba15c01d13f75a4c7248ffdf9627949cd185f815500a6d024bd4b66",
+   "sha256": "07355e7d6851daf770c40ac1a015e2f28532a9dd941df71c143afc116c7f90e4"
+  },
+  {
+   "covers": [
+    "refusal",
+    "injected_fault"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "verification_gap",
+    "http_status": 200,
+    "reason_code": "METRIC_NOT_EUCLIDEAN",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-result-scene-metric.json",
+   "id": "refusal-result-scene-metric",
+   "kind": "refusal",
+   "response_sha256": "c4060aafe38d80addb31a8ad28a9b4c4b864a8028dac5e43d310ada3f0ca4041",
+   "sha256": "1eb061da15e689f692e0865d98150efbebed08575006045b86f6e93676e64e5f"
+  },
+  {
+   "covers": [
+    "refusal",
+    "injected_fault"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "verification_gap",
+    "http_status": 200,
+    "reason_code": "ENGINE_SELF_CHECK_FAILED",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-result-engine-self-check.json",
+   "id": "refusal-result-engine-self-check",
+   "kind": "refusal",
+   "response_sha256": "134d39e7d8a49b828d18377ccb8bf63a50e52df57e13ef28510ec7e7503c0a87",
+   "sha256": "150b9d8360cf4d258170d0cfd94864f3bc22afdc66eb0fe87d0eddf35dc6432c"
+  },
+  {
+   "covers": [
+    "refusal"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "verification_gap",
+    "http_status": 200,
+    "reason_code": "FIGURE_NOT_UNIQUE",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-inconclusive-figure.json",
+   "id": "refusal-inconclusive-figure",
+   "kind": "refusal",
+   "response_sha256": "90c457d078d87f6d4e98f43f80921c69a1e74e0aa1cb3678a8714121cfd02969",
+   "sha256": "8edb080af337be8d55b8d992a70c3eb7ebfc27bc5f7343dc80775b503108a893"
+  },
+  {
+   "covers": [
+    "refusal"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "verification_gap",
+    "http_status": 200,
+    "reason_code": "NEGATED_CLAUSE",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-inconclusive-negated.json",
+   "id": "refusal-inconclusive-negated",
+   "kind": "refusal",
+   "response_sha256": "1114a2efb3720652d2214d2ec3c1c8bb9a6252a6d5aa4788e091e7797c29b30a",
+   "sha256": "132ae4fd95b0c80f66ae78c775ccfaf50b181cc12e0aecc6d7bcda2364429e8b"
+  },
+  {
+   "covers": [
+    "refusal"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "verification_gap",
+    "http_status": 200,
+    "reason_code": "PROOF_UNVERIFIABLE",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-inconclusive-proof-only.json",
+   "id": "refusal-inconclusive-proof-only",
+   "kind": "refusal",
+   "response_sha256": "59911d46fa2e2826a9327e345c6d7afadc84ebf52d0b6e7e2ab0d74911caf3a1",
+   "sha256": "0cd70d3f733c9a0a5af789e2381f7159d4315cdda45eaef983ae860d92ab86e3"
+  },
+  {
+   "covers": [
+    "refusal"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "geometry_generation_failed",
+    "http_status": 200,
+    "reason_code": "FACT_INCOMPLETE",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-extraction-fact-incomplete.json",
+   "id": "refusal-extraction-fact-incomplete",
+   "kind": "refusal",
+   "response_sha256": "5811be0d72b2e47fbdbe4580da692a901d54aa755c4fe9d626f471d4c692a461",
+   "sha256": "3ed4b794d164edb976ce3ffebde1798a8a314047cc16d4d7694d85e7f118bd86"
+  },
+  {
+   "covers": [
+    "refusal"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "geometry_generation_failed",
+    "http_status": 200,
+    "reason_code": "JSON_INVALID",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-extraction-not-json.json",
+   "id": "refusal-extraction-not-json",
+   "kind": "refusal",
+   "response_sha256": "91e91720ae13f29c18be2a35305d90ca177144155f55e5724dfec0006b78297d",
+   "sha256": "6384630a4e8681c1557c11244e6b16bcb2482278b4368a3df10d76244e66f6eb"
+  },
+  {
+   "covers": [
+    "refusal",
+    "injected_fault"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "geometry_generation_failed",
+    "http_status": 200,
+    "reason_code": "PREVIEW_IDENTITY_CHANGED",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-integrity-identity.json",
+   "id": "refusal-integrity-identity",
+   "kind": "refusal",
+   "response_sha256": "1f92e7fcd3b990c47b4ef3d4646720126b1c66da19709f03eb71798e746a7676",
+   "sha256": "27b76247074f20d8b734b4445ca3acac1a04fc58f1c548e918ac00fbad2c7ef2"
+  },
+  {
+   "covers": [
+    "refusal",
+    "injected_fault"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "geometry_generation_failed",
+    "http_status": 200,
+    "reason_code": "PREVIEW_PROOF_STATUS_INVALID",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-integrity-proof-status.json",
+   "id": "refusal-integrity-proof-status",
+   "kind": "refusal",
+   "response_sha256": "f453c023be21d3d04fd3603748d040e0924ff189778a5787fd5f52ef7b6ed916",
+   "sha256": "cc679bdd8779557d105d238c0ffaed00af891f4624433c9815729c6cfd92f45f"
+  },
+  {
+   "covers": [
+    "refusal",
+    "injected_fault"
+   ],
+   "expected": {
+    "envelope_status": "unsupported",
+    "failure_category": "geometry_generation_failed",
+    "http_status": 200,
+    "reason_code": "PREVIEW_SURFACE_CHANGED",
+    "refusal_cause": "UNKNOWN"
+   },
+   "file": "refusal-integrity-surface.json",
+   "id": "refusal-integrity-surface",
+   "kind": "refusal",
+   "response_sha256": "3d683a775e7997bc03a9cb66de60d4892afad10d06ace53897373ebfa760bbb1",
+   "sha256": "d0d4388b4966c8a84eada1c0d785ce7273afaa314601a5a4e14a35fc199a2f7a"
+  },
+  {
+   "covers": [
+    "gate"
+   ],
+   "expected": {
+    "http_status": 404,
+    "reason_code": "PREVIEW_DISABLED"
+   },
+   "file": "gate-disabled.json",
+   "id": "gate-disabled",
+   "kind": "gate",
+   "response_sha256": "2c8f3fee20e998b9e2d90108a2de22ef123cf37365c214921cb4cdc4bfb9249d",
+   "sha256": "983880f49a68a97f2720c0be0afd623b1b8faa1a8dec00e364a61a7e4018dd4c"
+  },
+  {
+   "covers": [
+    "gate"
+   ],
+   "expected": {
+    "http_status": 403,
+    "reason_code": "PREVIEW_FORBIDDEN"
+   },
+   "file": "gate-forbidden.json",
+   "id": "gate-forbidden",
+   "kind": "gate",
+   "response_sha256": "7363da8bddc542fbc0e2ade3a6213e7b3a4e9eb74707a78a77b287b496464e60",
+   "sha256": "7097e0ad0c7efe3f4591c460fc5a9fbf2d4b20e4b8ab9d913a8c050718ddae9e"
+  },
+  {
+   "covers": [
+    "gate"
+   ],
+   "expected": {
+    "http_status": 422,
+    "reason_code": "PREVIEW_BODY_INVALID"
+   },
+   "file": "gate-body-invalid.json",
+   "id": "gate-body-invalid",
+   "kind": "gate",
+   "response_sha256": "1506b81f48caf10260e1d7f420d6e4d8c72a8ee1a69176d5681b147f3b38eb6a",
+   "sha256": "f2f09985b9090ee09c048128181906e35f3953221bae496888e042ce977b6afc"
+  },
+  {
+   "covers": [
+    "gate"
+   ],
+   "expected": {
+    "http_status": 503,
+    "reason_code": "OFFLINE_FIXTURE_REQUIRED"
+   },
+   "file": "gate-fixture-missing.json",
+   "id": "gate-fixture-missing",
+   "kind": "gate",
+   "response_sha256": "3cf6fb0a82058bac8e5a3fe7eb7663c85451c865d4d980e788042a7ec3f47399",
+   "sha256": "ea08100b8445498b5da0630c788e290acecb94cf7ff4b0fe975c67d241d822ad"
+  }
+ ],
+ "generated_by": "backend/scripts/export_hybrid_preview_fixtures.py",
+ "producer": {
+  "adapter_version": "hybrid-preview-adapter/2",
+  "backend_app_dirty": false,
+  "commit": "61ade29e11d41417ff10efdcb4dd1e19cb69e910",
+  "envelope_version": "hybrid-route-d-preview/1",
+  "inputs_dirty": false,
+  "product_commit": "61ade29e11d41417ff10efdcb4dd1e19cb69e910",
+  "source_fingerprint": {
+   "files": 118,
+   "measured_system_hash": "54b5b565ef65a8e9a8faee5a63a19aca14749bc0edce2bf054b6846be322043c",
+   "rule": "scripts/freeze_evaluation_candidate.py::measured_system_hash"
+  }
+ },
+ "schema": "hybrid-preview-envelope-fixtures/1"
+}

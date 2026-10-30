@@ -18,7 +18,10 @@ ROOT = Path(__file__).resolve().parents[2]
 #: Superseded by run `hybrid-v2-backend-generalization` (planner /14, engine /13): served-H03 names the base plane it asks
 #: about by its full written name (ABCD) instead of the three-point plane (ABC); answers and geometry are unchanged and
 #: every other fixture differs only in producer commit and version identity. The common-perpendicular bundle stays.
-FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-v2-backend-generalization/fixtures-adapter-2-named-plane'
+#: Superseded by run `geometry-generalization-and-pedagogical-construction` (CACHE 131): served section fixtures carry an
+#: exactly verified section-edge "why" (`justification_text`, `details.justification`, `steps[].parallel_face_edge`);
+#: answers and geometry are unchanged. The named-plane bundle stays unchanged as the evidence it was.
+FIXTURES = ROOT / 'docs/evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction/fixtures-adapter-2-section-justification'
 #: The superseded bundle — the one that predates the route D version bump the identity-restore test is about.
 OLD_FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures-adapter-2'
 SCRIPT = ROOT / 'backend/scripts/export_hybrid_preview_fixtures.py'
