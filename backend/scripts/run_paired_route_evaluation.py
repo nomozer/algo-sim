@@ -37,13 +37,17 @@ sys.path.insert(0, str(BACKEND))
 KINDS = {"measure.distance": "distance", "measure.angle_cos_sq": "angle_cos_sq", "measure.angle_cos": "angle_cos",
          "measure.volume": "volume", "measure.area": "area", "measure.lateral_area": "lateral_area",
          "measure.radius": "radius", "assign.volume_ratio": "volume_ratio", "assign.residual_volume": "residual_volume"}
-#: Pre-registered refusal classes (§2, §4). Curved solids are NOT a refusal class: LLM_ONLY serves them in production.
-REFUSAL_CLASSES = ("OUT_OF_DOMAIN", "CONTRADICTORY_DATA", "MISSING_DATA", "PROOF_REQUEST")
-#: Hybrid failures of the TRANSPORT/PROVIDER (infrastructure, §4); every other non-served outcome — including a
-#: truncated or invalid model output — counts as "not served" in both arms, because LLM_ONLY cannot tell those apart
-#: either (its invalid outputs are re-asked and end as `geometry_generation_failed`).
-HYBRID_INFRASTRUCTURE = {"PROVIDER_ERROR", "PROVIDER_BLOCKED", "PROVIDER_REFUSED", "LIVE_AI_DISABLED",
-                         "HYBRID_DEADLINE_EXCEEDED", "HYBRID_CANCELLED", "EXTRACTOR_INTERNAL_ERROR"}
+#: Pre-registered refusal classes (§2, §4). Not refusal classes, because LLM_ONLY serves them by design in production:
+#: curved solids (served with π) and proof requests (`geometry_program_generator.md`: "Đề bảo CHỨNG MINH thì vẫn chỉ dựng
+#: hình…"), which are out of this evaluation's scope altogether (§2).
+REFUSAL_CLASSES = ("OUT_OF_DOMAIN", "CONTRADICTORY_DATA", "MISSING_DATA")
+#: Hybrid outcomes that are not a model or geometry result (§4): transport/provider failures (an empty candidate list
+#: included, as `call_gemini` raises on it for LLM_ONLY) and our own internal faults (LLM_ONLY's surface as exceptions,
+#: Hybrid's are caught into these codes). Every other non-served outcome — a truncated or invalid model output
+#: included — counts as "not served" in both arms (LLM_ONLY re-asks those and ends `geometry_generation_failed`).
+HYBRID_INFRASTRUCTURE = {"PROVIDER_ERROR", "PROVIDER_BLOCKED", "PROVIDER_REFUSED", "LIVE_AI_DISABLED", "NO_CANDIDATE",
+                         "HYBRID_DEADLINE_EXCEEDED", "HYBRID_CANCELLED", "EXTRACTOR_INTERNAL_ERROR",
+                         "ROUTE_INTERNAL_ERROR", "ADAPTER_INTERNAL_ERROR"}
 PROVIDER_BLOCK = {"PROVIDER_BLOCKED", "PROVIDER_REFUSED"}
 ARM_ORDER_SEED = "hybrid-master-paired/2026-10-31"     # §3: per-case arm order, fixed before any corpus exists
 PROMPT_FRAMING_RESERVE = 4096          # same conservative estimator as `run_hybrid_ab_pilot.reserve_payload`
@@ -72,7 +76,11 @@ def _norm(text: str) -> str:
 
 
 def parse_oracle(value: str):
+    """Exact oracle values only: a string in the `radical.parse_exact` grammar. Decimals and non-strings are refused —
+    an approximate oracle would score a correct exact answer as wrong-served."""
     from app.simulation.geometry.radical import parse_exact
+    if not isinstance(value, str) or re.search(r"\d[.,]\d|[eE][-+]?\d", value):
+        raise LiveRefused(f"oracle value {value!r} must be an exact string, not a decimal")
     x = parse_exact(value)
     if x is None:
         raise LiveRefused(f"oracle value {value!r} is not an exact number (radical.parse_exact grammar)")
@@ -127,7 +135,7 @@ def contamination_scan(corpus: dict[str, Any], repo: Path = REPO, exclude: Path 
         grams[cid] = {" ".join(words[i:i + shingle]) for i in range(max(1, len(words) - shingle + 1))}
     hits: dict[str, dict[str, list[str]]] = {}
     for path in repo.rglob("*"):
-        if (not path.is_file() or path.suffix not in _TEXT_SUFFIXES or _SKIP_DIRS & set(path.parts)
+        if (not path.is_file() or path.suffix not in _TEXT_SUFFIXES or _SKIP_DIRS & set(path.relative_to(repo).parts)
                 or (exclude is not None and path.resolve() == exclude.resolve())):
             continue
         try:
@@ -180,31 +188,37 @@ def _contains(served: list, wanted: list) -> bool:
 def refusal_class(arm: str, envelope: dict[str, Any] | None, code: str | None) -> str:
     """Pre-registered arm → class map (§4). What an arm does not state is `UNSPECIFIC`, never a guess."""
     env = envelope or {}
-    if env.get("failure_category") in ("out_of_scope", "not_simulation_suitable"):
+    if env.get("failure_category") == "out_of_scope":
         return "OUT_OF_DOMAIN"
+    if env.get("failure_category") == "not_simulation_suitable":       # in-domain text the product will not simulate
+        return "NOT_SIMULATION_SUITABLE"
     if arm == "HYBRID" and code:
         from app.ai.hybrid_preview import classify_refusal
-        return {"INVALID_DATA": "CONTRADICTORY_DATA", "MISSING_DATA": "MISSING_DATA",
-                "INCONCLUSIVE": "PROOF_REQUEST"}.get(classify_refusal(code).group, "UNSPECIFIC")
+        return {"INVALID_DATA": "CONTRADICTORY_DATA",
+                "MISSING_DATA": "MISSING_DATA"}.get(classify_refusal(code).group, "UNSPECIFIC")
     return "UNSPECIFIC"
 
 
 def score(case: dict[str, Any], envelope: dict[str, Any] | None, arm: str = "HYBRID") -> dict[str, Any]:
-    """Primary rule (§4): served-correct ⇔ served ∧ expected-serve ∧ every oracle value is among the served targets of
-    its kind. Sensitivity rule `served_correct_strict`: additionally no other value of an asked kind is shown."""
+    """Primary rule (§4): served-correct ⇔ served ∧ expected-serve ∧ for every asked kind the served target values are
+    exactly the oracle's (each oracle value shown; no other value of that kind shown — a wrong value the learner sees
+    is never "correct"). `served_correct_lenient` (oracle ⊆ shown) is reported as a sensitivity check only. Targets of
+    kinds the oracle does not ask are reported as `unverified_extra_targets`; they are not scored (§4 limitation)."""
     served = bool(envelope) and envelope.get("status") == "ok" and bool((envelope.get("scene3d") or {}).get("objects"))
     got = served_quantities(envelope) if served else {}
     expect_serve = case["expect"] == "SERVE"
     oracle = {k: [parse_oracle(v) for v in vs] for k, vs in (case.get("oracle") or {}).items()}
-    correct = served and expect_serve and all(_contains(got.get(k, []), v) for k, v in oracle.items())
+    lenient = served and expect_serve and all(_contains(got.get(k, []), v) for k, v in oracle.items())
     extra = {k: [str(x) for x in got.get(k, []) if str(x) not in set(map(str, v))] for k, v in oracle.items()}
     extra = {k: v for k, v in extra.items() if v}
+    correct = lenient and not extra
     code = (envelope or {}).get("error_code") or (envelope or {}).get("reason_code")
     klass = None if served else refusal_class(arm, envelope, code)
-    return {"served": served, "served_correct": correct, "served_correct_strict": correct and not extra,
+    return {"served": served, "served_correct": correct, "served_correct_lenient": lenient,
             "wrong_served": served and not correct, "false_refusal": expect_serve and not served,
             "refusal_reason_correct": not expect_serve and not served and klass == case.get("refusal_class"),
             "refusal_code": None if served else code, "refusal_class": klass, "extra_same_kind_values": extra,
+            "unverified_extra_targets": {k: [str(x) for x in v] for k, v in got.items() if k not in oracle},
             "served_quantities": {k: [str(x) for x in v] for k, v in got.items()},
             "stage_reached": (envelope or {}).get("stage_reached")}
 
@@ -250,7 +264,8 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
         out[arm] = {
             "n": len(rs), "expected_serve": len(pos), "served_correct": ok,
             "served_correct_ci95": wilson(ok, len(pos)),
-            "served_correct_strict": sum(r["served_correct_strict"] for r in rs),
+            "served_correct_lenient": sum(r["served_correct_lenient"] for r in rs),
+            "cases_with_unverified_extra_targets": sum(bool(r.get("unverified_extra_targets")) for r in rs),
             "wrong_served": sum(r["wrong_served"] for r in rs),
             "wrong_served_ci95": wilson(sum(r["wrong_served"] for r in rs), len(rs)),
             "false_refusal": sum(r["false_refusal"] for r in pos),
@@ -576,7 +591,7 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
                 try:
                     row.update(score(case, envelope, arm), outcome="SCORED")
                 except Exception as exc:  # noqa: BLE001 — never lose a paid row to a scorer bug
-                    row.update(served=False, served_correct=False, served_correct_strict=False, wrong_served=False,
+                    row.update(served=False, served_correct=False, served_correct_lenient=False, wrong_served=False,
                                false_refusal=False, refusal_reason_correct=False, outcome="SCORER_ERROR",
                                scorer_error=type(exc).__name__)
                 if technical:          # an infrastructure failure is never scored as a model or geometry outcome
@@ -601,6 +616,9 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
                     break
             if stop_reason:
                 break
+    except BaseException as exc:          # an interrupted run is reported as such, then the interruption propagates
+        stop_reason = f"INTERRUPTED:{type(exc).__name__}"
+        raise
     finally:
         undo_guard()
         gemini.set_budget(None)

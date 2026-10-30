@@ -96,13 +96,37 @@ def test_ratio_and_residual_producers_and_the_pre_registered_extra_value_rule():
     env = _ok(_quantity("assign.volume_ratio", _rational("1/24")), _quantity("assign.residual_volume", _rational("1/3")),
               _quantity("measure.volume", _rational("1/24")), _quantity("measure.volume", _rational("1/24")))
     s = E.score(case, env)
-    assert s["served_correct"] and s["served_correct_strict"]                 # auxiliary volumes are another kind
+    assert s["served_correct"] and s["unverified_extra_targets"] == {"volume": ["1/24", "1/24"]}   # other kind: reported
     noisy = _ok(*env["scene3d"]["objects"], _quantity("assign.volume_ratio", _rational("1/2")))
     s = E.score(case, noisy)
-    assert s["served_correct"] and not s["served_correct_strict"] and s["extra_same_kind_values"] == {"volume_ratio": ["1/2"]}
+    assert s["wrong_served"] and s["served_correct_lenient"] and s["extra_same_kind_values"] == {"volume_ratio": ["1/2"]}
     with pytest.raises(Exception):                                            # an unreadable exact form is never guessed
         E.score({"expect": "SERVE", "oracle": {"distance": ["1"]}},
                 _ok(_quantity("measure.distance", {"kind": "mystery", "value": "1"})))
+
+
+def test_a_wrong_value_the_learner_sees_is_never_correct():
+    """Review round 2, N2: oracle 12, shown 12 and 13 ⇒ wrong-served under the primary rule."""
+    case = {"expect": "SERVE", "oracle": {"distance": ["12"]}}
+    s = E.score(case, _ok(_quantity("measure.distance", _rational("12")), _quantity("measure.distance", _rational("13"))))
+    assert s["wrong_served"] and not s["served_correct"] and s["served_correct_lenient"]
+
+
+def test_decimal_oracles_are_refused():
+    for bad in ("1.4142", 0.1, "1,5", "1e3"):
+        with pytest.raises(E.LiveRefused):
+            E.parse_oracle(bad)
+    assert str(E.parse_oracle("√2")) == "√2"
+
+
+def test_proof_requests_are_out_of_scope_and_not_simulation_suitable_is_its_own_class():
+    """Review round 2, N1: LLM_ONLY builds the figure for a proof request by design, so a proof request is not an
+    expected refusal; a `not_simulation_suitable` refusal is not `OUT_OF_DOMAIN`."""
+    assert "PROOF_REQUEST" not in E.REFUSAL_CLASSES
+    assert E.refusal_class("LLM_ONLY", {"failure_category": "not_simulation_suitable"}, None) == "NOT_SIMULATION_SUITABLE"
+    with pytest.raises(E.LiveRefused):
+        E.validate_corpus({"cases": [{"id": "p", "problem_text": "Chứng minh BD vuông góc SC.", "expect": "REFUSE",
+                                      "refusal_class": "PROOF_REQUEST"}]})
 
 
 def test_refusal_classes_are_pre_registered_and_unstated_reasons_are_unspecific():
@@ -205,6 +229,44 @@ def test_an_invalid_corpus_is_refused_before_any_request(tmp_path, mutate):
     with pytest.raises(E.LiveRefused):
         E.evaluate(bad, tmp_path / "out.jsonl", None)
     assert not (tmp_path / "out.jsonl").exists()
+
+
+def test_contamination_scan_works_inside_a_checkout_under_a_skipped_name(tmp_path):
+    """Review round 2, M4 regression: the skip set was tested on the ABSOLUTE path, so a worktree under
+    `.superpowers/` scanned nothing. Only names inside the repository count."""
+    repo = tmp_path / ".superpowers" / "worktrees" / "wt"
+    (repo / "frontend/src/data").mkdir(parents=True)
+    text = "Cho hình lập phương ABCD.A'B'C'D' cạnh 4. Tính độ dài đường chéo AC'."
+    (repo / "frontend/src/data/samples.json").write_text(json.dumps({"p": text}), encoding="utf-8")
+    (repo / "node_modules").mkdir()
+    (repo / "node_modules/copy.json").write_text(json.dumps({"p": text}), encoding="utf-8")
+    hits = E.contamination_scan({"cases": [{"id": "c", "problem_text": text}]}, repo)
+    assert hits == {"c": {"exact": ["frontend/src/data/samples.json"], "near": []}}
+
+
+def test_an_interrupted_run_is_reported_as_interrupted(tmp_path, monkeypatch):
+    """Review round 2, N3: the summary written in `finally` must not claim completion."""
+    calls = [0]
+    real = E.score
+
+    def interrupt(*a, **k):
+        calls[0] += 1
+        if calls[0] == 3:
+            raise KeyboardInterrupt
+        return real(*a, **k)
+
+    monkeypatch.setattr(E, "score", interrupt)
+    with pytest.raises(KeyboardInterrupt):
+        E.evaluate(_corpus(tmp_path), tmp_path / "rows.jsonl", None)
+    summary = _rows(tmp_path / "rows.jsonl")[-1]
+    assert summary["type"] == "summary" and summary["completed"] is False
+    assert summary["stop_reason"] == "INTERRUPTED:KeyboardInterrupt"
+
+
+def test_an_empty_candidate_list_is_infrastructure_in_both_arms(tmp_path, monkeypatch):
+    out = _live(tmp_path, monkeypatch, Provider({"candidates": []}), cases=[_one()])
+    hybrid = next(r for r in out["rows"] if r["arm"] == "HYBRID")
+    assert hybrid["hybrid_code"] == "NO_CANDIDATE" and hybrid["technical_failure"] and not hybrid["false_refusal"]
 
 
 def test_contamination_scan_finds_opened_text_and_reports_its_limits(tmp_path):

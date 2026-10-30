@@ -16,7 +16,7 @@
    "id": "<unique id>",
    "problem_text": "<Vietnamese problem text>",
    "expect": "REFUSE",
-   "refusal_class": "<OUT_OF_DOMAIN|CONTRADICTORY_DATA|MISSING_DATA|PROOF_REQUEST>"
+   "refusal_class": "<OUT_OF_DOMAIN|CONTRADICTORY_DATA|MISSING_DATA>"
   }
  ]
 }

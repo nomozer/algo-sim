@@ -17,6 +17,23 @@
 
 **Tests:** `backend/tests/test_paired_route_evaluation.py`, 32 tests, all passing.
 
-## Re-verification
+## Round 2: re-verification of `edbc54b7` by the same reviewer — `NOT_READY`
 
-Pending. See the second-pass section below once it has run.
+**Closed:** B1, M1, and the curved-solid part of B2. The producer part of B3 and most of M2 and M3 were also confirmed closed.
+
+**Open:**
+
+| id | finding | fix |
+|---|---|---|
+| N1 BLOCKER | Proof requests were an expected-refuse class, but LLM_ONLY builds the figure for them by design (`geometry_program_generator.md:68-70`). This is the same flaw as curved solids. `not_simulation_suitable` was mapped to `OUT_OF_DOMAIN`. | `PROOF_REQUEST` is removed, and proof requests are out of scope (protocol §2). `not_simulation_suitable` → `NOT_SIMULATION_SUITABLE`, its own class. Refuse classes: 5 each of 3 (`test_proof_requests_are_out_of_scope_…`). |
+| N2 BLOCKER | The lenient primary rule scored "shown 12 and 13" as correct against an oracle of 12, and GO criterion 1 used it. | The **strict** rule is now primary for `served_correct` and `wrong_served`. Lenient is a sensitivity check only. Targets of unasked kinds are reported as `unverified_extra_targets`; that limitation is stated (`test_a_wrong_value_the_learner_sees_is_never_correct`). |
+| M4 REGRESSED (MAJOR) | The skip set was matched on the absolute path, so a checkout under `.superpowers/` scanned nothing. | Matched on the repo-relative path (`test_contamination_scan_works_inside_a_checkout_under_a_skipped_name`). **Probe on the real repository:** a sample text was found in 5 files, `geometry-samples.json` included, and a fresh text in none (51 s). |
+| N3 MAJOR | An interrupted run was reported `completed: true` | `INTERRUPTED:<type>`, `completed: false`, rows kept (`test_an_interrupted_run_is_reported_as_interrupted`) |
+| m1 | Decimal oracles were accepted | Refused (`test_decimal_oracles_are_refused`) |
+| m2 | `NO_CANDIDATE` and internal faults were asymmetric between the arms | `NO_CANDIDATE`, `ROUTE_INTERNAL_ERROR` and `ADAPTER_INTERNAL_ERROR` are infrastructure on Hybrid. An LLM_ONLY provider block cannot be detected by code; it counts as technical and feeds the streak (protocol §5.4). |
+
+**Tests:** 38/38.
+
+## Round 3
+
+Pending.

@@ -20,7 +20,7 @@ A person who did not build or tune the system: the Owner, or a teacher the Owner
   - `volume_ratio`, `residual_volume`.
 - Spread the problems over pyramids, prisms, cuboids, cubes **and curved solids**: spheres, cylinders and cones, with π answers. Also spread them over section-with-measure, distance, angle and volume questions. Each stratum needs at least 3 problems, or it is reported as `INSUFFICIENT_N`.
 
-**15 expected-refuse.** Give each a `refusal_class` of `OUT_OF_DOMAIN`, `CONTRADICTORY_DATA`, `MISSING_DATA` or `PROOF_REQUEST` (3–4 each).
+**15 expected-refuse.** Give each a `refusal_class` of `OUT_OF_DOMAIN`, `CONTRADICTORY_DATA` or `MISSING_DATA` (5 each). Do not write proof requests ("Chứng minh …"): they are out of scope.
 
 **Exclude:**
 - symbolic units such as "cạnh a"; use numbers;
@@ -30,7 +30,7 @@ A person who did not build or tune the system: the Owner, or a teacher the Owner
 ## Oracle rules
 
 - Compute every answer **by hand or with a CAS independent of this repository, before any system run.**
-- Write exact values: `"8/3"`, `"2√6/3"`, `"36π"`, `"√3/4"`. For `angle_cos_sq`, write cos² itself.
+- Write exact values: `"8/3"`, `"2√6/3"`, `"36π"`, `"√3/4"`. Never decimals: the harness refuses them. For `angle_cos_sq`, write cos² itself.
 - If two quantities of one kind are asked, list both.
 - Record the premise sentences that must be read, so failures can be attributed.
 

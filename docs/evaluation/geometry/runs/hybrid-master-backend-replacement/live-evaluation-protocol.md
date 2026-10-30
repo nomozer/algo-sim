@@ -27,7 +27,8 @@ The authoring rules are in `heldout-authoring/README.md`.
 
 **Composition: 60 problems.**
 - **45 expected-serve:** each asks at least one exact quantity. Problems that only ask for a construction are excluded. Curved solids are **allowed** as expected-serve, with π oracles, because LLM_ONLY serves them in production. If Hybrid refuses them, that is a measured capability loss.
-- **15 expected-refuse:** `refusal_class` is one of `OUT_OF_DOMAIN`, `CONTRADICTORY_DATA`, `MISSING_DATA`, `PROOF_REQUEST` (3–4 each).
+- **15 expected-refuse:** `refusal_class` is one of `OUT_OF_DOMAIN`, `CONTRADICTORY_DATA`, `MISSING_DATA` (5 each).
+- **Proof requests ("Chứng minh …") are out of scope.** LLM_ONLY builds the figure for them by design (`geometry_program_generator.md`), so they are neither an expected refusal nor scorable as an exact-quantity serve. *Revision, readiness review round 2, N1.*
 - **Numbers:** numeric data only. Symbolic units such as "cạnh a" are excluded, because the arms report unit coefficients differently.
 
 **Oracle.**
@@ -76,22 +77,24 @@ The authoring rules are in `heldout-authoring/README.md`.
 | field | definition |
 |---|---|
 | `served` | envelope `status == ok` with scene objects |
-| `served_correct` (**primary**) | served, expected-serve, and every oracle value is present among the served targets of its kind (multiset inclusion) |
-| `served_correct_strict` (**sensitivity**) | primary, and no other value of an asked kind is shown. Cases where the two differ are listed for blind adjudication. |
+| `served_correct` (**primary**) | served, expected-serve, and for every asked kind the shown target values are exactly the oracle's: each oracle value is shown, and **no other value of that kind is shown**. A wrong value the learner sees is never correct. *Revision, round 2, N2.* |
+| `served_correct_lenient` (**sensitivity only**) | every oracle value is shown, whatever else of that kind is shown. This is reported and does not feed any criterion. |
+| `unverified_extra_targets` | Targets of kinds the oracle does not ask. They are reported per case and per arm and are **not scored**. Their correctness rests on each arm's exact kernel; this is a stated limitation. |
 | `wrong_served` | served and not `served_correct`; this includes any served expected-refuse case |
 | `false_refusal` | expected-serve and not served, excluding technical failures |
 | `refusal_reason_correct` | the arm's class equals the case's `refusal_class` |
 
 **Refusal class per arm (fixed map):**
-- **Both arms:** `failure_category ∈ {out_of_scope, not_simulation_suitable}` → `OUT_OF_DOMAIN`.
-- **Hybrid:** `classify_refusal(code).group`, with `INVALID_DATA` → `CONTRADICTORY_DATA`, `MISSING_DATA` → `MISSING_DATA`, `INCONCLUSIVE` → `PROOF_REQUEST`.
+- **Both arms:** `failure_category = out_of_scope` → `OUT_OF_DOMAIN`; `not_simulation_suitable` → `NOT_SIMULATION_SUITABLE`, a class of its own that never matches an expected class.
+- **Hybrid:** `classify_refusal(code).group`, with `INVALID_DATA` → `CONTRADICTORY_DATA` and `MISSING_DATA` → `MISSING_DATA`.
 - **Anything else in either arm:** `UNSPECIFIC`, which is never correct. LLM_ONLY's `geometry_generation_failed` states no reason, and that is recorded as such.
 
 **Technical (infrastructure) failure, one rule for both arms:**
 - **Counts as technical:**
   - transport or HTTP errors after retries;
   - a deadline or budget stop;
-  - a provider block or refusal;
+  - a provider block or refusal, including an empty candidate list;
+  - an internal fault of our code (Hybrid's `ROUTE_INTERNAL_ERROR` / `ADAPTER_INTERNAL_ERROR`, LLM_ONLY's raised exceptions);
   - an exception raised out of the arm.
 - **Not technical:** a truncated or invalid model output. In LLM_ONLY it ends as `geometry_generation_failed`; in Hybrid it is `RESPONSE_TRUNCATED` / `JSON_INVALID`. Both count as **not served**.
 - **How technical failures are scored:** they count as not `served_correct`, are never counted as false refusals or as refused negatives, and are reported separately.
@@ -129,7 +132,10 @@ This is enough to re-score. Full model responses are not stored.
 1. **An arm serves an expected-refuse case:** that arm stops (`stopped_arms`) and the event is reported as a safety finding. The other arm continues.
 2. **Spend:** accounted spend reaches 80% of `max_usd` (`USD_80_PERCENT`).
 3. **Caps:** the request cap is reached (`REQUEST_CAP`), or the next request's exact ceiling would exceed `max_usd` (`COST_CEILING`).
-4. **Infrastructure:** 3 consecutive technical failures (`INFRASTRUCTURE_STREAK`), or a provider block or refusal (`PROVIDER_BLOCK`).
+4. **Infrastructure:** 3 consecutive technical failures (`INFRASTRUCTURE_STREAK`), or a provider block or refusal (`PROVIDER_BLOCK`). A block is detectable by code only in the Hybrid arm; in LLM_ONLY it surfaces as an exception, counts as technical, and feeds the streak.
+6. **Interruption:** an interrupted run writes `stop_reason = INTERRUPTED:<type>` and `completed: false`. Its rows are kept.
+
+Oracle values must be exact strings. Decimals are refused before any request.
 5. **Identity:** a change in the measured system, cache version, model, prompt files or harness (`IDENTITY_CHANGED`).
 
 **Hard cap.** Before every HTTP request of either arm, `CostCappedBudget` checks this inequality on the **exact payload**:
@@ -149,7 +155,7 @@ This is enough to re-score. Full model responses are not stored.
 
 Every criterion must hold on the frozen held-out set:
 1. Hybrid `wrong_served` is 0, and its Wilson upper bound is ≤ the LLM_ONLY observed rate.
-2. `served_correct` (primary) is not worse: the McNemar test does not favour LLM_ONLY at α = 0.05, and the difference is ≥ −5 pp. The strict sensitivity rule is reported, and any reversal is flagged.
+2. `served_correct` (primary) is not worse: the McNemar test does not favour LLM_ONLY at α = 0.05, and the difference is ≥ −5 pp. The lenient sensitivity rule is reported, and any reversal is flagged; it never overrides the primary rule.
 3. Hybrid refuses 100% of expected-refuse cases, with technical failures excluded and reported. Its refusal-reason accuracy is ≥ LLM_ONLY's.
 4. Hybrid latency: median ≤ LLM_ONLY's, and p90 ≤ 1.5× LLM_ONLY's.
 5. Hybrid USD per served-correct ≤ LLM_ONLY's.
