@@ -2,7 +2,8 @@
 """Migration Stage 2 — Hybrid V2 opt-in LOCAL on `/api/analyze` (run `scene3d-to-hybrid-v2-replacement`).
 
 Locked behaviour: the switch (`HYBRID_V2_LOCAL=offline-replay`) only acts for a loopback client; off or remote ⇒ the
-default `LLM_ONLY` path runs unchanged. On: the /4 response is returned as is, never cached, and a Hybrid refusal is
+default `LLM_ONLY` path runs unchanged. On: the /4 response is returned as is, never cached under the `LLM_ONLY` key
+(Route D rows have their own identity: `test_hybrid_route_d_cache_and_rollback.py`), and a Hybrid refusal is
 never re-run on `LLM_ONLY` (no silent fallback). A cached `LLM_ONLY` envelope for the same text is not served either.
 0 model calls: the default path here stops at its missing-key gate, the Hybrid path reads an authored replay corpus.
 """

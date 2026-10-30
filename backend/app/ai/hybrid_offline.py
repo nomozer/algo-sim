@@ -1,11 +1,12 @@
-"""Internal opt-in Hybrid integration. No cache, live transport or automatic fallback.
+"""Internal opt-in Hybrid integration. No live transport or automatic fallback; this module never touches the cache.
 
 The source-only injected extractor is trusted local code, not client-supplied code. The deadline/cancellation policy
 is cooperative between synchronous stages; a future live transport needs its own bounded I/O timeout.
 
 Migration Stage 2 (run `scene3d-to-hybrid-v2-replacement`): `run_local_replay` is reachable from `/api/analyze` only
 when the server sets `HYBRID_V2_LOCAL=offline-replay` and the client is loopback (`main._hybrid_v2_local`). The default
-route stays `LLM_ONLY`; nothing is cached; a Hybrid refusal is returned as a refusal, never re-run on `LLM_ONLY`.
+route stays `LLM_ONLY`; a Hybrid refusal is returned as a refusal, never re-run on `LLM_ONLY`. Only SERVED results are
+stored, by `main`, in their own Route D namespace under `prepare_local_replay(...).cache_key` (hybrid-master D-02).
 """
 from __future__ import annotations
 
@@ -86,7 +87,12 @@ def run_hybrid_offline(problem_text: str, extractor: Extractor, *, policy: Route
 
     def finish(result: KetQuaTuyen, failure_stage: str | None = None,
                failure_kind: str | None = None) -> HybridOfflineResult:
-        response = build_adapter4_response(result, source)
+        try:
+            response = build_adapter4_response(result, source)
+        except Exception:  # noqa: BLE001 — our fault while wrapping: a typed technical refusal, never a 500 or a fallback
+            result = KetQuaTuyen('REFUSED', 'ADAPTER_INTERNAL_ERROR')
+            failure_stage, failure_kind = 'adapter4', 'TECHNICAL_FAILURE'
+            response = build_adapter4_response(result, source)
         code = response['envelope'].get('reason_code')
         receipt.update(status=response['route_d']['status'], code=code,
                        failure_stage=failure_stage, failure_kind=failure_kind,
@@ -161,12 +167,27 @@ def run_hybrid_offline(problem_text: str, extractor: Extractor, *, policy: Route
 LOCAL_REPLAY_SCHEMA = 'hybrid-v2-local-replay-corpus/1'
 
 
-def run_local_replay(problem_text: str, corpus_path: str) -> HybridOfflineResult:
-    """Stage 2 opt-in local route: verbatim source → recorded `typed-fact-next/2` (authored replay corpus, keyed by the
-    exact problem text) → the same validation, Source Gate, planner, exact engine and /4 wrapper as `run_hybrid_offline`.
+@dataclass(frozen=True)
+class LocalReplay:
+    """One request's corpus read, policy snapshot and Route D cache identity — read ONCE, so the identity a result is
+    stored under is the identity it was computed from."""
+    problem_text: str
+    outputs: dict
+    policy: RoutePolicy
+    cache_key: str | None
 
-    A text the corpus does not hold is refused `NO_RECORDED_EXTRACTION` — the offline mode has no language
-    understanding, so it never guesses. An unreadable or foreign corpus file is an empty corpus, not an error page."""
+    def run(self) -> HybridOfflineResult:
+        return run_hybrid_offline(self.problem_text, ReplayExtractor(self.outputs), policy=self.policy)
+
+
+def prepare_local_replay(problem_text: str, corpus_path: str) -> LocalReplay:
+    """A text the corpus does not hold is refused `NO_RECORDED_EXTRACTION` at run time — the offline mode has no language
+    understanding, so it never guesses. An unreadable or foreign corpus file is an empty corpus, not an error page.
+
+    `cache_key` (D-02): sha256 of the route, the Route D surface (Registry/Planner/Engine/contract/adapter/envelope
+    versions), the recorded extraction and the EXACT source text — not the normalized `LLM_ONLY` key, because quotes
+    are grounded verbatim. `None` when nothing is recorded: such a request can only be refused, and refusals are not
+    cached."""
     try:
         data = json.loads(Path(corpus_path).read_text(encoding='utf-8'))
         outputs = data['outputs'] if data.get('schema') == LOCAL_REPLAY_SCHEMA and isinstance(data['outputs'], dict) \
@@ -174,4 +195,17 @@ def run_local_replay(problem_text: str, corpus_path: str) -> HybridOfflineResult
     except (OSError, ValueError, TypeError, KeyError, AttributeError):
         outputs = {}
     policy = hybrid_offline_policy({'HYBRID_ROUTE_D_PREVIEW': '1'})
-    return run_hybrid_offline(problem_text, ReplayExtractor(outputs), policy=policy)
+    recorded = outputs.get(problem_text) if isinstance(problem_text, str) else None
+    key = None
+    if recorded is not None:
+        identity = {'route': 'HYBRID_V2_LOCAL_OFFLINE_REPLAY', 'surface': dict(policy.preview_surface),
+                    'response_contract': policy.response_contract, 'recorded_extraction': recorded,
+                    'source': problem_text}
+        key = sha256(json.dumps(identity, sort_keys=True, ensure_ascii=False).encode('utf-8')).hexdigest()
+    return LocalReplay(problem_text, outputs, policy, key)
+
+
+def run_local_replay(problem_text: str, corpus_path: str) -> HybridOfflineResult:
+    """Stage 2 opt-in local route: verbatim source → recorded `typed-fact-next/2` (authored replay corpus, keyed by the
+    exact problem text) → the same validation, Source Gate, planner, exact engine and /4 wrapper as `run_hybrid_offline`."""
+    return prepare_local_replay(problem_text, corpus_path).run()

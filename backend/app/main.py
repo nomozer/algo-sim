@@ -20,6 +20,7 @@ from fastapi import Cookie, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field
+from sqlalchemy.exc import IntegrityError
 
 from app.persistence.db import (
     SessionLocal,
@@ -1089,22 +1090,70 @@ def _ngoai_pham_vi(text: str) -> dict | None:
     }
 
 
+#: `policy_version` of Route D rows (hybrid-master D-02). Their key is `prepare_local_replay(...).cache_key` (exact source
+#: + recorded extraction + Route D surface), a namespace the normalized `LLM_ONLY` key never produces; this tag makes the
+#: isolation two-way: an `LLM_ONLY` lookup wants `CACHE_VERSION[:fp]`, a Route D lookup wants this, so neither reads the
+#: other's row. Bumping `CACHE_VERSION` retires Route D rows too.
+ROUTE_D_CACHE_POLICY = f"{CACHE_VERSION}:route-d"
+
+
+def _served_route_d(row: SimulationCache | None) -> dict | None:
+    """A stored Route D response is reused only if it still is a SERVED /4 response; anything else is a MISS."""
+    try:
+        body = json.loads(row.envelope_json) if row is not None else None
+    except ValueError:
+        return None
+    return body if isinstance(body, dict) and (body.get("route_d") or {}).get("status") == "SERVED" else None
+
+
+def _store_route_d(session, key: str, text: str, response: dict) -> None:
+    stale = session.query(SimulationCache).filter_by(key=key).first()
+    if stale is not None:
+        session.delete(stale)
+        session.flush()        # same INSERT-before-DELETE trap as the LLM_ONLY write (see `analyze`)
+    session.add(SimulationCache(key=key, problem_text=text, simulation_id=str(response["envelope"].get("simulation_id", "")),
+                                envelope_json=json.dumps(response, ensure_ascii=False), dsl_version=DSL_VERSION,
+                                policy_version=ROUTE_D_CACHE_POLICY))
+    session.commit()
+
+
 async def _analyze_hybrid_v2_local(text: str, corpus_path: str, algosim_session: str | None) -> Any:
-    """Đường Hybrid V2 offline (Stage 2): phản hồi /4 nguyên vẹn (`hybrid-route-d-simulation/4`), `no-store`."""
+    """Đường Hybrid V2 offline (Stage 2): phản hồi /4 nguyên vẹn (`hybrid-route-d-simulation/4`), `no-store`.
+
+    Cache Route D (D-02): chỉ lưu kết quả SERVED, khoá theo `prepare_local_replay`; `X-Algosim-Cache` = hit | miss | none."""
     ngoai = _ngoai_pham_vi(text)
     if ngoai is not None:
         return JSONResponse(content=ngoai, headers={"Cache-Control": "no-store"})
     # Declared Hybrid V2 execution boundary, reached only after the opt-in and loopback gates.
     from starlette.concurrency import run_in_threadpool
 
-    from app.ai.hybrid_offline import run_local_replay
+    from app.ai.hybrid_offline import prepare_local_replay
 
-    result = await run_in_threadpool(run_local_replay, text, corpus_path)
-    if result.response["route_d"]["status"] == "SERVED":
+    replay = await run_in_threadpool(prepare_local_replay, text, corpus_path)
+    response, state = None, "none"
+    if replay.cache_key is not None:
+        with SessionLocal() as session:
+            row = _cache_lookup(session, replay.cache_key, ROUTE_D_CACHE_POLICY)
+            response = _served_route_d(row)
+            if response is not None:
+                row.hit_count += 1
+                row.last_used_at = datetime.now(timezone.utc)
+                session.commit()
+                state = "hit"
+    if response is None:
+        response = (await run_in_threadpool(replay.run)).response
+        if replay.cache_key is not None and response["route_d"]["status"] == "SERVED":
+            state = "miss"
+            with SessionLocal() as session:
+                try:
+                    _store_route_d(session, replay.cache_key, text, response)
+                except IntegrityError:
+                    session.rollback()   # a concurrent request stored the same identity first; this result stands
+    if response["route_d"]["status"] == "SERVED":
         with SessionLocal() as session:
             _consume_guest_trial(session, algosim_session)
             session.commit()
-    return JSONResponse(content=result.response, headers={"Cache-Control": "no-store"})
+    return JSONResponse(content=response, headers={"Cache-Control": "no-store", "X-Algosim-Cache": state})
 
 
 @app.post("/api/analyze")
