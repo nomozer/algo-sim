@@ -50,7 +50,7 @@ from .registry import DINH_CAT_CANH, _cum_hoi
 #: two lines "chéo nhau" but they are coplanar (NFC-normalised quote).
 #: /13 (run `hybrid-v2-backend-generalization`): question planes are measured through the first non-collinear triple of
 #: the whole label group (`chon_ba_mat`), every named label is checked coplanar, and the IR plane carries the full name.
-ENGINE_VERSION = "geometry-function-engine/14"
+ENGINE_VERSION = "geometry-function-engine/15"
 PLANE_SECTION_CERTIFICATE_VERSION = "plane-section-certificate/1"
 PLANE_SECTION_CERTIFICATE_RULE = "engine_derived_plane_section"
 PLANE_SECTION_CERTIFICATE_PRODUCER = "engine.kiem_chung_chi_thiet_dien"
@@ -1911,7 +1911,8 @@ _KIEM_DICH = {
 BAC_DAI_LUONG = {"ask_volume": 3, "ask_length": 1, "ask_distance_point_plane": 1, "ask_angle_line_plane": 0,
                  "ask_area": 2, "ask_angle_plane_plane": 0, "ask_distance_lines": 1, "ask_section_area": 2,
                  "ask_angle_lines": 0, "ask_volume_ratio": 0, "ask_residual_volume": 3,
-                 "ask_distance_line_plane": 1, "ask_distance_planes": 1}
+                 "ask_distance_line_plane": 1, "ask_distance_planes": 1,
+                 "ask_curved_volume": 3, "ask_lateral_area": 2, "ask_surface_area": 2, "ask_radius": 1}
 
 
 #: Definitions of the unnamed points a planner `effect-chain` may introduce (affine: valid in chart coordinates). A
@@ -1951,7 +1952,8 @@ def dinh_dang(x: Any) -> str:
         dau = "-" if he < 0 else ""
         he = abs(he)
         tu = "" if he.numerator == 1 else str(he.numerator)
-        return f"{dau}{tu}{pi}√{can}" + (f"/{he.denominator}" if he.denominator != 1 else "")
+        tu = tu or ("1" if can == 1 and not pi else "")          # π with a rational coefficient (b = 1): "45π", not "45π√1"
+        return f"{dau}{tu}{pi}" + (f"√{can}" if can != 1 else "") + (f"/{he.denominator}" if he.denominator != 1 else "")
     if isinstance(x, (int, Fraction)):
         return str(Fraction(x))
     raise TypeError(f"không phải số chính xác: {type(x).__name__}")
@@ -1990,6 +1992,194 @@ def _hien_thi_ky_hieu(x: Any, bac: int, ky_hieu: str) -> str:
     return f"{tu}{ky_hieu}{_MU[bac]}" + (f"√{can}" if can != 1 else "") + (f"/{he.denominator}" if he.denominator != 1 else "")
 
 
+#: Ask on a solid of revolution → (IR quantity, answer degree). `ask_surface_area` of a cylinder / cone is composed below.
+_HOI_CONG = {"ask_curved_volume": ("volume", 3), "ask_lateral_area": ("lateral_area", 2),
+             "ask_surface_area": ("area", 2), "ask_radius": ("radius", 1)}
+
+
+def _kich_thuoc_cong(k: LoiGoi, segs: list[LoiGoi]) -> tuple[Fraction, Fraction | None, str | None, list[dict]]:
+    """(r², h², length unit, derivation steps) of ONE solid of revolution, solved EXACTLY from what the source states. The
+    canonical figure fixes three named points: centre O, top/apex T on the axis (|OT| = h), rim A on the base circle
+    (|OA| = r, OA ⊥ OT) — so every stated length among {O, T, A} is ONE linear equation in (r², h²): radius, OA → r²;
+    height, OT → h²; TA → r² + h² (the slant of a cone). Unknown ⇒ `MISSING_DIMENSION`; any two that disagree, or a
+    non-positive solution ⇒ `INCONSISTENT_FACTS` — never a pick. A length between other points has no certificate here."""
+    a = k.args
+    roles = {frozenset((a.center, a.rim)): (1, 0), frozenset((a.center, a.top)): (0, 1), frozenset((a.top, a.rim)): (1, 1)}
+    eqs: list[tuple[tuple[int, int], tuple[Fraction, bool], str]] = []
+    if a.radius:
+        eqs.append(((1, 0), doc_so(a.radius), k.id))
+    if a.height:
+        eqs.append(((0, 1), doc_so(a.height), k.id))
+    for s in segs:
+        role = roles.get(frozenset(s.args.segment)) if None not in (a.top, a.rim) or a.kind == "sphere" else None
+        if a.kind == "sphere" and frozenset(s.args.segment) != frozenset((a.center, a.rim)):
+            role = None
+        if role is None:
+            raise TuChoi("CURVED_RELATION_UNSUPPORTED", f"{s.id}: đoạn {''.join(s.args.segment)} không nối tâm, đỉnh/tâm đáy "
+                         f"trên và điểm trên vành của {a.solid}", (s.id,))
+        eqs.append((role, doc_so(s.args.value), s.id))
+    if len({has_a for _r, (_v, has_a), _i in eqs}) > 1:
+        raise TuChoi("NON_HOMOGENEOUS_LENGTHS", "độ dài vừa có vừa không có ký hiệu a", tuple(i for *_x, i in eqs))
+    unit = "a" if eqs and eqs[0][1][1] else None
+    r2 = next((v for (x, y), (v, _a), _i in eqs if (x, y) == (1, 0)), None)
+    h2 = next((v for (x, y), (v, _a), _i in eqs if (x, y) == (0, 1)), None)
+    steps = []
+    for (x, y), (v, _a), i in eqs:          # TA² = r² + h²: derive whichever one is still unknown
+        if (x, y) == (1, 1) and (r2 is None) != (h2 is None):
+            if r2 is None:
+                r2 = v - h2
+                steps.append({"step": "derive_dimension", "object": "radius", "rule": "pythagoras_axis_rim",
+                              "calls": [i], "value_sq": str(r2), "note": f"{a.center}{a.rim}² = {a.top}{a.rim}² − {a.center}{a.top}²"})
+            else:
+                h2 = v - r2
+                steps.append({"step": "derive_dimension", "object": "height", "rule": "pythagoras_axis_rim",
+                              "calls": [i], "value_sq": str(h2), "note": f"{a.center}{a.top}² = {a.top}{a.rim}² − {a.center}{a.rim}²"})
+    need_h = a.kind != "sphere"
+    if r2 is None or (need_h and h2 is None):
+        raise TuChoi("MISSING_DIMENSION", f"{k.id}: thiếu {'bán kính' if r2 is None else 'chiều cao'} của {a.solid}", (k.id,))
+    if r2 <= 0 or (need_h and h2 <= 0):
+        raise TuChoi("INCONSISTENT_FACTS", f"{k.id}: kích thước suy ra không dương (r² = {r2}, h² = {h2})",
+                     tuple(i for *_x, i in eqs))
+    for (x, y), (v, _a), i in eqs:          # every stated length holds EXACTLY on the solved figure
+        if x * r2 + y * (h2 or 0) != v:
+            raise TuChoi("INCONSISTENT_FACTS", f"{i}: độ dài đã cho mâu thuẫn với bán kính / chiều cao của {a.solid}", (i,))
+    return r2, (h2 if need_h else None), unit, steps
+
+
+def _chung_chi_cong(kind: str, q: str, r2: Fraction, h2: Fraction | None) -> Any:
+    """INDEPENDENT closed form of an asked quantity (written from the formulas, not from `geometry/curved.py`): cylinder
+    V = πr²h, S_xq = 2πrh, S_tp = 2πrh + 2πr²; cone V = πr²h/3, S_xq = πr·√(r² + h²), S_tp = S_xq + πr²; sphere S = 4πr²,
+    V = 4πr³/3. A sum of unlike terms is outside the exact domain ⇒ `RadicalDomainError` (the caller refuses)."""
+    from app.simulation.geometry.radical import PI_EXPONENT_DOMAIN, add, multiply, radical, sqrt_rational, times_rational
+
+    assert PI_EXPONENT_DOMAIN == (0, 1)
+    pi, r = radical(1, 1, 1), sqrt_rational(r2)
+    if q == "radius":
+        return r
+    if kind == "sphere":
+        return times_rational(pi, 4 * r2) if q == "area" else times_rational(multiply(pi, r), Fraction(4, 3) * r2)
+    h = sqrt_rational(h2)
+    if q == "volume":
+        return times_rational(multiply(pi, h), r2 / (3 if kind == "cone" else 1))
+    side = times_rational(multiply(pi, multiply(r, h)), 2) if kind == "cylinder" else \
+        multiply(pi, multiply(r, sqrt_rational(r2 + h2)))
+    if q == "lateral_area":
+        return side
+    return add(side, times_rational(pi, r2 * (2 if kind == "cylinder" else 1)))
+
+
+def _dung_cong(calls: tuple[LoiGoi, ...], problem_text: str) -> KetQuaTuyen:
+    """A plan of ONE solid of revolution (curved slice, engine /15): the same Source Gate (already run), IR validator,
+    interpreter and exact kernel as every plan — only the LAYOUT differs: a canonical pose (centre at the origin, axis z)
+    instead of a polygon chart. Dimensions are solved exactly (`_kich_thuoc_cong`); every answer is the executed kernel
+    value AND equals an independent closed form (`_chung_chi_cong`), or the plan is refused."""
+    from app.simulation.geometry.radical import RadicalDomainError, display, sqrt_rational
+    from app.simulation.semantic_program.interpreter import SemanticProgramInterpreter
+    from app.simulation.semantic_program.validator import validate_semantic_program
+
+    (k,) = [c for c in calls if c.fn == "curved_solid"]
+    a = k.args
+    segs = [c for c in calls if c.fn == "segment_length"]
+    asks = [c for c in calls if c.fn in _HOI_CONG]
+    if lac := [c.id for c in calls if c is not k and c not in segs and c not in asks]:
+        raise TuChoi("CURVED_RELATION_UNSUPPORTED", f"{lac}: lời gọi chưa có quan hệ đã chứng nhận với khối tròn xoay", tuple(lac))
+    if (a.kind == "sphere") == (a.top is not None):
+        raise TuChoi("MALFORMED_CURVED_SOLID", f"{k.id}: {'mặt cầu không có đỉnh' if a.top else 'thiếu đỉnh / tâm đáy trên'}", (k.id,))
+    r2, h2, unit, steps = _kich_thuoc_cong(k, segs)
+    r, h = sqrt_rational(r2), (sqrt_rational(h2) if h2 is not None else None)
+    trace = [{"step": "choose_pose", "object": a.solid, "rule": "canonical_axis_z", "calls": [k.id],
+              "provenance": "LAYOUT_DERIVED", "note": f"tâm {a.center} tại gốc, trục là Oz — một lựa chọn hệ quy chiếu, "
+                                                       "không phải dữ kiện"}, *steps]
+    decls, stmts, pts = [], [], {a.center: (Fraction(0),) * 3}
+
+    def decl(name: str, mtype: str, init: Any = None) -> str:
+        decls.append({"name": name, "type": mtype, "initial_value": init})
+        return name
+    o = decl(ir_name(a.center), "point3", [0, 0, 0])
+    top = rim = rad = hgt = None
+    if a.top and isinstance(h, Fraction):
+        top, pts[a.top] = decl(ir_name(a.top), "point3", [0, 0, str(h)]), (Fraction(0), Fraction(0), h)
+    if a.rim and isinstance(r, Fraction):
+        rim, pts[a.rim] = decl(ir_name(a.rim), "point3", [str(r), 0, 0]), (r, Fraction(0), Fraction(0))
+    if rim is None:
+        rad = decl("R_" + ir_name(k.id), "float", display(r))
+    if h is not None and top is None:
+        hgt = decl("h_" + ir_name(k.id), "float", display(h))
+    solid = decl("khoi_" + ir_name(k.id), "curved_solid")
+    ten = {"cylinder": "Hình trụ", "cone": "Hình nón", "sphere": "Mặt cầu"}[a.kind]
+    stmts.append({"kind": "construct_curved_solid", "target_var": solid,
+                  "curved_kind": "ball" if a.kind == "sphere" else a.kind, "anchor": o,
+                  "apex_or_top": top, "rim_point": rim, "radius": rad, "height": hgt,
+                  "label": f"{ten} {a.solid}" + (f" tâm {a.center}" if a.kind == "sphere" else "")})
+    trace.append({"step": "construct_solid", "object": a.solid, "rule": a.kind, "calls": [k.id]})
+    hoi, tra, chinh_xac, muc_tieu, cert = {}, {}, {}, {solid}, {}
+    for c in asks:
+        q, bac = _HOI_CONG[c.fn]
+        if c.args.solid != a.solid:
+            raise TuChoi("UNKNOWN_SOLID", f"{c.id}: khối {c.args.solid!r} không phải {a.solid}", (c.id,))
+        if q == "lateral_area" and a.kind == "sphere":
+            raise TuChoi("CURVED_MEASURE_UNDEFINED", f"{c.id}: mặt cầu không có diện tích xung quanh", (c.id,))
+        if q == "area" and a.kind != "sphere" and not any("toàn phần" in chuan_hoa_vi(x) for x in c.quotes):
+            raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: diện tích của {ten.lower()} phải là xung quanh hay toàn phần — "
+                         "đề không nói rõ", (c.id,))
+        try:
+            cert[c.id] = _chung_chi_cong(a.kind, q, r2, h2)
+        except RadicalDomainError:
+            raise TuChoi("EXACT_DOMAIN_EXCEEDED", f"{c.id}: đáp số là tổng hai số hạng căn khác loại, ngoài miền số chính xác "
+                         "a·π·√b — không làm tròn", (c.id,)) from None
+        kq = decl("kq_" + ir_name(c.id), "float")
+        if q == "area" and a.kind != "sphere":         # S_tp = S_xq + (1 | 2)·S_đáy: lateral area + base circle(s)
+            mp, day = decl("mp_day_" + ir_name(k.id), "plane3"), decl("day_" + ir_name(k.id), "circle3")
+            xq, sd = decl("sxq_" + ir_name(c.id), "float"), decl("sday_" + ir_name(c.id), "float")
+            stmts += [{"kind": "construct_plane_from_equation", "target_var": mp, "a": 0, "b": 0, "c": 1, "d": 0,
+                       "label": f"Mặt phẳng đáy ({a.center})"},
+                      {"kind": "assign", "target_var": day, "expr": {"kind": "intersect_plane_curved", "solid": solid, "plane": mp}},
+                      {"kind": "assign", "target_var": xq, "expr": {"kind": "measure", "quantity": "lateral_area", "of": solid}},
+                      {"kind": "assign", "target_var": sd, "expr": {"kind": "measure", "quantity": "area", "of": day}},
+                      {"kind": "assign", "target_var": kq, "expr": {"kind": "arith", "op": "+", "left": {"kind": "var", "name": xq},
+                       "right": {"kind": "arith", "op": "*", "left": {"kind": "literal", "value": 2 if a.kind == "cylinder" else 1},
+                                 "right": {"kind": "var", "name": sd}}}}]
+            # the parts are intermediates, not answers: only the asked total is a target the learner reads as the result
+            trace.append({"step": "compose_quantity", "object": c.id, "rule": "total_area = lateral + bases",
+                          "calls": [c.id], "parts": [xq, sd]})
+        else:   # a sphere has no base: its surface IS its curved surface (`dien_tich_mat_cong` = 4πR²)
+            iq = "lateral_area" if (q, a.kind) == ("area", "sphere") else q
+            stmts.append({"kind": "assign", "target_var": kq, "expr": {"kind": "measure", "quantity": iq, "of": solid}})
+        hoi[c.id], muc_tieu = kq, muc_tieu | {kq}
+    program = {"program_id": "route_d_curved_solid", "title": problem_text[:120], "domain": "geometry",
+               "memory_declarations": decls, "statements": stmts}
+    vr = validate_semantic_program(program)
+    if not vr.ok:
+        raise TuChoi("ENGINE_IR_INVALID", f"IR khối tròn xoay không qua thẩm định: {vr.error}")
+    G = _metric.Metric(((Fraction(1), Z, Z), (Z, Fraction(1), Z), (Z, Z, Fraction(1))))   # the Euclidean chart
+    try:
+        with _metric.using(G):
+            ket = SemanticProgramInterpreter().execute(vr.spec)
+    except Exception as e:  # noqa: BLE001 — kernel refusal ⇒ a typed refusal, never an approximation
+        raise TuChoi(getattr(e, "code", None) or "ENGINE_EXECUTION_FAILED", f"{type(e).__name__}: {e}") from None
+    fm = ket.final_memory
+    for cid, kq in hoi.items():
+        if fm.get(kq) != cert[cid]:
+            raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"{cid}: giá trị thực thi khác công thức đóng độc lập", (cid,))
+        bac = _HOI_CONG[next(c.fn for c in asks if c.id == cid)][1]
+        chinh_xac[cid] = {"coef": dinh_dang(fm[kq]), "dim": bac if unit else 0, "unit": unit if bac else None}
+        tra[cid] = _hien_thi_ky_hieu(fm[kq], bac, unit) if unit else dinh_dang(fm[kq])
+        trace.append({"step": "certify_answer", "object": cid, "rule": "independent_closed_form", "calls": [cid],
+                      "value": chinh_xac[cid]["coef"]})
+    for t, p in pts.items():                       # every named point executed exactly where the layout put it
+        v = fm.get(ir_name(t))
+        if v is None or (v.x, v.y, v.z) != p:
+            raise TuChoi("ENGINE_SELF_CHECK_FAILED", "điểm kernel thực thi khác bố cục khối tròn xoay")
+    return KetQuaTuyen("SERVED", answers=tra, trace=trace, program=program, points=dict(pts), metric=G.as_json(),
+                       kernel_check=True, spec=vr.spec, exec_result=ket, chart_metric=G, targets=tuple(sorted(muc_tieu)),
+                       answer_exact=chinh_xac, length_unit=unit, checker=lambda call: None, declared_topology=None,
+                       calls=[{"id": c.id, "fn": c.fn, "args": c.args.model_dump(), "quotes": list(c.quotes)} for c in calls])
+
+
+def chuan_hoa_vi(s: str) -> str:
+    return " ".join(unicodedata.normalize("NFC", s).lower().split())
+
+
 def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = (),
                     read_quotes: tuple[str, ...] = ()) -> KetQuaTuyen:
     """Dựng + kiểm + thực thi từ lời gọi hàm. Trả `KetQuaTuyen` CHƯA có cảnh (`scene3d=None`) nhưng có `spec` và
@@ -2006,6 +2196,8 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         if esc := [c for c in calls if c.fn == "unsupported"]:
             raise TuChoi("OUT_OF_SCOPE", "; ".join(f"{c.id}: {c.args.reason} ({c.quote!r})" for c in esc),
                          tuple(c.id for c in esc))
+        if any(c.fn == "curved_solid" for c in calls):
+            return _dung_cong(calls, problem_text)
         ky_hieu = _don_vi(calls)
         dung = _Dung(calls, problem_text, ky_hieu)
         if ky_hieu:

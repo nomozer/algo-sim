@@ -325,6 +325,10 @@ IDENTITY_DELTAS = (
      "versions": {"registry_version": ("geometry-functions/20", "geometry-functions/21")}},
     {"run": "hybrid-master-backend-replacement",           # respectively projection lists; planner/engine unchanged
      "versions": {"registry_version": ("geometry-functions/21", "geometry-functions/22")}},
+    {"run": "hybrid-master-backend-replacement",           # curved solids on /4 (registry /23, planner /19, engine /15)
+     "versions": {"registry_version": ("geometry-functions/22", "geometry-functions/23"),
+                  "planner_version": ("geometry-fact-planner/18", "geometry-fact-planner/19"),
+                  "engine_version": ("geometry-function-engine/14", "geometry-function-engine/15")}},
 )
 
 

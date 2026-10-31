@@ -407,12 +407,21 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
     facts: list[dict[str, Any]] = []
     solids = {s.solid_id: s for s in p.solids}
     scoped = _kiem_pham_vi_tien_de(p, solids)  # semantic ownership precedes every capability refusal/fallback
+    curved = {s.solid_id for s in p.solids if s.solid_type not in ("pyramid", "prism")}
+    if curved and len(p.solids) > 1:      # curved slice (bridge /2, registry /23): one curved solid; composites need their own certificates
+        raise TuChoi("BRIDGE_UNSUPPORTED_CURVED_COMPOSITE", f"{sorted(curved)}: khối tròn xoay cùng khối khác trong một bài "
+                     "chưa có chứng chỉ quan hệ trên planner", tuple(sorted(curved)))
     for s in p.solids:
-        if s.solid_type not in ("pyramid", "prism"):
+        if s.solid_type == "cone_frustum":
             raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{s.solid_id}: khối {s.solid_type} chưa có trên planner", (s.solid_id,))
         if any(a != b for a, b in s.vertex_bindings.items()) or s.coordinate_frame_id != "root":
             raise TuChoi("BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY", f"{s.solid_id}: hai điểm khác nhau mang cùng nhãn — TypedFact "
                          "định danh điểm bằng nhãn", (s.solid_id,))
+        if s.solid_id in curved:
+            facts.append({"id": s.solid_id, "kind": "solid", "role": "premise", "quotes": [s.quote], "solid": s.notation,
+                          "curved": {"kind": s.solid_type, "center": s.center, "top": s.apex_or_top, "rim": s.rim_point,
+                                     "radius": s.radius, "height": s.height}})
+            continue
         facts.append({"id": s.solid_id, "kind": "solid", "role": "premise", "quotes": [s.quote], "solid": s.notation,
                       "solid_type": s.solid_type})
     theo_ten = {s.notation: f for s, f in zip(p.solids, facts)}
@@ -539,6 +548,8 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif g.kind == "residual_volume":
             facts.append({**q, "quantity": "residual_volume",
                           "solid_refs": [solid_fact(g.parent_solid_id, g.goal_id), solid_fact(g.cut_solid_id, g.goal_id)]})
+        elif g.goal_type in ("volume", "area", "lateral_area", "radius") and measurement_scope(p, g) in curved:
+            facts.append({**q, "quantity": g.goal_type, "solid": solids[measurement_scope(p, g)].notation})
         elif g.goal_type == "volume" and measurement_scope(p, g) in solids:
             # F6: a notation / canonical alias names the same solid (validated by the schema policy, S2/S3)
             facts.append({**q, "quantity": "volume",

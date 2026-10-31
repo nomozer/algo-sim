@@ -34,6 +34,11 @@ A person who did not build or tune the system: the Owner, or a teacher the Owner
 - List every quantity the problem asks, but write **each distinct value once**. If two asked distances are both 12, write `["12"]` (review n2).
 - Do not ask for a plain volume together with a volume ratio or remaining volume in the same problem. Systems may show auxiliary volumes as targets, and the strict rule would then fail a correct answer (review n1). Ask for them in separate problems.
 - Record the premise sentences that must be read, so failures can be attributed.
+- **π with a radical:** write π **before** the square root: `"4π√2"`, not `"4√2π"`. The second form is not in the `parse_exact` grammar, and the harness refuses it before any run.
+- **Curved surfaces (fixed before any corpus, the same for both arms).** The scorer reads each shown value by its producer kind, and in both arms the exact kernel measures a solid's surface only as its curved surface.
+  - The **surface area of a sphere** ("diện tích mặt cầu") goes under `lateral_area`, because a sphere's curved surface is its whole surface, 4πR².
+  - The **lateral area** of a cylinder or cone also goes under `lateral_area`.
+  - **Do not ask** for the total surface area ("diện tích toàn phần") of a cylinder or cone. Neither arm shows it under a scorable kind, so a correct answer could not be scored. Ask for the lateral area, volume or radius instead.
 
 ## Format and freeze
 

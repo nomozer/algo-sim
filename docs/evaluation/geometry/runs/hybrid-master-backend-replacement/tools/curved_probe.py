@@ -1,0 +1,174 @@
+"""Curved-solid DEVELOPMENT probe for Route D /4 (fifth continuation, Owner option (b)). Each oracle is written by hand
+before any implementation, in the `radical.parse_exact` grammar (π kept). Offline, 0 provider calls; not held-out.
+Usage: curved_probe.py [out.json]
+
+Formulas (closed form, by hand): cylinder V = πr²h, S_xq = 2πrh, S_tp = 2πrh + 2πr²; oracles write π before √ ("4π√2", the parse_exact grammar); cone V = πr²h/3, l² = r² + h²,
+S_xq = πrl, S_tp = πrl + πr²; sphere S = 4πR², V = 4πR³/3. A total area with two unlike radical terms is outside the exact
+single-term domain (a·π·√b) and must be a TYPED refusal, never an approximation.
+"""
+import json, sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[6]
+sys.path.insert(0, str(ROOT / 'backend'))
+from app.ai.adapter4_route import run_typed_fact_next_v2_route  # noqa: E402
+from app.simulation.geometry.radical import from_json, parse_exact  # noqa: E402
+
+
+def solid(kind, notation, center, top, rim, radius, height, quote):
+    s = {"solid_id": "k", "solid_type": kind, "notation": notation, "center": center, "rim_point": rim,
+         "radius": radius, "quote": quote}
+    if top:
+        s["apex_or_top"] = top
+    if height:
+        s["height"] = height
+    return s
+
+
+CYL = ("Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O, bán kính đáy bằng 3 và chiều cao bằng 5.",
+       solid("cylinder", "O.O'", "O", "O'", "A", "3", "5",
+             "Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O, bán kính đáy bằng 3 và chiều cao bằng 5"),
+       [])
+CONE = ("Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy, bán kính đáy bằng 3 và chiều cao bằng 4.",
+        solid("cone", "S.O", "O", "S", "A", "3", "4",
+              "Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy, bán kính đáy bằng 3 và chiều cao bằng 4"),
+        [])
+# slant given instead of the height: h² = SA² − OA² = 25 − 9 must be DERIVED (recomposition over named points)
+CONE_L = ("Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy, bán kính đáy bằng 3. Đường sinh SA = 5.",
+          solid("cone", "S.O", "O", "S", "A", "3", None,
+                "Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy, bán kính đáy bằng 3"),
+          [{"kind": "segment_length", "args": {"segment": ["S", "A"], "value": "5"}, "quote": "Đường sinh SA = 5",
+            "solid_id": "k"}])
+CONE_R = ("Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy, bán kính đáy bằng 2 và chiều cao bằng 2.",
+          solid("cone", "S.O", "O", "S", "A", "2", "2",
+                "Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy, bán kính đáy bằng 2 và chiều cao bằng 2"),
+          [])
+SPH = ("Cho mặt cầu tâm O, điểm A thuộc mặt cầu, bán kính bằng 3.",
+       solid("sphere", "O", "O", None, "A", "3", None, "Cho mặt cầu tâm O, điểm A thuộc mặt cầu, bán kính bằng 3"), [])
+CYL_R = ("Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O, bán kính đáy bằng √2 và chiều cao bằng 3.",
+         solid("cylinder", "O.O'", "O", "O'", "A", "√2", "3",
+               "Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O, bán kính đáy bằng √2 và chiều cao bằng 3"),
+         [])
+
+# (id, figure, goal_type, question, expected): expected = exact oracle string, or "REFUSE"
+CASES = [
+    ("cyl.V", CYL, "volume", "Tính thể tích khối trụ.", "45π"),
+    ("cyl.Sxq", CYL, "lateral_area", "Tính diện tích xung quanh của hình trụ.", "30π"),
+    ("cyl.Stp", CYL, "area", "Tính diện tích toàn phần của hình trụ.", "48π"),
+    ("cyl.r", CYL, "radius", "Tính bán kính đáy của hình trụ.", "3"),
+    ("cone.V", CONE, "volume", "Tính thể tích khối nón.", "12π"),
+    ("cone.Sxq", CONE, "lateral_area", "Tính diện tích xung quanh của hình nón.", "15π"),
+    ("cone.Stp", CONE, "area", "Tính diện tích toàn phần của hình nón.", "24π"),
+    ("coneL.V", CONE_L, "volume", "Tính thể tích khối nón.", "12π"),
+    ("coneL.Sxq", CONE_L, "lateral_area", "Tính diện tích xung quanh của hình nón.", "15π"),
+    ("coneR.Sxq", CONE_R, "lateral_area", "Tính diện tích xung quanh của hình nón.", "4π√2"),
+    ("coneR.V", CONE_R, "volume", "Tính thể tích khối nón.", "8π/3"),
+    ("sph.S", SPH, "area", "Tính diện tích mặt cầu.", "36π"),
+    ("sph.V", SPH, "volume", "Tính thể tích khối cầu.", "36π"),
+    ("cylR.V", CYL_R, "volume", "Tính thể tích khối trụ.", "6π"),
+    ("cylR.Sxq", CYL_R, "lateral_area", "Tính diện tích xung quanh của hình trụ.", "6π√2"),
+    ("cylR.Stp", CYL_R, "area", "Tính diện tích toàn phần của hình trụ.", "REFUSE"),     # 6√2π + 4π: two unlike terms
+]
+
+
+def payload(fig, goal_type, question, mutate=None):
+    given, s, premises = fig
+    target = {"solid_id": "k"} if goal_type == "volume" else {"solid": s["notation"]}
+    p = {"schema_version": "typed-fact-next/2", "problem_text": f"{given} {question}", "length_unit": "1",
+         "solids": [dict(s)], "premises": [dict(x) for x in premises], "derived_sections": [], "relations": [],
+         "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "k", "quote": s["quote"]}],
+         "math_goals": [{"goal_id": "mg1", "kind": "measurement", "goal_type": goal_type, "target": target,
+                         "quote": question.rstrip(".")}]}
+    if mutate:
+        mutate(p)
+    return p
+
+
+def bad_slant(p):          # l = 3 < r = 3? equal ⇒ h = 0: contradictory data
+    p["premises"][0] = {**p["premises"][0], "args": {"segment": ["S", "A"], "value": "3"}, "quote": "Đường sinh SA = 3"}
+    p["problem_text"] = p["problem_text"].replace("SA = 5", "SA = 3")
+
+
+def overdetermined(p):     # r = 3, h = 4 stated AND SA = 6 ≠ 5: contradictory, never pick one
+    p["premises"].append({"kind": "segment_length", "args": {"segment": ["S", "A"], "value": "6"}, "quote": "SA = 6",
+                          "solid_id": "k"})
+    p["problem_text"] = p["problem_text"].replace("chiều cao bằng 4.", "chiều cao bằng 4. SA = 6.")
+
+
+def wrong_value(p):        # payload radius disagrees with the text
+    p["solids"][0]["radius"] = "4"
+
+
+def no_height(p):          # cylinder volume without a height: missing data
+    p["solids"][0].pop("height")
+
+
+def foreign_solid(p):      # the goal names a solid that is not declared
+    p["math_goals"][0]["target"] = {"solid_id": "other"}
+
+
+def swapped(p):            # radius and height exchanged against the text (r = 3, h = 5)
+    p["solids"][0].update(radius="5", height="3")
+
+
+def no_height_text(p):     # the source states no height: a cylinder volume is underdetermined
+    q = "Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O, bán kính đáy bằng 3"
+    p["problem_text"] = q + ". Tính thể tích khối trụ."
+    p["solids"][0].update(quote=q)
+    p["solids"][0].pop("height")
+    p["simulation_goals"][0]["quote"] = q
+
+
+def composite(p):          # a pyramid in the same problem: no certified curved–polyhedral relation yet
+    p["problem_text"] += " Cho hình chóp S.ABC."
+    p["solids"].append({"solid_id": "c2", "solid_type": "pyramid", "notation": "S.ABC", "quote": "Cho hình chóp S.ABC"})
+
+
+def foreign_segment(p):    # a length to a point the cone does not own
+    p["premises"][0] = {**p["premises"][0], "args": {"segment": ["S", "B"], "value": "5"}, "quote": "Đường sinh SB = 5"}
+    p["problem_text"] = p["problem_text"].replace("SA = 5", "SB = 5")
+
+
+NEGATIVES = [("n.bad_slant", CONE_L, "volume", "Tính thể tích khối nón.", bad_slant),
+             ("n.swapped", CYL, "volume", "Tính thể tích khối trụ.", swapped),
+             ("n.wrong_kind", CYL, "volume", "Tính thể tích khối nón.", None),
+             ("n.missing_height", CYL, "volume", "Tính thể tích khối trụ.", no_height_text),
+             ("n.sphere_lateral", SPH, "lateral_area", "Tính diện tích xung quanh của mặt cầu.", None),
+             ("n.area_unqualified", CYL, "area", "Tính diện tích của hình trụ.", None),
+             ("n.composite", CYL, "volume", "Tính thể tích khối trụ.", composite),
+             ("n.foreign_segment", CONE_L, "volume", "Tính thể tích khối nón.", foreign_segment),
+             ("n.overdetermined", CONE, "volume", "Tính thể tích khối nón.", overdetermined),
+             ("n.wrong_value", CYL, "volume", "Tính thể tích khối trụ.", wrong_value),
+             ("n.no_height", CYL, "volume", "Tính thể tích khối trụ.", no_height),
+             ("n.foreign_solid", CYL, "volume", "Tính thể tích khối trụ.", foreign_solid)]
+
+
+def run():
+    rows = []
+    for cid, fig, gt, q, expected in CASES:
+        r = run_typed_fact_next_v2_route(payload(fig, gt, q))
+        got = (r.answer_exact or {}).get("mg1") if r.status == "SERVED" else None
+        if expected == "REFUSE":
+            outcome = "REFUSED_CORRECT" if got is None else "WRONG_SERVED"
+        elif got is None:
+            outcome = "REFUSED"
+        else:
+            outcome = "SERVED_CORRECT" if parse_exact(got["coef"]) == parse_exact(expected) else "WRONG_SERVED"
+        rows.append({"id": cid, "status": r.status, "code": r.code, "answer": got, "oracle": expected,
+                     "outcome": outcome, "reason": (r.reason or "")[:200]})
+    for cid, fig, gt, q, mutate in NEGATIVES:
+        r = run_typed_fact_next_v2_route(payload(fig, gt, q, mutate))
+        outcome = "REFUSED_CORRECT" if r.status != "SERVED" and not r.answer_exact else "SERVED_NEGATIVE"
+        rows.append({"id": cid, "status": r.status, "code": r.code, "outcome": outcome, "reason": (r.reason or "")[:200]})
+    return rows
+
+
+if __name__ == "__main__":
+    rows = run()
+    for x in rows:
+        print(f"{x['id']:16s} {x['status']:8s} {str(x['code']):34s} {x.get('answer')} oracle {x.get('oracle')} {x['outcome']}")
+    if len(sys.argv) > 1:
+        with open(sys.argv[1], 'x', encoding='utf-8', newline='\n') as f:
+            json.dump({"provider_calls": 0, "classification": "DEVELOPMENT_DIAGNOSTIC", "rows": rows}, f,
+                      ensure_ascii=False, indent=1)
+            f.write('\n')

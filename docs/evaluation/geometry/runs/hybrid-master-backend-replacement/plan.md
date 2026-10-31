@@ -51,3 +51,21 @@ Interfaces: immutable `SourceReference(path, spans)` records on `ExtractionResul
 - Existing TypedFactNext /2 is the canonical request/fact representation; source references and identity indexes extend its interpretation, not a new graph/DSL or solver. The legacy `geometry_compiler/FactGraph` is not reused as the Hybrid planner.
 - The Owner explicitly opted out of repeated design/phase questions; this plan implements the already authorized written architecture. A reviewer checks feasibility, not a new approval gate.
 - Missing live authorization prevents production acceptance, but does not stop independent offline implementation and validation.
+
+## Fifth continuation — curved solids on /4 (Owner option (b), 2026-10-31)
+
+**RED baseline:** `tools/curved_probe.py`, 16 positives with hand π oracles plus 5 negatives. All refused with `BRIDGE_UNSUPPORTED_CURVED` at `23c20679`.
+
+**Design:** one route, no new compiler. The IR (`construct_curved_solid`, `measure`) and the kernel (`geometry/curved.py`, exact `a·π^m·√b`) already exist.
+
+1. **Bridge** `_bridge`: a curved `SolidSpec` becomes a solid fact with `solid_type` cylinder, cone or sphere, `center`/`top`/`rim`, and `radius`/`height` values (quote = the solid quote). Goals `volume`, `lateral_area`, `area` and `radius` on that solid become question facts.
+2. **Planner:** curved solid fact → `curved_solid` call; questions → `ask_volume` (reused), `ask_lateral_area`, `ask_surface_area`, `ask_radius`. A `segment_length` on (apex, rim) of a cone is an ordinary premise call.
+3. **Registry:**
+   - `curved_solid` (construct): keywords trụ / nón / cầu; `radius` and `height` are value fields checked against the quote.
+   - The new asks, with their keywords.
+4. **Engine `_Dung`:** a curved solid owns a canonical pose: O at the origin, axis z, rim on x when r ∈ ℚ, top on z when h ∈ ℚ.
+   - **Dimensions solved exactly:** r² from the radius; h² from the height, or from a slant SA via h² = SA² − r² (> 0, else `INCONSISTENT_FACTS`). Both stated and disagreeing ⇒ `INCONSISTENT_FACTS`. Missing ⇒ `MISSING_DIMENSION`.
+   - **Emits:** IR `construct_curved_solid` plus `measure`.
+   - **Certificate:** an independent closed-form value from (r², h²), compared exactly with the executed kernel value. A total area with two unlike terms ⇒ a typed refusal, never an approximation.
+5. **Adapter /4:** curved scene objects pass `_validate_scene`. If they do not, fix the validator; never bypass it.
+6. **Mixing** curved and polyhedral solids in one plan ⇒ a typed refusal (`MIXED_CURVED_POLYHEDRAL_UNSUPPORTED`) until a composite slice has its own certificates.

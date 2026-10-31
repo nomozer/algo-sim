@@ -47,7 +47,7 @@ from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, rende
 #: M5 bounded section-area question binding (`diện tích của nó` and grounded named section polygons).
 #: /18 (run `hybrid-v2-w3-f1-cross-sentence-plane-grounding`): propagate declared `plane_name` on all derived plane relations
 #: (`MAT_SONG_SONG`, `MAT_VUONG_DUONG`, `MAT_HAI_DUONG`) and distinguish unasked section-area goals (`NOT_ASKED_IN_SOURCE`).
-PLANNER_VERSION = "geometry-fact-planner/18"
+PLANNER_VERSION = "geometry-fact-planner/19"
 PlaneName = Annotated[
     str,
     BeforeValidator(lambda v: chuan_hoa(v) if isinstance(v, str) else v),
@@ -106,7 +106,8 @@ class TypedFact(BaseModel):
     points_a: list[Label] | None = Field(None, description="toán hạng 1: 1 điểm, 2 điểm = đường thẳng, ≥3 = mặt phẳng")
     points_b: list[Label] | None = Field(None, description="toán hạng 2")
     line_ref: str | None = Field(None, min_length=1, description="ID dữ kiện intersection_line có nguồn, cho distance/projection; không phải nhãn điểm hay chương trình")
-    quantity: Annotated[Literal["volume", "area", "length", "distance", "angle", "volume_ratio", "residual_volume"],
+    quantity: Annotated[Literal["volume", "area", "length", "distance", "angle", "volume_ratio", "residual_volume",
+                                "lateral_area", "radius"],
                         WithJsonSchema({"enum": list(FLAT_QUANTITIES), "type": "string"})] | None = None
     plane_relation: Literal["parallel", "perpendicular", "parallel_two_lines"] | None = Field(
         None, description="thiết diện / diện tích thiết diện với mặt cắt cho bằng QUAN HỆ: mặt qua `point`, song song "
@@ -128,10 +129,13 @@ class TypedFact(BaseModel):
     # `boundary_edges` is an author-declared boundary (cyclic edges) the engine must verify, never trust.
     derive_cuts: SkipJsonSchema[bool | None] = None
     boundary_edges: SkipJsonSchema[list[list[Label]] | None] = None
+    # Internal only (curved slice, planner /19): a solid of revolution's declaration — kind, centre / top / rim labels and
+    # the stated radius / height — as the `typed-fact-next/2` bridge read it from one `SolidSpec`.
+    curved: SkipJsonSchema[dict[str, Any] | None] = None
 
 
 #: TypedFact fields only the deterministic bridge writes; a provider response carrying one is refused.
-INTERNAL_FACT_FIELDS = ("cut_edges", "cut_points", "plane_ref", "solid_refs", "derive_cuts", "boundary_edges")
+INTERNAL_FACT_FIELDS = ("cut_edges", "cut_points", "plane_ref", "solid_refs", "derive_cuts", "boundary_edges", "curved")
 
 
 @dataclass
@@ -234,6 +238,11 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
                 required = ("point", "at", "line_ref")
             else:
                 raise TuChoi("SCHEMA_INVALID", f"{f.id}: line_ref chỉ cho distance / projection", (f.id,))
+        if f.curved is not None:                        # a solid of revolution: kind + centre, never a polyhedral type
+            if (f.kind != "solid" or f.solid_type is not None or f.curved.get("kind") not in ("cylinder", "cone", "sphere")
+                    or not f.curved.get("center")):
+                raise TuChoi("SCHEMA_INVALID", f"{f.id}: khối tròn xoay cần loại (trụ, nón, cầu) và tâm", (f.id,))
+            required = ("solid",)
         if f.kind == "point_def" and f.point_kind in ("intersect_line_line", "intersect_line_plane"):
             required = ("point", "point_kind", "points_a", "points_b")
         if f.kind == "point_def" and f.point_kind == "divide_segment":       # the ratio t = AP/AB rides on `value`
@@ -365,6 +374,39 @@ def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
         raise TuChoi("FACT_INCOMPLETE", f"{f.id}: thiếu đích của khoảng cách (đường, mặt hay line_ref)", (f.id,))
 
 
+#: Question quantity on a solid of revolution → its ask (curved slice, planner /19).
+_HOI_CONG = {"volume": "ask_curved_volume", "lateral_area": "ask_lateral_area", "area": "ask_surface_area",
+             "radius": "ask_radius"}
+
+
+def _ke_hoach_cong(facts: list[TypedFact], k: KeHoach) -> KeHoach:
+    """One solid of revolution (the bridge refuses composites): its declaration → `curved_solid`; a stated segment between
+    its named points (a cone's slant SA) stays the ordinary `segment_length` premise, which the engine relates to the
+    radius and height; each question → its ask. Any other fact is refused — a curved–polyhedral relation, a section or an
+    inscription has no certificate on this route yet."""
+    (s,) = [f for f in facts if f.curved]
+    cv = s.curved
+
+    def phat(fid: str, fn: str, args: dict, quotes: list[str], luat: str) -> None:
+        k.calls.append({"id": fid, "fn": fn, "args": args, "source": {"quotes": list(dict.fromkeys(quotes))}})
+        k.trace.append({"fact": fid, "rule": luat, "fn": fn, "call": fid})
+
+    phat(s.id, "curved_solid", {"kind": cv["kind"], "solid": s.solid, "center": cv["center"], "top": cv.get("top"),
+                                "rim": cv.get("rim"), "radius": cv.get("radius"), "height": cv.get("height")},
+         s.quotes, f"solid({cv['kind']})→curved_solid")
+    for f in facts:
+        if f is s:
+            continue
+        if f.kind == "length" and f.measure == "segment" and f.points and f.value:
+            phat(f.id, "segment_length", {"segment": f.points, "value": f.value}, f.quotes, "length(segment)→segment_length")
+        elif f.kind == "question" and f.quantity in _HOI_CONG and f.solid == s.solid:
+            phat(f.id, _HOI_CONG[f.quantity], {"solid": s.solid}, f.quotes, f"question({f.quantity})→{_HOI_CONG[f.quantity]}")
+        else:
+            raise TuChoi("CURVED_RELATION_UNSUPPORTED", f"{f.id}: dữ kiện {f.kind} chưa có quan hệ đã chứng nhận với khối "
+                         "tròn xoay trên planner", (f.id,))
+    return k
+
+
 def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
     """Dữ kiện có kiểu → kế hoạch lời gọi. Từ chối (`TuChoi`) khi dữ kiện mơ hồ, có điều kiện, thiếu ô, hay không ánh xạ được.
     `problem_text` chỉ dùng để chọn nhãn điểm phụ không trùng đề (cổng nguồn kiểm lại độc lập)."""
@@ -377,6 +419,8 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
         raise TuChoi("AMBIGUOUS_FACT", f"AI đánh dấu mơ hồ: {mo} — không đoán cách hiểu", tuple(mo))
     if dk := [f.id for f in facts if f.role == "condition"]:
         raise TuChoi("CONDITIONAL_CLAUSE", f"dữ kiện trong mệnh đề điều kiện {dk} — không phải giả thiết vô điều kiện", tuple(dk))
+    if any(f.curved for f in facts):
+        return _ke_hoach_cong(facts, k)
     for f in facts:
         if f.kind == "solid" and f.role != "question" and f.plane_ref is None:
             kh = _doc_khoi(f)

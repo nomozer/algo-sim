@@ -55,7 +55,9 @@ from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationEr
 #: plane-relation connector, `cả hai` two-line quantifier, cut-clause + compound area request tails, and plane-name identity checks.
 #: /22 (run `hybrid-master-backend-replacement`): "H, K lần lượt là hình chiếu … của A trên SB, SC" — ordered respectively
 #: lists for point–line projections (LLM_ONLY W18 parity; midpoints/centroids already read them).
-REGISTRY_VERSION = "geometry-functions/22"
+#: /23 (same run): curved solids on /4 — `curved_solid` with role-bound radius/height, and the planner-only asks
+#: `ask_curved_volume` / `ask_lateral_area` / `ask_surface_area` / `ask_radius` (route A's provider surface unchanged).
+REGISTRY_VERSION = "geometry-functions/23"
 
 
 class TuChoi(Exception):
@@ -245,6 +247,26 @@ class FacePerpendicularBaseArgs(_Args):
 class HeightArgs(_Args):
     solid: SolidName
     value: ExactNumber
+
+
+#: A curved solid's notation as the source writes it: "O.O'" (two base centres), "S.O" (apex.centre) or "O" (sphere centre).
+CurvedName = Annotated[str, BeforeValidator(_nhan), Field(pattern=r"^[A-Z][0-9]*'?(?:\.[A-Z][0-9]*'?)?$")]
+
+
+class CurvedSolidArgs(_Args):
+    """Run `hybrid-master-backend-replacement` (curved slice): one solid of revolution in its canonical pose. Values are
+    role-bound in the quote by `_kich_thuoc_cong_dung_nguon` (radius after "bán kính", height after "chiều cao")."""
+    kind: Literal["cylinder", "cone", "sphere"]
+    solid: CurvedName
+    center: Label
+    top: Label | None = Field(None, description="tâm đáy trên (trụ) hoặc đỉnh (nón)")
+    rim: Label | None = Field(None, description="một điểm trên đường tròn đáy / mặt cầu")
+    radius: ExactNumber | None = None
+    height: ExactNumber | None = None
+
+
+class AskCurvedArgs(_Args):
+    solid: CurvedName
 
 
 class AskVolumeArgs(_Args):
@@ -575,6 +597,16 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
        (("tỉ số", "tỷ số", "thể tích", "re:V\\s*(?:\\(|_)"),), provider_offered=False),
     _F("ask_residual_volume", AskResidualVolumeArgs, "ask", "Đề hỏi thể tích phần còn lại của khối gốc sau khi cắt bỏ các khối con đã dựng.",
        (("thể tích",), ("còn lại",)), provider_offered=False),
+    # Curved slice (registry /23): planner-only, not offered to route A's provider (model surface unchanged).
+    _F("curved_solid", CurvedSolidArgs, "construct", "Khối tròn xoay (trụ, nón, cầu) với tâm, bán kính, chiều cao đề nêu.",
+       (("trụ", "nón", "cầu"),), provider_offered=False),
+    _F("ask_curved_volume", AskCurvedArgs, "ask", "Đề hỏi thể tích khối trụ / khối nón / khối cầu.", (("thể tích",),),
+       provider_offered=False),
+    _F("ask_lateral_area", AskCurvedArgs, "ask", "Đề hỏi diện tích xung quanh của hình trụ / hình nón.",
+       (("diện tích",), ("xung quanh",)), provider_offered=False),
+    _F("ask_surface_area", AskCurvedArgs, "ask", "Đề hỏi diện tích toàn phần của hình trụ / hình nón, hay diện tích mặt cầu.",
+       (("diện tích",), ("toàn phần", "mặt cầu")), provider_offered=False),
+    _F("ask_radius", AskCurvedArgs, "ask", "Đề hỏi bán kính của khối tròn xoay.", (("bán kính",),), provider_offered=False),
     _F("unsupported", UnsupportedArgs, "escape", "Mệnh đề không ánh xạ được vào thư viện — engine sẽ từ chối trung thực."),
     # Goal-directed slice (run `goal-directed-section-planning`): the plane through M parallel to (Q) is the plane through M
     # and two translates of M along directions of (Q) — the IR's own expression (`PlanePerpendicularToLineExpr` note).
@@ -2096,6 +2128,9 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
                     "right_angle", "divide_segment"):
             if not construction_source_bound(c, de):
                 raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: vai trò điểm và toán hạng dựng không khớp nguồn", (c.id,))
+        if c.fn == "curved_solid" and not _kich_thuoc_cong_dung_nguon(c):
+            raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: bán kính / chiều cao không là số của đúng mệnh đề vai trò trong "
+                         f"{c.quote!r}", (c.id,))
         if c.fn in ("section", "ask_section_area", "intersection_line") and not mat_cat_dung_nguon(c, calls):
             raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: mặt phẳng / khối của {c.fn} không phải cái mà {c.quote!r} gọi tên",
                          (c.id,))
@@ -2248,11 +2283,11 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
                                   for m in pattern.finditer(de, *vt) if _hoi_dung_cum(de, m.start(), m.end())}
     request_contexts = set(questions)
     construction_contexts = {_bien_cau(de, vt[0]) for c in calls
-                             if (c.spec.kind == "construct" and c.fn not in ("pyramid", "regular_pyramid", "prism"))
+                             if (c.spec.kind == "construct" and c.fn not in ("pyramid", "regular_pyramid", "prism", "curved_solid"))
                              or c.fn == "orthogonal_projection" for q in c.quotes
                              if (vt := _vi_tri(de, q)) is not None}
     solid_contexts = {_bien_cau(de, vt[0]) for c in calls
-                      if c.fn in ("pyramid", "regular_pyramid", "prism") for q in c.quotes
+                      if c.fn in ("pyramid", "regular_pyramid", "prism", "curved_solid") for q in c.quotes
                       if (vt := _vi_tri(de, q)) is not None}
     construction_contexts -= solid_contexts - request_contexts
     for c in calls:
@@ -2543,6 +2578,8 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
     rang: list[tuple[int, int, tuple, tuple[int, str]]] = []  # range, value, owning call field
     for ci, c in enumerate(calls):
         gt = [(f, doc_so(v)) for f in c.spec.value_fields if (v := getattr(c.args, f, None))]
+        if c.fn == "curved_solid":       # its dimensions are role-bound (`_kich_thuoc_cong_dung_nguon`), so they back numbers too
+            gt = [(f, doc_so(v)) for f in _VAI_CONG if (v := getattr(c.args, f, None))]
         for q in c.quotes:
             if (vt := _vi_tri(de, q)) is None or vt[0] >= het:
                 continue
@@ -2719,6 +2756,8 @@ def _rang_buoc_cuc_bo_khop(r: Any, c: LoiGoi, de: str) -> bool:
                 and _canh_khop(r, a.side, de))
     if r.kind == "base_rectangle" and c.fn == "rectangle":
         return _cung_da_giac(list(ids(a.vertices)), list(e))
+    if r.kind == "height" and c.fn == "curved_solid":   # registry /23: the role-bound height of THE solid of revolution
+        return not e and a.height is not None and r.value is not None and doc_so(a.height)[0] == Fraction(r.value) ** 2
     return False
 
 
@@ -2990,7 +3029,23 @@ def _ds_khoi_khop(m: re.Match, n: str, solids: list[str], khoi: dict) -> bool:
 
 
 #: hàm → [(cụm, buộc(m, args, khối của đề))].
+#: Curved slice (registry /23): the kind word a question uses for a solid of revolution.
+_KIEU_CONG = {"trụ": "cylinder", "nón": "cone", "cầu": "sphere"}
+_KHOI_CONG_CUM = r"(?:\s+của)?\s+(?:khối|hình|mặt)\s+(?P<kieu>trụ|nón|cầu)(?:\s+tròn\s+xoay)?(?:\s+(?-i:(?P<ten>[A-Z][0-9]*'?(?:\.[A-Z][0-9]*'?)?))(?![\w'.]))?"
+
+
+def _cong_khop(m: re.Match, a: Any) -> bool:
+    """The question names THE one declared solid of revolution: its kind word, and its notation when written."""
+    cong = [k for k in _GOI_NGUON.get() if k.fn == "curved_solid"]
+    return (len(cong) == 1 and cong[0].args.solid == a.solid and _KIEU_CONG[m["kieu"].lower()] == cong[0].args.kind
+            and m["ten"] in (None, a.solid))
+
+
 _CUM_HOI = {
+    "ask_curved_volume": [(_cum(rf"thể tích{_KHOI_CONG_CUM}"), lambda m, a, k: _cong_khop(m, a))],
+    "ask_lateral_area": [(_cum(rf"diện tích\s+xung\s+quanh{_KHOI_CONG_CUM}"), lambda m, a, k: _cong_khop(m, a))],
+    "ask_surface_area": [(_cum(rf"diện tích(?:\s+toàn\s+phần)?{_KHOI_CONG_CUM}"), lambda m, a, k: _cong_khop(m, a))],
+    "ask_radius": [(_cum(rf"bán\s+kính(?:\s+đáy)?{_KHOI_CONG_CUM}"), lambda m, a, k: _cong_khop(m, a))],
     "ask_volume": [
         (_cum(rf"thể tích(?:\s+của)?(?:\s+(?-i:V)(?:\s+của)?)?{_khoi_cum('k')}"), lambda m, a, k: _khoi_khop(m, "k", a.solid, k)),
         (_cum(r"(?<![\w'])(?-i:V)(?![\w'])"), lambda m, a, k: len(k) == 1 and a.solid in k and not _V_DINH_NGHIA.search(m.string)
@@ -4534,6 +4589,29 @@ def _chan_duong_cao_dung_nguon(c: LoiGoi, q: str) -> bool:
                 continue
         return True
     return False
+
+
+#: Role phrase of a curved dimension, then the value: "bán kính (đáy) (bằng | là | =) 3", "R = 3"; "chiều cao … 5", "h = 5".
+_VAI_CONG = {"radius": r"(?:(?i:bán\s+kính)(?:\s+(?i:đáy))?|(?<![\w'])R(?![\w']))",
+             "height": r"(?:(?i:chiều\s+cao)|(?<![\w'])h(?![\w']))"}
+
+
+def _kich_thuoc_cong_dung_nguon(c: LoiGoi) -> bool:
+    """Each stated dimension of a `curved_solid` is the ONE number of its own role clause — so a swapped radius/height,
+    or a value the clause does not state, binds nothing (registry /23)."""
+    for f, vai in _VAI_CONG.items():
+        if (v := getattr(c.args, f)) is None:
+            continue
+        doc = []
+        for q in c.quotes:
+            s = chuan_hoa(q)
+            for m in re.finditer(rf"{vai}\s*(?:(?i:bằng|là)\s+|=\s*)", s):
+                so = so_trong(s[m.end():])
+                if so and so[0][0] == 0:
+                    doc.append(so[0][1:])
+        if doc != [doc_so(v)]:
+            return False
+    return True
 
 
 def construction_source_bound(c: LoiGoi, de: str = "") -> bool:
