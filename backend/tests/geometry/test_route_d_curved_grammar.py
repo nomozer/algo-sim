@@ -128,6 +128,21 @@ def _sphere_with_a_base_distance_too():
     return p
 
 
+def _passive(sentence, kind, **fields):
+    SP = S.SP
+    return SP.build(SP.CONE_G, SP.CONE_S, sentence, SP.section(kind, sentence.rstrip("."), section_shape="circle", **fields),
+                    "Tính diện tích thiết diện.", SP.AREA)
+
+
+def _two_sections_second_quote_cut_mid_sentence():
+    SP = S.SP
+    s1 = "Mặt phẳng (P) song song với đáy và cách đáy một khoảng bằng 1 cắt hình nón theo một đường tròn."
+    q2 = "mặt phẳng (Q) song song với đáy và cách đáy một khoảng bằng 2 cắt hình nón theo một đường tròn"
+    p = SP.build(SP.CONE_G, SP.CONE_S, f"{s1} Biết rằng {q2}.", SP.dist("1", s1), "Tính diện tích thiết diện.", SP.AREA)
+    p["derived_sections"].append({**SP.dist("2", q2), "section_id": "td2", "plane_name": "Q"})
+    return p
+
+
 _AREA_Q = "Tính diện tích thiết diện."
 REVIEW_1 = [  # (id, payload builder, expected code)
     ("M1.zero_denominator_axis_point",
@@ -145,6 +160,11 @@ REVIEW_1 = [  # (id, payload builder, expected code)
     ("minor.one_point_as_both_centres", lambda: B.CP.payload(B.cyl(
         "Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O, bán kính đáy R = 2 và chiều cao h = 3.", top="O", rim=None,
         notation="O.O"), "volume", "Tính thể tích khối trụ."), "SOURCE_OBJECT_MISMATCH"),
+    # round 2: a correct quote the grammar cannot read is a capability gap; a quote cut mid-sentence keeps its source verdict
+    ("R2-M1.passive_section_sentence", lambda: _passive(
+        "Hình nón được cắt bởi mặt phẳng (P) song song với đáy và cách đáy một khoảng bằng 1.", "parallel_to_base_at_distance",
+        distance_from_base="1"), "CURVED_WORDING_UNSUPPORTED"),
+    ("R2-M2.second_quote_cut_mid_sentence", _two_sections_second_quote_cut_mid_sentence, "SOURCE_OBJECT_MISMATCH"),
 ]
 
 

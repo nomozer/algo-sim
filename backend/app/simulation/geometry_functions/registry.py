@@ -2076,11 +2076,12 @@ def _kiem_mat_chung(de: str, calls: tuple[LoiGoi, ...]) -> None:
 def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...] = (),
                read_quotes: tuple[str, ...] = ()) -> dict[str, str | None]:
     """See `_kiem_nguon`; `_GOI_NGUON` holds THIS run's calls and is reset afterwards (run `hybrid-v2-planner-premerge-review`)."""
-    token = _GOI_NGUON.set(tuple(calls))
+    token, tok_de = _GOI_NGUON.set(tuple(calls)), _DE_NGUON.set(text)
     try:
         return _kiem_nguon(calls, text, auxiliary, read_quotes)
     finally:
         _GOI_NGUON.reset(token)
+        _DE_NGUON.reset(tok_de)
 
 
 def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...] = (),
@@ -2935,6 +2936,8 @@ def _khoi_khop(m: re.Match, n: str, solid: str, khoi: dict) -> bool:
 #: Calls of the `kiem_nguon` call in progress (set there, like `_KHOI_MO_TA`): lets a question's kind word be checked
 #: against the solid the gate validated. Empty outside the gate — a specific class then cannot be verified and refuses.
 _GOI_NGUON: contextvars.ContextVar[tuple] = contextvars.ContextVar("_GOI_NGUON", default=())
+#: THIS run's source text, beside `_GOI_NGUON`, for binders that must re-ground another call (review 7 round 2, R2-M2).
+_DE_NGUON: contextvars.ContextVar[str] = contextvars.ContextVar("_DE_NGUON", default="")
 _TU_LOAI = re.compile(r"(?P<kn>chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)"
                       r"(?P<km>(?:\s+(?:đứng|đều|xiên|tam\s+giác|tứ\s+giác|ngũ\s+giác|lục\s+giác|chữ\s+nhật))*)",
                       re.IGNORECASE)
@@ -4741,7 +4744,7 @@ def _khoi_cong_dung_nguon(c: LoiGoi) -> str | None:
     apex, two_bases = kc.vai_dinh == "đỉnh", kc.co_truc and kc.vai_dinh != "đỉnh"
     if a.center is not None and a.center == a.top:
         return "SOURCE_OBJECT_MISMATCH"          # one point as both centres / centre and apex: no solid (review 7, minor)
-    if any(_cau_cua_mat_cat(chuan_hoa(q)) for q in c.quotes):
+    if any(_doc_mat_cat(s) is not None or _CHIA_NON.fullmatch(s) for s in map(chuan_hoa, c.quotes)):
         return "SOURCE_OBJECT_MISMATCH"          # the solid's quote is a section sentence: a misquote (review 7, M4)
     cau = [_doc_cau_cong(chuan_hoa(q)) for q in c.quotes]
     if any(x is None for x in cau):          # wording the closed grammar does not read: a capability gap, not a
@@ -4862,11 +4865,6 @@ def _doc_mat_cat(s: str) -> tuple[re.Match, list[tuple[str, re.Match]]] | None:
     return None
 
 
-def _cau_cua_mat_cat(s: str) -> bool:
-    """`s` opens a section or derived-cone sentence ("Mặt phẳng (P) …", "Cắt hình nón bởi …", "… chia hình nón thành …")."""
-    return any(mo.match(s) for mo in _MO_MAT_CAT) or _CHIA_NON.match(s) is not None
-
-
 def _dau_cau(de: str, q: str) -> bool:
     """The quote starts a sentence or clause of the source (review B1): a quote cut mid-sentence ("… (Q) chia hình nón …"
     quoted from "chia") leaves the words before it unread by THIS call."""
@@ -4901,8 +4899,8 @@ def _phan_cong_dung_nguon(c: LoiGoi, calls: tuple[LoiGoi, ...], de: str = "") ->
                 or m["mp"] not in ((sec.args.plane,) if many else (None, sec.args.plane)):
             return "SOURCE_OBJECT_MISMATCH"      # with two sections, the derived cone must NAME its cutting plane
         return None
-    if _MO_CONG.match(s):
-        return "SOURCE_OBJECT_MISMATCH"          # the section's quote is a solid sentence: a misquote (review 7, M4)
+    if _doc_cau_cong(s) is not None:
+        return "SOURCE_OBJECT_MISMATCH"          # the section's quote IS a solid sentence: a misquote (review 7, M4 / R2-M1)
     doc = _doc_mat_cat(s)
     if doc is None:
         return "CURVED_WORDING_UNSUPPORTED"
@@ -4974,8 +4972,9 @@ def _mat_cat_khop(a: Any) -> bool:
     secs = [x for x in _GOI_NGUON.get() if x.fn == "curved_section"]
     if len(secs) > 1 and any(x.args.section == a.section for x in secs):
         for x in secs:                           # an ungrounded section keeps its own source verdict (review 7, M3)
-            if (code := _phan_cong_dung_nguon(x, _GOI_NGUON.get())) is not None:
-                raise TuChoi(code, f"{x.id}: thiết diện không khớp nguồn", (x.id,))
+            if (code := _phan_cong_dung_nguon(x, _GOI_NGUON.get(), _DE_NGUON.get())) is not None:
+                raise TuChoi(code, f"{x.id}: thiết diện {x.quotes[0]!r} không nêu đúng điều đề viết ({code}); câu hỏi "
+                             "về thiết diện không được buộc trước khi mọi thiết diện khớp nguồn", (x.id,))
         # a capability gap, not a wrong object: the bounded binder reads "thiết diện" only when the run has ONE section
         raise TuChoi("CURVED_MULTI_SECTION_UNSUPPORTED", f"đề có {len(secs)} thiết diện của khối tròn xoay; câu hỏi "
                      "'thiết diện' chỉ được buộc khi đề có đúng một thiết diện", tuple(x.id for x in secs))

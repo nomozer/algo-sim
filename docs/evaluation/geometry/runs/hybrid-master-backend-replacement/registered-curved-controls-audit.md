@@ -129,3 +129,16 @@ Not changed, with reasons:
 - For the cone cells, the ratio section sentence names no solid, and the gate requires a section quote to name its solid.
 
 Totals: 32 / 32 REFUSED; 0 SERVED; 0 open REFUSAL_REASON_REGRESSION.
+
+## Independent review round 2 (verdict NOT_READY: 0 BLOCKER, 2 MAJOR) and its fixes
+
+| Finding | Fix | Locked by |
+|---|---|---|
+| R2-M1: the M4 opener test filed a correct passive section sentence ("Hình nón được cắt bởi mặt phẳng (P) …") as a misquote | A quote is a misquote only when it PARSES as the other object's sentence (`_doc_cau_cong` / `_doc_mat_cat` / `_CHIA_NON.fullmatch`). Otherwise it is `CURVED_WORDING_UNSUPPORTED` | `R2-M1.passive_section_sentence` |
+| R2-M2: the M3 re-grounding ran without the source text, so a quote cut mid-sentence was reported as a capability gap | `_DE_NGUON` (a context variable beside `_GOI_NGUON`) gives the binder the source text, so `_dau_cau` runs. The refusal message now carries the section's own code | `R2-M2.second_quote_cut_mid_sentence` |
+
+Minors kept as they are:
+
+- **Point named like the plane:** these are separate namespaces, and the value is correct.
+- **Cylinder rim on the upper base:** a safe refusal, unchanged since before 6e0a6c2c.
+- **d = 7 on a second section:** a documented ordering.
