@@ -54,14 +54,9 @@ def test_curved_negatives_are_refused_for_the_right_reason(cid, fig, goal, quest
     assert r.code == NEGATIVE_CODES[cid], (r.code, r.reason)
 
 
-#: Independent review round 1 (B1–B3): each of these SERVED a wrong exact value or insufficient data before the fix.
-ADVERSARIAL_CODES = {
-    "r.radius_times_h": "UNGROUNDED_VALUE", "r.radius_fraction_of_h": "UNGROUNDED_VALUE", "r.radius_sum": "UNGROUNDED_VALUE",
-    "r.cyl_rim_on_other_base": "SOURCE_OBJECT_MISMATCH", "r.cone_apex_centre_swapped": "SOURCE_OBJECT_MISMATCH",
-    "r.sphere_point_outside": "SOURCE_OBJECT_MISMATCH", "r.cyl_point_on_axis": "SOURCE_OBJECT_MISMATCH",
-    "r.height_of_a_triangle": "SOURCE_OBJECT_MISMATCH", "r.dimensions_of_another_solid": "SOURCE_OBJECT_MISMATCH",
-    "r.notation_against_roles": "SOURCE_OBJECT_MISMATCH", "r.invented_labels": "UNKNOWN_LABEL",
-}
+#: Independent review rounds 1–2: each of these SERVED a wrong exact value or insufficient data before its fix.
+ADVERSARIAL_CODES = {cid: "UNKNOWN_LABEL" if cid == "r.invented_labels" else "SOURCE_OBJECT_MISMATCH"
+                     for cid, *_ in C.ADVERSARIAL}     # a quote outside the closed clause grammar binds nothing
 
 
 @pytest.mark.parametrize("cid,given,solid,premises,goal,question", C.ADVERSARIAL, ids=[x[0] for x in C.ADVERSARIAL])
@@ -110,7 +105,7 @@ def test_a_symbolic_unit_keeps_pi_in_the_learner_answer_and_a_diameter_is_not_gu
     g2 = "Cho mặt cầu tâm O, điểm A thuộc mặt cầu, đường kính bằng 6."   # no role clause reads a diameter as a radius
     r2 = run_typed_fact_next_v2_route(C.payload((g2, C.solid("sphere", "O", "O", None, "A", "3", None, g2[:-1]), []),
                                                 "volume", "Tính thể tích khối cầu."))
-    assert r2.status == "REFUSED" and r2.code == "UNGROUNDED_VALUE"
+    assert r2.status == "REFUSED" and r2.code == "SOURCE_OBJECT_MISMATCH"     # "đường kính" is no clause of the grammar
 
 
 def test_a_tampered_certificate_is_never_served(monkeypatch):

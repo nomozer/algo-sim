@@ -188,10 +188,37 @@ ADVERSARIAL = [
      solid("cone", "S.O", "O", "S", "A", "3", "4", "Cho hình nón có bán kính đáy bằng 3 và chiều cao bằng 4"), [],
      "volume", "Tính thể tích khối nón."),
 ]
+
+def _cone(tail, r, h, kind_q=None):
+    q = (kind_q or _CONE) + tail
+    return solid("cone", "S.O", "O", "S", "A", r, h, q), q
+
+
+#: Independent review round 2: the blacklist guard still served these; the closed clause grammar refuses them.
+for _cid, _tail, _r, _h in (
+        ("r2.second_cone_same_kind", ", bán kính đáy bằng 3 và một hình nón khác có chiều cao bằng 4", "3", "4"),
+        ("r2.plane_section_circle", ", chiều cao bằng 4, mặt phẳng (P) song song với đáy cắt hình nón theo đường tròn có bán kính bằng 2", "2", "4"),
+        ("r2.sector_radius", ", chiều cao bằng 4, được cuộn từ một hình quạt có bán kính bằng 5", "5", "4"),
+        ("r2.unread_qualifier", ", bán kính đáy bằng 2, chiều cao bằng 3 và gấp đôi bán kính", "2", "3")):
+    _s, _q = _cone(_tail, _r, _h)
+    ADVERSARIAL.append((_cid, _q + ".", _s, [], "volume", "Tính thể tích khối nón."))
+_q = "Cho tam giác SAB có chiều cao bằng 4 và hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy, bán kính đáy bằng 3"
+ADVERSARIAL.append(("r2.object_before_kind_word", _q + ".", solid("cone", "S.O", "O", "S", "A", "3", "4", _q), [], "volume",
+                    "Tính thể tích khối nón."))
+_q = "Cho hình nón có bán kính đáy bằng 3 và chiều cao bằng 4"
+ADVERSARIAL.append(("r2.notation_not_written", _q + ".", {"solid_id": "k", "solid_type": "cone", "notation": "(N)", "radius": "3",
+                                                          "height": "4", "quote": _q}, [], "volume", "Tính thể tích khối nón."))
+#: Over-refusals the review flagged, now served: the rim on the O' circle (centre O', top O) and "chiều cao của hình nón".
+_q = "Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O', bán kính đáy bằng 3 và chiều cao bằng 5"
+CYL_TOP_RIM = (_q + ".", solid("cylinder", "O'.O", "O'", "O", "A", "3", "5", _q), [])
+CONE_OF = (f"{_CONE}, bán kính đáy bằng 3 và chiều cao của hình nón bằng 4.",
+           solid("cone", "S.O", "O", "S", "A", "3", "4", f"{_CONE}, bán kính đáy bằng 3 và chiều cao của hình nón bằng 4"), [])
+CASES += [("cylTop.V", CYL_TOP_RIM, "volume", "Tính thể tích khối trụ.", "45π"),
+          ("coneOf.V", CONE_OF, "volume", "Tính thể tích khối nón.", "12π")]
 #: Labels are optional, never invented: a source that names no point is served in the canonical pose.
-UNLABELLED = ("Cho hình nón có bán kính đáy bằng 3 và chiều cao bằng 4.",
+UNLABELLED = ("Cho hình nón (N) có bán kính đáy bằng 3 và chiều cao bằng 4.",
               {"solid_id": "k", "solid_type": "cone", "notation": "(N)", "radius": "3", "height": "4",
-               "quote": "Cho hình nón có bán kính đáy bằng 3 và chiều cao bằng 4"}, [])
+               "quote": "Cho hình nón (N) có bán kính đáy bằng 3 và chiều cao bằng 4"}, [])
 
 
 def run():
