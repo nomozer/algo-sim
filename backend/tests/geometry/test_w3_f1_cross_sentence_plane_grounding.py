@@ -74,9 +74,9 @@ def _assert_area_matches_oracle(r, resp: dict, payload: dict, ora: dict, stratum
 
 
 def test_w3_f1_versions_and_engine_unchanged() -> None:
-    assert registry.REGISTRY_VERSION == "geometry-functions/23"
-    assert planner.PLANNER_VERSION == "geometry-fact-planner/19"
-    assert engine.ENGINE_VERSION == "geometry-function-engine/15"
+    assert registry.REGISTRY_VERSION == "geometry-functions/24"
+    assert planner.PLANNER_VERSION == "geometry-fact-planner/20"
+    assert engine.ENGINE_VERSION == "geometry-function-engine/16"
     assert ADAPTER_V4_VERSION == "hybrid-simulation-adapter/4"
     assert engine.PLANE_SECTION_CERTIFICATE_VERSION == "plane-section-certificate/1"
 

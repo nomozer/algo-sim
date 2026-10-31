@@ -57,7 +57,9 @@ from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationEr
 #: lists for point–line projections (LLM_ONLY W18 parity; midpoints/centroids already read them).
 #: /23 (same run): curved solids on /4 — `curved_solid` with role-bound radius/height, and the planner-only asks
 #: `ask_curved_volume` / `ask_lateral_area` / `ask_surface_area` / `ask_radius` (route A's provider surface unchanged).
-REGISTRY_VERSION = "geometry-functions/23"
+#: /24 (same run): curved sections (parallel to the base, through the axis), the small cone, its ratio and remaining
+#: volume — planner-only functions; route A provider surface unchanged.
+REGISTRY_VERSION = "geometry-functions/24"
 
 
 class TuChoi(Exception):
@@ -268,6 +270,36 @@ class CurvedSolidArgs(_Args):
 
 class AskCurvedArgs(_Args):
     solid: CurvedName
+
+
+class CurvedSectionArgs(_Args):
+    """A plane section of THE solid of revolution (registry /24): parallel to the base at a stated distance from it, or
+    through the midpoint of the axis (`ratio` = distance from the apex / height), or through the axis."""
+    solid: CurvedName
+    section: Annotated[str, Field(min_length=1)]
+    kind: Literal["parallel_to_base_at_distance", "parallel_to_base_at_ratio", "axial_section"]
+    plane: Annotated[str, Field(min_length=1)] | None = None
+    distance: ExactNumber | None = None
+    ratio: Annotated[str, Field(pattern=r"^\d+/\d+$")] | None = None
+
+
+class CurvedSubsolidArgs(_Args):
+    """The small cone a plane parallel to the base cuts off at the apex (registry /24)."""
+    solid: CurvedName
+    section: Annotated[str, Field(min_length=1)]
+    derived: Annotated[str, Field(min_length=1)]
+    apex: Label
+
+
+class AskCurvedSectionArgs(_Args):
+    solid: CurvedName
+    section: Annotated[str, Field(min_length=1)]
+
+
+class AskCurvedPairArgs(_Args):
+    """Two solids by their ids, in the ORDER the question states them (numerator, denominator) / (original, cut)."""
+    first: Annotated[str, Field(min_length=1)]
+    second: Annotated[str, Field(min_length=1)]
 
 
 class AskVolumeArgs(_Args):
@@ -608,6 +640,19 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
     _F("ask_surface_area", AskCurvedArgs, "ask", "Đề hỏi diện tích toàn phần của hình trụ / hình nón, hay diện tích mặt cầu.",
        (("diện tích",), ("toàn phần", "mặt cầu")), provider_offered=False),
     _F("ask_radius", AskCurvedArgs, "ask", "Đề hỏi bán kính của khối tròn xoay.", (("bán kính",),), provider_offered=False),
+    # Curved sections and the cone ratio (registry /24): planner-only, route A's provider surface unchanged.
+    _F("curved_section", CurvedSectionArgs, "construct", "Thiết diện của khối tròn xoay bởi mặt phẳng song song đáy hay qua trục.",
+       (("mặt phẳng", "thiết diện"),), provider_offered=False),
+    _F("curved_subsolid", CurvedSubsolidArgs, "construct", "Khối nón nhỏ mà mặt phẳng song song đáy cắt ra ở phía đỉnh.",
+       (("nón",),), provider_offered=False),
+    _F("ask_curved_section_area", AskCurvedSectionArgs, "ask", "Đề hỏi diện tích thiết diện của khối tròn xoay.",
+       (("diện tích",), ("thiết diện",)), provider_offered=False),
+    _F("ask_curved_section_radius", AskCurvedSectionArgs, "ask", "Đề hỏi bán kính đường tròn thiết diện.",
+       (("bán kính",), ("thiết diện",)), provider_offered=False),
+    _F("ask_curved_volume_ratio", AskCurvedPairArgs, "ask", "Đề hỏi tỉ số thể tích của hai khối nón theo thứ tự đề nêu.",
+       (("tỉ số", "tỷ số"), ("thể tích",)), provider_offered=False),
+    _F("ask_curved_residual_volume", AskCurvedPairArgs, "ask", "Đề hỏi thể tích phần còn lại (khối nón cụt).",
+       (("thể tích",),), provider_offered=False),
     _F("unsupported", UnsupportedArgs, "escape", "Mệnh đề không ánh xạ được vào thư viện — engine sẽ từ chối trung thực."),
     # Goal-directed slice (run `goal-directed-section-planning`): the plane through M parallel to (Q) is the plane through M
     # and two translates of M along directions of (Q) — the IR's own expression (`PlanePerpendicularToLineExpr` note).
@@ -747,7 +792,7 @@ def nhan_cua_de(text: str) -> set[str]:
 def nhan_cua_loi_goi(c: LoiGoi) -> set[str]:
     ra: set[str] = set()
     for key, v in c.args.model_dump().items():
-        if key == "line_ref":                         # opaque producer ID, never a geometric point label
+        if key in ("line_ref", "section", "derived", "first", "second"):   # opaque object IDs, never point labels
             continue
         for x in (v if isinstance(v, list) else [v]):
             if isinstance(x, str) and re.fullmatch(r"(?:[A-Z][0-9]*'?)+(?:\.(?:[A-Z][0-9]*'?)+)?", x):
@@ -2129,6 +2174,9 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
                     "right_angle", "divide_segment"):
             if not construction_source_bound(c, de):
                 raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: vai trò điểm và toán hạng dựng không khớp nguồn", (c.id,))
+        if c.fn in ("curved_section", "curved_subsolid") and (ma := _phan_cong_dung_nguon(c, calls)):
+            raise TuChoi(ma, f"{c.id}: {c.quote!r} không nêu đúng {'thiết diện' if c.fn == 'curved_section' else 'khối nón nhỏ'} "
+                         "này của khối tròn xoay", (c.id,))
         if c.fn == "curved_solid" and (ma := _khoi_cong_dung_nguon(c)):
             raise TuChoi(ma, f"{c.id}: {c.quote!r} không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / "
                          "chiều cao của chính mệnh đề vai trò)", (c.id,))
@@ -2284,11 +2332,11 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
                                   for m in pattern.finditer(de, *vt) if _hoi_dung_cum(de, m.start(), m.end())}
     request_contexts = set(questions)
     construction_contexts = {_bien_cau(de, vt[0]) for c in calls
-                             if (c.spec.kind == "construct" and c.fn not in ("pyramid", "regular_pyramid", "prism", "curved_solid"))
+                             if (c.spec.kind == "construct" and c.fn not in ("pyramid", "regular_pyramid", "prism", "curved_solid", "curved_section", "curved_subsolid"))
                              or c.fn == "orthogonal_projection" for q in c.quotes
                              if (vt := _vi_tri(de, q)) is not None}
     solid_contexts = {_bien_cau(de, vt[0]) for c in calls
-                      if c.fn in ("pyramid", "regular_pyramid", "prism", "curved_solid") for q in c.quotes
+                      if c.fn in ("pyramid", "regular_pyramid", "prism", "curved_solid", "curved_section", "curved_subsolid") for q in c.quotes
                       if (vt := _vi_tri(de, q)) is not None}
     construction_contexts -= solid_contexts - request_contexts
     for c in calls:
@@ -2581,6 +2629,8 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
         gt = [(f, doc_so(v)) for f in c.spec.value_fields if (v := getattr(c.args, f, None))]
         if c.fn == "curved_solid":       # its dimensions are role-bound (`_kich_thuoc_cong_dung_nguon`), so they back numbers too
             gt = [(f, doc_so(v)) for f in _VAI_CONG if (v := getattr(c.args, f, None))]
+        if c.fn == "curved_section" and c.args.distance:      # the closed section grammar reads its one distance
+            gt = [("distance", doc_so(c.args.distance))]
         for q in c.quotes:
             if (vt := _vi_tri(de, q)) is None or vt[0] >= het:
                 continue
@@ -3034,6 +3084,8 @@ def _ds_khoi_khop(m: re.Match, n: str, solids: list[str], khoi: dict) -> bool:
 #: hàm → [(cụm, buộc(m, args, khối của đề))].
 #: Curved slice (registry /23): the kind word a question uses for a solid of revolution.
 _KIEU_CONG = {"trụ": "cylinder", "nón": "cone", "cầu": "sphere"}
+#: How a question names one of the two cones of a cut (registry /24): the small cone at the apex, or the original cone.
+_VAI_KHOI_NON = r"khối\s+nón\s+(?:nhỏ|ban\s+đầu|đã\s+cho|lớn)"
 _KHOI_CONG_CUM = r"(?:\s+của)?\s+(?:khối|hình|mặt)\s+(?P<kieu>trụ|nón|cầu)(?:\s+tròn\s+xoay)?(?:\s+(?-i:(?P<ten>\([A-Z][0-9]*'?\)|[A-Z][0-9]*'?(?:\.[A-Z][0-9]*'?)?))(?![\w'])(?!\.[A-Z]))?"
 
 
@@ -3049,6 +3101,15 @@ _CUM_HOI = {
     "ask_lateral_area": [(_cum(rf"diện tích\s+xung\s+quanh{_KHOI_CONG_CUM}"), lambda m, a, k: _cong_khop(m, a))],
     "ask_surface_area": [(_cum(rf"diện tích(?:\s+toàn\s+phần)?{_KHOI_CONG_CUM}"), lambda m, a, k: _cong_khop(m, a))],
     "ask_radius": [(_cum(rf"bán\s+kính(?:\s+đáy)?{_KHOI_CONG_CUM}"), lambda m, a, k: _cong_khop(m, a))],
+    "ask_curved_section_area": [(_cum(r"diện\s+tích\s+(?:của\s+)?thiết\s+diện(?:\s+(?:đó|này))?(?![\w])"),
+                                 lambda m, a, k: _mat_cat_khop(a))],
+    "ask_curved_section_radius": [(_cum(r"bán\s+kính\s+(?:của\s+)?(?:đường\s+tròn\s+)?thiết\s+diện(?:\s+(?:đó|này))?(?![\w])"),
+                                   lambda m, a, k: _mat_cat_khop(a))],
+    "ask_curved_volume_ratio": [(_cum(rf"tỉ\s+số\s+(?:giữa\s+)?thể\s+tích\s+(?:của\s+)?(?P<a>{_VAI_KHOI_NON})\s+(?:và|với)\s+"
+                                      rf"(?P<b>{_VAI_KHOI_NON})(?![\w])"),
+                                 lambda m, a, k: _cap_khoi_khop(m, a, ratio=True))],
+    "ask_curved_residual_volume": [(_cum(r"thể\s+tích\s+(?:của\s+)?(?:khối\s+nón\s+cụt|phần\s+còn\s+lại(?:\s+của\s+(?:hình|khối)\s+nón)?)(?![\w])"),
+                                    lambda m, a, k: _cap_khoi_khop(None, a, ratio=False))],
     "ask_volume": [
         (_cum(rf"thể tích(?:\s+của)?(?:\s+(?-i:V)(?:\s+của)?)?{_khoi_cum('k')}"), lambda m, a, k: _khoi_khop(m, "k", a.solid, k)),
         (_cum(r"(?<![\w'])(?-i:V)(?![\w'])"), lambda m, a, k: len(k) == 1 and a.solid in k and not _V_DINH_NGHIA.search(m.string)
@@ -4692,6 +4753,107 @@ def _khoi_cong_dung_nguon(c: LoiGoi) -> str | None:
         if (v := getattr(a, f)) is not None and vals[f] != [doc_so(v)]:
             return "UNGROUNDED_VALUE"
     return None
+
+
+_TEN_MP = rf"(?:\s+\((?-i:(?P<mp>{_L}))\))?"
+#: The CLOSED grammar of a curved section sentence (an allowlist, like `_CAU_CONG`): the whole quote must parse.
+_MO_MAT_CAT = (re.compile(rf"\s*(?:(?:cho|gọi)\s+)?(?:một\s+)?mặt\s+phẳng{_TEN_MP}", re.IGNORECASE),
+               re.compile(rf"\s*cắt\s+(?:hình|khối)\s+(?P<k>trụ|nón)(?:\s+(?-i:{_L}(?:\.{_L})?))?\s+bởi\s+(?:một\s+)?mặt\s+phẳng"
+                          rf"{_TEN_MP}", re.IGNORECASE))
+_CAU_MAT_CAT = tuple((vai, re.compile(mau, re.IGNORECASE)) for vai, mau in (
+    ("parallel", r"song\s+song\s+với\s+(?:mặt\s+phẳng\s+)?(?:mặt\s+)?đáy(?![\w])"),
+    ("distance", rf"cách\s+(?:mặt\s+phẳng\s+)?(?:mặt\s+)?đáy\s+(?:một\s+khoảng\s+)?(?:bằng\s+|là\s+)?{_SO_VB}"),
+    ("midpoint", rf"(?:đi\s+)?qua\s+trung\s+điểm\s+(?:của\s+)?(?:đường\s+cao|đoạn(?:\s+thẳng)?)\s+(?-i:(?P<x>{_L})(?P<y>{_L}))(?![\w'])"),
+    ("axial", r"(?:đi\s+)?qua\s+trục(?:\s+của\s+(?:hình|khối)\s+(?:trụ|nón))?(?![\w])"),
+    ("cuts", r"cắt\s+(?:hình|khối)\s+(?P<k2>trụ|nón)(?:\s+theo\s+(?:một\s+)?(?:thiết\s+diện|đường\s+tròn|hình\s+chữ\s+nhật|"
+             r"tam\s+giác(?:\s+cân)?))?(?![\w])"),
+))
+#: "Mặt phẳng (P) chia hình nón thành một khối nón nhỏ đỉnh S và một khối nón cụt" — the derived cone, closed form.
+_CHIA_NON = re.compile(rf"\s*(?:(?:một\s+)?mặt\s+phẳng{_TEN_MP}\s+)?chia\s+(?:hình|khối)\s+nón(?:\s+(?-i:{_L}(?:\.{_L})?))?\s+"
+                       rf"thành\s+(?:hai\s+phần\s*:?\s*)?(?:một\s+)?khối\s+nón\s+nhỏ(?:\s+đỉnh\s+(?-i:(?P<apex>{_L})))?"
+                       rf"\s+và\s+(?:một\s+)?(?:khối\s+nón\s+cụt|phần\s+còn\s+lại)\s*[.;]?\s*", re.IGNORECASE)
+
+
+def _doc_mat_cat(s: str) -> tuple[re.Match, list[tuple[str, re.Match]]] | None:
+    """The section sentence as (opener, [(role, match)]) — None when ANY word is left unread."""
+    for mo in _MO_MAT_CAT:
+        if (m := mo.match(s)) is None:
+            continue
+        out, pos = [], m.end()
+        while True:
+            pos = _NOI_CONG.match(s, pos).end()
+            if not s[pos:].strip(" .;"):
+                return m, out
+            nxt = next(((vai, x) for vai, mau in _CAU_MAT_CAT if (x := mau.match(s, pos))), None)
+            if nxt is None:
+                break
+            out.append(nxt)
+            pos = nxt[1].end()
+    return None
+
+
+def _phan_cong_dung_nguon(c: LoiGoi, calls: tuple[LoiGoi, ...]) -> str | None:
+    """`None` when a curved section / derived cone call is EXACTLY what its quote states (registry /24), else a code.
+    Section: the WHOLE sentence parses (`_doc_mat_cat`); a parallel section states "song song với đáy" and either its ONE
+    distance from the BASE ("cách đáy", never "cách đỉnh") or "qua trung điểm của đường cao <apex><centre>" (ratio 1/2); an
+    axial section states "qua trục" and nothing parallel; a written plane name and solid kind are this call's. Derived
+    cone: "… chia hình nón thành một khối nón nhỏ (đỉnh S) và một khối nón cụt", the apex THE cone's apex, the cutting
+    plane THE section's."""
+    a = c.args
+    solids = [k for k in calls if k.fn == "curved_solid" and k.args.solid == a.solid]
+    if len(solids) != 1:
+        return "UNKNOWN_SOLID"
+    k = solids[0].args
+    s = " ".join(chuan_hoa(q) for q in c.quotes)
+    if c.fn == "curved_subsolid":
+        m = _CHIA_NON.fullmatch(s)
+        sec = next((x for x in calls if x.fn == "curved_section" and x.args.section == a.section), None)
+        if m is None or sec is None or a.apex != k.top or m["apex"] not in (None, a.apex) \
+                or m["mp"] not in (None, sec.args.plane):
+            return "SOURCE_OBJECT_MISMATCH"
+        return None
+    doc = _doc_mat_cat(s)
+    if doc is None:
+        return "SOURCE_OBJECT_MISMATCH"
+    mo, clauses = doc
+    vai = [v for v, _m in clauses]
+    kinds = [x for x in [mo.groupdict().get("k")] + [m.groupdict().get("k2") for _v, m in clauses] if x]
+    if (not kinds or any(_KIEU_CONG[x.lower()] != k.kind for x in kinds) or mo["mp"] not in (None, a.plane)
+            or len(set(vai)) != len(vai)):
+        return "SOURCE_OBJECT_MISMATCH"
+    if a.kind == "axial_section":
+        return None if "axial" in vai and not {"parallel", "distance", "midpoint"} & set(vai) else "SOURCE_OBJECT_MISMATCH"
+    if "parallel" not in vai or "axial" in vai:
+        return "SOURCE_OBJECT_MISMATCH"
+    if a.kind == "parallel_to_base_at_distance":
+        d = [doc_so(m["v"]) for v, m in clauses if v == "distance"]
+        return None if "midpoint" not in vai and a.distance is not None and d == [doc_so(a.distance)] else "UNGROUNDED_VALUE"
+    mids = [m for v, m in clauses if v == "midpoint"]
+    ok = (len(mids) == 1 and "distance" not in vai and a.ratio == "1/2" and None not in (k.top, k.center)
+          and {mids[0]["x"], mids[0]["y"]} == {k.top, k.center})
+    return None if ok else "SOURCE_OBJECT_MISMATCH"
+
+
+def _mat_cat_khop(a: Any) -> bool:
+    """The question's "thiết diện" is THE one curved section of this run, of the asked solid."""
+    secs = [x for x in _GOI_NGUON.get() if x.fn == "curved_section"]
+    return len(secs) == 1 and secs[0].args.section == a.section and secs[0].args.solid == a.solid
+
+
+def _cap_khoi_khop(m: re.Match | None, a: Any, ratio: bool) -> bool:
+    """A ratio question names its two cones IN ORDER ("khối nón nhỏ và khối nón ban đầu" ⇒ small : original), so an
+    inverted call binds nothing; a remaining-volume question is (original, small cone). One cut only."""
+    sub = [x for x in _GOI_NGUON.get() if x.fn == "curved_subsolid"]
+    if len(sub) != 1:
+        return False
+    goc = next((x.id for x in _GOI_NGUON.get() if x.fn == "curved_solid" and x.args.solid == sub[0].args.solid), None)
+    nho = sub[0].args.derived
+    if not ratio:
+        return (a.first, a.second) == (goc, nho)
+
+    def ten(g: str) -> str | None:
+        return nho if re.search(r"nhỏ", g, re.IGNORECASE) else goc      # "ban đầu" / "đã cho" / "lớn" name the original
+    return (a.first, a.second) == (ten(m["a"]), ten(m["b"])) and a.first != a.second
 
 
 def construction_source_bound(c: LoiGoi, de: str = "") -> bool:

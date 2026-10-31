@@ -376,6 +376,8 @@ REFUSAL_CLASS = {
     # Curved solids on /4 (registry /23): taxonomy only; frozen benchmark cases and oracles unchanged.
     "BRIDGE_UNSUPPORTED_CURVED_COMPOSITE": "unsupported", "CURVED_RELATION_UNSUPPORTED": "unsupported",
     "CURVED_MEASURE_UNDEFINED": "unsupported", "EXACT_DOMAIN_EXCEEDED": "unsupported", "MALFORMED_CURVED_SOLID": "malformed",
+    "CURVED_SECTION_OUTSIDE_V1_CLOSURE": "unsupported", "CURVED_PLANE_DOES_NOT_CUT": "contradictory",
+    "CURVED_PLANE_TANGENT": "contradictory", "CURVED_SECTION_IS_A_BASE": "contradictory",
     # Result binding: taxonomy only; frozen case labels and mathematical oracle are unchanged.
     "UNKNOWN_DERIVED_REFERENCE": "malformed", "DERIVED_REFERENCE_TYPE_MISMATCH": "malformed",
     "RESULT_BINDING_UNVERIFIED": "grounding",

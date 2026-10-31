@@ -329,6 +329,10 @@ IDENTITY_DELTAS = (
      "versions": {"registry_version": ("geometry-functions/22", "geometry-functions/23"),
                   "planner_version": ("geometry-fact-planner/18", "geometry-fact-planner/19"),
                   "engine_version": ("geometry-function-engine/14", "geometry-function-engine/15")}},
+    {"run": "hybrid-master-backend-replacement",           # curved sections and cone ratio (registry /24, planner /20, engine /16)
+     "versions": {"registry_version": ("geometry-functions/23", "geometry-functions/24"),
+                  "planner_version": ("geometry-fact-planner/19", "geometry-fact-planner/20"),
+                  "engine_version": ("geometry-function-engine/15", "geometry-function-engine/16")}},
 )
 
 

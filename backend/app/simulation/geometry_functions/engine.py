@@ -50,7 +50,7 @@ from .registry import DINH_CAT_CANH, _cum_hoi
 #: two lines "chéo nhau" but they are coplanar (NFC-normalised quote).
 #: /13 (run `hybrid-v2-backend-generalization`): question planes are measured through the first non-collinear triple of
 #: the whole label group (`chon_ba_mat`), every named label is checked coplanar, and the IR plane carries the full name.
-ENGINE_VERSION = "geometry-function-engine/15"
+ENGINE_VERSION = "geometry-function-engine/16"
 PLANE_SECTION_CERTIFICATE_VERSION = "plane-section-certificate/1"
 PLANE_SECTION_CERTIFICATE_RULE = "engine_derived_plane_section"
 PLANE_SECTION_CERTIFICATE_PRODUCER = "engine.kiem_chung_chi_thiet_dien"
@@ -1912,7 +1912,9 @@ BAC_DAI_LUONG = {"ask_volume": 3, "ask_length": 1, "ask_distance_point_plane": 1
                  "ask_area": 2, "ask_angle_plane_plane": 0, "ask_distance_lines": 1, "ask_section_area": 2,
                  "ask_angle_lines": 0, "ask_volume_ratio": 0, "ask_residual_volume": 3,
                  "ask_distance_line_plane": 1, "ask_distance_planes": 1,
-                 "ask_curved_volume": 3, "ask_lateral_area": 2, "ask_surface_area": 2, "ask_radius": 1}
+                 "ask_curved_volume": 3, "ask_lateral_area": 2, "ask_surface_area": 2, "ask_radius": 1,
+                 "ask_curved_section_area": 2, "ask_curved_section_radius": 1, "ask_curved_volume_ratio": 0,
+                 "ask_curved_residual_volume": 3}
 
 
 #: Definitions of the unnamed points a planner `effect-chain` may introduce (affine: valid in chart coordinates). A
@@ -2070,6 +2072,162 @@ def _chung_chi_cong(kc: Any, q: str, r2: Fraction, h2: Fraction | None) -> Any:
     return add(side, times_rational(pi, r2 * (1 if apex else 2)))
 
 
+#: A goal on a part of the solid of revolution → its answer degree (registry /24).
+_HOI_PHAN_CONG = {"ask_curved_section_area": 2, "ask_curved_section_radius": 1, "ask_curved_volume_ratio": 0,
+                  "ask_curved_residual_volume": 3}
+
+
+def _dung_phan_cong(k: LoiGoi, kc: Any, secs: list[LoiGoi], subs: list[LoiGoi], phan: list[LoiGoi], r2: Fraction,
+                    h2: Fraction | None, unit: str | None, solid: str, top: str | None, problem_text: str, decl: Any,
+                    stmts: list, trace: list) -> tuple[dict, dict, set, list]:
+    """Sections, the small cone and their asks for ONE axial solid of revolution (engine /16), on existing IR only:
+    a parallel section is the plane z = d intersected by the KERNEL (`intersect_plane_curved`); an axial section is the
+    polygon through the axis (rectangle 2r × h, or triangle with apex); the small cone is built by the kernel from the apex,
+    the section circle's centre and the radius the kernel MEASURES on that circle. A ratio is certified by
+    cross-multiplication (q·V₁ − p·V₂ = 0, the polyhedral `ask_volume_ratio` mechanism), a remaining volume by subtraction.
+    Every answer has an independent similarity certificate (k = (h − d)/h: r' = k·r, V' = k³·V). Returns (asks → result var,
+    certificates, targets, post-execution checks)."""
+    from app.simulation.geometry.radical import radical, sqrt_rational, times_rational
+
+    pi, r = radical(1, 1, 1), sqrt_rational(r2)
+    h = sqrt_rational(h2) if h2 is not None else None
+    apex = kc.vai_dinh == "đỉnh"
+    if (secs or subs) and not (isinstance(r, Fraction) and isinstance(h, Fraction)):
+        raise TuChoi("CURVED_SECTION_OUTSIDE_V1_CLOSURE", f"{k.id}: thiết diện cần bán kính và chiều cao hữu tỉ", (k.id,))
+    taken = set(nhan_cua_de(problem_text)) | {x for x in (k.args.center, k.args.top, k.args.rim) if x}
+
+    def fresh(stem: str) -> str:
+        for cand in (stem, *(f"{stem}{i}" for i in range(1, 50))):
+            if cand not in taken:
+                taken.add(cand)
+                return cand
+        raise TuChoi("AUXILIARY_LABEL_COLLISION", f"{k.id}: hết nhãn điểm phụ", (k.id,))
+
+    def point(stem: str, xyz: tuple, why: str) -> str:
+        lab = fresh(stem)
+        trace.append({"step": "place_point", "object": lab, "rule": why, "binding": "AUXILIARY", "provenance": "DERIVED",
+                      "calls": [k.id]})
+        return decl(ir_name(lab), "point3", [str(x) for x in xyz])
+
+    info: dict[str, dict] = {}            # section id → {"var", "z", "k", "kind"}
+    kiem: list = []
+    for c in secs:
+        s = c.args
+        if s.kind == "axial_section":
+            rim = ir_name(k.args.rim) if k.args.rim else point("A", (r, 0, 0), "axial_section: rim point on the axis plane")
+            opp = point("B", (-r, 0, 0), "axial_section: diametrically opposite rim point")
+            if apex:
+                tip = top or point("S", (0, 0, h), "axial_section: apex")
+                verts = [tip, rim, opp]
+            else:
+                verts = [rim, opp, point("B'", (-r, 0, h), "axial_section: top rim"),
+                         point("A'", (r, 0, h), "axial_section: top rim")]
+            var = decl("td_" + ir_name(s.section), "polygon3")
+            mp = decl("mp_td_" + ir_name(c.id), "plane3")          # the plane through the axis, named as declared
+            stmts += [{"kind": "construct_plane", "target_var": mp, "through": verts[:3], "label": f"({s.plane or 'α'})"},
+                      {"kind": "construct_polygon", "target_var": var, "vertices": verts, "label": "Thiết diện qua trục"}]
+            trace.append({"step": "construct_section", "object": s.section, "rule": "axial_section", "calls": [c.id],
+                          "note": "mặt phẳng chứa trục cắt khối theo " + ("tam giác cân" if apex else "hình chữ nhật")})
+            info[s.section] = {"var": var, "kind": "axial"}
+            continue
+        if s.kind == "parallel_to_base_at_distance":
+            d2, has_a = doc_so(s.distance)
+            if (unit == "a") != has_a:
+                raise TuChoi("NON_HOMOGENEOUS_LENGTHS", f"{c.id}: khoảng cách và kích thước khối khác đơn vị", (c.id,))
+            z = sqrt_rational(d2)
+            if not isinstance(z, Fraction):
+                raise TuChoi("CURVED_SECTION_OUTSIDE_V1_CLOSURE", f"{c.id}: khoảng cách cắt phải hữu tỉ", (c.id,))
+        else:                             # through the midpoint of the axis: ratio = distance from the apex / height
+            if not apex:
+                raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: tỉ số từ đỉnh chỉ có nghĩa với khối có đỉnh", (c.id,))
+            z = (1 - Fraction(s.ratio)) * h
+        if z > h or z < 0:
+            raise TuChoi("CURVED_PLANE_DOES_NOT_CUT", f"{c.id}: mặt phẳng cách đáy {z} nằm ngoài khối (h = {h})", (c.id,))
+        if z == h and apex:
+            raise TuChoi("CURVED_PLANE_TANGENT", f"{c.id}: mặt phẳng qua đỉnh chỉ chạm khối tại một điểm", (c.id,))
+        if z in (0, h):
+            raise TuChoi("CURVED_SECTION_IS_A_BASE", f"{c.id}: mặt phẳng trùng một mặt đáy, không phải thiết diện", (c.id,))
+        kk = (h - z) / h if apex else Fraction(1)
+        mp = decl("mp_td_" + ir_name(c.id), "plane3")
+        var = decl("td_" + ir_name(s.section), "circle3")
+        stmts += [{"kind": "construct_plane_from_equation", "target_var": mp, "a": 0, "b": 0, "c": 1, "d": str(-z),
+                   "label": f"({s.plane or 'α'})"},
+                  {"kind": "assign", "target_var": var, "expr": {"kind": "intersect_plane_curved", "solid": solid, "plane": mp}}]
+        trace.append({"step": "construct_section", "object": s.section, "rule": "parallel_to_base", "calls": [c.id],
+                      "plane_height": str(z), "note": "mặt phẳng song song đáy cắt khối theo một đường tròn"})
+        if apex:
+            trace.append({"step": "derive_dimension", "object": s.section, "rule": "similar_cones", "calls": [c.id],
+                          "ratio": str(kk), "note": "r' / r = (h − d) / h (hai tam giác đồng dạng qua trục)"})
+        info[s.section] = {"var": var, "z": z, "k": kk, "kind": "circle"}
+        kiem.append((var, (Fraction(0), Fraction(0), z), r2 * kk * kk))
+    vol = times_rational(multiply_pi_r2_h(pi, r2, h), Fraction(1, 3) if apex else Fraction(1)) if h is not None else None
+    nho: dict[str, dict] = {}
+    for c in subs:
+        s, sec = c.args, info.get(c.args.section)
+        if not apex or sec is None or sec["kind"] != "circle":
+            raise TuChoi("CURVED_RELATION_UNSUPPORTED", f"{c.id}: khối con chỉ là nón nhỏ trên thiết diện song song đáy", (c.id,))
+        centre = point("I", (0, 0, sec["z"]), "small cone: centre of the section circle on the axis")
+        rr = decl("rr_" + ir_name(c.id), "float")
+        small = decl("khoi_" + ir_name(s.derived), "curved_solid")
+        hs = None if top else decl("hs_" + ir_name(c.id), "float", str(h - sec["z"]))
+        stmts += [{"kind": "assign", "target_var": rr, "expr": {"kind": "measure", "quantity": "radius", "of": sec["var"]}},
+                  {"kind": "construct_curved_solid", "target_var": small, "curved_kind": kc.kind, "anchor": centre,
+                   "apex_or_top": top, "rim_point": None, "radius": rr, "height": hs, "label": "Khối nón nhỏ"}]
+        trace.append({"step": "construct_subsolid", "object": s.derived, "rule": "cone_cut_by_parallel_plane",
+                      "calls": [c.id], "parts": [sec["var"], rr], "note": "đỉnh của nón ban đầu + đường tròn thiết diện"})
+        nho[s.derived] = {"var": small, "k": sec["k"]}
+    hoi, cert, muc = {}, {}, set()
+    for c in phan:
+        kq = decl("kq_" + ir_name(c.id), "float")
+        if c.fn in ("ask_curved_section_area", "ask_curved_section_radius"):
+            sec = info.get(c.args.section)
+            if sec is None or (c.fn == "ask_curved_section_radius" and sec["kind"] != "circle"):
+                raise TuChoi("CURVED_MEASURE_UNDEFINED", f"{c.id}: đại lượng này không có trên thiết diện đã dựng", (c.id,))
+            q = "area" if c.fn == "ask_curved_section_area" else "radius"
+            stmts.append({"kind": "assign", "target_var": kq, "expr": {"kind": "measure", "quantity": q, "of": sec["var"]}})
+            if sec["kind"] == "axial":
+                cert[c.id] = r * h if apex else 2 * r * h
+            else:
+                cert[c.id] = times_rational(r, sec["k"]) if q == "radius" else times_rational(pi, r2 * sec["k"] ** 2)
+            muc |= {sec["var"]}
+        else:
+            ids = {k.id: (solid, Fraction(1)), **{d: (v["var"], v["k"] ** 3) for d, v in nho.items()}}
+            if c.args.first not in ids or c.args.second not in ids or vol is None:
+                raise TuChoi("UNKNOWN_SOLID", f"{c.id}: hai khối của câu hỏi phải là nón ban đầu và nón nhỏ", (c.id,))
+            (v1, f1), (v2, f2) = ids[c.args.first], ids[c.args.second]
+            m1, m2 = decl("v1_" + ir_name(c.id), "float"), decl("v2_" + ir_name(c.id), "float")
+            stmts += [{"kind": "assign", "target_var": m1, "expr": {"kind": "measure", "quantity": "volume", "of": v1}},
+                      {"kind": "assign", "target_var": m2, "expr": {"kind": "measure", "quantity": "volume", "of": v2}}]
+            if c.fn == "ask_curved_volume_ratio":
+                ratio = f1 / f2
+                pq, qq = ratio.numerator, ratio.denominator
+                cross = {"kind": "arith", "op": "-",
+                         "left": {"kind": "arith", "op": "*", "left": {"kind": "literal", "value": qq}, "right": {"kind": "var", "name": m1}},
+                         "right": {"kind": "arith", "op": "*", "left": {"kind": "literal", "value": pq}, "right": {"kind": "var", "name": m2}}}
+                stmts.append({"kind": "assign", "target_var": kq,
+                              "expr": {"kind": "arith", "op": "+", "left": cross, "right": {"kind": "literal", "value": str(ratio)}}})
+                cert[c.id] = ratio
+                trace.append({"step": "compose_quantity", "object": c.id, "rule": "volume_ratio = (h'/h)³ (similar cones)",
+                              "calls": [c.id], "parts": [m1, m2], "note": "tỉ số chiều dài k, tỉ số thể tích k³"})
+            else:
+                stmts.append({"kind": "assign", "target_var": kq, "expr": {"kind": "arith", "op": "-",
+                              "left": {"kind": "var", "name": m1}, "right": {"kind": "var", "name": m2}}})
+                cert[c.id] = times_rational(vol, f1 - f2)
+                if f1 - f2 <= 0:
+                    raise TuChoi("NON_POSITIVE_RESIDUAL_VOLUME", f"{c.id}: phần còn lại không dương", (c.id,))
+                trace.append({"step": "compose_quantity", "object": c.id, "rule": "residual = V − V_small",
+                              "calls": [c.id], "parts": [m1, m2]})
+        hoi[c.id] = kq
+        muc |= {kq}
+    return hoi, cert, muc, kiem
+
+
+def multiply_pi_r2_h(pi: Any, r2: Fraction, h: Any) -> Any:
+    """π·r²·h, exact (an independent closed form for the certificate; never the kernel's formula)."""
+    from app.simulation.geometry.radical import multiply, times_rational
+    return times_rational(multiply(pi, h), r2)
+
+
 def _dung_cong(calls: tuple[LoiGoi, ...], problem_text: str) -> KetQuaTuyen:
     """A plan of ONE solid of revolution (curved slice, engine /15): the same Source Gate (already run), IR validator,
     interpreter and exact kernel as every plan — only the LAYOUT differs: a canonical pose (centre at the origin, axis z)
@@ -2083,7 +2241,10 @@ def _dung_cong(calls: tuple[LoiGoi, ...], problem_text: str) -> KetQuaTuyen:
     a = k.args
     segs = [c for c in calls if c.fn == "segment_length"]
     asks = [c for c in calls if c.fn in _HOI_CONG]
-    if lac := [c.id for c in calls if c is not k and c not in segs and c not in asks]:
+    secs = [c for c in calls if c.fn == "curved_section"]
+    subs = [c for c in calls if c.fn == "curved_subsolid"]
+    phan = [c for c in calls if c.fn in _HOI_PHAN_CONG]
+    if lac := [c.id for c in calls if c is not k and c not in (*segs, *asks, *secs, *subs, *phan)]:
         raise TuChoi("CURVED_RELATION_UNSUPPORTED", f"{lac}: lời gọi chưa có quan hệ đã chứng nhận với khối tròn xoay", tuple(lac))
     from app.simulation.geometry import curved as CV
 
@@ -2153,6 +2314,10 @@ def _dung_cong(calls: tuple[LoiGoi, ...], problem_text: str) -> KetQuaTuyen:
             iq = "lateral_area" if q == "area" else q
             stmts.append({"kind": "assign", "target_var": kq, "expr": {"kind": "measure", "quantity": iq, "of": solid}})
         hoi[c.id], muc_tieu = kq, muc_tieu | {kq}
+    ph_hoi, ph_cert, ph_muc, kiem_sau = _dung_phan_cong(k, kc, secs, subs, phan, r2, h2, unit, solid, top, problem_text,
+                                                       decl, stmts, trace)
+    hoi, muc_tieu = {**hoi, **ph_hoi}, muc_tieu | ph_muc
+    cert.update(ph_cert)
     program = {"program_id": "route_d_curved_solid", "title": problem_text[:120], "domain": "geometry",
                "memory_declarations": decls, "statements": stmts}
     vr = validate_semantic_program(program)
@@ -2168,11 +2333,16 @@ def _dung_cong(calls: tuple[LoiGoi, ...], problem_text: str) -> KetQuaTuyen:
     for cid, kq in hoi.items():
         if fm.get(kq) != cert[cid]:
             raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"{cid}: giá trị thực thi khác công thức đóng độc lập", (cid,))
-        bac = _HOI_CONG[next(c.fn for c in asks if c.id == cid)][1]
+        fn = next(c.fn for c in (*asks, *phan) if c.id == cid)
+        bac = _HOI_CONG[fn][1] if fn in _HOI_CONG else _HOI_PHAN_CONG[fn]
         chinh_xac[cid] = {"coef": dinh_dang(fm[kq]), "dim": bac if unit else 0, "unit": unit if bac else None}
         tra[cid] = _hien_thi_ky_hieu(fm[kq], bac, unit) if unit else dinh_dang(fm[kq])
         trace.append({"step": "certify_answer", "object": cid, "rule": "independent_closed_form", "calls": [cid],
                       "value": chinh_xac[cid]["coef"]})
+    for var, centre, rsq in kiem_sau:              # each section circle is the one the similarity certificate states
+        got = fm.get(var)
+        if got is None or (got.center.x, got.center.y, got.center.z) != centre or got.radius_sq != rsq:
+            raise TuChoi("ENGINE_SELF_CHECK_FAILED", "đường tròn thiết diện thực thi khác chứng chỉ đồng dạng")
     for t, p in pts.items():                       # every named point executed exactly where the layout put it
         v = fm.get(ir_name(t))
         if v is None or (v.x, v.y, v.z) != p:

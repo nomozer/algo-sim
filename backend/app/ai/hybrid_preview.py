@@ -76,7 +76,7 @@ _NHOM: tuple[tuple[str, str, frozenset[str], str], ...] = (
         "METRIC_REQUIRES_EUCLIDEAN_CHART",
         # curved slice (registry /23): what /4 cannot execute for a solid of revolution yet, or outside a·π·√b
         "BRIDGE_UNSUPPORTED_CURVED_COMPOSITE", "CURVED_RELATION_UNSUPPORTED", "CURVED_MEASURE_UNDEFINED",
-        "EXACT_DOMAIN_EXCEEDED",
+        "EXACT_DOMAIN_EXCEEDED", "CURVED_SECTION_OUTSIDE_V1_CLOSURE",
         # Route D's OUT_OF_SCOPE is the extraction escape `unsupported` ("this clause does not map to the function
         # library"), not the subject verdict of the scope gate: the preview runs no domain detection. `out_of_scope` would
         # tell the learner a geometry problem "belongs to another subject" (`learner_messages`: never).
@@ -88,7 +88,7 @@ _NHOM: tuple[tuple[str, str, frozenset[str], str], ...] = (
      "Dữ kiện hiện có chưa xác định được duy nhất hình cần dựng hoặc còn hiểu theo nhiều cách. AlgoSim không tự chọn số "
      "liệu hay cách hiểu thay em, nên không dựng hình."),
     ("INVALID_DATA", "geometry_generation_failed", frozenset({
-        "INCONSISTENT_FACTS", "NON_POSITIVE_LENGTH", "INVALID_RATIO", "DEGENERATE_LINE", "PARALLEL_PLANES", "SKEW_NO_INTERSECTION",
+        "INCONSISTENT_FACTS", "CURVED_PLANE_DOES_NOT_CUT", "CURVED_PLANE_TANGENT", "CURVED_SECTION_IS_A_BASE", "NON_POSITIVE_LENGTH", "INVALID_RATIO", "DEGENERATE_LINE", "PARALLEL_PLANES", "SKEW_NO_INTERSECTION",
         "SKEW_CLAIM_CONTRADICTED",
         "NON_COPLANAR_POINTS", "SECTION_EMPTY", "SECTION_PLANE_IS_FACE", "DERIVED_PLANE_IS_REFERENCE",
         "REGULAR_PYRAMID_NEEDS_REGULAR_BASE", "QUESTION_LOCAL_GIVEN_CONFLICT", "FOOT_NOT_IN_PLANE", "LINE_CONTAINED_IN_PLANE",

@@ -2,6 +2,7 @@
 from copy import deepcopy
 import hashlib
 import json
+from pathlib import Path
 
 import pytest
 
@@ -16,6 +17,12 @@ OUT = D.D1 / 'target-grammar-identity-recovery'
 CASES = json.loads((OUT / 'cases.json').read_text(encoding='utf-8'))
 REG = json.loads((OUT / 'registration.json').read_text(encoding='utf-8'))
 def names(cls): return [k for k, c in CASES.items() if c['class'] == cls]
+
+#: Sixth continuation (hybrid-master): curved sections moved the /4 boundary inward; these registered cells are now refused
+#: by the closed curved grammar instead of the bridge. The layer may only move a cell between REFUSED codes (asserted).
+_TRANSITIONS = json.loads((Path(__file__).resolve().parents[3] / "docs/evaluation/geometry/runs/hybrid-master-backend-replacement"
+                           / "registered-curved-control-transitions.json").read_text(encoding="utf-8"))["cells"]
+assert all(v["before"][0] == v["after"][0] == "REFUSED" for v in _TRANSITIONS.values())
 
 
 def v2_input(p):
@@ -73,6 +80,9 @@ def test_registered_controls_keep_schema_and_exact_route_outcomes(case):
     for name in ['a3','pl','a4']:
         r = F.ROUTES[name](deepcopy(p))
         expected = (before[name]['status'], before[name]['code'])
+        if (moved := _TRANSITIONS.get(f"target-grammar-identity-recovery::{case}::{name}")) is not None:
+            assert expected == tuple(moved["before"])          # the layer corrects exactly the registered value
+            expected = tuple(moved["after"])
         if expected[1] == 'ADAPTER_INTERNAL_ERROR':   # the 8 F7 cells; Owner D1 re-pins them (f7-narrow-recovery)
             expected = ('REFUSED', 'BRIDGE_UNSUPPORTED_MEASUREMENT')
         assert (r.status, r.code) == expected, (case,name,r.reason)

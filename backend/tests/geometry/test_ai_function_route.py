@@ -188,7 +188,9 @@ def test_khai_bao_ham_gemini_dung_tap_con_openapi():
         "translate_point", "ask_angle_lines", "divide_segment", "ask_volume_ratio", "ask_residual_volume",
         "ask_distance_line_plane", "ask_distance_planes",
         # hybrid-master curved slice (registry /23): planner-only, route A provider surface unchanged
-        "curved_solid", "ask_curved_volume", "ask_lateral_area", "ask_surface_area", "ask_radius"}
+        "curved_solid", "ask_curved_volume", "ask_lateral_area", "ask_surface_area", "ask_radius",
+        "curved_section", "curved_subsolid", "ask_curved_section_area", "ask_curved_section_radius",
+        "ask_curved_volume_ratio", "ask_curved_residual_volume"}
     txt = json.dumps(decl)
     for cam in ('"$ref"', '"$defs"', '"anyOf"', '"title"', '"additionalProperties"', '"xyz"', '"coord'):
         assert cam not in txt, cam

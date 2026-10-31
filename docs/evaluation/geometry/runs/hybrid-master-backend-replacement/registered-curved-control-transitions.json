@@ -1,0 +1,360 @@
+{
+ "schema": "REGISTERED_CONTROL_TRANSITIONS/1",
+ "run": "hybrid-master-backend-replacement (sixth continuation: curved sections and cone ratio on /4)",
+ "rule": "A corrected cell may only move from one REFUSED code to another REFUSED code; a SERVED transition is never recorded here. The registered oracle files are not edited.",
+ "classification": "CAPABILITY_BOUNDARY_MOVED_INWARD: /4 no longer refuses every curved section at the bridge (BRIDGE_UNSUPPORTED_CURVED); these controls now reach the closed curved Source Gate grammar and are refused there (SOURCE_OBJECT_MISMATCH) because their wording is outside it: 'tâm đáy O', 'tâm đáy dưới O, tâm đáy trên O'', 'A trên đường tròn đáy dưới', a ratio section 'cắt trục SO theo tỉ lệ 1/2 tính từ đỉnh S', 'thiết diện qua trục SAB'. Safe over-refusals (grammar gaps), no wrong serve.",
+ "cells": {
+  "measurement-dispatch-and-identity-order::CTRL.K.cone.lateral_area.solid::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cone_main: 'Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề vai trò)"
+  },
+  "measurement-dispatch-and-identity-order::CTRL.K.cone.radius.solid::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cone_main: 'Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề vai trò)"
+  },
+  "measurement-dispatch-and-identity-order::CTRL.K.cone.volume.solid::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cone_main: 'Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề vai trò)"
+  },
+  "measurement-dispatch-and-identity-order::CTRL.K.cyl.lateral_area.solid::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cyl: \"Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề va"
+  },
+  "measurement-dispatch-and-identity-order::CTRL.K.cyl.radius.solid::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cyl: \"Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề va"
+  },
+  "measurement-dispatch-and-identity-order::CTRL.K.cyl.volume.solid::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cyl: \"Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề va"
+  },
+  "target-grammar-identity-recovery::K.cone.area.notation::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cone_main: 'Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề vai trò)"
+  },
+  "target-grammar-identity-recovery::K.cone.area.section.goal_sid::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cone_main: 'Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề vai trò)"
+  },
+  "target-grammar-identity-recovery::K.cone.area.section::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cone_main: 'Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề vai trò)"
+  },
+  "target-grammar-identity-recovery::K.cone.area.solid::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cone_main: 'Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề vai trò)"
+  },
+  "target-grammar-identity-recovery::K.cone.lateral_area.notation::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cone_main: 'Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề vai trò)"
+  },
+  "target-grammar-identity-recovery::K.cone.lateral_area.solid::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cone_main: 'Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề vai trò)"
+  },
+  "target-grammar-identity-recovery::K.cone.radius.notation::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cone_main: 'Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề vai trò)"
+  },
+  "target-grammar-identity-recovery::K.cone.radius.section.goal_sid::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cone_main: 'Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề vai trò)"
+  },
+  "target-grammar-identity-recovery::K.cone.radius.section::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cone_main: 'Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề vai trò)"
+  },
+  "target-grammar-identity-recovery::K.cone.radius.solid::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cone_main: 'Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề vai trò)"
+  },
+  "target-grammar-identity-recovery::K.cone.volume.notation::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cone_main: 'Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề vai trò)"
+  },
+  "target-grammar-identity-recovery::K.cone.volume.solid::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cone_main: 'Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề vai trò)"
+  },
+  "target-grammar-identity-recovery::K.cone.volume.solid_id::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cone_main: 'Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4' không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề vai trò)"
+  },
+  "target-grammar-identity-recovery::K.cyl.area.notation::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cyl: \"Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề va"
+  },
+  "target-grammar-identity-recovery::K.cyl.area.section.goal_sid::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cyl: \"Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề va"
+  },
+  "target-grammar-identity-recovery::K.cyl.area.section::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cyl: \"Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề va"
+  },
+  "target-grammar-identity-recovery::K.cyl.area.solid::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cyl: \"Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề va"
+  },
+  "target-grammar-identity-recovery::K.cyl.lateral_area.notation::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cyl: \"Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề va"
+  },
+  "target-grammar-identity-recovery::K.cyl.lateral_area.solid::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cyl: \"Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề va"
+  },
+  "target-grammar-identity-recovery::K.cyl.radius.notation::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cyl: \"Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề va"
+  },
+  "target-grammar-identity-recovery::K.cyl.radius.section.goal_sid::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cyl: \"Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề va"
+  },
+  "target-grammar-identity-recovery::K.cyl.radius.section::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cyl: \"Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề va"
+  },
+  "target-grammar-identity-recovery::K.cyl.radius.solid::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cyl: \"Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề va"
+  },
+  "target-grammar-identity-recovery::K.cyl.volume.notation::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cyl: \"Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề va"
+  },
+  "target-grammar-identity-recovery::K.cyl.volume.solid::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cyl: \"Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề va"
+  },
+  "target-grammar-identity-recovery::K.cyl.volume.solid_id::a4": {
+   "before": [
+    "REFUSED",
+    "BRIDGE_UNSUPPORTED_CURVED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "cause": "cyl: \"Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3\" không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / chiều cao của chính mệnh đề va"
+  }
+ }
+}

@@ -47,7 +47,7 @@ from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, rende
 #: M5 bounded section-area question binding (`diện tích của nó` and grounded named section polygons).
 #: /18 (run `hybrid-v2-w3-f1-cross-sentence-plane-grounding`): propagate declared `plane_name` on all derived plane relations
 #: (`MAT_SONG_SONG`, `MAT_VUONG_DUONG`, `MAT_HAI_DUONG`) and distinguish unasked section-area goals (`NOT_ASKED_IN_SOURCE`).
-PLANNER_VERSION = "geometry-fact-planner/19"
+PLANNER_VERSION = "geometry-fact-planner/20"
 PlaneName = Annotated[
     str,
     BeforeValidator(lambda v: chuan_hoa(v) if isinstance(v, str) else v),
@@ -132,10 +132,13 @@ class TypedFact(BaseModel):
     # Internal only (curved slice, planner /19): a solid of revolution's declaration — kind, centre / top / rim labels and
     # the stated radius / height — as the `typed-fact-next/2` bridge read it from one `SolidSpec`.
     curved: SkipJsonSchema[dict[str, Any] | None] = None
+    # Internal only (planner /20): a section / the small cone / a goal of THE solid of revolution, as the bridge read it.
+    curved_part: SkipJsonSchema[dict[str, Any] | None] = None
 
 
 #: TypedFact fields only the deterministic bridge writes; a provider response carrying one is refused.
-INTERNAL_FACT_FIELDS = ("cut_edges", "cut_points", "plane_ref", "solid_refs", "derive_cuts", "boundary_edges", "curved")
+INTERNAL_FACT_FIELDS = ("cut_edges", "cut_points", "plane_ref", "solid_refs", "derive_cuts", "boundary_edges", "curved",
+                        "curved_part")
 
 
 @dataclass
@@ -243,6 +246,10 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
 
             if (f.kind != "solid" or f.solid_type is not None or f.curved.get("kind") not in LOAI_TU_NGUON):
                 raise TuChoi("SCHEMA_INVALID", f"{f.id}: khối tròn xoay cần loại (trụ, nón, cầu)", (f.id,))
+            required = ("solid",)
+        if f.curved_part is not None:                   # a part of THE solid of revolution: owner + its own fields
+            if f.curved_part.get("role") not in ("section", "derived", "ask") or f.points or f.solid_type:
+                raise TuChoi("SCHEMA_INVALID", f"{f.id}: phần của khối tròn xoay không hợp lệ", (f.id,))
             required = ("solid",)
         if f.kind == "point_def" and f.point_kind in ("intersect_line_line", "intersect_line_plane"):
             required = ("point", "point_kind", "points_a", "points_b")
@@ -380,6 +387,11 @@ _HOI_CONG = {"volume": "ask_curved_volume", "lateral_area": "ask_lateral_area", 
              "radius": "ask_radius"}
 
 
+#: A goal on a part of the solid of revolution → its ask (planner /20).
+_HOI_PHAN_CONG = {"area": "ask_curved_section_area", "radius": "ask_curved_section_radius",
+                  "volume_ratio": "ask_curved_volume_ratio", "residual_volume": "ask_curved_residual_volume"}
+
+
 def _ke_hoach_cong(facts: list[TypedFact], k: KeHoach) -> KeHoach:
     """One solid of revolution (the bridge refuses composites): its declaration → `curved_solid`; a stated segment between
     its named points (a cone's slant SA) stays the ordinary `segment_length` premise, which the engine relates to the
@@ -398,7 +410,20 @@ def _ke_hoach_cong(facts: list[TypedFact], k: KeHoach) -> KeHoach:
     for f in facts:
         if f is s:
             continue
-        if f.kind == "length" and f.measure == "segment" and f.points and f.value:
+        cp = f.curved_part or {}
+        if cp.get("role") == "section":
+            phat(f.id, "curved_section", {"solid": s.solid, "section": f.id, "kind": cp["kind"], "plane": cp.get("plane"),
+                                          "distance": cp.get("distance"), "ratio": cp.get("ratio")},
+                 f.quotes, f"section({cp['kind']})→curved_section")
+        elif cp.get("role") == "derived":
+            phat(f.id, "curved_subsolid", {"solid": s.solid, "section": cp["section"], "derived": cp["derived"],
+                                           "apex": cp["apex"]}, f.quotes, "derived_solid→curved_subsolid")
+        elif cp.get("role") == "ask" and f.quantity in _HOI_PHAN_CONG:
+            fn = _HOI_PHAN_CONG[f.quantity]
+            args = ({"solid": s.solid, "section": cp["section"]} if "section" in cp
+                    else {"first": cp["pair"][0], "second": cp["pair"][1]})
+            phat(f.id, fn, args, f.quotes, f"question({f.quantity})→{fn}")
+        elif f.kind == "length" and f.measure == "segment" and f.points and f.value:
             phat(f.id, "segment_length", {"segment": f.points, "value": f.value}, f.quotes, "length(segment)→segment_length")
         elif f.kind == "question" and f.quantity in _HOI_CONG and f.solid == s.solid:
             phat(f.id, _HOI_CONG[f.quantity], {"solid": s.solid}, f.quotes, f"question({f.quantity})→{_HOI_CONG[f.quantity]}")

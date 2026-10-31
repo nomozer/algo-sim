@@ -394,6 +394,70 @@ def bridge(raw: dict[str, Any] | TypedFactNextPayload) -> dict[str, Any]:
     return _bridge(p, _section_fact, BRIDGE_VERSION, v2=False)
 
 
+#: Curved sections the planner executes (bridge /2, registry /24); every other plane kind of a curved solid is refused.
+_MAT_CAT_CONG = ("parallel_to_base_at_distance", "parallel_to_base_at_ratio", "axial_section")
+
+
+def _phan_cong(p: TypedFactNextPayload, solids: dict[str, Any]) -> list[dict[str, Any]]:
+    """ONE solid of revolution (composites are refused before): its sections, the small cone a parallel section cuts off,
+    and every goal, as planner facts (internal `curved_part`). Pure translation: nothing is read from the text here — the
+    Source Gate binds each to its quote. An axis is required for a section (`KHOI_CONG.co_truc`): a sphere has none."""
+    from app.simulation.geometry.curved import KHOI_CONG, LOAI_TU_NGUON
+
+    (s,) = p.solids
+    kc = KHOI_CONG[LOAI_TU_NGUON[s.solid_type]]
+    out: list[dict[str, Any]] = []
+    secs = {x.section_id: x for x in p.derived_sections}
+    for x in p.derived_sections:
+        if x.target_solid_id != s.solid_id or x.plane_kind not in _MAT_CAT_CONG or not kc.co_truc:
+            raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{x.section_id}: thiết diện {x.plane_kind} của khối tròn xoay này chưa "
+                         "có trên planner", (x.section_id,))
+        out.append({"id": x.section_id, "kind": "section", "role": "premise", "quotes": [x.quote], "solid": s.notation,
+                    "curved_part": {"role": "section", "kind": x.plane_kind, "plane": x.plane_name,
+                                    "distance": x.distance_from_base, "ratio": x.ratio_from_apex}})
+    nho: set[str] = set()
+    for g in p.simulation_goals:
+        if g.kind != "construct_derived_solid":
+            continue
+        sec = secs.get(g.target_section_id or "")
+        if sec is None or sec.plane_kind == "axial_section" or (g.parent_solid_id or s.solid_id) != s.solid_id:
+            raise TuChoi("BRIDGE_UNSUPPORTED_DERIVED_SOLID", f"{g.goal_id}: khối con chỉ là khối nón nhỏ cắt bởi mặt phẳng song "
+                         "song đáy", (g.goal_id,))
+        nho.add(g.derived_solid_id)
+        out.append({"id": g.goal_id, "kind": "solid", "role": "premise", "quotes": [g.quote], "solid": s.notation,
+                    "curved_part": {"role": "derived", "section": sec.section_id, "derived": g.derived_solid_id,
+                                    "apex": _ref(g.apex_ref)}})
+    for g in p.math_goals:
+        q = {"id": g.goal_id, "kind": "question", "role": "question", "quotes": [g.quote], "solid": s.notation}
+        if g.kind in ("volume_ratio", "residual_volume"):
+            pair = ((g.numerator_solid_id, g.denominator_solid_id) if g.kind == "volume_ratio"
+                    else (g.parent_solid_id, g.cut_solid_id))
+            if set(pair) - {s.solid_id, *nho}:
+                raise TuChoi("UNKNOWN_SOLID_ID", f"{g.goal_id}: khối {sorted(set(pair) - {s.solid_id, *nho})} không có", (g.goal_id,))
+            out.append({**q, "quantity": g.kind, "curved_part": {"role": "ask", "pair": list(pair)}})
+        elif g.kind == "measurement" and g.goal_type in ("area", "radius") and "section_id" in g.target:
+            if g.target["section_id"] not in secs:
+                raise TuChoi("INVALID_MATH_GOAL", f"{g.goal_id}: thiết diện {g.target['section_id']!r} không có", (g.goal_id,))
+            out.append({**q, "quantity": g.goal_type, "curved_part": {"role": "ask", "section": g.target["section_id"]}})
+        elif (g.kind == "measurement" and g.goal_type in ("volume", "area", "lateral_area", "radius")
+              and measurement_scope(p, g) == s.solid_id):
+            out.append({**q, "quantity": g.goal_type})
+        else:
+            raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{g.goal_id}: mục tiêu {g.kind}/{g.goal_type} của khối tròn xoay chưa có "
+                         "trên planner", (g.goal_id,))
+    return out
+
+
+def _ket_cau_noi(p: TypedFactNextPayload, facts: list[dict[str, Any]], version: str, scoped: Any) -> dict[str, Any]:
+    khong = [g.goal_id for g in p.simulation_goals if g.kind in _NO_NEW_FACT_GOALS]
+    return {"facts": facts, "bridge": {"version": version, "goals_without_new_facts": khong,
+                                       "scope_validation_version": "typed-fact-next-scope/1",
+                                       "validated_premise_scopes": scoped,
+                                       "declared_length_unit": p.length_unit,
+                                       "declared_plane_names": {s.section_id: s.plane_name for s in p.derived_sections},
+                                       "problem_text": p.problem_text}}
+
+
 def bridge_v2(raw: dict[str, Any]) -> dict[str, Any]:
     """`typed-fact-next/2` → planner facts (run `hybrid-contract-v2`). The same pure translation as `/1` except sections."""
     try:
@@ -408,8 +472,7 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
     solids = {s.solid_id: s for s in p.solids}
     scoped = _kiem_pham_vi_tien_de(p, solids)  # semantic ownership precedes every capability refusal/fallback
     curved = {s.solid_id for s in p.solids if s.solid_type not in ("pyramid", "prism")}
-    if curved and (not v2 or p.derived_sections or p.relations):   # `/1` stays Adapter /3's; curved sections / relations
-        # are not on the planner yet
+    if curved and (not v2 or p.relations):   # `/1` stays Adapter /3's; curved relations are not on the planner yet
         raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{sorted(curved)}: thiết diện hay quan hệ của khối tròn xoay chưa có trên "
                      "planner", tuple(sorted(curved)))
     if curved and len(p.solids) > 1:      # curved slice (bridge /2, registry /23): one curved solid; composites need their own certificates
@@ -510,6 +573,8 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         raise TuChoi("BRIDGE_UNSUPPORTED_RELATION", f"{r.relation_id}: quan hệ {r.kind} chưa diễn đạt được trong TypedFact",
                      (r.relation_id,))
 
+    if curved:                                # curved sections, the small cone and their goals (registry /24)
+        return _ket_cau_noi(p, facts + _phan_cong(p, solids), version, scoped)
     asked = {}
     for g in p.simulation_goals:
         if g.kind == "construct_plane_section":
@@ -552,11 +617,6 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif g.kind == "residual_volume":
             facts.append({**q, "quantity": "residual_volume",
                           "solid_refs": [solid_fact(g.parent_solid_id, g.goal_id), solid_fact(g.cut_solid_id, g.goal_id)]})
-        elif curved:      # a solid of revolution answers only its own volume / areas / radius on the planner
-            if g.kind != "measurement" or g.goal_type not in ("volume", "area", "lateral_area", "radius")                     or measurement_scope(p, g) not in curved:
-                raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{g.goal_id}: mục tiêu {g.kind}/{g.goal_type} của khối tròn xoay "
-                             "chưa có trên planner", (g.goal_id,))
-            facts.append({**q, "quantity": g.goal_type, "solid": solids[measurement_scope(p, g)].notation})
         elif g.goal_type == "volume" and measurement_scope(p, g) in solids:
             # F6: a notation / canonical alias names the same solid (validated by the schema policy, S2/S3)
             facts.append({**q, "quantity": "volume",

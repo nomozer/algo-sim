@@ -3,6 +3,7 @@
 Inputs are frozen in f7-narrow-recovery/cases.json before the product edit; expected codes come from the active
 contract and the existing exact oracle, never from the runtime under test."""
 from copy import deepcopy
+from pathlib import Path
 import hashlib
 import json
 
@@ -34,11 +35,22 @@ def test_schema_outcome_on_both_versions(case):
     assert D.schema_code(G.v2_input(c['payload'])) == c['expected_schema']
 
 
+#: Sixth continuation (hybrid-master): curved sections moved the /4 boundary inward; these registered cells are now refused
+#: by the closed curved grammar instead of the bridge. The layer may only move a cell between REFUSED codes (asserted).
+_TRANSITIONS = json.loads((Path(__file__).resolve().parents[3] / "docs/evaluation/geometry/runs/hybrid-master-backend-replacement"
+                           / "registered-curved-control-transitions.json").read_text(encoding="utf-8"))["cells"]
+assert all(v["before"][0] == v["after"][0] == "REFUSED" for v in _TRANSITIONS.values())
+
+
 @pytest.mark.parametrize('case,route', ROUTED)
 def test_route_outcome_and_refusal_hygiene(case, route):
     c = CASES[case]
     r = F.ROUTES[route](deepcopy(c['payload']))
-    assert [r.status, r.code] == c['expected_routes'][route], (case, route, r.reason)
+    expected = c['expected_routes'][route]
+    if (moved := _TRANSITIONS.get(f"measurement-dispatch-and-identity-order::{case}::{route}")) is not None:
+        assert expected == moved["before"]                     # the layer corrects exactly the registered value
+        expected = moved["after"]
+    assert [r.status, r.code] == expected, (case, route, r.reason)
     if r.status == 'REFUSED':
         assert not any(getattr(r, f, None) for f in ('answers', 'answer_exact', 'scene3d')), (case, route)
 
