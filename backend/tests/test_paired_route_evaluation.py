@@ -201,7 +201,8 @@ def _arm_rows(corpus, arm, wrong=(), not_correct=(), technical=(), latency=1.0, 
                      "served_correct_lenient": correct, "wrong_served": bad, "technical_failure": tech,
                      "false_refusal": pos and not served and not tech,
                      "refusal_reason_correct": not pos and not served and not tech and reason_ok,
-                     "repair_attempts": 0, "latency_s": latency, "usd": usd, "usd_upper": usd, "outcome": "SCORED"})
+                     "repair_attempts": 0, "latency_s": latency, "usd": usd, "usd_floor": usd, "usd_upper": usd,
+                     "outcome": "SCORED"})
     return rows
 
 
@@ -290,6 +291,8 @@ def test_acceptance_refusal_latency_and_cost():
     assert _verdict(k, costly, cheap)["failed"] == ["5_usd_per_served_correct"]   # retry luck never passes it
     cached = [{**r, "usd": 0.0115, "usd_floor": 0.008} for r in cheap]   # review N3: billed cache discount
     assert _verdict(k, costly, cached)["failed"] == ["5_usd_per_served_correct"]
+    legacy = [{key: v for key, v in r.items() if key != "usd_floor"} for r in cached]     # m-e: no floor ⇒ adds 0
+    assert _verdict(k, costly, legacy)["failed"] == ["5_usd_per_served_correct"]
     terms = {"input_usd_per_million": 1.0, "output_usd_per_million": 0.0}
     use = {"semantic_analyze": {"prompt_tokens": 4000, "cached_content_tokens": 3000, "calls": 1}}
     assert E.usd(use, terms) == pytest.approx(0.004) and E.usd(use, terms, floor=True) == pytest.approx(0.001)

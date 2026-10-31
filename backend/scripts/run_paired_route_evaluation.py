@@ -286,7 +286,8 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
             # lower bound: reported usage only, cached prompt tokens at 0 (a request without usage, e.g. a retried 429,
             # adds 0) — criterion 5 compares Hybrid's charged UPPER bound with the control's LOWER bound, so neither
             # retry luck (N1) nor cache discounts (N3) can pass it
-            "usd_reported_total": sum(x for r in rs if isinstance(x := r.get("usd_floor", r["usd"]), (int, float))),
+            # (a row without `usd_floor`, e.g. re-scored pre-revision-D JSONL, adds 0: still a lower bound, review m-e)
+            "usd_reported_total": sum(x for r in rs if isinstance(x := r.get("usd_floor"), (int, float))),
             "exercised": len(rs) - sum(r["technical_failure"] for r in rs),
             "usd_per_served_correct": "UNKNOWN" if unknown or not ok else sum(usd) / ok,
         }

@@ -105,3 +105,14 @@ No live result exists.
 |---|---|---|
 | N3 MAJOR | The control's lower bound priced cached prompt tokens at the full input price. Implicit caching is on by default for 2.5 models, so that overstates LLM_ONLY's cost and could turn a true criterion-5 failure into a GO. | **Fixed:** `usd(..., floor=True)` prices `cached_content_tokens` at 0, and each row carries `usd_floor`. Revision D. A test covers it. |
 | m-d | The descriptive `usd_per_served_correct` could disagree with the criterion | **Labelled** in §7.5 as descriptive; criterion 5 does not read it. |
+
+**Round 4, re-verifying `9aa74c58`: `ACCEPTANCE_CONTRACT_REVIEW_READY`.**
+- **Re-verified:** N3 is closed, and every earlier probe still holds.
+- **Final sweep of criteria 0–7:** no remaining false-GO or unreachable-GO path.
+- **Non-blocking MINORs:**
+  - m-e: re-scored rows without `usd_floor` fell back to the full price. **Fixed:** such a row adds 0 to the control's lower bound, which is conservative (test added).
+  - m-f: the descriptive USD figure. Already labelled in §7.5.
+
+**Tests:** 46/46.
+
+**Status: `ACCEPTANCE_CONTRACT_REVIEW_READY`.** This holds for protocol revisions A–D and the harness at the commit that records this line. The thresholds of criteria 2–7 are unchanged from the reviewed draft. No live result exists.
