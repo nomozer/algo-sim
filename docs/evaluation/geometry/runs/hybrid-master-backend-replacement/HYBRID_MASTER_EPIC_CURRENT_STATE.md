@@ -212,3 +212,49 @@ This section supersedes the "Next exact action" above. Earlier sections are kept
    - **Start with:** a RED development probe of curved volume, area and radius, with hand π oracles; then the Registry function design and its exact pre/postconditions.
 2. **Owner, one consolidated decision:** `owner-go-request.md`. Either run the live evaluation on the current product, knowing it measures the curved gap, or after step 1. In both cases the Owner names the independent corpus author.
 3. With a GO: freeze the corpus hash into a protocol amendment, then `--live`.
+
+---
+
+## Fifth continuation (Owner GO option (b): curved geometry on /4), 2026-10-31 — IN PROGRESS
+
+This section supersedes the fourth continuation's "Next exact action".
+
+**Commits:**
+- `588cdf03`: the curved slice.
+- `e58d319a`: kind dispatch moved into the kernel table, the registered boundaries kept, the planner-only functions recorded.
+- `38e1a0bf`: grounding fixes after independent review round 1.
+
+**What is served on /4.** Details are in `curved-capability.md`, with hand oracles in `tools/curved_probe.py` → `curved-probe.json`.
+- **Solids:** cylinder, cone and sphere, declared with centre, top/apex and rim, radius and height. Named points are optional, and the canonical pose is used when none are named.
+- **Measures:** volume, lateral area, sphere surface, radius, and the total area of a cylinder or cone. The total is composed as lateral area plus base circle(s), and unlike radical terms give `EXACT_DOMAIN_EXCEEDED`.
+- **Derived dimension:** a cone's height from its slant, by Pythagoras.
+- **Symbolic unit a.**
+- **Probe:** 16/16 served exactly correct, plus 24 correct refusals: 1 domain case, 12 adversarial cases, and 11 reproductions from the review.
+
+**Design.** There is still one route: bridge → planner `_ke_hoach_cong` → Source Gate `_khoi_cong_dung_nguon` / `_cong_khop` → engine `_dung_cong`, a canonical-pose layout beside `_Dung` → the existing curved IR / interpreter / kernel → Adapter /4.
+- Per-kind facts come only from `curved.KHOI_CONG`, through `LOAI_TU_NGUON`.
+- The certificate `_chung_chi_cong` checks arithmetic. Grounding is the Source Gate's job.
+- Versions: registry /23, planner /19, engine /15.
+- Route A's provider surface and LLM_ONLY are unchanged; no `CACHE_VERSION` bump.
+
+**Still refused, typed:**
+- curved sections, relations and composites, including inscribed / circumscribed solids;
+- the standalone frustum;
+- diameter / circumference phrasings;
+- the legacy /1 bridge.
+
+The Owner-registered curved controls keep `BRIDGE_UNSUPPORTED_CURVED`.
+
+**Parity:** PARTIAL. Adapter /3 still owns parallel and axial sections and the cone ratio / remaining volume.
+
+**Independent review:**
+- Round 1: `NOT_READY`, with 3 blockers, all wrong-serve paths.
+- After the fix: re-review round 2 is pending.
+
+**Next exact action:**
+1. Get review round 2 to READY.
+2. Full backend suite.
+3. Regression replay: `tools/capability_inventory.py phase-f`.
+4. Re-freeze the candidate, in its own commit, with a new divergence layer in its own run folder, `runs/hybrid-master-curved-solids/candidate_divergence.json`, correcting the 5caa6e94 layer. Both layer paths in this run folder are already taken.
+5. Full T3 on a fresh detached worktree.
+6. Write back: CODE_INDEX, ledger, owner-go-request (measured system), and this file.
