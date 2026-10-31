@@ -330,3 +330,54 @@ This section supersedes every earlier "Next exact action".
 3. Design, with failing examples, for a sphere section (`distance_from_center`; a contract change ⇒ model-surface impact).
 
 Then the composite and inscribed/circumscribed design.
+
+## Seventh continuation (Owner GO "REGISTERED CONTRACT AUDIT → GENERALIZED CURVED GEOMETRY → SPHERE SECTIONS → ARCHITECTURE HARDENING"), 2026-10-31: CHECKPOINT REACHED
+
+Offline. `MAX_AUTHORIZED_LIVE_REQUESTS = 0`; 0 provider calls.
+
+| Commit | Content |
+|---|---|
+| `6e0a6c2c` | Audit, base-centre grammar, apex ratio k, sphere sections (registry /25, planner /21, engine /17) |
+| `8b057c0a` | Fixes from review round 1 |
+| `d9d11b60` | Fixes from review round 2 (this is the product commit) |
+| `0a9e40c2` | Review READY (round 3) and the regression replay (phase-k) |
+| `cb06635e` | Candidate re-frozen in its own commit, with a new divergence layer in `runs/hybrid-master-curved-generalization/` that corrects the sixth-continuation layer |
+
+**Registered contract audit** (`registered-curved-controls-audit.md`):
+
+- 32 of 32 controls are still REFUSED, and so are the 12 moved probes; 0 moved REFUSED → SERVED.
+- Two refusal-reason regressions were found and fixed: unread wording is now `CURVED_WORDING_UNSUPPORTED`, and several sections in one run is now `CURVED_MULTI_SECTION_UNSUPPORTED`. Both are in the CAPABILITY group.
+- The record has three layers. Each later layer corrects the one before, and no layer is edited. `load_transitions` asserts the chain.
+
+**Architecture** (`curved-generalization-audit.md`, `curved-capability.md` §7):
+
+- **Base-centre wordings:** 16/16 probe cases correct.
+- **General apex ratio k:** 20/20. The gate converts OM/OS; a named axis point is the section centre.
+- **Sphere sections:** 19/19. They use the additive /2 plane kinds `at_distance_from_center` and `through_center` and the kernel's `_giao_cau`, with the certificate r'² = R² − d². d = R refuses as tangent; d > R as missing.
+- **Greek plane names** are now read.
+- **Model surface:** changed for the /4 arm only. `CACHE_VERSION` 131 is not bumped, because LLM_ONLY is untouched.
+- **Planner:** no new search. Each change is backed by a failing case.
+- **Trace:** PARTIAL. Typed steps, dependencies and provenance are present; preconditions and postconditions are enforced but not exported.
+
+**Review** (`curved-generalization-review.md`): three rounds — 5 MAJOR, then 2 MAJOR, then **READY**. 0 BLOCKER in any round. Every finding is locked by a test with its exact code.
+
+**Gates:**
+
+- **Wave 3:** 67/72 served correctly; 72/72 negatives refused; 0 wrong-served.
+- **Locked 96:** 96/96.
+- **203 probes:** 0 wrong-served.
+- **Full T3:** `FULL_PRODUCT_GATE_PASS` on attempt 1, on a fresh detached worktree (`full-t3-cb06635e.json`). pytest 16140/0, vitest 1424, build, demo 5/5, crash surface 6/6.
+- **Candidate:** `cb06635e`, product `d9d11b60`, 118 files `4c269bab…`. `--verify` matches.
+- **Publication scan** of `f986e897..HEAD`: PASS. 0 `Co-Authored-By` trailers.
+
+**Status:**
+
+- `ARCHITECTURE_CAPABILITY_PROGRESS`.
+- `CURVED_PARITY_PARTIAL`: the 8 curved fixtures still refuse, blocked by P-1, P-2 and an unordered ratio.
+- `OFFLINE_BACKEND_READY_FOR_LIVE_EVALUATION`: this waits on the Owner live GO.
+- Overall: **`HYBRID_NOT_READY`**. Nothing is merged or pushed.
+
+**Next priority:**
+
+1. Owner rulings P-1, P-2 and P-3 (`owner-go-request.md`). These are the only path to curved fixture parity without repinning on our own.
+2. The Owner live GO for the paired measurement.

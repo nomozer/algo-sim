@@ -8,6 +8,25 @@
 
 **Provider facts** below were checked against official Google documentation on 2026-10-31 (`provider-facts.md`).
 
+**Update, seventh continuation (2026-10-31). It supersedes the sixth-continuation measured system below.**
+- **Measured system:** candidate `cb06635e` (product `d9d11b60`; 118 files, `4c269bab…`). `--manifest` prints the exact `measured_system` and `harness_sha256` to bind.
+- **Model surface:** the /4 arm's provider response schema widened. It gains the additive `typed-fact-next/2` plane kinds `at_distance_from_center` / `through_center` and the field `distance_from_center`. The LLM_ONLY arm is unchanged, and so is `CACHE_VERSION` 131.
+- **Newly served on Hybrid** (independent review READY after 3 rounds):
+  - the base-centre wordings;
+  - the general apex ratio k;
+  - sphere sections at a distance from the centre or through it.
+- **Still refused on Hybrid:**
+  - coordinated question lists;
+  - several sections in one run;
+  - a ratio question without its order;
+  - a plane given by an equation;
+  - ellipse sections.
+- **Three grammar rulings are needed** (each is optional; until it is given, the locked policy stays):
+  - **P-1:** should "Tính thể tích, diện tích xung quanh hình nón, …" bind one object across several measures? This would SERVE registered REFUSED controls, which needs your repin.
+  - **P-2:** with several sections in one run, may a section question bind by kind ("qua trục" ⇒ axial, plane name ⇒ parallel)? This also needs a repin.
+  - **P-3:** is "cắt trục SO theo tỉ lệ k tính từ đỉnh S" the whole-axis ratio SM/SO in the target curriculum? "theo tỉ số k" is refused as ambiguous.
+- **Adapter /3 finding** (evidence only; Adapter /3 is not changed): it served the axial-section area for the quote "diện tích thiết diện tròn", and it answered a bare "Tính bán kính." when several circles exist (`registered-curved-controls-audit.md`).
+
 **Update, sixth continuation (2026-10-31). It supersedes the fifth-continuation measured system below.**
 - **Measured system:** candidate `7a870059` (118 files, `277338ce…`).
 - **Newly served on Hybrid:** curved sections parallel to the base, axial sections, the cone volume ratio and the remaining volume. Each passed an independent review (READY after 3 rounds).
