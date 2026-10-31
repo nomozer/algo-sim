@@ -357,7 +357,7 @@ Offline. `MAX_AUTHORIZED_LIVE_REQUESTS = 0`; 0 provider calls.
 - **Greek plane names** are now read.
 - **Model surface:** changed for the /4 arm only. `CACHE_VERSION` 131 is not bumped, because LLM_ONLY is untouched.
 - **Planner:** no new search. Each change is backed by a failing case.
-- **Trace:** PARTIAL. Typed steps, dependencies and provenance are present; preconditions and postconditions are enforced but not exported.
+- **Trace:** PARTIAL at `cb06635e` (superseded in the eighth continuation below, which exports machine-verified `preconditions` and `postconditions`). Typed steps, dependencies and provenance are present; preconditions and postconditions are enforced but not exported.
 
 **Review** (`curved-generalization-review.md`): three rounds — 5 MAJOR, then 2 MAJOR, then **READY**. 0 BLOCKER in any round. Every finding is locked by a test with its exact code.
 
@@ -381,3 +381,50 @@ Offline. `MAX_AUTHORIZED_LIVE_REQUESTS = 0`; 0 provider calls.
 
 1. Owner rulings P-1, P-2 and P-3 (`owner-go-request.md`). These are the only path to curved fixture parity without repinning on our own.
 2. The Owner live GO for the paired measurement.
+
+## Eighth continuation (Cross-Agent Handoff from `962a0d53`: role-phrase parity, pedagogical trace pre/postconditions, certified circumscribed spheres on `/4`), 2026-10-31: CHECKPOINT REACHED
+
+Offline. `MAX_AUTHORIZED_LIVE_REQUESTS = 0`; `MAX_AUTHORIZED_LIVE_SPEND_USD = 0`; `0` provider calls. Versions held at `geometry-functions/25`, `geometry-fact-planner/21`, `geometry-function-engine/17`; `DEFAULT_MODE = "LLM_ONLY"` and `CACHE_VERSION = "131"` unchanged; `0` edits to `semantic_program/` or `frontend/`.
+
+| Commit | Content |
+|---|---|
+| `df81deba` | Slices 1–3 implementation, Round 1 & Round 2 review fixes, `schema-census-extension.json`, `circumscribed_sphere_probe.py`, and regression suites |
+| `5e50379d` | Independent review `READY` (Round 2), `phase-l` replay, and doc reconciliation |
+| `44a0b79e` | Restore `_khoi_khop` mutant-test line anchor in `registry.py` (this is the final product commit) |
+| `37ef4fff` | Re-export 41 Adapter `/2` preview fixtures with trace `preconditions`/`postconditions` (`fixtures-adapter-2-trace-pre-postconditions/`; historical W4 bundle preserved byte-for-byte) |
+| `b1b4cf5e` | `phase-l2` regression replay at product `44a0b79e` and Continuation 8 doc sync |
+| `db1ac63a` | Candidate re-frozen in its own commit (`runs/hybrid-master-circumscribed-spheres/` correcting `runs/hybrid-master-curved-generalization/`) |
+
+**State restoration from `962a0d53`:**
+
+- Continuation 7 items A–F (`registered-curved-controls-audit.md`, base-centre grammar, general apex ratio $k$, sphere sections, planner audit, Round 3 `READY` + Full T3 at `cb06635e`) verified `COMPLETED_VERIFIED`; item G (`docs/CURRENT_STATE.md` / `docs/EVIDENCE_INDEX.md` / `migration-ledger.md` / `curved-generalization-audit.md` sync) reconciled in this continuation.
+
+**Three offline backend slices delivered on Route D `/4`** (`curved-capability.md` §8, `circumscribed-spheres-review.md`):
+
+- **Slice 1 — Polyhedral Role-Phrase Source Gate Parity:** `_C_VAI` + `_cua_khop` accept explicit solid nouns without `"của"` (`"chiều cao hình chóp"`, `"cạnh bên hình lăng trụ"`, etc.) while delegating prism-subclass verification (`"lập phương"`, `"hộp chữ nhật"`, `"hộp"`, `"đứng"`, `"đều"`, `"tam/tứ/ngũ/lục giác"`) directly to `_loai_cum_dung` (`test_route_d_role_phrase_parity.py`).
+- **Slice 2 — Pedagogical Construction Trace Hardening:** `_gan_dieu_kien_vet` computes and exports machine-verified `preconditions` and `postconditions` (plus auxiliary-step `dependencies`) on `KetQuaTuyen.trace` and `route_d.construction_trace`; strips post-execution kernel claims on every `REFUSED` path (including post-engine `SCENE_BUILD_FAILED`, `NEGATED_CLAUSE`, `PROOF_UNVERIFIABLE`); emits axisless `canonical_origin_center` / `center_at_origin` on standalone spheres (`test_route_d_pedagogical_trace.py`).
+- **Slice 3 — Certified Circumscribed Spheres of Polyhedra on `/4`:** additive `SolidSpec.circumscribes` on `typed-fact-next/2` (`schema-census-extension.json`); exact `Fraction` $3 \times 3$ Gram circumcenter solver (`_tam_bon_dinh`) + all-vertex cosphericity certificate (`NO_CIRCUMSCRIBED_SPHERE`); exact `Fraction` Cholesky Euclidean chart normalization (`chuan_hoa_euclid`, refusing irrational charts with `METRIC_REQUIRES_EUCLIDEAN_CHART`); G4 IR perpendicular-bisector construction (`_emit_tam_ngoai_tiep`) + `construct_curved_solid` + independent closed-form cross-check; closed Vietnamese Source Gate grammar (`_CAU_CONG_NGOAI_TIEP`) + composite polyhedron/sphere `ask_volume` disambiguation via `_chi_mot_khoi_3d` (`circumscribed_sphere_probe.py`: `12/12` positives served with exact `π`/radical values, `12/12` adversarial negatives refused fail-closed; `test_route_d_circumscribed_spheres.py`).
+
+**Independent adversarial review** (`circumscribed-spheres-review.md`, subagent `0ef27125-61ad-4f33-b4aa-e126981ee0e6`): two rounds — `2 MAJOR, 2 MINOR, 2 NIT` (`NOT_READY`), then **`READY`** (`0 BLOCKER, 0 MAJOR`; `MINOR-R2-1` also closed).
+
+**Gates:**
+
+- **Wave 3 (`inventory-phase-l2.json`, `wave3-phase-l2.json`):** `67/72` served correctly; `72/72` negatives refused (`62` exact reason); `0` wrong-served; `0` transitions.
+- **Locked 96:** `96/96`, `0` wrong-served.
+- **203 probes:** `0` served negatives, `0` internal errors (same 12 curved `REFUSED -> REFUSED` transitions).
+- **Registered curved controls:** `32/32` remain `REFUSED` (`0` moved `REFUSED -> SERVED`).
+- **Candidate:** `db1ac63a`, product `44a0b79e`, 118 files `ccfce08c…`. `freeze_evaluation_candidate.py --verify` matches.
+- **Full T3:** `FULL_PRODUCT_GATE_PASS` on attempt 1 of `db1ac63a`, on fresh detached worktree `hm-t3-db1ac63a` (`full-t3-db1ac63a.json`): pytest `16181` passed (`0` failed, `7` skipped, `2` deselected, `15` xfailed), vitest `84` files / `1424` passed, production build `PASS`, demo replay `5/5`, crash surface `6/6`.
+- **Publication scan** of `f986e897..HEAD`: `PASS` (`0` violations, `0` `Co-Authored-By` trailers).
+
+**Status:**
+
+- `ARCHITECTURE_CAPABILITY_PROGRESS`.
+- `CURVED_PARITY_PARTIAL` (the 8 curved fixtures still refuse on `/4`, gated on `P-1`, `P-2` and unordered ratio).
+- `OFFLINE_BACKEND_READY_FOR_LIVE_EVALUATION`.
+- Overall: **`HYBRID_NOT_READY`**. Nothing is merged or pushed.
+
+**Next priority (live / human / frontend gates only):**
+
+1. Owner rulings `P-1`, `P-2` and `P-3` (`owner-go-request.md`) if curved fixture repins are desired.
+2. Owner live GO + independently authored 60-problem held-out corpus for paired live measurement (`D-04`, `D-11`, `D-13`, `GATE-16`), plus frontend `D-10` and manual QA `GATE-13`/`GATE-15`/`GATE-20` before any cutover decision.

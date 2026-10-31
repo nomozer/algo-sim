@@ -8,6 +8,19 @@
 
 **Provider facts** below were checked against official Google documentation on 2026-10-31 (`provider-facts.md`).
 
+**Update, eighth continuation (2026-10-31). It supersedes the seventh-continuation measured system below.**
+- **Measured system:** candidate `db1ac63a` (product `44a0b79e`; 118 files, `ccfce08c…`). `--manifest` prints the exact `measured_system` and `harness_sha256` to bind.
+- **Model surface:** the `/4` arm's provider response schema widened with the additive `typed-fact-next/2` field `SolidSpec.circumscribes` (a sphere circumscribing a declared polyhedron). The `LLM_ONLY` arm is unchanged, and so is `CACHE_VERSION` 131.
+- **Newly served and hardened on Hybrid `/4`** (independent review `READY` after 2 rounds; Registry `/25`, Planner `/21`, Engine `/17`):
+  - polyhedral role-phrase parity without `"của"` (`"chiều cao hình chóp"`, `"cạnh bên hình lăng trụ"`, etc.) with full prism-subclass invariant verification;
+  - machine-verified `preconditions` and `postconditions` exported on `KetQuaTuyen.trace` and `route_d.construction_trace` (stripped of post-execution kernel claims on all `REFUSED` paths, axisless standalone sphere pose);
+  - certified circumscribed spheres of polyhedra (`"mặt cầu / khối cầu ngoại tiếp"`), solved via exact `Fraction` $3 \times 3$ Gram circumcenter + all-vertex cosphericity certificate (`NO_CIRCUMSCRIBED_SPHERE`) + exact `Fraction` Cholesky Euclidean chart normalization (`chuan_hoa_euclid`) + G4 IR perpendicular-bisector construction + independent closed-form cross-check, plus composite polyhedron/sphere `ask_volume` disambiguation.
+- **Still refused on Hybrid `/4`:**
+  - inscribed spheres, tangent spheres, and circumcircles;
+  - non-cospheric polyhedra (`NO_CIRCUMSCRIBED_SPHERE`) and irrational Cholesky charts (`METRIC_REQUIRES_EUCLIDEAN_CHART`);
+  - coordinated question lists (P-1), several sections in one run (P-2), a ratio question without its order, a plane given by an equation, and ellipse sections.
+- **Same three optional grammar rulings (`P-1`, `P-2`, `P-3`)** as in the seventh continuation below remain open.
+
 **Update, seventh continuation (2026-10-31). It supersedes the sixth-continuation measured system below.**
 - **Measured system:** candidate `cb06635e` (product `d9d11b60`; 118 files, `4c269bab…`). `--manifest` prints the exact `measured_system` and `harness_sha256` to bind.
 - **Model surface:** the /4 arm's provider response schema widened. It gains the additive `typed-fact-next/2` plane kinds `at_distance_from_center` / `through_center` and the field `distance_from_center`. The LLM_ONLY arm is unchanged, and so is `CACHE_VERSION` 131.
