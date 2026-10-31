@@ -157,7 +157,9 @@ def test_registry_dong_va_khai_bao_ham_khong_co_toa_do():
     decl = GF.function_declarations()
     # planner-only, never declared: the auxiliary, and `ask_angle_lines` (route B only, goal-directed-function-composition)
     assert {d["name"] for d in decl} == set(GF.REGISTRY) - {"translate_point", "ask_angle_lines", "divide_segment", "ask_volume_ratio", "ask_residual_volume",
-                                                           "ask_distance_line_plane", "ask_distance_planes"}
+                                                           "ask_distance_line_plane", "ask_distance_planes",
+        # hybrid-master curved slice (registry /23): planner-only, route A provider surface unchanged
+        "curved_solid", "ask_curved_volume", "ask_lateral_area", "ask_surface_area", "ask_radius"}
     txt = json.dumps(decl, ensure_ascii=False).lower()
     for cam in ("xyz", "coord", "toạ độ", "tọa độ", "\"x\"", "position"):
         assert cam not in txt, cam

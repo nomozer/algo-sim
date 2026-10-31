@@ -77,6 +77,19 @@ def test_the_full_hybrid_path_shows_only_the_asked_value_as_target():
         assert targets == [parse_exact(oracle)]
 
 
+def test_a_symbolic_unit_keeps_pi_in_the_learner_answer_and_a_diameter_is_not_guessed():
+    g = "Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O, bán kính đáy bằng a và chiều cao bằng 2a."
+    p = C.payload((g, C.solid("cylinder", "O.O'", "O", "O'", "A", "a", "2a", g[:-1]), []), "volume", "Tính thể tích khối trụ.")
+    p["length_unit"] = "a"
+    r = run_typed_fact_next_v2_route(p)                       # V = π·a²·2a = 2πa³ (found: the π was dropped as "2a³")
+    assert r.status == "SERVED" and r.answer_exact["mg1"] == {"coef": "2π", "dim": 3, "unit": "a"}
+    assert r.answers["mg1"] == "2πa³"
+    g2 = "Cho mặt cầu tâm O, điểm A thuộc mặt cầu, đường kính bằng 6."   # no role clause reads a diameter as a radius
+    r2 = run_typed_fact_next_v2_route(C.payload((g2, C.solid("sphere", "O", "O", None, "A", "3", None, g2[:-1]), []),
+                                                "volume", "Tính thể tích khối cầu."))
+    assert r2.status == "REFUSED" and r2.code == "UNGROUNDED_VALUE"
+
+
 def test_a_tampered_certificate_is_never_served(monkeypatch):
     from app.simulation.geometry_functions import engine as E
     monkeypatch.setattr(E, "_chung_chi_cong", lambda kind, q, r2, h2: radical(1, 1, 1))     # wrong closed form

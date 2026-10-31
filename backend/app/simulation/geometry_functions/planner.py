@@ -106,8 +106,8 @@ class TypedFact(BaseModel):
     points_a: list[Label] | None = Field(None, description="toán hạng 1: 1 điểm, 2 điểm = đường thẳng, ≥3 = mặt phẳng")
     points_b: list[Label] | None = Field(None, description="toán hạng 2")
     line_ref: str | None = Field(None, min_length=1, description="ID dữ kiện intersection_line có nguồn, cho distance/projection; không phải nhãn điểm hay chương trình")
-    quantity: Annotated[Literal["volume", "area", "length", "distance", "angle", "volume_ratio", "residual_volume",
-                                "lateral_area", "radius"],
+    # the provider's flat quantities, plus the bridge-only ones (ratio / residual; curved lateral area and radius, /19)
+    quantity: Annotated[Literal[*FLAT_QUANTITIES, "volume_ratio", "residual_volume", "lateral_area", "radius"],
                         WithJsonSchema({"enum": list(FLAT_QUANTITIES), "type": "string"})] | None = None
     plane_relation: Literal["parallel", "perpendicular", "parallel_two_lines"] | None = Field(
         None, description="thiết diện / diện tích thiết diện với mặt cắt cho bằng QUAN HỆ: mặt qua `point`, song song "
@@ -239,7 +239,9 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
             else:
                 raise TuChoi("SCHEMA_INVALID", f"{f.id}: line_ref chỉ cho distance / projection", (f.id,))
         if f.curved is not None:                        # a solid of revolution: kind + centre, never a polyhedral type
-            if (f.kind != "solid" or f.solid_type is not None or f.curved.get("kind") not in ("cylinder", "cone", "sphere")
+            from app.simulation.geometry.curved import LOAI_TU_NGUON
+
+            if (f.kind != "solid" or f.solid_type is not None or f.curved.get("kind") not in LOAI_TU_NGUON
                     or not f.curved.get("center")):
                 raise TuChoi("SCHEMA_INVALID", f"{f.id}: khối tròn xoay cần loại (trụ, nón, cầu) và tâm", (f.id,))
             required = ("solid",)

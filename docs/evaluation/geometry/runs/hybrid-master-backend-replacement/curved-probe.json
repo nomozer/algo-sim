@@ -1,0 +1,294 @@
+{
+ "provider_calls": 0,
+ "classification": "DEVELOPMENT_DIAGNOSTIC",
+ "rows": [
+  {
+   "id": "cyl.V",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "45π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "45π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "cyl.Sxq",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "30π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "30π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "cyl.Stp",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "48π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "48π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "cyl.r",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "3",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "3",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "cone.V",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "12π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "12π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "cone.Sxq",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "15π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "15π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "cone.Stp",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "24π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "24π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "coneL.V",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "12π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "12π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "coneL.Sxq",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "15π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "15π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "coneR.Sxq",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "4π√2",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "4π√2",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "coneR.V",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "8π/3",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "8π/3",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "sph.S",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "36π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "36π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "sph.V",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "36π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "36π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "cylR.V",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "6π",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "6π",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "cylR.Sxq",
+   "status": "SERVED",
+   "code": null,
+   "answer": {
+    "coef": "6π√2",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "6π√2",
+   "outcome": "SERVED_CORRECT",
+   "reason": ""
+  },
+  {
+   "id": "cylR.Stp",
+   "status": "REFUSED",
+   "code": "EXACT_DOMAIN_EXCEEDED",
+   "answer": null,
+   "oracle": "REFUSE",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "mg1: đáp số là tổng hai số hạng căn khác loại, ngoài miền số chính xác a·π·√b — không làm tròn"
+  },
+  {
+   "id": "n.bad_slant",
+   "status": "REFUSED",
+   "code": "INCONSISTENT_FACTS",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "k: kích thước suy ra không dương (r² = 9, h² = 0)"
+  },
+  {
+   "id": "n.swapped",
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "k: bán kính / chiều cao không là số của đúng mệnh đề vai trò trong \"Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O, bán kính đáy bằng 3 và chiều cao bằng 5\""
+  },
+  {
+   "id": "n.wrong_kind",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "mg1: 'Tính thể tích khối nón' không gọi tên đúng đối tượng của ask_curved_volume {'solid': \"O.O'\"} — không trả lời câu hỏi về đối tượng khác"
+  },
+  {
+   "id": "n.missing_height",
+   "status": "REFUSED",
+   "code": "MISSING_DIMENSION",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "k: thiếu chiều cao của O.O'"
+  },
+  {
+   "id": "n.sphere_lateral",
+   "status": "REFUSED",
+   "code": "CURVED_MEASURE_UNDEFINED",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "mg1: mặt cầu không có diện tích xung quanh"
+  },
+  {
+   "id": "n.area_unqualified",
+   "status": "REFUSED",
+   "code": "PREDICATE_NOT_IN_QUOTE",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "mg1: ask_surface_area cần một trong ['toàn phần', 'mặt cầu'] trong 'Tính diện tích của hình trụ'"
+  },
+  {
+   "id": "n.composite",
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED_COMPOSITE",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "['k']: khối tròn xoay cùng khối khác trong một bài chưa có chứng chỉ quan hệ trên planner"
+  },
+  {
+   "id": "n.foreign_segment",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "p1: toán hạng/điểm dựng không thuộc phạm vi 'k'"
+  },
+  {
+   "id": "n.overdetermined",
+   "status": "REFUSED",
+   "code": "INCONSISTENT_FACTS",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "p1: độ dài đã cho mâu thuẫn với bán kính / chiều cao của S.O"
+  },
+  {
+   "id": "n.wrong_value",
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "k: bán kính / chiều cao không là số của đúng mệnh đề vai trò trong \"Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O, bán kính đáy bằng 3 và chiều cao bằng 5\""
+  },
+  {
+   "id": "n.no_height",
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "giá trị trong tiền đề \"Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O, bán kính đáy bằng 3 và chiều cao bằng 5.\" không nằm trong quote của lời gọi mang giá trị ấy — không dù"
+  },
+  {
+   "id": "n.foreign_solid",
+   "status": "REFUSED",
+   "code": "UNKNOWN_SOLID_ID",
+   "outcome": "REFUSED_CORRECT",
+   "reason": "mg1: khối 'other' chưa được khai báo"
+  }
+ ]
+}

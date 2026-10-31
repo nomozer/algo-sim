@@ -408,6 +408,10 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
     solids = {s.solid_id: s for s in p.solids}
     scoped = _kiem_pham_vi_tien_de(p, solids)  # semantic ownership precedes every capability refusal/fallback
     curved = {s.solid_id for s in p.solids if s.solid_type not in ("pyramid", "prism")}
+    if curved and (not v2 or p.derived_sections or p.relations):   # `/1` stays Adapter /3's; curved sections / relations
+        # are not on the planner yet
+        raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{sorted(curved)}: thiết diện hay quan hệ của khối tròn xoay chưa có trên "
+                     "planner", tuple(sorted(curved)))
     if curved and len(p.solids) > 1:      # curved slice (bridge /2, registry /23): one curved solid; composites need their own certificates
         raise TuChoi("BRIDGE_UNSUPPORTED_CURVED_COMPOSITE", f"{sorted(curved)}: khối tròn xoay cùng khối khác trong một bài "
                      "chưa có chứng chỉ quan hệ trên planner", tuple(sorted(curved)))
@@ -548,7 +552,10 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif g.kind == "residual_volume":
             facts.append({**q, "quantity": "residual_volume",
                           "solid_refs": [solid_fact(g.parent_solid_id, g.goal_id), solid_fact(g.cut_solid_id, g.goal_id)]})
-        elif g.goal_type in ("volume", "area", "lateral_area", "radius") and measurement_scope(p, g) in curved:
+        elif curved:      # a solid of revolution answers only its own volume / areas / radius on the planner
+            if g.kind != "measurement" or g.goal_type not in ("volume", "area", "lateral_area", "radius")                     or measurement_scope(p, g) not in curved:
+                raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{g.goal_id}: mục tiêu {g.kind}/{g.goal_type} của khối tròn xoay "
+                             "chưa có trên planner", (g.goal_id,))
             facts.append({**q, "quantity": g.goal_type, "solid": solids[measurement_scope(p, g)].notation})
         elif g.goal_type == "volume" and measurement_scope(p, g) in solids:
             # F6: a notation / canonical alias names the same solid (validated by the schema policy, S2/S3)

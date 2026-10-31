@@ -250,7 +250,8 @@ class HeightArgs(_Args):
 
 
 #: A curved solid's notation as the source writes it: "O.O'" (two base centres), "S.O" (apex.centre) or "O" (sphere centre).
-CurvedName = Annotated[str, BeforeValidator(_nhan), Field(pattern=r"^[A-Z][0-9]*'?(?:\.[A-Z][0-9]*'?)?$")]
+CurvedName = Annotated[str, BeforeValidator(_nhan),
+                      Field(pattern=r"^(?:\([A-Z][0-9]*'?\)|[A-Z][0-9]*'?(?:\.[A-Z][0-9]*'?)?)$")]
 
 
 class CurvedSolidArgs(_Args):
@@ -3031,7 +3032,7 @@ def _ds_khoi_khop(m: re.Match, n: str, solids: list[str], khoi: dict) -> bool:
 #: hàm → [(cụm, buộc(m, args, khối của đề))].
 #: Curved slice (registry /23): the kind word a question uses for a solid of revolution.
 _KIEU_CONG = {"trụ": "cylinder", "nón": "cone", "cầu": "sphere"}
-_KHOI_CONG_CUM = r"(?:\s+của)?\s+(?:khối|hình|mặt)\s+(?P<kieu>trụ|nón|cầu)(?:\s+tròn\s+xoay)?(?:\s+(?-i:(?P<ten>[A-Z][0-9]*'?(?:\.[A-Z][0-9]*'?)?))(?![\w'.]))?"
+_KHOI_CONG_CUM = r"(?:\s+của)?\s+(?:khối|hình|mặt)\s+(?P<kieu>trụ|nón|cầu)(?:\s+tròn\s+xoay)?(?:\s+(?-i:(?P<ten>\([A-Z][0-9]*'?\)|[A-Z][0-9]*'?(?:\.[A-Z][0-9]*'?)?))(?![\w'.]))?"
 
 
 def _cong_khop(m: re.Match, a: Any) -> bool:

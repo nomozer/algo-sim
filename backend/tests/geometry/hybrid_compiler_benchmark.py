@@ -373,6 +373,9 @@ def answer_square(s: str) -> F | None:
 
 #: Every refusal code of the B route, classified by meaning (complete: a code missing here is a harness bug, see the test).
 REFUSAL_CLASS = {
+    # Curved solids on /4 (registry /23): taxonomy only; frozen benchmark cases and oracles unchanged.
+    "BRIDGE_UNSUPPORTED_CURVED_COMPOSITE": "unsupported", "CURVED_RELATION_UNSUPPORTED": "unsupported",
+    "CURVED_MEASURE_UNDEFINED": "unsupported", "EXACT_DOMAIN_EXCEEDED": "unsupported", "MALFORMED_CURVED_SOLID": "malformed",
     # Result binding: taxonomy only; frozen case labels and mathematical oracle are unchanged.
     "UNKNOWN_DERIVED_REFERENCE": "malformed", "DERIVED_REFERENCE_TYPE_MISMATCH": "malformed",
     "RESULT_BINDING_UNVERIFIED": "grounding",
