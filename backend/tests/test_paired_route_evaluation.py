@@ -180,6 +180,116 @@ def test_statistics():
     assert E.mcnemar_exact(0, 6) == pytest.approx(2 / 64) and E.mcnemar_exact(3, 3) == 1.0
 
 
+# ── §7 acceptance as code (amendment A1: observed wrong-served, not an interval against an observed rate) ─────────────
+
+def _composition():
+    classes = ["SERVE"] * 45 + ["OUT_OF_DOMAIN", "CONTRADICTORY_DATA", "MISSING_DATA"] * 5
+    return {"cases": [{"id": f"K{i:02d}", "expect": "SERVE" if c == "SERVE" else "REFUSE",
+                       **({} if c == "SERVE" else {"refusal_class": c})} for i, c in enumerate(classes)]}
+
+
+def _arm_rows(corpus, arm, wrong=(), not_correct=(), technical=(), latency=1.0, usd=0.01, reason_ok=True):
+    """Synthetic scored rows: every expected-serve case served correct and every negative refused, except as listed."""
+    rows = []
+    for c in corpus["cases"]:
+        pos, cid = c["expect"] == "SERVE", c["id"]
+        tech, bad = cid in technical, cid in wrong
+        correct = pos and not bad and not tech and cid not in not_correct
+        served = correct or bad
+        rows.append({"case_id": cid, "arm": arm, "expect": c["expect"], "served": served, "served_correct": correct,
+                     "served_correct_lenient": correct, "wrong_served": bad, "technical_failure": tech,
+                     "false_refusal": pos and not served and not tech,
+                     "refusal_reason_correct": not pos and not served and not tech and reason_ok,
+                     "repair_attempts": 0, "latency_s": latency, "usd": usd, "usd_upper": usd, "outcome": "SCORED"})
+    return rows
+
+
+_INDEPENDENT = {"corpus_author": "named by the Owner", "authoring_independence": "ESTABLISHED",
+                "evaluator_independence": "ESTABLISHED"}
+
+
+def _verdict(corpus, hybrid_rows, llm_rows, approval=_INDEPENDENT, **record):
+    rec = {"completed": True, "stop_reason": None, "stopped_arms": {}, **record,
+           "summary": E.summarize(hybrid_rows + llm_rows)}
+    return E.acceptance(corpus, rec, approval)
+
+
+def test_acceptance_zero_wrong_in_both_arms_is_go_and_the_interval_is_only_reported():
+    """The pre-amendment rule (Wilson upper of Hybrid ≤ observed LLM_ONLY rate) is NO-GO here: 6.02 % > 0 %."""
+    k = _composition()
+    out = _verdict(k, _arm_rows(k, "HYBRID"), _arm_rows(k, "LLM_ONLY"))
+    assert out["verdict"] == "HYBRID_CUTOVER_GO" and out["failed"] == []
+    lo, hi = out["uncertainty"]["HYBRID_wrong_served_ci95"]
+    assert lo == 0.0 and hi == pytest.approx(0.0602, abs=5e-4)          # 0/60 is not a zero production error rate
+    assert hi > 0.0                                                      # the old comparison would have failed
+
+
+def test_acceptance_wrong_served_cases():
+    k = _composition()
+    one_llm = _verdict(k, _arm_rows(k, "HYBRID"), _arm_rows(k, "LLM_ONLY", wrong={"K00"}))
+    many_llm = _verdict(k, _arm_rows(k, "HYBRID"), _arm_rows(k, "LLM_ONLY", wrong={f"K{i:02d}" for i in range(10)}))
+    one_hybrid = _verdict(k, _arm_rows(k, "HYBRID", wrong={"K00"}), _arm_rows(k, "LLM_ONLY"))
+    assert one_llm["verdict"] == many_llm["verdict"] == "HYBRID_CUTOVER_GO"
+    assert one_hybrid["verdict"] == "HYBRID_CUTOVER_NO_GO"
+    assert {"1_hybrid_zero_wrong_served", "1_no_excess_wrong_served"} <= set(one_hybrid["failed"])
+    both = _verdict(k, _arm_rows(k, "HYBRID", wrong={"K00"}), _arm_rows(k, "LLM_ONLY", wrong={"K00", "K01"}))
+    assert "1_hybrid_zero_wrong_served" in both["failed"]                # fewer than the control is still not zero
+
+
+def test_acceptance_an_incomplete_or_unequal_evaluation_is_never_go():
+    k = _composition()
+    h, l = _arm_rows(k, "HYBRID"), _arm_rows(k, "LLM_ONLY")
+    stopped = _verdict(k, h[:30], l, completed=False, stop_reason="USD_80_PERCENT")
+    unequal = _verdict(k, h[:59], l)                                     # a row missing, even if "completed"
+    for out in (stopped, unequal):
+        assert out["verdict"] == "HYBRID_CUTOVER_NO_GO" and "0_complete_paired_evaluation" in out["failed"]
+        assert out["criteria"]["2_served_correct_not_worse"] is None     # not evaluated, never assumed
+    early = _verdict(k, _arm_rows(k, "HYBRID", wrong={"K45"})[:46], l, completed=False,
+                     stopped_arms={"HYBRID": "SERVED_EXPECTED_REFUSAL"})
+    assert early["verdict"] == "HYBRID_CUTOVER_NO_GO" and early["criteria"]["1_hybrid_zero_wrong_served"] is False
+    assert _verdict(k, [], [])["verdict"] == "HYBRID_CUTOVER_NO_GO"        # empty result set
+    assert E.acceptance(k, {}, _INDEPENDENT)["verdict"] == "HYBRID_CUTOVER_NO_GO"
+    small = {"cases": k["cases"][:10]}                                   # not the pre-registered 45 + 15
+    out = _verdict(small, _arm_rows(small, "HYBRID"), _arm_rows(small, "LLM_ONLY"))
+    assert "0_pre_registered_composition" in out["failed"]
+
+
+def test_acceptance_technical_failures_served_correct_and_independence():
+    k = _composition()
+    l = _arm_rows(k, "LLM_ONLY")
+    tech3 = _verdict(k, _arm_rows(k, "HYBRID", technical={"K00", "K01", "K02"}), l)          # 3/60 = 5 %
+    tech4 = _verdict(k, _arm_rows(k, "HYBRID", technical={"K00", "K01", "K02", "K03"}), l)   # 4/60 > 5 %
+    assert "6_technical_and_scorer" not in tech3["failed"] and "6_technical_and_scorer" in tech4["failed"]
+    assert "1_hybrid_zero_wrong_served" not in tech4["failed"]           # a technical failure is not wrong-served
+    drop3 = _verdict(k, _arm_rows(k, "HYBRID", not_correct={"K00", "K01"}), l)               # −2/45 = −4.4 pp
+    drop3b = _verdict(k, _arm_rows(k, "HYBRID", not_correct={"K00", "K01", "K02"}), l)       # −6.7 pp
+    assert drop3["criteria"]["2_served_correct_not_worse"] is True and "2_served_correct_not_worse" in drop3b["failed"]
+    for approval in (None, {}, {**_INDEPENDENT, "corpus_author": " "},
+                     {**_INDEPENDENT, "authoring_independence": "NOT_ESTABLISHED"}):
+        out = _verdict(k, _arm_rows(k, "HYBRID"), l, approval=approval)
+        assert out["verdict"] == "HYBRID_CUTOVER_NO_GO" and out["failed"] == ["7_independence"]
+
+
+def test_acceptance_refusal_latency_and_cost():
+    k = _composition()
+    l = _arm_rows(k, "LLM_ONLY", latency=10.0, usd=0.05)
+    assert _verdict(k, _arm_rows(k, "HYBRID", reason_ok=False), l)["failed"] == ["3_refusals"]
+    assert _verdict(k, _arm_rows(k, "HYBRID", latency=11.0), l)["failed"] == ["4_latency"]
+    assert _verdict(k, _arm_rows(k, "HYBRID", usd=0.06), l)["failed"] == ["5_usd_per_served_correct"]
+    assert _verdict(k, _arm_rows(k, "HYBRID", usd="UNKNOWN"), l)["criteria"]["5_usd_per_served_correct"] is None
+    nothing = {f"K{i:02d}" for i in range(45)}                           # Hybrid serves nothing correct: undefined
+    out = _verdict(k, _arm_rows(k, "HYBRID", not_correct=nothing), _arm_rows(k, "LLM_ONLY", not_correct=nothing))
+    assert out["criteria"]["5_usd_per_served_correct"] is None and out["verdict"] == "HYBRID_CUTOVER_NO_GO"
+    llm_none = _verdict(k, _arm_rows(k, "HYBRID"), _arm_rows(k, "LLM_ONLY", not_correct=nothing))
+    assert llm_none["criteria"]["5_usd_per_served_correct"] is True
+
+
+def test_the_run_summary_carries_the_acceptance_verdict(tmp_path):
+    out = E.evaluate(_corpus(tmp_path), tmp_path / "rows.jsonl", None)
+    assert out["acceptance"]["verdict"] == "HYBRID_CUTOVER_NO_GO"        # a 3-case fixture is never a GO
+    assert _rows(tmp_path / "rows.jsonl")[-1]["acceptance"] == json.loads(json.dumps(out["acceptance"]))
+
+
 def test_a_scorer_bug_never_loses_a_row(tmp_path, monkeypatch):
     monkeypatch.setattr(E, "score", lambda *a, **k: (_ for _ in ()).throw(KeyError("bug")))
     out = E.evaluate(_corpus(tmp_path), tmp_path / "rows.jsonl", None)
@@ -438,6 +548,16 @@ def test_a_served_expected_refusal_stops_only_that_arm(tmp_path, monkeypatch):
     assert out["stopped_arms"] == {"HYBRID": "SERVED_EXPECTED_REFUSAL"} and out["completed"] is False
     assert [r["case_id"] for r in out["rows"] if r["arm"] == "HYBRID"] == ["R1"]
     assert [r["case_id"] for r in out["rows"] if r["arm"] == "LLM_ONLY"] == ["R1", "L2"]
+
+
+def test_the_control_arm_is_never_stopped_by_its_own_wrong_serve(tmp_path, monkeypatch):
+    """Amendment A2: stopping LLM_ONLY would leave the pairs incomplete, so a GO would become unreachable exactly when
+    the control is the unsafe arm. Its served expected-refusal is recorded as wrong-served and the run goes on."""
+    cases = [_one("R1", expect="REFUSE"), _one("L2", dict(SERVED, problem_text=SERVED["problem_text"] + " Vẽ hình."))]
+    out = _live(tmp_path, monkeypatch, Provider(default=_body(None)), cases=cases,
+                llm_only=_ok(_quantity("measure.distance", _rational("12"))))
+    llm = {r["case_id"]: r for r in out["rows"] if r["arm"] == "LLM_ONLY"}
+    assert out["stopped_arms"] == {} and llm["R1"]["wrong_served"] and set(llm) == {"R1", "L2"}
 
 
 def test_an_identity_change_mid_run_stops_before_the_next_request(tmp_path, monkeypatch):

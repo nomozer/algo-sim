@@ -300,6 +300,57 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
     return out
 
 
+#: §2 composition and §7 thresholds, fixed before any corpus exists (amendment A1 changes criterion 1 only).
+COMPOSITION = {"SERVE": 45, "OUT_OF_DOMAIN": 5, "CONTRADICTORY_DATA": 5, "MISSING_DATA": 5}
+ALPHA, MAX_SERVED_CORRECT_DROP, P90_FACTOR, MAX_TECHNICAL_RATE = 0.05, 0.05, 1.5, 0.05
+
+
+def acceptance(corpus: dict[str, Any], record: dict[str, Any], approval: dict[str, Any] | None) -> dict[str, Any]:
+    """§7 as code, applied once to a finished run record (`completed`, `stopped_arms`, `summary`). Each criterion is
+    True, False, or None (not evaluable); only all-True is `HYBRID_CUTOVER_GO`. Criterion 1 (A1) is OBSERVED: Hybrid
+    shows 0 wrong-served and no wrong-served the control does not also show. Its Wilson interval is reported as
+    uncertainty and compared with nothing — 0/60 bounds the rate below ≈ 6 %, it does not show the rate is 0. A run
+    that is incomplete or unpaired is never a GO; criterion 1 still decides a NO-GO on the rows it has."""
+    s = record.get("summary") or {}
+    h, l, p = s.get("HYBRID"), s.get("LLM_ONLY"), s.get("paired")
+    cases = corpus.get("cases") or []
+    got = collections.Counter("SERVE" if c.get("expect") == "SERVE" else c.get("refusal_class") for c in cases)
+    complete = (bool(h and l and p) and record.get("completed") is True and not record.get("stopped_arms")
+                and h["n"] == l["n"] == p["complete_pairs"] == len(cases) and not p["unpaired_cases"])
+    c: dict[str, bool | None] = {
+        "0_pre_registered_composition": dict(got) == COMPOSITION,
+        "0_complete_paired_evaluation": complete,
+        "1_hybrid_zero_wrong_served": h["wrong_served"] == 0 if h else None,
+        "1_no_excess_wrong_served": p["wrong_served_only_HYBRID"] == 0 if p else None,
+    }
+    for key in ("2_served_correct_not_worse", "3_refusals", "4_latency", "5_usd_per_served_correct",
+                "6_technical_and_scorer"):
+        c[key] = None
+    if complete:
+        pos = h["expected_serve"]
+        favours_llm = (p["served_correct_mcnemar_p"] < ALPHA
+                       and p["served_correct_only_LLM_ONLY"] > p["served_correct_only_HYBRID"])
+        c["2_served_correct_not_worse"] = (pos > 0 and not favours_llm
+                                           and (h["served_correct"] - l["served_correct"]) / pos >= -MAX_SERVED_CORRECT_DROP)
+        c["3_refusals"] = (h["negatives_refused"] == h["negatives"] - h["negatives_technical"]
+                           and h["refusal_reason_correct"] >= l["refusal_reason_correct"])
+        lat = (h["latency_median_s"], l["latency_median_s"], h["latency_p90_s"], l["latency_p90_s"])
+        c["4_latency"] = None if None in lat else lat[0] <= lat[1] and lat[2] <= P90_FACTOR * lat[3]
+        if "UNKNOWN" not in (h["usd_total"], l["usd_total"]) and h["served_correct"]:      # undefined ⇒ None
+            llm = l["usd_total"] / l["served_correct"] if l["served_correct"] else math.inf
+            c["5_usd_per_served_correct"] = h["usd_total"] / h["served_correct"] <= llm
+        c["6_technical_and_scorer"] = all(a["technical_failures"] <= MAX_TECHNICAL_RATE * a["n"]
+                                          and a["scorer_errors"] == 0 for a in (h, l))
+    approval = approval or {}
+    c["7_independence"] = (str(approval.get("corpus_author") or "").strip() != ""
+                           and approval.get("authoring_independence") == "ESTABLISHED"
+                           and approval.get("evaluator_independence") == "ESTABLISHED") or None
+    failed = [k for k, v in c.items() if v is not True]
+    return {"verdict": "HYBRID_CUTOVER_NO_GO" if failed else "HYBRID_CUTOVER_GO", "failed": failed, "criteria": c,
+            "uncertainty": {f"{a}_wrong_served_ci95": (s.get(a) or {}).get("wrong_served_ci95")
+                            for a in ("HYBRID", "LLM_ONLY")}}
+
+
 # ── live authorization and cost containment ──────────────────────────────────────────────────────────────────────────
 
 def authorize_live(corpus_path: Path, approval_path: Path | None) -> dict[str, Any]:
@@ -600,8 +651,10 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
                 emit(row)
                 spent += upper if isinstance(upper, float) else 0.0
                 technical_streak = technical_streak + 1 if technical else 0
-                if row["served"] and case["expect"] != "SERVE":
-                    stopped_arms[arm] = "SERVED_EXPECTED_REFUSAL"          # §5.1: stop THAT arm, report it
+                if row["served"] and case["expect"] != "SERVE" and arm == "HYBRID":
+                    # §5.1 (A2): Hybrid alone stops — criterion 1 has already failed. The control arm goes on, its
+                    # wrong-serve recorded: stopping it would leave the pairs incomplete and make a GO unreachable.
+                    stopped_arms[arm] = "SERVED_EXPECTED_REFUSAL"
                 if budget is not None and budget.aborted:
                     stop_reason = budget.stop_reason or "REQUEST_CAP"       # TransportExtractor wraps BudgetExceeded
                 elif extra.get("hybrid_code") in PROVIDER_BLOCK:
@@ -610,8 +663,6 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
                     stop_reason = "USD_80_PERCENT"
                 elif technical_streak >= 3:
                     stop_reason = "INFRASTRUCTURE_STREAK"
-                elif len(stopped_arms) == 2:
-                    stop_reason = "BOTH_ARMS_STOPPED"
                 if stop_reason:
                     break
             if stop_reason:
@@ -626,6 +677,7 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
                "completed": stop_reason is None and not stopped_arms,
                "http_requests": budget.http_requests if budget else 0, "spent_upper_usd": spent if live else 0.0,
                "summary": summarize(rows)}
+        out["acceptance"] = acceptance(corpus, out, approval)
         emit(out)
         sink.close()
     return {**out, "measurement_class": "PREREGISTERED_LIVE_PAIRED_EVALUATION" if live

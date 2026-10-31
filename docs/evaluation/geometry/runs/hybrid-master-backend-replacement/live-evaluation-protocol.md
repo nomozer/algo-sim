@@ -12,6 +12,11 @@
 - The refusal reason is a pre-registered class, not a raw error code.
 - The asked-target rule, the technical-failure rule and the denominators are now fixed.
 
+*Revision A (2026-10-31, before any corpus or live result exists).* Two acceptance defects are fixed. Neither one could favour Hybrid; both could only block a deserved GO.
+- **A1, criterion 1.** The old rule was "Hybrid wrong-served = 0 **and** its Wilson upper bound ≤ the LLM_ONLY observed rate". That compared an interval bound with an observed rate, so it was unsatisfiable whenever LLM_ONLY was perfect: with 0/60 in both arms, Hybrid's upper bound is 6.02%, which is > 0%, so the result was NO-GO. Criterion 1 is now observed only: Hybrid shows 0 wrong-served, and none that the control does not also show. The Wilson interval is reported and compared with nothing.
+- **A2, §5.1.** Stopping the **control** arm when it served an expected refusal left the pairs incomplete, so a GO became unreachable exactly when LLM_ONLY was the unsafe arm. Only Hybrid stops now; its criterion 1 has already failed. The control's wrong-serve is recorded, and its arm goes on.
+- **§7 is now code.** `acceptance()` in the harness computes the verdict, and the run summary carries it. Before, §7 existed only as prose and no test covered it. The thresholds in criteria 2–7 are unchanged; only how undefined cases are treated is now fixed (§7).
+
 ## 1. Measurement metadata (actual values)
 
 | field | value |
@@ -129,7 +134,7 @@ This is enough to re-score. Full model responses are not stored.
 
 ## 5. Early stop (checked after each arm; spend checked before every request)
 
-1. **An arm serves an expected-refuse case:** that arm stops (`stopped_arms`) and the event is reported as a safety finding. The other arm continues.
+1. **Hybrid serves an expected-refuse case:** the Hybrid arm stops (`stopped_arms`) and the event is reported as a safety finding; criterion 1 has failed. LLM_ONLY continues. **If LLM_ONLY serves one,** it is recorded as wrong-served and its arm continues (A2).
 2. **Spend:** accounted spend reaches 80% of `max_usd` (`USD_80_PERCENT`).
 3. **Caps:** the request cap is reached (`REQUEST_CAP`), or the next request's exact ceiling would exceed `max_usd` (`COST_CEILING`).
 4. **Infrastructure:** 3 consecutive technical failures (`INFRASTRUCTURE_STREAK`), or a provider block or refusal (`PROVIDER_BLOCK`). A block is detectable by code only in the Hybrid arm; in LLM_ONLY it surfaces as an exception, counts as technical, and feeds the streak.
@@ -153,13 +158,15 @@ Oracle values must be exact strings. Decimals are refused before any request.
 
 ## 7. GO / NO-GO for Hybrid production (pre-registered)
 
-Every criterion must hold on the frozen held-out set:
-1. Hybrid `wrong_served` is 0, and its Wilson upper bound is ≤ the LLM_ONLY observed rate.
+Every criterion must hold on the frozen held-out set. The harness computes them in `acceptance()`, and the summary record carries the verdict. Each criterion is true, false or **not evaluable**; not evaluable counts as a failure.
+
+0. **Preconditions.** The composition is exactly as pre-registered: 45 serve, plus 5 of each refusal class. The run is complete: `completed`, no stopped arm, and both arms having one row per case, all paired. An incomplete, unequal or empty run is **never a GO**. Criterion 1 is still applied to the rows it has, so a Hybrid wrong-serve makes it a determinate NO-GO.
+1. **(A1)** Hybrid has **0 observed** `wrong_served`, and **no excess** over the control: `wrong_served_only_HYBRID` = 0 on the complete pairs. The Wilson 95% interval of each arm's wrong-served rate is reported as uncertainty. It is not compared with the other arm's observed rate. A result of 0/60 means a true rate ≤ about 6% is consistent with the data; it never means production makes no errors.
 2. `served_correct` (primary) is not worse: the McNemar test does not favour LLM_ONLY at α = 0.05, and the difference is ≥ −5 pp. The lenient sensitivity rule is reported, and any reversal is flagged; it never overrides the primary rule.
 3. Hybrid refuses 100% of expected-refuse cases, with technical failures excluded and reported. Its refusal-reason accuracy is ≥ LLM_ONLY's.
 4. Hybrid latency: median ≤ LLM_ONLY's, and p90 ≤ 1.5× LLM_ONLY's.
-5. Hybrid USD per served-correct ≤ LLM_ONLY's.
-6. Technical failures are ≤ 5% per arm, and there are 0 scorer errors.
-7. `EVALUATOR_INDEPENDENCE` and `AUTHORING_INDEPENDENCE` are established.
+5. Hybrid USD per served-correct ≤ LLM_ONLY's. When LLM_ONLY has 0 served-correct, its value is ∞. When Hybrid has 0 served-correct, or any usage is `UNKNOWN`, the criterion is not evaluable.
+6. Technical failures are ≤ 5% per arm (at most 3 of 60), and there are 0 scorer errors.
+7. `EVALUATOR_INDEPENDENCE` and `AUTHORING_INDEPENDENCE` are established. They are read from the Owner-written approval file: `corpus_author` must be non-empty, and `authoring_independence` and `evaluator_independence` must both be `ESTABLISHED`. The harness never writes them.
 
 Any failure is a NO-GO, reported with the failing criterion. Thresholds are never re-tuned. The 60 problems cover only the strata they sample; they are not evidence about all of grade 11–12 geometry.
