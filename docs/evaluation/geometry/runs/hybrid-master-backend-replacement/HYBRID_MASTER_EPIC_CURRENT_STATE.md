@@ -215,7 +215,7 @@ This section supersedes the "Next exact action" above. Earlier sections are kept
 
 ---
 
-## Fifth continuation (Owner GO option (b): curved geometry on /4), 2026-10-31 — IN PROGRESS
+## Fifth continuation (Owner GO option (b): curved geometry on /4), 2026-10-31 — CHECKPOINT REACHED
 
 This section supersedes the fourth continuation's "Next exact action".
 
@@ -258,3 +258,25 @@ The Owner-registered curved controls keep `BRIDGE_UNSUPPORTED_CURVED`.
 4. Re-freeze the candidate, in its own commit, with a new divergence layer in its own run folder, `runs/hybrid-master-curved-solids/candidate_divergence.json`, correcting the 5caa6e94 layer. Both layer paths in this run folder are already taken.
 5. Full T3 on a fresh detached worktree.
 6. Write back: CODE_INDEX, ledger, owner-go-request (measured system), and this file.
+
+**Fifth continuation: final state (supersedes the "Next exact action" just above).**
+- **Further commits:**
+  - `face0fc1`: the closed clause grammar.
+  - `4074e8b9`: the review recorded READY; the `NON_POSITIVE_LENGTH` fix; regression receipts.
+  - `98df8189`: candidate re-freeze.
+- **Independent review:** **`INDEPENDENT_CURVED_SLICE_REVIEW_READY`**, round 3 (`curved-slice-review.md`). 19 earlier false serves are refused and locked as tests; 97 probes match hand oracles.
+- **Probe:** 18/18 positives exact, plus 30 correct refusals (`curved-probe.json`).
+- **Locked regression at `face0fc1`** (`inventory-phase-f.json`): Wave 3 67/72, 0 wrong-served, **0 transitions**; locked 96/96; 203 probes clean.
+- **Candidate `98df8189`:** product `4074e8b9`, measured 118 files `2f8c9945…`, cache 131 (no bump). The divergence layer is `runs/hybrid-master-curved-solids/candidate_divergence.json`; `--verify` matches.
+- **Full T3 `FULL_PRODUCT_GATE_PASS`** at `98df8189`, attempt 1: pytest 16039 passed, 0 failed; vitest 1424; build, replay and crash surface (6/6 typed, 0 HTTP 500) all pass (`full-t3-98df8189.json`).
+- **Status:**
+  - `ARCHITECTURE_CAPABILITY_PROGRESS`: curved solids on /4.
+  - `OFFLINE_BACKEND_READY_FOR_LIVE_EVALUATION`.
+  - Overall `HYBRID_NOT_READY`: no live measurement, no corpus author, no GO.
+- **Next exact action, offline and justified:** port the remaining Adapter /3 curved capabilities into the same route and grammar. All of them sit on existing kernel primitives.
+  1. Sections parallel to the base: a circle and its area, via `intersect_plane_curved`.
+  2. Axial sections.
+  3. The cone volume ratio / remaining volume.
+
+  After those come the diameter phrasing and inscribed / circumscribed spheres, which need new relation types.
+- **Owner:** the single GO in `owner-go-request.md`, an independent author for the corpus, and the approval file.

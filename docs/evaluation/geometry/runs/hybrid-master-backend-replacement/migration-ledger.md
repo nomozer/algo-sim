@@ -79,3 +79,15 @@ Production cutover needs a measured real-text extraction quality on a new pre-re
 - **Parity:** LLM_ONLY's "lần lượt" projection grounding (W18) now exists on Route D (registry /22).
 - **Remaining parity gap blocking retirement:** curved solids. Adapter /3 and LLM_ONLY serve them; /4 refuses them.
 - **Unchanged:** retirement statuses and gate states D-01…D-13.
+
+**Fifth continuation (2026-10-31): curved solids on /4.**
+- **Served on /4:**
+  - cylinder, cone and sphere: volume, lateral area, sphere surface, radius;
+  - the total area of a cylinder or cone (exact, or `EXACT_DOMAIN_EXCEEDED`);
+  - a cone height derived from its slant;
+  - the symbolic unit a.
+- **Grounding:** a closed clause grammar. The independent review is READY after 3 rounds.
+- **Parity with Adapter /3: PARTIAL.** Adapter /3 still owns:
+  - sections parallel to the base and axial sections;
+  - the cone volume ratio / remaining volume.
+- **Retirement:** Adapter /3 and LLM_ONLY are not retired on curved problems.

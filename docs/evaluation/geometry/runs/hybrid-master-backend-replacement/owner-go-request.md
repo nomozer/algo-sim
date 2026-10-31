@@ -8,6 +8,18 @@
 
 **Provider facts** below were checked against official Google documentation on 2026-10-31 (`provider-facts.md`).
 
+**Update, fifth continuation (2026-10-31). It supersedes the fourth-continuation measured system and curved finding below.**
+- **Measured system:** candidate `98df8189` (118 files, `2f8c9945…`). `--manifest` prints the hash to bind.
+- **Curved solids on Hybrid /4:** cylinder, cone and sphere volume, lateral area, sphere surface and radius are now served exactly, with π kept; the independent review is READY.
+- **Still refused on Hybrid, but served by LLM_ONLY:**
+  - curved **sections** (parallel or axial);
+  - the cone ratio / remaining volume;
+  - curved composites (inscribed / circumscribed);
+  - diameter phrasings.
+
+  A corpus with several such problems would still cost Hybrid served-correct under criterion 2.
+- **The corpus must not be shaped around this.**
+
 **Update, fourth continuation (2026-10-31):**
 - **Measured system:** it is now candidate `5caa6e94` (118 files, `f0ebd8df…`), which includes the M-3 fix and registry /22. `--manifest` prints the exact `measured_system` and `harness_sha256` to bind.
 - **Acceptance contract:** reviewed `ACCEPTANCE_CONTRACT_REVIEW_READY` (protocol revisions A–D).
