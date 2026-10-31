@@ -53,7 +53,9 @@ from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationEr
 #: quantifiers, section wording & 4-vertex coplanar solid planes, compound premise coverage, bounded section-area question binding).
 #: /20 (run `hybrid-v2-w3-f1-cross-sentence-plane-grounding`): W3-F1 cross-sentence plane definition grounding, `đồng thời`
 #: plane-relation connector, `cả hai` two-line quantifier, cut-clause + compound area request tails, and plane-name identity checks.
-REGISTRY_VERSION = "geometry-functions/21"
+#: /22 (run `hybrid-master-backend-replacement`): "H, K lần lượt là hình chiếu … của A trên SB, SC" — ordered respectively
+#: lists for point–line projections (LLM_ONLY W18 parity; midpoints/centroids already read them).
+REGISTRY_VERSION = "geometry-functions/22"
 
 
 class TuChoi(Exception):
@@ -4568,6 +4570,17 @@ def construction_source_bound(c: LoiGoi, de: str = "") -> bool:
                     return True
         else:
             target = a.line if c.fn.endswith("_line") else a.plane
+            # "H, K lần lượt là hình chiếu (vuông góc) của A trên SB, SC": ≥ 2 names only with "lần lượt", equal
+            # counts, paired IN ORDER — the `_dinh_nghia_diem_dung_nguon` discipline for midpoints (registry /22)
+            if c.fn == "orthogonal_projection_line":
+                ds = rf"{point}(?:\s*(?:,|và)\s*{point})+"
+                for m in re.finditer(rf"(?<![\w'])({ds})\s+lần lượt\s+là\s+(?:các\s+)?hình chiếu\s+(?:vuông góc\s+)?"
+                                     rf"của\s+(?:(?:điểm|đỉnh)\s+)?({point})\s+(?:lên|trên)\s+(?:các\s+)?"
+                                     rf"(?:(?:đường thẳng|cạnh)\s+)?({token}(?:\s*(?:,|và)\s*{token})+)(?![\w'])", q):
+                    names, lines = labels(m[1]), re.findall(token, m[3])
+                    if len(names) == len(lines) and m[2] == a.point and any(
+                            n == a.image and labels(d) in (target, target[::-1]) for n, d in zip(names, lines)):
+                        return True
             patterns = [rf"(?<![\w'])({point})\s+(?:là|trùng\s+với)\s+hình chiếu\s+(?:vuông góc\s+)?của\s+(?:(?:điểm|đỉnh)\s+)?({point})\s+(?:lên|trên)\s+{operand}(?![\w'])",
                         rf"[Hh]ình chiếu\s+(?:vuông góc\s+)?của\s+(?:(?:điểm|đỉnh)\s+)?({point})\s+(?:lên|trên)\s+{operand}\s+(?:là|trùng\s+với)\s+(?:(?P<noun>điểm|đỉnh|trọng tâm|trung điểm)\s+)?({point})(?![\w'])"]
             for i, pattern in enumerate(patterns):

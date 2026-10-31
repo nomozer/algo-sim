@@ -1,0 +1,474 @@
+{
+ "provider_calls": 0,
+ "classification": "DEVELOPMENT_DIAGNOSTIC",
+ "rows": [
+  {
+   "id": "T1.v",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "12√3",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "432",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T1.SA",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "2√7",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "28",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T1.a_SA_base",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "3/7",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "3/7",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T1.a_dihedral",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "3/19",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "3/19",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T1.d_A_SBC",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "12√57/19",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "432/19",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T1.d_SA_BC",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "6√21/7",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "108/7",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T2.v",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "8",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "64",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T2.d_A_A'BD",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "2√3/3",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "4/3",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T2.d_AB'_BC'",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "2√3/3",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "4/3",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T2.d_AC'_BD",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "√6/3",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "2/3",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T2.d_A'_BD",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "√6",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "6",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T2.a_A'C_base",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "2/3",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "2/3",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T2.a_A'BD_base",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "1/3",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "1/3",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T2.A'I",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "√6",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "6",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T2.d_I_A'BD",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "2√3/3",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "4/3",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T3.v",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "8",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "64",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T3.SC",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "√41",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "41",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T3.d_A_SBC",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "12/5",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "144/25",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T3.d_SA_BC",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "3",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "9",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T3.d_A_SC",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "20√41/41",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "400/41",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T3.a_SC_base",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "25/41",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "25/41",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T3.a_dihedral",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "9/25",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "9/25",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T3.a_SB_AC",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "81/625",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "81/625",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T3.d_M_base",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "2",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "4",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T3.MN",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "2√2",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "8",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T3.a_MN_base",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "1/2",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "1/2",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T3.d_M_SAB",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "2",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "4",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T3.d_N_SC",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "2√2",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "8",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T3.d_G_base",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "4/3",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "16/9",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T3.AH",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "12/5",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "144/25",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T3.HK",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "64√41/205",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "4096/1025",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T3.d_H_SAC",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "192/125",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "36864/15625",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T4.v",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "4√3/3",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "16/3",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T4.d_A_SCD",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "2√21/7",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "12/7",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T4.a_SC_base",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "5/8",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "5/8",
+   "outcome": "SERVED_CORRECT"
+  },
+  {
+   "id": "T4.a_dihedral",
+   "status": "SERVED",
+   "code": null,
+   "reason": "",
+   "answer": {
+    "coef": "4/7",
+    "dim": 0,
+    "unit": null
+   },
+   "oracle": "4/7",
+   "outcome": "SERVED_CORRECT"
+  }
+ ]
+}

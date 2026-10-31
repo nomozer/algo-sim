@@ -323,6 +323,8 @@ IDENTITY_DELTAS = (
                   "planner_version": ("geometry-fact-planner/17", "geometry-fact-planner/18")}},
     {"run": "hybrid-v2-w3-f2-ratio-projection-language-grounding",
      "versions": {"registry_version": ("geometry-functions/20", "geometry-functions/21")}},
+    {"run": "hybrid-master-backend-replacement",           # respectively projection lists; planner/engine unchanged
+     "versions": {"registry_version": ("geometry-functions/21", "geometry-functions/22")}},
 )
 
 
