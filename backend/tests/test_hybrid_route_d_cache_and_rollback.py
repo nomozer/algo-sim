@@ -311,6 +311,61 @@ def test_an_adapter_fault_is_a_typed_technical_refusal_not_a_500_or_fallback(env
     assert r.headers["x-algosim-cache"] == "none"
 
 
+def _route_d_rows(text):
+    with SessionLocal() as s:
+        return s.query(SimulationCache).filter(SimulationCache.problem_text == text).count()
+
+
+def test_a_doubly_faulted_adapter_is_still_typed_and_the_next_request_recovers(env, monkeypatch):
+    """Review M-3: the fault handler re-ran the function that had just failed, so a fault in the refusal path itself
+    escaped as an HTTP 500. Repeated faults stay typed technical refusals; nothing is cached or partially stored, and
+    the route serves again once the fault is gone (no poisoned state)."""
+    raw, _ = env
+    real = H.build_adapter4_response
+    monkeypatch.setattr(H, "build_adapter4_response", lambda result, source: (_ for _ in ()).throw(RuntimeError("bug")))
+    for _ in range(2):
+        r = _post(raw["problem_text"])
+        body = r.json()
+        assert r.status_code == 200 and body["route_d"]["status"] == "REFUSED"
+        assert body["envelope"]["reason_code"] == "ADAPTER_INTERNAL_ERROR" and "scene3d" not in body["envelope"]
+        assert r.headers["x-algosim-cache"] == "none" and _route_d_rows(raw["problem_text"]) == 0
+    monkeypatch.setattr(H, "build_adapter4_response", real)
+    r = _post(raw["problem_text"])
+    assert r.json()["route_d"]["status"] == "SERVED" and r.headers["x-algosim-cache"] == "miss"
+
+
+def test_a_broken_refusal_classifier_on_a_refused_route_is_typed_not_a_500(env, monkeypatch):
+    """The sibling path: a refused route result is classified again for the receipt, outside the adapter guard."""
+    import app.ai.hybrid_preview as P
+    raw, path = env
+    bad = deepcopy(raw)
+    _geometry(bad)
+    _write(path, bad)
+    monkeypatch.setattr(P, "classify_refusal", lambda *a, **k: (_ for _ in ()).throw(RuntimeError("bug")))
+    r = _post(bad["problem_text"])
+    assert r.status_code == 200 and r.json()["route_d"]["status"] == "REFUSED"
+    assert r.json()["envelope"]["reason_code"] in {"ADAPTER_INTERNAL_ERROR", "ROUTE_INTERNAL_ERROR"}
+
+
+def test_an_unexpected_exception_anywhere_in_the_route_is_a_typed_technical_refusal(env, monkeypatch):
+    raw, _ = env
+    monkeypatch.setattr(H, "extract_typed_fact_next_v2", lambda *a: (_ for _ in ()).throw(KeyError("bug")))
+    r = _post(raw["problem_text"])
+    body = r.json()
+    assert r.status_code == 200 and body["route_d"]["status"] == "REFUSED" and "scene3d" not in body["envelope"]
+    assert body["envelope"]["reason_code"] == "ROUTE_INTERNAL_ERROR" and r.headers["x-algosim-cache"] == "none"
+    result = H.LocalReplay(raw["problem_text"], {}, H.hybrid_offline_policy({"HYBRID_ROUTE_D_PREVIEW": "1"}), None).run()
+    assert result.receipt["failure_kind"] == "TECHNICAL_FAILURE" and result.receipt["source_references"] == []
+    assert "bug" not in json.dumps(result.response, ensure_ascii=False)               # no exception prose leaks
+
+
+def test_the_fault_envelope_is_the_normal_technical_refusal_envelope():
+    from app.ai.adapter4_route import adapter_fault_response, build_adapter4_response
+    from app.simulation.geometry_functions import KetQuaTuyen
+    for code in ("ADAPTER_INTERNAL_ERROR", "ROUTE_INTERNAL_ERROR"):
+        assert adapter_fault_response(code) == build_adapter4_response(KetQuaTuyen("REFUSED", code), "")
+
+
 def test_a_deadline_is_a_typed_technical_refusal(env, monkeypatch):
     raw, _ = env
     clock = iter(range(0, 10_000, 100))

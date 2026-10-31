@@ -6,7 +6,8 @@ A THIN layer: `typed-fact-next/2` → bridge `/2` → the ONE planner / Registry
 refused with its code (curved solids, qualified multi-solid identity, unsupported plane kinds …) — `/1` Adapter /3 stays,
 isolated and labelled, for those. Every SERVED result is therefore verified by the Source Gate (strict by construction).
 The envelope reports what the engine certified: section boundaries with per-vertex provenance and closure certificates.
-Research only: not wired to `/api/analyze`.
+Reached from `/api/analyze` only through the declared local opt-in (`main._hybrid_v2_local` → `hybrid_offline`); the
+default route stays `LLM_ONLY`.
 """
 from __future__ import annotations
 
@@ -97,6 +98,29 @@ def _phong_bi(r: KetQuaTuyen) -> dict[str, Any]:
         "length_unit": r.length_unit,
         "planner": {k: (r.planner or {}).get(k) for k in ("version", "bridge")},
     }
+
+
+#: `classify_refusal`'s class of each fault-of-ours code, as constants (equality with the normal path is test-locked).
+_FAULT_CLASS = {
+    "ADAPTER_INTERNAL_ERROR": ("geometry_generation_failed",
+                               "Hệ chưa dựng được hình đã kiểm chứng cho đề này, nên không hiển thị hình."),
+    "ROUTE_INTERNAL_ERROR": ("verification_gap", "Hệ đã thử dựng nhưng kết quả chưa qua được khâu kiểm chứng, "
+                                                 "nên không hiển thị hình chưa được kiểm."),
+}
+
+
+def adapter_fault_response(code: str) -> dict[str, Any]:
+    """The technical refusal for a fault of OURS, built from constants only. A fault handler must not depend on the code
+    that just failed: re-running `build_adapter4_response` there let a second fault escape as an HTTP 500 (review M-3)."""
+    from app.simulation.geometry_functions.typed_fact_next import TYPED_FACT_NEXT_V2_SCHEMA_VERSION
+
+    category, message = _FAULT_CLASS[code]
+    return {"schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
+            "envelope": {"status": "unsupported", "reason_code": code, "reason": message, "learner_reason": message,
+                         "failure_category": category, "refusal_cause": "UNKNOWN"},
+            "route_d": {"schema_version": ROUTE_D_SIMULATION_V4_SCHEMA_VERSION, "adapter_version": ADAPTER_V4_VERSION,
+                        "contract_version": TYPED_FACT_NEXT_V2_SCHEMA_VERSION, "status": "REFUSED",
+                        "refusal": {"code": code}}}
 
 
 def build_adapter4_response(result: KetQuaTuyen, problem_text: str) -> dict[str, Any]:

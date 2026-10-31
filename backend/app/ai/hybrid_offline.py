@@ -21,7 +21,7 @@ from uuid import uuid4
 
 from app.ai.adapter4_route import (
     ADAPTER_V4_VERSION, ROUTE_D_SIMULATION_V4_SCHEMA_VERSION,
-    build_adapter4_response, run_typed_fact_next_v2_route,
+    adapter_fault_response, build_adapter4_response, run_typed_fact_next_v2_route,
 )
 from app.ai.pipeline import RoutePolicy, route_policy_snapshot
 from app.ai.typed_fact_next_extraction import Extractor, ReplayExtractor, extract_typed_fact_next_v2
@@ -66,10 +66,28 @@ def run_hybrid_offline(problem_text: str, extractor: Extractor, *, policy: Route
     Callers must explicitly supply an enabled research policy. Environment flags alone do not activate a call.
     Receipts exclude source text, decoded extraction, exception prose and provider bodies. Source/Planner/Engine timing
     stays combined because the existing route owns their execution; individual latency values are not invented.
+    Past argument validation this boundary never raises: any other fault of ours is the typed technical refusal
+    `ROUTE_INTERNAL_ERROR`, built from constants — never a 500, a scene, or a fallback (review M-3).
     """
     if isinstance(timeout_seconds, bool) or not isinstance(timeout_seconds, (int, float)) \
             or not math.isfinite(timeout_seconds) or timeout_seconds <= 0:
         raise ValueError('timeout_seconds must be finite and positive')
+    try:
+        return _run_hybrid_offline(problem_text, extractor, policy, timeout_seconds, cancelled)
+    except Exception:  # noqa: BLE001 — our fault outside every stage guard; no exception prose is kept
+        source = problem_text if isinstance(problem_text, str) else ''
+        return HybridOfflineResult(adapter_fault_response('ROUTE_INTERNAL_ERROR'), {
+            'schema': 'hybrid-offline-execution/1', 'request_id': uuid4().hex,
+            'classification': 'OFFLINE_INTEGRATION_NOT_LIVE_NLU_EVALUATION',
+            'source_sha256': sha256(source.encode('utf-8')).hexdigest(), 'provider_performance': 'NOT_MEASURED',
+            'cache': 'NOT_USED', 'stages': [], 'source_gate': {'status': 'NOT_CERTIFIED'},
+            'planner': {'status': 'NOT_CERTIFIED'}, 'engine': {'status': 'NOT_CERTIFIED'}, 'status': 'REFUSED',
+            'code': 'ROUTE_INTERNAL_ERROR', 'failure_stage': 'unknown', 'failure_kind': 'TECHNICAL_FAILURE',
+            'source_references': []})
+
+
+def _run_hybrid_offline(problem_text: str, extractor: Extractor, policy: RoutePolicy | None, timeout_seconds: float,
+                        cancelled: Callable[[], bool] | None) -> HybridOfflineResult:
     start = perf_counter()
     policy = policy if policy is not None else route_policy_snapshot()
     source = problem_text if isinstance(problem_text, str) else ''
@@ -90,10 +108,10 @@ def run_hybrid_offline(problem_text: str, extractor: Extractor, *, policy: Route
                failure_kind: str | None = None) -> HybridOfflineResult:
         try:
             response = build_adapter4_response(result, source)
-        except Exception:  # noqa: BLE001 — our fault while wrapping: a typed technical refusal, never a 500 or a fallback
+        except Exception:  # noqa: BLE001 — our fault while wrapping; the handler re-runs nothing that can fail (M-3)
             result = KetQuaTuyen('REFUSED', 'ADAPTER_INTERNAL_ERROR')
             failure_stage, failure_kind = 'adapter4', 'TECHNICAL_FAILURE'
-            response = build_adapter4_response(result, source)
+            response = adapter_fault_response(result.code)
         code = response['envelope'].get('reason_code')
         receipt.update(status=response['route_d']['status'], code=code,
                        failure_stage=failure_stage, failure_kind=failure_kind,

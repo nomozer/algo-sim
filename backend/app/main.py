@@ -1060,7 +1060,8 @@ def _hybrid_v2_local(request: Request) -> str | None:
 
     Chỉ khi máy chủ đặt `HYBRID_V2_LOCAL=offline-replay` VÀ khách là loopback ⇒ trả đường dẫn kho phát lại
     (`HYBRID_V2_LOCAL_REPLAY_CORPUS`). Ngoài ra `None`: tuyến mặc định `LLM_ONLY` chạy NGUYÊN như cũ — công tắc này không
-    đổi chính sách mặc định, không đổi cache (lượt Hybrid không đọc, không ghi cache), không bao giờ là đường lùi."""
+    đổi chính sách mặc định, không đụng hàng cache `LLM_ONLY` (Hybrid chỉ đọc/ghi hàng SERVED của riêng nó dưới
+    `ROUTE_D_CACHE_POLICY`, D-02), không bao giờ là đường lùi."""
     if os.getenv("HYBRID_V2_LOCAL") != "offline-replay":
         return None
     try:
