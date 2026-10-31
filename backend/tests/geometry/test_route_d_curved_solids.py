@@ -108,6 +108,13 @@ def test_a_symbolic_unit_keeps_pi_in_the_learner_answer_and_a_diameter_is_not_gu
     assert r2.status == "REFUSED" and r2.code == "SOURCE_OBJECT_MISMATCH"     # "đường kính" is no clause of the grammar
 
 
+def test_a_zero_radius_keeps_its_degenerate_length_code():
+    g = "Cho mặt cầu tâm O, điểm A thuộc mặt cầu, bán kính bằng 0."
+    r = run_typed_fact_next_v2_route(C.payload((g, C.solid("sphere", "O", "O", None, "A", "0", None, g[:-1]), []),
+                                               "volume", "Tính thể tích khối cầu."))
+    assert r.status == "REFUSED" and r.code == "NON_POSITIVE_LENGTH"        # review round 3, minor
+
+
 def test_a_tampered_certificate_is_never_served(monkeypatch):
     from app.simulation.geometry_functions import engine as E
     monkeypatch.setattr(E, "_chung_chi_cong", lambda kind, q, r2, h2: radical(1, 1, 1))     # wrong closed form

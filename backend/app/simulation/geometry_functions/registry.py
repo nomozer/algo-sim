@@ -4677,8 +4677,8 @@ def _khoi_cong_dung_nguon(c: LoiGoi) -> str | None:
         elif vai in vals:
             try:
                 vals[vai].append(doc_so(g["v"]))
-            except TuChoi:
-                return "UNGROUNDED_VALUE"
+            except TuChoi as e:                    # keep the reader's own code ("bằng 0" ⇒ NON_POSITIVE_LENGTH)
+                return e.code
         elif vai != "kind":
             return "SOURCE_OBJECT_MISMATCH"        # a clause of a role this kind does not have
     for f in bound:
