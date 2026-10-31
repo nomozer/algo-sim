@@ -333,6 +333,10 @@ IDENTITY_DELTAS = (
      "versions": {"registry_version": ("geometry-functions/23", "geometry-functions/24"),
                   "planner_version": ("geometry-fact-planner/19", "geometry-fact-planner/20"),
                   "engine_version": ("geometry-function-engine/15", "geometry-function-engine/16")}},
+    {"run": "hybrid-master-backend-replacement",           # base-centre grammar and apex ratio k (registry /25, planner /21, engine /17)
+     "versions": {"registry_version": ("geometry-functions/24", "geometry-functions/25"),
+                  "planner_version": ("geometry-fact-planner/20", "geometry-fact-planner/21"),
+                  "engine_version": ("geometry-function-engine/16", "geometry-function-engine/17")}},
 )
 
 

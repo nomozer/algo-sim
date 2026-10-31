@@ -388,9 +388,14 @@ class _PlaneSectionBase(ClosedNextModel):
         "parallel_to_base_at_ratio",
         "plane_equation",
         "axial_section",
+        # a sphere (run `hybrid-master-backend-replacement`, additive): the plane at a stated distance from the centre,
+        # or through the centre ("qua tâm" states no number, so it carries none)
+        "at_distance_from_center",
+        "through_center",
     ]
     through_point: NonEmptyText | None = None
     distance_from_base: NonEmptyText | None = None
+    distance_from_center: NonEmptyText | None = None
     ratio_from_apex: NonEmptyText | None = None
     equation_coeffs: tuple[NonEmptyText, NonEmptyText, NonEmptyText, NonEmptyText] | None = None
     section_shape: Literal["polygon", "circle", "ellipse"] | None = None
@@ -424,6 +429,12 @@ class _PlaneSectionBase(ClosedNextModel):
                 raise TypedFactNextValidationError(
                     "INVALID_DERIVED_SECTION",
                     f"Section {self.section_id!r} requires 'ratio_from_apex'.",
+                )
+        elif self.plane_kind == "at_distance_from_center":
+            if not self.distance_from_center:
+                raise TypedFactNextValidationError(
+                    "INVALID_DERIVED_SECTION",
+                    f"Section {self.section_id!r} requires 'distance_from_center'.",
                 )
         elif self.plane_kind == "plane_equation":
             if self.equation_coeffs is None or len(self.equation_coeffs) != 4:

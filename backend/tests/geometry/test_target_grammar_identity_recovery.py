@@ -18,11 +18,24 @@ CASES = json.loads((OUT / 'cases.json').read_text(encoding='utf-8'))
 REG = json.loads((OUT / 'registration.json').read_text(encoding='utf-8'))
 def names(cls): return [k for k, c in CASES.items() if c['class'] == cls]
 
-#: Sixth continuation (hybrid-master): curved sections moved the /4 boundary inward; these registered cells are now refused
-#: by the closed curved grammar instead of the bridge. The layer may only move a cell between REFUSED codes (asserted).
-_TRANSITIONS = json.loads((Path(__file__).resolve().parents[3] / "docs/evaluation/geometry/runs/hybrid-master-backend-replacement"
-                           / "registered-curved-control-transitions.json").read_text(encoding="utf-8"))["cells"]
-assert all(v["before"][0] == v["after"][0] == "REFUSED" for v in _TRANSITIONS.values())
+#: Sixth continuation (hybrid-master): curved sections moved the /4 boundary inward (layer 1); the seventh continuation's
+#: audit corrects it (layer 2, `corrects` layer 1, which stays untouched). A layer may only move a cell between REFUSED codes,
+#: and each layer's `before` must be the previous layer's `after` (asserted) — the composed cell runs registered → last layer.
+def load_transitions() -> dict:
+    run = Path(__file__).resolve().parents[3] / "docs/evaluation/geometry/runs/hybrid-master-backend-replacement"
+    out: dict = {}
+    for name in ("registered-curved-control-transitions.json", "registered-curved-control-transitions-2.json"):
+        for k, v in json.loads((run / name).read_text(encoding="utf-8"))["cells"].items():
+            assert v["before"][0] == v["after"][0] == "REFUSED", (name, k)
+            if k in out:
+                assert out[k]["after"] == v["before"], (name, k)
+                out[k] = {**v, "before": out[k]["before"]}
+            else:
+                out[k] = v
+    return out
+
+
+_TRANSITIONS = load_transitions()
 
 
 def v2_input(p):

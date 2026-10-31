@@ -47,7 +47,8 @@ from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, rende
 #: M5 bounded section-area question binding (`diện tích của nó` and grounded named section polygons).
 #: /18 (run `hybrid-v2-w3-f1-cross-sentence-plane-grounding`): propagate declared `plane_name` on all derived plane relations
 #: (`MAT_SONG_SONG`, `MAT_VUONG_DUONG`, `MAT_HAI_DUONG`) and distinguish unasked section-area goals (`NOT_ASKED_IN_SOURCE`).
-PLANNER_VERSION = "geometry-fact-planner/20"
+#: /21 (run `hybrid-master-backend-replacement`): a curved section carries the named point on the axis (`through_point`).
+PLANNER_VERSION = "geometry-fact-planner/21"
 PlaneName = Annotated[
     str,
     BeforeValidator(lambda v: chuan_hoa(v) if isinstance(v, str) else v),
@@ -413,7 +414,8 @@ def _ke_hoach_cong(facts: list[TypedFact], k: KeHoach) -> KeHoach:
         cp = f.curved_part or {}
         if cp.get("role") == "section":
             phat(f.id, "curved_section", {"solid": s.solid, "section": f.id, "kind": cp["kind"], "plane": cp.get("plane"),
-                                          "distance": cp.get("distance"), "ratio": cp.get("ratio")},
+                                          "distance": cp.get("distance"), "ratio": cp.get("ratio"),
+                                          "point": cp.get("point")},
                  f.quotes, f"section({cp['kind']})→curved_section")
         elif cp.get("role") == "derived":
             phat(f.id, "curved_subsolid", {"solid": s.solid, "section": cp["section"], "derived": cp["derived"],

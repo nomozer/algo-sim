@@ -55,8 +55,27 @@ def test_curved_negatives_are_refused_for_the_right_reason(cid, fig, goal, quest
 
 
 #: Independent review rounds 1–2: each of these SERVED a wrong exact value or insufficient data before its fix.
-ADVERSARIAL_CODES = {cid: "UNKNOWN_LABEL" if cid == "r.invented_labels" else "SOURCE_OBJECT_MISMATCH"
-                     for cid, *_ in C.ADVERSARIAL}     # a quote outside the closed clause grammar binds nothing
+#: Wording outside the closed grammar ⇒ CURVED_WORDING_UNSUPPORTED (a capability gap); a parsed clause whose roles or
+#: values do not bind ⇒ SOURCE_OBJECT_MISMATCH (registered-controls audit: the two were conflated before).
+ADVERSARIAL_CODES = {
+    'r.radius_times_h': 'CURVED_WORDING_UNSUPPORTED',
+    'r.radius_fraction_of_h': 'CURVED_WORDING_UNSUPPORTED',
+    'r.radius_sum': 'CURVED_WORDING_UNSUPPORTED',
+    'r.cyl_rim_on_other_base': 'SOURCE_OBJECT_MISMATCH',
+    'r.cone_apex_centre_swapped': 'SOURCE_OBJECT_MISMATCH',
+    'r.sphere_point_outside': 'CURVED_WORDING_UNSUPPORTED',
+    'r.cyl_point_on_axis': 'SOURCE_OBJECT_MISMATCH',
+    'r.height_of_a_triangle': 'CURVED_WORDING_UNSUPPORTED',
+    'r.dimensions_of_another_solid': 'CURVED_WORDING_UNSUPPORTED',
+    'r.notation_against_roles': 'SOURCE_OBJECT_MISMATCH',
+    'r.invented_labels': 'UNKNOWN_LABEL',
+    'r2.second_cone_same_kind': 'CURVED_WORDING_UNSUPPORTED',
+    'r2.plane_section_circle': 'CURVED_WORDING_UNSUPPORTED',
+    'r2.sector_radius': 'CURVED_WORDING_UNSUPPORTED',
+    'r2.unread_qualifier': 'CURVED_WORDING_UNSUPPORTED',
+    'r2.object_before_kind_word': 'CURVED_WORDING_UNSUPPORTED',
+    'r2.notation_not_written': 'SOURCE_OBJECT_MISMATCH',
+}
 
 
 @pytest.mark.parametrize("cid,given,solid,premises,goal,question", C.ADVERSARIAL, ids=[x[0] for x in C.ADVERSARIAL])
@@ -105,7 +124,7 @@ def test_a_symbolic_unit_keeps_pi_in_the_learner_answer_and_a_diameter_is_not_gu
     g2 = "Cho mặt cầu tâm O, điểm A thuộc mặt cầu, đường kính bằng 6."   # no role clause reads a diameter as a radius
     r2 = run_typed_fact_next_v2_route(C.payload((g2, C.solid("sphere", "O", "O", None, "A", "3", None, g2[:-1]), []),
                                                 "volume", "Tính thể tích khối cầu."))
-    assert r2.status == "REFUSED" and r2.code == "SOURCE_OBJECT_MISMATCH"     # "đường kính" is no clause of the grammar
+    assert r2.status == "REFUSED" and r2.code == "CURVED_WORDING_UNSUPPORTED"  # "đường kính" is no clause of the grammar
 
 
 def test_a_zero_radius_keeps_its_degenerate_length_code():

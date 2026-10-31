@@ -35,11 +35,8 @@ def test_schema_outcome_on_both_versions(case):
     assert D.schema_code(G.v2_input(c['payload'])) == c['expected_schema']
 
 
-#: Sixth continuation (hybrid-master): curved sections moved the /4 boundary inward; these registered cells are now refused
-#: by the closed curved grammar instead of the bridge. The layer may only move a cell between REFUSED codes (asserted).
-_TRANSITIONS = json.loads((Path(__file__).resolve().parents[3] / "docs/evaluation/geometry/runs/hybrid-master-backend-replacement"
-                           / "registered-curved-control-transitions.json").read_text(encoding="utf-8"))["cells"]
-assert all(v["before"][0] == v["after"][0] == "REFUSED" for v in _TRANSITIONS.values())
+#: The registered-control transition layers (hybrid-master sixth + seventh continuations), composed in ONE place.
+_TRANSITIONS = G.load_transitions()
 
 
 @pytest.mark.parametrize('case,route', ROUTED)

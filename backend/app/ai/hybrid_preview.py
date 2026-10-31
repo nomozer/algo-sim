@@ -76,7 +76,7 @@ _NHOM: tuple[tuple[str, str, frozenset[str], str], ...] = (
         "METRIC_REQUIRES_EUCLIDEAN_CHART",
         # curved slice (registry /23): what /4 cannot execute for a solid of revolution yet, or outside a·π·√b
         "BRIDGE_UNSUPPORTED_CURVED_COMPOSITE", "CURVED_RELATION_UNSUPPORTED", "CURVED_MEASURE_UNDEFINED",
-        "EXACT_DOMAIN_EXCEEDED", "CURVED_SECTION_OUTSIDE_V1_CLOSURE",
+        "EXACT_DOMAIN_EXCEEDED", "CURVED_SECTION_OUTSIDE_V1_CLOSURE", "CURVED_WORDING_UNSUPPORTED", "CURVED_MULTI_SECTION_UNSUPPORTED",
         # Route D's OUT_OF_SCOPE is the extraction escape `unsupported` ("this clause does not map to the function
         # library"), not the subject verdict of the scope gate: the preview runs no domain detection. `out_of_scope` would
         # tell the learner a geometry problem "belongs to another subject" (`learner_messages`: never).

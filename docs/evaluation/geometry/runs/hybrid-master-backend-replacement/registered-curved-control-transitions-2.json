@@ -1,0 +1,456 @@
+{
+ "schema": "REGISTERED_CONTROL_TRANSITIONS/1",
+ "run": "hybrid-master-backend-replacement (seventh continuation: registered contract audit, base-centre grammar, apex ratio k)",
+ "corrects": "registered-curved-control-transitions.json",
+ "rule": "Layer 2: `before` is layer 1's `after`; a cell may only move from one REFUSED code to another REFUSED code. All 32 layer-1 cells are listed: where the code holds (before == after), the layer re-attributes its cause — the figure now parses (base-centre grammar) and the refusal comes from the question binder. Layer 1 and the registered oracle files are not edited.",
+ "cells": {
+  "measurement-dispatch-and-identity-order::CTRL.K.cone.lateral_area.solid::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "NOT_ASKED_IN_SOURCE"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "shared question-context gate (S1 closed tail): the tail ', diện tích thiết diện qua trục, tỉ số thể tích …' holds phrases the closed grammar does not read, so the phrase is not verified as asked intact — the same rule polyhedra get",
+   "owner_proposal": "P-1 coordinated question lists (as above)",
+   "cause": "q: 'diện tích xung quanh hình nón' không hỏi đối tượng này nguyên vẹn (không có từ hỏi gắn với nó, đã gán giá trị, hay bị bổ nghĩa / đặt điều kiện) — không trả lời điều đề không hỏi"
+  },
+  "measurement-dispatch-and-identity-order::CTRL.K.cone.radius.solid::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the quote 'Tính bán kính.' names no object; base radius and section radius are both present",
+   "owner_proposal": null,
+   "cause": "q: 'Tính bán kính.' không gọi tên đúng đối tượng của ask_radius {'solid': 'S.O'} — không trả lời câu hỏi về đối tượng khác"
+  },
+  "measurement-dispatch-and-identity-order::CTRL.K.cone.volume.solid::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the goal quote 'Tính thể tích' names no solid; the gate grounds a question only on a quote that names its object (the cone run declares three: cone, small cone, frustum)",
+   "owner_proposal": "P-1 coordinated question lists: 'Tính thể tích, diện tích xung quanh hình nón, …' distributes the object; binding it would SERVE a cell the Owner registered as REFUSED",
+   "cause": "q: 'Tính thể tích' không gọi tên đúng đối tượng của ask_curved_volume {'solid': 'S.O'} — không trả lời câu hỏi về đối tượng khác"
+  },
+  "measurement-dispatch-and-identity-order::CTRL.K.cyl.lateral_area.solid::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "NOT_ASKED_IN_SOURCE"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "shared question-context gate (S1 closed tail): the tail ', diện tích thiết diện qua trục, tỉ số thể tích …' holds phrases the closed grammar does not read, so the phrase is not verified as asked intact — the same rule polyhedra get",
+   "owner_proposal": "P-1 coordinated question lists (as above)",
+   "cause": "q: 'diện tích xung quanh hình trụ' không hỏi đối tượng này nguyên vẹn (không có từ hỏi gắn với nó, đã gán giá trị, hay bị bổ nghĩa / đặt điều kiện) — không trả lời điều đề không hỏi"
+  },
+  "measurement-dispatch-and-identity-order::CTRL.K.cyl.radius.solid::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the quote 'Tính bán kính.' names no object; base radius and section radius are both present",
+   "owner_proposal": null,
+   "cause": "q: 'Tính bán kính.' không gọi tên đúng đối tượng của ask_radius {'solid': \"O.O'\"} — không trả lời câu hỏi về đối tượng khác"
+  },
+  "measurement-dispatch-and-identity-order::CTRL.K.cyl.volume.solid::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the goal quote 'Tính thể tích' names no solid; the gate grounds a question only on a quote that names its object (the cone run declares three: cone, small cone, frustum)",
+   "owner_proposal": "P-1 coordinated question lists: 'Tính thể tích, diện tích xung quanh hình nón, …' distributes the object; binding it would SERVE a cell the Owner registered as REFUSED",
+   "cause": "q: 'Tính thể tích' không gọi tên đúng đối tượng của ask_curved_volume {'solid': \"O.O'\"} — không trả lời câu hỏi về đối tượng khác"
+  },
+  "target-grammar-identity-recovery::K.cone.area.notation::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the target is the solid but the quote asks a section's area — a true object mismatch (Adapter /3 also refuses: GEOMETRY_OPERAND_TYPE)",
+   "owner_proposal": null,
+   "cause": "q: 'diện tích thiết diện qua trục' không gọi tên đúng đối tượng của ask_surface_area {'solid': 'S.O'} — không trả lời câu hỏi về đối tượng khác"
+  },
+  "target-grammar-identity-recovery::K.cone.area.section.goal_sid::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "CURVED_MULTI_SECTION_UNSUPPORTED"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "two curved sections in the run; the bounded section binder reads 'thiết diện' only with one section. Layer 1 / the interim code said SOURCE_OBJECT_MISMATCH (REFUSAL_REASON_REGRESSION: the cone quote does name sec_axial) — fixed RED→GREEN with the CAPABILITY code CURVED_MULTI_SECTION_UNSUPPORTED",
+   "owner_proposal": "P-2 multi-section binding by kind ('qua trục' ⇒ axial, plane name ⇒ parallel): would SERVE the cone cell the Owner registered as REFUSED",
+   "cause": "đề có 2 thiết diện của khối tròn xoay; câu hỏi 'thiết diện' chỉ được buộc khi đề có đúng một thiết diện"
+  },
+  "target-grammar-identity-recovery::K.cone.area.section::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "CURVED_MULTI_SECTION_UNSUPPORTED"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "two curved sections in the run; the bounded section binder reads 'thiết diện' only with one section. Layer 1 / the interim code said SOURCE_OBJECT_MISMATCH (REFUSAL_REASON_REGRESSION: the cone quote does name sec_axial) — fixed RED→GREEN with the CAPABILITY code CURVED_MULTI_SECTION_UNSUPPORTED",
+   "owner_proposal": "P-2 multi-section binding by kind ('qua trục' ⇒ axial, plane name ⇒ parallel): would SERVE the cone cell the Owner registered as REFUSED",
+   "cause": "đề có 2 thiết diện của khối tròn xoay; câu hỏi 'thiết diện' chỉ được buộc khi đề có đúng một thiết diện"
+  },
+  "target-grammar-identity-recovery::K.cone.area.solid::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the target is the solid but the quote asks a section's area — a true object mismatch (Adapter /3 also refuses: GEOMETRY_OPERAND_TYPE)",
+   "owner_proposal": null,
+   "cause": "q: 'diện tích thiết diện qua trục' không gọi tên đúng đối tượng của ask_surface_area {'solid': 'S.O'} — không trả lời câu hỏi về đối tượng khác"
+  },
+  "target-grammar-identity-recovery::K.cone.lateral_area.notation::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "NOT_ASKED_IN_SOURCE"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "shared question-context gate (S1 closed tail): the tail ', diện tích thiết diện qua trục, tỉ số thể tích …' holds phrases the closed grammar does not read, so the phrase is not verified as asked intact — the same rule polyhedra get",
+   "owner_proposal": "P-1 coordinated question lists (as above)",
+   "cause": "q: 'diện tích xung quanh hình nón' không hỏi đối tượng này nguyên vẹn (không có từ hỏi gắn với nó, đã gán giá trị, hay bị bổ nghĩa / đặt điều kiện) — không trả lời điều đề không hỏi"
+  },
+  "target-grammar-identity-recovery::K.cone.lateral_area.solid::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "NOT_ASKED_IN_SOURCE"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "shared question-context gate (S1 closed tail): the tail ', diện tích thiết diện qua trục, tỉ số thể tích …' holds phrases the closed grammar does not read, so the phrase is not verified as asked intact — the same rule polyhedra get",
+   "owner_proposal": "P-1 coordinated question lists (as above)",
+   "cause": "q: 'diện tích xung quanh hình nón' không hỏi đối tượng này nguyên vẹn (không có từ hỏi gắn với nó, đã gán giá trị, hay bị bổ nghĩa / đặt điều kiện) — không trả lời điều đề không hỏi"
+  },
+  "target-grammar-identity-recovery::K.cone.radius.notation::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the quote 'Tính bán kính.' names no object; base radius and section radius are both present",
+   "owner_proposal": null,
+   "cause": "q: 'Tính bán kính.' không gọi tên đúng đối tượng của ask_radius {'solid': 'S.O'} — không trả lời câu hỏi về đối tượng khác"
+  },
+  "target-grammar-identity-recovery::K.cone.radius.section.goal_sid::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the quote 'Tính bán kính.' names no object; base radius and section radius are both present",
+   "owner_proposal": null,
+   "cause": "q: 'Tính bán kính.' không gọi tên đúng đối tượng của ask_curved_section_radius {'solid': 'S.O', 'section': 'sec_axial'} — không trả lời câu hỏi về đối tượng khác"
+  },
+  "target-grammar-identity-recovery::K.cone.radius.section::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the quote 'Tính bán kính.' names no object; base radius and section radius are both present",
+   "owner_proposal": null,
+   "cause": "q: 'Tính bán kính.' không gọi tên đúng đối tượng của ask_curved_section_radius {'solid': 'S.O', 'section': 'sec_axial'} — không trả lời câu hỏi về đối tượng khác"
+  },
+  "target-grammar-identity-recovery::K.cone.radius.solid::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the quote 'Tính bán kính.' names no object; base radius and section radius are both present",
+   "owner_proposal": null,
+   "cause": "q: 'Tính bán kính.' không gọi tên đúng đối tượng của ask_radius {'solid': 'S.O'} — không trả lời câu hỏi về đối tượng khác"
+  },
+  "target-grammar-identity-recovery::K.cone.volume.notation::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the goal quote 'Tính thể tích' names no solid; the gate grounds a question only on a quote that names its object (the cone run declares three: cone, small cone, frustum)",
+   "owner_proposal": "P-1 coordinated question lists: 'Tính thể tích, diện tích xung quanh hình nón, …' distributes the object; binding it would SERVE a cell the Owner registered as REFUSED",
+   "cause": "q: 'Tính thể tích' không gọi tên đúng đối tượng của ask_curved_volume {'solid': 'S.O'} — không trả lời câu hỏi về đối tượng khác"
+  },
+  "target-grammar-identity-recovery::K.cone.volume.solid::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the goal quote 'Tính thể tích' names no solid; the gate grounds a question only on a quote that names its object (the cone run declares three: cone, small cone, frustum)",
+   "owner_proposal": "P-1 coordinated question lists: 'Tính thể tích, diện tích xung quanh hình nón, …' distributes the object; binding it would SERVE a cell the Owner registered as REFUSED",
+   "cause": "q: 'Tính thể tích' không gọi tên đúng đối tượng của ask_curved_volume {'solid': 'S.O'} — không trả lời câu hỏi về đối tượng khác"
+  },
+  "target-grammar-identity-recovery::K.cone.volume.solid_id::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the goal quote 'Tính thể tích' names no solid; the gate grounds a question only on a quote that names its object (the cone run declares three: cone, small cone, frustum)",
+   "owner_proposal": "P-1 coordinated question lists: 'Tính thể tích, diện tích xung quanh hình nón, …' distributes the object; binding it would SERVE a cell the Owner registered as REFUSED",
+   "cause": "q: 'Tính thể tích' không gọi tên đúng đối tượng của ask_curved_volume {'solid': 'S.O'} — không trả lời câu hỏi về đối tượng khác"
+  },
+  "target-grammar-identity-recovery::K.cyl.area.notation::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the target is the solid but the quote asks a section's area — a true object mismatch (Adapter /3 also refuses: GEOMETRY_OPERAND_TYPE)",
+   "owner_proposal": null,
+   "cause": "q: 'diện tích thiết diện tròn' không gọi tên đúng đối tượng của ask_surface_area {'solid': \"O.O'\"} — không trả lời câu hỏi về đối tượng khác"
+  },
+  "target-grammar-identity-recovery::K.cyl.area.section.goal_sid::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "CURVED_MULTI_SECTION_UNSUPPORTED"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "two curved sections in the run; the bounded section binder reads 'thiết diện' only with one section. Layer 1 / the interim code said SOURCE_OBJECT_MISMATCH (REFUSAL_REASON_REGRESSION: the cone quote does name sec_axial) — fixed RED→GREEN with the CAPABILITY code CURVED_MULTI_SECTION_UNSUPPORTED",
+   "owner_proposal": "P-2 multi-section binding by kind ('qua trục' ⇒ axial, plane name ⇒ parallel): would SERVE the cone cell the Owner registered as REFUSED",
+   "cause": "đề có 2 thiết diện của khối tròn xoay; câu hỏi 'thiết diện' chỉ được buộc khi đề có đúng một thiết diện"
+  },
+  "target-grammar-identity-recovery::K.cyl.area.section::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "CURVED_MULTI_SECTION_UNSUPPORTED"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "two curved sections in the run; the bounded section binder reads 'thiết diện' only with one section. Layer 1 / the interim code said SOURCE_OBJECT_MISMATCH (REFUSAL_REASON_REGRESSION: the cone quote does name sec_axial) — fixed RED→GREEN with the CAPABILITY code CURVED_MULTI_SECTION_UNSUPPORTED",
+   "owner_proposal": "P-2 multi-section binding by kind ('qua trục' ⇒ axial, plane name ⇒ parallel): would SERVE the cone cell the Owner registered as REFUSED",
+   "cause": "đề có 2 thiết diện của khối tròn xoay; câu hỏi 'thiết diện' chỉ được buộc khi đề có đúng một thiết diện"
+  },
+  "target-grammar-identity-recovery::K.cyl.area.solid::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the target is the solid but the quote asks a section's area — a true object mismatch (Adapter /3 also refuses: GEOMETRY_OPERAND_TYPE)",
+   "owner_proposal": null,
+   "cause": "q: 'diện tích thiết diện tròn' không gọi tên đúng đối tượng của ask_surface_area {'solid': \"O.O'\"} — không trả lời câu hỏi về đối tượng khác"
+  },
+  "target-grammar-identity-recovery::K.cyl.lateral_area.notation::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "NOT_ASKED_IN_SOURCE"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "shared question-context gate (S1 closed tail): the tail ', diện tích thiết diện qua trục, tỉ số thể tích …' holds phrases the closed grammar does not read, so the phrase is not verified as asked intact — the same rule polyhedra get",
+   "owner_proposal": "P-1 coordinated question lists (as above)",
+   "cause": "q: 'diện tích xung quanh hình trụ' không hỏi đối tượng này nguyên vẹn (không có từ hỏi gắn với nó, đã gán giá trị, hay bị bổ nghĩa / đặt điều kiện) — không trả lời điều đề không hỏi"
+  },
+  "target-grammar-identity-recovery::K.cyl.lateral_area.solid::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "NOT_ASKED_IN_SOURCE"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "shared question-context gate (S1 closed tail): the tail ', diện tích thiết diện qua trục, tỉ số thể tích …' holds phrases the closed grammar does not read, so the phrase is not verified as asked intact — the same rule polyhedra get",
+   "owner_proposal": "P-1 coordinated question lists (as above)",
+   "cause": "q: 'diện tích xung quanh hình trụ' không hỏi đối tượng này nguyên vẹn (không có từ hỏi gắn với nó, đã gán giá trị, hay bị bổ nghĩa / đặt điều kiện) — không trả lời điều đề không hỏi"
+  },
+  "target-grammar-identity-recovery::K.cyl.radius.notation::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the quote 'Tính bán kính.' names no object; base radius and section radius are both present",
+   "owner_proposal": null,
+   "cause": "q: 'Tính bán kính.' không gọi tên đúng đối tượng của ask_radius {'solid': \"O.O'\"} — không trả lời câu hỏi về đối tượng khác"
+  },
+  "target-grammar-identity-recovery::K.cyl.radius.section.goal_sid::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the quote 'Tính bán kính.' names no object; base radius and section radius are both present",
+   "owner_proposal": null,
+   "cause": "q: 'Tính bán kính.' không gọi tên đúng đối tượng của ask_curved_section_radius {'solid': \"O.O'\", 'section': 'sec_axial'} — không trả lời câu hỏi về đối tượng khác"
+  },
+  "target-grammar-identity-recovery::K.cyl.radius.section::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the quote 'Tính bán kính.' names no object; base radius and section radius are both present",
+   "owner_proposal": null,
+   "cause": "q: 'Tính bán kính.' không gọi tên đúng đối tượng của ask_curved_section_radius {'solid': \"O.O'\", 'section': 'sec_axial'} — không trả lời câu hỏi về đối tượng khác"
+  },
+  "target-grammar-identity-recovery::K.cyl.radius.solid::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the quote 'Tính bán kính.' names no object; base radius and section radius are both present",
+   "owner_proposal": null,
+   "cause": "q: 'Tính bán kính.' không gọi tên đúng đối tượng của ask_radius {'solid': \"O.O'\"} — không trả lời câu hỏi về đối tượng khác"
+  },
+  "target-grammar-identity-recovery::K.cyl.volume.notation::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the goal quote 'Tính thể tích' names no solid; the gate grounds a question only on a quote that names its object (the cone run declares three: cone, small cone, frustum)",
+   "owner_proposal": "P-1 coordinated question lists: 'Tính thể tích, diện tích xung quanh hình nón, …' distributes the object; binding it would SERVE a cell the Owner registered as REFUSED",
+   "cause": "q: 'Tính thể tích' không gọi tên đúng đối tượng của ask_curved_volume {'solid': \"O.O'\"} — không trả lời câu hỏi về đối tượng khác"
+  },
+  "target-grammar-identity-recovery::K.cyl.volume.solid::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the goal quote 'Tính thể tích' names no solid; the gate grounds a question only on a quote that names its object (the cone run declares three: cone, small cone, frustum)",
+   "owner_proposal": "P-1 coordinated question lists: 'Tính thể tích, diện tích xung quanh hình nón, …' distributes the object; binding it would SERVE a cell the Owner registered as REFUSED",
+   "cause": "q: 'Tính thể tích' không gọi tên đúng đối tượng của ask_curved_volume {'solid': \"O.O'\"} — không trả lời câu hỏi về đối tượng khác"
+  },
+  "target-grammar-identity-recovery::K.cyl.volume.solid_id::a4": {
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "the goal quote 'Tính thể tích' names no solid; the gate grounds a question only on a quote that names its object (the cone run declares three: cone, small cone, frustum)",
+   "owner_proposal": "P-1 coordinated question lists: 'Tính thể tích, diện tích xung quanh hình nón, …' distributes the object; binding it would SERVE a cell the Owner registered as REFUSED",
+   "cause": "q: 'Tính thể tích' không gọi tên đúng đối tượng của ask_curved_volume {'solid': \"O.O'\"} — không trả lời câu hỏi về đối tượng khác"
+  }
+ }
+}

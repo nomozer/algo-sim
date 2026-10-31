@@ -396,6 +396,8 @@ def bridge(raw: dict[str, Any] | TypedFactNextPayload) -> dict[str, Any]:
 
 #: Curved sections the planner executes (bridge /2, registry /24); every other plane kind of a curved solid is refused.
 _MAT_CAT_CONG = ("parallel_to_base_at_distance", "parallel_to_base_at_ratio", "axial_section")
+#: A solid WITHOUT an axis (a sphere) is cut by a plane placed from its centre (seventh continuation).
+_MAT_CAT_TAM = ("at_distance_from_center", "through_center")
 
 
 def _phan_cong(p: TypedFactNextPayload, solids: dict[str, Any]) -> list[dict[str, Any]]:
@@ -413,7 +415,7 @@ def _phan_cong(p: TypedFactNextPayload, solids: dict[str, Any]) -> list[dict[str
         raise TuChoi("AMBIGUOUS_REFERENCE", f"hai thiết diện cùng tên mặt phẳng {sorted({n for n in names if names.count(n) > 1})}",
                      tuple(x.section_id for x in p.derived_sections))
     for x in p.derived_sections:
-        if x.target_solid_id != s.solid_id or x.plane_kind not in _MAT_CAT_CONG or not kc.co_truc:
+        if x.target_solid_id != s.solid_id or x.plane_kind not in (_MAT_CAT_CONG if kc.co_truc else _MAT_CAT_TAM):
             raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{x.section_id}: thiết diện {x.plane_kind} của khối tròn xoay này chưa "
                          "có trên planner", (x.section_id,))
         if x.section_shape not in (None, "polygon" if x.plane_kind == "axial_section" else "circle"):
@@ -421,7 +423,9 @@ def _phan_cong(p: TypedFactNextPayload, solids: dict[str, Any]) -> list[dict[str
                          f"{x.plane_kind}", (x.section_id,))     # review M2: the payload's own fields must agree
         out.append({"id": x.section_id, "kind": "section", "role": "premise", "quotes": [x.quote], "solid": s.notation,
                     "curved_part": {"role": "section", "kind": x.plane_kind, "plane": x.plane_name,
-                                    "distance": x.distance_from_base, "ratio": x.ratio_from_apex}})
+                                    "distance": x.distance_from_center if kc.co_truc is False else x.distance_from_base,
+                                    "ratio": x.ratio_from_apex,
+                                    "point": _ref(x.through_point) if x.through_point else None}})
     nho: set[str] = set()
     for g in p.simulation_goals:
         if g.kind != "construct_derived_solid":

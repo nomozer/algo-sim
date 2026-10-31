@@ -25,8 +25,8 @@ _spec.loader.exec_module(S)
 
 NEGATIVE_CODES = {
     "n.cyl.d_above": "CURVED_PLANE_DOES_NOT_CUT", "n.cone.at_apex": "CURVED_PLANE_TANGENT",
-    "n.wrong_distance": "UNGROUNDED_VALUE", "n.from_apex": "SOURCE_OBJECT_MISMATCH",
-    "n.unread_tail": "SOURCE_OBJECT_MISMATCH", "n.not_parallel": "SOURCE_OBJECT_MISMATCH",
+    "n.wrong_distance": "UNGROUNDED_VALUE", "n.from_apex": "CURVED_WORDING_UNSUPPORTED",
+    "n.unread_tail": "CURVED_WORDING_UNSUPPORTED", "n.not_parallel": "CURVED_WORDING_UNSUPPORTED",
     "n.ratio_inverted": "SOURCE_OBJECT_MISMATCH", "n.volume_of_section": "INVALID_MATH_GOAL",
     "n.sphere_axial": "BRIDGE_UNSUPPORTED_CURVED", "n.section_kind_mismatch": "SOURCE_OBJECT_MISMATCH",
     # independent review round 1: wrong-section binding (B1), shape contradictions (M2), foreign notation (m1)
