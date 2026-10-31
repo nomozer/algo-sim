@@ -241,9 +241,8 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
         if f.curved is not None:                        # a solid of revolution: kind + centre, never a polyhedral type
             from app.simulation.geometry.curved import LOAI_TU_NGUON
 
-            if (f.kind != "solid" or f.solid_type is not None or f.curved.get("kind") not in LOAI_TU_NGUON
-                    or not f.curved.get("center")):
-                raise TuChoi("SCHEMA_INVALID", f"{f.id}: khối tròn xoay cần loại (trụ, nón, cầu) và tâm", (f.id,))
+            if (f.kind != "solid" or f.solid_type is not None or f.curved.get("kind") not in LOAI_TU_NGUON):
+                raise TuChoi("SCHEMA_INVALID", f"{f.id}: khối tròn xoay cần loại (trụ, nón, cầu)", (f.id,))
             required = ("solid",)
         if f.kind == "point_def" and f.point_kind in ("intersect_line_line", "intersect_line_plane"):
             required = ("point", "point_kind", "points_a", "points_b")

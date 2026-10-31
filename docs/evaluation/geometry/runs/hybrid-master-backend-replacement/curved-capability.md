@@ -1,5 +1,7 @@
 # Curved solids on Route D /4: capability, parity and limits (fifth continuation, 2026-10-31)
 
+**Revision after independent review round 1 (`NOT_READY`).** The reviewer found three blockers. B1: the centre, top and rim roles were not grounded. B2: a value did not have to end its clause. B3: a role phrase or height belonging to another object was accepted. Each one served a WRONG exact value. All are fixed, and each reproduction is a locked negative (`ADVERSARIAL` in the probe). M1, the certificate's scope, is corrected in the table below.
+
 **Basis.** This record is read from the code at the branch HEAD and from the development probe `tools/curved_probe.py` → `curved-probe.json`. 0 provider calls. The implementer wrote the probe cases, so this is `DEVELOPMENT_DIAGNOSTIC` evidence, never held-out. The oracles were computed by hand, before the implementation. At `23c20679` every case was RED, refused with `BRIDGE_UNSUPPORTED_CURVED`.
 
 ## What is now served, and how (one route, no new compiler)
@@ -18,8 +20,8 @@ The only new layout code is the engine's canonical pose (`_dung_cong`), which si
 | Radius | **IMPLEMENTED_AND_VERIFIED** | 3 |
 | **Derived dimension:** cone height from a stated slant, h² = SA² − OA² | **IMPLEMENTED_AND_VERIFIED.** This is recomposition over named points. | 12π and 15π from SA = 5; traced as `derive_dimension` / `pythagoras_axis_rim` |
 | Symbolic unit a | **IMPLEMENTED_AND_VERIFIED** | V = 2πa³. A defect was found and fixed here: the learner answer had dropped π and showed "2a³". |
-| Source grounding | **IMPLEMENTED_AND_VERIFIED** | The radius and height are bound to their own role clause (`_kich_thuoc_cong_dung_nguon`), and the question must name the solid's kind (`_cong_khop`). 12/12 adversarial cases are refused, each with the expected code. |
-| Exactness certificate | **IMPLEMENTED_AND_VERIFIED** | Each answer equals both the executed kernel value and an independent closed form (`_chung_chi_cong`). A tampered closed form gives `ENGINE_SELF_CHECK_FAILED`. |
+| Source grounding | **IMPLEMENTED_AND_VERIFIED** | `_khoi_cong_dung_nguon` checks four things:<br>• the quote describes one solid of this kind and no other object;<br>• every named point is bound by its role phrase (centre, top/apex, rim on ITS base circle or on the sphere);<br>• the notation agrees with those roles;<br>• each dimension is the one number of its own role clause, and that number ends the clause.<br>A height assertion counts only inside the solid's own quote. The question must name the solid's kind (`_cong_khop`). Unnamed points are allowed (canonical pose) and never invented. Refused, each with the expected code: 12 adversarial cases plus 11 reproductions from the independent review. |
+| Exactness certificate | **IMPLEMENTED_AND_VERIFIED, for arithmetic only** | Each answer equals both the executed kernel value and an independent closed form (`_chung_chi_cong`), written from the geometry by `KHOI_CONG` attribute. A tampered closed form gives `ENGINE_SELF_CHECK_FAILED`. **Scope (review M1):** the certificate receives the same solved (r², h²) as the IR. It certifies the formula and the kernel's execution, **not the grounding**. Grounding belongs to the Source Gate (next row). |
 | Pedagogical trace | **PARTIALLY_IMPLEMENTED** | Steps recorded: `choose_pose` (LAYOUT_DERIVED, not a given), `derive_dimension`, `construct_solid`, `compose_quantity`, `certify_answer`. The learner sees only the asked target; the parts stay intermediates. |
 
 **Negatives, each refused for the right reason:**

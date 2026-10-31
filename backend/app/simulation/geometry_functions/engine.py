@@ -2088,20 +2088,21 @@ def _dung_cong(calls: tuple[LoiGoi, ...], problem_text: str) -> KetQuaTuyen:
     from app.simulation.geometry import curved as CV
 
     kc = CV.KHOI_CONG[CV.LOAI_TU_NGUON[a.kind]]          # every per-kind fact comes from the kernel's ONE table
-    if kc.co_truc != (a.top is not None):
-        raise TuChoi("MALFORMED_CURVED_SOLID", f"{k.id}: {'thiếu' if kc.co_truc else 'thừa'} {kc.vai_dinh or 'đỉnh'} của "
-                     f"{kc.danh_tu.lower()}", (k.id,))
+    # a top / apex only with an axis; an unnamed centre only when the source names NO point (the kernel's canonical pose)
+    if (a.top is not None and not kc.co_truc) or (a.center is None and (a.top or a.rim)):
+        raise TuChoi("MALFORMED_CURVED_SOLID", f"{k.id}: điểm {a.top or a.rim} không có vai trò trong "
+                     f"{kc.danh_tu.lower()} đã khai", (k.id,))
     r2, h2, unit, steps = _kich_thuoc_cong(k, segs, kc)
     r, h = sqrt_rational(r2), (sqrt_rational(h2) if h2 is not None else None)
     trace = [{"step": "choose_pose", "object": a.solid, "rule": "canonical_axis_z", "calls": [k.id],
-              "provenance": "LAYOUT_DERIVED", "note": f"tâm {a.center} tại gốc, trục là Oz — một lựa chọn hệ quy chiếu, "
-                                                       "không phải dữ kiện"}, *steps]
-    decls, stmts, pts = [], [], {a.center: (Fraction(0),) * 3}
+              "provenance": "LAYOUT_DERIVED", "note": f"{f'tâm {a.center}' if a.center else 'tâm'} tại gốc, trục là Oz — "
+                                                       "một lựa chọn hệ quy chiếu, không phải dữ kiện"}, *steps]
+    decls, stmts, pts = [], [], ({a.center: (Fraction(0),) * 3} if a.center else {})
 
     def decl(name: str, mtype: str, init: Any = None) -> str:
         decls.append({"name": name, "type": mtype, "initial_value": init})
         return name
-    o = decl(ir_name(a.center), "point3", [0, 0, 0])
+    o = decl(ir_name(a.center), "point3", [0, 0, 0]) if a.center else None
     top = rim = rad = hgt = None
     if a.top and isinstance(h, Fraction):
         top, pts[a.top] = decl(ir_name(a.top), "point3", [0, 0, str(h)]), (Fraction(0), Fraction(0), h)
@@ -2116,7 +2117,7 @@ def _dung_cong(calls: tuple[LoiGoi, ...], problem_text: str) -> KetQuaTuyen:
     stmts.append({"kind": "construct_curved_solid", "target_var": solid,
                   "curved_kind": kc.kind, "anchor": o,
                   "apex_or_top": top, "rim_point": rim, "radius": rad, "height": hgt,
-                  "label": f"{ten} {a.solid}" + ("" if kc.co_truc else f" tâm {a.center}")})
+                  "label": f"{ten} {a.solid}" + ("" if kc.co_truc or not a.center else f" tâm {a.center}")})
     trace.append({"step": "construct_solid", "object": a.solid, "rule": kc.kind, "calls": [k.id]})
     hoi, tra, chinh_xac, muc_tieu, cert = {}, {}, {}, {solid}, {}
     for c in asks:
@@ -2138,7 +2139,7 @@ def _dung_cong(calls: tuple[LoiGoi, ...], problem_text: str) -> KetQuaTuyen:
             mp, day = decl("mp_day_" + ir_name(k.id), "plane3"), decl("day_" + ir_name(k.id), "circle3")
             xq, sd = decl("sxq_" + ir_name(c.id), "float"), decl("sday_" + ir_name(c.id), "float")
             stmts += [{"kind": "construct_plane_from_equation", "target_var": mp, "a": 0, "b": 0, "c": 1, "d": 0,
-                       "label": f"Mặt phẳng đáy ({a.center})"},
+                       "label": f"Mặt phẳng đáy ({a.center})" if a.center else "Mặt phẳng đáy"},
                       {"kind": "assign", "target_var": day, "expr": {"kind": "intersect_plane_curved", "solid": solid, "plane": mp}},
                       {"kind": "assign", "target_var": xq, "expr": {"kind": "measure", "quantity": "lateral_area", "of": solid}},
                       {"kind": "assign", "target_var": sd, "expr": {"kind": "measure", "quantity": "area", "of": day}},

@@ -259,7 +259,7 @@ class CurvedSolidArgs(_Args):
     role-bound in the quote by `_kich_thuoc_cong_dung_nguon` (radius after "bán kính", height after "chiều cao")."""
     kind: Literal["cylinder", "cone", "sphere"]
     solid: CurvedName
-    center: Label
+    center: Label | None = Field(None, description="tâm (đáy / mặt cầu) nếu đề đặt tên")
     top: Label | None = Field(None, description="tâm đáy trên (trụ) hoặc đỉnh (nón)")
     rim: Label | None = Field(None, description="một điểm trên đường tròn đáy / mặt cầu")
     radius: ExactNumber | None = None
@@ -2129,9 +2129,9 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
                     "right_angle", "divide_segment"):
             if not construction_source_bound(c, de):
                 raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: vai trò điểm và toán hạng dựng không khớp nguồn", (c.id,))
-        if c.fn == "curved_solid" and not _kich_thuoc_cong_dung_nguon(c):
-            raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: bán kính / chiều cao không là số của đúng mệnh đề vai trò trong "
-                         f"{c.quote!r}", (c.id,))
+        if c.fn == "curved_solid" and (ma := _khoi_cong_dung_nguon(c)):
+            raise TuChoi(ma, f"{c.id}: {c.quote!r} không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / "
+                         "chiều cao của chính mệnh đề vai trò)", (c.id,))
         if c.fn in ("section", "ask_section_area", "intersection_line") and not mat_cat_dung_nguon(c, calls):
             raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: mặt phẳng / khối của {c.fn} không phải cái mà {c.quote!r} gọi tên",
                          (c.id,))
@@ -2757,8 +2757,10 @@ def _rang_buoc_cuc_bo_khop(r: Any, c: LoiGoi, de: str) -> bool:
                 and _canh_khop(r, a.side, de))
     if r.kind == "base_rectangle" and c.fn == "rectangle":
         return _cung_da_giac(list(ids(a.vertices)), list(e))
-    if r.kind == "height" and c.fn == "curved_solid":   # registry /23: the role-bound height of THE solid of revolution
-        return not e and a.height is not None and r.value is not None and doc_so(a.height)[0] == Fraction(r.value) ** 2
+    if r.kind == "height" and c.fn == "curved_solid":   # registry /23: the role-bound height of THE solid of revolution,
+        # stated inside its own (gate-validated) quote — never a height elsewhere with an equal value (review B3)
+        return (not e and a.height is not None and r.value is not None and doc_so(a.height)[0] == Fraction(r.value) ** 2
+                and any((vt := _vi_tri(de, q)) is not None and vt[0] <= r.span[0] and r.span[1] <= vt[1] for q in c.quotes))
     return False
 
 
@@ -3032,7 +3034,7 @@ def _ds_khoi_khop(m: re.Match, n: str, solids: list[str], khoi: dict) -> bool:
 #: hàm → [(cụm, buộc(m, args, khối của đề))].
 #: Curved slice (registry /23): the kind word a question uses for a solid of revolution.
 _KIEU_CONG = {"trụ": "cylinder", "nón": "cone", "cầu": "sphere"}
-_KHOI_CONG_CUM = r"(?:\s+của)?\s+(?:khối|hình|mặt)\s+(?P<kieu>trụ|nón|cầu)(?:\s+tròn\s+xoay)?(?:\s+(?-i:(?P<ten>\([A-Z][0-9]*'?\)|[A-Z][0-9]*'?(?:\.[A-Z][0-9]*'?)?))(?![\w'.]))?"
+_KHOI_CONG_CUM = r"(?:\s+của)?\s+(?:khối|hình|mặt)\s+(?P<kieu>trụ|nón|cầu)(?:\s+tròn\s+xoay)?(?:\s+(?-i:(?P<ten>\([A-Z][0-9]*'?\)|[A-Z][0-9]*'?(?:\.[A-Z][0-9]*'?)?))(?![\w'])(?!\.[A-Z]))?"
 
 
 def _cong_khop(m: re.Match, a: Any) -> bool:
@@ -4597,22 +4599,71 @@ _VAI_CONG = {"radius": r"(?:(?i:bán\s+kính)(?:\s+(?i:đáy))?|(?<![\w'])R(?![\
              "height": r"(?:(?i:chiều\s+cao)|(?<![\w'])h(?![\w']))"}
 
 
-def _kich_thuoc_cong_dung_nguon(c: LoiGoi) -> bool:
-    """Each stated dimension of a `curved_solid` is the ONE number of its own role clause — so a swapped radius/height,
-    or a value the clause does not state, binds nothing (registry /23)."""
+_L = r"[A-Z][0-9]*'?"
+#: Any object noun but the solid itself: a clause naming one of these does not describe THIS solid (review B3).
+_VAT_KHAC = re.compile(r"(?i:tam\s+giác|tứ\s+giác|đa\s+giác|hình\s+(?:vuông|chữ\s+nhật|thang|chóp|hộp|lập\s+phương|tròn"
+                       r"(?!\s+xoay))|khối\s+(?:chóp|hộp|lập\s+phương)|lăng\s+trụ|tứ\s+diện|chóp|đoạn|cạnh)(?!\w)")
+_TU_KHOI_CONG = re.compile(r"(?i:hình|khối|mặt)\s+(?i:(trụ|nón|cầu))(?!\w)")
+#: The value of a role ends its clause: "bằng 3 lần chiều cao", "3 + √2", "3 cm hơn …" bind nothing (review B2).
+_HET_MENH_DE = re.compile(r"\s*(?:$|[,.;]|(?i:và)(?!\w))")
+
+
+def _khoi_cong_dung_nguon(c: LoiGoi) -> str | None:
+    """`None` when a `curved_solid` call is EXACTLY what its quote states, else the refusal code (registry /23; independent
+    review round 1, B1–B3). Per-kind facts come from the kernel's table (`curved.KHOI_CONG`), never from a kind name.
+    • The quote describes ONE solid of this kind and no other object (a triangle's "chiều cao", a second solid's radius).
+    • Every named point is bound by its role phrase — centre: "tâm hai đáy là O và O'" (first), "đáy là đường tròn tâm O",
+      "mặt cầu tâm O"; top: the second centre / "nón đỉnh S"; rim: "A thuộc đường tròn đáy (tâm O)" / "A thuộc mặt cầu";
+      a cylinder's rim must name ITS base centre. A point the quote does not bind is refused, never assumed.
+    • The notation agrees with those roles: apex.centre, centre.top, or a centre / "(S)" with no axis.
+    • Each stated dimension is the ONE number of its own role clause, and that number ends the clause."""
+    from app.simulation.geometry import curved as CV
+
+    a = c.args
+    kc = CV.KHOI_CONG[CV.LOAI_TU_NGUON[a.kind]]
+    apex, two_bases = kc.vai_dinh == "đỉnh", kc.co_truc and kc.vai_dinh != "đỉnh"
+    s = " ".join(chuan_hoa(q) for q in c.quotes)
+    words = [m for m in _TU_KHOI_CONG.finditer(s)]      # "A thuộc mặt cầu" repeats the solid's OWN kind word: allowed
+    if (not words or any(_KIEU_CONG[w[1].lower()] != a.kind for w in words)
+            or _VAT_KHAC.search(s, words[0].end())):
+        return "SOURCE_OBJECT_MISMATCH"
+    bound: dict[str, set[str]] = {"center": set(), "top": set(), "rim": set()}
+    if two_bases:
+        for m in re.finditer(rf"(?i:tâm)\s+(?:(?i:của)\s+)?(?i:hai|các)\s+(?i:đáy)\s+(?:(?i:lần\s+lượt)\s+)?(?i:là)\s+"
+                             rf"({_L})\s+(?i:và)\s+({_L})(?![\w'])", s):
+            bound["center"].add(m[1]), bound["top"].add(m[2])
+    if kc.co_truc:
+        for m in re.finditer(rf"(?i:đáy)\s+(?:(?i:là)\s+)?(?:(?i:một)\s+)?(?i:đường\s+tròn)\s+(?i:tâm)\s+({_L})(?![\w'])", s):
+            bound["center"].add(m[1])
+    else:
+        for m in re.finditer(rf"(?i:mặt|khối|hình)\s+(?i:cầu)(?:\s+\({_L}\))?\s+(?:(?i:có)\s+)?(?i:tâm)\s+({_L})(?![\w'])", s):
+            bound["center"].add(m[1])
+    if apex:
+        for m in re.finditer(rf"(?i:hình|khối)\s+(?i:nón)\s+(?:(?i:có)\s+)?(?i:đỉnh)\s+({_L})(?![\w'])", s):
+            bound["top"].add(m[1])
+    vanh = (rf"(?i:đường\s+tròn\s+đáy)(?:\s+(?i:tâm)\s+(?P<c>{_L})(?![\w']))?" if kc.co_truc else r"(?i:mặt\s+cầu)(?!\w)")
+    for m in re.finditer(rf"(?<![\w'])({_L})\s+(?i:thuộc|nằm\s+trên)\s+{vanh}", s):
+        if m.groupdict().get("c") == a.center if two_bases else m.groupdict().get("c") in (None, a.center):
+            bound["rim"].add(m[1])
+    for f in bound:
+        if (v := getattr(a, f)) is not None and bound[f] != {v}:
+            return "SOURCE_OBJECT_MISMATCH"
+    ten = (f"{a.top}.{a.center}" if apex else f"{a.center}.{a.top}") if kc.co_truc else a.center
+    if a.solid != ten and not re.fullmatch(rf"\({_L}\)", a.solid):
+        return "SOURCE_OBJECT_MISMATCH"
     for f, vai in _VAI_CONG.items():
-        if (v := getattr(c.args, f)) is None:
+        if (v := getattr(a, f)) is None:
             continue
         doc = []
-        for q in c.quotes:
-            s = chuan_hoa(q)
-            for m in re.finditer(rf"{vai}\s*(?:(?i:bằng|là)\s+|=\s*)", s):
-                so = so_trong(s[m.end():])
-                if so and so[0][0] == 0:
-                    doc.append(so[0][1:])
+        for m in re.finditer(rf"{vai}\s*(?:(?i:bằng|là)\s+|=\s*)", s):
+            so = _SO.match(s, m.end())
+            if so and so.end() > so.start() and (r := _doc(so)) is not None and _HET_MENH_DE.match(s, so.end()):
+                doc.append(r)
+            else:
+                return "UNGROUNDED_VALUE"            # a role clause whose value is not one closed number
         if doc != [doc_so(v)]:
-            return False
-    return True
+            return "UNGROUNDED_VALUE"
+    return None
 
 
 def construction_source_bound(c: LoiGoi, de: str = "") -> bool:

@@ -18,6 +18,7 @@ from app.simulation.geometry.radical import from_json, parse_exact  # noqa: E402
 def solid(kind, notation, center, top, rim, radius, height, quote):
     s = {"solid_id": "k", "solid_type": kind, "notation": notation, "center": center, "rim_point": rim,
          "radius": radius, "quote": quote}
+    s = {k: v for k, v in s.items() if v is not None}
     if top:
         s["apex_or_top"] = top
     if height:
@@ -143,6 +144,56 @@ NEGATIVES = [("n.bad_slant", CONE_L, "volume", "Tính thể tích khối nón.",
              ("n.foreign_solid", CYL, "volume", "Tính thể tích khối trụ.", foreign_solid)]
 
 
+def seg(a, b, v, q):
+    return {"kind": "segment_length", "args": {"segment": [a, b], "value": v}, "quote": q, "solid_id": "k"}
+
+
+_CYL = "Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O"
+_CONE = "Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy"
+#: Independent review of the curved slice (round 1): each served a WRONG exact value or served insufficient data. Every one
+#: must now be REFUSED. (id, given, solid, premises, goal, question)
+ADVERSARIAL = [
+    ("r.radius_times_h", f"{_CYL}, chiều cao bằng 2 và bán kính đáy bằng 3 lần chiều cao.",
+     solid("cylinder", "O.O'", "O", "O'", "A", "3", "2", f"{_CYL}, chiều cao bằng 2 và bán kính đáy bằng 3 lần chiều cao"), [],
+     "volume", "Tính thể tích khối trụ."),
+    ("r.radius_fraction_of_h", f"{_CYL}, chiều cao bằng 6 và bán kính đáy bằng 1/3 chiều cao.",
+     solid("cylinder", "O.O'", "O", "O'", "A", "1/3", "6", f"{_CYL}, chiều cao bằng 6 và bán kính đáy bằng 1/3 chiều cao"), [],
+     "volume", "Tính thể tích khối trụ."),
+    ("r.radius_sum", f"{_CYL}, bán kính đáy bằng 3 + √2 và chiều cao bằng 5.",
+     solid("cylinder", "O.O'", "O", "O'", "A", "3", "5", f"{_CYL}, bán kính đáy bằng 3 + √2 và chiều cao bằng 5"), [],
+     "volume", "Tính thể tích khối trụ."),
+    ("r.cyl_rim_on_other_base", "Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O', chiều cao bằng 4. Biết OA = 5.",
+     solid("cylinder", "O.O'", "O", "O'", "A", None, "4",
+           "Cho hình trụ có tâm hai đáy là O và O', điểm A thuộc đường tròn đáy tâm O', chiều cao bằng 4"),
+     [seg("O", "A", "5", "Biết OA = 5")], "volume", "Tính thể tích khối trụ."),
+    ("r.cone_apex_centre_swapped", f"{_CONE}, chiều cao bằng 4. Đường sinh SA = 5.",
+     solid("cone", "S.O", "S", "O", "A", None, "4", f"{_CONE}, chiều cao bằng 4"),
+     [seg("S", "A", "5", "Đường sinh SA = 5")], "volume", "Tính thể tích khối nón."),
+    ("r.sphere_point_outside", "Cho mặt cầu tâm O, điểm A nằm ngoài mặt cầu, OA = 5.",
+     solid("sphere", "O", "O", None, "A", None, None, "Cho mặt cầu tâm O, điểm A nằm ngoài mặt cầu"),
+     [seg("O", "A", "5", "OA = 5")], "volume", "Tính thể tích khối cầu."),
+    ("r.cyl_point_on_axis", "Cho hình trụ có tâm hai đáy là O và O', chiều cao bằng 4. Điểm A thuộc đoạn OO' sao cho OA = 3.",
+     solid("cylinder", "O.O'", "O", "O'", "A", None, "4", "Cho hình trụ có tâm hai đáy là O và O', chiều cao bằng 4"),
+     [seg("O", "A", "3", "Điểm A thuộc đoạn OO' sao cho OA = 3")], "volume", "Tính thể tích khối trụ."),
+    ("r.height_of_a_triangle", f"{_CONE}, bán kính đáy bằng 3, tam giác SAB có chiều cao bằng 2.",
+     solid("cone", "S.O", "O", "S", "A", "3", "2", f"{_CONE}, bán kính đáy bằng 3, tam giác SAB có chiều cao bằng 2"), [],
+     "volume", "Tính thể tích khối nón."),
+    ("r.dimensions_of_another_solid", f"{_CONE} và một hình trụ có bán kính đáy bằng 3, chiều cao bằng 4.",
+     solid("cone", "S.O", "O", "S", "A", "3", "4", f"{_CONE} và một hình trụ có bán kính đáy bằng 3, chiều cao bằng 4"), [],
+     "volume", "Tính thể tích khối nón."),
+    ("r.notation_against_roles", f"{_CONE}, bán kính đáy bằng 3 và chiều cao bằng 4.",
+     solid("cone", "S.O", "S", "O", "A", "3", "4", f"{_CONE}, bán kính đáy bằng 3 và chiều cao bằng 4"), [],
+     "volume", "Tính thể tích khối nón."),
+    ("r.invented_labels", "Cho hình nón có bán kính đáy bằng 3 và chiều cao bằng 4.",
+     solid("cone", "S.O", "O", "S", "A", "3", "4", "Cho hình nón có bán kính đáy bằng 3 và chiều cao bằng 4"), [],
+     "volume", "Tính thể tích khối nón."),
+]
+#: Labels are optional, never invented: a source that names no point is served in the canonical pose.
+UNLABELLED = ("Cho hình nón có bán kính đáy bằng 3 và chiều cao bằng 4.",
+              {"solid_id": "k", "solid_type": "cone", "notation": "(N)", "radius": "3", "height": "4",
+               "quote": "Cho hình nón có bán kính đáy bằng 3 và chiều cao bằng 4"}, [])
+
+
 def run():
     rows = []
     for cid, fig, gt, q, expected in CASES:
@@ -160,6 +211,14 @@ def run():
         r = run_typed_fact_next_v2_route(payload(fig, gt, q, mutate))
         outcome = "REFUSED_CORRECT" if r.status != "SERVED" and not r.answer_exact else "SERVED_NEGATIVE"
         rows.append({"id": cid, "status": r.status, "code": r.code, "outcome": outcome, "reason": (r.reason or "")[:200]})
+    for cid, given, s, prem, gt, q in ADVERSARIAL:
+        r = run_typed_fact_next_v2_route(payload((given, s, prem), gt, q))
+        rows.append({"id": cid, "status": r.status, "code": r.code, "reason": (r.reason or "")[:200],
+                     "outcome": "REFUSED_CORRECT" if r.status != "SERVED" and not r.answer_exact else "SERVED_NEGATIVE"})
+    r = run_typed_fact_next_v2_route(payload(UNLABELLED, "volume", "Tính thể tích khối nón."))
+    got = (r.answer_exact or {}).get("mg1")
+    rows.append({"id": "u.unlabelled_cone.V", "status": r.status, "code": r.code, "answer": got, "oracle": "12π",
+                 "outcome": "SERVED_CORRECT" if got and parse_exact(got["coef"]) == parse_exact("12π") else "REFUSED"})
     return rows
 
 

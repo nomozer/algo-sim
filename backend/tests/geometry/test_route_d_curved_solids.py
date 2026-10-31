@@ -54,6 +54,29 @@ def test_curved_negatives_are_refused_for_the_right_reason(cid, fig, goal, quest
     assert r.code == NEGATIVE_CODES[cid], (r.code, r.reason)
 
 
+#: Independent review round 1 (B1–B3): each of these SERVED a wrong exact value or insufficient data before the fix.
+ADVERSARIAL_CODES = {
+    "r.radius_times_h": "UNGROUNDED_VALUE", "r.radius_fraction_of_h": "UNGROUNDED_VALUE", "r.radius_sum": "UNGROUNDED_VALUE",
+    "r.cyl_rim_on_other_base": "SOURCE_OBJECT_MISMATCH", "r.cone_apex_centre_swapped": "SOURCE_OBJECT_MISMATCH",
+    "r.sphere_point_outside": "SOURCE_OBJECT_MISMATCH", "r.cyl_point_on_axis": "SOURCE_OBJECT_MISMATCH",
+    "r.height_of_a_triangle": "SOURCE_OBJECT_MISMATCH", "r.dimensions_of_another_solid": "SOURCE_OBJECT_MISMATCH",
+    "r.notation_against_roles": "SOURCE_OBJECT_MISMATCH", "r.invented_labels": "UNKNOWN_LABEL",
+}
+
+
+@pytest.mark.parametrize("cid,given,solid,premises,goal,question", C.ADVERSARIAL, ids=[x[0] for x in C.ADVERSARIAL])
+def test_review_reproductions_are_refused_never_served(cid, given, solid, premises, goal, question):
+    r = run_typed_fact_next_v2_route(C.payload((given, solid, premises), goal, question))
+    assert r.status == "REFUSED" and not r.answer_exact and r.scene3d is None
+    assert r.code == ADVERSARIAL_CODES[cid], (r.code, r.reason)
+
+
+def test_a_source_naming_no_point_is_served_in_the_canonical_pose():
+    r = run_typed_fact_next_v2_route(C.payload(C.UNLABELLED, "volume", "Tính thể tích khối nón."))
+    assert r.status == "SERVED" and parse_exact(r.answer_exact["mg1"]["coef"]) == parse_exact("12π")
+    assert r.points == {}                                     # no invented point, no coordinate presented as a given
+
+
 def test_slant_given_height_is_derived_and_traced():
     fig = C.CONE_L
     r = run_typed_fact_next_v2_route(C.payload(fig, "volume", "Tính thể tích khối nón."))
