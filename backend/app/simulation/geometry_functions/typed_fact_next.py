@@ -236,6 +236,7 @@ class SolidSpec(ClosedNextModel):
     rim_point: NonEmptyText | None = None
     radius: NonEmptyText | None = None
     height: NonEmptyText | None = None
+    circumscribes: IdentifierStr | None = None
     notation: NonEmptyText
     quote: NonEmptyText
     vertex_bindings: dict[Label, Label] = Field(default_factory=dict)
@@ -257,6 +258,17 @@ class SolidSpec(ClosedNextModel):
                 raise TypedFactNextValidationError(
                     "INVALID_SOLID_NOTATION",
                     f"Prism notation {self.notation!r} must have two disjoint congruent-length base cycles of >=3 vertices.",
+                )
+        if self.circumscribes is not None:
+            from app.simulation.geometry import curved as CV
+
+            loai = CV.LOAI_TU_NGUON.get(self.solid_type)
+            if loai is None or CV.KHOI_CONG[loai].co_truc or any(
+                x is not None for x in (self.apex_or_top, self.rim_point, self.radius, self.height)
+            ):
+                raise TypedFactNextValidationError(
+                    "SOURCE_OBJECT_MISMATCH",
+                    f"Solid {self.solid_id!r} with circumscribes={self.circumscribes!r} must be an axisless curved solid derived solely from the polyhedron.",
                 )
         local_set = set(self.local_vertices())
         for local_v in self.vertex_bindings:
@@ -1038,6 +1050,12 @@ def _validate_declared_solid_scope(p: "TypedFactNextPayload", known: set[str]) -
     def family(scope: str | None) -> set[str]:
         return {scope, parents[scope]} if scope in parents else {scope}
 
+    for s in p.solids:
+        if s.circumscribes is not None:
+            declared(s.circumscribes, s.solid_id)                                           # S1
+            if s.circumscribes == s.solid_id or solids[s.circumscribes].solid_type not in ("pyramid", "prism"):  # S3
+                refuse("SOURCE_OBJECT_MISMATCH", s.solid_id,
+                       f"khối ngoại tiếp {s.circumscribes!r} phải là khối đa diện đã khai báo khác {s.solid_id!r}")
     for i, prem in enumerate(p.premises, 1):
         where = f"p{i}"
         scope = declared(prem.solid_id, where)

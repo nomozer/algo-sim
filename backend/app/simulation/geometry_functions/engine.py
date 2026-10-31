@@ -277,6 +277,9 @@ class _Dung:
         self.section_certificates: list[dict[str, Any]] = []  # `plane-section-certificate/1` đã kiểm trên hình thực thi
         self.mat_phu: list[dict] = []           # mặt phẳng dẫn xuất đã khai (`MAT_SONG_SONG`), kiểm ở `kiem_mat_cat`
         self.ten_mat_phu: dict[str, str | None] = {}   # tên đề đặt cho mỗi mặt dẫn xuất — do `kiem_nguon` trả về
+        self.circumcenters: dict[str, tuple[str, str, str, str]] = {}
+        self.curved_certificates: dict[str, tuple[V3, Fraction, tuple[str, str, str, str], Any]] = {}
+        self.khoi_cong_ir: dict[str, tuple[str, Any, Fraction, V3, str]] = {}
 
     def of(self, *fns: str) -> list[LoiGoi]:
         return [c for c in self.calls if c.fn in fns]
@@ -303,6 +306,18 @@ class _Dung:
         for c in self.of("height", "ask_volume"):
             if c.args.solid not in self.khoi:
                 raise TuChoi("UNKNOWN_SOLID", f"{c.id}: khối {c.args.solid} chưa được dựng bằng lời gọi nào", (c.id,))
+        cong_names: set[str] = set()
+        for c in self.of("curved_solid"):
+            if c.args.circumscribes not in self.khoi:
+                raise TuChoi("UNKNOWN_SOLID", f"{c.id}: khối {c.args.circumscribes} chưa được dựng bằng lời gọi nào", (c.id,))
+            if c.args.solid in cong_names:
+                raise TuChoi("AMBIGUOUS_REFERENCE", f"{c.id}: trùng ký hiệu khối tròn xoay {c.args.solid}", (c.id,))
+            cong_names.add(c.args.solid)
+        if extra_cong := self.of("curved_section", "curved_subsolid", *_HOI_PHAN_CONG):
+            raise TuChoi("CURVED_RELATION_UNSUPPORTED", f"{extra_cong[0].id}: phần của khối cong chưa chứng nhận trên hình ghép", (extra_cong[0].id,))
+        for c in self.of(*_HOI_CONG):
+            if c.args.solid not in cong_names:
+                raise TuChoi("UNKNOWN_SOLID", f"{c.id}: khối tròn xoay {c.args.solid} chưa được khai báo", (c.id,))
         for c in self.of("ask_volume_ratio"):
             for s in (c.args.numerator_solid, c.args.denominator_solid):
                 if s not in self.khoi:
@@ -576,6 +591,7 @@ class _Dung:
                 self.divisions[p] = (a, b, t)
                 self._dat(p, tuple((1 - t) * self.pts[a][i] + t * self.pts[b][i] for i in range(3)), f"divide_segment_t={t}",
                           {c.id}, "DERIVED")
+                self.trace[-1]["dependencies"] = [a, b]
                 self.dung.add(c.id)
                 return True
         for c in self.of("midpoint"):
@@ -584,6 +600,7 @@ class _Dung:
                 self.midpoints[p] = (a, b)
                 self._dat(p, tuple((self.pts[a][i] + self.pts[b][i]) / 2 for i in range(3)), "midpoint", {c.id},
                           "DERIVED")
+                self.trace[-1]["dependencies"] = [a, b]
                 self.dung.add(c.id)
                 return True
         for k in sorted(self.khoi.values(), key=lambda k: k.name):
@@ -599,6 +616,7 @@ class _Dung:
                     n = len(k.base)
                     self._dat(self.tam, tuple(sum(self.pts[v][i] for v in k.base) / n for i in range(3)),
                               "center_of_regular_base", {k.call, reg[0].id}, "DERIVED")
+                    self.trace[-1]["dependencies"] = list(k.base)
                 h2, cs = self._chieu_cao(k.apex, self.tam, [k.name])
                 self._dat_ngoai_day(k.apex, self.tam, h2, "apex_over_center", {k.call, reg[0].id} | cs)
                 return True
@@ -610,6 +628,7 @@ class _Dung:
                 self.centroids[p] = tuple(da)
                 self._dat(p, tuple(sum(self.pts[v][i] for v in da) / 3 for i in range(3)), "centroid_of_triangle", {c.id},
                           "DERIVED")
+                self.trace[-1]["dependencies"] = list(da)
                 self.dung.add(c.id)
                 return True
         for c, (a, b), mp, luat, chan_khai in self._rang_buoc_vuong():
@@ -668,6 +687,22 @@ class _Dung:
                 self._dat(t, tuple(self.pts[b][i] + v[i] for i in range(3)), f"prism_lateral_vector_{b0}{t0}", {k.call},
                           "DERIVED")
                 return True
+        for c in self.of("curved_solid"):
+            a = c.args
+            if a.center and a.center not in self.pts and a.circumscribes in self.khoi:
+                k = self.khoi[a.circumscribes]
+                verts = [k.apex, *k.base] if k.kind == "pyramid" else [*k.base, *k.top]
+                if all(v in self.pts for v in verts):
+                    bon = self._bon_dinh_khoi(k)
+                    res = self._tam_bon_dinh(*bon)
+                    if res is None:
+                        raise TuChoi("DEGENERATE_SOLID", f"{k.name}: bốn đỉnh không tạo thành tứ diện không suy biến", (c.id,))
+                    xyz, _r2 = res
+                    self.circumcenters[a.center] = bon
+                    self._dat(a.center, xyz, "perpendicular_bisector_intersection", {c.id}, "DERIVED")
+                    self.trace[-1]["dependencies"] = list(bon)
+                    self.dung.add(c.id)
+                    return True
         return False
 
     def _rang_buoc_vuong(self):
@@ -938,6 +973,101 @@ class _Dung:
                 })
             for c in self.of("ask_residual_volume"):
                 self._kiem_phan_con_lai(c)
+        for c in self.of("curved_solid"):
+            from app.simulation.geometry import curved as CV
+
+            a = c.args
+            kc = CV.KHOI_CONG[CV.LOAI_TU_NGUON[a.kind]]
+            if kc.co_truc or a.circumscribes not in self.khoi:
+                raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: khối ngoại tiếp đa diện phải là mặt không có trục", (c.id,))
+            k = self.khoi[a.circumscribes]
+            verts = [k.apex, *k.base] if k.kind == "pyramid" else [*k.base, *k.top]
+            bon = self._bon_dinh_khoi(k)
+            res = self._tam_bon_dinh(*bon)
+            if res is None or res[1] <= 0:
+                raise TuChoi("DEGENERATE_SOLID", f"{c.id}: khối {k.name} suy biến, không xác định được mặt ngoại tiếp", (c.id,))
+            center, r2 = res
+            for v in verts:
+                dv = tuple(self.pts[v][i] - center[i] for i in range(3))
+                if self.g(dv, dv) != r2:
+                    raise TuChoi(
+                        "NO_CIRCUMSCRIBED_SPHERE",
+                        f"{c.id}: các đỉnh của khối {k.name} không cùng cách đều một điểm (|I{v}|² ≠ R²)",
+                        (c.id,),
+                    )
+            if a.center is not None and self.pts.get(a.center) != center:
+                if c.id in self.dung:
+                    raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"{c.id}: tâm {a.center} lệch chứng chỉ cách đều", (c.id,))
+                raise TuChoi(
+                    "INCONSISTENT_FACTS",
+                    f"{c.id}: điểm {a.center} đã dựng không trùng tâm ngoại tiếp của {k.name}",
+                    (c.id,),
+                )
+            self.curved_certificates[c.id] = (center, r2, bon, kc)
+
+    def _bon_dinh_khoi(self, k: _Khoi) -> tuple[str, str, str, str]:
+        dinh_ngoai = k.apex if k.kind == "pyramid" else k.top[0]
+        for v0, v1, v2 in combinations(k.base, 3):
+            u, w = self._vec(v0, v1), self._vec(v0, v2)
+            if self.g(u, u) * self.g(w, w) - self.g(u, w) ** 2 != 0:
+                return (v0, v1, v2, dinh_ngoai)
+        return (k.base[0], k.base[1], k.base[2], dinh_ngoai)
+
+    def _tam_bon_dinh(self, v0: str, v1: str, v2: str, v3: str) -> tuple[V3, Fraction] | None:
+        """Exact `Fraction` solver for the unique point equidistant under `self.g` to `(v0, v1, v2, v3)`."""
+        u = [self._vec(v0, v1), self._vec(v0, v2), self._vec(v0, v3)]
+        aug = [[self.g(u[i], u[j]) for j in range(3)] + [self.g(u[i], u[i]) / 2] for i in range(3)]
+        for col in range(3):
+            piv = next((r for r in range(col, 3) if aug[r][col] != 0), None)
+            if piv is None:
+                return None
+            aug[col], aug[piv] = aug[piv], aug[col]
+            pv = aug[col][col]
+            for j in range(col, 4):
+                aug[col][j] /= pv
+            for r in range(3):
+                if r != col and aug[r][col] != 0:
+                    fac = aug[r][col]
+                    for j in range(col, 4):
+                        aug[r][j] -= fac * aug[col][j]
+        disp = tuple(sum(aug[j][3] * u[j][i] for j in range(3)) for i in range(3))
+        p0 = self.pts[v0]
+        return (p0[0] + disp[0], p0[1] + disp[1], p0[2] + disp[2]), self.g(disp, disp)
+
+    def chuan_hoa_euclid(self) -> None:
+        """Exact `Fraction` Cholesky isometry `(ℚ³, G) -> (ℚ³, I)` when Euclidean curved primitives execute."""
+        (g00, g01), (_g10, g11) = self.G2
+        h2 = self.h2 if self.h2 is not None else Fraction(1)
+        s0 = _sqrt_q(g00)
+        px = (g01 / s0) if (s0 is not None and s0 > 0) else None
+        s1 = _sqrt_q(g11 - px * px) if px is not None else None
+        s2 = _sqrt_q(h2)
+        if s0 is None or s1 is None or s2 is None or s0 <= 0 or s1 <= 0 or s2 <= 0:
+            cids = tuple(c.id for c in self.of("curved_solid"))
+            raise TuChoi(
+                _metric.ERR_CAN_EUCLID,
+                "khung metric của khối đa diện có hệ số vô tỉ — chưa nhúng vào khung Euclid ℚ³ cho khối cong",
+                cids,
+            )
+
+        def phi(p: V3) -> V3:
+            return (s0 * p[0] + px * p[1], s1 * p[1], s2 * p[2])
+
+        self.pts = {t: phi(p) for t, p in self.pts.items()}
+        self.lines = {
+            lid: Line3(
+                Vec3(*phi((ln.point.x, ln.point.y, ln.point.z))),
+                Vec3(*phi((ln.direction.x, ln.direction.y, ln.direction.z))),
+            )
+            for lid, ln in self.lines.items()
+        }
+        self.G2 = ((Fraction(1), Z), (Z, Fraction(1)))
+        self.h2 = Fraction(1)
+        for cid, (center, r2, bon, kc) in list(self.curved_certificates.items()):
+            ec = phi(center)
+            if any(sum((ec[i] - self.pts[v][i]) ** 2 for i in range(3)) != r2 for v in bon):
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"{cid}: phép nhúng Euclid không bảo toàn khoảng cách tới các đỉnh", (cid,))
+            self.curved_certificates[cid] = (ec, r2, bon, kc)
 
     def _the_tich2_chop(self, k: _Khoi) -> Fraction:
         """Independent of the interpreter's oriented boundary-volume sum: Gram base area × altitude / 3, squared."""
@@ -1165,6 +1295,46 @@ class _Dung:
         return True                                             # ask_* / unsupported: không phải dữ kiện
 
     # ── IR ──────────────────────────────────────────────────────────────────
+    def _emit_tam_ngoai_tiep(
+        self,
+        prefix: str,
+        target_var: str,
+        label: str | None,
+        bon: tuple[str, str, str, str],
+        lenh: list[dict[str, Any]],
+        khai: list[dict[str, Any]],
+        so_huu: set[str],
+    ) -> None:
+        v0 = ir_name(bon[0])
+        mps: list[str] = []
+        for idx, vj_lbl in enumerate(bon[1:], 1):
+            vj = ir_name(vj_lbl)
+            mid = f"td_cau_{prefix}_{idx}"
+            ln = f"dt_cau_{prefix}_{idx}"
+            mp = f"mp_cau_{prefix}_{idx}"
+            lenh.append({"kind": "construct_point", "target_var": mid, "expr": {"kind": "midpoint", "a": v0, "b": vj}})
+            lenh.append(P.construct_line(ln, v0, vj))
+            lenh.append({"kind": "assign", "target_var": mp, "expr": {"kind": "plane_perpendicular_to_line", "point": mid, "line": ln}})
+            khai += [
+                P.memory_declaration(mid, "point3"),
+                P.memory_declaration(ln, "line3"),
+                P.memory_declaration(mp, "plane3"),
+            ]
+            so_huu.add(ln)
+            mps.append(mp)
+        truc = f"truc_cau_{prefix}"
+        lenh.append({"kind": "assign", "target_var": truc, "expr": {"kind": "intersect_plane_plane", "plane_a": mps[0], "plane_b": mps[1]}})
+        khai.append(P.memory_declaration(truc, "line3"))
+        pt_stmt: dict[str, Any] = {
+            "kind": "construct_point",
+            "target_var": target_var,
+            "expr": {"kind": "intersect_line_plane", "line": truc, "plane": mps[2]},
+        }
+        if label is not None:
+            pt_stmt["label"] = label
+        lenh.append(pt_stmt)
+        khai.append(P.memory_declaration(target_var, "point3"))
+
     def bien_dich(self) -> tuple[dict[str, Any], dict[str, str]]:
         self.emitted_lines: set[str] = set()
         so_huu: set[str] = set()                 # operand lines / planes this compiler names itself (`gop_doi_tuong_trung`)
@@ -1230,6 +1400,8 @@ class _Dung:
                 lenh.append({"kind": "construct_point", "target_var": ir_name(t), "label": t,
                              "expr": {"kind": "divide_segment", "a": ir_name(a), "b": m, "ratio": "2/3"}})
                 khai += [P.memory_declaration(m, "point3"), P.memory_declaration(ir_name(t), "point3")]
+            elif t in self.circumcenters:
+                self._emit_tam_ngoai_tiep(ir_name(t), ir_name(t), t, self.circumcenters[t], lenh, khai, so_huu)
             else:
                 lenh.append(P.declare_point(ir_name(t), self.pts[t], t))
                 khai.append(P.memory_declaration(ir_name(t), "point3", provenance="LAYOUT_DERIVED"))
@@ -1264,6 +1436,42 @@ class _Dung:
         lenh += [st for _, l in sau for st in l]
         khai += [d for t, _ in sau for d in khai_cua[t]]
         td = self._bien_dich_mat_cat(khai, lenh)
+        khoi_cong_ir: dict[str, tuple[str, Any, Fraction, V3, str]] = {}
+        for c in self.of("curved_solid"):
+            a = c.args
+            center_xyz, r2, bon, kc = self.curved_certificates[c.id]
+            if a.center:
+                tam_var = ir_name(a.center)
+            else:
+                tam_var = f"tam_cau_{ir_name(c.id)}"
+                self._emit_tam_ngoai_tiep(ir_name(c.id), tam_var, None, bon, lenh, khai, so_huu)
+            solid_var = f"khoi_cong_{ir_name(c.id)}"
+            if a.solid == "()" or (a.solid.startswith("(") and len(a.solid) > 4):
+                nhan_cong = f"{kc.ten_mat_cong.capitalize()} ngoại tiếp {a.circumscribes}"
+            else:
+                nhan_cong = f"{kc.ten_mat_cong.capitalize()} {a.solid}" + (f" tâm {a.center}" if a.center and a.solid != a.center else "")
+            lenh.append({
+                "kind": "construct_curved_solid",
+                "target_var": solid_var,
+                "curved_kind": kc.kind,
+                "anchor": tam_var,
+                "apex_or_top": None,
+                "rim_point": ir_name(bon[0]),
+                "radius": None,
+                "height": None,
+                "label": nhan_cong,
+            })
+            khai.append(P.memory_declaration(solid_var, "curved_solid"))
+            self.trace.append({
+                "step": "construct_solid",
+                "object": a.solid,
+                "rule": "circumscribed_solid",
+                "calls": [c.id],
+                "dependencies": list(bon),
+                "provenance": "DERIVED",
+            })
+            khoi_cong_ir[a.solid] = (solid_var, kc, r2, center_xyz, tam_var)
+        self.khoi_cong_ir = khoi_cong_ir
         hoi: dict[str, str] = {}
         for c in self.of(*BAC_DAI_LUONG):
             kq, a = f"kq_{c.id}", c.args
@@ -1327,11 +1535,23 @@ class _Dung:
                     khai.append(P.memory_declaration(v_sub, P.KIEU_DAI_LUONG))
                     expr = {"kind": "arith", "op": "-", "left": expr, "right": {"kind": "var", "name": v_sub}}
                 lenh.append({"kind": "assign", "target_var": kq, "expr": expr, "label": f"Thể tích phần còn lại của {a.original_solid}"})
-            else:
+            elif c.fn in _HOI_CONG:
+                q_cong, _bac_cong = _HOI_CONG[c.fn]
+                cong_ir = khoi_cong_ir.get(a.solid)
+                if cong_ir is None:
+                    raise TuChoi("UNKNOWN_SOLID", f"{c.id}: khối {a.solid!r} chưa được dựng bằng lời gọi nào", (c.id,))
+                solid_var, kc_cong, _r2_cong, _ec_cong, _tv_cong = cong_ir
+                if q_cong == "lateral_area" and not kc_cong.co_truc:
+                    raise TuChoi("CURVED_MEASURE_UNDEFINED", f"{c.id}: {kc_cong.ten_mat_cong} không có diện tích xung quanh", (c.id,))
+                iq = "lateral_area" if (q_cong == "area" and not kc_cong.co_truc) else q_cong
+                lenh.append(P.measure_quantity(kq, iq, solid_var))
+            elif c.fn == "ask_area":
                 dg = f"dg_{c.id}"
                 lenh.append(P.construct_polygon(dg, tuple(map(ir_name, a.polygon))))
                 khai.append(P.memory_declaration(dg, "polygon3"))
                 lenh.append(P.measure_quantity(kq, "area", dg))
+            else:
+                raise TuChoi("CURVED_RELATION_UNSUPPORTED", f"{c.id}: đại lượng {c.fn} chưa được chứng nhận trên hình ghép", (c.id,))
             khai.append(P.memory_declaration(kq, P.KIEU_DAI_LUONG))
             hoi[c.id] = kq
             self.trace.append({"step": "measure", "object": c.fn, "rule": c.fn, "calls": [c.id], "provenance": "DERIVED"})
@@ -2296,9 +2516,12 @@ def _dung_cong(calls: tuple[LoiGoi, ...], problem_text: str) -> KetQuaTuyen:
                      f"{kc.danh_tu.lower()} đã khai", (k.id,))
     r2, h2, unit, steps = _kich_thuoc_cong(k, segs, kc)
     r, h = sqrt_rational(r2), (sqrt_rational(h2) if h2 is not None else None)
-    trace = [{"step": "choose_pose", "object": a.solid, "rule": "canonical_axis_z", "calls": [k.id],
-              "provenance": "LAYOUT_DERIVED", "note": f"{f'tâm {a.center}' if a.center else 'tâm'} tại gốc, trục là Oz — "
-                                                       "một lựa chọn hệ quy chiếu, không phải dữ kiện"}, *steps]
+    pose_rule = "canonical_axis_z" if kc.co_truc else "canonical_origin_center"
+    pose_note = (f"{f'tâm {a.center}' if a.center else 'tâm'} tại gốc"
+                 + (", trục là Oz" if kc.co_truc else "")
+                 + " — một lựa chọn hệ quy chiếu, không phải dữ kiện")
+    trace = [{"step": "choose_pose", "object": a.solid, "rule": pose_rule, "calls": [k.id],
+              "provenance": "LAYOUT_DERIVED", "note": pose_note}, *steps]
     decls, stmts, pts = [], [], ({a.center: (Fraction(0),) * 3} if a.center else {})
 
     def decl(name: str, mtype: str, init: Any = None) -> str:
@@ -2392,10 +2615,97 @@ def _dung_cong(calls: tuple[LoiGoi, ...], problem_text: str) -> KetQuaTuyen:
         v = fm.get(ir_name(t))
         if v is None or (v.x, v.y, v.z) != p:
             raise TuChoi("ENGINE_SELF_CHECK_FAILED", "điểm kernel thực thi khác bố cục khối tròn xoay")
+    _gan_dieu_kien_vet(trace, kernel_checked=True, checked_points=frozenset(pts))
     return KetQuaTuyen("SERVED", answers=tra, trace=trace, program=program, points=dict(pts), metric=G.as_json(),
                        kernel_check=True, spec=vr.spec, exec_result=ket, chart_metric=G, targets=tuple(sorted(muc_tieu)),
                        answer_exact=chinh_xac, length_unit=unit, checker=lambda call: None, declared_topology=None,
                        calls=[{"id": c.id, "fn": c.fn, "args": c.args.model_dump(), "quotes": list(c.quotes)} for c in calls])
+
+
+def _gan_dieu_kien_vet(trace: list[dict[str, Any]], *, kernel_checked: bool,
+                       checked_points: set[str] | frozenset[str] = frozenset()) -> list[dict[str, Any]]:
+    """Attach machine-verified `preconditions` and `postconditions` to each construction trace entry."""
+    for s in trace:
+        st = s.get("step")
+        obj = s.get("object")
+        deps = [f"placed({d})" for d in s.get("dependencies", [])]
+        calls = [f"source_verified({c})" for c in s.get("calls", [])]
+        parts = [f"ready({p})" for p in s.get("parts", [])]
+        if st == "choose_unit":
+            pre = ["homogeneous_symbolic_lengths", *calls]
+            post = [f"unit_scale({obj}==1)"]
+        elif st == "choose_pose":
+            pre = calls or ["canonical_pose_selected"]
+            post = [f"pose_fixed({obj})", "axis(Oz)" if s.get("rule") == "canonical_axis_z" else "center_at_origin"]
+        elif st == "derive_dimension":
+            if "value_sq" in s:
+                pre = ["axis_perpendicular_to_base_radius", *calls]
+                post = [f"{obj}_sq=={s['value_sq']}", f"{obj}_sq>0"]
+            else:
+                pre = ["plane_parallel_to_base", "apex_cone", *calls]
+                post = [f"similarity_ratio=={s['ratio']}", "0<similarity_ratio<1"]
+        elif st == "place_point":
+            pre = deps + calls if (deps or calls) else ["chart_spd_verified"]
+            post = [f"coords_exact({obj})"]
+            if s.get("relation_verified"):
+                post.append("relation_verified")
+            if kernel_checked and obj in checked_points:
+                post.append("kernel_point_matched")
+        elif st == "resolve_line":
+            pre = [*deps, "planes_non_parallel"]
+            post = [f"line_exact({obj})"]
+            if s.get("relation_verified"):
+                post.append("incidence_verified")
+            if kernel_checked:
+                post.append("kernel_line_matched")
+        elif st == "verify_solid":
+            pre = [*deps, "simple_planar_faces"]
+            post = ["base_coplanar", f"volume_sq=={s['volume_squared']}", "volume_sq>0"]
+        elif st == "certify_volume_ratio":
+            pre = [f"volume_certified({s['numerator_solid']})", f"volume_certified({s['denominator_solid']})", "distinct_solids"]
+            post = [f"ratio=={s['ratio']}", "ratio>0"]
+        elif st == "certify_residual_volume":
+            pre = [f"volume_certified({s['original_solid']})",
+                   *(f"volume_certified({x})" for x in s.get("subtracted_solids", []))]
+            post = ["containment_verified", "shared_boundary_verified", "disjoint_interiors_verified",
+                    f"residual_volume_sq=={s['residual_volume_squared']}"]
+        elif st == "construct_solid":
+            pre = [*deps, *calls] or ["vertices_placed"]
+            post = [f"solid_constructed({obj})"]
+        elif st == "construct_plane":
+            pre = [*deps, "non_collinear_support", "not_solid_face"]
+            post = [f"plane_constructed({obj})", *(["relation_verified"] if s.get("relation_verified") else [])]
+        elif st == "construct_line":
+            pre = [*calls, "planes_non_parallel"]
+            post = [f"line_constructed({obj})"]
+        elif st == "construct_section":
+            pre = [*calls, "cutting_plane_strict"]
+            post = [f"section_constructed({obj})", *(["closed_section_verified"] if kernel_checked else [])]
+        elif st == "construct_subsolid":
+            pre = [*parts, *calls] or ["section_circle_constructed"]
+            post = [f"subsolid_constructed({obj})"]
+        elif st == "certify_section_vertex":
+            e = "".join(s.get("edge", []))
+            pre = [f"lateral_edge({e})", f"line_not_parallel_to_plane({e})"]
+            post = [f"on_segment({obj},{e},t={s['t']})", "on_cutting_plane"]
+        elif st == "certify_section_closure":
+            pre = ["section_vertices_certified"]
+            post = [f"cycle_matches_cross_section({obj})"]
+        elif st in ("compose_quantity", "measure"):
+            pre = [*parts, *calls] or ["operands_constructed"]
+            post = [f"quantity_evaluated({obj})"]
+        elif st == "certify_answer":
+            pre = [f"executed({c})" for c in s.get("calls", [])] or ["quantity_executed"]
+            post = [f"closed_form_matched({obj}=={s['value']})"]
+        elif st == "formation_budget":
+            pre = [f"declarations({s['declarations']})>limit({s['limit']})"]
+            post = ["verified_ir_preserved_unexpanded"]
+        else:
+            pre = [*deps, *parts, *calls] or [f"step_ready({st})"]
+            post = [f"step_completed({st})"]
+        s["preconditions"] = pre
+        s["postconditions"] = post
+    return trace
 
 
 def chuan_hoa_vi(s: str) -> str:
@@ -2418,8 +2728,13 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         if esc := [c for c in calls if c.fn == "unsupported"]:
             raise TuChoi("OUT_OF_SCOPE", "; ".join(f"{c.id}: {c.args.reason} ({c.quote!r})" for c in esc),
                          tuple(c.id for c in esc))
-        if any(c.fn == "curved_solid" for c in calls):
+        cong_calls = [c for c in calls if c.fn == "curved_solid"]
+        if cong_calls and all(c.args.circumscribes is None for c in cong_calls):
+            if len(cong_calls) != 1:
+                raise TuChoi("CURVED_RELATION_UNSUPPORTED", "chỉ hỗ trợ một khối tròn xoay độc lập", tuple(c.id for c in cong_calls))
             return _dung_cong(calls, problem_text)
+        if any(c.args.circumscribes is None for c in cong_calls):
+            raise TuChoi("CURVED_RELATION_UNSUPPORTED", "chưa hỗ trợ trộn khối tròn xoay độc lập với khối ngoại tiếp", tuple(c.id for c in cong_calls))
         ky_hieu = _don_vi(calls)
         dung = _Dung(calls, problem_text, ky_hieu)
         if ky_hieu:
@@ -2440,6 +2755,8 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         dung.mat_phu = [d for d in auxiliary if d.get("rule") in (MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG)]
         dung.ten_mat_phu = ten_mat_phu
         dung.kiem()
+        if dung.of("curved_solid"):
+            dung.chuan_hoa_euclid()
         dung.kiem_mat_cat()
         for d in auxiliary:                              # section vertices on stated cut edges (`DINH_CAT_CANH`)
             if d.get("rule") == DINH_CAT_CANH:
@@ -2459,7 +2776,7 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         to_po = hop_dong_to_po_da_khai(calls)
         spec = hoan_thien_dung_hinh(vr.spec, to_po).spec
         if (len(spec.memory_declarations) > MAX_MEMORY_DECLARATIONS
-                and any(d.get("rule") == DINH_CAT_CANH for d in auxiliary)):
+                and (any(d.get("rule") == DINH_CAT_CANH for d in auxiliary) or bool(dung.of("curved_solid")))):
             # Section-vertex plans only (run `typedfactnext-planner-bridge`; every other plan keeps main's behaviour): when
             # the teaching expansion ALONE exceeds the IR budget, build the verified program unexpanded — the Adapter /3
             # policy — and say so in the trace. Geometry, checks and answers are those of the verified program.
@@ -2538,6 +2855,21 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         if hong := [t for t in dung.sections if not fm[t].is_closed]:
             raise TuChoi("SECTION_EMPTY", f"mặt phẳng không cắt khối thành một đa giác ({hong}) — không có thiết diện để dựng")
         dung.kiem_chung_chi_thiet_dien(fm, hoi)
+        for _sname, (solid_var, _kc_cong, r2_cong, ec_cong, tam_var) in dung.khoi_cong_ir.items():
+            pt_tam = fm.get(tam_var)
+            cs_obj = fm.get(solid_var)
+            if (pt_tam is None or (pt_tam.x, pt_tam.y, pt_tam.z) != ec_cong
+                    or cs_obj is None or (cs_obj.anchor.x, cs_obj.anchor.y, cs_obj.anchor.z) != ec_cong
+                    or cs_obj.radius_sq != r2_cong):
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", "khối ngoại tiếp kernel thực thi khác chứng chỉ tâm–bán kính")
+        for c in dung.of(*_HOI_CONG):
+            q_cong, _bac_cong = _HOI_CONG[c.fn]
+            _svar, kc_cong, r2_cong, _ec_cong, _tv_cong = dung.khoi_cong_ir[c.args.solid]
+            want_cong = _chung_chi_cong(kc_cong, q_cong, r2_cong, None)
+            if fm.get(hoi.get(c.id, "")) != want_cong:
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"{c.id}: giá trị khối cong thực thi khác công thức đóng độc lập", (c.id,))
+            dung.trace.append({"step": "certify_answer", "object": c.id, "rule": "independent_closed_form",
+                               "calls": [c.id], "value": dinh_dang(fm[hoi[c.id]])})
         tra, chinh_xac = {}, {}
         for cid, kq in hoi.items():
             v = fm.get(kq)
@@ -2570,6 +2902,7 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
                 "khoi_" + ir_name(c.args.original_solid.replace(".", "_")),
                 *("khoi_" + ir_name(s.replace(".", "_")) for s in c.args.subtracted_solids),
             }
+        _gan_dieu_kien_vet(dung.trace, kernel_checked=True, checked_points=frozenset(dung.pts))
         return KetQuaTuyen("SERVED", answers=tra, trace=dung.trace, program=program, points=dict(dung.pts),
                            metric=G.as_json(), kernel_check=True, spec=spec, exec_result=ket, chart_metric=G,
                            targets=tuple(sorted(muc_tieu)),
@@ -2578,4 +2911,5 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
                            calls=[{"id": c.id, "fn": c.fn, "args": c.args.model_dump(), "quotes": list(c.quotes)}
                                   for c in calls])
     except TuChoi as e:
-        return KetQuaTuyen("REFUSED", e.code, e.reason, e.calls, trace=dung.trace if dung else [], details=e.data)
+        vet = _gan_dieu_kien_vet(dung.trace, kernel_checked=False) if dung else []
+        return KetQuaTuyen("REFUSED", e.code, e.reason, e.calls, trace=vet, details=e.data)

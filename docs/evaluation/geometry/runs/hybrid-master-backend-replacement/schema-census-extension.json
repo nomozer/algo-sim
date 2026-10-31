@@ -1,6 +1,6 @@
 {
  "schema": "SCHEMA_CENSUS_EXTENSION/1",
- "run": "hybrid-master-backend-replacement (seventh continuation: sphere sections)",
+ "run": "hybrid-master-backend-replacement (seventh/eighth continuation: sphere sections & circumscribed spheres)",
  "extends": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/schema-census-v3.json",
  "rule": "Additive only: classifies fields the contract gained after v3. A path already in v3 may not appear here (asserted).",
  "fields": {
@@ -13,6 +13,17 @@
    "category": "METADATA",
    "note": "value",
    "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "SolidSpec.circumscribes": {
+   "category": "SOLID_OPERAND",
+   "note": "polyhedron solid_id circumscribed by a non-axial curved solid",
+   "rules": [
+    "S1",
+    "S3"
+   ],
+   "positive_test": "test_circumscribed_sphere_scope_controls_serve",
+   "negative_test": "test_circumscribed_sphere_scope_violations_refuse",
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=None, max_length=None, pattern='^[A-Za-z0-9_.:-]+$', ascii_only=None)]]"
   }
  }
 }

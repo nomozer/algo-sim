@@ -257,23 +257,37 @@ class HeightArgs(_Args):
 #: A curved solid's notation as the source writes it: "O.O'" (two base centres), "S.O" (apex.centre) or "O" (sphere centre).
 #: The ONE grammar of a curved notation the planner can express (the bridge refuses any other as a capability gap).
 CURVED_NAME_PATTERN = r"^(?:\([A-Z][0-9]*'?\)|[A-Z][0-9]*'?(?:\.[A-Z][0-9]*'?)?)$"
+CIRCUMSCRIBED_NAME_PATTERN = r"^(?:\(\)|\([A-Z][0-9]*'?\)|\((?:[A-Z][0-9]*'?)+\.(?:[A-Z][0-9]*'?)+\)|[A-Z][0-9]*'?)$"
 CurvedName = Annotated[str, BeforeValidator(_nhan), Field(pattern=CURVED_NAME_PATTERN)]
+CircumscribedOrCurvedName = Annotated[
+    str,
+    BeforeValidator(_nhan),
+    Field(pattern=rf"(?:{CURVED_NAME_PATTERN})|(?:{CIRCUMSCRIBED_NAME_PATTERN})"),
+]
 
 
 class CurvedSolidArgs(_Args):
-    """Run `hybrid-master-backend-replacement` (curved slice): one solid of revolution in its canonical pose. Values are
-    role-bound in the quote by `_kich_thuoc_cong_dung_nguon` (radius after "bán kính", height after "chiều cao")."""
+    """Run `hybrid-master-backend-replacement` (curved slice): one solid of revolution in its canonical pose, or an axisless
+    curved solid circumscribing a declared polyhedron (`circumscribes`)."""
     kind: Literal["cylinder", "cone", "sphere"]
-    solid: CurvedName
+    solid: CircumscribedOrCurvedName
     center: Label | None = Field(None, description="tâm (đáy / mặt cầu) nếu đề đặt tên")
     top: Label | None = Field(None, description="tâm đáy trên (trụ) hoặc đỉnh (nón)")
     rim: Label | None = Field(None, description="một điểm trên đường tròn đáy / mặt cầu")
     radius: ExactNumber | None = None
     height: ExactNumber | None = None
+    circumscribes: SolidName | None = Field(None, description="khối đa diện được mặt cầu ngoại tiếp, nếu có")
+
+    @model_validator(mode="after")
+    def _check_notation_for_mode(self) -> CurvedSolidArgs:
+        pat = CIRCUMSCRIBED_NAME_PATTERN if self.circumscribes is not None else CURVED_NAME_PATTERN
+        if not re.fullmatch(pat, self.solid):
+            raise ValueError(f"curved_solid: ký hiệu {self.solid!r} không hợp lệ")
+        return self
 
 
 class AskCurvedArgs(_Args):
-    solid: CurvedName
+    solid: CircumscribedOrCurvedName
 
 
 class CurvedSectionArgs(_Args):
@@ -1021,7 +1035,7 @@ _C_KHOI = re.compile(rf"(?:(?:cho|xét)\s+)?(?:một\s+)?(?:(?:hình|khối)\s+)
                      rf"\s+(?P<k>{_NHAN}(?:\.{_NHAN})?)(?![\w'])", re.IGNORECASE)
 _C_DAY = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:mặt|tứ\s+giác|tam\s+giác)\s+)?đáy(?:\s+(?P<d>{_NHAN}))?\s+(?:là\s+(?:một\s+)?{_HINH}(?:\s+(?P<d2>{_NHAN}))?(?:\s+vuông(?:\s+cân)?\s+(?:tại|ở)\s+{_L1})?|đều|vuông(?:\s+cân)?\s+(?:tại|ở)\s+{_L1})(?![\w'])"
                     rf"(?:(?:\s*,\s*|\s+)(?:(?:và|với)\s+)?(?:có\s+)?(?:(?:các|mọi|mỗi)\s+)?(?:độ\s+dài\s+)?cạnh\s*(?:(?:bằng|=|là)\s*)?{_so_nhom('ds')})?", re.IGNORECASE)
-_C_VAI = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:các|mọi|mỗi)\s+)?(?:độ\s+dài\s+(?:(?:các|mọi|mỗi)\s+)?)?(?P<vai>cạnh\s+đáy|cạnh\s+bên|chiều\s+cao|đường\s+cao|cạnh)(?:\s+của\s+(?:(?:hình|khối)\s+)?"
+_C_VAI = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:các|mọi|mỗi)\s+)?(?:độ\s+dài\s+(?:(?:các|mọi|mỗi)\s+)?)?(?P<vai>cạnh\s+đáy|cạnh\s+bên|chiều\s+cao|đường\s+cao|cạnh)(?:\s+(?:của\s+(?:(?:hình|khối)\s+)?|(?:hình|khối)\s+|(?=tứ\s+diện))"
                     rf"(?P<qn>chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)(?:\s+(?P<ql>{_NHAN}(?:\.{_NHAN})?))?)?"
                     rf"\s*(?:(?:có\s+)?độ\s+dài\s*)?(?:(?:=|bằng|là)\s*)?{_so_nhom('vs')}", re.IGNORECASE)
 #: "của <solid>" names the role's owner: its noun must be the bound solid's kind, its label (if any) the bound solid's
@@ -1172,7 +1186,7 @@ def _lien_ket_cau(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) -> dict[in
                         out[x + m.start("ds")] = ("side", frozenset(nhan))
                 elif kind == "doan" and _vai_doan_ok(m, khoi, calls):
                     out[x + m.start("ss")] = ("seg", frozenset(re.findall(r"[A-Z][0-9]*'?", m["seg"])))
-                elif kind == "vai" and not mo and _cua_khop(m, khoi):
+                elif kind == "vai" and not mo and _cua_khop(m, khoi, calls):
                     out[x + m.start("vs")] = ("vai", re.sub(r"\s+", " ", m["vai"].lower()), khoi, moi)
         p = y + 1 if y > p else b
     return out
@@ -1324,14 +1338,21 @@ def _kiem_so_dinh_nguon(de: str, calls: tuple[LoiGoi, ...] = ()) -> None:
         truoc_do[cs] = can
 
 
-def _cua_khop(m: re.Match, khoi: LoiGoi | None) -> bool:
-    """A role clause's "của <solid>" names the bound solid itself: its kind, and its label when one is written."""
+def _ten_khoi_goi(k: LoiGoi) -> str:
+    return (
+        f"{k.args.apex}.{''.join(k.args.base)}"
+        if k.fn in ("pyramid", "regular_pyramid")
+        else f"{''.join(k.args.base)}.{''.join(k.args.top)}"
+    )
+
+
+def _cua_khop(m: re.Match, khoi: LoiGoi | None, calls: tuple[LoiGoi, ...] | None = None) -> bool:
+    """A role clause's "của <solid>" / "<solid>" names the bound solid itself: its exact class, and its label when written."""
     if not m["qn"]:
         return True
-    tu = re.sub(r"\s+", " ", m["qn"].lower())
-    if khoi is None or khoi.fn not in _LOAI_KHOI.get(tu, ()) or tu == "tứ diện" and len(khoi.args.base) != 3:
+    if khoi is None or (m["ql"] and set(re.findall(r"[A-Z][0-9]*'?", m["ql"])) != _nhan_khoi(khoi)):
         return False
-    return not m["ql"] or set(re.findall(r"[A-Z][0-9]*'?", m["ql"])) == _nhan_khoi(khoi)
+    return _loai_cum_dung(m["qn"], _ten_khoi_goi(khoi), calls=calls)
 
 
 def _canh_cua(v) -> set[frozenset]:
@@ -2147,7 +2168,11 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
                     raise TuChoi("GOAL_CLAUSE_NOT_PREMISE", f"{c.id}: {q!r} là điều phải chứng minh, không phải dữ kiện", (c.id,))
                 if "CONDITIONAL" in roles:
                     raise TuChoi("CONDITIONAL_CLAUSE", f"{c.id}: {q!r} nằm trong mệnh đề điều kiện — không phải dữ kiện", (c.id,))
-                if "QUESTION" in roles:
+                if "QUESTION" in roles and not (
+                    c.fn == "curved_solid"
+                    and c.args.circumscribes is not None
+                    and _CAU_CONG_NGOAI_TIEP[2].fullmatch(chuan_hoa(q)) is not None
+                ):
                     raise TuChoi("QUESTION_CLAUSE_NOT_PREMISE", f"{c.id}: {q!r} nằm trong một câu hỏi — không phải dữ kiện", (c.id,))
         if any(_phu_dinh(de, dau, q) for (dau, _c), q in zip(vts, c.quotes)):
             raise TuChoi("NEGATED_CLAUSE", f"{c.id}: mệnh đề {c.quote!r} mang phủ định — không làm dữ kiện {c.fn}", (c.id,))
@@ -2184,7 +2209,7 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
         if c.fn in ("curved_section", "curved_subsolid") and (ma := _phan_cong_dung_nguon(c, calls, de)):
             raise TuChoi(ma, f"{c.id}: {c.quote!r} không nêu đúng {'thiết diện' if c.fn == 'curved_section' else 'khối nón nhỏ'} "
                          "này của khối tròn xoay", (c.id,))
-        if c.fn == "curved_solid" and (ma := _khoi_cong_dung_nguon(c)):
+        if c.fn == "curved_solid" and (ma := _khoi_cong_dung_nguon(c, calls)):
             raise TuChoi(ma, f"{c.id}: {c.quote!r} không nêu đúng khối tròn xoay này (vai trò điểm, ký hiệu, hay bán kính / "
                          "chiều cao của chính mệnh đề vai trò)", (c.id,))
         if c.fn in ("section", "ask_section_area", "intersection_line") and not mat_cat_dung_nguon(c, calls):
@@ -2401,6 +2426,9 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
         # words — "tính từ đỉnh S" included, which is no request — are read (registry /25)
         phep_dung_spans += [vt for c in calls if c.fn in ("curved_section", "curved_subsolid") for q in c.quotes
                             if (vt := _vi_tri(de, q)) is not None and start <= vt[0] and vt[1] <= end]
+        phep_dung_spans += [vt for c in calls if c.fn == "curved_solid" and c.args.circumscribes is not None for q in c.quotes
+                            if (vt := _vi_tri(de, q)) is not None and start <= vt[0] and vt[1] <= end
+                            and not request_verb.search(de, start, end) and not _HOI_SAU.search(de, start, end)]
         for a, b in (*phrases, *phep_dung_spans):
             masked[a - start:b - start] = " " * (b - a)
         assertions = [r.span for r in rb] + [m.span() for m in lengths]
@@ -2918,6 +2946,11 @@ def _cung_mat(tap: frozenset | None, diem: list[str]) -> bool:
     return tap is not None and len(tap & target) >= 3 and (tap <= target or target <= tap)
 
 
+def _chi_mot_khoi_3d(khoi: dict, calls: tuple | None = None) -> bool:
+    cs = _GOI_NGUON.get() if calls is None else calls
+    return len(khoi) == 1 and not any(c.fn == "curved_solid" for c in cs)
+
+
 def _khoi_khop(m: re.Match, n: str, solid: str, khoi: dict) -> bool:
     """Khối của cụm: ký hiệu (nếu có) đúng là khối của lời gọi; không ký hiệu thì đề chỉ có MỘT khối; từ loại khối (chóp /
     lăng trụ …) phải đúng loại — "khối lập phương" không gọi một hình chóp."""
@@ -2925,10 +2958,11 @@ def _khoi_khop(m: re.Match, n: str, solid: str, khoi: dict) -> bool:
         return False
     if (tu := m[n + "t"]) and set(_nhan_cum(tu)) != set(_nhan_cum(solid)):
         return False
-    if not sym and not tu and len(khoi) != 1:
+    kw = m[n + "k"]
+    if not sym and not tu and (len(khoi) != 1 if kw else not _chi_mot_khoi_3d(khoi)):
         return False
     # từ loại xét cả khi có hay không có ký hiệu (run `hybrid-v2-source-kind-consistency`)
-    if (kw := m[n + "k"]) and not _loai_cum_dung(m.string[m.start(n + "k"):m.end()], solid):
+    if kw and not _loai_cum_dung(m.string[m.start(n + "k"):m.end()], solid):
         return False
     return True
 
@@ -2967,7 +3001,12 @@ def _loai_cum_dung(cum: str, solid: str, calls: tuple | None = None) -> bool:
         return False                                     # specific class, solid not validated here: cannot verify
     day, lang_tru = list(k.args.base), k.fn == "prism"
     right = lang_tru and bool(k.args.right)
-    hinh = {d.fn for d in calls if d.fn in ("rectangle", "regular_polygon") and _cung_da_giac(list(d.args.vertices), day)}
+    hinh = {
+        d.fn
+        for d in calls
+        if d.fn in ("rectangle", "regular_polygon")
+        and (_cung_da_giac(list(d.args.vertices), day) or (lang_tru and _cung_da_giac(list(d.args.vertices), list(k.args.top))))
+    }
     dn = [(re.sub(r"\s+", " ", x["kn"].lower()), x["km"].lower()) for q in k.quotes
           for x in _C_KHOI.finditer(chuan_hoa(q)) if set(_nhan_cum(x["k"])) == nhan]
     if tu == "tứ diện" and len(day) != 3:
@@ -3003,7 +3042,7 @@ def _hai_mat(m, a, khoi):
 
 def _khoi_thiet_dien(m, a, khoi):
     co = [n for n in ("k", "j") if m[n + "k"] or m[n + "s"] or m[n + "t"]]
-    return all(_khoi_khop(m, n, a.solid, khoi) for n in co) and (bool(co) or len(khoi) == 1)
+    return all(_khoi_khop(m, n, a.solid, khoi) for n in co) and (bool(co) or _chi_mot_khoi_3d(khoi))
 
 
 _MOT_KHOI_RO = (
@@ -3102,21 +3141,38 @@ def _ds_khoi_khop(m: re.Match, n: str, solids: list[str], khoi: dict) -> bool:
 _KIEU_CONG = {"trụ": "cylinder", "nón": "cone", "cầu": "sphere"}
 #: How a question names one of the two cones of a cut (registry /24): the small cone at the apex, or the original cone.
 _VAI_KHOI_NON = r"khối\s+nón\s+(?:nhỏ|ban\s+đầu|đã\s+cho|lớn)"
-_KHOI_CONG_CUM = r"(?:\s+của)?\s+(?:khối|hình|mặt)\s+(?P<kieu>trụ|nón|cầu)(?:\s+tròn\s+xoay)?(?:\s+(?-i:(?P<ten>\([A-Z][0-9]*'?\)|[A-Z][0-9]*'?(?:\.[A-Z][0-9]*'?)?))(?![\w'])(?!\.[A-Z]))?"
+_KHOI_CONG_CUM = (
+    r"(?:\s+của)?\s+(?:khối|hình|mặt)\s+(?P<kieu>trụ|nón|cầu)(?:\s+tròn\s+xoay)?"
+    r"(?:\s+(?-i:(?P<ten>\([A-Z][0-9]*'?\)|[A-Z][0-9]*'?(?:\.[A-Z][0-9]*'?)?))(?![\w'])(?!\.[A-Z]))?"
+    rf"(?:\s+(?:có\s+)?tâm\s+(?:là\s+)?(?P<tam>{_P1})(?![\w']))?"
+    rf"(?P<nt>\s+ngoại\s+tiếp{_khoi_cum('pk')}(?:\s+đã\s+cho)?)?"
+)
 
 
-def _cong_khop(m: re.Match, a: Any) -> bool:
-    """The question names THE one declared solid of revolution: its kind word, and its notation when written."""
+def _cong_khop(m: re.Match, a: Any, khoi: dict | None = None) -> bool:
+    """The question names THE one declared solid of revolution: its kind word, and its notation / circumscribed polyhedron when written."""
     cong = [k for k in _GOI_NGUON.get() if k.fn == "curved_solid"]
-    return (len(cong) == 1 and cong[0].args.solid == a.solid and _KIEU_CONG[m["kieu"].lower()] == cong[0].args.kind
-            and m["ten"] in (None, a.solid))
+    if len(cong) != 1 or cong[0].args.solid != a.solid or _KIEU_CONG[m["kieu"].lower()] != cong[0].args.kind:
+        return False
+    ca = cong[0].args
+    gd = m.groupdict()
+    has_nt = bool(gd.get("pkk") or gd.get("pks") or gd.get("pkt"))
+    if ca.circumscribes is None:
+        return gd.get("tam") is None and gd.get("nt") is None and m["ten"] in (None, a.solid)
+    if gd.get("tam") not in (None, ca.center):
+        return False
+    if gd.get("nt") is not None:
+        khoi_map = _khoi_cua_loi_goi(_GOI_NGUON.get()) if khoi is None else khoi
+        if not has_nt or not _khoi_khop(m, "pk", ca.circumscribes, khoi_map):
+            return False
+    return m["ten"] in (None, a.solid)
 
 
 _CUM_HOI = {
-    "ask_curved_volume": [(_cum(rf"thể tích{_KHOI_CONG_CUM}"), lambda m, a, k: _cong_khop(m, a))],
-    "ask_lateral_area": [(_cum(rf"diện tích\s+xung\s+quanh{_KHOI_CONG_CUM}"), lambda m, a, k: _cong_khop(m, a))],
-    "ask_surface_area": [(_cum(rf"diện tích(?:\s+toàn\s+phần)?{_KHOI_CONG_CUM}"), lambda m, a, k: _cong_khop(m, a))],
-    "ask_radius": [(_cum(rf"bán\s+kính(?:\s+đáy)?{_KHOI_CONG_CUM}"), lambda m, a, k: _cong_khop(m, a))],
+    "ask_curved_volume": [(_cum(rf"thể tích{_KHOI_CONG_CUM}"), lambda m, a, k: _cong_khop(m, a, k))],
+    "ask_lateral_area": [(_cum(rf"diện tích\s+xung\s+quanh{_KHOI_CONG_CUM}"), lambda m, a, k: _cong_khop(m, a, k))],
+    "ask_surface_area": [(_cum(rf"diện tích(?:\s+toàn\s+phần)?{_KHOI_CONG_CUM}"), lambda m, a, k: _cong_khop(m, a, k))],
+    "ask_radius": [(_cum(rf"bán\s+kính(?:\s+đáy)?{_KHOI_CONG_CUM}"), lambda m, a, k: _cong_khop(m, a, k))],
     "ask_curved_section_area": [(_cum(r"diện\s+tích\s+(?:của\s+)?(?:thiết\s+diện|(?:hình|đường)\s+tròn\s+giao\s+tuyến)"
                                       r"(?:\s+(?:đó|này))?(?![\w])"),
                                  lambda m, a, k: _mat_cat_khop(a))],
@@ -3129,8 +3185,9 @@ _CUM_HOI = {
     "ask_curved_residual_volume": [(_cum(r"thể\s+tích\s+(?:của\s+)?(?:khối\s+nón\s+cụt|phần\s+còn\s+lại(?:\s+của\s+(?:hình|khối)\s+nón)?)(?![\w])"),
                                     lambda m, a, k: _cap_khoi_khop(None, a, ratio=False))],
     "ask_volume": [
-        (_cum(rf"thể tích(?:\s+của)?(?:\s+(?-i:V)(?:\s+của)?)?{_khoi_cum('k')}"), lambda m, a, k: _khoi_khop(m, "k", a.solid, k)),
-        (_cum(r"(?<![\w'])(?-i:V)(?![\w'])"), lambda m, a, k: len(k) == 1 and a.solid in k and not _V_DINH_NGHIA.search(m.string)
+        (_cum(rf"thể tích(?:\s+của)?(?:\s+(?-i:V)(?:\s+của)?)?{_khoi_cum('k')}(?!\s+(?:(?-i:V)\s+)?(?:của\s+)?(?:khối|hình|mặt)\s+(?:trụ|nón|cầu))"),
+         lambda m, a, k: _khoi_khop(m, "k", a.solid, k)),
+        (_cum(r"(?<![\w'])(?-i:V)(?![\w'])"), lambda m, a, k: _chi_mot_khoi_3d(k) and a.solid in k and not _V_DINH_NGHIA.search(m.string)
          and not m.string[m.end():].lstrip().startswith("("))],
     "ask_length": [
         (_cum(rf"(?:độ dài(?:\s+của)?\s+)?{_doan_cum('s')}"), lambda m, a, k: set(_nhan_cum(m["s"])) == set(a.segment))],
@@ -4499,7 +4556,12 @@ def mat_cat_dung_nguon(c: LoiGoi, calls: tuple[LoiGoi, ...]) -> bool:
     if (ky_hieu and c.args.solid not in ky_hieu) or (not ky_hieu and len(khoi) != 1):
         return False
     day = khoi.get(c.args.solid)
-    return any(_tap_mat(m, 1, day) == frozenset(c.args.plane) and _cum_goi_khoi(m[0], c.args.solid, calls) for q in c.quotes for mau in _CAT_BOI for m in mau.finditer(q))
+    return any(
+        _tap_mat(m, 1, day) == frozenset(c.args.plane)
+        and (bool(ky_hieu or _TU_LOAI.search(m[0])) or _chi_mot_khoi_3d(khoi, calls))
+        and _cum_goi_khoi(m[0], c.args.solid, calls)
+        for q in c.quotes for mau in _CAT_BOI for m in mau.finditer(q)
+    )
 
 
 _DIEM = r"[A-Z][0-9]*'?"
@@ -4728,7 +4790,77 @@ def _doc_cau_cong(s: str) -> list[tuple[str, re.Match]] | None:
         pos = nxt[1].end()
 
 
-def _khoi_cong_dung_nguon(c: LoiGoi) -> str | None:
+_TEN_CAU_NT = r"(?-i:\([A-Z][0-9]*'?\))"
+_CAU_CONG_NGOAI_TIEP = (
+    re.compile(
+        rf"\s*(?:(?:cho|xét|gọi|biết(?:\s+rằng)?)\s+)?"
+        rf"(?:(?P<n1>{_TEN_CAU_NT})\s+là\s+)?"
+        rf"(?:hình|khối|mặt)\s+(?P<k>trụ|nón|cầu)(?:\s+tròn\s+xoay)?"
+        rf"(?:\s+(?P<n2>{_TEN_CAU_NT}))?"
+        rf"(?:\s+(?:có\s+)?tâm\s+(?:là\s+)?(?P<c>{_P1})(?![\w']))?"
+        rf"\s+ngoại\s+tiếp{_khoi_cum('p')}(?:\s+đã\s+cho)?\s*[.;!]?\s*",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        rf"\s*(?:(?:cho|gọi|biết(?:\s+rằng)?)\s+)?"
+        rf"(?P<c>{_P1})(?![\w'])\s+là\s+tâm(?:\s+của)?\s+(?:hình|khối|mặt)\s+(?P<k>trụ|nón|cầu)(?:\s+tròn\s+xoay)?"
+        rf"(?:\s+(?P<n2>{_TEN_CAU_NT}))?"
+        rf"\s+ngoại\s+tiếp{_khoi_cum('p')}(?:\s+đã\s+cho)?\s*[.;!]?\s*",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        rf"\s*(?:hãy\s+)?(?:tính|tìm|xác\s+định)\s+"
+        rf"(?:bán\s+kính|diện\s+tích(?:\s+xung\s+quanh|\s+toàn\s+phần)?|thể\s+tích)"
+        rf"(?:\s+của)?\s+(?:hình|khối|mặt)\s+(?P<k>trụ|nón|cầu)(?:\s+tròn\s+xoay)?"
+        rf"(?:\s+(?P<n2>{_TEN_CAU_NT}))?"
+        rf"(?:\s+(?:có\s+)?tâm\s+(?:là\s+)?(?P<c>{_P1})(?![\w']))?"
+        rf"\s+ngoại\s+tiếp{_khoi_cum('p')}(?:\s+đã\s+cho)?\s*[.;?!]?\s*",
+        re.IGNORECASE,
+    ),
+)
+
+
+def _khoi_cong_ngoai_tiep_dung_nguon(c: LoiGoi, calls: tuple[LoiGoi, ...], kc: Any) -> str | None:
+    """Closed Source Gate binder for a circumscribed axisless curved solid (`a.circumscribes is not None`)."""
+    a = c.args
+    if kc.co_truc or any(x is not None for x in (a.top, a.rim, a.radius, a.height)):
+        return "SOURCE_OBJECT_MISMATCH"
+    calls_ctx = calls or _GOI_NGUON.get()
+    khoi_map = _khoi_cua_loi_goi(calls_ctx)
+    if a.circumscribes not in khoi_map:
+        return "UNKNOWN_SOLID"
+    matches: list[re.Match] = []
+    for q in c.quotes:
+        s = chuan_hoa(q)
+        m = next((pat.fullmatch(s) for pat in _CAU_CONG_NGOAI_TIEP if pat.fullmatch(s) is not None), None)
+        if m is None:
+            return "CURVED_WORDING_UNSUPPORTED"
+        matches.append(m)
+    written: set[str] = set()
+    centers: set[str] = set()
+    for m in matches:
+        gd = m.groupdict()
+        if _KIEU_CONG[gd["k"].lower()] != a.kind:
+            return "SOURCE_OBJECT_MISMATCH"
+        has_p = bool(gd.get("pk") or gd.get("ps") or gd.get("pt"))
+        if not has_p or not _khoi_khop(m, "p", a.circumscribes, khoi_map):
+            return "SOURCE_OBJECT_MISMATCH"
+        for key in ("n1", "n2"):
+            if gd.get(key):
+                written.add(gd[key])
+        if gd.get("c"):
+            centers.add(gd["c"])
+    if len(written) > 1 or len(centers) > 1:
+        return "SOURCE_OBJECT_MISMATCH"
+    if (a.center is not None and centers != {a.center}) or (a.center is None and centers):
+        return "SOURCE_OBJECT_MISMATCH"
+    allowed = written if written else ({a.center, "()", f"({a.circumscribes})"} if a.center else {"()", f"({a.circumscribes})"})
+    if a.solid not in allowed:
+        return "SOURCE_OBJECT_MISMATCH"
+    return None
+
+
+def _khoi_cong_dung_nguon(c: LoiGoi, calls: tuple[LoiGoi, ...] = ()) -> str | None:
     """`None` when a `curved_solid` call is EXACTLY what its quote states, else the refusal code (registry /23; independent
     review rounds 1–2). The quote must parse COMPLETELY in the closed grammar `_CAU_CONG` (an allowlist, not a blacklist);
     per-kind facts come from `curved.KHOI_CONG`, never from a kind name.
@@ -4741,6 +4873,8 @@ def _khoi_cong_dung_nguon(c: LoiGoi) -> str | None:
 
     a = c.args
     kc = CV.KHOI_CONG[CV.LOAI_TU_NGUON[a.kind]]
+    if a.circumscribes is not None:
+        return _khoi_cong_ngoai_tiep_dung_nguon(c, calls, kc)
     apex, two_bases = kc.vai_dinh == "đỉnh", kc.co_truc and kc.vai_dinh != "đỉnh"
     if a.center is not None and a.center == a.top:
         return "SOURCE_OBJECT_MISMATCH"          # one point as both centres / centre and apex: no solid (review 7, minor)

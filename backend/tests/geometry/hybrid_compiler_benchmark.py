@@ -442,6 +442,7 @@ REFUSAL_CLASS = {
     "INVALID_MATH_GOAL": "malformed",
     # claude-to-codex-takeover (engine /12): the question calls two coplanar lines skew; taxonomy only.
     "SKEW_CLAIM_CONTRADICTED": "contradictory",    # malformed facts / plan
+    "NO_CIRCUMSCRIBED_SPHERE": "contradictory",
     "SCHEMA_INVALID": "malformed", "FACT_INCOMPLETE": "malformed", "UNKNOWN_SOLID": "malformed", "NO_SOLID": "malformed",
     "DUPLICATE_CALL_ID": "malformed", "DEPENDENCY_CYCLE": "dependency", "DANGLING_DEPENDENCY": "dependency",
     # system faults (never a correct answer to a geometry question)

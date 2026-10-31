@@ -397,7 +397,8 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
             # Presentation of the certified auxiliary binding; no new geometry or semantic authority.
             aux_ids = ({ir_name(p) for d in two_line for p in d['labels']}
                        | {ir_name(d['label']) for d in auxiliary if d.get('effect_binding') and d.get('fresh')}
-                       | {ir_name(p) for d in auxiliary if d.get('rule') == 'effect-chain' for p in d['labels']})
+                       | {ir_name(p) for d in auxiliary if d.get('rule') == 'effect-chain' for p in d['labels']}
+                       | {o['id'] for o in state['scene']['objects'] if o['id'].startswith(('td_cau_', 'tam_cau_'))})
             vai = {o['id']: o.get('role') for o in state['scene']['objects'] if (o.get('producer') or '').startswith('construct_point.')}
             for obj in state['scene']['objects']:
                 if obj['id'] in aux_ids:
@@ -421,11 +422,12 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
             _vai_mat_cat(canh, auxiliary)
     except _KhoiKhongKhai as e:
         return KetQuaTuyen("REFUSED", "SCENE_BUILD_FAILED",
-                           f"khối {e} dựng trên đỉnh thiết diện không tên mà không có khối dẫn xuất đã khai", trace=r.trace)
+                           f"khối {e} dựng trên đỉnh thiết diện không tên mà không có khối dẫn xuất đã khai",
+                           trace=_vet_tu_choi(r.trace))
     except Exception as e:  # noqa: BLE001 — cảnh hỏng ⇒ từ chối có mã, không phục vụ nửa vời
-        return KetQuaTuyen("REFUSED", "SCENE_BUILD_FAILED", f"{type(e).__name__}: {e}", trace=r.trace)
+        return KetQuaTuyen("REFUSED", "SCENE_BUILD_FAILED", f"{type(e).__name__}: {e}", trace=_vet_tu_choi(r.trace))
     if not canh.get("objects"):
-        return KetQuaTuyen("REFUSED", "SCENE_BUILD_FAILED", "cảnh rỗng", trace=r.trace)
+        return KetQuaTuyen("REFUSED", "SCENE_BUILD_FAILED", "cảnh rỗng", trace=_vet_tu_choi(r.trace))
     r.scene3d = {**canh, "chart_metric": r.metric}
     if r.length_unit:
         # Toạ độ khung đo theo đơn vị a (a = 1 là TỈ LỆ hiển thị, không phải dữ kiện đề); đáp số mang a^bậc.
@@ -462,13 +464,20 @@ def run_fact_route(problem_text: str, facts: Any) -> KetQuaTuyen:
     if dung := list(r.planner["negated_checks"]):
         return KetQuaTuyen("REFUSED", "NEGATED_CLAUSE",
                            f"mệnh đề phủ định {dung} chưa có chứng chỉ chứng minh độc lập; không phân loại giả thiết này",
-                           tuple(dung), trace=r.trace, planner=r.planner)
+                           tuple(dung), trace=_vet_tu_choi(r.trace), planner=r.planner)
     # Không có câu hỏi số học để phục vụ: các goal trên một cấu hình không đủ làm proof certificate.
     if k.goals and not r.answers:
         return KetQuaTuyen("REFUSED", "PROOF_UNVERIFIABLE",
                            "checker chỉ quan sát trên một cấu hình; chưa có chứng chỉ suy diễn từ giả thiết",
-                           tuple(r.planner["goal_checks"]), trace=r.trace, planner=r.planner)
+                           tuple(r.planner["goal_checks"]), trace=_vet_tu_choi(r.trace), planner=r.planner)
     return r
+
+
+def _vet_tu_choi(trace: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    from copy import deepcopy
+    from app.simulation.geometry_functions.engine import _gan_dieu_kien_vet
+
+    return _gan_dieu_kien_vet(deepcopy(trace), kernel_checked=False)
 
 
 def run_typed_fact_next_planner_route(raw: Any) -> KetQuaTuyen:

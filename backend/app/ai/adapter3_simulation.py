@@ -3039,6 +3039,13 @@ class _Adapter3Compiler:
                 # No Bridge/Source Gate reaches this route, and it reads no premise: validate their ownership first.
                 _kiem_pham_vi_tien_de(self.payload, {s.solid_id: s for s in self.payload.solids})
                 self._preflight_curved_relations()
+                for solid in self.payload.solids:
+                    _verify_quote_in_problem(solid.quote, self.problem_text, solid.solid_id)
+                if any(s.circumscribes is not None or s.solid_type in ("pyramid", "prism") for s in self.payload.solids):
+                    raise TuChoi(
+                        "BRIDGE_UNSUPPORTED_CURVED_COMPOSITE",
+                        "tuyến Adapter /3 không mở rộng cho tổ hợp đa diện – khối tròn xoay; hãy dùng tuyến `/4`",
+                    )
                 res = self._run_curved_route()
                 if res.status == "SERVED":          # the planner has no curved solids: no shared gate verdict exists
                     res.source_verification = {"authority": LEGACY_SOURCE_AUTHORITY,

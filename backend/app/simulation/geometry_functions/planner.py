@@ -154,6 +154,7 @@ class KeHoach:
     heights: dict[str, str] = field(default_factory=dict)           # khối → id dữ kiện chiều cao (chẩn đoán tính duy nhất)
     volume_asks: dict[str, str] = field(default_factory=dict)       # id câu hỏi thể tích → khối
     solids: dict[str, "_Khoi"] = field(default_factory=dict)
+    curved_solids: dict[str, TypedFact] = field(default_factory=dict)
     derived_planes: dict[tuple, dict] = field(default_factory=dict)  # (khối, điểm, mặt tham chiếu) → khai báo `MAT_SONG_SONG`
     # A question plane named by > 3 labels whose function slot takes three, `{"call": id, "labels": [...]}`: the engine
     # checks every label (`kiem_mat_viet`), measures through a non-collinear triple of them (`chon_ba_mat`) and shows the
@@ -441,15 +442,19 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
     facts = doc_du_kien(raw)
     k = KeHoach()
     k.fact_ids = {f.id for f in facts}
-    k.taken = nhan_cua_de(problem_text) | nhan_phu_da_dung(problem_text) | {n for f in facts for v in (f.points, f.points_a, f.points_b, [f.at, f.point],
-                                                                       _nhan(f.solid or "")) for n in (v or []) if n}
+    k.taken = (nhan_cua_de(problem_text) | nhan_phu_da_dung(problem_text) | {
+        n for f in facts for v in (f.points, f.points_a, f.points_b, [f.at, f.point], _nhan(f.solid or "")) for n in (v or []) if n
+    } | ({f.curved.get("center") for f in facts if f.curved} - {None}))
     if mo := [f.id for f in facts if f.ambiguous]:
         raise TuChoi("AMBIGUOUS_FACT", f"AI đánh dấu mơ hồ: {mo} — không đoán cách hiểu", tuple(mo))
     if dk := [f.id for f in facts if f.role == "condition"]:
         raise TuChoi("CONDITIONAL_CLAUSE", f"dữ kiện trong mệnh đề điều kiện {dk} — không phải giả thiết vô điều kiện", tuple(dk))
-    if any(f.curved for f in facts):
+    if any(f.curved and not f.curved.get("circumscribes") for f in facts):
         return _ke_hoach_cong(facts, k)
     for f in facts:
+        if f.curved and f.curved.get("circumscribes"):
+            k.curved_solids[f.solid] = f
+            continue
         if f.kind == "solid" and f.role != "question" and f.plane_ref is None:
             kh = _doc_khoi(f)
             k.solids[kh.ky_hieu] = kh
@@ -493,6 +498,14 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
                                               "lăng trụ đều / lập phương ⇒ đáy đa giác đều")
             elif kh.loai == "cuboid":
                 phat(kh.fact + "_day", "rectangle", {"vertices": kh.day}, kh.quotes, "hình hộp chữ nhật ⇒ đáy hình chữ nhật")
+    for sf in k.curved_solids.values():
+        cv = sf.curved
+        poly_kh = khoi_cua(cv["circumscribes"], sf)
+        phat(sf.id, "curved_solid",
+             {"kind": cv["kind"], "solid": sf.solid, "center": cv.get("center"), "top": cv.get("top"),
+              "rim": cv.get("rim"), "radius": cv.get("radius"), "height": cv.get("height"),
+              "circumscribes": poly_kh.ten},
+             sf.quotes, f"solid({cv['kind']},circumscribes={poly_kh.ten})→curved_solid")
 
     # Bind all explicit producers before resolving goals, independently of provider order.
     def anh_xa(f: TypedFact) -> None:
@@ -552,6 +565,7 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
 _NON_POINT_ARG_KEYS = frozenset({
     "line_ref", "solid", "numerator_solid", "denominator_solid",
     "original_solid", "subtracted_solids", "value", "side", "reason", "right",
+    "circumscribes", "kind", "radius", "height",
 })
 
 
@@ -641,6 +655,11 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
             if not is_apex_foot_proj and pt not in solid_vertices:
                 point_producers.setdefault(pt, []).append(c["id"])
                 produced_point_of_call[c["id"]] = pt
+        elif fn == "curved_solid" and isinstance(a.get("center"), str):
+            pt = a["center"]
+            if pt not in solid_vertices and pt not in explicit_point_producers:
+                point_producers.setdefault(pt, []).append(c["id"])
+                produced_point_of_call[c["id"]] = pt
 
     direct_deps: dict[str, set[str]] = {c["id"]: set() for c in calls}
     consumed_points_of_call: dict[str, list[str]] = {}
@@ -675,6 +694,11 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
                     direct_deps[v["id"]].add(kh.fact)
 
     for u in calls:
+        if u["fn"] == "curved_solid":
+            u_solid = (u.get("args") or {}).get("solid")
+            for v in calls:
+                if v["fn"] in _HOI_CONG.values() and (v.get("args") or {}).get("solid") == u_solid:
+                    direct_deps[v["id"]].add(u["id"])
         if u["fn"] == "section":
             u_solid = (u.get("args") or {}).get("solid")
             u_plane = frozenset((u.get("args") or {}).get("plane") or ())
@@ -1076,6 +1100,14 @@ def _hoi_dien_tich_thiet_dien_phu(f: TypedFact, q: list[str], k: KeHoach, khoi_c
 
 def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
     n = f.quantity
+    if f.solid in k.curved_solids:
+        if f.role == "prove":
+            raise TuChoi("GOAL_CLAUSE_NOT_PREMISE", f"{f.id}: đại lượng khối tròn xoay là điều phải chứng minh, chưa hỗ trợ", (f.id,))
+        if f.negated:
+            raise TuChoi("NEGATED_CLAUSE", f"{f.id}: câu hỏi khối tròn xoay bị phủ định", (f.id,))
+        if n not in _HOI_CONG:
+            raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: câu hỏi {n!r} chưa hỗ trợ trên khối tròn xoay", (f.id,))
+        return phat(f.id, _HOI_CONG[n], {"solid": f.solid}, q, f"question({n})→{_HOI_CONG[n]}")
     # Diện tích THIẾT DIỆN chỉ khi câu hỏi gọi tên đúng đối tượng ấy ("diện tích (của) thiết diện"); "diện tích tam giác MAB"
     # có ô `solid` vẫn là đa giác; một dữ kiện hỏi CẢ HAI là mơ hồ (review 2, I2). Cổng nguồn kiểm lại cụm mặt cắt.
     hoi_td = any(_DIEN_TICH_THIET_DIEN.search(x) for x in q)

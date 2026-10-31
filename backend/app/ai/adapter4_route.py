@@ -97,6 +97,7 @@ def _phong_bi(r: KetQuaTuyen) -> dict[str, Any]:
         "answer_exact": dict(r.answer_exact),
         "length_unit": r.length_unit,
         "planner": {k: (r.planner or {}).get(k) for k in ("version", "bridge")},
+        "construction_trace": deepcopy(r.trace) if served else [],
     }
 
 

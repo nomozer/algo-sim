@@ -141,6 +141,7 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
                 and set(_refs(relation.face_b)) <= set(solids[relation.solid_b].local_vertices())
                 and chuan_hoa(relation.quote) in chuan_hoa(p.problem_text)):
             shared_faces.add(frozenset((relation.solid_a, relation.solid_b)))
+    circumscribed = {frozenset((sid, s.circumscribes)) for sid, s in solids.items() if s.circumscribes in solids}
     records = []
     for i, prem in enumerate(p.premises, 1):
         fid = f"p{i}"
@@ -189,7 +190,7 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
                 # A shared-face subsolid may name a point constructed on its parent's edge (e.g. a midpoint).
                 # A projection's existing foreign foot is not a fresh point definition.
                 candidates = {s for s in candidates if s in vertices[label] or output == 'point'
-                              and any(frozenset((s, other)) in shared_faces for other in vertices[label])}
+                              and any(frozenset((s, other)) in (shared_faces | circumscribed) for other in vertices[label])}
             before = set(owners.get(label, set()))
             owners.setdefault(label, set()).update(candidates)
             changed |= before != owners[label]
@@ -490,15 +491,31 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
     if curved and (not v2 or p.relations):   # `/1` stays Adapter /3's; curved relations are not on the planner yet
         raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{sorted(curved)}: thiết diện hay quan hệ của khối tròn xoay chưa có trên "
                      "planner", tuple(sorted(curved)))
-    from .registry import CURVED_NAME_PATTERN
+    from .registry import CIRCUMSCRIBED_NAME_PATTERN, CURVED_NAME_PATTERN
     import re as _re_cong
 
-    if bad := sorted(s.solid_id for s in p.solids if s.solid_id in curved and not _re_cong.fullmatch(CURVED_NAME_PATTERN, s.notation)):
+    if bad := sorted(
+        s.solid_id for s in p.solids
+        if s.solid_id in curved
+        and not _re_cong.fullmatch(
+            CIRCUMSCRIBED_NAME_PATTERN if s.circumscribes is not None else CURVED_NAME_PATTERN,
+            s.notation,
+        )
+    ):
         raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{bad}: ký hiệu khối tròn xoay này chưa diễn đạt được trên planner",
                      tuple(bad))              # a capability gap, not an extraction error (Wave 3 W3-N45/N46 reason lock)
-    if curved and len(p.solids) > 1:      # curved slice (bridge /2, registry /23): one curved solid; composites need their own certificates
+    is_circumscribed = (
+        v2
+        and len(p.solids) == 2
+        and len(curved) == 1
+        and solids[next(iter(curved))].circumscribes is not None
+        and not p.derived_sections
+        and not any(g.kind == "construct_derived_solid" for g in p.simulation_goals)
+    )
+    if curved and len(p.solids) > 1 and not is_circumscribed:  # curved slice: standalone curved OR certified circumscribed sphere
         raise TuChoi("BRIDGE_UNSUPPORTED_CURVED_COMPOSITE", f"{sorted(curved)}: khối tròn xoay cùng khối khác trong một bài "
                      "chưa có chứng chỉ quan hệ trên planner", tuple(sorted(curved)))
+    poly_solids = [x for x in solids.values() if x.solid_type in ("pyramid", "prism")]
     for s in p.solids:
         if s.solid_type == "cone_frustum":
             raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{s.solid_id}: khối {s.solid_type} chưa có trên planner", (s.solid_id,))
@@ -506,9 +523,12 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
             raise TuChoi("BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY", f"{s.solid_id}: hai điểm khác nhau mang cùng nhãn — TypedFact "
                          "định danh điểm bằng nhãn", (s.solid_id,))
         if s.solid_id in curved:
+            curved_info = {"kind": s.solid_type, "center": s.center, "top": s.apex_or_top, "rim": s.rim_point,
+                           "radius": s.radius, "height": s.height}
+            if s.circumscribes is not None:
+                curved_info["circumscribes"] = solids[s.circumscribes].notation
             facts.append({"id": s.solid_id, "kind": "solid", "role": "premise", "quotes": [s.quote], "solid": s.notation,
-                          "curved": {"kind": s.solid_type, "center": s.center, "top": s.apex_or_top, "rim": s.rim_point,
-                                     "radius": s.radius, "height": s.height}})
+                          "curved": curved_info})
             continue
         facts.append({"id": s.solid_id, "kind": "solid", "role": "premise", "quotes": [s.quote], "solid": s.notation,
                       "solid_type": s.solid_type})
@@ -540,8 +560,8 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif k == "height":
             sid = a.get("solid") or prem.solid_id
             sol = solids.get(sid or "")
-            if sol is None and sid is None and len(solids) == 1:
-                sol = next(iter(solids.values()))
+            if sol is None and sid is None and len(poly_solids) == 1:
+                sol = poly_solids[0]
             f = {"kind": "length", "measure": "height", "solid": sol.notation if sol else sid,
                  "value": str(a["value"])}
         elif k in ("equal_length", "equal_segments"):
@@ -555,8 +575,8 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif k == "altitude":
             sid = a.get("solid") or prem.solid_id
             sol = solids.get(sid or "")
-            if sol is None and sid is None and len(solids) == 1:
-                sol = next(iter(solids.values()))
+            if sol is None and sid is None and len(poly_solids) == 1:
+                sol = poly_solids[0]
             f = {"kind": "altitude", "points": [_ref(a["apex"]), _ref(a["foot"])],
                  "solid": sol.notation if sol else sid}
         elif k in ("midpoint", "point_is_midpoint"):
@@ -594,7 +614,7 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         raise TuChoi("BRIDGE_UNSUPPORTED_RELATION", f"{r.relation_id}: quan hệ {r.kind} chưa diễn đạt được trong TypedFact",
                      (r.relation_id,))
 
-    if curved:                                # curved sections, the small cone and their goals (registry /24)
+    if curved and not is_circumscribed:       # curved sections, the small cone and their goals (registry /24)
         return _ket_cau_noi(p, facts + _phan_cong(p, solids), version, scoped)
     asked = {}
     for g in p.simulation_goals:
@@ -638,6 +658,10 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif g.kind == "residual_volume":
             facts.append({**q, "quantity": "residual_volume",
                           "solid_refs": [solid_fact(g.parent_solid_id, g.goal_id), solid_fact(g.cut_solid_id, g.goal_id)]})
+        elif is_circumscribed and g.kind == "measurement" and measurement_scope(p, g) in curved and g.goal_type in (
+            "volume", "area", "lateral_area", "radius"
+        ):
+            facts.append({**q, "quantity": g.goal_type, "solid": solids[measurement_scope(p, g)].notation})
         elif g.goal_type == "volume" and measurement_scope(p, g) in solids:
             # F6: a notation / canonical alias names the same solid (validated by the schema policy, S2/S3)
             facts.append({**q, "quantity": "volume",

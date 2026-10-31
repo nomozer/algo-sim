@@ -546,6 +546,53 @@ def test_closure_mutants_are_killed(monkeypatch, name):
         oracle()
 
 
+# ── circumscribed sphere scope closure (`SolidSpec.circumscribes`, S1 + S3) ─────────────────────────────────────
+def _circumscribed_control() -> dict:
+    txt = (
+        "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, chiều cao hình chóp bằng 4. "
+        "Gọi (S) là mặt cầu tâm I ngoại tiếp hình chóp S.ABCD. Tính bán kính mặt cầu (S)."
+    )
+    q1 = "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, chiều cao hình chóp bằng 4."
+    q2 = "Gọi (S) là mặt cầu tâm I ngoại tiếp hình chóp S.ABCD."
+    q3 = "Tính bán kính mặt cầu (S)."
+    return {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": txt,
+        "solids": [
+            {"solid_id": "poly", "solid_type": "pyramid", "notation": "S.ABCD", "quote": q1},
+            {"solid_id": "sph", "solid_type": "sphere", "center": "I", "circumscribes": "poly", "notation": "(S)", "quote": q2},
+        ],
+        "premises": [
+            {"kind": "regular_pyramid", "solid_id": "poly", "args": {"apex": "S", "base": ["A", "B", "C", "D"]}, "quote": q1},
+            {"kind": "regular_polygon", "solid_id": "poly", "args": {"vertices": ["A", "B", "C", "D"], "side": "4"}, "quote": q1},
+            {"kind": "height", "solid_id": "poly", "args": {"solid": "S.ABCD", "value": "4"}, "quote": q1},
+        ],
+        "relations": [],
+        "derived_sections": [],
+        "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "poly", "quote": q1}],
+        "math_goals": [{"goal_id": "mg1", "kind": "measurement", "goal_type": "radius", "target": {"solid": "(S)"}, "quote": q3}],
+    }
+
+
+def test_circumscribed_sphere_scope_controls_serve():
+    r = run_typed_fact_next_v2_route(_circumscribed_control())
+    assert r.status == "SERVED" and r.kernel_check is True, (r.code, r.reason)
+
+
+def test_circumscribed_sphere_scope_violations_refuse():
+    for patch, code in (
+        ({"circumscribes": "missing"}, "UNKNOWN_SOLID_ID"),
+        ({"circumscribes": "sph"}, "SOURCE_OBJECT_MISMATCH"),
+        ({"solid_type": "cone"}, "SOURCE_OBJECT_MISMATCH"),
+        ({"radius": "2"}, "SOURCE_OBJECT_MISMATCH"),
+    ):
+        p = _circumscribed_control()
+        p["solids"][1].update(patch)
+        with pytest.raises(TypedFactNextValidationError) as exc:
+            T.parse_typed_fact_next_v2(p)
+        assert exc.value.code == code
+
+
 # ── coverage gate: every model field classified; every scope field mapped to rules, tests and product code ───────
 def test_census_inventory_complete():
     fields = C.field_paths(); inv = INVENTORY['fields']
