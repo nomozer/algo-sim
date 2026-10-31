@@ -31,6 +31,7 @@ NEGATIVE_CODES = {
     "n.sphere_axial": "BRIDGE_UNSUPPORTED_CURVED", "n.section_kind_mismatch": "SOURCE_OBJECT_MISMATCH",
     # independent review round 1: wrong-section binding (B1), shape contradictions (M2), foreign notation (m1)
     **{cid: "SOURCE_OBJECT_MISMATCH" for cid, *_ in S.NEGATIVES if cid.startswith("rv.")},
+    "rv2.two_sections_same_name": "AMBIGUOUS_REFERENCE",           # review round 2, B2
 }
 
 

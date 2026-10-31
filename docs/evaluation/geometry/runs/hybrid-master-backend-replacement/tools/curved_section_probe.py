@@ -177,6 +177,14 @@ NEGATIVES += [
                                              section("axial_section", "Cắt hình nón A.S bởi một mặt phẳng đi qua trục",
                                                      section_shape="polygon", plane_name="α"), "Tính diện tích thiết diện.", AREA), "REFUSE"),
 ]
+# B2 (review round 2): two sections sharing one plane name are ambiguous, whichever one the derived cone names
+_same = _two_sections("Mặt phẳng (P) chia hình nón thành một khối nón nhỏ đỉnh S và một khối nón cụt",
+                      "Mặt phẳng (P) chia hình nón thành một khối nón nhỏ đỉnh S và một khối nón cụt.")
+_same["problem_text"] = _same["problem_text"].replace("Mặt phẳng (Q)", "Mặt phẳng (P)")
+_same["derived_sections"][1] = {**_same["derived_sections"][1], "plane_name": "P",
+                                "quote": _same["derived_sections"][1]["quote"].replace("(Q)", "(P)")}
+_same["simulation_goals"][1]["quote"] = _same["derived_sections"][0]["quote"]
+NEGATIVES.append(("rv2.two_sections_same_name", _same, "REFUSE"))
 # M1: a dimensionless ratio with a symbolic unit (cone r = 3a, h = 4a, cut at 2a ⇒ 1/8)
 _g = "Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy, bán kính đáy bằng 3a và chiều cao bằng 4a."
 _sec = "Mặt phẳng (P) song song với đáy và cách đáy một khoảng bằng 2a cắt hình nón theo một đường tròn."

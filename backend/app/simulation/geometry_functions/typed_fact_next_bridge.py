@@ -408,6 +408,10 @@ def _phan_cong(p: TypedFactNextPayload, solids: dict[str, Any]) -> list[dict[str
     kc = KHOI_CONG[LOAI_TU_NGUON[s.solid_type]]
     out: list[dict[str, Any]] = []
     secs = {x.section_id: x for x in p.derived_sections}
+    names = [x.plane_name for x in p.derived_sections]
+    if len(set(names)) != len(names):       # one name, two planes: every binding would be a guess (review round 2, B2)
+        raise TuChoi("AMBIGUOUS_REFERENCE", f"hai thiết diện cùng tên mặt phẳng {sorted({n for n in names if names.count(n) > 1})}",
+                     tuple(x.section_id for x in p.derived_sections))
     for x in p.derived_sections:
         if x.target_solid_id != s.solid_id or x.plane_kind not in _MAT_CAT_CONG or not kc.co_truc:
             raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{x.section_id}: thiết diện {x.plane_kind} của khối tròn xoay này chưa "
