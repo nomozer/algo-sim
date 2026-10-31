@@ -2129,6 +2129,7 @@ def _dung_phan_cong(k: LoiGoi, kc: Any, secs: list[LoiGoi], subs: list[LoiGoi], 
             trace.append({"step": "construct_section", "object": s.section, "rule": "axial_section", "calls": [c.id],
                           "note": "mặt phẳng chứa trục cắt khối theo " + ("tam giác cân" if apex else "hình chữ nhật")})
             info[s.section] = {"var": var, "kind": "axial"}
+            kiem.append(("axis", mp, [(Fraction(0), Fraction(0), Fraction(0)), (Fraction(0), Fraction(0), h)]))
             continue
         if s.kind == "parallel_to_base_at_distance":
             d2, has_a = doc_so(s.distance)
@@ -2159,7 +2160,7 @@ def _dung_phan_cong(k: LoiGoi, kc: Any, secs: list[LoiGoi], subs: list[LoiGoi], 
             trace.append({"step": "derive_dimension", "object": s.section, "rule": "similar_cones", "calls": [c.id],
                           "ratio": str(kk), "note": "r' / r = (h − d) / h (hai tam giác đồng dạng qua trục)"})
         info[s.section] = {"var": var, "z": z, "k": kk, "kind": "circle"}
-        kiem.append((var, (Fraction(0), Fraction(0), z), r2 * kk * kk))
+        kiem.append(("circle", var, ((Fraction(0), Fraction(0), z), r2 * kk * kk)))
     vol = times_rational(multiply_pi_r2_h(pi, r2, h), Fraction(1, 3) if apex else Fraction(1)) if h is not None else None
     nho: dict[str, dict] = {}
     for c in subs:
@@ -2336,13 +2337,17 @@ def _dung_cong(calls: tuple[LoiGoi, ...], problem_text: str) -> KetQuaTuyen:
         fn = next(c.fn for c in (*asks, *phan) if c.id == cid)
         bac = _HOI_CONG[fn][1] if fn in _HOI_CONG else _HOI_PHAN_CONG[fn]
         chinh_xac[cid] = {"coef": dinh_dang(fm[kq]), "dim": bac if unit else 0, "unit": unit if bac else None}
-        tra[cid] = _hien_thi_ky_hieu(fm[kq], bac, unit) if unit else dinh_dang(fm[kq])
+        tra[cid] = _hien_thi_ky_hieu(fm[kq], bac, unit) if (unit and bac) else dinh_dang(fm[kq])
         trace.append({"step": "certify_answer", "object": cid, "rule": "independent_closed_form", "calls": [cid],
                       "value": chinh_xac[cid]["coef"]})
-    for var, centre, rsq in kiem_sau:              # each section circle is the one the similarity certificate states
+    for what, var, expected in kiem_sau:
         got = fm.get(var)
-        if got is None or (got.center.x, got.center.y, got.center.z) != centre or got.radius_sq != rsq:
-            raise TuChoi("ENGINE_SELF_CHECK_FAILED", "đường tròn thiết diện thực thi khác chứng chỉ đồng dạng")
+        if what == "circle":                      # each section circle is the one the similarity certificate states
+            centre, rsq = expected
+            if got is None or (got.center.x, got.center.y, got.center.z) != centre or got.radius_sq != rsq:
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", "đường tròn thiết diện thực thi khác chứng chỉ đồng dạng")
+        elif got is None or not all(point_on_plane(Vec3(*p), got) for p in expected):
+            raise TuChoi("ENGINE_SELF_CHECK_FAILED", "mặt phẳng thiết diện qua trục không chứa trục của khối")
     for t, p in pts.items():                       # every named point executed exactly where the layout put it
         v = fm.get(ir_name(t))
         if v is None or (v.x, v.y, v.z) != p:

@@ -144,6 +144,49 @@ def run():
     return rows
 
 
+
+# ── Independent review round 1 (curved sections): each reproduction is locked here ───────────────────────────────────
+def _two_sections(derived_quote, derived_sentence):
+    s1 = "Mặt phẳng (P) song song với đáy và cách đáy một khoảng bằng 1 cắt hình nón theo một đường tròn."
+    s2 = "Mặt phẳng (Q) song song với đáy và cách đáy một khoảng bằng 2 cắt hình nón theo một đường tròn."
+    p = build(CONE_G, CONE_S, f"{s1} {s2} {derived_sentence}", dist("1", s1),
+              "Tính tỉ số thể tích của khối nón nhỏ và khối nón ban đầu.",
+              {"kind": "volume_ratio", "numerator_solid_id": "kn", "denominator_solid_id": "k"}, derived=derived_quote)
+    p["derived_sections"].append({**dist("2", s2), "section_id": "td2", "plane_name": "Q"})
+    return p
+
+
+NEGATIVES += [
+    # B1: with two sections the small cone must NAME its plane, and a quote may not start mid-sentence
+    ("rv.derived_quote_cut_mid_sentence", _two_sections(
+        "chia hình nón thành một khối nón nhỏ đỉnh S và một khối nón cụt",
+        "Mặt phẳng (Q) chia hình nón thành một khối nón nhỏ đỉnh S và một khối nón cụt."), "REFUSE"),
+    ("rv.derived_plane_unnamed_two_sections", _two_sections(
+        "Chia hình nón thành một khối nón nhỏ đỉnh S và một khối nón cụt",
+        "Chia hình nón thành một khối nón nhỏ đỉnh S và một khối nón cụt."), "REFUSE"),
+    # M2: a shape word contradicting the section kind
+    ("rv.axial_called_circle", build(CONE_G, CONE_S, "Cắt hình nón bởi một mặt phẳng đi qua trục và cắt hình nón theo một đường tròn.",
+                                     section("axial_section", "Cắt hình nón bởi một mặt phẳng đi qua trục và cắt hình nón theo một đường tròn",
+                                             section_shape="polygon", plane_name="α"), "Tính diện tích thiết diện.", AREA), "REFUSE"),
+    ("rv.parallel_called_triangle", build(CONE_G, CONE_S, SEC_CONE1.replace("đường tròn", "tam giác cân"),
+                                          dist("1", SEC_CONE1.replace("đường tròn", "tam giác cân")), "Tính diện tích thiết diện.", AREA), "REFUSE"),
+    ("rv.payload_shape_contradiction", build(CYL_G, CYL_S, AX_CYL, section("axial_section", AX_CYL.rstrip("."), section_shape="circle",
+                                                                          plane_name="α"), "Tính diện tích thiết diện.", AREA), "REFUSE"),
+    # m1: a notation in the section sentence that is not this solid's
+    ("rv.foreign_notation_in_section", build(CONE_G, CONE_S, "Cắt hình nón A.S bởi một mặt phẳng đi qua trục.",
+                                             section("axial_section", "Cắt hình nón A.S bởi một mặt phẳng đi qua trục",
+                                                     section_shape="polygon", plane_name="α"), "Tính diện tích thiết diện.", AREA), "REFUSE"),
+]
+# M1: a dimensionless ratio with a symbolic unit (cone r = 3a, h = 4a, cut at 2a ⇒ 1/8)
+_g = "Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy, bán kính đáy bằng 3a và chiều cao bằng 4a."
+_sec = "Mặt phẳng (P) song song với đáy và cách đáy một khoảng bằng 2a cắt hình nón theo một đường tròn."
+_pa = build(_g, CP.solid("cone", "S.O", "O", "S", "A", "3a", "4a", _g[:-1]), _sec + " " + DERIVED, dist("2a", _sec),
+            "Tính tỉ số thể tích của khối nón nhỏ và khối nón ban đầu.",
+            {"kind": "volume_ratio", "numerator_solid_id": "kn", "denominator_solid_id": "k"}, derived=DERIVED.rstrip("."))
+_pa["length_unit"] = "a"
+CASES.append(("rv.unit_a_ratio", _pa, "1/8"))
+
+
 if __name__ == "__main__":
     rows = run()
     for x in rows:

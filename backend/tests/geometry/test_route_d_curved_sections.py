@@ -29,6 +29,8 @@ NEGATIVE_CODES = {
     "n.unread_tail": "SOURCE_OBJECT_MISMATCH", "n.not_parallel": "SOURCE_OBJECT_MISMATCH",
     "n.ratio_inverted": "SOURCE_OBJECT_MISMATCH", "n.volume_of_section": "INVALID_MATH_GOAL",
     "n.sphere_axial": "BRIDGE_UNSUPPORTED_CURVED", "n.section_kind_mismatch": "SOURCE_OBJECT_MISMATCH",
+    # independent review round 1: wrong-section binding (B1), shape contradictions (M2), foreign notation (m1)
+    **{cid: "SOURCE_OBJECT_MISMATCH" for cid, *_ in S.NEGATIVES if cid.startswith("rv.")},
 }
 
 
@@ -44,6 +46,12 @@ def test_section_negatives_are_refused_for_the_right_reason(cid, payload, oracle
     r = run_typed_fact_next_v2_route(payload)
     assert r.status == "REFUSED" and not r.answer_exact and r.scene3d is None
     assert r.code == NEGATIVE_CODES[cid], (r.code, r.reason)
+
+
+def test_a_ratio_with_a_symbolic_unit_is_dimensionless_for_the_learner():
+    (cid, p, _o) = next(c for c in S.CASES if c[0] == "rv.unit_a_ratio")     # review M1: crashed with KeyError before
+    r = run_typed_fact_next_v2_route(p)
+    assert r.status == "SERVED" and r.answers["mg1"] == "1/8" and r.answer_exact["mg1"] == {"coef": "1/8", "dim": 0, "unit": None}
 
 
 def test_the_full_hybrid_path_shows_one_target_with_the_scorer_kind():

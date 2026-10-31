@@ -88,3 +88,64 @@ The scorer and the thresholds are untouched. The authoring package (`heldout-aut
 - the total area of a cylinder or cone is not asked, because neither arm shows it under a scorable producer kind.
 
 Each rule follows from the kernel both arms share. None of them favours Hybrid.
+
+---
+
+## Sixth continuation: curved sections and the cone volume ratio (registry /24, planner /20, engine /16)
+
+**Development probe:** `tools/curved_section_probe.py`, with oracles computed by hand before the code. At `9f4f61d2` every case was refused at the bridge. Now **10/10 positives are served exactly** and **10/10 negatives are refused for the right reason** (`test_route_d_curved_sections.py`).
+
+### What is served, and how
+
+| capability | how (existing primitives only) | oracle examples |
+|---|---|---|
+| Section parallel to the base, cylinder | plane z = d → kernel `intersect_plane_curved` → `measure area` / `measure radius` | d = 2: S = 9π, r′ = 3 |
+| Section parallel to the base, cone, at a distance from the base | the same; certificate r′ = r·(h − d)/h | d = 1: r′ = 9/4, S = 81π/16 |
+| The same, through the midpoint of the axis (ratio from the apex = 1/2) | z = (1 − k)·h | S = 9π/4 |
+| Axial section of a cylinder (rectangle) or a cone (isosceles triangle) | a polygon through the axis plus its named plane → `measure area` | 30; 12 |
+| Volume ratio small cone : original cone, in either order | the kernel builds the small cone from the apex and the radius it **measures** on the section circle; ratio by cross-multiplication (q·V₁ − p·V₂ = 0) | 1/8; inverse 8 |
+| Remaining volume (frustum) | V − V_small, by IR subtraction | 21π/2 |
+
+**Scorer-facing output:** one target per question — `measure.area`, `measure.radius`, `assign.volume_ratio` or `assign.residual_volume`.
+
+### Typed refusals
+
+| case | code |
+|---|---|
+| a plane outside the solid | `CURVED_PLANE_DOES_NOT_CUT` |
+| a plane through the apex | `CURVED_PLANE_TANGENT` |
+| a plane on a base | `CURVED_SECTION_IS_A_BASE` |
+| an irrational cut | `CURVED_SECTION_OUTSIDE_V1_CLOSURE` |
+| a distance the text does not state | `UNGROUNDED_VALUE` |
+| a distance "cách đỉnh"; an unread qualifier; a plane not parallel; an inverted ratio; a section sentence about another kind | `SOURCE_OBJECT_MISMATCH` |
+| a section "volume" | `INVALID_MATH_GOAL` |
+| sphere sections | `BRIDGE_UNSUPPORTED_CURVED` |
+
+### Recomposition (honest classification)
+
+The dependency chain is **original cone → section circle (kernel) → its measured radius → small cone (kernel) → its volume → ratio / remaining volume**. The trace records it in order: `construct_section` → `derive_dimension` (similar cones) → `construct_subsolid` (reusing the section circle) → `compose_quantity` → `certify_answer`, and it is test-locked.
+
+This is **bounded composition of existing primitives**, not open-ended planning. No polyhedral planner change was needed.
+
+### Parity Adapter /3 → /4
+
+| capability | status |
+|---|---|
+| Cylinder, cone, sphere: volume, lateral area, radius | `SUPPORTED_BOTH` |
+| Section parallel to the base, cylinder and cone (distance from the base) | `SUPPORTED_BOTH` |
+| Ratio from the apex: /3 takes any k in (0, 1); /4 reads only the midpoint wording (k = 1/2) | `PARTIAL` |
+| Axial section of a cylinder or cone | `SUPPORTED_BOTH` |
+| Cone volume ratio, remaining volume | `SUPPORTED_BOTH` |
+| Height from slant; total area of a cylinder or cone; canonical pose | `SUPPORTED_ONLY_V4` |
+| Plane by equation (`plane_equation`); ellipse sections | `SUPPORTED_ONLY_V3` (the /4 schema path would need coordinates from the LLM, which R0 forbids) |
+| Sphere section at a distance from the centre / through the centre | `UNSUPPORTED` on /4 (needs a new contract field) |
+| Standalone frustum; curved composites | `UNSUPPORTED` on both |
+
+**Parity is therefore still PARTIAL.** Adapter /3 cannot be retired yet.
+
+### Registered controls (explicit layer, not a silent re-pin)
+
+`registered-curved-control-transitions.json` records 32 Owner-registered control cells. Each moved from REFUSED `BRIDGE_UNSUPPORTED_CURVED` to REFUSED `SOURCE_OBJECT_MISMATCH`.
+- **Why:** these controls now pass the bridge, and their wording lies outside the closed grammar: "tâm đáy O", "tâm đáy dưới/trên", "A trên đường tròn đáy dưới", "cắt trục SO theo tỉ lệ 1/2 tính từ đỉnh S", "thiết diện qua trục SAB".
+- **Guarantee:** the layer can only move a cell between REFUSED codes, and the tests assert that. The registered oracle files are not edited.
+- **These wordings are the next grammar gaps.**

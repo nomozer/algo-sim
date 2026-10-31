@@ -2174,7 +2174,7 @@ def _kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...
                     "right_angle", "divide_segment"):
             if not construction_source_bound(c, de):
                 raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: vai trò điểm và toán hạng dựng không khớp nguồn", (c.id,))
-        if c.fn in ("curved_section", "curved_subsolid") and (ma := _phan_cong_dung_nguon(c, calls)):
+        if c.fn in ("curved_section", "curved_subsolid") and (ma := _phan_cong_dung_nguon(c, calls, de)):
             raise TuChoi(ma, f"{c.id}: {c.quote!r} không nêu đúng {'thiết diện' if c.fn == 'curved_section' else 'khối nón nhỏ'} "
                          "này của khối tròn xoay", (c.id,))
         if c.fn == "curved_solid" and (ma := _khoi_cong_dung_nguon(c)):
@@ -4758,18 +4758,18 @@ def _khoi_cong_dung_nguon(c: LoiGoi) -> str | None:
 _TEN_MP = rf"(?:\s+\((?-i:(?P<mp>{_L}))\))?"
 #: The CLOSED grammar of a curved section sentence (an allowlist, like `_CAU_CONG`): the whole quote must parse.
 _MO_MAT_CAT = (re.compile(rf"\s*(?:(?:cho|gọi)\s+)?(?:một\s+)?mặt\s+phẳng{_TEN_MP}", re.IGNORECASE),
-               re.compile(rf"\s*cắt\s+(?:hình|khối)\s+(?P<k>trụ|nón)(?:\s+(?-i:{_L}(?:\.{_L})?))?\s+bởi\s+(?:một\s+)?mặt\s+phẳng"
+               re.compile(rf"\s*cắt\s+(?:hình|khối)\s+(?P<k>trụ|nón)(?:\s+(?-i:(?P<n>{_L}(?:\.{_L})?)))?\s+bởi\s+(?:một\s+)?mặt\s+phẳng"
                           rf"{_TEN_MP}", re.IGNORECASE))
 _CAU_MAT_CAT = tuple((vai, re.compile(mau, re.IGNORECASE)) for vai, mau in (
     ("parallel", r"song\s+song\s+với\s+(?:mặt\s+phẳng\s+)?(?:mặt\s+)?đáy(?![\w])"),
     ("distance", rf"cách\s+(?:mặt\s+phẳng\s+)?(?:mặt\s+)?đáy\s+(?:một\s+khoảng\s+)?(?:bằng\s+|là\s+)?{_SO_VB}"),
     ("midpoint", rf"(?:đi\s+)?qua\s+trung\s+điểm\s+(?:của\s+)?(?:đường\s+cao|đoạn(?:\s+thẳng)?)\s+(?-i:(?P<x>{_L})(?P<y>{_L}))(?![\w'])"),
     ("axial", r"(?:đi\s+)?qua\s+trục(?:\s+của\s+(?:hình|khối)\s+(?:trụ|nón))?(?![\w])"),
-    ("cuts", r"cắt\s+(?:hình|khối)\s+(?P<k2>trụ|nón)(?:\s+theo\s+(?:một\s+)?(?:thiết\s+diện|đường\s+tròn|hình\s+chữ\s+nhật|"
-             r"tam\s+giác(?:\s+cân)?))?(?![\w])"),
+    ("cuts", r"cắt\s+(?:hình|khối)\s+(?P<k2>trụ|nón)(?:\s+theo\s+(?:một\s+)?(?P<shape>thiết\s+diện|đường\s+tròn|"
+             r"hình\s+chữ\s+nhật|tam\s+giác(?:\s+cân)?))?(?![\w])"),
 ))
 #: "Mặt phẳng (P) chia hình nón thành một khối nón nhỏ đỉnh S và một khối nón cụt" — the derived cone, closed form.
-_CHIA_NON = re.compile(rf"\s*(?:(?:một\s+)?mặt\s+phẳng{_TEN_MP}\s+)?chia\s+(?:hình|khối)\s+nón(?:\s+(?-i:{_L}(?:\.{_L})?))?\s+"
+_CHIA_NON = re.compile(rf"\s*(?:(?:một\s+)?mặt\s+phẳng{_TEN_MP}\s+)?chia\s+(?:hình|khối)\s+nón(?:\s+(?-i:(?P<n>{_L}(?:\.{_L})?)))?\s+"
                        rf"thành\s+(?:hai\s+phần\s*:?\s*)?(?:một\s+)?khối\s+nón\s+nhỏ(?:\s+đỉnh\s+(?-i:(?P<apex>{_L})))?"
                        rf"\s+và\s+(?:một\s+)?(?:khối\s+nón\s+cụt|phần\s+còn\s+lại)\s*[.;]?\s*", re.IGNORECASE)
 
@@ -4792,25 +4792,37 @@ def _doc_mat_cat(s: str) -> tuple[re.Match, list[tuple[str, re.Match]]] | None:
     return None
 
 
-def _phan_cong_dung_nguon(c: LoiGoi, calls: tuple[LoiGoi, ...]) -> str | None:
+def _dau_cau(de: str, q: str) -> bool:
+    """The quote starts a sentence or clause of the source (review B1): a quote cut mid-sentence ("… (Q) chia hình nón …"
+    quoted from "chia") leaves the words before it unread by THIS call."""
+    vt = _vi_tri(de, q)
+    return vt is not None and re.search(r"(?:^|[.!?;:]\s*)$", de[:vt[0]].rstrip() + (" " if de[:vt[0]].strip() else "")) is not None
+
+
+def _phan_cong_dung_nguon(c: LoiGoi, calls: tuple[LoiGoi, ...], de: str = "") -> str | None:
     """`None` when a curved section / derived cone call is EXACTLY what its quote states (registry /24), else a code.
     Section: the WHOLE sentence parses (`_doc_mat_cat`); a parallel section states "song song với đáy" and either its ONE
     distance from the BASE ("cách đáy", never "cách đỉnh") or "qua trung điểm của đường cao <apex><centre>" (ratio 1/2); an
     axial section states "qua trục" and nothing parallel; a written plane name and solid kind are this call's. Derived
     cone: "… chia hình nón thành một khối nón nhỏ (đỉnh S) và một khối nón cụt", the apex THE cone's apex, the cutting
     plane THE section's."""
+    from app.simulation.geometry import curved as CV
+
     a = c.args
     solids = [k for k in calls if k.fn == "curved_solid" and k.args.solid == a.solid]
     if len(solids) != 1:
         return "UNKNOWN_SOLID"
     k = solids[0].args
+    if de and not all(_dau_cau(de, q) for q in c.quotes):
+        return "SOURCE_OBJECT_MISMATCH"
     s = " ".join(chuan_hoa(q) for q in c.quotes)
     if c.fn == "curved_subsolid":
         m = _CHIA_NON.fullmatch(s)
         sec = next((x for x in calls if x.fn == "curved_section" and x.args.section == a.section), None)
-        if m is None or sec is None or a.apex != k.top or m["apex"] not in (None, a.apex) \
-                or m["mp"] not in (None, sec.args.plane):
-            return "SOURCE_OBJECT_MISMATCH"
+        many = sum(x.fn == "curved_section" for x in calls) > 1
+        if m is None or sec is None or a.apex != k.top or m["apex"] not in (None, a.apex) or m["n"] not in (None, a.solid) \
+                or m["mp"] not in ((sec.args.plane,) if many else (None, sec.args.plane)):
+            return "SOURCE_OBJECT_MISMATCH"      # with two sections, the derived cone must NAME its cutting plane
         return None
     doc = _doc_mat_cat(s)
     if doc is None:
@@ -4818,9 +4830,13 @@ def _phan_cong_dung_nguon(c: LoiGoi, calls: tuple[LoiGoi, ...]) -> str | None:
     mo, clauses = doc
     vai = [v for v, _m in clauses]
     kinds = [x for x in [mo.groupdict().get("k")] + [m.groupdict().get("k2") for _v, m in clauses] if x]
+    kc = CV.KHOI_CONG[CV.LOAI_TU_NGUON[k.kind]]
+    shapes = {" ".join(m["shape"].lower().split()) for v, m in clauses if v == "cuts" and m["shape"]}
+    hop = ({"thiết diện", "đường tròn"} if a.kind != "axial_section" else
+           {"thiết diện", "tam giác", "tam giác cân"} if kc.vai_dinh == "đỉnh" else {"thiết diện", "hình chữ nhật"})
     if (not kinds or any(_KIEU_CONG[x.lower()] != k.kind for x in kinds) or mo["mp"] not in (None, a.plane)
-            or len(set(vai)) != len(vai)):
-        return "SOURCE_OBJECT_MISMATCH"
+            or len(set(vai)) != len(vai) or (mo.groupdict().get("n") or a.solid) != a.solid or shapes - hop):
+        return "SOURCE_OBJECT_MISMATCH"      # a shape word that contradicts the section kind is refused (review M2)
     if a.kind == "axial_section":
         return None if "axial" in vai and not {"parallel", "distance", "midpoint"} & set(vai) else "SOURCE_OBJECT_MISMATCH"
     if "parallel" not in vai or "axial" in vai:
