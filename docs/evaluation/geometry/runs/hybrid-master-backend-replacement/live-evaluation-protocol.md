@@ -27,6 +27,8 @@
 
 *Revision C (2026-10-31, still before any corpus or live result).* Round 2 of the acceptance review found a problem with revision B's cost rule (N1). Charging requests without usage at their ceiling inflates mostly the control's cost: LLM_ONLY has no output cap, so its ceiling is about 7× Hybrid's, and it sends more requests. One unbilled LLM_ONLY 429 could then turn a true criterion-5 failure into a GO. Criterion 5 now compares Hybrid's **upper** bound with LLM_ONLY's **lower** bound (§7.5), and its not-evaluable cases are stated exactly (N2).
 
+*Revision D (2026-10-31, still before any corpus or live result).* Acceptance review round 3, N3: the control's lower bound priced cached prompt tokens at the full price. Implicit caching is on by default for 2.5 models, and LLM_ONLY repeats long system prompts, so that bound overstated the control's cost. The control's lower bound now prices cached tokens at 0 (§7.5).
+
 ## 1. Measurement metadata (actual values)
 
 | field | value |
@@ -177,7 +179,8 @@ Every criterion must hold on the frozen held-out set. The harness computes them 
 4. Hybrid latency: median ≤ LLM_ONLY's, and p90 ≤ 1.5× LLM_ONLY's.
 5. Hybrid USD per served-correct ≤ LLM_ONLY's, compared **conservatively toward NO-GO** (revision C).
    - **Hybrid** is charged its upper bound, `usd_charged_total`: reported usage, plus each request without usage at its own ceiling.
-   - **LLM_ONLY** is charged its lower bound, `usd_reported_total`: reported usage only.
+   - **LLM_ONLY** is charged its lower bound, `usd_reported_total`: reported usage only, with cached prompt tokens (`cachedContentTokenCount`) priced at 0 (revision D). This holds whatever the provider's cache discount is. Hybrid's upper bound prices cached tokens at the full price.
+   - The summary's `usd_total` and `usd_per_served_correct` are descriptive actual-price figures. Criterion 5 does not read them.
    - A request without usage (a 0-request domain-gate row, a retried 429) adds 0 to the lower bound. So retries cannot make the uncapped control look costlier than it was.
    - When LLM_ONLY has 0 served-correct, its value is ∞.
    - **Not evaluable** in exactly two cases: Hybrid has 0 served-correct, or Hybrid's `usd_upper` is not numeric, which happens only in a dry run. A row whose `usage`/`usd` is `UNKNOWN` does not by itself make the criterion not evaluable.

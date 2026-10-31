@@ -283,9 +283,10 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
             # ceiling; a 0-request row (the deterministic domain gate) costs a known 0.0 (review B1/M1)
             "usd_charged_total": (sum(r["usd_upper"] for r in rs)
                                   if all(isinstance(r["usd_upper"], (int, float)) for r in rs) else "UNKNOWN"),
-            # lower bound: reported usage only (a request without usage, e.g. a retried 429, adds 0) — criterion 5
-            # compares Hybrid's charged UPPER bound with the control's LOWER bound, so retry luck cannot pass it (N1)
-            "usd_reported_total": sum(r["usd"] for r in rs if isinstance(r["usd"], (int, float))),
+            # lower bound: reported usage only, cached prompt tokens at 0 (a request without usage, e.g. a retried 429,
+            # adds 0) — criterion 5 compares Hybrid's charged UPPER bound with the control's LOWER bound, so neither
+            # retry luck (N1) nor cache discounts (N3) can pass it
+            "usd_reported_total": sum(x for r in rs if isinstance(x := r.get("usd_floor", r["usd"]), (int, float))),
             "exercised": len(rs) - sum(r["technical_failure"] for r in rs),
             "usd_per_served_correct": "UNKNOWN" if unknown or not ok else sum(usd) / ok,
         }
@@ -423,10 +424,12 @@ def request_ceiling_usd(payload: Any, approval: dict[str, Any]) -> float:
     return len(body) * approval["input_usd_per_million"] / 1e6 + out * approval["output_usd_per_million"] / 1e6
 
 
-def usd(usage: dict[str, dict[str, int]], approval: dict[str, Any] | None) -> float | str:
+def usd(usage: dict[str, dict[str, int]], approval: dict[str, Any] | None, *, floor: bool = False) -> float | str:
+    """Reported usage at full price. `floor=True` prices cached prompt tokens at 0 (billed at a discount), so it is a
+    lower bound whatever the discount — the control's criterion-5 cost (review N3)."""
     if approval is None or not usage:
         return "UNKNOWN"
-    tin = sum(v.get("prompt_tokens", 0) for v in usage.values())
+    tin = sum(v.get("prompt_tokens", 0) - (v.get("cached_content_tokens", 0) if floor else 0) for v in usage.values())
     tout = sum(v.get("candidates_tokens", 0) + v.get("thoughts_tokens", 0) for v in usage.values())
     return tin * approval["input_usd_per_million"] / 1e6 + tout * approval["output_usd_per_million"] / 1e6
 
@@ -652,7 +655,7 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
                        "http_requests": (budget.http_requests - budget.arm_start_requests) if budget else 0,
                        "repair_attempts": 0 if arm == "HYBRID" else (max(0, program_calls - 1)
                                                                      if isinstance(program_calls, int) else "UNKNOWN"),
-                       "usd": usd(usage, approval), "usd_upper": upper, "technical_failure": technical, **extra}
+                       "usd": usd(usage, approval), "usd_floor": usd(usage, approval, floor=True), "usd_upper": upper, "technical_failure": technical, **extra}
                 try:
                     row.update(score(case, envelope, arm), outcome="SCORED")
                 except Exception as exc:  # noqa: BLE001 — never lose a paid row to a scorer bug

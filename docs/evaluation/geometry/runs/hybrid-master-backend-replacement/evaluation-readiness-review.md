@@ -97,3 +97,11 @@ No live result exists.
 | m-c | The B1/M1 record did not say the rule moved to an upper bound | **Recorded here.** Revision C supersedes it. |
 
 **Tests:** 46/46.
+
+**Round 3, re-verifying `383fd4f7`: `NOT_READY`.**
+- **Closed:** N1 and N2. A deserved GO is still reachable end to end, and Hybrid's upper bound cannot be under-counted live, because `usd_upper ≥ usd` and every send is reserved.
+
+| id | finding | disposition |
+|---|---|---|
+| N3 MAJOR | The control's lower bound priced cached prompt tokens at the full input price. Implicit caching is on by default for 2.5 models, so that overstates LLM_ONLY's cost and could turn a true criterion-5 failure into a GO. | **Fixed:** `usd(..., floor=True)` prices `cached_content_tokens` at 0, and each row carries `usd_floor`. Revision D. A test covers it. |
+| m-d | The descriptive `usd_per_served_correct` could disagree with the criterion | **Labelled** in §7.5 as descriptive; criterion 5 does not read it. |

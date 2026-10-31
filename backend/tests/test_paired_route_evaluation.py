@@ -288,6 +288,11 @@ def test_acceptance_refusal_latency_and_cost():
     assert _verdict(k, costly, cheap)["failed"] == ["5_usd_per_served_correct"]
     cheap[0] = {**cheap[0], "usd_upper": cheap[0]["usd_upper"] + 0.168}   # review N1: one unbilled LLM_ONLY 429
     assert _verdict(k, costly, cheap)["failed"] == ["5_usd_per_served_correct"]   # retry luck never passes it
+    cached = [{**r, "usd": 0.0115, "usd_floor": 0.008} for r in cheap]   # review N3: billed cache discount
+    assert _verdict(k, costly, cached)["failed"] == ["5_usd_per_served_correct"]
+    terms = {"input_usd_per_million": 1.0, "output_usd_per_million": 0.0}
+    use = {"semantic_analyze": {"prompt_tokens": 4000, "cached_content_tokens": 3000, "calls": 1}}
+    assert E.usd(use, terms) == pytest.approx(0.004) and E.usd(use, terms, floor=True) == pytest.approx(0.001)
     hybrid_429 = _arm_rows(k, "HYBRID", usd=0.008)
     hybrid_429[0] = {**hybrid_429[0], "usd_upper": hybrid_429[0]["usd_upper"] + 0.023}
     assert _verdict(k, hybrid_429, cheap)["failed"] == ["5_usd_per_served_correct"]  # conservative toward NO-GO
