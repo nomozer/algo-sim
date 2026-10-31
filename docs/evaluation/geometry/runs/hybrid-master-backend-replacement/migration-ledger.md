@@ -121,3 +121,10 @@ Production cutover needs a measured real-text extraction quality on a new pre-re
   - several sections in one run (P-2).
 - **Retirement:** Adapter /3 is still not retired for curved problems. The 8 curved fixtures still refuse on /4, because of
   P-1, P-2 and an unordered ratio question.
+
+## Update after eighth continuation (`df81deba`, 2026-10-31)
+
+- **Role-phrase Source Gate parity (`/4`):** `_C_VAI` + `_cua_khop` accept explicit solid nouns without `"của"` while delegating prism-subclass checks to `_loai_cum_dung` (`test_route_d_role_phrase_parity.py`).
+- **Pedagogical construction trace (`/4`):** `preconditions` and `postconditions` are exported on `KetQuaTuyen.trace` and `route_d.construction_trace` (`_gan_dieu_kien_vet`), stripped of post-execution kernel claims on all `REFUSED` paths (`test_route_d_pedagogical_trace.py`). Frontend trace presentation remains part of D-10.
+- **Certified circumscribed spheres of polyhedra (`/4`):** additive `SolidSpec.circumscribes` on `typed-fact-next/2`, exact `Fraction` Gram circumcenter + all-vertex cosphericity certificate (`NO_CIRCUMSCRIBED_SPHERE`), exact `Fraction` Cholesky Euclidean chart normalization (`chuan_hoa_euclid`), G4 IR perpendicular-bisector construction, independent closed-form cross-check, and closed Vietnamese Source Gate grammar (`circumscribed_sphere_probe.py` `12/12` pos + `12/12` neg; `circumscribed-spheres-review.md` Round 2 `READY`; `inventory-phase-l.json` Wave 3 `67/72`, `72/72`, `0` wrong-served, `96/96` locked, `203` probes clean).
+- **Retirement & live gates:** unchanged — Adapter `/3` and compiler `C` remain unretired (not expanded for circumscribed spheres), `DEFAULT_MODE = "LLM_ONLY"` and `CACHE_VERSION = "131"` are untouched, and D-04 / D-11 / D-13 / GATE-16 await the Owner live GO.

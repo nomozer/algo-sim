@@ -174,8 +174,7 @@ Details:
   are typed:
   - d = R ⇒ `CURVED_PLANE_TANGENT`: a point, no area;
   - d > R ⇒ `CURVED_PLANE_DOES_NOT_CUT`.
-- **Sphere status.** Sphere sections are REPRESENTABLE_AND_PROBED. They count as IMPLEMENTED_AND_VERIFIED only after the
-  independent review returns READY and the full gates pass.
+- **Sphere status.** Sphere sections are **IMPLEMENTED_AND_VERIFIED** on `/4` (`curved-generalization-review.md` Round 3 `READY`, Full T3 `FULL_PRODUCT_GATE_PASS` at `cb06635e`).
 
 ### Refusal-reason integrity
 
@@ -188,9 +187,9 @@ tượng khác" (about another object).
 The transition layer is in two parts:
 
 - **Layer 1** is `registered-curved-control-transitions.json`. It is left untouched.
-- **Layer 2** is `registered-curved-control-transitions-2.json`.
-  - It corrects layer 1 and lists all 32 cells.
-  - The tests compose the two layers and assert the chain.
+- **Layer 2 & Layer 3** are `registered-curved-control-transitions-2.json` and `registered-curved-control-transitions-3.json`.
+  - Layer 2 corrects layer 1 across all 32 cells, and Layer 3 corrects the 2 multi-section cells (`CURVED_MULTI_SECTION_UNSUPPORTED`).
+  - The tests (`test_target_grammar_identity_recovery.load_transitions`) compose all three layers and assert the chain.
   - Every cell moves REFUSED → REFUSED; none is SERVED.
 
 ### Parity: what still blocks the 8 Adapter /3 curved fixtures
@@ -206,3 +205,23 @@ The base-centre grammar was necessary, but it is not sufficient. The fixtures st
 Serving the first two would turn registered REFUSED cells into SERVED cells, so both are withheld until the Owner decides.
 
 **Parity is still PARTIAL.**
+
+## Eighth continuation: role-phrase parity, pedagogical trace pre/postconditions, and certified circumscribed spheres of polyhedra on /4
+
+Commit `df81deba`. Offline, 0 provider calls. Supporting documents: `circumscribed-spheres-review.md`, `tools/circumscribed_sphere_probe.py`, `inventory-phase-l.json`.
+
+### What is now served and hardened on /4
+
+| Slice | Capability / Hardening | Verification |
+|---|---|---|
+| Polyhedral role-phrase parity | `_C_VAI` + `_cua_khop` accept explicit solid nouns without `"của"` (e.g. `"chiều cao hình chóp bằng 4"`, `"cạnh bên hình lăng trụ bằng 3"`) while enforcing full prism-subclass invariants via `_loai_cum_dung` | `test_route_d_role_phrase_parity.py` |
+| Pedagogical construction trace | `_gan_dieu_kien_vet` exports machine-verified `preconditions` and `postconditions` on `KetQuaTuyen.trace` and `route_d.construction_trace` across polyhedral, standalone curved, and composite traces; strips post-execution kernel claims on all `REFUSED` paths; keeps standalone sphere pose axisless (`canonical_origin_center`) | `test_route_d_pedagogical_trace.py` |
+| Certified circumscribed spheres of polyhedra | Additive `SolidSpec.circumscribes` on `typed-fact-next/2`; exact `Fraction` $3 \times 3$ Gram circumcenter solver (`_tam_bon_dinh`) + all-vertex cosphericity certificate (`NO_CIRCUMSCRIBED_SPHERE`); exact `Fraction` Cholesky Euclidean chart normalization (`chuan_hoa_euclid`, refusing irrational charts with `METRIC_REQUIRES_EUCLIDEAN_CHART`); G4 IR perpendicular-bisector construction (`_emit_tam_ngoai_tiep`) + `construct_curved_solid` + independent closed-form cross-check; closed Vietnamese Source Gate grammar (`_CAU_CONG_NGOAI_TIEP`) + composite `ask_volume` disambiguation (`_chi_mot_khoi_3d`) | `circumscribed_sphere_probe.py` (`12/12` served, `12/12` refused), `test_route_d_circumscribed_spheres.py`, `test_scope_census_closure.py`, `circumscribed-spheres-review.md` (`READY`, Round 2) |
+
+### Still refused on /4 (typed)
+
+- Inscribed spheres (`"mặt cầu nội tiếp"`), tangent spheres, and circumcircles (`CURVED_WORDING_UNSUPPORTED`);
+- Non-cospheric polyhedra such as oblique pyramids, non-cyclic bases, and oblique prisms (`NO_CIRCUMSCRIBED_SPHERE`);
+- Polyhedra whose base metric/height requires an irrational Cholesky factor (`METRIC_REQUIRES_EUCLIDEAN_CHART`);
+- Composite polyhedron + curved sections in a single run (`BRIDGE_UNSUPPORTED_CURVED_COMPOSITE`);
+- Legacy Adapter `/3` is not expanded (`BRIDGE_UNSUPPORTED_CURVED_COMPOSITE`).

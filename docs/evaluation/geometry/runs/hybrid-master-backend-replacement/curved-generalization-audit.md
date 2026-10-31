@@ -68,23 +68,20 @@ Each served curved answer equals **both** values below, or the plan is refused (
 
 ## Pedagogical trace (no frontend change)
 
-Status: **PARTIAL**.
+Status: **EXPORTED ON BACKEND (`/4`)** as of Continuation 8 (`df81deba`; frontend consumer remains deferred under D-10).
 
-What each step carries today:
+What each step carries:
 
 - `step` (a typed kind such as `construct_section`, `derive_dimension`, `construct_subsolid`, `place_point` or
   `compose_quantity`);
-- `rule` (for example `sphere_plane_at_distance` or `point_on_axis_at_ratio`);
-- dependencies through `calls` and `parts`;
-- provenance (`SOURCE_NAMED` / `DERIVED`, `binding: AUXILIARY`);
+- `rule` (for example `sphere_plane_at_distance`, `point_on_axis_at_ratio`, `perpendicular_bisector_intersection`, or
+  `canonical_origin_center` for axisless spheres);
+- dependencies through `dependencies`, `calls` and `parts`;
+- provenance (`SOURCE_NAMED` / `DERIVED` / `LAYOUT_DERIVED`, `binding: AUXILIARY`);
+- machine-verified `preconditions` and `postconditions` exported on `KetQuaTuyen.trace` and `route_d.construction_trace`
+  (`_gan_dieu_kien_vet`), with post-execution kernel claims (`kernel_point_matched`, `kernel_line_matched`,
+  `closed_section_verified`) stripped on every `REFUSED` path;
 - a learner `note`.
-
-What is missing:
-
-- Preconditions and postconditions are enforced (the kernel self-checks, and the refusal codes above), but the trace does
-  not export them as fields.
-- Exporting them is a contract addition for the Scene3D consumer. It needs a frontend reader, which is out of scope for
-  this GO, so it is recorded as the next trace step.
 
 ## Unsupported (typed refusals, exact domain kept)
 
@@ -113,5 +110,4 @@ What is missing:
 - **Live readiness.**
   - The corpus is not pre-registered yet: no Owner GO, and the authorized budget is 0. So no amendment file is needed.
   - The Owner's approval packet must bind the new candidate and harness hashes, which is the next request.
-- **Status.** Sphere sections stay REPRESENTABLE_AND_PROBED until the independent review returns READY. Only with that
-  verdict and the full gates do they become IMPLEMENTED_AND_VERIFIED.
+- **Status.** Sphere sections are **IMPLEMENTED_AND_VERIFIED** (`curved-generalization-review.md` Round 3 `READY` and Full T3 `FULL_PRODUCT_GATE_PASS` at `cb06635e`), and certified circumscribed spheres of polyhedra (`SolidSpec.circumscribes`) are added in Continuation 8 (`df81deba`, `circumscribed-spheres-review.md` Round 2 `READY`).
