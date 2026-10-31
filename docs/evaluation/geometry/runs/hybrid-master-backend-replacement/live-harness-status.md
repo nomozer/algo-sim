@@ -33,3 +33,9 @@ Rows below that predate this revision are superseded where they conflict. The li
 | Held-out corpus by an independent author | **NOT_ESTABLISHED** | `heldout-authoring/` package ready; no author named |
 
 **Overall:** the harness is `READY_FOR_LIVE_MEASUREMENT`. The evaluation is **not** runnable until the corpus exists and its author is named.
+
+**Revised again, fourth continuation (2026-10-31):**
+- **Verdict as code:** protocol §7 is computed by `acceptance()` and carried in the run summary (revisions A–D).
+- **Review:** `ACCEPTANCE_CONTRACT_REVIEW_READY` after 4 rounds (`evaluation-readiness-review.md`).
+- **Locks:** 46 tests, including an end-to-end GO driven through `evaluate()` with zero-call domain-gate refusals.
+- **Still NOT_MEASURED / NOT_ESTABLISHED:** provider behaviour and the held-out corpus, as above.

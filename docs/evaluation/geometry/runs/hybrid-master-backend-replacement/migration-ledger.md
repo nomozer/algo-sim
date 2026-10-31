@@ -73,3 +73,9 @@ Production cutover needs a measured real-text extraction quality on a new pre-re
 - **D-12:** rollback tests.
 - An opt-in `/api/analyze` Hybrid route behind a **declared** gate (D-01: "cổng nối phải được KHAI"), with an injected extractor and no silent fallback. It stays off by default, and `LLM_ONLY` must stay byte-identical.
 - **Adapter /3 → /4 parity:** fail-closed curved support in /4 only with certified exact curved geometry.
+
+**Fourth continuation (2026-10-31):**
+- **M-3 closed** (`14155201`): a doubly-faulted adapter returns a typed technical refusal, not HTTP 500; any fault of ours past argument validation is `ROUTE_INTERNAL_ERROR`. There is still no fallback to LLM_ONLY.
+- **Parity:** LLM_ONLY's "lần lượt" projection grounding (W18) now exists on Route D (registry /22).
+- **Remaining parity gap blocking retirement:** curved solids. Adapter /3 and LLM_ONLY serve them; /4 refuses them.
+- **Unchanged:** retirement statuses and gate states D-01…D-13.

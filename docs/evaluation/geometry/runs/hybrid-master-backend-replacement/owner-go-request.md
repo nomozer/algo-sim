@@ -8,6 +8,15 @@
 
 **Provider facts** below were checked against official Google documentation on 2026-10-31 (`provider-facts.md`).
 
+**Update, fourth continuation (2026-10-31):**
+- **Measured system:** it is now candidate `5caa6e94` (118 files, `f0ebd8df…`), which includes the M-3 fix and registry /22. `--manifest` prints the exact `measured_system` and `harness_sha256` to bind.
+- **Acceptance contract:** reviewed `ACCEPTANCE_CONTRACT_REVIEW_READY` (protocol revisions A–D).
+- **Decision-relevant finding:** Hybrid /4 refuses every curved solid. The corpus admits curved solids as expected-serve, and criterion 2 tolerates a net loss of only 2 of 45. **If the author includes 3 or more curved serve problems, the run will almost certainly end `HYBRID_CUTOVER_NO_GO`.** You can choose to:
+  - (a) run now, as a measurement of the current product; or
+  - (b) first let the agent build curved solids on /4 offline, then run.
+
+  Either way, the corpus must not be shaped around this: the author writes it independently.
+
 | # | item | proposal |
 |---|---|---|
 | 1 | Provider | Google Gemini API `v1beta generateContent`, on the Owner's **paid (billed) Cloud project**. The free tier is excluded because its content may be used for product improvement and human review. |

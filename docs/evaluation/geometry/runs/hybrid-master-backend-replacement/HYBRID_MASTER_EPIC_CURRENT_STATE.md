@@ -148,3 +148,67 @@ The original next actions 2 and 3 of that stop were done in the second continuat
 1. The Owner decides on `owner-go-request.md` and names an independent author for the held-out set.
 2. With a GO: freeze the corpus and oracle hashes into the protocol, then run `backend/scripts/run_paired_route_evaluation.py --live` under the approved terms.
 3. Without a GO: no further offline item in this epic is blocked. Optional: an independent architecture review of `f986e897..HEAD` before an integration request.
+
+---
+
+## Fourth continuation (Owner Master GO "architecture generalization + pre-live acceptance hardening"), 2026-10-31
+
+This section supersedes the "Next exact action" above. Earlier sections are kept as history.
+
+**Commits on the branch, in order:**
+- `5bec390f`, `9e2cfe80`, `383fd4f7`, `9aa74c58`, `15a7fbd6`: the acceptance contract (harness, tests, protocol revisions A–D).
+- `14155201`: M-3.
+- `b249d82a`: registry /22.
+- `e20f30e7`: regression receipts.
+- `5caa6e94`: candidate re-freeze.
+
+**Phase A — acceptance contract: `ACCEPTANCE_CONTRACT_REVIEW_READY`.** It took 4 rounds with a fresh-context reviewer, recorded in `evaluation-readiness-review.md` under "Acceptance contract".
+- §7 is now **code**: `acceptance()` in `run_paired_route_evaluation.py`, and the run summary carries the verdict.
+- **Criterion 1 (A1):** 0 observed Hybrid wrong-serves, plus no excess over the control. Wilson intervals over exercised rows are reported and never compared. The old rule gave 0/60 vs 0/60 ⇒ NO-GO.
+- **A2:** the control arm is never stopped, because stopping it made a GO unreachable exactly when LLM_ONLY was the unsafe arm.
+- **Criterion 5:** Hybrid's charged upper bound against the control's lower bound, which uses reported usage only with cached prompt tokens at 0. Reviewer findings B1, M1, N1 and N3 were each a false-GO or unreachable-GO path, and each is fixed and tested.
+- **Precondition 0:** composition 45 + 5 + 5 + 5; a complete run; `stop_reason` null; paired ids equal to the corpus ids.
+- The approval must state `corpus_author`, `authoring_independence` and `evaluator_independence`.
+- The thresholds of criteria 2–7 are unchanged.
+- **Stated limitations:** McNemar never binds beside −5 pp at n = 45; there is no served-correct floor (the `CONTROL_ARM_DEGENERATE` flag covers that).
+- An end-to-end GO is reachable through `evaluate()`. Harness tests: 46.
+
+**Phase B — M-3: CLOSED.** The fault handler re-ran `build_adapter4_response`, so a fault in its refusal path (`classify_refusal`) escaped as HTTP 500.
+- **Fix:** `adapter4_route.adapter_fault_response` builds the envelope from constants; it is test-locked equal to the normal refusal path.
+- `run_hybrid_offline` returns `ROUTE_INTERNAL_ERROR` for any other fault of ours, past argument validation.
+- **Tests:** RED → GREEN for 4 tests (repeated faults; recovery with no poisoned state; a broken classifier on a refused route; an unexpected exception without leaked prose). A mutant that restores the re-call fails them.
+- M-4 docstrings are closed.
+- This is a technical refusal, not a semantic one: it is classified technical in receipts and in the harness.
+
+**Phase C — architecture (`architecture-capability-audit.md`):**
+- **Development probe** `tools/topology_probe.py` → `topology-probe.json`: 4 new topologies, 36 hand-oracle questions, **36/36 exact** at registry /22. It was 35/36 before the fix below.
+- **Components A–J are classified;** the planner is a **bounded effect planner** (needs/effects producer selection, shallow decomposition).
+  - The probe found no gap where existing primitives could reach a goal the planner misses.
+  - **So no planner change is justified.**
+- **Implemented: Source Gate registry /22.** "H, K lần lượt là hình chiếu … của A trên SB, SC" is now read with ordered pairing (`test_respectively_projection_grounding.py`, 8 tests including a pairing mutant).
+  - This was a parity gap with LLM_ONLY (W18).
+  - The preview fixture chain is extended (`export_hybrid_preview_fixtures.py`), and the 5 version pins are updated.
+- **18-group delta:** curved (7–9, 14–16), frustum (10) and Oxyz (17–18) stay REFUSED on /4.
+
+**Gates at `5caa6e94`:**
+- Geometry suite before the freeze: 13353 passed. The 11 failures were all freeze-pending or dirty-tree checks, and the identity tests pass after the freeze (168/168).
+- Locked regression (`inventory-phase-e.json`): Wave 3 67/72, 0 wrong-served, **0 transitions**; locked 96/96; 203 probes with 0 served negatives, 0 internal, 0 transitions.
+- **Candidate `5caa6e94`:** product `b249d82a`, measured 118 files `f0ebd8df…`, cache 131 (no bump).
+  - The divergence layer is `inputs/candidate_divergence.json`.
+  - `--verify` matches.
+- **Full T3:** see `full-t3-5caa6e94.json`. T0 and T2 are subsets of T3: pytest, vitest, build, replay, crash surface.
+
+**Status:**
+- `ARCHITECTURE_CAPABILITY_PROGRESS`: Source Gate parity /22; M-3 closed; the planner is classified.
+- `OFFLINE_BACKEND_READY_FOR_LIVE_EVALUATION`: Full T3 `FULL_PRODUCT_GATE_PASS` at `5caa6e94`, attempt 1; pytest 15984 passed, 0 failed; vitest 1424; build, replay and crash surface (6/6 typed, 0 HTTP 500) all pass (`full-t3-5caa6e94.json`).
+- Overall `HYBRID_NOT_READY`.
+- Not `LIVE_MEASUREMENT_READY`: there is no corpus author and no GO.
+
+**Decisive capability finding for cutover.** The pre-registered corpus admits curved solids as expected-serve, because LLM_ONLY serves them. /4 refuses them all (`BRIDGE_UNSUPPORTED_CURVED`), and criterion 2 tolerates a net loss of at most 2 of 45. So **a corpus with ≥ 3 curved serve cases makes `HYBRID_CUTOVER_NO_GO` near-certain under the current product.**
+
+**Next exact action:**
+1. **Architecture, offline and justified:** curved solids on /4 inside the one planner. No second compiler, and no bridge into Adapter /3.
+   - **Scope:** Registry functions for cylinder, cone and sphere on exact ℚ³ anchors (`geometry/curved.py` exists); Source Gate grammar; planner effects; engine certificates for π-exact volume, area and radius; the /4 scene.
+   - **Start with:** a RED development probe of curved volume, area and radius, with hand π oracles; then the Registry function design and its exact pre/postconditions.
+2. **Owner, one consolidated decision:** `owner-go-request.md`. Either run the live evaluation on the current product, knowing it measures the curved gap, or after step 1. In both cases the Owner names the independent corpus author.
+3. With a GO: freeze the corpus hash into a protocol amendment, then `--live`.
