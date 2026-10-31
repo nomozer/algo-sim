@@ -283,6 +283,14 @@ def test_acceptance_refusal_latency_and_cost():
     assert out["criteria"]["5_usd_per_served_correct"] is None and out["verdict"] == "HYBRID_CUTOVER_NO_GO"
     llm_none = _verdict(k, _arm_rows(k, "HYBRID"), _arm_rows(k, "LLM_ONLY", not_correct=nothing))
     assert llm_none["criteria"]["5_usd_per_served_correct"] is True
+    costly = _arm_rows(k, "HYBRID", usd=0.010)                          # Hybrid truly costlier than 0.008
+    cheap = _arm_rows(k, "LLM_ONLY", latency=10.0, usd=0.008)
+    assert _verdict(k, costly, cheap)["failed"] == ["5_usd_per_served_correct"]
+    cheap[0] = {**cheap[0], "usd_upper": cheap[0]["usd_upper"] + 0.168}   # review N1: one unbilled LLM_ONLY 429
+    assert _verdict(k, costly, cheap)["failed"] == ["5_usd_per_served_correct"]   # retry luck never passes it
+    hybrid_429 = _arm_rows(k, "HYBRID", usd=0.008)
+    hybrid_429[0] = {**hybrid_429[0], "usd_upper": hybrid_429[0]["usd_upper"] + 0.023}
+    assert _verdict(k, hybrid_429, cheap)["failed"] == ["5_usd_per_served_correct"]  # conservative toward NO-GO
     assert llm_none["flags"] == ["CONTROL_ARM_DEGENERATE"] and _verdict(k, _arm_rows(k, "HYBRID"), l)["flags"] == []
 
 

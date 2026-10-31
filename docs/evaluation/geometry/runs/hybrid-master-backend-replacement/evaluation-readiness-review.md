@@ -84,3 +84,16 @@ No live result exists.
 | m6 | Criterion-7 fields were not required in the approval | **Fixed:** `check_approval_terms` requires them to be stated |
 
 **Tests:** 46/46.
+
+**Round 2, the same reviewer, re-verifying `9e2cfe80`: `NOT_READY`.**
+- **Re-probed and closed:** B1, M1, m3 (the interval over exercised rows), m5, and m6.
+
+| id | finding | disposition |
+|---|---|---|
+| N1 BLOCKER | The B1/M1 fix put criterion 5 on charged cost (an upper bound) for **both** arms. Requests without usage are charged at their ceiling, and LLM_ONLY's ceiling is about 7× Hybrid's (no output cap). So one unbilled LLM_ONLY 429 turned a true criterion-5 failure into a GO. | **Fixed:** the comparison is now conservative. Hybrid is charged its upper bound (`usd_charged_total`), and LLM_ONLY its lower bound (`usd_reported_total`). The test covers the reviewer's probe, an LLM_ONLY 429 that stays NO-GO, and a Hybrid 429 that is charged against Hybrid. A mutant that puts the control on charged cost fails it. |
+| N2 MAJOR | §7.5 still said "any `UNKNOWN` usage ⇒ not evaluable", which contradicted the code on the 0-request rows | **Fixed:** §7.5 states exactly two not-evaluable cases. |
+| m-a | `arm_upper` matches ceilings by send order | **Stated** in §7.5. The effect is about USD 0.0004 per request. |
+| m-b | `CONTROL_ARM_DEGENERATE` fires only at 0 served-correct | **Accepted** as stated: it is a flag, not a criterion. |
+| m-c | The B1/M1 record did not say the rule moved to an upper bound | **Recorded here.** Revision C supersedes it. |
+
+**Tests:** 46/46.

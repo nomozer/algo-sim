@@ -283,6 +283,9 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
             # ceiling; a 0-request row (the deterministic domain gate) costs a known 0.0 (review B1/M1)
             "usd_charged_total": (sum(r["usd_upper"] for r in rs)
                                   if all(isinstance(r["usd_upper"], (int, float)) for r in rs) else "UNKNOWN"),
+            # lower bound: reported usage only (a request without usage, e.g. a retried 429, adds 0) — criterion 5
+            # compares Hybrid's charged UPPER bound with the control's LOWER bound, so retry luck cannot pass it (N1)
+            "usd_reported_total": sum(r["usd"] for r in rs if isinstance(r["usd"], (int, float))),
             "exercised": len(rs) - sum(r["technical_failure"] for r in rs),
             "usd_per_served_correct": "UNKNOWN" if unknown or not ok else sum(usd) / ok,
         }
@@ -342,8 +345,8 @@ def acceptance(corpus: dict[str, Any], record: dict[str, Any], approval: dict[st
                            and h["refusal_reason_correct"] >= l["refusal_reason_correct"])
         lat = (h["latency_median_s"], l["latency_median_s"], h["latency_p90_s"], l["latency_p90_s"])
         c["4_latency"] = None if None in lat else lat[0] <= lat[1] and lat[2] <= P90_FACTOR * lat[3]
-        if "UNKNOWN" not in (h["usd_charged_total"], l["usd_charged_total"]) and h["served_correct"]:  # else None
-            llm = l["usd_charged_total"] / l["served_correct"] if l["served_correct"] else math.inf
+        if h["usd_charged_total"] != "UNKNOWN" and h["served_correct"]:              # dry run or none correct ⇒ None
+            llm = l["usd_reported_total"] / l["served_correct"] if l["served_correct"] else math.inf
             c["5_usd_per_served_correct"] = h["usd_charged_total"] / h["served_correct"] <= llm
         c["6_technical_and_scorer"] = all(a["technical_failures"] <= MAX_TECHNICAL_RATE * a["n"]
                                           and a["scorer_errors"] == 0 for a in (h, l))

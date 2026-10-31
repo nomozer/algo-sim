@@ -25,6 +25,8 @@
 - **m1, stated limitation.** With 45 serve cases, the −5 pp rule allows a net loss of at most 2, and no such discordant split has an exact McNemar p < 0.05. The −5 pp rule is therefore the binding part of criterion 2; McNemar is reported for completeness.
 - **m2, stated limitation.** No absolute floor on served-correct is pre-registered. If the control arm collapsed, a GO would rest on a degenerate comparison. When LLM_ONLY has 0 served-correct, the verdict carries the flag `CONTROL_ARM_DEGENERATE` for the Owner. The flag is not a criterion, and the thresholds are not changed.
 
+*Revision C (2026-10-31, still before any corpus or live result).* Round 2 of the acceptance review found a problem with revision B's cost rule (N1). Charging requests without usage at their ceiling inflates mostly the control's cost: LLM_ONLY has no output cap, so its ceiling is about 7× Hybrid's, and it sends more requests. One unbilled LLM_ONLY 429 could then turn a true criterion-5 failure into a GO. Criterion 5 now compares Hybrid's **upper** bound with LLM_ONLY's **lower** bound (§7.5), and its not-evaluable cases are stated exactly (N2).
+
 ## 1. Measurement metadata (actual values)
 
 | field | value |
@@ -173,7 +175,13 @@ Every criterion must hold on the frozen held-out set. The harness computes them 
 2. `served_correct` (primary) is not worse: the McNemar test does not favour LLM_ONLY at α = 0.05, and the difference is ≥ −5 pp. The lenient sensitivity rule is reported, and any reversal is flagged; it never overrides the primary rule.
 3. Hybrid refuses 100% of expected-refuse cases, with technical failures excluded and reported. Its refusal-reason accuracy is ≥ LLM_ONLY's.
 4. Hybrid latency: median ≤ LLM_ONLY's, and p90 ≤ 1.5× LLM_ONLY's.
-5. Hybrid USD per served-correct ≤ LLM_ONLY's. Cost is the §3 charged cost (`usd_charged_total`, revision B). When LLM_ONLY has 0 served-correct, its value is ∞. When Hybrid has 0 served-correct, or any usage is `UNKNOWN`, the criterion is not evaluable.
+5. Hybrid USD per served-correct ≤ LLM_ONLY's, compared **conservatively toward NO-GO** (revision C).
+   - **Hybrid** is charged its upper bound, `usd_charged_total`: reported usage, plus each request without usage at its own ceiling.
+   - **LLM_ONLY** is charged its lower bound, `usd_reported_total`: reported usage only.
+   - A request without usage (a 0-request domain-gate row, a retried 429) adds 0 to the lower bound. So retries cannot make the uncapped control look costlier than it was.
+   - When LLM_ONLY has 0 served-correct, its value is ∞.
+   - **Not evaluable** in exactly two cases: Hybrid has 0 served-correct, or Hybrid's `usd_upper` is not numeric, which happens only in a dry run. A row whose `usage`/`usd` is `UNKNOWN` does not by itself make the criterion not evaluable.
+   - *Stated assumption:* `arm_upper` charges the ceilings of the last-sent requests as the unreported ones. Analyze and program ceilings differ only by input bytes (about USD 0.0004), so this cannot move the verdict materially.
 6. Technical failures are ≤ 5% per arm (at most 3 of 60), and there are 0 scorer errors.
 7. `EVALUATOR_INDEPENDENCE` and `AUTHORING_INDEPENDENCE` are established. They are read from the Owner-written approval file: `corpus_author` must be non-empty, and `authoring_independence` and `evaluator_independence` must both be `ESTABLISHED`. The harness never writes them.
 
