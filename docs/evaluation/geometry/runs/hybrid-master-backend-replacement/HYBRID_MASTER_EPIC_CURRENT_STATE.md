@@ -280,3 +280,53 @@ The Owner-registered curved controls keep `BRIDGE_UNSUPPORTED_CURVED`.
 
   After those come the diameter phrasing and inscribed / circumscribed spheres, which need new relation types.
 - **Owner:** the single GO in `owner-go-request.md`, an independent author for the corpus, and the approval file.
+
+---
+
+## Sixth continuation (Owner GO: curved sections, cone ratio, reusable composition), 2026-10-31 — CHECKPOINT REACHED
+
+This section supersedes every earlier "Next exact action".
+
+**Commits:**
+- `5dc812ed`: the slice.
+- `140ead7a`: review round-1 fixes.
+- `142eb9db`: the notation boundary, which restores the Wave 3 W3-N45/N46 reasons.
+- `bfe8912f`: duplicate section names (round 2).
+- Review record and replay receipts.
+- `7a870059`: candidate re-freeze.
+
+**Served on /4 (registry /24, planner /20, engine /16):**
+- **Sections parallel to the base, of a cylinder and a cone:** at a stated distance from the base, or, for a cone, through the midpoint of its height. This is the kernel's `intersect_plane_curved` of the plane z = d.
+- **Axial sections:** a rectangle or an isosceles triangle, with the plane proven by the kernel to contain the axis.
+- **The small cone:** built by the kernel from the apex and the radius it **measures** on the section.
+- **Ratio:** by cross-multiplication, in either order the question states.
+- **Remaining volume:** by subtraction.
+- **Certificates:** each answer has an independent similarity certificate, k = (h − d)/h.
+- **Grounding:** closed grammars for the section, derived-cone and question sentences.
+
+**Evidence:**
+- Probe `tools/curved_section_probe.py`: 11 positives served exactly correct and 17 refused correctly (`test_route_d_curved_sections.py`).
+- **Independent review: `INDEPENDENT_CURVED_SECTION_REVIEW_READY`**, round 3 (`curved-section-review.md`).
+
+**Regression at `bfe8912f`** (`inventory-phase-i.json`):
+- Wave 3: 67/72, 0 wrong-served, **0 transitions**.
+- Locked cases: 96/96.
+- 203 probes: 0 served negatives and 0 internal faults. 12 positive probes moved REFUSED → REFUSED.
+
+**Registered controls:** 32 cells, REFUSED → REFUSED, recorded in the explicit layer `registered-curved-control-transitions.json` and asserted to remain refusals.
+
+**Candidate `7a870059`:** product `bfe8912f`, measured 118 files `277338ce…`, cache 131 (no bump). The divergence layer is `runs/hybrid-master-curved-sections/candidate_divergence.json`.
+
+**Full T3 `FULL_PRODUCT_GATE_PASS`** at `7a870059`: pytest 16071 passed; vitest 1424; build, replay and crash surface all pass (`full-t3-7a870059.json`).
+
+**Status:**
+- **`CURVED_PARITY_PARTIAL`.** These are `SUPPORTED_BOTH`: solid measures; parallel and axial sections; cone ratio and remaining volume. Still only on /3: an arbitrary apex ratio, the plane-equation path and ellipse sections, and the solid wordings "tâm đáy O" and "tâm đáy dưới/trên". Sphere sections are unsupported on /4.
+- `OFFLINE_BACKEND_READY_FOR_LIVE_EVALUATION`.
+- Overall `HYBRID_NOT_READY`.
+
+**Next exact action (offline):**
+1. Grammar for the wordings above, in the same closed grammar, each with adversarial locks.
+2. An apex ratio "cắt trục SO theo tỉ lệ k tính từ đỉnh S".
+3. Design, with failing examples, for a sphere section (`distance_from_center`; a contract change ⇒ model-surface impact).
+
+Then the composite and inscribed/circumscribed design.

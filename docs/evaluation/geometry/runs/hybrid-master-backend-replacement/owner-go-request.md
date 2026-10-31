@@ -8,6 +8,15 @@
 
 **Provider facts** below were checked against official Google documentation on 2026-10-31 (`provider-facts.md`).
 
+**Update, sixth continuation (2026-10-31). It supersedes the fifth-continuation measured system below.**
+- **Measured system:** candidate `7a870059` (118 files, `277338ce…`).
+- **Newly served on Hybrid:** curved sections parallel to the base, axial sections, the cone volume ratio and the remaining volume. Each passed an independent review (READY after 3 rounds).
+- **Still refused on Hybrid:**
+  - sphere sections;
+  - a ratio from the apex other than the midpoint;
+  - a ratio question that does not state its order. Adapter /3 guesses that order; /4 refuses it.
+  - the wordings "tâm đáy O" and "tâm đáy dưới/trên".
+
 **Update, fifth continuation (2026-10-31). It supersedes the fourth-continuation measured system and curved finding below.**
 - **Measured system:** candidate `98df8189` (118 files, `2f8c9945…`). `--manifest` prints the hash to bind.
 - **Curved solids on Hybrid /4:** cylinder, cone and sphere volume, lateral area, sphere surface and radius are now served exactly, with π kept; the independent review is READY.

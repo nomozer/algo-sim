@@ -91,3 +91,16 @@ Production cutover needs a measured real-text extraction quality on a new pre-re
   - sections parallel to the base and axial sections;
   - the cone volume ratio / remaining volume.
 - **Retirement:** Adapter /3 and LLM_ONLY are not retired on curved problems.
+
+**Sixth continuation (2026-10-31): curved sections and cone ratio on /4.**
+- **Now `SUPPORTED_BOTH` on /3 and /4:**
+  - sections parallel to the base (cylinder, cone) at a distance from the base;
+  - axial sections;
+  - the cone volume ratio and remaining volume.
+- **Only on /4:** the derived height, the total area, and the canonical pose.
+- **Partial or still only on /3:**
+  - an arbitrary ratio from the apex (/4 reads only the midpoint wording);
+  - a plane given by an equation, and ellipse sections;
+  - the wordings "tâm đáy O" and "tâm đáy dưới/trên".
+- **Sphere sections:** unsupported on /4; they need a contract field.
+- **Retirement:** Adapter /3 is still not retired for curved problems.
