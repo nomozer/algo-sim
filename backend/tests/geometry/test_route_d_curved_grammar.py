@@ -93,3 +93,69 @@ def test_a_missing_centre_distance_is_a_contract_error():
     del p["derived_sections"][0]["distance_from_center"]
     r = run_typed_fact_next_v2_route(p)
     assert r.status == "REFUSED" and not r.answer_exact
+
+
+# ── independent review round 1 (seventh continuation): each finding's reproducer, locked with its exact code ────────────
+def _greek_plane(p):
+    import copy
+    p = copy.deepcopy(p)
+    sec = p["derived_sections"][0]
+    p["problem_text"] = p["problem_text"].replace("(P)", "(α)")
+    sec["plane_name"], sec["quote"] = "α", sec["quote"].replace("(P)", "(α)")
+    p["simulation_goals"][1]["quote"] = sec["quote"]
+    return p
+
+
+def _two_sections_second_distance_invented():
+    SP = S.SP
+    s1 = "Mặt phẳng (P) song song với đáy và cách đáy một khoảng bằng 1 cắt hình nón theo một đường tròn."
+    s2 = "Mặt phẳng (Q) song song với đáy và cách đáy một khoảng bằng 2 cắt hình nón theo một đường tròn."
+    p = SP.build(SP.CONE_G, SP.CONE_S, f"{s1} {s2}", SP.dist("1", s1), "Tính diện tích thiết diện.", SP.AREA)
+    p["derived_sections"].append({**SP.dist("3", s2), "section_id": "td2", "plane_name": "Q"})   # the text says 2
+    return p
+
+
+def _solid_quote_is_the_section_sentence():
+    SP = S.SP
+    q = SP.build(SP.CONE_G, SP.CONE_S, SP.SEC_CONE1, SP.dist("1", SP.SEC_CONE1), "Tính diện tích thiết diện.", SP.AREA)
+    q["solids"][0]["quote"] = q["simulation_goals"][0]["quote"] = SP.SEC_CONE1.rstrip(".")
+    return q
+
+
+def _sphere_with_a_base_distance_too():
+    p = S.case("cách tâm O một khoảng bằng 3", "at_distance_from_center", S.AREA, S.A_Q, distance_from_center="3")
+    p["derived_sections"][0]["distance_from_base"] = "2"
+    return p
+
+
+_AREA_Q = "Tính diện tích thiết diện."
+REVIEW_1 = [  # (id, payload builder, expected code)
+    ("M1.zero_denominator_axis_point",
+     lambda: K.ratio_case("và cắt SO tại M sao cho SM/SO = 1/0", "1/3", K.AREA, _AREA_Q, point="M"), "SCHEMA_INVALID"),
+    ("M1.zero_denominator_axis_ratio",
+     lambda: K.ratio_case("cắt trục SO theo tỉ lệ 2/0 tính từ đỉnh S", "1/3", K.AREA, _AREA_Q), "SCHEMA_INVALID"),
+    ("M2.rim_on_another_circle", lambda: B.CP.payload(B.cone(
+        "Cho hình nón đỉnh S, đáy là đường tròn tâm O, điểm A thuộc đường tròn đáy tâm I, bán kính đáy bằng 3 và chiều cao "
+        "bằng 4.", rim=None), "volume", "Tính thể tích khối nón."), "SOURCE_OBJECT_MISMATCH"),
+    ("M3.second_section_distance_invented", _two_sections_second_distance_invented, "UNGROUNDED_VALUE"),
+    ("M4.solid_quote_is_the_section_sentence", _solid_quote_is_the_section_sentence, "SOURCE_OBJECT_MISMATCH"),
+    ("M5.ti_so_reads_parts_or_whole",
+     lambda: K.ratio_case("cắt trục SO theo tỉ số 1/2 tính từ đỉnh S", "1/2", K.AREA, _AREA_Q), "AMBIGUOUS_REFERENCE"),
+    ("minor.sphere_section_with_a_base_distance", _sphere_with_a_base_distance_too, "SOURCE_OBJECT_MISMATCH"),
+    ("minor.one_point_as_both_centres", lambda: B.CP.payload(B.cyl(
+        "Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O, bán kính đáy R = 2 và chiều cao h = 3.", top="O", rim=None,
+        notation="O.O"), "volume", "Tính thể tích khối trụ."), "SOURCE_OBJECT_MISMATCH"),
+]
+
+
+@pytest.mark.parametrize("cid,build,code", REVIEW_1, ids=[c[0] for c in REVIEW_1])
+def test_review_round_1_reproducers_are_refused_for_the_right_reason(cid, build, code):
+    r = run_typed_fact_next_v2_route(build())
+    assert r.status == "REFUSED" and not r.answer_exact and r.code == code, (r.code, r.reason)
+
+
+def test_a_greek_plane_name_is_read():
+    p = _greek_plane(S.CASES[0][1])                     # "Mặt phẳng (α) cách tâm O một khoảng bằng 3 …"
+    r = run_typed_fact_next_v2_route(p)
+    assert r.status == "SERVED", (r.code, r.reason)
+    assert parse_exact(r.answer_exact["mg1"]["coef"]) == parse_exact("16π")

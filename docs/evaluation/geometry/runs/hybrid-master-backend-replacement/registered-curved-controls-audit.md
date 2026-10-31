@@ -96,3 +96,36 @@ blockers, in order, are:
     parallel one.
   - What would change: it would SERVE `K.cone.area.section*`, which is registered as REFUSED.
   - What it needs: an Owner repin.
+
+## Independent review round 1 (verdict NOT_READY: 0 BLOCKER, 5 MAJOR) and its fixes
+
+| Finding | Fix | Locked by |
+|---|---|---|
+| M1: `k/0` crashed (ROUTE_INTERNAL_ERROR) | The ratio parse refuses `SCHEMA_INVALID` | `REVIEW_1` M1 ×2 |
+| M2: a rim clause on another circle was silently dropped (REFUSED → SERVED against c3bc1f67) | A read rim that fits no base refuses `SOURCE_OBJECT_MISMATCH` | M2 |
+| M3: `CURVED_MULTI_SECTION_UNSUPPORTED` masked a second section's invented value (it moved SOURCE_UNVERIFIED to CAPABILITY) | Every section is grounded first (`_phan_cong_dung_nguon`), and only then is the capability gap raised | M3 (`UNGROUNDED_VALUE`) |
+| M4: a misquote was reported as a capability gap | A solid quote that is a section sentence, or a section quote that is a solid sentence, refuses `SOURCE_OBJECT_MISMATCH` | M4 |
+| M5: "theo tỉ số k tính từ đỉnh S" is ambiguous (parts SM/MO or whole SM/SO) | It refuses `AMBIGUOUS_REFERENCE`. "theo tỉ lệ k" keeps the whole-axis reading. **Owner ruling requested (P-3)**: is "tỉ lệ k tính từ đỉnh" the whole-axis ratio in the intended curriculum? | M5 |
+| Minor: one point as both centres | `SOURCE_OBJECT_MISMATCH` | minor row |
+| Minor: contradicting section fields (`distance_from_base` / `ratio_from_apex` / `through_point` on a sphere; `distance_from_center` on another kind) | The bridge refuses `SOURCE_OBJECT_MISMATCH` instead of dropping them | minor row |
+| Minor: a later layer could add a cell absent from earlier layers | `load_transitions` asserts that a later layer only corrects existing cells | chain assertion |
+| Found while fixing M3: "Mặt phẳng (α)" was unreadable, because the plane-name grammar was Latin only | `_TEN_MP` accepts a Greek letter | `test_a_greek_plane_name_is_read` |
+
+Not changed, with reasons:
+
+- **A point named like the plane** ("tại P", plane "(P)"): the point label and the plane name are separate namespaces, and the value is correct.
+- **d = 0 written as a number:** `through_center` covers the great circle.
+- **"đáy có tâm O" on a cylinder when the other base is named:** this is a safe over-refusal (`AMBIGUOUS_REFERENCE`).
+- **`CURVED_PLANE_DOES_NOT_CUT` of a second section:** it is still reported after the question binder. The engine runs after the gate, and the precedence is the same as at c3bc1f67.
+
+**Layer 3** (`registered-curved-control-transitions-3.json`) moves 4 cells, REFUSED → REFUSED, each with its own reason:
+
+| Cells | Count | Before | After | Group |
+|---|---|---|---|---|
+| `K.cyl.area.section*` | 2 | `CURVED_MULTI_SECTION_UNSUPPORTED` | `CURVED_WORDING_UNSUPPORTED` | CAPABILITY, the registered group |
+| `K.cone.area.section*` | 2 | `CURVED_MULTI_SECTION_UNSUPPORTED` | `SOURCE_OBJECT_MISMATCH` | SOURCE_UNVERIFIED |
+
+- For the cylinder cells, the parallel-section sentence ends "theo thiết diện đường tròn", which the grammar does not read.
+- For the cone cells, the ratio section sentence names no solid, and the gate requires a section quote to name its solid.
+
+Totals: 32 / 32 REFUSED; 0 SERVED; 0 open REFUSAL_REASON_REGRESSION.

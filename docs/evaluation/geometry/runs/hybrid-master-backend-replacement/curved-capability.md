@@ -149,3 +149,60 @@ This is **bounded composition of existing primitives**, not open-ended planning.
 - **Why:** these controls now pass the bridge, and their wording lies outside the closed grammar: "tâm đáy O", "tâm đáy dưới/trên", "A trên đường tròn đáy dưới", "cắt trục SO theo tỉ lệ 1/2 tính từ đỉnh S", "thiết diện qua trục SAB".
 - **Guarantee:** the layer can only move a cell between REFUSED codes, and the tests assert that. The registered oracle files are not edited.
 - **These wordings are the next grammar gaps.**
+
+## Seventh continuation: registered contract audit, base-centre grammar, apex ratio k, sphere sections (registry /25, planner /21, engine /17)
+
+Commit `6e0a6c2c`. Offline, 0 provider calls. Supporting documents:
+
+- `registered-curved-controls-audit.md`: the 32 registered cells and the 12 moved probes;
+- `curved-generalization-audit.md`: planner, FactGraph, certificates, trace and model-surface impact.
+
+### What is now served on /4
+
+| Area | New wording or capability | Development probe |
+|---|---|---|
+| Base-centre grammar | "tâm đáy O", "tâm đáy dưới/trên (là) X", "hai đáy (lần lượt) có tâm X và Y", "đáy có tâm O", "đường tròn đáy (có) tâm O", rims "thuộc / trên đường tròn đáy (dưới/trên) (tâm O)/(O)", "bán kính đáy R = 3", "chiều cao h = 4", segment dimensions "chiều cao SO = 15" / "bán kính OB = 9" | `base_center_probe`: 7/7 served, 9/9 refused with the exact code |
+| Apex ratio k | "cắt (trục) SO tại M sao cho SM/SO = k"; "OM/OS = k" (the **gate** converts it to 1 − k, never the model); "cắt trục SO theo tỉ lệ k tính từ đỉnh S" | `apex_ratio_probe`: 11/11 served, 9/9 refused |
+| Sphere sections | "cách tâm O một khoảng bằng d" (`at_distance_from_center`) and "(đi) qua tâm O" (`through_center`) | `sphere_section_probe`: 8/8 served, 11/11 refused |
+
+Details:
+
+- **Apex ratio k.** The section's r' = k·r and S = πk²r². The small cone is V' = k³V and the rest is (1 − k³)V. One
+  mechanism covers every k (no per-k code). A named point M is the centre of the section circle and the base centre of the
+  small cone.
+- **Sphere sections.** The kernel's `_giao_cau` gives r'² = R² − d², with an independent certificate. The two edge cases
+  are typed:
+  - d = R ⇒ `CURVED_PLANE_TANGENT`: a point, no area;
+  - d > R ⇒ `CURVED_PLANE_DOES_NOT_CUT`.
+- **Sphere status.** Sphere sections are REPRESENTABLE_AND_PROBED. They count as IMPLEMENTED_AND_VERIFIED only after the
+  independent review returns READY and the full gates pass.
+
+### Refusal-reason integrity
+
+Unread curved wording now refuses with `CURVED_WORDING_UNSUPPORTED`. Before this fix it said `SOURCE_OBJECT_MISMATCH`, a
+false reason (the input names no wrong object) that moved the cell from CAPABILITY to SOURCE_UNVERIFIED.
+
+When a run has more than one section, the refusal is now `CURVED_MULTI_SECTION_UNSUPPORTED`. Before, it was a false "về đối
+tượng khác" (about another object).
+
+The transition layer is in two parts:
+
+- **Layer 1** is `registered-curved-control-transitions.json`. It is left untouched.
+- **Layer 2** is `registered-curved-control-transitions-2.json`.
+  - It corrects layer 1 and lists all 32 cells.
+  - The tests compose the two layers and assert the chain.
+  - Every cell moves REFUSED → REFUSED; none is SERVED.
+
+### Parity: what still blocks the 8 Adapter /3 curved fixtures
+
+The base-centre grammar was necessary, but it is not sufficient. The fixtures still refuse because of three gaps:
+
+| Gap | Effect | Status |
+|---|---|---|
+| Coordinated question lists ("Tính thể tích, diện tích xung quanh hình nón, …") | The shared question gate cannot bind them | Owner proposal P-1 |
+| Several sections in one run | The binder covers one section only | Owner proposal P-2 |
+| The cone fixtures ask "tỉ số thể tích" with no order | The question cannot be bound | Stays a refusal |
+
+Serving the first two would turn registered REFUSED cells into SERVED cells, so both are withheld until the Owner decides.
+
+**Parity is still PARTIAL.**

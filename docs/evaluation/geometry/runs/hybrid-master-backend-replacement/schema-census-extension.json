@@ -1,0 +1,18 @@
+{
+ "schema": "SCHEMA_CENSUS_EXTENSION/1",
+ "run": "hybrid-master-backend-replacement (seventh continuation: sphere sections)",
+ "extends": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/schema-census-v3.json",
+ "rule": "Additive only: classifies fields the contract gained after v3. A path already in v3 may not appear here (asserted).",
+ "fields": {
+  "DerivedPlaneSectionSpec.distance_from_center": {
+   "category": "METADATA",
+   "note": "value",
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "DerivedPlaneSectionSpecV2.distance_from_center": {
+   "category": "METADATA",
+   "note": "value",
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  }
+ }
+}

@@ -104,3 +104,20 @@ Production cutover needs a measured real-text extraction quality on a new pre-re
   - the wordings "tâm đáy O" and "tâm đáy dưới/trên".
 - **Sphere sections:** unsupported on /4; they need a contract field.
 - **Retirement:** Adapter /3 is still not retired for curved problems.
+
+**Seventh continuation (2026-10-31): registered contract audit, base-centre grammar, apex ratio k, sphere sections (commit `6e0a6c2c`).**
+
+- **Now `SUPPORTED_BOTH` on /3 and /4:**
+  - an arbitrary ratio from the apex, k = SM/SO, including OM/OS converted by the gate;
+  - the wordings "tâm đáy O" and "tâm đáy dưới/trên".
+- **On /4 under a new contract kind:** sphere sections at a distance from the centre and through the centre.
+  - Adapter /3 serves spheres only through `plane_equation`, which needs coordinates, and the registered sphere controls use
+    exactly that.
+  - Status: REPRESENTABLE_AND_PROBED until the independent review returns READY.
+- **Still only on /3:**
+  - a plane given by an equation;
+  - ellipse sections;
+  - coordinated question lists (P-1);
+  - several sections in one run (P-2).
+- **Retirement:** Adapter /3 is still not retired for curved problems. The 8 curved fixtures still refuse on /4, because of
+  P-1, P-2 and an unordered ratio question.

@@ -24,11 +24,12 @@ def names(cls): return [k for k, c in CASES.items() if c['class'] == cls]
 def load_transitions() -> dict:
     run = Path(__file__).resolve().parents[3] / "docs/evaluation/geometry/runs/hybrid-master-backend-replacement"
     out: dict = {}
-    for name in ("registered-curved-control-transitions.json", "registered-curved-control-transitions-2.json"):
+    for i, name in enumerate(("registered-curved-control-transitions.json", "registered-curved-control-transitions-2.json",
+                                  "registered-curved-control-transitions-3.json")):
         for k, v in json.loads((run / name).read_text(encoding="utf-8"))["cells"].items():
             assert v["before"][0] == v["after"][0] == "REFUSED", (name, k)
-            if k in out:
-                assert out[k]["after"] == v["before"], (name, k)
+            if i:                                  # a later layer only corrects cells an earlier layer holds
+                assert k in out and out[k]["after"] == v["before"], (name, k)
                 out[k] = {**v, "before": out[k]["before"]}
             else:
                 out[k] = v

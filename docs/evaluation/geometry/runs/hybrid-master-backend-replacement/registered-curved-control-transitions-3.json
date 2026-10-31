@@ -1,0 +1,64 @@
+{
+ "schema": "REGISTERED_CONTROL_TRANSITIONS/1",
+ "run": "hybrid-master-backend-replacement (seventh continuation, independent review round 1)",
+ "corrects": "registered-curved-control-transitions-2.json",
+ "rule": "Layer 3: `before` is layer 2's `after`; REFUSED -> REFUSED only; layers 1 and 2 are not edited.",
+ "cells": {
+  "target-grammar-identity-recovery::K.cone.area.section.goal_sid::a4": {
+   "before": [
+    "REFUSED",
+    "CURVED_MULTI_SECTION_UNSUPPORTED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "review round 1 (M3, plus '(α)' now read): several sections are a capability gap only once every section is grounded. The ratio section sentence 'Mặt phẳng (α) song song với đáy cắt trục SO theo tỉ lệ 1/2 tính từ đỉnh S' names no solid ('cắt hình nón' absent); the gate binds a section only to a solid its quote names (sixth-continuation review M2). Group SOURCE_UNVERIFIED: the quote does not ground the section's solid.",
+   "owner_proposal": "P-2 multi-section binding by kind ('qua trục' ⇒ axial, plane name ⇒ parallel): would SERVE the cone cell the Owner registered as REFUSED",
+   "cause": "sec_cut: thiết diện không khớp nguồn"
+  },
+  "target-grammar-identity-recovery::K.cone.area.section::a4": {
+   "before": [
+    "REFUSED",
+    "CURVED_MULTI_SECTION_UNSUPPORTED"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "review round 1 (M3, plus '(α)' now read): several sections are a capability gap only once every section is grounded. The ratio section sentence 'Mặt phẳng (α) song song với đáy cắt trục SO theo tỉ lệ 1/2 tính từ đỉnh S' names no solid ('cắt hình nón' absent); the gate binds a section only to a solid its quote names (sixth-continuation review M2). Group SOURCE_UNVERIFIED: the quote does not ground the section's solid.",
+   "owner_proposal": "P-2 multi-section binding by kind ('qua trục' ⇒ axial, plane name ⇒ parallel): would SERVE the cone cell the Owner registered as REFUSED",
+   "cause": "sec_cut: thiết diện không khớp nguồn"
+  },
+  "target-grammar-identity-recovery::K.cyl.area.section.goal_sid::a4": {
+   "before": [
+    "REFUSED",
+    "CURVED_MULTI_SECTION_UNSUPPORTED"
+   ],
+   "after": [
+    "REFUSED",
+    "CURVED_WORDING_UNSUPPORTED"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "review round 1 (M3): several sections are a capability gap only once every section is grounded. The parallel section sentence ends '… cắt hình trụ theo thiết diện đường tròn', outside the closed grammar (CAPABILITY, the registered group).",
+   "owner_proposal": "P-2 multi-section binding by kind ('qua trục' ⇒ axial, plane name ⇒ parallel): would SERVE the cone cell the Owner registered as REFUSED",
+   "cause": "sec_parallel: thiết diện không khớp nguồn"
+  },
+  "target-grammar-identity-recovery::K.cyl.area.section::a4": {
+   "before": [
+    "REFUSED",
+    "CURVED_MULTI_SECTION_UNSUPPORTED"
+   ],
+   "after": [
+    "REFUSED",
+    "CURVED_WORDING_UNSUPPORTED"
+   ],
+   "classification": "JUSTIFIED_REFUSAL_REFINEMENT",
+   "why": "review round 1 (M3): several sections are a capability gap only once every section is grounded. The parallel section sentence ends '… cắt hình trụ theo thiết diện đường tròn', outside the closed grammar (CAPABILITY, the registered group).",
+   "owner_proposal": "P-2 multi-section binding by kind ('qua trục' ⇒ axial, plane name ⇒ parallel): would SERVE the cone cell the Owner registered as REFUSED",
+   "cause": "sec_parallel: thiết diện không khớp nguồn"
+  }
+ }
+}

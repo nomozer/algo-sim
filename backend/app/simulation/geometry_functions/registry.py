@@ -4739,6 +4739,10 @@ def _khoi_cong_dung_nguon(c: LoiGoi) -> str | None:
     a = c.args
     kc = CV.KHOI_CONG[CV.LOAI_TU_NGUON[a.kind]]
     apex, two_bases = kc.vai_dinh == "đỉnh", kc.co_truc and kc.vai_dinh != "đỉnh"
+    if a.center is not None and a.center == a.top:
+        return "SOURCE_OBJECT_MISMATCH"          # one point as both centres / centre and apex: no solid (review 7, minor)
+    if any(_cau_cua_mat_cat(chuan_hoa(q)) for q in c.quotes):
+        return "SOURCE_OBJECT_MISMATCH"          # the solid's quote is a section sentence: a misquote (review 7, M4)
     cau = [_doc_cau_cong(chuan_hoa(q)) for q in c.quotes]
     if any(x is None for x in cau):          # wording the closed grammar does not read: a capability gap, not a
         return "CURVED_WORDING_UNSUPPORTED"   # claim that the source says something else (registered-controls audit)
@@ -4793,8 +4797,9 @@ def _khoi_cong_dung_nguon(c: LoiGoi) -> str | None:
                  (c is None and tang == "dưới" and a.center in duoi)
         else:
             ok = tang is None and c in (None, a.center)
-        if ok:
-            bound["rim"].add(g["x"])
+        if not ok:
+            return "SOURCE_OBJECT_MISMATCH"      # a rim on another circle / the other base (review 7, M2)
+        bound["rim"].add(g["x"])
     for f in bound:
         if (v := getattr(a, f)) is not None and bound[f] != {v}:
             return "SOURCE_OBJECT_MISMATCH"
@@ -4810,7 +4815,8 @@ def _khoi_cong_dung_nguon(c: LoiGoi) -> str | None:
     return None
 
 
-_TEN_MP = rf"(?:\s+\((?-i:(?P<mp>{_L}))\))?"
+#: A plane's written name: a Latin label or a Greek letter — "(P)", "(α)", "(β)" (review 7: "(α)" was unreadable).
+_TEN_MP = rf"(?:\s+\((?-i:(?P<mp>{_L}|[α-ω]))\))?"
 #: The CLOSED grammar of a curved section sentence (an allowlist, like `_CAU_CONG`): the whole quote must parse.
 _MO_MAT_CAT = (re.compile(rf"\s*(?:(?:cho|gọi)\s+)?(?:một\s+)?mặt\s+phẳng{_TEN_MP}", re.IGNORECASE),
                re.compile(rf"\s*cắt\s+(?:hình|khối|mặt)\s+(?P<k>trụ|nón|cầu)(?:\s+(?-i:(?P<n>{_L}(?:\.{_L})?)))?\s+bởi\s+(?:một\s+)?mặt\s+phẳng"
@@ -4824,7 +4830,7 @@ _CAU_MAT_CAT = tuple((vai, re.compile(mau, re.IGNORECASE)) for vai, mau in (
     ("axis_point", rf"cắt\s+(?:trục\s+|đường\s+cao\s+)?(?-i:(?P<x>{_L})(?P<y>{_L}))(?![\w'])\s+tại\s+(?:điểm\s+)?"
                    rf"(?-i:(?P<m>{_L}))(?![\w'])\s+sao\s+cho\s+(?-i:(?P<a1>{_L})(?P<a2>{_L}))\s*/\s*"
                    rf"(?-i:(?P<b1>{_L})(?P<b2>{_L}))\s*=\s*(?P<k>\d+(?:/\d+)?)(?![\w'√/])"),
-    ("axis_ratio", rf"cắt\s+(?:trục\s+|đường\s+cao\s+)?(?-i:(?P<x>{_L})(?P<y>{_L}))(?![\w'])\s+theo\s+tỉ\s+(?:lệ|số)\s+"
+    ("axis_ratio", rf"cắt\s+(?:trục\s+|đường\s+cao\s+)?(?-i:(?P<x>{_L})(?P<y>{_L}))(?![\w'])\s+theo\s+tỉ\s+(?P<w>lệ|số)\s+"
                    rf"(?P<k>\d+(?:/\d+)?)(?![\w'√/])\s+(?:tính\s+)?từ\s+(?:đỉnh\s+|điểm\s+)?(?-i:(?P<z>{_L}))(?![\w'])"),
     ("cuts", r"cắt\s+(?:hình|khối|mặt)\s+(?P<k2>trụ|nón|cầu)(?:\s+theo\s+(?:một\s+)?(?P<shape>thiết\s+diện|đường\s+tròn|"
              r"hình\s+chữ\s+nhật|tam\s+giác(?:\s+cân)?)(?:\s+giao\s+tuyến)?)?(?![\w])"),
@@ -4854,6 +4860,11 @@ def _doc_mat_cat(s: str) -> tuple[re.Match, list[tuple[str, re.Match]]] | None:
             out.append(nxt)
             pos = nxt[1].end()
     return None
+
+
+def _cau_cua_mat_cat(s: str) -> bool:
+    """`s` opens a section or derived-cone sentence ("Mặt phẳng (P) …", "Cắt hình nón bởi …", "… chia hình nón thành …")."""
+    return any(mo.match(s) for mo in _MO_MAT_CAT) or _CHIA_NON.match(s) is not None
 
 
 def _dau_cau(de: str, q: str) -> bool:
@@ -4890,6 +4901,8 @@ def _phan_cong_dung_nguon(c: LoiGoi, calls: tuple[LoiGoi, ...], de: str = "") ->
                 or m["mp"] not in ((sec.args.plane,) if many else (None, sec.args.plane)):
             return "SOURCE_OBJECT_MISMATCH"      # with two sections, the derived cone must NAME its cutting plane
         return None
+    if _MO_CONG.match(s):
+        return "SOURCE_OBJECT_MISMATCH"          # the section's quote is a solid sentence: a misquote (review 7, M4)
     doc = _doc_mat_cat(s)
     if doc is None:
         return "CURVED_WORDING_UNSUPPORTED"
@@ -4929,7 +4942,12 @@ def _phan_cong_dung_nguon(c: LoiGoi, calls: tuple[LoiGoi, ...], de: str = "") ->
         if v == "midpoint" and {m["x"], m["y"]} == axis:
             found.append((Fraction(1, 2), None))
         elif v in ("axis_point", "axis_ratio") and {m["x"], m["y"]} == axis:
-            kk = Fraction(m["k"])
+            if v == "axis_ratio" and m["w"].lower() == "số":
+                return "AMBIGUOUS_REFERENCE"         # "chia theo tỉ số k" reads SM/MO in textbooks (review 7, M5)
+            try:
+                kk = Fraction(m["k"])
+            except ZeroDivisionError:
+                return "SCHEMA_INVALID"              # a zero denominator (review 7, M1)
             if v == "axis_point":                   # XM / XY = k: X is the shared endpoint the ratio is measured from
                 num, den = (m["a1"], m["a2"]), (m["b1"], m["b2"])
                 frm = next((e for e in num if e in den and e in axis), None)
@@ -4955,6 +4973,9 @@ def _mat_cat_khop(a: Any) -> bool:
     """The question's "thiết diện" is THE one curved section of this run, of the asked solid."""
     secs = [x for x in _GOI_NGUON.get() if x.fn == "curved_section"]
     if len(secs) > 1 and any(x.args.section == a.section for x in secs):
+        for x in secs:                           # an ungrounded section keeps its own source verdict (review 7, M3)
+            if (code := _phan_cong_dung_nguon(x, _GOI_NGUON.get())) is not None:
+                raise TuChoi(code, f"{x.id}: thiết diện không khớp nguồn", (x.id,))
         # a capability gap, not a wrong object: the bounded binder reads "thiết diện" only when the run has ONE section
         raise TuChoi("CURVED_MULTI_SECTION_UNSUPPORTED", f"đề có {len(secs)} thiết diện của khối tròn xoay; câu hỏi "
                      "'thiết diện' chỉ được buộc khi đề có đúng một thiết diện", tuple(x.id for x in secs))

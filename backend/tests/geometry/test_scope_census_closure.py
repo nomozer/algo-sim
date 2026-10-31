@@ -27,6 +27,10 @@ RUNS = Path(__file__).resolve().parents[3] / 'docs/evaluation/geometry/runs'
 RUN = RUNS / 'hybrid-v2-w3-f2-ratio-projection-language-grounding'
 # v2 = preregistration-amendment-1 (F7 residual ancestry); v1 stays as the originally registered inventory.
 INVENTORY = json.loads((RUN / 'closed-input-contract/schema-census-v3.json').read_text(encoding='utf-8'))
+#: Fields the contract gained after v3 (hybrid-master seventh continuation: `distance_from_center`), additive, never a re-pin.
+_EXT = json.loads((RUNS / 'hybrid-master-backend-replacement/schema-census-extension.json').read_text(encoding='utf-8'))['fields']
+assert not set(_EXT) & set(INVENTORY['fields'])
+INVENTORY = {**INVENTORY, 'fields': {**INVENTORY['fields'], **_EXT}}
 SUP = json.loads((RUN / 'inputs/recovery-supplementary.json').read_text(encoding='utf-8'))['control']
 A3DEV = {c['case_id']: c for c in json.loads((RUNS / 'typedfact-next-adapter3-simulation/corpus-dev.json').read_text(encoding='utf-8'))['cases']}
 SIM = {c['case_id']: c for c in json.loads((RUNS / 'simulation-coverage-visual-validation/corpus-dev.json').read_text(encoding='utf-8'))['cases']}

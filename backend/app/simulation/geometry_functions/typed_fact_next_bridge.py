@@ -418,6 +418,10 @@ def _phan_cong(p: TypedFactNextPayload, solids: dict[str, Any]) -> list[dict[str
         if x.target_solid_id != s.solid_id or x.plane_kind not in (_MAT_CAT_CONG if kc.co_truc else _MAT_CAT_TAM):
             raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{x.section_id}: thiết diện {x.plane_kind} của khối tròn xoay này chưa "
                          "có trên planner", (x.section_id,))
+        if (x.distance_from_center is not None) != (x.plane_kind == "at_distance_from_center") or (
+                not kc.co_truc and (x.distance_from_base or x.ratio_from_apex or x.through_point)):
+            raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{x.section_id}: trường của thiết diện mâu thuẫn với loại mặt phẳng "
+                         f"{x.plane_kind}", (x.section_id,))     # review 7: contradicting fields are refused, not dropped
         if x.section_shape not in (None, "polygon" if x.plane_kind == "axial_section" else "circle"):
             raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{x.section_id}: hình dạng {x.section_shape} mâu thuẫn với loại thiết diện "
                          f"{x.plane_kind}", (x.section_id,))     # review M2: the payload's own fields must agree
