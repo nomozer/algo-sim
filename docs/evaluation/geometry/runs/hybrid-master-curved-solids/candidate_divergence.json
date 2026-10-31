@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT (fifth continuation: curved solids on /4)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-master-backend-replacement/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "2f8c9945ac95d3fd7338cd68b54501e2d83d581ea44f034a507cf0e526a06c1d",
+  "current_product_commit": "4074e8b95ec5ff64f7743bc8be4259b2f0136362",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Backend only, offline, on top of the f0ebd8df candidate: cylinders, cones and spheres are served on Route D /4 through the one route (bridge → planner → Source Gate closed clause grammar → engine canonical-pose layout → existing curved IR / interpreter / exact kernel → Adapter /4), with exact π results and an independent arithmetic certificate (registry /23, planner /19, engine /15). Curved sections, relations, composites and the /1 bridge stay refused BRIDGE_UNSUPPORTED_CURVED. Also: π display fixes (45π; 2πa³) and require_euclidean accepting an identity Gram matrix. Every previously served input is unchanged (locked regression 0 transitions). The default LLM_ONLY path, its cache identity, prompts, schemas and route A's provider surface are unchanged.",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "NO BUMP: LLM_ONLY untouched; Route D rows are keyed by the Route D surface (registry /23, planner /19, engine /15), so older Route D rows are retired by key; refusals are never cached.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored."
+  }
+}
