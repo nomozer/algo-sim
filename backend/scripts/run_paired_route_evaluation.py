@@ -279,6 +279,11 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
             "latency_p90_s": _quantile([r["latency_s"] for r in rs], 0.9),
             "usd_total": "UNKNOWN" if unknown else sum(usd),
             "usd_upper_total": sum(r["usd_upper"] for r in rs if isinstance(r["usd_upper"], float)),
+            # §3 cost rule, the one criterion 5 reads: reported usage, plus every request sent without usage at its
+            # ceiling; a 0-request row (the deterministic domain gate) costs a known 0.0 (review B1/M1)
+            "usd_charged_total": (sum(r["usd_upper"] for r in rs)
+                                  if all(isinstance(r["usd_upper"], (int, float)) for r in rs) else "UNKNOWN"),
+            "exercised": len(rs) - sum(r["technical_failure"] for r in rs),
             "usd_per_served_correct": "UNKNOWN" if unknown or not ok else sum(usd) / ok,
         }
     if rows:                   # always reported, so a run stopped inside its first arm still names its unpaired cases
@@ -291,7 +296,7 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
                     sum(by[i, b][field] and not by[i, a][field] for i in ids))
 
         (oa, ob), (wa, wb) = disc("served_correct"), disc("wrong_served")
-        out["paired"] = {"arms": [a, b], "complete_pairs": len(ids),
+        out["paired"] = {"arms": [a, b], "complete_pairs": len(ids), "paired_case_ids": ids,
                          "unpaired_cases": sorted({r["case_id"] for r in rows} - set(ids)),
                          f"served_correct_only_{a}": oa, f"served_correct_only_{b}": ob,
                          "served_correct_mcnemar_p": mcnemar_exact(oa, ob),
@@ -315,8 +320,9 @@ def acceptance(corpus: dict[str, Any], record: dict[str, Any], approval: dict[st
     h, l, p = s.get("HYBRID"), s.get("LLM_ONLY"), s.get("paired")
     cases = corpus.get("cases") or []
     got = collections.Counter("SERVE" if c.get("expect") == "SERVE" else c.get("refusal_class") for c in cases)
-    complete = (bool(h and l and p) and record.get("completed") is True and not record.get("stopped_arms")
-                and h["n"] == l["n"] == p["complete_pairs"] == len(cases) and not p["unpaired_cases"])
+    complete = (bool(h and l and p) and record.get("completed") is True and record.get("stop_reason") is None
+                and not record.get("stopped_arms") and h["n"] == l["n"] == p["complete_pairs"] == len(cases)
+                and not p["unpaired_cases"] and set(p["paired_case_ids"]) == {x.get("id") for x in cases})
     c: dict[str, bool | None] = {
         "0_pre_registered_composition": dict(got) == COMPOSITION,
         "0_complete_paired_evaluation": complete,
@@ -336,9 +342,9 @@ def acceptance(corpus: dict[str, Any], record: dict[str, Any], approval: dict[st
                            and h["refusal_reason_correct"] >= l["refusal_reason_correct"])
         lat = (h["latency_median_s"], l["latency_median_s"], h["latency_p90_s"], l["latency_p90_s"])
         c["4_latency"] = None if None in lat else lat[0] <= lat[1] and lat[2] <= P90_FACTOR * lat[3]
-        if "UNKNOWN" not in (h["usd_total"], l["usd_total"]) and h["served_correct"]:      # undefined ⇒ None
-            llm = l["usd_total"] / l["served_correct"] if l["served_correct"] else math.inf
-            c["5_usd_per_served_correct"] = h["usd_total"] / h["served_correct"] <= llm
+        if "UNKNOWN" not in (h["usd_charged_total"], l["usd_charged_total"]) and h["served_correct"]:  # else None
+            llm = l["usd_charged_total"] / l["served_correct"] if l["served_correct"] else math.inf
+            c["5_usd_per_served_correct"] = h["usd_charged_total"] / h["served_correct"] <= llm
         c["6_technical_and_scorer"] = all(a["technical_failures"] <= MAX_TECHNICAL_RATE * a["n"]
                                           and a["scorer_errors"] == 0 for a in (h, l))
     approval = approval or {}
@@ -346,9 +352,12 @@ def acceptance(corpus: dict[str, Any], record: dict[str, Any], approval: dict[st
                            and approval.get("authoring_independence") == "ESTABLISHED"
                            and approval.get("evaluator_independence") == "ESTABLISHED") or None
     failed = [k for k, v in c.items() if v is not True]
+    flags = ["CONTROL_ARM_DEGENERATE"] if l and l["served_correct"] == 0 else []      # revision B m2: not a criterion
     return {"verdict": "HYBRID_CUTOVER_NO_GO" if failed else "HYBRID_CUTOVER_GO", "failed": failed, "criteria": c,
-            "uncertainty": {f"{a}_wrong_served_ci95": (s.get(a) or {}).get("wrong_served_ci95")
-                            for a in ("HYBRID", "LLM_ONLY")}}
+            "flags": flags,
+            # over EXERCISED rows: a technical failure tested nothing, so it does not narrow the interval (review m3)
+            "uncertainty": {f"{a}_wrong_served_ci95": wilson(s[a]["wrong_served"], s[a]["exercised"])
+                            for a in ("HYBRID", "LLM_ONLY") if s.get(a)}}
 
 
 # ── live authorization and cost containment ──────────────────────────────────────────────────────────────────────────
@@ -371,7 +380,9 @@ def check_approval_terms(corpus_bytes: bytes, approval: dict[str, Any]) -> dict[
     if approval.get("corpus_sha256") != sha256_bytes(corpus_bytes):
         raise LiveRefused("corpus hash differs from the approved one")
     for key in ("max_requests", "max_usd", "input_usd_per_million", "output_usd_per_million", "model",
-                "llm_only_output_reservation_tokens", "measured_system", "harness_sha256"):
+                "llm_only_output_reservation_tokens", "measured_system", "harness_sha256",
+                # criterion 7 fields must be stated (any value): a paid run without them is a silent certain NO-GO
+                "corpus_author", "authoring_independence", "evaluator_independence"):
         if key not in approval:
             raise LiveRefused(f"approval lacks {key}")
     identity = runtime_identity()

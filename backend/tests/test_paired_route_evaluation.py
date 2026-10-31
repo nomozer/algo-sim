@@ -70,7 +70,8 @@ def _terms(corpus_path, **over):
     return {"corpus_sha256": E.sha256_file(corpus_path), "max_requests": 40, "max_usd": 7.0, "model": ident["model"],
             "measured_system": ident["measured_system"], "harness_sha256": ident["harness_sha256"],
             "input_usd_per_million": 0.30, "output_usd_per_million": 2.50,
-            "llm_only_output_reservation_tokens": 65536, **over}
+            "llm_only_output_reservation_tokens": 65536, "corpus_author": "", "authoring_independence": "NOT_ESTABLISHED",
+            "evaluator_independence": "NOT_ESTABLISHED", **over}
 
 
 def _rows(path):
@@ -282,6 +283,7 @@ def test_acceptance_refusal_latency_and_cost():
     assert out["criteria"]["5_usd_per_served_correct"] is None and out["verdict"] == "HYBRID_CUTOVER_NO_GO"
     llm_none = _verdict(k, _arm_rows(k, "HYBRID"), _arm_rows(k, "LLM_ONLY", not_correct=nothing))
     assert llm_none["criteria"]["5_usd_per_served_correct"] is True
+    assert llm_none["flags"] == ["CONTROL_ARM_DEGENERATE"] and _verdict(k, _arm_rows(k, "HYBRID"), l)["flags"] == []
 
 
 def test_the_run_summary_carries_the_acceptance_verdict(tmp_path):
@@ -598,6 +600,60 @@ def test_the_real_llm_only_arm_is_held_by_the_same_request_cap(tmp_path, monkeyp
     llm = next(r for r in out["rows"] if r["arm"] == "LLM_ONLY")
     assert llm["technical_failure"] and not llm["served"] and async_calls
     assert len(async_calls) + provider.calls == 3 == out["http_requests"] and out["stop_reason"] == "REQUEST_CAP"
+
+
+def test_a_deserved_go_is_reachable_end_to_end_with_zero_call_domain_gate_refusals(tmp_path, monkeypatch):
+    """Review B1/M1: the 5 out-of-domain cases are refused by the deterministic gate with 0 requests (no usage). Under
+    the §3 cost rule they cost a known 0.0, so a run that deserves a GO gets one through `evaluate()` itself."""
+    from app.ai.telemetry import record_usage
+
+    def variant(i, mutate=None):
+        p = deepcopy(SERVED)
+        p["problem_text"] = p["problem_text"].replace("AB = 6.", f"AB = {6 + i}.")     # d(A', (ABC)) = AA' = 12 still
+        p["premises"][1] = {**p["premises"][1], "args": {"segment": ["A", "B"], "value": str(6 + i)},
+                            "quote": f"AB = {6 + i}."}
+        if mutate:
+            mutate(p)
+        return p
+
+    def ambiguous(p):
+        p["solids"].append({**p["solids"][0], "solid_id": "pr2"})
+
+    def impossible(p):
+        p["problem_text"] = p["problem_text"].replace("AA' = 12.", "AA' = 12. BC = 11.")
+        p["premises"].append({"kind": "segment_length", "args": {"segment": ["B", "C"], "value": "11"}, "quote": "BC = 11."})
+
+    cases, script, llm_by_text = [], [], {}
+    for i in range(45):
+        p = variant(i)
+        cases.append({"id": f"S{i:02d}", "problem_text": p["problem_text"], "expect": "SERVE", "oracle": {"distance": ["12"]}})
+        script.append(_body(p))
+        llm_by_text[p["problem_text"]] = _ok(_quantity("measure.distance", _rational("12")))
+    for i, (klass, mutate) in enumerate([("CONTRADICTORY_DATA", impossible), ("MISSING_DATA", ambiguous)] * 5):
+        p = variant(100 + i, mutate)
+        cases.append({"id": f"R{i:02d}", "problem_text": p["problem_text"], "expect": "REFUSE", "refusal_class": klass})
+        script.append(_body(p))
+    for i in range(5):
+        cases.append({"id": f"O{i}", "problem_text": f"Viết chương trình Python in {i + 10} số Fibonacci đầu tiên.",
+                      "expect": "REFUSE", "refusal_class": "OUT_OF_DOMAIN"})
+    clock = [0.0]
+    monkeypatch.setattr(E.time, "perf_counter", lambda: clock[0])
+
+    async def llm_only(text, api_key):
+        clock[0] += 10.0
+        if text in llm_by_text:
+            record_usage("semantic_analyze", {"promptTokenCount": 12000, "candidatesTokenCount": 4000})
+        from app.main import _ngoai_pham_vi
+        return llm_by_text.get(text) or _ngoai_pham_vi(text) or {"status": "unsupported",
+                                                                  "failure_category": "geometry_generation_failed"}
+    corpus = _write(tmp_path, cases)
+    _env(monkeypatch, Provider(*script))
+    monkeypatch.setattr(E, "run_llm_only", llm_only)
+    out = E.evaluate(corpus, tmp_path / "go.jsonl", _terms(corpus, max_requests=400, max_usd=70.0, **_INDEPENDENT),
+                     sleep=lambda s: None)
+    gate_rows = [r for r in out["rows"] if r["case_id"].startswith("O")]
+    assert all(r["http_requests"] == 0 and r["usd"] == "UNKNOWN" and r["usd_upper"] == 0.0 for r in gate_rows)
+    assert out["acceptance"]["verdict"] == "HYBRID_CUTOVER_GO", out["acceptance"]["failed"]
 
 
 def test_a_finished_run_is_never_overwritten(tmp_path):

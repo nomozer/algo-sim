@@ -53,3 +53,34 @@ All round-2 items (N1, N2, M4, N3, m1, m2) are **CLOSED**, with evidence from ne
 - there is no Owner GO.
 
 No live result exists.
+
+## Acceptance contract (protocol §7, revisions A and B)
+
+**Why this exists.** The Owner found that the §7 criterion 1 rule (Hybrid's Wilson upper bound ≤ LLM_ONLY's observed rate) was unsatisfiable: with 0/60 in both arms, the upper bound is 6.02%, which is > 0%. §7 also existed only as prose.
+
+**Revision A, `5bec390f`:**
+- `acceptance()` makes §7 executable;
+- criterion 1 is now observed only;
+- the control arm is never stopped (A2).
+
+**Round 1, a fresh-context reviewer:** read-only, 0 network calls. Verdict `ACCEPTANCE_CONTRACT_REVIEW_NOT_READY`.
+- **Verified correct:**
+  - Wilson: 0/60 → (0, 0.06017); 9/10 → (0.5958, 0.9821).
+  - Exact McNemar, against an independent pmf reference.
+  - The criterion 2 denominator.
+  - The thresholds of criteria 2–7 are unchanged.
+  - A2 is justified and unbiased.
+  - Precondition 0 rejects incomplete, stopped, duplicate, missing, empty and mis-composed runs.
+
+| id | finding | disposition |
+|---|---|---|
+| B1 BLOCKER | Criterion 5 read actual USD. Out-of-domain cases refused by the deterministic gate make 0 requests and have no usage, so their USD is `UNKNOWN`, criterion 5 becomes not evaluable, and the result is always NO-GO. | **Fixed.** Criterion 5 reads the §3 charged cost, `usd_charged_total`, where a 0-request row costs 0.0. `test_a_deserved_go_is_reachable_end_to_end_with_zero_call_domain_gate_refusals` drives a GO through `evaluate()` with 5 zero-call OOD rows. Reverting to actual USD fails it. |
+| M1 MAJOR | A technical failure without usage had the same effect. The actual-USD rule also contradicted protocol §3. | **Fixed** by the same single rule. |
+| m1 | McNemar can never bind beside −5 pp when n = 45 | **Stated** in protocol revision B; thresholds unchanged |
+| m2 | No floor on served-correct, so a collapsed control arm can still give a GO | **Stated.** The verdict flags `CONTROL_ARM_DEGENERATE`; it is not a criterion. |
+| m3 | The interval counted technical failures as exercised | **Fixed:** the interval is over exercised rows |
+| m4 | Revision A was framed as purely neutral | **Fixed:** the dropped comparative claim is stated |
+| m5 | Counts, not identity; `stop_reason` was not read | **Fixed:** `stop_reason` must be null, and the paired ids must equal the corpus ids |
+| m6 | Criterion-7 fields were not required in the approval | **Fixed:** `check_approval_terms` requires them to be stated |
+
+**Tests:** 46/46.
