@@ -2958,11 +2958,11 @@ def _khoi_khop(m: re.Match, n: str, solid: str, khoi: dict) -> bool:
         return False
     if (tu := m[n + "t"]) and set(_nhan_cum(tu)) != set(_nhan_cum(solid)):
         return False
-    kw = m[n + "k"]
-    if not sym and not tu and (len(khoi) != 1 if kw else not _chi_mot_khoi_3d(khoi)):
+    if not sym and not tu and (len(khoi) != 1 if m[n + "k"] else not _chi_mot_khoi_3d(khoi)):
         return False
     # từ loại xét cả khi có hay không có ký hiệu (run `hybrid-v2-source-kind-consistency`)
-    if kw and not _loai_cum_dung(m.string[m.start(n + "k"):m.end()], solid):
+    if (kw := m[n + "k"]) and not _loai_cum_dung(
+            m.string[m.start(n + "k"):m.end()], solid):
         return False
     return True
 
