@@ -68,7 +68,7 @@ Each served curved answer equals **both** values below, or the plan is refused (
 
 ## Pedagogical trace (no frontend change)
 
-Status: **EXPORTED ON BACKEND (`/4`)** as of Continuation 8 (`df81deba`; frontend consumer remains deferred under D-10).
+Status: **EXPORTED ON BACKEND (`/4`)** as of Continuation 8 (`44a0b79e`; frontend consumer remains deferred under D-10).
 
 What each step carries:
 
@@ -110,4 +110,4 @@ What each step carries:
 - **Live readiness.**
   - The corpus is not pre-registered yet: no Owner GO, and the authorized budget is 0. So no amendment file is needed.
   - The Owner's approval packet must bind the new candidate and harness hashes, which is the next request.
-- **Status.** Sphere sections are **IMPLEMENTED_AND_VERIFIED** (`curved-generalization-review.md` Round 3 `READY` and Full T3 `FULL_PRODUCT_GATE_PASS` at `cb06635e`), and certified circumscribed spheres of polyhedra (`SolidSpec.circumscribes`) are added in Continuation 8 (`df81deba`, `circumscribed-spheres-review.md` Round 2 `READY`).
+- **Status.** Sphere sections are **IMPLEMENTED_AND_VERIFIED** (`curved-generalization-review.md` Round 3 `READY` and Full T3 `FULL_PRODUCT_GATE_PASS` at `cb06635e`), and certified circumscribed spheres of polyhedra (`SolidSpec.circumscribes`) are added in Continuation 8 (`44a0b79e`, `circumscribed-spheres-review.md` Round 2 `READY`).

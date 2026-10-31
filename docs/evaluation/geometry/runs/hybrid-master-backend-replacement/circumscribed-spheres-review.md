@@ -1,4 +1,4 @@
-# Independent adversarial review: eighth continuation (962a0d53..df81deba)
+# Independent adversarial review: eighth continuation (962a0d53..44a0b79e)
 
 The review covers all three Continuation 8 slices on Route D `/4`:
 1. Polyhedral role-phrase Source Gate parity (`_C_VAI` + `_cua_khop` delegating to `_loai_cum_dung`);
@@ -12,7 +12,7 @@ The review covers all three Continuation 8 slices on Route D `/4`:
 | Round | Target reviewed | BLOCKER | MAJOR | MINOR | NIT | Verdict |
 |---|---|---:|---:|---:|---:|---|
 | 1 | Continuation 8 initial implementation on `962a0d53` | 0 | 2 (`MAJOR-1`, `MAJOR-2`) | 2 (`MINOR-1`, `MINOR-2`) | 2 (`NIT-1`, `NIT-2`) | `NOT_READY` |
-| 2 | Fixed tree + regression locks (`df81deba`) | 0 | 0 | 1 (`MINOR-R2-1`, also closed in `df81deba`) | 0 | **`READY`** |
+| 2 | Fixed tree + regression locks (`df81deba`; mutant-anchor line formatting restored in `44a0b79e`) | 0 | 0 | 1 (`MINOR-R2-1`, closed in `df81deba`) | 0 | **`READY`** |
 
 ## Findings and closures
 
@@ -29,7 +29,7 @@ The review covers all three Continuation 8 slices on Route D `/4`:
 - G4 IR construction via 3 perpendicular bisector planes + post-execution cross-check against `ec_cong`, `r2_cong`, and `_chung_chi_cong`.
 - Zero `"circumsphere"` substrings in `backend/app/`; zero `"sphere"`/`"cylinder"`/`"cone"` branching outside `geometry/curved.py`; `DEFAULT_MODE == "LLM_ONLY"` and `CACHE_VERSION == "131"` unchanged; zero edits to `semantic_program/` or `frontend/`.
 
-## Regression replay at `df81deba` (`inventory-phase-l.json`, `wave3-phase-l.json`)
+## Regression replay at `44a0b79e` (`inventory-phase-l2.json`, `wave3-phase-l2.json`; identical to `df81deba` in `inventory-phase-l.json`)
 
 | Set | Result |
 |---|---|

@@ -208,7 +208,7 @@ Serving the first two would turn registered REFUSED cells into SERVED cells, so 
 
 ## Eighth continuation: role-phrase parity, pedagogical trace pre/postconditions, and certified circumscribed spheres of polyhedra on /4
 
-Commit `df81deba`. Offline, 0 provider calls. Supporting documents: `circumscribed-spheres-review.md`, `tools/circumscribed_sphere_probe.py`, `inventory-phase-l.json`.
+Commits `df81deba` / `44a0b79e` (product). Offline, 0 provider calls. Supporting documents: `circumscribed-spheres-review.md`, `tools/circumscribed_sphere_probe.py`, `inventory-phase-l2.json`.
 
 ### What is now served and hardened on /4
 
