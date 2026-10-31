@@ -13,7 +13,7 @@ This folder holds the candidate-divergence layer for the eighth continuation of
 - `curved-capability.md`, the eighth-continuation section
 - `curved-generalization-audit.md`
 - `migration-ledger.md`
-- `inventory-phase-l.json`
-- `wave3-phase-l.json`
+- `inventory-phase-l2.json` and `wave3-phase-l2.json`
+- `fixtures-adapter-2-trace-pre-postconditions/`
 - `schema-census-extension.json`
 - `HYBRID_MASTER_EPIC_CURRENT_STATE.md`
