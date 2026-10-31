@@ -478,6 +478,12 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
     if curved and (not v2 or p.relations):   # `/1` stays Adapter /3's; curved relations are not on the planner yet
         raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{sorted(curved)}: thiết diện hay quan hệ của khối tròn xoay chưa có trên "
                      "planner", tuple(sorted(curved)))
+    from .registry import CURVED_NAME_PATTERN
+    import re as _re_cong
+
+    if bad := sorted(s.solid_id for s in p.solids if s.solid_id in curved and not _re_cong.fullmatch(CURVED_NAME_PATTERN, s.notation)):
+        raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{bad}: ký hiệu khối tròn xoay này chưa diễn đạt được trên planner",
+                     tuple(bad))              # a capability gap, not an extraction error (Wave 3 W3-N45/N46 reason lock)
     if curved and len(p.solids) > 1:      # curved slice (bridge /2, registry /23): one curved solid; composites need their own certificates
         raise TuChoi("BRIDGE_UNSUPPORTED_CURVED_COMPOSITE", f"{sorted(curved)}: khối tròn xoay cùng khối khác trong một bài "
                      "chưa có chứng chỉ quan hệ trên planner", tuple(sorted(curved)))

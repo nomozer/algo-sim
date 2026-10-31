@@ -252,8 +252,9 @@ class HeightArgs(_Args):
 
 
 #: A curved solid's notation as the source writes it: "O.O'" (two base centres), "S.O" (apex.centre) or "O" (sphere centre).
-CurvedName = Annotated[str, BeforeValidator(_nhan),
-                      Field(pattern=r"^(?:\([A-Z][0-9]*'?\)|[A-Z][0-9]*'?(?:\.[A-Z][0-9]*'?)?)$")]
+#: The ONE grammar of a curved notation the planner can express (the bridge refuses any other as a capability gap).
+CURVED_NAME_PATTERN = r"^(?:\([A-Z][0-9]*'?\)|[A-Z][0-9]*'?(?:\.[A-Z][0-9]*'?)?)$"
+CurvedName = Annotated[str, BeforeValidator(_nhan), Field(pattern=CURVED_NAME_PATTERN)]
 
 
 class CurvedSolidArgs(_Args):
