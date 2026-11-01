@@ -27,7 +27,10 @@ ROOT = Path(__file__).resolve().parents[2]
 #: Superseded by run `hybrid-master-backend-replacement` (ninth continuation, registry /26, planner /22, engine /18):
 #: served fixtures carry `composition_classification` on `route_d.planner` and `relation_certificates` on `route_d`;
 #: answers, scene3d, witnesses, trace and refusal/gate fixtures are unchanged. Earlier bundles stay unchanged.
-FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-master-backend-replacement/fixtures-adapter-2-composition-classification'
+#: Superseded by run `hybrid-master-backend-replacement` (eleventh continuation, registry /28, planner /23, engine /20):
+#: served fixtures carry `search_telemetry` on `route_d.planner`; answers, scene3d, witnesses, trace,
+#: `relation_certificates` and refusal/gate fixtures are unchanged. Earlier bundles stay unchanged.
+FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-master-backend-replacement/fixtures-adapter-2-search-telemetry'
 #: The superseded bundle — the one that predates the route D version bump the identity-restore test is about.
 OLD_FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures-adapter-2'
 SCRIPT = ROOT / 'backend/scripts/export_hybrid_preview_fixtures.py'
