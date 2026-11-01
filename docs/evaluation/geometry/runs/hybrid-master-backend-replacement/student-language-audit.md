@@ -194,3 +194,15 @@ Regression at `fb67cfb2`:
   bytes through the declared identity delta.
 - Frontend envelope unchanged; `route_d.refusal.clarification` appears only on the honest-exit refusal (frontend
   consumer tests 177/177).
+
+## 10. Eleventh continuation addendum — PE-2 closure, unanswered-request hardening, S-1 offline prototype & S-2 pilot harness (2026-11-01)
+
+- **PE-2 (`ISSUE-ARCH-ROUTE-D-SOLID-CLASS-WORD-UNCERTIFIED`) closed on the research branch (`9e059eb7`, Registry `/28`, Engine `/20`):**
+  - `registry.py::doc_khang_dinh_loai_hinh` reads premise-level solid-class claims (`hình lập phương`, `hình hộp chữ nhật`, `hình hộp đứng`, `hình hộp`, `hình lăng trụ đứng`, `hình lăng trụ đều`, `hình lăng trụ xiên`, `hình chóp đều`, `tứ diện đều`) and 2D polygon claims (`hình vuông`, `hình thoi`, `hình chữ nhật`, `hình bình hành`, `hình thang`, `hình thang cân`, `hình thang vuông`, `lục giác đều`, `tam giác đều` / `cân` / `vuông` / `vuông cân`), binding prose solid symbols by ordered topology (`_khop_ky_hieu_khoi`) and multi-solid sentence coordination (`_day_khoi_cho_menh_de`).
+  - `engine.py::kiem_khang_dinh_loai_hinh` certifies every extracted assertion in exact `Fraction` Gram arithmetic across root and sub-solids (`"Cho hình lập phương ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật, AB = 2, AD = 3, AA' = 4."` deterministically refuses `INCONSISTENT_FACTS`; locked in `test_route_d_semantic_shape_invariants.py`, `41/41`).
+- **Unanswered / operand-less imperative requests closed (`§8` residual above):**
+  - `"Vẽ hình rồi tính."`, `"Tìm."`, and `"Xác định."` (where an imperative calculation/search clause has no answered math/section/intersection goal) now refuse fail-closed with `SOURCE_GOAL_UNANSWERED`, while preserving all legitimate `SL-1` simulation-only requests (`student-language-probe-c11.json` identical to `student-language-probe-final.json`: `52` `SERVED_CORRECT`, `5` `NEEDS_CLARIFICATION_CORRECT`, `3` `FALSE_REFUSAL`, `7` `CORRECT_REFUSAL`, `20/20` adversarial `SAFE_REFUSAL`, `0` `WRONG_SERVED`).
+- **`S-1` isolated offline prototype (`backend/scripts/s1_diacritic_offline.py`, `s1-diacritic-free-offline-audit.md`):**
+  - Built outside `backend/app/` (`detect_domain` untouched), preserving 1-to-1 `norm_char_to_raw_span`, mixed-IME `_ascii_fold`, `verify_no_forged_quotes`, and `NEEDS_CLARIFICATION` flags for polysemous ASCII tokens (`goc`, `day`, `tam`, `canh`, `duong`) and lowercase solid notations (`16/16` in `s1-diacritic-development-corpus.json`, `test_s1_diacritic_free_offline.py`). Production enablement remains gated on Owner decision `S-1`.
+- **`S-2` offline pilot protocol & deterministic scorer (`backend/scripts/score_s2_student_language_pilot.py`, `s2-student-language-pilot-protocol.md`):**
+  - Offline 8-metric harness (`ALLOW_LIVE_AI=0`, `0` live calls, `NOT_MEASURED`/`NOT_RECOVERABLE` preserved without coercing to `0`, `test_s2_student_language_pilot_harness.py`), ready for Owner budget/execution authorization.

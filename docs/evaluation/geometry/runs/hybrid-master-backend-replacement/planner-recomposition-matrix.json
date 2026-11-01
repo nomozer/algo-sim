@@ -1,0 +1,4284 @@
+{
+  "schema": "planner-recomposition-matrix/1",
+  "provider_calls": 0,
+  "versions": {
+    "registry": "geometry-functions/28",
+    "planner": "geometry-fact-planner/23",
+    "engine": "geometry-function-engine/20"
+  },
+  "summary": {
+    "total_diagnostic_cases": 24,
+    "counts_baseline_v22": {
+      "SOURCE_EXPLICIT_SEQUENCE": 2,
+      "REGISTERED_DECOMPOSITION": 2,
+      "REACHABLE_BUT_SEARCH_MISSED": 11,
+      "MISSING_PRIMITIVE": 2,
+      "UNSUPPORTED_EXACT_DOMAIN": 2,
+      "INSUFFICIENT_GIVENS": 2,
+      "SOURCE_UNVERIFIED": 2,
+      "NOT_ESTABLISHED": 1
+    },
+    "counts_current_v23": {
+      "SOURCE_EXPLICIT_SEQUENCE": 2,
+      "REGISTERED_DECOMPOSITION": 2,
+      "DISCOVERED_FUNCTION_COMPOSITION": 9,
+      "REACHABLE_BUT_SEARCH_MISSED": 2,
+      "MISSING_PRIMITIVE": 2,
+      "UNSUPPORTED_EXACT_DOMAIN": 2,
+      "INSUFFICIENT_GIVENS": 2,
+      "SOURCE_UNVERIFIED": 2,
+      "NOT_ESTABLISHED": 1
+    },
+    "newly_unlocked_discovered_compositions": 9,
+    "remaining_reachable_but_search_missed": 2,
+    "wrong_served": 0
+  },
+  "registry_contract_audit": {
+    "registry_version": "geometry-functions/28",
+    "total_functions": 49,
+    "functions": [
+      {
+        "name": "altitude",
+        "kind": "fact",
+        "inputs": [
+          "apex",
+          "foot",
+          "solid"
+        ],
+        "outputs": [
+          "GeometricConstraint"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "compatible_with_declared_topology_and_metric_constraints"
+        ],
+        "postconditions": [
+          "metric_or_incidence_constraint_satisfied"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "GeometricConstraint",
+          "fact"
+        ],
+        "source_requirements": {
+          "keywords_groups": 2,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [
+            "foot"
+          ],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "ask_angle_line_plane",
+        "kind": "ask",
+        "inputs": [
+          "line",
+          "plane"
+        ],
+        "outputs": [
+          "ExactScalarMetric"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "solid_coordinates_determinable_up_to_isometry",
+          "target_operands_constructed"
+        ],
+        "postconditions": [
+          "exact_fraction_or_quadratic_radical_value",
+          "gram_formula_cross_checked"
+        ],
+        "needs": [
+          [
+            "Point:P",
+            "Point:Q",
+            "Plane:R"
+          ]
+        ],
+        "effects": [
+          "AnswerAngleLinePlane:goal_answer"
+        ],
+        "object_types": [
+          "ExactScalarMetric",
+          "ask"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": true
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only",
+          "returns_exact_cos2_or_sin2_not_transcendental_arccos_float"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "ask_angle_lines",
+        "kind": "ask",
+        "inputs": [
+          "line1",
+          "line2"
+        ],
+        "outputs": [
+          "ExactScalarMetric"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "solid_coordinates_determinable_up_to_isometry",
+          "target_operands_constructed"
+        ],
+        "postconditions": [
+          "exact_fraction_or_quadratic_radical_value",
+          "gram_formula_cross_checked"
+        ],
+        "needs": [
+          [
+            "Point:P",
+            "Point:Q",
+            "Line:L"
+          ]
+        ],
+        "effects": [
+          "AnswerAngleLines:goal_answer"
+        ],
+        "object_types": [
+          "ExactScalarMetric",
+          "ask"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": false,
+          "has_descriptor_phrase": true
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only",
+          "returns_exact_cos2_or_sin2_not_transcendental_arccos_float"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "ask_angle_plane_plane",
+        "kind": "ask",
+        "inputs": [
+          "plane1",
+          "plane2"
+        ],
+        "outputs": [
+          "ExactScalarMetric"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "solid_coordinates_determinable_up_to_isometry",
+          "target_operands_constructed"
+        ],
+        "postconditions": [
+          "exact_fraction_or_quadratic_radical_value",
+          "gram_formula_cross_checked"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "ExactScalarMetric",
+          "ask"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only",
+          "returns_exact_cos2_or_sin2_not_transcendental_arccos_float"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "ask_area",
+        "kind": "ask",
+        "inputs": [
+          "polygon"
+        ],
+        "outputs": [
+          "ExactScalarMetric"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "solid_coordinates_determinable_up_to_isometry",
+          "target_operands_constructed"
+        ],
+        "postconditions": [
+          "exact_fraction_or_quadratic_radical_value",
+          "gram_formula_cross_checked"
+        ],
+        "needs": [
+          [
+            "Point:P",
+            "Point:Q",
+            "Point:R"
+          ]
+        ],
+        "effects": [
+          "AnswerArea:goal_answer"
+        ],
+        "object_types": [
+          "ExactScalarMetric",
+          "ask"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": true
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "ask_curved_residual_volume",
+        "kind": "ask",
+        "inputs": [
+          "first",
+          "second"
+        ],
+        "outputs": [
+          "ExactScalarMetric"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "solid_coordinates_determinable_up_to_isometry",
+          "target_operands_constructed"
+        ],
+        "postconditions": [
+          "exact_fraction_or_quadratic_radical_value",
+          "gram_formula_cross_checked"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "ExactScalarMetric",
+          "ask"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": false,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only",
+          "curved_solid_canonical_relations_only_no_arbitrary_oblique_plane_cut"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "ask_curved_section_area",
+        "kind": "ask",
+        "inputs": [
+          "solid",
+          "section"
+        ],
+        "outputs": [
+          "ExactScalarMetric"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "solid_coordinates_determinable_up_to_isometry",
+          "target_operands_constructed"
+        ],
+        "postconditions": [
+          "exact_fraction_or_quadratic_radical_value",
+          "gram_formula_cross_checked"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "ExactScalarMetric",
+          "ask"
+        ],
+        "source_requirements": {
+          "keywords_groups": 2,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": false,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only",
+          "curved_solid_canonical_relations_only_no_arbitrary_oblique_plane_cut"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "ask_curved_section_radius",
+        "kind": "ask",
+        "inputs": [
+          "solid",
+          "section"
+        ],
+        "outputs": [
+          "ExactScalarMetric"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "solid_coordinates_determinable_up_to_isometry",
+          "target_operands_constructed"
+        ],
+        "postconditions": [
+          "exact_fraction_or_quadratic_radical_value",
+          "gram_formula_cross_checked"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "ExactScalarMetric",
+          "ask"
+        ],
+        "source_requirements": {
+          "keywords_groups": 2,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": false,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only",
+          "curved_solid_canonical_relations_only_no_arbitrary_oblique_plane_cut"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "ask_curved_volume",
+        "kind": "ask",
+        "inputs": [
+          "solid"
+        ],
+        "outputs": [
+          "ExactScalarMetric"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "solid_coordinates_determinable_up_to_isometry",
+          "target_operands_constructed"
+        ],
+        "postconditions": [
+          "exact_fraction_or_quadratic_radical_value",
+          "gram_formula_cross_checked"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "ExactScalarMetric",
+          "ask"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": false,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only",
+          "curved_solid_canonical_relations_only_no_arbitrary_oblique_plane_cut"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "ask_curved_volume_ratio",
+        "kind": "ask",
+        "inputs": [
+          "first",
+          "second"
+        ],
+        "outputs": [
+          "ExactScalarMetric"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "solid_coordinates_determinable_up_to_isometry",
+          "target_operands_constructed"
+        ],
+        "postconditions": [
+          "exact_fraction_or_quadratic_radical_value",
+          "gram_formula_cross_checked"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "ExactScalarMetric",
+          "ask"
+        ],
+        "source_requirements": {
+          "keywords_groups": 2,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": false,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only",
+          "curved_solid_canonical_relations_only_no_arbitrary_oblique_plane_cut"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "ask_distance_line_plane",
+        "kind": "ask",
+        "inputs": [
+          "line",
+          "plane"
+        ],
+        "outputs": [
+          "ExactScalarMetric"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "solid_coordinates_determinable_up_to_isometry",
+          "target_operands_constructed"
+        ],
+        "postconditions": [
+          "exact_fraction_or_quadratic_radical_value",
+          "gram_formula_cross_checked"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "ExactScalarMetric",
+          "ask"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": false,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "ask_distance_lines",
+        "kind": "ask",
+        "inputs": [
+          "line1",
+          "line2"
+        ],
+        "outputs": [
+          "ExactScalarMetric"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "solid_coordinates_determinable_up_to_isometry",
+          "target_operands_constructed"
+        ],
+        "postconditions": [
+          "exact_fraction_or_quadratic_radical_value",
+          "gram_formula_cross_checked"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "ExactScalarMetric",
+          "ask"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "ask_distance_planes",
+        "kind": "ask",
+        "inputs": [
+          "plane1",
+          "plane2"
+        ],
+        "outputs": [
+          "ExactScalarMetric"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "solid_coordinates_determinable_up_to_isometry",
+          "target_operands_constructed"
+        ],
+        "postconditions": [
+          "exact_fraction_or_quadratic_radical_value",
+          "gram_formula_cross_checked"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "ExactScalarMetric",
+          "ask"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": false,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "ask_distance_point_plane",
+        "kind": "ask",
+        "inputs": [
+          "point",
+          "plane"
+        ],
+        "outputs": [
+          "ExactScalarMetric"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "solid_coordinates_determinable_up_to_isometry",
+          "target_operands_constructed"
+        ],
+        "postconditions": [
+          "exact_fraction_or_quadratic_radical_value",
+          "gram_formula_cross_checked"
+        ],
+        "needs": [
+          [
+            "Point:P",
+            "Plane:Q"
+          ]
+        ],
+        "effects": [
+          "AnswerDistance:distance_answer"
+        ],
+        "object_types": [
+          "ExactScalarMetric",
+          "ask"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "ask_lateral_area",
+        "kind": "ask",
+        "inputs": [
+          "solid"
+        ],
+        "outputs": [
+          "ExactScalarMetric"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "solid_coordinates_determinable_up_to_isometry",
+          "target_operands_constructed"
+        ],
+        "postconditions": [
+          "exact_fraction_or_quadratic_radical_value",
+          "gram_formula_cross_checked"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "ExactScalarMetric",
+          "ask"
+        ],
+        "source_requirements": {
+          "keywords_groups": 2,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": false,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only",
+          "curved_solid_canonical_relations_only_no_arbitrary_oblique_plane_cut"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "ask_length",
+        "kind": "ask",
+        "inputs": [
+          "segment"
+        ],
+        "outputs": [
+          "ExactScalarMetric"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "solid_coordinates_determinable_up_to_isometry",
+          "target_operands_constructed"
+        ],
+        "postconditions": [
+          "exact_fraction_or_quadratic_radical_value",
+          "gram_formula_cross_checked"
+        ],
+        "needs": [
+          [
+            "Point:P",
+            "Foot:F,P,L"
+          ],
+          [
+            "Point:P",
+            "Point:Q"
+          ]
+        ],
+        "effects": [
+          "AnswerDistance:distance_witness",
+          "AnswerLength:goal_answer"
+        ],
+        "object_types": [
+          "ExactScalarMetric",
+          "ask"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": true
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "ask_radius",
+        "kind": "ask",
+        "inputs": [
+          "solid"
+        ],
+        "outputs": [
+          "ExactScalarMetric"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "solid_coordinates_determinable_up_to_isometry",
+          "target_operands_constructed"
+        ],
+        "postconditions": [
+          "exact_fraction_or_quadratic_radical_value",
+          "gram_formula_cross_checked"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "ExactScalarMetric",
+          "ask"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": false,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only",
+          "curved_solid_canonical_relations_only_no_arbitrary_oblique_plane_cut"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "ask_residual_volume",
+        "kind": "ask",
+        "inputs": [
+          "original_solid",
+          "subtracted_solids"
+        ],
+        "outputs": [
+          "ExactScalarMetric"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "solid_coordinates_determinable_up_to_isometry",
+          "target_operands_constructed"
+        ],
+        "postconditions": [
+          "exact_fraction_or_quadratic_radical_value",
+          "gram_formula_cross_checked"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "ExactScalarMetric",
+          "ask"
+        ],
+        "source_requirements": {
+          "keywords_groups": 2,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": false,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "ask_section_area",
+        "kind": "ask",
+        "inputs": [
+          "solid",
+          "plane"
+        ],
+        "outputs": [
+          "ExactScalarMetric"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "solid_coordinates_determinable_up_to_isometry",
+          "target_operands_constructed"
+        ],
+        "postconditions": [
+          "exact_fraction_or_quadratic_radical_value",
+          "gram_formula_cross_checked"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "ExactScalarMetric",
+          "ask"
+        ],
+        "source_requirements": {
+          "keywords_groups": 2,
+          "value_fields": [],
+          "plane_fields": [
+            "plane"
+          ],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "ask_surface_area",
+        "kind": "ask",
+        "inputs": [
+          "solid"
+        ],
+        "outputs": [
+          "ExactScalarMetric"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "solid_coordinates_determinable_up_to_isometry",
+          "target_operands_constructed"
+        ],
+        "postconditions": [
+          "exact_fraction_or_quadratic_radical_value",
+          "gram_formula_cross_checked"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "ExactScalarMetric",
+          "ask"
+        ],
+        "source_requirements": {
+          "keywords_groups": 2,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": false,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only",
+          "curved_solid_canonical_relations_only_no_arbitrary_oblique_plane_cut"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "ask_volume",
+        "kind": "ask",
+        "inputs": [
+          "solid"
+        ],
+        "outputs": [
+          "ExactScalarMetric"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "solid_coordinates_determinable_up_to_isometry",
+          "target_operands_constructed"
+        ],
+        "postconditions": [
+          "exact_fraction_or_quadratic_radical_value",
+          "gram_formula_cross_checked"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "ExactScalarMetric",
+          "ask"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "ask_volume_ratio",
+        "kind": "ask",
+        "inputs": [
+          "numerator_solid",
+          "denominator_solid"
+        ],
+        "outputs": [
+          "ExactScalarMetric"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "solid_coordinates_determinable_up_to_isometry",
+          "target_operands_constructed"
+        ],
+        "postconditions": [
+          "exact_fraction_or_quadratic_radical_value",
+          "gram_formula_cross_checked"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "ExactScalarMetric",
+          "ask"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": false,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "centroid",
+        "kind": "construct",
+        "inputs": [
+          "point",
+          "polygon"
+        ],
+        "outputs": [
+          "Point3D"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "distinct_non_degenerate_operands"
+        ],
+        "postconditions": [
+          "exact_affine_or_gram_coordinates",
+          "independent_witness_verified"
+        ],
+        "needs": [
+          [
+            "Point:A",
+            "Point:B",
+            "Point:C"
+          ]
+        ],
+        "effects": [
+          "Point:centroid"
+        ],
+        "object_types": [
+          "Point3D",
+          "construct"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": true
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "curved_section",
+        "kind": "construct",
+        "inputs": [
+          "solid",
+          "section",
+          "kind",
+          "plane",
+          "distance",
+          "ratio",
+          "point"
+        ],
+        "outputs": [
+          "CurvedSection2D"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "distinct_non_degenerate_operands"
+        ],
+        "postconditions": [
+          "exact_affine_or_gram_coordinates",
+          "independent_witness_verified"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "CurvedSection2D",
+          "construct"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": false,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only",
+          "curved_solid_canonical_relations_only_no_arbitrary_oblique_plane_cut"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "curved_solid",
+        "kind": "construct",
+        "inputs": [
+          "kind",
+          "solid",
+          "center",
+          "top",
+          "rim",
+          "radius",
+          "height",
+          "circumscribes",
+          "inscribed_in"
+        ],
+        "outputs": [
+          "CurvedSolid3D"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "distinct_non_degenerate_operands"
+        ],
+        "postconditions": [
+          "exact_affine_or_gram_coordinates",
+          "independent_witness_verified"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "CurvedSolid3D",
+          "construct"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": false,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only",
+          "curved_solid_canonical_relations_only_no_arbitrary_oblique_plane_cut"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "curved_subsolid",
+        "kind": "construct",
+        "inputs": [
+          "solid",
+          "section",
+          "derived",
+          "apex"
+        ],
+        "outputs": [
+          "CurvedSubsolid3D"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "distinct_non_degenerate_operands"
+        ],
+        "postconditions": [
+          "exact_affine_or_gram_coordinates",
+          "independent_witness_verified"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "CurvedSubsolid3D",
+          "construct"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": false,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only",
+          "curved_solid_canonical_relations_only_no_arbitrary_oblique_plane_cut"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "divide_segment",
+        "kind": "construct",
+        "inputs": [
+          "point",
+          "segment",
+          "ratio"
+        ],
+        "outputs": [
+          "Point3D"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "distinct_non_degenerate_operands"
+        ],
+        "postconditions": [
+          "exact_affine_or_gram_coordinates",
+          "independent_witness_verified"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "Point3D",
+          "construct"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": false,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "equal_length",
+        "kind": "fact",
+        "inputs": [
+          "segment_a",
+          "segment_b"
+        ],
+        "outputs": [
+          "GeometricConstraint"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "compatible_with_declared_topology_and_metric_constraints"
+        ],
+        "postconditions": [
+          "metric_or_incidence_constraint_satisfied"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "GeometricConstraint",
+          "fact"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [
+            "segment_a",
+            "segment_b"
+          ],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "face_perpendicular_base",
+        "kind": "fact",
+        "inputs": [
+          "face",
+          "base"
+        ],
+        "outputs": [
+          "GeometricConstraint"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "compatible_with_declared_topology_and_metric_constraints"
+        ],
+        "postconditions": [
+          "metric_or_incidence_constraint_satisfied"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "GeometricConstraint",
+          "fact"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [
+            "base",
+            "face"
+          ],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "height",
+        "kind": "fact",
+        "inputs": [
+          "solid",
+          "value"
+        ],
+        "outputs": [
+          "GeometricConstraint"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "compatible_with_declared_topology_and_metric_constraints"
+        ],
+        "postconditions": [
+          "metric_or_incidence_constraint_satisfied"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "GeometricConstraint",
+          "fact"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [
+            "value"
+          ],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "intersect_line_line",
+        "kind": "construct",
+        "inputs": [
+          "point",
+          "line1",
+          "line2"
+        ],
+        "outputs": [
+          "Point3D"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "distinct_non_degenerate_operands",
+          "transversal_unique_intersection"
+        ],
+        "postconditions": [
+          "exact_affine_or_gram_coordinates",
+          "independent_witness_verified"
+        ],
+        "needs": [
+          [
+            "Line:L1",
+            "Line:L2"
+          ]
+        ],
+        "effects": [
+          "Point:intersect_line_line"
+        ],
+        "object_types": [
+          "Point3D",
+          "construct"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [
+            "line1",
+            "line2"
+          ],
+          "point_fields": [
+            "point"
+          ],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": true
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "intersect_line_plane",
+        "kind": "construct",
+        "inputs": [
+          "point",
+          "line",
+          "plane"
+        ],
+        "outputs": [
+          "Point3D"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "distinct_non_degenerate_operands",
+          "transversal_unique_intersection"
+        ],
+        "postconditions": [
+          "exact_affine_or_gram_coordinates",
+          "independent_witness_verified"
+        ],
+        "needs": [
+          [
+            "Line:L",
+            "Plane:Q"
+          ],
+          [
+            "Line:L",
+            "Plane:Q"
+          ]
+        ],
+        "effects": [
+          "Meet:section_vertex",
+          "Point:intersect_line_plane"
+        ],
+        "object_types": [
+          "Point3D",
+          "construct"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [
+            "plane"
+          ],
+          "segment_fields": [
+            "line"
+          ],
+          "point_fields": [
+            "point"
+          ],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": true
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "intersection_line",
+        "kind": "construct",
+        "inputs": [
+          "plane1",
+          "plane2"
+        ],
+        "outputs": [
+          "Line3D"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "distinct_non_degenerate_operands",
+          "transversal_unique_intersection"
+        ],
+        "postconditions": [
+          "exact_affine_or_gram_coordinates",
+          "independent_witness_verified"
+        ],
+        "needs": [
+          [
+            "Plane:A",
+            "Plane:B"
+          ]
+        ],
+        "effects": [
+          "Line:declared_intersection"
+        ],
+        "object_types": [
+          "Line3D",
+          "construct"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [
+            "plane1",
+            "plane2"
+          ],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "midpoint",
+        "kind": "construct",
+        "inputs": [
+          "point",
+          "segment"
+        ],
+        "outputs": [
+          "Point3D"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "distinct_non_degenerate_operands"
+        ],
+        "postconditions": [
+          "exact_affine_or_gram_coordinates",
+          "independent_witness_verified"
+        ],
+        "needs": [
+          [
+            "Point:A",
+            "Point:B"
+          ]
+        ],
+        "effects": [
+          "Point:midpoint"
+        ],
+        "object_types": [
+          "Point3D",
+          "construct"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": true
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "orthogonal_projection",
+        "kind": "fact",
+        "inputs": [
+          "point",
+          "plane",
+          "image"
+        ],
+        "outputs": [
+          "GeometricConstraint"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "compatible_with_declared_topology_and_metric_constraints"
+        ],
+        "postconditions": [
+          "metric_or_incidence_constraint_satisfied"
+        ],
+        "needs": [
+          [
+            "Point:P",
+            "Plane:Q"
+          ]
+        ],
+        "effects": [
+          "Point:orthogonal_projection"
+        ],
+        "object_types": [
+          "GeometricConstraint",
+          "fact"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [
+            "plane"
+          ],
+          "segment_fields": [],
+          "point_fields": [
+            "image"
+          ],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": true
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "orthogonal_projection_line",
+        "kind": "construct",
+        "inputs": [
+          "point",
+          "line",
+          "line_ref",
+          "image"
+        ],
+        "outputs": [
+          "Point3D"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "distinct_non_degenerate_operands",
+          "gram_metric_determinable_on_target"
+        ],
+        "postconditions": [
+          "exact_affine_or_gram_coordinates",
+          "independent_witness_verified"
+        ],
+        "needs": [
+          [
+            "Point:P",
+            "Line:L"
+          ],
+          [
+            "Point:P",
+            "Line:L"
+          ]
+        ],
+        "effects": [
+          "Foot:projection_foot",
+          "Point:orthogonal_projection_line"
+        ],
+        "object_types": [
+          "Point3D",
+          "construct"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [
+            "line"
+          ],
+          "point_fields": [
+            "image"
+          ],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": true
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "perpendicular_line_plane",
+        "kind": "fact",
+        "inputs": [
+          "line",
+          "plane"
+        ],
+        "outputs": [
+          "GeometricConstraint"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "compatible_with_declared_topology_and_metric_constraints"
+        ],
+        "postconditions": [
+          "metric_or_incidence_constraint_satisfied"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "GeometricConstraint",
+          "fact"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [
+            "plane"
+          ],
+          "segment_fields": [
+            "line"
+          ],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "perpendicular_lines",
+        "kind": "fact",
+        "inputs": [
+          "line1",
+          "line2"
+        ],
+        "outputs": [
+          "GeometricConstraint"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "compatible_with_declared_topology_and_metric_constraints"
+        ],
+        "postconditions": [
+          "metric_or_incidence_constraint_satisfied"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "GeometricConstraint",
+          "fact"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [
+            "line1",
+            "line2"
+          ],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "prism",
+        "kind": "construct",
+        "inputs": [
+          "base",
+          "top",
+          "right"
+        ],
+        "outputs": [
+          "PolyhedralSolid3D",
+          "VertexSet"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "distinct_non_degenerate_operands"
+        ],
+        "postconditions": [
+          "exact_affine_or_gram_coordinates",
+          "independent_witness_verified"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "PolyhedralSolid3D",
+          "VertexSet",
+          "construct"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "pyramid",
+        "kind": "construct",
+        "inputs": [
+          "apex",
+          "base"
+        ],
+        "outputs": [
+          "PolyhedralSolid3D",
+          "VertexSet"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "distinct_non_degenerate_operands"
+        ],
+        "postconditions": [
+          "exact_affine_or_gram_coordinates",
+          "independent_witness_verified"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "PolyhedralSolid3D",
+          "VertexSet",
+          "construct"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "rectangle",
+        "kind": "fact",
+        "inputs": [
+          "vertices"
+        ],
+        "outputs": [
+          "GeometricConstraint"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "compatible_with_declared_topology_and_metric_constraints"
+        ],
+        "postconditions": [
+          "metric_or_incidence_constraint_satisfied"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "GeometricConstraint",
+          "fact"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "regular_polygon",
+        "kind": "fact",
+        "inputs": [
+          "vertices",
+          "side"
+        ],
+        "outputs": [
+          "GeometricConstraint"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "compatible_with_declared_topology_and_metric_constraints"
+        ],
+        "postconditions": [
+          "metric_or_incidence_constraint_satisfied"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "GeometricConstraint",
+          "fact"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [
+            "side"
+          ],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "regular_pyramid",
+        "kind": "construct",
+        "inputs": [
+          "apex",
+          "base"
+        ],
+        "outputs": [
+          "PolyhedralSolid3D",
+          "VertexSet"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "distinct_non_degenerate_operands"
+        ],
+        "postconditions": [
+          "exact_affine_or_gram_coordinates",
+          "independent_witness_verified"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "PolyhedralSolid3D",
+          "VertexSet",
+          "construct"
+        ],
+        "source_requirements": {
+          "keywords_groups": 2,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "right_angle",
+        "kind": "fact",
+        "inputs": [
+          "vertex",
+          "rays"
+        ],
+        "outputs": [
+          "GeometricConstraint"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "compatible_with_declared_topology_and_metric_constraints"
+        ],
+        "postconditions": [
+          "metric_or_incidence_constraint_satisfied"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "GeometricConstraint",
+          "fact"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "section",
+        "kind": "construct",
+        "inputs": [
+          "solid",
+          "plane"
+        ],
+        "outputs": [
+          "PolygonSection3D"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "distinct_non_degenerate_operands",
+          "three_non_collinear_plane_points",
+          "strict_polyhedral_cut_ge_3_vertices"
+        ],
+        "postconditions": [
+          "cyclic_coplanar_convex_polygon_on_boundary",
+          "section_certificate_verified"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "PolygonSection3D",
+          "construct"
+        ],
+        "source_requirements": {
+          "keywords_groups": 1,
+          "value_fields": [],
+          "plane_fields": [
+            "plane"
+          ],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "segment_length",
+        "kind": "fact",
+        "inputs": [
+          "segment",
+          "value"
+        ],
+        "outputs": [
+          "GeometricConstraint"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "compatible_with_declared_topology_and_metric_constraints"
+        ],
+        "postconditions": [
+          "metric_or_incidence_constraint_satisfied"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "GeometricConstraint",
+          "fact"
+        ],
+        "source_requirements": {
+          "keywords_groups": 0,
+          "value_fields": [
+            "value"
+          ],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "sphere_tangent_plane",
+        "kind": "fact",
+        "inputs": [
+          "solid",
+          "plane",
+          "point"
+        ],
+        "outputs": [
+          "GeometricConstraint"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "compatible_with_declared_topology_and_metric_constraints"
+        ],
+        "postconditions": [
+          "metric_or_incidence_constraint_satisfied"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "GeometricConstraint",
+          "fact"
+        ],
+        "source_requirements": {
+          "keywords_groups": 2,
+          "value_fields": [],
+          "plane_fields": [
+            "plane"
+          ],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": false,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only",
+          "curved_solid_canonical_relations_only_no_arbitrary_oblique_plane_cut"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "translate_point",
+        "kind": "construct",
+        "inputs": [
+          "point",
+          "vector",
+          "image"
+        ],
+        "outputs": [
+          "Point3D"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args",
+          "distinct_non_degenerate_operands"
+        ],
+        "postconditions": [
+          "exact_affine_or_gram_coordinates",
+          "independent_witness_verified"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "Point3D",
+          "construct"
+        ],
+        "source_requirements": {
+          "keywords_groups": 0,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": true,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      },
+      {
+        "name": "unsupported",
+        "kind": "escape",
+        "inputs": [
+          "reason"
+        ],
+        "outputs": [
+          "EscapeRefusal"
+        ],
+        "preconditions": [
+          "acyclic_depends_on",
+          "schema_valid_args"
+        ],
+        "postconditions": [
+          "explicit_out_of_scope_refusal"
+        ],
+        "needs": [],
+        "effects": [],
+        "object_types": [
+          "EscapeRefusal",
+          "escape"
+        ],
+        "source_requirements": {
+          "keywords_groups": 0,
+          "value_fields": [],
+          "plane_fields": [],
+          "segment_fields": [],
+          "point_fields": [],
+          "auxiliary_only": false,
+          "provider_offered": true,
+          "has_descriptor_phrase": false
+        },
+        "derived_dependencies": [
+          "explicit_depends_on_dag"
+        ],
+        "computational_limitations": [
+          "exact_rational_or_quadratic_radical_only"
+        ],
+        "verification_authority": "SourceGate(registry.kiem_nguon)+ExactKernel(engine.dung_tu_loi_goi)"
+      }
+    ],
+    "cross_cutting": {
+      "multi_producer_effects": {
+        "AnswerDistance": [
+          "ask_distance_point_plane",
+          "ask_length"
+        ],
+        "Point": [
+          "centroid",
+          "intersect_line_line",
+          "intersect_line_plane",
+          "midpoint",
+          "orthogonal_projection",
+          "orthogonal_projection_line"
+        ],
+        "Point3D_construct_producers": [
+          "centroid",
+          "divide_segment",
+          "intersect_line_line",
+          "intersect_line_plane",
+          "midpoint",
+          "orthogonal_projection_line",
+          "translate_point"
+        ]
+      },
+      "multi_step_intermediate_consumers": [
+        "ask_angle_line_plane",
+        "ask_angle_lines",
+        "ask_angle_plane_plane",
+        "ask_area",
+        "ask_curved_residual_volume",
+        "ask_curved_section_area",
+        "ask_curved_section_radius",
+        "ask_curved_volume_ratio",
+        "ask_distance_line_plane",
+        "ask_distance_lines",
+        "ask_distance_planes",
+        "ask_distance_point_plane",
+        "ask_length",
+        "ask_residual_volume",
+        "ask_section_area",
+        "ask_volume_ratio",
+        "intersection_line",
+        "section",
+        "translate_point"
+      ],
+      "reusable_intermediate_producers": [
+        "centroid",
+        "divide_segment",
+        "intersect_line_line",
+        "intersect_line_plane",
+        "intersection_line",
+        "midpoint",
+        "orthogonal_projection_line",
+        "section",
+        "translate_point"
+      ],
+      "shared_dependency_multi_goal_pairs": [
+        [
+          "section",
+          "ask_section_area"
+        ],
+        [
+          "ask_length",
+          "ask_distance_point_plane"
+        ],
+        [
+          "ask_section_area",
+          "ask_distance_point_plane"
+        ],
+        [
+          "ask_angle_lines",
+          "ask_length"
+        ]
+      ],
+      "cross_topology_composability": {
+        "polyhedral_agnostic": [
+          "ask_angle_line_plane",
+          "ask_angle_lines",
+          "ask_angle_plane_plane",
+          "ask_area",
+          "ask_distance_line_plane",
+          "ask_distance_lines",
+          "ask_distance_planes",
+          "ask_distance_point_plane",
+          "ask_length",
+          "ask_residual_volume",
+          "ask_section_area",
+          "ask_volume",
+          "ask_volume_ratio",
+          "centroid",
+          "divide_segment",
+          "equal_length",
+          "face_perpendicular_base",
+          "height",
+          "intersect_line_line",
+          "intersect_line_plane",
+          "intersection_line",
+          "midpoint",
+          "orthogonal_projection",
+          "orthogonal_projection_line",
+          "perpendicular_line_plane",
+          "perpendicular_lines",
+          "rectangle",
+          "regular_polygon",
+          "right_angle",
+          "section",
+          "segment_length",
+          "translate_point"
+        ],
+        "pyramid_specific": [
+          "pyramid",
+          "regular_pyramid",
+          "altitude"
+        ],
+        "prism_specific": [
+          "prism"
+        ],
+        "curved_isolated": [
+          "ask_curved_residual_volume",
+          "ask_curved_section_area",
+          "ask_curved_section_radius",
+          "ask_curved_volume",
+          "ask_curved_volume_ratio",
+          "ask_lateral_area",
+          "ask_radius",
+          "ask_surface_area",
+          "curved_section",
+          "curved_solid",
+          "curved_subsolid",
+          "sphere_tangent_plane"
+        ]
+      },
+      "invalidating_constraints": [
+        "skew_or_parallel_lines_for_intersect_line_line",
+        "line_parallel_or_in_plane_for_intersect_line_plane",
+        "plane_coincides_with_face_or_misses_solid_PLANE_DOES_NOT_CUT",
+        "collinear_three_point_plane_definition",
+        "contradictory_shape_class_claim_INCONSISTENT_FACTS",
+        "underdetermined_metric_degree_of_freedom_UNDERDETERMINED_POINT",
+        "role_swapped_or_ungrounded_source_span_SOURCE_MISMATCH"
+      ]
+    }
+  },
+  "cases": [
+    {
+      "case_id": "A1-explicit-midpoint-length",
+      "classification": "SOURCE_EXPLICIT_SEQUENCE",
+      "baseline_v22_classification": "SOURCE_EXPLICIT_SEQUENCE",
+      "goal": "ask_length(A, M) with M explicitly defined in source as midpoint(SC)",
+      "initial_facts": [
+        "f1:solid",
+        "f2:polygon_shape",
+        "f3:perpendicular",
+        "f4:length",
+        "f5:point_def",
+        "q1:question"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "midpoint",
+        "ask_length"
+      ],
+      "planner_originated_intermediate_steps": [],
+      "search_depth": 1,
+      "explored_states": 3,
+      "reused_intermediates": 0,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "√3"
+        }
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "REACHABLE",
+        "oracle_min_extra_steps": 1,
+        "oracle_witness_functions": [
+          "ask_length"
+        ],
+        "oracle_exact_answers": {
+          "orc_1": "√3"
+        }
+      },
+      "certificate_result": {
+        "status": "CERTIFIED",
+        "auxiliary_certificates": 0,
+        "scene3d_objects": 13,
+        "formation_steps": 6
+      },
+      "failure_attribution": null
+    },
+    {
+      "case_id": "A2-explicit-intersection-length",
+      "classification": "SOURCE_EXPLICIT_SEQUENCE",
+      "baseline_v22_classification": "SOURCE_EXPLICIT_SEQUENCE",
+      "goal": "ask_length(S, O) with O explicitly defined in source as intersect_line_line(AC, BD)",
+      "initial_facts": [
+        "f1:solid",
+        "f2:polygon_shape",
+        "f3:perpendicular",
+        "f4:length",
+        "f5:point_def",
+        "q1:question"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "intersect_line_line",
+        "ask_length"
+      ],
+      "planner_originated_intermediate_steps": [],
+      "search_depth": 1,
+      "explored_states": 3,
+      "reused_intermediates": 0,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "√6"
+        }
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "REACHABLE",
+        "oracle_min_extra_steps": 1,
+        "oracle_witness_functions": [
+          "ask_length"
+        ],
+        "oracle_exact_answers": {
+          "orc_1": "√6"
+        }
+      },
+      "certificate_result": {
+        "status": "CERTIFIED",
+        "auxiliary_certificates": 0,
+        "scene3d_objects": 15,
+        "formation_steps": 8
+      },
+      "failure_attribution": null
+    },
+    {
+      "case_id": "B1-registered-distance-point-to-line",
+      "classification": "REGISTERED_DECOMPOSITION",
+      "baseline_v22_classification": "REGISTERED_DECOMPOSITION",
+      "goal": "distance(M, AD) via registered distance(point, line) auxiliary foot decomposition",
+      "initial_facts": [
+        "f1:solid",
+        "f2:polygon_shape",
+        "f3:perpendicular",
+        "f4:length",
+        "f5:point_def",
+        "q1:question"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "midpoint",
+        "orthogonal_projection_line",
+        "ask_length"
+      ],
+      "planner_originated_intermediate_steps": [
+        "orthogonal_projection_line"
+      ],
+      "search_depth": 2,
+      "explored_states": 5,
+      "reused_intermediates": 0,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "√2"
+        }
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "REACHABLE",
+        "oracle_min_extra_steps": 2,
+        "oracle_witness_functions": [
+          "orthogonal_projection_line",
+          "ask_length"
+        ],
+        "oracle_exact_answers": {
+          "orc_2": "√2"
+        }
+      },
+      "certificate_result": {
+        "status": "CERTIFIED",
+        "auxiliary_certificates": 1,
+        "scene3d_objects": 15,
+        "formation_steps": 8
+      },
+      "failure_attribution": null
+    },
+    {
+      "case_id": "B2-registered-named-point-parallel-plane-section-area",
+      "classification": "REGISTERED_DECOMPOSITION",
+      "baseline_v22_classification": "REGISTERED_DECOMPOSITION",
+      "goal": "section + ask_section_area of (P) through named M parallel to (SBC) via MAT_SONG_SONG",
+      "initial_facts": [
+        "f1:solid",
+        "f2:polygon_shape",
+        "f3:perpendicular",
+        "f4:length",
+        "f5:point_def",
+        "sec1:section",
+        "q1:question"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "midpoint",
+        "translate_point",
+        "translate_point",
+        "section",
+        "ask_section_area"
+      ],
+      "planner_originated_intermediate_steps": [
+        "translate_point",
+        "translate_point"
+      ],
+      "search_depth": 0,
+      "explored_states": 0,
+      "reused_intermediates": 0,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "45/8"
+        }
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "REACHABLE",
+        "oracle_min_extra_steps": 3,
+        "oracle_witness_functions": [
+          "translate_point",
+          "translate_point",
+          "ask_section_area"
+        ],
+        "oracle_exact_answers": {
+          "orc_3": "45/8"
+        }
+      },
+      "certificate_result": {
+        "status": "CERTIFIED",
+        "auxiliary_certificates": 1,
+        "scene3d_objects": 19,
+        "formation_steps": 16
+      },
+      "failure_attribution": null
+    },
+    {
+      "case_id": "C1a-unhinted-proj-line-length",
+      "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+      "baseline_v22_classification": "REACHABLE_BUT_SEARCH_MISSED",
+      "goal": "ask_length(C, orthogonal_projection_line(A, SD)) without named intermediate point",
+      "initial_facts": [
+        "f1:solid",
+        "f2:polygon_shape",
+        "f3:perpendicular",
+        "f4:length",
+        "q1:question"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "orthogonal_projection_line",
+        "ask_length"
+      ],
+      "planner_originated_intermediate_steps": [
+        "orthogonal_projection_line"
+      ],
+      "search_depth": 2,
+      "explored_states": 5,
+      "reused_intermediates": 0,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "3√34/5"
+        }
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "REACHABLE",
+        "oracle_min_extra_steps": 2,
+        "oracle_witness_functions": [
+          "orthogonal_projection_line",
+          "ask_length"
+        ],
+        "oracle_exact_answers": {
+          "orc_2": "3√34/5"
+        }
+      },
+      "certificate_result": {
+        "status": "CERTIFIED",
+        "auxiliary_certificates": 1,
+        "scene3d_objects": 14,
+        "formation_steps": 7
+      },
+      "failure_attribution": null
+    },
+    {
+      "case_id": "C1b-unhinted-proj-plane-area",
+      "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+      "baseline_v22_classification": "REACHABLE_BUT_SEARCH_MISSED",
+      "goal": "ask_area(orthogonal_projection(A, (SBC)), B, D) without named foot",
+      "initial_facts": [
+        "f1:solid",
+        "f2:polygon_shape",
+        "f3:perpendicular",
+        "f4:length",
+        "q1:question"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "orthogonal_projection",
+        "ask_area"
+      ],
+      "planner_originated_intermediate_steps": [
+        "orthogonal_projection"
+      ],
+      "search_depth": 2,
+      "explored_states": 6,
+      "reused_intermediates": 0,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "√3"
+        }
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "REACHABLE",
+        "oracle_min_extra_steps": 2,
+        "oracle_witness_functions": [
+          "orthogonal_projection",
+          "ask_area"
+        ],
+        "oracle_exact_answers": {
+          "orc_2": "√3"
+        }
+      },
+      "certificate_result": {
+        "status": "CERTIFIED",
+        "auxiliary_certificates": 1,
+        "scene3d_objects": 15,
+        "formation_steps": 8
+      },
+      "failure_attribution": null
+    },
+    {
+      "case_id": "C2-unhinted-inter-line-line-dist-plane",
+      "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+      "baseline_v22_classification": "REACHABLE_BUT_SEARCH_MISSED",
+      "goal": "ask_distance_point_plane(intersect_line_line(AC, BD), (SBC)) without named O",
+      "initial_facts": [
+        "f1:solid",
+        "f2:polygon_shape",
+        "f3:perpendicular",
+        "f4:length",
+        "q1:question"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "intersect_line_line",
+        "ask_distance_point_plane"
+      ],
+      "planner_originated_intermediate_steps": [
+        "intersect_line_line"
+      ],
+      "search_depth": 2,
+      "explored_states": 6,
+      "reused_intermediates": 0,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "√2/2"
+        }
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "REACHABLE",
+        "oracle_min_extra_steps": 2,
+        "oracle_witness_functions": [
+          "intersect_line_line",
+          "ask_distance_point_plane"
+        ],
+        "oracle_exact_answers": {
+          "orc_2": "√2/2"
+        }
+      },
+      "certificate_result": {
+        "status": "CERTIFIED",
+        "auxiliary_certificates": 1,
+        "scene3d_objects": 16,
+        "formation_steps": 9
+      },
+      "failure_attribution": null
+    },
+    {
+      "case_id": "C3-unhinted-inter-line-plane-angle-line-plane",
+      "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+      "baseline_v22_classification": "REACHABLE_BUT_SEARCH_MISSED",
+      "goal": "ask_angle_line_plane(line(intersect_line_plane(AM, (SBD)), B), (ABCD)) without named intersection",
+      "initial_facts": [
+        "f1:solid",
+        "f2:polygon_shape",
+        "f3:perpendicular",
+        "f4:length",
+        "f5:point_def",
+        "q1:question"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "midpoint",
+        "intersect_line_plane",
+        "ask_angle_line_plane"
+      ],
+      "planner_originated_intermediate_steps": [
+        "intersect_line_plane"
+      ],
+      "search_depth": 2,
+      "explored_states": 6,
+      "reused_intermediates": 0,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "5/6"
+        }
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "REACHABLE",
+        "oracle_min_extra_steps": 2,
+        "oracle_witness_functions": [
+          "intersect_line_plane",
+          "ask_angle_line_plane"
+        ],
+        "oracle_exact_answers": {
+          "orc_2": "5/6"
+        }
+      },
+      "certificate_result": {
+        "status": "CERTIFIED",
+        "auxiliary_certificates": 1,
+        "scene3d_objects": 18,
+        "formation_steps": 11
+      },
+      "failure_attribution": null
+    },
+    {
+      "case_id": "C4-multi-goal-shared-proj-line-reuse",
+      "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+      "baseline_v22_classification": "REACHABLE_BUT_SEARCH_MISSED",
+      "goal": "Multi-goal reuse: ask_length(H, C) + ask_distance_point_plane(H, (ABCD)) sharing unnamed H = orthogonal_projection_line(A, SD)",
+      "initial_facts": [
+        "f1:solid",
+        "f2:polygon_shape",
+        "f3:perpendicular",
+        "f4:length",
+        "q1:question",
+        "q2:question"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "orthogonal_projection_line",
+        "ask_length",
+        "ask_distance_point_plane"
+      ],
+      "planner_originated_intermediate_steps": [
+        "orthogonal_projection_line"
+      ],
+      "search_depth": 2,
+      "explored_states": 8,
+      "reused_intermediates": 1,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "SERVED",
+        "answers": {
+          "q2": "36/25",
+          "q1": "3√34/5"
+        }
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "REACHABLE",
+        "oracle_min_extra_steps": 3,
+        "oracle_witness_functions": [
+          "orthogonal_projection_line",
+          "ask_length",
+          "ask_distance_point_plane"
+        ],
+        "oracle_exact_answers": {
+          "orc_3": "36/25",
+          "orc_2": "3√34/5"
+        }
+      },
+      "certificate_result": {
+        "status": "CERTIFIED",
+        "auxiliary_certificates": 2,
+        "scene3d_objects": 16,
+        "formation_steps": 9
+      },
+      "failure_attribution": null
+    },
+    {
+      "case_id": "C5-flagship-unhinted-proj-line-parallel-plane-section-area",
+      "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+      "baseline_v22_classification": "REACHABLE_BUT_SEARCH_MISSED",
+      "goal": "Flagship §4.2: section + ask_section_area of (P) through unnamed orthogonal_projection_line(A, SD) parallel to (SBC)",
+      "initial_facts": [
+        "f1:solid",
+        "f2:polygon_shape",
+        "f3:perpendicular",
+        "f4:length",
+        "sec1:section",
+        "q1:question"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "orthogonal_projection_line",
+        "translate_point",
+        "translate_point",
+        "section",
+        "ask_section_area"
+      ],
+      "planner_originated_intermediate_steps": [
+        "orthogonal_projection_line",
+        "translate_point",
+        "translate_point"
+      ],
+      "search_depth": 1,
+      "explored_states": 3,
+      "reused_intermediates": 1,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "1107/250"
+        }
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "REACHABLE",
+        "oracle_min_extra_steps": 4,
+        "oracle_witness_functions": [
+          "orthogonal_projection_line",
+          "translate_point",
+          "translate_point",
+          "ask_section_area"
+        ],
+        "oracle_exact_answers": {
+          "orc_4": "1107/250"
+        }
+      },
+      "certificate_result": {
+        "status": "CERTIFIED",
+        "auxiliary_certificates": 1,
+        "scene3d_objects": 20,
+        "formation_steps": 17
+      },
+      "failure_attribution": null
+    },
+    {
+      "case_id": "C6a-unhinted-midpoint-perp-line-section-area",
+      "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+      "baseline_v22_classification": "REACHABLE_BUT_SEARCH_MISSED",
+      "goal": "section + ask_section_area of (P) through unnamed midpoint(SA) perpendicular to SC",
+      "initial_facts": [
+        "f1:solid",
+        "f2:polygon_shape",
+        "f3:perpendicular",
+        "f4:length",
+        "sec1:section",
+        "q1:question"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "midpoint",
+        "orthogonal_projection_line",
+        "orthogonal_projection_line",
+        "translate_point",
+        "translate_point",
+        "section",
+        "ask_section_area"
+      ],
+      "planner_originated_intermediate_steps": [
+        "midpoint",
+        "orthogonal_projection_line",
+        "orthogonal_projection_line",
+        "translate_point",
+        "translate_point"
+      ],
+      "search_depth": 1,
+      "explored_states": 3,
+      "reused_intermediates": 1,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "√3/6"
+        }
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "REACHABLE",
+        "oracle_min_extra_steps": 6,
+        "oracle_witness_functions": [
+          "midpoint",
+          "orthogonal_projection_line",
+          "orthogonal_projection_line",
+          "translate_point",
+          "translate_point",
+          "ask_section_area"
+        ],
+        "oracle_exact_answers": {
+          "orc_6": "√3/6"
+        }
+      },
+      "certificate_result": {
+        "status": "CERTIFIED",
+        "auxiliary_certificates": 1,
+        "scene3d_objects": 22,
+        "formation_steps": 19
+      },
+      "failure_attribution": null
+    },
+    {
+      "case_id": "C6b-unhinted-proj-line-perp-derived-SO-section-area",
+      "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+      "baseline_v22_classification": "REACHABLE_BUT_SEARCH_MISSED",
+      "goal": "section + ask_section_area of (P) through unnamed orthogonal_projection_line(O, SC) perpendicular to derived line SO",
+      "initial_facts": [
+        "f1:solid",
+        "f2:polygon_shape",
+        "f3:perpendicular",
+        "f4:length",
+        "f5:point_def",
+        "sec1:section",
+        "q1:question"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "intersect_line_line",
+        "orthogonal_projection_line",
+        "orthogonal_projection_line",
+        "orthogonal_projection_line",
+        "translate_point",
+        "translate_point",
+        "section",
+        "ask_section_area"
+      ],
+      "planner_originated_intermediate_steps": [
+        "orthogonal_projection_line",
+        "orthogonal_projection_line",
+        "orthogonal_projection_line",
+        "translate_point",
+        "translate_point"
+      ],
+      "search_depth": 1,
+      "explored_states": 3,
+      "reused_intermediates": 1,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "20√6/27"
+        }
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "REACHABLE",
+        "oracle_min_extra_steps": 6,
+        "oracle_witness_functions": [
+          "orthogonal_projection_line",
+          "orthogonal_projection_line",
+          "orthogonal_projection_line",
+          "translate_point",
+          "translate_point",
+          "ask_section_area"
+        ],
+        "oracle_exact_answers": {
+          "orc_6": "20√6/27"
+        }
+      },
+      "certificate_result": {
+        "status": "CERTIFIED",
+        "auxiliary_certificates": 1,
+        "scene3d_objects": 26,
+        "formation_steps": 24
+      },
+      "failure_attribution": null
+    },
+    {
+      "case_id": "C7-prism-unhinted-proj-line-length",
+      "classification": "DISCOVERED_FUNCTION_COMPOSITION",
+      "baseline_v22_classification": "REACHABLE_BUT_SEARCH_MISSED",
+      "goal": "Cross-topology right triangular prism ABC.A'B'C': ask_length(C, orthogonal_projection_line(A, A'B))",
+      "initial_facts": [
+        "f1:solid",
+        "f2:right_angle",
+        "f3:length",
+        "f4:length",
+        "f5:length",
+        "q1:question"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "prism",
+        "right_angle",
+        "segment_length",
+        "segment_length",
+        "segment_length",
+        "orthogonal_projection_line",
+        "ask_length"
+      ],
+      "planner_originated_intermediate_steps": [
+        "orthogonal_projection_line"
+      ],
+      "search_depth": 2,
+      "explored_states": 5,
+      "reused_intermediates": 0,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "SERVED",
+        "answers": {
+          "q1": "4√34/5"
+        }
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "REACHABLE",
+        "oracle_min_extra_steps": 2,
+        "oracle_witness_functions": [
+          "orthogonal_projection_line",
+          "ask_length"
+        ],
+        "oracle_exact_answers": {
+          "orc_2": "4√34/5"
+        }
+      },
+      "certificate_result": {
+        "status": "CERTIFIED",
+        "auxiliary_certificates": 1,
+        "scene3d_objects": 15,
+        "formation_steps": 8
+      },
+      "failure_attribution": null
+    },
+    {
+      "case_id": "D1-nested-two-level-unnamed-descriptor",
+      "classification": "REACHABLE_BUT_SEARCH_MISSED",
+      "baseline_v22_classification": "REACHABLE_BUT_SEARCH_MISSED",
+      "goal": "ask_length(C, orthogonal_projection(midpoint(SC), (ABCD))) — nested 2-level unnamed Point AST",
+      "initial_facts": [
+        "f1:solid",
+        "f2:polygon_shape",
+        "f3:perpendicular",
+        "f4:length",
+        "q1:question"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [],
+      "planner_originated_intermediate_steps": [],
+      "search_depth": "NOT_APPLICABLE",
+      "explored_states": "NOT_APPLICABLE",
+      "reused_intermediates": "NOT_APPLICABLE",
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "REFUSED",
+        "code": "FACT_INCOMPLETE",
+        "reason": "q1: orthogonal_projection cần toán hạng phân biệt đúng kiểu hợp đồng"
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "REACHABLE",
+        "oracle_min_extra_steps": 3,
+        "oracle_witness_functions": [
+          "midpoint",
+          "orthogonal_projection",
+          "ask_length"
+        ],
+        "oracle_exact_answers": {
+          "orc_3": "√2"
+        }
+      },
+      "certificate_result": {
+        "status": "REFUSED_FAIL_CLOSED",
+        "code": "FACT_INCOMPLETE"
+      },
+      "failure_attribution": "Locked TypedFact schema (aa9d93ee...) carries flat point_kind + points without recursive AST nesting; Registry primitives exist and Oracle confirms 3-step plan (√2)."
+    },
+    {
+      "case_id": "D2-dual-unnamed-point-endpoints-in-binary-goal",
+      "classification": "REACHABLE_BUT_SEARCH_MISSED",
+      "baseline_v22_classification": "REACHABLE_BUT_SEARCH_MISSED",
+      "goal": "ask_length(midpoint(SA), midpoint(BC)) — two distinct unnamed Point descriptors in one binary goal",
+      "initial_facts": [
+        "f1:solid",
+        "f2:polygon_shape",
+        "f3:perpendicular",
+        "f4:length",
+        "q1:question"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [],
+      "planner_originated_intermediate_steps": [],
+      "search_depth": "NOT_APPLICABLE",
+      "explored_states": "NOT_APPLICABLE",
+      "reused_intermediates": "NOT_APPLICABLE",
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "REFUSED",
+        "code": "FACT_INCOMPLETE",
+        "reason": "q1: toán hạng của mục tiêu length không điền đúng ô của hợp đồng mục tiêu nào (điểm đích phân biệt, đường hai điểm, mặt ≥ 3 điểm)"
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "REACHABLE",
+        "oracle_min_extra_steps": 3,
+        "oracle_witness_functions": [
+          "midpoint",
+          "midpoint",
+          "ask_length"
+        ],
+        "oracle_exact_answers": {
+          "orc_3": "√6"
+        }
+      },
+      "certificate_result": {
+        "status": "REFUSED_FAIL_CLOSED",
+        "code": "FACT_INCOMPLETE"
+      },
+      "failure_attribution": "Locked TypedFact schema (aa9d93ee...) & single-descriptor AnswerLength(P, B) bind one unnamed Point per question fact; Registry primitives exist and Oracle confirms 3-step plan (√6)."
+    },
+    {
+      "case_id": "E1-missing-circumcenter-primitive",
+      "classification": "MISSING_PRIMITIVE",
+      "baseline_v22_classification": "MISSING_PRIMITIVE",
+      "goal": "Distance from S to circumcenter of arbitrary triangle ABC",
+      "initial_facts": [
+        "u1:unsupported"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "unsupported"
+      ],
+      "planner_originated_intermediate_steps": [],
+      "search_depth": 0,
+      "explored_states": 0,
+      "reused_intermediates": 0,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "REFUSED",
+        "code": "OUT_OF_SCOPE",
+        "reason": "u1: circumcenter primitive not in REGISTRY ('Tính khoảng cách từ S đến tâm đường tròn ngoại tiếp tam giác ABC.')"
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "MISSING_PRIMITIVE",
+        "oracle_min_extra_steps": null,
+        "oracle_witness_functions": [],
+        "oracle_exact_answers": {}
+      },
+      "certificate_result": {
+        "status": "REFUSED_FAIL_CLOSED",
+        "code": "OUT_OF_SCOPE"
+      },
+      "failure_attribution": "OUT_OF_SCOPE: u1: circumcenter primitive not in REGISTRY ('Tính khoảng cách từ S đến tâm đường tròn ngoại tiếp tam giác ABC.')"
+    },
+    {
+      "case_id": "E2-missing-incenter-primitive",
+      "classification": "MISSING_PRIMITIVE",
+      "baseline_v22_classification": "MISSING_PRIMITIVE",
+      "goal": "Length from S to incenter of triangle ABC",
+      "initial_facts": [
+        "u1:unsupported"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "unsupported"
+      ],
+      "planner_originated_intermediate_steps": [],
+      "search_depth": 0,
+      "explored_states": 0,
+      "reused_intermediates": 0,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "REFUSED",
+        "code": "OUT_OF_SCOPE",
+        "reason": "u1: incenter primitive not in REGISTRY ('Tính độ dài đoạn nối S với tâm đường tròn nội tiếp tam giác ABC.')"
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "MISSING_PRIMITIVE",
+        "oracle_min_extra_steps": null,
+        "oracle_witness_functions": [],
+        "oracle_exact_answers": {}
+      },
+      "certificate_result": {
+        "status": "REFUSED_FAIL_CLOSED",
+        "code": "OUT_OF_SCOPE"
+      },
+      "failure_attribution": "OUT_OF_SCOPE: u1: incenter primitive not in REGISTRY ('Tính độ dài đoạn nối S với tâm đường tròn nội tiếp tam giác ABC.')"
+    },
+    {
+      "case_id": "F1-transcendental-arccos-degree-sum",
+      "classification": "UNSUPPORTED_EXACT_DOMAIN",
+      "baseline_v22_classification": "UNSUPPORTED_EXACT_DOMAIN",
+      "goal": "Exact degree sum of two general irrational arccos dihedral/line angles outside cyclotomic table",
+      "initial_facts": [
+        "f1:solid",
+        "f2:polygon_shape",
+        "f3:perpendicular",
+        "f4:length",
+        "u1:unsupported"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "unsupported"
+      ],
+      "planner_originated_intermediate_steps": [],
+      "search_depth": 0,
+      "explored_states": 0,
+      "reused_intermediates": 0,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "REFUSED",
+        "code": "OUT_OF_SCOPE",
+        "reason": "u1: transcendental arccos degree sum ('Tính tổng số đo theo độ của góc giữa SB với (ABCD) và góc giữa SD với (ABCD).')"
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "UNSUPPORTED_EXACT_DOMAIN",
+        "oracle_min_extra_steps": null,
+        "oracle_witness_functions": [],
+        "oracle_exact_answers": {}
+      },
+      "certificate_result": {
+        "status": "REFUSED_FAIL_CLOSED",
+        "code": "OUT_OF_SCOPE"
+      },
+      "failure_attribution": "OUT_OF_SCOPE: u1: transcendental arccos degree sum ('Tính tổng số đo theo độ của góc giữa SB với (ABCD) và góc giữa SD với (ABCD).')"
+    },
+    {
+      "case_id": "F2-curved-oblique-conic-section",
+      "classification": "UNSUPPORTED_EXACT_DOMAIN",
+      "baseline_v22_classification": "UNSUPPORTED_EXACT_DOMAIN",
+      "goal": "Area of oblique non-axis/non-parallel conic section of cone",
+      "initial_facts": [
+        "u1:unsupported"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "unsupported"
+      ],
+      "planner_originated_intermediate_steps": [],
+      "search_depth": 0,
+      "explored_states": 0,
+      "reused_intermediates": 0,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "REFUSED",
+        "code": "OUT_OF_SCOPE",
+        "reason": "u1: oblique conic section outside curved_section axis/perp_axis domain ('Tính diện tích thiết diện của hình nón cắt bởi (P).')"
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "UNSUPPORTED_EXACT_DOMAIN",
+        "oracle_min_extra_steps": null,
+        "oracle_witness_functions": [],
+        "oracle_exact_answers": {}
+      },
+      "certificate_result": {
+        "status": "REFUSED_FAIL_CLOSED",
+        "code": "OUT_OF_SCOPE"
+      },
+      "failure_attribution": "OUT_OF_SCOPE: u1: oblique conic section outside curved_section axis/perp_axis domain ('Tính diện tích thiết diện của hình nón cắt bởi (P).')"
+    },
+    {
+      "case_id": "G1-insufficient-missing-altitude-length",
+      "classification": "INSUFFICIENT_GIVENS",
+      "baseline_v22_classification": "INSUFFICIENT_GIVENS",
+      "goal": "ask_length(S, C) on S.ABCD when SA length is omitted",
+      "initial_facts": [
+        "f1:solid",
+        "f2:polygon_shape",
+        "f3:perpendicular",
+        "q1:question"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "ask_length"
+      ],
+      "planner_originated_intermediate_steps": [],
+      "search_depth": 1,
+      "explored_states": 3,
+      "reused_intermediates": 0,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "reason": "chưa có dữ kiện cho chiều cao của S"
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "INSUFFICIENT_GIVENS",
+        "oracle_min_extra_steps": null,
+        "oracle_witness_functions": [
+          "ask_length"
+        ],
+        "oracle_exact_answers": {}
+      },
+      "certificate_result": {
+        "status": "REFUSED_FAIL_CLOSED",
+        "code": "MISSING_DIMENSION"
+      },
+      "failure_attribution": "MISSING_DIMENSION: chưa có dữ kiện cho chiều cao của S"
+    },
+    {
+      "case_id": "G2-insufficient-unconstrained-quadrilateral-base",
+      "classification": "INSUFFICIENT_GIVENS",
+      "baseline_v22_classification": "INSUFFICIENT_GIVENS",
+      "goal": "ask_volume(S.ABCD) when base ABCD has no shape or side lengths",
+      "initial_facts": [
+        "f1:solid",
+        "f2:perpendicular",
+        "f3:length",
+        "q1:question"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "pyramid",
+        "perpendicular_line_plane",
+        "segment_length",
+        "ask_volume"
+      ],
+      "planner_originated_intermediate_steps": [],
+      "search_depth": 0,
+      "explored_states": 0,
+      "reused_intermediates": 0,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION",
+        "reason": "đáy 4 đỉnh chưa có độ dài nào để xác định hình"
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "INSUFFICIENT_GIVENS",
+        "oracle_min_extra_steps": null,
+        "oracle_witness_functions": [
+          "ask_length"
+        ],
+        "oracle_exact_answers": {}
+      },
+      "certificate_result": {
+        "status": "REFUSED_FAIL_CLOSED",
+        "code": "MISSING_DIMENSION"
+      },
+      "failure_attribution": "MISSING_DIMENSION: đáy 4 đỉnh chưa có độ dài nào để xác định hình"
+    },
+    {
+      "case_id": "H1-role-swapped-projection-source-unverified",
+      "classification": "SOURCE_UNVERIFIED",
+      "baseline_v22_classification": "SOURCE_UNVERIFIED",
+      "goal": "Adversarial role-swap: source says foot of B onto SA, fact claims foot of A onto SB",
+      "initial_facts": [
+        "f1:solid",
+        "f2:polygon_shape",
+        "f3:perpendicular",
+        "f4:length",
+        "q1:question"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "orthogonal_projection_line",
+        "ask_length"
+      ],
+      "planner_originated_intermediate_steps": [
+        "orthogonal_projection_line"
+      ],
+      "search_depth": 2,
+      "explored_states": 5,
+      "reused_intermediates": 0,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "REFUSED",
+        "code": "SOURCE_OBJECT_MISMATCH",
+        "reason": "nguồn không hỏi khoảng cách từ đúng điểm được mô tả tới đúng đích"
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "SOURCE_UNVERIFIED",
+        "oracle_min_extra_steps": 2,
+        "oracle_witness_functions": [
+          "orthogonal_projection_line",
+          "ask_length"
+        ],
+        "oracle_exact_answers": {}
+      },
+      "certificate_result": {
+        "status": "REFUSED_FAIL_CLOSED",
+        "code": "SOURCE_OBJECT_MISMATCH"
+      },
+      "failure_attribution": "SOURCE_OBJECT_MISMATCH: nguồn không hỏi khoảng cách từ đúng điểm được mô tả tới đúng đích"
+    },
+    {
+      "case_id": "H2-derived-point-forged-as-given-premise",
+      "classification": "SOURCE_UNVERIFIED",
+      "baseline_v22_classification": "SOURCE_UNVERIFIED",
+      "goal": "Adversarial provenance spoofing: unmentioned point H injected as premise point_def",
+      "initial_facts": [
+        "f1:solid",
+        "f2:polygon_shape",
+        "f3:perpendicular",
+        "f4:length",
+        "f_fake:projection",
+        "q1:question"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "orthogonal_projection_line",
+        "ask_length"
+      ],
+      "planner_originated_intermediate_steps": [],
+      "search_depth": 1,
+      "explored_states": 3,
+      "reused_intermediates": 0,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "REFUSED",
+        "code": "UNKNOWN_LABEL",
+        "reason": "f_fake: nhãn ['H'] không có trong đề"
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "SOURCE_UNVERIFIED",
+        "oracle_min_extra_steps": 2,
+        "oracle_witness_functions": [
+          "orthogonal_projection_line",
+          "ask_length"
+        ],
+        "oracle_exact_answers": {}
+      },
+      "certificate_result": {
+        "status": "REFUSED_FAIL_CLOSED",
+        "code": "UNKNOWN_LABEL"
+      },
+      "failure_attribution": "UNKNOWN_LABEL: f_fake: nhãn ['H'] không có trong đề"
+    },
+    {
+      "case_id": "I1-beyond-finite-oracle-horizon-not-established",
+      "classification": "NOT_ESTABLISHED",
+      "baseline_v22_classification": "NOT_ESTABLISHED",
+      "goal": "Multi-step locus/iterated projection chain exceeding finite oracle bound (ORACLE_STEP_LIMIT = 8)",
+      "initial_facts": [
+        "f1:solid",
+        "f2:polygon_shape",
+        "f3:perpendicular",
+        "f4:length",
+        "u1:unsupported"
+      ],
+      "available_effects": [
+        "ask_angle_line_plane:AnswerAngleLinePlane",
+        "ask_angle_lines:AnswerAngleLines",
+        "ask_area:AnswerArea",
+        "ask_distance_point_plane:AnswerDistance",
+        "ask_length:AnswerDistance",
+        "ask_length:AnswerLength",
+        "centroid:Point[centroid]",
+        "intersect_line_line:Point[intersect_line_line]",
+        "intersect_line_plane:Meet",
+        "intersect_line_plane:Point[intersect_line_plane]",
+        "intersection_line:Line",
+        "midpoint:Point[midpoint]",
+        "orthogonal_projection:Point[orthogonal_projection]",
+        "orthogonal_projection_line:Foot",
+        "orthogonal_projection_line:Point[orthogonal_projection_line]"
+      ],
+      "selected_functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "unsupported"
+      ],
+      "planner_originated_intermediate_steps": [],
+      "search_depth": 0,
+      "explored_states": 0,
+      "reused_intermediates": 0,
+      "search_budget": {
+        "max_depth": 3,
+        "max_needs": 32,
+        "max_candidates": 8,
+        "max_fresh_points": 8,
+        "max_calls": 64,
+        "oracle_step_limit": 8,
+        "oracle_candidate_limit": 256
+      },
+      "execution_result": {
+        "status": "REFUSED",
+        "code": "OUT_OF_SCOPE",
+        "reason": "u1: exceeds finite bounded planning/oracle horizon ('Tính giới hạn độ dài đoạn thứ 10.')"
+      },
+      "exact_oracle_agreement": {
+        "agrees": true,
+        "oracle_classification": "NOT_ESTABLISHED",
+        "oracle_min_extra_steps": null,
+        "oracle_witness_functions": [],
+        "oracle_exact_answers": {}
+      },
+      "certificate_result": {
+        "status": "REFUSED_FAIL_CLOSED",
+        "code": "OUT_OF_SCOPE"
+      },
+      "failure_attribution": "OUT_OF_SCOPE: u1: exceeds finite bounded planning/oracle horizon ('Tính giới hạn độ dài đoạn thứ 10.')"
+    }
+  ]
+}

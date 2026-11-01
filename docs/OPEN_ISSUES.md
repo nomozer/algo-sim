@@ -4,7 +4,7 @@
 
 ### ISSUE-ARCH-ROUTE-D-SOLID-CLASS-WORD-UNCERTIFIED
 
-- **status:** OPEN (found 2026-11-01 by the independent review of the hybrid-master tenth continuation; it predates that work and is present at `c9f54828`).
+- **status:** RESOLVED ON RESEARCH BRANCH (2026-11-01, eleventh continuation of `ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT`, product `9e059eb7`, Registry `/28`, Planner `/23`, Engine `/20`; independent adversarial review `READY` in Round 4, `0 BLOCKER, 0 MAJOR, 0 MINOR`; not yet on `main`). `registry.py::doc_khang_dinh_loai_hinh` reads premise-level solid-class and 2D polygon assertions (with ordered prose-solid topology binding `_khop_ky_hieu_khoi` and multi-solid coordination `_day_khoi_cho_menh_de`) and `engine.py::kiem_khang_dinh_loai_hinh` certifies them in exact `Fraction` Gram arithmetic (`"Cho hình lập phương ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật, AB = 2, AD = 3, AA' = 4."` deterministically refuses `INCONSISTENT_FACTS`). Locked by `backend/tests/geometry/test_route_d_semantic_shape_invariants.py` (`41/41`). Original status preserved: OPEN (found 2026-11-01 by the independent review of the hybrid-master tenth continuation; it predates that work and is present at `c9f54828`).
 - **cause:** A specific solid-class word in a solid clause is a claim that no call encodes and nothing checks. "Cho hình lập phương ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật, AB = 2, AD = 3, AA' = 4." is served on Route D /4 as a 2×3×4 box, so the cube claim (all edges equal) is never verified. The engine has no notion of the class.
 - **impact:** A contradictory text is served instead of being refused. The SL-1 opener ("Vẽ hình lập phương … có …") inherits the same path. The trailing-mention reader does not inherit it: it accepts only the generic word.
 - **repair:** Certify the class where the claim is read: the Source Gate requires calls that encode the class, or the engine checks it after layout. This needs a RED test on the repro above.
@@ -15,6 +15,7 @@
 - **status:** OPEN, waiting for an Owner decision (S-1 in `evaluation/geometry/runs/hybrid-master-backend-replacement/owner-go-request.md`).
 - **cause:** `detect_domain` refuses space-geometry text typed without diacritics as out of scope on every route, the `LLM_ONLY` default included. On Route D the closed Source Gate grammars would then refuse it as well.
 - **evidence:** probe row S05 in `evaluation/geometry/runs/hybrid-master-backend-replacement/student-language-probe.json`.
+- **update 2026-11-01 (eleventh continuation, offline prototype only):** `backend/scripts/s1_diacritic_offline.py` (`0` imports in `backend/app/`, `detect_domain` untouched) implements a strictly isolated, span-preserving normalization prototype (`norm_char_to_raw_span`, `verify_no_forged_quotes`, mixed-IME `_ascii_fold`, and polysemy flags `NEEDS_CLARIFICATION` for `goc`/`day`/`tam`/`canh`/`duong` and lowercase solid labels), verified on `s1-diacritic-development-corpus.json` (`16/16`, `test_s1_diacritic_free_offline.py`; `s1-diacritic-free-offline-audit.md`). Production integration remains gated on Owner decision `S-1`.
 
 ### ISSUE-RESEARCH-TYPEDFACTNEXT-PREMISE-SCOPE-ERASED
 
