@@ -1,6 +1,6 @@
 {
  "schema": "SCHEMA_CENSUS_EXTENSION/1",
- "run": "hybrid-master-backend-replacement (seventh/eighth/ninth continuations: sphere sections, circumscribed spheres & V2 composite relations)",
+ "run": "hybrid-master-backend-replacement (seventh/eighth/ninth continuations: sphere sections, circumscribed spheres & V2 composite relations; tenth continuation: SL-2 unresolved exit)",
  "extends": "docs/evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/schema-census-v3.json",
  "rule": "Additive only: classifies fields the contract gained after v3. A path already in v3 may not appear here (asserted).",
  "fields": {
@@ -298,6 +298,41 @@
     "SOURCE_OBJECT_MISMATCH"
    ],
    "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None"
+  },
+  "TypedFactNextPayloadV2.unresolved": {
+   "category": "METADATA",
+   "note": "SL-2 honest exit list; any entry refuses the payload, never a fact",
+   "annotation": "tuple[app.simulation.geometry_functions.typed_fact_next.UnresolvedSpec, ...]"
+  },
+  "UnresolvedSpec.unresolved_id": {
+   "category": "METADATA",
+   "note": "clarification id, not a solid",
+   "annotation": "<class 'str'>"
+  },
+  "UnresolvedSpec.kind": {
+   "category": "METADATA",
+   "note": "closed exit kind; maps to an existing refusal code",
+   "annotation": "typing.Literal['ambiguous', 'missing_operand', 'unrecognized_term', 'unsupported']"
+  },
+  "UnresolvedSpec.quote": {
+   "category": "METADATA",
+   "note": "verbatim source quote (extraction walker); located, never grounded as a fact",
+   "annotation": "<class 'str'>"
+  },
+  "UnresolvedSpec.subject_ref": {
+   "category": "METADATA",
+   "note": "label named in the clarification question only; never resolved against a solid",
+   "annotation": "typing.Optional[typing.Annotated[str, BeforeValidator(func=<function _nhan at 0x000001CB4F4F65C0>, json_schema_input_type=PydanticUndefined), FieldInfo(annotation=NoneType, required=True, description=\"nhãn một điểm của đề, vd S, A, A'\", metadata=[_PydanticGeneralMetadata(pattern=\"^[A-Z][0-9]*'?$\")])]]"
+  },
+  "UnresolvedSpec.missing_roles": {
+   "category": "METADATA",
+   "note": "closed role vocabulary for the server-built question",
+   "annotation": "tuple[typing.Literal['source_point', 'target_line_or_plane', 'relation_kind', 'solid_notation', 'dimension', 'goal_object'], ...]"
+  },
+  "UnresolvedSpec.candidate_relations": {
+   "category": "METADATA",
+   "note": "closed relation vocabulary, offered never chosen",
+   "annotation": "tuple[typing.Literal['orthogonal_projection', 'intersection', 'midpoint', 'centroid', 'perpendicular', 'parallel', 'angle', 'distance'], ...]"
   }
  }
 }

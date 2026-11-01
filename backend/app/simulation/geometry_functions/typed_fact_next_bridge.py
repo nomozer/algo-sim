@@ -17,6 +17,7 @@ from .typed_fact_next import (
     _ARGS_GOC_VUONG,
     CONSTRUCTED_OUTPUTS,
     canonical_vertex_ref,
+    clarification_record,
     measurement_scope,
     _derived_parents,
     resolve_solid_name,
@@ -511,6 +512,13 @@ def bridge_v2(raw: dict[str, Any]) -> dict[str, Any]:
         p = parse_typed_fact_next_v2(raw)
     except TypedFactNextValidationError as e:
         raise TuChoi(e.code, e.detail) from None
+    if p.unresolved:
+        # SL-2: the extractor reported what it could not read. Existing codes (flat contract parity): `ambiguous` facts are
+        # AMBIGUOUS_FACT, the `unsupported` escape is OUT_OF_SCOPE. The record describes the FIRST entry.
+        u = p.unresolved[0]
+        raise TuChoi("OUT_OF_SCOPE" if u.kind == "unsupported" else "AMBIGUOUS_FACT",
+                     f"{u.unresolved_id}: {u.kind} — không đoán cách hiểu", tuple(x.unresolved_id for x in p.unresolved),
+                     data={"clarification": clarification_record(u, p.problem_text)})
     return _bridge(p, _section_fact_v2, BRIDGE_V2_VERSION, v2=True)
 
 

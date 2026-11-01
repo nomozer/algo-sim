@@ -1067,7 +1067,12 @@ def _so_nhom(g: str) -> str:
 
 _HINH = (rf"(?:tam\s+giác(?:\s+(?:đều|vuông\s+cân|vuông|cân))?(?:\s+(?:tại|ở)\s+{_L1})?|hình\s+vuông|hình\s+chữ\s+nhật|hình\s+thoi|"
          rf"lục\s+giác\s+đều|hình\s+thang(?:\s+vuông)?(?:\s+tại\s+{_L1}(?:\s+và\s+{_L1})?)?)")
-_C_KHOI = re.compile(rf"(?:(?:cho|xét)\s+)?(?:một\s+)?(?:(?:hình|khối)\s+)?(?P<kn>chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)"
+#: SL-1 (tenth continuation, `student-language-probe.json`): a learner asks to SEE a figure ("Vẽ / Dựng / Mô phỏng / Cho
+#: mình xem hình chóp …"). The verb states no geometry: it opens a solid clause exactly like "Cho", or forms a request
+#: that only mentions objects the validated calls already build (`_doc_yeu_cau_mo_phong`). It never adds a fact.
+_DONG_TU_MO_PHONG = (r"(?:(?:(?:em|bạn)\s+)?hãy\s+)?(?:vẽ|dựng|mô\s+phỏng|minh\s+ho[ạa]|biểu\s+diễn|hiển\s+thị"
+                     r"|cho\s+(?:mình|em|tôi|tớ)\s+xem)(?:\s+giúp(?:\s+(?:mình|em|tôi|tớ))?|\s+lại)?(?!\w)")
+_C_KHOI = re.compile(rf"(?:(?:cho|xét|{_DONG_TU_MO_PHONG})\s+)?(?:một\s+)?(?:(?:hình|khối)\s+)?(?P<kn>chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)"
                      rf"(?P<km>(?:\s+(?:đứng|đều|xiên|tam\s+giác|tứ\s+giác|ngũ\s+giác|lục\s+giác|chữ\s+nhật))*)"
                      rf"\s+(?P<k>{_NHAN}(?:\.{_NHAN})?)(?![\w'])", re.IGNORECASE)
 _C_DAY = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:mặt|tứ\s+giác|tam\s+giác)\s+)?đáy(?:\s+(?P<d>{_NHAN}))?\s+(?:là\s+(?:một\s+)?{_HINH}(?:\s+(?P<d2>{_NHAN}))?(?:\s+vuông(?:\s+cân)?\s+(?:tại|ở)\s+{_L1})?|đều|vuông(?:\s+cân)?\s+(?:tại|ở)\s+{_L1})(?![\w'])"
@@ -1093,11 +1098,11 @@ _C_DIEM = re.compile(rf"(?:gọi\s+)?{_L1}\s+là\s+(?:(?:trung\s+điểm|tâm|tr
 _C_CHIEU = re.compile(rf"(?:(?:gọi\s+)?{_L1}\s+(?:là|trùng\s+với)\s+hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}"
                       rf"|hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}\s+(?:là|trùng\s+với)\s+(?:(?:điểm|đỉnh|trung\s+điểm|trọng\s+tâm)\s+)?{_L1}(?:\s+của\s+{_DOI_TUONG_NHAN})?)"
                       rf"(?![\w'])(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
-_C_DOAN = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:các\s+)?kích\s+thước\s+)?(?:độ\s+dài\s+(?:của\s+)?)?(?:(?P<sv>cạnh\s+bên|chiều\s+cao)\s+|(?:cạnh|đoạn(?:\s+thẳng)?|đường\s+chéo|số\s+đo)\s+)?"
+_C_DOAN = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:các\s+)?kích\s+thước\s+)?(?:độ\s+dài\s+(?:của\s+)?)?(?:(?P<sv>cạnh\s+bên|chiều\s+cao|đường\s+cao)\s+|(?:cạnh|đoạn(?:\s+thẳng)?|đường\s+chéo|số\s+đo)\s+)?"
                      rf"(?P<seg>{_L1}{_L1})(?![\w'])"
                      rf"(?:\s*=\s*{_L1}{_L1}(?![\w']))*\s*(?:=|bằng|(?:có\s+)?độ\s+dài(?:\s+bằng)?)\s*{_so_nhom('ss')}",
                      re.IGNORECASE)
-_C_VUONG = re.compile(rf"(?:(?:có|với|biết)\s+)?(?:(?:cạnh\s+bên|cạnh|đường\s+thẳng)\s+)?{_L1}{_L1}\s*(?:vuông\s+góc\s+với|vuông|⊥)\s*"
+_C_VUONG = re.compile(rf"(?:(?:có|với|biết)\s+)?(?:(?:cạnh\s+bên|cạnh|đường\s+thẳng)\s+)?{_L1}{_L1}\s*(?:vuông\s+góc(?:\s+với)?|vuông|⊥)\s*"
                       rf"(?:mặt\s+phẳng\s+|mp\s*)?(?:\({_NHAN}\)|{_L1}{_L1}\s+và\s+{_L1}{_L1}(?![\w'])(?!\s*(?:=|bằng))|{_NHAN}(?![\w'])"
                       rf"|(?:mặt\s+(?:phẳng\s+)?)?đáy(?!\w))", re.IGNORECASE)
 #: "cạnh CD" (a named edge) continues its clause; only a role "cạnh" ("… cạnh 2", "… cạnh bên") opens a new one
@@ -1151,6 +1156,51 @@ def _vai_doan_ok(m: re.Match, khoi: LoiGoi | None, calls: tuple[LoiGoi, ...]) ->
 
 def _nhan_khoi(k: LoiGoi) -> set[str]:
     return {*([k.args.apex] if k.fn in ("pyramid", "regular_pyramid") else []), *k.args.base, *(getattr(k.args, "top", None) or [])}
+
+
+#: One object a simulation request may show (SL-1): the figure, a declared polyhedron by its kind (and notation), or a
+#: point / segment / line / plane by labels. A shape noun ("hình vuông ABCD") is no mention: it would be a claim.
+_VAT_MO_PHONG = re.compile(rf"(?:(?:hình|khối)\s+(?P<kn>chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)"
+                           rf"(?:\s+(?P<k>{_NHAN}\.{_NHAN}))?|(?P<hinh>hình(?:\s+vẽ)?)"
+                           rf"|(?:các\s+)?(?:điểm|đỉnh)\s+(?P<d>{_L1}(?:\s*,\s*{_L1})*)"
+                           rf"|(?:đoạn(?:\s+thẳng)?|đường\s+thẳng|cạnh)\s+(?P<s>{_L1}{_L1})"
+                           rf"|(?:mặt\s+phẳng|mp)\s*\((?P<m>{_L1}{_L1}{_NHAN})\))"
+                           rf"(?:\s+(?:này|đó|đã\s+cho|trên))?(?![\w'])", re.IGNORECASE)
+_NOI_VAT_MO_PHONG = re.compile(r"\s*,\s*(?:và\s+)?|\s+và\s+|\s+cùng\s+(?:với\s+)?", re.IGNORECASE)
+_MO_YEU_CAU_MO_PHONG = re.compile(rf"\s*(?:(?:không|chưa)\s+cần\s+)?{_DONG_TU_MO_PHONG}\s+", re.IGNORECASE)
+#: … then the question of the same sentence ("Vẽ hình rồi tính …", "Không cần vẽ hình, tính …").
+_SAU_MO_PHONG_HOI = re.compile(r"(?:\s*,\s*|\s+)(?:(?:rồi|và|sau\s+đó|đồng\s+thời)\s+)?(?=(?:hãy\s+)?(?:tính|tìm|xác\s+định)(?!\w))",
+                               re.IGNORECASE)
+
+
+def _doc_yeu_cau_mo_phong(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) -> int | None:
+    """End of the simulation request opening `de[a:b]` (SL-1), else None: `b` when it is the whole segment, or the start of
+    the question that follows it in the same sentence. Every mention must be an object the validated calls build — the
+    figure, a declared solid of that kind and notation, labels some call uses — so the request reads no new content."""
+    khoi = [k for k in calls if k.fn in _KHOI_FN]
+    dung = {n for c in calls for n in nhan_cua_loi_goi(c)}
+    if not khoi or (m := _MO_YEU_CAU_MO_PHONG.match(de, a, b)) is None:
+        return None
+    p = m.end()
+    while True:
+        v = _VAT_MO_PHONG.match(de, p, b)
+        if v is None:
+            return None
+        if v["kn"]:
+            loai = _LOAI_KHOI[re.sub(r"\s+", " ", v["kn"].lower())]
+            nhan = set(re.findall(r"[A-Z][0-9]*'?", v["k"] or ""))
+            if not any(k.fn in loai and (not nhan or nhan == _nhan_khoi(k)) for k in khoi):
+                return None
+        elif not v["hinh"] and not set(re.findall(r"[A-Z][0-9]*'?", v["d"] or v["s"] or v["m"] or "")) <= dung:
+            return None
+        p = v.end()
+        if _C_HET.fullmatch(de, p, b):
+            return b
+        if (q := _SAU_MO_PHONG_HOI.match(de, p, b)) is not None:
+            return q.end()
+        if (j := _NOI_VAT_MO_PHONG.match(de, p, b)) is None:
+            return None
+        p = j.end()
 
 
 def _phan_tich_cau(s: str) -> list[tuple[str, re.Match | None]] | None:
@@ -2443,6 +2493,10 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
     def khong_tra_loi(spans) -> list[str]:
         return [de[a:b] for a, b in spans if not any(x <= a and b <= y for x, y in tra_loi)]
     for start, end in sorted(questions):
+        # SL-1: a request to show built objects asks nothing; before a question of its own sentence it is read whole
+        gd_mp = _GIAN_DAN.match(de, start, end)
+        if (het_mp := _doc_yeu_cau_mo_phong(de, gd_mp.end() if gd_mp else start, end, calls)) == end:
+            continue
         phrases = [(m.start(), m.end()) for fn, rules in _CUM_HOI.items() for pattern, _bind in rules
                    for m in pattern.finditer(de, start, end)
                    if _hoi_dung_cum(de, m.start(), m.end())
@@ -2463,6 +2517,8 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
         # A validated construction definition is read as a whole: its own words ("sao cho" of a ratio point) are not
         # given markers opening an unread fragment (run `geometry-capability-expansion`).
         phep_dung_spans = _doc_phep_dung_cau_hoi(de, start, end, calls, dung, khoi, phu)
+        if het_mp is not None:
+            phep_dung_spans.append((start, het_mp))
         phep_dung_spans += [(a, b) for a, b in buoc if start <= a and b <= end and not _hoi_dung_cum(de, a, b)]
         # a curved section / derived cone quote is read WHOLE by its closed grammar (the gate refused it otherwise), so its
         # words — "tính từ đỉnh S" included, which is no request — are read (registry /25)
@@ -2488,7 +2544,8 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
         stops = sorted({a for a, _b in phrases} | {m.start() for m in request_verb.finditer(de, start, end)} | {end})
         fragments = [(start + m.start(), a, next(p for p in stops if p >= a)) for m, a in zip(dan, markers)]
         first = min(stops)
-        prefix = de[start:first]
+        a_hoi = start if het_mp is None else het_mp
+        prefix = de[a_hoi:first]
         gd = _GIAN_DAN.match(de, start, first)
         a0 = gd.end() if gd else start
         is_note = bool(_GHI_CHU.fullmatch(de, a0, end)
@@ -2507,7 +2564,7 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
                         raise TuChoi("INCONSISTENT_FACTS", "điều phải chứng minh nêu một độ dài khác giá trị đã xác thực")
         discourse =(_GIUA_HOP_LE.fullmatch(prefix) or re.fullmatch(r"\s*khi đó\s*,?\s*", prefix, re.I) or bool(muc_spans))
         if not is_note and start < first < end and not markers and not discourse and _tu_nhan(prefix):
-            fragments.append((start, start, first))
+            fragments.append((a_hoi, a_hoi, first))
         # Sentence-level reading (run `shared-ask-grammar-safety`): in a sentence that asks an object, every word must be
         # read by something — the asked phrase with its governing verb and closed tail, a covered given fragment, a
         # follow-up read in closed words, a goal clause, or a validated construction. What is left may only be punctuation
@@ -2617,6 +2674,9 @@ _GIAN_DAN = re.compile(r"\s*(?:(?:bài tập|bài|câu|ví dụ)\s*(?:\d+|[a-d])
 #: Sentence-initial indefinite article directly before a solid noun ("Một hộp chữ nhật …"); "một" anywhere else (a number,
 #: "một nửa", "một cạnh") stays premise content.
 _MAO_TU_KHOI = re.compile(r"\s*một\s+(?=(?:hình|khối|hộp|lăng\s+trụ|chóp|tứ\s+diện)(?!\w))", re.IGNORECASE)
+#: Sentence-initial simulation verb directly before a solid noun (SL-1): a lead-in like "Cho", never premise content.
+_MO_PHONG_MO_KHOI = re.compile(rf"\s*{_DONG_TU_MO_PHONG}\s+(?=(?:một\s+)?(?:(?:hình|khối)\s+)?(?:chóp|lăng\s+trụ|hộp|lập\s+phương"
+                               r"|tứ\s+diện)(?!\w))", re.IGNORECASE)
 #: Nouns that only NAME an object next to its label; ROLE nouns also state a role and are accepted only when that role
 #: matches a validated call (`_vai_tro_doi_tuong_khop`) — "đường cao SB" is a claim, not a name.
 _DANH_TU_TRUNG_TINH = r"mặt phẳng|đường thẳng|đoạn thẳng|đoạn|cạnh|mặt|điểm|độ dài|(?:các\s+)?kích\s+thước|hình chóp|khối chóp"
@@ -2769,6 +2829,11 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
             continue
         gd = _GIAN_DAN.match(de, a, b)
         a0 = gd.end() if gd else a
+        if _doc_yeu_cau_mo_phong(de, a0, b, calls) == b:
+            continue                                     # only asks to show built objects (SL-1)
+        if ((mp := _MO_PHONG_MO_KHOI.match(de, a0, b)) and (mk := _C_KHOI.match(de, mp.end(), b))
+                and any(set(re.findall(r"[A-Z][0-9]*'?", mk["k"])) == _nhan_khoi(k) for k in calls if k.fn in _KHOI_FN)):
+            a0 = mp.end()                                # "Vẽ hình chóp S.ABCD có …" reads like "Cho hình chóp …"
         if mt := _MAO_TU_KHOI.match(de, a0, b):
             a0 = mt.end()
         if (_GHI_CHU.fullmatch(de, a0, b) and not _tu_nhan(de[a0:b])

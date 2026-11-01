@@ -814,12 +814,14 @@ class TypedFactNextPayload(ClosedNextModel):
                 "SCHEMA_VERSION_MISMATCH",
                 f"Expected schema_version={self._VERSION!r}, got {self.schema_version!r}.",
             )
-        if not self.solids:
+        # `/2` honest exit (SL-2): a payload that only reports what it could not read declares no solid or goal
+        unresolved = bool(getattr(self, "unresolved", ()))
+        if not self.solids and not unresolved:
             raise TypedFactNextValidationError(
                 "EMPTY_SOLIDS",
                 "TypedFactNextPayload requires at least one declared solid.",
             )
-        if not self.simulation_goals:
+        if not self.simulation_goals and not unresolved:
             raise TypedFactNextValidationError(
                 "EMPTY_SIMULATION_GOALS",
                 "TypedFactNextPayload is simulation-first and requires at least one simulation_goal.",
@@ -1229,13 +1231,87 @@ def _validate_declared_solid_scope(p: "TypedFactNextPayload", known: set[str]) -
                 refuse("SOURCE_OBJECT_MISMATCH", where, f"{label!r} chỉ là đỉnh của khối khác, không thuộc {base!r}")
 
 
+#: SL-2 (tenth continuation): the `/2` honest exit, parity with the flat contract's `ambiguous` / `unsupported`. Closed
+#: vocabularies only, so the model writes nothing a learner reads; the server builds the clarification text.
+UNRESOLVED_KINDS = ("ambiguous", "missing_operand", "unrecognized_term", "unsupported")
+MISSING_ROLES = ("source_point", "target_line_or_plane", "relation_kind", "solid_notation", "dimension", "goal_object")
+CANDIDATE_RELATIONS = ("orthogonal_projection", "intersection", "midpoint", "centroid", "perpendicular", "parallel",
+                       "angle", "distance")
+CLARIFICATION_SCHEMA_VERSION = "route-d-clarification/1"
+
+
+class UnresolvedSpec(ClosedNextModel):
+    """A clause the extractor cannot represent without guessing: an undefined term, a missing operand, several readings,
+    or a request outside the library. Never a fact; any entry refuses the payload (`bridge_v2`)."""
+
+    unresolved_id: IdentifierStr
+    kind: Literal[*UNRESOLVED_KINDS]
+    quote: NonEmptyText
+    subject_ref: Label | None = None
+    missing_roles: tuple[Literal[*MISSING_ROLES], ...] = ()
+    candidate_relations: tuple[Literal[*CANDIDATE_RELATIONS], ...] = Field(default=(), max_length=3)
+
+    @model_validator(mode="after")
+    def _subject_in_quote(self) -> "UnresolvedSpec":
+        if self.subject_ref is not None and not re.search(rf"(?<![\w']){re.escape(self.subject_ref)}(?![\w'])", self.quote):
+            raise TypedFactNextValidationError(
+                "INVALID_TYPED_FACT_NEXT", f"Unresolved {self.unresolved_id!r}: subject {self.subject_ref!r} is not in its quote.")
+        return self
+
+
+_VAI_THIEU_HOI = {"source_point": "của điểm nào", "target_line_or_plane": "lên đường thẳng hoặc mặt phẳng nào",
+                  "relation_kind": "theo quan hệ hình học nào", "solid_notation": "với tên các đỉnh nào",
+                  "dimension": "với số đo nào", "goal_object": "với đối tượng nào"}
+_VAI_THIEU_TEN = {"source_point": "điểm được dùng", "target_line_or_plane": "đường thẳng hoặc mặt phẳng nhận",
+                  "relation_kind": "quan hệ hình học", "solid_notation": "tên các đỉnh của hình",
+                  "dimension": "các số đo cần thiết", "goal_object": "đối tượng cần dựng hoặc tính"}
+_QUAN_HE_TEN = {"orthogonal_projection": "hình chiếu", "intersection": "giao điểm", "midpoint": "trung điểm",
+                "centroid": "trọng tâm", "perpendicular": "vuông góc", "parallel": "song song", "angle": "góc",
+                "distance": "khoảng cách"}
+_NLU_LOAI = {"ambiguous": "AMBIGUOUS", "missing_operand": "MISSING_DATA", "unrecognized_term": "UNRECOGNIZED_WORDING",
+             "unsupported": "VALID_BUT_UNSUPPORTED"}
+
+
+def clarification_record(u: UnresolvedSpec, problem_text: str) -> dict[str, Any]:
+    """`route-d-clarification/1`, written by the server from `u`'s closed fields and verbatim quote: every occurrence of
+    the quote (overlapping ones too), the NLU class, and one short question — none for `unsupported`, which no answer
+    from the learner can fix. Candidate readings are offered, never chosen."""
+    spans, k = [], problem_text.find(u.quote)
+    while k != -1:
+        spans.append([k, k + len(u.quote)])
+        k = problem_text.find(u.quote, k + 1)
+    question = None
+    if u.kind != "unsupported":
+        quan_he = " hay ".join(_QUAN_HE_TEN[c] for c in u.candidate_relations)
+        if quan_he:
+            hoi = " và ".join(_VAI_THIEU_HOI[r] for r in u.missing_roles)
+            chu = f"{u.subject_ref} là " if u.subject_ref else "nói "
+            question = f"Trong “{u.quote}”, bạn muốn {chu}{quan_he}{' ' + hoi if hoi else ''}?"
+        else:
+            ten = " và ".join(_VAI_THIEU_TEN[r] for r in u.missing_roles) or "ý muốn nói"
+            question = f"Trong “{u.quote}”, bạn hãy nói rõ {ten}."
+    return {"schema_version": CLARIFICATION_SCHEMA_VERSION, "unresolved_id": u.unresolved_id, "kind": u.kind,
+            "nlu_class": _NLU_LOAI[u.kind], "quote": u.quote, "spans": spans, "subject_ref": u.subject_ref,
+            "missing_roles": list(u.missing_roles), "candidate_relations": list(u.candidate_relations),
+            "question": question}
+
+
 class TypedFactNextPayloadV2(TypedFactNextPayload):
     """`typed-fact-next/2` (run `hybrid-contract-v2`, owner D1): `/1` with the section split into stated intersections
-    and an optional declared boundary, plus `/2` composite geometric relations (`GeometricRelationSpecV2`)."""
+    and an optional declared boundary, plus `/2` composite geometric relations (`GeometricRelationSpecV2`) and the
+    honest exit `unresolved` (SL-2)."""
 
     _VERSION: ClassVar[str] = TYPED_FACT_NEXT_V2_SCHEMA_VERSION
     derived_sections: tuple[DerivedPlaneSectionSpecV2, ...] = ()
     relations: tuple[GeometricRelationSpecV2, ...] = ()
+    unresolved: tuple[UnresolvedSpec, ...] = ()
+
+    @model_validator(mode="after")
+    def _validate_unresolved_ids(self) -> "TypedFactNextPayloadV2":
+        ids = [u.unresolved_id for u in self.unresolved]
+        if len(ids) != len(set(ids)):
+            raise TypedFactNextValidationError("INVALID_TYPED_FACT_NEXT", "Duplicate unresolved_id.")
+        return self
 
 
 def parse_typed_fact_next(raw: dict[str, Any] | TypedFactNextPayload) -> TypedFactNextPayload:

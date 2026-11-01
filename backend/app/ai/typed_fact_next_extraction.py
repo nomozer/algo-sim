@@ -60,7 +60,9 @@ class TransportExtractor:
             "Ghi đủ đối tượng, dữ kiện, mục tiêu dựng và câu hỏi của đề. Không tự thêm dữ kiện, "
             "không tính toán, không chọn phép dựng, không sinh toạ độ hoặc mã. "
             "Không biến phủ định, điều kiện hay điều phải chứng minh thành premise. "
-            "stated_intersections chỉ chứa giao điểm đề nêu; không tự suy ra giao điểm còn lại.")
+            "stated_intersections chỉ chứa giao điểm đề nêu; không tự suy ra giao điểm còn lại. "
+            "Thuật ngữ không rõ nghĩa, thiếu toán hạng, nhiều cách hiểu hay yêu cầu ngoài lược đồ ⇒ ghi vào unresolved "
+            "với quote nguyên văn; không đoán.")
         try:
             body = self.transport(request)
         except Exception:

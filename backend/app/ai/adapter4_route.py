@@ -89,7 +89,8 @@ def _phong_bi(r: KetQuaTuyen) -> dict[str, Any]:
         "adapter_version": ADAPTER_V4_VERSION,
         "contract_version": TYPED_FACT_NEXT_V2_SCHEMA_VERSION,
         "status": r.status,
-        "refusal": None if served else {"code": r.code, "detail": r.reason, "calls": list(r.failed_calls)},
+        "refusal": None if served else {"code": r.code, "detail": r.reason, "calls": list(r.failed_calls),
+                                        **_ban_ghi_lam_ro(r)},
         # every served `/4` result passed the Registry Source Gate; there is no other authority on this route
         "source_verification": {"authority": SOURCE_GATE_AUTHORITY} if served else None,
         "sections": sections,
@@ -100,6 +101,13 @@ def _phong_bi(r: KetQuaTuyen) -> dict[str, Any]:
         "planner": {k: (r.planner or {}).get(k) for k in ("version", "bridge")},
         "construction_trace": deepcopy(r.trace) if served else [],
     }
+
+
+def _ban_ghi_lam_ro(r: KetQuaTuyen) -> dict[str, Any]:
+    """`{"clarification": route-d-clarification/1}` for a refusal of the `/2` honest exit (SL-2), else nothing — every
+    other refusal keeps its exact shape. The record is the bridge's own (closed fields, verbatim quote)."""
+    clar = (r.details or {}).get("clarification") if r.status != "SERVED" else None
+    return {"clarification": deepcopy(clar)} if clar else {}
 
 
 #: `classify_refusal`'s class of each fault-of-ours code, as constants (equality with the normal path is test-locked).
@@ -146,7 +154,8 @@ def build_adapter4_response(result: KetQuaTuyen, problem_text: str) -> dict[str,
                 "envelope": {"status": "unsupported", "reason_code": code, "reason": kind.message,
                              "learner_reason": kind.message, "failure_category": kind.failure_category,
                              "refusal_cause": kind.refusal_cause},
-                "route_d": {**identity, "status": "REFUSED", "refusal": {"code": code}}}
+                "route_d": {**identity, "status": "REFUSED",
+                            "refusal": {"code": code, **(_ban_ghi_lam_ro(result) if code == result.code else {})}}}
 
     if result.status != "SERVED":
         return refuse(result.code or "PREVIEW_RESULT_INVALID")

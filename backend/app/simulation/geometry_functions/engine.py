@@ -593,6 +593,10 @@ class _Dung:
         elif (chuoi := self._chuoi_goc_vuong(self.root.base)) is not None:
             vong, khung, G2, dung = chuoi
             luat = "right_angle_chain_chart"
+        elif not any(self.do_dai(x, y) for x in dat for y in dat if x < y):
+            # D02 (tenth continuation): no source gives ANY length between base vertices, so no layout rule could fix the
+            # base whatever its shape — missing data, not an unsupported shape ("Vẽ hình chóp S.ABCD.")
+            raise TuChoi("MISSING_DIMENSION", f"đáy {len(dat)} đỉnh chưa có độ dài nào để xác định hình")
         else:
             raise TuChoi("UNSUPPORTED_BASE_SHAPE",
                          f"đáy {len(dat)} đỉnh không có lời gọi xác định hình (đa giác đều / hình chữ nhật)")
