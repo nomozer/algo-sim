@@ -40,6 +40,10 @@ from score_s2_student_language_pilot import _rate_or_unknown, score_s2_pilot_rec
 LiveRefused = P.LiveRefused
 MAX_CASES = 36                                       # §3/§4: hard request cap ≤ 36, one request per case
 STRATA = ("S2-A", "S2-B", "S2-C", "S2-D", "S2-E", "S2-F")
+#: C15: one runner, several pre-registered studies — each with its own closed strata and case cap (= request cap). A
+#: corpus names its study; none ⇒ S-2, so the locked S-2 corpus is byte-identical. An approval binds exactly one study.
+STUDIES = {"S-2": (STRATA, MAX_CASES),
+           "R-1": (("R1-A", "R1-B", "R1-C", "R1-D", "R1-E", "R1-F"), 18)}   # unnamed described points (C14 proposal)
 OUTCOMES = ("SERVED", "CLARIFY", "REFUSED_UNSUPPORTED", "REFUSED_INCONSISTENT")
 #: `route-d-clarification/1` closed `nlu_class` vocabulary (server-built, never model prose) = the clarification code.
 CLARIFICATION_CODES = ("AMBIGUOUS", "MISSING_DATA", "UNRECOGNIZED_WORDING")
@@ -70,18 +74,26 @@ def runtime_identity() -> dict[str, str]:
 
 # ── corpus ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 
+def study_of(corpus: dict[str, Any]) -> str:
+    study = corpus.get("study", "S-2")
+    if study not in STUDIES:
+        raise LiveRefused(f"unknown study {study!r}: one of {tuple(STUDIES)}")
+    return study
+
+
 def validate_corpus(corpus: dict[str, Any]) -> None:
+    strata, cap = STUDIES[study_of(corpus)]
     cases = corpus.get("cases")
-    if not isinstance(cases, list) or not 0 < len(cases) <= MAX_CASES:
-        raise LiveRefused(f"corpus needs 1..{MAX_CASES} cases")
+    if not isinstance(cases, list) or not 0 < len(cases) <= cap:
+        raise LiveRefused(f"corpus needs 1..{cap} cases")
     ids = [c.get("id") for c in cases]
     texts = [P._norm(c.get("problem_text") or "") for c in cases]
     if len(set(ids)) != len(ids) or len(set(texts)) != len(texts) or not all(texts):
         raise LiveRefused("duplicate or empty case id / problem text")
     for c in cases:
         e = c.get("expected") or {}
-        if c.get("stratum") not in STRATA or e.get("outcome") not in OUTCOMES:
-            raise LiveRefused(f"{c.get('id')}: stratum must be in {STRATA} and expected.outcome in {OUTCOMES}")
+        if c.get("stratum") not in strata or e.get("outcome") not in OUTCOMES:
+            raise LiveRefused(f"{c.get('id')}: stratum must be in {strata} and expected.outcome in {OUTCOMES}")
         if (e["outcome"] == "CLARIFY") != bool(e.get("is_ambiguous")):
             raise LiveRefused(f"{c['id']}: exactly the CLARIFY cases are ambiguous")
         if e["outcome"] == "CLARIFY" and not set(e.get("allowed_clarification_codes") or ()) <= set(CLARIFICATION_CODES):
@@ -233,6 +245,9 @@ def observe(text: str, extractor, deadline_s: float = 15.0) -> tuple[dict[str, A
     if served:
         obs.update(status="SERVED", certificate_verified=receipt["engine"]["status"] == "VERIFIED",
                    answers={k: sorted(map(str, v)) for k, v in P.served_quantities(env).items()})
+        tel = (route.get("planner") or {}).get("search_telemetry") or {}      # C15: what the planner itself composed
+        extra["search"] = {"classification": tel.get("classification"),
+                           "planner_originated_steps": list(tel.get("planner_originated_steps") or ())}
         return obs, extra
     clar = (route.get("refusal") or {}).get("clarification")
     if clar and clar.get("kind") != "unsupported":          # no learner answer can fix `unsupported` (server rule)
@@ -296,11 +311,68 @@ def attribute(row: dict[str, Any], gold_observed: dict[str, Any], gold_code: str
     return "UNATTRIBUTED"
 
 
-def supplementary(rows: list[dict[str, Any]]) -> dict[str, Any]:
+#: C15 R-1 label of a row whose gold reproduction ends the same way, by the refusal group of its code. The public refusal
+#: surface does not say which of bridge / Source Gate / planner refused, so only PLAN_TOO_LARGE is the planner's own.
+_LAYER_BY_GROUP = {"EXTRACTION_FAILED": "REPRESENTATION_BLOCKED", "SOURCE_UNVERIFIED": "SOURCE_GROUNDING_FAILURE",
+                   "CAPABILITY": "MISSING_PRIMITIVE", "RESULT_UNVERIFIED": "KERNEL_VERIFICATION_FAILURE",
+                   "INCONCLUSIVE": "KERNEL_VERIFICATION_FAILURE"}
+
+
+def composition_label(row: dict[str, Any]) -> str:
+    """R-1 (C15 directive §V): how a row was served, or the first layer that failed. A served row takes the planner's
+    own search classification, and DISCOVERED_FUNCTION_COMPOSITION only with a step the planner made itself — a long
+    trace is not evidence. Failures are labelled by layer only when the gold reproduction ends the same way."""
+    from app.ai.hybrid_preview import classify_refusal
+
+    if row["technical_failure"]:
+        return "NOT_ESTABLISHED"
+    if row["observed"].get("status") == "SERVED" and not row["end_to_end_correct"]:
+        return "WRONG_SERVED"
+    if row["end_to_end_correct"]:
+        if row["expected"]["outcome"] != "SERVED":
+            return "CORRECT_REFUSAL"
+        search = row.get("search") or {}
+        kind = search.get("classification")
+        if kind == "DISCOVERED_FUNCTION_COMPOSITION" and not search.get("planner_originated_steps"):
+            return "NOT_ESTABLISHED"
+        return kind or "NOT_ESTABLISHED"
+    if row["attribution"] == "LLM_EXTRACTION_DIFFERS_FROM_GOLD":
+        return "EXTRACTION_FAILURE"
+    if row["attribution"] != "DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD":
+        return "NOT_ESTABLISHED"
+    code = row.get("hybrid_code") or ""
+    if code == "BRIDGE_UNSUPPORTED_DESCRIBED_POINT":
+        return "REPRESENTATION_BLOCKED"
+    if code == "PLAN_TOO_LARGE":
+        return "PLANNER_SEARCH_FAILURE"
+    return _LAYER_BY_GROUP.get(classify_refusal(code).group, "NOT_ESTABLISHED")
+
+
+def described_check(gold: Any, raw: Any, text: str) -> dict[str, bool] | None:
+    """R-1 (C15 directive §V 1–4): the model's OWN `DescribedPointSpec`s against the gold's, fixed before any live run.
+    `None` where the gold describes no point. Operands and goals are the scorer's goal metric (`project` resolves each
+    `@id` to its description), so they are not repeated here."""
+    want = (gold or {}).get("described_points") or []
+    if not want:
+        return None
+    got = [d for d in (raw.get("described_points") or []) if isinstance(d, dict)] if isinstance(raw, dict) else []
+    refs = {x.strip() for x in _leaves(raw) if x.strip().startswith("@")} if isinstance(raw, dict) else set()
+    return {"emitted": bool(got),
+            "kinds_match": sorted(map(str, (d.get("kind") for d in got))) == sorted(d["kind"] for d in want),
+            "refs_resolve": bool(refs) and refs <= {f"@{str(d.get('described_id')).strip()}" for d in got},
+            "quotes_verbatim": bool(got) and all(isinstance(d.get("quote"), str) and d["quote"] in text for d in got)}
+
+
+def supplementary(rows: list[dict[str, Any]], study: str = "S-2") -> dict[str, Any]:
     scored = [r for r in rows if r["end_to_end_correct"] is not None]
     serve = [r for r in scored if r["expected"]["outcome"] == "SERVED"]
-    strata = {s: [r for r in scored if r["stratum"] == s] for s in STRATA}
-    return {"note": "not a protocol §2 metric; reported beside them (Master directive §V)",
+    strata = {s: [r for r in scored if r["stratum"] == s] for s in STUDIES[study][0]}
+    checked = [r["described_check"] for r in rows if not r["technical_failure"] and r.get("described_check")]
+    extra = {} if study == "S-2" else {
+        "composition_labels": dict(sorted(collections.Counter(r["composition_label"] for r in rows).items())),
+        "described_points": {k: _rate_or_unknown(sum(c[k] for c in checked), len(checked))
+                             for k in ("emitted", "kinds_match", "refs_resolve", "quotes_verbatim")}}
+    return {**extra, "note": "not a protocol §2 metric; reported beside them (Master directive §V)",
             "end_to_end_correct": _rate_or_unknown(sum(r["end_to_end_correct"] for r in scored), len(scored)),
             "gold_replay_ceiling": _rate_or_unknown(sum(bool(r["gold_replay_end_to_end_correct"]) for r in scored),
                                                     len(scored)),
@@ -333,8 +405,10 @@ def check_approval_terms(corpus_bytes: bytes, approval: dict[str, Any]) -> dict[
     for key in APPROVAL_FIELDS:
         if key not in approval:
             raise LiveRefused(f"approval lacks {key}")
-    if approval["pilot"] != "S-2":
-        raise LiveRefused("approval is not for the S-2 pilot")
+    corpus = json.loads(corpus_bytes.decode("utf-8"))
+    study = study_of(corpus)
+    if approval["pilot"] != study:                                               # one approval, one study (C15)
+        raise LiveRefused(f"approval is not for the {study} pilot")
     if approval["paid_project_confirmed"] is not True:                           # §4.3
         raise LiveRefused("the paid project / key is not confirmed")
     if approval["corpus_sha256"] != hashlib.sha256(corpus_bytes).hexdigest():   # §4.6 data scope
@@ -343,13 +417,13 @@ def check_approval_terms(corpus_bytes: bytes, approval: dict[str, Any]) -> dict[
     for key in ("model", "measured_system", "runner_sha256", "paired_harness_sha256", "scorer_sha256"):   # §4.2
         if approval[key] != identity[key]:
             raise LiveRefused(f"{key} differs from the approved one")
-    if type(approval["max_requests"]) is not int or not 0 < approval["max_requests"] <= MAX_CASES:   # §4.4
-        raise LiveRefused(f"max_requests must be an integer in 1..{MAX_CASES}")
+    cap = STUDIES[study][1]
+    if type(approval["max_requests"]) is not int or not 0 < approval["max_requests"] <= cap:   # §4.4
+        raise LiveRefused(f"max_requests must be an integer in 1..{cap}")
     for key in ("max_usd", "input_usd_per_million", "output_usd_per_million"):   # NaN / ≤ 0 would disable the USD cap
         v = approval[key]
         if type(v) not in (int, float) or not math.isfinite(v) or v <= 0:
             raise LiveRefused(f"{key} must be a finite positive number")
-    corpus = json.loads(corpus_bytes.decode("utf-8"))
     validate_corpus(corpus)
     worst = worst_case_request_usd(corpus, approval)
     if approval["max_requests"] * worst > approval["max_usd"]:                  # §4.5
@@ -383,6 +457,7 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
         check_approval_terms(corpus_bytes, approval)
     corpus = json.loads(corpus_bytes.decode("utf-8"))
     validate_corpus(corpus)
+    study = study_of(corpus)
     identity = runtime_identity()
     sink = out_path.open("x", encoding="utf-8", newline="\n")
 
@@ -391,7 +466,8 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
         sink.flush()
 
     klass = "LIVE_DEVELOPMENT_PILOT" if live else "OFFLINE_DETERMINISTIC_FIXTURE_TEST"
-    emit({"type": "header", "measurement_class": klass, "corpus_sha256": hashlib.sha256(corpus_bytes).hexdigest(),
+    emit({"type": "header", "study": study, "measurement_class": klass,
+          "corpus_sha256": hashlib.sha256(corpus_bytes).hexdigest(),
           "runtime_identity": identity})
     budget = P._cost_capped_budget(approval) if live else None
     gemini.set_budget(budget)
@@ -435,6 +511,9 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
             row["gold_replay_status"] = gold_observed.get("status")
             row["gold_replay_end_to_end_correct"] = end_to_end_correct(row["expected"], gold_observed)
             row["attribution"] = attribute(row, gold_observed, gold_extra.get("hybrid_code"), gold)
+            if study != "S-2":
+                row["composition_label"] = composition_label(row)
+                row["described_check"] = described_check(gold, row.get("raw_extraction"), case["problem_text"])
             rows.append(row)
             emit(row)
             spent += upper if isinstance(upper, float) else 0.0
@@ -457,7 +536,7 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
                                          "observed": r["observed"]} for r in rows])
         latencies = [r["latency_s"] for r in rows if not r["technical_failure"]]
         complete = stop_reason is None and len(rows) == len(corpus["cases"])
-        out = {"type": "summary", "measurement_class": klass, "stop_reason": stop_reason,
+        out = {"type": "summary", "study": study, "measurement_class": klass, "stop_reason": stop_reason,
                "run_status": "COMPLETE" if complete else "INCOMPLETE",
                "completed": complete,
                "cases_run": len(rows), "cases_planned": len(corpus["cases"]),
@@ -468,7 +547,7 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
                                       else sum(r["usd"] for r in rows)),
                "latency_median_s": P._quantile(latencies, 0.5) if live else "NOT_MEASURED",
                "latency_p90_s": P._quantile(latencies, 0.9) if live else "NOT_MEASURED",
-               "score": score, "supplementary": supplementary(rows)}
+               "score": score, "supplementary": supplementary(rows, study)}
         emit(out)
         sink.close()
     return {**out, "runtime_identity": identity, "rows": rows}

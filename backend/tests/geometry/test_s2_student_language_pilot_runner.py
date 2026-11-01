@@ -211,6 +211,127 @@ def test_request_cap_blocks_the_next_request_before_it_is_sent(tmp_path, monkeyp
     assert provider.calls == 1 and out["stop_reason"] == "REQUEST_CAP" and not out["completed"]
 
 
+# ── C15: the same runner measures the R-1 described-point study ─────────────────────────────────────────────────────
+
+_R1_TEXT = ("Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. "
+            "Tính khoảng cách từ giao điểm của AC và BD đến mặt phẳng (SBC).")
+
+
+def _r1_case(cid="R1-A-X", stratum="R1-A"):
+    """An R-1 case whose gold asks through an UNNAMED described point (C13 probe row C2, oracle √2/2)."""
+    gold = {"schema_version": "typed-fact-next/2", "problem_text": _R1_TEXT, "length_unit": "1",
+            "solids": [{"solid_id": "s1", "solid_type": "pyramid", "notation": "S.ABCD", "quote": "Cho hình chóp S.ABCD"}],
+            "premises": [
+                {"kind": "regular_polygon", "args": {"vertices": list("ABCD"), "side": "2"},
+                 "quote": "Đáy ABCD là hình vuông cạnh 2", "solid_id": "s1"},
+                {"kind": "perpendicular_line_plane", "args": {"line": ["S", "A"], "plane": list("ABCD")},
+                 "quote": "SA vuông góc với (ABCD)", "solid_id": "s1"},
+                {"kind": "segment_length", "args": {"segment": ["S", "A"], "value": "2"}, "quote": "SA = 2",
+                 "solid_id": "s1"}],
+            "derived_sections": [], "relations": [],
+            "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "s1",
+                                  "quote": "Cho hình chóp S.ABCD"}],
+            "math_goals": [{"goal_id": "q1", "kind": "measurement", "goal_type": "distance",
+                            "target": {"point": "@o1", "plane": ["S", "B", "C"]}, "solid_id": "s1",
+                            "quote": "Tính khoảng cách từ giao điểm của AC và BD đến mặt phẳng (SBC)"}],
+            "described_points": [{"described_id": "o1", "kind": "intersect_line_line", "quote": "giao điểm của AC và BD",
+                                  "line1": ["A", "C"], "line2": ["B", "D"]}]}
+    return {"id": cid, "stratum": stratum, "problem_text": _R1_TEXT, "gold_extraction": gold,
+            "expected": {"outcome": "SERVED", "oracle": {"distance": ["√2/2"]}}}
+
+
+def _write_study(tmp_path, study, cases):
+    path = tmp_path / "corpus.json"
+    path.write_text(json.dumps({"study": study, "cases": cases}, ensure_ascii=False), encoding="utf-8")
+    return path
+
+
+def test_c15_a_corpus_names_its_study_and_the_s2_corpus_stays_s2(tmp_path):
+    R.validate_corpus({"cases": [_case("S2-A-I02_ve")]})                         # no `study` ⇒ S-2, as locked
+    R.validate_corpus({"study": "R-1", "cases": [_r1_case()]})
+    with pytest.raises(R.LiveRefused, match="stratum"):
+        R.validate_corpus({"study": "R-1", "cases": [_case("S2-A-I02_ve")]})      # an S-2 stratum is not an R-1 one
+    with pytest.raises(R.LiveRefused, match="study"):
+        R.validate_corpus({"study": "R-9", "cases": [_r1_case()]})
+    with pytest.raises(R.LiveRefused, match="1..18"):
+        R.validate_corpus({"study": "R-1", "cases": [_r1_case(f"R1-A-{i}") for i in range(19)]})
+
+
+def test_c15_an_approval_binds_exactly_one_study(tmp_path):
+    corpus = _write_study(tmp_path, "R-1", [_r1_case()])
+    with pytest.raises(R.LiveRefused, match="R-1"):
+        R.check_approval_terms(corpus.read_bytes(), _terms(corpus))              # an S-2 approval on the R-1 corpus
+    with pytest.raises(R.LiveRefused, match="max_requests"):
+        R.check_approval_terms(corpus.read_bytes(), _terms(corpus, pilot="R-1", max_requests=19))
+    assert R.check_approval_terms(corpus.read_bytes(), _terms(corpus, pilot="R-1", max_requests=18))["pilot"] == "R-1"
+    s2 = _write(tmp_path, [_case("S2-A-I02_ve")])
+    with pytest.raises(R.LiveRefused, match="S-2"):
+        R.check_approval_terms(s2.read_bytes(), _terms(s2, pilot="R-1"))
+
+
+def test_c15_gold_replay_labels_a_discovered_composition_only_with_a_planner_made_step(tmp_path):
+    out = R.evaluate(_write_study(tmp_path, "R-1", [_r1_case()]), tmp_path / "dry.jsonl", None)
+    row = out["rows"][0]
+    assert row["end_to_end_correct"] and row["search"]["classification"] == "DISCOVERED_FUNCTION_COMPOSITION"
+    assert row["search"]["planner_originated_steps"] and row["composition_label"] == "DISCOVERED_FUNCTION_COMPOSITION"
+    assert out["supplementary"]["composition_labels"] == {"DISCOVERED_FUNCTION_COMPOSITION": 1}
+    assert set(out["supplementary"]["by_stratum"]) == {"R1-A", "R1-B", "R1-C", "R1-D", "R1-E", "R1-F"}
+    no_step = dict(row, search={"classification": "DISCOVERED_FUNCTION_COMPOSITION", "planner_originated_steps": []})
+    assert R.composition_label(no_step) == "NOT_ESTABLISHED"          # the planner's own label alone is not evidence
+
+
+def test_c15_the_models_own_described_points_are_checked_against_gold():
+    gold = _r1_case()["gold_extraction"]
+    assert R.described_check(gold, gold, _R1_TEXT) == {"emitted": True, "kinds_match": True, "refs_resolve": True,
+                                                        "quotes_verbatim": True}
+    assert R.described_check(_case("S2-A-I02_ve")["gold_extraction"], gold, _R1_TEXT) is None   # gold declares none
+    named = deepcopy(gold)                                   # the model named the point instead of describing it
+    named.pop("described_points")
+    named["math_goals"][0]["target"]["point"] = "O"
+    assert R.described_check(gold, named, _R1_TEXT)["emitted"] is False
+    wrong = deepcopy(gold)
+    wrong["described_points"][0].update(kind="midpoint", quote="giao điểm của AC")          # paraphrase is fine
+    wrong["math_goals"][0]["target"]["point"] = "@x9"
+    assert R.described_check(gold, wrong, _R1_TEXT) == {"emitted": True, "kinds_match": False, "refs_resolve": False,
+                                                         "quotes_verbatim": True}
+    wrong["described_points"][0]["quote"] = "giao điểm hai đường chéo"
+    assert R.described_check(gold, wrong, _R1_TEXT)["quotes_verbatim"] is False
+    assert R.described_check(gold, None, _R1_TEXT)["emitted"] is False                     # no readable extraction
+
+
+def test_c15_mock_live_a_model_that_names_the_point_is_an_extraction_failure_never_a_serve(tmp_path, monkeypatch):
+    named = deepcopy(_r1_case()["gold_extraction"])
+    named.pop("described_points")
+    named["math_goals"][0]["target"]["point"] = "O"                      # invents a label the text never gives
+    corpus = _write_study(tmp_path, "R-1", [_r1_case()])
+    monkeypatch.setenv("ALLOW_LIVE_AI", "1")
+    monkeypatch.setenv("GEMINI_API_KEY", "offline-test-key-never-sent")
+    monkeypatch.setattr(httpx, "post", Provider(_body(named)))
+    out = R.evaluate(corpus, tmp_path / "live.jsonl", _terms(corpus, pilot="R-1", max_requests=18), sleep=lambda s: None)
+    row = out["rows"][0]
+    assert out["completed"] and row["observed"]["status"] != "SERVED" and row["gold_replay_end_to_end_correct"]
+    assert row["composition_label"] == "EXTRACTION_FAILURE" and row["described_check"]["emitted"] is False
+    assert out["supplementary"]["described_points"]["emitted"]["rate"] == 0.0
+
+
+@pytest.mark.parametrize("code,attribution,label", [
+    ("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", "DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD", "REPRESENTATION_BLOCKED"),
+    ("SOURCE_OBJECT_MISMATCH", "DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD", "SOURCE_GROUNDING_FAILURE"),
+    ("PLAN_TOO_LARGE", "DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD", "PLANNER_SEARCH_FAILURE"),
+    ("UNSUPPORTED_CAPABILITY", "DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD", "MISSING_PRIMITIVE"),
+    ("ENGINE_SELF_CHECK_FAILED", "DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD", "KERNEL_VERIFICATION_FAILURE"),
+    ("SOURCE_OBJECT_MISMATCH", "LLM_EXTRACTION_DIFFERS_FROM_GOLD", "EXTRACTION_FAILURE"),
+    ("SOURCE_OBJECT_MISMATCH", "UNATTRIBUTED", "NOT_ESTABLISHED"),
+])
+def test_c15_a_failed_row_is_labelled_by_the_layer_its_gold_reproduction_names(code, attribution, label):
+    row = {"technical_failure": False, "end_to_end_correct": False, "attribution": attribution, "hybrid_code": code,
+           "expected": {"outcome": "SERVED"}, "observed": {"status": "REFUSED"}}
+    assert R.composition_label(row) == label
+    assert R.composition_label(dict(row, observed={"status": "SERVED"})) == "WRONG_SERVED"
+    assert R.composition_label(dict(row, technical_failure=True)) == "NOT_ESTABLISHED"
+    assert R.composition_label(dict(row, end_to_end_correct=True, expected={"outcome": "CLARIFY"})) == "CORRECT_REFUSAL"
+
+
 class _Ran(Exception):
     pass
 
