@@ -491,3 +491,31 @@ Offline only; `MAX_AUTHORIZED_LIVE_REQUESTS = 0`; 0 provider calls. `DEFAULT_MOD
 | `58888d7c` | Review round-1 fixes (B1 class words, B2 undrawn mentions, PE-1 dropped requests, SL-2 MINORs) — product commit |
 
 <!-- candidate, T3 and review verdict appended at the checkpoint -->
+| `35cac578` | Review round-2 fixes (anaphor-only reading, closed intersection operands, raw-source spans) |
+| `fb67cfb2` | Review round-3 fix (anaphor noun ↔ its own call) — **final product commit** |
+| `8b25df71` | Candidate re-frozen in its own commit (`runs/hybrid-master-student-language/` correcting `runs/hybrid-master-composite-relations/`) |
+
+**Delivered on Route D `/4`** (registry /27, planner /22, engine /19; `student-language-audit.md`):
+- SL-1: simulation requests are read by one closed reader that adds no fact (generic solid word + own notation, built points; opener only before the solid's attributes).
+- SL-2: `typed-fact-next/2` honest exit `unresolved`; refused with AMBIGUOUS_FACT / OUT_OF_SCOPE and a server-built `route-d-clarification/1` record in `route_d.refusal`; frontend envelope unchanged; `/1` untouched; census extension +7 METADATA rows.
+- D02: an unconstrained base is `MISSING_DIMENSION`. PE-1 (pre-existing): a request sentence no call answers is refused.
+
+**Development probe (authored, offline, not held-out, not live)**, same probe before/after: on 60 shared gold rows SERVED_CORRECT 22 → 45, FALSE_REFUSAL 26 → 3, clarification 0 → 5, wrong class 2 → 0; 0 WRONG_SERVED before and after; adversarial 20/20 refused. Seven longer composition chains added after the fix are served exactly (52 served-correct of 67 gold rows in total). No planner (B), registry (C) or kernel (F) gap found.
+
+**Independent review:** four rounds — NOT_READY (2 BLOCKER), NOT_READY (1 BLOCKER), NOT_READY (1 MAJOR), **READY** (0/0). Every finding is locked by a test.
+
+**Gates:**
+- Wave 3 67/72, 72/72 negatives refused (62 exact reason), 0 wrong-served, 0 transitions; locked 96/96; 203 probes 0 served negatives, 0 internal (`inventory-phase-n4.json`). Earlier curved, section, sphere, apex, base-centre, topology, measurement and composite probes identical to baseline.
+- Candidate `8b25df71`: product `fb67cfb2`, 118 files `42347fbe…`, cache 131 (no bump); `--verify` matches.
+- **Full T3 `FULL_PRODUCT_GATE_PASS`** on attempt 1 of `8b25df71` (`full-t3-8b25df71.json`): pytest 16324 passed, 0 failed; vitest 1424; build; demo 5/5; crash surface 6/6.
+- Publication scan of `f986e897..HEAD`: PASS, 0 `Co-Authored-By` trailers.
+
+**Status:** `ARCHITECTURE_CAPABILITY_PROGRESS` (student language); `OFFLINE_BACKEND_READY_FOR_LIVE_EVALUATION`; overall **`HYBRID_NOT_READY`**. Nothing merged or pushed.
+
+**Open (recorded):** no-diacritic input refused at the domain gate on every route (`ISSUE-ARCH-ROUTE-D-DIACRITIC-FREE-INPUT`, Owner S-1); lowercase labels and tone typos unread; PE-2 solid-class word uncertified (`ISSUE-ARCH-ROUTE-D-SOLID-CLASS-WORD-UNCERTIFIED`); simulation requests on curved solids unread; live use of the honest exit unmeasured.
+
+**Next exact action (one Owner decision point, `owner-go-request.md` + addendum):**
+1. S-1: keep the domain gate, or authorize the diacritic-restoration slice (default-route behaviour change).
+2. S-2: GO / defer for a live student-wording study (budget + author), separate from the locked protocol.
+3. The existing live paired GO: name the corpus author; `--manifest` now prints the new `measured_system`.
+Without these, the next offline item is PE-2 (solid-class certificate), with a RED test on its repro.
