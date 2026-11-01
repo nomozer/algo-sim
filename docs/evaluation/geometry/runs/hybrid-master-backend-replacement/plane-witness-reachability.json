@@ -1,0 +1,8917 @@
+{
+ "classification": "IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC",
+ "provider_calls": 0,
+ "head": "93a15f8e1d07427019c4d8b01cc1410f7a7774c1",
+ "summary": {
+  "cases": 710,
+  "verdicts": {
+   "CORRECT_REFUSAL": 346,
+   "SERVED_CORRECT": 364
+  },
+  "reachable_refused_codes": {}
+ },
+ "rows": [
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AB",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AB",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AB",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AB",
+   "through": "D",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AB",
+   "through": "S",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AB",
+   "through": "trung điểm của AB",
+   "oracle_area2": "9/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AB",
+   "through": "trung điểm của BC",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AB",
+   "through": "trung điểm của CD",
+   "oracle_area2": "9/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AB",
+   "through": "trung điểm của DA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AB",
+   "through": "trung điểm của SA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AB",
+   "through": "trung điểm của SB",
+   "oracle_area2": "9/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AB",
+   "through": "trung điểm của SC",
+   "oracle_area2": "9/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AB",
+   "through": "trung điểm của SD",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AC",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AC",
+   "through": "B",
+   "oracle_area2": "2",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AC",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AC",
+   "through": "D",
+   "oracle_area2": "2",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AC",
+   "through": "S",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AC",
+   "through": "trung điểm của AB",
+   "oracle_area2": "25/8",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AC",
+   "through": "trung điểm của BC",
+   "oracle_area2": "1/8",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AC",
+   "through": "trung điểm của CD",
+   "oracle_area2": "1/8",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AC",
+   "through": "trung điểm của DA",
+   "oracle_area2": "25/8",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AC",
+   "through": "trung điểm của SA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AC",
+   "through": "trung điểm của SB",
+   "oracle_area2": "25/8",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AC",
+   "through": "trung điểm của SC",
+   "oracle_area2": "2",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AC",
+   "through": "trung điểm của SD",
+   "oracle_area2": "25/8",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AD",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AD",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AD",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AD",
+   "through": "D",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AD",
+   "through": "S",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AD",
+   "through": "trung điểm của AB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AD",
+   "through": "trung điểm của BC",
+   "oracle_area2": "9/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AD",
+   "through": "trung điểm của CD",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AD",
+   "through": "trung điểm của DA",
+   "oracle_area2": "9/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AD",
+   "through": "trung điểm của SA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AD",
+   "through": "trung điểm của SB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AD",
+   "through": "trung điểm của SC",
+   "oracle_area2": "9/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AD",
+   "through": "trung điểm của SD",
+   "oracle_area2": "9/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AS",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AS",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AS",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AS",
+   "through": "D",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AS",
+   "through": "S",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AS",
+   "through": "trung điểm của AB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AS",
+   "through": "trung điểm của BC",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AS",
+   "through": "trung điểm của CD",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AS",
+   "through": "trung điểm của DA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AS",
+   "through": "trung điểm của SA",
+   "oracle_area2": "1",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AS",
+   "through": "trung điểm của SB",
+   "oracle_area2": "1",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AS",
+   "through": "trung điểm của SC",
+   "oracle_area2": "1",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "AS",
+   "through": "trung điểm của SD",
+   "oracle_area2": "1",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BC",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BC",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BC",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BC",
+   "through": "D",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BC",
+   "through": "S",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BC",
+   "through": "trung điểm của AB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BC",
+   "through": "trung điểm của BC",
+   "oracle_area2": "9/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BC",
+   "through": "trung điểm của CD",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BC",
+   "through": "trung điểm của DA",
+   "oracle_area2": "9/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BC",
+   "through": "trung điểm của SA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BC",
+   "through": "trung điểm của SB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BC",
+   "through": "trung điểm của SC",
+   "oracle_area2": "9/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BC",
+   "through": "trung điểm của SD",
+   "oracle_area2": "9/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BD",
+   "through": "A",
+   "oracle_area2": "8",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BD",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BD",
+   "through": "C",
+   "oracle_area2": "8",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BD",
+   "through": "D",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BD",
+   "through": "S",
+   "oracle_area2": "8",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BD",
+   "through": "trung điểm của AB",
+   "oracle_area2": "1/2",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BD",
+   "through": "trung điểm của BC",
+   "oracle_area2": "1/2",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BD",
+   "through": "trung điểm của CD",
+   "oracle_area2": "1/2",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BD",
+   "through": "trung điểm của DA",
+   "oracle_area2": "1/2",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BD",
+   "through": "trung điểm của SA",
+   "oracle_area2": "8",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BD",
+   "through": "trung điểm của SB",
+   "oracle_area2": "1/2",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BD",
+   "through": "trung điểm của SC",
+   "oracle_area2": "8",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BD",
+   "through": "trung điểm của SD",
+   "oracle_area2": "1/2",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BS",
+   "through": "A",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BS",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BS",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BS",
+   "through": "D",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BS",
+   "through": "S",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BS",
+   "through": "trung điểm của AB",
+   "oracle_area2": "49/32",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BS",
+   "through": "trung điểm của BC",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BS",
+   "through": "trung điểm của CD",
+   "oracle_area2": "49/32",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BS",
+   "through": "trung điểm của DA",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BS",
+   "through": "trung điểm của SA",
+   "oracle_area2": "9/32",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BS",
+   "through": "trung điểm của SB",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BS",
+   "through": "trung điểm của SC",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "BS",
+   "through": "trung điểm của SD",
+   "oracle_area2": "9/32",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CD",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CD",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CD",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CD",
+   "through": "D",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CD",
+   "through": "S",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CD",
+   "through": "trung điểm của AB",
+   "oracle_area2": "9/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CD",
+   "through": "trung điểm của BC",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CD",
+   "through": "trung điểm của CD",
+   "oracle_area2": "9/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CD",
+   "through": "trung điểm của DA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CD",
+   "through": "trung điểm của SA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CD",
+   "through": "trung điểm của SB",
+   "oracle_area2": "9/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CD",
+   "through": "trung điểm của SC",
+   "oracle_area2": "9/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CD",
+   "through": "trung điểm của SD",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CS",
+   "through": "A",
+   "oracle_area2": "4/3",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CS",
+   "through": "B",
+   "oracle_area2": "4/3",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CS",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CS",
+   "through": "D",
+   "oracle_area2": "4/3",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CS",
+   "through": "S",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CS",
+   "through": "trung điểm của AB",
+   "oracle_area2": "3",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CS",
+   "through": "trung điểm của BC",
+   "oracle_area2": "1/12",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CS",
+   "through": "trung điểm của CD",
+   "oracle_area2": "1/12",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CS",
+   "through": "trung điểm của DA",
+   "oracle_area2": "3",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CS",
+   "through": "trung điểm của SA",
+   "oracle_area2": "1/12",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CS",
+   "through": "trung điểm của SB",
+   "oracle_area2": "4/3",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CS",
+   "through": "trung điểm của SC",
+   "oracle_area2": "3",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "CS",
+   "through": "trung điểm của SD",
+   "oracle_area2": "4/3",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "DS",
+   "through": "A",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "DS",
+   "through": "B",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "DS",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "DS",
+   "through": "D",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "DS",
+   "through": "S",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "DS",
+   "through": "trung điểm của AB",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "DS",
+   "through": "trung điểm của BC",
+   "oracle_area2": "49/32",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "DS",
+   "through": "trung điểm của CD",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "DS",
+   "through": "trung điểm của DA",
+   "oracle_area2": "49/32",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "DS",
+   "through": "trung điểm của SA",
+   "oracle_area2": "9/32",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "DS",
+   "through": "trung điểm của SB",
+   "oracle_area2": "9/32",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "DS",
+   "through": "trung điểm của SC",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('2', '2')",
+   "line": "DS",
+   "through": "trung điểm của SD",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AB",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AB",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AB",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AB",
+   "through": "D",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AB",
+   "through": "S",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AB",
+   "through": "trung điểm của AB",
+   "oracle_area2": "81/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AB",
+   "through": "trung điểm của BC",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AB",
+   "through": "trung điểm của CD",
+   "oracle_area2": "81/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AB",
+   "through": "trung điểm của DA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AB",
+   "through": "trung điểm của SA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AB",
+   "through": "trung điểm của SB",
+   "oracle_area2": "81/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AB",
+   "through": "trung điểm của SC",
+   "oracle_area2": "81/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AB",
+   "through": "trung điểm của SD",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AC",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AC",
+   "through": "B",
+   "oracle_area2": "18",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AC",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AC",
+   "through": "D",
+   "oracle_area2": "18",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AC",
+   "through": "S",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AC",
+   "through": "trung điểm của AB",
+   "oracle_area2": "225/8",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AC",
+   "through": "trung điểm của BC",
+   "oracle_area2": "9/8",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AC",
+   "through": "trung điểm của CD",
+   "oracle_area2": "9/8",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AC",
+   "through": "trung điểm của DA",
+   "oracle_area2": "225/8",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AC",
+   "through": "trung điểm của SA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AC",
+   "through": "trung điểm của SB",
+   "oracle_area2": "225/8",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AC",
+   "through": "trung điểm của SC",
+   "oracle_area2": "18",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AC",
+   "through": "trung điểm của SD",
+   "oracle_area2": "225/8",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AD",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AD",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AD",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AD",
+   "through": "D",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AD",
+   "through": "S",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AD",
+   "through": "trung điểm của AB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AD",
+   "through": "trung điểm của BC",
+   "oracle_area2": "81/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AD",
+   "through": "trung điểm của CD",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AD",
+   "through": "trung điểm của DA",
+   "oracle_area2": "81/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AD",
+   "through": "trung điểm của SA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AD",
+   "through": "trung điểm của SB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AD",
+   "through": "trung điểm của SC",
+   "oracle_area2": "81/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AD",
+   "through": "trung điểm của SD",
+   "oracle_area2": "81/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AS",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AS",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AS",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AS",
+   "through": "D",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AS",
+   "through": "S",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AS",
+   "through": "trung điểm của AB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AS",
+   "through": "trung điểm của BC",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AS",
+   "through": "trung điểm của CD",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AS",
+   "through": "trung điểm của DA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AS",
+   "through": "trung điểm của SA",
+   "oracle_area2": "81/16",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AS",
+   "through": "trung điểm của SB",
+   "oracle_area2": "81/16",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AS",
+   "through": "trung điểm của SC",
+   "oracle_area2": "81/16",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "AS",
+   "through": "trung điểm của SD",
+   "oracle_area2": "81/16",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BC",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BC",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BC",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BC",
+   "through": "D",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BC",
+   "through": "S",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BC",
+   "through": "trung điểm của AB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BC",
+   "through": "trung điểm của BC",
+   "oracle_area2": "81/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BC",
+   "through": "trung điểm của CD",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BC",
+   "through": "trung điểm của DA",
+   "oracle_area2": "81/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BC",
+   "through": "trung điểm của SA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BC",
+   "through": "trung điểm của SB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BC",
+   "through": "trung điểm của SC",
+   "oracle_area2": "81/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BC",
+   "through": "trung điểm của SD",
+   "oracle_area2": "81/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BD",
+   "through": "A",
+   "oracle_area2": "72",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BD",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BD",
+   "through": "C",
+   "oracle_area2": "72",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BD",
+   "through": "D",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BD",
+   "through": "S",
+   "oracle_area2": "72",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BD",
+   "through": "trung điểm của AB",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BD",
+   "through": "trung điểm của BC",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BD",
+   "through": "trung điểm của CD",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BD",
+   "through": "trung điểm của DA",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BD",
+   "through": "trung điểm của SA",
+   "oracle_area2": "72",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BD",
+   "through": "trung điểm của SB",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BD",
+   "through": "trung điểm của SC",
+   "oracle_area2": "72",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BD",
+   "through": "trung điểm của SD",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BS",
+   "through": "A",
+   "oracle_area2": "544644/15625",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BS",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BS",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BS",
+   "through": "D",
+   "oracle_area2": "544644/15625",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BS",
+   "through": "S",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BS",
+   "through": "trung điểm của AB",
+   "oracle_area2": "670761/62500",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BS",
+   "through": "trung điểm của BC",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BS",
+   "through": "trung điểm của CD",
+   "oracle_area2": "670761/62500",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BS",
+   "through": "trung điểm của DA",
+   "oracle_area2": "544644/15625",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BS",
+   "through": "trung điểm của SA",
+   "oracle_area2": "136161/62500",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BS",
+   "through": "trung điểm của SB",
+   "oracle_area2": "3404025/262144",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BS",
+   "through": "trung điểm của SC",
+   "oracle_area2": "3404025/262144",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "BS",
+   "through": "trung điểm của SD",
+   "oracle_area2": "136161/62500",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CD",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CD",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CD",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CD",
+   "through": "D",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CD",
+   "through": "S",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CD",
+   "through": "trung điểm của AB",
+   "oracle_area2": "81/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CD",
+   "through": "trung điểm của BC",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CD",
+   "through": "trung điểm của CD",
+   "oracle_area2": "81/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CD",
+   "through": "trung điểm của DA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CD",
+   "through": "trung điểm của SA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CD",
+   "through": "trung điểm của SB",
+   "oracle_area2": "81/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CD",
+   "through": "trung điểm của SC",
+   "oracle_area2": "81/4",
+   "oracle_witness_pairs": 2,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "S"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CD",
+   "through": "trung điểm của SD",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 2,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CS",
+   "through": "A",
+   "oracle_area2": "165888/10625",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CS",
+   "through": "B",
+   "oracle_area2": "162/17",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CS",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CS",
+   "through": "D",
+   "oracle_area2": "162/17",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CS",
+   "through": "S",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CS",
+   "through": "trung điểm của AB",
+   "oracle_area2": "1996569/85000",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CS",
+   "through": "trung điểm của BC",
+   "oracle_area2": "81/136",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CS",
+   "through": "trung điểm của CD",
+   "oracle_area2": "81/136",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CS",
+   "through": "trung điểm của DA",
+   "oracle_area2": "1996569/85000",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CS",
+   "through": "trung điểm của SA",
+   "oracle_area2": "10368/10625",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CS",
+   "through": "trung điểm của SB",
+   "oracle_area2": "50625/8704",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CS",
+   "through": "trung điểm của SC",
+   "oracle_area2": "971074/50625",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "CS",
+   "through": "trung điểm của SD",
+   "oracle_area2": "50625/8704",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "DS",
+   "through": "A",
+   "oracle_area2": "544644/15625",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "DS",
+   "through": "B",
+   "oracle_area2": "544644/15625",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "DS",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "DS",
+   "through": "D",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "DS",
+   "through": "S",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "DS",
+   "through": "trung điểm của AB",
+   "oracle_area2": "544644/15625",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "DS",
+   "through": "trung điểm của BC",
+   "oracle_area2": "670761/62500",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "DS",
+   "through": "trung điểm của CD",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 3,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "DS",
+   "through": "trung điểm của DA",
+   "oracle_area2": "670761/62500",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "DS",
+   "through": "trung điểm của SA",
+   "oracle_area2": "136161/62500",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "DS",
+   "through": "trung điểm của SB",
+   "oracle_area2": "136161/62500",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "DS",
+   "through": "trung điểm của SC",
+   "oracle_area2": "3404025/262144",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "pyramid('3', '4')",
+   "line": "DS",
+   "through": "trung điểm của SD",
+   "oracle_area2": "3404025/262144",
+   "oracle_witness_pairs": 3,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB",
+   "through": "A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB",
+   "through": "trung điểm của AB",
+   "oracle_area2": "16",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB",
+   "through": "trung điểm của BC",
+   "oracle_area2": "16",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB",
+   "through": "trung điểm của CA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": "16",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "16",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB",
+   "through": "trung điểm của AA'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB",
+   "through": "trung điểm của BB'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB",
+   "through": "trung điểm của CC'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC",
+   "through": "A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC",
+   "through": "trung điểm của AB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC",
+   "through": "trung điểm của BC",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC",
+   "through": "trung điểm của CA",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC",
+   "through": "trung điểm của AA'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC",
+   "through": "trung điểm của BB'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC",
+   "through": "trung điểm của CC'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AA'",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AA'",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AA'",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AA'",
+   "through": "A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AA'",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AA'",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AA'",
+   "through": "trung điểm của AB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AA'",
+   "through": "trung điểm của BC",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AA'",
+   "through": "trung điểm của CA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AA'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AA'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AA'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AA'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "36",
+   "oracle_witness_pairs": 4,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AA'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": "36",
+   "oracle_witness_pairs": 4,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AA'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": "36",
+   "oracle_witness_pairs": 4,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB'",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB'",
+   "through": "B",
+   "oracle_area2": "3328/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB'",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB'",
+   "through": "A'",
+   "oracle_area2": "40768/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB'",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB'",
+   "through": "C'",
+   "oracle_area2": "40768/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB'",
+   "through": "trung điểm của AB",
+   "oracle_area2": "35152/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB'",
+   "through": "trung điểm của BC",
+   "oracle_area2": "35152/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB'",
+   "through": "trung điểm của CA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": "5200/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "5200/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": "40768/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "13312/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": "208/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AB'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": "13312/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC'",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC'",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC'",
+   "through": "C",
+   "oracle_area2": "45/64",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC'",
+   "through": "A'",
+   "oracle_area2": "2205/64",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC'",
+   "through": "B'",
+   "oracle_area2": "2205/64",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC'",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC'",
+   "through": "trung điểm của AB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC'",
+   "through": "trung điểm của BC",
+   "oracle_area2": "1125/64",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC'",
+   "through": "trung điểm của CA",
+   "oracle_area2": "1125/64",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": "2205/64",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "405/64",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": "405/64",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "10125/1024",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": "10125/1024",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "AC'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": "45/1024",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC",
+   "through": "A",
+   "oracle_area2": "576/25",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC",
+   "through": "A'",
+   "oracle_area2": "576/25",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC",
+   "through": "trung điểm của AB",
+   "oracle_area2": "144/25",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC",
+   "through": "trung điểm của BC",
+   "oracle_area2": "225/16",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC",
+   "through": "trung điểm của CA",
+   "oracle_area2": "144/25",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": "144/25",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "225/16",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": "144/25",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "576/25",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC",
+   "through": "trung điểm của BB'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC",
+   "through": "trung điểm của CC'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BA'",
+   "through": "A",
+   "oracle_area2": "40768/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BA'",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BA'",
+   "through": "C",
+   "oracle_area2": "40768/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BA'",
+   "through": "A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BA'",
+   "through": "B'",
+   "oracle_area2": "3328/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BA'",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BA'",
+   "through": "trung điểm của AB",
+   "oracle_area2": "5200/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BA'",
+   "through": "trung điểm của BC",
+   "oracle_area2": "5200/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BA'",
+   "through": "trung điểm của CA",
+   "oracle_area2": "40768/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BA'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": "35152/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BA'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "35152/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BA'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BA'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "13312/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BA'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": "208/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BA'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": "13312/729",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BB'",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BB'",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BB'",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BB'",
+   "through": "A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BB'",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BB'",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BB'",
+   "through": "trung điểm của AB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BB'",
+   "through": "trung điểm của BC",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BB'",
+   "through": "trung điểm của CA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BB'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BB'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BB'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BB'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "36",
+   "oracle_witness_pairs": 4,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BB'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": "36",
+   "oracle_witness_pairs": 4,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BB'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": "36",
+   "oracle_witness_pairs": 4,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC'",
+   "through": "A",
+   "oracle_area2": "90944/5625",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC'",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC'",
+   "through": "C",
+   "oracle_area2": "261/625",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC'",
+   "through": "A'",
+   "oracle_area2": "12789/625",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC'",
+   "through": "B'",
+   "oracle_area2": "7424/5625",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC'",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC'",
+   "through": "trung điểm của AB",
+   "oracle_area2": "464/225",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC'",
+   "through": "trung điểm của BC",
+   "oracle_area2": "499693229/23040000",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC'",
+   "through": "trung điểm của CA",
+   "oracle_area2": "261/25",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": "78416/5625",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "115101/10000",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": "2349/625",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "2005901/90000",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": "464/5625",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "BC'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": "261/10000",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CA'",
+   "through": "A",
+   "oracle_area2": "2205/64",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CA'",
+   "through": "B",
+   "oracle_area2": "2205/64",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CA'",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CA'",
+   "through": "A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CA'",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CA'",
+   "through": "C'",
+   "oracle_area2": "45/64",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CA'",
+   "through": "trung điểm của AB",
+   "oracle_area2": "2205/64",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CA'",
+   "through": "trung điểm của BC",
+   "oracle_area2": "405/64",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CA'",
+   "through": "trung điểm của CA",
+   "oracle_area2": "405/64",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CA'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CA'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "1125/64",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CA'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": "1125/64",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CA'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "10125/1024",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CA'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": "10125/1024",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CA'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": "45/1024",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CB'",
+   "through": "A",
+   "oracle_area2": "12789/625",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CB'",
+   "through": "B",
+   "oracle_area2": "7424/5625",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CB'",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CB'",
+   "through": "A'",
+   "oracle_area2": "90944/5625",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CB'",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CB'",
+   "through": "C'",
+   "oracle_area2": "261/625",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CB'",
+   "through": "trung điểm của AB",
+   "oracle_area2": "78416/5625",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CB'",
+   "through": "trung điểm của BC",
+   "oracle_area2": "115101/10000",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CB'",
+   "through": "trung điểm của CA",
+   "oracle_area2": "2349/625",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CB'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": "464/225",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CB'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "499693229/23040000",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CB'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": "261/25",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CB'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "2005901/90000",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CB'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": "464/5625",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CB'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": "261/10000",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CC'",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CC'",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CC'",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CC'",
+   "through": "A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CC'",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CC'",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CC'",
+   "through": "trung điểm của AB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CC'",
+   "through": "trung điểm của BC",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CC'",
+   "through": "trung điểm của CA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CC'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CC'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CC'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CC'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "36",
+   "oracle_witness_pairs": 4,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CC'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": "36",
+   "oracle_witness_pairs": 4,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "CC'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": "36",
+   "oracle_witness_pairs": 4,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'B'",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'B'",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'B'",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'B'",
+   "through": "A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'B'",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'B'",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'B'",
+   "through": "trung điểm của AB",
+   "oracle_area2": "16",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'B'",
+   "through": "trung điểm của BC",
+   "oracle_area2": "16",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'B'",
+   "through": "trung điểm của CA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'B'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": "16",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'B'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "16",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'B'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'B'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'B'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'B'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'C'",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'C'",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'C'",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'C'",
+   "through": "A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'C'",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'C'",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'C'",
+   "through": "trung điểm của AB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'C'",
+   "through": "trung điểm của BC",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'C'",
+   "through": "trung điểm của CA",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'C'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'C'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'C'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'C'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'C'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "A'C'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "B'C'",
+   "through": "A",
+   "oracle_area2": "576/25",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "B'C'",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "B'C'",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "B'C'",
+   "through": "A'",
+   "oracle_area2": "576/25",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "B'C'",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "B'C'",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "B'C'",
+   "through": "trung điểm của AB",
+   "oracle_area2": "144/25",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "B'C'",
+   "through": "trung điểm của BC",
+   "oracle_area2": "225/16",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "B'C'",
+   "through": "trung điểm của CA",
+   "oracle_area2": "144/25",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "B'C'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": "144/25",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "B'C'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "225/16",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "B'C'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": "144/25",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "B'C'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "576/25",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "B'C'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('3', '2')",
+   "line": "B'C'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB",
+   "through": "A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB",
+   "through": "trung điểm của AB",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB",
+   "through": "trung điểm của BC",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB",
+   "through": "trung điểm của CA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB",
+   "through": "trung điểm của AA'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB",
+   "through": "trung điểm của BB'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB",
+   "through": "trung điểm của CC'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC",
+   "through": "A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC",
+   "through": "trung điểm của AB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC",
+   "through": "trung điểm của BC",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC",
+   "through": "trung điểm của CA",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC",
+   "through": "trung điểm của AA'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC",
+   "through": "trung điểm của BB'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC",
+   "through": "trung điểm của CC'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AA'",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AA'",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AA'",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AA'",
+   "through": "A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AA'",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AA'",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AA'",
+   "through": "trung điểm của AB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AA'",
+   "through": "trung điểm của BC",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AA'",
+   "through": "trung điểm của CA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AA'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AA'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AA'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AA'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "4",
+   "oracle_witness_pairs": 4,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AA'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": "4",
+   "oracle_witness_pairs": 4,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AA'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": "4",
+   "oracle_witness_pairs": 4,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB'",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB'",
+   "through": "B",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB'",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB'",
+   "through": "A'",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB'",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB'",
+   "through": "C'",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB'",
+   "through": "trung điểm của AB",
+   "oracle_area2": "13/4",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB'",
+   "through": "trung điểm của BC",
+   "oracle_area2": "13/4",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB'",
+   "through": "trung điểm của CA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": "13/36",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "13/36",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AB'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC'",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC'",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC'",
+   "through": "C",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC'",
+   "through": "A'",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC'",
+   "through": "B'",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC'",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC'",
+   "through": "trung điểm của AB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC'",
+   "through": "trung điểm của BC",
+   "oracle_area2": "13/4",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC'",
+   "through": "trung điểm của CA",
+   "oracle_area2": "13/4",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "13/36",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": "13/36",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "AC'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC",
+   "through": "A",
+   "oracle_area2": "18",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC",
+   "through": "A'",
+   "oracle_area2": "18",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC",
+   "through": "trung điểm của AB",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC",
+   "through": "trung điểm của BC",
+   "oracle_area2": "18",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC",
+   "through": "trung điểm của CA",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "18",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "18",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "A'"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC",
+   "through": "trung điểm của BB'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC",
+   "through": "trung điểm của CC'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BA'",
+   "through": "A",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BA'",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BA'",
+   "through": "C",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BA'",
+   "through": "A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BA'",
+   "through": "B'",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BA'",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BA'",
+   "through": "trung điểm của AB",
+   "oracle_area2": "13/36",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BA'",
+   "through": "trung điểm của BC",
+   "oracle_area2": "13/36",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BA'",
+   "through": "trung điểm của CA",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BA'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": "13/4",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BA'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "13/4",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BA'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BA'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BA'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BA'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BB'",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BB'",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BB'",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BB'",
+   "through": "A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BB'",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BB'",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BB'",
+   "through": "trung điểm của AB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BB'",
+   "through": "trung điểm của BC",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BB'",
+   "through": "trung điểm của CA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BB'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BB'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BB'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BB'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "4",
+   "oracle_witness_pairs": 4,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BB'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": "4",
+   "oracle_witness_pairs": 4,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BB'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": "4",
+   "oracle_witness_pairs": 4,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC'",
+   "through": "A",
+   "oracle_area2": "17/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC'",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC'",
+   "through": "C",
+   "oracle_area2": "68/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC'",
+   "through": "A'",
+   "oracle_area2": "17/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC'",
+   "through": "B'",
+   "oracle_area2": "68/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC'",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC'",
+   "through": "trung điểm của AB",
+   "oracle_area2": "17/144",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC'",
+   "through": "trung điểm của BC",
+   "oracle_area2": "17/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC'",
+   "through": "trung điểm của CA",
+   "oracle_area2": "833/144",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": "833/144",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "17/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": "17/144",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "68/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": "106097/36864",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "BC'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": "106097/36864",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "C"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CA'",
+   "through": "A",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CA'",
+   "through": "B",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CA'",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CA'",
+   "through": "A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CA'",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CA'",
+   "through": "C'",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CA'",
+   "through": "trung điểm của AB",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CA'",
+   "through": "trung điểm của BC",
+   "oracle_area2": "13/36",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CA'",
+   "through": "trung điểm của CA",
+   "oracle_area2": "13/36",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CA'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CA'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "13/4",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CA'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": "13/4",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CA'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CA'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CA'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": "52/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CB'",
+   "through": "A",
+   "oracle_area2": "17/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CB'",
+   "through": "B",
+   "oracle_area2": "68/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CB'",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CB'",
+   "through": "A'",
+   "oracle_area2": "17/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CB'",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CB'",
+   "through": "C'",
+   "oracle_area2": "68/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CB'",
+   "through": "trung điểm của AB",
+   "oracle_area2": "833/144",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CB'",
+   "through": "trung điểm của BC",
+   "oracle_area2": "17/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CB'",
+   "through": "trung điểm của CA",
+   "oracle_area2": "17/144",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CB'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": "17/144",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CB'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "17/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CB'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": "833/144",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CB'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "68/9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CB'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": "106097/36864",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CB'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": "106097/36864",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CC'",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CC'",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CC'",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CC'",
+   "through": "A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CC'",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CC'",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CC'",
+   "through": "trung điểm của AB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CC'",
+   "through": "trung điểm của BC",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CC'",
+   "through": "trung điểm của CA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CC'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CC'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CC'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 4,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CC'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "4",
+   "oracle_witness_pairs": 4,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CC'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": "4",
+   "oracle_witness_pairs": 4,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "CC'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": "4",
+   "oracle_witness_pairs": 4,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A",
+    "B"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'B'",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'B'",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'B'",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'B'",
+   "through": "A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'B'",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'B'",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'B'",
+   "through": "trung điểm của AB",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'B'",
+   "through": "trung điểm của BC",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'B'",
+   "through": "trung điểm của CA",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'B'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'B'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "C'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'B'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'B'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'B'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'B'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'C'",
+   "through": "A",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'C'",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'C'",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'C'",
+   "through": "A'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'C'",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'C'",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'C'",
+   "through": "trung điểm của AB",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'C'",
+   "through": "trung điểm của BC",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'C'",
+   "through": "trung điểm của CA",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'C'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'C'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'C'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": "9",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "B'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'C'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'C'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "A'C'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "B'C'",
+   "through": "A",
+   "oracle_area2": "18",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "B'C'",
+   "through": "B",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "B'C'",
+   "through": "C",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "B'C'",
+   "through": "A'",
+   "oracle_area2": "18",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "B'C'",
+   "through": "B'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "B'C'",
+   "through": "C'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "B'C'",
+   "through": "trung điểm của AB",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "B'C'",
+   "through": "trung điểm của BC",
+   "oracle_area2": "18",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "B'C'",
+   "through": "trung điểm của CA",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "B'C'",
+   "through": "trung điểm của A'B'",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "B'C'",
+   "through": "trung điểm của B'C'",
+   "oracle_area2": "18",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "B'C'",
+   "through": "trung điểm của C'A'",
+   "oracle_area2": "9/2",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "B'C'",
+   "through": "trung điểm của AA'",
+   "oracle_area2": "18",
+   "oracle_witness_pairs": 5,
+   "status": "SERVED",
+   "code": null,
+   "anchors": [
+    "A'",
+    "A"
+   ],
+   "verdict": "SERVED_CORRECT"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "B'C'",
+   "through": "trung điểm của BB'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  },
+  {
+   "topology": "prism('2', '3')",
+   "line": "B'C'",
+   "through": "trung điểm của CC'",
+   "oracle_area2": null,
+   "oracle_witness_pairs": 5,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "anchors": null,
+   "verdict": "CORRECT_REFUSAL"
+  }
+ ]
+}
