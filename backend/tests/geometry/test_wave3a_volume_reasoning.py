@@ -187,7 +187,7 @@ def test_direct_route_interior_point_without_shared_boundary_face_refuses(monkey
 def test_wave3a_version_and_surface_fingerprint_invariants():
     # /13, /13, /11 since hybrid-contract-v2 (owner D5); engine /12 since claude-to-codex-takeover (skew-claim refusal).
     # Wave 3A surface fingerprints below unchanged
-    assert registry.REGISTRY_VERSION == "geometry-functions/28"    # /28: PE-2 solid-class invariants + generalized planner recomposition
+    assert registry.REGISTRY_VERSION == "geometry-functions/29"    # /29: SL-3 student shorthand (k/c, đt)
     assert planner.PLANNER_VERSION == "geometry-fact-planner/23"
     assert engine.ENGINE_VERSION == "geometry-function-engine/20"
     assert ADAPTER_VERSION == "hybrid-preview-adapter/2"

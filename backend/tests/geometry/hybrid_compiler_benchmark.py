@@ -436,7 +436,7 @@ REFUSAL_CLASS = {
     "BRIDGE_UNSUPPORTED_DERIVED_SOLID": "unsupported", "BRIDGE_UNSUPPORTED_MEASUREMENT": "unsupported",
     "BRIDGE_UNSUPPORTED_PLANE_KIND": "unsupported", "BRIDGE_UNSUPPORTED_PREMISE": "unsupported",
     "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY": "unsupported", "BRIDGE_UNSUPPORTED_RELATION": "unsupported",
-    "BRIDGE_UNSUPPORTED_LENGTH_UNIT": "unsupported",
+    "BRIDGE_UNSUPPORTED_LENGTH_UNIT": "unsupported", "BRIDGE_UNSUPPORTED_DESCRIBED_POINT": "unsupported",
     "INVALID_TYPED_FACT_NEXT": "malformed", "UNKNOWN_VERTEX_REF": "malformed", "INVALID_PREMISE_ARGS": "malformed",
     # hybrid-b3-v2-distance-bridge: a `/2` distance target outside its three key forms; taxonomy only.
     "INVALID_MATH_GOAL": "malformed",

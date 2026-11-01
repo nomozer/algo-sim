@@ -668,3 +668,30 @@ def test_census_inventory_complete():
         for rule in row['rules']:
             assert re.search(rf'#\s*{rule}\b', product), (path, rule)
     assert INVENTORY['kinds'] == C.kinds()
+
+
+# R-1 (thirteenth continuation): the label operands of a described point are scoped by what uses it (`scope_records`).
+_R1 = {c['id']: c for c in json.loads((RUNS / 'hybrid-master-backend-replacement/r1-described-point-probe.json')
+                                      .read_text(encoding='utf-8'))['cases']}
+
+
+def _r1_with_second_solid():
+    p = deepcopy(_R1['C2']['payload'])
+    other = deepcopy(p['solids'][0]); other.update(solid_id='zz', notation='T.ABCD', quote='Cho hình chóp T.ABCD')
+    p['solids'].append(other); p['problem_text'] += ' Cho hình chóp T.ABCD.'
+    return p
+
+
+def test_described_point_scope_controls_serve():
+    from app.ai.adapter4_route import run_typed_fact_next_v2_route
+    base = run_typed_fact_next_v2_route(deepcopy(_R1['C2']['payload'])); assert base.status == 'SERVED'
+    p = deepcopy(_R1['C2']['payload']); p['described_points'][0]['line1'] = ['s1::A', 'C']
+    r = run_typed_fact_next_v2_route(p); assert r.status == 'SERVED' and r.answer_exact == base.answer_exact
+
+
+@pytest.mark.parametrize('field', ['line1', 'line2'])
+def test_described_point_scope_violations_refuse(field):
+    from app.ai.adapter4_route import run_typed_fact_next_v2_route
+    p = _r1_with_second_solid()
+    p['described_points'][0][field] = ['zz::T', p['described_points'][0][field][1]]
+    assert outcome(run_typed_fact_next_v2_route(p)) == ('REFUSED', 'SOURCE_OBJECT_MISMATCH')          # S5

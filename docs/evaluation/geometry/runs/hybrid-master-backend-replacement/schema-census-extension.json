@@ -333,6 +333,142 @@
    "category": "METADATA",
    "note": "closed relation vocabulary, offered never chosen",
    "annotation": "tuple[typing.Literal['orthogonal_projection', 'intersection', 'midpoint', 'centroid', 'perpendicular', 'parallel', 'angle', 'distance'], ...]"
+  },
+  "DescribedPointSpec.point": {
+   "category": "VERTEX_REF",
+   "owner": "scope of the goal / section that uses the described point (R-1)",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter4, bridge",
+   "positive_test": "test_described_point_scope_controls_serve",
+   "negative_test": "test_described_point_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_DESCRIBED_POINT",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "typing.Optional[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)]]"
+  },
+  "DescribedPointSpec.segment": {
+   "category": "VERTEX_REF",
+   "owner": "scope of the goal / section that uses the described point (R-1)",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter4, bridge",
+   "positive_test": "test_described_point_scope_controls_serve",
+   "negative_test": "test_described_point_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_DESCRIBED_POINT",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], ...] | None"
+  },
+  "DescribedPointSpec.polygon": {
+   "category": "VERTEX_REF",
+   "owner": "scope of the goal / section that uses the described point (R-1)",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter4, bridge",
+   "positive_test": "test_described_point_scope_controls_serve",
+   "negative_test": "test_described_point_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_DESCRIBED_POINT",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], ...] | None"
+  },
+  "DescribedPointSpec.line": {
+   "category": "VERTEX_REF",
+   "owner": "scope of the goal / section that uses the described point (R-1)",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter4, bridge",
+   "positive_test": "test_described_point_scope_controls_serve",
+   "negative_test": "test_described_point_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_DESCRIBED_POINT",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], ...] | None"
+  },
+  "DescribedPointSpec.line1": {
+   "category": "VERTEX_REF",
+   "owner": "scope of the goal / section that uses the described point (R-1)",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter4, bridge",
+   "positive_test": "test_described_point_scope_controls_serve",
+   "negative_test": "test_described_point_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_DESCRIBED_POINT",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], ...] | None"
+  },
+  "DescribedPointSpec.line2": {
+   "category": "VERTEX_REF",
+   "owner": "scope of the goal / section that uses the described point (R-1)",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter4, bridge",
+   "positive_test": "test_described_point_scope_controls_serve",
+   "negative_test": "test_described_point_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_DESCRIBED_POINT",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], ...] | None"
+  },
+  "DescribedPointSpec.plane": {
+   "category": "VERTEX_REF",
+   "owner": "scope of the goal / section that uses the described point (R-1)",
+   "rules": [
+    "S5",
+    "S7",
+    "S8"
+   ],
+   "entry_points": "adapter4, bridge",
+   "positive_test": "test_described_point_scope_controls_serve",
+   "negative_test": "test_described_point_scope_violations_refuse",
+   "refusal_codes": [
+    "INVALID_DESCRIBED_POINT",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "annotation": "tuple[typing.Annotated[str, StringConstraints(strip_whitespace=True, to_upper=None, to_lower=None, strict=None, min_length=1, max_length=None, pattern=None, ascii_only=None)], ...] | None"
+  },
+  "DescribedPointSpec.described_id": {
+   "category": "DEFINITION_ID",
+   "annotation": "<class 'str'>"
+  },
+  "DescribedPointSpec.kind": {
+   "category": "METADATA",
+   "annotation": "typing.Literal['midpoint', 'centroid', 'orthogonal_projection', 'orthogonal_projection_line', 'intersect_line_line', 'intersect_line_plane']"
+  },
+  "DescribedPointSpec.quote": {
+   "category": "METADATA",
+   "annotation": "<class 'str'>"
+  },
+  "TypedFactNextPayloadV2.described_points": {
+   "category": "METADATA",
+   "note": "container; fields classified above",
+   "annotation": "tuple[app.simulation.geometry_functions.typed_fact_next.DescribedPointSpec, ...]"
   }
  }
 }

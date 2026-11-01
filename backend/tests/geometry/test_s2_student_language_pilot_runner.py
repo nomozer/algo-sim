@@ -61,14 +61,14 @@ def test_gold_replay_of_the_registered_corpus_is_the_attribution_baseline(tmp_pa
     m = out["score"]["metrics"]
     assert m["wrong_served_end_to_end"]["numerator"] == 0 and m["false_clarification"]["numerator"] == 0
     sup = out["supplementary"]
-    assert (sup["end_to_end_correct"]["numerator"], sup["end_to_end_correct"]["denominator"]) == (33, 36)
-    # the three shorthand / tone-typo serve cases are refused by the Source Gate on the GOLD extraction: whatever a live
-    # model does there, it cannot be scored as its fault (Master directive §VII)
+    # Baseline of the product under test. At candidate 800ab355 it was 33/36 (F05 "k/c … mp(SBC)" and F06 "đt … mp"
+    # also refused, `s2-pilot-gold-replay-r2.jsonl`); SL-3 (thirteenth continuation, registry /29) reads that shorthand.
+    assert (sup["end_to_end_correct"]["numerator"], sup["end_to_end_correct"]["denominator"]) == (35, 36)
+    # the tone-typo serve case is refused by the Source Gate on the GOLD extraction (S-1 policy, not guessed): whatever a
+    # live model does there in the same way, it cannot be scored as its fault (Master directive §VII)
     failed = {r["case_id"]: (r["hybrid_code"], r["attribution"]) for r in out["rows"] if not r["end_to_end_correct"]}
-    assert failed == {"S2-F-S07_typo_tone": ("UNGROUNDED_VALUE", "DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD"),
-                      "S2-F-F05_kc_mp_shorthand": ("SOURCE_OBJECT_MISMATCH", "DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD"),
-                      "S2-F-F06_dt_mp_shorthand": ("SOURCE_OBJECT_MISMATCH", "DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD")}
-    assert sup["false_refusal"]["numerator"] == 3
+    assert failed == {"S2-F-S07_typo_tone": ("UNGROUNDED_VALUE", "DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD")}
+    assert sup["false_refusal"]["numerator"] == 1
 
 
 def test_the_eight_metrics_alone_cannot_see_a_false_refusal(tmp_path):
@@ -250,12 +250,12 @@ def test_M2_an_inconsistent_case_refused_for_the_wrong_reason_is_not_correct(tmp
 
 
 def test_M3_a_gold_failing_case_does_not_excuse_a_different_model_fault(tmp_path, monkeypatch):
-    case = _case("S2-F-F05_kc_mp_shorthand")                     # gold refused SOURCE_OBJECT_MISMATCH
+    case = _case("S2-F-S07_typo_tone")                           # gold refused UNGROUNDED_VALUE ("hình chop")
     forged = deepcopy(case["gold_extraction"])
-    forged["math_goals"][0]["quote"] = "Tính khoảng cách từ A đến mặt phẳng (SBC)"   # not in the source
+    forged["math_goals"][0]["quote"] = "Tính thể tích khối chóp S.ABCD bằng"           # not in the source
     out = _live(tmp_path, monkeypatch, Provider(_body(forged)), [case])
     row = out["rows"][0]
-    assert row["hybrid_code"] != "SOURCE_OBJECT_MISMATCH" and not row["gold_replay_end_to_end_correct"]
+    assert row["hybrid_code"] != "UNGROUNDED_VALUE" and not row["gold_replay_end_to_end_correct"]
     assert row["attribution"] == "LLM_EXTRACTION_DIFFERS_FROM_GOLD"
     (tmp_path / "same").mkdir()
     same = _live(tmp_path / "same", monkeypatch, Provider(_body(case["gold_extraction"])), [case])

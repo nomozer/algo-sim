@@ -470,7 +470,7 @@ def test_version_constants_surface_fingerprints_and_historical_receipt_preservat
     # phrases, bound to the cut solid; provider schemas unchanged.
     # -> registry /27, engine /19 (hybrid-master tenth continuation): simulation-request reader (SL-1), `/2` honest exit
     # (SL-2, the /4 extraction schema and instruction gain `unresolved`), an unconstrained base is MISSING_DIMENSION.
-    assert REGISTRY_VERSION == "geometry-functions/28"
+    assert REGISTRY_VERSION == "geometry-functions/29"
     # planner /14, engine /13 (hybrid-v2-backend-generalization): full > 3-label question planes, witness triple.
     assert PLANNER_VERSION == "geometry-fact-planner/23"
     # engine /11 -> /12 (claude-to-codex-takeover): skew-claim contradiction refusal on ask_distance_lines; registry/planner unchanged.

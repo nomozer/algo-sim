@@ -61,6 +61,9 @@ class TransportExtractor:
             "không tính toán, không chọn phép dựng, không sinh toạ độ hoặc mã. "
             "Không biến phủ định, điều kiện hay điều phải chứng minh thành premise. "
             "stated_intersections chỉ chứa giao điểm đề nêu; không tự suy ra giao điểm còn lại. "
+            "Điểm đề MÔ TẢ mà không đặt tên (trung điểm của SC, trọng tâm tam giác SAB, hình chiếu vuông góc của A lên SD, "
+            "giao điểm của AC và BD, …) ⇒ khai một mục described_points (kind, toán hạng, quote nguyên văn cụm mô tả) và "
+            "ghi '@' + described_id ở đúng chỗ của điểm đó trong mục tiêu hoặc through_point; không tự đặt tên cho điểm. "
             "Thuật ngữ không rõ nghĩa, thiếu toán hạng, nhiều cách hiểu hay yêu cầu ngoài lược đồ ⇒ ghi vào unresolved "
             "với quote nguyên văn; không đoán.")
         try:

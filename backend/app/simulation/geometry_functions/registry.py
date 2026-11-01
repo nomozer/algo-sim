@@ -64,7 +64,9 @@ from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationEr
 #: tính từ đỉnh S"); an unread curved clause refuses `CURVED_WORDING_UNSUPPORTED` (CAPABILITY, not SOURCE_UNVERIFIED).
 #: /26 (same run): certified `inscribed_in` spheres on polyhedra and axial curved hosts, `sphere_tangent_plane` tangency
 #: facts with optional named contact points, and multi-curved question disambiguation (`(S1)`/`(S2)`, `ngoại tiếp` vs `nội tiếp`).
-REGISTRY_VERSION = "geometry-functions/28"
+#: /29 (thirteenth continuation, SL-3): student shorthand "k/c" (khoảng cách) as a whole token wherever the ask grammar
+#: reads that word, and "đt" (đường thẳng) before a line's two labels; no function, contract or provider surface changed.
+REGISTRY_VERSION = "geometry-functions/29"
 
 
 class TuChoi(Exception):
@@ -79,6 +81,13 @@ class TuChoi(Exception):
 def chuan_hoa(s: str) -> str:
     s = unicodedata.normalize("NFC", s).replace("’", "'").replace("′", "'").replace("‘", "'")
     return re.sub(r"\s+", " ", s).strip()
+
+
+#: SL-3 (thirteenth continuation): the student abbreviation "k/c" of "khoảng cách", as a whole token, wherever the ask
+#: grammar reads that word (never in `chuan_hoa`: source text is not rewritten). "mp" (mặt phẳng) was already read where a
+#: plane's labels follow; "đt" (đường thẳng) is read only before a line's two labels (`_doan_cum`). A bare abbreviation
+#: names nothing: every pattern that accepts one still requires the object's labels.
+_KC = r"(?:khoảng cách|(?<![\w/])k/c(?![\w/]))"
 
 
 def _nhan(v: Any) -> Any:
@@ -706,18 +715,18 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
                                  phrase=(r"độ dài\s+(?:của\s+)?đoạn(?:\s+thẳng)?\s+nối\s+(?:{D}){J}{N}(?P<t>{P})(?![\w'])",
                                          r"độ dài\s+(?:của\s+)?đoạn(?:\s+thẳng)?\s+nối\s+{N}(?P<t>{P}){J}(?:{D})")),)),
     _F("ask_distance_point_plane", AskDistancePointPlaneArgs, "ask", "Đề hỏi khoảng cách từ một điểm tới một mặt phẳng.",
-       (("khoảng cách",),),
+       (("khoảng cách", r"re:(?<![\w/])k/c(?![\w/])"),),
        planning=PlanningContract((PlanningTerm("Point", ("P",)), PlanningTerm("Plane", ("Q",))),
                                  PlanningTerm("AnswerDistance", ("P", "Q")), "distance_answer", "distance",
                                  call=(("point", "P"), ("plane", "Q")))),
     _F("ask_distance_lines", AskDistanceLinesArgs, "ask", "Đề hỏi khoảng cách giữa hai đường thẳng (chéo nhau).",
-       (("khoảng cách",),)),
+       (("khoảng cách", r"re:(?<![\w/])k/c(?![\w/])"),)),
     # Run `hybrid-v2-nl-certificates-e2e`: kernel/IR already measure `distance(line3, plane3)` and `distance(plane3, plane3)`
     # exactly (`measure.distance_sq_line_plane` / `distance_sq_planes`); these expose them to route B / `/4` only.
     _F("ask_distance_line_plane", AskDistanceLinePlaneArgs, "ask", "Đề hỏi khoảng cách giữa một đường thẳng và một mặt phẳng.",
-       (("khoảng cách",),), provider_offered=False),
+       (("khoảng cách", r"re:(?<![\w/])k/c(?![\w/])"),), provider_offered=False),
     _F("ask_distance_planes", AskDistancePlanesArgs, "ask", "Đề hỏi khoảng cách giữa hai mặt phẳng.",
-       (("khoảng cách",),), provider_offered=False),
+       (("khoảng cách", r"re:(?<![\w/])k/c(?![\w/])"),), provider_offered=False),
     # Goal contracts of the angle asks (Wave 2A): the line is (described point P, named point Q), the target `{M}` a plane /
     # `{L}` a line, in closed wordings (both orders of "nối … với …"). Named angles keep their direct rule (`_cau_hoi`).
     _F("ask_angle_line_plane", AskAngleLinePlaneArgs, "ask", "Đề hỏi góc giữa đường thẳng và mặt phẳng (trả cos²).",
@@ -1682,7 +1691,7 @@ AUXILIARY_RULES = {"distance(point,line)": ("orthogonal_projection_line", "ask_l
                    DINH_CAT_CANH: ("intersect_line_plane", "pyramid")}
 #: "khoảng cách từ S đến (đường thẳng) BD": điểm và đường gắn vai trong CÙNG một cụm; cách nói khác ⇒ từ chối, không đoán.
 _KHOANG_CACH_DIEM_DUONG = re.compile(
-    r"khoảng cách\s+từ\s+(?:điểm\s+)?([A-Z][0-9]*'?)\s+(?:đến|tới)\s+(?:đường thẳng\s+)?([A-Z][0-9]*'?)([A-Z][0-9]*'?)(?![\w'])",
+    _KC + r"\s+từ\s+(?:điểm\s+)?([A-Z][0-9]*'?)\s+(?:đến|tới)\s+(?:đường thẳng\s+)?([A-Z][0-9]*'?)([A-Z][0-9]*'?)(?![\w'])",
     re.IGNORECASE)
 #: Câu hỏi khoảng cách điểm–đường: không gán giá trị ngay sau đường thẳng ("bằng 4", "không bằng 3", "khác 3"; "bằng bao nhiêu" vẫn là câu hỏi).
 _GAN_GIA_TRI = re.compile(r"\s*(?:(?:\w+\s+)?(?:(?:bằng|là|khác)(?!\w)|[=≠])\s*(?!bao\s+nhiêu|\?)\S|(?:đổi|thay|cộng|trừ|nhân|chia|[+\-*/])\b)", re.IGNORECASE)
@@ -1901,7 +1910,7 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
         # The point is a label or a point the Registry's own descriptor contracts describe ("trọng tâm của tam giác SAB").
         desc = [re.sub(r"\(\?P<[^>]+>", "(?:", p.phrase).replace('{P}', _P1)
                 for s in REGISTRY.values() for p in planning_contracts(s) if p.descriptor and isinstance(p.phrase, str)]
-        inline_form = (rf'(?:(?i:tính|tìm|xác định)\s+)?(?i:khoảng cách\s+từ\s+)(?:(?i:điểm\s+)?{_P1}|'
+        inline_form = (rf'(?:(?i:tính|tìm|xác định)\s+)?(?i:{_KC}\s+từ\s+)(?:(?i:điểm\s+)?{_P1}|'
                        + '|'.join(f'(?i:{d})' for d in desc) + rf')\s*(?i:đến|tới)\s*'
                        rf'(?i:giao tuyến của)\s*{_MAT_TOAN_HANG}\s*(?i:và)\s*{_MAT_TOAN_HANG}\s*[.?]?\s*')
         consumers = {chuan_hoa(x) for d in calls if getattr(d.args, 'line_ref', None) == ref for x in d.quotes}
@@ -1931,7 +1940,7 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
         return set(planes)=={frozenset(c.args.plane1),frozenset(c.args.plane2)}
 
     plane_pattern = rf'(?P<a>{_MAT_TOAN_HANG})\s*(?i:và)\s*(?P<b>{_MAT_TOAN_HANG})'
-    derived = re.compile(rf'(?i:khoảng cách\s+từ\s+(?:điểm\s+)?)' + rf'(?P<p>{_P1})'
+    derived = re.compile(rf'(?i:{_KC}\s+từ\s+(?:điểm\s+)?)' + rf'(?P<p>{_P1})'
                          + rf'\s*(?i:đến|tới)\s*(?i:giao tuyến của)\s*{plane_pattern}')
     seen_fresh = {}
     khoi = _khoi_cua_loi_goi(calls)
@@ -3305,7 +3314,7 @@ def _mat_cum(n: str) -> str:
 
 
 def _doan_cum(n: str) -> str:
-    return rf"(?:(?:các\s+)?(?:đường thẳng|đoạn thẳng|đoạn|cạnh bên|cạnh đáy|cạnh|đường chéo)\s+)?(?<![\w'.])(?P<{n}>{_P1}{_P1})(?![\w'])"
+    return rf"(?:(?:các\s+)?(?:đường thẳng|đt|đoạn thẳng|đoạn|cạnh bên|cạnh đáy|cạnh|đường chéo)\s+)?(?<![\w'.])(?P<{n}>{_P1}{_P1})(?![\w'])"
 
 
 def _khoi_cum(n: str) -> str:
@@ -3953,20 +3962,20 @@ _CUM_HOI = {
     "ask_length": [
         (_cum(rf"(?:độ dài(?:\s+của)?\s+)?{_doan_cum('s')}"), lambda m, a, k: set(_nhan_cum(m["s"])) == set(a.segment))],
     "ask_distance_point_plane": [
-        (_cum(rf"khoảng cách\s+(?:từ\s+)?(?:(?:điểm|đỉnh)\s+)?(?<![\w'.])(?P<p>{_P1})(?![\w'])\s+(?:đến|tới)\s+{_mat_cum('m')}"),
+        (_cum(rf"{_KC}\s+(?:từ\s+)?(?:(?:điểm|đỉnh)\s+)?(?<![\w'.])(?P<p>{_P1})(?![\w'])\s+(?:đến|tới)\s+{_mat_cum('m')}"),
          lambda m, a, k: m["p"] == a.point and _cung_mat(_mat_cua(m, "m", k), a.plane))],
     "ask_distance_lines": [
-        (_cum(rf"khoảng cách\s+giữa\s+(?:hai\s+đường thẳng(?:\s+chéo nhau)?\s+)?{_doan_cum('a')}\s+(?:và|với)\s+{_doan_cum('b')}"),
+        (_cum(rf"{_KC}\s+giữa\s+(?:hai\s+đường thẳng(?:\s+chéo nhau)?\s+)?{_doan_cum('a')}\s+(?:và|với)\s+{_doan_cum('b')}"),
          lambda m, a, k: {frozenset(_nhan_cum(m["a"])), frozenset(_nhan_cum(m["b"]))} == {frozenset(a.line1), frozenset(a.line2)})],
     # a line (exactly two labels) and a plane group, or two plane groups: disjoint from `ask_distance_lines` (two labels each)
     # and `ask_distance_point_plane` (one label before "đến")
     "ask_distance_line_plane": [
-        (_cum(rf"khoảng cách\s+(?:giữa|từ)\s+{_doan_cum('l')}\s+(?:và|với|đến|tới)\s+{_mat_cum('m')}"),
+        (_cum(rf"{_KC}\s+(?:giữa|từ)\s+{_doan_cum('l')}\s+(?:và|với|đến|tới)\s+{_mat_cum('m')}"),
          lambda m, a, k: set(_nhan_cum(m["l"])) == set(a.line) and _cung_mat(_mat_cua(m, "m", k), a.plane)),
-        (_cum(rf"khoảng cách\s+giữa\s+{_mat_cum('m')}\s+(?:và|với)\s+{_doan_cum('l')}"),
+        (_cum(rf"{_KC}\s+giữa\s+{_mat_cum('m')}\s+(?:và|với)\s+{_doan_cum('l')}"),
          lambda m, a, k: set(_nhan_cum(m["l"])) == set(a.line) and _cung_mat(_mat_cua(m, "m", k), a.plane))],
     "ask_distance_planes": [
-        (_cum(rf"khoảng cách\s+(?:giữa|từ)\s+(?:hai\s+mặt phẳng\s+)?{_mat_cum('a')}\s+(?:và|với|đến|tới)\s+{_mat_cum('b')}"), _hai_mat)],
+        (_cum(rf"{_KC}\s+(?:giữa|từ)\s+(?:hai\s+mặt phẳng\s+)?{_mat_cum('a')}\s+(?:và|với|đến|tới)\s+{_mat_cum('b')}"), _hai_mat)],
     "ask_angle_line_plane": [
         (_cum(rf"(?:số đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo bởi|hợp bởi)\s+{_doan_cum('l')}\s+(?:và|với)\s+{_mat_cum('m')}"),
          lambda m, a, k: set(_nhan_cum(m["l"])) == set(a.line) and _cung_mat(_mat_cua(m, "m", k), a.plane))],
@@ -4038,7 +4047,7 @@ _DICH_KHOANG_CACH = (rf"(?:(?i:giao tuyến của)\s*(?P<a>{_MAT_TOAN_HANG})\s*(
 @functools.lru_cache(maxsize=None)
 def _mau_khoang_cach_mo_ta(phrase: str) -> re.Pattern[str]:
     """Closed ask phrase "khoảng cách từ ‹unnamed point, as the contract's `phrase` names it› đến ‹target›"."""
-    return re.compile(r"khoảng cách\s+từ\s+(?:" + phrase.replace("{P}", _P1) + r")\s+(?:đến|tới)\s+" + _DICH_KHOANG_CACH,
+    return re.compile(_KC + r"\s+từ\s+(?:" + phrase.replace("{P}", _P1) + r")\s+(?:đến|tới)\s+" + _DICH_KHOANG_CACH,
                       re.IGNORECASE)
 
 
@@ -5330,7 +5339,7 @@ _DIEM_TRUOC_HAI_DUONG_ANON = re.sub(r"\(\?P<[^>]+>", "(?:", _DIEM_TRUOC_HAI_DUON
 _QUA_SONG_SONG_ANON = _QUA_SONG_SONG_ANON + "|" + _QUA_DESC_SONG_SONG_ANON
 _DIEM_TRUOC_SONG_SONG_ANON = _DIEM_TRUOC_SONG_SONG_ANON + "|" + _DT_DESC_SONG_SONG_ANON
 _KHOANG_CACH_GIAO_TUYEN = re.compile(
-    rf"khoảng cách\s+từ\s+(?:(?:điểm|đỉnh)\s+)?(?P<p>{_P1})(?![\w'])\s*(?:đến|tới)\s*"
+    rf"{_KC}\s+từ\s+(?:(?:điểm|đỉnh)\s+)?(?P<p>{_P1})(?![\w'])\s*(?:đến|tới)\s*"
     rf"giao tuyến\s+(?:của\s+)?(?P<a>{_MAT_TOAN_HANG})\s*(?:và|với)\s*(?P<b>{_MAT_TOAN_HANG})",
     re.IGNORECASE,
 )

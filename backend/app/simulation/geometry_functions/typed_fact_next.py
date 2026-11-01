@@ -63,6 +63,29 @@ def parse_qualified_ref(ref: str) -> tuple[str | None, str]:
     return m.group("solid_id"), m.group("label")
 
 
+#: R-1 (thirteenth continuation, `/2` additive): a point the source DESCRIBES without naming it ("hình chiếu vuông góc
+#: của A lên SD") is declared once in `TypedFactNextPayloadV2.described_points` and referenced as `@id` where a point
+#: label would stand — in a measurement goal's point operands, a section's `through_point`, or another described point.
+#: It is never a fact and never a label: the bridge hands the planner its description, the planner builds it from the
+#: Registry's descriptor contracts, the Source Gate reads the description in the source and the engine checks it.
+DESCRIBED_REF_RE = re.compile(r"@(?P<id>[A-Za-z][A-Za-z0-9_]{0,31})")
+#: Kind → its operand fields (Registry descriptor contracts): `pt` one point, `pt2` two points (a segment / line), `labels3`
+#: exactly three labels, `labels3+` a plane of ≥ 3 labels. Point operands may be described refs; planes / polygons are labels.
+DESCRIBED_POINT_FIELDS = {"midpoint": {"segment": "pt2"}, "centroid": {"polygon": "labels3"},
+                          "orthogonal_projection": {"point": "pt", "plane": "labels3+"},
+                          "orthogonal_projection_line": {"point": "pt", "line": "pt2"},
+                          "intersect_line_line": {"line1": "pt2", "line2": "pt2"},
+                          "intersect_line_plane": {"line": "pt2", "plane": "labels3+"}}
+#: Goal target keys whose values are point operands (a described ref may stand there); planes stay labels.
+DESCRIBED_GOAL_KEYS = ("point", "segment", "line", "line1", "line2", "polygon")
+#: Nesting bound of described points (the planner's effect search is bounded at depth 3: the ask + two producer levels).
+MAX_DESCRIBED_DEPTH = 2
+
+
+def is_described_ref(value: Any) -> bool:
+    return isinstance(value, str) and DESCRIBED_REF_RE.fullmatch(value.strip()) is not None
+
+
 # Closed input contract: the runtime authority; run-local JSON is its preregistered snapshot.
 KIND_ALLOWED_FIELDS = {'math_goal': {'volume_ratio': ['denominator_solid_id', 'goal_id', 'kind', 'numerator_solid_id', 'quote'],
                'residual_volume': ['cut_solid_id', 'goal_id', 'kind', 'parent_solid_id', 'quote'],
@@ -364,8 +387,8 @@ _ARGS_GOC_VUONG = ({"vertices": "refs3=", "right_at": "ref"}, {"vertex": "ref", 
 
 
 def _hinh_dung(value: Any, shape: str) -> bool:
-    if shape == "ref":
-        return isinstance(value, str) and _QUALIFIED_REF_RE.match(value.strip()) is not None
+    if shape == "ref":      # a described ref passes here; the payload checks it is declared and where it stands (R-1)
+        return isinstance(value, str) and (_QUALIFIED_REF_RE.match(value.strip()) is not None or is_described_ref(value))
     if shape.startswith("refs"):
         n, exact = int(shape[4:].rstrip("=")), shape.endswith("=")
         return (isinstance(value, (list, tuple)) and all(_hinh_dung(x, "ref") for x in value)
@@ -445,7 +468,8 @@ class _PlaneSectionBase(ClosedNextModel):
                     "INVALID_DERIVED_SECTION",
                     f"Section {self.section_id!r} ({self.plane_kind}) requires 'through_point'.",
                 )
-            parse_qualified_ref(self.through_point)
+            if not is_described_ref(self.through_point):     # a described point: the payload checks it (R-1)
+                parse_qualified_ref(self.through_point)
         elif self.plane_kind == "parallel_to_base_at_distance":
             if not self.distance_from_base:
                 raise TypedFactNextValidationError(
@@ -916,9 +940,52 @@ class TypedFactNextPayload(ClosedNextModel):
                     "UNKNOWN_SOLID_ID",
                     f"Math goal {mg.goal_id!r} references unknown cut solid {mg.cut_solid_id!r}.",
                 )
+        _check_described_refs(self)
         _validate_declared_solid_scope(self, all_solid_ids)
         _validate_goal_identities(self)
         return self
+
+
+def _strings(value: Any):
+    """Every string of a dumped payload except source text (quotes may contain anything)."""
+    if isinstance(value, dict):
+        for k, v in value.items():
+            if k not in ("quote", "problem_text"):
+                yield from _strings(v)
+    elif isinstance(value, (list, tuple)):
+        for v in value:
+            yield from _strings(v)
+    elif isinstance(value, str):
+        yield value
+
+
+def described_ref_uses(p: "TypedFactNextPayload") -> list[tuple[str, str]]:
+    """`(consumer, described id)` of every described ref standing where one may (R-1): a measurement goal's point operand,
+    a section's `through_point`, a point operand of another described point (consumer `@id`)."""
+    uses: list[tuple[str, str]] = []
+    for mg in p.math_goals:
+        if mg.kind == "measurement":
+            for k in DESCRIBED_GOAL_KEYS:
+                v = mg.target.get(k)
+                uses += [(mg.goal_id, x.strip()[1:]) for x in (v if isinstance(v, (list, tuple)) else [v])
+                         if is_described_ref(x)]
+    uses += [(s.section_id, s.through_point.strip()[1:]) for s in p.derived_sections if is_described_ref(s.through_point)]
+    for d in getattr(p, "described_points", ()):
+        uses += [(f"@{d.described_id}", x.strip()[1:]) for x in d.point_operands() if is_described_ref(x)]
+    return uses
+
+
+def _check_described_refs(p: "TypedFactNextPayload") -> None:
+    """Every `@id` stands where a described point may and names a declared one. `/1` declares none, so it refuses any
+    (with the code an unreadable operand always had there)."""
+    uses = described_ref_uses(p)
+    if sum(map(is_described_ref, _strings(p.model_dump()))) != len(uses):
+        raise TypedFactNextValidationError("INVALID_DESCRIBED_POINT",
+                                           "a described point (@id) stands where only a label may (premise, plane, relation)")
+    declared = {d.described_id for d in getattr(p, "described_points", ())}
+    if missing := sorted({i for _c, i in uses if i not in declared}):
+        code = "UNKNOWN_DERIVED_REFERENCE" if hasattr(p, "described_points") else "INVALID_MATH_GOAL"
+        raise TypedFactNextValidationError(code, f"described point(s) {missing} are not declared")
 
 
 def _solid_aliases(solid: SolidSpec) -> set[str]:
@@ -996,7 +1063,7 @@ def _validate_goal_identities(p: "TypedFactNextPayload") -> None:
         scope = measurement_scope(p, goal)
         for key, refs in goal.target.items():
             if GOAL_OPERAND_SHAPES[key].startswith("refs"):
-                identities = [canonical_vertex_ref(p, ref, scope) for ref in refs]
+                identities = [ref.strip() if is_described_ref(ref) else canonical_vertex_ref(p, ref, scope) for ref in refs]
                 if len(set(identities)) != len(identities):
                     raise TypedFactNextValidationError("INVALID_MATH_GOAL", f"{goal.goal_id}: repeated identity in {key!r}")
 
@@ -1033,7 +1100,7 @@ def scope_records(p: "TypedFactNextPayload") -> list[tuple[str, str, str | None,
         recs.append(("premise", f"p{i}", prem.solid_id or resolve_solid_name(p, prem.args.get("solid")), refs, False))
     for sec in p.derived_sections:
         refs = [x for x in (sec.through_point, *(sec.parallel_plane or ()), *(sec.perpendicular_line or ()),
-                            *(sec.parallel_line_a or ()), *(sec.parallel_line_b or ())) if x]
+                            *(sec.parallel_line_a or ()), *(sec.parallel_line_b or ())) if x and not is_described_ref(x)]
         refs += [x for e in getattr(sec, "cut_edges", ()) for x in e]
         refs += [x for k in getattr(sec, "named_intersections", {}) for x in split_edge_key(k)]
         refs += [x for s in getattr(sec, "stated_intersections", ()) for x in s.edge]
@@ -1064,8 +1131,24 @@ def scope_records(p: "TypedFactNextPayload") -> list[tuple[str, str, str | None,
         t = mg.target
         sec = sections.get(t["section_id"]) if isinstance(t.get("section_id"), str) else None
         scope = measurement_scope(p, mg)
-        refs = [x for k in GOAL_OPERAND_KEYS if k in t for x in (t[k] if isinstance(t[k], (list, tuple)) else [t[k]])]
+        refs = [x for k in GOAL_OPERAND_KEYS if k in t for x in (t[k] if isinstance(t[k], (list, tuple)) else [t[k]])
+                if not is_described_ref(x)]
         recs.append(("math_goal", mg.goal_id, scope, refs, False))
+    # R-1: the labels of a described point belong to the scope of what uses it (one scope, else none is claimed)
+    consumer_scope = {mg.goal_id: measurement_scope(p, mg) for mg in p.math_goals if mg.kind == "measurement"}
+    consumer_scope |= {s.section_id: s.target_solid_id for s in p.derived_sections}
+    uses = described_ref_uses(p)
+    for d in getattr(p, "described_points", ()):
+        scopes, frontier, seen = set(), {f"@{d.described_id}"}, set()
+        while frontier:                                   # up the (acyclic, checked in `/2`) chain of consumers
+            seen |= frontier
+            nxt = {c for c, i in uses if f"@{i}" in frontier}
+            scopes |= {consumer_scope.get(c) for c in nxt if not c.startswith("@")}
+            frontier = {c for c in nxt if c.startswith("@")} - seen
+        scope = next(iter(scopes)) if len(scopes) == 1 else None
+        recs.append(("described_point", d.described_id, scope,
+                     [x for x in (*d.point_operands(), *(d.plane or ()), *(d.polygon or ())) if not is_described_ref(x)],
+                     False))
     return recs
 
 
@@ -1310,6 +1393,46 @@ def clarification_record(u: UnresolvedSpec, problem_text: str) -> dict[str, Any]
             "question": question}
 
 
+class DescribedPointSpec(ClosedNextModel):
+    """Một điểm đề MÔ TẢ mà không đặt tên (trung điểm của SC, hình chiếu vuông góc của A lên SD, ...). quote là nguyên văn
+    cụm mô tả; chỉ điền các toán hạng của kind (midpoint: segment; centroid: polygon; orthogonal_projection: point,
+    plane; orthogonal_projection_line: point, line; intersect_line_line: line1, line2; intersect_line_plane: line, plane).
+    Chỗ dùng điểm này ghi '@' + described_id. (R-1: never a fact, never a label — `DESCRIBED_REF_RE`.)"""
+
+    described_id: Annotated[str, StringConstraints(strip_whitespace=True, pattern=r"^[A-Za-z][A-Za-z0-9_]{0,31}$")]
+    kind: Literal[*DESCRIBED_POINT_FIELDS]
+    quote: NonEmptyText
+    point: NonEmptyText | None = None
+    segment: tuple[NonEmptyText, ...] | None = None
+    polygon: tuple[NonEmptyText, ...] | None = None
+    line: tuple[NonEmptyText, ...] | None = None
+    line1: tuple[NonEmptyText, ...] | None = None
+    line2: tuple[NonEmptyText, ...] | None = None
+    plane: tuple[NonEmptyText, ...] | None = None
+
+    @model_validator(mode="after")
+    def _operands(self) -> "DescribedPointSpec":
+        fields = DESCRIBED_POINT_FIELDS[self.kind]
+        given = {k for k in ("point", "segment", "polygon", "line", "line1", "line2", "plane") if getattr(self, k) is not None}
+        if given != set(fields):
+            raise TypedFactNextValidationError(
+                "INVALID_DESCRIBED_POINT", f"{self.described_id}: {self.kind} takes exactly {sorted(fields)}, got {sorted(given)}")
+        for key, shape in fields.items():
+            v = getattr(self, key)
+            vals = [v] if shape == "pt" else list(v)
+            n_ok = len(vals) == {"pt": 1, "pt2": 2, "labels3": 3}.get(shape, len(vals)) and len(vals) >= (3 if shape == "labels3+" else 1)
+            ok = n_ok and all(_QUALIFIED_REF_RE.match(x) or (shape in ("pt", "pt2") and is_described_ref(x)) for x in vals)
+            if not ok or len(set(vals)) != len(vals) or f"@{self.described_id}" in vals:
+                raise TypedFactNextValidationError(
+                    "INVALID_DESCRIBED_POINT", f"{self.described_id}: malformed operand {key!r} for {self.kind}")
+        return self
+
+    def point_operands(self) -> tuple[str, ...]:
+        """Its point operands (where a described ref may stand), in field order."""
+        return tuple(x for k, shape in DESCRIBED_POINT_FIELDS[self.kind].items() if shape in ("pt", "pt2")
+                     for x in ([getattr(self, k)] if shape == "pt" else getattr(self, k)))
+
+
 class TypedFactNextPayloadV2(TypedFactNextPayload):
     """`typed-fact-next/2` (run `hybrid-contract-v2`, owner D1): `/1` with the section split into stated intersections
     and an optional declared boundary, plus `/2` composite geometric relations (`GeometricRelationSpecV2`) and the
@@ -1319,12 +1442,36 @@ class TypedFactNextPayloadV2(TypedFactNextPayload):
     derived_sections: tuple[DerivedPlaneSectionSpecV2, ...] = ()
     relations: tuple[GeometricRelationSpecV2, ...] = ()
     unresolved: tuple[UnresolvedSpec, ...] = ()
+    described_points: tuple[DescribedPointSpec, ...] = ()
 
     @model_validator(mode="after")
     def _validate_unresolved_ids(self) -> "TypedFactNextPayloadV2":
         ids = [u.unresolved_id for u in self.unresolved]
         if len(ids) != len(set(ids)):
             raise TypedFactNextValidationError("INVALID_TYPED_FACT_NEXT", "Duplicate unresolved_id.")
+        return self
+
+    @model_validator(mode="after")
+    def _validate_described_points(self) -> "TypedFactNextPayloadV2":
+        """R-1 graph checks (placement and declaration are checked by `_check_described_refs` in the base payload): ids
+        unique, every declared point used, no cycle, nesting ≤ `MAX_DESCRIBED_DEPTH`."""
+        ids = [d.described_id for d in self.described_points]
+        if len(ids) != len(set(ids)):
+            raise TypedFactNextValidationError("INVALID_DESCRIBED_POINT", "Duplicate described_id.")
+        uses = described_ref_uses(self)
+        if unused := sorted(set(ids) - {i for _c, i in uses}):
+            raise TypedFactNextValidationError("DANGLING_DEPENDENCY", f"described point(s) {unused} are declared but unused")
+        inner = {d.described_id: [x.strip()[1:] for x in d.point_operands() if is_described_ref(x)]
+                 for d in self.described_points}
+
+        def depth(i: str, path: tuple[str, ...]) -> int:
+            if i in path:
+                raise TypedFactNextValidationError("DEPENDENCY_CYCLE", f"described point {i!r} depends on itself")
+            return max((1 + depth(j, (*path, i)) for j in inner[i]), default=0)
+
+        if any(depth(i, ()) > MAX_DESCRIBED_DEPTH - 1 for i in ids):
+            raise TypedFactNextValidationError("PLAN_TOO_LARGE",
+                                               f"described points nest deeper than {MAX_DESCRIBED_DEPTH} levels")
         return self
 
 
