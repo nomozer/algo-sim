@@ -63,7 +63,9 @@ def runtime_identity() -> dict[str, str]:
     ident = P.runtime_identity()
     return {"measured_system": ident["measured_system"], "cache_version": ident["cache_version"],
             "model": ident["model"], "skills_sha256": ident["skills_sha256"],
-            "paired_harness_sha256": ident["harness_sha256"], "runner_sha256": sha256_file(Path(__file__))}
+            "paired_harness_sha256": ident["harness_sha256"], "runner_sha256": sha256_file(Path(__file__)),
+            # C14 review: the scorer writes the summary's 8 metrics, so the approval binds it too
+            "scorer_sha256": sha256_file(BACKEND / "scripts" / "score_s2_student_language_pilot.py")}
 
 
 # ── corpus ───────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -313,7 +315,7 @@ def supplementary(rows: list[dict[str, Any]]) -> dict[str, Any]:
 #: The six §4 gates as approval fields (plus the identity bindings). The Owner writes the file; this runner never does.
 APPROVAL_FIELDS = ("pilot", "model", "paid_project_confirmed", "max_requests", "max_usd", "input_usd_per_million",
                    "output_usd_per_million", "corpus_sha256", "measured_system", "runner_sha256",
-                   "paired_harness_sha256")
+                   "paired_harness_sha256", "scorer_sha256")
 
 
 def authorize_live(corpus_path: Path, approval_path: Path | None) -> dict[str, Any]:
@@ -338,7 +340,7 @@ def check_approval_terms(corpus_bytes: bytes, approval: dict[str, Any]) -> dict[
     if approval["corpus_sha256"] != hashlib.sha256(corpus_bytes).hexdigest():   # §4.6 data scope
         raise LiveRefused("corpus hash differs from the approved data scope")
     identity = runtime_identity()
-    for key in ("model", "measured_system", "runner_sha256", "paired_harness_sha256"):   # §4.2 + what is measured
+    for key in ("model", "measured_system", "runner_sha256", "paired_harness_sha256", "scorer_sha256"):   # §4.2
         if approval[key] != identity[key]:
             raise LiveRefused(f"{key} differs from the approved one")
     if type(approval["max_requests"]) is not int or not 0 < approval["max_requests"] <= MAX_CASES:   # §4.4

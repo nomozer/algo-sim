@@ -36,7 +36,8 @@ def _terms(corpus_path, **over):
     return {"pilot": "S-2", "model": ident["model"], "paid_project_confirmed": True, "max_requests": 36,
             "max_usd": 3.0, "input_usd_per_million": 0.30, "output_usd_per_million": 2.50,
             "corpus_sha256": R.sha256_file(corpus_path), "measured_system": ident["measured_system"],
-            "runner_sha256": ident["runner_sha256"], "paired_harness_sha256": ident["paired_harness_sha256"], **over}
+            "runner_sha256": ident["runner_sha256"], "paired_harness_sha256": ident["paired_harness_sha256"],
+            "scorer_sha256": ident["scorer_sha256"], **over}
 
 
 def _rows(path):
@@ -134,6 +135,7 @@ def test_an_invalid_corpus_is_refused(mutate):
     ({"max_requests": 36, "max_usd": 0.01}, "exceeds max_usd"), ({"corpus_sha256": "0" * 64}, "data scope"),
     ({"runner_sha256": "0" * 64}, "runner_sha256"), ({"paired_harness_sha256": "0" * 64}, "paired_harness"),
     ({"measured_system": "0" * 64}, "measured_system"), ({"model": "gemini-other"}, "model"),
+    ({"scorer_sha256": "0" * 64}, "scorer_sha256"),          # C14 review MINOR: the scorer that writes the summary
 ])
 def test_the_approved_terms_are_checked_before_any_request(tmp_path, over, why):
     corpus = _write(tmp_path, [_case("S2-A-I02_ve")])

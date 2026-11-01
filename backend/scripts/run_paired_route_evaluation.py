@@ -382,10 +382,10 @@ def authorize_live(corpus_path: Path, approval_path: Path | None) -> dict[str, A
 def claim_approval(approval_path: Path, out_path: Path) -> None:
     """One approval, one live run (C14). `max_requests` / `max_usd` are counted inside one process, so a second `--live`
     under the same file would spend them again; an interrupted run is never resumed under the approval it consumed — a
-    re-run needs a new Owner approval file. A taken `--out` is refused first, so a typo never burns the approval.
-    Guards an accidental re-run, not a copied file (the agent never writes approval files, AGENTS.md)."""
-    if out_path.exists():
-        raise FileExistsError(out_path)
+    re-run needs a new Owner approval file. `--out` is first created and removed, so a taken, misspelt or unwritable path
+    never burns the approval. Guards an accidental re-run, not a copied file (the agent never writes approval files)."""
+    out_path.open("x").close()                    # FileExistsError / FileNotFoundError / PermissionError before the claim
+    out_path.unlink()
     marker = approval_path.with_name(approval_path.name + ".consumed")
     try:
         with marker.open("x", encoding="utf-8", newline="\n") as f:
@@ -411,6 +411,12 @@ def check_approval_terms(corpus_bytes: bytes, approval: dict[str, Any]) -> dict[
     for key in ("model", "measured_system", "harness_sha256"):
         if approval[key] != identity[key]:
             raise LiveRefused(f"{key} differs from the approved one")
+    if type(approval["max_requests"]) is not int or approval["max_requests"] <= 0:   # C14 review: = the S-2 runner's m1
+        raise LiveRefused("max_requests must be a positive integer")
+    for key in ("max_usd", "input_usd_per_million", "output_usd_per_million"):   # NaN / ≤ 0 would disable the USD cap
+        v = approval[key]
+        if type(v) not in (int, float) or not math.isfinite(v) or v <= 0:
+            raise LiveRefused(f"{key} must be a finite positive number")
     if int(approval["llm_only_output_reservation_tokens"]) < MODEL_OUTPUT_LIMIT:
         raise LiveRefused("LLM_ONLY sets no output cap: the reservation must be at least the model output limit")
     corpus = json.loads(corpus_bytes.decode("utf-8"))

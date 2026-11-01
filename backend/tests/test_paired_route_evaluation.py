@@ -370,6 +370,27 @@ def test_one_approval_one_live_run_and_a_second_is_refused_before_any_request(tm
     assert runs == [tmp_path / "first.jsonl"]
 
 
+def test_an_unwritable_out_never_burns_the_approval(tmp_path):
+    """C14 review MINOR: the claim must prove `--out` can be created, not only that it does not exist."""
+    approval = tmp_path / "approval.json"
+    approval.write_text("{}", encoding="utf-8")
+    with pytest.raises(FileNotFoundError):
+        E.claim_approval(approval, tmp_path / "no-such-dir" / "live.jsonl")
+    assert not (tmp_path / "approval.json.consumed").exists()
+    E.claim_approval(approval, tmp_path / "live.jsonl")
+    assert (tmp_path / "approval.json.consumed").exists() and not (tmp_path / "live.jsonl").exists()
+
+
+@pytest.mark.parametrize("over", [{"max_usd": float("nan")}, {"max_usd": 0}, {"input_usd_per_million": -1},
+                                  {"output_usd_per_million": float("inf")}, {"max_requests": 40.0},
+                                  {"max_requests": True}])
+def test_cap_values_that_would_disable_a_cap_are_refused(tmp_path, over):
+    """C14 review MINOR (= the S-2 runner's m1): NaN compares False everywhere, so it would switch the USD cap off."""
+    corpus = _corpus(tmp_path)
+    with pytest.raises(E.LiveRefused, match="max_requests|finite positive"):
+        E.check_approval_terms(corpus.read_bytes(), _terms(corpus, **over))
+
+
 @pytest.mark.parametrize("mutate", [
     lambda cs: cs.append(dict(cs[0], id="dup-text", problem_text=" " + cs[0]["problem_text"].upper())),  # normalized dup
     lambda cs: cs.append(dict(cs[1], problem_text="khác")) or cs[-1].update(id=cs[0]["id"]),   # duplicate id
