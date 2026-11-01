@@ -2649,8 +2649,12 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
         # even when no ask call exists — "Tìm giao điểm của SC và (ABD)." otherwise served a figure and dropped the request
         # A validated section / intersection line answers its own anaphoric request ("… theo một thiết diện. Xác định thiết
         # diện đó."): only that closed phrase is read, never what a broad model quote also covers (review round 2).
-        if any(c.fn in ("section", "intersection_line") for c in calls):
-            du = _HOI_CHI_DUNG.sub(lambda m: " " * len(m.group()), du)
+        # matched on the source (a request verb inside it, "vừa dựng", is already blanked in `du`) and only for the noun
+        # whose own call exists: "thiết diện" ↔ section, "giao tuyến" ↔ intersection line (review round 3)
+        fns = {c.fn for c in calls}
+        for m in _HOI_CHI_DUNG.finditer(de, start, end):
+            if {"thiết diện": "section", "giao tuyến": "intersection_line"}[re.sub(r"\s+", " ", m["n"].lower())] in fns:
+                du = du[:m.start() - start] + " " * (m.end() - m.start()) + du[m.end() - start:]
         if ((phrases or _DONG_TU_HOI.search(de, start, end)
              or (any(c.spec.kind == "ask" for c in calls) and start >= first_request))
                 and not _DAN_CAU_HOI.fullmatch(du)):
@@ -3565,7 +3569,8 @@ _DAN_CAU_HOI = re.compile(
     r"[\s,;:.?!]*(?:(?:\(?(?:[a-z]|\d{1,2})\)|(?:câu|ý|phần)\s+(?:[a-z]|\d{1,2})|hơn nữa|ngoài ra|khi đó|từ đó|sau đó|tiếp theo|tiếp đó"
     r"|rồi|do đó|vậy|cuối cùng|và|cùng|hãy|em hãy|các|lần lượt)(?!\w)[\s,;:.?!]*)*", re.IGNORECASE)
 #: The anaphoric object of a request a validated section / intersection line answers ("Xác định thiết diện đó.").
-_HOI_CHI_DUNG = re.compile(r"(?<!\w)(?:thiết\s+diện|giao\s+tuyến)\s+(?:đó|này|trên|vừa\s+dựng(?:\s+được)?)(?!\w)", re.IGNORECASE)
+_HOI_CHI_DUNG = re.compile(r"(?<!\w)(?P<n>thiết\s+diện|giao\s+tuyến)\s+(?:đó|này|trên|vừa\s+dựng(?:\s+được)?)(?!\w)",
+                           re.IGNORECASE)
 _DON_VI_MET = r"(?:cm|dm|mm|(?-i:m))"
 _DON_VI = (rf"(?:{_DON_VI_MET}(?:2|\^2|²)|đvdt"
            rf"|{_DON_VI_MET}(?:3|\^3|³)|đvtt"

@@ -375,3 +375,15 @@ def test_slice_mutant_is_killed(monkeypatch, name, apply, old, new, killed):
     assert not killed(), "the unmutated code must pass the kill check"
     apply(monkeypatch, old, new)
     assert killed(), f"mutant survived: {name}"
+
+
+# hybrid-master tenth continuation, review round 3: an anaphoric request is answered only by the call of ITS noun
+@pytest.mark.parametrize("text,served", [
+    ("Mặt phẳng (MAB) cắt hình chóp S.ABCD theo một thiết diện. Xác định thiết diện đó.", True),
+    ("Mặt phẳng (MAB) cắt hình chóp S.ABCD theo một thiết diện. Xác định thiết diện vừa dựng.", True),
+    ("Mặt phẳng (MAB) cắt hình chóp S.ABCD theo một thiết diện. Xác định giao tuyến đó.", False),
+    ("Mặt phẳng (MAB) cắt hình chóp S.ABCD theo một thiết diện. Tìm giao tuyến này.", False),
+])
+def test_anaphoric_request_needs_the_call_of_its_own_noun(text, served):
+    r = _run(HB._mid("f5", "M", "S", "C"), _section("f6", text, "MAB"))
+    assert (r.status == "SERVED") is served, (r.code, r.reason)
