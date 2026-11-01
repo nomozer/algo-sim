@@ -66,7 +66,7 @@ def test_simulation_opener_still_binds_the_question():
     ("Vẽ hình chóp S.ABCD.", "Vẽ hình chóp S.ABCD"),
     ("Hãy mô phỏng hình.", "Hãy mô phỏng hình"),
     ("Mô phỏng hình chóp.", "Mô phỏng hình chóp"),
-    ("Cho mình xem hình chóp S.ABCD và đường thẳng SC.", "Cho mình xem hình chóp S.ABCD"),
+    ("Cho mình xem hình chóp S.ABCD và đỉnh S.", "Cho mình xem hình chóp S.ABCD"),
 ])
 def test_trailing_simulation_request_mentions_only_built_objects(tail, sim):
     text = f"{STD} {tail}"
@@ -179,3 +179,64 @@ def test_a_base_with_lengths_but_no_layout_rule_stays_an_unsupported_shape():
         _p("segment_length", f"{s} = {v}", segment=list(s), value=v)
         for s, v in (("AB", "2"), ("BC", "3"), ("CD", "4"), ("DA", "5"))]))
     assert (r.status, r.code) == ("REFUSED", "UNSUPPORTED_BASE_SHAPE"), r.reason
+
+
+# --- independent review round 1 (BLOCKERs 1–2): a mention must be a drawn object, and a class word is a claim ----------
+@pytest.mark.parametrize("tail,goal", [
+    ("Vẽ khối tứ diện S.ABCD rồi tính thể tích khối chóp S.ABCD.", _vol("tính thể tích khối chóp S.ABCD")),
+    ("Vẽ hình lập phương S.ABCD.", None),
+    ("Vẽ hình chóp đều S.ABCD.", None),                                       # "đều" is not proved here
+    ("Vẽ mặt phẳng (SBD) và đoạn BD rồi tính thể tích khối chóp S.ABCD.", _vol("tính thể tích khối chóp S.ABCD")),
+    ("Vẽ đường thẳng AC.", None),                                            # not in the scene: the request is dropped
+    ("Biểu diễn hình chóp S.ABCD cùng với mặt phẳng (SAC).", None),
+    ("Vẽ điểm S, A và mặt phẳng (ABC).", None),
+    ("Vẽ cạnh AC và cạnh BD.", None),                                        # diagonals called edges
+    ("Cho mình xem hình chóp S.ABCD và đường thẳng SC.", None),
+])
+def test_review_r1_unverified_class_or_undrawn_object_is_unread(tail, goal):
+    r = run_typed_fact_next_v2_route(_payload(f"{STD} {tail}", "Cho hình chóp S.ABCD", [goal] if goal else []))
+    assert r.status == "REFUSED", tail
+
+
+def test_review_r1_a_vertex_claim_on_a_constructed_point_is_unread():
+    text = f"{STD} Gọi M là trung điểm của SC. Vẽ đỉnh M."
+    assert run_typed_fact_next_v2_route(_payload(text, "Cho hình chóp S.ABCD", extra=[MID_M])).status == "REFUSED"
+    text = f"{STD} Gọi M là trung điểm của SC. Vẽ điểm M."
+    assert run_typed_fact_next_v2_route(_payload(text, "Cho hình chóp S.ABCD", extra=[MID_M])).status == "SERVED"
+
+
+BOX = "Cho hình hộp chữ nhật ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật, AB = 2, AD = 3, AA' = 4."
+
+
+def _box(text, goals=()):
+    sq = "Cho hình hộp chữ nhật ABCD.A'B'C'D'"
+    return {"schema_version": "typed-fact-next/2", "problem_text": text, "length_unit": "1",
+            "solids": [{"solid_id": "s1", "solid_type": "prism", "notation": "ABCD.A'B'C'D'", "quote": sq}],
+            "premises": [_p("right_prism", sq, base=list("ABCD"), top=["A'", "B'", "C'", "D'"]),
+                         _p("rectangle", "có đáy ABCD là hình chữ nhật", vertices=list("ABCD")),
+                         _p("segment_length", "AB = 2", segment=["A", "B"], value="2"),
+                         _p("segment_length", "AD = 3", segment=["A", "D"], value="3"),
+                         _p("segment_length", "AA' = 4", segment=["A", "A'"], value="4")],
+            "relations": [], "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "s1",
+                                                    "quote": sq}],
+            "math_goals": list(goals)}
+
+
+def test_review_r1_a_cube_claim_on_a_cuboid_is_unread():
+    vol = {"goal_id": "mg1", "kind": "measurement", "goal_type": "volume", "target": {"solid_id": "s1"},
+           "quote": "tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'", "solid_id": "s1"}
+    ok = run_typed_fact_next_v2_route(_box(f"{BOX} Vẽ hình lăng trụ ABCD.A'B'C'D' rồi {vol['quote']}.", [vol]))
+    assert ok.status == "SERVED" and ok.answer_exact["mg1"]["coef"] == "24", ok.reason   # the generic class is true
+    bad = run_typed_fact_next_v2_route(_box(f"{BOX} Vẽ hình lập phương ABCD.A'B'C'D' rồi {vol['quote']}.", [vol]))
+    assert bad.status == "REFUSED"
+
+
+# --- PE-1 (pre-existing at c9f54828, widened by SL-1): a request sentence without an answering call is never dropped -----
+@pytest.mark.parametrize("tail", [
+    "Tìm giao điểm của SC và mặt phẳng (ABD).",
+    "Xác định hình chiếu của S lên mặt phẳng (SBC).",
+    "Vẽ hình rồi tìm giao điểm của SC và mặt phẳng (ABD).",
+    "Mô phỏng hình chóp S.ABCD, tìm cách dựng.",
+])
+def test_pe1_an_unanswered_request_sentence_is_refused(tail):
+    assert run_typed_fact_next_v2_route(_payload(f"{STD} {tail}", "Cho hình chóp S.ABCD")).status == "REFUSED", tail

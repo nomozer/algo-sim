@@ -1253,7 +1253,14 @@ class UnresolvedSpec(ClosedNextModel):
 
     @model_validator(mode="after")
     def _subject_in_quote(self) -> "UnresolvedSpec":
-        if self.subject_ref is not None and not re.search(rf"(?<![\w']){re.escape(self.subject_ref)}(?![\w'])", self.quote):
+        from app.simulation.geometry_functions.registry import chuan_hoa
+
+        if len(re.findall(r"\w", self.quote)) < 2:          # a quote must locate words, not a stray mark
+            raise TypedFactNextValidationError(
+                "INVALID_TYPED_FACT_NEXT", f"Unresolved {self.unresolved_id!r}: quote locates no wording.")
+        # the label is canonical (A′ → A'), so it is matched against the canonical spelling of its own quote
+        if self.subject_ref is not None and not re.search(rf"(?<![\w']){re.escape(self.subject_ref)}(?![\w'])",
+                                                          chuan_hoa(self.quote)):
             raise TypedFactNextValidationError(
                 "INVALID_TYPED_FACT_NEXT", f"Unresolved {self.unresolved_id!r}: subject {self.subject_ref!r} is not in its quote.")
         return self
@@ -1281,18 +1288,19 @@ def clarification_record(u: UnresolvedSpec, problem_text: str) -> dict[str, Any]
         spans.append([k, k + len(u.quote)])
         k = problem_text.find(u.quote, k + 1)
     question = None
+    roles = tuple(dict.fromkeys(u.missing_roles))
     if u.kind != "unsupported":
-        quan_he = " hay ".join(_QUAN_HE_TEN[c] for c in u.candidate_relations)
+        quan_he = " hay ".join(_QUAN_HE_TEN[c] for c in dict.fromkeys(u.candidate_relations))
         if quan_he:
-            hoi = " và ".join(_VAI_THIEU_HOI[r] for r in u.missing_roles)
+            hoi = " và ".join(_VAI_THIEU_HOI[r] for r in roles)
             chu = f"{u.subject_ref} là " if u.subject_ref else "nói "
             question = f"Trong “{u.quote}”, bạn muốn {chu}{quan_he}{' ' + hoi if hoi else ''}?"
         else:
-            ten = " và ".join(_VAI_THIEU_TEN[r] for r in u.missing_roles) or "ý muốn nói"
+            ten = " và ".join(_VAI_THIEU_TEN[r] for r in roles) or "ý muốn nói"
             question = f"Trong “{u.quote}”, bạn hãy nói rõ {ten}."
     return {"schema_version": CLARIFICATION_SCHEMA_VERSION, "unresolved_id": u.unresolved_id, "kind": u.kind,
             "nlu_class": _NLU_LOAI[u.kind], "quote": u.quote, "spans": spans, "subject_ref": u.subject_ref,
-            "missing_roles": list(u.missing_roles), "candidate_relations": list(u.candidate_relations),
+            "missing_roles": list(roles), "candidate_relations": list(dict.fromkeys(u.candidate_relations)),
             "question": question}
 
 

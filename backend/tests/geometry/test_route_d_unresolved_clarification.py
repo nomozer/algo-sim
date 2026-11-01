@@ -176,3 +176,36 @@ def test_other_wrapper_refusals_are_unchanged():
     raw = {**_servable(), "premises": _servable()["premises"][:1]}
     out = run_hybrid_offline(STD, ReplayExtractor({STD: raw}), policy=POLICY).response
     assert out["route_d"]["refusal"] == {"code": out["envelope"]["reason_code"]}
+
+
+# --- independent review round 1 (MINOR / NIT) ----------------------------------------------------------------------
+def test_review_r1_spans_are_offsets_in_the_raw_text():
+    text = "  " + GOC_CHIEU
+    clar = run_typed_fact_next_v2_route(_only(text, _u(quote="S là góc chiếu")))["refusal"] \
+        if False else run_typed_fact_next_v2_route(_only(text, _u(quote="S là góc chiếu"))).route_d["refusal"]["clarification"]
+    (a, b), = clar["spans"]
+    assert text[a:b] == "S là góc chiếu"
+
+
+def test_review_r1_the_answerable_entry_is_described_whatever_the_order():
+    first = _u(kind="unsupported", quote="Mô phỏng điểm S", missing=(), candidates=(), subject=None)
+    second = {**_u(), "unresolved_id": "u2"}
+    r = run_typed_fact_next_v2_route(_only(GOC_CHIEU, first, second))
+    assert r.code == "AMBIGUOUS_FACT" and r.route_d["refusal"]["clarification"]["unresolved_id"] == "u2"
+
+
+@pytest.mark.parametrize("quote", [".", " , ", "S"])
+def test_review_r1_a_quote_must_locate_wording(quote):
+    with pytest.raises(TypedFactNextValidationError):
+        parse_typed_fact_next_v2(_only(GOC_CHIEU + " .", _u(quote=quote, subject=None)))
+
+
+def test_review_r1_a_primed_subject_matches_its_quote_in_any_prime_spelling():
+    text = "Mô phỏng điểm A′ là góc chiếu của hình lăng trụ xiên."
+    r = run_typed_fact_next_v2_route(_only(text, _u(quote="A′ là góc chiếu", subject="A'")))
+    assert r.code == "AMBIGUOUS_FACT" and r.route_d["refusal"]["clarification"]["subject_ref"] == "A'"
+
+
+def test_review_r1_repeated_roles_are_asked_once():
+    r = run_typed_fact_next_v2_route(_only(GOC_CHIEU, _u(missing=("source_point", "source_point"))))
+    assert r.route_d["refusal"]["clarification"]["question"].count("của điểm nào") == 1

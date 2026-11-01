@@ -1158,13 +1158,13 @@ def _nhan_khoi(k: LoiGoi) -> set[str]:
     return {*([k.args.apex] if k.fn in ("pyramid", "regular_pyramid") else []), *k.args.base, *(getattr(k.args, "top", None) or [])}
 
 
-#: One object a simulation request may show (SL-1): the figure, a declared polyhedron by its kind (and notation), or a
-#: point / segment / line / plane by labels. A shape noun ("hình vuông ABCD") is no mention: it would be a claim.
-_VAT_MO_PHONG = re.compile(rf"(?:(?:hình|khối)\s+(?P<kn>chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)"
-                           rf"(?:\s+(?P<k>{_NHAN}\.{_NHAN}))?|(?P<hinh>hình(?:\s+vẽ)?)"
-                           rf"|(?:các\s+)?(?:điểm|đỉnh)\s+(?P<d>{_L1}(?:\s*,\s*{_L1})*)"
-                           rf"|(?:đoạn(?:\s+thẳng)?|đường\s+thẳng|cạnh)\s+(?P<s>{_L1}{_L1})"
-                           rf"|(?:mặt\s+phẳng|mp)\s*\((?P<m>{_L1}{_L1}{_NHAN})\))"
+#: One object a simulation request may show (SL-1): the figure, a declared polyhedron by its GENERIC kind word (and its
+#: own notation), or built points — the scene draws exactly these. A specific class word ("lập phương", "hộp", "tứ diện")
+#: is a claim the gate does not verify here, a segment / line / plane is not drawn, and a shape noun ("hình vuông ABCD")
+#: is a claim: none is a mention (independent review, BLOCKERs 1–2).
+_VAT_MO_PHONG = re.compile(rf"(?:(?:hình|khối)\s+(?P<kn>chóp|lăng\s+trụ)(?:\s+(?P<k>{_NHAN}\.{_NHAN}))?(?!\s*(?:đều|đứng|xiên))"
+                           rf"|(?P<hinh>hình(?:\s+vẽ)?)"
+                           rf"|(?:các\s+)?(?P<vai>điểm|đỉnh)\s+(?P<d>{_L1}(?:\s*,\s*{_L1})*))"
                            rf"(?:\s+(?:này|đó|đã\s+cho|trên))?(?![\w'])", re.IGNORECASE)
 _NOI_VAT_MO_PHONG = re.compile(r"\s*,\s*(?:và\s+)?|\s+và\s+|\s+cùng\s+(?:với\s+)?", re.IGNORECASE)
 _MO_YEU_CAU_MO_PHONG = re.compile(rf"\s*(?:(?:không|chưa)\s+cần\s+)?{_DONG_TU_MO_PHONG}\s+", re.IGNORECASE)
@@ -1191,8 +1191,11 @@ def _doc_yeu_cau_mo_phong(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) ->
             nhan = set(re.findall(r"[A-Z][0-9]*'?", v["k"] or ""))
             if not any(k.fn in loai and (not nhan or nhan == _nhan_khoi(k)) for k in khoi):
                 return None
-        elif not v["hinh"] and not set(re.findall(r"[A-Z][0-9]*'?", v["d"] or v["s"] or v["m"] or "")) <= dung:
-            return None
+        elif v["d"]:
+            diem = set(re.findall(r"[A-Z][0-9]*'?", v["d"]))
+            # "đỉnh" claims a solid vertex; "điểm" any point a validated call builds (drawn in the scene)
+            if not diem <= (set().union(*map(_nhan_khoi, khoi)) if v["vai"].lower() == "đỉnh" else dung):
+                return None
         p = v.end()
         if _C_HET.fullmatch(de, p, b):
             return b
@@ -2642,7 +2645,16 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
             if first < m.start() < end and _vai_tro_tai(de, m.start()) not in ("GOAL", "QUESTION"):
                 cover(m.start(), m.end())
         du = "".join(" " if x else ch for x, ch in zip(doc_cau, de[start:end]))
-        if (phrases or (any(c.spec.kind == "ask" for c in calls) and start >= first_request)) and not _DAN_CAU_HOI.fullmatch(du):
+        # PE-1 (review round 1, pre-existing): a sentence that REQUESTS something ("tìm / tính / xác định …") is read whole
+        # even when no ask call exists — "Tìm giao điểm của SC và (ABD)." otherwise served a figure and dropped the request
+        # A sentence lying inside the quote of a validated construction ("… theo một thiết diện. Xác định thiết diện đó.")
+        # is answered by that call.
+        s0, e0 = start + len(de[start:end]) - len(de[start:end].lstrip()), start + len(de[start:end].rstrip(" .?!;"))
+        dung_tra_loi = any(c.spec.kind == "construct" and c.fn not in _KHOI_FN and (vt := _vi_tri(de, q)) is not None
+                           and vt[0] <= s0 and e0 <= vt[1] for c in calls for q in c.quotes)
+        if ((phrases or (_DONG_TU_HOI.search(de, start, end) and not dung_tra_loi)
+             or (any(c.spec.kind == "ask" for c in calls) and start >= first_request))
+                and not _DAN_CAU_HOI.fullmatch(du)):
             raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED", f"câu hỏi có phần chưa được đọc ({du.strip()!r}) — có thể đổi đại "
                          "lượng được hỏi; không trả lời một đại lượng khác")
     # Requesting the same object again in a modified form after it was asked ("Tính SC, … tính lại SC", "SC lần nữa",
@@ -2831,7 +2843,10 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
         a0 = gd.end() if gd else a
         if _doc_yeu_cau_mo_phong(de, a0, b, calls) == b:
             continue                                     # only asks to show built objects (SL-1)
+        # only before the solid's own attributes ("… có / với / biết …"): a bare mention list is the reader's job above, so
+        # "Cho mình xem hình chóp S.ABCD và đường thẳng SC" is not read as object names (review round 1)
         if ((mp := _MO_PHONG_MO_KHOI.match(de, a0, b)) and (mk := _C_KHOI.match(de, mp.end(), b))
+                and re.match(r"\s*,?\s*(?:có|với|biết|th[ỏo]a\s+mãn)(?!\w)", de[mk.end():b], re.IGNORECASE)
                 and any(set(re.findall(r"[A-Z][0-9]*'?", mk["k"])) == _nhan_khoi(k) for k in calls if k.fn in _KHOI_FN)):
             a0 = mp.end()                                # "Vẽ hình chóp S.ABCD có …" reads like "Cho hình chóp …"
         if mt := _MAO_TU_KHOI.match(de, a0, b):
@@ -3886,7 +3901,11 @@ def _doc_phep_dung_cau_hoi(de: str, start: int, end: int, calls: tuple[LoiGoi, .
         for m in _CAT_CANH_CHUNG.finditer(de, start, end):
             chu = _CHU_NGU_CAT.search(de, start, m.start())
             spans.append((chu.start() if chu and chu["ten"] in dinh_nghia else m.start(), m.end()))
-    for m in _CUM_DUNG_HINH_CHIEU.finditer(de, start, end):
+    # PE-1 (review round 1): an unbuilt projection is read only as the method of an ask OF ITS OWN SENTENCE; alone
+    # ("Xác định hình chiếu của S lên (SBC).") it is a request no call answers
+    hoi_cung_cau = any(c.spec.kind == "ask" and any((vt := _vi_tri(de, q)) is not None and start <= vt[0] and vt[1] <= end
+                                                    for q in c.quotes) for c in calls)
+    for m in _CUM_DUNG_HINH_CHIEU.finditer(de, start, end) if hoi_cung_cau else ():
         if m["p"] not in dung or (m["img"] and m["img"] not in dung):
             continue
         mat = _mat_cua(m, "m", khoi)
