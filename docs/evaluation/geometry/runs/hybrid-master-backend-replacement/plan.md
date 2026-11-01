@@ -69,3 +69,18 @@ Interfaces: immutable `SourceReference(path, spans)` records on `ExtractionResul
    - **Certificate:** an independent closed-form value from (r², h²), compared exactly with the executed kernel value. A total area with two unlike terms ⇒ a typed refusal, never an approximation.
 5. **Adapter /4:** curved scene objects pass `_validate_scene`. If they do not, fix the validator; never bypass it.
 6. **Mixing** curved and polyhedral solids in one plan ⇒ a typed refusal (`MIXED_CURVED_POLYHEDRAL_UNSUPPORTED`) until a composite slice has its own certificates.
+
+## Tenth continuation — student natural-language understanding (Owner Master Task, 2026-11-01)
+
+Offline only; 0 provider calls. Development diagnostic, never a held-out claim. The locked live protocol, scorer, GO thresholds and 60-case corpus are not touched.
+
+**Measured before any code change** (scratch experiments at product `fa1ed277`, re-measured by the probe below):
+- SL-1: a simulation request ("Vẽ / Dựng / Mô phỏng / Cho mình xem hình chóp …", or a trailing "Vẽ hình …", "Hãy mô phỏng hình và điểm H.") is refused (`UNGROUNDED_VALUE`, `SOURCE_PREMISE_UNREAD`, `QUESTION_CONTEXT_UNSUPPORTED`) while the same givens opened by "Cho" are served. Root cause: the Source Gate's clause grammar opens a solid clause only with `cho|xét` (`_C_KHOI`), and no closed reader covers a sentence that only asks to show objects that the calls already build.
+- SL-2: `typed-fact-next/2` has no honest exit. The flat contract has `ambiguous` and `unsupported`; `GROUNDED_GOAL_COMPLETENESS_CONTRACT.md` requires one. An extractor faced with "Mô phỏng điểm S là góc chiếu của hình lăng trụ xiên." can only guess or emit an invalid payload.
+
+**Tasks:**
+1. `tools/student_language_probe.py`: authored gold / adversarial extractions replayed through `run_hybrid_offline` (extraction validation → /4 → Adapter /4), with independent hand oracles; axes per case; scorer separate from extraction. Baseline receipt before the fix.
+2. SL-1 in the Source Gate only: one closed simulation-request reader (verb + mentions of objects the validated calls already build), used by the clause grammar, the premise-region and the request-region coverage. It adds no fact. RED/GREEN + adversarial locks (numbers, new objects, negation, smuggled givens).
+3. SL-2: additive `unresolved` entries on `/2` (closed kinds and roles), refused by the bridge with existing codes (`AMBIGUOUS_FACT`, `OUT_OF_SCOPE`) and a server-built `route-d-clarification/1` record in `route_d.refusal`. Never able to serve. Census + compatibility audit.
+4. Other gaps the probe attributes, each at its own layer, or recorded only.
+5. Regression (inventory replay, registered controls, all route-D suites), independent review, candidate re-freeze in its own commit, Full T3, write-back, one consolidated Owner decision point.
