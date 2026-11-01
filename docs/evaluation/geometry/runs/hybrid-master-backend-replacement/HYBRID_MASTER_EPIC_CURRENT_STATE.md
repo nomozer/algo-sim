@@ -621,3 +621,48 @@ Offline only; `0` provider calls; `USD 0`. **No Owner approval file exists**, so
 - a wrong serve of the gold's own facts, now attributed to the deterministic layer.
 
 Re-issued: runner `b25830f2…`; template blob `a3590e6b…`, whose command was dry-run again with a non-approval value; gold replay `s2-pilot-gold-replay-r2.jsonl`, unchanged at 33/36. **S-2 status: `OFFLINE_READY_AWAITING_OWNER_GO`.**
+
+---
+
+## Thirteenth continuation (Emergency Cross-Agent Handoff from `e4240c99`: `R-1` unnamed described points on `/4`, `SL-3` student shorthands, bridge regex repair), 2026-11-01: CHECKPOINT REACHED — `OFFLINE_READY_AWAITING_OWNER_GO`
+
+Offline only; `ALLOW_LIVE_AI = 0`; `MAX_AUTHORIZED_LIVE_REQUESTS = 0`; `MAX_AUTHORIZED_LIVE_SPEND_USD = 0`; `0` provider calls; `USD 0` spend. Versions bumped to `geometry-functions/29` (planner `/23`, engine `/20` unchanged; `D-02` `cache_key` hashes `REGISTRY_VERSION` via `policy.preview_surface`, invalidating Route D cache rows automatically while keeping `DEFAULT_MODE = "LLM_ONLY"` and `CACHE_VERSION = "131"` untouched); `0` edits to `frontend/`, `semantic_program/`, or `adapter3_simulation.py`; locked `TypedFact` / `flat` / `v3` / Route A / `function_declarations` SHA-256 pins preserved. Reports: `r1-described-points-audit.md`, `continuation13-adversarial-review.md`, `continuation13-handoff-checkpoint.md`.
+
+| Commit | Content |
+|---|---|
+| `e4240c99` | Initial Continuation 13 slice (`R-1` `TypedFactNextPayloadV2.described_points` + bridge mapping, `SL-3` `k/c` & `đt`, `_v2_plane_def_quotes` literal `0x08` repair, `schema-census-extension.json`, `r1_described_point_probe.py`) — checkpoint preserved at emergency cross-agent takeover |
+| `9503482a` | Takeover pre-review hardening + Round 1 independent review fixes (`_described_consumer_scopes` multi-scope ownership propagation, `canonical_vertex_ref` duplicate operand check on `DescribedPointSpec`, `angle(line1, line2)` on `/4`, `MAJOR-1` `distance(line, plane)` capability refusal, `MINOR-1` case-insensitive `K/c`, `MINOR-2` curved whole-solid `set(g.target) <= {"solid", "solid_id"}` guard, `SL-3` full `đt` parity, `export_hybrid_preview_fixtures.py` `IDENTITY_DELTAS`, and `MINOR-3` `S-2` OpenAPI `nullable: True` `project()` canonicalization) — **final product commit** |
+| `ea3861be` | Round 2 `READY` review record, `r1-described-point-probe-r2.json`, `inventory-phase-p2.json` / `wave3-phase-p2.json`, `s2-pilot-gold-replay-r3.jsonl` (`35/36`), re-issued `s2-owner-approval.template.json` (`d6c6e6b0…`), and Continuation 13 doc/index sync |
+| `0fe38a29` | Candidate re-frozen in its own commit (`runs/hybrid-master-described-points/` correcting `runs/hybrid-master-semantic-planner-recomposition/`) |
+
+**Capabilities & repairs delivered on Route D `/4`:**
+
+- **`R-1` — Unnamed Described Points End-to-End on Hybrid `/4` (`ISSUE-ARCH-ROUTE-D4-UNNAMED-DESCRIBED-POINT-GOAL` closed on research branch):**
+  - Additive `TypedFactNextPayloadV2.described_points` (`DescribedPointSpec`, `@id` refs, canonical alias deduplication via `canonical_vertex_ref`, explicit dependency cycle/depth validation `MAX_DESCRIBED_DEPTH = 2`, multi-consumer `scope_records` ownership propagation `_described_consumer_scopes`, verbatim quote span provenance; `typed-fact-next/1` untouched).
+  - `typed_fact_next_bridge.py` (`_mo_ta_phang`, `_cau_hoi_mo_ta`, `_mat_fact`) connects `/4` measurement goals (`distance(point, plane)`, `distance(point, line)` on `point`, `distance(segment)`, `angle(line, plane)` on `line`, `angle(line1, line2)` on either line, and 3-vertex `area(polygon)`) and section `through_point`s directly to the existing Registry descriptor contracts, Planner `_EffectResolver`, Source Gate `effect-chain` certificates, Exact Kernel, and `Scene3D` `construction_trace` (`0` new `GeometryFunction` primitives).
+  - All **9/9** Continuation 11 `DISCOVERED_FUNCTION_COMPOSITION` chains (`C1a..C7`) plus `angle(line1, line2)` (`1/3`) now serve exact hand-verified answers end-to-end on `/4` (`r1-described-point-probe-r2.json`: `10/10` positives served, `6/6` adversarial extractions refused; `test_route_d4_described_points.py`: `55/55`).
+  - `D1` (nested depth-2) and `D2` (two described operands in one goal) are schema-representable on `/2` and refuse fail-closed with `BRIDGE_UNSUPPORTED_DESCRIBED_POINT` (`CAPABILITY`) until Source Gate `effect-chain` certification is generalized in a dedicated wave.
+- **`SL-3` — Student Shorthand Reading (`ISSUE-ARCH-ROUTE-D-STUDENT-SHORTHAND-UNREAD` closed for `k/c`, `mp`, `đt`):**
+  - `registry.py` (`/29`) reads case-insensitive `k/c` (`"k/c"`, `"K/c"`, `"K/C"`) and `đt` before two line labels across named and described-point distance/angle/descriptor phrases (`s2-pilot-gold-replay-r3.jsonl`: **`35/36`** end-to-end, up from `33/36`, `0` wrong-served; tone-dropped `"hình chop"` in `S2-F-S07` stays fail-closed `UNGROUNDED_VALUE` under Owner diacritic policy `S-1`; `46/46` in `test_s2_student_language_pilot_runner.py`).
+- **Bridge Regex Control-Byte Repair (`ISSUE-ARCH-ROUTE-D-BRIDGE-LITERAL-BACKSPACE-REGEX` closed on research branch):**
+  - `typed_fact_next_bridge.py::_v2_plane_def_quotes` literal `0x08` (`BACKSPACE`) byte replaced with `\b` + word-for-word imperative restatement deduplication (`0` ASCII control bytes across `backend/`).
+- **Preview Fixtures (§4):** `export_hybrid_preview_fixtures.py` declares `("geometry-functions/28", "geometry-functions/29")` in `IDENTITY_DELTAS`; `--verify` passes on all `41/41` fixtures (`0` non-identity payload diffs; historical bundles untouched).
+
+**Independent adversarial review** (`continuation13-adversarial-review.md`, subagent `fcc3f7ac-31ea-4cc3-9321-b586dc9f4605`): two rounds — Round 1 (`0 BLOCKER, 1 MAJOR, 3 MINOR, 1 NIT`, `NOT_READY`), Round 2 **`VERDICT: READY`** (`0 BLOCKER, 0 MAJOR, 0 MINOR, 1 NIT`; `14,019` geometry/hybrid tests passed during review sweep).
+
+**Gates:**
+- **Wave 3 (`inventory-phase-p2.json`, `wave3-phase-p2.json`):** `67/72` served correctly; `72/72` negatives refused (`62` exact reason); `0` wrong-served; `0` transitions.
+- **Locked 96:** `96/96`, `0` wrong-served.
+- **203 probes:** `0` served negatives, `0` internal errors (same 12 curved `REFUSED -> REFUSED` transitions).
+- **Registered curved controls:** `32/32` remain `REFUSED`.
+- **Preview fixtures (`fixtures-adapter-2-search-telemetry/`):** `41/41` verified (`problems: []`, `test_hybrid_preview_fixtures.py` `6/6`).
+- **Candidate:** `0fe38a29`, product `9503482a`, `118` files `773e440de0385d577040a9eca107706bfb2d3e4aec1d827b52c99c89d42ac7c3`, cache `131` (no bump); `freeze_evaluation_candidate.py --verify` matches.
+- **Full T3:** `FULL_PRODUCT_GATE_PASS` on attempt 1 of `0fe38a29`, on fresh detached worktree `hm-t3-0fe38a29` (`full-t3-0fe38a29.json`): pytest `16514` passed (`0` failed, `7` skipped, `2` deselected, `15` xfailed), vitest `84` files / `1424` passed, production build `PASS`, demo replay `5/5`, crash surface `6/6`.
+- **Publication scan** of `f986e897..HEAD`: `PASS` (`scanned=706`, `messages=90`, `violations=0`, `0` `Co-Authored-By` trailers).
+
+**Status:** `ARCHITECTURE_CAPABILITY_PROGRESS` (`R-1` + `SL-3` + bridge regex closed); `OFFLINE_BACKEND_READY_FOR_LIVE_EVALUATION`; overall **`HYBRID_NOT_READY`** (`OFFLINE_READY_AWAITING_OWNER_GO`). Nothing merged or pushed; worktree preserved.
+
+**Next exact action (Owner decision boundaries in `owner-go-request.md`):**
+1. **`S-2` live student-language pilot (`<= 36` requests, `USD 2.0` cap):** run the blob-locked PowerShell command in `owner-go-request.md` (`s2-owner-approval.template.json` blob `d6c6e6b01b115621600054f611a7ff5f8657aec2`, binding candidate `0fe38a29` / `measured_system = 773e440de0385d57…` and `runner_sha256 = a274eabc…`).
+2. **Live paired evaluation GO (`D-04`, `D-11`, `D-13`, `GATE-16`):** name the independent 60-problem corpus author and provide the Owner approval JSON binding candidate `0fe38a29`.
+3. **Policy boundaries:** `S-1` diacritic-free input (including `"hình chop"`), optional `D1`/`D2` Source Gate multi/recursive chain certification, optional curved grammar rulings `P-1..P-3`, and `main` integration (`INTEGRATION_PENDING_OWNER_GO`).
