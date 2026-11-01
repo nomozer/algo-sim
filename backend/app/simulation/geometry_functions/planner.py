@@ -1868,12 +1868,17 @@ class _Choice:
 #: Source policies of contracts that are a declared decomposition's step: the foot of `distance(point,line)`, a section
 #: vertex on a stated cut edge (`DINH_CAT_CANH`), a declared intersection line (`registry.AUXILIARY_RULES`).
 _RULE_POLICIES = frozenset({"projection_foot", "distance_witness", "section_vertex", "declared_intersection"})
+#: The only functions the planner writes to spell out a definition its solid word carries (`<solid>_day`, `khoi_cua`).
+DEFINITION_FUNCTIONS = frozenset({"regular_polygon", "rectangle"})
 
 
 def _nguon_goc_buoc(k: KeHoach) -> dict[str, list[str]]:
-    """Planner-made steps by provenance (C16). Untagged ones come from a declared decomposition."""
+    """Planner-made steps by provenance (C16). A `DEFINITION_FUNCTIONS` step restates a definition the source's own solid
+    word carries ("hình lập phương" ⇒ `<solid>_day` regular base): source-defined. Other untagged ones are steps of a
+    declared decomposition."""
     own = [c["id"] for c in k.calls if c["id"] not in k.fact_ids]
-    tag = {i: k.step_provenance.get(i, "registered") for i in own}
+    fn = {c["id"]: c["fn"] for c in k.calls}
+    tag = {i: k.step_provenance.get(i, "source_defined" if fn[i] in DEFINITION_FUNCTIONS else "registered") for i in own}
     return {"planner_originated_steps": own,
             "source_defined_steps": [i for i in own if tag[i] == "source_defined"],
             "registered_decomposition_steps": [i for i in own if tag[i] == "registered"],

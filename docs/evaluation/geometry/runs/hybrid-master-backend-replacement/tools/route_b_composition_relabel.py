@@ -30,16 +30,34 @@ def leaves(v):
         yield v.split('::')[-1]
 
 
+PROJECTIONS = ('orthogonal_projection', 'orthogonal_projection_line')
+
+
+def key(fn, points):
+    """A projection keeps its roles (the projected point, then the target's labels); other constructors are symmetric
+    in their labels (C16 review MINOR-3: S onto AD must not match "A onto SD")."""
+    pts = list(points)
+    return (fn, pts[0], tuple(sorted(pts[1:]))) if fn in PROJECTIONS else (fn, tuple(sorted(pts)))
+
+
 def described(facts):
-    return {(f['point_kind'], tuple(sorted(leaves(f.get('points') or ())))) for f in facts if f.get('point_kind')}
+    return {key(f['point_kind'], leaves(f.get('points') or ())) for f in facts if f.get('point_kind')}
+
+
+def step_key(s):
+    a = s['args']
+    if s['fn'] in PROJECTIONS:
+        return key(s['fn'], [a['point'], *leaves(a.get('line') or a.get('plane') or ())])
+    return key(s['fn'], leaves([v for k, v in a.items() if k != OUTPUT.get(s['fn'])]))
 
 
 def label(steps, facts):
+    from app.simulation.geometry_functions.planner import DEFINITION_FUNCTIONS
     stated = described(facts)
-    beyond = [s for s in steps
-              if (s['fn'], tuple(sorted(leaves([v for k, v in s['args'].items() if k != OUTPUT.get(s['fn'])])))) not in stated]
+    steps = [s for s in steps if s['fn'] not in DEFINITION_FUNCTIONS]      # a solid word's own definition (MINOR-3)
+    beyond = [s for s in steps if step_key(s) not in stated]
     if not steps:
-        return 'NO_PLANNER_STEP', beyond
+        return 'SOURCE_EXPLICIT_SEQUENCE', beyond                           # no planner-made step at all
     if not beyond:
         return 'SOURCE_EXPLICIT_SEQUENCE', beyond
     return ('REGISTERED_DECOMPOSITION' if all(s['fn'] in REGISTERED for s in beyond)

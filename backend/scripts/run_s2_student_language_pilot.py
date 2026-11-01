@@ -335,7 +335,11 @@ def _inputs(kind: str, operands: dict[str, Any]) -> tuple:
 
 
 def _beyond_description(steps: list[dict[str, Any]], raw: Any) -> list[dict[str, Any]]:
-    """Planner-made steps that do more than build a point the extraction itself described."""
+    """Planner-made steps that do more than build a point the extraction itself described, or restate a definition the
+    source's solid word carries (`planner.DEFINITION_FUNCTIONS`: the regular base of "hình lập phương" — review MINOR-3)."""
+    from app.simulation.geometry_functions.planner import DEFINITION_FUNCTIONS
+
+    steps = [s for s in steps if s.get("fn") not in DEFINITION_FUNCTIONS]
     specs = [d for d in (raw.get("described_points") or []) if isinstance(d, dict)] if isinstance(raw, dict) else []
     stated = {_inputs(str(d.get("kind")), {k: d[k] for k in _SPEC_OPERANDS if d.get(k) is not None}) for d in specs}
     return [s for s in steps if _inputs(str(s.get("fn")), {k: v for k, v in (s.get("args") or {}).items()
@@ -358,12 +362,10 @@ def composition_label(row: dict[str, Any]) -> str:
     if row["end_to_end_correct"]:
         if row["expected"]["outcome"] != "SERVED":
             return "CORRECT_REFUSAL"
-        search = row.get("search") or {}
-        kind, steps = search.get("classification"), search.get("planner_steps") or []
-        if kind != "DISCOVERED_FUNCTION_COMPOSITION":
-            return kind or "NOT_ESTABLISHED"
-        if not steps:
-            return "NOT_ESTABLISHED"                            # the planner's own label alone is not evidence
+        # C16 review MAJOR: the rule runs on EVERY served row — the planner's own label is recorded, never trusted
+        steps = (row.get("search") or {}).get("planner_steps")
+        if steps is None:
+            return "NOT_ESTABLISHED"
         beyond = _beyond_description(steps, row.get("raw_extraction"))
         if not beyond:
             return "SOURCE_EXPLICIT_SEQUENCE"
@@ -407,6 +409,8 @@ def supplementary(rows: list[dict[str, Any]], study: str = "S-2") -> dict[str, A
     checked = [r["described_check"] for r in rows if not r["technical_failure"] and r.get("described_check")]
     extra = {} if study == "S-2" else {
         "composition_labels": dict(sorted(collections.Counter(r["composition_label"] for r in rows).items())),
+        "planner_label_disagreements": [r["case_id"] for r in rows if r.get("search")
+                                        and r["search"].get("classification") != r["composition_label"]],
         "described_points": {k: _rate_or_unknown(sum(c[k] for c in checked), len(checked))
                              for k in ("emitted", "kinds_match", "refs_resolve", "quotes_verbatim")}}
     return {**extra, "note": "not a protocol §2 metric; reported beside them (Master directive §V)",

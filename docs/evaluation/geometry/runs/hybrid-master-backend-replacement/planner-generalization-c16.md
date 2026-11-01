@@ -58,8 +58,15 @@ All results are `VERIFIED_OFFLINE` and implementer-authored development data, wi
   - **0 reachable-but-missed**, 0 wrong-served.
 - **The other two plane kinds** (∥ a plane, ∥ two lines) have no choice to search: their directions are fixed by the
   text.
+- **Review round 1 (MINOR-4).**
+  - In all 710 rows the oracle found ≥ 2 witness pairs, so "reachable" reduces to "the plane cuts the interior". Any
+    two vertices not coplanar with d work, which makes the anchor choice easy, not deep.
+  - The reviewer also ran 948 extra cases in scratch: a regular pyramid with its apex over the centre, a cube, and
+    S.ABC with SA ⊥ (ABC) and a right angle at B, with M also at face centroids. Again 0 reachable-but-refused and
+    0 wrong-served. These are reviewer evidence, not a committed receipt.
 
-**There is no planning gap in the representable domain for a search engine to close.**
+**On the tested topologies and point choices, no planning gap exists for a search engine to close.** This is evidence
+for the representable domain, not a proof over it.
 
 ### 2.3 Ablation (`planner-ablation.json`; monkeypatch in the evaluation process only)
 
@@ -107,10 +114,22 @@ written down anywhere. `HYPOTHESIS`: on those goals it would produce genuinely s
   - a declared rule's policy (projection foot, section vertex, declared intersection) is `registered`;
   - anything else is `search_generated`.
 
-  Steps of the hand-written decompositions are `registered`.
+  Steps of the hand-written decompositions are `registered`. A `DEFINITION_FUNCTIONS` step (`regular_polygon` /
+  `rectangle` spelling out the base that "hình lập phương" or "chóp đều" defines) is `source_defined` (review MINOR-2).
+  With that, `/23` and `/24` differ only where `/23` said DISCOVERED.
 - **Telemetry.** `search_telemetry` adds `source_defined_steps`, `registered_decomposition_steps` and
   `search_generated_steps`. `DISCOVERED_FUNCTION_COMPOSITION` now requires a search-generated step.
-- **Agreement with the independent rule:** case for case, on all served rows of route B (13) and the R-1 gold (11).
+- **Agreement with the independent rule:** case for case, on all served rows of route B (13,
+  `route-b-composition-relabel-r2.json`) and the R-1 gold (11, `r1-live-pilot-gold-replay-r2.jsonl`:
+  `planner_label_disagreements = []`).
+  - The runner now applies its rule to **every** served row, never only to those the planner calls discovered
+    (review MAJOR).
+  - **Stated limit (review MINOR-1):** in Registry `/29`, every contract the resolver can emit is an answer, a
+    descriptor or a declared rule's policy. So `search_generated`, and with it DISCOVERED, **cannot occur today**.
+    Agreement on that label is by construction and carries no evidence; the label is ready for a contract that would
+    make it reachable (§3).
+- **Reviewer's comparison:** they ran the `/23` planner next to `/24` on 752 plans from 15 planner-heavy test files.
+  Calls and auxiliary certificates were identical, except in tests that monkeypatch planner globals.
 - **Unchanged:** answers, calls, envelopes and cache identity. 41/41 preview fixtures verify through the declared
   `/23 → /24` identity delta. `CACHE_VERSION` stays 131: `/api/analyze` does not reach the planner.
 - **Tests:** the three tests that locked the false label now assert the provenance contract (it is a correction, not a

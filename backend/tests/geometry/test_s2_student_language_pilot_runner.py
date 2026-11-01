@@ -281,7 +281,17 @@ def test_c15_realizing_the_models_own_described_point_is_not_a_discovered_compos
     assert out["supplementary"]["composition_labels"] == {"SOURCE_EXPLICIT_SEQUENCE": 1}
     assert set(out["supplementary"]["by_stratum"]) == {"R1-A", "R1-B", "R1-C", "R1-D", "R1-E", "R1-F", "R1-G"}
     no_step = dict(row, search={"classification": "DISCOVERED_FUNCTION_COMPOSITION", "planner_steps": []})
-    assert R.composition_label(no_step) == "NOT_ESTABLISHED"          # the planner's own label alone is not evidence
+    assert R.composition_label(no_step) == "SOURCE_EXPLICIT_SEQUENCE"   # the planner's own label is never evidence
+    assert R.composition_label(dict(row, search={})) == "NOT_ESTABLISHED"   # no recorded steps: nothing to judge
+
+
+def test_c16_the_rule_runs_whatever_the_planner_calls_its_plan():
+    """C16 review MAJOR: /24 never self-labels DISCOVERED, so a rule gated on that label would never run."""
+    new = {"id": "q1_aux3", "fn": "centroid", "args": {"point": "G", "polygon": ["S", "A", "B"]}}
+    row = dict(_served([new]), search={"classification": "SOURCE_EXPLICIT_SEQUENCE", "planner_steps": [new]})
+    assert R.composition_label(row) == "DISCOVERED_FUNCTION_COMPOSITION"
+    base = {"id": "f1_day", "fn": "regular_polygon", "args": {"vertices": ["A", "B", "C", "D"]}}   # a definition
+    assert R.composition_label(_served([base])) == "SOURCE_EXPLICIT_SEQUENCE"
 
 
 def _served(steps, described=()):
@@ -322,7 +332,7 @@ def test_c15_the_registered_r1_corpus_and_its_gold_replay_are_locked(tmp_path):
     corpus = CORPUS.parent / "r1-live-pilot-corpus.json"
     R.validate_corpus(json.loads(corpus.read_text(encoding="utf-8")))
     out = R.evaluate(corpus, tmp_path / "dry.jsonl", None)
-    receipt = _rows(CORPUS.parent / "r1-live-pilot-gold-replay.jsonl")
+    receipt = _rows(CORPUS.parent / "r1-live-pilot-gold-replay-r2.jsonl")   # C16: runner records label disagreements
     assert receipt[0]["corpus_sha256"] == R.sha256_file(corpus)
     assert {r["case_id"]: r["composition_label"] for r in out["rows"]} == {
         r["case_id"]: r["composition_label"] for r in receipt if r["type"] == "row"}

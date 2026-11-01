@@ -46,10 +46,27 @@ def test_c16_a_function_known_only_by_its_contract_is_selected_without_dispatch_
 
 
 def test_c16_removing_the_only_producer_refuses_instead_of_guessing(monkeypatch):
+    """The refusal comes from the planner's library pre-check (no Registry function can build the described point),
+    before the effect resolver runs (C16 review MINOR-5)."""
     monkeypatch.delitem(registry.REGISTRY, "orthogonal_projection_line")
     with pytest.raises(registry.TuChoi) as e:
         planner.lap_ke_hoach({"facts": _C1A}, "")
-    assert e.value.code in ("UNSUPPORTED_CAPABILITY", "FACT_INCOMPLETE")
+    assert e.value.code == "UNSUPPORTED_CAPABILITY"
+
+
+def test_c16_a_definition_the_solid_word_carries_is_source_defined_not_a_registered_rule():
+    """C16 review MINOR-2: "hình lập phương" ⇒ its base is a regular polygon. The planner writes that step itself
+    (`<solid>_day`), but it restates the source's own definition — /23 called the plan source-explicit, and so must /24."""
+    from tests.geometry.test_hybrid_section_slice import _area, _section, f
+    q = ["Cho hình lập phương ABCD.A'B'C'D' cạnh 2.", "Xác định thiết diện của hình lập phương cắt bởi mặt phẳng (A'BD).",
+         "Tính diện tích thiết diện của hình lập phương cắt bởi mặt phẳng (A'BD)."]
+    facts = [f("f1", "solid", q[0], solid="ABCD.A'B'C'D'", solid_type="cube"),
+             f("f2", "length", q[0], solid="ABCD.A'B'C'D'", measure="edge", value="2"),
+             _section("f3", q[1], ["A'", "B", "D"], solid="ABCD.A'B'C'D'"),
+             _area(q[2], ["A'", "B", "D"], solid="ABCD.A'B'C'D'")]
+    tel = run_fact_route(" ".join(q), {"facts": facts}).planner["search_telemetry"]
+    assert tel["source_defined_steps"] == ["f1_day"] and not tel["registered_decomposition_steps"]
+    assert tel["classification"] == "SOURCE_EXPLICIT_SEQUENCE"
 
 
 def _honest(tel: dict) -> bool:
