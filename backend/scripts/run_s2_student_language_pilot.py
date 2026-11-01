@@ -328,9 +328,10 @@ _SPEC_OPERANDS = ("segment", "polygon", "point", "plane", "line", "line1", "line
 
 
 def _inputs(kind: str, operands: dict[str, Any]) -> tuple:
-    """Kind + its input operands, each label set sorted, the operands themselves sorted (AC∩BD = BD∩AC)."""
+    """Kind + its input operands, each label set sorted, the operands themselves sorted (AC∩BD = BD∩AC); a scope
+    qualifier `s1::B` is the label `B` (review round 2, MINOR-A)."""
     vals = (v if isinstance(v, list) else [v] for v in operands.values())
-    return kind, tuple(sorted(tuple(sorted(str(x).strip().replace("′", "'") for x in v)) for v in vals))
+    return kind, tuple(sorted(tuple(sorted(str(x).split("::")[-1].strip().replace("′", "'") for x in v)) for v in vals))
 
 
 def _beyond_description(steps: list[dict[str, Any]], raw: Any) -> list[dict[str, Any]]:

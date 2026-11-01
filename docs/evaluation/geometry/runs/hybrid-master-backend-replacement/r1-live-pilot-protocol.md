@@ -64,7 +64,10 @@ same for the boundary values of R1-F (`boundary_value`).
     - no step left: `SOURCE_EXPLICIT_SEQUENCE`;
     - only functions of the registered auxiliary rules (`registry.AUXILIARY_RULES`): `REGISTERED_DECOMPOSITION`;
     - anything else: `DISCOVERED_FUNCTION_COMPOSITION`.
-    - **Limit:** the registered check is by function name, so it can only undercount discovery, never overcount it.
+    - **Limit:** the registered check is by function name, so it can only undercount discovery. The description
+      match can still overcount on a form the review has not found (`s1::` qualifiers are now stripped). So **every
+      row labelled `DISCOVERED_FUNCTION_COMPOSITION` is audited by hand** from its recorded `search.planner_steps`
+      before it is reported.
   - **Other rows:**
     - a wrong serve: `WRONG_SERVED`;
     - an expected refusal or clarification that is met: `CORRECT_REFUSAL`;
@@ -90,8 +93,8 @@ same for the boundary values of R1-F (`boundary_value`).
 | R1-G | both refused at the Source Gate on **gold** (`SOURCE_OBJECT_MISMATCH`): a deterministic false refusal |
 | `described_check` on gold | 4/4 metrics at 1.0 |
 
-A live run is attributed against this ceiling. On these texts the deterministic layers serve the stated reading, so
-the live run measures **the model's reading** of unnamed points. The route's own contribution is bounded: it applies
+A live run is attributed against this ceiling. On R1-A to R1-D the deterministic layers serve the stated reading, so
+the live run there measures **the model's reading** of unnamed points. The route's own contribution is bounded: it applies
 registered rules; it does not search for compositions (§5).
 
 **The same rule applied to the C13 probe** (`r1-composition-relabel.json`): its 9 planner-labelled `DISCOVERED` chains
@@ -119,3 +122,12 @@ and the route served y/13 exactly with z wrong-served". It may also state the co
 5. **MINOR-4, NIT-4, NIT-5:** disclosed in §3. The S-2 output gains only the additive keys `study` and `search`.
 6. **NITs 1–3:** F03 has a boundary value, every check is computed from coordinates, and F03's boundary is stated as
    the `DescribedPointSpec` kind vocabulary.
+
+## Revision B (review round 2: `READY`, before any approval)
+
+- **MINOR-A:** scope-qualified labels (`s1::B`) are matched as their label. Every DISCOVERED row is audited by hand.
+- **NIT-1:** operand order (line–plane, line1/line2) and the no-spec quote case are tested.
+- **NIT-4:** §4 is limited to R1-A–D.
+- **Kept:** the request cap stays at 18, one per case, so no retry is possible. Raising it would change the proposal
+  the Owner reads; the Owner may ask for that.
+- Harness tests: 119. The gold replay was regenerated with the final runner bytes, and its result is unchanged.

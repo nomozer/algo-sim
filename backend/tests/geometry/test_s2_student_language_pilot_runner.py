@@ -301,6 +301,16 @@ def test_c15_only_a_step_beyond_the_description_and_the_registered_rules_is_disc
     assert R.composition_label(_served([moved], [h1])) == "DISCOVERED_FUNCTION_COMPOSITION"
     swapped = dict(real, args={"point": "B", "plane": ["C", "S", "A"], "image": "H"})        # same plane, other order
     assert R.composition_label(_served([swapped], [h1])) == "SOURCE_EXPLICIT_SEQUENCE"
+    # round 2: a scope-qualified label is the same point (MINOR-A); the operands are matched in any order (NIT-1) —
+    # `intersect_line_plane` specs name the plane first in JSON order, the call names the line first
+    qualified = dict(h1, point="s1::B", plane=["s1::S", "s1::A", "s1::C"])
+    assert R.composition_label(_served([real], [qualified])) == "SOURCE_EXPLICIT_SEQUENCE"
+    i1 = {"described_id": "i1", "kind": "intersect_line_plane", "quote": "q", "plane": ["S", "B", "D"], "line": ["A", "M"]}
+    call = {"id": "a", "fn": "intersect_line_plane", "args": {"point": "I", "line": ["A", "M"], "plane": ["S", "B", "D"]}}
+    assert R.composition_label(_served([call], [i1])) == "SOURCE_EXPLICIT_SEQUENCE"
+    ll = {"described_id": "o1", "kind": "intersect_line_line", "quote": "q", "line1": ["A", "C"], "line2": ["B", "D"]}
+    swap = {"id": "a", "fn": "intersect_line_line", "args": {"point": "O", "line1": ["D", "B"], "line2": ["C", "A"]}}
+    assert R.composition_label(_served([swap], [ll])) == "SOURCE_EXPLICIT_SEQUENCE"
     mid = {"described_id": "m1", "kind": "midpoint", "quote": "q", "segment": ["S", "B"]}
     assert R.composition_label(_served([{"id": "a", "fn": "midpoint", "args": {"point": "M", "segment": ["B", "S"]}}],
                                        [mid])) == "SOURCE_EXPLICIT_SEQUENCE"
@@ -346,6 +356,7 @@ def test_c15_the_models_own_described_points_are_checked_against_gold():
     two = deepcopy(gold)                                      # gold has 1 intersection; 2 intersections ≠ the multiset
     two["described_points"].append(dict(two["described_points"][0], described_id="o2"))
     assert R.described_check(gold, two, _R1_TEXT)["kinds_match"] is False
+    assert R.described_check(gold, named, _R1_TEXT)["quotes_verbatim"] is False   # no spec: never vacuously verbatim
 
 
 def test_c15_mock_live_a_model_that_names_the_point_is_an_extraction_failure_never_a_serve(tmp_path, monkeypatch):
