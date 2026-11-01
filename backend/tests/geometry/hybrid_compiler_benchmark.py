@@ -443,6 +443,17 @@ REFUSAL_CLASS = {
     # claude-to-codex-takeover (engine /12): the question calls two coplanar lines skew; taxonomy only.
     "SKEW_CLAIM_CONTRADICTED": "contradictory",    # malformed facts / plan
     "NO_CIRCUMSCRIBED_SPHERE": "contradictory",
+    "NO_INSCRIBED_SPHERE": "contradictory",
+    "COLLINEAR_POINTS": "contradictory",
+    "NON_COPLANAR_POINTS": "contradictory",
+    "PLANE_INTERSECTS_SPHERE_NOT_TANGENT": "contradictory",
+    "PLANE_DOES_NOT_TOUCH_SPHERE": "contradictory",
+    "METRIC_REQUIRES_EUCLIDEAN_CHART": "unsupported",
+    "EXACT_DOMAIN_EXCEEDED": "unsupported",
+    "CURVED_WORDING_UNSUPPORTED": "unsupported",
+    "CURVED_RELATION_UNSUPPORTED": "unsupported",
+    "CURVED_MEASURE_UNDEFINED": "unsupported",
+    "BRIDGE_UNSUPPORTED_CURVED_COMPOSITE": "unsupported",
     "SCHEMA_INVALID": "malformed", "FACT_INCOMPLETE": "malformed", "UNKNOWN_SOLID": "malformed", "NO_SOLID": "malformed",
     "DUPLICATE_CALL_ID": "malformed", "DEPENDENCY_CYCLE": "dependency", "DANGLING_DEPENDENCY": "dependency",
     # system faults (never a correct answer to a geometry question)

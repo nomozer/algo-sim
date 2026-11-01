@@ -100,6 +100,10 @@ def _pham_vi_khoi(named: Any, sid: str | None, solids: dict[str, Any], fid: str)
     if named is None:
         return sid
     resolved = [s for s, solid in solids.items() if named in (s, solid.notation)]
+    if named == "()" and len(resolved) > 1 and sid is not None:
+        if sid not in resolved:
+            raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{fid}: khối trong toán hạng khác phạm vi đã khai", (fid,))
+        return sid
     if len(resolved) != 1:
         if sid is None:     # no scope claim to contradict: the planner refuses the unknown solid (locked UNKNOWN_SOLID)
             return None
@@ -133,6 +137,17 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
     outputs = CONSTRUCTED_OUTPUTS
     new_names = {_ref(prem.args[outputs[prem.kind]]) for prem in p.premises
                  if prem.kind in outputs and outputs[prem.kind] in prem.args}
+    anchored_spheres: dict[str, str] = {}
+    for sid, s in solids.items():
+        host = s.circumscribes or getattr(s, "inscribed_in", None)
+        if host in solids:
+            anchored_spheres[sid] = host
+    for relation in p.relations:
+        if relation.kind in ("circumscribes", "inscribed_in") and relation.solid_a in solids and relation.solid_b in solids:
+            anchored_spheres[relation.solid_a] = relation.solid_b
+    for sph_id, host_id in anchored_spheres.items():
+        if solids[sph_id].center:
+            owners.setdefault(solids[sph_id].canonical_vertex(solids[sph_id].center), set()).add(host_id)
     shared_faces = set()
     for relation in p.relations:
         if (relation.kind == 'shared_faces' and relation.solid_a in solids and relation.solid_b in solids
@@ -141,7 +156,7 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
                 and set(_refs(relation.face_b)) <= set(solids[relation.solid_b].local_vertices())
                 and chuan_hoa(relation.quote) in chuan_hoa(p.problem_text)):
             shared_faces.add(frozenset((relation.solid_a, relation.solid_b)))
-    circumscribed = {frozenset((sid, s.circumscribes)) for sid, s in solids.items() if s.circumscribes in solids}
+    circumscribed = {frozenset((sph_id, host_id)) for sph_id, host_id in anchored_spheres.items()}
     records = []
     for i, prem in enumerate(p.premises, 1):
         fid = f"p{i}"
@@ -176,7 +191,7 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
         return set.intersection(*sets) if sets else set()
 
     # Dependency order may differ from source order; a scope never manufactures an operand's ownership.
-    for _ in range(len(records) + 1):
+    for _ in range(len(records) + len(p.relations) + 1):
         changed = False
         for prem, _fid, sid, refs in records:
             output = outputs.get(prem.kind)
@@ -194,6 +209,22 @@ def _kiem_pham_vi_tien_de(p: TypedFactNextPayload, solids: dict[str, Any]) -> li
             before = set(owners.get(label, set()))
             owners.setdefault(label, set()).update(candidates)
             changed |= before != owners[label]
+        for rel in p.relations:
+            if (
+                rel.kind == "tangent_to"
+                and getattr(rel, "contact_ref", None)
+                and rel.solid_b in solids
+                and all(rel.solid_b in ref_owners(x, rel.solid_b) for x in rel.entity_b)
+            ):
+                c_ns, _ = parse_qualified_ref(rel.contact_ref)
+                if c_ns is not None and c_ns != rel.solid_b:
+                    continue
+                c_lbl = identity(rel.contact_ref, rel.solid_b)
+                existing = owners.get(c_lbl)
+                if not existing or rel.solid_b in existing:
+                    before = set(owners.get(c_lbl, set()))
+                    owners.setdefault(c_lbl, set()).update({x for x in (rel.solid_a, rel.solid_b) if x in solids})
+                    changed |= before != owners[c_lbl]
         if not changed:
             break
     checked = []
@@ -488,7 +519,20 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
     solids = {s.solid_id: s for s in p.solids}
     scoped = _kiem_pham_vi_tien_de(p, solids)  # semantic ownership precedes every capability refusal/fallback
     curved = {s.solid_id for s in p.solids if s.solid_type not in ("pyramid", "prism")}
-    if curved and (not v2 or p.relations):   # `/1` stays Adapter /3's; curved relations are not on the planner yet
+    poly_solids = [x for x in solids.values() if x.solid_type in ("pyramid", "prism")]
+    poly_ids = {x.solid_id for x in poly_solids}
+    sphere_anchor: dict[str, tuple[str, str, list[str]]] = {}
+    for s in p.solids:
+        if s.circumscribes is not None:
+            sphere_anchor[s.solid_id] = ("circumscribes", s.circumscribes, [])
+        elif getattr(s, "inscribed_in", None) is not None:
+            sphere_anchor[s.solid_id] = ("inscribed_in", s.inscribed_in, [])
+    for r in p.relations:
+        if r.kind in ("circumscribes", "inscribed_in") and r.solid_a and r.solid_b:
+            prev_q = sphere_anchor[r.solid_a][2] if r.solid_a in sphere_anchor else []
+            extra_q = [*prev_q, *([r.quote] if r.quote != solids[r.solid_a].quote and r.quote not in prev_q else [])]
+            sphere_anchor[r.solid_a] = (r.kind, r.solid_b, extra_q)
+    if curved and (not v2 or (not poly_ids and any(r.kind not in ("circumscribes", "inscribed_in") for r in p.relations))):
         raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{sorted(curved)}: thiết diện hay quan hệ của khối tròn xoay chưa có trên "
                      "planner", tuple(sorted(curved)))
     from .registry import CIRCUMSCRIBED_NAME_PATTERN, CURVED_NAME_PATTERN
@@ -498,24 +542,47 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         s.solid_id for s in p.solids
         if s.solid_id in curved
         and not _re_cong.fullmatch(
-            CIRCUMSCRIBED_NAME_PATTERN if s.circumscribes is not None else CURVED_NAME_PATTERN,
+            CIRCUMSCRIBED_NAME_PATTERN if s.solid_id in sphere_anchor else CURVED_NAME_PATTERN,
             s.notation,
         )
     ):
         raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{bad}: ký hiệu khối tròn xoay này chưa diễn đạt được trên planner",
                      tuple(bad))              # a capability gap, not an extraction error (Wave 3 W3-N45/N46 reason lock)
-    is_circumscribed = (
+    from ..geometry import curved as CV
+
+    axial_hosts = [
+        s.solid_id for s in p.solids
+        if s.solid_type in CV.LOAI_TU_NGUON and CV.KHOI_CONG[CV.LOAI_TU_NGUON[s.solid_type]].co_truc
+    ]
+    is_standalone_curved = v2 and len(p.solids) == 1 and len(curved) == 1 and not sphere_anchor
+    is_poly_sphere_composite = (
         v2
-        and len(p.solids) == 2
-        and len(curved) == 1
-        and solids[next(iter(curved))].circumscribes is not None
+        and bool(poly_ids)
+        and bool(curved)
+        and all(cid in sphere_anchor and sphere_anchor[cid][1] in poly_ids for cid in curved)
+        and all(sec.target_solid_id in poly_ids for sec in p.derived_sections)
+    )
+    is_axial_sphere_composite = (
+        v2
+        and not poly_ids
+        and len(axial_hosts) == 1
+        and len(curved) >= 2
+        and all(cid == axial_hosts[0] or (cid in sphere_anchor and sphere_anchor[cid][1] == axial_hosts[0]) for cid in curved)
         and not p.derived_sections
         and not any(g.kind == "construct_derived_solid" for g in p.simulation_goals)
     )
-    if curved and len(p.solids) > 1 and not is_circumscribed:  # curved slice: standalone curved OR certified circumscribed sphere
+    if curved and not (is_standalone_curved or is_poly_sphere_composite or is_axial_sphere_composite):
         raise TuChoi("BRIDGE_UNSUPPORTED_CURVED_COMPOSITE", f"{sorted(curved)}: khối tròn xoay cùng khối khác trong một bài "
                      "chưa có chứng chỉ quan hệ trên planner", tuple(sorted(curved)))
-    poly_solids = [x for x in solids.values() if x.solid_type in ("pyramid", "prism")]
+    unnamed_curved = [s.solid_id for s in p.solids if s.solid_id in curved and s.notation == "()"]
+    curved_sym: dict[str, str] = {}
+    for s in p.solids:
+        if s.solid_id in curved:
+            if len(unnamed_curved) > 1 and s.notation == "()" and s.solid_id in sphere_anchor:
+                rk, hid, _eq = sphere_anchor[s.solid_id]
+                curved_sym[s.solid_id] = f"({'out' if rk == 'circumscribes' else 'in'}:{solids[hid].notation})"
+            else:
+                curved_sym[s.solid_id] = s.notation
     for s in p.solids:
         if s.solid_type == "cone_frustum":
             raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{s.solid_id}: khối {s.solid_type} chưa có trên planner", (s.solid_id,))
@@ -525,14 +592,32 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         if s.solid_id in curved:
             curved_info = {"kind": s.solid_type, "center": s.center, "top": s.apex_or_top, "rim": s.rim_point,
                            "radius": s.radius, "height": s.height}
-            if s.circumscribes is not None:
-                curved_info["circumscribes"] = solids[s.circumscribes].notation
-            facts.append({"id": s.solid_id, "kind": "solid", "role": "premise", "quotes": [s.quote], "solid": s.notation,
-                          "curved": curved_info})
+            s_quotes = [s.quote]
+            if s.solid_id in sphere_anchor:
+                rel_kind, host_id, extra_q = sphere_anchor[s.solid_id]
+                curved_info[rel_kind] = curved_sym.get(host_id, solids[host_id].notation)
+                s_quotes.extend(extra_q)
+            facts.append({"id": s.solid_id, "kind": "solid", "role": "premise", "quotes": s_quotes,
+                          "solid": curved_sym[s.solid_id], "curved": curved_info})
             continue
         facts.append({"id": s.solid_id, "kind": "solid", "role": "premise", "quotes": [s.quote], "solid": s.notation,
                       "solid_type": s.solid_type})
     theo_ten = {s.notation: f for s, f in zip(p.solids, facts)}
+    used_fact_ids = (
+        {f["id"] for f in facts}
+        | {sec.section_id for sec in p.derived_sections}
+        | {g.goal_id for g in p.simulation_goals}
+        | {g.goal_id for g in p.math_goals}
+    )
+
+    def _alloc_fact_id(preferred: str, prefix: str) -> str:
+        cand = preferred if preferred not in used_fact_ids else f"{prefix}_{preferred}"
+        idx = 2
+        while cand in used_fact_ids:
+            cand = f"{prefix}_{preferred}_{idx}"
+            idx += 1
+        used_fact_ids.add(cand)
+        return cand
 
     for i, prem in enumerate(p.premises, 1):
         a, k, fid, q = prem.args, prem.kind, f"p{i}", [prem.quote]
@@ -562,7 +647,8 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
             sol = solids.get(sid or "")
             if sol is None and sid is None and len(poly_solids) == 1:
                 sol = poly_solids[0]
-            f = {"kind": "length", "measure": "height", "solid": sol.notation if sol else sid,
+            f = {"kind": "length", "measure": "height",
+                 "solid": curved_sym.get(sol.solid_id, sol.notation) if sol else sid,
                  "value": str(a["value"])}
         elif k in ("equal_length", "equal_segments"):
             f = {"kind": "equal_lengths", "points_a": _refs(a["segment_a"]), "points_b": _refs(a["segment_b"])}
@@ -598,23 +684,39 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
                  "points_a": _refs(a["line"]), "points_b": _refs(a["plane"])}
         else:
             raise TuChoi("BRIDGE_UNSUPPORTED_PREMISE", f"{fid}: giả thiết {k!r} chưa có ánh xạ sang TypedFact", (fid,))
-        facts.append({"id": fid, "role": "premise", "quotes": q, **f})
+        facts.append({"id": _alloc_fact_id(fid, "prem"), "role": "premise", "quotes": q, **f})
 
     for r in p.relations:
         if r.kind == "coordinate_frame" and r.frame_id == "root":
             continue                                       # one root chart is what TypedFact always uses
         if r.kind == "perpendicular":
-            facts.append({"id": r.relation_id, "kind": "perpendicular", "role": "premise", "quotes": [r.quote],
+            facts.append({"id": _alloc_fact_id(r.relation_id, "rel"), "kind": "perpendicular", "role": "premise", "quotes": [r.quote],
                           "points_a": _refs(r.entity_a), "points_b": _refs(r.entity_b)})
             continue
         if r.kind == "shared_vertices" and all(_ref(x) == _ref(y) for x, y in r.pairs):
             continue                                       # identity bindings: shared labels ARE the shared points
         if r.kind == "shared_faces" and _refs(r.face_a) == _refs(r.face_b):
             continue
+        if r.kind in ("circumscribes", "inscribed_in"):
+            continue
+        if r.kind == "tangent_to":
+            facts.append({
+                "id": _alloc_fact_id(r.relation_id, "rel"),
+                "kind": "projection",
+                "role": "premise",
+                "quotes": [r.quote],
+                "solid": curved_sym.get(r.solid_a, solids[r.solid_a].notation),
+                "curved_part": {
+                    "role": "tangent_plane",
+                    "plane": _refs(r.entity_b),
+                    "point": _ref(r.contact_ref) if getattr(r, "contact_ref", None) is not None else None,
+                },
+            })
+            continue
         raise TuChoi("BRIDGE_UNSUPPORTED_RELATION", f"{r.relation_id}: quan hệ {r.kind} chưa diễn đạt được trong TypedFact",
                      (r.relation_id,))
 
-    if curved and not is_circumscribed:       # curved sections, the small cone and their goals (registry /24)
+    if is_standalone_curved:       # curved sections, the small cone and their goals (registry /24)
         return _ket_cau_noi(p, facts + _phan_cong(p, solids), version, scoped)
     asked = {}
     for g in p.simulation_goals:
@@ -658,10 +760,11 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif g.kind == "residual_volume":
             facts.append({**q, "quantity": "residual_volume",
                           "solid_refs": [solid_fact(g.parent_solid_id, g.goal_id), solid_fact(g.cut_solid_id, g.goal_id)]})
-        elif is_circumscribed and g.kind == "measurement" and measurement_scope(p, g) in curved and g.goal_type in (
+        elif (is_poly_sphere_composite or is_axial_sphere_composite) and g.kind == "measurement" and measurement_scope(p, g) in curved and g.goal_type in (
             "volume", "area", "lateral_area", "radius"
         ):
-            facts.append({**q, "quantity": g.goal_type, "solid": solids[measurement_scope(p, g)].notation})
+            msid = measurement_scope(p, g)
+            facts.append({**q, "quantity": g.goal_type, "solid": curved_sym.get(msid, solids[msid].notation)})
         elif g.goal_type == "volume" and measurement_scope(p, g) in solids:
             # F6: a notation / canonical alias names the same solid (validated by the schema policy, S2/S3)
             facts.append({**q, "quantity": "volume",

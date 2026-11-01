@@ -593,6 +593,67 @@ def test_circumscribed_sphere_scope_violations_refuse():
         assert exc.value.code == code
 
 
+# ── V2 inscribed_in + GeometricRelationSpecV2 scope closure (S1 + S3 + S5 + S7 + S8) ────────────────────────────
+def _inscribed_cube_control() -> dict:
+    q1 = "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 2."
+    q2 = "Gọi (S) là mặt cầu tâm I nội tiếp hình lập phương ABCD.A'B'C'D'."
+    q3 = "Mặt cầu (S) tiếp xúc với mặt phẳng (ABCD) tại H."
+    q4 = "Tính bán kính mặt cầu (S)."
+    txt = f"{q1} {q2} {q3} {q4}"
+    return {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": txt,
+        "solids": [
+            {"solid_id": "cube", "solid_type": "prism", "notation": "ABCD.A'B'C'D'", "quote": q1},
+            {"solid_id": "sph", "solid_type": "sphere", "center": "I", "inscribed_in": "cube", "notation": "(S)", "quote": q2},
+        ],
+        "premises": [
+            {"kind": "right_prism", "solid_id": "cube", "args": {"base": ["A", "B", "C", "D"], "top": ["A'", "B'", "C'", "D'"]}, "quote": q1},
+            {"kind": "regular_polygon", "solid_id": "cube", "args": {"vertices": ["A", "B", "C", "D"], "side": "2"}, "quote": q1},
+            {"kind": "segment_length", "solid_id": "cube", "args": {"segment": ["A", "A'"], "value": "2"}, "quote": q1},
+        ],
+        "relations": [
+            {"relation_id": "r_in", "kind": "inscribed_in", "solid_a": "sph", "solid_b": "cube", "quote": q2},
+            {"relation_id": "r_tan", "kind": "tangent_to", "solid_a": "sph", "solid_b": "cube", "entity_b": ["A", "B", "C", "D"], "contact_ref": "H", "quote": q3},
+        ],
+        "derived_sections": [],
+        "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "cube", "quote": q1}],
+        "math_goals": [{"goal_id": "mg1", "kind": "measurement", "goal_type": "radius", "target": {"solid": "(S)"}, "quote": q4}],
+    }
+
+
+def test_inscribed_and_v2_relation_scope_controls_serve():
+    r = run_typed_fact_next_v2_route(_inscribed_cube_control())
+    assert r.status == "SERVED" and r.kernel_check is True, (r.code, r.reason)
+
+
+def test_inscribed_and_v2_relation_scope_violations_refuse():
+    for mut, code in (
+        (lambda p: p["solids"][1].update({"inscribed_in": "missing"}), "UNKNOWN_SOLID_ID"),
+        (lambda p: p["solids"][1].update({"inscribed_in": "sph"}), "SOURCE_OBJECT_MISMATCH"),
+        (lambda p: p["solids"][1].update({"circumscribes": "cube"}), "SOURCE_OBJECT_MISMATCH"),
+        (lambda p: p["relations"][0].update({"solid_a": "missing"}), "UNKNOWN_SOLID_ID"),
+        (lambda p: p["relations"][0].update({"solid_a": "cube", "solid_b": "sph"}), "SOURCE_OBJECT_MISMATCH"),
+        (lambda p: p["relations"][0].update({"kind": "circumscribes"}), "SOURCE_OBJECT_MISMATCH"),
+        (lambda p: p["relations"][1].update({"solid_b": "sph"}), "SOURCE_OBJECT_MISMATCH"),
+        (lambda p: p["relations"][1].update({"contact_ref": "sph::H"}), "SOURCE_OBJECT_MISMATCH"),
+    ):
+        p = _inscribed_cube_control()
+        mut(p)
+        with pytest.raises(TypedFactNextValidationError) as exc:
+            T.parse_typed_fact_next_v2(p)
+        assert exc.value.code == code
+
+    # Foreign vertex from another solid on entity_b or contact_ref must refuse SOURCE_OBJECT_MISMATCH (S7/S8)
+    for field, val in (("entity_b", ["T", "B", "C"]), ("contact_ref", "T")):
+        p = _inscribed_cube_control()
+        q_other = "Cho hình chóp T.ABCD."
+        p["problem_text"] += f" {q_other}"
+        p["solids"].append({"solid_id": "pyr2", "solid_type": "pyramid", "notation": "T.ABCD", "quote": q_other})
+        p["relations"][1][field] = val
+        assert outcome(run_typed_fact_next_v2_route(p)) == ("REFUSED", "SOURCE_OBJECT_MISMATCH")
+
+
 # ── coverage gate: every model field classified; every scope field mapped to rules, tests and product code ───────
 def test_census_inventory_complete():
     fields = C.field_paths(); inv = INVENTORY['fields']

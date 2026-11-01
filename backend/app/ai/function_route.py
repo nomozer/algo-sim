@@ -398,7 +398,7 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
             aux_ids = ({ir_name(p) for d in two_line for p in d['labels']}
                        | {ir_name(d['label']) for d in auxiliary if d.get('effect_binding') and d.get('fresh')}
                        | {ir_name(p) for d in auxiliary if d.get('rule') == 'effect-chain' for p in d['labels']}
-                       | {o['id'] for o in state['scene']['objects'] if o['id'].startswith(('td_cau_', 'tam_cau_'))})
+                       | {o['id'] for o in state['scene']['objects'] if o['id'].startswith(('td_cau_', 'tam_cau_', 'tx_cau_', 'tam_truc_'))})
             vai = {o['id']: o.get('role') for o in state['scene']['objects'] if (o.get('producer') or '').startswith('construct_point.')}
             for obj in state['scene']['objects']:
                 if obj['id'] in aux_ids:
@@ -450,7 +450,7 @@ def run_fact_route(problem_text: str, facts: Any) -> KetQuaTuyen:
     doc = tuple(q for g in (*k.goals, *k.negated) if g.get("call") for q in g["call"]["source"]["quotes"])
     r = run_function_route(problem_text, {"calls": k.calls, "named_planes": k.named_planes}, tuple(k.auxiliary), doc)
     r.planner = {"version": PLANNER_VERSION, "calls": k.calls, "trace": k.trace, "auxiliary": k.auxiliary,
-                 "goal_checks": {}, "negated_checks": {}}
+                 "composition_classification": k.composition_classification, "goal_checks": {}, "negated_checks": {}}
     if r.status != "SERVED":
         if r.code == "UNDERDETERMINED_POINT" and (khong := _hinh_khong_duy_nhat(k, r.details.get("points") or [])):
             return KetQuaTuyen("REFUSED", "FIGURE_NOT_UNIQUE", khong, r.failed_calls, trace=r.trace,

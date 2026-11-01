@@ -337,6 +337,10 @@ IDENTITY_DELTAS = (
      "versions": {"registry_version": ("geometry-functions/24", "geometry-functions/25"),
                   "planner_version": ("geometry-fact-planner/20", "geometry-fact-planner/21"),
                   "engine_version": ("geometry-function-engine/16", "geometry-function-engine/17")}},
+    {"run": "hybrid-master-backend-replacement",           # composite inscribed sphere, tangency & axial-sphere relations (registry /26, planner /22, engine /18)
+     "versions": {"registry_version": ("geometry-functions/25", "geometry-functions/26"),
+                  "planner_version": ("geometry-fact-planner/21", "geometry-fact-planner/22"),
+                  "engine_version": ("geometry-function-engine/17", "geometry-function-engine/18")}},
 )
 
 

@@ -152,6 +152,14 @@ KIND_ALLOWED_FIELDS = {'math_goal': {'volume_ratio': ['denominator_solid_id', 'g
                                    'relation_id',
                                    'section_id',
                                    'solid_id']}}
+KIND_ALLOWED_FIELDS_V2 = {
+    'relation_v2': {
+        **KIND_ALLOWED_FIELDS['relation'],
+        'circumscribes': ['kind', 'quote', 'relation_id', 'solid_a', 'solid_b'],
+        'inscribed_in': ['kind', 'quote', 'relation_id', 'solid_a', 'solid_b'],
+        'tangent_to': ['contact_ref', 'entity_b', 'kind', 'quote', 'relation_id', 'solid_a', 'solid_b'],
+    }
+}
 GOAL_OPERAND_SHAPES = {'point': 'ref',
  'segment': 'refs2=',
  'line': 'refs2=',
@@ -178,7 +186,8 @@ GOAL_TARGET_ALTERNATIVES = {'distance': [['segment'],
 
 _KIND_GROUPS = {"MathGoalSpec": ("math_goal", "INVALID_MATH_GOAL"),
                 "SimulationGoalSpec": ("simulation_goal", "INVALID_SIMULATION_GOAL"),
-                "GeometricRelationSpec": ("relation", "INVALID_RELATION_SPEC")}
+                "GeometricRelationSpec": ("relation", "INVALID_RELATION_SPEC"),
+                "GeometricRelationSpecV2": ("relation_v2", "INVALID_RELATION_SPEC")}
 
 
 def _validate_goal_target(goal) -> None:
@@ -219,8 +228,9 @@ class ClosedNextModel(BaseModel):
     @classmethod
     def _closed_kind_fields(cls, value):
         policy = _KIND_GROUPS.get(cls.__name__)  # S4: one per-kind field applicability authority
-        if policy and isinstance(value, dict) and value.get("kind") in KIND_ALLOWED_FIELDS[policy[0]]:
-            unexpected = set(value) - set(KIND_ALLOWED_FIELDS[policy[0]][value["kind"]])
+        table = KIND_ALLOWED_FIELDS_V2 if policy and policy[0] == "relation_v2" else KIND_ALLOWED_FIELDS
+        if policy and isinstance(value, dict) and value.get("kind") in table[policy[0]]:
+            unexpected = set(value) - set(table[policy[0]][value["kind"]])
             if unexpected:
                 raise TypedFactNextValidationError(policy[1], f"{value['kind']}: inapplicable fields {sorted(unexpected)}")
         return value
@@ -237,6 +247,7 @@ class SolidSpec(ClosedNextModel):
     radius: NonEmptyText | None = None
     height: NonEmptyText | None = None
     circumscribes: IdentifierStr | None = None
+    inscribed_in: IdentifierStr | None = None
     notation: NonEmptyText
     quote: NonEmptyText
     vertex_bindings: dict[Label, Label] = Field(default_factory=dict)
@@ -259,7 +270,12 @@ class SolidSpec(ClosedNextModel):
                     "INVALID_SOLID_NOTATION",
                     f"Prism notation {self.notation!r} must have two disjoint congruent-length base cycles of >=3 vertices.",
                 )
-        if self.circumscribes is not None:
+        if self.circumscribes is not None and self.inscribed_in is not None:
+            raise TypedFactNextValidationError(
+                "SOURCE_OBJECT_MISMATCH",
+                f"Solid {self.solid_id!r} cannot simultaneously declare circumscribes and inscribed_in.",
+            )
+        if (rel_host := self.circumscribes or self.inscribed_in) is not None:
             from app.simulation.geometry import curved as CV
 
             loai = CV.LOAI_TU_NGUON.get(self.solid_type)
@@ -268,7 +284,7 @@ class SolidSpec(ClosedNextModel):
             ):
                 raise TypedFactNextValidationError(
                     "SOURCE_OBJECT_MISMATCH",
-                    f"Solid {self.solid_id!r} with circumscribes={self.circumscribes!r} must be an axisless curved solid derived solely from the polyhedron.",
+                    f"Solid {self.solid_id!r} anchored to {rel_host!r} must be an axisless curved solid derived solely from the host solid.",
                 )
         local_set = set(self.local_vertices())
         for local_v in self.vertex_bindings:
@@ -635,6 +651,44 @@ class GeometricRelationSpec(ClosedNextModel):
         return self
 
 
+class GeometricRelationSpecV2(GeometricRelationSpec):
+    """`typed-fact-next/2` explicit inter-object geometric relation (`circumscribes`, `inscribed_in`, `tangent_to`)."""
+
+    kind: Literal[
+        "containment",
+        "shared_vertices",
+        "shared_faces",
+        "parallel",
+        "perpendicular",
+        "section_membership",
+        "coordinate_frame",
+        "circumscribes",
+        "inscribed_in",
+        "tangent_to",
+    ]
+    contact_ref: NonEmptyText | None = None
+
+    @model_validator(mode="after")
+    def _validate_v2_relation_fields(self) -> "GeometricRelationSpecV2":
+        if self.kind in ("circumscribes", "inscribed_in"):
+            if not self.solid_a or not self.solid_b:
+                raise TypedFactNextValidationError(
+                    "INVALID_RELATION_SPEC",
+                    f"Relation {self.relation_id!r} ({self.kind!r}) requires 'solid_a' and 'solid_b'.",
+                )
+        elif self.kind == "tangent_to":
+            if not self.solid_a or not self.solid_b or len(self.entity_b) < 3:
+                raise TypedFactNextValidationError(
+                    "INVALID_RELATION_SPEC",
+                    f"Relation {self.relation_id!r} ('tangent_to') requires 'solid_a', 'solid_b', and >=3-point 'entity_b'.",
+                )
+            for p in self.entity_b:
+                parse_qualified_ref(p)
+            if self.contact_ref is not None:
+                parse_qualified_ref(self.contact_ref)
+        return self
+
+
 class SimulationGoalSpec(ClosedNextModel):
     """Primary simulation goal driving Scene3D construction, highlighting, and step sequencing."""
 
@@ -793,6 +847,15 @@ class TypedFactNextPayload(ClosedNextModel):
                 )
             section_ids.add(sec.section_id)
 
+        relation_ids: set[str] = set()
+        for rel in self.relations:
+            if rel.relation_id in relation_ids:
+                raise TypedFactNextValidationError(
+                    "INVALID_RELATION_SPEC",
+                    f"Duplicate relation_id {rel.relation_id!r}.",
+                )
+            relation_ids.add(rel.relation_id)
+
         sim_goal_ids: set[str] = set()
         derived_solid_ids: set[str] = set()
         for g in self.simulation_goals:
@@ -938,11 +1001,17 @@ def _validate_goal_identities(p: "TypedFactNextPayload") -> None:
 
 def constructed_names(p: "TypedFactNextPayload") -> set[str]:
     """Labels the payload itself introduces as constructed points (premise outputs, named section points)."""
+    root_labels = {v for s in p.solids for v in (*s.local_vertices(), *map(s.canonical_vertex, s.local_vertices()))}
     names = {parse_qualified_ref(prem.args[out])[1] for prem in p.premises
              if (out := CONSTRUCTED_OUTPUTS.get(prem.kind)) and isinstance(prem.args.get(out), str)}
     for sec in p.derived_sections:
         names.update(getattr(sec, "named_intersections", {}).values())
         names.update(s.point for s in getattr(sec, "stated_intersections", ()) if s.point)
+    for r in p.relations:
+        if getattr(r, "contact_ref", None):
+            lbl = parse_qualified_ref(r.contact_ref)[1]
+            if lbl not in root_labels:
+                names.add(lbl)
     return names
 
 
@@ -976,7 +1045,8 @@ def scope_records(p: "TypedFactNextPayload") -> list[tuple[str, str, str | None,
         recs.append(("relation", r.relation_id, r.solid_a or r.solid_id,
                      [*r.face_a, *r.entity_a, *(a for a, _b in r.pairs)], r.kind == "shared_faces"))
         recs.append(("relation", r.relation_id, r.solid_b or r.solid_id,
-                     [*r.face_b, *r.entity_b, *(b for _a, b in r.pairs)], r.kind == "shared_faces"))
+                     [*r.face_b, *r.entity_b, *(b for _a, b in r.pairs),
+                      *([r.contact_ref] if getattr(r, "contact_ref", None) else ())], r.kind == "shared_faces"))
         recs.append(("relation", r.relation_id, single,
                      [*(_chain_refs(r.container_ref) if r.container_ref and not whole else ()),
                       *([r.member_ref] if r.member_ref else ()), *r.member_refs, *r.anchor_refs], r.kind == "coordinate_frame"))
@@ -1027,6 +1097,8 @@ def _validate_declared_solid_scope(p: "TypedFactNextPayload", known: set[str]) -
             return None
         hits = [s for s, spec in solids.items() if name in _solid_aliases(spec)] or [n for n in known if n == name] \
             if isinstance(name, str) else []
+        if name == "()" and len(hits) > 1 and scope is not None:
+            return scope if scope in hits else hits[0]
         if len(hits) != 1:
             refuse("UNKNOWN_SOLID_ID" if scope is not None else "UNKNOWN_SOLID", where,
                    f"khối {name!r} không xác định duy nhất")
@@ -1050,12 +1122,20 @@ def _validate_declared_solid_scope(p: "TypedFactNextPayload", known: set[str]) -
     def family(scope: str | None) -> set[str]:
         return {scope, parents[scope]} if scope in parents else {scope}
 
+    from ..geometry import curved as CV
+
+    axial_curved_types = tuple(k for k, v in CV.LOAI_TU_NGUON.items() if CV.KHOI_CONG[v].co_truc)
+    axisless_curved_types = tuple(k for k, v in CV.LOAI_TU_NGUON.items() if not CV.KHOI_CONG[v].co_truc)
+    host_types = ("pyramid", "prism", *axial_curved_types) if isinstance(p, TypedFactNextPayloadV2) else ("pyramid", "prism")
+    sphere_bindings: dict[str, tuple[str, str]] = {}
     for s in p.solids:
-        if s.circumscribes is not None:
-            declared(s.circumscribes, s.solid_id)                                           # S1
-            if s.circumscribes == s.solid_id or solids[s.circumscribes].solid_type not in ("pyramid", "prism"):  # S3
-                refuse("SOURCE_OBJECT_MISMATCH", s.solid_id,
-                       f"khối ngoại tiếp {s.circumscribes!r} phải là khối đa diện đã khai báo khác {s.solid_id!r}")
+        for rel_kind, host_sid in (("circumscribes", s.circumscribes), ("inscribed_in", s.inscribed_in)):
+            if host_sid is not None:
+                declared(host_sid, s.solid_id)                                                  # S1
+                if host_sid == s.solid_id or solids[host_sid].solid_type not in host_types:     # S3
+                    refuse("SOURCE_OBJECT_MISMATCH", s.solid_id,
+                           f"khối neo {host_sid!r} ({rel_kind}) phải là khối chủ hợp lệ đã khai báo khác {s.solid_id!r}")
+                sphere_bindings[s.solid_id] = (rel_kind, host_sid)
     for i, prem in enumerate(p.premises, 1):
         where = f"p{i}"
         scope = declared(prem.solid_id, where)
@@ -1070,6 +1150,40 @@ def _validate_declared_solid_scope(p: "TypedFactNextPayload", known: set[str]) -
             one_solid(r.relation_id, r.solid_id, section_of(r.section_id, r.relation_id))
         if r.container_ref in known:                                                       # S3: whole-solid container
             one_solid(r.relation_id, r.solid_id, r.container_ref)
+        if r.kind in ("circumscribes", "inscribed_in"):
+            sph_spec = solids.get(r.solid_a or "")
+            host_spec = solids.get(r.solid_b or "")
+            if (
+                sph_spec is None
+                or host_spec is None
+                or r.solid_a == r.solid_b
+                or sph_spec.solid_type not in axisless_curved_types
+                or any(x is not None for x in (sph_spec.apex_or_top, sph_spec.rim_point, sph_spec.radius, sph_spec.height))
+                or host_spec.solid_type not in host_types
+            ):                                                                             # S3
+                refuse("SOURCE_OBJECT_MISMATCH", r.relation_id,
+                       f"quan hệ {r.kind!r} đòi hỏi solid_a là mặt cầu suy ra và solid_b là khối chủ hợp lệ")
+            if r.solid_a in sphere_bindings and sphere_bindings[r.solid_a] != (r.kind, r.solid_b):
+                refuse("SOURCE_OBJECT_MISMATCH", r.relation_id,
+                       f"mặt cầu {r.solid_a!r} có khai báo quan hệ mâu thuẫn {sphere_bindings[r.solid_a]} vs {(r.kind, r.solid_b)}")
+            sphere_bindings[r.solid_a] = (r.kind, r.solid_b)
+        elif r.kind == "tangent_to":
+            sph_spec = solids.get(r.solid_a or "")
+            host_spec = solids.get(r.solid_b or "")
+            if (
+                sph_spec is None
+                or host_spec is None
+                or r.solid_a == r.solid_b
+                or sph_spec.solid_type not in axisless_curved_types
+                or host_spec.solid_type not in ("pyramid", "prism")
+            ):                                                                             # S3
+                refuse("SOURCE_OBJECT_MISMATCH", r.relation_id,
+                       "quan hệ 'tangent_to' đòi hỏi solid_a là mặt cầu và solid_b là khối đa diện")
+    for sph_id, (_rk, host_id) in sphere_bindings.items():
+        ctr = solids[sph_id].center
+        if ctr is not None:
+            for v in {ctr, solids[sph_id].canonical_vertex(ctr)}:
+                owners_of.setdefault(v, set()).add(host_id)
     for g in p.simulation_goals:
         declared(g.parent_solid_id, g.goal_id)
         if g.target_section_id in sections:
@@ -1117,10 +1231,11 @@ def _validate_declared_solid_scope(p: "TypedFactNextPayload", known: set[str]) -
 
 class TypedFactNextPayloadV2(TypedFactNextPayload):
     """`typed-fact-next/2` (run `hybrid-contract-v2`, owner D1): `/1` with the section split into stated intersections
-    and an optional declared boundary. Everything else keeps the `/1` shape and cross-reference checks."""
+    and an optional declared boundary, plus `/2` composite geometric relations (`GeometricRelationSpecV2`)."""
 
     _VERSION: ClassVar[str] = TYPED_FACT_NEXT_V2_SCHEMA_VERSION
     derived_sections: tuple[DerivedPlaneSectionSpecV2, ...] = ()
+    relations: tuple[GeometricRelationSpecV2, ...] = ()
 
 
 def parse_typed_fact_next(raw: dict[str, Any] | TypedFactNextPayload) -> TypedFactNextPayload:

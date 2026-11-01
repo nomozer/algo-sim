@@ -48,7 +48,9 @@ from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, rende
 #: /18 (run `hybrid-v2-w3-f1-cross-sentence-plane-grounding`): propagate declared `plane_name` on all derived plane relations
 #: (`MAT_SONG_SONG`, `MAT_VUONG_DUONG`, `MAT_HAI_DUONG`) and distinguish unasked section-area goals (`NOT_ASKED_IN_SOURCE`).
 #: /21 (run `hybrid-master-backend-replacement`): a curved section carries the named point on the axis (`through_point`).
-PLANNER_VERSION = "geometry-fact-planner/21"
+#: /22 (run `hybrid-master-backend-replacement`): composite geometry relations (`inscribed_in`, `sphere_tangent_plane`,
+#: multi-sphere & axial-host composites) and explicit `composition_classification`.
+PLANNER_VERSION = "geometry-fact-planner/22"
 PlaneName = Annotated[
     str,
     BeforeValidator(lambda v: chuan_hoa(v) if isinstance(v, str) else v),
@@ -160,6 +162,7 @@ class KeHoach:
     # checks every label (`kiem_mat_viet`), measures through a non-collinear triple of them (`chon_ba_mat`) and shows the
     # full name — the call keeps the registry's three-label contract, nothing is dropped unchecked (review I-1).
     named_planes: list[dict[str, Any]] = field(default_factory=list)
+    composition_classification: str = "SCHEMA_TRANSLATION"
     resolver: Any = field(default=None, repr=False)  # ephemeral view of existing calls; no geometry/semantic state
 
 
@@ -249,9 +252,13 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
             if (f.kind != "solid" or f.solid_type is not None or f.curved.get("kind") not in LOAI_TU_NGUON):
                 raise TuChoi("SCHEMA_INVALID", f"{f.id}: khối tròn xoay cần loại (trụ, nón, cầu)", (f.id,))
             required = ("solid",)
-        if f.curved_part is not None:                   # a part of THE solid of revolution: owner + its own fields
-            if f.curved_part.get("role") not in ("section", "derived", "ask") or f.points or f.solid_type:
+        if f.curved_part is not None:                   # a part / relation of a solid of revolution: owner + its own fields
+            if f.curved_part.get("role") not in ("section", "derived", "ask", "tangent_plane") or f.points or f.solid_type:
                 raise TuChoi("SCHEMA_INVALID", f"{f.id}: phần của khối tròn xoay không hợp lệ", (f.id,))
+            if f.curved_part.get("role") == "tangent_plane":
+                pl = f.curved_part.get("plane") or []
+                if len(pl) < 3 or len(set(pl)) != len(pl):
+                    raise TuChoi("FACT_INCOMPLETE", f"{f.id}: mặt tiếp xúc cần ít nhất ba nhãn phân biệt", (f.id,))
             required = ("solid",)
         if f.kind == "point_def" and f.point_kind in ("intersect_line_line", "intersect_line_plane"):
             required = ("point", "point_kind", "points_a", "points_b")
@@ -395,11 +402,14 @@ _HOI_PHAN_CONG = {"area": "ask_curved_section_area", "radius": "ask_curved_secti
 
 
 def _ke_hoach_cong(facts: list[TypedFact], k: KeHoach) -> KeHoach:
-    """One solid of revolution (the bridge refuses composites): its declaration → `curved_solid`; a stated segment between
-    its named points (a cone's slant SA) stays the ordinary `segment_length` premise, which the engine relates to the
-    radius and height; each question → its ask. Any other fact is refused — a curved–polyhedral relation, a section or an
-    inscription has no certificate on this route yet."""
-    (s,) = [f for f in facts if f.curved]
+    """Standalone solid of revolution, or one axial host (`cylinder`/`cone`) with ≥ 1 anchored spheres (`circumscribes` /
+    `inscribed_in`). Unanchored multi-curved or unsupported mixed facts are refused fail-closed."""
+    unanchored = [f for f in facts if f.curved and not f.curved.get("circumscribes") and not f.curved.get("inscribed_in")]
+    anchored = [f for f in facts if f.curved and (f.curved.get("circumscribes") or f.curved.get("inscribed_in"))]
+    if len(unanchored) != 1:
+        raise TuChoi("CURVED_RELATION_UNSUPPORTED", "chỉ hỗ trợ một khối tròn xoay gốc trên tuyến này",
+                     tuple(f.id for f in facts if f.curved))
+    s = unanchored[0]
     cv = s.curved
 
     def phat(fid: str, fn: str, args: dict, quotes: list[str], luat: str) -> None:
@@ -409,27 +419,50 @@ def _ke_hoach_cong(facts: list[TypedFact], k: KeHoach) -> KeHoach:
     phat(s.id, "curved_solid", {"kind": cv["kind"], "solid": s.solid, "center": cv["center"], "top": cv.get("top"),
                                 "rim": cv.get("rim"), "radius": cv.get("radius"), "height": cv.get("height")},
          s.quotes, f"solid({cv['kind']})→curved_solid")
+    from app.simulation.geometry import curved as CV
+
+    known_curved = {s.solid: s}
+    host_kc = CV.KHOI_CONG[CV.LOAI_TU_NGUON[cv["kind"]]]
+    for af in anchored:
+        acv = af.curved
+        akind = "circumscribes" if acv.get("circumscribes") else "inscribed_in"
+        anch_kc = CV.KHOI_CONG[CV.LOAI_TU_NGUON[acv["kind"]]]
+        if not host_kc.co_truc or anch_kc.co_truc or acv.get(akind) != s.solid:
+            raise TuChoi("CURVED_RELATION_UNSUPPORTED", f"{af.id}: quan hệ {akind} chưa hỗ trợ cho {acv['kind']} trên {cv['kind']}",
+                         (af.id,))
+        if af.solid in known_curved:
+            raise TuChoi("AMBIGUOUS_REFERENCE", f"{af.id}: ký hiệu khối cong {af.solid!r} bị trùng", (af.id,))
+        known_curved[af.solid] = af
+        phat(af.id, "curved_solid",
+             {"kind": acv["kind"], "solid": af.solid, "center": acv.get("center"), "top": acv.get("top"),
+              "rim": acv.get("rim"), "radius": acv.get("radius"), "height": acv.get("height"),
+              akind: s.solid},
+             af.quotes, f"solid({acv['kind']},{akind}={s.solid})→curved_solid")
+    if anchored:
+        k.composition_classification = "BOUNDED_RULE_COMPOSITION"
     for f in facts:
-        if f is s:
+        if f is s or f in anchored:
             continue
         cp = f.curved_part or {}
-        if cp.get("role") == "section":
+        if cp.get("role") == "section" and not anchored:
             phat(f.id, "curved_section", {"solid": s.solid, "section": f.id, "kind": cp["kind"], "plane": cp.get("plane"),
                                           "distance": cp.get("distance"), "ratio": cp.get("ratio"),
                                           "point": cp.get("point")},
                  f.quotes, f"section({cp['kind']})→curved_section")
-        elif cp.get("role") == "derived":
+            k.composition_classification = "BOUNDED_RULE_COMPOSITION"
+        elif cp.get("role") == "derived" and not anchored:
             phat(f.id, "curved_subsolid", {"solid": s.solid, "section": cp["section"], "derived": cp["derived"],
                                            "apex": cp["apex"]}, f.quotes, "derived_solid→curved_subsolid")
-        elif cp.get("role") == "ask" and f.quantity in _HOI_PHAN_CONG:
+            k.composition_classification = "BOUNDED_RULE_COMPOSITION"
+        elif cp.get("role") == "ask" and f.quantity in _HOI_PHAN_CONG and not anchored:
             fn = _HOI_PHAN_CONG[f.quantity]
             args = ({"solid": s.solid, "section": cp["section"]} if "section" in cp
                     else {"first": cp["pair"][0], "second": cp["pair"][1]})
             phat(f.id, fn, args, f.quotes, f"question({f.quantity})→{fn}")
         elif f.kind == "length" and f.measure == "segment" and f.points and f.value:
             phat(f.id, "segment_length", {"segment": f.points, "value": f.value}, f.quotes, "length(segment)→segment_length")
-        elif f.kind == "question" and f.quantity in _HOI_CONG and f.solid == s.solid:
-            phat(f.id, _HOI_CONG[f.quantity], {"solid": s.solid}, f.quotes, f"question({f.quantity})→{_HOI_CONG[f.quantity]}")
+        elif f.kind == "question" and f.quantity in _HOI_CONG and f.solid in known_curved:
+            phat(f.id, _HOI_CONG[f.quantity], {"solid": f.solid}, f.quotes, f"question({f.quantity})→{_HOI_CONG[f.quantity]}")
         else:
             raise TuChoi("CURVED_RELATION_UNSUPPORTED", f"{f.id}: dữ kiện {f.kind} chưa có quan hệ đã chứng nhận với khối "
                          "tròn xoay trên planner", (f.id,))
@@ -443,16 +476,23 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
     k = KeHoach()
     k.fact_ids = {f.id for f in facts}
     k.taken = (nhan_cua_de(problem_text) | nhan_phu_da_dung(problem_text) | {
-        n for f in facts for v in (f.points, f.points_a, f.points_b, [f.at, f.point], _nhan(f.solid or "")) for n in (v or []) if n
+        n for f in facts for v in (f.points, f.points_a, f.points_b, [f.at, f.point], _nhan(f.solid or ""),
+                                   (f.curved_part or {}).get("plane"), [(f.curved_part or {}).get("point")])
+        for n in (v or []) if n
     } | ({f.curved.get("center") for f in facts if f.curved} - {None}))
     if mo := [f.id for f in facts if f.ambiguous]:
         raise TuChoi("AMBIGUOUS_FACT", f"AI đánh dấu mơ hồ: {mo} — không đoán cách hiểu", tuple(mo))
     if dk := [f.id for f in facts if f.role == "condition"]:
         raise TuChoi("CONDITIONAL_CLAUSE", f"dữ kiện trong mệnh đề điều kiện {dk} — không phải giả thiết vô điều kiện", tuple(dk))
-    if any(f.curved and not f.curved.get("circumscribes") for f in facts):
+    has_poly = any(f.kind == "solid" and f.curved is None and f.role != "question" and f.plane_ref is None for f in facts)
+    if not has_poly and any(f.curved for f in facts):
+        return _ke_hoach_cong(facts, k)
+    if any(f.curved and not f.curved.get("circumscribes") and not f.curved.get("inscribed_in") for f in facts):
         return _ke_hoach_cong(facts, k)
     for f in facts:
-        if f.curved and f.curved.get("circumscribes"):
+        if f.curved and (f.curved.get("circumscribes") or f.curved.get("inscribed_in")):
+            if f.solid in k.curved_solids:
+                raise TuChoi("AMBIGUOUS_REFERENCE", f"{f.id}: ký hiệu khối cong {f.solid!r} bị trùng", (f.id,))
             k.curved_solids[f.solid] = f
             continue
         if f.kind == "solid" and f.role != "question" and f.plane_ref is None:
@@ -500,12 +540,13 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
                 phat(kh.fact + "_day", "rectangle", {"vertices": kh.day}, kh.quotes, "hình hộp chữ nhật ⇒ đáy hình chữ nhật")
     for sf in k.curved_solids.values():
         cv = sf.curved
-        poly_kh = khoi_cua(cv["circumscribes"], sf)
+        anchor_kind = "circumscribes" if cv.get("circumscribes") else "inscribed_in"
+        poly_kh = khoi_cua(cv[anchor_kind], sf)
         phat(sf.id, "curved_solid",
              {"kind": cv["kind"], "solid": sf.solid, "center": cv.get("center"), "top": cv.get("top"),
               "rim": cv.get("rim"), "radius": cv.get("radius"), "height": cv.get("height"),
-              "circumscribes": poly_kh.ten},
-             sf.quotes, f"solid({cv['kind']},circumscribes={poly_kh.ten})→curved_solid")
+              anchor_kind: poly_kh.ten},
+             sf.quotes, f"solid({cv['kind']},{anchor_kind}={poly_kh.ten})→curved_solid")
 
     # Bind all explicit producers before resolving goals, independently of provider order.
     def anh_xa(f: TypedFact) -> None:
@@ -559,13 +600,20 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
     _sap_xep_phu_thuoc_loi_goi(k)
     if k.resolver.used:
         _bind_result_dependencies(k)
+    k.composition_classification = (
+        "GENERALIZED_PRIMITIVE_COMPOSITION"
+        if k.resolver.used
+        else "BOUNDED_RULE_COMPOSITION"
+        if (k.derived_planes or k.curved_solids or len(k.solids) > 1 or any(c["fn"] == "sphere_tangent_plane" for c in k.calls))
+        else "SCHEMA_TRANSLATION"
+    )
     return k
 
 
 _NON_POINT_ARG_KEYS = frozenset({
     "line_ref", "solid", "numerator_solid", "denominator_solid",
     "original_solid", "subtracted_solids", "value", "side", "reason", "right",
-    "circumscribes", "kind", "radius", "height",
+    "circumscribes", "inscribed_in", "kind", "radius", "height",
 })
 
 
@@ -660,6 +708,11 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
             if pt not in solid_vertices and pt not in explicit_point_producers:
                 point_producers.setdefault(pt, []).append(c["id"])
                 produced_point_of_call[c["id"]] = pt
+        elif fn == "sphere_tangent_plane" and isinstance(a.get("point"), str):
+            pt = a["point"]
+            if pt not in solid_vertices and pt not in explicit_point_producers:
+                point_producers.setdefault(pt, []).append(c["id"])
+                produced_point_of_call[c["id"]] = pt
 
     direct_deps: dict[str, set[str]] = {c["id"]: set() for c in calls}
     consumed_points_of_call: dict[str, list[str]] = {}
@@ -695,9 +748,15 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
 
     for u in calls:
         if u["fn"] == "curved_solid":
-            u_solid = (u.get("args") or {}).get("solid")
+            ua = u.get("args") or {}
+            u_solid = ua.get("solid")
+            host_ten = ua.get("circumscribes") or ua.get("inscribed_in")
+            if host_ten:
+                for kh in k.solids.values():
+                    if kh.ten == host_ten and kh.fact in by_id and kh.fact != u["id"]:
+                        direct_deps[u["id"]].add(kh.fact)
             for v in calls:
-                if v["fn"] in _HOI_CONG.values() and (v.get("args") or {}).get("solid") == u_solid:
+                if v["fn"] in (*_HOI_CONG.values(), "sphere_tangent_plane") and (v.get("args") or {}).get("solid") == u_solid:
                     direct_deps[v["id"]].add(u["id"])
         if u["fn"] == "section":
             u_solid = (u.get("args") or {}).get("solid")
@@ -710,12 +769,12 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
                 ):
                     direct_deps[v["id"]].add(u["id"])
 
-    # Determine goal-reachable calls (ask_*, section, explicit line_ref / depends_on)
+    # Determine goal-reachable calls (ask_*, section, sphere_tangent_plane, explicit line_ref / depends_on)
     goal_roots = [
         c["id"]
         for c in calls
         if c["fn"].startswith("ask_")
-        or c["fn"] == "section"
+        or c["fn"] in ("section", "sphere_tangent_plane")
         or bool(c.get("depends_on"))
         or bool((c.get("args") or {}).get("line_ref"))
     ]
@@ -926,6 +985,13 @@ def _anh_xa(f: TypedFact, k: KeHoach, ten: dict, deu: dict, khoi_cua, phat) -> d
         x, y = f.points
         dinh, chan = (x, y) if x == kh.dinh else (y, x)
         return phat(f.id, "altitude", {"apex": dinh, "foot": chan, "solid": kh.ten}, q, "altitude")
+    if f.curved_part and f.curved_part.get("role") == "tangent_plane":
+        if f.solid not in k.curved_solids:
+            raise TuChoi("UNKNOWN_SOLID", f"{f.id}: mặt cầu {f.solid!r} không có trong dữ kiện", (f.id,))
+        cp = f.curved_part
+        return phat(f.id, "sphere_tangent_plane",
+                    {"solid": f.solid, "plane": cp["plane"], **({"point": cp["point"]} if cp.get("point") else {})},
+                    q, "tangent_to→sphere_tangent_plane")
     if f.kind == "projection":
         if f.line_ref:
             ref = k.resolver.aliases.get(f.line_ref,f.line_ref)
@@ -1796,11 +1862,17 @@ def _nhan_ra(c: _Choice) -> str:
 
 def _bind_result_dependencies(k):
     """Call edges are a view of the existing producers, not another FactGraph."""
+    solid_pts = {v for kh in k.solids.values() for v in (*kh.day, *kh.tren, *([kh.dinh] if kh.dinh else ()))}
     producers = {}
+    curved_by_solid = {}
     for c in k.calls:
         a, fn = c['args'], c['fn']
+        if fn == 'curved_solid' and isinstance(a.get('solid'), str):
+            curved_by_solid[a['solid']] = c['id']
         label = (a.get('image') if fn in ('orthogonal_projection_line','orthogonal_projection','translate_point')
-                 else a.get('point') if fn in POINT_PRODUCERS else None)
+                 else a.get('point') if fn in (*POINT_PRODUCERS, 'sphere_tangent_plane')
+                 else a.get('center') if fn == 'curved_solid' and a.get('center') not in solid_pts
+                 else None)
         if label:
             producers.setdefault(label, []).append(c['id'])
     for c in k.calls:
@@ -1808,10 +1880,14 @@ def _bind_result_dependencies(k):
         points = [x for v in a.values() if isinstance(v,list) for x in v]
         if c['fn'].startswith('orthogonal_projection') or c['fn']=='translate_point' or c['fn'].startswith('ask_'):
             points += [a['point']] if isinstance(a.get('point'), str) else []
-        output = a.get('image') or (a.get('point') if c['fn'] in POINT_PRODUCERS else None)
+        output = (a.get('image')
+                  or (a.get('point') if c['fn'] in (*POINT_PRODUCERS, 'sphere_tangent_plane') else None)
+                  or (a.get('center') if c['fn'] == 'curved_solid' else None))
         if output:
             points = [x for x in points if x != output]
         deps = {p for x in points for p in producers.get(x,()) if p != c['id']}
+        if c['fn'] == 'sphere_tangent_plane' and a.get('solid') in curved_by_solid:
+            deps.add(curved_by_solid[a['solid']])
         if a.get('line_ref'):
             deps.add(a['line_ref'])
         c['depends_on'] = sorted(deps)

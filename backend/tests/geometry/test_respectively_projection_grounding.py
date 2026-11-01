@@ -84,4 +84,4 @@ def test_a_single_name_clause_is_unchanged():
 
 
 def test_registry_version_records_the_language_change():
-    assert REGISTRY_VERSION == "geometry-functions/25"
+    assert REGISTRY_VERSION == "geometry-functions/26"

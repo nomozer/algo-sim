@@ -93,6 +93,7 @@ def _phong_bi(r: KetQuaTuyen) -> dict[str, Any]:
         # every served `/4` result passed the Registry Source Gate; there is no other authority on this route
         "source_verification": {"authority": SOURCE_GATE_AUTHORITY} if served else None,
         "sections": sections,
+        "relation_certificates": deepcopy(list(r.relation_certificates)) if served else [],
         "answers": dict(r.answers),
         "answer_exact": dict(r.answer_exact),
         "length_unit": r.length_unit,
@@ -227,6 +228,20 @@ def build_adapter4_response(result: KetQuaTuyen, problem_text: str) -> dict[str,
         if route.get("sections") != _phong_bi(result)["sections"]:
             raise PreviewInvalid("PREVIEW_RESULT_INVALID")
         _validate_sections(route["sections"], objects, result)
+        if route.get("relation_certificates") != _phong_bi(result)["relation_certificates"]:
+            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        for rcert in route.get("relation_certificates") or ():
+            if not isinstance(rcert, dict):
+                raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+            for layer in (
+                "SOURCE_GROUNDING_PROOF",
+                "GEOMETRIC_RELATION_PROOF",
+                "KERNEL_EXECUTION_PROOF",
+                "RESULT_CERTIFICATE",
+            ):
+                lp = rcert.get(layer)
+                if not isinstance(lp, dict) or lp.get("verified") is not True:
+                    raise PreviewInvalid("PREVIEW_RESULT_INVALID")
         with using(metric):
             envelope = compile_semantic_program_to_envelope(result.spec)
         if validate_semantic_envelope_config(envelope["config"]) or envelope["config"]["execution_truncated"]:

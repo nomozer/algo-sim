@@ -1,0 +1,387 @@
+{
+  "epic": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT",
+  "continuation": "multi_object_factgraph_composite_geometry_relations",
+  "live_provider_calls": 0,
+  "positive_total": 17,
+  "positive_passed": 17,
+  "negative_total": 19,
+  "negative_passed": 19,
+  "positives": [
+    {
+      "case_id": "cr.cube_2.inscribed.radius",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "mg1": "1"
+      },
+      "expected": {
+        "mg1": "1"
+      },
+      "relation_certificates": 1,
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.cube_2.inscribed.area",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "mg1": "4π"
+      },
+      "expected": {
+        "mg1": "4π"
+      },
+      "relation_certificates": 1,
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.cube_2.inscribed.volume_rel_v2",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "mg1": "4π/3"
+      },
+      "expected": {
+        "mg1": "4π/3"
+      },
+      "relation_certificates": 1,
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.cube_2.circumscribes_rel_v2",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "mg1": "√3"
+      },
+      "expected": {
+        "mg1": "√3"
+      },
+      "relation_certificates": 1,
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.cube_2.dual_spheres.multi_goal",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "mg1": "12π",
+        "mg2": "4π",
+        "mg3": "8"
+      },
+      "expected": {
+        "mg1": "12π",
+        "mg2": "4π",
+        "mg3": "8"
+      },
+      "relation_certificates": 2,
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.pyr_sq_6_4.inscribed.radius",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "mg1": "3/2"
+      },
+      "expected": {
+        "mg1": "3/2"
+      },
+      "relation_certificates": 1,
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.pyr_sq_6_4.inscribed.all_faces_wording",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "mg1": "9π/2"
+      },
+      "expected": {
+        "mg1": "9π/2"
+      },
+      "relation_certificates": 1,
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.pyr_sq_6_4.dual_spheres.distinct_centers",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "mg1": "17/4",
+        "mg2": "3/2"
+      },
+      "expected": {
+        "mg1": "17/4",
+        "mg2": "3/2"
+      },
+      "relation_certificates": 2,
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.prism_345_h2.inscribed.area",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "mg1": "4π"
+      },
+      "expected": {
+        "mg1": "4π"
+      },
+      "relation_certificates": 1,
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.prism_345_h2.dual_spheres.multi_goal",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "mg1": "29π",
+        "mg2": "4π/3"
+      },
+      "expected": {
+        "mg1": "29π",
+        "mg2": "4π/3"
+      },
+      "relation_certificates": 2,
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.tetra_asym_132.inscribed.named_center",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "mg1": "1/3",
+        "mg2": "√3/3"
+      },
+      "expected": {
+        "mg1": "1/3",
+        "mg2": "√3/3"
+      },
+      "relation_certificates": 1,
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.tetra_asym_132.tangent_plane_with_contact_point",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "mg1": "1/3",
+        "mg2": "4π/81"
+      },
+      "expected": {
+        "mg1": "1/3",
+        "mg2": "4π/81"
+      },
+      "relation_certificates": 2,
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.shared_base_pyramids_plus_inscribed_sphere",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "mg1": "72",
+        "mg2": "9π"
+      },
+      "expected": {
+        "mg1": "72",
+        "mg2": "9π"
+      },
+      "relation_certificates": 1,
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.cube_section_plus_inscribed_sphere",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "mg1": "4",
+        "mg2": "4π/3"
+      },
+      "expected": {
+        "mg1": "4",
+        "mg2": "4π/3"
+      },
+      "relation_certificates": 1,
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.cylinder_r3_h6.inscribed.volume",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "mg1": "36π"
+      },
+      "expected": {
+        "mg1": "36π"
+      },
+      "relation_certificates": 1,
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.cylinder_r3_h6.dual_spheres",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "mg1": "72π",
+        "mg2": "36π"
+      },
+      "expected": {
+        "mg1": "72π",
+        "mg2": "36π"
+      },
+      "relation_certificates": 2,
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.cone_r3_h4.dual_spheres",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "mg1": "25/8",
+        "mg2": "9π"
+      },
+      "expected": {
+        "mg1": "25/8",
+        "mg2": "9π"
+      },
+      "relation_certificates": 2,
+      "matched_oracle": true
+    }
+  ],
+  "negatives": [
+    {
+      "case_id": "cr.neg.cuboid_224_no_inscribed_sphere",
+      "status": "REFUSED",
+      "code": "NO_INSCRIBED_SPHERE",
+      "expected_code": "NO_INSCRIBED_SPHERE",
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.neg.prism_345_h5_no_inscribed_sphere",
+      "status": "REFUSED",
+      "code": "NO_INSCRIBED_SPHERE",
+      "expected_code": "NO_INSCRIBED_SPHERE",
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.neg.rect_pyramid_no_inscribed_sphere",
+      "status": "REFUSED",
+      "code": "NO_INSCRIBED_SPHERE",
+      "expected_code": "NO_INSCRIBED_SPHERE",
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.neg.cylinder_r3_h4_no_inscribed_sphere",
+      "status": "REFUSED",
+      "code": "NO_INSCRIBED_SPHERE",
+      "expected_code": "NO_INSCRIBED_SPHERE",
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.neg.pyr_sq_2_2_irrational_incenter_exact_domain_exceeded",
+      "status": "REFUSED",
+      "code": "EXACT_DOMAIN_EXCEEDED",
+      "expected_code": "EXACT_DOMAIN_EXCEEDED",
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.neg.cone_r1_h1_irrational_inradius_exact_domain_exceeded",
+      "status": "REFUSED",
+      "code": "EXACT_DOMAIN_EXCEEDED",
+      "expected_code": "EXACT_DOMAIN_EXCEEDED",
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.neg.equilateral_pyramid_inscribed_non_euclidean_chart",
+      "status": "REFUSED",
+      "code": "METRIC_REQUIRES_EUCLIDEAN_CHART",
+      "expected_code": "METRIC_REQUIRES_EUCLIDEAN_CHART",
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.neg.contradictory_named_incenter",
+      "status": "REFUSED",
+      "code": "INCONSISTENT_FACTS",
+      "expected_code": "INCONSISTENT_FACTS",
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.neg.secant_plane_claimed_tangent",
+      "status": "REFUSED",
+      "code": "PLANE_INTERSECTS_SPHERE_NOT_TANGENT",
+      "expected_code": "PLANE_INTERSECTS_SPHERE_NOT_TANGENT",
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.neg.disjoint_plane_claimed_tangent",
+      "status": "REFUSED",
+      "code": "PLANE_DOES_NOT_TOUCH_SPHERE",
+      "expected_code": "PLANE_DOES_NOT_TOUCH_SPHERE",
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.neg.wrong_contact_point_on_tangent_plane",
+      "status": "REFUSED",
+      "code": "INCONSISTENT_FACTS",
+      "expected_code": "INCONSISTENT_FACTS",
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.neg.reversed_inscribed_direction",
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "expected_code": "SOURCE_OBJECT_MISMATCH",
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.neg.conflicting_circumscribes_and_inscribed",
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "expected_code": "SOURCE_OBJECT_MISMATCH",
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.neg.ambiguous_bare_sphere_question_with_two_spheres",
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "expected_code": "SOURCE_OBJECT_MISMATCH",
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.neg.wrong_sphere_id_for_inscribed_question",
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "expected_code": "SOURCE_OBJECT_MISMATCH",
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.neg.negated_inscribed_clause",
+      "status": "REFUSED",
+      "code": "NEGATED_CLAUSE",
+      "expected_code": "NEGATED_CLAUSE",
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.neg.conditional_inscribed_clause",
+      "status": "REFUSED",
+      "code": "CONDITIONAL_CLAUSE",
+      "expected_code": "CONDITIONAL_CLAUSE",
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.neg.goal_prove_tangent_clause",
+      "status": "REFUSED",
+      "code": "GOAL_CLAUSE_NOT_PREMISE",
+      "expected_code": "GOAL_CLAUSE_NOT_PREMISE",
+      "matched_oracle": true
+    },
+    {
+      "case_id": "cr.neg.two_unanchored_cylinders_refused",
+      "status": "REFUSED",
+      "code": "BRIDGE_UNSUPPORTED_CURVED_COMPOSITE",
+      "expected_code": "BRIDGE_UNSUPPORTED_CURVED_COMPOSITE",
+      "matched_oracle": true
+    }
+  ]
+}
