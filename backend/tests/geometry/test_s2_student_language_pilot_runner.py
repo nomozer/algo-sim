@@ -274,7 +274,8 @@ def test_c15_realizing_the_models_own_described_point_is_not_a_discovered_compos
     DISCOVERED; but that step is exactly what the extraction stated, so the plan is source-explicit."""
     out = R.evaluate(_write_study(tmp_path, "R-1", [_r1_case()]), tmp_path / "dry.jsonl", None)
     row = out["rows"][0]
-    assert row["end_to_end_correct"] and row["search"]["classification"] == "DISCOVERED_FUNCTION_COMPOSITION"
+    # planner /24 (C16) no longer self-labels this DISCOVERED: the product label and the runner's rule now agree
+    assert row["end_to_end_correct"] and row["search"]["classification"] == "SOURCE_EXPLICIT_SEQUENCE"
     assert [s["fn"] for s in row["search"]["planner_steps"]] == ["intersect_line_line"]
     assert row["composition_label"] == "SOURCE_EXPLICIT_SEQUENCE"
     assert out["supplementary"]["composition_labels"] == {"SOURCE_EXPLICIT_SEQUENCE": 1}
