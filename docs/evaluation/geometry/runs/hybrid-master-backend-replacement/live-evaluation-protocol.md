@@ -189,3 +189,16 @@ Every criterion must hold on the frozen held-out set. The harness computes them 
 7. `EVALUATOR_INDEPENDENCE` and `AUTHORING_INDEPENDENCE` are established. They are read from the Owner-written approval file: `corpus_author` must be non-empty, and `authoring_independence` and `evaluator_independence` must both be `ESTABLISHED`. The harness never writes them.
 
 Any failure is a NO-GO, reported with the failing criterion. Thresholds are never re-tuned. The 60 problems cover only the strata they sample; they are not evidence about all of grade 11–12 geometry.
+
+## Amendment, fourteenth continuation (2026-11-01, before any live request)
+
+Metrics, thresholds, composition and acceptance are unchanged. Two harness rules are added; both are pre-run:
+- **One approval, one live run.** `main` first creates and removes `--out` (a taken, misspelt or unwritable path is
+  refused without using the approval), then exclusively creates `<approval>.consumed` before the first request. A
+  second `--live` under the same file is refused. There is no resume: a stopped or interrupted run stays incomplete
+  (§5, item 6), and a re-run needs a new Owner approval file.
+- **Cap terms are validated** as in the S-2 runner: `max_requests` must be a positive integer, and `max_usd` and both
+  prices must be finite and positive. Without this, `NaN` would compare false everywhere and switch the USD cap off.
+
+The harness hash changed (`2ac9577f…` at this amendment). `--manifest` prints the value to bind; hashes printed before
+this amendment do not bind.

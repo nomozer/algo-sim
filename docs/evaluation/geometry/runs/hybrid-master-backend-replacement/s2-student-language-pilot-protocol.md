@@ -152,3 +152,19 @@ thay `-r1`, kết quả không đổi: 33/36, 0 wrong-served. Test của runner:
   `runner_sha256 = a274eabcb86079203fa6fb10be4b4efaf53a405142bb8e7fa427e382fc9696aa`; `s2-owner-approval.template.json`
   được phát hành lại với blob `d6c6e6b01b115621600054f611a7ff5f8657aec2` (`owner_decision = "PENDING_OWNER_DECISION"`,
   `paid_project_confirmed = false`).
+
+**5.10 Continuation 14 (2026-11-01, vẫn `0` live call)** — không đổi chỉ số, ngưỡng, corpus hay cách chấm. Chỉ thêm:
+- **Một approval, một lượt live.** Trần request/USD đếm trong một tiến trình, nên trước đây có thể chạy `--live` lần hai
+  với cùng file approval và gửi lại các request đã được tính. Nay `main` tạo rồi xoá `--out` (đường dẫn trùng, sai hay
+  không ghi được bị từ chối mà không tốn approval), sau đó tạo độc quyền `<approval>.consumed` trước request đầu. Lượt
+  sau với cùng file bị từ chối. **Không có resume:** lượt dừng giữa chừng giữ `INCOMPLETE`; chạy lại cần approval mới.
+- Approval ràng thêm `scorer_sha256` (scorer viết 8 chỉ số của summary).
+- Lưu ý cho Owner: một ca dừng ở domain gate không tốn request, nên lượt đầy đủ cần 35 request dưới trần ≤ 36 (tính cả
+  retry). Hai lần retry tạm thời (429/5xx) là đủ để lượt kết thúc `REQUEST_CAP` / `INCOMPLETE`.
+- **Phạm vi:** `s2-r1-coverage.json`: 0/36 gold có `described_points`, 0/36 câu hỏi qua điểm mô tả không tên, 17/17 ca
+  gold được phục vụ là `SOURCE_EXPLICIT_SEQUENCE`. Pilot này **không** đo R-1 hay tái tổ hợp Planner:
+  `R1_LIVE_GENERALIZATION_NOT_ESTABLISHED`.
+- Danh tính mới do `--manifest` in ra: `runner_sha256 = 2c463ac3a44fa310d10e9ec4def3de3c363a19c8d2f2017d49c655d71a3d1f77`,
+  `paired_harness_sha256 = 2ac9577ff68e15ebdf345577bea20ae4116ce26654b64d63e82b92b7619e5ada`,
+  `scorer_sha256 = 8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d`; `measured_system` và
+  `corpus_sha256` không đổi. Template phát hành lại: blob `8b2ab292c4339d27201623482e26821f1457f6ac`.

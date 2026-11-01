@@ -45,4 +45,7 @@ A person who did not build or tune the system: the Owner, or a teacher the Owner
 1. Fill in `corpus-template.json`. Do not include a `dry_run` field.
 2. Run `backend/scripts/run_paired_route_evaluation.py --corpus corpus.json --manifest`. It validates the corpus, prints `corpus_sha256` and the runtime identity, and runs the contamination scan. An exact match fails. Near matches are listed for the author to check.
 3. Put the corpus hash, the author's name, the harness hash and the measured-system hash in the Owner approval file. Record them in a protocol amendment as well.
+   - The approval must also state `corpus_author`, `authoring_independence` and `evaluator_independence`. Criterion 7 reads them; a run without them is a certain NO-GO.
+   - `--manifest` prints the hashes of the tree it runs in. Run it in the tree that will make the live run, after the last harness change (fourteenth continuation: the harness changed, so hashes printed before then do not bind).
+   - One approval file allows one live run. A stopped or interrupted run is not resumed; a re-run needs a new approval file.
 4. After the first live request the corpus is immutable. Errata go to an amendment and are reported. Every observed case becomes development data for later runs; a new blind run needs a new corpus.

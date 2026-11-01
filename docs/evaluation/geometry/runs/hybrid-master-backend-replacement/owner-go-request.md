@@ -224,3 +224,53 @@ $s = $s.Replace('"owner_decision": "PENDING_OWNER_DECISION"', '"owner_decision":
 ```
 
 Remaining Owner decisions: (1) `S-2` live pilot GO above; (2) 60-problem live paired evaluation GO (`D-04`, `D-11`, `D-13`, `GATE-16`, independent corpus author + approval JSON binding `measured_system = 773e440de0385d57…`); (3) `S-1` diacritic-free input policy (including tone-dropped `"hình chop"`); (4) optional `D1`/`D2` Source Gate multi/recursive chain certification and curved rulings `P-1..P-3`; (5) `main` integration authorization (`INTEGRATION_PENDING_OWNER_GO`).
+
+## Addendum — fourteenth continuation (live readiness), 2026-11-01. It supersedes the S-2 command of the thirteenth addendum.
+
+Still `0` live calls and `USD 0`. No approval file exists. The measured system is **unchanged**: candidate `0fe38a29`
+(product `9503482a`, `773e440d…`, `--verify` matches). Only the scripts changed (`continuation14-live-readiness.md`):
+- **One approval funds one live run**, on both runners. An interrupted run is not resumed; a re-run needs a new approval.
+- The paired harness now refuses `NaN` / non-positive cap terms.
+- The S-2 approval also binds the scorer.
+
+The runner and harness hashes changed, so **the thirteenth-addendum command (blob `d6c6e6b0…`) no longer works**: its
+template check fails, and the approval it would produce is refused by `check_approval_terms`.
+
+**Read before deciding S-2:**
+- It measures how Gemini reads student wording on named constructions.
+- It does **not** measure R-1 or planner recomposition. 0 of the 36 texts ask through an unnamed described point
+  (`s2-r1-coverage.json`): `R1_LIVE_GENERALIZATION_NOT_ESTABLISHED` whatever the result.
+- Retry headroom is thin. A full run needs 35 requests under the cap of 36, retries included. Two transient provider
+  errors end it `INCOMPLETE`, and a re-run needs a new approval.
+
+**S-2 GO — the one Owner action.** Template blob `8b2ab292c4339d27201623482e26821f1457f6ac`. The terms are unchanged:
+`gemini-2.5-flash`, 36 requests including retries, USD 2.0, 0.30 / 2.50 USD per million tokens. The agent dry-ran this
+command with a non-approval decision value, the terms passed `check_approval_terms`, and the scratch file was deleted.
+
+```powershell
+cd D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-master-backend-replacement
+$d = 'APPROVED_BY_USER'
+$t = 'docs\evaluation\geometry\runs\hybrid-master-backend-replacement\s2-owner-approval.template.json'
+$o = 'docs\evaluation\geometry\runs\hybrid-master-backend-replacement\s2-owner-approval.json'
+if ((git hash-object $t) -ne '8b2ab292c4339d27201623482e26821f1457f6ac') { throw 'template changed: do not approve' }
+if (Test-Path $o) { throw 'approval file already exists' }
+$s = [IO.File]::ReadAllText((Resolve-Path $t))
+if ([regex]::Matches($s, '"owner_decision": "PENDING_OWNER_DECISION"').Count -ne 1 -or [regex]::Matches($s, '"paid_project_confirmed": false').Count -ne 1) { throw 'unexpected template' }
+$s = $s.Replace('"owner_decision": "PENDING_OWNER_DECISION"', '"owner_decision": "' + $d + '"').Replace('"paid_project_confirmed": false', '"paid_project_confirmed": true')
+[IO.File]::WriteAllText((Join-Path (Get-Location) $o), $s, (New-Object Text.UTF8Encoding $false))
+```
+
+For the run only: `ALLOW_LIVE_AI=1` and a `GEMINI_API_KEY` from the paid project. **Check first** that this key can use
+`gemini-2.5-flash`: Google limits 2.5 access to earlier users, and there is no silent model switch. Do not enable
+httpx INFO logging: the LLM_ONLY arm's `call_gemini` puts the key in the URL (relevant to the paired run).
+
+**All Owner decisions, in one place:**
+
+| # | decision | options | consequence |
+|---|---|---|---|
+| 1 | **S-2 live pilot** | run the command above, or defer | ≤ 36 requests, ≤ USD 2.0. Result is `LIVE_DEVELOPMENT_PILOT` evidence only |
+| 2 | **Paired 60-problem GO** (D-04, D-11, D-13, GATE-16) | name an independent author, who writes the corpus per `heldout-authoring/`; then `--manifest`, and the Owner writes the approval JSON | ≤ 400 requests, ≤ USD 70 proposed. Without an author the run is only `IMPLEMENTER_AUTHORED_DIAGNOSTIC` and cannot satisfy D-13 |
+| 3 | **R-1 live probe** (new, optional) | approve a 12–18 problem probe of unnamed described points, preferably by the paired author; or defer | needs a small runner generalization (scripts, review) and its own template. About USD 0.44, proposed cap USD 1.0 |
+| 4 | **S-1** diacritic-free input, including "hình chop" | keep the domain gate, or authorize the clarification slice | unchanged |
+| 5 | D1/D2, P-1..P-3 | optional | unchanged; no live evidence asks for them yet |
+| 6 | Integration | merge / push | `INTEGRATION_PENDING_OWNER_GO` |
