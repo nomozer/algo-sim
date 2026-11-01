@@ -488,9 +488,7 @@ Offline only; `MAX_AUTHORIZED_LIVE_REQUESTS = 0`; 0 provider calls. `DEFAULT_MOD
 | `020263cf` | SL-1 simulation-request reader, `_C_VUONG` / `_C_DOAN` wording, SL-2 `/2` honest exit + `route-d-clarification/1`, D02 empty base ⇒ `MISSING_DIMENSION` |
 | `6637f6fd` | Registry /27, engine /19 (D-02 cache identity), preview identity delta |
 | `d3dc97fc` | Probe after the fix, corrected baseline at `fa1ed277`, `phase-n` replay |
-| `58888d7c` | Review round-1 fixes (B1 class words, B2 undrawn mentions, PE-1 dropped requests, SL-2 MINORs) — product commit |
-
-<!-- candidate, T3 and review verdict appended at the checkpoint -->
+| `58888d7c` | Review round-1 fixes (B1 class words, B2 undrawn mentions, PE-1 dropped requests, SL-2 MINORs) |
 | `35cac578` | Review round-2 fixes (anaphor-only reading, closed intersection operands, raw-source spans) |
 | `fb67cfb2` | Review round-3 fix (anaphor noun ↔ its own call) — **final product commit** |
 | `8b25df71` | Candidate re-frozen in its own commit (`runs/hybrid-master-student-language/` correcting `runs/hybrid-master-composite-relations/`) |
