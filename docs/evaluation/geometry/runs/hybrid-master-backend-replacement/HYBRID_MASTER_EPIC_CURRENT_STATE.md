@@ -666,3 +666,44 @@ Offline only; `ALLOW_LIVE_AI = 0`; `MAX_AUTHORIZED_LIVE_REQUESTS = 0`; `MAX_AUTH
 1. **`S-2` live student-language pilot (`<= 36` requests, `USD 2.0` cap):** run the blob-locked PowerShell command in `owner-go-request.md` (`s2-owner-approval.template.json` blob `d6c6e6b01b115621600054f611a7ff5f8657aec2`, binding candidate `0fe38a29` / `measured_system = 773e440de0385d57…` and `runner_sha256 = a274eabc…`).
 2. **Live paired evaluation GO (`D-04`, `D-11`, `D-13`, `GATE-16`):** name the independent 60-problem corpus author and provide the Owner approval JSON binding candidate `0fe38a29`.
 3. **Policy boundaries:** `S-1` diacritic-free input (including `"hình chop"`), optional `D1`/`D2` Source Gate multi/recursive chain certification, optional curved grammar rulings `P-1..P-3`, and `main` integration (`INTEGRATION_PENDING_OWNER_GO`).
+
+---
+
+## Fourteenth continuation (Owner Master Directive: live evidence, real-world generalization & cutover decision), 2026-11-01: CHECKPOINT REACHED — `OFFLINE_READY_AWAITING_OWNER_GO`
+
+Offline only. **No Owner approval file exists** for S-2 or for the paired run, so no live step ran: `0` provider calls,
+`USD 0`. The directive is not a spending approval. The candidate is unchanged: `0fe38a29` (product `9503482a`, 118 files
+`773e440d…`); `--verify` matches; `0` edits to `backend/app` or `frontend/`. `CHE_DO_MAC_DINH = "LLM_ONLY"`,
+`CACHE_VERSION = "131"`. Report: `continuation14-live-readiness.md`.
+
+| Commit | Content |
+|---|---|
+| `fe8d0aa6` | Single-use live approval (`claim_approval`, both runners); `tools/s2_r1_coverage_scan.py` → `s2-r1-coverage.json` |
+| `db601ac8` | Review round 1 code fixes: `--out` probed before the claim; paired cap terms validated (NaN); `scorer_sha256` bound |
+| `02393f35` | S-2 template re-issued (blob `8b2ab292…`); protocol amendments; fourteenth addendum in `owner-go-request.md`; authoring README |
+
+**Findings:**
+- **Live readiness:** identity, corpus, model, budget, stops, parsing, usage, secrets and receipts were checked in code.
+  One defect was found and fixed: an approval could fund more than one run, because caps are counted per process.
+  There is no resume; a re-run needs a new approval.
+- **S-2 cannot measure R-1:** 0/36 gold `described_points`, 0/36 unnamed described-point phrasings, 17/17 gold serves
+  `SOURCE_EXPLICIT_SEQUENCE` ⇒ `R1_LIVE_GENERALIZATION_NOT_ESTABLISHED`. An R-1 live probe is proposed (Owner item 3),
+  not run.
+- **Migration gates:** unchanged and re-checked against the code. D-04, D-11 and D-13 are BLOCKED on live data; D-10 is
+  frontend-owned; GATE-13/15/16/20 are not started.
+
+**Review:** fresh-context. Round 1 `NOT_READY` (0 BLOCKER, 1 MAJOR = stale template, now re-issued; the code MINORs
+are fixed). Round 2 **`READY`** (0 BLOCKER, 0 MAJOR, 0 MINOR, 3 NIT; `continuation14-live-readiness.md` §7).
+
+**Status labels:**
+- `OFFLINE_BACKEND_READY`: yes, for `0fe38a29`.
+- `LIVE_EVALUATION_PASS`: not measured.
+- `INTEGRATION_READY`: no.
+- `PRODUCTION_READY`: no.
+- Overall: **`HYBRID_NOT_READY`**. Nothing is merged or pushed; the worktree is kept.
+
+**Next exact action:** the Owner decides items 1–6 of the fourteenth addendum in `owner-go-request.md`.
+- With an S-2 approval: `run_s2_student_language_pilot.py --live --approval-file <file> --out <new.jsonl>`, once. Then
+  score, attribute and get an independent review.
+- With a paired approval and a named author: freeze the corpus hash in an amendment, then `--live` once.
+- Without these: nothing offline in this epic is blocked except by these decisions.

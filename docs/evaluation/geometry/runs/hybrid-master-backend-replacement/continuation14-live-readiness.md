@@ -125,4 +125,19 @@ production readiness.
   the scan. It noted regex gaps for future corpora ("Cho …, tính khoảng cách từ trung điểm …", "tâm", "chân đường …"),
   none of which occur in this corpus.
 
-ROUND_2_PENDING
+**Round 2 (`02393f35`): `READY`.** 0 BLOCKER, 0 MAJOR, 0 MINOR, 3 NIT.
+
+The reviewer checked:
+- The template hashes equal `--manifest` at HEAD and the raw `sha256` of the three scripts.
+- It ran the fourteenth-addendum command step by step with a scratch non-approval value. The result passed
+  `check_approval_terms`, and `authorize_live` still refused it on the environment gate.
+- Both amendments leave every metric, threshold and composition unchanged.
+- Each new test kills its mutant.
+- Test counts: 105 in the three harness files, and 147 together with the docs gate.
+
+The NITs:
+- The duplicate §5.10 is fixed: the new section is §5.11.
+- The probe can leave an empty `--out` if Windows holds the new file. This is harmless: the approval is not claimed, and
+  the next try refuses the taken path.
+- The runner docstring does not list the scorer binding. It is left as is, because changing a byte would invalidate
+  the template just issued.

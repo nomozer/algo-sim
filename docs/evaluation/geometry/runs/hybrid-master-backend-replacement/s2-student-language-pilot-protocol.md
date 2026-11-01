@@ -153,7 +153,7 @@ thay `-r1`, kết quả không đổi: 33/36, 0 wrong-served. Test của runner:
   được phát hành lại với blob `d6c6e6b01b115621600054f611a7ff5f8657aec2` (`owner_decision = "PENDING_OWNER_DECISION"`,
   `paid_project_confirmed = false`).
 
-**5.10 Continuation 14 (2026-11-01, vẫn `0` live call)** — không đổi chỉ số, ngưỡng, corpus hay cách chấm. Chỉ thêm:
+**5.11 Continuation 14 (2026-11-01, vẫn `0` live call)** — không đổi chỉ số, ngưỡng, corpus hay cách chấm. Chỉ thêm:
 - **Một approval, một lượt live.** Trần request/USD đếm trong một tiến trình, nên trước đây có thể chạy `--live` lần hai
   với cùng file approval và gửi lại các request đã được tính. Nay `main` tạo rồi xoá `--out` (đường dẫn trùng, sai hay
   không ghi được bị từ chối mà không tốn approval), sau đó tạo độc quyền `<approval>.consumed` trước request đầu. Lượt

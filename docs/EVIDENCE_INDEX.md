@@ -51,6 +51,19 @@ MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_MASTER_C12_S2_RUNNABLE_AND_ROUTE_D4_CORRECTION (supersedes C12 /4 REPRESENTATION_BLOCKED state and S-2 33/36 gold-replay baseline; historical C12 receipts preserved byte-for-byte)
 CORRECTED_BY = NONE
 
+
+## CONTINUATION_ID = HYBRID_MASTER_C14_LIVE_READINESS
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/continuation14-live-readiness.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = OFFLINE_DETERMINISTIC_FIXTURE_TEST + IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC (no live measurement; no Owner approval exists); single-use live approval on both runners, paired cap-term validation, scorer bound into the S-2 approval (harness tests 105); S-2 corpus cannot measure R-1 (0/36 described_points, 0/36 unnamed phrasings, 17/17 gold serves SOURCE_EXPLICIT_SEQUENCE ⇒ R1_LIVE_GENERALIZATION_NOT_ESTABLISHED); S-2 template re-issued (blob 8b2ab292)
+VERIFICATION = continuation14-live-readiness.md; s2-r1-coverage.json; tools/s2_r1_coverage_scan.py; s2-owner-approval.template.json; s2-student-language-pilot-protocol.md §5.11; live-evaluation-protocol.md (fourteenth amendment); owner-go-request.md (fourteenth addendum)
+CODE_COMMIT = 9503482a7480c2e8501efa8bcef0ce2c37776287 (product unchanged; scripts/tests/docs only)
+CANDIDATE_COMMIT = 0fe38a29
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C13_R1_DESCRIBED_POINTS_AND_SL3_SHORTHAND (the S-2 approval template blob d6c6e6b0 and its command no longer bind; C13 receipts unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION
 
 REPORT = docs/evaluation/geometry/runs/geometry-generalization-and-pedagogical-construction/report.md
