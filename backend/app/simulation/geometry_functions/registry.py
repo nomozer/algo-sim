@@ -64,7 +64,7 @@ from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationEr
 #: tính từ đỉnh S"); an unread curved clause refuses `CURVED_WORDING_UNSUPPORTED` (CAPABILITY, not SOURCE_UNVERIFIED).
 #: /26 (same run): certified `inscribed_in` spheres on polyhedra and axial curved hosts, `sphere_tangent_plane` tangency
 #: facts with optional named contact points, and multi-curved question disambiguation (`(S1)`/`(S2)`, `ngoại tiếp` vs `nội tiếp`).
-REGISTRY_VERSION = "geometry-functions/26"
+REGISTRY_VERSION = "geometry-functions/27"
 
 
 class TuChoi(Exception):

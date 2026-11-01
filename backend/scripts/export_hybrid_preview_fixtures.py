@@ -341,6 +341,9 @@ IDENTITY_DELTAS = (
      "versions": {"registry_version": ("geometry-functions/25", "geometry-functions/26"),
                   "planner_version": ("geometry-fact-planner/21", "geometry-fact-planner/22"),
                   "engine_version": ("geometry-function-engine/17", "geometry-function-engine/18")}},
+    {"run": "hybrid-master-backend-replacement",           # student simulation requests, honest exit, empty base (registry /27, engine /19; planner /22)
+     "versions": {"registry_version": ("geometry-functions/26", "geometry-functions/27"),
+                  "engine_version": ("geometry-function-engine/18", "geometry-function-engine/19")}},
 )
 
 

@@ -54,7 +54,7 @@ from .registry import DINH_CAT_CANH, _cum_hoi
 #: cone's base centre, placed at the ratio height and kernel cross-checked with the solid's named points.
 #: /18 (run `hybrid-master-backend-replacement`): certified inscribed spheres on convex polyhedra, sphere–plane tangency
 #: with optional contact point, composite multi-sphere / axial-sphere execution, and 4-layer `relation_certificates`.
-ENGINE_VERSION = "geometry-function-engine/18"
+ENGINE_VERSION = "geometry-function-engine/19"
 PLANE_SECTION_CERTIFICATE_VERSION = "plane-section-certificate/1"
 PLANE_SECTION_CERTIFICATE_RULE = "engine_derived_plane_section"
 PLANE_SECTION_CERTIFICATE_PRODUCER = "engine.kiem_chung_chi_thiet_dien"
