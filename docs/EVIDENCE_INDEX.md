@@ -49,7 +49,7 @@ CODE_COMMIT = 9503482a7480c2e8501efa8bcef0ce2c37776287
 CANDIDATE_COMMIT = 0fe38a29
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_MASTER_C12_S2_RUNNABLE_AND_ROUTE_D4_CORRECTION (supersedes C12 /4 REPRESENTATION_BLOCKED state and S-2 33/36 gold-replay baseline; historical C12 receipts preserved byte-for-byte)
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_MASTER_C14_LIVE_READINESS (S-2 template blob d6c6e6b0) + HYBRID_MASTER_C15_R1_LIVE_PILOT_PREPARED (the 9/9 DISCOVERED_FUNCTION_COMPOSITION claim is the planner's self-label: 6 SOURCE_EXPLICIT_SEQUENCE + 3 REGISTERED_DECOMPOSITION)
 
 
 ## CONTINUATION_ID = HYBRID_MASTER_C14_LIVE_READINESS
@@ -62,6 +62,19 @@ CODE_COMMIT = 9503482a7480c2e8501efa8bcef0ce2c37776287 (product unchanged; scrip
 CANDIDATE_COMMIT = 0fe38a29
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_MASTER_C13_R1_DESCRIBED_POINTS_AND_SL3_SHORTHAND (the S-2 approval template blob d6c6e6b0 and its command no longer bind; C13 receipts unchanged)
+CORRECTED_BY = HYBRID_MASTER_C15_R1_LIVE_PILOT_PREPARED (S-2 template blob 8b2ab292 no longer binds after the runner change)
+
+
+## CONTINUATION_ID = HYBRID_MASTER_C15_R1_LIVE_PILOT_PREPARED
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/r1-live-pilot-protocol.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = OFFLINE_DETERMINISTIC_FIXTURE_TEST + IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC (no live measurement; no Owner approval exists); runner measures studies (S-2 default, R-1); R-1 corpus 18 implementer-authored texts, gold replay 16/18 end to end, 0 wrong-served, 11/11 served exact, 0 DISCOVERED_FUNCTION_COMPOSITION under the reviewed composition rule (7 SOURCE_EXPLICIT_SEQUENCE + 4 REGISTERED_DECOMPOSITION), both paraphrases refused at the Source Gate on gold; independent review READY in round 2; harness tests 119; S-2 template re-issued (blob f764752d), R-1 template new (blob df69d370)
+VERIFICATION = r1-live-pilot-protocol.md; r1-live-pilot-corpus.json; tools/build_r1_live_corpus.py; r1-live-pilot-gold-replay.jsonl; r1-composition-relabel.json; tools/r1_composition_relabel.py; r1-owner-approval.template.json; s2-owner-approval.template.json; s2-student-language-pilot-protocol.md §5.12; owner-go-request.md (fifteenth addendum)
+CODE_COMMIT = 9503482a7480c2e8501efa8bcef0ce2c37776287 (product unchanged; scripts/tests/docs only)
+CANDIDATE_COMMIT = 0fe38a29
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C13_R1_DESCRIBED_POINTS_AND_SL3_SHORTHAND (its 9/9 DISCOVERED_FUNCTION_COMPOSITION is the planner's self-label: 6 SOURCE_EXPLICIT_SEQUENCE + 3 REGISTERED_DECOMPOSITION, r1-composition-relabel.json; served values unchanged) + HYBRID_MASTER_C14_LIVE_READINESS (S-2 template blob)
 CORRECTED_BY = NONE
 
 ## WAVE_ID = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION

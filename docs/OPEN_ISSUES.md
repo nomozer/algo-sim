@@ -17,6 +17,18 @@
 - **evidence:** probe row S05 in `evaluation/geometry/runs/hybrid-master-backend-replacement/student-language-probe.json`.
 - **update 2026-11-01 (eleventh continuation, offline prototype only):** `backend/scripts/s1_diacritic_offline.py` (`0` imports in `backend/app/`, `detect_domain` untouched) implements a strictly isolated, span-preserving normalization prototype (`norm_char_to_raw_span`, `verify_no_forged_quotes`, mixed-IME `_ascii_fold`, and polysemy flags `NEEDS_CLARIFICATION` for `goc`/`day`/`tam`/`canh`/`duong` and lowercase solid labels), verified on `s1-diacritic-development-corpus.json` (`16/16`, `test_s1_diacritic_free_offline.py`; `s1-diacritic-free-offline-audit.md`). Production integration remains gated on Owner decision `S-1`.
 
+### ISSUE-ARCH-PLANNER-COMPOSITION-SELF-LABEL-OVERSTATES
+
+- **status:** OPEN (2026-11-02, fifteenth continuation of `ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT`). The evaluation scripts no longer trust the label. The product telemetry is unchanged: changing it is a `backend/app` change, so it needs a new candidate.
+- **cause:** `planner.py` counts every call whose id is not a fact id in `search_telemetry.planner_originated_steps`, and labels the plan `DISCOVERED_FUNCTION_COMPOSITION`. Such a call can be:
+  - the step that only builds a point the extraction described (`midpoint(S,B)` for "trung điểm của SB");
+  - a step of a registered auxiliary rule (`registry.AUXILIARY_RULES`).
+- **evidence:**
+  - `evaluation/geometry/runs/hybrid-master-backend-replacement/r1-composition-relabel.json`: the 9 C13 probe chains the planner labels DISCOVERED are 6 `SOURCE_EXPLICIT_SEQUENCE` and 3 `REGISTERED_DECOMPOSITION`.
+  - `r1-live-pilot-gold-replay.jsonl`: of 11 serves, 0 are DISCOVERED.
+  - The rule is in `backend/scripts/run_s2_student_language_pilot.py::composition_label`. Its independent review is READY (`r1-live-pilot-protocol.md`, revisions A–B).
+- **impact:** every report that cites the planner's own DISCOVERED count overstates composition. That includes C13 "9/9" and C11 "9 discovered". The C11 route-B claim has not been re-checked with this rule: `HYPOTHESIS`, not `ESTABLISHED`.
+
 ### ISSUE-ARCH-ROUTE-D4-UNNAMED-DESCRIBED-POINT-GOAL
 
 - **status:** RESOLVED ON RESEARCH BRANCH (2026-11-01, thirteenth continuation of `ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT`, product `9503482a`, Registry `/29`, Planner `/23`, Engine `/20`; independent adversarial review `READY` in Round 2, `0 BLOCKER, 0 MAJOR, 0 MINOR`; not yet on `main`). `TypedFactNextPayloadV2.described_points` (`DescribedPointSpec`, `@id` refs, canonical alias deduplication, explicit cycle/depth validation, multi-consumer `scope_records` ownership checks, verbatim quote span provenance) + `typed_fact_next_bridge.py` (`_mo_ta_phang`, `_cau_hoi_mo_ta`, `_mat_fact`) carry unnamed described points end-to-end on `/4` across measurement goals and section `through_point`s (`9/9` Continuation 11 `DISCOVERED_FUNCTION_COMPOSITION` chains `C1a..C7` + `angle(line1, line2)` served with exact values in `r1-described-point-probe-r2.json` and `test_route_d4_described_points.py` `55/55`; `D1` depth-2 nested and `D2` two-described-operand goals are contract-representable on `/2` and refuse fail-closed `BRIDGE_UNSUPPORTED_DESCRIBED_POINT` until Source Gate `effect-chain` certification is generalized). Original status preserved: OPEN, waiting for an Owner decision (R-1 in `evaluation/geometry/runs/hybrid-master-backend-replacement/owner-go-request.md`, twelfth-continuation addendum).

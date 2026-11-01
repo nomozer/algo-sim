@@ -168,3 +168,9 @@ thay `-r1`, kết quả không đổi: 33/36, 0 wrong-served. Test của runner:
   `paired_harness_sha256 = 2ac9577ff68e15ebdf345577bea20ae4116ce26654b64d63e82b92b7619e5ada`,
   `scorer_sha256 = 8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d`; `measured_system` và
   `corpus_sha256` không đổi. Template phát hành lại: blob `8b2ab292c4339d27201623482e26821f1457f6ac`.
+
+**5.12 Continuation 15 (2026-11-02, vẫn `0` live call)** — chỉ số, ngưỡng, corpus và scorer S-2 không đổi.
+- Runner đổi để đo thêm nghiên cứu R-1 (`r1-live-pilot-protocol.md`). Corpus S-2 không khai `study` nên vẫn là S-2, byte
+  không đổi. Output S-2 chỉ thêm khoá `study` (header, summary) và `search` (row được phục vụ).
+- `runner_sha256 = 3ec508de20b6ad95ed003d63b2dd5ea98bceb231b782ba1aa6bd22748bda9da6`. Template phát hành lại: blob
+  `f764752dd27522d81e00fd4dc4848146fdd99329`. Blob `8b2ab292…` của §5.11 không còn hiệu lực.

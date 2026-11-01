@@ -243,6 +243,9 @@ template check fails, and the approval it would produce is refused by `check_app
 - Retry headroom is thin. A full run needs 35 requests under the cap of 36, retries included. Two transient provider
   errors end it `INCOMPLETE`, and a re-run needs a new approval.
 
+> **SUPERSEDED (fifteenth continuation):** the runner changed, so the command below fails its blob check. Use the
+> S-2 command in the fifteenth addendum (blob `f764752d…`).
+
 **S-2 GO — the one Owner action.** Template blob `8b2ab292c4339d27201623482e26821f1457f6ac`. The terms are unchanged:
 `gemini-2.5-flash`, 36 requests including retries, USD 2.0, 0.30 / 2.50 USD per million tokens. The agent dry-ran this
 command with a non-approval decision value, the terms passed `check_approval_terms`, and the scratch file was deleted.
@@ -273,4 +276,66 @@ httpx INFO logging: the LLM_ONLY arm's `call_gemini` puts the key in the URL (re
 | 3 | **R-1 live probe** (new, optional) | approve a 12–18 problem probe of unnamed described points, preferably by the paired author; or defer | needs a small runner generalization (scripts, review) and its own template. About USD 0.44, proposed cap USD 1.0 |
 | 4 | **S-1** diacritic-free input, including "hình chop" | keep the domain gate, or authorize the clarification slice | unchanged |
 | 5 | D1/D2, P-1..P-3 | optional | unchanged; no live evidence asks for them yet |
+| 6 | Integration | merge / push | `INTEGRATION_PENDING_OWNER_GO` |
+
+## Addendum — fifteenth continuation (R-1 live pilot prepared; composition claim corrected), 2026-11-02. It supersedes the S-2 command of the fourteenth addendum.
+
+Still `0` live calls and `USD 0`. **No approval file exists**, for S-2, R-1 or the paired run. The measured system is
+unchanged: candidate `0fe38a29` (product `9503482a`, `773e440d…`, `--verify` matches). Scripts, tests and docs changed
+only.
+
+**Correction you should read first (`r1-composition-relabel.json`, `ISSUE-ARCH-PLANNER-COMPOSITION-SELF-LABEL-OVERSTATES`).**
+- The planner labels a plan "discovered" even when its only own step builds the point the text described, or applies
+  a registered rule.
+- Under the reviewed rule, the C13 claim "9/9 discovered compositions" is **6 source-explicit + 3 registered
+  decompositions, 0 discovered**.
+- Hybrid `/4` serves unnamed described points correctly from gold, but the evidence shows bounded rule application,
+  not search-based discovery.
+
+**New: the R-1 live pilot is ready** (`r1-live-pilot-protocol.md`, revisions A–B; independent review READY in round 2).
+- **Corpus:** 18 implementer-authored texts in 7 strata, so a live run is `LIVE_DEVELOPMENT_PILOT`, not held-out. Hand
+  oracles are checked by exact coordinates.
+- **Gold ceiling:** 16/18. Both paraphrase cases are refused at the Source Gate on gold.
+- 0 wrong-served.
+- It measures whether Gemini emits correct `DescribedPointSpec`s; the S-2 pilot cannot measure that.
+- No retry headroom: the cap is 18 requests for 18 cases.
+
+**The two Owner commands** (each dry-run with a non-approval value; both passed `check_approval_terms`, and the
+scratch files were deleted). Each writes one approval file. Running it **is** the GO for that pilot only; it confirms
+the paid project and the use of its key.
+- **S-2:** template blob `f764752dd27522d81e00fd4dc4848146fdd99329`. Terms unchanged: 36 requests, USD 2.0.
+- **R-1:** template blob `df69d3708a49e0509e43af4cf4b82e41db071ecf`. Terms: 18 requests, USD 1.0, estimate about USD 0.44.
+- For both: 0.30 / 2.50 USD per million tokens, `gemini-2.5-flash`.
+
+```powershell
+cd D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-master-backend-replacement
+$d = 'APPROVED_BY_USER'
+$run = 'docs\evaluation\geometry\runs\hybrid-master-backend-replacement'
+# choose ONE pair: S-2 → 's2', 'f764752dd27522d81e00fd4dc4848146fdd99329' ; R-1 → 'r1', 'df69d3708a49e0509e43af4cf4b82e41db071ecf'
+$name = 's2'; $blob = 'f764752dd27522d81e00fd4dc4848146fdd99329'
+$t = "$run\$name-owner-approval.template.json"
+$o = "$run\$name-owner-approval.json"
+if ((git hash-object $t) -ne $blob) { throw 'template changed: do not approve' }
+if (Test-Path $o) { throw 'approval file already exists' }
+$s = [IO.File]::ReadAllText((Resolve-Path $t))
+if ([regex]::Matches($s, '"owner_decision": "PENDING_OWNER_DECISION"').Count -ne 1 -or [regex]::Matches($s, '"paid_project_confirmed": false').Count -ne 1) { throw 'unexpected template' }
+$s = $s.Replace('"owner_decision": "PENDING_OWNER_DECISION"', '"owner_decision": "' + $d + '"').Replace('"paid_project_confirmed": false', '"paid_project_confirmed": true')
+[IO.File]::WriteAllText((Join-Path (Get-Location) $o), $s, (New-Object Text.UTF8Encoding $false))
+```
+
+**For the run only:**
+- set `ALLOW_LIVE_AI=1` and a `GEMINI_API_KEY` from the paid project;
+- **check first** that the key may use `gemini-2.5-flash`.
+
+Each approval funds one run (`<approval>.consumed`). A stopped run is not resumed, and a re-run needs a new approval.
+
+**All Owner decisions, in one place:**
+
+| # | decision | options | consequence |
+|---|---|---|---|
+| 1 | S-2 live pilot | run the command with `s2`, or defer | ≤ 36 requests, ≤ USD 2.0; `LIVE_DEVELOPMENT_PILOT` |
+| 2 | **R-1 live pilot** | run the command with `r1`, or defer; or ask for a retry headroom or an independent author first | ≤ 18 requests, ≤ USD 1.0; `LIVE_DEVELOPMENT_PILOT` |
+| 3 | Paired 60-problem GO | name an independent author; the corpus via `heldout-authoring/`, then the approval JSON | ≤ 400 requests, ≤ USD 70 proposed; the only route to D-04/D-11/D-13/GATE-16 |
+| 4 | Planner telemetry (`ISSUE-ARCH-PLANNER-COMPOSITION-SELF-LABEL-OVERSTATES`) | fix the product label (new candidate, review, Full T3, new approvals), or keep it with the evaluation-side rule | the evaluation already uses the reviewed rule |
+| 5 | S-1, D1/D2, P-1..P-3 | unchanged | `DEFERRED_PENDING_EVIDENCE` |
 | 6 | Integration | merge / push | `INTEGRATION_PENDING_OWNER_GO` |

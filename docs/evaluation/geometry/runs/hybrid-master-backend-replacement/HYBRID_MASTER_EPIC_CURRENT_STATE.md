@@ -640,7 +640,7 @@ Offline only; `ALLOW_LIVE_AI = 0`; `MAX_AUTHORIZED_LIVE_REQUESTS = 0`; `MAX_AUTH
 - **`R-1` — Unnamed Described Points End-to-End on Hybrid `/4` (`ISSUE-ARCH-ROUTE-D4-UNNAMED-DESCRIBED-POINT-GOAL` closed on research branch):**
   - Additive `TypedFactNextPayloadV2.described_points` (`DescribedPointSpec`, `@id` refs, canonical alias deduplication via `canonical_vertex_ref`, explicit dependency cycle/depth validation `MAX_DESCRIBED_DEPTH = 2`, multi-consumer `scope_records` ownership propagation `_described_consumer_scopes`, verbatim quote span provenance; `typed-fact-next/1` untouched).
   - `typed_fact_next_bridge.py` (`_mo_ta_phang`, `_cau_hoi_mo_ta`, `_mat_fact`) connects `/4` measurement goals (`distance(point, plane)`, `distance(point, line)` on `point`, `distance(segment)`, `angle(line, plane)` on `line`, `angle(line1, line2)` on either line, and 3-vertex `area(polygon)`) and section `through_point`s directly to the existing Registry descriptor contracts, Planner `_EffectResolver`, Source Gate `effect-chain` certificates, Exact Kernel, and `Scene3D` `construction_trace` (`0` new `GeometryFunction` primitives).
-  - All **9/9** Continuation 11 `DISCOVERED_FUNCTION_COMPOSITION` chains (`C1a..C7`) plus `angle(line1, line2)` (`1/3`) now serve exact hand-verified answers end-to-end on `/4` (`r1-described-point-probe-r2.json`: `10/10` positives served, `6/6` adversarial extractions refused; `test_route_d4_described_points.py`: `55/55`).
+  - All **9/9** Continuation 11 `DISCOVERED_FUNCTION_COMPOSITION` chains (`C1a..C7`) plus `angle(line1, line2)` (`1/3`) now serve exact hand-verified answers end-to-end on `/4` (`r1-described-point-probe-r2.json`: `10/10` positives served, `6/6` adversarial extractions refused; `test_route_d4_described_points.py`: `55/55`). *Corrected in C15 (`r1-composition-relabel.json`): the "discovered" label is the planner's own; under the reviewed rule these chains are 6 `SOURCE_EXPLICIT_SEQUENCE` + 3 `REGISTERED_DECOMPOSITION`, 0 discovered. The served values stand.*
   - `D1` (nested depth-2) and `D2` (two described operands in one goal) are schema-representable on `/2` and refuse fail-closed with `BRIDGE_UNSUPPORTED_DESCRIBED_POINT` (`CAPABILITY`) until Source Gate `effect-chain` certification is generalized in a dedicated wave.
 - **`SL-3` — Student Shorthand Reading (`ISSUE-ARCH-ROUTE-D-STUDENT-SHORTHAND-UNREAD` closed for `k/c`, `mp`, `đt`):**
   - `registry.py` (`/29`) reads case-insensitive `k/c` (`"k/c"`, `"K/c"`, `"K/C"`) and `đt` before two line labels across named and described-point distance/angle/descriptor phrases (`s2-pilot-gold-replay-r3.jsonl`: **`35/36`** end-to-end, up from `33/36`, `0` wrong-served; tone-dropped `"hình chop"` in `S2-F-S07` stays fail-closed `UNGROUNDED_VALUE` under Owner diacritic policy `S-1`; `46/46` in `test_s2_student_language_pilot_runner.py`).
@@ -662,7 +662,7 @@ Offline only; `ALLOW_LIVE_AI = 0`; `MAX_AUTHORIZED_LIVE_REQUESTS = 0`; `MAX_AUTH
 
 **Status:** `ARCHITECTURE_CAPABILITY_PROGRESS` (`R-1` + `SL-3` + bridge regex closed); `OFFLINE_BACKEND_READY_FOR_LIVE_EVALUATION`; overall **`HYBRID_NOT_READY`** (`OFFLINE_READY_AWAITING_OWNER_GO`). Nothing merged or pushed; worktree preserved.
 
-**Next exact action (Owner decision boundaries in `owner-go-request.md`):**
+**Next exact action (Owner decision boundaries in `owner-go-request.md`):** *(superseded: the S-2 blobs `d6c6e6b0…` and `8b2ab292…` no longer bind; see the fifteenth continuation)*
 1. **`S-2` live student-language pilot (`<= 36` requests, `USD 2.0` cap):** run the blob-locked PowerShell command in `owner-go-request.md` (`s2-owner-approval.template.json` blob `d6c6e6b01b115621600054f611a7ff5f8657aec2`, binding candidate `0fe38a29` / `measured_system = 773e440de0385d57…` and `runner_sha256 = a274eabc…`).
 2. **Live paired evaluation GO (`D-04`, `D-11`, `D-13`, `GATE-16`):** name the independent 60-problem corpus author and provide the Owner approval JSON binding candidate `0fe38a29`.
 3. **Policy boundaries:** `S-1` diacritic-free input (including `"hình chop"`), optional `D1`/`D2` Source Gate multi/recursive chain certification, optional curved grammar rulings `P-1..P-3`, and `main` integration (`INTEGRATION_PENDING_OWNER_GO`).
@@ -707,3 +707,51 @@ are fixed). Round 2 **`READY`** (0 BLOCKER, 0 MAJOR, 0 MINOR, 3 NIT; `continuati
   score, attribute and get an independent review.
 - With a paired approval and a named author: freeze the corpus hash in an amendment, then `--live` once.
 - Without these: nothing offline in this epic is blocked except by these decisions.
+
+---
+
+## Fifteenth continuation (Owner Master Directive: live validation, planner generalization, evidence-based cutover), 2026-11-01/02: CHECKPOINT REACHED — `OFFLINE_READY_AWAITING_OWNER_GO`
+
+**No approval file exists** for S-2, R-1 or the paired run, and there is no independent 60-case corpus. So no live step
+ran: `0` provider calls, `USD 0`. The candidate is unchanged: `0fe38a29` (product `9503482a`, 118 files `773e440d…`);
+`--verify` matches; `0` edits to `backend/app` or `frontend/`. `LLM_ONLY` and `CACHE_VERSION = 131` are unchanged.
+
+| Commit | Content |
+|---|---|
+| `139f7618` | Runner measures studies (`S-2` default, `R-1`); `composition_label`, `described_check`; R-1 corpus (16) + gold replay |
+| `275d3c6b` | R-1 protocol, pre-registered |
+| `c72453b4` | Review round 1 fixes: label = steps beyond the description; R1-G paraphrases (18 cases); C13 correction `r1-composition-relabel.json` |
+| `d710c6e0` | Protocol revision A |
+| `28130c03` | Review round 2 `READY`: `s1::` labels, operand-order tests; protocol revision B; final runner bytes `3ec508de…` |
+| (this commit) | Templates: S-2 re-issued (blob `f764752d…`), R-1 new (blob `df69d370…`); fifteenth addendum; write-back |
+
+**Findings (all `VERIFIED_OFFLINE`, implementer-authored development data):**
+- **R-1 was prepared, not measured live.**
+  - 18 new texts (`r1-live-pilot-corpus.json`) with hand oracles checked against exact coordinates.
+  - Gold replay: **16/18** end to end and 0 wrong-served. 11/11 served values are exact; 5/5 refusals are correct.
+  - Both paraphrases (R1-G) are refused at the Source Gate on **gold**: `SOURCE_OBJECT_MISMATCH`, a deterministic false
+    refusal.
+- **Planner composition: the claim is corrected.**
+  - The planner's self-label `DISCOVERED_FUNCTION_COMPOSITION` counts the step that only builds a described point.
+  - Under the reviewed rule (`composition_label`), the 11 R-1 serves are 7 `SOURCE_EXPLICIT_SEQUENCE` and
+    4 `REGISTERED_DECOMPOSITION`: **0 discovered**.
+  - C13's "9/9" is 6 + 3 (`r1-composition-relabel.json`).
+  - Issue: `ISSUE-ARCH-PLANNER-COMPOSITION-SELF-LABEL-OVERSTATES`. The C11 route-B claim is not re-checked: `HYPOTHESIS`.
+- **Not measured:** S-2, R-1 and paired live metrics; latency; cost; real student wording.
+
+**Review (fresh-context, R-1 scope):**
+- Round 1 `NOT_READY`: 2 MAJOR (the self-label; the stale S-2 template), 4 MINOR, 5 NIT. All fixed or disclosed.
+- Round 2 **`READY`**. Its one condition, re-issuing the templates after the last byte change, is met in this commit.
+- Harness tests: 119.
+
+**Status labels:**
+- `HARNESS_READY` for S-2 and R-1.
+- `LIVE_PILOT_COMPLETE`: no.
+- `PAIRED_ACCEPTANCE_PASS`: not measured.
+- `INTEGRATION_READY`, `PRODUCTION_READY`: no.
+- Overall **`HYBRID_NOT_READY`**. Nothing is merged or pushed.
+
+**Next exact action:** the Owner decides items 1–6 of the fifteenth addendum.
+- With an approval: run `run_s2_student_language_pilot.py --corpus <s2|r1 corpus> --live --approval-file <file> --out <new.jsonl>`
+  once. Then hand attribution of every failed and DISCOVERED row, and an independent review.
+- Without approvals: nothing more offline is justified. No further readiness round (directive §XII).
