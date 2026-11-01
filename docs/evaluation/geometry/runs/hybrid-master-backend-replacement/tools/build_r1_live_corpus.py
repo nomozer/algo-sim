@@ -1,11 +1,12 @@
-"""Fifteenth continuation: build the R-1 live described-point pilot corpus (6 strata, 16 cases, ≤ 18 requests).
+"""Fifteenth continuation: build the R-1 live described-point pilot corpus (7 strata, 18 cases = 18 requests).
 
 IMPLEMENTER-AUTHORED DEVELOPMENT TEXTS ⇒ a live run is `LIVE_DEVELOPMENT_PILOT`, never held-out. No text reuses one of
-the thirteenth-continuation probe rows (`r1_described_point_probe.py` C1a..C7, D1, D2) or an S-2 text verbatim; the
-standard section request sentence is shared wording. Every SERVED oracle is a hand string in the `parse_exact` grammar,
-and the builder recomputes its square (or cos²) from hand coordinates in exact fractions below — never from the system.
-D1 / D2 / the reflection case expect the registered capability boundary (a typed refusal); their would-be values are
-recorded in `boundary_value` only.
+the thirteenth-continuation probe rows (`r1_described_point_probe.py` C1a..C7, D1, D2) or an S-2 text verbatim, but the
+question FRAMES do ("Tính độ dài đoạn thẳng nối … với …", the section request sentence, "tam giác tạo bởi"), 12 of 18
+texts share one premise sentence, and D01 reuses the C7 prism's base (review MINOR-3) — R1-G adds two paraphrases
+outside those frames. Every SERVED oracle is a hand string in the `parse_exact` grammar, and the builder recomputes its
+square (or cos²) from hand coordinates in exact fractions below — never from the system. D1 / D2 / the reflection case
+expect the registered capability boundary (a typed refusal); their would-be values are in `boundary_value` only.
 
 Hand coordinates. P(a, h): A(0,0,0) B(a,0,0) C(a,a,0) D(0,a,0) S(0,0,h).
 - A01 P(4,4): M = mid SB = (2,0,2); (SCD): y + z = 4 ⇒ d = 2/√2 = √2.
@@ -119,28 +120,58 @@ def area2_triangle(p, q, r):
     return dot(w, w) / 4
 
 
+def area2_convex(poly):                    # fan of triangles from the first vertex; returns the square of the area
+    w = (0, 0, 0)
+    for q, r in zip(poly[1:], poly[2:]):
+        c = cross(sub(q, poly[0]), sub(r, poly[0]))
+        w = tuple(x + y for x, y in zip(w, c))
+    return dot(w, w) / 4
+
+
+def cos2_to_base(v):                       # cos² of the angle between v and the plane z = 0
+    return 1 - F(v[2]) ** 2 / dot(v, v)
+
+
+def cut(p, q, coord, value):               # the point of segment pq where coordinate `coord` equals `value`
+    t = (value - p[coord]) / (q[coord] - p[coord])
+    return tuple(x + t * (y - x) for x, y in zip(p, q))
+
+
+def square_section_area2(a, h, z):         # pyramid P(a, h) cut by z = const: square of side a·(1 − z/h)
+    return (a * (1 - F(z) / h)) ** 4
+
+
 V = pts(4, 4)
 H_B = (F(2), F(2), F(0))                                                      # foot of B on x = y
 assert dot(sub(V['B'], H_B), (1, 1, 0)) == 0 and dot(sub(V['B'], H_B), (0, 0, 1)) == 0
 W = pts(3, 4)
 H_A = foot_line(W['A'], W['S'], W['B'])
-lam = 1 - H_A[2] / 4
+P2, P24 = pts(2, 2), pts(2, 4)
+O2 = mid(P2['A'], P2['C'])                                                 # AC ∩ BD of the square
+PR = {'A': (0, 0, 0), 'B': (F(3), 0, 0), 'C': (0, F(4), 0), "A'": (0, 0, F(2))}
+C02_POLY = [cut(P2['A'], P2['D'], 1, O2[1]), cut(P2['B'], P2['C'], 1, O2[1]), cut(P2['S'], P2['C'], 1, O2[1]),
+            cut(P2['S'], P2['D'], 1, O2[1])]                              # plane y = y(O) ∥ (SAB): y = 0
 CHECK = {
     'R1-A01': {'distance': [dist2_point_plane(mid(V['S'], V['B']), V['S'], V['C'], V['D'])]},
     'R1-A02': {'distance': [dist2_point_line(H_B, V['S'], V['C'])]},
     'R1-A03': {'distance': [dot(sub(pts(4, 3)['S'], (2, 2, 0)), sub(pts(4, 3)['S'], (2, 2, 0)))]},
-    'R1-A04': {'angle_cos_sq': [F(1) - F(1, 3)]},                         # AM = (1,1,1): sin² = 1/3 against z = 0
-    'R1-A05': {'area': [area2_triangle(pts(2, 2)['S'], pts(2, 2)['C'], mid(pts(2, 2)['A'], pts(2, 2)['B']))]},
-    'R1-B01': {'area': [(3 * lam) ** 4]},                                    # (side)² squared
-    'R1-B02': {'area': [(4 * F(1, 2)) ** 4]},
-    'R1-C01': {'distance': [F(4), dot(sub(pts(2, 4)['B'], mid(pts(2, 4)['S'], pts(2, 4)['C'])),
-                                        sub(pts(2, 4)['B'], mid(pts(2, 4)['S'], pts(2, 4)['C'])))]},
-    'R1-C02': {'area': [((2 + 1) * F(1, 2)) ** 2]},                          # trapezoid sides 2 and 1, height 1
-    'R1-D01': {'distance': [F(9, 4) + 4 + 4]},
-    'R1-D02': {'distance': [dist2_point_plane(mid(pts(2, 2)['S'], pts(2, 2)['C']), pts(2, 2)['S'], pts(2, 2)['B'],
-                                              pts(2, 2)['D'])]},           # S.MNPQ ≅ S.ABCD with N→B, Q→D
+    'R1-A04': {'angle_cos_sq': [cos2_to_base(sub(mid(P2['S'], P2['C']), P2['A']))]},
+    'R1-A05': {'area': [area2_triangle(P2['S'], P2['C'], mid(P2['A'], P2['B']))]},
+    'R1-B01': {'area': [square_section_area2(3, 4, H_A[2])]},
+    'R1-B02': {'area': [square_section_area2(4, 2, mid(pts(4, 2)['S'], pts(4, 2)['D'])[2])]},   # plane ⊥ SA is z = const
+    'R1-C01': {'distance': [mid(P24['S'], P24['C'])[2] ** 2,
+                            dot(sub(P24['B'], mid(P24['S'], P24['C'])), sub(P24['B'], mid(P24['S'], P24['C'])))]},
+    'R1-C02': {'area': [area2_convex(C02_POLY)]},
+    'R1-D01': {'distance': [dot(sub(PR["A'"], mid(PR['B'], PR['C'])), sub(PR["A'"], mid(PR['B'], PR['C'])))]},
+    'R1-D02': {'distance': [dist2_point_plane(mid(P2['S'], P2['C']), P2['S'], P2['B'], P2['D'])]},   # N→B, P→C, Q→D
+    'R1-G01': {'angle_cos_sq': [cos2_to_base(sub(mid(P24['S'], P24['C']), P24['A']))]},
+    'R1-G02': {'distance': [dist2_point_plane(mid(P2['S'], P2['B']), P2['S'], P2['C'], P2['D'])]},
 }
 assert H_A == (F(48, 25), 0, F(36, 25)), H_A
+assert C02_POLY == [(0, 1, 0), (2, 1, 0), (1, 1, 1), (0, 1, 1)], C02_POLY
+BOUNDARY = {'R1-F01': dist2_point_line((F(1), F(1), F(0)), P2['S'], P2['B']),          # foot of mid SC on (ABCD)
+            'R1-F02': dot(sub(mid(P2['S'], P2['B']), O2), sub(mid(P2['S'], P2['B']), O2)),
+            'R1-F03': dist2_point_plane(sub(tuple(2 * x for x in P2['C']), P2['A']), P2['S'], P2['B'], P2['D'])}
 
 
 # ── cases ───────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -267,16 +298,33 @@ case('R1-F02', 'R1-F', t2 + q + '.', gold(t2 + q + '.', p2, [G('q1', 'distance',
      'REFUSED_UNSUPPORTED', boundary='D2 two described operands', boundary_value='√2')
 q = 'Tính khoảng cách từ điểm đối xứng với A qua C đến mặt phẳng (SBD)'
 case('R1-F03', 'R1-F', t2 + q + '.', gold(t2 + q + '.', p2, unresolved=[U('unsupported', 'điểm đối xứng với A qua C')]),
-     'REFUSED_UNSUPPORTED', boundary='no reflection primitive in the library')
+     'REFUSED_UNSUPPORTED', boundary_value='2√3',
+     boundary='a reflected point is no DescribedPointSpec kind (typed_fact_next.py), so it has no @-reference')
+
+# R1-G: paraphrases outside the standard frames (C15 review MINOR-3) — the Source Gate may not read them; the expected
+# outcome stays the mathematically right serve, so a refusal here is a measured deterministic false refusal
+t5b, p5b = pyramid(2, 4)
+q = 'Tính góc giữa đường thẳng đi qua A và trung điểm của SC với mặt phẳng (ABCD)'
+case('R1-G01', 'R1-G', t5b + q + '.', gold(t5b + q + '.', p5b, [G('q1', 'angle', {'line': ['A', '@m1'],
+                                                                                 'plane': list('ABCD')}, q)],
+     described=[DP('m1', 'midpoint', 'trung điểm của SC', segment=['S', 'C'])]), 'SERVED', {'angle_cos_sq': ['1/3']},
+     described_dependencies=['m1 = midpoint(SC)'], paraphrase='"đường thẳng đi qua A và …" for "đường thẳng nối A với …"')
+q = 'Tính khoảng cách từ điểm chính giữa cạnh SB tới mặt phẳng (SCD)'
+case('R1-G02', 'R1-G', t2 + q + '.', gold(t2 + q + '.', p2, [G('q1', 'distance', {'point': '@m1', 'plane': list('SCD')}, q)],
+     described=[DP('m1', 'midpoint', 'điểm chính giữa cạnh SB', segment=['S', 'B'])]), 'SERVED', {'distance': ['√2/2']},
+     described_dependencies=['m1 = midpoint(SB)'], paraphrase='"điểm chính giữa cạnh" for "trung điểm của", "tới" for "đến"')
 
 for c in CASES:                                              # every hand oracle agrees with the exact coordinates
     e = c['expected']
+    if c.get('boundary_value'):
+        assert squared(c['boundary_value']) == BOUNDARY[c['id']], c['id']
     if e['outcome'] != 'SERVED':
         continue
     got = {k: sorted(F(v) if k == 'angle_cos_sq' else squared(v) for v in vs) for k, vs in e['oracle'].items()}
     want = {k: sorted(vs) for k, vs in CHECK[c['id']].items()}
     assert got == want, (c['id'], got, want)
-assert len(CASES) == 16 and len({c['problem_text'] for c in CASES}) == 16
+assert len(CASES) == 18 and len({c['problem_text'] for c in CASES}) == 18 and set(CHECK) == {
+    c['id'] for c in CASES if c['expected']['outcome'] == 'SERVED'}
 
 if __name__ == '__main__':
     with open(sys.argv[1], 'x', encoding='utf-8', newline='\n') as f:

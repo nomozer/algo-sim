@@ -1682,7 +1682,242 @@
     "outcome": "REFUSED_UNSUPPORTED",
     "is_ambiguous": false
    },
-   "boundary": "no reflection primitive in the library"
+   "boundary_value": "2√3",
+   "boundary": "a reflected point is no DescribedPointSpec kind (typed_fact_next.py), so it has no @-reference"
+  },
+  {
+   "id": "R1-G01",
+   "stratum": "R1-G",
+   "source": "build_r1_live_corpus.py (new, implementer)",
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 4. Tính góc giữa đường thẳng đi qua A và trung điểm của SC với mặt phẳng (ABCD).",
+   "gold_extraction": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 4. Tính góc giữa đường thẳng đi qua A và trung điểm của SC với mặt phẳng (ABCD).",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với mặt phẳng (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "4"
+      },
+      "quote": "SA = 4",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "angle",
+      "target": {
+       "line": [
+        "A",
+        "@m1"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "Tính góc giữa đường thẳng đi qua A và trung điểm của SC với mặt phẳng (ABCD)",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "m1",
+      "kind": "midpoint",
+      "quote": "trung điểm của SC",
+      "segment": [
+       "S",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expected": {
+    "outcome": "SERVED",
+    "is_ambiguous": false,
+    "oracle": {
+     "angle_cos_sq": [
+      "1/3"
+     ]
+    }
+   },
+   "described_dependencies": [
+    "m1 = midpoint(SC)"
+   ],
+   "paraphrase": "\"đường thẳng đi qua A và …\" for \"đường thẳng nối A với …\""
+  },
+  {
+   "id": "R1-G02",
+   "stratum": "R1-G",
+   "source": "build_r1_live_corpus.py (new, implementer)",
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Tính khoảng cách từ điểm chính giữa cạnh SB tới mặt phẳng (SCD).",
+   "gold_extraction": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng (ABCD) và SA = 2. Tính khoảng cách từ điểm chính giữa cạnh SB tới mặt phẳng (SCD).",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với mặt phẳng (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2"
+      },
+      "quote": "SA = 2",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "point": "@m1",
+       "plane": [
+        "S",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "Tính khoảng cách từ điểm chính giữa cạnh SB tới mặt phẳng (SCD)",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "m1",
+      "kind": "midpoint",
+      "quote": "điểm chính giữa cạnh SB",
+      "segment": [
+       "S",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected": {
+    "outcome": "SERVED",
+    "is_ambiguous": false,
+    "oracle": {
+     "distance": [
+      "√2/2"
+     ]
+    }
+   },
+   "described_dependencies": [
+    "m1 = midpoint(SB)"
+   ],
+   "paraphrase": "\"điểm chính giữa cạnh\" for \"trung điểm của\", \"tới\" for \"đến\""
   }
  ]
 }

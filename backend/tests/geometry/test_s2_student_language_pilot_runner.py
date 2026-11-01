@@ -269,15 +269,54 @@ def test_c15_an_approval_binds_exactly_one_study(tmp_path):
         R.check_approval_terms(s2.read_bytes(), _terms(s2, pilot="R-1"))
 
 
-def test_c15_gold_replay_labels_a_discovered_composition_only_with_a_planner_made_step(tmp_path):
+def test_c15_realizing_the_models_own_described_point_is_not_a_discovered_composition(tmp_path):
+    """C15 review MAJOR-1: the planner calls the step that builds a described point its own, and labels the plan
+    DISCOVERED; but that step is exactly what the extraction stated, so the plan is source-explicit."""
     out = R.evaluate(_write_study(tmp_path, "R-1", [_r1_case()]), tmp_path / "dry.jsonl", None)
     row = out["rows"][0]
     assert row["end_to_end_correct"] and row["search"]["classification"] == "DISCOVERED_FUNCTION_COMPOSITION"
-    assert row["search"]["planner_originated_steps"] and row["composition_label"] == "DISCOVERED_FUNCTION_COMPOSITION"
-    assert out["supplementary"]["composition_labels"] == {"DISCOVERED_FUNCTION_COMPOSITION": 1}
-    assert set(out["supplementary"]["by_stratum"]) == {"R1-A", "R1-B", "R1-C", "R1-D", "R1-E", "R1-F"}
-    no_step = dict(row, search={"classification": "DISCOVERED_FUNCTION_COMPOSITION", "planner_originated_steps": []})
+    assert [s["fn"] for s in row["search"]["planner_steps"]] == ["intersect_line_line"]
+    assert row["composition_label"] == "SOURCE_EXPLICIT_SEQUENCE"
+    assert out["supplementary"]["composition_labels"] == {"SOURCE_EXPLICIT_SEQUENCE": 1}
+    assert set(out["supplementary"]["by_stratum"]) == {"R1-A", "R1-B", "R1-C", "R1-D", "R1-E", "R1-F", "R1-G"}
+    no_step = dict(row, search={"classification": "DISCOVERED_FUNCTION_COMPOSITION", "planner_steps": []})
     assert R.composition_label(no_step) == "NOT_ESTABLISHED"          # the planner's own label alone is not evidence
+
+
+def _served(steps, described=()):
+    return {"technical_failure": False, "end_to_end_correct": True, "expected": {"outcome": "SERVED"},
+            "observed": {"status": "SERVED"}, "raw_extraction": {"described_points": list(described)},
+            "search": {"classification": "DISCOVERED_FUNCTION_COMPOSITION", "planner_steps": list(steps)}}
+
+
+def test_c15_only_a_step_beyond_the_description_and_the_registered_rules_is_discovered():
+    h1 = {"described_id": "h1", "kind": "orthogonal_projection", "quote": "q", "point": "B", "plane": ["S", "A", "C"]}
+    real = {"id": "q1_aux", "fn": "orthogonal_projection", "args": {"point": "B", "plane": ["S", "A", "C"], "image": "H"}}
+    rule = {"id": "q1_aux2", "fn": "orthogonal_projection_line", "args": {"point": "H", "line": ["C", "S"], "image": "H1"}}
+    new = {"id": "q1_aux3", "fn": "centroid", "args": {"point": "G", "polygon": ["S", "A", "B"]}}
+    assert R.composition_label(_served([real], [h1])) == "SOURCE_EXPLICIT_SEQUENCE"
+    assert R.composition_label(_served([real, rule], [h1])) == "REGISTERED_DECOMPOSITION"     # distance(point,line)
+    assert R.composition_label(_served([real, rule, new], [h1])) == "DISCOVERED_FUNCTION_COMPOSITION"
+    moved = dict(real, args={"point": "D", "plane": ["S", "A", "C"], "image": "H"})          # not the stated point
+    assert R.composition_label(_served([moved], [h1])) == "DISCOVERED_FUNCTION_COMPOSITION"
+    swapped = dict(real, args={"point": "B", "plane": ["C", "S", "A"], "image": "H"})        # same plane, other order
+    assert R.composition_label(_served([swapped], [h1])) == "SOURCE_EXPLICIT_SEQUENCE"
+    mid = {"described_id": "m1", "kind": "midpoint", "quote": "q", "segment": ["S", "B"]}
+    assert R.composition_label(_served([{"id": "a", "fn": "midpoint", "args": {"point": "M", "segment": ["B", "S"]}}],
+                                       [mid])) == "SOURCE_EXPLICIT_SEQUENCE"
+
+
+def test_c15_the_registered_r1_corpus_and_its_gold_replay_are_locked(tmp_path):
+    """C15 review MINOR-2: the corpus validates, and its gold replay reproduces the committed receipt."""
+    corpus = CORPUS.parent / "r1-live-pilot-corpus.json"
+    R.validate_corpus(json.loads(corpus.read_text(encoding="utf-8")))
+    out = R.evaluate(corpus, tmp_path / "dry.jsonl", None)
+    receipt = _rows(CORPUS.parent / "r1-live-pilot-gold-replay.jsonl")
+    assert receipt[0]["corpus_sha256"] == R.sha256_file(corpus)
+    assert {r["case_id"]: r["composition_label"] for r in out["rows"]} == {
+        r["case_id"]: r["composition_label"] for r in receipt if r["type"] == "row"}
+    assert out["supplementary"] == receipt[-1]["supplementary"]
+    assert out["score"]["metrics"]["wrong_served_end_to_end"]["numerator"] == 0
 
 
 def test_c15_the_models_own_described_points_are_checked_against_gold():
@@ -297,6 +336,16 @@ def test_c15_the_models_own_described_points_are_checked_against_gold():
     wrong["described_points"][0]["quote"] = "giao điểm hai đường chéo"
     assert R.described_check(gold, wrong, _R1_TEXT)["quotes_verbatim"] is False
     assert R.described_check(gold, None, _R1_TEXT)["emitted"] is False                     # no readable extraction
+    # C15 review MINOR-1: each condition is load-bearing
+    unref = deepcopy(gold)                                    # a spec is emitted but nothing refers to it
+    unref["math_goals"][0]["target"]["point"] = "O"
+    assert R.described_check(gold, unref, _R1_TEXT)["refs_resolve"] is False
+    empty = deepcopy(gold)
+    empty["described_points"][0]["quote"] = ""                # "" is in every text: never verbatim
+    assert R.described_check(gold, empty, _R1_TEXT)["quotes_verbatim"] is False
+    two = deepcopy(gold)                                      # gold has 1 intersection; 2 intersections ≠ the multiset
+    two["described_points"].append(dict(two["described_points"][0], described_id="o2"))
+    assert R.described_check(gold, two, _R1_TEXT)["kinds_match"] is False
 
 
 def test_c15_mock_live_a_model_that_names_the_point_is_an_extraction_failure_never_a_serve(tmp_path, monkeypatch):

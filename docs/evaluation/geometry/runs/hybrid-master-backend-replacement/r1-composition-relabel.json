@@ -1,0 +1,132 @@
+{
+ "classification": "IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC",
+ "provider_calls": 0,
+ "corrects": "r1-described-point-probe-r2.json (planner self-label DISCOVERED_FUNCTION_COMPOSITION)",
+ "summary": {
+  "planner_label": {
+   "DISCOVERED_FUNCTION_COMPOSITION": 9,
+   "REGISTERED_DECOMPOSITION": 1
+  },
+  "composition_label": {
+   "SOURCE_EXPLICIT_SEQUENCE": 6,
+   "REGISTERED_DECOMPOSITION": 4
+  }
+ },
+ "rows": [
+  {
+   "id": "C1a",
+   "planner_label": "DISCOVERED_FUNCTION_COMPOSITION",
+   "composition_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "planner_steps": [
+    "orthogonal_projection_line"
+   ],
+   "beyond_description": []
+  },
+  {
+   "id": "C1b",
+   "planner_label": "DISCOVERED_FUNCTION_COMPOSITION",
+   "composition_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "planner_steps": [
+    "orthogonal_projection"
+   ],
+   "beyond_description": []
+  },
+  {
+   "id": "C2",
+   "planner_label": "DISCOVERED_FUNCTION_COMPOSITION",
+   "composition_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "planner_steps": [
+    "intersect_line_line"
+   ],
+   "beyond_description": []
+  },
+  {
+   "id": "C3",
+   "planner_label": "DISCOVERED_FUNCTION_COMPOSITION",
+   "composition_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "planner_steps": [
+    "intersect_line_plane"
+   ],
+   "beyond_description": []
+  },
+  {
+   "id": "C4",
+   "planner_label": "DISCOVERED_FUNCTION_COMPOSITION",
+   "composition_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "planner_steps": [
+    "orthogonal_projection_line"
+   ],
+   "beyond_description": []
+  },
+  {
+   "id": "C5",
+   "planner_label": "DISCOVERED_FUNCTION_COMPOSITION",
+   "composition_label": "REGISTERED_DECOMPOSITION",
+   "planner_steps": [
+    "orthogonal_projection_line",
+    "translate_point",
+    "translate_point"
+   ],
+   "beyond_description": [
+    "translate_point",
+    "translate_point"
+   ]
+  },
+  {
+   "id": "C6a",
+   "planner_label": "DISCOVERED_FUNCTION_COMPOSITION",
+   "composition_label": "REGISTERED_DECOMPOSITION",
+   "planner_steps": [
+    "midpoint",
+    "orthogonal_projection_line",
+    "orthogonal_projection_line",
+    "translate_point",
+    "translate_point"
+   ],
+   "beyond_description": [
+    "orthogonal_projection_line",
+    "orthogonal_projection_line",
+    "translate_point",
+    "translate_point"
+   ]
+  },
+  {
+   "id": "C6b",
+   "planner_label": "DISCOVERED_FUNCTION_COMPOSITION",
+   "composition_label": "REGISTERED_DECOMPOSITION",
+   "planner_steps": [
+    "orthogonal_projection_line",
+    "orthogonal_projection_line",
+    "orthogonal_projection_line",
+    "translate_point",
+    "translate_point"
+   ],
+   "beyond_description": [
+    "orthogonal_projection_line",
+    "orthogonal_projection_line",
+    "translate_point",
+    "translate_point"
+   ]
+  },
+  {
+   "id": "C7",
+   "planner_label": "DISCOVERED_FUNCTION_COMPOSITION",
+   "composition_label": "SOURCE_EXPLICIT_SEQUENCE",
+   "planner_steps": [
+    "orthogonal_projection_line"
+   ],
+   "beyond_description": []
+  },
+  {
+   "id": "N1",
+   "planner_label": "REGISTERED_DECOMPOSITION",
+   "composition_label": "REGISTERED_DECOMPOSITION",
+   "planner_steps": [
+    "orthogonal_projection_line"
+   ],
+   "beyond_description": [
+    "orthogonal_projection_line"
+   ]
+  }
+ ]
+}

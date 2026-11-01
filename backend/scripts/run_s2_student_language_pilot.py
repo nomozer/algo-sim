@@ -43,7 +43,7 @@ STRATA = ("S2-A", "S2-B", "S2-C", "S2-D", "S2-E", "S2-F")
 #: C15: one runner, several pre-registered studies — each with its own closed strata and case cap (= request cap). A
 #: corpus names its study; none ⇒ S-2, so the locked S-2 corpus is byte-identical. An approval binds exactly one study.
 STUDIES = {"S-2": (STRATA, MAX_CASES),
-           "R-1": (("R1-A", "R1-B", "R1-C", "R1-D", "R1-E", "R1-F"), 18)}   # unnamed described points (C14 proposal)
+           "R-1": (("R1-A", "R1-B", "R1-C", "R1-D", "R1-E", "R1-F", "R1-G"), 18)}   # unnamed described points (C14)
 OUTCOMES = ("SERVED", "CLARIFY", "REFUSED_UNSUPPORTED", "REFUSED_INCONSISTENT")
 #: `route-d-clarification/1` closed `nlu_class` vocabulary (server-built, never model prose) = the clarification code.
 CLARIFICATION_CODES = ("AMBIGUOUS", "MISSING_DATA", "UNRECOGNIZED_WORDING")
@@ -245,9 +245,12 @@ def observe(text: str, extractor, deadline_s: float = 15.0) -> tuple[dict[str, A
     if served:
         obs.update(status="SERVED", certificate_verified=receipt["engine"]["status"] == "VERIFIED",
                    answers={k: sorted(map(str, v)) for k, v in P.served_quantities(env).items()})
-        tel = (route.get("planner") or {}).get("search_telemetry") or {}      # C15: what the planner itself composed
+        planner = route.get("planner") or {}                                 # C15: what the planner itself composed
+        tel = planner.get("search_telemetry") or {}
+        own = set(tel.get("planner_originated_steps") or ())
         extra["search"] = {"classification": tel.get("classification"),
-                           "planner_originated_steps": list(tel.get("planner_originated_steps") or ())}
+                           "planner_steps": [{k: c.get(k) for k in ("id", "fn", "args")}
+                                             for c in planner.get("calls") or () if c.get("id") in own]}
         return obs, extra
     clar = (route.get("refusal") or {}).get("clarification")
     if clar and clar.get("kind") != "unsupported":          # no learner answer can fix `unsupported` (server rule)
@@ -318,11 +321,34 @@ _LAYER_BY_GROUP = {"EXTRACTION_FAILED": "REPRESENTATION_BLOCKED", "SOURCE_UNVERI
                    "INCONCLUSIVE": "KERNEL_VERIFICATION_FAILURE"}
 
 
+#: Output operand of each point constructor a `DescribedPointSpec` kind names (the rest are its inputs).
+_OUTPUT_ARG = {"midpoint": "point", "centroid": "point", "intersect_line_line": "point", "intersect_line_plane": "point",
+               "orthogonal_projection": "image", "orthogonal_projection_line": "image"}
+_SPEC_OPERANDS = ("segment", "polygon", "point", "plane", "line", "line1", "line2")
+
+
+def _inputs(kind: str, operands: dict[str, Any]) -> tuple:
+    """Kind + its input operands, each label set sorted, the operands themselves sorted (AC∩BD = BD∩AC)."""
+    vals = (v if isinstance(v, list) else [v] for v in operands.values())
+    return kind, tuple(sorted(tuple(sorted(str(x).strip().replace("′", "'") for x in v)) for v in vals))
+
+
+def _beyond_description(steps: list[dict[str, Any]], raw: Any) -> list[dict[str, Any]]:
+    """Planner-made steps that do more than build a point the extraction itself described."""
+    specs = [d for d in (raw.get("described_points") or []) if isinstance(d, dict)] if isinstance(raw, dict) else []
+    stated = {_inputs(str(d.get("kind")), {k: d[k] for k in _SPEC_OPERANDS if d.get(k) is not None}) for d in specs}
+    return [s for s in steps if _inputs(str(s.get("fn")), {k: v for k, v in (s.get("args") or {}).items()
+                                                            if k != _OUTPUT_ARG.get(s.get("fn"))}) not in stated]
+
+
 def composition_label(row: dict[str, Any]) -> str:
-    """R-1 (C15 directive §V): how a row was served, or the first layer that failed. A served row takes the planner's
-    own search classification, and DISCOVERED_FUNCTION_COMPOSITION only with a step the planner made itself — a long
-    trace is not evidence. Failures are labelled by layer only when the gold reproduction ends the same way."""
+    """R-1 (C15 directive §V): how a row was served, or the first layer that failed. The planner calls every step it
+    adds its own — including the one that only builds a point the model described (review MAJOR-1) — so a served row is
+    SOURCE_EXPLICIT_SEQUENCE when nothing goes beyond the description, REGISTERED_DECOMPOSITION when the rest uses only
+    functions of the registered auxiliary rules, and DISCOVERED_FUNCTION_COMPOSITION only otherwise. Failures are
+    labelled by layer only when the gold reproduction ends the same way."""
     from app.ai.hybrid_preview import classify_refusal
+    from app.simulation.geometry_functions.registry import AUXILIARY_RULES
 
     if row["technical_failure"]:
         return "NOT_ESTABLISHED"
@@ -332,10 +358,19 @@ def composition_label(row: dict[str, Any]) -> str:
         if row["expected"]["outcome"] != "SERVED":
             return "CORRECT_REFUSAL"
         search = row.get("search") or {}
-        kind = search.get("classification")
-        if kind == "DISCOVERED_FUNCTION_COMPOSITION" and not search.get("planner_originated_steps"):
-            return "NOT_ESTABLISHED"
-        return kind or "NOT_ESTABLISHED"
+        kind, steps = search.get("classification"), search.get("planner_steps") or []
+        if kind != "DISCOVERED_FUNCTION_COMPOSITION":
+            return kind or "NOT_ESTABLISHED"
+        if not steps:
+            return "NOT_ESTABLISHED"                            # the planner's own label alone is not evidence
+        beyond = _beyond_description(steps, row.get("raw_extraction"))
+        if not beyond:
+            return "SOURCE_EXPLICIT_SEQUENCE"
+        # ponytail: by function name — a registered-rule function used outside its rule is counted registered too
+        # (undercounts discovery, never overcounts); match the rule's step pattern if that ever matters
+        registered = {fn for fns in AUXILIARY_RULES.values() for fn in fns}
+        return ("REGISTERED_DECOMPOSITION" if all(s.get("fn") in registered for s in beyond)
+                else "DISCOVERED_FUNCTION_COMPOSITION")
     if row["attribution"] == "LLM_EXTRACTION_DIFFERS_FROM_GOLD":
         return "EXTRACTION_FAILURE"
     if row["attribution"] != "DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD":
@@ -360,7 +395,8 @@ def described_check(gold: Any, raw: Any, text: str) -> dict[str, bool] | None:
     return {"emitted": bool(got),
             "kinds_match": sorted(map(str, (d.get("kind") for d in got))) == sorted(d["kind"] for d in want),
             "refs_resolve": bool(refs) and refs <= {f"@{str(d.get('described_id')).strip()}" for d in got},
-            "quotes_verbatim": bool(got) and all(isinstance(d.get("quote"), str) and d["quote"] in text for d in got)}
+            "quotes_verbatim": bool(got) and all(isinstance(d.get("quote"), str) and d["quote"].strip()
+                                                 and d["quote"] in text for d in got)}
 
 
 def supplementary(rows: list[dict[str, Any]], study: str = "S-2") -> dict[str, Any]:
