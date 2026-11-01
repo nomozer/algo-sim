@@ -337,9 +337,12 @@ def _cau_hoi_mo_ta(g, mo_ta: dict[str, dict[str, Any]]) -> dict[str, Any] | None
         return {"quantity": "distance", **desc, "points_b": _refs(t["line"])}
     if g.goal_type == "distance" and keys == {"segment"}:
         return {"quantity": "length", **desc, "points_b": rest("segment")}
-    if g.goal_type in ("distance", "angle") and keys == {"line", "plane"} and key == "line":
-        return {"quantity": g.goal_type, **desc, "points_a": rest("line"), "points_b": _refs(t["plane"])}
-    if g.goal_type == "area" and keys == {"polygon"}:
+    if g.goal_type == "angle" and keys == {"line", "plane"} and key == "line":
+        return {"quantity": "angle", **desc, "points_a": rest("line"), "points_b": _refs(t["plane"])}
+    if g.goal_type == "angle" and keys == {"line1", "line2"} and key in ("line1", "line2"):
+        other = "line2" if key == "line1" else "line1"
+        return {"quantity": "angle", **desc, "points_a": rest(key), "points_b": _refs(t[other])}
+    if g.goal_type == "area" and keys == {"polygon"} and len(t["polygon"]) == 3:
         return {"quantity": "area", **desc, "points_b": rest("polygon")}
     raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"{g.goal_id}: điểm được mô tả ở toán hạng {key!r} của "
                  f"{g.goal_type} chưa có hợp đồng mục tiêu", (g.goal_id,))
@@ -531,6 +534,10 @@ def _phan_cong(p: TypedFactNextPayload, solids: dict[str, Any]) -> list[dict[str
         if x.section_shape not in (None, "polygon" if x.plane_kind == "axial_section" else "circle"):
             raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{x.section_id}: hình dạng {x.section_shape} mâu thuẫn với loại thiết diện "
                          f"{x.plane_kind}", (x.section_id,))     # review M2: the payload's own fields must agree
+        if x.through_point and is_described_ref(x.through_point):
+            raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+                         f"{x.section_id}: thiết diện của khối tròn xoay qua điểm mô tả chưa có trên planner",
+                         (x.section_id,))
         out.append({"id": x.section_id, "kind": "section", "role": "premise", "quotes": [x.quote], "solid": s.notation,
                     "curved_part": {"role": "section", "kind": x.plane_kind, "plane": x.plane_name,
                                     "distance": x.distance_from_center if kc.co_truc is False else x.distance_from_base,
@@ -561,8 +568,13 @@ def _phan_cong(p: TypedFactNextPayload, solids: dict[str, Any]) -> list[dict[str
                 raise TuChoi("INVALID_MATH_GOAL", f"{g.goal_id}: thiết diện {g.target['section_id']!r} không có", (g.goal_id,))
             out.append({**q, "quantity": g.goal_type, "curved_part": {"role": "ask", "section": g.target["section_id"]}})
         elif (g.kind == "measurement" and g.goal_type in ("volume", "area", "lateral_area", "radius")
-              and measurement_scope(p, g) == s.solid_id):
+              and set(g.target) <= {"solid", "solid_id"} and measurement_scope(p, g) == s.solid_id):
             out.append({**q, "quantity": g.goal_type})
+        elif any(is_described_ref(x) for k in DESCRIBED_GOAL_KEYS if k in g.target
+                 for x in (g.target[k] if isinstance(g.target[k], (list, tuple)) else [g.target[k]])):
+            raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+                         f"{g.goal_id}: mục tiêu của khối tròn xoay với điểm mô tả chưa có trên planner",
+                         (g.goal_id,))
         else:
             raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{g.goal_id}: mục tiêu {g.kind}/{g.goal_type} của khối tròn xoay chưa có "
                          "trên planner", (g.goal_id,))
@@ -843,11 +855,18 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
         elif g.kind == "residual_volume":
             facts.append({**q, "quantity": "residual_volume",
                           "solid_refs": [solid_fact(g.parent_solid_id, g.goal_id), solid_fact(g.cut_solid_id, g.goal_id)]})
-        elif (is_poly_sphere_composite or is_axial_sphere_composite) and g.kind == "measurement" and measurement_scope(p, g) in curved and g.goal_type in (
-            "volume", "area", "lateral_area", "radius"
-        ):
-            msid = measurement_scope(p, g)
-            facts.append({**q, "quantity": g.goal_type, "solid": curved_sym.get(msid, solids[msid].notation)})
+        elif (is_poly_sphere_composite or is_axial_sphere_composite) and g.kind == "measurement" and measurement_scope(p, g) in curved:
+            if set(g.target) <= {"solid", "solid_id"} and g.goal_type in ("volume", "area", "lateral_area", "radius"):
+                msid = measurement_scope(p, g)
+                facts.append({**q, "quantity": g.goal_type, "solid": curved_sym.get(msid, solids[msid].notation)})
+            elif any(is_described_ref(x) for k in DESCRIBED_GOAL_KEYS if k in g.target
+                     for x in (g.target[k] if isinstance(g.target[k], (list, tuple)) else [g.target[k]])):
+                raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+                             f"{g.goal_id}: mục tiêu của khối tròn xoay với điểm mô tả chưa có trên planner",
+                             (g.goal_id,))
+            else:
+                raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{g.goal_id}: mục tiêu {g.kind}/{g.goal_type} của khối tròn xoay chưa có "
+                             "trên planner", (g.goal_id,))
         elif g.goal_type == "volume" and measurement_scope(p, g) in solids:
             # F6: a notation / canonical alias names the same solid (validated by the schema policy, S2/S3)
             facts.append({**q, "quantity": "volume",

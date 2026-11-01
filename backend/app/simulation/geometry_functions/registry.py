@@ -650,7 +650,7 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
            PlanningTerm("Point", ("H",)), "derived_point", "orthogonal_projection_line",
            call=(("point", "P"), ("line", "L"), ("image", "H")), fresh="H", descriptor="orthogonal_projection_line",
            phrase=(r"hình chiếu(?:\s+vuông góc)?\s+của\s+(?:(?:điểm|đỉnh)\s+)?(?P<op_p>{P})(?![\w'])\s+"
-                   r"(?:lên|trên)\s+(?:(?:đường thẳng|đoạn thẳng|đoạn|cạnh(?:\s+bên|\s+đáy)?)\s+)?"
+                   r"(?:lên|trên)\s+(?:(?:đường thẳng|đt|đoạn thẳng|đoạn|cạnh(?:\s+bên|\s+đáy)?)\s+)?"
                    r"(?<![\w'.(])(?P<op_l>(?:{P}){2})(?![\w'])")),)),
     _F("intersect_line_line", IntersectionLinesArgs, "construct", "Dựng giao điểm DUY NHẤT của hai đường thẳng; không phải đoạn hữu hạn.",
        (("giao điểm",),), segment_fields=("line1", "line2"), point_fields=("point",),
@@ -658,9 +658,9 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
            (PlanningTerm("Line", ("L1",)), PlanningTerm("Line", ("L2",))),
            PlanningTerm("Point", ("I",)), "derived_point", "intersect_line_line",
            call=(("point", "I"), ("line1", "L1"), ("line2", "L2")), fresh="I", descriptor="intersect_line_line",
-           phrase=(r"giao điểm\s+(?:của\s+)?(?:hai\s+(?:đường thẳng|đường chéo|cạnh|đoạn(?:\s+thẳng)?)\s+)?"
+           phrase=(r"giao điểm\s+(?:của\s+)?(?:hai\s+(?:đường thẳng|đt|đường chéo|cạnh|đoạn(?:\s+thẳng)?)\s+)?"
                    r"(?<![\w'.(])(?P<op_l1>(?:{P}){2})(?![\w'])\s*(?:,\s*|\s+(?:và|với)\s+)"
-                   r"(?:(?:đường thẳng|đường chéo|cạnh|đoạn(?:\s+thẳng)?)\s+)?(?<![\w'.(])(?P<op_l2>(?:{P}){2})(?![\w'])"))),
+                   r"(?:(?:đường thẳng|đt|đường chéo|cạnh|đoạn(?:\s+thẳng)?)\s+)?(?<![\w'.(])(?P<op_l2>(?:{P}){2})(?![\w'])"))),
     _F("intersect_line_plane", IntersectionPlaneArgs, "construct", "Dựng giao điểm DUY NHẤT của đường thẳng và mặt phẳng.",
        (("giao điểm",),), plane_fields=("plane",), segment_fields=("line",), point_fields=("point",),
        # Section vertex (run `hybrid-contract-v2`): effect `Meet` X = L ∩ Q; only `planner._dinh_cat_canh` asks for it
@@ -672,7 +672,7 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
            (PlanningTerm("Line", ("L",)), PlanningTerm("Plane", ("Q",))),
            PlanningTerm("Point", ("I",)), "derived_point", "intersect_line_plane",
            call=(("point", "I"), ("line", "L"), ("plane", "Q")), fresh="I", descriptor="intersect_line_plane",
-           phrase=(r"giao điểm\s+(?:của\s+)?(?:(?:đường thẳng|đường chéo|cạnh(?:\s+bên|\s+đáy)?|đoạn(?:\s+thẳng)?)\s+)?"
+           phrase=(r"giao điểm\s+(?:của\s+)?(?:(?:đường thẳng|đt|đường chéo|cạnh(?:\s+bên|\s+đáy)?|đoạn(?:\s+thẳng)?)\s+)?"
                    r"(?<![\w'.(])(?P<op_l>(?:{P}){2})(?![\w'])\s+(?:và|với)\s+"
                    r"(?:(?:mặt phẳng|mp|mặt bên|mặt đáy)\s*)?\(?(?P<op_q>(?:{P}){3,})(?![\w'])\)?")),)),
     _F("perpendicular_lines", PerpendicularLinesArgs, "fact", "Hai đường thẳng vuông góc (SA ⊥ AB). Một lời gọi cho MỖI cặp.",
@@ -715,18 +715,18 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
                                  phrase=(r"độ dài\s+(?:của\s+)?đoạn(?:\s+thẳng)?\s+nối\s+(?:{D}){J}{N}(?P<t>{P})(?![\w'])",
                                          r"độ dài\s+(?:của\s+)?đoạn(?:\s+thẳng)?\s+nối\s+{N}(?P<t>{P}){J}(?:{D})")),)),
     _F("ask_distance_point_plane", AskDistancePointPlaneArgs, "ask", "Đề hỏi khoảng cách từ một điểm tới một mặt phẳng.",
-       (("khoảng cách", r"re:(?<![\w/])k/c(?![\w/])"),),
+       (("khoảng cách", r"re:(?i)(?<![\w/])k/c(?![\w/])"),),
        planning=PlanningContract((PlanningTerm("Point", ("P",)), PlanningTerm("Plane", ("Q",))),
                                  PlanningTerm("AnswerDistance", ("P", "Q")), "distance_answer", "distance",
                                  call=(("point", "P"), ("plane", "Q")))),
     _F("ask_distance_lines", AskDistanceLinesArgs, "ask", "Đề hỏi khoảng cách giữa hai đường thẳng (chéo nhau).",
-       (("khoảng cách", r"re:(?<![\w/])k/c(?![\w/])"),)),
+       (("khoảng cách", r"re:(?i)(?<![\w/])k/c(?![\w/])"),)),
     # Run `hybrid-v2-nl-certificates-e2e`: kernel/IR already measure `distance(line3, plane3)` and `distance(plane3, plane3)`
     # exactly (`measure.distance_sq_line_plane` / `distance_sq_planes`); these expose them to route B / `/4` only.
     _F("ask_distance_line_plane", AskDistanceLinePlaneArgs, "ask", "Đề hỏi khoảng cách giữa một đường thẳng và một mặt phẳng.",
-       (("khoảng cách", r"re:(?<![\w/])k/c(?![\w/])"),), provider_offered=False),
+       (("khoảng cách", r"re:(?i)(?<![\w/])k/c(?![\w/])"),), provider_offered=False),
     _F("ask_distance_planes", AskDistancePlanesArgs, "ask", "Đề hỏi khoảng cách giữa hai mặt phẳng.",
-       (("khoảng cách", r"re:(?<![\w/])k/c(?![\w/])"),), provider_offered=False),
+       (("khoảng cách", r"re:(?i)(?<![\w/])k/c(?![\w/])"),), provider_offered=False),
     # Goal contracts of the angle asks (Wave 2A): the line is (described point P, named point Q), the target `{M}` a plane /
     # `{L}` a line, in closed wordings (both orders of "nối … với …"). Named angles keep their direct rule (`_cau_hoi`).
     _F("ask_angle_line_plane", AskAngleLinePlaneArgs, "ask", "Đề hỏi góc giữa đường thẳng và mặt phẳng (trả cos²).",
@@ -735,9 +735,9 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
            (PlanningTerm("Point", ("P",)), PlanningTerm("Point", ("Q",)), PlanningTerm("Plane", ("R",))),
            PlanningTerm("AnswerAngleLinePlane", ("P", "Q", "R")), "goal_answer", "angle_line_plane",
            call=(("line", ("P", "Q")), ("plane", "R")), goal="angle",
-           phrase=(r"góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:đường thẳng|đoạn thẳng|đoạn)\s+nối\s+{N}(?P<t>{P})"
+           phrase=(r"góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:đường thẳng|đt|đoạn thẳng|đoạn)\s+nối\s+{N}(?P<t>{P})"
                    r"{J}(?:{D})\s+(?:và|với)\s+{M}",
-                   r"góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:đường thẳng|đoạn thẳng|đoạn)\s+nối\s+(?:{D}){J}"
+                   r"góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:đường thẳng|đt|đoạn thẳng|đoạn)\s+nối\s+(?:{D}){J}"
                    r"{N}(?P<t>{P})\s+(?:và|với)\s+{M}"))),
     _F("ask_angle_plane_plane", AskAnglePlanePlaneArgs, "ask", "Đề hỏi góc giữa hai mặt phẳng (trả cos²).", (("góc",),)),
     # Wave 2A primitive: kernel/IR already measure `angle_cos_sq(line3, line3)`; this exposes it to route B only.
@@ -747,9 +747,9 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
            (PlanningTerm("Point", ("P",)), PlanningTerm("Point", ("Q",)), PlanningTerm("Line", ("L",))),
            PlanningTerm("AnswerAngleLines", ("P", "Q", "L")), "goal_answer", "angle_lines",
            call=(("line1", ("P", "Q")), ("line2", "L")), goal="angle",
-           phrase=(r"góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:đường thẳng|đoạn thẳng|đoạn)\s+nối\s+{N}(?P<t>{P})"
+           phrase=(r"góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:đường thẳng|đt|đoạn thẳng|đoạn)\s+nối\s+{N}(?P<t>{P})"
                    r"{J}(?:{D})\s+(?:và|với)\s+{L}",
-                   r"góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:đường thẳng|đoạn thẳng|đoạn)\s+nối\s+(?:{D}){J}"
+                   r"góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:đường thẳng|đt|đoạn thẳng|đoạn)\s+nối\s+(?:{D}){J}"
                    r"{N}(?P<t>{P})\s+(?:và|với)\s+{L}"))),
     _F("ask_area", AskAreaArgs, "ask", "Đề hỏi diện tích một đa giác.", (("diện tích",),),
        planning=PlanningContract(
@@ -1691,7 +1691,7 @@ AUXILIARY_RULES = {"distance(point,line)": ("orthogonal_projection_line", "ask_l
                    DINH_CAT_CANH: ("intersect_line_plane", "pyramid")}
 #: "khoảng cách từ S đến (đường thẳng) BD": điểm và đường gắn vai trong CÙNG một cụm; cách nói khác ⇒ từ chối, không đoán.
 _KHOANG_CACH_DIEM_DUONG = re.compile(
-    _KC + r"\s+từ\s+(?:điểm\s+)?([A-Z][0-9]*'?)\s+(?:đến|tới)\s+(?:đường thẳng\s+)?([A-Z][0-9]*'?)([A-Z][0-9]*'?)(?![\w'])",
+    _KC + r"\s+từ\s+(?:điểm\s+)?([A-Z][0-9]*'?)\s+(?:đến|tới)\s+(?:(?:đường thẳng|đt)\s+)?([A-Z][0-9]*'?)([A-Z][0-9]*'?)(?![\w'])",
     re.IGNORECASE)
 #: Câu hỏi khoảng cách điểm–đường: không gán giá trị ngay sau đường thẳng ("bằng 4", "không bằng 3", "khác 3"; "bằng bao nhiêu" vẫn là câu hỏi).
 _GAN_GIA_TRI = re.compile(r"\s*(?:(?:\w+\s+)?(?:(?:bằng|là|khác)(?!\w)|[=≠])\s*(?!bao\s+nhiêu|\?)\S|(?:đổi|thay|cộng|trừ|nhân|chia|[+\-*/])\b)", re.IGNORECASE)
@@ -4041,7 +4041,7 @@ _CUM_HOI = {
 }
 #: Distance target after "đến/tới": a source result line (groups a, b), a named plane (`_mat_cum`), or a named line (l).
 _DICH_KHOANG_CACH = (rf"(?:(?i:giao tuyến của)\s*(?P<a>{_MAT_TOAN_HANG})\s*(?i:và)\s*(?P<b>{_MAT_TOAN_HANG})"
-                     rf"|{_mat_cum('m')}|(?:(?i:đường thẳng)\s+)?(?<![\w'.])(?P<l>{_P1}{_P1})(?![\w']))")
+                     rf"|{_mat_cum('m')}|(?:(?i:đường thẳng|đt)\s+)?(?<![\w'.])(?P<l>{_P1}{_P1})(?![\w']))")
 
 
 @functools.lru_cache(maxsize=None)

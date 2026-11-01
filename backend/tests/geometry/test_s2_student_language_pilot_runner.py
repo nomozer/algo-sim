@@ -308,3 +308,46 @@ def test_r2_a_wrong_serve_of_the_gold_facts_is_the_deterministic_layer_but_other
     other = deepcopy(gold)
     other["premises"][2]["args"]["value"] = "3"
     assert R.attribute(row | {"raw_extraction": other}, dict(wrong), None, gold) == "LLM_EXTRACTION_DIFFERS_FROM_GOLD"
+
+
+def test_r1_project_normalizes_described_point_ids_without_leaking_uppercase_id_tokens():
+    a = {
+        "solids": [{"solid_id": "s1", "notation": "S.ABCD", "quote": "q"}],
+        "described_points": [{"described_id": "m1", "kind": "midpoint", "segment": ["S", "C"], "quote": "q"}],
+        "math_goals": [{"goal_id": "g1", "kind": "measurement", "goal_type": "distance",
+                        "target": {"point": "@m1", "plane": ["A", "B", "C"]}, "quote": "q"}],
+    }
+    b = {
+        "solids": [{"solid_id": "pyr", "notation": "S.ABCD", "quote": "q2"}],
+        "described_points": [{"described_id": "M9", "kind": "midpoint", "segment": ["C", "S"], "quote": "q2"}],
+        "math_goals": [{"goal_id": "g9", "kind": "measurement", "goal_type": "distance",
+                        "target": {"point": "@M9", "plane": ["C", "B", "A"]}, "quote": "q2"}],
+    }
+    diff = deepcopy(b)
+    diff["described_points"][0]["segment"] = ["S", "A"]
+    assert R.project(a) == R.project(b)
+    assert "M9" not in R.project(b)["operands"]
+    assert R.project(a) != R.project(diff)
+
+
+def test_r1_project_ignores_openapi_nullable_none_fields_and_outer_whitespace_on_described_refs():
+    """Review MINOR-3: Gemini OpenAPI `nullable: True` emits explicit `None` for unused optional fields on
+    `DescribedPointSpec` / goals, and `is_described_ref` trims outer whitespace."""
+    gold = {
+        "solids": [{"solid_id": "s1", "notation": "S.ABCD", "quote": "q"}],
+        "described_points": [{"described_id": "m1", "kind": "midpoint", "segment": ["S", "C"], "quote": "q"}],
+        "math_goals": [{"goal_id": "g1", "kind": "measurement", "goal_type": "distance",
+                        "target": {"point": "@m1", "plane": ["A", "B", "C"]}, "quote": "q"}],
+    }
+    nullable = {
+        "solids": [{"solid_id": "s1", "notation": "S.ABCD", "quote": "q", "center": None, "radius": None}],
+        "described_points": [{
+            "described_id": "m1", "kind": "midpoint", "segment": ["S", "C"], "quote": "q",
+            "point": None, "polygon": None, "line": None, "line1": None, "line2": None, "plane": None,
+        }],
+        "math_goals": [{
+            "goal_id": "g1", "kind": "measurement", "goal_type": "distance", "solid_id": None,
+            "target": {"point": "  @m1  ", "plane": ["A", "B", "C"]}, "quote": "q",
+        }],
+    }
+    assert R.project(nullable) == R.project(gold)

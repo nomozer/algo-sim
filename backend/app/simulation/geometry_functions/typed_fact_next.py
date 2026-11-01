@@ -1056,6 +1056,22 @@ def canonical_vertex_ref(p: "TypedFactNextPayload", ref: str, scope: str | None 
     return next(iter(identities), label)
 
 
+def _described_consumer_scopes(p: "TypedFactNextPayload") -> dict[str, set[str | None]]:
+    consumer_scope = {mg.goal_id: measurement_scope(p, mg) for mg in p.math_goals if mg.kind == "measurement"}
+    consumer_scope |= {s.section_id: s.target_solid_id for s in p.derived_sections}
+    uses = described_ref_uses(p)
+    out: dict[str, set[str | None]] = {}
+    for d in getattr(p, "described_points", ()):
+        scopes, frontier, seen = set(), {f"@{d.described_id}"}, set()
+        while frontier:                                   # up the (acyclic, checked in `/2`) chain of consumers
+            seen |= frontier
+            nxt = {c for c, i in uses if f"@{i}" in frontier}
+            scopes |= {consumer_scope.get(c) for c in nxt if not c.startswith("@")}
+            frontier = {c for c in nxt if c.startswith("@")} - seen
+        out[d.described_id] = scopes
+    return out
+
+
 def _validate_goal_identities(p: "TypedFactNextPayload") -> None:
     for goal in p.math_goals:
         if goal.kind != "measurement":
@@ -1066,6 +1082,17 @@ def _validate_goal_identities(p: "TypedFactNextPayload") -> None:
                 identities = [ref.strip() if is_described_ref(ref) else canonical_vertex_ref(p, ref, scope) for ref in refs]
                 if len(set(identities)) != len(identities):
                     raise TypedFactNextValidationError("INVALID_MATH_GOAL", f"{goal.goal_id}: repeated identity in {key!r}")
+    desc_scopes = _described_consumer_scopes(p)
+    for d in getattr(p, "described_points", ()):
+        claimed = [s for s in desc_scopes.get(d.described_id, set()) if s is not None]
+        scope = claimed[0] if len(claimed) == 1 else None
+        for key, shape in DESCRIBED_POINT_FIELDS[d.kind].items():
+            if shape != "pt":
+                refs = getattr(d, key)
+                identities = [ref.strip() if is_described_ref(ref) else canonical_vertex_ref(p, ref, scope) for ref in refs]
+                if len(set(identities)) != len(identities):
+                    raise TypedFactNextValidationError(
+                        "INVALID_DESCRIBED_POINT", f"{d.described_id}: repeated identity in {key!r}")
 
 
 def constructed_names(p: "TypedFactNextPayload") -> set[str]:
@@ -1134,21 +1161,13 @@ def scope_records(p: "TypedFactNextPayload") -> list[tuple[str, str, str | None,
         refs = [x for k in GOAL_OPERAND_KEYS if k in t for x in (t[k] if isinstance(t[k], (list, tuple)) else [t[k]])
                 if not is_described_ref(x)]
         recs.append(("math_goal", mg.goal_id, scope, refs, False))
-    # R-1: the labels of a described point belong to the scope of what uses it (one scope, else none is claimed)
-    consumer_scope = {mg.goal_id: measurement_scope(p, mg) for mg in p.math_goals if mg.kind == "measurement"}
-    consumer_scope |= {s.section_id: s.target_solid_id for s in p.derived_sections}
-    uses = described_ref_uses(p)
+    # R-1: the labels of a described point belong to every solid scope claimed by its consumers (else None when unscoped)
+    desc_scopes = _described_consumer_scopes(p)
     for d in getattr(p, "described_points", ()):
-        scopes, frontier, seen = set(), {f"@{d.described_id}"}, set()
-        while frontier:                                   # up the (acyclic, checked in `/2`) chain of consumers
-            seen |= frontier
-            nxt = {c for c, i in uses if f"@{i}" in frontier}
-            scopes |= {consumer_scope.get(c) for c in nxt if not c.startswith("@")}
-            frontier = {c for c in nxt if c.startswith("@")} - seen
-        scope = next(iter(scopes)) if len(scopes) == 1 else None
-        recs.append(("described_point", d.described_id, scope,
-                     [x for x in (*d.point_operands(), *(d.plane or ()), *(d.polygon or ())) if not is_described_ref(x)],
-                     False))
+        refs = [x for x in (*d.point_operands(), *(d.plane or ()), *(d.polygon or ())) if not is_described_ref(x)]
+        claimed = sorted(s for s in desc_scopes.get(d.described_id, set()) if s is not None)
+        for scope in (claimed or [None]):
+            recs.append(("described_point", d.described_id, scope, refs, False))
     return recs
 
 

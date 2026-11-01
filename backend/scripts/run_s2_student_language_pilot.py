@@ -44,7 +44,7 @@ OUTCOMES = ("SERVED", "CLARIFY", "REFUSED_UNSUPPORTED", "REFUSED_INCONSISTENT")
 #: `route-d-clarification/1` closed `nlu_class` vocabulary (server-built, never model prose) = the clarification code.
 CLARIFICATION_CODES = ("AMBIGUOUS", "MISSING_DATA", "UNRECOGNIZED_WORDING")
 #: Keys whose values are identifiers or source text, never facts: dropped before comparison.
-_UNCOMPARED = {"quote", "problem_text", "schema_version", "goal_id", "relation_id", "unresolved_id"}
+_UNCOMPARED = {"quote", "problem_text", "schema_version", "goal_id", "relation_id", "unresolved_id", "described_id"}
 #: Operands whose label ORDER carries no meaning: segment/line endpoints, a plane's labels (any 3+ name the same plane).
 #: A polygon (`vertices`, `base`, `top`, `polygon`) keeps its order — it names the boundary — and so does the `segment`
 #: of a ratio (`divide_segment`: P = (1−t)A + tB), see `_canon`.
@@ -103,7 +103,7 @@ def validate_corpus(corpus: dict[str, Any]) -> None:
 
 def _canon(value: Any, names: dict[str, str]) -> Any:
     if isinstance(value, dict):
-        out = {k: _canon(v, names) for k, v in sorted(value.items()) if k not in _UNCOMPARED}
+        out = {k: _canon(v, names) for k, v in sorted(value.items()) if k not in _UNCOMPARED and v is not None}
         for k in _UNORDERED & out.keys():
             if k == "segment" and "ratio" in out:                 # directed: the ratio is measured from the first label
                 continue
@@ -116,7 +116,7 @@ def _canon(value: Any, names: dict[str, str]) -> Any:
     if isinstance(value, (list, tuple)):
         return [_canon(v, names) for v in value]
     if isinstance(value, str):
-        value = value.replace("′", "'")
+        value = value.strip().replace("′", "'")
         return names.get(value, value)
     return value
 
@@ -144,13 +144,16 @@ def project(payload: Any) -> dict[str, Any] | None:
     try:
         names = {s["solid_id"]: f"solid:{s.get('notation')}" for s in payload.get("solids") or ()}
         names |= {s["section_id"]: f"section:{s.get('plane_name')}" for s in payload.get("derived_sections") or ()}
+        for _ in range(2):                                    # R-1: `@id` → its canonical description (up to depth 2)
+            for d in payload.get("described_points") or ():
+                names[f"@{str(d['described_id']).strip()}"] = f"described:{_key(_canon(d, names))}"
         facts = {"length_unit": payload.get("length_unit"),
                  **{k: sorted(_key(_canon(x, names)) for x in payload.get(k) or ())
                     for k in ("solids", "premises", "derived_sections", "relations")}}
         goals = sorted([_key(["sim", _canon(g, names)]) for g in payload.get("simulation_goals") or ()]
                        + [_key(["math", _canon(g, names)]) for g in payload.get("math_goals") or ()])
         operands = sorted({x for x in _leaves(_canon({k: v for k, v in payload.items() if k != "unresolved"}, names))
-                           if _OPERAND.search(x) and not x.startswith(("solid:", "section:"))})
+                           if _OPERAND.search(x) and not x.startswith(("solid:", "section:", "described:", "@"))})
     except (KeyError, TypeError, AttributeError):
         return None
     return {"facts_signature": hashlib.sha256(_key(facts).encode("utf-8")).hexdigest()[:16],

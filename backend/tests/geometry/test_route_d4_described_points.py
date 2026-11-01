@@ -38,11 +38,15 @@ def _run(text, payload):
 @pytest.mark.parametrize("cid", COMPOSED)
 def test_r1_composition_is_served_exactly_on_d4_by_the_same_planner(cid):
     c = CASES[cid]
-    route, _env, answers = _run(c["text"], c["payload"])
+    out = run_hybrid_offline(c["text"], ReplayExtractor({c["text"]: c["payload"]}), policy=POLICY)
+    route, env = out.response["route_d"], out.response["envelope"]
+    answers = {k: v.get("coef") for k, v in (route.get("answer_exact") or {}).items()}
     assert route["status"] == "SERVED" and answers == c["want"]
     assert route["planner"]["search_telemetry"]["classification"] == "DISCOVERED_FUNCTION_COMPOSITION"
     kinds = {d["kind"] for d in c["payload"]["described_points"]}
     assert kinds <= {p["fn"] for p in route["source_provenance"]}          # the described point is BUILT by its function
+    assert env["scene3d"]["objects"] and route["construction_trace"]
+    assert any(r["path"] == ["described_points", 0, "quote"] and r["spans"] for r in out.receipt["source_references"])
 
 
 def test_r1_named_control_is_unchanged():
@@ -148,6 +152,160 @@ def test_r1_typed_fact_next_1_still_refuses_a_described_ref():
     assert e.value.code == "INVALID_MATH_GOAL"
 
 
+def test_r1_non_verbatim_described_point_quote_is_refused_at_extraction():
+    c = copy.deepcopy(CASES["C2"])
+    c["payload"]["described_points"][0]["quote"] = "giao điểm của hai đường chéo AC, BD"
+    route, env, _a = _run(c["text"], c["payload"])
+    assert route["status"] == "REFUSED" and env["reason_code"] == "QUOTE_NOT_IN_SOURCE"
+
+
+def test_r1_canonical_alias_duplicate_in_described_point_is_refused():
+    p = copy.deepcopy(CASES["C2"]["payload"])
+    p["described_points"][0]["line1"] = ["A", "s1::A"]
+    with pytest.raises(T.TypedFactNextValidationError) as e:
+        T._parse(T.TypedFactNextPayloadV2, p)
+    assert e.value.code == "INVALID_DESCRIBED_POINT"
+
+
+@pytest.mark.parametrize("first_scope", [None, "s1"])
+def test_r1_shared_described_point_cannot_bypass_cross_solid_scope(first_scope):
+    """If @o1 belongs to s1 only, sharing @o1 between an unscoped/s1 goal and an s2-scoped goal must still refuse S7."""
+    p = copy.deepcopy(CASES["C2"]["payload"])
+    p["solids"].append({
+        "solid_id": "s2",
+        "solid_type": "pyramid",
+        "notation": "T.EFGH",
+        "quote": p["solids"][0]["quote"],
+    })
+    if first_scope is not None:
+        p["math_goals"][0]["solid_id"] = first_scope
+    mg2 = copy.deepcopy(p["math_goals"][0])
+    mg2.update(goal_id="q2", solid_id="s2", target={"point": "@o1", "plane": ["E", "F", "G"]})
+    p["math_goals"].append(mg2)
+    with pytest.raises(T.TypedFactNextValidationError) as e:
+        T._parse(T.TypedFactNextPayloadV2, p)
+    assert e.value.code == "SOURCE_OBJECT_MISMATCH"
+
+
+def test_r1_angle_between_described_line_and_named_line_is_served_on_d4():
+    p = copy.deepcopy(CASES["C2"]["payload"])
+    text = CASES["C2"]["text"].replace(
+        "Tính khoảng cách từ giao điểm của AC và BD đến mặt phẳng (SBC).",
+        "Tính góc giữa đường thẳng nối A với trung điểm của SC và đường thẳng BC.",
+    )
+    p["problem_text"] = text
+    p["described_points"] = [{"described_id": "m1", "kind": "midpoint", "quote": "trung điểm của SC", "segment": ["S", "C"]}]
+    p["math_goals"] = [{
+        "goal_id": "q1",
+        "kind": "measurement",
+        "goal_type": "angle",
+        "quote": "Tính góc giữa đường thẳng nối A với trung điểm của SC và đường thẳng BC",
+        "target": {"line1": ["A", "@m1"], "line2": ["B", "C"]},
+        "solid_id": "s1",
+    }]
+    route, env, answers = _run(text, p)
+    assert route["status"] == "SERVED", env.get("reason_code")
+    assert answers == {"q1": "1/3"}
+    assert route["planner"]["search_telemetry"]["classification"] == "DISCOVERED_FUNCTION_COMPOSITION"
+
+
+def test_r1_quadrilateral_area_with_described_vertex_refuses_capability_not_input():
+    p = copy.deepcopy(CASES["C1b"]["payload"])
+    p["math_goals"][0]["target"] = {"polygon": ["@h1", "A", "B", "C"]}
+    route, env, _a = _run(p["problem_text"], p)
+    assert route["status"] == "REFUSED" and env["reason_code"] == "BRIDGE_UNSUPPORTED_DESCRIBED_POINT"
+
+
+def test_r1_curved_section_with_described_through_point_refuses_capability_not_qualified_ref():
+    text = "Cho hình nón đỉnh S, tâm đáy O, bán kính đáy 3, chiều cao 4. Cắt hình nón bởi thiết diện qua trục đi qua trung điểm của SO. Tính diện tích thiết diện."
+    p = {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": text,
+        "solids": [{
+            "solid_id": "cone1",
+            "solid_type": "cone",
+            "notation": "S.O",
+            "center": "O",
+            "apex_or_top": "S",
+            "radius": "3",
+            "height": "4",
+            "quote": "Cho hình nón đỉnh S, tâm đáy O, bán kính đáy 3, chiều cao 4.",
+        }],
+        "premises": [],
+        "described_points": [{"described_id": "m1", "kind": "midpoint", "quote": "trung điểm của SO", "segment": ["S", "O"]}],
+        "derived_sections": [{
+            "section_id": "sec1",
+            "plane_name": "α",
+            "target_solid_id": "cone1",
+            "plane_kind": "axial_section",
+            "through_point": "@m1",
+            "quote": "Cắt hình nón bởi thiết diện qua trục đi qua trung điểm của SO.",
+        }],
+        "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "cone1", "quote": "Cho hình nón đỉnh S, tâm đáy O, bán kính đáy 3, chiều cao 4."}],
+        "math_goals": [{"goal_id": "mg1", "kind": "measurement", "goal_type": "area", "quote": "Tính diện tích thiết diện.", "target": {"section_id": "sec1"}}],
+    }
+    route, env, _a = _run(text, p)
+    assert route["status"] == "REFUSED" and env["reason_code"] == "BRIDGE_UNSUPPORTED_DESCRIBED_POINT"
+
+
+def test_r1_distance_line_plane_with_described_point_refuses_capability_not_schema_invalid():
+    """Review MAJOR-1: `ask_distance_line_plane` has no goal PlanningContract, so `distance(line, plane)` with `@id` on
+    `line` must refuse `BRIDGE_UNSUPPORTED_DESCRIBED_POINT` (CAPABILITY), never leak to `planner` as `SCHEMA_INVALID`."""
+    c = copy.deepcopy(CASES["C3"])
+    old_q = c["payload"]["math_goals"][0]["quote"]
+    ask = old_q.replace("Tính góc", "Tính khoảng cách")
+    t = c["text"].replace(old_q, ask)
+    p = c["payload"]
+    p["problem_text"] = t
+    p["math_goals"][0].update(goal_type="distance", quote=ask)
+    route, env, _a = _run(t, p)
+    assert route["status"] == "REFUSED" and env["reason_code"] == "BRIDGE_UNSUPPORTED_DESCRIBED_POINT"
+
+
+def test_r1_curved_polygon_area_goal_with_described_point_refuses_capability():
+    """Review MINOR-2: curved solid `area` goal with `polygon` target must not drop `polygon` into whole-solid `area`."""
+    text = ("Cho hình nón (N) đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy 3, chiều cao 4. "
+            "Tính diện tích tam giác tạo bởi trung điểm của SO, O và A.")
+    p = {
+        "schema_version": "typed-fact-next/2",
+        "problem_text": text,
+        "solids": [{
+            "solid_id": "cone1",
+            "solid_type": "cone",
+            "notation": "(N)",
+            "center": "O",
+            "apex_or_top": "S",
+            "rim_point": "A",
+            "radius": "3",
+            "height": "4",
+            "quote": "Cho hình nón (N) đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy 3, chiều cao 4.",
+        }],
+        "premises": [],
+        "described_points": [{"described_id": "m1", "kind": "midpoint", "quote": "trung điểm của SO", "segment": ["S", "O"]}],
+        "simulation_goals": [{"goal_id": "sg1", "kind": "construct_object", "target_solid_id": "cone1",
+                              "quote": "Cho hình nón (N) đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy 3, chiều cao 4."}],
+        "math_goals": [{"goal_id": "mg1", "kind": "measurement", "goal_type": "area", "solid_id": "cone1",
+                        "quote": "Tính diện tích tam giác tạo bởi trung điểm của SO, O và A.",
+                        "target": {"polygon": ["@m1", "O", "A"]}}],
+    }
+    route, env, _a = _run(text, p)
+    assert route["status"] == "REFUSED" and env["reason_code"] == "BRIDGE_UNSUPPORTED_DESCRIBED_POINT"
+    # Composite cone + circumscribed sphere branch in `_bridge` (`is_axial_sphere_composite`): same capability refusal
+    p_comp = copy.deepcopy(p)
+    comp_text = ("Cho hình nón (N) đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy 3, chiều cao 4. "
+                 "Mặt cầu (S) ngoại tiếp hình nón (N). Tính diện tích tam giác tạo bởi trung điểm của SO, O và A.")
+    p_comp["problem_text"] = comp_text
+    p_comp["solids"].append({
+        "solid_id": "sph1",
+        "solid_type": "sphere",
+        "notation": "(S)",
+        "circumscribes": "cone1",
+        "quote": "Mặt cầu (S) ngoại tiếp hình nón (N).",
+    })
+    r_c, e_c, _ = _run(comp_text, p_comp)
+    assert r_c["status"] == "REFUSED" and e_c["reason_code"] == "BRIDGE_UNSUPPORTED_DESCRIBED_POINT"
+
+
 # ── SL-3: student shorthand ─────────────────────────────────────────────────────────────────────────────────────────
 
 S2 = {c["id"]: c for c in json.loads((RUN / "s2-student-language-pilot-corpus.json").read_text(encoding="utf-8"))["cases"]}
@@ -198,6 +356,43 @@ def test_sl3_a_tone_typo_in_the_solid_word_stays_refused():
     c = S2["S2-F-S07_typo_tone"]
     route, env, _a = _run(c["problem_text"], c["gold_extraction"])
     assert route["status"] == "REFUSED" and env["reason_code"] == "UNGROUNDED_VALUE"
+
+
+def test_sl3_kc_and_dt_shorthand_work_on_point_to_line_and_described_point_goals():
+    # 1. Named point-to-line distance with both `k/c` and `đt`: d(A, SC) on S.ABCD (square side 2, SA=2 ⊥ base) = 2√6/3
+    t1, p1 = _kc("Tính k/c từ A đến đt SC.", "Tính k/c từ A đến đt SC.", {"point": "A", "line": ["S", "C"]})
+    r1, e1, a1 = _run(t1, p1)
+    assert r1["status"] == "SERVED", e1.get("reason_code")
+    assert a1 == {"mg1": "2√6/3"}
+
+    # 2. Unnamed described point distance to line with `k/c` and `đt`: d(midpoint(SA), BC) = √5
+    c2 = copy.deepcopy(S2["S2-F-F05_kc_mp_shorthand"])
+    p2 = c2["gold_extraction"]
+    t2 = c2["problem_text"].replace("Tính k/c từ A đến mp(SBC).", "Tính k/c từ trung điểm của SA đến đt BC.")
+    p2["problem_text"] = t2
+    p2["described_points"] = [{"described_id": "m1", "kind": "midpoint", "quote": "trung điểm của SA", "segment": ["S", "A"]}]
+    p2["math_goals"][0].update(quote="Tính k/c từ trung điểm của SA đến đt BC.", target={"point": "@m1", "line": ["B", "C"]})
+    r2, e2, a2 = _run(t2, p2)
+    assert r2["status"] == "SERVED", e2.get("reason_code")
+    assert a2 == {"mg1": "√5"}
+
+    # 3. Unnamed projection onto line using `đt` + `k/c` + `mp`: C1a phrased with student shorthands = 3√34/5
+    c3 = copy.deepcopy(CASES["C1a"])
+    t3 = c3["text"].replace("khoảng cách", "k/c").replace("lên SD", "lên đt SD").replace("mặt phẳng (SBC)", "mp(SBC)")
+    p3 = c3["payload"]
+    p3["problem_text"] = t3
+    p3["described_points"][0]["quote"] = p3["described_points"][0]["quote"].replace("lên SD", "lên đt SD")
+    p3["math_goals"][0]["quote"] = p3["math_goals"][0]["quote"].replace("khoảng cách", "k/c").replace("lên SD", "lên đt SD").replace("mặt phẳng (SBC)", "mp(SBC)")
+    r3, e3, a3 = _run(t3, p3)
+    assert r3["status"] == "SERVED", e3.get("reason_code")
+    assert a3 == {"q1": "3√34/5"}
+
+    # 4. Review MINOR-1: sentence-initial capitalized `K/c` and uppercase `K/C` on named distance ask
+    for ask in ("K/c từ A đến mp(SBC) bằng bao nhiêu?", "Tính K/C từ A đến MP(SBC)."):
+        t4, p4 = _kc(ask, ask, {"point": "A", "plane": ["S", "B", "C"]})
+        r4, e4, a4 = _run(t4, p4)
+        assert r4["status"] == "SERVED", e4.get("reason_code")
+        assert a4 == {"mg1": "√2"}
 
 
 # ── the literal BACKSPACE regex of `_v2_plane_def_quotes` ──────────────────────────────────────────────────────────

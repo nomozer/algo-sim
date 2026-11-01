@@ -348,6 +348,8 @@ IDENTITY_DELTAS = (
      "versions": {"registry_version": ("geometry-functions/27", "geometry-functions/28"),
                   "planner_version": ("geometry-fact-planner/22", "geometry-fact-planner/23"),
                   "engine_version": ("geometry-function-engine/19", "geometry-function-engine/20")}},
+    {"run": "hybrid-master-backend-replacement",           # SL-3 student shorthand + R-1 described points on /4 (registry /29; planner /23, engine /20)
+     "versions": {"registry_version": ("geometry-functions/28", "geometry-functions/29")}},
 )
 
 
