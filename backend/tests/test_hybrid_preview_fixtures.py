@@ -24,7 +24,10 @@ ROOT = Path(__file__).resolve().parents[2]
 #: Superseded by run `hybrid-master-backend-replacement` (eighth continuation): served fixtures carry `preconditions`,
 #: `postconditions` and auxiliary-step `dependencies` on `route_d.construction_trace`; answers, scene3d, witnesses and
 #: refusal/gate fixtures are unchanged. The section-justification bundle stays unchanged as the evidence it was.
-FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-master-backend-replacement/fixtures-adapter-2-trace-pre-postconditions'
+#: Superseded by run `hybrid-master-backend-replacement` (ninth continuation, registry /26, planner /22, engine /18):
+#: served fixtures carry `composition_classification` on `route_d.planner` and `relation_certificates` on `route_d`;
+#: answers, scene3d, witnesses, trace and refusal/gate fixtures are unchanged. Earlier bundles stay unchanged.
+FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-master-backend-replacement/fixtures-adapter-2-composition-classification'
 #: The superseded bundle — the one that predates the route D version bump the identity-restore test is about.
 OLD_FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures-adapter-2'
 SCRIPT = ROOT / 'backend/scripts/export_hybrid_preview_fixtures.py'
