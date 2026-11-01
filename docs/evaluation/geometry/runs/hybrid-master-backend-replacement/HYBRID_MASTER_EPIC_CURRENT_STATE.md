@@ -566,3 +566,37 @@ Offline only; `MAX_AUTHORIZED_LIVE_REQUESTS = 0`; `MAX_AUTHORIZED_LIVE_SPEND_USD
 2. **Optional `S-2` live student-language pilot (`<= 36` requests):** authorize the 6 parameters in `s2-student-language-pilot-protocol.md` §4, or defer.
 3. **Policy decision `S-1` (diacritic-free input):** keep the current domain gate, or authorize integrating a `route-d-clarification/1` confirmation flow backed by `s1_diacritic_offline.py` (never silent guessing).
 4. **Optional curved grammar rulings (`P-1`, `P-2`, `P-3`):** if repinning the 8 legacy curved fixtures is desired.
+
+---
+
+## Twelfth continuation (Owner Master Directive: real-world generalization, live validation & production readiness), 2026-11-01: CHECKPOINT REACHED — `OFFLINE_READY_AWAITING_OWNER_GO`
+
+Offline only; `0` provider calls; `USD 0`. **No Owner approval file exists**, so no live call was made (the directive itself is not a spending approval, §V). `0` edits to `backend/app`, `frontend/`, schemas or prompts: candidate `800ab355` (product `9e059eb7`, 118 files `184c64ff…`) still verifies and still binds every approval. `DEFAULT_MODE = "LLM_ONLY"`, `CACHE_VERSION = "131"`.
+
+**Restored from Git:** branch HEAD `e466deca` matched the handoff; tree clean; `main` (`f986e897`) is an ancestor; `freeze_evaluation_candidate.py --verify` matches.
+
+**Delivered:**
+1. **S-2 made runnable (it was not):** the protocol had a scorer but no corpus and no code that turns a route outcome into its records.
+   - `s2-student-language-pilot-corpus.json` (36 = 6 strata × 6; 21 reused from the C10 probe with its gold and hand expectations, 15 new; hand oracles cross-checked against the probe's own; sha `3f1682bd…`).
+   - `backend/scripts/run_s2_student_language_pilot.py`, reusing the paired harness's budget, send guard and transport; test file with 28 tests, 5 injected faults all caught.
+   - The mock live tests caught a real defect before any spend: the scorer refuses to run under `ALLOW_LIVE_AI=1`, so a paid run would have lost its summary. The runner now clears the flag around the pure scorer call; the scorer is unchanged.
+   - Gold replay (`s2-pilot-gold-replay.jsonl`): 8 metrics all perfect, yet end-to-end is only **33/36**. The scorer has no false-refusal count, so the runner adds `supplementary` and a per-row `attribution` by gold reproduction (protocol §5).
+   - The 3 false refusals are Source Gate gaps on the **gold** extraction: `k/c`, `mp`, `đt`, and "hình chop" (`ISSUE-ARCH-ROUTE-D-STUDENT-SHORTHAND-UNREAD`). They are recorded, not fixed: a fix would change the candidate that approvals bind to.
+2. **Correction of the C11 `/4` planner claim** (`planner-recomposition-route-d4-correction.md`, `route-d4-representation-probe.json`):
+   - The 9 discovered compositions are real on the flat route B only.
+   - On `/4`, a goal or section plane with an unnamed described point is refused (`INVALID_MATH_GOAL` / `INVALID_QUALIFIED_REF`), and 0 of 52 served `/4` gold rows are `DISCOVERED_FUNCTION_COMPOSITION`.
+   - D1, D2 and the 9 C cases are `REPRESENTATION_BLOCKED` on `/4`, not search misses. Two named controls are served, both hand-checked (2√6/3, 3√2/2).
+   - Usage evidence: 2/60 problems in the blind-agent NLU corpus; 0/220 in Waves 2–3. Not implemented: it would change the Hybrid model surface; Owner decision R-1 (`ISSUE-ARCH-ROUTE-D4-UNNAMED-DESCRIBED-POINT-GOAL`).
+
+**Tests run this continuation:** listed in the commit; no Full T3, because no product change was made.
+
+**Verified capabilities (this checkpoint):** unchanged from C11 on `/4` for named chains + 2 registered decompositions; route-B discovered composition as C11 measured it.
+**Unsupported / blocked on `/4`:** unnamed described points (R-1), nested descriptors (D1), student shorthand (SL-3), diacritic-free input (S-1).
+**Not measured:** every live metric: S-2, live paired, latency, cost, real student wording.
+**Open blockers (Owner only):** S-2 GO; R-1; SL-3 timing; the paired corpus author; S-1; integration permission. All are in `owner-go-request.md` (twelfth-continuation addendum).
+**Git:** `INTEGRATION_PENDING_OWNER_GO`. Nothing merged or pushed; the worktree is kept.
+
+**Next exact action:**
+- Owner decides S-2 / R-1 / SL-3, plus the paired author.
+- With a valid S-2 approval file: `run_s2_student_language_pilot.py --live --approval-file <file>`, once, then an independent review of the results.
+- Without one: no offline item in this epic is blocked except by those decisions.

@@ -17,6 +17,20 @@
 - **evidence:** probe row S05 in `evaluation/geometry/runs/hybrid-master-backend-replacement/student-language-probe.json`.
 - **update 2026-11-01 (eleventh continuation, offline prototype only):** `backend/scripts/s1_diacritic_offline.py` (`0` imports in `backend/app/`, `detect_domain` untouched) implements a strictly isolated, span-preserving normalization prototype (`norm_char_to_raw_span`, `verify_no_forged_quotes`, mixed-IME `_ascii_fold`, and polysemy flags `NEEDS_CLARIFICATION` for `goc`/`day`/`tam`/`canh`/`duong` and lowercase solid labels), verified on `s1-diacritic-development-corpus.json` (`16/16`, `test_s1_diacritic_free_offline.py`; `s1-diacritic-free-offline-audit.md`). Production integration remains gated on Owner decision `S-1`.
 
+### ISSUE-ARCH-ROUTE-D4-UNNAMED-DESCRIBED-POINT-GOAL
+
+- **status:** OPEN, waiting for an Owner decision (R-1 in `evaluation/geometry/runs/hybrid-master-backend-replacement/owner-go-request.md`, twelfth-continuation addendum).
+- **cause:** the `/4` bridge (`typed_fact_next_bridge._distance_question` / `_angle_question` / `_operand`, section `through_point`) accepts only named labels as goal operands, so a goal or auxiliary plane that uses an unnamed described point ("khoảng cách từ trung điểm của SC đến (ABCD)") is refused (`INVALID_MATH_GOAL` / `INVALID_QUALIFIED_REF`). The planner `/23` composes these goals on the flat route B only; the eleventh-continuation `/4` claim is corrected.
+- **evidence:** `evaluation/geometry/runs/hybrid-master-backend-replacement/planner-recomposition-route-d4-correction.md`, `route-d4-representation-probe.json` (4 refused shapes, 2 named controls served with hand-checked values; 0 `DISCOVERED_FUNCTION_COMPOSITION` among 52 served `/4` gold rows). 2/60 problems of the blind-agent NLU corpus use this wording.
+- **impact:** fail-closed (0 wrong-served); a likely Hybrid false-refusal source in the live paired run. Fixing it changes the Hybrid model surface ⇒ new candidate.
+
+### ISSUE-ARCH-ROUTE-D-STUDENT-SHORTHAND-UNREAD
+
+- **status:** OPEN, recorded; fix deferred until after the S-2 pilot (SL-3 in the same addendum).
+- **cause:** the Source Gate does not read the student abbreviations `k/c` (khoảng cách), `mp` (mặt phẳng), `đt` (đường thẳng) as object names (`SOURCE_OBJECT_MISMATCH`), and a tone typo in the solid word ("hình chop") leaves its clause unread (`UNGROUNDED_VALUE`).
+- **evidence:** the S-2 gold replay `evaluation/geometry/runs/hybrid-master-backend-replacement/s2-pilot-gold-replay.jsonl`: rows `S2-F-F05`, `S2-F-F06`, `S2-F-S07` refused on the **gold** extraction (attribution `DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD`).
+- **impact:** fail-closed false refusals; caps S-2 end-to-end at 33/36 whatever the live model reads.
+
 ### ISSUE-RESEARCH-TYPEDFACTNEXT-PREMISE-SCOPE-ERASED
 
 - **status:** RESOLVED ON RESEARCH BRANCH (2026-10-30, candidate `4e7fe91d`, READY_FOR_OWNER_REVIEW, not on main): N1–N4, CIC-D1, F1/F2 and F7 closed; Full T3 PASS; `evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/target-grammar-identity-recovery/f7-narrow-recovery/final-handoff.md`. Original status kept below for history: OPEN; blocks W3-F2 research readiness. Scope census closure (products `959e23a6`/`1262fbd5`, not frozen) closed F1–F7 from `unified-solid-scope/review.md` with a mechanical field census; the pre-freeze adversarial review (2026-10-29) found pre-existing fail-open classes outside it: string-form operands read per character by Adapter3 (N1), constructed-point ownership skipped on the Adapter3 legacy fallback (N2), kind-inapplicable fields silently ignored (N3), relations unread on the curved route (N4) — `unified-solid-scope-closure/pre-freeze-review.md`. Needs a new Owner GO (closed per-kind field tables, one operand grammar, S8 before capability refusal).

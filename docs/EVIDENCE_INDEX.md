@@ -23,6 +23,19 @@ CANDIDATE_COMMIT = 800ab355
 VERIFICATION = task1-green.json; capability-inventory.md; inventory-task2.json; measurement-probe.json; migration-ledger.md; architecture-consolidation.md; recomposition-evidence.json; inventory-phase-d.json; live-evaluation-protocol.md; live-harness-status.md; owner-go-request.md; curved-capability.md; registered-curved-controls-audit.md; curved-generalization-audit.md; curved-generalization-review.md; circumscribed-spheres-review.md; multi-object-factgraph-audit.md; composite-relations-review.md; composite-relations-probe.json; student-language-audit.md; student-language-probe-final.json; student-language-probe-c11.json; planner-recomposition-audit.md; planner-recomposition-matrix.json; s1-diacritic-free-offline-audit.md; s1-diacritic-development-corpus.json; s2-student-language-pilot-protocol.md; continuation11-adversarial-review.md; results/historical-gold-delta.json; inventory-phase-k.json; inventory-phase-l2.json; wave3-phase-l2.json; inventory-phase-m.json; wave3-phase-m.json; inventory-phase-n4.json; wave3-phase-n4.json; inventory-phase-o.json; wave3-phase-o.json; schema-census-extension.json; fixtures-adapter-2-trace-pre-postconditions/; fixtures-adapter-2-composition-classification/; fixtures-adapter-2-search-telemetry/; full-t3-cb06635e.json; full-t3-db1ac63a.json; full-t3-17e4a326.json; full-t3-8b25df71.json; full-t3-800ab355.json; ../hybrid-master-circumscribed-spheres/frozen-evaluation-candidate.json; ../hybrid-master-circumscribed-spheres/candidate_divergence.json; ../hybrid-master-composite-relations/frozen-evaluation-candidate.json; ../hybrid-master-composite-relations/candidate_divergence.json; ../hybrid-master-student-language/frozen-evaluation-candidate.json; ../hybrid-master-student-language/candidate_divergence.json; ../hybrid-master-semantic-planner-recomposition/frozen-evaluation-candidate.json; ../hybrid-master-semantic-planner-recomposition/candidate_divergence.json
 MODEL_REQUEST_COUNT = 0
 CORRECTS = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION (candidate divergence chain only)
+CORRECTED_BY = HYBRID_MASTER_C12_S2_RUNNABLE_AND_ROUTE_D4_CORRECTION (the "generalized … planner recomposition" in CLASSIFICATION holds on the flat route B only; on /4 unnamed described points are REPRESENTATION_BLOCKED)
+
+
+## CONTINUATION_ID = HYBRID_MASTER_C12_S2_RUNNABLE_AND_ROUTE_D4_CORRECTION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/planner-recomposition-route-d4-correction.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC + OFFLINE_DETERMINISTIC_FIXTURE_TEST (no live measurement); S-2 pilot made runnable (corpus 36, runner, gold-replay attribution baseline 33/36 end-to-end, 0 wrong-served, 3 Source Gate false refusals on gold); /4 representation probe (unnamed described points refused on /4, 0 DISCOVERED_FUNCTION_COMPOSITION among 52 served /4 gold rows)
+VERIFICATION = route-d4-representation-probe.json; s2-student-language-pilot-corpus.json; s2-pilot-gold-replay.jsonl; s2-student-language-pilot-protocol.md §5; owner-go-request.md (twelfth-continuation addendum)
+CODE_COMMIT = 9e059eb7163532d66a3f7a7cd24250a50b0ac7a3 (product unchanged; scripts/tests/docs only)
+CANDIDATE_COMMIT = 800ab355
+MODEL_REQUEST_COUNT = 0
+CORRECTS = ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT (the /4 scope of the eleventh-continuation planner claim); planner-recomposition-audit.md and owner-go-request.md originals unchanged
 CORRECTED_BY = NONE
 
 ## WAVE_ID = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION

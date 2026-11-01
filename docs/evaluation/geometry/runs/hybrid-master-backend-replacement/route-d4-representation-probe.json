@@ -1,0 +1,73 @@
+{
+ "classification": "IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC",
+ "provider_calls": 0,
+ "identity": {
+  "head": "e466deca3f6bc84d6307de16b1601aef61a6079c"
+ },
+ "rows": [
+  {
+   "id": "U1_unnamed_foot_in_segment",
+   "c11_analogue": "C1a",
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "got": "INVALID_MATH_GOAL",
+   "expected": "INVALID_MATH_GOAL",
+   "agrees": true,
+   "classification": null
+  },
+  {
+   "id": "U2_unnamed_midpoint_point_plane",
+   "c11_analogue": "C2/E-like",
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "got": "INVALID_MATH_GOAL",
+   "expected": "INVALID_MATH_GOAL",
+   "agrees": true,
+   "classification": null
+  },
+  {
+   "id": "U3_two_unnamed_endpoints",
+   "c11_analogue": "D2",
+   "status": "REFUSED",
+   "code": "INVALID_MATH_GOAL",
+   "got": "INVALID_MATH_GOAL",
+   "expected": "INVALID_MATH_GOAL",
+   "agrees": true,
+   "classification": null
+  },
+  {
+   "id": "U4_unnamed_point_of_section_plane",
+   "c11_analogue": "C5",
+   "status": "REFUSED",
+   "code": "INVALID_QUALIFIED_REF",
+   "got": "INVALID_QUALIFIED_REF",
+   "expected": "INVALID_QUALIFIED_REF",
+   "agrees": true,
+   "classification": null
+  },
+  {
+   "id": "N1_named_point_line_control",
+   "c11_analogue": "B1",
+   "status": "SERVED",
+   "code": null,
+   "got": "2√6/3",
+   "expected": "2√6/3",
+   "agrees": true,
+   "classification": "REGISTERED_DECOMPOSITION"
+  },
+  {
+   "id": "N2_named_section_point_control",
+   "c11_analogue": "C5 named",
+   "status": "SERVED",
+   "code": null,
+   "got": "3√2/2",
+   "expected": "3√2/2",
+   "agrees": true,
+   "classification": "REGISTERED_DECOMPOSITION"
+  }
+ ],
+ "student_probe_gold_served_on_d4_by_search_class": {
+  "SOURCE_EXPLICIT_SEQUENCE": 50,
+  "REGISTERED_DECOMPOSITION": 2
+ }
+}

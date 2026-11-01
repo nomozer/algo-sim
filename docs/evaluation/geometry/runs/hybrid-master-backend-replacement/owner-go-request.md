@@ -146,3 +146,59 @@ The locked 60-case live paired protocol (`live-evaluation-protocol.md`), thresho
 - **Offline readiness for `S-1` and `S-2`:**
   - `S-1` (`s1-diacritic-free-offline-audit.md`): isolated prototype `backend/scripts/s1_diacritic_offline.py` (`0` imports in `backend/app/`, `detect_domain` untouched) preserves 1-to-1 `norm_char_to_raw_span`, mixed-IME `_ascii_fold`, `verify_no_forged_quotes`, and `NEEDS_CLARIFICATION` polysemy flags (`16/16` dev corpus). Production policy remains Owner decision `S-1` above.
   - `S-2` (`s2-student-language-pilot-protocol.md`): offline deterministic 8-metric scorer `backend/scripts/score_s2_student_language_pilot.py` (`ALLOW_LIVE_AI=0`, `NOT_MEASURED`/`NOT_RECOVERABLE` preserved) is ready if the Owner authorizes the 6 live parameters (`Execution Authorization`, `Model ID`, `Project/Key`, `Hard Request Cap <= 36`, `Hard USD Cap`, `Data Scope`).
+
+## Addendum — twelfth continuation (S-2 runnable, `/4` correction), 2026-11-01
+
+Still `0` live calls, `USD 0`. No Owner approval file exists. The measured system is **unchanged**: candidate `800ab355`
+(product `9e059eb7`, `184c64ff…`, `--verify` matches); no `backend/app` edit in this continuation, so every earlier
+instruction for the live paired GO still binds this candidate.
+
+**Correction (read before deciding).** The eleventh-continuation claim "generalized planner recomposition on Hybrid `/4`"
+overstates the evidence (`planner-recomposition-route-d4-correction.md`). The 9 discovered compositions are real on the
+flat route B only. On `/4` — the arm both live protocols measure — a goal or section plane that uses an **unnamed**
+described point ("khoảng cách từ trung điểm của SC đến (ABCD)") is refused (`INVALID_MATH_GOAL` /
+`INVALID_QUALIFIED_REF`); named chains are served. In the blind-agent 60-case NLU corpus, 2/60 problems use this wording.
+
+| # | decision | options | consequence |
+|---|---|---|---|
+| **S-2** | live student-language pilot | **GO** with the fields below, or **DEFER** | GO: ≤ 36 requests, est. ≤ USD 0.88; result is `LIVE_DEVELOPMENT_PILOT` evidence only |
+| **R-1** | unnamed described points on `/4` | **(a)** keep `/4` as is and measure it; **(b)** first extend the `/4` goal contract additively (bridge + extraction instruction), then measure | (a) a likely Hybrid false-refusal source in the paired run; (b) Hybrid model-surface change ⇒ new candidate, review, Full T3, new approvals; D1 (nested) stays out either way |
+| **SL-3** | student shorthand `k/c`, `mp`, `đt` and tone typos ("hình chop") are unread by the Source Gate (fail-closed) | fix **after** S-2 shows how often a live model's reading meets them (recommended), or **before** | before ⇒ new candidate; the S-2 approval below would no longer bind |
+| Paired | live paired GO | unchanged: name the independent author; bind `800ab355` | — |
+| S-1 | diacritic-free input | unchanged | — |
+| Integration | merge/push | unchanged: `INTEGRATION_PENDING_OWNER_GO` | — |
+
+**S-2 GO — what the Owner writes** (the agent never writes it). One JSON file, e.g. `s2-owner-approval.json`:
+
+```json
+{
+  "owner_decision": "APPROVED_BY_USER",
+  "pilot": "S-2",
+  "model": "gemini-2.5-flash",
+  "paid_project_confirmed": true,
+  "max_requests": 36,
+  "max_usd": 2.0,
+  "input_usd_per_million": 0.30,
+  "output_usd_per_million": 2.50,
+  "corpus_sha256": "3f1682bd6adbc5f21cb504a6b25f6ccc226c9b0d791f05fcb2eeb6a9a6fc6791",
+  "measured_system": "<from --manifest>",
+  "runner_sha256": "<from --manifest>",
+  "paired_harness_sha256": "<from --manifest>"
+}
+```
+
+The numbers shown are a proposal, not a grant: `max_usd` must be at least `max_requests × 0.0244` or the runner refuses.
+Fill the three hashes from this command, run in the tree that will be measured:
+
+```powershell
+cd backend; $env:PYTHONIOENCODING='utf-8'
+.venv\Scripts\python.exe scripts\run_s2_student_language_pilot.py --corpus ..\docs\evaluation\geometry\runs\hybrid-master-backend-replacement\s2-student-language-pilot-corpus.json --manifest
+```
+
+At this checkpoint `--manifest` prints `measured_system = 184c64ff1810ec20af5f5ba1451cfcac082de65876fbf8bbfc63a7f012afe26d`,
+`paired_harness_sha256 = 8f819ee0…`, `runner_sha256 = 583bfe33…` (a later commit of the runner changes the last one —
+always copy from the command). Then, for the run only: `ALLOW_LIVE_AI=1` and `GEMINI_API_KEY` from the paid project.
+Data sent: the 36 authored texts plus the `/4` system instruction and schema — no learner, account or repository data.
+After a valid GO the agent runs `--live` once, reports the 8 metrics, the supplementary end-to-end/false-refusal counts and
+the per-row attribution, then gets an independent review. It does not tune the product on the pilot and re-score it as if
+blind.

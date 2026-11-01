@@ -53,3 +53,57 @@ Công cụ chấm điểm khóa cứng `ALLOW_LIVE_AI=0`. Không một request l
 4. **Giới hạn số lượng request (`Hard Request Cap`)**: Trần cứng `<= 36` requests kèm circuit-breaker dừng ngay sau 3 lỗi liên tiếp.
 5. **Ngân sách tối đa (`Hard Budget Cap`)**: Trần chi phí USD cụ thể trước khi chạy.
 6. **Phạm vi dữ liệu (`Data Scope`)**: Xác nhận tập 36 câu pilot phát triển (không chạm tập Holdout độc lập).
+
+---
+
+## 5. Sửa đổi trước khi chạy — Continuation 12 (2026-11-01), vẫn `0` live call
+
+§1–§4 giữ nguyên. Phần này thêm đúng những gì §2–§4 thiếu để chạy được khi Owner GO; đều cố định **trước** mọi lượt live.
+
+**5.1 Corpus** — `s2-student-language-pilot-corpus.json` (sinh bởi `tools/build_s2_pilot_corpus.py`, ghi một lần),
+`corpus_sha256 = 3f1682bd6adbc5f21cb504a6b25f6ccc226c9b0d791f05fcb2eeb6a9a6fc6791`. 36 ca, 6 tầng × 6 đúng §3.
+21 ca lấy nguyên văn bản + gold + kỳ vọng viết tay của `student_language_probe.py` (C10); 15 ca viết mới cho tầng
+probe thiếu (E: Oxyz, chóp cụt, cực trị, quỹ tích, phép tịnh tiến, bài toán thực tế; F: `k/c`, `mp(SBC)`, `đt`;
+C: góc thiếu mặt phẳng, "Vẽ hình rồi tính.", hình vuông thiếu cạnh; D: lập phương đáy chữ nhật/cao lệch, cạnh đáy ⊥ đáy,
+đường chéo sai). Oracle là chuỗi chính xác viết tay; với ca tái dùng, builder đối chiếu từng giá trị với oracle bình
+phương/cos² độc lập của probe. **Tác giả: implementer (agent) — không độc lập, không held-out.** Văn bản đã có trong kho:
+pilot đo cách model đọc chữ, không đo tổng quát hoá của tầng tất định.
+
+**5.2 Runner** — `backend/scripts/run_s2_student_language_pilot.py` (+ `tests/geometry/test_s2_student_language_pilot_runner.py`,
+28 test, 5 mutant đều bị giết). Một arm: đường opt-in Hybrid `/4` (domain gate → trích xuất → Source Gate → planner →
+engine → Adapter /4), 1 request mỗi ca. Budget USD theo payload, guard send, transport (retry/timeout như `call_gemini`)
+**là của** `run_paired_route_evaluation.py`, không chép. Scorer 8 chỉ số không đổi; runner chỉ dựng bản ghi:
+- `facts_signature` / `extracted_goals` / `operands`: MỘT phép chiếu (`project`) cho cả gold lẫn observed — bỏ id, quote,
+  thứ tự; id khối/thiết diện thay bằng ký hiệu. Chỉ có trên ca có gold không chứa `unresolved` (khi có `unresolved`,
+  cả payload bị từ chối nên dữ kiện đi kèm không xác định). So khớp **nghiêm ngặt về dạng**: hai cách trích tương đương
+  khác `kind` premise bị tính là khác — `extraction_accuracy` là cận dưới của độ đúng ngữ nghĩa.
+- `clarification_code` = `nlu_class` của `route-d-clarification/1` (server viết, từ vựng đóng). `unresolved` loại
+  `unsupported` không có câu hỏi ⇒ `REFUSED` + mã unsupported, không phải `CLARIFY` (luật của server).
+- `answers` = đại lượng mục tiêu người học thấy, theo loại, so như số chính xác. `certificate_verified` = engine `VERIFIED`.
+- Lỗi hạ tầng (`HYBRID_INFRASTRUCTURE` của harness paired) ⇒ `NOT_RECOVERABLE`, không bao giờ thành 0.
+
+**5.3 Chỉ số phụ (ngoài 8 chỉ số §2)** — scorer không có false refusal: gold replay cho thấy cả 8 chỉ số hoàn hảo trong
+khi 3 ca phải SERVED bị từ chối. Directive Master §V đòi end-to-end, nên runner báo cạnh 8 chỉ số, không thay chúng:
+`end_to_end_correct`, `false_refusal` (trên ca kỳ vọng SERVED), theo tầng, `gold_replay_ceiling`, và `attribution` mỗi
+dòng hỏng: `INFRASTRUCTURE` · `DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD` (gold cũng hỏng như vậy) · `DOMAIN_GATE` ·
+`LLM_EXTRACTION_DIFFERS_FROM_GOLD` · `UNATTRIBUTED`. Định nghĩa cố định trong mã trước khi chạy.
+
+**5.4 Mốc quy lỗi (gold replay, `s2-pilot-gold-replay.jsonl`, 0 request)** — end-to-end 33/36; 0 wrong-served;
+3 false refusal, cả ba tại Source Gate trên **gold**: `S07_typo_tone` (`UNGROUNDED_VALUE`, "hình chop"),
+`F05_kc_mp_shorthand` và `F06_dt_mp_shorthand` (`SOURCE_OBJECT_MISMATCH`: `k/c`, `mp`, `đt` không được đọc là tên
+đối tượng). Lượt live không thể vượt 33/36; ba ca này không được tính là lỗi của model. Không sửa product trước pilot:
+sửa sẽ đổi candidate mà approval bind vào, và chưa có bằng chứng tần suất — pilot là phép đo đó.
+
+**5.5 Cổng §4 thành trường approval** (Owner ghi; runner không bao giờ ghi): `owner_decision = "APPROVED_BY_USER"`,
+`pilot = "S-2"`, `model`, `paid_project_confirmed = true`, `max_requests` (số nguyên 1..36, tính cả retry),
+`max_usd`, `input_usd_per_million`, `output_usd_per_million`, `corpus_sha256` (phạm vi dữ liệu), và các giá trị
+`measured_system`, `runner_sha256`, `paired_harness_sha256` do `--manifest` in ra **trên đúng cây sẽ chạy**
+(`core.autocrlf=true`: hash là của byte thô trong cây đó). Từ chối trước request đầu nếu thiếu/lệch bất kỳ trường nào,
+nếu `max_requests × ước tính mỗi request > max_usd`, hoặc thiếu `ALLOW_LIVE_AI=1` + `GEMINI_API_KEY`.
+
+**5.6 Dừng** — trần request, trần USD (dự trữ trần của chính payload trước mỗi send), provider block, 3 lỗi hạ tầng
+liên tiếp, đổi danh tính. Dừng giữa chừng ⇒ `completed = false`, báo `INCOMPLETE`, không báo thành công.
+
+**5.7 Chi phí ước tính** (giá 0.30/2.50 USD mỗi triệu token, `provider-facts.md`): trần mỗi request ≈ USD 0.0244
+(input ≤ byte payload, output ≤ 8 192 token của `/4`), 36 request ≈ USD 0.88. Chi phí thật lấy từ `usageMetadata`; trước
+khi chạy là `NOT_MEASURED`.
