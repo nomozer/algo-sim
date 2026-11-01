@@ -470,11 +470,11 @@ def test_version_constants_surface_fingerprints_and_historical_receipt_preservat
     # phrases, bound to the cut solid; provider schemas unchanged.
     # -> registry /27, engine /19 (hybrid-master tenth continuation): simulation-request reader (SL-1), `/2` honest exit
     # (SL-2, the /4 extraction schema and instruction gain `unresolved`), an unconstrained base is MISSING_DIMENSION.
-    assert REGISTRY_VERSION == "geometry-functions/27"
+    assert REGISTRY_VERSION == "geometry-functions/28"
     # planner /14, engine /13 (hybrid-v2-backend-generalization): full > 3-label question planes, witness triple.
-    assert PLANNER_VERSION == "geometry-fact-planner/22"
+    assert PLANNER_VERSION == "geometry-fact-planner/23"
     # engine /11 -> /12 (claude-to-codex-takeover): skew-claim contradiction refusal on ask_distance_lines; registry/planner unchanged.
-    assert ENGINE_VERSION == "geometry-function-engine/19"
+    assert ENGINE_VERSION == "geometry-function-engine/20"
     # 125 -> 126 (hybrid-offline-readiness-finalization): độ dài nguồn không đọc từ biểu thức/vectơ/giả định.
     # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): segment3 đường cao mang perpendicular_witness.
     # 127 -> 128 (visual-hybrid-final-corrections): tên hiển thị backend (mặt phẳng tên đề viết, chu trình thiết diện).

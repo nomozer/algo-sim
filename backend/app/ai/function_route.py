@@ -174,16 +174,17 @@ def _vai_mat_cat(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -> None:
             quan_he = f"vuông góc với {ky(d['perpendicular_to'])}"
         else:
             continue
-        mat["role"] = f"Mặt phẳng qua {ky(d['point'])} và {quan_he}"
+        diem_qua = "điểm dựng phụ" if d.get("point_operand") else ky(d["point"])
+        mat["role"] = f"Mặt phẳng qua {diem_qua} và {quan_he}"
         # Review R1 (run `scene3d-section-inspector-c0`): the fallback explanation read "Dựng mặt phẳng (α) qua ba điểm
         # M, H, H1." as if H, H1 defined (α). Source definition first, then the real construction and its auxiliaries.
         ten = mat.get("display_label") or mat.get("label")
         phu = ", ".join(ky([x]) for x in d.get("labels") or ())
         for e in canh["events"]:
             if e.get("object") == mat["id"] and e.get("action") == "CREATE" and phu:
-                e["explanation"] = (f"Dựng {ten}: mặt phẳng qua {ky(d['point'])} và {quan_he}; dựng qua "
-                                    f"{ky(d['point'])} và các điểm dựng phụ {phu}.")
-        phu_mat = [x for x in (*(d.get("labels") or ()), *(d.get("feet") or ())) if isinstance(x, str)]
+                e["explanation"] = (f"Dựng {ten}: mặt phẳng qua {diem_qua} và {quan_he}; dựng qua "
+                                    f"{diem_qua} và các điểm dựng phụ {phu}.")
+        phu_mat = [x for x in (*(d.get("labels") or ()), *(d.get("feet") or ()), *(d.get("point_labels") or ())) if isinstance(x, str)]
         if phu_mat and ten:
             an_mat = re.compile(
                 r"(?<![\w'])[A-Z0-9'.]*(?:"
@@ -398,6 +399,7 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
             aux_ids = ({ir_name(p) for d in two_line for p in d['labels']}
                        | {ir_name(d['label']) for d in auxiliary if d.get('effect_binding') and d.get('fresh')}
                        | {ir_name(p) for d in auxiliary if d.get('rule') == 'effect-chain' for p in d['labels']}
+                       | {ir_name(p) for d in auxiliary if d.get('point_labels') for p in d['point_labels']}
                        | {o['id'] for o in state['scene']['objects'] if o['id'].startswith(('td_cau_', 'tam_cau_', 'tx_cau_', 'tam_truc_'))})
             vai = {o['id']: o.get('role') for o in state['scene']['objects'] if (o.get('producer') or '').startswith('construct_point.')}
             for obj in state['scene']['objects']:
@@ -450,7 +452,8 @@ def run_fact_route(problem_text: str, facts: Any) -> KetQuaTuyen:
     doc = tuple(q for g in (*k.goals, *k.negated) if g.get("call") for q in g["call"]["source"]["quotes"])
     r = run_function_route(problem_text, {"calls": k.calls, "named_planes": k.named_planes}, tuple(k.auxiliary), doc)
     r.planner = {"version": PLANNER_VERSION, "calls": k.calls, "trace": k.trace, "auxiliary": k.auxiliary,
-                 "composition_classification": k.composition_classification, "goal_checks": {}, "negated_checks": {}}
+                 "composition_classification": k.composition_classification,
+                 "search_telemetry": k.search_telemetry, "goal_checks": {}, "negated_checks": {}}
     if r.status != "SERVED":
         if r.code == "UNDERDETERMINED_POINT" and (khong := _hinh_khong_duy_nhat(k, r.details.get("points") or [])):
             return KetQuaTuyen("REFUSED", "FIGURE_NOT_UNIQUE", khong, r.failed_calls, trace=r.trace,

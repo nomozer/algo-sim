@@ -901,8 +901,10 @@ def test_review_t3i_bottom_or_top_face_is_not_a_lateral_face():
 
 
 def test_review_t3i_a_parenthesised_face_label_is_served():
-    served(regular_two_sentences("Mặt (SBC) là tam giác đều."), {"q": "√3"})
-    served(regular_two_sentences("Tam giác ΔSBC là tam giác đều."), {"q": "√3"})
+    served(regular_two_sentences("Mặt (SBC) là tam giác cân."), {"q": "√3"})
+    served(regular_two_sentences("Tam giác ΔSBC là tam giác cân."), {"q": "√3"})
+    for inconsistent in ("Mặt (SBC) là tam giác đều.", "Tam giác ΔSBC là tam giác đều."):
+        assert regular_two_sentences(inconsistent).code == "INCONSISTENT_FACTS"
     for bad in ("Tam giác ΔABCD là tam giác đều.", "Hình vuông ΔSBC là tam giác đều.", "ΔSBC là hình vuông."):
         refused(regular_two_sentences(bad))
 

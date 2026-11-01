@@ -291,7 +291,8 @@ def adapt_result(result, policy, problem_text: str = "") -> HybridPreviewEnvelop
         "runtime_identity": preview_runtime_identity(policy), "geometry_ir": result.spec.model_dump(mode="json"),
         "answers": deepcopy(result.answers), "answer_exact": deepcopy(result.answer_exact),
         "source_provenance": deepcopy(result.calls), "construction_trace": deepcopy(result.trace),
-        "planner": planner, "length_unit": deepcopy(unit), "kernel_check": result.kernel_check,
+        "planner": {k: v for k, v in planner.items() if k != "search_telemetry"}, "length_unit": deepcopy(unit),
+        "kernel_check": result.kernel_check,
     })
 
 

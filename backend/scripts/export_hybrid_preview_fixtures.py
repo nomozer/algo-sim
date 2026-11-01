@@ -344,6 +344,10 @@ IDENTITY_DELTAS = (
     {"run": "hybrid-master-backend-replacement",           # student simulation requests, honest exit, empty base (registry /27, engine /19; planner /22)
      "versions": {"registry_version": ("geometry-functions/26", "geometry-functions/27"),
                   "engine_version": ("geometry-function-engine/18", "geometry-function-engine/19")}},
+    {"run": "hybrid-master-backend-replacement",           # PE-2 solid-class invariants + generalized planner recomposition (registry /28, planner /23, engine /20)
+     "versions": {"registry_version": ("geometry-functions/27", "geometry-functions/28"),
+                  "planner_version": ("geometry-fact-planner/22", "geometry-fact-planner/23"),
+                  "engine_version": ("geometry-function-engine/19", "geometry-function-engine/20")}},
 )
 
 

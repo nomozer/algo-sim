@@ -36,7 +36,7 @@ from app.simulation.geometry import kernel as K
 from app.simulation.geometry.predicates import parallel_planes, point_on_line, point_on_plane, parallel_line_plane, line_in_plane
 from app.simulation.semantic_program import ir_builders as P
 
-from .registry import MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_so, kiem_nguon, nhan_cua_de, nhom_mat_nguon
+from .registry import MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_khang_dinh_loai_hinh, doc_so, kiem_nguon, nhan_cua_de, nhom_mat_nguon
 from .registry import DINH_CAT_CANH, _cum_hoi
 
 #: /6 (run `goal-directed-function-composition`): `ask_angle_lines` IR + independent line–line Gram verifier.
@@ -54,7 +54,10 @@ from .registry import DINH_CAT_CANH, _cum_hoi
 #: cone's base centre, placed at the ratio height and kernel cross-checked with the solid's named points.
 #: /18 (run `hybrid-master-backend-replacement`): certified inscribed spheres on convex polyhedra, sphere–plane tangency
 #: with optional contact point, composite multi-sphere / axial-sphere execution, and 4-layer `relation_certificates`.
-ENGINE_VERSION = "geometry-function-engine/19"
+#: /19 (same run): student simulation requests, honest exit, empty base, and solid-class semantic invariants (PE-2).
+#: /20 (same run): independent Gram/affine postcondition verifiers (`_MO_TA`) for composed projection and intersection
+#: `Point` descriptors across goal chains and derived planes (`point_operand`).
+ENGINE_VERSION = "geometry-function-engine/20"
 PLANE_SECTION_CERTIFICATE_VERSION = "plane-section-certificate/1"
 PLANE_SECTION_CERTIFICATE_RULE = "engine_derived_plane_section"
 PLANE_SECTION_CERTIFICATE_PRODUCER = "engine.kiem_chung_chi_thiet_dien"
@@ -412,6 +415,7 @@ def _key(c: LoiGoi) -> tuple:
 class _Dung:
     def __init__(self, calls: tuple[LoiGoi, ...], text: str, ky_hieu: str | None = None) -> None:
         self.calls = tuple(sorted(calls, key=_key))
+        self.text = text
         self.ky_hieu = ky_hieu
         self.centroids: dict[str, tuple[str, ...]] = {}
         self.text_labels = nhan_cua_de(text)
@@ -776,6 +780,8 @@ class _Dung:
         for c in self.of("divide_segment"):
             p, (a, b), t = c.args.point, c.args.segment, Fraction(c.args.ratio)
             if p not in self.pts and a in self.pts and b in self.pts:
+                if self.pts[a] == self.pts[b]:
+                    raise TuChoi("DEGENERATE_POINTS", f"{c.id}: đoạn {a}{b} suy biến ({a} trùng {b})", (c.id,))
                 self.divisions[p] = (a, b, t)
                 self._dat(p, tuple((1 - t) * self.pts[a][i] + t * self.pts[b][i] for i in range(3)), f"divide_segment_t={t}",
                           {c.id}, "DERIVED")
@@ -785,6 +791,8 @@ class _Dung:
         for c in self.of("midpoint"):
             p, (a, b) = c.args.point, c.args.segment
             if p not in self.pts and a in self.pts and b in self.pts:
+                if self.pts[a] == self.pts[b]:
+                    raise TuChoi("DEGENERATE_POINTS", f"{c.id}: đoạn {a}{b} suy biến ({a} trùng {b})", (c.id,))
                 self.midpoints[p] = (a, b)
                 self._dat(p, tuple((self.pts[a][i] + self.pts[b][i]) / 2 for i in range(3)), "midpoint", {c.id},
                           "DERIVED")
@@ -813,6 +821,11 @@ class _Dung:
             if len(da) != 3:
                 raise TuChoi("UNSUPPORTED_CENTROID", f"{c.id}: bản này dựng trọng tâm TAM GIÁC", (c.id,))
             if p not in self.pts and all(v in self.pts for v in da):
+                pa, pb, pc = (self.pts[v] for v in da)
+                if Vec3(pb[0] - pa[0], pb[1] - pa[1], pb[2] - pa[2]).cross(
+                    Vec3(pc[0] - pa[0], pc[1] - pa[1], pc[2] - pa[2])
+                ).is_zero():
+                    raise TuChoi("COLLINEAR_POINTS", f"{c.id}: ba điểm {da} thẳng hàng — không tạo thành tam giác", (c.id,))
                 self.centroids[p] = tuple(da)
                 self._dat(p, tuple(sum(self.pts[v][i] for v in da) / 3 for i in range(3)), "centroid_of_triangle", {c.id},
                           "DERIVED")
@@ -826,6 +839,13 @@ class _Dung:
                 if set(mp) <= set(self.pts) or not (set(mp) & set(self.pts)):
                     continue
                 raise TuChoi("UNSUPPORTED_PLANE", f"{c.id}: mặt phẳng {sorted(mp)} không phải mặt đáy đã dựng", (c.id,))
+            if not any(
+                self.g(self._vec(mp[0], x), self._vec(mp[0], x)) * self.g(self._vec(mp[0], y), self._vec(mp[0], y))
+                - self.g(self._vec(mp[0], x), self._vec(mp[0], y)) ** 2 > 0
+                for i, x in enumerate(mp[1:], 1)
+                for y in mp[i + 1:]
+            ):
+                raise TuChoi("COLLINEAR_POINTS", f"{c.id}: ba điểm {list(mp)} thẳng hàng — không tạo thành mặt phẳng", (c.id,))
             if chan_khai is not None:                          # đường cao / hình chiếu: CHÂN do chính lời gọi nêu
                 chan, dinh = chan_khai, (a if b == chan_khai else b)
                 if chan not in self.pts or dinh in self.pts:
@@ -850,7 +870,7 @@ class _Dung:
         if self._mat_ben_vuong_goc_day():
             return True
         for k in sorted(self.khoi.values(), key=lambda k: k.name):
-            if k.kind == "prism" and k.right and any(t not in self.pts for t in k.top) and all(b in self.pts for b in k.base):
+            if k.kind == "prism" and k.right and all(t not in self.pts for t in k.top) and all(b in self.pts for b in k.base):
                 h2, cs = self._chieu_cao_lang_tru(k)
                 for i, (b, t) in enumerate(zip(k.base, k.top)):
                     if i == 0:
@@ -1812,6 +1832,205 @@ class _Dung:
             return None
         return next(iter(canh))
 
+    def _la_hinh_chu_nhat(self, v) -> bool:
+        if len(v) != 4 or any(p not in self.pts for p in v):
+            return False
+        u, w = self._vec(v[0], v[1]), self._vec(v[0], v[3])
+        return (
+            self.g(u, u) > 0
+            and self.g(w, w) > 0
+            and self.g(u, w) == 0
+            and all(self.pts[v[2]][i] - self.pts[v[1]][i] == w[i] for i in range(3))
+        )
+
+    def _la_hinh_binh_hanh(self, v: tuple[str, ...] | list[str]) -> bool:
+        if len(v) != 4:
+            return False
+        u, w = self._vec(v[0], v[1]), self._vec(v[0], v[3])
+        return (
+            self.g(u, u) * self.g(w, w) - self.g(u, w) ** 2 > 0
+            and all(self.pts[v[2]][i] - self.pts[v[1]][i] == w[i] for i in range(3))
+        )
+
+    def _cap_day_hinh_thang(self, v: tuple[str, ...] | list[str]) -> list[tuple[tuple[Fraction, ...], tuple[Fraction, ...]]]:
+        if len(v) != 4:
+            return []
+        u0, w0 = self._vec(v[0], v[1]), self._vec(v[0], v[2])
+        if self.g(u0, u0) * self.g(w0, w0) - self.g(u0, w0) ** 2 <= 0 or self._kc2_mat(v[3], v[:3]) != 0:
+            return []
+        pairs: list[tuple[tuple[Fraction, ...], tuple[Fraction, ...]]] = []
+        for i0, i1, j0, j1 in ((0, 1, 3, 2), (1, 2, 0, 3)):
+            b1, b2 = self._vec(v[i0], v[i1]), self._vec(v[j0], v[j1])
+            u_tri = self._vec(v[i0], v[j1])
+            if (
+                self.g(b1, b1) * self.g(u_tri, u_tri) - self.g(b1, u_tri) ** 2 > 0
+                and Vec3(*b1).cross(Vec3(*b2)).is_zero()
+                and self.g(b1, b2) > 0
+            ):
+                pairs.append((b1, b2))
+        return pairs
+
+    def kiem_khang_dinh_loai_hinh(self) -> None:
+        """Certify every premise shape-kind assertion on the constructed Gram coordinates (States 1/2/4/5)."""
+        for ob in doc_khang_dinh_loai_hinh(self.text, self.calls):
+            if ob.kind == "ambiguous_base":
+                raise TuChoi(
+                    "AMBIGUOUS_REFERENCE",
+                    f"khẳng định loại hình {ob.quote!r} mơ hồ khi có nhiều khối có đáy khác nhau trong bài",
+                )
+            req_pts = (*ob.vertices, *ob.top, *((ob.apex,) if ob.apex else ()), *ob.at)
+            if any(p not in self.pts for p in req_pts):
+                raise TuChoi(
+                    "UNDERDETERMINED_POINT",
+                    f"khẳng định loại hình {ob.quote!r} ({ob.kind}) thiếu toạ độ đỉnh để kiểm chứng",
+                )
+            v = ob.vertices
+            ok = False
+            if ob.kind in ("cube", "cuboid", "parallelepiped", "right_parallelepiped", "right_prism", "oblique_prism", "regular_prism"):
+                vecs = {self._vec(b, t) for b, t in zip(v, ob.top)} if len(v) == len(ob.top) >= 3 else set()
+                if len(vecs) == 1:
+                    d = next(iter(vecs))
+                    d2_lat = self.g(d, d)
+                    u0, w0 = self._vec(v[0], v[1]), self._vec(v[0], v[2])
+                    base_nondeg = (
+                        self.g(u0, u0) * self.g(w0, w0) - self.g(u0, w0) ** 2 > 0
+                        and all(self._kc2_mat(x, v[:3]) == 0 for x in v[3:])
+                    )
+                    perp = all(self.g(d, self._vec(v[0], x)) == 0 for x in v[1:])
+                    if d2_lat > 0 and base_nondeg and self._kc2_mat(ob.top[0], v[:3]) > 0:
+                        if ob.kind == "right_prism":
+                            ok = perp
+                        elif ob.kind == "oblique_prism":
+                            ok = not perp
+                        elif ob.kind == "regular_prism":
+                            ok = perp and self._canh_da_giac_deu(v) is not None
+                        elif ob.kind == "parallelepiped":
+                            ok = self._la_hinh_binh_hanh(v)
+                        elif ob.kind == "right_parallelepiped":
+                            ok = perp and self._la_hinh_binh_hanh(v)
+                        elif ob.kind == "cuboid":
+                            ok = perp and self._la_hinh_chu_nhat(v)
+                        elif ob.kind == "cube":
+                            s2 = self._canh_da_giac_deu(v)
+                            ok = (
+                                len(v) == 4
+                                and perp
+                                and s2 is not None
+                                and d2_lat == s2
+                                and (ob.side is None or s2 == binh_phuong(ob.side))
+                            )
+            elif ob.kind == "regular_pyramid":
+                s2 = self._canh_da_giac_deu(v)
+                ok = (
+                    ob.apex is not None
+                    and s2 is not None
+                    and self._kc2_mat(ob.apex, v[:3]) > 0
+                    and len({self.d2(ob.apex, b) for b in v}) == 1
+                )
+            elif ob.kind == "regular_tetrahedron":
+                edges = {self.d2(v[i], v[j]) for i in range(4) for j in range(i + 1, 4)} if len(v) == 4 else set()
+                u0, w0 = self._vec(v[0], v[1]), self._vec(v[0], v[2])
+                nondeg = self.g(u0, u0) * self.g(w0, w0) - self.g(u0, w0) ** 2 > 0 and self._kc2_mat(v[3], v[:3]) > 0
+                s2 = next(iter(edges)) if len(edges) == 1 else Z
+                ok = nondeg and s2 > 0 and (ob.side is None or s2 == binh_phuong(ob.side))
+            elif ob.kind in ("equilateral_triangle", "square", "regular_hexagon"):
+                want_n = {"equilateral_triangle": 3, "square": 4, "regular_hexagon": 6}[ob.kind]
+                s2 = self._canh_da_giac_deu(v) if len(v) == want_n else None
+                ok = s2 is not None and (ob.side is None or s2 == binh_phuong(ob.side))
+            elif ob.kind == "rectangle":
+                ok = self._la_hinh_chu_nhat(v)
+            elif ob.kind == "parallelogram":
+                ok = self._la_hinh_binh_hanh(v)
+            elif ob.kind == "trapezoid":
+                ok = bool(self._cap_day_hinh_thang(v))
+            elif ob.kind == "isosceles_trapezoid":
+                ok = bool(self._cap_day_hinh_thang(v)) and self.d2(v[0], v[2]) == self.d2(v[1], v[3])
+            elif ob.kind == "rhombus":
+                if len(v) == 4:
+                    u, w = self._vec(v[0], v[1]), self._vec(v[0], v[3])
+                    s2 = self.g(u, u)
+                    ok = (
+                        s2 > 0
+                        and self.g(w, w) == s2
+                        and self.g(u, u) * self.g(w, w) - self.g(u, w) ** 2 > 0
+                        and all(self.pts[v[2]][i] - self.pts[v[1]][i] == w[i] for i in range(3))
+                        and (ob.side is None or s2 == binh_phuong(ob.side))
+                    )
+            elif ob.kind in ("right_triangle", "isosceles_triangle", "right_isosceles_triangle", "acute_triangle", "obtuse_triangle"):
+                if len(v) == 3:
+                    u0, w0 = self._vec(v[0], v[1]), self._vec(v[0], v[2])
+                    if self.g(u0, u0) * self.g(w0, w0) - self.g(u0, w0) ** 2 > 0 and set(ob.at) <= set(v):
+                        cands = ob.at if ob.at else v
+                        if ob.kind == "right_triangle":
+                            ok = any(
+                                self.g(self._vec(vt, x), self._vec(vt, y)) == 0
+                                for vt in cands
+                                for x, y in ([p for p in v if p != vt],)
+                            )
+                        elif ob.kind == "isosceles_triangle":
+                            ok = any(
+                                self.d2(vt, x) == self.d2(vt, y)
+                                for vt in cands
+                                for x, y in ([p for p in v if p != vt],)
+                            )
+                        elif ob.kind == "right_isosceles_triangle":
+                            ok = any(
+                                self.g(self._vec(vt, x), self._vec(vt, y)) == 0 and self.d2(vt, x) == self.d2(vt, y)
+                                for vt in cands
+                                for x, y in ([p for p in v if p != vt],)
+                            )
+                        elif ob.kind == "acute_triangle":
+                            ok = not ob.at and all(
+                                self.g(self._vec(vt, x), self._vec(vt, y)) > 0
+                                for vt in v
+                                for x, y in ([p for p in v if p != vt],)
+                            )
+                        else:
+                            ok = any(
+                                self.g(self._vec(vt, x), self._vec(vt, y)) < 0
+                                for vt in cands
+                                for x, y in ([p for p in v if p != vt],)
+                            )
+            elif ob.kind == "right_trapezoid":
+                if len(v) == 4 and set(ob.at) <= set(v):
+                    u0, w0 = self._vec(v[0], v[1]), self._vec(v[0], v[2])
+                    coplanar = (
+                        self.g(u0, u0) * self.g(w0, w0) - self.g(u0, w0) ** 2 > 0
+                        and self._kc2_mat(v[3], v[:3]) == 0
+                    )
+                    if coplanar:
+                        legs = []
+                        for i in range(4):
+                            vi, vj, vp, vn = v[i], v[(i + 1) % 4], v[(i - 1) % 4], v[(i + 2) % 4]
+                            e_leg, l1, l2 = self._vec(vi, vj), self._vec(vi, vp), self._vec(vj, vn)
+                            if (
+                                self.g(e_leg, e_leg) > 0
+                                and self.g(l1, l1) > 0
+                                and self.g(l2, l2) > 0
+                                and self.g(e_leg, l1) == 0
+                                and self.g(e_leg, l2) == 0
+                                and self.g(l1, l2) > 0
+                            ):
+                                legs.append({vi, vj})
+                        if len(ob.at) == 2:
+                            ok = set(ob.at) in legs
+                        elif len(ob.at) == 1:
+                            ok = any(ob.at[0] in leg for leg in legs)
+                        else:
+                            ok = bool(legs)
+            if not ok:
+                raise TuChoi(
+                    "INCONSISTENT_FACTS",
+                    f"khẳng định loại hình {ob.quote!r} ({ob.kind}) mâu thuẫn với toạ độ/kích thước đã dựng",
+                )
+            self.trace.append({
+                "step": "verify_shape_assertion",
+                "object": ob.quote,
+                "rule": f"exact_gram_{ob.kind}_invariant",
+                "provenance": "DERIVED",
+                "vertices": list(v),
+            })
+
     def _dung_khong(self, c: LoiGoi) -> bool:
         a = c.args
         if c.fn in ("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "translate_point"):
@@ -1824,25 +2043,41 @@ class _Dung:
             canh = self._canh_da_giac_deu(a.vertices)
             return canh is not None and (a.side is None or canh == binh_phuong(a.side))
         if c.fn == "rectangle":
-            v = a.vertices
-            return all(self.g(self._vec(v[i], v[(i + 1) % 4]), self._vec(v[i], v[(i - 1) % 4])) == 0 for i in range(4))
+            return self._la_hinh_chu_nhat(a.vertices)
         if c.fn == "right_angle":
-            return self.g(self._vec(a.vertex, a.rays[0]), self._vec(a.vertex, a.rays[1])) == 0
+            u, w = self._vec(a.vertex, a.rays[0]), self._vec(a.vertex, a.rays[1])
+            return self.g(u, u) > 0 and self.g(w, w) > 0 and self.g(u, w) == 0
         if c.fn == "perpendicular_line_plane":
             d, mp = self._vec(*a.line), a.plane
-            return all(self.g(d, self._vec(mp[0], x)) == 0 for x in mp[1:])
+            return (
+                self.g(d, d) > 0
+                and any(
+                    self.g(self._vec(mp[0], x), self._vec(mp[0], x)) * self.g(self._vec(mp[0], y), self._vec(mp[0], y))
+                    - self.g(self._vec(mp[0], x), self._vec(mp[0], y)) ** 2 > 0
+                    for i, x in enumerate(mp[1:], 1)
+                    for y in mp[i + 1:]
+                )
+                and all(self.g(d, self._vec(mp[0], x)) == 0 for x in mp[1:])
+            )
         if c.fn == "midpoint":
             p, (x, y) = a.point, a.segment
-            return all(2 * self.pts[p][i] == self.pts[x][i] + self.pts[y][i] for i in range(3))
+            return self.pts[x] != self.pts[y] and all(2 * self.pts[p][i] == self.pts[x][i] + self.pts[y][i] for i in range(3))
         if c.fn == "centroid":
-            return all(3 * self.pts[a.point][i] == sum(self.pts[v][i] for v in a.polygon) for i in range(3))
+            return (
+                len(a.polygon) == 3
+                and not Vec3(*(self.pts[a.polygon[1]][i] - self.pts[a.polygon[0]][i] for i in range(3))).cross(
+                    Vec3(*(self.pts[a.polygon[2]][i] - self.pts[a.polygon[0]][i] for i in range(3)))
+                ).is_zero()
+                and all(3 * self.pts[a.point][i] == sum(self.pts[v][i] for v in a.polygon) for i in range(3))
+            )
         if c.fn == "divide_segment":
             t, (x, y) = Fraction(a.ratio), a.segment
-            return all(self.pts[a.point][i] == (1 - t) * self.pts[x][i] + t * self.pts[y][i] for i in range(3))
+            return self.pts[x] != self.pts[y] and all(self.pts[a.point][i] == (1 - t) * self.pts[x][i] + t * self.pts[y][i] for i in range(3))
         if c.fn == "equal_length":
             return self.d2(*a.segment_a) == self.d2(*a.segment_b)
         if c.fn == "perpendicular_lines":
-            return self.g(self._vec(*a.line1), self._vec(*a.line2)) == 0
+            u, w = self._vec(*a.line1), self._vec(*a.line2)
+            return self.g(u, u) > 0 and self.g(w, w) > 0 and self.g(u, w) == 0
         if c.fn in ("altitude", "orthogonal_projection"):
             if c.fn == "altitude":
                 k = self.khoi[a.solid]
@@ -1857,7 +2092,7 @@ class _Dung:
                 u, v = self._vec(m[0], m[1]), self._vec(m[0], m[2])
                 return Vec3(u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0])
             n1, n2 = phap(a.face), phap(a.base)
-            return self.metric().vector(n2).dot(n1) == 0     # hai mặt ⊥ ⇔ n₁ᵀ G⁻¹ n₂ = 0
+            return not n1.is_zero() and not n2.is_zero() and self.metric().vector(n2).dot(n1) == 0     # hai mặt ⊥ ⇔ n₁ᵀ G⁻¹ n₂ = 0
         if c.fn == "height":
             k = self.khoi[a.solid]
             dinh = k.apex if k.kind == "pyramid" else k.top[0]
@@ -2457,7 +2692,7 @@ class _Dung:
         if dung is None:
             raise TuChoi("UNSUPPORTED_CAPABILITY", f"không có vị từ kiểm cho mô tả {op.get('descriptor')!r}", ask)
         x, pts = op.get("label"), op.get("points") or []
-        if x not in self.pts or any(p not in self.pts for p in pts) or not dung(self.pts[x], [self.pts[p] for p in pts]):
+        if x not in self.pts or any(p not in self.pts for p in pts) or not dung(self, self.pts[x], [self.pts[p] for p in pts]):
             raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"điểm {x} không phải {op.get('descriptor')} của {''.join(pts)}", ask)
 
     def _dt2_tam_giac(self, p: str, q: str, r: str) -> Fraction:
@@ -2785,11 +3020,77 @@ BAC_DAI_LUONG = {"ask_volume": 3, "ask_length": 1, "ask_distance_point_plane": 1
                  "ask_curved_residual_volume": 3}
 
 
-#: Definitions of the unnamed points a planner `effect-chain` may introduce (affine: valid in chart coordinates). A
+def _chon_phap_tuyen_mat(ps: list[V3]) -> tuple[V3, V3, V3, Vec3] | None:
+    if len(ps) < 3:
+        return None
+    q0 = ps[0]
+    for i in range(1, len(ps)):
+        u = (ps[i][0] - q0[0], ps[i][1] - q0[1], ps[i][2] - q0[2])
+        for j in range(i + 1, len(ps)):
+            v = (ps[j][0] - q0[0], ps[j][1] - q0[1], ps[j][2] - q0[2])
+            n = Vec3(*u).cross(Vec3(*v))
+            if not n.is_zero():
+                if any(n.dot(Vec3(q[0] - q0[0], q[1] - q0[1], q[2] - q0[2])) != 0 for q in ps[1:]):
+                    return None
+                return q0, u, v, n
+    return None
+
+
+def _kiem_mo_ta_chieu_duong(dung: _Dung, x: V3, ps: list[V3]) -> bool:
+    if len(ps) != 3:
+        return False
+    p, a, b = ps
+    ab = (b[0] - a[0], b[1] - a[1], b[2] - a[2])
+    ax = (x[0] - a[0], x[1] - a[1], x[2] - a[2])
+    px = (x[0] - p[0], x[1] - p[1], x[2] - p[2])
+    return dung.g(ab, ab) != 0 and Vec3(*ax).cross(Vec3(*ab)).is_zero() and dung.g(px, ab) == 0
+
+
+def _kiem_mo_ta_chieu_mat(dung: _Dung, x: V3, ps: list[V3]) -> bool:
+    if len(ps) < 4 or (mp := _chon_phap_tuyen_mat(ps[1:])) is None:
+        return False
+    q0, u, v, n = mp
+    px = (x[0] - ps[0][0], x[1] - ps[0][1], x[2] - ps[0][2])
+    return n.dot(Vec3(x[0] - q0[0], x[1] - q0[1], x[2] - q0[2])) == 0 and dung.g(px, u) == 0 and dung.g(px, v) == 0
+
+
+def _kiem_mo_ta_giao_duong(_dung: _Dung, x: V3, ps: list[V3]) -> bool:
+    if len(ps) != 4:
+        return False
+    a, b, c, d = ps
+    ab = Vec3(b[0] - a[0], b[1] - a[1], b[2] - a[2])
+    cd = Vec3(d[0] - c[0], d[1] - c[1], d[2] - c[2])
+    return (not ab.cross(cd).is_zero()
+            and Vec3(x[0] - a[0], x[1] - a[1], x[2] - a[2]).cross(ab).is_zero()
+            and Vec3(x[0] - c[0], x[1] - c[1], x[2] - c[2]).cross(cd).is_zero())
+
+
+def _kiem_mo_ta_giao_mat(_dung: _Dung, x: V3, ps: list[V3]) -> bool:
+    if len(ps) < 5 or (mp := _chon_phap_tuyen_mat(ps[2:])) is None:
+        return False
+    a, b = ps[0], ps[1]
+    q0, _u, _v, n = mp
+    ab = Vec3(b[0] - a[0], b[1] - a[1], b[2] - a[2])
+    return (n.dot(ab) != 0
+            and Vec3(x[0] - a[0], x[1] - a[1], x[2] - a[2]).cross(ab).is_zero()
+            and n.dot(Vec3(x[0] - q0[0], x[1] - q0[1], x[2] - q0[2])) == 0)
+
+
+#: Definitions of the unnamed points a planner `effect-chain` or `point_operand` may introduce (affine + Gram metric). A
 #: description without a predicate here is not served, whatever contract proposes it.
 _MO_TA = {
-    "midpoint": lambda x, ps: len(ps) == 2 and all(2 * x[i] == ps[0][i] + ps[1][i] for i in range(3)),
-    "centroid": lambda x, ps: len(ps) == 3 and all(3 * x[i] == sum(p[i] for p in ps) for i in range(3)),
+    "midpoint": lambda _dung, x, ps: len(ps) == 2 and ps[0] != ps[1] and all(2 * x[i] == ps[0][i] + ps[1][i] for i in range(3)),
+    "centroid": lambda _dung, x, ps: (
+        len(ps) == 3
+        and not Vec3(ps[1][0] - ps[0][0], ps[1][1] - ps[0][1], ps[1][2] - ps[0][2]).cross(
+            Vec3(ps[2][0] - ps[0][0], ps[2][1] - ps[0][1], ps[2][2] - ps[0][2])
+        ).is_zero()
+        and all(3 * x[i] == sum(p[i] for p in ps) for i in range(3))
+    ),
+    "orthogonal_projection_line": _kiem_mo_ta_chieu_duong,
+    "orthogonal_projection": _kiem_mo_ta_chieu_mat,
+    "intersect_line_line": _kiem_mo_ta_giao_duong,
+    "intersect_line_plane": _kiem_mo_ta_giao_mat,
 }
 
 
@@ -3753,7 +4054,11 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         dung.giai_phu_thuoc()
         named = plan.get("named_planes") or [] if isinstance(plan, dict) else []
         dung.chon_ba_mat(named)
-        phu = {x: d for d in auxiliary for x in (d.get("labels") or ([d['label']] if d.get('label') else []))}
+        phu = {
+            x: d
+            for d in auxiliary
+            for x in (*(d.get("labels") or ([d["label"]] if d.get("label") else [])), *(d.get("point_labels") or ()))
+        }
         for s in dung.trace:                             # điểm phụ: DẪN XUẤT, không phải nhãn của đề — ghi rõ ràng buộc
             if s["step"] == "place_point" and s["object"] in phu:
                 s.update(binding="AUXILIARY", auxiliary_rule=phu[s["object"]]["rule"], goal=phu[s["object"]]["goal"])
@@ -3762,11 +4067,15 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         dung.kiem()
         if dung.of("curved_solid"):
             dung.chuan_hoa_euclid()
+        for d in dung.mat_phu:
+            if d.get("point_operand"):
+                dung.kiem_mo_ta({"operand": d["point_operand"], "ask": (d.get("targets") or [""])[0]})
         dung.kiem_mat_cat()
         for d in auxiliary:                              # section vertices on stated cut edges (`DINH_CAT_CANH`)
             if d.get("rule") == DINH_CAT_CANH:
                 dung.kiem_dinh_cat(d)
         dung.kiem_mat_viet(nhom_mat_nguon(problem_text), named)
+        dung.kiem_khang_dinh_loai_hinh()
         chuoi = [d for d in auxiliary if d.get("rule") == "effect-chain"]
         for d in chuoi:
             dung.kiem_mo_ta(d)
