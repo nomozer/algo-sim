@@ -362,8 +362,11 @@ SLICE_MUTANTS = [
          "SAB")).status != "REFUSED"),
     ("cutting-plane binding dropped", _gate_mutant, "        if c.fn in (\"section\", \"ask_section_area\", \"intersection_line\") "
      "and not mat_cat_dung_nguon(c, calls):", "        if False:",
+     # hybrid-master tenth continuation (PE-1): the unread remainder of this request sentence is now refused by a second,
+     # independent guard, so the mutant is observed by the reason the binding check gives, not by a serve
      lambda: _run(HB._mid("f5", "M", "S", "C"), _section(
-         "f6", "Xác định thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng qua M song song với đáy.", "MAB")).status != "REFUSED"),
+         "f6", "Xác định thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng qua M song song với đáy.", "MAB")).code
+     != "SOURCE_OBJECT_MISMATCH"),
 ]
 
 

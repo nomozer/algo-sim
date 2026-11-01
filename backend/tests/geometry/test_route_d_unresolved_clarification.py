@@ -209,3 +209,10 @@ def test_review_r1_a_primed_subject_matches_its_quote_in_any_prime_spelling():
 def test_review_r1_repeated_roles_are_asked_once():
     r = run_typed_fact_next_v2_route(_only(GOC_CHIEU, _u(missing=("source_point", "source_point"))))
     assert r.route_d["refusal"]["clarification"]["question"].count("của điểm nào") == 1
+
+
+def test_review_r2_wrapper_spans_are_offsets_in_the_raw_source():
+    text = "  " + GOC_CHIEU
+    out = run_hybrid_offline(text, ReplayExtractor({text: _only(text, _u(quote="S là góc chiếu"))}), policy=POLICY).response
+    (a, b), = out["route_d"]["refusal"]["clarification"]["spans"]
+    assert text[a:b] == "S là góc chiếu"

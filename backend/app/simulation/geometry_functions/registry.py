@@ -2647,12 +2647,11 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
         du = "".join(" " if x else ch for x, ch in zip(doc_cau, de[start:end]))
         # PE-1 (review round 1, pre-existing): a sentence that REQUESTS something ("tìm / tính / xác định …") is read whole
         # even when no ask call exists — "Tìm giao điểm của SC và (ABD)." otherwise served a figure and dropped the request
-        # A sentence lying inside the quote of a validated construction ("… theo một thiết diện. Xác định thiết diện đó.")
-        # is answered by that call.
-        s0, e0 = start + len(de[start:end]) - len(de[start:end].lstrip()), start + len(de[start:end].rstrip(" .?!;"))
-        dung_tra_loi = any(c.spec.kind == "construct" and c.fn not in _KHOI_FN and (vt := _vi_tri(de, q)) is not None
-                           and vt[0] <= s0 and e0 <= vt[1] for c in calls for q in c.quotes)
-        if ((phrases or (_DONG_TU_HOI.search(de, start, end) and not dung_tra_loi)
+        # A validated section / intersection line answers its own anaphoric request ("… theo một thiết diện. Xác định thiết
+        # diện đó."): only that closed phrase is read, never what a broad model quote also covers (review round 2).
+        if any(c.fn in ("section", "intersection_line") for c in calls):
+            du = _HOI_CHI_DUNG.sub(lambda m: " " * len(m.group()), du)
+        if ((phrases or _DONG_TU_HOI.search(de, start, end)
              or (any(c.spec.kind == "ask" for c in calls) and start >= first_request))
                 and not _DAN_CAU_HOI.fullmatch(du)):
             raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED", f"câu hỏi có phần chưa được đọc ({du.strip()!r}) — có thể đổi đại "
@@ -3565,6 +3564,8 @@ _GIUA_HOP_LE = re.compile(r"[\s,:]*(?:(?:(?:và|cùng|lần lượt|hãy|các)(?
 _DAN_CAU_HOI = re.compile(
     r"[\s,;:.?!]*(?:(?:\(?(?:[a-z]|\d{1,2})\)|(?:câu|ý|phần)\s+(?:[a-z]|\d{1,2})|hơn nữa|ngoài ra|khi đó|từ đó|sau đó|tiếp theo|tiếp đó"
     r"|rồi|do đó|vậy|cuối cùng|và|cùng|hãy|em hãy|các|lần lượt)(?!\w)[\s,;:.?!]*)*", re.IGNORECASE)
+#: The anaphoric object of a request a validated section / intersection line answers ("Xác định thiết diện đó.").
+_HOI_CHI_DUNG = re.compile(r"(?<!\w)(?:thiết\s+diện|giao\s+tuyến)\s+(?:đó|này|trên|vừa\s+dựng(?:\s+được)?)(?!\w)", re.IGNORECASE)
 _DON_VI_MET = r"(?:cm|dm|mm|(?-i:m))"
 _DON_VI = (rf"(?:{_DON_VI_MET}(?:2|\^2|²)|đvdt"
            rf"|{_DON_VI_MET}(?:3|\^3|³)|đvtt"
@@ -3833,6 +3834,10 @@ def _doc_muc_tieu_cau_hoi(de: str, a: int, b: int, dung: set[str]) -> list[tuple
 
 _NOI_TY_SO = r"(?i:sao\s+cho|thỏa\s+mãn|với)"
 
+#: An operand of an intersection-point definition: a named line / segment / edge, or a plane (labels, a named (P) / (α),
+#: the base).
+_TOAN_HANG_GIAO = (rf"(?:(?:(?:đường\s+thẳng|đường\s+chéo|đoạn(?:\s+thẳng)?|cạnh(?:\s+bên|\s+đáy)?)\s+)?{_P1}{_P1}(?![\w'])"
+                   rf"|(?:mặt\s+phẳng\s*|mp\s*)?\((?:[A-Z][0-9]*'?|[α-ωΑ-Ω][0-9]*'?)\)|{_MAT_TOAN_HANG})")
 _CUM_DINH_NGHIA_DIEM = re.compile(
     # ratio point written without "là … điểm" ("Điểm M thuộc cạnh SA sao cho SM = 1/3 SA"): the same optional part as the
     # binding grammar `_TY_SO`, so a clause that grammar validated is read whole (run `typedfactnext-planner-bridge`)
@@ -3842,7 +3847,8 @@ _CUM_DINH_NGHIA_DIEM = re.compile(
     rf"(?:trung điểm(?:\s+của)?(?:\s+(?:đoạn(?:\s+thẳng)?|cạnh(?:\s+bên|\s+đáy)?))?\s+{_P1}{_P1}"
     rf"|trọng tâm(?:\s+của)?(?:\s+(?:tam giác|tứ giác|đa giác|mặt\s+đáy|đáy))?\s+\(?{_NHOM_NHAN}\)?"
     rf"|hình chiếu(?:\s+vuông góc)?\s+của\s+(?:điểm\s+|đỉnh\s+)?{_P1}\s+(?:lên|trên)\s+(?:{_MAT_TOAN_HANG}|(?:đường thẳng\s+|cạnh\s+)?{_P1}{_P1}|{_GIAO_TUYEN.pattern})"
-    rf"|giao điểm\s+của\s+[^,.;!?]+"
+    # two closed operands (review round 2: "[^,.;!?]+" also read "… và tìm giao điểm của SC với (ABD)" as this definition)
+    rf"|giao điểm\s+của\s+(?:hai\s+đường(?:\s+thẳng|\s+chéo)?\s+)?{_TOAN_HANG_GIAO}\s+(?:và|với)\s+{_TOAN_HANG_GIAO}"
     # ratio point (`divide_segment`, bound by `_TY_SO`): "M là điểm thuộc cạnh SA sao cho SM = 2MA"
     rf"|(?:một\s+)?điểm\s+(?:thuộc|nằm\s+trên|trên)\s+(?:(?:cạnh|đoạn\s+thẳng|đoạn)\s+)?{_P1}{_P1}\s*,?\s*{_NOI_TY_SO}\s+"
     rf"{_P1}{_P1}\s*=\s*(?:\d+(?:/\d+)?)?\s*{_P1}{_P1})"

@@ -1279,14 +1279,20 @@ _NLU_LOAI = {"ambiguous": "AMBIGUOUS", "missing_operand": "MISSING_DATA", "unrec
              "unsupported": "VALID_BUT_UNSUPPORTED"}
 
 
+def quote_spans(text: str, quote: str) -> list[list[int]]:
+    """Every half-open occurrence of `quote` in `text`, overlapping ones too (none is chosen)."""
+    spans, k = [], text.find(quote)
+    while k != -1:
+        spans.append([k, k + len(quote)])
+        k = text.find(quote, k + 1)
+    return spans
+
+
 def clarification_record(u: UnresolvedSpec, problem_text: str) -> dict[str, Any]:
     """`route-d-clarification/1`, written by the server from `u`'s closed fields and verbatim quote: every occurrence of
     the quote (overlapping ones too), the NLU class, and one short question — none for `unsupported`, which no answer
     from the learner can fix. Candidate readings are offered, never chosen."""
-    spans, k = [], problem_text.find(u.quote)
-    while k != -1:
-        spans.append([k, k + len(u.quote)])
-        k = problem_text.find(u.quote, k + 1)
+    spans = quote_spans(problem_text, u.quote)
     question = None
     roles = tuple(dict.fromkeys(u.missing_roles))
     if u.kind != "unsupported":

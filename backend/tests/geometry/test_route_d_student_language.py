@@ -240,3 +240,14 @@ def test_review_r1_a_cube_claim_on_a_cuboid_is_unread():
 ])
 def test_pe1_an_unanswered_request_sentence_is_refused(tail):
     assert run_typed_fact_next_v2_route(_payload(f"{STD} {tail}", "Cho hình chóp S.ABCD")).status == "REFUSED", tail
+
+
+# --- review round 2: a broad construction quote never answers a second request of its sentence -------------------------
+@pytest.mark.parametrize("tail", [
+    "Xác định I là giao điểm của AM và (SBD) và tìm giao điểm của SC với (ABD).",
+    "Xác định I là giao điểm của AM và (SBD), tìm hình chiếu của S lên (SBC).",
+])
+def test_review_r2_a_broad_construct_quote_does_not_cover_another_request(tail):
+    text = f"{STD} Gọi M là trung điểm của SC. {tail}"
+    inter = _p("intersect_line_plane", tail.rstrip("."), point="I", line=["A", "M"], plane=["S", "B", "D"])
+    assert run_typed_fact_next_v2_route(_payload(text, "Cho hình chóp S.ABCD", extra=[MID_M, inter])).status == "REFUSED"

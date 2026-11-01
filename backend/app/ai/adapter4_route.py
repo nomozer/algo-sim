@@ -56,6 +56,10 @@ def run_typed_fact_next_v2_route(raw: Any) -> KetQuaTuyen:
                         planner={"bridge": {"version": BRIDGE_V2_VERSION}})
     if isinstance(source, str):
         r.ai["source_sha256"] = sha256(source.encode("utf-8")).hexdigest()
+        if (clar := (r.details or {}).get("clarification")) and r.status != "SERVED":
+            from app.simulation.geometry_functions.typed_fact_next import quote_spans
+
+            clar["spans"] = quote_spans(source, clar["quote"])   # offsets in the RAW source (a model input is stripped)
     r.route_d = deepcopy(_phong_bi(r))
     return r
 

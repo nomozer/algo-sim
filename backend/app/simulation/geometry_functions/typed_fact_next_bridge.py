@@ -515,12 +515,11 @@ def bridge_v2(raw: dict[str, Any]) -> dict[str, Any]:
     if p.unresolved:
         # SL-2: the extractor reported what it could not read. Existing codes (flat contract parity): `ambiguous` facts are
         # AMBIGUOUS_FACT, the `unsupported` escape is OUT_OF_SCOPE. The record describes the first entry a learner can
-        # answer (else the first), whatever order the model wrote; spans are offsets in the RAW text, not the stripped one.
+        # answer (else the first), whatever order the model wrote. Adapter /4 re-locates spans in the raw source.
         u = next((x for x in p.unresolved if x.kind != "unsupported"), p.unresolved[0])
-        text = raw["problem_text"] if isinstance(raw, dict) and isinstance(raw.get("problem_text"), str) else p.problem_text
         raise TuChoi("OUT_OF_SCOPE" if u.kind == "unsupported" else "AMBIGUOUS_FACT",
                      f"{u.unresolved_id}: {u.kind} — không đoán cách hiểu", tuple(x.unresolved_id for x in p.unresolved),
-                     data={"clarification": clarification_record(u, text)})
+                     data={"clarification": clarification_record(u, p.problem_text)})
     return _bridge(p, _section_fact_v2, BRIDGE_V2_VERSION, v2=True)
 
 
