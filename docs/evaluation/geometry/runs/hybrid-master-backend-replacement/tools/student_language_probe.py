@@ -332,6 +332,67 @@ CASES = [
                               point='A', image='H', plane=['S', 'B', 'C'])])},
          served({'mg1': ('sq', F(2))})),
 
+    # longer chains (oracles on the C1 chart): G = centroid SBC = (4/3,2/3,2/3), its foot on (ABCD) H = (4/3,2/3,0) ⇒ AH² = 20/9;
+    # O = (1,1,0), M = (1,1,1), I = AM ∩ SO = (2/3,2/3,2/3) ⇒ SI² = 8/3; d(BM, SD)² = 16/24 = 2/3 (n = (−4,−2,−2));
+    # H = foot of A on (SBC): x + z = 2 ⇒ (1,0,1), K = foot of H on SC = (2/3,2/3,4/3) ⇒ HK² = 2/3
+    case('P11_centroid_foot_length', {'family': 'pyramid', 'chain': 3},
+         f'{STD} Gọi G là trọng tâm tam giác SBC và H là hình chiếu vuông góc của G lên mặt phẳng (ABCD). Tính độ dài AH.',
+         {'gold': c1(f'{STD} Gọi G là trọng tâm tam giác SBC và H là hình chiếu vuông góc của G lên mặt phẳng (ABCD). Tính độ dài AH.',
+                     'Cho hình chóp S.ABCD', [M('mg1', 'distance', {'segment': ['A', 'H']}, 'Tính độ dài AH')],
+                     extra=[P('centroid', 'Gọi G là trọng tâm tam giác SBC', point='G', polygon=['S', 'B', 'C']),
+                            P('orthogonal_projection', 'H là hình chiếu vuông góc của G lên mặt phẳng (ABCD)', point='G',
+                              image='H', plane=list('ABCD'))])},
+         served({'mg1': ('sq', F(20, 9))})),
+    case('P12_intersection_of_constructed_lines', {'family': 'pyramid', 'chain': 4},
+         f'{STD} Gọi O là giao điểm của AC và BD, M là trung điểm của SC và I là giao điểm của AM và SO. Tính độ dài SI.',
+         {'gold': c1(f'{STD} Gọi O là giao điểm của AC và BD, M là trung điểm của SC và I là giao điểm của AM và SO. Tính độ dài SI.',
+                     'Cho hình chóp S.ABCD', [M('mg1', 'distance', {'segment': ['S', 'I']}, 'Tính độ dài SI')],
+                     extra=[P('intersect_line_line', 'Gọi O là giao điểm của AC và BD', point='O', line1=['A', 'C'],
+                              line2=['B', 'D']),
+                            P('midpoint', 'M là trung điểm của SC', point='M', segment=['S', 'C']),
+                            P('intersect_line_line', 'I là giao điểm của AM và SO', point='I', line1=['A', 'M'],
+                              line2=['S', 'O'])])},
+         served({'mg1': ('sq', F(8, 3))})),
+    case('P13_skew_lines_through_constructed_point', {'family': 'pyramid', 'chain': 2},
+         f'{STD} Gọi M là trung điểm của SC. Tính khoảng cách giữa hai đường thẳng BM và SD.',
+         {'gold': c1(f'{STD} Gọi M là trung điểm của SC. Tính khoảng cách giữa hai đường thẳng BM và SD.', 'Cho hình chóp S.ABCD',
+                     [M('mg1', 'distance', {'line1': ['B', 'M'], 'line2': ['S', 'D']},
+                        'Tính khoảng cách giữa hai đường thẳng BM và SD')],
+                     extra=[P('midpoint', 'Gọi M là trung điểm của SC', point='M', segment=['S', 'C'])])},
+         served({'mg1': ('sq', F(2, 3))})),
+    case('P14_face_foot_then_line_foot', {'family': 'pyramid', 'chain': 3},
+         f'{STD} Gọi H là hình chiếu vuông góc của A lên mặt phẳng (SBC) và K là hình chiếu vuông góc của H trên SC. Tính độ dài HK.',
+         {'gold': c1(f'{STD} Gọi H là hình chiếu vuông góc của A lên mặt phẳng (SBC) và K là hình chiếu vuông góc của H trên SC. Tính độ dài HK.',
+                     'Cho hình chóp S.ABCD', [M('mg1', 'distance', {'segment': ['H', 'K']}, 'Tính độ dài HK')],
+                     extra=[P('orthogonal_projection', 'Gọi H là hình chiếu vuông góc của A lên mặt phẳng (SBC)', point='A',
+                              image='H', plane=['S', 'B', 'C']),
+                            P('orthogonal_projection_line', 'K là hình chiếu vuông góc của H trên SC', point='H', image='K',
+                              line=['S', 'C'])])},
+         served({'mg1': ('sq', F(2, 3))})),
+
+    # planner-limit probes: d(M, SD)² = 1 (foot (0,1,1)); (MAB) normal (0,−2,2) ⇒ cos²((MAB),(ABCD)) = 1/2;
+    # d(O, (SBC))² = 1/2
+    case('P15_point_line_from_constructed_point', {'family': 'pyramid', 'chain': 3, 'auxiliary': 'planner'},
+         f'{STD} Gọi M là trung điểm của SC. Tính khoảng cách từ M đến đường thẳng SD.',
+         {'gold': c1(f'{STD} Gọi M là trung điểm của SC. Tính khoảng cách từ M đến đường thẳng SD.', 'Cho hình chóp S.ABCD',
+                     [M('mg1', 'distance', {'point': 'M', 'line': ['S', 'D']}, 'Tính khoảng cách từ M đến đường thẳng SD')],
+                     extra=[P('midpoint', 'Gọi M là trung điểm của SC', point='M', segment=['S', 'C'])])},
+         served({'mg1': ('sq', F(1))})),
+    case('P16_dihedral_through_constructed_point', {'family': 'pyramid', 'chain': 2},
+         f'{STD} Gọi M là trung điểm của SC. Tính góc giữa hai mặt phẳng (MAB) và (ABCD).',
+         {'gold': c1(f'{STD} Gọi M là trung điểm của SC. Tính góc giữa hai mặt phẳng (MAB) và (ABCD).', 'Cho hình chóp S.ABCD',
+                     [M('mg1', 'angle', {'plane1': ['M', 'A', 'B'], 'plane2': list('ABCD')},
+                        'Tính góc giữa hai mặt phẳng (MAB) và (ABCD)')],
+                     extra=[P('midpoint', 'Gọi M là trung điểm của SC', point='M', segment=['S', 'C'])])},
+         served({'mg1': ('cos2', F(1, 2))})),
+    case('P17_intersection_to_face', {'family': 'pyramid', 'chain': 2},
+         f'{STD} Gọi O là giao điểm của AC và BD. Tính khoảng cách từ O đến mặt phẳng (SBC).',
+         {'gold': c1(f'{STD} Gọi O là giao điểm của AC và BD. Tính khoảng cách từ O đến mặt phẳng (SBC).', 'Cho hình chóp S.ABCD',
+                     [M('mg1', 'distance', {'point': 'O', 'plane': ['S', 'B', 'C']}, 'Tính khoảng cách từ O đến mặt phẳng (SBC)')],
+                     extra=[P('intersect_line_line', 'Gọi O là giao điểm của AC và BD', point='O', line1=['A', 'C'],
+                              line2=['B', 'D'])])},
+         served({'mg1': ('sq', F(1, 2))})),
+
     # --- the Owner's mandatory example and its positive control ------------------------------------------------------
     case('A01_goc_chieu', {'family': 'prism', 'ambiguity': 'undefined_term', 'wording': 'nonstandard_term'},
          'Mô phỏng điểm S là góc chiếu của hình lăng trụ xiên.',
@@ -538,6 +599,9 @@ def observe(text, payload):
     if route['status'] == 'SERVED':
         o['answer_exact'] = route.get('answer_exact') or {}
         o['scene_points'] = sorted(x['id'] for x in env['scene3d']['objects'] if x.get('type') == 'point3')
+        # what the planner actually composed: Registry functions of the executed calls, and auxiliary decompositions
+        o['functions'] = [c['fn'] for c in route.get('source_provenance') or []]
+        o['auxiliary_rules'] = sorted({d.get('rule') for d in (route.get('planner') or {}).get('auxiliary') or []})
         return o
     clar = (route.get('refusal') or {}).get('clarification')
     o['clarification'] = clar
