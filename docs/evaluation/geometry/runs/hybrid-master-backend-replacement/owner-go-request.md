@@ -8,6 +8,14 @@
 
 **Provider facts** below were checked against official Google documentation on 2026-10-31 (`provider-facts.md`).
 
+**Update, thirteenth continuation (2026-11-01). It supersedes the twelfth- and eleventh-continuation measured systems below.**
+- **Measured system:** product `9503482a` (118 files, `773e440de0385d577040a9eca107706bfb2d3e4aec1d827b52c99c89d42ac7c3`; Registry `/29`, Planner `/23`, Engine `/20`). `--manifest` prints the exact `measured_system` and `harness_sha256` / `runner_sha256` to bind.
+- **Model surface:** the `/4` arm's provider response schema (`typed-fact-next-extraction/2`) widened additively with `described_points` (`DescribedPointSpec`); locked `TypedFact` / `flat` / `v3` / Route A schema SHAs, `typed-fact-next/1`, the `LLM_ONLY` arm, and `CACHE_VERSION` 131 are unchanged.
+- **Newly delivered offline on Hybrid `/4`** (independent adversarial review `READY` in Round 2, `0 BLOCKER, 0 MAJOR, 0 MINOR`; `r1-described-points-audit.md`, `continuation13-adversarial-review.md`):
+  - **`R-1` closed on `/4` (`ISSUE-ARCH-ROUTE-D4-UNNAMED-DESCRIBED-POINT-GOAL`):** unnamed described points carry end-to-end on `/4` across measurement goals and auxiliary section `through_point`s (`9/9` Continuation 11 `DISCOVERED_FUNCTION_COMPOSITION` chains `C1a..C7` + `angle(line1, line2)` served with exact values; `D1` nested depth-2 and `D2` two-described-operand goals are contract-representable on `/2` and refuse fail-closed `BRIDGE_UNSUPPORTED_DESCRIBED_POINT` until Source Gate chain certification is generalized);
+  - **`SL-3` closed on `/4` (`ISSUE-ARCH-ROUTE-D-STUDENT-SHORTHAND-UNREAD`):** Source Gate reads `k/c` (case-insensitive) and `đt` before line labels alongside `mp`, lifting the `S-2` gold replay baseline from `33/36` to **`35/36`** (`0` wrong-served; `"hình chop"` tone typo stays governed under `S-1`);
+  - **Bridge control-byte defect closed (`ISSUE-ARCH-ROUTE-D-BRIDGE-LITERAL-BACKSPACE-REGEX`):** `_v2_plane_def_quotes` literal `0x08` byte replaced with `\b` + word-for-word imperative restatement rule (`0` ASCII control bytes across `backend/`).
+
 **Update, eleventh continuation (2026-11-01). It supersedes the tenth- and ninth-continuation measured systems below.**
 - **Measured system:** candidate `800ab355` (product `9e059eb7`; 118 files, `184c64ff1810ec20…`). `--manifest` prints the exact `measured_system` and `harness_sha256` to bind.
 - **Model surface:** locked `TypedFact` / `flat` / `v3` / Route A schema SHAs, `typed-fact-next/1`, the `LLM_ONLY` arm, and `CACHE_VERSION` 131 are unchanged (all `/4` schema additions from Continuation 10 `unresolved` remain intact).
@@ -197,3 +205,22 @@ Data sent: the 36 authored texts plus the `/4` system instruction and schema —
 After a valid GO the agent runs `--live` once, reports the 8 metrics, the supplementary end-to-end/false-refusal counts and
 the per-row attribution, then gets an independent review. It does not tune the product on the pilot and re-score it as if
 blind.
+
+## Addendum — thirteenth continuation (`R-1` + `SL-3` + bridge regex delivered offline; `S-2` template re-issued), 2026-11-01
+
+Still `0` live calls, `USD 0` spend. Both `R-1` (unnamed described points end-to-end on `/4`) and `SL-3` (`k/c`, `mp`, `đt` student shorthands) are now implemented, independently reviewed (`VERDICT: READY`, Round 2), and regression-verified on product `9503482a` (`measured_system = 773e440de0385d577040a9eca107706bfb2d3e4aec1d827b52c99c89d42ac7c3`, `s2-pilot-gold-replay-r3.jsonl`: **`35/36`** end-to-end, `0` wrong-served). Because `measured_system` and `runner_sha256` (`a274eabcb86079203fa6fb10be4b4efaf53a405142bb8e7fa427e382fc9696aa`) changed, `s2-owner-approval.template.json` has been re-issued (`owner_decision = "PENDING_OWNER_DECISION"`, `paid_project_confirmed = false`, blob `d6c6e6b01b115621600054f611a7ff5f8657aec2`). To authorize the `S-2` live pilot (`<= 36` requests, hard cap `USD 2.0`) on this new candidate, run:
+
+```powershell
+cd D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-master-backend-replacement
+$d = 'APPROVED_BY_USER'
+$t = 'docs\evaluation\geometry\runs\hybrid-master-backend-replacement\s2-owner-approval.template.json'
+$o = 'docs\evaluation\geometry\runs\hybrid-master-backend-replacement\s2-owner-approval.json'
+if ((git hash-object $t) -ne 'd6c6e6b01b115621600054f611a7ff5f8657aec2') { throw 'template changed: do not approve' }
+if (Test-Path $o) { throw 'approval file already exists' }
+$s = [IO.File]::ReadAllText((Resolve-Path $t))
+if ([regex]::Matches($s, '"owner_decision": "PENDING_OWNER_DECISION"').Count -ne 1 -or [regex]::Matches($s, '"paid_project_confirmed": false').Count -ne 1) { throw 'unexpected template' }
+$s = $s.Replace('"owner_decision": "PENDING_OWNER_DECISION"', '"owner_decision": "' + $d + '"').Replace('"paid_project_confirmed": false', '"paid_project_confirmed": true')
+[IO.File]::WriteAllText((Join-Path (Get-Location) $o), $s, (New-Object Text.UTF8Encoding $false))
+```
+
+Remaining Owner decisions: (1) `S-2` live pilot GO above; (2) 60-problem live paired evaluation GO (`D-04`, `D-11`, `D-13`, `GATE-16`, independent corpus author + approval JSON binding `measured_system = 773e440de0385d57…`); (3) `S-1` diacritic-free input policy (including tone-dropped `"hình chop"`); (4) optional `D1`/`D2` Source Gate multi/recursive chain certification and curved rulings `P-1..P-3`; (5) `main` integration authorization (`INTEGRATION_PENDING_OWNER_GO`).

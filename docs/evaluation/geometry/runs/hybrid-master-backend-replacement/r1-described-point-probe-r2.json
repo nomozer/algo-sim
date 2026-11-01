@@ -1,0 +1,2322 @@
+{
+ "classification": "IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC",
+ "provider_calls": 0,
+ "path": "run_hybrid_offline (production opt-in /4)",
+ "identity": {
+  "head": "9503482a7480c2e8501efa8bcef0ce2c37776287",
+  "product_uncommitted": false
+ },
+ "summary": {
+  "SERVED_CORRECT": 10,
+  "REFUSED": 2,
+  "ADVERSARIAL_REFUSED": 6
+ },
+ "rows": [
+  {
+   "id": "C1a",
+   "c11_analogue": "C1a-unhinted-proj-line-length",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q1": "3√34/5"
+   },
+   "want": {
+    "q1": "3√34/5"
+   },
+   "correct": true,
+   "search_classification": "DISCOVERED_FUNCTION_COMPOSITION",
+   "functions": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "orthogonal_projection_line",
+    "ask_length"
+   ]
+  },
+  {
+   "id": "C1b",
+   "c11_analogue": "C1b-unhinted-proj-plane-area",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q1": "√3"
+   },
+   "want": {
+    "q1": "√3"
+   },
+   "correct": true,
+   "search_classification": "DISCOVERED_FUNCTION_COMPOSITION",
+   "functions": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "orthogonal_projection",
+    "ask_area"
+   ]
+  },
+  {
+   "id": "C2",
+   "c11_analogue": "C2-unhinted-inter-line-line-dist-plane",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q1": "√2/2"
+   },
+   "want": {
+    "q1": "√2/2"
+   },
+   "correct": true,
+   "search_classification": "DISCOVERED_FUNCTION_COMPOSITION",
+   "functions": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "intersect_line_line",
+    "ask_distance_point_plane"
+   ]
+  },
+  {
+   "id": "C3",
+   "c11_analogue": "C3-unhinted-inter-line-plane-angle-line-plane",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q1": "5/6"
+   },
+   "want": {
+    "q1": "5/6"
+   },
+   "correct": true,
+   "search_classification": "DISCOVERED_FUNCTION_COMPOSITION",
+   "functions": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "midpoint",
+    "intersect_line_plane",
+    "ask_angle_line_plane"
+   ]
+  },
+  {
+   "id": "C4",
+   "c11_analogue": "C4-multi-goal-shared-proj-line-reuse",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q2": "36/25",
+    "q1": "3√34/5"
+   },
+   "want": {
+    "q1": "3√34/5",
+    "q2": "36/25"
+   },
+   "correct": true,
+   "search_classification": "DISCOVERED_FUNCTION_COMPOSITION",
+   "functions": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "orthogonal_projection_line",
+    "ask_length",
+    "ask_distance_point_plane"
+   ]
+  },
+  {
+   "id": "C5",
+   "c11_analogue": "C5-flagship-unhinted-proj-line-parallel-plane-section-area",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q1": "1107/250"
+   },
+   "want": {
+    "q1": "1107/250"
+   },
+   "correct": true,
+   "search_classification": "DISCOVERED_FUNCTION_COMPOSITION",
+   "functions": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "orthogonal_projection_line",
+    "translate_point",
+    "translate_point",
+    "section",
+    "ask_section_area"
+   ]
+  },
+  {
+   "id": "C6a",
+   "c11_analogue": "C6a-unhinted-midpoint-perp-line-section-area",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q1": "√3/6"
+   },
+   "want": {
+    "q1": "√3/6"
+   },
+   "correct": true,
+   "search_classification": "DISCOVERED_FUNCTION_COMPOSITION",
+   "functions": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "midpoint",
+    "orthogonal_projection_line",
+    "orthogonal_projection_line",
+    "translate_point",
+    "translate_point",
+    "section",
+    "ask_section_area"
+   ]
+  },
+  {
+   "id": "C6b",
+   "c11_analogue": "C6b-unhinted-proj-line-perp-derived-SO-section-area",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q1": "20√6/27"
+   },
+   "want": {
+    "q1": "20√6/27"
+   },
+   "correct": true,
+   "search_classification": "DISCOVERED_FUNCTION_COMPOSITION",
+   "functions": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "intersect_line_line",
+    "orthogonal_projection_line",
+    "orthogonal_projection_line",
+    "orthogonal_projection_line",
+    "translate_point",
+    "translate_point",
+    "section",
+    "ask_section_area"
+   ]
+  },
+  {
+   "id": "C7",
+   "c11_analogue": "C7-prism-unhinted-proj-line-length",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q1": "4√34/5"
+   },
+   "want": {
+    "q1": "4√34/5"
+   },
+   "correct": true,
+   "search_classification": "DISCOVERED_FUNCTION_COMPOSITION",
+   "functions": [
+    "prism",
+    "right_angle",
+    "segment_length",
+    "segment_length",
+    "segment_length",
+    "orthogonal_projection_line",
+    "ask_length"
+   ]
+  },
+  {
+   "id": "N1",
+   "c11_analogue": "C12 N1",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q1": "2√6/3"
+   },
+   "want": {
+    "q1": "2√6/3"
+   },
+   "correct": true,
+   "search_classification": "REGISTERED_DECOMPOSITION",
+   "functions": [
+    "pyramid",
+    "regular_polygon",
+    "perpendicular_line_plane",
+    "segment_length",
+    "orthogonal_projection_line",
+    "ask_length"
+   ]
+  },
+  {
+   "id": "D1",
+   "c11_analogue": "D1-nested-two-level-unnamed-descriptor",
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+   "answers": null,
+   "want": {
+    "q1": "√2"
+   },
+   "correct": false,
+   "search_classification": null,
+   "functions": []
+  },
+  {
+   "id": "D2",
+   "c11_analogue": "D2-dual-unnamed-point-endpoints-in-binary-goal",
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_DESCRIBED_POINT",
+   "answers": null,
+   "want": {
+    "q1": "√6"
+   },
+   "correct": false,
+   "search_classification": null,
+   "functions": []
+  },
+  {
+   "id": "X1_role_swap",
+   "c11_analogue": "operands swapped (D onto SA) under the same quote",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": null,
+   "want": null,
+   "correct": false,
+   "search_classification": null,
+   "functions": []
+  },
+  {
+   "id": "X2_wrong_kind",
+   "c11_analogue": "intersection of lines read as line–plane",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": null,
+   "want": null,
+   "correct": false,
+   "search_classification": null,
+   "functions": []
+  },
+  {
+   "id": "X3_quote_elsewhere",
+   "c11_analogue": "describing quote is not the phrase in the goal",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": null,
+   "want": null,
+   "correct": false,
+   "search_classification": null,
+   "functions": []
+  },
+  {
+   "id": "X4_target_swapped",
+   "c11_analogue": "distance to (ABCD) instead of (SBC)",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": null,
+   "want": null,
+   "correct": false,
+   "search_classification": null,
+   "functions": []
+  },
+  {
+   "id": "X5_invented_described",
+   "c11_analogue": "a described point the text does not describe",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": null,
+   "want": null,
+   "correct": false,
+   "search_classification": null,
+   "functions": []
+  },
+  {
+   "id": "X6_section_wrong_desc",
+   "c11_analogue": "through-point description changed (S onto AD)",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": null,
+   "want": null,
+   "correct": false,
+   "search_classification": null,
+   "functions": []
+  }
+ ],
+ "cases": [
+  {
+   "id": "C1a",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 3. SA vuông góc với (ABCD). SA = 4. Tính độ dài đoạn thẳng nối điểm C với hình chiếu vuông góc của A lên SD.",
+   "payload": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 3. SA vuông góc với (ABCD). SA = 4. Tính độ dài đoạn thẳng nối điểm C với hình chiếu vuông góc của A lên SD.",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "3"
+      },
+      "quote": "Đáy ABCD là hình vuông cạnh 3",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "4"
+      },
+      "quote": "SA = 4",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "segment": [
+        "C",
+        "@h1"
+       ]
+      },
+      "quote": "Tính độ dài đoạn thẳng nối điểm C với hình chiếu vuông góc của A lên SD",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "h1",
+      "kind": "orthogonal_projection_line",
+      "quote": "hình chiếu vuông góc của A lên SD",
+      "point": "A",
+      "line": [
+       "S",
+       "D"
+      ]
+     }
+    ]
+   },
+   "want": {
+    "q1": "3√34/5"
+   }
+  },
+  {
+   "id": "C1b",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Tính diện tích tam giác tạo bởi B, D và hình chiếu vuông góc của A lên (SBC).",
+   "payload": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Tính diện tích tam giác tạo bởi B, D và hình chiếu vuông góc của A lên (SBC).",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "Đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2"
+      },
+      "quote": "SA = 2",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "area",
+      "target": {
+       "polygon": [
+        "@h1",
+        "B",
+        "D"
+       ]
+      },
+      "quote": "Tính diện tích tam giác tạo bởi B, D và hình chiếu vuông góc của A lên (SBC)",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "h1",
+      "kind": "orthogonal_projection",
+      "quote": "hình chiếu vuông góc của A lên (SBC)",
+      "point": "A",
+      "plane": [
+       "S",
+       "B",
+       "C"
+      ]
+     }
+    ]
+   },
+   "want": {
+    "q1": "√3"
+   }
+  },
+  {
+   "id": "C2",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Tính khoảng cách từ giao điểm của AC và BD đến mặt phẳng (SBC).",
+   "payload": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Tính khoảng cách từ giao điểm của AC và BD đến mặt phẳng (SBC).",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "Đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2"
+      },
+      "quote": "SA = 2",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "point": "@o1",
+       "plane": [
+        "S",
+        "B",
+        "C"
+       ]
+      },
+      "quote": "Tính khoảng cách từ giao điểm của AC và BD đến mặt phẳng (SBC)",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "o1",
+      "kind": "intersect_line_line",
+      "quote": "giao điểm của AC và BD",
+      "line1": [
+       "A",
+       "C"
+      ],
+      "line2": [
+       "B",
+       "D"
+      ]
+     }
+    ]
+   },
+   "want": {
+    "q1": "√2/2"
+   }
+  },
+  {
+   "id": "C3",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Gọi M là trung điểm của SC. Tính góc giữa đường thẳng nối điểm B với giao điểm của AM và (SBD) và mặt phẳng (ABCD).",
+   "payload": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Gọi M là trung điểm của SC. Tính góc giữa đường thẳng nối điểm B với giao điểm của AM và (SBD) và mặt phẳng (ABCD).",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "Đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2"
+      },
+      "quote": "SA = 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "midpoint",
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "C"
+       ]
+      },
+      "quote": "Gọi M là trung điểm của SC",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "angle",
+      "target": {
+       "line": [
+        "B",
+        "@i1"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "Tính góc giữa đường thẳng nối điểm B với giao điểm của AM và (SBD) và mặt phẳng (ABCD)",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "i1",
+      "kind": "intersect_line_plane",
+      "quote": "giao điểm của AM và (SBD)",
+      "line": [
+       "A",
+       "M"
+      ],
+      "plane": [
+       "S",
+       "B",
+       "D"
+      ]
+     }
+    ]
+   },
+   "want": {
+    "q1": "5/6"
+   }
+  },
+  {
+   "id": "C4",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 3. SA vuông góc với (ABCD). SA = 4. Tính độ dài đoạn thẳng nối điểm C với hình chiếu vuông góc của A lên SD. Tính khoảng cách từ hình chiếu vuông góc của A lên SD đến mặt phẳng (ABCD).",
+   "payload": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 3. SA vuông góc với (ABCD). SA = 4. Tính độ dài đoạn thẳng nối điểm C với hình chiếu vuông góc của A lên SD. Tính khoảng cách từ hình chiếu vuông góc của A lên SD đến mặt phẳng (ABCD).",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "3"
+      },
+      "quote": "Đáy ABCD là hình vuông cạnh 3",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "4"
+      },
+      "quote": "SA = 4",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "segment": [
+        "C",
+        "@h1"
+       ]
+      },
+      "quote": "Tính độ dài đoạn thẳng nối điểm C với hình chiếu vuông góc của A lên SD",
+      "solid_id": "s1"
+     },
+     {
+      "goal_id": "q2",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "point": "@h1",
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "Tính khoảng cách từ hình chiếu vuông góc của A lên SD đến mặt phẳng (ABCD)",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "h1",
+      "kind": "orthogonal_projection_line",
+      "quote": "hình chiếu vuông góc của A lên SD",
+      "point": "A",
+      "line": [
+       "S",
+       "D"
+      ]
+     }
+    ]
+   },
+   "want": {
+    "q1": "3√34/5",
+    "q2": "36/25"
+   }
+  },
+  {
+   "id": "C5",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 3. SA vuông góc với (ABCD). SA = 4. Mặt phẳng (P) đi qua hình chiếu vuông góc của A lên SD và song song với mặt phẳng (SBC). Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+   "payload": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 3. SA vuông góc với (ABCD). SA = 4. Mặt phẳng (P) đi qua hình chiếu vuông góc của A lên SD và song song với mặt phẳng (SBC). Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "3"
+      },
+      "quote": "Đáy ABCD là hình vuông cạnh 3",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "4"
+      },
+      "quote": "SA = 4",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [
+     {
+      "section_id": "sec1",
+      "plane_name": "P",
+      "target_solid_id": "s1",
+      "quote": "Mặt phẳng (P) đi qua hình chiếu vuông góc của A lên SD và song song với mặt phẳng (SBC)",
+      "through_point": "@h1",
+      "stated_intersections": [],
+      "plane_kind": "through_point_parallel_plane",
+      "parallel_plane": [
+       "S",
+       "B",
+       "C"
+      ]
+     }
+    ],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "area",
+      "target": {
+       "section_id": "sec1"
+      },
+      "quote": "Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "h1",
+      "kind": "orthogonal_projection_line",
+      "quote": "hình chiếu vuông góc của A lên SD",
+      "point": "A",
+      "line": [
+       "S",
+       "D"
+      ]
+     }
+    ]
+   },
+   "want": {
+    "q1": "1107/250"
+   }
+  },
+  {
+   "id": "C6a",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Mặt phẳng (P) đi qua trung điểm của SA và vuông góc với SC. Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+   "payload": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Mặt phẳng (P) đi qua trung điểm của SA và vuông góc với SC. Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "Đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2"
+      },
+      "quote": "SA = 2",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [
+     {
+      "section_id": "sec1",
+      "plane_name": "P",
+      "target_solid_id": "s1",
+      "quote": "Mặt phẳng (P) đi qua trung điểm của SA và vuông góc với SC",
+      "through_point": "@m1",
+      "stated_intersections": [],
+      "plane_kind": "through_point_perpendicular_line",
+      "perpendicular_line": [
+       "S",
+       "C"
+      ]
+     }
+    ],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "area",
+      "target": {
+       "section_id": "sec1"
+      },
+      "quote": "Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "m1",
+      "kind": "midpoint",
+      "quote": "trung điểm của SA",
+      "segment": [
+       "S",
+       "A"
+      ]
+     }
+    ]
+   },
+   "want": {
+    "q1": "√3/6"
+   }
+  },
+  {
+   "id": "C6b",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Gọi O là giao điểm của AC và BD. Mặt phẳng (P) đi qua hình chiếu vuông góc của O lên SC và vuông góc với SO. Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+   "payload": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Gọi O là giao điểm của AC và BD. Mặt phẳng (P) đi qua hình chiếu vuông góc của O lên SC và vuông góc với SO. Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "Đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2"
+      },
+      "quote": "SA = 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "intersect_line_line",
+      "args": {
+       "point": "O",
+       "line1": [
+        "A",
+        "C"
+       ],
+       "line2": [
+        "B",
+        "D"
+       ]
+      },
+      "quote": "Gọi O là giao điểm của AC và BD",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [
+     {
+      "section_id": "sec1",
+      "plane_name": "P",
+      "target_solid_id": "s1",
+      "quote": "Mặt phẳng (P) đi qua hình chiếu vuông góc của O lên SC và vuông góc với SO",
+      "through_point": "@k1",
+      "stated_intersections": [],
+      "plane_kind": "through_point_perpendicular_line",
+      "perpendicular_line": [
+       "S",
+       "O"
+      ]
+     }
+    ],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "area",
+      "target": {
+       "section_id": "sec1"
+      },
+      "quote": "Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "k1",
+      "kind": "orthogonal_projection_line",
+      "quote": "hình chiếu vuông góc của O lên SC",
+      "point": "O",
+      "line": [
+       "S",
+       "C"
+      ]
+     }
+    ]
+   },
+   "want": {
+    "q1": "20√6/27"
+   }
+  },
+  {
+   "id": "C7",
+   "text": "Cho hình lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 3, AC = 4, AA' = 4. Tính độ dài đoạn thẳng nối điểm C với hình chiếu vuông góc của A lên A'B.",
+   "payload": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình lăng trụ đứng ABC.A'B'C'. Đáy ABC là tam giác vuông tại A. AB = 3, AC = 4, AA' = 4. Tính độ dài đoạn thẳng nối điểm C với hình chiếu vuông góc của A lên A'B.",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "prism",
+      "notation": "ABC.A'B'C'",
+      "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "right_prism",
+      "args": {
+       "base": [
+        "A",
+        "B",
+        "C"
+       ],
+       "top": [
+        "A'",
+        "B'",
+        "C'"
+       ]
+      },
+      "quote": "Cho hình lăng trụ đứng ABC.A'B'C'",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "right_angle",
+      "args": {
+       "vertex": "A",
+       "rays": [
+        "B",
+        "C"
+       ]
+      },
+      "quote": "Đáy ABC là tam giác vuông tại A",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "A",
+        "B"
+       ],
+       "value": "3"
+      },
+      "quote": "AB = 3",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "A",
+        "C"
+       ],
+       "value": "4"
+      },
+      "quote": "AC = 4",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "A",
+        "A'"
+       ],
+       "value": "4"
+      },
+      "quote": "AA' = 4",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình lăng trụ đứng ABC.A'B'C'"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "segment": [
+        "C",
+        "@h1"
+       ]
+      },
+      "quote": "Tính độ dài đoạn thẳng nối điểm C với hình chiếu vuông góc của A lên A'B",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "h1",
+      "kind": "orthogonal_projection_line",
+      "quote": "hình chiếu vuông góc của A lên A'B",
+      "point": "A",
+      "line": [
+       "A'",
+       "B"
+      ]
+     }
+    ]
+   },
+   "want": {
+    "q1": "4√34/5"
+   }
+  },
+  {
+   "id": "N1",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Tính khoảng cách từ A đến đường thẳng SC.",
+   "payload": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Tính khoảng cách từ A đến đường thẳng SC.",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "Đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2"
+      },
+      "quote": "SA = 2",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "point": "A",
+       "line": [
+        "S",
+        "C"
+       ]
+      },
+      "quote": "Tính khoảng cách từ A đến đường thẳng SC",
+      "solid_id": "s1"
+     }
+    ]
+   },
+   "want": {
+    "q1": "2√6/3"
+   }
+  },
+  {
+   "id": "D1",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Tính độ dài đoạn thẳng nối điểm C với hình chiếu vuông góc của trung điểm SC lên (ABCD).",
+   "payload": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Tính độ dài đoạn thẳng nối điểm C với hình chiếu vuông góc của trung điểm SC lên (ABCD).",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "Đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2"
+      },
+      "quote": "SA = 2",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "segment": [
+        "C",
+        "@h1"
+       ]
+      },
+      "quote": "Tính độ dài đoạn thẳng nối điểm C với hình chiếu vuông góc của trung điểm SC lên (ABCD)",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "h1",
+      "kind": "orthogonal_projection",
+      "quote": "hình chiếu vuông góc của trung điểm SC lên (ABCD)",
+      "point": "@m1",
+      "plane": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "described_id": "m1",
+      "kind": "midpoint",
+      "quote": "trung điểm SC",
+      "segment": [
+       "S",
+       "C"
+      ]
+     }
+    ]
+   },
+   "want": {
+    "q1": "√2"
+   }
+  },
+  {
+   "id": "D2",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Tính độ dài đoạn thẳng nối trung điểm của SA với trung điểm của BC.",
+   "payload": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Tính độ dài đoạn thẳng nối trung điểm của SA với trung điểm của BC.",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "Đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2"
+      },
+      "quote": "SA = 2",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "segment": [
+        "@m1",
+        "@m2"
+       ]
+      },
+      "quote": "Tính độ dài đoạn thẳng nối trung điểm của SA với trung điểm của BC",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "m1",
+      "kind": "midpoint",
+      "quote": "trung điểm của SA",
+      "segment": [
+       "S",
+       "A"
+      ]
+     },
+     {
+      "described_id": "m2",
+      "kind": "midpoint",
+      "quote": "trung điểm của BC",
+      "segment": [
+       "B",
+       "C"
+      ]
+     }
+    ]
+   },
+   "want": {
+    "q1": "√6"
+   }
+  },
+  {
+   "id": "X1_role_swap",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 3. SA vuông góc với (ABCD). SA = 4. Tính độ dài đoạn thẳng nối điểm C với hình chiếu vuông góc của A lên SD.",
+   "payload": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 3. SA vuông góc với (ABCD). SA = 4. Tính độ dài đoạn thẳng nối điểm C với hình chiếu vuông góc của A lên SD.",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "3"
+      },
+      "quote": "Đáy ABCD là hình vuông cạnh 3",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "4"
+      },
+      "quote": "SA = 4",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "segment": [
+        "C",
+        "@h1"
+       ]
+      },
+      "quote": "Tính độ dài đoạn thẳng nối điểm C với hình chiếu vuông góc của A lên SD",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "h1",
+      "kind": "orthogonal_projection_line",
+      "quote": "hình chiếu vuông góc của A lên SD",
+      "point": "D",
+      "line": [
+       "S",
+       "A"
+      ]
+     }
+    ]
+   },
+   "want": null
+  },
+  {
+   "id": "X2_wrong_kind",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Tính khoảng cách từ giao điểm của AC và BD đến mặt phẳng (SBC).",
+   "payload": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Tính khoảng cách từ giao điểm của AC và BD đến mặt phẳng (SBC).",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "Đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2"
+      },
+      "quote": "SA = 2",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "point": "@o1",
+       "plane": [
+        "S",
+        "B",
+        "C"
+       ]
+      },
+      "quote": "Tính khoảng cách từ giao điểm của AC và BD đến mặt phẳng (SBC)",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "o1",
+      "kind": "intersect_line_plane",
+      "quote": "giao điểm của AC và BD",
+      "line": [
+       "A",
+       "C"
+      ],
+      "plane": [
+       "B",
+       "D",
+       "S"
+      ]
+     }
+    ]
+   },
+   "want": null
+  },
+  {
+   "id": "X3_quote_elsewhere",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 3. SA vuông góc với (ABCD). SA = 4. Tính độ dài đoạn thẳng nối điểm C với hình chiếu vuông góc của A lên SD.",
+   "payload": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 3. SA vuông góc với (ABCD). SA = 4. Tính độ dài đoạn thẳng nối điểm C với hình chiếu vuông góc của A lên SD.",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "3"
+      },
+      "quote": "Đáy ABCD là hình vuông cạnh 3",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "4"
+      },
+      "quote": "SA = 4",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "segment": [
+        "C",
+        "@h1"
+       ]
+      },
+      "quote": "Tính độ dài đoạn thẳng nối điểm C với hình chiếu vuông góc của A lên SD",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "h1",
+      "kind": "orthogonal_projection_line",
+      "quote": "SA = 4",
+      "point": "A",
+      "line": [
+       "S",
+       "D"
+      ]
+     }
+    ]
+   },
+   "want": null
+  },
+  {
+   "id": "X4_target_swapped",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Tính khoảng cách từ giao điểm của AC và BD đến mặt phẳng (SBC).",
+   "payload": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Tính khoảng cách từ giao điểm của AC và BD đến mặt phẳng (SBC).",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "Đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2"
+      },
+      "quote": "SA = 2",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "point": "@o1",
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "Tính khoảng cách từ giao điểm của AC và BD đến mặt phẳng (SBC)",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "o1",
+      "kind": "intersect_line_line",
+      "quote": "giao điểm của AC và BD",
+      "line1": [
+       "A",
+       "C"
+      ],
+      "line2": [
+       "B",
+       "D"
+      ]
+     }
+    ]
+   },
+   "want": null
+  },
+  {
+   "id": "X5_invented_described",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Tính khoảng cách từ A đến đường thẳng SC.",
+   "payload": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 2. Tính khoảng cách từ A đến đường thẳng SC.",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "2"
+      },
+      "quote": "Đáy ABCD là hình vuông cạnh 2",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2"
+      },
+      "quote": "SA = 2",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "distance",
+      "target": {
+       "point": "@h1",
+       "line": [
+        "S",
+        "C"
+       ]
+      },
+      "quote": "Tính khoảng cách từ A đến đường thẳng SC",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "h1",
+      "kind": "midpoint",
+      "quote": "đường thẳng SC",
+      "segment": [
+       "S",
+       "C"
+      ]
+     }
+    ]
+   },
+   "want": null
+  },
+  {
+   "id": "X6_section_wrong_desc",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 3. SA vuông góc với (ABCD). SA = 4. Mặt phẳng (P) đi qua hình chiếu vuông góc của A lên SD và song song với mặt phẳng (SBC). Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+   "payload": {
+    "schema_version": "typed-fact-next/2",
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 3. SA vuông góc với (ABCD). SA = 4. Mặt phẳng (P) đi qua hình chiếu vuông góc của A lên SD và song song với mặt phẳng (SBC). Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó.",
+    "length_unit": "1",
+    "solids": [
+     {
+      "solid_id": "s1",
+      "solid_type": "pyramid",
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "kind": "regular_polygon",
+      "args": {
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ],
+       "side": "3"
+      },
+      "quote": "Đáy ABCD là hình vuông cạnh 3",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "perpendicular_line_plane",
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "quote": "SA vuông góc với (ABCD)",
+      "solid_id": "s1"
+     },
+     {
+      "kind": "segment_length",
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "4"
+      },
+      "quote": "SA = 4",
+      "solid_id": "s1"
+     }
+    ],
+    "derived_sections": [
+     {
+      "section_id": "sec1",
+      "plane_name": "P",
+      "target_solid_id": "s1",
+      "quote": "Mặt phẳng (P) đi qua hình chiếu vuông góc của A lên SD và song song với mặt phẳng (SBC)",
+      "through_point": "@h1",
+      "stated_intersections": [],
+      "plane_kind": "through_point_parallel_plane",
+      "parallel_plane": [
+       "S",
+       "B",
+       "C"
+      ]
+     }
+    ],
+    "relations": [],
+    "simulation_goals": [
+     {
+      "goal_id": "sg1",
+      "kind": "construct_object",
+      "target_solid_id": "s1",
+      "quote": "Cho hình chóp S.ABCD"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "q1",
+      "kind": "measurement",
+      "goal_type": "area",
+      "target": {
+       "section_id": "sec1"
+      },
+      "quote": "Xác định thiết diện của hình chóp S.ABCD cắt bởi (P) và tính diện tích thiết diện đó",
+      "solid_id": "s1"
+     }
+    ],
+    "described_points": [
+     {
+      "described_id": "h1",
+      "kind": "orthogonal_projection_line",
+      "quote": "hình chiếu vuông góc của A lên SD",
+      "point": "S",
+      "line": [
+       "A",
+       "D"
+      ]
+     }
+    ]
+   },
+   "want": null
+  }
+ ]
+}

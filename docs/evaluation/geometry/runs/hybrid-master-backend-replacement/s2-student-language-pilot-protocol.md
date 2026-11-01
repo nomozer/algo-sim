@@ -139,3 +139,16 @@ test và lỗi tiêm:
 
 Runner mới có sha `b25830f2…`; template được phát hành lại với blob `a3590e6b…`. Gold replay `s2-pilot-gold-replay-r2.jsonl`
 thay `-r1`, kết quả không đổi: 33/36, 0 wrong-served. Test của runner: 44.
+
+**5.10 Continuation 13 (R-1 + SL-3, review phản biện vòng 2 `READY`, vẫn trước mọi lượt live)** —
+- `SL-3` (`registry.py` `/29`) đọc `k/c` (không phân biệt hoa/thường) và `đt` trước hai nhãn điểm của đường thẳng; hai ca
+  `S2-F-F05_kc_mp_shorthand` và `S2-F-F06_dt_mp_shorthand` nay `SERVED` đúng trên gold (`√2` và `2/3`), chỉ còn
+  `S2-F-S07_typo_tone` (`"hình chop"`, thuộc chính sách `S-1`) từ chối an toàn `UNGROUNDED_VALUE`.
+- `project()` trong `run_s2_student_language_pilot.py` chuẩn hoá `described_points` (`@id -> described:...`, bỏ `described_id`,
+  bỏ các trường tuỳ chọn mang giá trị `None` do OpenAPI `nullable: True` sinh ra và cắt khoảng trắng hai đầu chuỗi `@id`).
+- Gold replay mới trên product `9503482a`: `s2-pilot-gold-replay-r3.jsonl` (giữ nguyên `-r2.jsonl` lịch sử): **35/36**
+  end-to-end (`97.22%`), `0` wrong-served, `1/18` false refusal (`S2-F-S07`). Test của runner: **46**.
+- Danh tính mới do `--manifest` in ra: `measured_system = 773e440de0385d577040a9eca107706bfb2d3e4aec1d827b52c99c89d42ac7c3`,
+  `runner_sha256 = a274eabcb86079203fa6fb10be4b4efaf53a405142bb8e7fa427e382fc9696aa`; `s2-owner-approval.template.json`
+  được phát hành lại với blob `d6c6e6b01b115621600054f611a7ff5f8657aec2` (`owner_decision = "PENDING_OWNER_DECISION"`,
+  `paid_project_confirmed = false`).
