@@ -1,0 +1,346 @@
+{
+ "classification": "IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC",
+ "method": "regex filter, hand-read",
+ "runs": {
+  "20260927-cross-family-scene3d-product-semantic-repair": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "20260928-cross-family-hidden-line-occlusion-oracle-and-formation-repair": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "ai-function-route": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "c0-whole-solid-grounding": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "c0-whole-solid-reader": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "classroom-band-fit": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "claude-to-codex-takeover": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "cuboid-final-review": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "exact-dimensions": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "f2-role-aware-oracle": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "general-polygon-base": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "generalized-goal-entry": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "geometry-capability-expansion": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "geometry-grounding-safety": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "goal-directed-function-discovery": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "goal-directed-section-planning": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "goal-directed-section-planning-main-integration": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "hybrid-ab-pilot-readiness": {
+   "distinct_texts_mentioning_a_polyhedron": 46,
+   "distinct_matched_sentences": []
+  },
+  "hybrid-b3-v2-distance-bridge": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "hybrid-compiler-selection": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "hybrid-master-backend-replacement": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "hybrid-semantic-extraction-v2": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "hybrid-semantic-grounding-reliability": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "hybrid-v2-adapter4-plane-section-certificate": {
+   "distinct_texts_mentioning_a_polyhedron": 23,
+   "distinct_matched_sentences": []
+  },
+  "hybrid-v2-after-main-integration": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "hybrid-v2-backend-generalization": {
+   "distinct_texts_mentioning_a_polyhedron": 14,
+   "distinct_matched_sentences": []
+  },
+  "hybrid-v2-independent-vietnamese-geometry-holdout-wave3": {
+   "distinct_texts_mentioning_a_polyhedron": 130,
+   "distinct_matched_sentences": []
+  },
+  "hybrid-v2-independent-vietnamese-section-holdout-wave2": {
+   "distinct_texts_mentioning_a_polyhedron": 90,
+   "distinct_matched_sentences": []
+  },
+  "hybrid-v2-nl-certificates-e2e": {
+   "distinct_texts_mentioning_a_polyhedron": 50,
+   "distinct_matched_sentences": []
+  },
+  "hybrid-v2-planner-generalization": {
+   "distinct_texts_mentioning_a_polyhedron": 17,
+   "distinct_matched_sentences": []
+  },
+  "hybrid-v2-w2-m4-exact-radical-normalization": {
+   "distinct_texts_mentioning_a_polyhedron": 2,
+   "distinct_matched_sentences": []
+  },
+  "hybrid-v2-w2-m5-adapter4-category-a-identity-repair": {
+   "distinct_texts_mentioning_a_polyhedron": 14,
+   "distinct_matched_sentences": []
+  },
+  "hybrid-v2-w3-f1-cross-sentence-plane-grounding": {
+   "distinct_texts_mentioning_a_polyhedron": 68,
+   "distinct_matched_sentences": []
+  },
+  "hybrid-v2-w3-f2-ratio-projection-language-grounding": {
+   "distinct_texts_mentioning_a_polyhedron": 86,
+   "distinct_matched_sentences": []
+  },
+  "hybrid-v2-wave2-source-gate-language-generalization": {
+   "distinct_texts_mentioning_a_polyhedron": 50,
+   "distinct_matched_sentences": []
+  },
+  "independent-nlu-extraction-evaluation": {
+   "distinct_texts_mentioning_a_polyhedron": 105,
+   "distinct_matched_sentences": [
+    "Tính khoảng cách từ O đến trọng tâm của tam giác ABC",
+    "Tính khoảng cách từ trung điểm của cạnh SC đến mặt phẳng (ABCD)",
+    "Tính khoảng cách từ trọng tâm tam giác A'BD đến đỉnh C'"
+   ]
+  },
+  "mobile-canvas-fit": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "oblique-prism": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "pedagogical-construction-sequencing": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "phone-landscape-layout": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "question-local-givens": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "question-local-givens-final-review": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "regular-hexagonal-pyramid": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "regular-prisms": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "regular-square-pyramid-w01": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "regular-square-pyramid-w02": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "regular-square-pyramid-w03": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "regular-square-pyramid-w04": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "regular-square-pyramid-w05": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "regular-triangular-pyramid-w01": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "repo-cleanup": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "result-binding-final-acceptance": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "scene3d-codex-takeover": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "scene3d-construction-audit": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "scene3d-final-acceptance": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "scene3d-visual-correctness": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "semantic-extraction-schema-contract": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "semantic-extraction-v3-runtime-revision": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "shared-ask-grammar-safety": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "source-bound-result-planning": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "source-bound-result-planning-false-serve-fix": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "source-gate-hardening": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "source-grounding-completeness": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "source-grounding-integration": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "sphere-final-closure": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "sphere-sample-source-authority": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "text-to-geometry-functions": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "two-line-plane-section": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "unnamed-pyramid-vertex-binding": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "unnamed-regular-pyramid-grounding": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "visual-b3-sphere-integration": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "visual-closure-hybrid-readiness": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "w09-verify-cleanup": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "w10-pedagogical-playback": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "w11-pedagogical-polish": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "w12-pedagogical-grounding-closure": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "w13-geometry-preregistration": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "w14-generic-formation-assumption": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "w15-assumption-closure": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "w16-premerge-closure": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "w17-operation-annotations": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "w18-binding-focus": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "w19-docs-organization": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  },
+  "w20-cleanup-premerge": {
+   "distinct_texts_mentioning_a_polyhedron": 0,
+   "distinct_matched_sentences": []
+  }
+ }
+}

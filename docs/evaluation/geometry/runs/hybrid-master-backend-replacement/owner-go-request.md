@@ -157,7 +157,7 @@ instruction for the live paired GO still binds this candidate.
 overstates the evidence (`planner-recomposition-route-d4-correction.md`). The 9 discovered compositions are real on the
 flat route B only. On `/4` — the arm both live protocols measure — a goal or section plane that uses an **unnamed**
 described point ("khoảng cách từ trung điểm của SC đến (ABCD)") is refused (`INVALID_MATH_GOAL` /
-`INVALID_QUALIFIED_REF`); named chains are served. In the blind-agent 60-case NLU corpus, 2/60 problems use this wording.
+`INVALID_QUALIFIED_REF`); named chains are served. In the blind-agent 60-case NLU corpus, 3/60 problems use this wording (`described-point-usage-scan.json`).
 
 | # | decision | options | consequence |
 |---|---|---|---|
@@ -168,36 +168,31 @@ described point ("khoảng cách từ trung điểm của SC đến (ABCD)") is 
 | S-1 | diacritic-free input | unchanged | — |
 | Integration | merge/push | unchanged: `INTEGRATION_PENDING_OWNER_GO` | — |
 
-**S-2 GO — what the Owner writes** (the agent never writes it). One JSON file, e.g. `s2-owner-approval.json`:
-
-```json
-{
-  "owner_decision": "APPROVED_BY_USER",
-  "pilot": "S-2",
-  "model": "gemini-2.5-flash",
-  "paid_project_confirmed": true,
-  "max_requests": 36,
-  "max_usd": 2.0,
-  "input_usd_per_million": 0.30,
-  "output_usd_per_million": 2.50,
-  "corpus_sha256": "3f1682bd6adbc5f21cb504a6b25f6ccc226c9b0d791f05fcb2eeb6a9a6fc6791",
-  "measured_system": "<from --manifest>",
-  "runner_sha256": "<from --manifest>",
-  "paired_harness_sha256": "<from --manifest>"
-}
-```
-
-The numbers shown are a proposal, not a grant: `max_usd` must be at least `max_requests × 0.0244` or the runner refuses.
-Fill the three hashes from this command, run in the tree that will be measured:
+**S-2 GO — the one Owner action** (the agent never writes the decision value). The agent committed a pending file,
+`s2-owner-approval.template.json` (blob `ab98b00c7f0a54700dc7609300b196b0fba2e366`), with every term filled:
+model `gemini-2.5-flash`, `max_requests` 36 (retries included), `max_usd` 2.0, prices 0.30 / 2.50 USD per million tokens,
+corpus `3f1682bd…`, measured system `184c64ff…` (candidate `800ab355`), runner `d5a923bf…`, paired harness `8f819ee0…`.
+Those caps are a proposal, not a grant: to change one, say so and the agent re-issues the template and this command.
+Running the command below **is** the GO. It confirms the paid project and that the key may be used for this pilot. It
+refuses if the template changed, and it writes a new `s2-owner-approval.json`, changing exactly two values:
 
 ```powershell
-cd backend; $env:PYTHONIOENCODING='utf-8'
-.venv\Scripts\python.exe scripts\run_s2_student_language_pilot.py --corpus ..\docs\evaluation\geometry\runs\hybrid-master-backend-replacement\s2-student-language-pilot-corpus.json --manifest
+cd D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-master-backend-replacement
+$d = 'APPROVED_BY_USER'
+$t = 'docs\evaluation\geometry\runs\hybrid-master-backend-replacement\s2-owner-approval.template.json'
+$o = 'docs\evaluation\geometry\runs\hybrid-master-backend-replacement\s2-owner-approval.json'
+if ((git hash-object $t) -ne 'ab98b00c7f0a54700dc7609300b196b0fba2e366') { throw 'template changed: do not approve' }
+if (Test-Path $o) { throw 'approval file already exists' }
+$s = [IO.File]::ReadAllText((Resolve-Path $t))
+if ([regex]::Matches($s, '"owner_decision": "PENDING_OWNER_DECISION"').Count -ne 1 -or [regex]::Matches($s, '"paid_project_confirmed": false').Count -ne 1) { throw 'unexpected template' }
+$s = $s.Replace('"owner_decision": "PENDING_OWNER_DECISION"', '"owner_decision": "' + $d + '"').Replace('"paid_project_confirmed": false', '"paid_project_confirmed": true')
+[IO.File]::WriteAllText((Join-Path (Get-Location) $o), $s, (New-Object Text.UTF8Encoding $false))
 ```
 
-At this checkpoint `--manifest` prints `measured_system = 184c64ff1810ec20af5f5ba1451cfcac082de65876fbf8bbfc63a7f012afe26d`,
-`paired_harness_sha256 = 8f819ee0…`, `runner_sha256 = 583bfe33…` (a later commit of the runner changes the last one —
-always copy from the command). Then, for the run only: `ALLOW_LIVE_AI=1` and `GEMINI_API_KEY` from the paid project.
+The agent dry-ran the command with a non-approval decision value into a scratch file: the terms passed
+`check_approval_terms`, and the scratch file was then deleted. The runner re-checks every hash at run time and refuses
+before the first request if one has drifted. For the run only: `ALLOW_LIVE_AI=1` and `GEMINI_API_KEY` from the paid
+project.
 Data sent: the 36 authored texts plus the `/4` system instruction and schema — no learner, account or repository data.
 After a valid GO the agent runs `--live` once, reports the 8 metrics, the supplementary end-to-end/false-refusal counts and
 the per-row attribution, then gets an independent review. It does not tune the product on the pilot and re-score it as if

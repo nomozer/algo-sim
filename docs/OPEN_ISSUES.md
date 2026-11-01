@@ -21,7 +21,7 @@
 
 - **status:** OPEN, waiting for an Owner decision (R-1 in `evaluation/geometry/runs/hybrid-master-backend-replacement/owner-go-request.md`, twelfth-continuation addendum).
 - **cause:** the `/4` bridge (`typed_fact_next_bridge._distance_question` / `_angle_question` / `_operand`, section `through_point`) accepts only named labels as goal operands, so a goal or auxiliary plane that uses an unnamed described point ("khoảng cách từ trung điểm của SC đến (ABCD)") is refused (`INVALID_MATH_GOAL` / `INVALID_QUALIFIED_REF`). The planner `/23` composes these goals on the flat route B only; the eleventh-continuation `/4` claim is corrected.
-- **evidence:** `evaluation/geometry/runs/hybrid-master-backend-replacement/planner-recomposition-route-d4-correction.md`, `route-d4-representation-probe.json` (4 refused shapes, 2 named controls served with hand-checked values; 0 `DISCOVERED_FUNCTION_COMPOSITION` among 52 served `/4` gold rows). 2/60 problems of the blind-agent NLU corpus use this wording.
+- **evidence:** `evaluation/geometry/runs/hybrid-master-backend-replacement/planner-recomposition-route-d4-correction.md`, `route-d4-representation-probe.json` (4 refused shapes, 2 named controls served with hand-checked values; 0 `DISCOVERED_FUNCTION_COMPOSITION` among 52 served `/4` gold rows). 3/60 problems of the blind-agent NLU corpus use this wording (`described-point-usage-scan.json`).
 - **impact:** fail-closed (0 wrong-served); a likely Hybrid false-refusal source in the live paired run. Fixing it changes the Hybrid model surface ⇒ new candidate.
 
 ### ISSUE-ARCH-ROUTE-D-STUDENT-SHORTHAND-UNREAD
@@ -30,6 +30,13 @@
 - **cause:** the Source Gate does not read the student abbreviations `k/c` (khoảng cách), `mp` (mặt phẳng), `đt` (đường thẳng) as object names (`SOURCE_OBJECT_MISMATCH`), and a tone typo in the solid word ("hình chop") leaves its clause unread (`UNGROUNDED_VALUE`).
 - **evidence:** the S-2 gold replay `evaluation/geometry/runs/hybrid-master-backend-replacement/s2-pilot-gold-replay.jsonl`: rows `S2-F-F05`, `S2-F-F06`, `S2-F-S07` refused on the **gold** extraction (attribution `DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD`).
 - **impact:** fail-closed false refusals; caps S-2 end-to-end at 33/36 whatever the live model reads.
+
+### ISSUE-ARCH-ROUTE-D-BRIDGE-LITERAL-BACKSPACE-REGEX
+
+- **status:** OPEN, recorded 2026-11-01 (twelfth continuation); fix with the next product change (any `backend/app` edit invalidates candidate `800ab355`).
+- **cause:** `backend/app/simulation/geometry_functions/typed_fact_next_bridge.py::_v2_plane_def_quotes` (line 382, since `c15eebe4`) matches `r"^\s*(?:hãy\s+)?dựng<0x08>"`: the file holds a literal BACKSPACE byte where the word boundary `\b` was meant, so the rule that skips an imperative "(Hãy) dựng …" sentence when looking for a plane's declarative definition never fires. Most likely a shell escape collapse when the line was written.
+- **evidence:** a byte scan of the files changed on the branch (`[\x00-\x08\x0b\x0c\x0e-\x1f]`), with this line as its only hit.
+- **impact:** `NOT_MEASURED`. A "Dựng mặt phẳng (P) …" sentence can count as a definition candidate. With two candidates the function returns none, which risks a false refusal; with one, an extra quote is sent to the Source Gate. No wrong-served path is known.
 
 ### ISSUE-RESEARCH-TYPEDFACTNEXT-PREMISE-SCOPE-ERASED
 

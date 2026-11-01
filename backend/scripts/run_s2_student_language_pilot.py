@@ -22,6 +22,7 @@ import argparse
 import collections
 import hashlib
 import json
+import math
 import os
 import re
 import sys
@@ -44,6 +45,12 @@ OUTCOMES = ("SERVED", "CLARIFY", "REFUSED_UNSUPPORTED", "REFUSED_INCONSISTENT")
 CLARIFICATION_CODES = ("AMBIGUOUS", "MISSING_DATA", "UNRECOGNIZED_WORDING")
 #: Keys whose values are identifiers or source text, never facts: dropped before comparison.
 _UNCOMPARED = {"quote", "problem_text", "schema_version", "goal_id", "relation_id", "unresolved_id"}
+#: Operands whose label ORDER carries no meaning: segment/line endpoints, a plane's labels (any 3+ name the same plane).
+#: A polygon (`vertices`, `base`, `top`, `polygon`) keeps its order — it names the boundary.
+_UNORDERED = {"segment", "line", "plane", "parallel_plane", "perpendicular_line", "parallel_line_a", "parallel_line_b",
+              "edge"}
+#: Pairs of operands that are interchangeable as a whole (distance/angle between two lines or two planes).
+_SYMMETRIC_PAIRS = (("line1", "line2"), ("plane1", "plane2"))
 _OPERAND = re.compile(r"^[A-Z][A-Z0-9']*(?:\.[A-Z0-9']+)?$|\d|√|π|^a$")
 
 
@@ -95,7 +102,14 @@ def validate_corpus(corpus: dict[str, Any]) -> None:
 
 def _canon(value: Any, names: dict[str, str]) -> Any:
     if isinstance(value, dict):
-        return {k: _canon(v, names) for k, v in sorted(value.items()) if k not in _UNCOMPARED}
+        out = {k: _canon(v, names) for k, v in sorted(value.items()) if k not in _UNCOMPARED}
+        for k in _UNORDERED & out.keys():
+            if isinstance(out[k], list) and all(isinstance(x, str) for x in out[k]):
+                out[k] = sorted(out[k])
+        for a, b in _SYMMETRIC_PAIRS:
+            if a in out and b in out and _key(out[b]) < _key(out[a]):
+                out[a], out[b] = out[b], out[a]
+        return out
     if isinstance(value, (list, tuple)):
         return [_canon(v, names) for v in value]
     if isinstance(value, str):
@@ -216,7 +230,8 @@ def observe(text: str, extractor, deadline_s: float = 15.0) -> tuple[dict[str, A
     if clar and clar.get("kind") != "unsupported":          # no learner answer can fix `unsupported` (server rule)
         obs.update(status="CLARIFY", clarification_code=clar.get("nlu_class"))
     else:
-        obs.update(status="REFUSED", is_unsupported_code=bool(clar) or classify_refusal(code or "").group == "CAPABILITY")
+        group = classify_refusal(code or "").group
+        obs.update(status="REFUSED", refusal_group=group, is_unsupported_code=bool(clar) or group == "CAPABILITY")
     extra["clarification"] = clar
     return obs, extra
 
@@ -245,23 +260,29 @@ def end_to_end_correct(expected: dict[str, Any], observed: dict[str, Any]) -> bo
         return status == "SERVED" and not _score([rec])["per_case"][0]["wrong_served"]
     if outcome == "CLARIFY":
         return status == "CLARIFY" and observed.get("clarification_code") in expected["allowed_clarification_codes"]
-    unsupported = bool(observed.get("is_unsupported_code"))
-    return status == "REFUSED" and unsupported == (outcome == "REFUSED_UNSUPPORTED")
+    if outcome == "REFUSED_UNSUPPORTED":
+        return status == "REFUSED" and bool(observed.get("is_unsupported_code"))
+    # REFUSED_INCONSISTENT: refused BECAUSE the givens contradict (the paired harness's CONTRADICTORY_DATA rule) — a
+    # refusal for an unread quote or a failed extraction is the right status for the wrong reason
+    return status == "REFUSED" and observed.get("refusal_group") == "INVALID_DATA"
 
 
-def attribute(row: dict[str, Any], gold_observed: dict[str, Any], gold_raw: Any) -> str | None:
-    """First divergent layer of a failed row, by reproduction with the gold extraction (Master directive §VII)."""
+def attribute(row: dict[str, Any], gold_observed: dict[str, Any], gold_code: str | None, gold_raw: Any) -> str | None:
+    """First divergent layer of a failed row, by reproduction with the gold extraction (Master directive §VII). The
+    deterministic layers are blamed only when the gold run ends in the SAME status and code; a served row is never
+    excused by a failing gold (the live extraction got past the gate on its own)."""
     if row["technical_failure"]:
         return "INFRASTRUCTURE"
     if row["end_to_end_correct"]:
         return None
-    if not end_to_end_correct(row["expected"], gold_observed):
-        return "DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD"          # the gold extraction fails the same way
     if row.get("failure_stage") == "domain_gate":
-        return "DOMAIN_GATE"
+        return "DOMAIN_GATE"                                       # text-only gate: no extraction involved
+    same = (row["observed"].get("status"), row.get("hybrid_code")) == (gold_observed.get("status"), gold_code)
+    if row["observed"].get("status") != "SERVED" and same and not end_to_end_correct(row["expected"], gold_observed):
+        return "DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD"
     gold, got = project(gold_raw), project(row.get("raw_extraction"))
-    if gold is None or got is None or gold != got:
-        return "LLM_EXTRACTION_DIFFERS_FROM_GOLD"
+    if gold is None or got is None or gold != got or not row["observed"].get("quotes_verbatim_in_raw", True):
+        return "LLM_EXTRACTION_DIFFERS_FROM_GOLD"                 # facts, goals or a non-verbatim quote
     return "UNATTRIBUTED"
 
 
@@ -312,8 +333,12 @@ def check_approval_terms(corpus_bytes: bytes, approval: dict[str, Any]) -> dict[
     for key in ("model", "measured_system", "runner_sha256", "paired_harness_sha256"):   # §4.2 + what is measured
         if approval[key] != identity[key]:
             raise LiveRefused(f"{key} differs from the approved one")
-    if not isinstance(approval["max_requests"], int) or not 0 < approval["max_requests"] <= MAX_CASES:   # §4.4
+    if type(approval["max_requests"]) is not int or not 0 < approval["max_requests"] <= MAX_CASES:   # §4.4
         raise LiveRefused(f"max_requests must be an integer in 1..{MAX_CASES}")
+    for key in ("max_usd", "input_usd_per_million", "output_usd_per_million"):   # NaN / ≤ 0 would disable the USD cap
+        v = approval[key]
+        if type(v) not in (int, float) or not math.isfinite(v) or v <= 0:
+            raise LiveRefused(f"{key} must be a finite positive number")
     corpus = json.loads(corpus_bytes.decode("utf-8"))
     validate_corpus(corpus)
     worst = worst_case_request_usd(corpus, approval)
@@ -336,7 +361,8 @@ def worst_case_request_usd(corpus: dict[str, Any], approval: dict[str, Any]) -> 
 
 def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None, *, sleep=time.sleep) -> dict[str, Any]:
     """`approval is None` ⇒ gold replay; otherwise live under the approved terms, re-checked against the exact corpus
-    bytes run. Rows are flushed as they complete into a new file (never overwritten); a stop is reported, never hidden."""
+    bytes run (the Owner decision and the environment are checked by `authorize_live`, the CLI's only live entry, and
+    `live_transport` refuses every send unless ALLOW_LIVE_AI=1). Rows are flushed as they complete into a new file (never overwritten); a stop is reported, never hidden."""
     from app.ai import gemini
     from app.ai.telemetry import reset_usage, usage_report
     from app.ai.typed_fact_next_extraction import ReplayExtractor, TransportExtractor
@@ -381,8 +407,6 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
                     observed, extra = observe(case["problem_text"],
                                               ReplayExtractor({case["problem_text"]: gold} if gold else {}))
                 technical = observed.get("status") == "NOT_RECOVERABLE"
-            except gemini.BudgetExceeded:
-                technical, observed = True, {"status": "NOT_RECOVERABLE"}
             except Exception as exc:  # noqa: BLE001 — infrastructure, never a model or geometry result
                 technical, observed, extra = True, {"status": "NOT_RECOVERABLE"}, {"exception": type(exc).__name__}
             usage = usage_report()
@@ -390,15 +414,17 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
             row = {"type": "row", "case_id": case["id"], "stratum": case["stratum"],
                    "latency_s": time.perf_counter() - start, "usage": usage or "UNKNOWN",
                    "http_requests": (budget.http_requests - budget.arm_start_requests) if budget else 0,
-                   "usd": P.usd(usage, approval), "usd_upper": upper, "technical_failure": technical,
+                   "usd": (P.usd(usage, approval) if usage or not live
+                           else 0.0 if budget.http_requests == budget.arm_start_requests else "UNKNOWN"),
+                   "usd_upper": upper, "technical_failure": technical,
                    "expected": expected_record(case), "observed": observed, **extra}
             row["end_to_end_correct"] = end_to_end_correct(row["expected"], observed)
             gold = case.get("gold_extraction")              # offline reproduction, 0 requests (budget not involved)
-            gold_observed, _ = observe(case["problem_text"],
-                                       ReplayExtractor({case["problem_text"]: gold} if gold else {}))
+            gold_observed, gold_extra = observe(case["problem_text"],
+                                                ReplayExtractor({case["problem_text"]: gold} if gold else {}))
             row["gold_replay_status"] = gold_observed.get("status")
             row["gold_replay_end_to_end_correct"] = end_to_end_correct(row["expected"], gold_observed)
-            row["attribution"] = attribute(row, gold_observed, gold)
+            row["attribution"] = attribute(row, gold_observed, gold_extra.get("hybrid_code"), gold)
             rows.append(row)
             emit(row)
             spent += upper if isinstance(upper, float) else 0.0
@@ -420,13 +446,16 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
         score = _score([{"case_id": r["case_id"], "expected": r["expected"],
                                          "observed": r["observed"]} for r in rows])
         latencies = [r["latency_s"] for r in rows if not r["technical_failure"]]
+        complete = stop_reason is None and len(rows) == len(corpus["cases"])
         out = {"type": "summary", "measurement_class": klass, "stop_reason": stop_reason,
-               "completed": stop_reason is None and len(rows) == len(corpus["cases"]),
+               "run_status": "COMPLETE" if complete else "INCOMPLETE",
+               "completed": complete,
                "cases_run": len(rows), "cases_planned": len(corpus["cases"]),
                "http_requests": budget.http_requests if budget else 0,
                "spent_upper_usd": spent if live else 0.0,
-               "spent_reported_usd": (sum(r["usd"] for r in rows if isinstance(r["usd"], float)) if live
-                                      else "NOT_MEASURED"),
+               "spent_reported_usd": ("NOT_MEASURED" if not live else "UNKNOWN"
+                                      if any(not isinstance(r["usd"], float) for r in rows)
+                                      else sum(r["usd"] for r in rows)),
                "latency_median_s": P._quantile(latencies, 0.5) if live else "NOT_MEASURED",
                "latency_p90_s": P._quantile(latencies, 0.9) if live else "NOT_MEASURED",
                "score": score, "supplementary": supplementary(rows)}

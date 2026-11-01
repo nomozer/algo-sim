@@ -215,3 +215,64 @@ def test_a_run_never_overwrites_an_earlier_output(tmp_path):
     with pytest.raises(FileExistsError):
         R.evaluate(CORPUS, out, None)
     assert out.read_text(encoding="utf-8") == "earlier\n"
+
+
+# ── review round 1 (M1–M3, m1, m3): each finding locked ─────────────────────────────────────────────────────────────
+
+def test_M1_a_reversed_segment_is_the_same_goal_and_a_correct_serve_is_not_wrong_served(tmp_path, monkeypatch):
+    case = _case("S2-B-I11_mo_phong_va_tinh_SC")
+    rev = deepcopy(case["gold_extraction"])
+    rev["math_goals"][0]["target"]["segment"] = ["C", "S"]
+    rev["premises"][1]["args"]["plane"] = ["D", "C", "B", "A"]          # a plane's labels are a set
+    assert R.project(rev) == R.project(case["gold_extraction"])
+    out = _live(tmp_path, monkeypatch, Provider(_body(rev)), [case])
+    row = out["rows"][0]
+    assert row["observed"]["status"] == "SERVED" and row["end_to_end_correct"] and row["attribution"] is None
+    assert out["score"]["metrics"]["wrong_served_end_to_end"]["numerator"] == 0
+
+
+def test_M1_polygon_order_still_matters():
+    gold = _case("S2-B-I11_mo_phong_va_tinh_SC")["gold_extraction"]
+    swapped = deepcopy(gold)
+    swapped["premises"][0]["args"]["vertices"] = ["A", "C", "B", "D"]
+    assert R.project(swapped)["facts_signature"] != R.project(gold)["facts_signature"]
+
+
+def test_M2_an_inconsistent_case_refused_for_the_wrong_reason_is_not_correct(tmp_path, monkeypatch):
+    case = _case("S2-D-D03_contradictory_length")
+    dropped = deepcopy(case["gold_extraction"])
+    dropped["premises"] = [p for p in dropped["premises"] if p["quote"] != "SC = 5"]   # the contradiction left unread
+    out = _live(tmp_path, monkeypatch, Provider(_body(dropped)), [case])
+    row = out["rows"][0]
+    assert row["observed"]["status"] == "REFUSED" and row["observed"]["refusal_group"] != "INVALID_DATA"
+    assert row["end_to_end_correct"] is False and row["gold_replay_end_to_end_correct"] is True
+    assert row["attribution"] == "LLM_EXTRACTION_DIFFERS_FROM_GOLD"
+
+
+def test_M3_a_gold_failing_case_does_not_excuse_a_different_model_fault(tmp_path, monkeypatch):
+    case = _case("S2-F-F05_kc_mp_shorthand")                     # gold refused SOURCE_OBJECT_MISMATCH
+    forged = deepcopy(case["gold_extraction"])
+    forged["math_goals"][0]["quote"] = "Tính khoảng cách từ A đến mặt phẳng (SBC)"   # not in the source
+    out = _live(tmp_path, monkeypatch, Provider(_body(forged)), [case])
+    row = out["rows"][0]
+    assert row["hybrid_code"] != "SOURCE_OBJECT_MISMATCH" and not row["gold_replay_end_to_end_correct"]
+    assert row["attribution"] == "LLM_EXTRACTION_DIFFERS_FROM_GOLD"
+    (tmp_path / "same").mkdir()
+    same = _live(tmp_path / "same", monkeypatch, Provider(_body(case["gold_extraction"])), [case])
+    assert same["rows"][0]["attribution"] == "DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD"
+
+
+@pytest.mark.parametrize("over", [{"max_usd": float("nan")}, {"max_usd": float("inf")}, {"max_usd": 0},
+                                  {"max_usd": True}, {"input_usd_per_million": 0}, {"output_usd_per_million": -2.5},
+                                  {"max_requests": True}, {"max_requests": 3.0}])
+def test_m1_numeric_terms_that_would_disable_a_cap_are_refused(tmp_path, over):
+    corpus = _write(tmp_path, [_case("S2-A-I02_ve")])
+    with pytest.raises(R.LiveRefused):
+        R.check_approval_terms(corpus.read_bytes(), _terms(corpus, **over))
+
+
+def test_m3_a_domain_gate_row_costs_zero_and_the_run_reports_its_status(tmp_path, monkeypatch):
+    provider = Provider(default=500)
+    out = _live(tmp_path, monkeypatch, provider, [_case("S2-E-E01_oxyz")])
+    assert provider.calls == 0 and out["rows"][0]["usd"] == 0.0 and out["spent_reported_usd"] == 0.0
+    assert out["run_status"] == "COMPLETE" and out["rows"][0]["attribution"] is None

@@ -107,3 +107,24 @@ liên tiếp, đổi danh tính. Dừng giữa chừng ⇒ `completed = false`, 
 **5.7 Chi phí ước tính** (giá 0.30/2.50 USD mỗi triệu token, `provider-facts.md`): trần mỗi request ≈ USD 0.0244
 (input ≤ byte payload, output ≤ 8 192 token của `/4`), 36 request ≈ USD 0.88. Chi phí thật lấy từ `usageMetadata`; trước
 khi chạy là `NOT_MEASURED`.
+
+**5.8 Review vòng 1 (fresh-context, cùng continuation; vẫn trước mọi lượt live)** — verdict `NOT_READY`, 0 BLOCKER,
+3 MAJOR, 6 MINOR. Mọi MAJOR đã sửa, có test khoá và lỗi tiêm. Định nghĩa thay đổi so với §5.2–§5.3:
+- **M1:** thứ tự nhãn của toán hạng không có thứ tự (đầu mút đoạn/đường, nhãn mặt phẳng, cặp `line1/line2` và
+  `plane1/plane2`) được chuẩn hoá trong `project`. Thứ tự đa giác vẫn giữ. Trước đó, "CS" thay cho "SC" làm một ca đúng
+  thành wrong-served.
+- **M2:** `REFUSED_INCONSISTENT` chỉ đúng end-to-end khi nhóm từ chối là `INVALID_DATA` (cùng luật `CONTRADICTORY_DATA`
+  của harness paired), không phải mọi lần từ chối.
+- **M3:** chỉ quy cho tầng tất định khi gold kết thúc **cùng** trạng thái và mã. Một ca SERVED không bao giờ được miễn
+  lỗi; quote không nguyên văn quy về trích xuất.
+- **m1:** `max_usd` và hai giá phải là số hữu hạn, dương, không phải bool (NaN hay ≤ 0 sẽ vô hiệu trần USD).
+  `max_requests` phải là số nguyên thật.
+- **m3:** `spent_reported_usd = UNKNOWN` nếu có dòng thiếu usage; dòng không gửi request nào có chi phí 0.
+- **Nit:** summary có `run_status` `COMPLETE` / `INCOMPLETE`.
+
+m2 giữ nguyên có chủ đích: `owner_decision` chỉ kiểm ở `authorize_live`, vì test không bao giờ được ghi giá trị
+approval. Approval nay là template `PENDING_OWNER_DECISION` cộng một lệnh khoá theo blob (m6; `owner-go-request.md`).
+Tần suất ở bản đính chính `/4` được sửa thành 3/60, có biên nhận (m4).
+
+Gold replay theo định nghĩa mới: `s2-pilot-gold-replay-r1.jsonl`, **thay thế** `s2-pilot-gold-replay.jsonl` (giữ nguyên,
+không sửa). Kết quả: 33/36 end-to-end, 0 wrong-served, 3 false refusal cùng ba ca, tầng D 6/6. Test của runner: 41.

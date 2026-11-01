@@ -30,8 +30,10 @@ Trên 52 ca SERVED gold của `student_language_probe.py` chạy qua `/4`: 50 `S
 2 `REGISTERED_DECOMPOSITION`, **0 `DISCOVERED_FUNCTION_COMPOSITION`**.
 
 **Tuyên bố đúng:** planner `/23` tự tái tổ hợp hàm qua needs/effects trên tuyến B. Trên `/4`, lớp bài có điểm mô tả không
-đặt tên là `REPRESENTATION_BLOCKED` (hợp đồng mục tiêu), fail-closed, 0 wrong-served. Trên `/4` chỉ phục vụ được chuỗi có
-tên (`SOURCE_EXPLICIT_SEQUENCE`) và hai quy tắc phân rã đã đăng ký (điểm–đường, mặt phẳng phụ qua điểm có tên).
+đặt tên là `REPRESENTATION_BLOCKED` (hợp đồng mục tiêu), fail-closed, 0 wrong-served. Trên `/4`, những gì **quan sát được**
+là chuỗi có tên (`SOURCE_EXPLICIT_SEQUENCE`) và hai quy tắc phân rã đã đăng ký (điểm–đường, mặt phẳng phụ qua điểm có
+tên). Mẫu (4 dạng bị từ chối, 52 dòng gold) chứng minh lớp điểm không tên bị chặn; nó không chứng minh rằng không có tổ
+hợp tự tìm nào với điểm có tên trên `/4`.
 
 ## 2. D1/D2 theo checklist §IX
 
@@ -48,11 +50,13 @@ Không có lỗi tìm kiếm nào được chứng minh trên `/4`.
 
 ## 3. Bằng chứng về giá trị sử dụng (để quyết định có mở hợp đồng không)
 
-Quét toàn bộ đề hình không gian trong các corpus đánh giá của kho (mẫu: câu không mở đầu bằng "Gọi/Lấy/Cho" có
+Quét bằng `tools/described_point_usage_scan.py` (biên nhận `described-point-usage-scan.json`) mọi đề hình không gian trong
+các corpus đánh giá của kho (mẫu: câu không mở đầu bằng "Gọi/Lấy/Cho" có
 "từ/nối/đến/giữa/và/qua/của + trung điểm/trọng tâm/hình chiếu/giao điểm + của/cạnh/đoạn/nhãn"):
 
-- `independent-nlu-extraction-evaluation` (60 đề, tác giả là subagent không truy cập kho — **không phải người**): **2/60**
-  ("Tính khoảng cách từ trung điểm của cạnh SC đến mặt phẳng (ABCD)", "Tính khoảng cách từ O đến trọng tâm của tam giác ABC").
+- `independent-nlu-extraction-evaluation` (60 đề, tác giả là subagent không truy cập kho — **không phải người**): **3/60**
+  ("Tính khoảng cách từ trung điểm của cạnh SC đến mặt phẳng (ABCD)", "Tính khoảng cách từ O đến trọng tâm của tam giác
+  ABC", "Tính khoảng cách từ trọng tâm tam giác A'BD đến đỉnh C'"; đọc tay từng câu).
 - Wave 2 (90) và Wave 3 (130), curator độc lập, thiên về thiết diện: **0**.
 - Các corpus phát triển còn lại: 0.
 
@@ -66,5 +70,11 @@ từ chối (`INVALID_MATH_GOAL`) trong khi LLM_ONLY có thể phục vụ — m
 
 Mở hợp đồng là đổi **bề mặt mô hình của arm Hybrid** (bridge + lời dặn trong `TransportExtractor`; `MathGoalSpec.target`
 vốn là `dict` mở nên lược đồ JSON có thể không đổi), nên kéo theo candidate mới, Full T3, review độc lập, approval mới.
-Bằng chứng giá trị hiện có (2/60, tác giả agent) chưa đủ để tự làm. Đưa thành quyết định Owner **R-1** trong
+Bằng chứng giá trị hiện có (3/60, tác giả agent) chưa đủ để tự làm. Đưa thành quyết định Owner **R-1** trong
 `owner-go-request.md`. D1 (lồng) cần thêm biểu diễn lồng ở cả câu hỏi phẳng — không đề xuất ở mốc này.
+
+## 5. Review vòng 1 (fresh-context, cùng continuation)
+
+Bản đầu ghi **2/60** từ một lần quét tay không có biên nhận (review m4). Khi đóng gói bộ quét, phát hiện bộ lọc tên khối
+phân biệt hoa thường đã bỏ sót "Tứ diện OABC": con số đúng là **3/60**. Câu "chỉ phục vụ được" đổi thành "quan sát được"
+(review m5). Kết luận ở §4 không đổi.

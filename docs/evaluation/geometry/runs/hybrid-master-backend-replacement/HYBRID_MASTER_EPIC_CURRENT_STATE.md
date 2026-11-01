@@ -586,7 +586,7 @@ Offline only; `0` provider calls; `USD 0`. **No Owner approval file exists**, so
    - The 9 discovered compositions are real on the flat route B only.
    - On `/4`, a goal or section plane with an unnamed described point is refused (`INVALID_MATH_GOAL` / `INVALID_QUALIFIED_REF`), and 0 of 52 served `/4` gold rows are `DISCOVERED_FUNCTION_COMPOSITION`.
    - D1, D2 and the 9 C cases are `REPRESENTATION_BLOCKED` on `/4`, not search misses. Two named controls are served, both hand-checked (2√6/3, 3√2/2).
-   - Usage evidence: 2/60 problems in the blind-agent NLU corpus; 0/220 in Waves 2–3. Not implemented: it would change the Hybrid model surface; Owner decision R-1 (`ISSUE-ARCH-ROUTE-D4-UNNAMED-DESCRIBED-POINT-GOAL`).
+   - Usage evidence: 3/60 problems in the blind-agent NLU corpus (`described-point-usage-scan.json`; an earlier unreceipted 2/60 was a case-sensitive filter miss); 0/220 in Waves 2–3. Not implemented: it would change the Hybrid model surface; Owner decision R-1 (`ISSUE-ARCH-ROUTE-D4-UNNAMED-DESCRIBED-POINT-GOAL`).
 
 **Tests run this continuation:** listed in the commit; no Full T3, because no product change was made.
 
@@ -600,3 +600,17 @@ Offline only; `0` provider calls; `USD 0`. **No Owner approval file exists**, so
 - Owner decides S-2 / R-1 / SL-3, plus the paired author.
 - With a valid S-2 approval file: `run_s2_student_language_pilot.py --live --approval-file <file>`, once, then an independent review of the results.
 - Without one: no offline item in this epic is blocked except by those decisions.
+
+**Review round 1 of this continuation** (fresh-context, after `5e613816`): verdict `NOT_READY` — 0 BLOCKER, 3 MAJOR, 6 MINOR, 8 NIT.
+- **Fixed, each locked by a test and an injected fault (runner tests 28 → 41):**
+  - M1: a reversed segment no longer turns a correct serve into a wrong-serve.
+  - M2: an inconsistent case must be refused as `INVALID_DATA`.
+  - M3: the deterministic layer is blamed only when gold ends the same way.
+  - m1: NaN or ≤ 0 terms are refused.
+  - m3: unknown spend is reported as `UNKNOWN`.
+  - m4: the usage scan now has a tool and a receipt. It found 3/60, not 2/60: the first count's filter was case-sensitive.
+  - m5: wording.
+  - m6: the approval is now a `PENDING_OWNER_DECISION` template plus one blob-keyed command, dry-run with a non-approval value.
+- **Kept on purpose:** m2. Tests never write the approval value.
+- Protocol §5.8 lists the changes. The new runner sha is `d5a923bf…`. The gold replay `s2-pilot-gold-replay-r1.jsonl` replaces the first one and is unchanged in result (33/36, 0 wrong-served).
+- **Found while checking:** a literal BACKSPACE byte in a bridge regex (`ISSUE-ARCH-ROUTE-D-BRIDGE-LITERAL-BACKSPACE-REGEX`). It is a product defect, impact `NOT_MEASURED`; it will be fixed with the next product change.
