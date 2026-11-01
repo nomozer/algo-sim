@@ -153,9 +153,13 @@ CASES = [
          served(show=['M'])),
     case('I13_chi_ra_duong_cao', {'family': 'pyramid', 'intent': 'highlight_role', 'wording': 'informal'},
          f'{STD} Vẽ hình rồi chỉ ra đường cao của hình chóp.',
+         # "chỉ ra" asks to IDENTIFY a role: highlight goals are presentation only and never verified, and naming SA the
+         # altitude would be the extractor's own inference (R0). The faithful extraction is the honest exit.
          {'gold': c1(f'{STD} Vẽ hình rồi chỉ ra đường cao của hình chóp.', 'Cho hình chóp S.ABCD', sim='Vẽ hình',
-                     highlight=('chỉ ra đường cao của hình chóp', ['S', 'A']))},
-         served(show=['S', 'A'])),
+                     unresolved=[U('u1', 'unsupported', 'chỉ ra đường cao của hình chóp')]),
+          'adv:inferred_highlight': c1(f'{STD} Vẽ hình rồi chỉ ra đường cao của hình chóp.', 'Cho hình chóp S.ABCD',
+                                       sim='Vẽ hình', highlight=('chỉ ra đường cao của hình chóp', ['S', 'A']))},
+         clarify('VALID_BUT_UNSUPPORTED', 'unsupported')),
     case('I14_hoi_bao_nhieu', {'family': 'pyramid', 'intent': 'measure', 'wording': 'question_form'},
          f'{STD} Thể tích khối chóp S.ABCD bằng bao nhiêu?',
          {'gold': c1(f'{STD} Thể tích khối chóp S.ABCD bằng bao nhiêu?', 'Cho hình chóp S.ABCD',
@@ -207,7 +211,8 @@ CASES = [
          f'Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, đường cao SA = 2. {VOL}.',
          {'gold': X(f'Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, đường cao SA = 2. {VOL}.', 'Cho hình chóp S.ABCD',
                     [P('regular_polygon', 'đáy ABCD là hình vuông cạnh 2', vertices=list('ABCD'), side='2'),
-                     P('altitude', 'đường cao SA', apex='S', foot='A'),
+                     P('altitude', 'Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, đường cao SA', apex='S',
+                       foot='A'),
                      P('segment_length', 'SA = 2', segment=['S', 'A'], value='2')],
                     [M('mg1', 'volume', {'solid_id': 's1'}, VOL)])},
          served(V_C1)),
@@ -481,6 +486,40 @@ CASES = [
 ]
 
 
+# --- metamorphic opener swap on two independent topologies of `topology_probe.py` (T1, T2; same hand oracles) ---------
+def _t1(opener):
+    lead = '' if opener == 'Cho' else f'{opener} '
+    sq = 'Cho hình chóp tam giác đều S.ABC' if opener == 'Cho' else 'hình chóp tam giác đều S.ABC'
+    text = f'{opener} hình chóp tam giác đều S.ABC có cạnh đáy bằng 6 và chiều cao bằng 4. Tính thể tích khối chóp S.ABC.'
+    return text, X(text, sq, [P('regular_pyramid', 'hình chóp tam giác đều S.ABC', apex='S', base=['A', 'B', 'C']),
+                              P('regular_polygon', 'hình chóp tam giác đều S.ABC có cạnh đáy bằng 6', vertices=['A', 'B', 'C'],
+                                side='6'),
+                              P('height', 'chiều cao bằng 4', value='4')],
+                   [M('mg1', 'volume', {'solid_id': 's1'}, 'Tính thể tích khối chóp S.ABC')],
+                   sim=None if opener == 'Cho' else f'{lead}hình chóp tam giác đều S.ABC'.strip(), notation='S.ABC')
+
+
+def _t2(opener):
+    sq = "Cho lăng trụ đứng ABCD.A'B'C'D'" if opener == 'Cho' else "lăng trụ đứng ABCD.A'B'C'D'"
+    text = (f"{opener} lăng trụ đứng ABCD.A'B'C'D' có đáy ABCD là hình vuông cạnh 2 và AA' = 2. "
+            "Tính khoảng cách từ A đến mặt phẳng (A'BD).")
+    return text, X(text, sq, [P('right_prism', sq, base=list('ABCD'), top=["A'", "B'", "C'", "D'"]),
+                              P('regular_polygon', 'đáy ABCD là hình vuông cạnh 2', vertices=list('ABCD'), side='2'),
+                              P('segment_length', "AA' = 2", segment=['A', "A'"], value='2')],
+                   [M('mg1', 'distance', {'point': 'A', 'plane': ["A'", 'B', 'D']},
+                      "Tính khoảng cách từ A đến mặt phẳng (A'BD)")],
+                   sim=None if opener == 'Cho' else f"{opener} lăng trụ đứng ABCD.A'B'C'D'", notation="ABCD.A'B'C'D'",
+                   solid_type='prism')
+
+
+for _tag, _make, _oracle in (('T1', _t1, F(432)), ('T2', _t2, F(4, 3))):
+    for _op in ('Cho', 'Vẽ', 'Mô phỏng', 'Cho mình xem'):
+        _text, _payload = _make(_op)
+        CASES.append(case(f'M_{_tag}_{_op.replace(" ", "_")}', {'family': 'pyramid' if _tag == 'T1' else 'prism',
+                                                                'metamorphic': 'opener_swap', 'wording': _op},
+                          _text, {'gold': _payload}, served({'mg1': ('sq', _oracle)})))
+
+
 # ---- scoring -----------------------------------------------------------------------------------------------------------
 def squared(coef):
     m = re.fullmatch(r'(?P<p>\d+)?(?:√(?P<r>\d+))?(?:/(?P<q>\d+))?', coef or '')
@@ -498,7 +537,7 @@ def observe(text, payload):
     o = {'status': route['status'], 'code': env.get('reason_code'), 'stage': out.receipt.get('failure_stage')}
     if route['status'] == 'SERVED':
         o['answer_exact'] = route.get('answer_exact') or {}
-        o['scene_labels'] = sorted({str(x.get('label') or x.get('id')) for x in env['scene3d']['objects']})
+        o['scene_points'] = sorted(x['id'] for x in env['scene3d']['objects'] if x.get('type') == 'point3')
         return o
     clar = (route.get('refusal') or {}).get('clarification')
     o['clarification'] = clar
@@ -520,7 +559,7 @@ def score(expect, o, adversarial):
                 return 'WRONG_SERVED'
         if set(o['answer_exact']) != set(expect['oracle']):
             return 'WRONG_SERVED'
-        missing = [s for s in expect['show'] if not any(s == lab or lab.startswith(s) for lab in o['scene_labels'])]
+        missing = [s for s in expect['show'] if s not in o['scene_points']]
         return 'SERVED_INCOMPLETE_SCENE' if missing else 'SERVED_CORRECT'
     if o['status'] == 'SERVED':
         return 'WRONG_SERVED'
