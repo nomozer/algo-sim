@@ -15,6 +15,15 @@ from app.ai.function_route import run_fact_route
 from app.simulation.geometry.radical import Radical
 from app.simulation.geometry_functions import engine, planner, registry
 from scripts import planning_oracle
+
+
+def _honest(tel: dict) -> bool:
+    """C16: these compositions build the point the question describes (SOURCE-defined) and, for a section, a declared
+    rule (REGISTERED); the planner no longer calls them discovered (`route-b-composition-relabel.json`)."""
+    own = set(tel["planner_originated_steps"])
+    return (tel["classification"] in ("SOURCE_EXPLICIT_SEQUENCE", "REGISTERED_DECOMPOSITION")
+            and not tel["search_generated_steps"] and bool(tel["source_defined_steps"])
+            and own == set(tel["source_defined_steps"]) | set(tel["registered_decomposition_steps"]))
 from scripts.planning_oracle import (
     ORACLE_STEP_LIMIT,
     audit_registry_contracts,
@@ -156,7 +165,7 @@ def test_c1_unhinted_orthogonal_projection_line_to_length():
     )
     assert r.status == "SERVED", (r.code, r.reason)
     assert _exact_vals(r)["q1"] == Radical(Fraction(3, 5), 34)
-    assert r.planner["search_telemetry"]["classification"] == "DISCOVERED_FUNCTION_COMPOSITION"
+    assert _honest(r.planner["search_telemetry"])
 
 
 def test_c2_unhinted_orthogonal_projection_plane_to_length():
@@ -180,7 +189,7 @@ def test_c2_unhinted_orthogonal_projection_plane_to_length():
     )
     assert r.status == "SERVED", (r.code, r.reason)
     assert _exact_vals(r)["q1"] == Radical(1, 6)
-    assert r.planner["search_telemetry"]["classification"] == "DISCOVERED_FUNCTION_COMPOSITION"
+    assert _honest(r.planner["search_telemetry"])
 
 
 def test_c3_unhinted_intersect_line_line_to_distance_pyramid_and_cube():
@@ -204,7 +213,7 @@ def test_c3_unhinted_intersect_line_line_to_distance_pyramid_and_cube():
     )
     assert r_pyr.status == "SERVED", (r_pyr.code, r_pyr.reason)
     assert _exact_vals(r_pyr)["q1"] == Radical(Fraction(1, 2), 2)
-    assert r_pyr.planner["search_telemetry"]["classification"] == "DISCOVERED_FUNCTION_COMPOSITION"
+    assert _honest(r_pyr.planner["search_telemetry"])
 
     s1 = "Cho hình lập phương ABCD.A'B'C'D' cạnh 2."
     ask_cube = "Tính khoảng cách từ giao điểm của AC và BD đến (A'BC')."
@@ -314,7 +323,7 @@ def test_c5_flagship_unhinted_indirect_point_parallel_plane_section_and_area_and
     assert "translate_point" in fns
     assert "section" in fns
     assert "ask_section_area" in fns
-    assert r.planner["search_telemetry"]["classification"] == "DISCOVERED_FUNCTION_COMPOSITION"
+    assert _honest(r.planner["search_telemetry"])
 
     # Invalidating constraint twin: foot of A on SB already lies in (SBC), so (P) coincides with face (SBC)
     s_pl_bad = s_pl.replace("lên SD", "lên SB")

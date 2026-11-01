@@ -42,7 +42,11 @@ def test_r1_composition_is_served_exactly_on_d4_by_the_same_planner(cid):
     route, env = out.response["route_d"], out.response["envelope"]
     answers = {k: v.get("coef") for k, v in (route.get("answer_exact") or {}).items()}
     assert route["status"] == "SERVED" and answers == c["want"]
-    assert route["planner"]["search_telemetry"]["classification"] == "DISCOVERED_FUNCTION_COMPOSITION"
+    # C16: building the point the text describes is SOURCE-defined, a declared rule is REGISTERED — never "discovered"
+    tel = route["planner"]["search_telemetry"]
+    assert tel["classification"] in ("SOURCE_EXPLICIT_SEQUENCE", "REGISTERED_DECOMPOSITION") and not tel["search_generated_steps"]
+    assert tel["source_defined_steps"] and set(tel["planner_originated_steps"]) == (
+        set(tel["source_defined_steps"]) | set(tel["registered_decomposition_steps"]))
     kinds = {d["kind"] for d in c["payload"]["described_points"]}
     assert kinds <= {p["fn"] for p in route["source_provenance"]}          # the described point is BUILT by its function
     assert env["scene3d"]["objects"] and route["construction_trace"]
@@ -206,7 +210,8 @@ def test_r1_angle_between_described_line_and_named_line_is_served_on_d4():
     route, env, answers = _run(text, p)
     assert route["status"] == "SERVED", env.get("reason_code")
     assert answers == {"q1": "1/3"}
-    assert route["planner"]["search_telemetry"]["classification"] == "DISCOVERED_FUNCTION_COMPOSITION"
+    tel = route["planner"]["search_telemetry"]
+    assert tel["classification"] == "SOURCE_EXPLICIT_SEQUENCE" and tel["source_defined_steps"] == tel["planner_originated_steps"]
 
 
 def test_r1_quadrilateral_area_with_described_vertex_refuses_capability_not_input():

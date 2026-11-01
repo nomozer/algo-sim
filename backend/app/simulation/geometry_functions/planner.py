@@ -53,7 +53,10 @@ from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, parse
 #: /23 (run `hybrid-master-backend-replacement`): generalized unhinted `Point` descriptor resolution across goals and
 #: auxiliary planes (`parse_descriptor_inputs`, `_EffectResolver.point`), premise-line `MAT_VUONG_DUONG` anchors, and
 #: 3-way `search_telemetry` + `SEARCH_EXHAUSTED` budget telemetry.
-PLANNER_VERSION = "geometry-fact-planner/23"
+#: /24 (run `hybrid-master-backend-replacement`, C16): `search_telemetry` classifies by step PROVENANCE recorded at emission
+#: (`source_defined_steps` / `registered_decomposition_steps` / `search_generated_steps`); building a point the source
+#: describes is no longer "discovered" (`route-b-composition-relabel.json`, `r1-composition-relabel.json`).
+PLANNER_VERSION = "geometry-fact-planner/24"
 PlaneName = Annotated[
     str,
     BeforeValidator(lambda v: chuan_hoa(v) if isinstance(v, str) else v),
@@ -168,6 +171,10 @@ class KeHoach:
     named_planes: list[dict[str, Any]] = field(default_factory=list)
     composition_classification: str = "SCHEMA_TRANSLATION"
     search_telemetry: dict[str, Any] = field(default_factory=dict)
+    #: call id → source_defined (builds a point the source describes) | registered (a declared rule's step) |
+    #: search_generated (a producer the effect search chose for a need neither describes); untagged planner calls are
+    #: steps of a declared decomposition (`_mat_qua_diem`, `_mat_vuong_duong`, `_dinh_cat_canh`, curved composites)
+    step_provenance: dict[str, str] = field(default_factory=dict)
     resolver: Any = field(default=None, repr=False)  # ephemeral view of existing calls; no geometry/semantic state
 
 
@@ -495,7 +502,7 @@ def _ke_hoach_cong(facts: list[TypedFact], k: KeHoach) -> KeHoach:
         "candidate_evaluations": 0,
         "search_depth": 0,
         "reused_intermediates": 0,
-        "planner_originated_steps": [c["id"] for c in k.calls if c["id"] not in k.fact_ids],
+        **_nguon_goc_buoc(k),
         "selected_functions": [c["fn"] for c in k.calls],
         "available_effects": sorted({pc.effect.kind for sp in REGISTRY.values() for pc in planning_contracts(sp)}),
         "search_budget": {
@@ -647,12 +654,12 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
         if (k.derived_planes or k.curved_solids or len(k.solids) > 1 or any(c["fn"] == "sphere_tangent_plane" for c in k.calls))
         else "SCHEMA_TRANSLATION"
     )
-    has_discovered = (
-        any(d.get("rule") == "effect-chain" or d.get("point_chain") for d in k.auxiliary)
-        or bool(k.resolver.lines)
-    )
+    # C16: DISCOVERED only with a step the effect search chose for a need the source does not describe and no declared
+    # rule supplies — before /24, building the point a question describes ("effect-chain", "point_chain") counted
+    steps = _nguon_goc_buoc(k)
     has_registered_decomp = (
-        bool(k.auxiliary)
+        bool(steps["registered_decomposition_steps"])
+        or any(d.get("rule") != "effect-chain" for d in k.auxiliary)
         or bool(k.derived_planes)
         or bool(k.curved_solids)
         or len(k.solids) > 1
@@ -661,7 +668,7 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
     k.search_telemetry = {
         "classification": (
             "DISCOVERED_FUNCTION_COMPOSITION"
-            if has_discovered
+            if steps["search_generated_steps"]
             else "REGISTERED_DECOMPOSITION"
             if has_registered_decomp
             else "SOURCE_EXPLICIT_SEQUENCE"
@@ -670,7 +677,7 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
         "candidate_evaluations": k.resolver.candidates,
         "search_depth": k.resolver.depth_max,
         "reused_intermediates": k.resolver.reused,
-        "planner_originated_steps": [c["id"] for c in k.calls if c["id"] not in k.fact_ids],
+        **steps,
         "selected_functions": [c["fn"] for c in k.calls],
         "available_effects": sorted({pc.effect.kind for s in REGISTRY.values() for pc in planning_contracts(s)}),
         "search_budget": {
@@ -1858,6 +1865,21 @@ class _Choice:
     contract: Any = None
 
 
+#: Source policies of contracts that are a declared decomposition's step: the foot of `distance(point,line)`, a section
+#: vertex on a stated cut edge (`DINH_CAT_CANH`), a declared intersection line (`registry.AUXILIARY_RULES`).
+_RULE_POLICIES = frozenset({"projection_foot", "distance_witness", "section_vertex", "declared_intersection"})
+
+
+def _nguon_goc_buoc(k: KeHoach) -> dict[str, list[str]]:
+    """Planner-made steps by provenance (C16). Untagged ones come from a declared decomposition."""
+    own = [c["id"] for c in k.calls if c["id"] not in k.fact_ids]
+    tag = {i: k.step_provenance.get(i, "registered") for i in own}
+    return {"planner_originated_steps": own,
+            "source_defined_steps": [i for i in own if tag[i] == "source_defined"],
+            "registered_decomposition_steps": [i for i in own if tag[i] == "registered"],
+            "search_generated_steps": [i for i in own if tag[i] == "search_generated"]}
+
+
 def _loai(v) -> str | None:
     """Kind of a typed-need operand: a point (label, or `("desc", kind, operands)` for an unnamed described point), a line
     (`("named", (X, Y))` / `("result", fact_id)`) or a plane (≥ 3 labels)."""
@@ -2026,6 +2048,10 @@ class _EffectResolver:
                                           if i not in self.plan.fact_ids | {c['id'] for c in self.plan.calls})
         call = self.emit(cid, choice.fn, render_call(contract, env), fact.quotes, f'effect({contract.effect.kind})→{choice.fn}')
         self.plan.trace[-1]['fact'] = fact.id
+        if not answer:                     # provenance at emission (C16): what put this step in the plan
+            self.plan.step_provenance[cid] = ('source_defined' if contract.descriptor
+                                              else 'registered' if contract.source_policy in _RULE_POLICIES
+                                              else 'search_generated')
         self._ghi(call, env, contract)
         if not answer:
             choice.env.update(env)
