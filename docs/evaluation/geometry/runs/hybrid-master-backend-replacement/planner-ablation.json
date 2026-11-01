@@ -1,0 +1,347 @@
+{
+ "classification": "IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC",
+ "provider_calls": 0,
+ "production_defaults_changed": false,
+ "summary": {
+  "served_in_B": 34,
+  "C_declared_rules_off": {
+   "SURVIVES": 21,
+   "REFUSED": 13
+  },
+  "D_low_budget": {
+   "REFUSED": 22,
+   "SURVIVES": 12
+  }
+ },
+ "rows": [
+  {
+   "set": "C13/4",
+   "id": "C1a",
+   "B": "SERVED",
+   "C": "SURVIVES",
+   "D": "REFUSED"
+  },
+  {
+   "set": "C13/4",
+   "id": "C1b",
+   "B": "SERVED",
+   "C": "SURVIVES",
+   "D": "REFUSED"
+  },
+  {
+   "set": "C13/4",
+   "id": "C2",
+   "B": "SERVED",
+   "C": "SURVIVES",
+   "D": "REFUSED"
+  },
+  {
+   "set": "C13/4",
+   "id": "C3",
+   "B": "SERVED",
+   "C": "SURVIVES",
+   "D": "REFUSED"
+  },
+  {
+   "set": "C13/4",
+   "id": "C4",
+   "B": "SERVED",
+   "C": "SURVIVES",
+   "D": "REFUSED"
+  },
+  {
+   "set": "C13/4",
+   "id": "C5",
+   "B": "SERVED",
+   "C": "REFUSED",
+   "D": "SURVIVES"
+  },
+  {
+   "set": "C13/4",
+   "id": "C6a",
+   "B": "SERVED",
+   "C": "REFUSED",
+   "D": "SURVIVES"
+  },
+  {
+   "set": "C13/4",
+   "id": "C6b",
+   "B": "SERVED",
+   "C": "REFUSED",
+   "D": "SURVIVES"
+  },
+  {
+   "set": "C13/4",
+   "id": "C7",
+   "B": "SERVED",
+   "C": "SURVIVES",
+   "D": "REFUSED"
+  },
+  {
+   "set": "C13/4",
+   "id": "N1",
+   "B": "SERVED",
+   "C": "REFUSED",
+   "D": "REFUSED"
+  },
+  {
+   "set": "R1/4",
+   "id": "R1-A01",
+   "B": "SERVED",
+   "C": "SURVIVES",
+   "D": "REFUSED"
+  },
+  {
+   "set": "R1/4",
+   "id": "R1-A02",
+   "B": "SERVED",
+   "C": "REFUSED",
+   "D": "REFUSED"
+  },
+  {
+   "set": "R1/4",
+   "id": "R1-A03",
+   "B": "SERVED",
+   "C": "SURVIVES",
+   "D": "REFUSED"
+  },
+  {
+   "set": "R1/4",
+   "id": "R1-A04",
+   "B": "SERVED",
+   "C": "SURVIVES",
+   "D": "REFUSED"
+  },
+  {
+   "set": "R1/4",
+   "id": "R1-A05",
+   "B": "SERVED",
+   "C": "SURVIVES",
+   "D": "REFUSED"
+  },
+  {
+   "set": "R1/4",
+   "id": "R1-B01",
+   "B": "SERVED",
+   "C": "REFUSED",
+   "D": "SURVIVES"
+  },
+  {
+   "set": "R1/4",
+   "id": "R1-B02",
+   "B": "SERVED",
+   "C": "REFUSED",
+   "D": "SURVIVES"
+  },
+  {
+   "set": "R1/4",
+   "id": "R1-C01",
+   "B": "SERVED",
+   "C": "SURVIVES",
+   "D": "REFUSED"
+  },
+  {
+   "set": "R1/4",
+   "id": "R1-C02",
+   "B": "SERVED",
+   "C": "REFUSED",
+   "D": "SURVIVES"
+  },
+  {
+   "set": "R1/4",
+   "id": "R1-D01",
+   "B": "SERVED",
+   "C": "SURVIVES",
+   "D": "REFUSED"
+  },
+  {
+   "set": "R1/4",
+   "id": "R1-D02",
+   "B": "SERVED",
+   "C": "SURVIVES",
+   "D": "REFUSED"
+  },
+  {
+   "set": "R1/4",
+   "id": "R1-G01",
+   "B": "REFUSED",
+   "C": "n/a",
+   "D": "n/a"
+  },
+  {
+   "set": "R1/4",
+   "id": "R1-G02",
+   "B": "REFUSED",
+   "C": "n/a",
+   "D": "n/a"
+  },
+  {
+   "set": "C11/B",
+   "id": "A1-explicit-midpoint-length",
+   "B": "SERVED",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "set": "C11/B",
+   "id": "A2-explicit-intersection-length",
+   "B": "SERVED",
+   "C": "SURVIVES",
+   "D": "SURVIVES"
+  },
+  {
+   "set": "C11/B",
+   "id": "B1-registered-distance-point-to-line",
+   "B": "SERVED",
+   "C": "REFUSED",
+   "D": "REFUSED"
+  },
+  {
+   "set": "C11/B",
+   "id": "B2-registered-named-point-parallel-plane-section-area",
+   "B": "SERVED",
+   "C": "REFUSED",
+   "D": "SURVIVES"
+  },
+  {
+   "set": "C11/B",
+   "id": "C1a-unhinted-proj-line-length",
+   "B": "SERVED",
+   "C": "SURVIVES",
+   "D": "REFUSED"
+  },
+  {
+   "set": "C11/B",
+   "id": "C1b-unhinted-proj-plane-area",
+   "B": "SERVED",
+   "C": "SURVIVES",
+   "D": "REFUSED"
+  },
+  {
+   "set": "C11/B",
+   "id": "C2-unhinted-inter-line-line-dist-plane",
+   "B": "SERVED",
+   "C": "SURVIVES",
+   "D": "REFUSED"
+  },
+  {
+   "set": "C11/B",
+   "id": "C3-unhinted-inter-line-plane-angle-line-plane",
+   "B": "SERVED",
+   "C": "SURVIVES",
+   "D": "REFUSED"
+  },
+  {
+   "set": "C11/B",
+   "id": "C4-multi-goal-shared-proj-line-reuse",
+   "B": "SERVED",
+   "C": "SURVIVES",
+   "D": "REFUSED"
+  },
+  {
+   "set": "C11/B",
+   "id": "C5-flagship-unhinted-proj-line-parallel-plane-section-area",
+   "B": "SERVED",
+   "C": "REFUSED",
+   "D": "SURVIVES"
+  },
+  {
+   "set": "C11/B",
+   "id": "C6a-unhinted-midpoint-perp-line-section-area",
+   "B": "SERVED",
+   "C": "REFUSED",
+   "D": "SURVIVES"
+  },
+  {
+   "set": "C11/B",
+   "id": "C6b-unhinted-proj-line-perp-derived-SO-section-area",
+   "B": "SERVED",
+   "C": "REFUSED",
+   "D": "SURVIVES"
+  },
+  {
+   "set": "C11/B",
+   "id": "C7-prism-unhinted-proj-line-length",
+   "B": "SERVED",
+   "C": "SURVIVES",
+   "D": "REFUSED"
+  },
+  {
+   "set": "C11/B",
+   "id": "D1-nested-two-level-unnamed-descriptor",
+   "B": "REFUSED",
+   "C": "n/a",
+   "D": "n/a"
+  },
+  {
+   "set": "C11/B",
+   "id": "D2-dual-unnamed-point-endpoints-in-binary-goal",
+   "B": "REFUSED",
+   "C": "n/a",
+   "D": "n/a"
+  },
+  {
+   "set": "C11/B",
+   "id": "E1-missing-circumcenter-primitive",
+   "B": "REFUSED",
+   "C": "n/a",
+   "D": "n/a"
+  },
+  {
+   "set": "C11/B",
+   "id": "E2-missing-incenter-primitive",
+   "B": "REFUSED",
+   "C": "n/a",
+   "D": "n/a"
+  },
+  {
+   "set": "C11/B",
+   "id": "F1-transcendental-arccos-degree-sum",
+   "B": "REFUSED",
+   "C": "n/a",
+   "D": "n/a"
+  },
+  {
+   "set": "C11/B",
+   "id": "F2-curved-oblique-conic-section",
+   "B": "REFUSED",
+   "C": "n/a",
+   "D": "n/a"
+  },
+  {
+   "set": "C11/B",
+   "id": "G1-insufficient-missing-altitude-length",
+   "B": "REFUSED",
+   "C": "n/a",
+   "D": "n/a"
+  },
+  {
+   "set": "C11/B",
+   "id": "G2-insufficient-unconstrained-quadrilateral-base",
+   "B": "REFUSED",
+   "C": "n/a",
+   "D": "n/a"
+  },
+  {
+   "set": "C11/B",
+   "id": "H1-role-swapped-projection-source-unverified",
+   "B": "REFUSED",
+   "C": "n/a",
+   "D": "n/a"
+  },
+  {
+   "set": "C11/B",
+   "id": "H2-derived-point-forged-as-given-premise",
+   "B": "REFUSED",
+   "C": "n/a",
+   "D": "n/a"
+  },
+  {
+   "set": "C11/B",
+   "id": "I1-beyond-finite-oracle-horizon-not-established",
+   "B": "REFUSED",
+   "C": "n/a",
+   "D": "n/a"
+  }
+ ]
+}

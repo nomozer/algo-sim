@@ -17,6 +17,41 @@ from app.simulation.geometry_functions import engine, planner, registry
 from scripts import planning_oracle
 
 
+#: C11 C1a: "Tính độ dài đoạn thẳng nối điểm C với hình chiếu vuông góc của A lên SD." — the question describes the point.
+_C1A = [
+    {"id": "f1", "kind": "solid", "role": "premise", "quotes": ["Cho hình chóp S.ABCD."], "solid": "S.ABCD",
+     "solid_type": "pyramid"},
+    {"id": "f2", "kind": "polygon_shape", "role": "premise", "quotes": ["Đáy ABCD là hình vuông cạnh 3."],
+     "points": ["A", "B", "C", "D"], "shape": "square", "value": "3"},
+    {"id": "f3", "kind": "perpendicular", "role": "premise", "quotes": ["SA vuông góc với (ABCD)."],
+     "points_a": ["S", "A"], "points_b": ["A", "B", "C", "D"]},
+    {"id": "f4", "kind": "length", "role": "premise", "quotes": ["SA = 4."], "points": ["S", "A"], "measure": "segment",
+     "value": "4"},
+    {"id": "q1", "kind": "question", "role": "question",
+     "quotes": ["Tính độ dài đoạn thẳng nối điểm C với hình chiếu vuông góc của A lên SD."], "quantity": "length",
+     "point_kind": "orthogonal_projection_line", "points": ["A", "S", "D"], "points_b": ["C"]},
+]
+
+
+def test_c16_a_function_known_only_by_its_contract_is_selected_without_dispatch_code(monkeypatch):
+    """§V.5.5 (planner level only — the clone has no IR of its own, so nothing is executed): a new Registry entry
+    carrying the SAME contracts as `orthogonal_projection_line` is selected by the effect resolver (ties by name), written
+    from its contract template, and tagged source-defined; no planner code names it."""
+    src = registry.REGISTRY["orthogonal_projection_line"]
+    monkeypatch.setitem(registry.REGISTRY, "a_projection_onto_line", replace(src, name="a_projection_onto_line"))
+    k = planner.lap_ke_hoach({"facts": _C1A}, "")
+    step = next(c for c in k.calls if c["id"] not in k.fact_ids)
+    assert step["fn"] == "a_projection_onto_line" and step["args"]["point"] == "A"
+    assert k.search_telemetry["source_defined_steps"] == [step["id"]]
+
+
+def test_c16_removing_the_only_producer_refuses_instead_of_guessing(monkeypatch):
+    monkeypatch.delitem(registry.REGISTRY, "orthogonal_projection_line")
+    with pytest.raises(registry.TuChoi) as e:
+        planner.lap_ke_hoach({"facts": _C1A}, "")
+    assert e.value.code in ("UNSUPPORTED_CAPABILITY", "FACT_INCOMPLETE")
+
+
 def _honest(tel: dict) -> bool:
     """C16: these compositions build the point the question describes (SOURCE-defined) and, for a section, a declared
     rule (REGISTERED); the planner no longer calls them discovered (`route-b-composition-relabel.json`)."""
