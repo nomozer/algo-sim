@@ -517,3 +517,52 @@ Offline only; `MAX_AUTHORIZED_LIVE_REQUESTS = 0`; 0 provider calls. `DEFAULT_MOD
 2. S-2: GO / defer for a live student-wording study (budget + author), separate from the locked protocol.
 3. The existing live paired GO: name the corpus author; `--manifest` now prints the new `measured_system`.
 Without these, the next offline item is PE-2 (solid-class certificate), with a RED test on its repro.
+
+---
+
+## Eleventh continuation (Owner Master Directive: Semantic Correctness, Generalized Planner Recomposition & Live Readiness), 2026-11-01: CHECKPOINT REACHED
+
+Offline only; `MAX_AUTHORIZED_LIVE_REQUESTS = 0`; `MAX_AUTHORIZED_LIVE_SPEND_USD = 0`; `0` provider calls. Versions bumped to `geometry-functions/28`, `geometry-fact-planner/23`, and `geometry-function-engine/20`; `DEFAULT_MODE = "LLM_ONLY"` and `CACHE_VERSION = "131"` unchanged; `0` edits to `frontend/`, `semantic_program/`, or `adapter3_simulation.py`; locked schema/surface SHA-256 pins preserved (`flat = 485d3834…`, `v3 = 4bff35bb…`, Route A `= 7ea511a6…`, `TypedFact = aa9d93ee…`, `function_declarations = 5ceb0f99…`). Reports: `planner-recomposition-audit.md`, `s1-diacritic-free-offline-audit.md`, `s2-student-language-pilot-protocol.md`, `continuation11-adversarial-review.md`.
+
+| Commit | Content |
+|---|---|
+| `9e059eb7` | PE-2 solid/2D shape-kind invariant certification (`doc_khang_dinh_loai_hinh` + `kiem_khang_dinh_loai_hinh`), unanswered-request refusal (`SOURCE_GOAL_UNANSWERED`), pre-placed non-degeneracy checks (`_dung_khong` / `_mot_buoc`), generalized `Point` descriptor `PlanningContract`s + auxiliary-plane recomposition + 2D `carrier_planes` perpendicular anchors (`_chon_moc_vuong_duong`) + `search_telemetry`, standalone `planning_oracle.py`, isolated `s1_diacritic_offline.py` & `score_s2_student_language_pilot.py`, Round 1–4 review fixes, and `results/historical-gold-delta.json` — **final product commit** |
+| `ab5fabcc` | Re-export 41 Adapter `/2` preview fixtures with `search_telemetry` (`fixtures-adapter-2-search-telemetry/`; earlier bundles preserved byte-for-byte) |
+| `69da35a1` | `phase-o` regression replay, `student-language-probe-c11.json`, `planner-recomposition-matrix.json`, audits, protocols, Round 4 `READY` review, and index updates |
+| `800ab355` | Candidate re-frozen in its own commit (`runs/hybrid-master-semantic-planner-recomposition/` correcting `runs/hybrid-master-student-language/`) |
+
+**Delivered on Route D `/4` and offline readiness tooling:**
+
+- **Priority A — Semantic Correctness & PE-2 Closure (`ISSUE-ARCH-ROUTE-D-SOLID-CLASS-WORD-UNCERTIFIED` closed):**
+  - `registry.py::doc_khang_dinh_loai_hinh` extracts premise-level 3D solid-class claims (`cube`, `cuboid`, `right_parallelepiped`, `parallelepiped`, `regular_prism`, `right_prism`, `oblique_prism`, `regular_pyramid`, `regular_tetrahedron`) and 2D polygon claims (`square`, `rhombus`, `rectangle`, `parallelogram`, `trapezoid`, `isosceles_trapezoid`, `right_trapezoid`, `regular_hexagon`, `equilateral_triangle`, `isosceles_triangle`, `right_triangle`, `right_isosceles_triangle`), binding prose solid symbols by ordered apex/base and lateral-edge correspondence (`_khop_ky_hieu_khoi`) and multi-solid coordination (`_day_khoi_cho_menh_de`).
+  - `engine.py::kiem_khang_dinh_loai_hinh` certifies every extracted assertion in exact `Fraction` Gram arithmetic across root and sub-solids (`"Cho hình lập phương ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật, AB = 2, AD = 3, AA' = 4."` deterministically refuses `INCONSISTENT_FACTS`; `41/41` in `test_route_d_semantic_shape_invariants.py`).
+  - Unanswered / operand-less imperative requests (`"Vẽ hình rồi tính."`, `"Tìm."`, `"Xác định."`) refuse fail-closed with `SOURCE_GOAL_UNANSWERED` while preserving `SL-1` simulation-only requests (`student-language-probe-c11.json` identical to `student-language-probe-final.json`).
+  - `engine._dung_khong` and `_mot_buoc` enforce positive squared lengths, non-zero area cross products, and non-collinear projection planes (`COLLINEAR_POINTS`) on pre-placed points.
+- **Priority B — Generalized Planner Recomposition & Independent Planning Oracle (`planner-recomposition-audit.md`):**
+  - Audited all 49 `REGISTRY` `FunctionSpec`s across 11 contract dimensions (`audit_registry_contracts()`).
+  - Extended `Point` descriptor `PlanningContract`s in `registry.py` from 2 (`midpoint`, `centroid`) to all 6 general point constructors (`orthogonal_projection`, `orthogonal_projection_line`, `intersect_line_line`, `intersect_line_plane`), connected `_EffectResolver.point` to auxiliary planes (`MAT_SONG_SONG`, `MAT_HAI_DUONG`, `MAT_VUONG_DUONG`), generalized `_chon_moc_vuong_duong` over 2D `carrier_planes` and `perp_faces`, enforced independent Gram/affine postcondition verification in `_MO_TA`, and added explicit `search_telemetry` (`SOURCE_EXPLICIT_SEQUENCE` / `REGISTERED_DECOMPOSITION` / `DISCOVERED_FUNCTION_COMPOSITION`, `SEARCH_EXHAUSTED` budget guard).
+  - Built standalone `backend/scripts/planning_oracle.py` (`0` imports from `planner.py`): on the 24-case `planner-recomposition-matrix.json`, `DISCOVERED_FUNCTION_COMPOSITION` increased `0 -> 9` (including §4.2 `"Mặt phẳng (P) đi qua hình chiếu vuông góc của A lên SD và song song với (SBC)..."` without step hints, shared multi-goal intermediate reuse, derived perpendicular axes, and right prisms), `REACHABLE_BUT_SEARCH_MISSED` dropped `11 -> 2` (the remaining `D1`/`D2` cases require recursive/two-descriptor question fields beyond the locked flat `TypedFact` schema), `24/24` agree with the independent oracle and Exact Kernel, and `wrong_served = 0` (`26/26` in `test_planner_recomposition_oracle.py`).
+- **Priority C — Isolated `S-1` Diacritic-Free Prototype & `S-2` Pilot Harness:**
+  - `S-1`: `backend/scripts/s1_diacritic_offline.py` (`0` imports in `backend/app/`, `detect_domain` untouched) preserves 1-to-1 `norm_char_to_raw_span`, mixed-IME `_ascii_fold`, `verify_no_forged_quotes`, and `NEEDS_CLARIFICATION` flags on polysemous ASCII tokens (`goc`, `day`, `tam`, `canh`, `duong`) and lowercase solid notations (`16/16` in `s1-diacritic-development-corpus.json`, `6/6` in `test_s1_diacritic_free_offline.py`).
+  - `S-2`: `backend/scripts/score_s2_student_language_pilot.py` + `s2-student-language-pilot-protocol.md` provide a deterministic 8-metric scorer (`ALLOW_LIVE_AI=0`, `0` live calls, `NOT_MEASURED`/`NOT_RECOVERABLE` preserved without coercing to `0`, `5/5` in `test_s2_student_language_pilot_harness.py`).
+
+**Independent adversarial review** (`continuation11-adversarial-review.md`, subagent `76cc54fa-371c-4f90-80a2-36b259724296`): four rounds — Round 1 (`4 BLOCKER, 3 MAJOR, 1 MINOR, 1 NIT`), Round 2 (`3 BLOCKER, 1 MAJOR, 1 MINOR`), Round 3 (`READY`, `0 BLOCKER, 0 MAJOR, 1 MINOR, 1 NIT`), Round 4 **`READY`** (`0 BLOCKER, 0 MAJOR, 0 MINOR`; `NIT-R3-1` closed by candidate freeze `800ab355`).
+
+**Gates:**
+- **Wave 3 (`inventory-phase-o.json`, `wave3-phase-o.json`):** `67/72` served correctly; `72/72` negatives refused (`62` exact reason); `0` wrong-served; `0` transitions.
+- **Locked 96:** `96/96`, `0` wrong-served.
+- **203 probes:** `0` served negatives, `0` internal errors (same 12 curved `REFUSED -> REFUSED` transitions).
+- **Registered curved controls:** `32/32` remain `REFUSED`.
+- **Student-language probe (`student-language-probe-c11.json`):** `52` `SERVED_CORRECT`, `5` `NEEDS_CLARIFICATION_CORRECT`, `3` `FALSE_REFUSAL`, `7` `CORRECT_REFUSAL`, `20/20` adversarial `SAFE_REFUSAL`, `0` `WRONG_SERVED` (identical to `student-language-probe-final.json`).
+- **Preview fixtures (`fixtures-adapter-2-search-telemetry/`):** `41/41` regenerated identically from `POST /api/preview/hybrid` (`test_hybrid_preview_fixtures.py` `6/6`).
+- **Candidate:** `800ab355`, product `9e059eb7`, `118` files `184c64ff1810ec20…`, cache `131` (no bump); `freeze_evaluation_candidate.py --verify` matches.
+- **Full T3:** `FULL_PRODUCT_GATE_PASS` on attempt 1 of `800ab355`, on fresh detached worktree `hm-t3-800ab355` (`full-t3-800ab355.json`): pytest `16408` passed (`0` failed, `7` skipped, `2` deselected, `15` xfailed), vitest `84` files / `1424` passed, production build `PASS`, demo replay `5/5`, crash surface `6/6`.
+- **Publication scan** of `f986e897..HEAD`: `PASS` (`scanned=623`, `messages=82`, `violations=0`, `0` `Co-Authored-By` trailers).
+
+**Status:** `ARCHITECTURE_CAPABILITY_PROGRESS` (PE-2 closed + generalized planner recomposition); `OFFLINE_BACKEND_READY_FOR_LIVE_EVALUATION`; overall **`HYBRID_NOT_READY`**. Nothing merged or pushed.
+
+**Next exact action (one consolidated Owner decision point, `owner-go-request.md`):**
+1. **Live paired evaluation GO (`D-04`, `D-11`, `D-13`, `GATE-16`):** name the independent 60-problem corpus author and provide the Owner approval JSON binding candidate `800ab355` (`tree_hash = 184c64ff1810ec20af5f5ba1451cfcac082de65876fbf8bbfc63a7f012afe26d`, product `9e059eb7`).
+2. **Optional `S-2` live student-language pilot (`<= 36` requests):** authorize the 6 parameters in `s2-student-language-pilot-protocol.md` §4, or defer.
+3. **Policy decision `S-1` (diacritic-free input):** keep the current domain gate, or authorize integrating a `route-d-clarification/1` confirmation flow backed by `s1_diacritic_offline.py` (never silent guessing).
+4. **Optional curved grammar rulings (`P-1`, `P-2`, `P-3`):** if repinning the 8 legacy curved fixtures is desired.

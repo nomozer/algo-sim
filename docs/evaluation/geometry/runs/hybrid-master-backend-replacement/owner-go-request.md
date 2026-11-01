@@ -8,6 +8,15 @@
 
 **Provider facts** below were checked against official Google documentation on 2026-10-31 (`provider-facts.md`).
 
+**Update, eleventh continuation (2026-11-01). It supersedes the tenth- and ninth-continuation measured systems below.**
+- **Measured system:** candidate `800ab355` (product `9e059eb7`; 118 files, `184c64ff1810ec20…`). `--manifest` prints the exact `measured_system` and `harness_sha256` to bind.
+- **Model surface:** locked `TypedFact` / `flat` / `v3` / Route A schema SHAs, `typed-fact-next/1`, the `LLM_ONLY` arm, and `CACHE_VERSION` 131 are unchanged (all `/4` schema additions from Continuation 10 `unresolved` remain intact).
+- **Newly certified and generalized on Hybrid `/4`** (independent review `READY` in Round 4, `0 BLOCKER, 0 MAJOR, 0 MINOR`; Registry `/28`, Planner `/23`, Engine `/20`):
+  - **PE-2 closed (`ISSUE-ARCH-ROUTE-D-SOLID-CLASS-WORD-UNCERTIFIED`):** premise-level 3D solid classes (`cube`, `cuboid`, `right_parallelepiped`, `parallelepiped`, `regular_prism`, `right_prism`, `oblique_prism`, `regular_pyramid`, `regular_tetrahedron`) and 2D polygon classes (`square`, `rhombus`, `rectangle`, `parallelogram`, `trapezoid`, `isosceles_trapezoid`, `right_trapezoid`, `regular_hexagon`, triangle classes) are certified in exact `Fraction` Gram arithmetic (`INCONSISTENT_FACTS` / `AMBIGUOUS_REFERENCE`), and operand-less imperative requests (`"Vẽ hình rồi tính."`, `"Tìm."`, `"Xác định."`) refuse fail-closed (`SOURCE_GOAL_UNANSWERED`);
+  - **Generalized planner recomposition (`planner-recomposition-audit.md`):** `Point` descriptor `PlanningContract`s cover all 6 point constructors (`midpoint`, `centroid`, `orthogonal_projection`, `orthogonal_projection_line`, `intersect_line_line`, `intersect_line_plane`), connected to auxiliary planes through unnamed described points (`MAT_SONG_SONG`, `MAT_HAI_DUONG`, `MAT_VUONG_DUONG`), 2D `carrier_planes` perpendicular anchors (`_chon_moc_vuong_duong`), Gram postcondition self-checks (`_MO_TA`), and explicit `search_telemetry` (`9` newly unlocked `DISCOVERED_FUNCTION_COMPOSITION` chains, `24/24` agreement with standalone `backend/scripts/planning_oracle.py`, `0` wrong-served);
+  - **Isolated `S-1` / `S-2` offline readiness:** `backend/scripts/s1_diacritic_offline.py` (`0` imports in `backend/app/`, `16/16` dev corpus) and `backend/scripts/score_s2_student_language_pilot.py` (`8` deterministic metrics, `ALLOW_LIVE_AI=0`).
+- **Same consolidated Owner decisions (`Live Paired GO`, `S-1`, `S-2`, and optional `P-1..P-3`)** apply below.
+
 **Update, ninth continuation (2026-11-01). It supersedes the eighth-continuation measured system below.**
 - **Measured system:** candidate `17e4a326` (product `fa1ed277`; 118 files, `9583018d…`). `--manifest` prints the exact `measured_system` and `harness_sha256` to bind.
 - **Model surface:** the `/4` arm's provider response schema widened with additive `typed-fact-next/2` fields (`SolidSpec.inscribed_in` and `GeometricRelationSpecV2` kinds `circumscribes`, `inscribed_in`, `tangent_to` + optional `contact_ref`). `typed-fact-next/1`, the `LLM_ONLY` arm, and `CACHE_VERSION` 131 are unchanged.
