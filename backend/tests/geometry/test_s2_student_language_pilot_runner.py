@@ -276,3 +276,35 @@ def test_m3_a_domain_gate_row_costs_zero_and_the_run_reports_its_status(tmp_path
     out = _live(tmp_path, monkeypatch, provider, [_case("S2-E-E01_oxyz")])
     assert provider.calls == 0 and out["rows"][0]["usd"] == 0.0 and out["spent_reported_usd"] == 0.0
     assert out["run_status"] == "COMPLETE" and out["rows"][0]["attribution"] is None
+
+
+# ── review round 2 (MINOR 1–3) ──────────────────────────────────────────────────────────────────────────────────────
+
+def test_r2_labels_inside_a_symmetric_pair_are_canonical_too():
+    g = lambda t: R.project({"solids": [], "math_goals": [{"goal_id": "g", "kind": "measurement", "goal_type": "distance",
+                                                            "target": t, "quote": "q"}]})["goals"]
+    assert g({"line1": ["S", "C"], "line2": ["A", "B"]}) == g({"line1": ["B", "A"], "line2": ["C", "S"]})
+    assert g({"plane1": ["S", "B", "C"], "plane2": list("ABCD")}) == g({"plane1": list("DCBA"), "plane2": ["S", "C", "B"]})
+    assert g({"line1": ["S", "C"], "line2": ["A", "B"]}) != g({"line1": ["S", "A"], "line2": ["C", "B"]})
+
+
+def test_r2_the_segment_of_a_ratio_keeps_its_direction():
+    p = lambda seg: R.project({"solids": [], "premises": [{"kind": "divide_segment", "quote": "q", "args": {
+        "point": "M", "segment": seg, "ratio": "1/3"}}]})["facts_signature"]
+    assert p(["S", "C"]) != p(["C", "S"])
+    m = lambda seg: R.project({"solids": [], "premises": [{"kind": "midpoint", "quote": "q", "args": {
+        "point": "M", "segment": seg}}]})["facts_signature"]
+    assert m(["S", "C"]) == m(["C", "S"])
+
+
+def test_r2_a_wrong_serve_of_the_gold_facts_is_the_deterministic_layer_but_other_facts_are_not():
+    gold = _case("S2-B-I11_mo_phong_va_tinh_SC")["gold_extraction"]
+    expected = R.expected_record(_case("S2-B-I11_mo_phong_va_tinh_SC"))
+    wrong = {"status": "SERVED", "answers": {"distance": ["3"]}, "certificate_verified": True,
+             "quotes_verbatim_in_raw": True}
+    row = {"technical_failure": False, "end_to_end_correct": False, "expected": expected, "observed": wrong,
+           "hybrid_code": None, "raw_extraction": gold}
+    assert R.attribute(row, dict(wrong), None, gold) == "DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD"
+    other = deepcopy(gold)
+    other["premises"][2]["args"]["value"] = "3"
+    assert R.attribute(row | {"raw_extraction": other}, dict(wrong), None, gold) == "LLM_EXTRACTION_DIFFERS_FROM_GOLD"

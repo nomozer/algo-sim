@@ -169,9 +169,9 @@ described point ("khoảng cách từ trung điểm của SC đến (ABCD)") is 
 | Integration | merge/push | unchanged: `INTEGRATION_PENDING_OWNER_GO` | — |
 
 **S-2 GO — the one Owner action** (the agent never writes the decision value). The agent committed a pending file,
-`s2-owner-approval.template.json` (blob `ab98b00c7f0a54700dc7609300b196b0fba2e366`), with every term filled:
+`s2-owner-approval.template.json` (blob `a3590e6bc7890559615d67dd50bcb35a26e10a09`), with every term filled:
 model `gemini-2.5-flash`, `max_requests` 36 (retries included), `max_usd` 2.0, prices 0.30 / 2.50 USD per million tokens,
-corpus `3f1682bd…`, measured system `184c64ff…` (candidate `800ab355`), runner `d5a923bf…`, paired harness `8f819ee0…`.
+corpus `3f1682bd…`, measured system `184c64ff…` (candidate `800ab355`), runner `b25830f2…`, paired harness `8f819ee0…`.
 Those caps are a proposal, not a grant: to change one, say so and the agent re-issues the template and this command.
 Running the command below **is** the GO. It confirms the paid project and that the key may be used for this pilot. It
 refuses if the template changed, and it writes a new `s2-owner-approval.json`, changing exactly two values:
@@ -181,7 +181,7 @@ cd D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-master-backend-r
 $d = 'APPROVED_BY_USER'
 $t = 'docs\evaluation\geometry\runs\hybrid-master-backend-replacement\s2-owner-approval.template.json'
 $o = 'docs\evaluation\geometry\runs\hybrid-master-backend-replacement\s2-owner-approval.json'
-if ((git hash-object $t) -ne 'ab98b00c7f0a54700dc7609300b196b0fba2e366') { throw 'template changed: do not approve' }
+if ((git hash-object $t) -ne 'a3590e6bc7890559615d67dd50bcb35a26e10a09') { throw 'template changed: do not approve' }
 if (Test-Path $o) { throw 'approval file already exists' }
 $s = [IO.File]::ReadAllText((Resolve-Path $t))
 if ([regex]::Matches($s, '"owner_decision": "PENDING_OWNER_DECISION"').Count -ne 1 -or [regex]::Matches($s, '"paid_project_confirmed": false').Count -ne 1) { throw 'unexpected template' }

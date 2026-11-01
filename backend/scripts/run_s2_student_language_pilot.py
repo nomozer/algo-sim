@@ -46,9 +46,10 @@ CLARIFICATION_CODES = ("AMBIGUOUS", "MISSING_DATA", "UNRECOGNIZED_WORDING")
 #: Keys whose values are identifiers or source text, never facts: dropped before comparison.
 _UNCOMPARED = {"quote", "problem_text", "schema_version", "goal_id", "relation_id", "unresolved_id"}
 #: Operands whose label ORDER carries no meaning: segment/line endpoints, a plane's labels (any 3+ name the same plane).
-#: A polygon (`vertices`, `base`, `top`, `polygon`) keeps its order — it names the boundary.
+#: A polygon (`vertices`, `base`, `top`, `polygon`) keeps its order — it names the boundary — and so does the `segment`
+#: of a ratio (`divide_segment`: P = (1−t)A + tB), see `_canon`.
 _UNORDERED = {"segment", "line", "plane", "parallel_plane", "perpendicular_line", "parallel_line_a", "parallel_line_b",
-              "edge"}
+              "edge", "line1", "line2", "plane1", "plane2", "segment_a", "segment_b"}
 #: Pairs of operands that are interchangeable as a whole (distance/angle between two lines or two planes).
 _SYMMETRIC_PAIRS = (("line1", "line2"), ("plane1", "plane2"))
 _OPERAND = re.compile(r"^[A-Z][A-Z0-9']*(?:\.[A-Z0-9']+)?$|\d|√|π|^a$")
@@ -104,6 +105,8 @@ def _canon(value: Any, names: dict[str, str]) -> Any:
     if isinstance(value, dict):
         out = {k: _canon(v, names) for k, v in sorted(value.items()) if k not in _UNCOMPARED}
         for k in _UNORDERED & out.keys():
+            if k == "segment" and "ratio" in out:                 # directed: the ratio is measured from the first label
+                continue
             if isinstance(out[k], list) and all(isinstance(x, str) for x in out[k]):
                 out[k] = sorted(out[k])
         for a, b in _SYMMETRIC_PAIRS:
@@ -269,18 +272,20 @@ def end_to_end_correct(expected: dict[str, Any], observed: dict[str, Any]) -> bo
 
 def attribute(row: dict[str, Any], gold_observed: dict[str, Any], gold_code: str | None, gold_raw: Any) -> str | None:
     """First divergent layer of a failed row, by reproduction with the gold extraction (Master directive §VII). The
-    deterministic layers are blamed only when the gold run ends in the SAME status and code; a served row is never
-    excused by a failing gold (the live extraction got past the gate on its own)."""
+    deterministic layers are blamed only when the gold run ends in the SAME status and code, and a wrong serve only when
+    the live extraction also carries the gold's facts — otherwise it got past the gate on its own reading."""
     if row["technical_failure"]:
         return "INFRASTRUCTURE"
     if row["end_to_end_correct"]:
         return None
     if row.get("failure_stage") == "domain_gate":
         return "DOMAIN_GATE"                                       # text-only gate: no extraction involved
-    same = (row["observed"].get("status"), row.get("hybrid_code")) == (gold_observed.get("status"), gold_code)
-    if row["observed"].get("status") != "SERVED" and same and not end_to_end_correct(row["expected"], gold_observed):
-        return "DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD"
     gold, got = project(gold_raw), project(row.get("raw_extraction"))
+    same = (row["observed"].get("status"), row.get("hybrid_code")) == (gold_observed.get("status"), gold_code)
+    if same and not end_to_end_correct(row["expected"], gold_observed) and (
+            row["observed"].get("status") != "SERVED" or (gold is not None and gold == got)):
+        # a refusal the gold run reproduces; or a wrong serve of the SAME facts as gold (engine / verification fault)
+        return "DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD"
     if gold is None or got is None or gold != got or not row["observed"].get("quotes_verbatim_in_raw", True):
         return "LLM_EXTRACTION_DIFFERS_FROM_GOLD"                 # facts, goals or a non-verbatim quote
     return "UNATTRIBUTED"

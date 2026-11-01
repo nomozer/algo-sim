@@ -614,3 +614,10 @@ Offline only; `0` provider calls; `USD 0`. **No Owner approval file exists**, so
 - **Kept on purpose:** m2. Tests never write the approval value.
 - Protocol §5.8 lists the changes. The new runner sha is `d5a923bf…`. The gold replay `s2-pilot-gold-replay-r1.jsonl` replaces the first one and is unchanged in result (33/36, 0 wrong-served).
 - **Found while checking:** a literal BACKSPACE byte in a bridge regex (`ISSUE-ARCH-ROUTE-D-BRIDGE-LITERAL-BACKSPACE-REGEX`). It is a product defect, impact `NOT_MEASURED`; it will be fixed with the next product change.
+
+**Review round 2:** `READY` (0 BLOCKER, 0 MAJOR). Its 3 MINORs were fixed before any approval exists. Runner tests are now 44, and each fix was also checked with a fault injection. The fixes:
+- labels inside symmetric pairs;
+- the direction of a ratio's segment;
+- a wrong serve of the gold's own facts, now attributed to the deterministic layer.
+
+Re-issued: runner `b25830f2…`; template blob `a3590e6b…`, whose command was dry-run again with a non-approval value; gold replay `s2-pilot-gold-replay-r2.jsonl`, unchanged at 33/36. **S-2 status: `OFFLINE_READY_AWAITING_OWNER_GO`.**

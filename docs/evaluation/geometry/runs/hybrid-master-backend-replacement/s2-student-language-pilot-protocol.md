@@ -91,7 +91,8 @@ dòng hỏng: `INFRASTRUCTURE` · `DETERMINISTIC_LAYER_REPRODUCED_WITH_GOLD` (go
 **5.4 Mốc quy lỗi (gold replay, `s2-pilot-gold-replay.jsonl`, 0 request)** — end-to-end 33/36; 0 wrong-served;
 3 false refusal, cả ba tại Source Gate trên **gold**: `S07_typo_tone` (`UNGROUNDED_VALUE`, "hình chop"),
 `F05_kc_mp_shorthand` và `F06_dt_mp_shorthand` (`SOURCE_OBJECT_MISMATCH`: `k/c`, `mp`, `đt` không được đọc là tên
-đối tượng). Lượt live không thể vượt 33/36; ba ca này không được tính là lỗi của model. Không sửa product trước pilot:
+đối tượng). Lượt live không thể vượt 33/36; ba ca này không được tính là lỗi của model *khi lượt live hỏng giống gold* (cùng trạng
+thái và mã — luật đã chặt lại ở §5.8–§5.9). Không sửa product trước pilot:
 sửa sẽ đổi candidate mà approval bind vào, và chưa có bằng chứng tần suất — pilot là phép đo đó.
 
 **5.5 Cổng §4 thành trường approval** (Owner ghi; runner không bao giờ ghi): `owner_decision = "APPROVED_BY_USER"`,
@@ -128,3 +129,13 @@ Tần suất ở bản đính chính `/4` được sửa thành 3/60, có biên 
 
 Gold replay theo định nghĩa mới: `s2-pilot-gold-replay-r1.jsonl`, **thay thế** `s2-pilot-gold-replay.jsonl` (giữ nguyên,
 không sửa). Kết quả: 33/36 end-to-end, 0 wrong-served, 3 false refusal cùng ba ca, tầng D 6/6. Test của runner: 41.
+
+**5.9 Review vòng 2** — verdict `READY` (0 BLOCKER, 0 MAJOR). Ba MINOR đã sửa trước khi có bất kỳ approval nào, mỗi cái có
+test và lỗi tiêm:
+- Nhãn bên trong cặp `line1/line2`, `plane1/plane2` và `segment_a/segment_b` cũng được chuẩn hoá. Bản §5.8 chỉ đổi chỗ cả
+  cặp, nên nói quá so với mã.
+- `segment` đi kèm `ratio` (`divide_segment`) giữ hướng.
+- Một ca SERVED sai mà vẫn mang đúng dữ kiện của gold được quy cho tầng tất định.
+
+Runner mới có sha `b25830f2…`; template được phát hành lại với blob `a3590e6b…`. Gold replay `s2-pilot-gold-replay-r2.jsonl`
+thay `-r1`, kết quả không đổi: 33/36, 0 wrong-served. Test của runner: 44.
