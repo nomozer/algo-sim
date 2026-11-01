@@ -81,3 +81,13 @@ Curved solids on /4 are the highest-reuse gap: 6 of the 18 groups, plus the comp
 - an adapter scene.
 
 This must not become a second compiler and must not bridge into Adapter /3. It is **justified offline work that is not done in this continuation.** It is recorded as the next architecture action, `HYBRID_MASTER_EPIC_CURRENT_STATE.md` → Next.
+
+---
+
+## Addendum through Ninth Continuation (`fa1ed277` / candidate `17e4a326`, 2026-11-01)
+
+The curved and composite architecture actions identified above were implemented across Continuations 5–9 inside the single Route D `/4` pipeline (`Registry /26`, `Planner /22`, `Engine /18`, `geometric-relation-certificate/1`), without creating a fourth compiler or expanding legacy Adapter `/3`:
+
+- **Continuations 5–7 (`4074e8b9`, `bfe8912f`, `d9d11b60`):** standalone cylinder/cone/sphere measures, parallel/axial/sphere sections, general cone apex ratio $k$, residual volume, and closed base-centre grammar (`curved-capability.md` §§5–7, `curved-generalization-audit.md`).
+- **Continuation 8 (`44a0b79e`):** polyhedral role-phrase Source Gate parity, exported machine-verified `preconditions` and `postconditions` on `construction_trace`, and certified circumscribed spheres of polyhedra (`curved-capability.md` §8, `circumscribed-spheres-review.md`).
+- **Continuation 9 (`fa1ed277`):** 16-dimension multi-object FactGraph audit (`multi-object-factgraph-audit.md`); additive `typed-fact-next/2` `GeometricRelationSpecV2` (`circumscribes`, `inscribed_in`, `tangent_to` + `contact_ref`) and `SolidSpec.inscribed_in`; certified sphere inscribed in a convex polyhedron across all boundary faces (`_tam_noi_tiep_da_dien` over exact `Fraction` + `_QField`); certified sphere–plane tangency (`_chan_tiep_xuc_mat`); dual named/unnamed spheres, polyhedron section + sphere coexistence, multi-polyhedron `shared_faces` + sphere, and axial cylinder/cone + circumscribed/inscribed spheres (`_dung_cong_ghep`); explicit multi-object planner dependency DAG + `composition_classification`; and 4-layer `relation_certificates` (`curved-capability.md` §9, `composite-relations-review.md` Round 3 `READY`).

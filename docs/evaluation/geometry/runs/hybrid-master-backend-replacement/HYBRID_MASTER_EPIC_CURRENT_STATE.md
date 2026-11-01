@@ -428,3 +428,50 @@ Offline. `MAX_AUTHORIZED_LIVE_REQUESTS = 0`; `MAX_AUTHORIZED_LIVE_SPEND_USD = 0`
 
 1. Owner rulings `P-1`, `P-2` and `P-3` (`owner-go-request.md`) if curved fixture repins are desired.
 2. Owner live GO + independently authored 60-problem held-out corpus for paired live measurement (`D-04`, `D-11`, `D-13`, `GATE-16`), plus frontend `D-10` and manual QA `GATE-13`/`GATE-15`/`GATE-20` before any cutover decision.
+
+---
+
+## Ninth continuation (Owner Master GO: Multi-Object FactGraph + Composite Geometry + Generalized Geometric Relations), 2026-11-01: CHECKPOINT REACHED
+
+Offline. `MAX_AUTHORIZED_LIVE_REQUESTS = 0`; `MAX_AUTHORIZED_LIVE_SPEND_USD = 0`; `0` provider calls. Versions bumped to `geometry-functions/26`, `geometry-fact-planner/22`, `geometry-function-engine/18`, and `geometric-relation-certificate/1`; `DEFAULT_MODE = "LLM_ONLY"` and `CACHE_VERSION = "131"` unchanged; `0` edits to `adapter3_simulation.py`, `semantic_program/`, or `frontend/`.
+
+| Commit | Content |
+|---|---|
+| `fa1ed277` | Multi-object FactGraph audit, additive `typed-fact-next/2` relation contract, certified polyhedron insphere (`_tam_noi_tiep_da_dien`), certified sphere–plane tangency (`_chan_tiep_xuc_mat`), axial cylinder/cone + sphere composites (`_dung_cong_ghep`), planner DAG + `composition_classification`, Source Gate closed grammar, 4-layer `relation_certificates`, Round 1–3 review fixes, `composite_relations_probe.py`, and `test_route_d_composite_relations.py` (`54/54`) |
+| `625da863` | Re-export 41 Adapter `/2` preview fixtures with `composition_classification` and `relation_certificates` (`fixtures-adapter-2-composition-classification/`; earlier bundles preserved byte-for-byte) |
+| `f6a605f5` | `phase-m` regression replay at product `fa1ed277` (`inventory-phase-m.json`, `wave3-phase-m.json`) and Continuation 9 capability/index docs |
+| `17e4a326` | Candidate re-frozen in its own commit (`runs/hybrid-master-composite-relations/` correcting `runs/hybrid-master-circumscribed-spheres/`) |
+
+**Capabilities delivered on Route D `/4`** (`multi-object-factgraph-audit.md`, `curved-capability.md` §9, `composite-relations-review.md`):
+
+- **Workstream A — Multi-Object & Relation Audit + Additive V2 Contract:** 16-dimension architectural audit (`multi-object-factgraph-audit.md`) evaluating all 12 candidate relations; additive `GeometricRelationSpecV2` (`circumscribes`, `inscribed_in`, `tangent_to` with optional `contact_ref`) and `SolidSpec.inscribed_in` in `typed-fact-next/2` (`typed-fact-next/1` schema untouched), unique `relation_id` validation, `solid_scope` disambiguation for dual unnamed `"()"` solids, and `schema-census-extension.json` closure (`test_scope_census_closure.py`).
+- **Workstream B — Certified Insphere (5A), Certified Sphere–Plane Tangency (5B), and Composite Topologies (5C/5D):**
+  - **5A (`_tam_noi_tiep_da_dien`):** exact `Fraction` + integer `isqrt` + multiquadratic `_QField` ($m \le 4$) solver across **all** boundary faces (`NO_INSCRIBED_SPHERE` when tangential compatibility fails; `EXACT_DOMAIN_EXCEEDED`; `METRIC_REQUIRES_EUCLIDEAN_CHART`), enforcing face coplanarity (`NON_COPLANAR_POINTS`), strict polygon convexity (`DEGENERATE_SOLID`), strict inward half-space signs, strict relative-interior face polygon contacts $T_k \in \operatorname{relint}(F_k)$, and independent pure-`Fraction` volume-surface identity ($9V^2 = r^2 (\sum_k S_k)^2$).
+  - **5B (`_chan_tiep_xuc_mat`):** exact Euclidean chart distance $d^2(O, (\alpha)) = R^2$ vs. secant (`PLANE_INTERSECTS_SPHERE_NOT_TANGENT`, $d^2 < R^2$) vs. disjoint (`PLANE_DOES_NOT_TOUCH_SPHERE`, $d^2 > R^2$), certified non-collinear witness triple for G4 IR `construct_plane`, and optional named contact point verification (`INCONSISTENT_FACTS` on mismatch, usable in downstream metric goals).
+  - **5C & 5D (`_dung_cong_ghep` & polyhedral composites):** multi-polyhedron (`shared_faces` / `shared_vertices`) + spheres; dual spheres (`(S1)` circumscribed + `(S2)` inscribed, plus dual unnamed `"()"` spheres via synthetic `(out:...)` / `(in:...)` symbols); polyhedron plane section + sphere coexistence; axial cylinder/cone hosts (`O.O'`, `(T)`, `S.O`, `(N)`) + circumscribed/inscribed/dual spheres (`NO_INSCRIBED_SPHERE` when cylinder $h \ne 2R$); multi-goal cross-solid queries; unanchored multi-curved payloads remain fail-closed (`BRIDGE_UNSUPPORTED_CURVED_COMPOSITE`).
+- **Workstreams C–F — Planner DAG, Source Gate Grounding, 4-Layer `relation_certificates` & Scene3D:** explicit multi-object dependency DAG (`DEPENDENCY_CYCLE` detection) + honest `composition_classification`; closed Vietnamese Source Gate grammar (`_CAU_CONG_NGOAI_TIEP`, `_CAU_TIEP_XUC_MP`, `_host_cum`, multi-sphere disambiguation, negation/conditional/goal rejection); 4-layer `relation_certificates` (`SOURCE_GROUNDING_PROOF`, `GEOMETRIC_RELATION_PROOF`, `KERNEL_EXECUTION_PROOF`, `RESULT_CERTIFICATE`) cleared on all `REFUSED` envelopes; composite `construction_trace` and `Scene3D` (`0` edits to `frontend/`).
+
+**Independent adversarial review** (`composite-relations-review.md`, subagent `117e0e72-2c22-4db8-a8de-066bc0ccf54a`): three rounds — Round 1 (`1 BLOCKER, 4 MAJOR, 3 MINOR, 2 NIT`), Round 2 (`1 BLOCKER, 2 MAJOR, 2 MINOR`), Round 3 **`READY`** (`0 BLOCKER, 0 MAJOR, 0 MINOR, 1 NIT` closed before commit; `54/54` tests in `test_route_d_composite_relations.py`, `17/17` positives & `19/19` negatives in `composite_relations_probe.py`).
+
+**Gates:**
+
+- **Wave 3 (`inventory-phase-m.json`, `wave3-phase-m.json`):** `67/72` served correctly; `72/72` negatives refused (`62` exact reason); `0` wrong-served; `0` transitions.
+- **Locked 96:** `96/96`, `0` wrong-served.
+- **203 probes:** `0` served negatives, `0` internal errors (same 12 curved `REFUSED -> REFUSED` transitions).
+- **Registered curved controls:** `32/32` remain `REFUSED` (`0` moved `REFUSED -> SERVED`).
+- **Candidate:** `17e4a326`, product `fa1ed277`, 118 files `9583018d…`. `freeze_evaluation_candidate.py --verify` matches.
+- **Full T3:** `FULL_PRODUCT_GATE_PASS` on attempt 1 of `17e4a326`, on fresh detached worktree `hm-t3-17e4a326` (`full-t3-17e4a326.json`): pytest `16237` passed (`0` failed, `7` skipped, `2` deselected, `15` xfailed), vitest `84` files / `1424` passed, production build `PASS`, demo replay `5/5`, crash surface `6/6`.
+- **Publication scan** of `f986e897..HEAD`: `PASS` (`0` violations, `0` `Co-Authored-By` trailers).
+
+**Status:**
+
+- `ARCHITECTURE_CAPABILITY_PROGRESS`.
+- `CURVED_PARITY_PARTIAL` (the 8 curved fixtures still refuse on `/4`, gated on `P-1`, `P-2` and unordered ratio).
+- `OFFLINE_BACKEND_READY_FOR_LIVE_EVALUATION`.
+- Overall: **`HYBRID_NOT_READY`**. Nothing is merged or pushed.
+
+**Next priority (live / human / frontend / deferred geometry frontiers):**
+
+1. Owner rulings `P-1`, `P-2` and `P-3` (`owner-go-request.md`) if curved fixture repins are desired.
+2. Owner live GO + independently authored 60-problem held-out corpus for paired live measurement (`D-04`, `D-11`, `D-13`, `GATE-16`), plus frontend `D-10` and manual QA `GATE-13`/`GATE-15`/`GATE-20` before any cutover decision.
+3. Optional subsequent offline geometry frontiers (`curved-capability.md` §9): polyhedron–cylinder/cone inscription (`Group 7` / prism–cylinder in `Group 8`), standalone pyramid/cone frustum (`Group 10`), and Oxyz coordinate input (`Groups 17–18`).

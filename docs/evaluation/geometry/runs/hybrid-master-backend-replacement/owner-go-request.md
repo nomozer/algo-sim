@@ -8,6 +8,18 @@
 
 **Provider facts** below were checked against official Google documentation on 2026-10-31 (`provider-facts.md`).
 
+**Update, ninth continuation (2026-11-01). It supersedes the eighth-continuation measured system below.**
+- **Measured system:** candidate `17e4a326` (product `fa1ed277`; 118 files, `9583018d…`). `--manifest` prints the exact `measured_system` and `harness_sha256` to bind.
+- **Model surface:** the `/4` arm's provider response schema widened with additive `typed-fact-next/2` fields (`SolidSpec.inscribed_in` and `GeometricRelationSpecV2` kinds `circumscribes`, `inscribed_in`, `tangent_to` + optional `contact_ref`). `typed-fact-next/1`, the `LLM_ONLY` arm, and `CACHE_VERSION` 131 are unchanged.
+- **Newly served and certified on Hybrid `/4`** (independent review `READY` after 3 rounds; Registry `/26`, Planner `/22`, Engine `/18`, `geometric-relation-certificate/1`):
+  - certified spheres inscribed in convex polyhedra across **all** boundary faces (`NO_INSCRIBED_SPHERE`, strict inward half-spaces, strict `relint` face polygon contacts, and independent $9V^2 = r^2 (\sum_k S_k)^2$ cross-check);
+  - certified sphere–plane tangency (`tangent_to`, $d^2 = R^2$ vs. `PLANE_INTERSECTS_SPHERE_NOT_TANGENT` / `PLANE_DOES_NOT_TOUCH_SPHERE`, non-collinear witness triple, optional named contact point usable in downstream metric goals);
+  - composite topologies: multi-polyhedron `shared_faces` + sphere, dual circumscribed + inscribed spheres (named `(S1)`/`(S2)` or unnamed `"()"`), polyhedron plane section + sphere coexistence, axial cylinder/cone hosts (`O.O'`, `(T)`, `S.O`, `(N)`) + circumscribed/inscribed/dual spheres (`NO_INSCRIBED_SPHERE` when cylinder $h \ne 2R$), explicit planner dependency DAG + `composition_classification`, and 4-layer `relation_certificates`.
+- **Still refused on Hybrid `/4`:**
+  - non-cospheric polyhedra (`NO_CIRCUMSCRIBED_SPHERE`), non-tangential polyhedra or cylinders (`NO_INSCRIBED_SPHERE`), and irrational Cholesky charts (`METRIC_REQUIRES_EUCLIDEAN_CHART`);
+  - polyhedron–cylinder/cone inscription, sphere–line / sphere–sphere tangency, standalone frustum, Oxyz coordinate/equation input, ellipse sections, coordinated question lists (`P-1`), several sections in one run (`P-2`), and unordered ratio questions.
+- **Same three optional grammar rulings (`P-1`, `P-2`, `P-3`)** as in the seventh continuation below remain open.
+
 **Update, eighth continuation (2026-10-31). It supersedes the seventh-continuation measured system below.**
 - **Measured system:** candidate `db1ac63a` (product `44a0b79e`; 118 files, `ccfce08c…`). `--manifest` prints the exact `measured_system` and `harness_sha256` to bind.
 - **Model surface:** the `/4` arm's provider response schema widened with the additive `typed-fact-next/2` field `SolidSpec.circumscribes` (a sphere circumscribing a declared polyhedron). The `LLM_ONLY` arm is unchanged, and so is `CACHE_VERSION` 131.
