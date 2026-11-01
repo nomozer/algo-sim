@@ -2,6 +2,20 @@
 
 **Integration update 2026-10-30:** W3-F2 resolution below is now on local main `15a8e1ac`; earlier “not on main” labels are historical. Publication retains 105 baseline head findings (104 pending findings, 1 additional test vector), not new W3-F2 regressions: 95 traceback, 5 Google-key test vectors and 5 other security-pattern findings. Narrow Owner policy and closure: `evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/integration/report.md`. This does not resolve the historical publication debt globally.
 
+### ISSUE-ARCH-ROUTE-D-SOLID-CLASS-WORD-UNCERTIFIED
+
+- **status:** OPEN (found 2026-11-01 by the independent review of the hybrid-master tenth continuation; it predates that work and is present at `c9f54828`).
+- **cause:** A specific solid-class word in a solid clause is a claim that no call encodes and nothing checks. "Cho hình lập phương ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật, AB = 2, AD = 3, AA' = 4." is served on Route D /4 as a 2×3×4 box, so the cube claim (all edges equal) is never verified. The engine has no notion of the class.
+- **impact:** A contradictory text is served instead of being refused. The SL-1 opener ("Vẽ hình lập phương … có …") inherits the same path. The trailing-mention reader does not inherit it: it accepts only the generic word.
+- **repair:** Certify the class where the claim is read: the Source Gate requires calls that encode the class, or the engine checks it after layout. This needs a RED test on the repro above.
+- **source:** `evaluation/geometry/runs/hybrid-master-backend-replacement/student-language-audit.md` §8.
+
+### ISSUE-ARCH-ROUTE-D-DIACRITIC-FREE-INPUT
+
+- **status:** OPEN, waiting for an Owner decision (S-1 in `evaluation/geometry/runs/hybrid-master-backend-replacement/owner-go-request.md`).
+- **cause:** `detect_domain` refuses space-geometry text typed without diacritics as out of scope on every route, the `LLM_ONLY` default included. On Route D the closed Source Gate grammars would then refuse it as well.
+- **evidence:** probe row S05 in `evaluation/geometry/runs/hybrid-master-backend-replacement/student-language-probe.json`.
+
 ### ISSUE-RESEARCH-TYPEDFACTNEXT-PREMISE-SCOPE-ERASED
 
 - **status:** RESOLVED ON RESEARCH BRANCH (2026-10-30, candidate `4e7fe91d`, READY_FOR_OWNER_REVIEW, not on main): N1–N4, CIC-D1, F1/F2 and F7 closed; Full T3 PASS; `evaluation/geometry/runs/hybrid-v2-w3-f2-ratio-projection-language-grounding/closed-input-contract/cic-d1-contract-recovery/target-grammar-identity-recovery/f7-narrow-recovery/final-handoff.md`. Original status kept below for history: OPEN; blocks W3-F2 research readiness. Scope census closure (products `959e23a6`/`1262fbd5`, not frozen) closed F1–F7 from `unified-solid-scope/review.md` with a mechanical field census; the pre-freeze adversarial review (2026-10-29) found pre-existing fail-open classes outside it: string-form operands read per character by Adapter3 (N1), constructed-point ownership skipped on the Adapter3 legacy fallback (N2), kind-inapplicable fields silently ignored (N3), relations unread on the curved route (N4) — `unified-solid-scope-closure/pre-freeze-review.md`. Needs a new Owner GO (closed per-kind field tables, one operand grammar, S8 before capability refusal).

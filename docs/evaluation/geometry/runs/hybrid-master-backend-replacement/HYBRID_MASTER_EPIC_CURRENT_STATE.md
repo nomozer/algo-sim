@@ -475,3 +475,19 @@ Offline. `MAX_AUTHORIZED_LIVE_REQUESTS = 0`; `MAX_AUTHORIZED_LIVE_SPEND_USD = 0`
 1. Owner rulings `P-1`, `P-2` and `P-3` (`owner-go-request.md`) if curved fixture repins are desired.
 2. Owner live GO + independently authored 60-problem held-out corpus for paired live measurement (`D-04`, `D-11`, `D-13`, `GATE-16`), plus frontend `D-10` and manual QA `GATE-13`/`GATE-15`/`GATE-20` before any cutover decision.
 3. Optional subsequent offline geometry frontiers (`curved-capability.md` §9): polyhedron–cylinder/cone inscription (`Group 7` / prism–cylinder in `Group 8`), standalone pyramid/cone frustum (`Group 10`), and Oxyz coordinate input (`Groups 17–18`).
+
+---
+
+## Tenth continuation (Owner Master Task: student natural-language understanding), 2026-11-01
+
+Offline only; `MAX_AUTHORIZED_LIVE_REQUESTS = 0`; 0 provider calls. `DEFAULT_MODE = "LLM_ONLY"` and `CACHE_VERSION = "131"` unchanged; 0 edits to `frontend/`, `semantic_program/` or `adapter3_simulation.py`. Report: `student-language-audit.md`.
+
+| Commit | Content |
+|---|---|
+| `c9f54828` | Development probe `tools/student_language_probe.py` and its baseline at product `fa1ed277` (before any code change) |
+| `020263cf` | SL-1 simulation-request reader, `_C_VUONG` / `_C_DOAN` wording, SL-2 `/2` honest exit + `route-d-clarification/1`, D02 empty base ⇒ `MISSING_DIMENSION` |
+| `6637f6fd` | Registry /27, engine /19 (D-02 cache identity), preview identity delta |
+| `d3dc97fc` | Probe after the fix, corrected baseline at `fa1ed277`, `phase-n` replay |
+| `58888d7c` | Review round-1 fixes (B1 class words, B2 undrawn mentions, PE-1 dropped requests, SL-2 MINORs) — product commit |
+
+<!-- candidate, T3 and review verdict appended at the checkpoint -->

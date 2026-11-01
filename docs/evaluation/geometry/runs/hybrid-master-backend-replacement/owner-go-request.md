@@ -112,3 +112,18 @@
 3. `ALLOW_LIVE_AI=1` and the key, for the run only.
 
 The agent never writes the approval value.
+
+## Addendum — tenth continuation (student language), 2026-11-01
+
+Nothing above is changed: the locked protocol, scorer, thresholds and 60-case corpus stay as registered. The measured
+system changes (registry /27, engine /19, `/4` extraction surface gains the `unresolved` exit), so `--manifest` prints a
+new `measured_system`; an approval written for an earlier candidate does not bind this one. Evidence:
+`student-language-audit.md`.
+
+Three decisions only the Owner can take, in one place:
+
+| # | decision | why it is not taken here | options |
+|---|---|---|---|
+| S-1 | **Diacritic-free input.** `detect_domain` refuses "cho hinh chop S.ABCD …" as out of scope on every route, including the `LLM_ONLY` default. | Changing it changes default-route behaviour (more text reaches a paid model) and the domain policy; a Hybrid-only fix would be dead code behind that gate. | (a) keep, and tell learners to type with diacritics; (b) authorize one slice: a length-preserving restoration copy for the domain gate and the Source Gate, raw quotes kept, ambiguous folds refused or clarified, with its own independent review |
+| S-2 | **A live student-wording study**, separate from the locked paired protocol: does a live model use the honest exit correctly, and how often does it over-use it? | Needs provider budget and authored student-style texts; gold replay cannot answer it. | GO with a budget and an author, or defer |
+| S-3 | **The corpus author** of the locked 60-case set should know that diacritic-free and simulation-only wording now behave differently on the two arms (Hybrid reads simulation requests; both arms refuse no-diacritic text). | Authoring choices are the author's. | inform the author; no protocol change |

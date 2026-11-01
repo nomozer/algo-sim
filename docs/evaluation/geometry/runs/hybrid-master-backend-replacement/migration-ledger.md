@@ -137,3 +137,9 @@ Production cutover needs a measured real-text extraction quality on a new pre-re
   - Certified sphere–plane tangency (`_chan_tiep_xuc_mat`, $d^2 = R^2$ vs. `PLANE_INTERSECTS_SPHERE_NOT_TANGENT` vs. `PLANE_DOES_NOT_TOUCH_SPHERE` + named contact verification), dual spheres (`(S1)`/`(S2)` and dual unnamed `"()"`), polyhedron section + sphere coexistence, multi-polyhedron `shared_faces` + sphere, and axial cylinder/cone + circumscribed/inscribed spheres (`_dung_cong_ghep`).
   - Explicit multi-object planner dependency DAG + `composition_classification` + 4-layer `relation_certificates` (`composite_relations_probe.py`: `17/17` pos + `19/19` neg; `composite-relations-review.md` Round 3 `READY`; `inventory-phase-m.json` Wave 3 `67/72`, `72/72`, `0` wrong-served, `0` transitions, `96/96` locked, `203` probes clean, `32/32` curved controls `REFUSED`).
 - **Retirement & live gates:** unchanged — Adapter `/3` (`0` edits in Continuation 9) and compiler `C` remain unretired, `DEFAULT_MODE = "LLM_ONLY"` and `CACHE_VERSION = "131"` are untouched, and D-04 / D-11 / D-13 / GATE-16 await the Owner live GO.
+
+## Update after tenth continuation (student language, 2026-11-01)
+
+- **No legacy consumer changed.** The slice extends the Route D readers (Source Gate SL-1, `/2` honest exit SL-2, engine empty-base class D02; registry /27, engine /19). LLM_ONLY, compiler C and Adapter /3 are untouched; `DEFAULT_MODE = "LLM_ONLY"`, `CACHE_VERSION = "131"`.
+- **New input to the cutover decision:** learner wording without diacritics is refused as out of scope by `detect_domain` on every route, the default included (`student-language-audit.md` §7). A live paired run on a corpus with such wording would show both arms failing at the same gate; the corpus author should know that.
+- Retirement and live gates: unchanged (D-04 / D-11 / D-13 / GATE-16 await the Owner live GO).
