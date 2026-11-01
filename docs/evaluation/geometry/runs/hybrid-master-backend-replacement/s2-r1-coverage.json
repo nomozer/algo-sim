@@ -1,0 +1,343 @@
+{
+ "classification": "IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC",
+ "provider_calls": 0,
+ "corpus_sha256": "3f1682bd6adbc5f21cb504a6b25f6ccc226c9b0d791f05fcb2eeb6a9a6fc6791",
+ "identity": {
+  "head": "48c7e4c03ba9d48b3fd55ae58ab67ceb91a888e5",
+  "product_uncommitted": false
+ },
+ "summary": {
+  "cases": 36,
+  "gold_with_described_points": 0,
+  "texts_with_unnamed_described_phrasing": 0,
+  "search_classification_of_gold_served": {
+   "SOURCE_EXPLICIT_SEQUENCE": 17
+  }
+ },
+ "rows": [
+  {
+   "id": "S2-A-I02_ve",
+   "stratum": "S2-A",
+   "expected": "SERVED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "SERVED",
+   "search_classification": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "id": "S2-A-I04_mo_phong",
+   "stratum": "S2-A",
+   "expected": "SERVED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "SERVED",
+   "search_classification": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "id": "S2-A-I05_cho_minh_xem",
+   "stratum": "S2-A",
+   "expected": "SERVED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "SERVED",
+   "search_classification": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "id": "S2-A-I08_trailing_ve",
+   "stratum": "S2-A",
+   "expected": "SERVED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "SERVED",
+   "search_classification": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "id": "S2-A-I09_trailing_mo_phong_hinh",
+   "stratum": "S2-A",
+   "expected": "SERVED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "SERVED",
+   "search_classification": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "id": "S2-A-I12_trailing_point",
+   "stratum": "S2-A",
+   "expected": "SERVED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "SERVED",
+   "search_classification": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "id": "S2-B-I07_ve_va_tinh",
+   "stratum": "S2-B",
+   "expected": "SERVED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "SERVED",
+   "search_classification": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "id": "S2-B-I10_ve_roi_tinh",
+   "stratum": "S2-B",
+   "expected": "SERVED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "SERVED",
+   "search_classification": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "id": "S2-B-I11_mo_phong_va_tinh_SC",
+   "stratum": "S2-B",
+   "expected": "SERVED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "SERVED",
+   "search_classification": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "id": "S2-B-P07_shared_intermediate_two_goals",
+   "stratum": "S2-B",
+   "expected": "SERVED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "SERVED",
+   "search_classification": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "id": "S2-B-P09_student_chain",
+   "stratum": "S2-B",
+   "expected": "SERVED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "SERVED",
+   "search_classification": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "id": "S2-B-A03_control_with_dimensions",
+   "stratum": "S2-B",
+   "expected": "SERVED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "SERVED",
+   "search_classification": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "id": "S2-C-A01_goc_chieu",
+   "stratum": "S2-C",
+   "expected": "CLARIFY",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "REFUSED",
+   "search_classification": null
+  },
+  {
+   "id": "S2-C-D05_projection_missing_target",
+   "stratum": "S2-C",
+   "expected": "CLARIFY",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "REFUSED",
+   "search_classification": null
+  },
+  {
+   "id": "S2-C-D06_unnamed_prism",
+   "stratum": "S2-C",
+   "expected": "CLARIFY",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "REFUSED",
+   "search_classification": null
+  },
+  {
+   "id": "S2-C-C04_angle_plane_missing",
+   "stratum": "S2-C",
+   "expected": "CLARIFY",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "REFUSED",
+   "search_classification": null
+  },
+  {
+   "id": "S2-C-C05_draw_then_compute",
+   "stratum": "S2-C",
+   "expected": "CLARIFY",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "REFUSED",
+   "search_classification": null
+  },
+  {
+   "id": "S2-C-C06_square_without_side",
+   "stratum": "S2-C",
+   "expected": "CLARIFY",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "REFUSED",
+   "search_classification": null
+  },
+  {
+   "id": "S2-D-D03_contradictory_length",
+   "stratum": "S2-D",
+   "expected": "REFUSED_INCONSISTENT",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "REFUSED",
+   "search_classification": null
+  },
+  {
+   "id": "S2-D-D04_two_values_same_segment",
+   "stratum": "S2-D",
+   "expected": "REFUSED_INCONSISTENT",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "REFUSED",
+   "search_classification": null
+  },
+  {
+   "id": "S2-D-D07_cube_rectangle_base",
+   "stratum": "S2-D",
+   "expected": "REFUSED_INCONSISTENT",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "REFUSED",
+   "search_classification": null
+  },
+  {
+   "id": "S2-D-D08_cube_tall",
+   "stratum": "S2-D",
+   "expected": "REFUSED_INCONSISTENT",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "REFUSED",
+   "search_classification": null
+  },
+  {
+   "id": "S2-D-D09_base_edge_perp_base",
+   "stratum": "S2-D",
+   "expected": "REFUSED_INCONSISTENT",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "REFUSED",
+   "search_classification": null
+  },
+  {
+   "id": "S2-D-D10_square_diagonal_3",
+   "stratum": "S2-D",
+   "expected": "REFUSED_INCONSISTENT",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "REFUSED",
+   "search_classification": null
+  },
+  {
+   "id": "S2-E-E01_oxyz",
+   "stratum": "S2-E",
+   "expected": "REFUSED_UNSUPPORTED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "REFUSED",
+   "search_classification": null
+  },
+  {
+   "id": "S2-E-E02_truncated_pyramid",
+   "stratum": "S2-E",
+   "expected": "REFUSED_UNSUPPORTED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "REFUSED",
+   "search_classification": null
+  },
+  {
+   "id": "S2-E-E03_volume_maximum",
+   "stratum": "S2-E",
+   "expected": "REFUSED_UNSUPPORTED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "REFUSED",
+   "search_classification": null
+  },
+  {
+   "id": "S2-E-E06_word_problem_rate",
+   "stratum": "S2-E",
+   "expected": "REFUSED_UNSUPPORTED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "REFUSED",
+   "search_classification": null
+  },
+  {
+   "id": "S2-E-E04_locus",
+   "stratum": "S2-E",
+   "expected": "REFUSED_UNSUPPORTED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "REFUSED",
+   "search_classification": null
+  },
+  {
+   "id": "S2-E-E05_translation",
+   "stratum": "S2-E",
+   "expected": "REFUSED_UNSUPPORTED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "REFUSED",
+   "search_classification": null
+  },
+  {
+   "id": "S2-F-S02_vuong_goc_day",
+   "stratum": "S2-F",
+   "expected": "SERVED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "SERVED",
+   "search_classification": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "id": "S2-F-S03_symbol_perp",
+   "stratum": "S2-F",
+   "expected": "SERVED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "SERVED",
+   "search_classification": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "id": "S2-F-S07_typo_tone",
+   "stratum": "S2-F",
+   "expected": "SERVED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "REFUSED",
+   "search_classification": null
+  },
+  {
+   "id": "S2-F-S08_altitude_wording",
+   "stratum": "S2-F",
+   "expected": "SERVED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "SERVED",
+   "search_classification": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "id": "S2-F-F05_kc_mp_shorthand",
+   "stratum": "S2-F",
+   "expected": "SERVED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "SERVED",
+   "search_classification": "SOURCE_EXPLICIT_SEQUENCE"
+  },
+  {
+   "id": "S2-F-F06_dt_mp_shorthand",
+   "stratum": "S2-F",
+   "expected": "SERVED",
+   "gold_described_points": 0,
+   "unnamed_described_phrasing": [],
+   "gold_route_status": "SERVED",
+   "search_classification": "SOURCE_EXPLICIT_SEQUENCE"
+  }
+ ]
+}

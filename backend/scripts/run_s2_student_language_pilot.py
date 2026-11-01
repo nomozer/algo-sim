@@ -490,6 +490,8 @@ def main(argv: list[str] | None = None) -> int:
     if a.out is None:
         p.error("--out is required for a run")
     approval = authorize_live(a.corpus, a.approval_file) if a.live else None
+    if approval is not None:
+        P.claim_approval(a.approval_file, a.out)
     out = evaluate(a.corpus, a.out, approval)
     print(json.dumps({k: out[k] for k in ("measurement_class", "stop_reason", "completed", "cases_run",
                                           "http_requests", "spent_upper_usd")}

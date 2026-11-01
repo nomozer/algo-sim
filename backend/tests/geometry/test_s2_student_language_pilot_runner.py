@@ -209,6 +209,34 @@ def test_request_cap_blocks_the_next_request_before_it_is_sent(tmp_path, monkeyp
     assert provider.calls == 1 and out["stop_reason"] == "REQUEST_CAP" and not out["completed"]
 
 
+class _Ran(Exception):
+    pass
+
+
+def test_one_approval_one_live_run_and_a_second_is_refused_before_any_request(tmp_path, monkeypatch):
+    """C14: the caps count requests per process, so a second `--live` under the same approval would re-send requests
+    the first one already counted. An interrupted run is never resumed under the approval it consumed."""
+    corpus = _write(tmp_path, [_case("S2-A-I02_ve")])
+    approval = tmp_path / "approval.json"
+    approval.write_text("{}", encoding="utf-8")         # `authorize_live` is stubbed: tests never write an approval value
+    monkeypatch.setattr(R, "authorize_live", lambda c, a: _terms(corpus))
+    runs = []
+
+    def ran(c, out, terms):
+        runs.append(out)
+        raise _Ran
+    monkeypatch.setattr(R, "evaluate", ran)
+    argv = ["--corpus", str(corpus), "--live", "--approval-file", str(approval), "--out"]
+    (tmp_path / "taken.jsonl").write_text("earlier\n", encoding="utf-8")
+    with pytest.raises(FileExistsError):                # a taken --out is refused before the approval is consumed
+        R.main([*argv, str(tmp_path / "taken.jsonl")])
+    with pytest.raises(_Ran):
+        R.main([*argv, str(tmp_path / "first.jsonl")])
+    with pytest.raises(R.LiveRefused, match="consumed"):
+        R.main([*argv, str(tmp_path / "second.jsonl")])
+    assert runs == [tmp_path / "first.jsonl"]
+
+
 def test_a_run_never_overwrites_an_earlier_output(tmp_path):
     out = tmp_path / "dry.jsonl"
     out.write_text("earlier\n", encoding="utf-8")

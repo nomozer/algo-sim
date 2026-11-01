@@ -342,6 +342,34 @@ def test_live_is_refused_before_any_request(tmp_path, monkeypatch):
     assert not (tmp_path / "x.jsonl").exists()
 
 
+class _Ran(Exception):
+    pass
+
+
+def test_one_approval_one_live_run_and_a_second_is_refused_before_any_request(tmp_path, monkeypatch):
+    """C14: `max_requests` / `max_usd` are counted per process, so a second `--live` under the same approval would spend
+    them again. An interrupted run is never resumed under the approval it consumed; a re-run needs a new approval."""
+    corpus = _corpus(tmp_path)
+    approval = tmp_path / "approval.json"
+    approval.write_text("{}", encoding="utf-8")         # `authorize_live` is stubbed: tests never write an approval value
+    monkeypatch.setattr(E, "authorize_live", lambda c, a: _terms(corpus))
+    runs = []
+
+    def ran(c, out, terms):
+        runs.append(out)
+        raise _Ran
+    monkeypatch.setattr(E, "evaluate", ran)
+    argv = ["--corpus", str(corpus), "--live", "--approval-file", str(approval), "--out"]
+    (tmp_path / "taken.jsonl").write_text("earlier\n", encoding="utf-8")
+    with pytest.raises(FileExistsError):                # a taken --out is refused before the approval is consumed
+        E.main([*argv, str(tmp_path / "taken.jsonl")])
+    with pytest.raises(_Ran):
+        E.main([*argv, str(tmp_path / "first.jsonl")])
+    with pytest.raises(E.LiveRefused, match="consumed"):
+        E.main([*argv, str(tmp_path / "second.jsonl")])
+    assert runs == [tmp_path / "first.jsonl"]
+
+
 @pytest.mark.parametrize("mutate", [
     lambda cs: cs.append(dict(cs[0], id="dup-text", problem_text=" " + cs[0]["problem_text"].upper())),  # normalized dup
     lambda cs: cs.append(dict(cs[1], problem_text="khác")) or cs[-1].update(id=cs[0]["id"]),   # duplicate id

@@ -379,6 +379,23 @@ def authorize_live(corpus_path: Path, approval_path: Path | None) -> dict[str, A
     return check_approval_terms(corpus_path.read_bytes(), approval)
 
 
+def claim_approval(approval_path: Path, out_path: Path) -> None:
+    """One approval, one live run (C14). `max_requests` / `max_usd` are counted inside one process, so a second `--live`
+    under the same file would spend them again; an interrupted run is never resumed under the approval it consumed — a
+    re-run needs a new Owner approval file. A taken `--out` is refused first, so a typo never burns the approval.
+    Guards an accidental re-run, not a copied file (the agent never writes approval files, AGENTS.md)."""
+    if out_path.exists():
+        raise FileExistsError(out_path)
+    marker = approval_path.with_name(approval_path.name + ".consumed")
+    try:
+        with marker.open("x", encoding="utf-8", newline="\n") as f:
+            json.dump({"approval_sha256": sha256_file(approval_path), "out": str(out_path),
+                       "claimed_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}, f)
+    except FileExistsError:
+        raise LiveRefused(f"approval already consumed by an earlier live run ({marker.name}); a re-run needs a new "
+                          "Owner approval") from None
+
+
 def check_approval_terms(corpus_bytes: bytes, approval: dict[str, Any]) -> dict[str, Any]:
     """The approved terms themselves, against the EXACT corpus bytes that will be run (tests exercise this directly —
     automation never writes an approval value)."""
@@ -579,6 +596,8 @@ def main(argv: list[str] | None = None) -> int:
     if a.out is None:
         p.error("--out is required for a run")
     approval = authorize_live(a.corpus, a.approval_file) if a.live else None
+    if approval is not None:
+        claim_approval(a.approval_file, a.out)
     out = evaluate(a.corpus, a.out, approval)
     print(json.dumps(out["summary"], ensure_ascii=False, indent=1, default=str))
     return 0
