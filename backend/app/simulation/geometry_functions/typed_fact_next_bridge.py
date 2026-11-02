@@ -391,6 +391,16 @@ def _mat_fact(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2, solids: 
               asked: list[str], mo_ta: dict[str, dict[str, Any]] | None = None) -> dict[str, Any]:
     """The section fact's PLANE (shared by `/1` and `/2`). A described through-point (R-1) becomes route B's described
     point of a relation plane: `point_kind` + `points` instead of `point`."""
+    if sec.plane_kind == "constrained":                # C17: the stated relations only — witnesses are the planner's
+        if any(is_described_ref(p) for c in sec.constraints for p in c.operands):
+            raise TuChoi("BRIDGE_UNSUPPORTED_DESCRIBED_POINT", f"{sec.section_id}: điểm mô tả trong ràng buộc mặt chưa hỗ trợ",
+                         (sec.section_id,))
+        f = {"id": sec.section_id, "kind": "section", "role": "question" if asked else "premise",
+             "quotes": [sec.quote, *asked], "solid": solids[sec.target_solid_id].notation,
+             "plane_constraints": [{"kind": c.kind, "points": _refs(c.operands)} for c in sec.constraints]}
+        if sec.plane_name is not None:
+            f["plane_name"] = sec.plane_name
+        return f
     rel = _PLANE_RELATION.get(sec.plane_kind)
     if rel is None:
         raise TuChoi("BRIDGE_UNSUPPORTED_PLANE_KIND", f"{sec.section_id}: mặt {sec.plane_kind} chưa có phép dựng của planner",
@@ -885,7 +895,7 @@ def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> di
             f = _mat_fact(sec, solids, [], mo_ta)
             facts.append({**q, "quantity": "area", **{k: f[k] for k in ("solid", "point", "point_kind", "points",
                                                                          "plane_relation", "points_b", "points_a",
-                                                                         "plane_name") if k in f}})
+                                                                         "plane_name", "plane_constraints") if k in f}})
         elif v2 and (described := _cau_hoi_mo_ta(g, mo_ta)) is not None:
             facts.append({**q, **described})
         elif v2 and g.goal_type == "distance":

@@ -510,7 +510,7 @@ def _validate_engine_derived_section(
         _binh_phuong,
         ir_name,
     )
-    from app.simulation.geometry_functions.registry import MAT_HAI_DUONG, MAT_SONG_SONG, MAT_VUONG_DUONG
+    from app.simulation.geometry_functions.registry import MAT_HAI_DUONG, MAT_RANG_BUOC, MAT_SONG_SONG, MAT_VUONG_DUONG
 
     if section.get("certificate_version") != PLANE_SECTION_CERTIFICATE_VERSION:
         raise PreviewInvalid("PREVIEW_IDENTITY_CHANGED")
@@ -597,6 +597,21 @@ def _validate_engine_derived_section(
             po = objects.get(ir_name(p_lbl), {})
             if po.get("type") != "point3" or sum(a * b for a, b in zip(normal, (Fraction(c) for c in po["xyz"]))) != offset:
                 raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+    elif plane_rule == MAT_RANG_BUOC:                 # C17: every witness and stated point on the plane, relations as stated
+        dan = next((d for d in ((result.planner or {}).get("auxiliary") or ())
+                    if d.get("rule") == plane_rule and sid in (d.get("targets") or ())), None)
+        if (dan is None or not isinstance(tp, str) or dan.get("point") != tp or rel.get("through_point") != tp
+                or rel.get("kind") != "stated_constraints"
+                or rel.get("constraints") != [{"kind": c["kind"], "points": list(c["points"])} for c in dan["constraints"]]
+                or list(dan["plane"][:3]) != list(plane_points)):
+            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        for p_lbl in dan["plane"]:
+            po = objects.get(ir_name(p_lbl), {})
+            if po.get("type") != "point3" or sum(a * b for a, b in zip(normal, (Fraction(c) for c in po["xyz"]))) != offset:
+                raise PreviewInvalid("PREVIEW_RESULT_INVALID")
+        dau = [sum(a * b for a, b in zip(normal, pt)) - offset for pt in solid_pts]
+        if sum(x == 0 for x in dau) >= 3 and {x > 0 for x in dau if x != 0} != {True, False}:
+            raise PreviewInvalid("PREVIEW_RESULT_INVALID")
     elif plane_rule in {MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG}:
         if not isinstance(tp, str) or not tp or rel.get("through_point") != tp:
             raise PreviewInvalid("PREVIEW_RESULT_INVALID")

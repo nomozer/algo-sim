@@ -563,14 +563,63 @@ class StatedIntersectionSpec(ClosedNextModel):
         return self
 
 
+#: Arity of each stated plane constraint (C17): points the plane contains (a line AB is its two points), a line it is
+#: parallel to, a plane it is perpendicular to.
+PLANE_CONSTRAINT_ARITY = {"contains_points": (1, 4), "parallel_to_line": (2, 2), "perpendicular_to_plane": (3, 4)}
+
+
+class PlaneConstraintSpec(ClosedNextModel):
+    """ONE relation the source states about a plane it defines by relations (`plane_kind = "constrained"`) — never a
+    construction step: which witness points build the plane is the planner's choice, and the engine proves the plane
+    exists and is unique from every stated constraint."""
+
+    kind: Literal["contains_points", "parallel_to_line", "perpendicular_to_plane"]
+    operands: tuple[NonEmptyText, ...]
+
+    @model_validator(mode="after")
+    def _validate_operands(self) -> "PlaneConstraintSpec":
+        lo, hi = PLANE_CONSTRAINT_ARITY[self.kind]
+        refs = [parse_qualified_ref(p) for p in self.operands]
+        if not lo <= len(refs) <= hi or len(set(refs)) != len(refs):
+            raise TypedFactNextValidationError(
+                "INVALID_DERIVED_SECTION", f"plane constraint {self.kind} needs {lo}..{hi} distinct labels")
+        return self
+
+
 class DerivedPlaneSectionSpecV2(_PlaneSectionBase):
     """`typed-fact-next/2` section (run `hybrid-contract-v2`): inputs say only what the source says. The section boundary,
     its derived vertices and its closure certificate are ENGINE outputs. `declared_boundary` is an author's claim (cyclic
     order of edges) that is always verified, never trusted. There is no input flag that waives the closure proof: whether
-    a closed boundary is required follows from the goals (a derived solid needs it)."""
+    a closed boundary is required follows from the goals (a derived solid needs it). C17 (additive, `/2` only): a plane
+    the source defines by relations is `plane_kind = "constrained"` with its stated `constraints`."""
 
+    plane_kind: Literal[
+        "through_point_parallel_plane",
+        "through_point_perpendicular_line",
+        "through_point_parallel_two_lines",
+        "parallel_to_base_at_distance",
+        "parallel_to_base_at_ratio",
+        "plane_equation",
+        "axial_section",
+        "at_distance_from_center",
+        "through_center",
+        "constrained",
+    ]
+    constraints: tuple[PlaneConstraintSpec, ...] = ()
     stated_intersections: tuple[StatedIntersectionSpec, ...] = ()
     declared_boundary: tuple[tuple[NonEmptyText, NonEmptyText], ...] | None = None
+
+    @model_validator(mode="after")
+    def _validate_constraints(self) -> "DerivedPlaneSectionSpecV2":
+        if (self.plane_kind == "constrained") != bool(self.constraints):
+            raise TypedFactNextValidationError(
+                "INVALID_DERIVED_SECTION", f"Section {self.section_id!r}: exactly a constrained plane carries constraints")
+        if self.constraints and (self.through_point is not None
+                                 or not any(c.kind == "contains_points" for c in self.constraints)):
+            raise TypedFactNextValidationError(
+                "INVALID_DERIVED_SECTION",
+                f"Section {self.section_id!r}: a constrained plane names the points it contains in its constraints")
+        return self
 
     @model_validator(mode="after")
     def _validate_statements(self) -> "DerivedPlaneSectionSpecV2":

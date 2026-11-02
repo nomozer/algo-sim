@@ -66,7 +66,7 @@ from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationEr
 #: facts with optional named contact points, and multi-curved question disambiguation (`(S1)`/`(S2)`, `ngoại tiếp` vs `nội tiếp`).
 #: /29 (thirteenth continuation, SL-3): student shorthand "k/c" (khoảng cách) as a whole token wherever the ask grammar
 #: reads that word, and "đt" (đường thẳng) before a line's two labels; no function, contract or provider surface changed.
-REGISTRY_VERSION = "geometry-functions/29"
+REGISTRY_VERSION = "geometry-functions/30"
 
 
 class TuChoi(Exception):
@@ -441,7 +441,7 @@ class TranslatePointArgs(_Args):
 class PlanningTerm:
     """Internal typed role slots; not an expression language or provider program."""
     kind: Literal["Point", "Plane", "Line", "Foot", "AnswerDistance", "AnswerLength", "AnswerArea", "AnswerAngleLinePlane",
-                  "AnswerAngleLines", "Meet"]
+                  "AnswerAngleLines", "Meet", "Normal"]
     operands: tuple[str, ...]
 
 
@@ -454,7 +454,7 @@ class PlanningContract:
     inputs: tuple[PlanningTerm, ...]
     effect: PlanningTerm
     source_policy: Literal["declared_intersection", "projection_foot", "distance_witness", "derived_point", "distance_answer",
-                           "goal_answer", "section_vertex"]
+                           "goal_answer", "section_vertex", "normal_witness"]
     verifier: str
     call: tuple[tuple[str, str | tuple[str, ...]], ...] = ()
     fresh: str | None = None
@@ -639,7 +639,11 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
            PlanningTerm("Point", ("H",)), "derived_point", "orthogonal_projection",
            call=(("point", "P"), ("plane", "Q"), ("image", "H")), fresh="H", descriptor="orthogonal_projection",
            phrase=(r"hình chiếu(?:\s+vuông góc)?\s+của\s+(?:(?:điểm|đỉnh)\s+)?(?P<op_p>{P})(?![\w'])\s+"
-                   r"(?:lên|trên)\s+(?:(?:mặt phẳng|mp|mặt bên|mặt đáy)\s*)?\(?(?P<op_q>(?:{P}){3,})(?![\w'])\)?"))),
+                   r"(?:lên|trên)\s+(?:(?:mặt phẳng|mp|mặt bên|mặt đáy)\s*)?\(?(?P<op_q>(?:{P}){3,})(?![\w'])\)?")),
+       # C17: a NORMAL direction of a plane Q — Z − H for any point Z off Q, H its foot on Q. The planner chooses Z.
+       planning_extra=(PlanningContract(
+           (PlanningTerm("Point", ("Z",)), PlanningTerm("Plane", ("Q",))), PlanningTerm("Normal", ("Q",)), "normal_witness",
+           "orthogonal_projection", call=(("point", "Z"), ("plane", "Q"), ("image", "H")), fresh="H"),)),
     _F("orthogonal_projection_line", ProjectionLineArgs, "construct", "Dựng ảnh hình chiếu vuông góc của điểm lên đường thẳng.",
        (("hình chiếu",),), segment_fields=("line",), point_fields=("image",),
        planning=PlanningContract((PlanningTerm("Point", ("P",)), PlanningTerm("Line", ("L",))),
@@ -1685,10 +1689,16 @@ MAT_VUONG_DUONG = "section(plane through point perpendicular to a line)"
 #: ("(α) … cắt SB, SC (lần lượt tại N, P)") — one `intersect_line_plane` per stated edge (the plane's own through-point
 #: reused on its edge), and optionally the pyramid "khối chóp đỉnh S cắt bởi (α)" over the closed lateral-edge cycle.
 DINH_CAT_CANH = "section vertices on the stated cut edges of a derived plane"
+#: C17: a plane the source defines by RELATIONS ("(P) đi qua M, N và vuông góc với (ABCD)", "(P) chứa AB và song song với
+#: SC"). The entry names the functions a witness may use, not a call sequence: the planner chooses, per constraint, a
+#: producer by contract (a `Normal` need: a stated line ⊥ Q, or the foot of a chosen point on Q) and the engine proves the
+#: plane exists and is unique from ALL the stated constraints.
+MAT_RANG_BUOC = "section(plane defined by stated constraints)"
 AUXILIARY_RULES = {"distance(point,line)": ("orthogonal_projection_line", "ask_length"),
                    MAT_SONG_SONG: ("translate_point", "section"), MAT_HAI_DUONG: ("translate_point", "section"),
                    MAT_VUONG_DUONG: ("orthogonal_projection_line", "translate_point", "section"),
-                   DINH_CAT_CANH: ("intersect_line_plane", "pyramid")}
+                   DINH_CAT_CANH: ("intersect_line_plane", "pyramid"),
+                   MAT_RANG_BUOC: ("orthogonal_projection", "translate_point", "section")}
 #: "khoảng cách từ S đến (đường thẳng) BD": điểm và đường gắn vai trong CÙNG một cụm; cách nói khác ⇒ từ chối, không đoán.
 _KHOANG_CACH_DIEM_DUONG = re.compile(
     _KC + r"\s+từ\s+(?:điểm\s+)?([A-Z][0-9]*'?)\s+(?:đến|tới)\s+(?:(?:đường thẳng|đt)\s+)?([A-Z][0-9]*'?)([A-Z][0-9]*'?)(?![\w'])",
@@ -1736,6 +1746,9 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
         if luat in (MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG):
             da |= _kiem_mat_song_song(d, theo_id, de, nhan, chiem, nhan_da_khai, calls, ten_mat_phu, don_vi_de, buoc,
                                       cat_doc, khoi_dan_xuat, plane_pts.get(id(d)))
+            continue
+        if luat == MAT_RANG_BUOC:
+            da |= _kiem_mat_rang_buoc(d, theo_id, de, nhan, chiem, nhan_da_khai, calls, ten_mat_phu, buoc)
             continue
         if luat == DINH_CAT_CANH:
             cat_canh.append(d)
@@ -5106,6 +5119,130 @@ def _kiem_mat_vuong_duong(d, p, xs, chan, duong, moc, dung, dich, qs, ids, de, n
         cat_doc[d.get("goal")] = bool(doc_cat)
     if ten_mat_phu is not None:
         ten_mat_phu[ids[0]] = next(iter(ten_nguon)) if len(ten_nguon) == 1 else None
+    return set(ids)
+
+
+#: C17 closed grammar of a plane the source defines by relations, named "(P)": it contains two points (or the line through
+#: them) and is ⊥ a plane, or ∥ a line. Any other wording is refused, never guessed.
+_RB_DAU = (rf"(?:(?:mặt phẳng|mp)\s*)?\((?P<ten>{_P1}|[α-ω]'?)\)\s*(?:là\s+mặt phẳng\s+)?(?:(?:đi\s+)?qua|chứa)\s+"
+           rf"(?:(?:hai\s+điểm|đường thẳng|đoạn thẳng|cạnh)\s+)?(?P<p1>{_P1})\s*(?:,\s*|\s+và\s+)?(?P<p2>{_P1})(?![\w'])"
+           rf"\s*,?\s*(?:(?:và(?:\s+đồng\s+thời)?|đồng\s+thời)\s+)?")
+_RB_VUONG_MAT = re.compile(_RB_DAU + rf"vuông góc\s+(?:với\s+)?(?:(?:mặt phẳng|mp|mặt đáy|mặt bên)\s*)?"
+                           rf"\((?P<q>{_NHOM_NHAN})\)", re.IGNORECASE)
+_RB_SONG_SONG_DUONG = re.compile(_RB_DAU + rf"song song\s+(?:với\s+)?(?:(?:đường thẳng|đoạn thẳng|cạnh)\s+)?"
+                                 rf"(?<![\w'.(])(?P<a>{_P1})(?P<b>{_P1})(?![\w'])", re.IGNORECASE)
+
+
+def _rang_buoc_nguon(de: str) -> list[tuple[str, frozenset, tuple[int, int]]]:
+    """Every constrained-plane definition the source writes: (name, its constraint set, span) — read from the TEXT."""
+    out = []
+    for mau, kind in ((_RB_VUONG_MAT, "perpendicular_to_plane"), (_RB_SONG_SONG_DUONG, "parallel_to_line")):
+        for m in mau.finditer(de):
+            ref = frozenset(_nhan_cum(m["q"])) if kind == "perpendicular_to_plane" else frozenset((m["a"], m["b"]))
+            out.append((m["ten"], frozenset({("contains_points", frozenset((m["p1"], m["p2"]))), (kind, ref)}), m.span()))
+    return out
+
+
+def _kiem_mat_rang_buoc(d: dict, theo_id: dict, de: str, nhan: set[str], chiem: set[str], nhan_da_khai: set[str],
+                        calls: tuple[LoiGoi, ...], ten_mat_phu: dict | None,
+                        buoc: list[tuple[int, int]] | None = None) -> set[str]:
+    """Certificate of `MAT_RANG_BUOC` (C17). The SOURCE grounds the stated constraints (one closed-grammar definition of
+    the named plane, not negated, not conditional, not a goal); the CERTIFICATE grounds every witness: a point the plane
+    contains, the anchor translated along a stated line, or along a normal of a stated plane — a premise line stated ⊥ to
+    it, or Z − H with H written by a function whose CONTRACT has a `Normal` effect. Nothing here proves geometry: the
+    engine proves the plane exists, is unique and satisfies every constraint."""
+    ids = tuple(d.get("constructs") or ()) + tuple(d.get("targets") or ())
+    p, cs, chung, qs = d.get("point"), d.get("constraints") or [], d.get("witnesses") or [], tuple(d.get("quotes") or ())
+    ten = d.get("plane_name")
+    sai = lambda why: TuChoi("AUXILIARY_RULE_MISMATCH", f"mặt cho bằng ràng buộc ({ten}): {why}", ids)  # noqa: E731
+    diem = list(dict.fromkeys(x for c in cs if c.get("kind") == "contains_points" for x in c.get("points") or ()))
+    if not ten or not diem or p != diem[0] or not qs or not d.get("targets"):
+        raise sai("khai báo không đủ")
+    tap_rb = frozenset((c["kind"], frozenset(c["points"])) for c in cs if c["kind"] != "contains_points") | {
+        ("contains_points", frozenset(diem))}
+    khop = [sp for t, r, sp in _rang_buoc_nguon(de) if t == ten and r == tap_rb]
+    if len(khop) != 1:
+        raise TuChoi("SOURCE_OBJECT_MISMATCH", f"đề không định nghĩa đúng một mặt ({ten}) bằng các ràng buộc đã khai", ids)
+    vt = khop[0][0]
+    de_n = de
+    if _phu_dinh(de_n, vt, de_n[vt:khop[0][1]]):
+        raise TuChoi("NEGATED_CLAUSE", f"mệnh đề định nghĩa ({ten}) mang phủ định", ids)
+    vai = _vai_tro_tai(de_n, vt)
+    if vai == "CONDITIONAL":
+        raise TuChoi("CONDITIONAL_CLAUSE", f"mệnh đề định nghĩa ({ten}) nằm trong mệnh đề điều kiện", ids)
+    if vai == "GOAL":
+        raise TuChoi("GOAL_CLAUSE_NOT_PREMISE", f"mệnh đề định nghĩa ({ten}) nằm trong mệnh đề mục tiêu", ids)
+    if lac := sorted({x for c in cs for x in c["points"]} - nhan):
+        raise TuChoi("UNKNOWN_LABEL", f"nhãn {lac} không có trong đề", ids)
+    tu_do = []
+    for w in chung:
+        tu_do += [w.get("label")] + ([w["foot"]] if w.get("foot") else [])
+    for x in tu_do:
+        if not x or x in nhan_da_khai or x == p:
+            raise sai(f"điểm phụ {x} được khai hai lần")
+        nhan_da_khai.add(x)
+        if x in chiem:
+            raise TuChoi("AUXILIARY_LABEL_COLLISION", f"điểm phụ {x} trùng một nhãn của đề", ids)
+    dung = list(d.get("constructs") or ())
+    for w in chung:
+        i = w.get("constraint")
+        if not isinstance(i, int) or not 0 <= i < len(cs) or cs[i]["kind"] == "contains_points":
+            raise sai("điểm chứng không gắn với một ràng buộc phương")
+        c, t = cs[i], theo_id.get(w.get("translate"))
+        if (t is None or t.fn != "translate_point" or t.args.point != p or t.args.vector != w.get("vector")
+                or t.args.image != w["label"] or t.quotes != qs):
+            raise sai(f"điểm chứng {w.get('label')} không là ảnh tịnh tiến của {p}")
+        if c["kind"] == "parallel_to_line":
+            if w.get("producer") != "stated_line" or list(w["vector"]) != list(c["points"]):
+                raise sai("phương song song không phải đường đã nêu")
+        elif w.get("producer") == "premise":
+            pc = theo_id.get(w.get("fact"))
+            if (pc is None or pc.fn != "perpendicular_line_plane" or frozenset(pc.args.line) != frozenset(w["vector"])
+                    or not (frozenset(c["points"]) <= frozenset(pc.args.plane) or frozenset(pc.args.plane) <= frozenset(c["points"]))):
+                raise sai("pháp tuyến không phải đường đề cho vuông góc với mặt")
+        else:
+            h = theo_id.get(w.get("call"))
+            spec = REGISTRY.get(h.fn) if h is not None else None
+            if (spec is None or not any(pc.effect.kind == "Normal" for pc in planning_contracts(spec))
+                    or h.args.point != w.get("point") or frozenset(h.args.plane) != frozenset(c["points"])
+                    or h.args.image != w.get("foot") or list(w["vector"]) != [w.get("foot"), w.get("point")]
+                    or h.quotes != qs or w.get("call") not in dung):
+                raise sai("pháp tuyến không do một hàm có hợp đồng Normal dựng")
+    mat = [p, *diem[1:2], *(w["label"] for w in chung), *diem[2:]]
+    if list(d.get("plane") or ()) != mat or {w["translate"] for w in chung} | {w["call"] for w in chung if w.get("call")} != set(dung):
+        raise sai("lời gọi không khớp các điểm chứng")
+    doc: list[tuple[int, int]] = [khop[0]]              # spans this certificate READS: definition, section phrase, ask
+    for tid in d["targets"]:
+        c = theo_id.get(tid)
+        if c is None or c.fn not in ("section", "ask_section_area") or c.args.plane != mat or c.quotes != qs:
+            raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{tid}: thiết diện không gọi đúng mặt ({ten})", ids)
+        cum, hoi = [], []
+        for quote in c.quotes:
+            if (vt := _vi_tri(de, quote)) is None:
+                raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{tid}: quote không có trong đề", ids)
+            qn = chuan_hoa(quote)
+            cum += [(vt[0] + r.start(), vt[0] + r.end()) for r in re.finditer(
+                rf"{_DAN_THIET_DIEN}(?:(?:mặt phẳng|mp)\s*)?\({re.escape(ten)}\)", qn, re.IGNORECASE)]
+            for h in _HOI_DIEN_TICH_THIET_DIEN.finditer(qn):  # "diện tích thiết diện (đó)": THE section bound to (P)
+                a, b = vt[0] + h.start(), vt[0] + h.end()
+                ana = re.match(r"\s+(?:đó|này|trên)(?![\w'])", de[b:], re.IGNORECASE)
+                truoc = [t.start() for t in re.finditer("thiết diện", de[:b - _TU_THIET_DIEN], re.IGNORECASE)]
+                b_obj = b + ana.end() if ana else b if re.match(r"\s*(?:[.?!;]|$)", de[b:]) else None
+                if (b_obj is not None and truoc and any(x <= truoc[-1] < y for x, y in cum)
+                        and _hoi_dung_cum(de, a, b_obj) and _vai_tro_tai(de, a) not in ("GOAL", "CONDITIONAL")):
+                    hoi.append((a, b_obj))
+        if not cum:
+            raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{tid}: đề không gọi thiết diện cắt bởi ({ten})", ids)
+        if c.fn == "ask_section_area":
+            if not hoi:
+                raise TuChoi("NOT_ASKED_IN_SOURCE", f"{tid}: nguồn không hỏi diện tích thiết diện cắt bởi ({ten})", ids)
+            if not all(_kiem_don_vi_hoi("ask_section_area", de, a, b, set(), calls) for a, b in hoi):
+                raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED", f"{tid}: đơn vị yêu cầu không khớp", ids)
+        doc += cum + hoi
+    if buoc is not None:
+        buoc.extend(doc)
+    if ten_mat_phu is not None:
+        ten_mat_phu[ids[0]] = ten
     return set(ids)
 
 

@@ -29,7 +29,7 @@ from typing import Annotated, Any, Literal
 from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationError, WithJsonSchema
 from pydantic.json_schema import SkipJsonSchema
 
-from .registry import AUXILIARY_RULES, DINH_CAT_CANH, MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, ExactNumber, Label, TuChoi, chuan_hoa
+from .registry import AUXILIARY_RULES, DINH_CAT_CANH, MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, MAT_RANG_BUOC, ExactNumber, Label, TuChoi, chuan_hoa
 from .registry import nhan_cua_de, nhan_phu_da_dung
 from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, parse_descriptor_inputs, planning_contract, planning_contracts, render_call, same_call
 
@@ -56,7 +56,9 @@ from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, parse
 #: /24 (run `hybrid-master-backend-replacement`, C16): `search_telemetry` classifies by step PROVENANCE recorded at emission
 #: (`source_defined_steps` / `registered_decomposition_steps` / `search_generated_steps`); building a point the source
 #: describes is no longer "discovered" (`route-b-composition-relabel.json`, `r1-composition-relabel.json`).
-PLANNER_VERSION = "geometry-fact-planner/24"
+#: /25 (C17): a plane the source defines by stated constraints (`plane_constraints`, `_mat_rang_buoc`): witness points
+#: chosen per constraint by contract (`Normal` needs: a stated line ⊥ Q, or the foot of a candidate point on Q).
+PLANNER_VERSION = "geometry-fact-planner/25"
 PlaneName = Annotated[
     str,
     BeforeValidator(lambda v: chuan_hoa(v) if isinstance(v, str) else v),
@@ -142,13 +144,16 @@ class TypedFact(BaseModel):
     # Internal only (curved slice, planner /19): a solid of revolution's declaration — kind, centre / top / rim labels and
     # the stated radius / height — as the `typed-fact-next/2` bridge read it from one `SolidSpec`.
     curved: SkipJsonSchema[dict[str, Any] | None] = None
+    # Internal only (C17, planner /25): a plane the source defines by stated relations, as the `/2` bridge read them —
+    # [{"kind": contains_points | parallel_to_line | perpendicular_to_plane, "points": [labels]}]; no construction step.
+    plane_constraints: SkipJsonSchema[list[dict[str, Any]] | None] = None
     # Internal only (planner /20): a section / the small cone / a goal of THE solid of revolution, as the bridge read it.
     curved_part: SkipJsonSchema[dict[str, Any] | None] = None
 
 
 #: TypedFact fields only the deterministic bridge writes; a provider response carrying one is refused.
 INTERNAL_FACT_FIELDS = ("cut_edges", "cut_points", "plane_ref", "solid_refs", "derive_cuts", "boundary_edges", "curved",
-                        "curved_part")
+                        "curved_part", "plane_constraints")
 
 
 @dataclass
@@ -279,6 +284,11 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
                 required = ("point", "point_kind", "points_a", "points_b")
             elif f.point_kind == "divide_segment":       # the ratio t = AP/AB rides on `value`
                 required = ("point", "point_kind", "points", "value")
+        if f.plane_constraints is not None:             # C17: a plane the source defines by stated relations only
+            if (f.kind not in ("section", "question") or f.plane_relation or f.point or f.points or f.point_kind
+                    or not f.plane_constraints):
+                raise TuChoi("SCHEMA_INVALID", f"{f.id}: mặt cho bằng ràng buộc chỉ cho thiết diện, thay cho điểm/quan hệ", (f.id,))
+            required = ("solid",) + (("quantity",) if f.kind == "question" else ())
         if f.plane_relation is not None:                # mặt cắt cho bằng quan hệ: điểm đi qua + mặt tham chiếu, không ba điểm
             if f.kind not in ("section", "question") or (f.points and f.point_kind is None) or (f.point and f.point_kind is not None):
                 raise TuChoi("SCHEMA_INVALID", f"{f.id}: plane_relation chỉ cho thiết diện, và thay cho `points`", (f.id,))
@@ -300,7 +310,7 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
                         raise TuChoi("DEGENERATE_LINE", f"{f.id}: hai đầu mút đường trùng nhau", (f.id,))
         if f.cut_edges is not None or f.cut_points is not None or f.derive_cuts or f.boundary_edges is not None:
             # an empty stated list is meaningful only with `derive_cuts` (`/2`); `/1` never writes one
-            if (f.kind != "section" or f.plane_relation is None or f.cut_edges is None
+            if (f.kind != "section" or (f.plane_relation is None and f.plane_constraints is None) or f.cut_edges is None
                     or (not f.cut_edges and not f.derive_cuts)):
                 raise TuChoi("SCHEMA_INVALID", f"{f.id}: cạnh bị cắt chỉ cho thiết diện của mặt cho bằng quan hệ", (f.id,))
             vong = [frozenset(e) for e in f.boundary_edges or ()]
@@ -1098,9 +1108,11 @@ def _anh_xa(f: TypedFact, k: KeHoach, ten: dict, deu: dict, khoi_cua, phat) -> d
             args = {"point": f.point, ("segment" if fn == "midpoint" else "polygon"): f.points}
             return phat(f.id, fn, args, q, f"point_def({f.point_kind})")
         raise TuChoi("SCHEMA_INVALID", f"{f.id}: point_def không hỗ trợ point_kind={f.point_kind!r}", (f.id,))
-    if f.kind == "section" and f.plane_relation:                     # mục tiêu: thiết diện với một mặt DỰNG từ quan hệ
+    if f.kind == "section" and (f.plane_relation or f.plane_constraints):   # thiết diện với một mặt DỰNG từ quan hệ
         c = _mat_qua_diem(f, q, k, phat, khoi_cua(f.solid, f).ten, "section")
-        if f.cut_edges or (f.cut_edges is not None and f.derive_cuts):      # `/2`: no stated cut, vertices derived (D6)
+        if f.plane_constraints and f.cut_edges:
+            raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: giao điểm khai sẵn trên mặt cho bằng ràng buộc chưa hỗ trợ", (f.id,))
+        if not f.plane_constraints and (f.cut_edges or (f.cut_edges is not None and f.derive_cuts)):      # `/2`: no stated cut, vertices derived (D6)
             _dinh_cat_canh(f, k, phat, khoi_cua(f.solid, f))
         return c
     if f.kind == "section":                                         # dựng thiết diện: khối × mặt phẳng qua ba điểm có tên
@@ -1268,9 +1280,9 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
             if not any(re.search(r"diện\s+tích", x, re.IGNORECASE) for x in q):
                 raise TuChoi("NOT_ASKED_IN_SOURCE", f"{f.id}: nguồn không hỏi diện tích thiết diện", (f.id,))
             raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{f.id}: câu hỏi diện tích không gọi đúng thiết diện đã khai", (f.id,))
-    if n == "area" and f.plane_relation and hoi_td and not f.negated and f.role == "question":
+    if n == "area" and (f.plane_relation or f.plane_constraints) and hoi_td and not f.negated and f.role == "question":
         return _mat_qua_diem(f, q, k, phat, khoi_cua(f.solid, f).ten, "ask_section_area")
-    if f.plane_relation:
+    if f.plane_relation or f.plane_constraints:
         raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: mặt cho bằng quan hệ chỉ dùng cho thiết diện / diện tích thiết diện",
                      (f.id,))
     if n == "area" and f.solid and len(f.points or []) >= 3 and hoi_td:
@@ -1395,6 +1407,8 @@ def _mat_qua_diem(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: s
     định nghĩa) → hai điểm phụ = M tịnh tiến theo hai vectơ chỉ phương của (Q) → thiết diện qua (M, X₁, X₂). Engine kiểm
     hậu điều kiện độc lập (qua M, song song (Q), không trùng (Q), không phải mặt biên). Một mặt dẫn xuất chỉ dựng MỘT lần
     dù được dùng để dựng và để hỏi diện tích. Mặt qua một điểm VUÔNG GÓC với một mặt phẳng không duy nhất ⇒ từ chối."""
+    if f.plane_constraints:                           # C17: witnesses chosen per stated constraint, not one rule per kind
+        return _mat_rang_buoc(f, q, k, phat, khoi, fn)
     if f.plane_relation == "perpendicular":
         if len(set(f.points_b)) >= 3:                 # ⊥ a PLANE: infinitely many planes through the point
             raise TuChoi("PLANE_NOT_UNIQUE", f"{f.id}: mặt qua {f.point or f.point_kind} vuông góc với ({''.join(f.points_b)}) có vô số — cần "
@@ -1699,6 +1713,147 @@ def _mat_vuong_duong(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn
                     "calls": dd["constructs"] + [f.id], "auxiliary": dd["feet"] + dd["labels"],
                     "reason": f"mặt qua {m} và hai điểm {m} + (đỉnh − chân của đỉnh trên {''.join(d)}) (IR sẵn có: project_onto, "
                               "translate; engine kiểm vuông góc chính xác)",
+                    "provenance": "DERIVED", "binding": "AUXILIARY"})
+    return c
+
+
+#: Bound of the constraint-to-witness search (C17): normal-producer candidates evaluated per plane, witness directions.
+MAX_NORMAL_CANDIDATES = 12
+MAX_PLANE_DIRECTIONS = 3
+
+
+def _mat_cua_khoi(kh: _Khoi) -> list[frozenset[str]]:
+    """The faces of a polyhedral solid from its STRUCTURE (no coordinates): base, top, lateral faces."""
+    mats = [frozenset(kh.day)] + ([frozenset(kh.tren)] if kh.loai == "prism" and kh.tren else [])
+    n = len(kh.day)
+    for i in range(n):
+        j = (i + 1) % n
+        mats.append(frozenset((kh.dinh, kh.day[i], kh.day[j])) if kh.loai == "pyramid"
+                    else frozenset((kh.day[i], kh.day[j], kh.tren[j], kh.tren[i])))
+    return mats
+
+
+def _phap_tuyen(q_mat: list[str], kh: _Khoi, k: KeHoach) -> dict:
+    """Goal regression of ONE `Normal(Q)` need (C17): every producer the Registry's contracts offer, cheapest first.
+    - a premise stating a line ⊥ Q reuses that line (cost 0, nothing built);
+    - each `Normal` contract (today `orthogonal_projection`) with a FREE point Z bound to every solid vertex not on Q —
+      a vertex of a face holding Q's labels lies on Q, so its foot is itself (rejected, never tried on coordinates).
+    Ties break on the vertex label's position in the solid, never on the problem's wording. The engine re-checks ⊥."""
+    tap_q = frozenset(q_mat)
+    ung_vien, loai = [], []
+    for pf in k.resolver.facts.values():
+        pa, pb = list(pf.points_a or ()), list(pf.points_b or ())
+        if (pf.kind == "perpendicular" and pf.role == "premise" and not pf.negated and len(pa) == 2 and len(pb) >= 3
+                and (tap_q <= frozenset(pb) or frozenset(pb) <= tap_q)):
+            chan = next((x for x in pa if x in pb or x in tap_q), pa[0])
+            ung_vien.append({"cost": 0, "producer": "premise", "fact": pf.id, "vector": [chan, next(x for x in pa if x != chan)]})
+    tren_q = set().union(*(m for m in _mat_cua_khoi(kh) if len(tap_q & m) >= 3)) | tap_q
+    dinh = list(dict.fromkeys([*kh.day, *(kh.tren if kh.loai == "prism" else [kh.dinh])]))
+    for spec in sorted(REGISTRY.values(), key=lambda s: s.name):
+        for contract in planning_contracts(spec):
+            if contract.effect.kind != "Normal":
+                continue
+            for z in dinh:
+                if z in tren_q:
+                    loai.append({"producer": spec.name, "point": z, "rejected": "lies on the plane's face"})
+                    continue
+                ung_vien.append({"cost": 1, "producer": spec.name, "contract": contract, "point": z})
+    if len(ung_vien) > MAX_NORMAL_CANDIDATES:
+        raise TuChoi("PLAN_TOO_LARGE", f"quá {MAX_NORMAL_CANDIDATES} ứng viên pháp tuyến của ({''.join(q_mat)})",
+                     data={"outcome": "SEARCH_EXHAUSTED", "candidates": len(ung_vien)})
+    if not ung_vien:
+        raise TuChoi("UNSUPPORTED_CAPABILITY", f"không hàm nào của thư viện cho pháp tuyến của ({''.join(q_mat)})",
+                     data={"outcome": "MISSING_PRIMITIVE"})
+    chon = min(ung_vien, key=lambda u: (u["cost"], dinh.index(u["point"]) if "point" in u else -1, u.get("fact", "")))
+    return {"selected": chon, "candidates": len(ung_vien), "rejected": loai}
+
+
+def _mat_rang_buoc(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: str) -> dict:
+    """CONSTRAINT-TO-WITNESS (C17, `MAT_RANG_BUOC`): a plane the source defines only by relations. The kernel cuts a plane
+    through points, so the planner must FIND witness points the source never names:
+    - points the plane contains are witnesses as they are (the first is the anchor);
+    - a line it is ∥ to: the anchor translated along it;
+    - a plane Q it is ⊥ to: a `Normal(Q)` subgoal (`_phap_tuyen`), then the anchor translated along that normal.
+    Fewer than three witnesses ⇒ the stated relations cannot fix a plane. The engine proves the plane exists and is
+    unique from EVERY stated constraint, so a redundant or contradictory constraint is checked, never ignored."""
+    if f.role not in ("premise", "question") or f.negated:
+        raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: mặt dựng từ quan hệ chỉ cho thiết diện được yêu cầu", (f.id,))
+    cs = [{"kind": c["kind"], "points": list(c["points"])} for c in f.plane_constraints]
+    diem = list(dict.fromkeys(p for c in cs if c["kind"] == "contains_points" for p in c["points"]))
+    khoa = (khoi, f.plane_name, "constrained", tuple((c["kind"], frozenset(c["points"])) for c in cs))
+    d = k.derived_planes.get(khoa)
+    if d is None:
+        if len(k.derived_planes) >= MAX_DERIVED_PLANES:
+            raise TuChoi("PLAN_TOO_LARGE", f"{f.id}: quá {MAX_DERIVED_PLANES} mặt dẫn xuất", (f.id,))
+        huong = [c for c in cs if c["kind"] != "contains_points"]
+        if len(huong) > MAX_PLANE_DIRECTIONS:
+            raise TuChoi("PLAN_TOO_LARGE", f"{f.id}: quá {MAX_PLANE_DIRECTIONS} ràng buộc phương", (f.id,))
+        if len(diem) + len(huong) < 3:
+            raise TuChoi("PLANE_NOT_UNIQUE", f"{f.id}: các quan hệ đã nêu chưa xác định một mặt phẳng duy nhất", (f.id,))
+        kh = next(x for x in k.solids.values() if x.ten == khoi)
+        anchor, cids, nhan, chung, tim = diem[0], [], [], [], []
+
+        def moi_nhan() -> str:
+            x = next((t for t in _NHAN_PHU if t not in k.taken), None)
+            if x is None:
+                raise TuChoi("PLAN_TOO_LARGE", f"{f.id}: hết nhãn điểm phụ", (f.id,))
+            k.taken.add(x)
+            return x
+
+        def moi_id(goc: str) -> str:
+            dung = {c["id"] for c in k.calls}
+            return next(j for j in (goc, *(f"{goc}_{n}" for n in range(2, 1000))) if j not in k.fact_ids | dung)
+
+        for i, c in enumerate(cs):
+            if c["kind"] == "contains_points":
+                continue
+            if c["kind"] == "parallel_to_line":
+                vec, nguon, cach = list(c["points"]), {"producer": "stated_line"}, "registered"
+            else:                                            # perpendicular_to_plane: a Normal(Q) subgoal
+                tim.append(_phap_tuyen(c["points"], kh, k))
+                u = tim[-1]["selected"]
+                cach = "search_generated"
+                if u["producer"] == "premise":
+                    vec, nguon = list(u["vector"]), {"producer": "premise", "fact": u["fact"]}
+                else:
+                    h = moi_nhan()
+                    cid = moi_id(f"{f.id}_normal{i}")
+                    phat(cid, u["producer"], render_call(u["contract"], {"Z": u["point"], "Q": tuple(c["points"]), "H": h}), q,
+                         f"{MAT_RANG_BUOC}→{u['producer']} (pháp tuyến của ({''.join(c['points'])}): {u['point']} − chân {h})")
+                    k.trace[-1]["fact"] = f.id
+                    k.step_provenance[cid] = "search_generated"
+                    cids.append(cid)
+                    vec, nguon = [h, u["point"]], {"producer": u["producer"], "point": u["point"], "foot": h, "call": cid}
+            x = moi_nhan()
+            cid = moi_id(f"{f.id}_witness{i}")
+            phat(cid, "translate_point", {"point": anchor, "vector": vec, "image": x}, q,
+                 f"{MAT_RANG_BUOC}→translate_point (điểm chứng {x} = {anchor} + {vec[0]}{vec[1]}→)")
+            k.trace[-1]["fact"] = f.id
+            k.step_provenance[cid] = cach
+            cids.append(cid)
+            nhan.append(x)
+            chung.append({"label": x, "translate": cid, "vector": vec, "constraint": i, **nguon})
+        d = {"rule": MAT_RANG_BUOC, "goal": f.id, "point": anchor, "contains": diem[1:], "constraints": cs, "labels": nhan,
+             "witnesses": chung, "constructs": cids, "targets": [], "solid": khoi, "plane": [anchor, *diem[1:2], *nhan, *diem[2:]],
+             "quotes": list(dict.fromkeys(q)), "provenance": "DERIVED", "binding": "AUXILIARY",
+             "search": {"subgoals": [{"need": f"Normal({''.join(c['points'])})", "candidates": t["candidates"],
+                                      "rejected": t["rejected"],
+                                      "selected": {key: v for key, v in t["selected"].items() if key != "contract"}}
+                                     for c, t in zip([c for c in cs if c["kind"] == "perpendicular_to_plane"], tim)]}}
+        if f.plane_name is not None:
+            d["plane_name"] = f.plane_name
+        k.derived_planes[khoa] = d
+        k.auxiliary.append(d)
+    d["quotes"] = list(dict.fromkeys(d["quotes"] + q))
+    c = phat(f.id, fn, {"solid": khoi, "plane": list(d["plane"])}, d["quotes"], f"{MAT_RANG_BUOC}→{fn}")
+    k.trace[-1]["fact"] = f.id
+    d["targets"].append(f.id)
+    for call in k.calls:                                  # one declaration, one set of quotes for all its calls
+        if call["id"] in d["constructs"] + d["targets"]:
+            call["source"]["quotes"] = list(d["quotes"])
+    k.trace.append({"fact": f.id, "step": "decompose_goal", "rule": MAT_RANG_BUOC,
+                    "goal": f"Section({khoi}, Plane(" + "; ".join(f"{c['kind']} {''.join(c['points'])}" for c in d["constraints"]) + "))",
+                    "subgoals": d["search"]["subgoals"], "calls": d["constructs"] + [f.id], "auxiliary": d["labels"],
                     "provenance": "DERIVED", "binding": "AUXILIARY"})
     return c
 

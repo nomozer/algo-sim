@@ -36,7 +36,7 @@ from app.simulation.geometry import kernel as K
 from app.simulation.geometry.predicates import parallel_planes, point_on_line, point_on_plane, parallel_line_plane, line_in_plane
 from app.simulation.semantic_program import ir_builders as P
 
-from .registry import MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_khang_dinh_loai_hinh, doc_so, kiem_nguon, nhan_cua_de, nhom_mat_nguon
+from .registry import MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, MAT_RANG_BUOC, LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_khang_dinh_loai_hinh, doc_so, kiem_nguon, nhan_cua_de, nhom_mat_nguon
 from .registry import DINH_CAT_CANH, _cum_hoi
 
 #: /6 (run `goal-directed-function-composition`): `ask_angle_lines` IR + independent line–line Gram verifier.
@@ -57,7 +57,7 @@ from .registry import DINH_CAT_CANH, _cum_hoi
 #: /19 (same run): student simulation requests, honest exit, empty base, and solid-class semantic invariants (PE-2).
 #: /20 (same run): independent Gram/affine postcondition verifiers (`_MO_TA`) for composed projection and intersection
 #: `Point` descriptors across goal chains and derived planes (`point_operand`).
-ENGINE_VERSION = "geometry-function-engine/20"
+ENGINE_VERSION = "geometry-function-engine/21"
 PLANE_SECTION_CERTIFICATE_VERSION = "plane-section-certificate/1"
 PLANE_SECTION_CERTIFICATE_RULE = "engine_derived_plane_section"
 PLANE_SECTION_CERTIFICATE_PRODUCER = "engine.kiem_chung_chi_thiet_dien"
@@ -2575,7 +2575,66 @@ class _Dung:
         if not all(ref.signed_eval(Vec3(*self.pts[x])) == 0 for x in (p, x1, x2)) or not mat.normal.cross(ref.normal).is_zero():
             raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"mặt dẫn xuất qua {p} khác mặt qua {p} vuông góc {a}{b} của kernel", ids)
 
+    def _kiem_mat_rang_buoc(self, d: dict) -> None:
+        """Postconditions of a plane the source defines by relations (`MAT_RANG_BUOC`, C17), independent of the witnesses
+        the planner chose:
+        - every NORMAL witness direction is ⊥ its plane in the chart Gram metric, and non-zero;
+        - EXISTENCE and UNIQUENESS from every stated constraint: the vectors it contributes (contained points − anchor,
+          stated line directions, verified normals) have affine rank exactly 2 — rank < 2: infinitely many planes
+          (`PLANE_NOT_UNIQUE`); a vector off the span of two independent ones: no plane satisfies all (`INCONSISTENT_FACTS`);
+        - the section's plane is that plane; a stated ∥ line is not contained in it; not a face of the solid."""
+        ids = tuple(d["constructs"]) + tuple(d["targets"])
+        p, cs = d["point"], d["constraints"]
+
+        def cheo(u, v):
+            return (u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0])
+
+        vec = []
+        for i, c in enumerate(cs):
+            if c["kind"] == "contains_points":
+                vec += [self._vec(p, x) for x in c["points"] if x != p]
+            elif c["kind"] == "parallel_to_line":
+                v = self._vec(*c["points"])
+                if self.g(v, v) == 0:
+                    raise TuChoi("DEGENERATE_LINE", "hai đầu mút của đường trùng tọa độ đã xác minh", ids)
+                vec.append(v)
+            else:
+                w = next(x for x in d["witnesses"] if x["constraint"] == i)
+                q0, q1, q2 = c["points"][:3]
+                e1, e2, n = self._vec(q0, q1), self._vec(q0, q2), self._vec(*w["vector"])
+                if not any(cheo(e1, e2)):
+                    raise TuChoi("DEGENERATE_POINTS", f"({''.join(c['points'])}) không xác định một mặt phẳng", ids)
+                if self.g(n, n) == 0 or self.g(n, e1) != 0 or self.g(n, e2) != 0:
+                    raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"phương chứng không vuông góc ({''.join(c['points'])})", ids)
+                vec.append(n)
+        cap = next(((u, v) for i, u in enumerate(vec) for v in vec[i + 1:] if any(cheo(u, v))), None)
+        if cap is None:
+            raise TuChoi("PLANE_NOT_UNIQUE", "các quan hệ đã nêu thoả bởi vô số mặt phẳng", ids)
+        n0 = cheo(*cap)
+        if any(sum(a * b for a, b in zip(n0, v)) != 0 for v in vec):
+            raise TuChoi("INCONSISTENT_FACTS", "không mặt phẳng nào thoả đồng thời mọi quan hệ đã nêu", ids)
+        mat = self._plane(d["plane"])
+        if any(cheo((mat.normal.x, mat.normal.y, mat.normal.z), n0)):
+            raise TuChoi("ENGINE_SELF_CHECK_FAILED", "mặt của thiết diện khác mặt các quan hệ xác định", ids)
+        for c in cs:
+            if c["kind"] == "parallel_to_line" and line_in_plane(self._line(c["points"]), mat):
+                raise TuChoi("LINE_CONTAINED_IN_PLANE", "đường nằm trong mặt phẳng, không song song nghiêm ngặt", ids)
+        for c in self.of(*{"section", "ask_section_area"}):
+            if c.id not in ids:
+                continue
+            k = self.khoi[c.args.solid]
+            dinh = list(dict.fromkeys([*k.base, *k.top, *([k.apex] if k.apex else [])]))
+            dau = [mat.signed_eval(Vec3(*self.pts[v])) for v in dinh]
+            if sum(x == 0 for x in dau) >= 3 and not ({x > 0 for x in dau if x != 0} == {True, False}):
+                raise TuChoi("SECTION_PLANE_IS_FACE", f"{c.id}: mặt dẫn xuất chứa một mặt biên của {k.name}", ids)
+        self.trace.append({"step": "construct_plane", "object": f"({d.get('plane_name') or 'α'})", "rule": d["rule"],
+                           "calls": list(d["constructs"]), "dependencies": list(d["plane"]), "relation_verified": True,
+                           "existence": "VERIFIED", "uniqueness": "VERIFIED",
+                           "provenance": "DERIVED", "binding": "AUXILIARY"})
+
     def _kiem_mat_phu(self, d: dict) -> None:
+        if d["rule"] == MAT_RANG_BUOC:
+            return self._kiem_mat_rang_buoc(d)
         """Postconditions of a derived plane, independent of how the planner built it. It passes through the point by
         construction (built through it); checked here: parallel to the reference plane (normals, `predicates.parallel_planes`),
         not that plane, and not a face of the solid it cuts (a boundary plane is not a cutting section — no silent M4)."""
@@ -2784,6 +2843,9 @@ class _Dung:
                     quan_he = {"kind": "parallel_plane", "through_point": qua_diem, "parallel_to": list(dan["parallel_to"])}
                 elif dan["rule"] == MAT_HAI_DUONG:
                     quan_he = {"kind": "parallel_lines", "through_point": qua_diem, "lines": [list(x) for x in dan["lines"]]}
+                elif dan["rule"] == MAT_RANG_BUOC:          # C17: the stated relations, as the source gave them
+                    quan_he = {"kind": "stated_constraints", "through_point": qua_diem,
+                               "constraints": [{"kind": c["kind"], "points": list(c["points"])} for c in dan["constraints"]]}
                 else:
                     quan_he = {"kind": "perpendicular_line", "through_point": qua_diem,
                                "perpendicular_to": list(dan["perpendicular_to"])}
@@ -4062,7 +4124,7 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         for s in dung.trace:                             # điểm phụ: DẪN XUẤT, không phải nhãn của đề — ghi rõ ràng buộc
             if s["step"] == "place_point" and s["object"] in phu:
                 s.update(binding="AUXILIARY", auxiliary_rule=phu[s["object"]]["rule"], goal=phu[s["object"]]["goal"])
-        dung.mat_phu = [d for d in auxiliary if d.get("rule") in (MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG)]
+        dung.mat_phu = [d for d in auxiliary if d.get("rule") in (MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, MAT_RANG_BUOC)]
         dung.ten_mat_phu = ten_mat_phu
         dung.kiem()
         if dung.of("curved_solid"):
