@@ -75,6 +75,19 @@ CODE_COMMIT = 9503482a7480c2e8501efa8bcef0ce2c37776287 (product unchanged; scrip
 CANDIDATE_COMMIT = 0fe38a29
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_MASTER_C13_R1_DESCRIBED_POINTS_AND_SL3_SHORTHAND (its 9/9 DISCOVERED_FUNCTION_COMPOSITION is the planner's self-label: 6 SOURCE_EXPLICIT_SEQUENCE + 3 REGISTERED_DECOMPOSITION, r1-composition-relabel.json; served values unchanged) + HYBRID_MASTER_C14_LIVE_READINESS (S-2 template blob)
+CORRECTED_BY = HYBRID_MASTER_C16_PLANNER_PROVENANCE (templates f764752d / df69d370 no longer bind: candidate 3154a696, runner 48d3fd11; the runner's composition rule now runs on every served row; gold-replay receipt superseded by r1-live-pilot-gold-replay-r2.jsonl)
+
+
+## CONTINUATION_ID = HYBRID_MASTER_C16_PLANNER_PROVENANCE
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/planner-generalization-c16.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = OFFLINE_DETERMINISTIC_FIXTURE_TEST + IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC (no live measurement; no approval exists); GENUINE_DISCOVERY_NOT_ESTABLISHED — on route B and /4 every served plan is source-explicit or a declared decomposition (route B C11: 6 + 3, /4 C13: 6 + 3, R-1 gold: 7 + 4, 0 discovered); 710 generated perpendicular-plane sections, 0 reachable-but-missed (364 served exact, 346 unreachable refused); ablation: declared rules off ⇒ exactly the source-explicit plans survive; product: planner /24 provenance-classified search_telemetry (calls/certificates/answers unchanged on 753 compared plans; DISCOVERED unreachable in Registry /29); independent review READY in round 2; Full T3 PASS (attempt 2)
+VERIFICATION = planner-generalization-c16.md; route-b-composition-relabel.json; route-b-composition-relabel-r2.json; plane-witness-reachability.json; planner-ablation.json; r1-live-pilot-gold-replay-r2.jsonl; inventory-phase-q.json; wave3-phase-q.json; full-t3-3154a696.json; s2-owner-approval.template.json; r1-owner-approval.template.json; owner-go-request.md (sixteenth addendum); ../hybrid-master-planner-provenance/frozen-evaluation-candidate.json; ../hybrid-master-planner-provenance/candidate_divergence.json
+CODE_COMMIT = 9c561ca62e1a193697e5b7b69f1bdf77fa8bd770
+CANDIDATE_COMMIT = 3154a696
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C15_R1_LIVE_PILOT_PREPARED (approval templates; the runner's composition rule) + C11 route-B planner-recomposition claim (planner-recomposition-matrix.json: 9 DISCOVERED = 6 source-explicit + 3 registered); historical receipts unchanged
 CORRECTED_BY = NONE
 
 ## WAVE_ID = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION

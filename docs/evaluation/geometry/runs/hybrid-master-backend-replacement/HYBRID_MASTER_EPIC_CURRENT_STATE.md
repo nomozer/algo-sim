@@ -790,7 +790,9 @@ Offline only: `0` provider calls, `USD 0`, no approval file. Report: `planner-ge
 
 **Review:** fresh-context. Round 1 `NOT_READY` (1 BLOCKER, 1 MAJOR, 5 MINOR); round 2 **`READY`**.
 
-**Full T3:** FULL_T3_PENDING
+**Full T3:** `FULL_PRODUCT_GATE_PASS` on attempt 2 (`full-t3-3154a696.json`, HEAD `7e9e479d`, candidate `3154a696`):
+pytest 16542 passed, 0 failed; vitest 1424; build; demo 5/5; crash surface 6/6. Attempt 1 failed one test: a corpus
+hash compared on CRLF bytes. That was fixed test-only at `7e072c7e`.
 
 **Status:**
 - `PLANNER_GENERALIZATION_OFFLINE_VERIFIED`: no. Discovery is `NOT_ESTABLISHED`; the capability is measured and the
