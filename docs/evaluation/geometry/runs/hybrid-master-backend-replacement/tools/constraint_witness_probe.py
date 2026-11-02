@@ -248,7 +248,9 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         import subprocess
         head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+        dirty = bool(subprocess.check_output(['git', 'status', '--porcelain', '--', 'backend'], cwd=ROOT, text=True).strip())
         with open(sys.argv[1], 'x', encoding='utf-8', newline='\n') as f:
             json.dump({'classification': 'IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC', 'provider_calls': 0, 'head': head,
+                       'backend_tree_dirty': dirty,
                        'summary': summary, 'rows': rows}, f, ensure_ascii=False, indent=1)
             f.write('\n')

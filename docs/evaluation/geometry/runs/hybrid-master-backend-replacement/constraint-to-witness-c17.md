@@ -61,7 +61,10 @@ C16 left one hypothesis (`planner-generalization-c16.md` §3): goals with implic
 
 **Adapter `/4`** re-checks the relation and that every point lies on the plane.
 
-## 4. Systematic measurement (`constraint-witness-probe-r2.json`, 1 531 generated cases, independent exact oracle)
+## 4. Systematic measurement (`constraint-witness-probe-r3.json`, 1 531 generated cases, independent exact oracle)
+
+r3 was produced at the clean commit `8a89c6fd` (`backend_tree_dirty: false`). Its summary and rows equal r2, which was
+produced at `f646a8cc` plus uncommitted fixes (review MINOR-3). The same holds for the ablation r3 against r2.
 
 | oracle | cases | product |
 |---|---|---|
@@ -90,7 +93,7 @@ declared rule. The product's own label agrees on all 407. In detail:
 | translation along a stated line | 101 |
 | a witness that only re-checks a stated relation | 15 |
 
-## 5. Why this is not discovery (independent review, adversarial; ablation `constraint-witness-ablation-r2.json`)
+## 5. Why this is not discovery (independent review, adversarial; ablation `constraint-witness-ablation-r3.json`)
 
 | arm | built normal (267) | premise (24) | stated line (101) |
 |---|---|---|---|

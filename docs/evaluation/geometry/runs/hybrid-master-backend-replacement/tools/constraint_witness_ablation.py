@@ -70,7 +70,10 @@ summary = {arm_: {comp: dict(collections.Counter(r[arm_] for r in rows if r['com
 summary['served_in_B'] = sum(r['B'] == 'SERVED' for r in rows)
 print(json.dumps(summary, ensure_ascii=False, indent=1))
 if len(sys.argv) > 1:
+    import subprocess
+    git = lambda *a: subprocess.check_output(['git', *a], cwd=P.ROOT, text=True).strip()
     with open(sys.argv[1], 'x', encoding='utf-8', newline='\n') as f:
         json.dump({'classification': 'IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC', 'provider_calls': 0,
+                   'head': git('rev-parse', 'HEAD'), 'backend_tree_dirty': bool(git('status', '--porcelain', '--', 'backend')),
                    'production_defaults_changed': False, 'summary': summary, 'rows': rows}, f, ensure_ascii=False, indent=1)
         f.write('\n')
