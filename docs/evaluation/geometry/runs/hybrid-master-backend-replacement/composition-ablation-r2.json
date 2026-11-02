@@ -1,0 +1,268 @@
+{
+ "classification": "IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC",
+ "provider_calls": 0,
+ "head": "a7aed190dc847de5f18657912e6f3b52922bba9d",
+ "backend_tree_dirty": false,
+ "arms": {
+  "candidate": {
+   "verdicts": {
+    "SERVED_CORRECT": 480,
+    "CORRECT_REFUSAL": 24
+   },
+   "verdict_by_necessity": {
+    "COMPOSITION_NECESSARY": {
+     "SERVED_CORRECT": 208
+    },
+    "DEGENERATE_TRIANGLE": {
+     "CORRECT_REFUSAL": 24
+    },
+    "DIRECT_FUNCTION_SOLUTION": {
+     "SERVED_CORRECT": 136
+    },
+    "SOURCE_POINT": {
+     "SERVED_CORRECT": 136
+    }
+   },
+   "refusal_codes": {
+    "DEGENERATE_POINTS": 24
+   },
+   "served_with_same_answer_as_candidate": 480,
+   "served_with_another_plan_than_candidate": 0,
+   "chain_functions_of_served": {
+    "intersect_line_line+orthogonal_projection_line": 240,
+    "intersect_line_line+midpoint+orthogonal_projection_line+translate_point": 240
+   },
+   "max_explored_states": 25,
+   "ms_median": 34.9
+  },
+  "no_translate_locus": {
+   "verdicts": {
+    "SERVED_CORRECT": 240,
+    "REACHABLE_BUT_SEARCH_MISSED": 240,
+    "CORRECT_REFUSAL": 24
+   },
+   "verdict_by_necessity": {
+    "COMPOSITION_NECESSARY": {
+     "REACHABLE_BUT_SEARCH_MISSED": 114,
+     "SERVED_CORRECT": 94
+    },
+    "DEGENERATE_TRIANGLE": {
+     "CORRECT_REFUSAL": 24
+    },
+    "DIRECT_FUNCTION_SOLUTION": {
+     "REACHABLE_BUT_SEARCH_MISSED": 112,
+     "SERVED_CORRECT": 24
+    },
+    "SOURCE_POINT": {
+     "SERVED_CORRECT": 122,
+     "REACHABLE_BUT_SEARCH_MISSED": 14
+    }
+   },
+   "refusal_codes": {
+    "UNSUPPORTED_CAPABILITY": 252,
+    "DEGENERATE_POINTS": 12
+   },
+   "served_with_same_answer_as_candidate": 240,
+   "served_with_another_plan_than_candidate": 0,
+   "chain_functions_of_served": {
+    "intersect_line_line+orthogonal_projection_line": 240
+   },
+   "max_explored_states": 13,
+   "ms_median": 11.2
+  },
+  "no_foot_locus": {
+   "verdicts": {
+    "SERVED_CORRECT": 480,
+    "CORRECT_REFUSAL": 24
+   },
+   "verdict_by_necessity": {
+    "COMPOSITION_NECESSARY": {
+     "SERVED_CORRECT": 208
+    },
+    "DEGENERATE_TRIANGLE": {
+     "CORRECT_REFUSAL": 24
+    },
+    "DIRECT_FUNCTION_SOLUTION": {
+     "SERVED_CORRECT": 136
+    },
+    "SOURCE_POINT": {
+     "SERVED_CORRECT": 136
+    }
+   },
+   "refusal_codes": {
+    "DEGENERATE_POINTS": 24
+   },
+   "served_with_same_answer_as_candidate": 480,
+   "served_with_another_plan_than_candidate": 240,
+   "chain_functions_of_served": {
+    "intersect_line_line+orthogonal_projection_line+translate_point": 240,
+    "intersect_line_line+midpoint+orthogonal_projection_line+translate_point": 240
+   },
+   "max_explored_states": 25,
+   "ms_median": 39.3
+  },
+  "no_direction": {
+   "verdicts": {
+    "SERVED_CORRECT": 240,
+    "REACHABLE_BUT_SEARCH_MISSED": 240,
+    "CORRECT_REFUSAL": 24
+   },
+   "verdict_by_necessity": {
+    "COMPOSITION_NECESSARY": {
+     "REACHABLE_BUT_SEARCH_MISSED": 114,
+     "SERVED_CORRECT": 94
+    },
+    "DEGENERATE_TRIANGLE": {
+     "CORRECT_REFUSAL": 24
+    },
+    "DIRECT_FUNCTION_SOLUTION": {
+     "REACHABLE_BUT_SEARCH_MISSED": 112,
+     "SERVED_CORRECT": 24
+    },
+    "SOURCE_POINT": {
+     "SERVED_CORRECT": 122,
+     "REACHABLE_BUT_SEARCH_MISSED": 14
+    }
+   },
+   "refusal_codes": {
+    "UNSUPPORTED_CAPABILITY": 252,
+    "DEGENERATE_POINTS": 12
+   },
+   "served_with_same_answer_as_candidate": 240,
+   "served_with_another_plan_than_candidate": 0,
+   "chain_functions_of_served": {
+    "intersect_line_line+orthogonal_projection_line": 240
+   },
+   "max_explored_states": 19,
+   "ms_median": 14.1
+  },
+  "no_preconditions": {
+   "verdicts": {
+    "SERVED_CORRECT": 240,
+    "REACHABLE_BUT_SEARCH_MISSED": 240,
+    "CORRECT_REFUSAL": 24
+   },
+   "verdict_by_necessity": {
+    "COMPOSITION_NECESSARY": {
+     "REACHABLE_BUT_SEARCH_MISSED": 114,
+     "SERVED_CORRECT": 94
+    },
+    "DEGENERATE_TRIANGLE": {
+     "CORRECT_REFUSAL": 24
+    },
+    "DIRECT_FUNCTION_SOLUTION": {
+     "REACHABLE_BUT_SEARCH_MISSED": 112,
+     "SERVED_CORRECT": 24
+    },
+    "SOURCE_POINT": {
+     "SERVED_CORRECT": 122,
+     "REACHABLE_BUT_SEARCH_MISSED": 14
+    }
+   },
+   "refusal_codes": {
+    "DEGENERATE_POINTS": 264
+   },
+   "served_with_same_answer_as_candidate": 240,
+   "served_with_another_plan_than_candidate": 0,
+   "chain_functions_of_served": {
+    "intersect_line_line+orthogonal_projection_line": 240
+   },
+   "max_explored_states": 37,
+   "ms_median": 27.2
+  },
+  "depth_3": {
+   "verdicts": {
+    "SERVED_CORRECT": 240,
+    "SEARCH_EXHAUSTED": 240,
+    "CORRECT_REFUSAL": 24
+   },
+   "verdict_by_necessity": {
+    "COMPOSITION_NECESSARY": {
+     "SEARCH_EXHAUSTED": 114,
+     "SERVED_CORRECT": 94
+    },
+    "DEGENERATE_TRIANGLE": {
+     "CORRECT_REFUSAL": 24
+    },
+    "DIRECT_FUNCTION_SOLUTION": {
+     "SEARCH_EXHAUSTED": 112,
+     "SERVED_CORRECT": 24
+    },
+    "SOURCE_POINT": {
+     "SERVED_CORRECT": 122,
+     "SEARCH_EXHAUSTED": 14
+    }
+   },
+   "refusal_codes": {
+    "PLAN_TOO_LARGE": 252,
+    "DEGENERATE_POINTS": 12
+   },
+   "served_with_same_answer_as_candidate": 240,
+   "served_with_another_plan_than_candidate": 0,
+   "chain_functions_of_served": {
+    "intersect_line_line+orthogonal_projection_line": 240
+   },
+   "max_explored_states": 19,
+   "ms_median": 12.1
+  },
+  "reversed_loci": {
+   "verdicts": {
+    "SERVED_CORRECT": 480,
+    "CORRECT_REFUSAL": 24
+   },
+   "verdict_by_necessity": {
+    "COMPOSITION_NECESSARY": {
+     "SERVED_CORRECT": 208
+    },
+    "DEGENERATE_TRIANGLE": {
+     "CORRECT_REFUSAL": 24
+    },
+    "DIRECT_FUNCTION_SOLUTION": {
+     "SERVED_CORRECT": 136
+    },
+    "SOURCE_POINT": {
+     "SERVED_CORRECT": 136
+    }
+   },
+   "refusal_codes": {
+    "DEGENERATE_POINTS": 24
+   },
+   "served_with_same_answer_as_candidate": 480,
+   "served_with_another_plan_than_candidate": 480,
+   "chain_functions_of_served": {
+    "intersect_line_line+orthogonal_projection_line": 240,
+    "intersect_line_line+midpoint+orthogonal_projection_line+translate_point": 240
+   },
+   "max_explored_states": 25,
+   "ms_median": 41.4
+  },
+  "no_definitions": {
+   "verdicts": {
+    "REACHABLE_BUT_SEARCH_MISSED": 480,
+    "CORRECT_REFUSAL": 24
+   },
+   "verdict_by_necessity": {
+    "COMPOSITION_NECESSARY": {
+     "REACHABLE_BUT_SEARCH_MISSED": 208
+    },
+    "DEGENERATE_TRIANGLE": {
+     "CORRECT_REFUSAL": 24
+    },
+    "DIRECT_FUNCTION_SOLUTION": {
+     "REACHABLE_BUT_SEARCH_MISSED": 136
+    },
+    "SOURCE_POINT": {
+     "REACHABLE_BUT_SEARCH_MISSED": 136
+    }
+   },
+   "refusal_codes": {
+    "UNSUPPORTED_CAPABILITY": 504
+   },
+   "served_with_same_answer_as_candidate": 0,
+   "served_with_another_plan_than_candidate": 0,
+   "chain_functions_of_served": {},
+   "max_explored_states": 0,
+   "ms_median": 3.7
+  }
+ }
+}

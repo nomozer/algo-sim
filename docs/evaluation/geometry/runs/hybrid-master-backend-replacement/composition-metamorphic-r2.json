@@ -1,0 +1,7325 @@
+{
+ "classification": "IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC",
+ "provider_calls": 0,
+ "head": "a7aed190dc847de5f18657912e6f3b52922bba9d",
+ "backend_tree_dirty": false,
+ "summary": {
+  "cases": 1044,
+  "holds": {
+   "rename|True": 348,
+   "order|True": 348,
+   "premises|True": 348
+  },
+  "refusals": {}
+ },
+ "rows": [
+  {
+   "id": "pyramid(2,2)|orthocenter|ABC|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABC|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABC|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABC|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABC|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABC|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABC|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABC|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABC|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABC|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABC|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABC|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABD|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABD|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABD|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABD|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABD|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABD|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABD|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABD|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABD|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABD|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABD|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABD|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABS|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABS|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABS|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABS|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABS|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABS|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABS|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABS|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABS|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABS|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABS|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABS|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ABN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ABN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACD|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACD|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACD|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACD|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACD|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACD|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACD|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACD|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACD|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACD|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACD|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACD|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACS|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACS|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACS|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACS|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACS|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACS|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACS|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACS|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACS|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACS|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACS|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACS|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ACN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ACN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ADS|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ADS|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ADS|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ADS|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ADS|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ADS|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ADS|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ADS|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ADS|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ADS|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ADS|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ADS|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ADM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ADM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ADM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ADM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ADM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ADM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ADM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ADM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ADM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ADM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ADM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ADM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ADN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ADN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ADN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ADN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ADN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ADN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ADN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ADN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ADN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ADN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ADN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ADN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ASM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ASM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ASM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ASM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ASM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ASM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ASM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ASM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ASM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ASM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ASM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ASM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ASN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ASN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ASN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ASN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ASN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|ASN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ASN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ASN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ASN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ASN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ASN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|ASN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|AMN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|AMN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|AMN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|AMN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|AMN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|AMN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|AMN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|AMN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|AMN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|AMN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|AMN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|AMN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCD|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCD|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCD|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCD|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCD|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCD|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCD|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCD|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCD|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCD|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCD|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCD|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCS|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCS|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCS|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCS|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCS|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCS|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCS|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCS|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCS|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCS|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCS|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCS|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BCN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BCN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BDS|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BDS|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BDS|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BDS|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BDS|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BDS|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BDS|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BDS|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BDS|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BDS|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BDS|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BDS|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BDM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BDM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BDM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BDM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BDM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BDM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BDM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BDM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BDM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BDM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BDM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BDM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BDN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BDN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BDN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BDN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BDN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BDN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BDN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BDN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BDN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BDN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BDN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BDN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BSM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BSM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BSM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BSM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BSM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BSM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BSM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BSM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BSM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BSM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BSM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BSM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BSN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BSN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BSN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BSN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BSN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BSN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BSN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BSN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BSN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BSN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BSN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BSN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BMN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BMN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BMN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BMN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BMN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|BMN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BMN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BMN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BMN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BMN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BMN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|BMN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CDS|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CDS|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CDS|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CDS|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CDS|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CDS|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CDS|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CDS|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CDS|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CDS|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CDS|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CDS|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CDM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CDM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CDM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CDM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CDM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CDM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CDM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CDM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CDM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CDM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CDM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CDM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CDN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CDN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CDN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CDN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CDN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CDN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CDN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CDN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CDN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CDN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CDN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CDN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CSM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CSM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CSM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CSM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CSM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CSM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CSM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CSM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CSM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CSM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CSM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CSM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CMN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CMN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CMN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CMN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CMN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|CMN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CMN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CMN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CMN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CMN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CMN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|CMN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|DSM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|DSM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|DSM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|DSM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|DSM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|DSM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|DSM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|DSM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|DSM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|DSM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|DSM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|DSM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|DSN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|DSN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|DSN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|DSN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|DSN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|DSN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|DSN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|DSN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|DSN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|DSN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|DSN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|DSN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|DMN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|DMN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|DMN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|DMN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|DMN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|DMN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|DMN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|DMN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|DMN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|DMN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|DMN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|DMN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|SMN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|SMN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|SMN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|SMN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|SMN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|orthocenter|SMN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|SMN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|SMN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|SMN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|SMN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|SMN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "pyramid(2,2)|circumcenter|SMN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABC|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABC|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABC|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABC|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABC|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABC|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABC|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABC|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABC|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABC|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABC|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABC|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABA'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABA'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABA'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABA'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABA'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABA'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABA'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABA'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABA'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABA'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABA'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABA'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABB'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABB'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABB'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABB'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABB'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABB'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABB'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABB'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABB'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABB'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABB'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABB'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABC'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABC'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABC'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABC'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABC'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABC'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABC'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABC'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABC'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABC'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABC'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABC'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ABN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ABN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACA'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACA'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACA'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACA'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACA'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACA'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACA'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACA'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACA'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACA'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACA'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACA'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACB'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACB'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACB'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACB'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACB'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACB'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACB'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACB'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACB'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACB'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACB'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACB'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACC'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACC'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACC'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACC'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACC'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACC'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACC'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACC'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACC'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACC'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACC'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACC'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACM|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACM|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACM|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACM|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACM|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACM|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|ACN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|ACN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'B'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'B'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'B'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'B'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'B'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'B'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'B'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'B'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'B'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'B'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'B'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'B'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'C'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'C'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'C'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'C'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'C'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'C'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'C'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'C'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'C'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'C'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'C'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'C'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AA'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AA'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AB'C'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AB'C'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AB'C'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AB'C'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AB'C'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AB'C'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AB'C'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AB'C'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AB'C'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AB'C'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AB'C'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AB'C'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AB'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AB'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AB'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AB'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AB'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AB'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AB'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AB'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AB'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AB'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AB'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AB'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AB'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AB'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AB'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AB'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AB'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AB'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AB'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AB'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AB'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AB'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AB'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AB'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AC'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AC'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AC'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AC'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AC'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AC'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AC'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AC'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AC'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AC'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AC'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AC'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AC'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AC'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AC'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AC'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AC'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AC'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AC'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AC'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AC'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AC'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AC'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AC'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AMN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AMN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AMN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AMN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AMN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|AMN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AMN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AMN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AMN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AMN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AMN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|AMN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCA'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCA'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCA'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCA'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCA'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCA'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCA'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCA'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCA'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCA'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCA'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCA'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCB'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCB'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCB'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCB'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCB'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCB'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCB'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCB'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCB'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCB'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCB'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCB'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCC'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCC'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCC'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCC'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCC'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCC'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCC'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCC'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCC'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCC'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCC'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCC'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BCN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BCN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'B'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'B'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'B'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'B'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'B'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'B'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'B'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'B'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'B'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'B'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'B'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'B'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'C'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'C'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'C'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'C'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'C'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'C'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'C'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'C'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'C'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'C'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'C'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'C'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BA'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BA'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BB'C'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BB'C'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BB'C'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BB'C'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BB'C'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BB'C'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BB'C'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BB'C'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BB'C'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BB'C'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BB'C'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BB'C'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BB'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BB'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BB'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BB'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BB'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BB'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BB'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BB'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BB'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BB'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BB'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BB'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BB'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BB'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BB'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BB'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BB'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BB'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BB'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BB'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BB'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BB'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BB'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BB'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BC'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BC'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BC'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BC'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BC'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BC'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BC'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BC'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BC'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BC'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BC'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BC'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BC'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BC'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BC'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BC'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BC'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BC'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BC'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BC'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BC'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BC'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BC'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BC'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BMN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BMN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BMN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BMN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BMN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|BMN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BMN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BMN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BMN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BMN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BMN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|BMN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'B'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'B'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'B'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'B'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'B'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'B'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'B'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'B'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'B'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'B'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'B'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'B'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'C'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'C'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'C'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'C'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'C'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'C'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'C'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'C'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'C'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'C'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'C'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'C'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CA'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CA'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CB'C'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CB'C'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CB'C'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CB'C'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CB'C'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CB'C'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CB'C'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CB'C'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CB'C'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CB'C'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CB'C'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CB'C'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CB'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CB'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CB'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CB'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CB'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CB'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CB'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CB'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CB'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CB'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CB'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CB'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CB'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CB'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CB'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CB'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CB'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CB'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CB'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CB'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CB'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CB'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CB'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CB'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CC'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CC'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CC'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CC'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CC'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CC'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CC'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CC'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CC'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CC'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CC'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CC'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CC'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CC'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CC'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CC'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CC'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CC'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CC'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CC'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CC'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CC'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CC'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CC'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CMN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CMN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CMN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CMN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CMN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|CMN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CMN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CMN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CMN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CMN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CMN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|CMN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'B'C'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'B'C'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'B'C'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'B'C'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'B'C'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'B'C'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'B'C'|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'B'C'|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'B'C'|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'B'C'|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'B'C'|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'B'C'|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'B'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'B'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'B'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'B'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'B'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'B'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'B'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'B'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'B'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'B'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'B'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'B'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'C'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'C'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'C'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'C'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'C'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'C'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'C'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'C'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'C'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'C'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'C'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'C'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'C'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'C'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'C'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'C'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'C'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'C'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'C'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'C'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'C'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'C'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'C'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'C'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'MN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'MN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'MN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'MN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'MN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|A'MN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'MN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'MN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'MN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'MN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'MN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|A'MN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|B'C'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|B'C'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|B'C'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|B'C'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|B'C'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|B'C'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|B'C'M|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|B'C'M|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|B'C'M|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|B'C'M|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|B'C'M|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|B'C'M|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|B'C'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|B'C'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|B'C'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|B'C'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|B'C'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|B'C'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|B'C'N|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|B'C'N|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|B'C'N|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|B'C'N|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|B'C'N|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|B'C'N|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|B'MN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|B'MN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|B'MN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|B'MN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|B'MN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|B'MN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|B'MN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|B'MN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|B'MN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|B'MN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|B'MN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|B'MN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|C'MN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|C'MN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|C'MN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|C'MN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|C'MN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|orthocenter|C'MN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|C'MN|G1",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|C'MN|G1",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|C'MN|G1",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|C'MN|G2",
+   "relation": "rename",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|C'MN|G2",
+   "relation": "order",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  },
+  {
+   "id": "prism(3,4,2)|circumcenter|C'MN|G2",
+   "relation": "premises",
+   "status": "SERVED",
+   "holds": true,
+   "code": null
+  }
+ ]
+}
