@@ -66,6 +66,15 @@ C16 left one hypothesis (`planner-generalization-c16.md` §3): goals with implic
 r3 was produced at the clean commit `8a89c6fd` (`backend_tree_dirty: false`). Its summary and rows equal r2, which was
 produced at `f646a8cc` plus uncommitted fixes (review MINOR-3). The same holds for the ablation r3 against r2.
 
+**The generator moved between r1 and r2 (review round 2, MINOR-A).** F3 takes its reference planes as `planes[0]`,
+`planes[2]`, `planes[-1]`. Adding the midpoint-named Q changed `planes[-1]`: SBD became SMN on the pyramid, and A'BC
+became AMA' on the prism. As a result, 126 F3 cases of r1 are not in r2/r3: 14 UNIQUE, 110 NO_PLANE, 2 NO_SECTION.
+That is why the verification-only count fell from 25 to 15. The reviewer re-ran those 126 at `8a89c6fd`:
+- the 14 UNIQUE cases are served with exact areas;
+- the 110 NO_PLANE cases are refused `INCONSISTENT_FACTS`;
+- the 2 NO_SECTION cases are refused `PLANE_TOUCHES_EDGE`;
+- 0 are wrong.
+
 | oracle | cases | product |
 |---|---|---|
 | UNIQUE | 407 | **407 served, exact area** |
@@ -84,7 +93,10 @@ produced at `f646a8cc` plus uncommitted fixes (review MINOR-3). The same holds f
    refused. Midpoint closure fixes it; the generator now includes such Q.
 
 **Composition.** Under the reviewed C15 rule, **all 407 are `REGISTERED_DECOMPOSITION`**, because `MAT_RANG_BUOC` is a
-declared rule. The product's own label agrees on all 407. In detail:
+declared rule. The product's own label agrees on all 407. The receipt field `c15_rule_label_of_served` is **derived**,
+not computed by the probe (review round 2, MINOR-C). It follows because the only steps beyond the source are
+`orthogonal_projection`, `translate_point` and `section`, all functions of a registered rule. The reviewer applied the
+rule independently and confirmed it. In detail:
 
 | label | cases |
 |---|---|
@@ -121,6 +133,14 @@ goals, and a verify-and-backtrack loop between planner and engine (`HYPOTHESIS`)
 - Preview fixtures 41/41.
 - C17 tests: 15 + 2 scope.
 - Full T3 and the freeze: see the master state.
+- **Independent review:**
+  - Round 1 found 3 MAJOR findings (telemetry, ablation, labels), all closed.
+  - Round 2 at `8a89c6fd` / `c0a0793d`: **READY**, 0 BLOCKER, 0 MAJOR. All 8 closures hold.
+  - Round 2 left MINOR-A and MINOR-C, both closed above.
+  - Round 2 also left MINOR-B: from registry `/30`, the S-2 runner's `composition_label` counts `orthogonal_projection`
+    as a registered-rule function, with the same runner bytes. Relabelling the gold S-2 (36) and R-1 (18) dry-runs with
+    and without `MAT_RANG_BUOC` gave 0 flips. This is declared in the template re-issue (`owner-go-request.md`, C17).
+- The reviewer's full backend run at `c0a0793d`: 16 548 passed, 11 failed, all freeze or precheck checks.
 
 ## 7. Known limits (from the review, all failing safe)
 
