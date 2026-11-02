@@ -1,6 +1,6 @@
 # Continuation 18 — function composition for points named by a property
 
-**Verdict:**
+**Verdict** (independent review round 2: `READY`; candidate re-freeze and Full T3: see the master state):
 - **`GENUINE_DISCOVERY_NOT_ESTABLISHED`** (unchanged from C16/C17).
 - **New capability `DEFINITION_REGRESSION_COMPOSITION_VERIFIED_OFFLINE`**: a point the source names only by a property
   (orthocenter, circumcenter of a triangle) — which no Registry function builds and which, in 202 goals, no single call
@@ -59,10 +59,13 @@ every function the oracle's plans use exists.
 - **Planner `/26`:** `_EffectResolver._dinh_nghia` regresses the definition into one `PerpLine` need per locus, each
   solved like any need (all contracts with that effect, free slots, structural preconditions, rejected candidates
   recorded); the two cheapest loci are met by the one `Point ← Line, Line` contract (chosen by signature; the locus line
-  is bound through `contract.line` — review MINOR-1: the planner does depend on that library shape). A depth-exhausted
+  is bound through `contract.line` — review MINOR-1: the planner does depend on that library shape). Planner `/26` is the
+  version of both product commits `b2dd77de` (steps tagged `search_generated`) and `a7aed190` (tagged `registered`);
+  neither was frozen in between, receipts r1 and r2 are told apart by their head (review R2 NIT). A depth-exhausted
   alternative no longer aborts its siblings; a memo entry chosen before the plan grew is re-chosen. Steps under a
   definition are `registered`.
-- **Gate:** `_dinh_nghia_trong_chuoi` re-derives that the measured point is the meet of two loci of ITS definition; only
+- **Gate:** a certificate naming `DINH_NGHIA_DIEM` directly is refused `AUXILIARY_RULE_MISMATCH` (review R2-1; the rule
+  is only ever certified as an `effect-chain`). `_dinh_nghia_trong_chuoi` re-derives that the measured point is the meet of two loci of ITS definition; only
   in such a chain may a named line pass through a point the chain built (review NIT, scoped).
 - **Engine `/22`:** `_MO_TA` checks all three conditions of the definition (Gram metric); a definition without a
   predicate is never served.
@@ -77,14 +80,14 @@ which every fresh point is consumed: orthocenter `orthogonal_projection_line` ×
 | label | value on all 480 |
 |---|---|
 | planner provenance (after review MAJOR-2) | `REGISTERED_DECOMPOSITION`, 0 `search_generated` steps |
-| C15 rule, computed by the S-2/R-1 runner's unchanged `composition_label` | `REGISTERED_DECOMPOSITION` |
+| C15 rule, computed by the S-2/R-1 runner's `composition_label` | `REGISTERED_DECOMPOSITION` — because `DINH_NGHIA_DIEM` entered the rule table it reads (review R2-2); without the entry it said DISCOVERED (r1). The entry is global: any future step using `midpoint` / `intersect_line_line` beyond a description counts as a rule function (undercounts discovery). Stored gold rows: 54, 0 flips (`c15-rule-flip-check.json`) |
 | oracle necessity | 202 `NECESSARY_COMPOSITION_SERVED`, 278 `COMPOSED_NOT_NECESSARY` |
 
-Search cost: ≤ 25 needs, depth 4, tens of ms per case.
+Search cost: ≤ 25 needs, depth 4; median 68.5 ms, max 475.5 ms per case (r2 receipt, whole route).
 
 The independent reviewer re-attacked correctness on 636 new cases on four other topologies (non-orthonormal regular
 S.ABC, S.ABC right at B, a cube, midpoints named H and I to collide with fresh labels): 0 wrong-served, 28/28 degenerate
-refused.
+refused. That run is reviewer evidence with no committed receipt.
 
 ## 5. Ablation (`composition-ablation-r2.json`)
 
@@ -141,3 +144,14 @@ A goal whose subgoals no declared definition or rule names: e.g. a property the 
 between objects (not as loci), so that the planner must itself choose which relation becomes which locus, with
 alternatives that differ in validity in ways structure cannot see — so that exact verification fails and the search
 must retry. None of the measured goals has that property.
+
+## 11. Independent review
+
+Fresh-context, adversarial, read-only.
+- Round 1 (`b2dd77de`): `NOT_READY` — MAJOR-1 (by the C17 standard this is a registered decomposition), MAJOR-2
+  (provenance relabel; product telemetry overclaimed DISCOVERED on all 480), MINOR-1..6, three NITs. All accepted; the
+  verdict was restated, not defended.
+- Round 2 (`a7aed190`, receipts `93e36379`): **`READY`**, 0 BLOCKER, 0 MAJOR; 0 route outputs contain "DISCOVERED";
+  0 gold flips reproduced independently. Left MINOR-R2-1 (a forged `DINH_NGHIA_DIEM` certificate crashed the gate),
+  MINOR-R2-2 (the C15 label moves through the rule table), MINOR-R2-3 (re-freeze and Full T3 pending) and three NITs —
+  closed in this report and in the final product commit.
