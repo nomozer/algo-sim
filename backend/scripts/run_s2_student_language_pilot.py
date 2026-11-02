@@ -51,7 +51,8 @@ STUDIES = {"S-2": (STRATA, MAX_CASES),
                     "H-MULTI", "H-MISSING", "H-CONTRA", "H-AMBIG", "H-OUT", "H-NONUNIQUE"), 60)}
 #: C19: end-to-end outcome of one row, Hybrid-only taxonomy (`hybrid-only-independent-evaluation-protocol.md` §4).
 HYBRID_OUTCOMES = ("SERVED_CORRECT", "SERVED_WRONG", "CORRECT_REFUSAL", "FALSE_REFUSAL", "WRONG_REASON_REFUSAL",
-                   "CORRECT_CLARIFICATION", "WRONG_REASON_CLARIFICATION", "FALSE_CLARIFICATION", "INFRASTRUCTURE_FAILURE")
+                   "CORRECT_CLARIFICATION", "WRONG_REASON_CLARIFICATION", "FALSE_CLARIFICATION", "REASON_NOT_VERIFIED",
+                   "INFRASTRUCTURE_FAILURE")
 #: C19: REFUSED_UNDERDETERMINED — refused because the stated givens fix no unique object (refusal group MISSING_DATA), e.g. a
 #: plane the stated constraints leave free; only the engine can see it, so no model clarification is expected.
 OUTCOMES = ("SERVED", "CLARIFY", "REFUSED_UNSUPPORTED", "REFUSED_INCONSISTENT", "REFUSED_UNDERDETERMINED")
@@ -123,8 +124,11 @@ def validate_corpus(corpus: dict[str, Any]) -> None:
             raise LiveRefused(f"{c['id']}: the gold extraction must be for this exact problem text")
         # C19 review MAJOR-2: goal and operand matching exists only against a gold, so in H-1 a SERVED case without one
         # could be "correct" with a dropped goal; the gold is part of the frozen expectation, confirmed by the author
-        if study_of(corpus) == "H-1" and e["outcome"] == "SERVED" and gold is None:
-            raise LiveRefused(f"{c['id']}: every H-1 SERVED case needs its author-confirmed gold extraction")
+        # review round 2 MAJOR-C: the gold also fixes the RIGHT reason of a refusal or clarification — every H-1 case needs one
+        if study_of(corpus) == "H-1" and gold is None:
+            raise LiveRefused(f"{c['id']}: every H-1 case needs its author-confirmed gold extraction")
+        if study_of(corpus) == "H-1" and e["outcome"] == "CLARIFY" and not gold.get("unresolved"):
+            raise LiveRefused(f"{c['id']}: an H-1 CLARIFY gold names its ambiguous wording in `unresolved`")
     if study_of(corpus) == "H-1":
         if set(strata) - {c.get("stratum") for c in cases}:       # review MINOR-4: no stratum is dropped
             raise LiveRefused(f"an H-1 corpus covers every stratum: missing {sorted(set(strata) - {c.get('stratum') for c in cases})}")
@@ -451,12 +455,31 @@ def constraint_check(gold: Any, raw: Any, text: str) -> dict[str, bool] | None:
             and len(sections) <= len((gold or {}).get("derived_sections") or [])}
 
 
-def reason_verified(row: dict[str, Any], gold_code: str | None, gold_raw: Any) -> bool | None:
-    """C19 review MAJOR-1: a refusal or clarification is right for the RIGHT reason — the same refusal code as the gold
-    replay, or an `unresolved` entry on the same wording as the gold's. `None` where there is nothing to compare (a SERVED
-    expectation, no gold, a gold without `unresolved`)."""
+def _spans(text: str, quote: str) -> list[tuple[int, int]]:
+    return [(m.start(), m.start() + len(quote)) for m in re.finditer(re.escape(quote), text)] if quote else []
+
+
+def _same_wording(text: str, got: str, want: str) -> bool:
+    """Review round 2 MAJOR-B: the live quote sits where the gold's does in the text (located spans intersect), covers MORE
+    than half of the gold's words, and is at most twice as long — a shared function word ("với") or the shared relation
+    ("vuông góc với") is not the same wording. Conservative: a quote naming only half of it counts as another wording."""
+    words = lambda s: re.findall(r"\w+", s.lower())  # noqa: E731
+    w, g = words(want), words(got)
+    return (any(a < d and c < b for a, b in _spans(text, got) for c, d in _spans(text, want))
+            and len(set(w) & set(g)) * 2 > len(set(w)) and len(got) <= 2 * len(want))
+
+
+def reason_verified(row: dict[str, Any], gold_code: str | None, gold_raw: Any, text: str = "") -> bool | None:
+    """C19 review MAJOR-1: a refusal or clarification is right for the RIGHT reason — the same refusal code AND the same
+    facts as the gold replay, or EVERY `unresolved` entry on the gold's ambiguous wording (`_same_wording`). `None` where
+    nothing can be compared (a SERVED expectation; no gold; a gold without `unresolved`) — and None is never counted as
+    right (`hybrid_outcome`: REASON_NOT_VERIFIED; review round 2 MAJOR-C)."""
     exp = row["expected"]["outcome"]
-    if exp == "SERVED" or not isinstance(gold_raw, dict):
+    if exp == "SERVED":
+        return None
+    if row.get("failure_stage") == "domain_gate":           # refused on the text alone, before any extraction
+        return row.get("hybrid_code") == gold_code
+    if not isinstance(gold_raw, dict):
         return None
     if exp == "CLARIFY":
         want = [str(u.get("quote") or "").strip() for u in gold_raw.get("unresolved") or () if isinstance(u, dict)]
@@ -464,9 +487,7 @@ def reason_verified(row: dict[str, Any], gold_code: str | None, gold_raw: Any) -
         got = [str(u.get("quote") or "").strip() for u in raw.get("unresolved") or () if isinstance(u, dict)]
         if not want:
             return None
-        return any(g and w and (g in w or w in g) for g in got for w in want)
-    if row.get("failure_stage") == "domain_gate":           # refused on the text alone, before any extraction
-        return row.get("hybrid_code") == gold_code
+        return bool(got) and all(any(_same_wording(text, g, w) for w in want) for g in got)
     # the same code is not enough: a model that drops the constraint fixing a plane gets the gold's PLANE_NOT_UNIQUE too
     # (review MAJOR-1) — the refusal must come from the gold's own facts (conservative: an equivalent but different
     # extraction counts as the wrong reason)
@@ -478,17 +499,20 @@ def hybrid_outcome(row: dict[str, Any]) -> str:
     `end_to_end_correct` says (every goal, exact answers, verified certificate); a refusal or clarification of a case the
     protocol expects SERVED is FALSE, of a refused case for another reason WRONG_REASON."""
     obs, exp = row["observed"].get("status"), row["expected"]["outcome"]
-    if row["technical_failure"] or row["end_to_end_correct"] is None:
+    status_ok = row.get("end_to_end_status_only", row["end_to_end_correct"])
+    if row["technical_failure"] or status_ok is None:
         return "INFRASTRUCTURE_FAILURE"
     if obs == "SERVED":
-        return "SERVED_CORRECT" if row["end_to_end_correct"] else "SERVED_WRONG"
+        return "SERVED_CORRECT" if status_ok else "SERVED_WRONG"
     if exp == "SERVED":
         return "FALSE_CLARIFICATION" if obs == "CLARIFY" else "FALSE_REFUSAL"
-    right = row["end_to_end_correct"] and row.get("reason_verified") is not False
+    if not status_ok:
+        return "FALSE_CLARIFICATION" if obs == "CLARIFY" else "WRONG_REASON_REFUSAL"
+    if row.get("reason_verified") is None:                  # nothing to verify the reason against: never "correct"
+        return "REASON_NOT_VERIFIED"
     if obs == "CLARIFY":
-        return ("CORRECT_CLARIFICATION" if right else "WRONG_REASON_CLARIFICATION" if row["end_to_end_correct"]
-                else "FALSE_CLARIFICATION")
-    return "CORRECT_REFUSAL" if right else "WRONG_REASON_REFUSAL"
+        return "CORRECT_CLARIFICATION" if row["reason_verified"] else "WRONG_REASON_CLARIFICATION"
+    return "CORRECT_REFUSAL" if row["reason_verified"] else "WRONG_REASON_REFUSAL"
 
 
 def supplementary(rows: list[dict[str, Any]], study: str = "S-2") -> dict[str, Any]:
@@ -646,22 +670,26 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
                            else 0.0 if budget.http_requests == budget.arm_start_requests else "UNKNOWN"),
                    "usd_upper": upper, "technical_failure": technical,
                    "expected": expected_record(case), "observed": observed, **extra}
-            row["end_to_end_correct"] = end_to_end_correct(row["expected"], observed)
+            row["end_to_end_status_only"] = end_to_end_correct(row["expected"], observed)
             gold = case.get("gold_extraction")              # offline reproduction, 0 requests (budget not involved)
             gold_observed, gold_extra = observe(case["problem_text"],
                                                 ReplayExtractor({case["problem_text"]: gold} if gold else {}))
             row["gold_replay_status"] = gold_observed.get("status")
             row["gold_replay_end_to_end_correct"] = end_to_end_correct(row["expected"], gold_observed)
+            row["reason_verified"] = reason_verified(row, gold_extra.get("hybrid_code"), gold, case["problem_text"])
+            # review round 2 MAJOR-A: ONE definition of "correct" for every summary rate, label and attribution — a
+            # non-served expectation is correct only for the verified reason (the scorer's eight metrics stay status-only)
+            row["end_to_end_correct"] = (row["end_to_end_status_only"]
+                                         if row["expected"]["outcome"] == "SERVED" or not row["end_to_end_status_only"]
+                                         else row["reason_verified"] is True)
             row["attribution"] = attribute(row, gold_observed, gold_extra.get("hybrid_code"), gold)
+            if row["end_to_end_status_only"] and row["reason_verified"] is None and row["expected"]["outcome"] != "SERVED":
+                row["attribution"] = "REASON_NOT_VERIFIED"           # no gold reason to compare with: not a model fault
             if study != "S-2":
                 row["composition_label"] = composition_label(row)
                 row["described_check"] = described_check(gold, row.get("raw_extraction"), case["problem_text"])
             if study not in ("S-2", "R-1"):
                 row["constraint_check"] = constraint_check(gold, row.get("raw_extraction"), case["problem_text"])
-            row["reason_verified"] = reason_verified(row, gold_extra.get("hybrid_code"), gold)
-            if row["reason_verified"] is False and row["attribution"] is None:      # right status, wrong reason
-                row["attribution"] = ("LLM_EXTRACTION_DIFFERS_FROM_GOLD"
-                                      if project(gold) != project(row.get("raw_extraction")) else "UNATTRIBUTED")
             row["hybrid_outcome"] = hybrid_outcome(row)
             rows.append(row)
             emit(row)

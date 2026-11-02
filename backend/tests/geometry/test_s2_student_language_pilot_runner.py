@@ -608,7 +608,7 @@ def test_c19_the_k1_gold_replay_is_the_locked_attribution_baseline(tmp_path, mon
     assert sup["hybrid_outcomes"] == {"SERVED_CORRECT": 10, "SERVED_WRONG": 0, "CORRECT_REFUSAL": 4, "FALSE_REFUSAL": 0,
                                       "WRONG_REASON_REFUSAL": 0, "CORRECT_CLARIFICATION": 2,
                                       "WRONG_REASON_CLARIFICATION": 0, "FALSE_CLARIFICATION": 0,
-                                      "INFRASTRUCTURE_FAILURE": 0}
+                                      "REASON_NOT_VERIFIED": 0, "INFRASTRUCTURE_FAILURE": 0}
     assert {r["reason_verified"] for r in out["rows"] if r["expected"]["outcome"] != "SERVED"} == {True}
     assert sup["constraints"]["operands_match"]["numerator"] == 6 and sup["described_points"]["kinds_match"]["numerator"] == 8
     assert out["latency_median_s"] == "NOT_MEASURED" and out["spent_reported_usd"] == "NOT_MEASURED"   # offline: no cost
@@ -647,8 +647,16 @@ def test_c19_constraint_check_sees_a_wrong_kind_a_wrong_operand_and_an_invented_
     ("REFUSED_UNSUPPORTED", "NOT_RECOVERABLE", None, True, "INFRASTRUCTURE_FAILURE"),   # never a correct refusal
 ])
 def test_c19_hybrid_outcome_taxonomy(exp, obs, e2e, tech, want):
-    row = {"expected": {"outcome": exp}, "observed": {"status": obs}, "end_to_end_correct": e2e, "technical_failure": tech}
+    row = {"expected": {"outcome": exp}, "observed": {"status": obs}, "end_to_end_correct": e2e, "technical_failure": tech,
+           "reason_verified": True if exp != "SERVED" else None}
     assert R.hybrid_outcome(row) == want
+
+
+@pytest.mark.parametrize("exp,obs", [("REFUSED_INCONSISTENT", "REFUSED"), ("CLARIFY", "CLARIFY")])
+def test_c19_review_round2_majorC_a_reason_nothing_can_verify_is_never_correct(exp, obs):
+    row = {"expected": {"outcome": exp}, "observed": {"status": obs}, "end_to_end_correct": True,
+           "technical_failure": False, "reason_verified": None}
+    assert R.hybrid_outcome(row) == "REASON_NOT_VERIFIED"
 
 
 @pytest.mark.parametrize("exp,obs,want", [("REFUSED_INCONSISTENT", "REFUSED", "WRONG_REASON_REFUSAL"),
@@ -667,9 +675,49 @@ def test_c19_review_major1_a_model_that_drops_the_constraint_gets_the_same_code_
                                                  if c["kind"] != "perpendicular_to_plane"]
     out = _k1_live(tmp_path, monkeypatch, Provider(_body(bad)), [case])
     row = out["rows"][0]
-    assert row["hybrid_code"] == "PLANE_NOT_UNIQUE" and row["end_to_end_correct"]      # the old, status-only verdict
+    assert row["hybrid_code"] == "PLANE_NOT_UNIQUE" and row["end_to_end_status_only"]   # the old, status-only verdict
     assert row["reason_verified"] is False and row["hybrid_outcome"] == "WRONG_REASON_REFUSAL"
     assert row["attribution"] == "LLM_EXTRACTION_DIFFERS_FROM_GOLD"
+    # review round 2 MAJOR-A: every summary rate and label uses the same verdict
+    assert row["end_to_end_correct"] is False and row["composition_label"] != "CORRECT_REFUSAL"
+    sup = out["supplementary"]
+    assert sup["end_to_end_correct"]["numerator"] == 0 and sup["by_stratum"]["K-B"]["numerator"] == 0
+
+
+@pytest.mark.parametrize("quotes,ok", [
+    (["vuông góc với một mặt bên"], True),
+    (["góc với một mặt bên"], True),                                 # most of the gold wording, inside its span
+    (["một mặt bên"], False),                                        # only half of it: conservative, counted wrong
+    (["với"], False),                                                # a function word (review round 2 MAJOR-B)
+    (["vuông góc với"], False),                                      # half of it, also the stated "SA vuông góc với …"
+    (["bên"], False),
+    (["Mặt phẳng (P) đi qua A, B và vuông góc với một mặt bên"], False),  # the whole sentence: far longer
+    (["vuông góc với một mặt bên", "SA = 2"], False),                # one relevant entry cannot carry another
+])
+def test_c19_review_round2_majorB_a_clarification_must_name_the_gold_wording(tmp_path, monkeypatch, quotes, ok):
+    case = _k1("K-E01")
+    bad = deepcopy(case["gold_extraction"])
+    bad["unresolved"] = [{"unresolved_id": f"u{i}", "kind": "ambiguous", "quote": q} for i, q in enumerate(quotes)]
+    out = _k1_live(tmp_path, monkeypatch, Provider(_body(bad)), [case])
+    row = out["rows"][0]
+    assert row["observed"]["status"] == "CLARIFY"
+    assert row["reason_verified"] is ok and (row["hybrid_outcome"] == "CORRECT_CLARIFICATION") is ok
+
+
+def test_c19_review_round2_majorC_a_refusal_without_gold_is_not_verified_and_h1_requires_gold_everywhere(
+        tmp_path, monkeypatch):
+    case = dict(_k1("K-B01"))
+    bad = deepcopy(case["gold_extraction"])
+    bad["derived_sections"][0]["constraints"] = bad["derived_sections"][0]["constraints"][:1]
+    case.pop("gold_extraction")
+    row = _k1_live(tmp_path, monkeypatch, Provider(_body(bad)), [case])["rows"][0]
+    assert row["reason_verified"] is None and row["hybrid_outcome"] == "REASON_NOT_VERIFIED"
+    assert row["end_to_end_correct"] is False and row["attribution"] == "REASON_NOT_VERIFIED"
+    cases = _h1_cases()
+    k = next(i for i, c in enumerate(cases) if c["expected"]["outcome"] != "SERVED")
+    cases[k].pop("gold_extraction")
+    with pytest.raises(R.LiveRefused, match="every H-1 case needs"):
+        R.validate_corpus({"study": "H-1", "authoring": _ATTESTED, "cases": cases})
 
 
 def test_c19_review_major1_a_clarification_on_another_phrase_is_not_correct(tmp_path, monkeypatch):

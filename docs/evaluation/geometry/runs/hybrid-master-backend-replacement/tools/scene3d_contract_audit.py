@@ -3,9 +3,12 @@ opt-in path `run_hybrid_offline` (gold extractions, 0 provider calls). It checks
 show that a learner sees a correct rendering (no browser here).
 
 Served rows must have: envelope status ok; route SERVED; engine VERIFIED with kernel_check; EVERY math goal of the
-extraction answered; ≥ 1 scene object, each with id and type, point coordinates exact (no float); a construction trace;
-no machine code (`UPPER_SNAKE`) or the envelope's simulation_id in learner-visible text (title, description, notes, object
-labels). Non-served rows must carry a refusal code and no answer, and no scene answers.
+extraction answered (presence; values are the oracle's job); ≥ 1 scene object, each with id and type; every coordinate
+field (`_COORDS`, list values) exact by `fullmatch` (no float); a construction trace. Non-served rows must carry a refusal
+code and no answer. EVERY row (served or refused): no machine code (`UPPER_SNAKE`), entity id (`khoi_S_ABCD`) or the
+envelope's simulation_id in any learner-visible field (`_VISIBLE`) of the envelope or route_d.
+Not checked: a dropped SIMULATION goal, answer values, and plain sections through three named points (no corpus here
+holds that group).
 Groups: polyhedra/measures (S-2 gold), described points (R-1 gold), constraint planes / defined points / refusals /
 clarifications (K-1 gold), curved solids (`curved_probe.CASES`), composite solids (`composite_relations_probe`).
 Usage: scene3d_contract_audit.py [out.json]   (`OFFLINE_DETERMINISTIC_FIXTURE_TEST`, 0 provider calls)
@@ -26,8 +29,8 @@ _CODE = re.compile(r'\b[A-Z]{2,}(?:_[A-Z0-9]{2,})+\b'          # reason codes: P
 _EXACT = re.compile(r"[0-9√π/+\-() ]+")
 #: fields whose text a learner reads, anywhere in the envelope (served or refused)
 _VISIBLE = {'label', 'display_label', 'learner_text', 'learner_reason', 'explanation', 'title', 'description', 'notes',
-            'message', 'caption'}
-_COORDS = {'xyz', 'polygon', 'vertices_xyz', 'center_xyz'}
+            'message', 'caption', 'reason', 'role', 'question'}        # review round 2 MINOR-D: reason, role, question
+_COORDS = {'xyz', 'polygon', 'vertices_xyz', 'center_xyz', 'normal', 'point', 'endpoints'}
 
 
 def corpora():
@@ -48,27 +51,27 @@ def corpora():
         yield 'composite solids', cid, p['problem_text'], p
 
 
-def _walk(v, key=None):
+def _walk(v, key=None, listed=False):
     if isinstance(v, dict):
         for k, x in v.items():
             yield from _walk(x, k)
     elif isinstance(v, list):
         for x in v:
-            yield from _walk(x, key)
+            yield from _walk(x, key, True)
     else:
-        yield key, v
+        yield key, v, listed
 
 
 def learner_text(env):
     """Every string under a learner-visible key, anywhere in the envelope."""
-    for k, v in _walk(env):
+    for k, v, _l in _walk(env):
         if k in _VISIBLE and isinstance(v, str):
             yield v
 
 
 def coordinates(env):
-    for k, v in _walk(env.get('scene3d') or {}):
-        if k in _COORDS:
+    for k, v, listed in _walk(env.get('scene3d') or {}):
+        if k in _COORDS and listed:                   # `point` is also a label elsewhere: coordinates are listed values
             yield v
 
 
@@ -90,7 +93,10 @@ def audit(text, payload, run):
         v += [] if (route.get('refusal') or {}).get('code') else ['refusal_without_code']
         v += [] if not route.get('answer_exact') and not route.get('answers') else ['refusal_with_answers']
         v += [] if env.get('status') != 'ok' else ['refusal_envelope_ok']
-    texts = list(learner_text(env))                       # served AND refused (review MINOR-5)
+    # served AND refused, envelope AND route_d (review MINOR-5, D) — but not the planner's engineering trace, nor
+    # `route_d.sections[].vertices[].label`, which by contract is a scene-object ID reference the frontend matches with
+    # `o.id === v.label` (hybrid-preview-adapter.ts `kiemSectionsCore`), not display text (`B_prime` is right there)
+    texts = [*learner_text(env), *learner_text({k: v for k, v in route.items() if k not in ('planner', 'sections')})]
     leaked = sorted({m for t in texts for m in _CODE.findall(t)}
                     | ({env['simulation_id']} if env.get('simulation_id') and any(env['simulation_id'] in t for t in texts)
                        else set()))
@@ -119,13 +125,20 @@ def _selfcheck():
                         (lambda e: e['scene3d'].update(events=[{'learner_text': 'A_prime'}]), 'leaked'),
                         (lambda e: e['scene3d']['objects'][0].update(xyz=['0.3333', '0', '0']), 'inexact_coordinate'),
                         (lambda e: e['scene3d']['objects'][0].update(xyz=['0.5√2', '0', '0']), 'inexact_coordinate'),
-                        (lambda e: e['scene3d'].update(sections=[{'polygon': [['0.5', '1', '0']]}]), 'inexact_coordinate')):
+                        (lambda e: e['scene3d'].update(sections=[{'polygon': [['0.5', '1', '0']]}]), 'inexact_coordinate'),
+                        (lambda e: e['scene3d'].update(planes=[{'normal': ['0.5', '1', '0']}]), 'inexact_coordinate'),
+                        (lambda e: e['scene3d']['objects'][0].update(endpoints=[['1', '0.5', '0']]), 'inexact_coordinate'),
+                        (lambda e: e['scene3d']['objects'][0].update(role='SECTION_VERTEX'), 'leaked')):
         bad = json.loads(json.dumps(ok_env))
         plant(bad)
         assert any(x.startswith(want) for x in audit('', one, fake(bad, ok_route))['violations']), (want, bad)
-    refused = {'status': 'unsupported', 'learner_reason': 'Lỗi SOURCE_OBJECT_MISMATCH'}
-    v = audit('', one, fake(refused, {'status': 'REFUSED', 'refusal': {'code': 'X'}}))['violations']
-    assert any(x.startswith('leaked') for x in v), v
+    for refused, route in (({'status': 'unsupported', 'learner_reason': 'Lỗi SOURCE_OBJECT_MISMATCH'},
+                             {'status': 'REFUSED', 'refusal': {'code': 'X'}}),
+                            ({'status': 'unsupported', 'reason': 'PLANE_NOT_UNIQUE'}, {'status': 'REFUSED', 'refusal': {'code': 'X'}}),
+                            ({'status': 'unsupported'}, {'status': 'REFUSED', 'refusal': {'code': 'X', 'clarification': {
+                                'question': 'Bạn muốn nói khoi_S_ABCD?'}}})):
+        v = audit('', one, fake(refused, route))['violations']
+        assert any(x.startswith('leaked') for x in v), v
 
 
 if __name__ == '__main__':

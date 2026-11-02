@@ -1,6 +1,6 @@
 # Hybrid-only independent evaluation — protocol `hybrid-only-independent-evaluation/1` (pre-registered, C19, 2026-11-02)
 
-**Status: framework ready, `NOT_MEASURED`.** Revision 1a (same day, before any run): independent review round 1 closures (MAJOR-1/2, MINOR-4). No corpus exists: no author independent of the implementer has been named,
+**Status: framework ready, `NOT_MEASURED`.** Revision 1a (same day, before any run): independent review round 1 closures (MAJOR-1/2, MINOR-4); revision 1b: round 2 closures (MAJOR-A/B/C). No corpus exists: no author independent of the implementer has been named,
 and this protocol forbids the implementer from writing one or attesting its independence.
 
 ## 1. Question
@@ -37,7 +37,8 @@ its limits? Hybrid is the target architecture. **This protocol does not compare 
 - **Gold extraction for every `SERVED` case** (review MAJOR-2): goal and operand matching exists only against a gold, so
   the gold IS part of the expectation. It is written before the freeze (by the author, or by the implementer and then
   confirmed by the author: `authoring.gold_confirmed_by_author: true`); the runner refuses an H-1 corpus without it, or
-  without every stratum. Gold may be added for non-served cases for attribution only.
+  without every stratum. **Every non-served case needs a gold too** (round 2 MAJOR-C): it fixes the right reason of the
+  refusal, and a CLARIFY gold names the ambiguous wording in `unresolved`.
 - **What the authorship fields prove:** nothing by themselves — they are fields of the corpus file. The control is the
   Owner approving the hash of that file (review MINOR-4).
 
@@ -48,13 +49,16 @@ its limits? Hybrid is the target architecture. **This protocol does not compare 
 - **`SERVED_CORRECT`** only when every expected quantity is answered exactly, the certificate is verified, and the
   extraction's goals and operands match the gold's (tests: an unanswered expected quantity is `SERVED_WRONG`; a model
   that drops one of two goals is never `SERVED_CORRECT`).
-- **Right status, right reason** (review MAJOR-1): a refusal is correct only with the gold replay's refusal code AND the
-  gold's facts; a clarification only with an `unresolved` entry on the gold's ambiguous wording (`reason_verified`).
-  Otherwise `WRONG_REASON_REFUSAL` / `WRONG_REASON_CLARIFICATION`. Conservative: an equivalent but different extraction
-  that refuses for the right reason is counted wrong. A refusal at the domain gate (no extraction) needs only the code.
+- **Right status, right reason** (review MAJOR-1, round 2 MAJOR-A/B/C): a refusal is correct only with the gold
+  replay's refusal code AND the gold's facts; a clarification only when EVERY live `unresolved` entry lies on the gold's
+  ambiguous wording (located spans intersect, more than half of its words, at most twice its length). Otherwise
+  `WRONG_REASON_REFUSAL` / `WRONG_REASON_CLARIFICATION`; with nothing to compare, `REASON_NOT_VERIFIED` — never correct.
+  The same verdict feeds `end_to_end_correct`, `by_stratum` and `composition_label`; only the scorer's eight metrics stay
+  status-only (unchanged scorer). Conservative: an equivalent but different extraction, or a clarification naming only
+  half of the ambiguous wording, counts as wrong. A refusal at the domain gate (no extraction) needs only the code.
 - **Outcome taxonomy per row** (`hybrid_outcome`): `SERVED_CORRECT`, `SERVED_WRONG`, `CORRECT_REFUSAL`, `FALSE_REFUSAL`,
   `WRONG_REASON_REFUSAL`, `CORRECT_CLARIFICATION`, `WRONG_REASON_CLARIFICATION`, `FALSE_CLARIFICATION`,
-  `INFRASTRUCTURE_FAILURE`; unrun cases are
+  `REASON_NOT_VERIFIED`, `INFRASTRUCTURE_FAILURE`; unrun cases are
   `cases_not_measured`, never 0. A technical failure is never a refusal (test).
 - **Extraction detail:** `described_check` (kinds, refs, quotes) and `constraint_check` (kinds, operands, quotes, no
   invented construction).
