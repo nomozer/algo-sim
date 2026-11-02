@@ -12,4 +12,4 @@ This folder holds the candidate-divergence layer for the Real Product Integratio
   - `LIVE_PROVIDER_NOT_MEASURED` (`0` live Gemini requests; `PAID_PROJECT_NOT_VERIFIED`);
   - `GENUINE_DISCOVERY_NOT_ESTABLISHED` (`../hybrid-master-backend-replacement/composition-c18.md`).
 - **Unchanged:** `CACHE_VERSION` 131; `DEFAULT_MODE = LLM_ONLY`; locked flat `TypedFact` schema; Route A schemas; math kernel/planner/registry versions (`/31`, `/26`, `/22`, `/4`).
-- **Candidate:** product `6fc6b309`, 118 files, `91e45c9f7a7d0b08…` (`frozen-evaluation-candidate.json`); prior candidate `15d236eb` (`51ba6135` / `3711d4eeee260ffd…`) preserved in `../hybrid-master-definition-composition/frozen-evaluation-candidate.json` and `../hybrid-master-backend-replacement/frozen-evaluation-candidate-15d236eb.json`.
+- **Candidate:** product `d17116cb`, 118 files, `730045ff43f7be80…` (`frozen-evaluation-candidate.json`); prior candidate `15d236eb` (`51ba6135` / `3711d4eeee260ffd…`) preserved in `../hybrid-master-definition-composition/frozen-evaluation-candidate.json` and `../hybrid-master-backend-replacement/frozen-evaluation-candidate-15d236eb.json`.
