@@ -1,0 +1,15 @@
+{
+ "owner_decision": "PENDING_OWNER_DECISION",
+ "pilot": "K-1",
+ "model": "gemini-2.5-flash",
+ "paid_project_confirmed": false,
+ "max_requests": 16,
+ "max_usd": 1.0,
+ "input_usd_per_million": 0.30,
+ "output_usd_per_million": 2.50,
+ "corpus_sha256": "6eeab278aef771c14ac1849363af3f87d52e8d90f6d27c1d5441ad8308acc080",
+ "measured_system": "3711d4eeee260ffdbe50871c59b66922d470c99908eead729810c473d6ef8773",
+ "runner_sha256": "1a3d80d939d9ffa1e8b290f96e272401b388c2ed1041db007f6cc213414b11b0",
+ "paired_harness_sha256": "2ac9577ff68e15ebdf345577bea20ae4116ce26654b64d63e82b92b7619e5ada",
+ "scorer_sha256": "8c330bd493f9d401f579b6383f1a1df2bc9172eee2530cf187be2024801b5a2d"
+}

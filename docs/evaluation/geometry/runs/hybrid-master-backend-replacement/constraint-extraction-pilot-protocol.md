@@ -54,3 +54,18 @@ the model's.
 It can show whether the extraction surface opened in C17/C18 is usable by the live model on these 16 texts. It cannot
 show held-out generality, student wording, or anything about the planner (the planner is measured offline:
 `composition-c18.md`).
+
+## Revision A (C19, 2026-11-02, before any live run)
+
+The pilot is now runnable as study **`K-1`** of the S-2/R-1 runner (same transport, budget, identity guard, scorer and
+gold-replay attribution). Corpus: `k1-live-pilot-corpus.json` (built by `tools/build_k1_live_corpus.py` from the 16 cases
+above; nothing re-selected). Changes, all found by the offline gold replay, never by a model output:
+- K-B01 (constraints fix no plane) expects **`REFUSED_UNDERDETERMINED`** (refusal group `MISSING_DATA`), as §2 above
+  registered ("REFUSED"); the first conversion had mapped it to CLARIFY, which only a model could produce and only the
+  engine can see.
+- K-E gold is the honest exit (the source gold without the ambiguous object and its goal, plus one `unresolved`).
+- Metrics §3: 1 and 2 are the runner's `constraint_check` / `described_check`; 6 is `no_invented_construction`;
+  8 is the scorer plus `hybrid_outcome`.
+
+Gold replay (`k1-live-pilot-gold-replay.jsonl`): **16/16**, 0 wrong-served. Approval template
+`k1-owner-approval.template.json`: 16 requests (one per case, no retry headroom), USD 1.0; worst-case estimate USD 0.39.
