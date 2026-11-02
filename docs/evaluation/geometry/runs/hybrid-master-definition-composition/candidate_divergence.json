@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT (eighteenth continuation: points named by a property composed by definition regression, registry /31, planner /26, engine /22)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-master-constraint-witness/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "3711d4eeee260ffdbe50871c59b66922d470c99908eead729810c473d6ef8773",
+  "current_product_commit": "51ba6135a76e1daf761c021ce5c03de34acbae62",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Backend only, offline, on top of the 2fc15108 candidate: typed-fact-next/2 gains the described kinds orthocenter and circumcenter (polygon, three labels; flat, v3, Route A schemas unchanged). Registry /31 adds POINT_DEFINITIONS (textbook loci, a descriptor contract with no call, declared rule DINH_NGHIA_DIEM), locus contracts PerpLine / PerpDir on orthogonal_projection_line and PerpLine on translate_point, and the gate check _dinh_nghia_trong_chuoi; planner /26 regresses a definition into PerpLine needs (free slots, structural preconditions, local depth cut, memo re-chosen when the plan grew; steps tagged registered); engine /22 checks the whole definition in the Gram metric. Independent oracle on 504 generated cases: 480 served exact, 24 degenerate refused, 0 wrong-served, 0 reachable-refused; 202 goals need composition (composition-probe-r2.json). Discovery is NOT established (review round 1 MAJOR-1/2: a registered decomposition by the C17 standard). C17 corpus 1531/1531 rows identical; 41/41 preview fixtures through the declared identity delta; Wave 3 phase-s2 0 transitions. Independent review READY in round 2. LLM_ONLY, its cache identity, prompts, frontend and route A schemas are unchanged.",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "NO BUMP: LLM_ONLY untouched (CACHE_VERSION keys the /api/analyze response cache); Route D rows are keyed by the Route D surface, which includes the registry/planner/engine versions (/31, /26, /22), so they invalidate on their own; refusals are never cached.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored. Property-defined points were refused (INVALID_TYPED_FACT_NEXT) on 2fc15108 (composition-baseline-25.json)."
+  }
+}
