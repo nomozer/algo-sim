@@ -80,7 +80,7 @@ DESCRIBED_POINT_FIELDS = {"midpoint": {"segment": "pt2"}, "centroid": {"polygon"
                           "orthocenter": {"polygon": "labels3"}, "circumcenter": {"polygon": "labels3"}}
 #: Goal target keys whose values are point operands (a described ref may stand there); planes stay labels.
 DESCRIBED_GOAL_KEYS = ("point", "segment", "line", "line1", "line2", "polygon")
-#: Nesting bound of described points (the planner's effect search is bounded at depth 3: the ask + two producer levels).
+#: Nesting bound of described points (the bridge certifies one description per question; the planner's effect search is bounded at depth 4 since C18).
 MAX_DESCRIBED_DEPTH = 2
 
 

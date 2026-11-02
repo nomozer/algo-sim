@@ -339,6 +339,11 @@ def cases(topologies=TOPOLOGIES, search=True):
                            'source_point': next((v for v in V if X is not None and V[v] == X), None),
                            'direct': ({'fn': direct[X][0], 'args': list(direct[X][1])} if X is not None and X in direct
                                       else None),
+                           # C18 review MINOR-3: a distance to a face PARALLEL to the triangle's plane is the same for
+                           # every point of that plane — one primitive on a vertex answers the GOAL without the centre
+                           'goal_direct': (goal == 'G1' and X is not None and not any(cross(
+                               cross(sub(V[tri[1]], V[tri[0]]), sub(V[tri[2]], V[tri[0]])),
+                               cross(sub(V[face[1]], V[face[0]]), sub(V[face[2]], V[face[0]]))))),
                            'forward': fw}
 
 

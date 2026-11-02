@@ -9,10 +9,13 @@ Verdicts per case:
   SEARCH_EXHAUSTED                        reachable, refused on a search bound (`PLAN_TOO_LARGE`);
   REACHABLE_BUT_SEARCH_MISSED             reachable and representable, refused by the planner / engine otherwise.
 Composition of a served case (from the CERTIFICATE it was served with, checked against the oracle):
-  DISCOVERED_FUNCTION_COMPOSITION         the oracle says composition is NECESSARY (no single Registry call on the named
-                                          points reaches the centre), the chain has ≥ 2 distinct functions, and every
-                                          fresh point of the chain is consumed by a later step of it;
-  COMPOSED_NOT_NECESSARY                  served by the same search, but the centre is a named point or one call away.
+  NECESSARY_COMPOSITION_SERVED            the oracle says composition is NECESSARY for the GOAL (no single Registry call
+                                          on the named points reaches the centre, and the goal is not the same for every
+                                          point of the triangle's plane — review MINOR-3), the chain has ≥ 2 distinct
+                                          functions, and every fresh point of the chain is consumed by a later step;
+  COMPOSED_NOT_NECESSARY                  served by the same search, but the centre or the goal is one call away.
+Necessity is not discovery: whether the plan was DISCOVERED is the provenance question (review MAJOR-1/2), answered by
+the planner's step provenance and by the C15 rule (`c15_rule_label`), both recorded per row.
 Usage: composition_probe.py [out.json] [--arm NAME]   (`IMPLEMENTER_AUTHORED_DEVELOPMENT_DIAGNOSTIC`, 0 provider calls)
 """
 import collections, functools, json, os, re, socket, sys, time
@@ -66,10 +69,10 @@ def composition(route, case):
                   for c in chain_calls if not c['fn'].startswith('ask_'))
     info = {'chain_functions': fns, 'plan': plan, 'fresh_points': fresh, 'fresh_consumed': used,
             'search_generated_steps': (route['planner'].get('search_telemetry') or {}).get('search_generated_steps')}
-    if case['necessity'] != 'COMPOSITION_NECESSARY':
+    if case['necessity'] != 'COMPOSITION_NECESSARY' or case['goal_direct']:
         return 'COMPOSED_NOT_NECESSARY', info
     ok = len(fns) >= 2 and fresh and all(used.values())
-    return ('DISCOVERED_FUNCTION_COMPOSITION' if ok else 'NOT_ESTABLISHED'), info
+    return ('NECESSARY_COMPOSITION_SERVED' if ok else 'NOT_ESTABLISHED'), info
 
 
 @functools.lru_cache(maxsize=1)
@@ -120,7 +123,7 @@ def run_all(arm=None):
             verdict = 'REACHABLE_BUT_SEARCH_MISSED'
         comp, info = composition(route, c) if served else (None, {})
         tel = (route.get('planner') or {}).get('search_telemetry') or {}
-        rows.append({k: c[k] for k in ('id', 'topology', 'center', 'triangle', 'goal', 'necessity', 'want2')} | {
+        rows.append({k: c[k] for k in ('id', 'topology', 'center', 'triangle', 'goal', 'necessity', 'goal_direct', 'want2')} | {
             'status': route['status'], 'code': code, 'verdict': verdict, 'got2': [str(g) for g in got] if got else None,
             'composition': comp, 'planner_label': tel.get('classification') if served else None,
             'c15_rule_label': c15_rule_label(route, c['payload']) if served else None,
@@ -141,8 +144,8 @@ def summary(rows):
                                                                      for r in served)),
             'c15_rule_label_vs_composition': dict(collections.Counter(f"{r.get('c15_rule_label')} | {r['composition']}"
                                                                       for r in served)),
-            'chain_functions_of_discovered': dict(collections.Counter(
-                '+'.join(r['chain_functions']) for r in served if r['composition'] == 'DISCOVERED_FUNCTION_COMPOSITION')),
+            'chain_functions_of_necessary': dict(collections.Counter(
+                '+'.join(r['chain_functions']) for r in served if r['composition'] == 'NECESSARY_COMPOSITION_SERVED')),
             'max_explored_states': max((r['explored_states'] or 0 for r in rows), default=0),
             'max_search_depth': max((r['search_depth'] or 0 for r in rows), default=0),
             'ms_max': max(r['ms'] for r in rows), 'ms_median': sorted(r['ms'] for r in rows)[len(rows) // 2]}

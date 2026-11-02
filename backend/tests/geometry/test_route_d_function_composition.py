@@ -56,7 +56,9 @@ def test_c18_a_property_defined_point_is_served_by_a_composition_the_planner_fou
     assert route["status"] == "SERVED", env.get("reason_code")
     assert answers == {"q1": want}
     tel = route["planner"]["search_telemetry"]
-    assert tel["classification"] == "DISCOVERED_FUNCTION_COMPOSITION" and tel["search_generated_steps"]
+    # review MAJOR-1/2: the definition is a declared rule (C17 standard) — necessary composition, not discovery
+    assert tel["classification"] == "REGISTERED_DECOMPOSITION" and not tel["search_generated_steps"]
+    assert registry.DINH_NGHIA_DIEM in registry.AUXILIARY_RULES
     d = _chain(route)
     fns = [e["fn"] for e in d["chain"]]
     assert "orthogonal_projection_line" in fns and "intersect_line_line" in fns and fns[-1].startswith("ask_")
@@ -73,7 +75,7 @@ def test_c18_orthocenter_meets_two_altitudes_each_through_a_foot_the_source_neve
     # every fresh foot is consumed by the meet: line i passes through its vertex and its foot
     lines = [set(meet["env"]["L1"][1]), set(meet["env"]["L2"][1])]
     assert all(any(f["env"]["X"] in ln for ln in lines) for f in feet)
-    assert set(route["planner"]["search_telemetry"]["search_generated_steps"]) >= {e["call"] for e in feet}
+    assert set(route["planner"]["search_telemetry"]["registered_decomposition_steps"]) >= {e["call"] for e in feet}
 
 
 def test_c18_circumcenter_cannot_use_the_foot_of_a_midpoint_on_its_own_side_and_translates_instead():
@@ -90,8 +92,9 @@ def test_c18_a_collinear_triangle_is_refused_never_served():
     assert route["status"] == "REFUSED", env.get("reason_code")
 
 
-def test_c18_the_contract_graph_alone_resolves_the_point_no_dispatch_names_it():
-    """Planner level: the definition and the locus contracts are Registry data; the resolver names no function."""
+def test_c18_the_definition_resolver_has_no_function_name_literal():
+    """A string check only (review MINOR-1): the meet IS chosen by signature (exactly one `Point ← Line, Line` contract)
+    and a locus line is bound through `contract.line` — so this proves no literal, not independence from the library."""
     src = Path(planner.__file__).read_text(encoding="utf-8")
     body = src[src.index("    def _dinh_nghia("):src.index("    def _emit(")]
     assert not any(f'"{fn}"' in body or f"'{fn}'" in body for fn in registry.REGISTRY)

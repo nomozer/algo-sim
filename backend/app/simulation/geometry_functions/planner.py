@@ -62,7 +62,8 @@ from .registry import POINT_DEFINITIONS, descriptor_contracts
 #: /26 (C18): a point the source names by a PROPERTY (`registry.POINT_DEFINITIONS`: orthocenter, circumcenter) is
 #: resolved by goal regression into its loci, each locus a typed need (`PerpLine`, `PerpDir`) whose producers come from
 #: function contracts (free slots, structural preconditions); depth exhaustion of one alternative no longer aborts the
-#: others; steps written inside such a regression are `search_generated`.
+#: others; steps written inside such a regression are `registered` (the definition is the declared rule
+#: `DINH_NGHIA_DIEM`, review MAJOR-1/2): the composition is necessary and served, but it is not discovery.
 PLANNER_VERSION = "geometry-fact-planner/26"
 PlaneName = Annotated[
     str,
@@ -2292,7 +2293,7 @@ class _EffectResolver:
     def _emit(self, choice, fact, under=False):
         if choice.fn is None:
             return choice.env
-        under = under or choice.definition is not None     # C18: inside a definition's regression nothing is source-said
+        under = under or choice.definition is not None     # C18: inside a definition's regression: the declared rule
         contract = choice.contract
         env = dict(choice.env)
         for t, child in zip(contract.inputs, choice.inputs):  # an input slot takes its producer's effect, by position
@@ -2328,7 +2329,8 @@ class _EffectResolver:
         call = self.emit(cid, choice.fn, render_call(contract, env), fact.quotes, f'effect({contract.effect.kind})→{choice.fn}')
         self.plan.trace[-1]['fact'] = fact.id
         if not answer:                     # provenance at emission (C16): what put this step in the plan
-            self.plan.step_provenance[cid] = ('search_generated' if under
+            # C18 review MAJOR-2: a step under a defined point realizes its DECLARED definition (`DINH_NGHIA_DIEM`)
+            self.plan.step_provenance[cid] = ('registered' if under
                                               else 'source_defined' if contract.descriptor
                                               else 'registered' if contract.source_policy in _RULE_POLICIES
                                               else 'search_generated')

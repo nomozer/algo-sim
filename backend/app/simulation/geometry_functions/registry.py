@@ -1758,7 +1758,11 @@ DINH_CAT_CANH = "section vertices on the stated cut edges of a derived plane"
 #: producer by contract (a `Normal` need: a stated line ⊥ Q, or the foot of a chosen point on Q) and the engine proves the
 #: plane exists and is unique from ALL the stated constraints.
 MAT_RANG_BUOC = "section(plane defined by stated constraints)"
-AUXILIARY_RULES = {"distance(point,line)": ("orthogonal_projection_line", "ask_length"),
+#: C18 (review MAJOR-1/2): a point named by a property is built from its DECLARED definition (`POINT_DEFINITIONS`: the
+#: loci, the meet) — a registered decomposition by the C17 standard, whatever contract realizes each locus. The entry
+#: names the functions such a plan may use, not a call sequence.
+DINH_NGHIA_DIEM = "point(defined by a property: the common point of its loci)"
+AUXILIARY_RULES = {DINH_NGHIA_DIEM: ("midpoint", "orthogonal_projection_line", "translate_point", "intersect_line_line"),"distance(point,line)": ("orthogonal_projection_line", "ask_length"),
                    MAT_SONG_SONG: ("translate_point", "section"), MAT_HAI_DUONG: ("translate_point", "section"),
                    MAT_VUONG_DUONG: ("orthogonal_projection_line", "translate_point", "section"),
                    DINH_CAT_CANH: ("intersect_line_plane", "pyramid"),
@@ -2088,8 +2092,9 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
         if d.get('labels') != labels or len(set(labels)) != len(labels):
             raise TuChoi('AUXILIARY_RULE_MISMATCH', 'nhãn phụ không đúng các đầu ra tươi của chuỗi', (ask.id,))
         produced = {(g[0].effect.kind, values(g[0].effect, g[1])) for g in got}
-        # C18: a point an earlier call of this chain built (a foot, a translate) may span a line of a later call
-        built = {env.get(contract.effect.operands[0]) for contract, env, _c, fresh in got if fresh and contract.fresh}
+        # C18: in a DEFINED point's chain only, a point an earlier call built (a foot, a translate) may span a later line
+        built = ({env.get(contract.effect.operands[0]) for contract, env, _c, fresh in got if fresh and contract.fresh}
+                 if (d.get('operand') or {}).get('descriptor') in POINT_DEFINITIONS else set())
         for contract, env, c, fresh in got:
             for t in contract.inputs:                    # every input: a source leaf, or produced inside this chain
                 v = values(t, env)

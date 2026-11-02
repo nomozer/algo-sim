@@ -333,6 +333,10 @@ def test_available_foot_candidates_are_also_budgeted(monkeypatch):
                                       'points':['B','D'],'quotes':[quote]})
     r=run_fact_route(c['text'],c['payload'])
     assert r.status=='REFUSED' and r.code=='PLAN_TOO_LARGE'
+    # C18 review MINOR-6, a DECLARED behavioural transition: at the new default bound the same plan is served, correctly
+    monkeypatch.setattr(planner, 'MAX_EFFECT_CANDIDATES', 48)
+    r=run_fact_route(c['text'],c['payload'])
+    assert r.status=='SERVED' and set(r.answers.values())=={'√11'}, (r.code, r.answers)
 
 
 def test_type_incompatible_effect_candidate_is_excluded(monkeypatch):
