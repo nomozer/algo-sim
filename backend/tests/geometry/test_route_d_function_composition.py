@@ -206,6 +206,21 @@ def test_c18_plans_follow_the_definition_data_and_the_engine_is_the_authority_on
     assert route["status"] == "REFUSED" and env["reason_code"] == "ENGINE_SELF_CHECK_FAILED"
 
 
+def test_c18_a_certificate_naming_the_definition_rule_directly_is_refused_typed(monkeypatch):
+    """Review R2-1: the declared rule `DINH_NGHIA_DIEM` is never emitted as its own certificate; a forged one is a typed
+    refusal, not an internal error."""
+    from app.ai.adapter4_route import run_typed_fact_next_v2_route
+    real = planner.lap_ke_hoach
+
+    def forged(*a, **k):
+        plan = real(*a, **k)
+        plan.auxiliary.append({"rule": registry.DINH_NGHIA_DIEM, "label": "H9", "quotes": ["x"]})
+        return plan
+    monkeypatch.setattr(planner, "lap_ke_hoach", forged)
+    r = run_typed_fact_next_v2_route(CASES[H_CDM]["payload"])
+    assert r.status == "REFUSED" and r.code == "AUXILIARY_RULE_MISMATCH", (r.code, r.reason)
+
+
 def test_c18_a_definition_the_engine_cannot_check_is_never_served(monkeypatch):
     from app.simulation.geometry_functions import engine
     monkeypatch.delitem(engine._MO_TA, "orthocenter")

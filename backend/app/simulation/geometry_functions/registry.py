@@ -1811,6 +1811,8 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
         x, luat = d.get("label"), d.get("rule")
         if luat not in AUXILIARY_RULES:
             raise TuChoi("AUXILIARY_RULE_MISMATCH", f"điểm phụ {x}: luật {luat!r} không có trong bảng phân rã")
+        if luat == DINH_NGHIA_DIEM:                       # C18 review R2-1: only ever certified as an `effect-chain`
+            raise TuChoi("AUXILIARY_RULE_MISMATCH", f"điểm phụ {x}: điểm định nghĩa chỉ có chứng chỉ chuỗi hiệu ứng")
         if luat in (MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG):
             da |= _kiem_mat_song_song(d, theo_id, de, nhan, chiem, nhan_da_khai, calls, ten_mat_phu, don_vi_de, buoc,
                                       cat_doc, khoi_dan_xuat, plane_pts.get(id(d)))
