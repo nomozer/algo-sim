@@ -925,3 +925,36 @@ or pushed.
 
 **Next exact action:** the Owner decides items 1–8 of the nineteenth addendum. Without a GO or an author, no further
 offline round is warranted (directive §XVI).
+
+## Twentieth continuation (read-only live preflight), 2026-11-02: `AWAITING_OWNER_LIVE_GO`
+
+Read-only verification only (`0` commits, `0` provider calls): candidate `15d236eb` and templates `05f2a546…` /
+`71792f77…` / `a6ccbf2e…` matched, while no manual Owner-issued `*-owner-approval.json` existed on disk. Stopped cleanly
+at `AWAITING_OWNER_LIVE_GO`.
+
+## Twenty-first continuation (Owner-delegated automatic live execution & paid-project pre-request gate), 2026-11-02: `DELEGATED_AUTOMATION_READY_AND_VERIFIED` · `BLOCKED_PREFLIGHT` (`PAID_PROJECT_NOT_VERIFIED`)
+
+No product change: candidate `15d236eb` preserved (`51ba6135`, `118` files `3711d4ee…`, `--verify` MATCH; `CACHE_VERSION`
+131, `DEFAULT_MODE = LLM_ONLY`; no new Full T3). Report: `hybrid-live-validation-c21.md`. Receipt:
+`c21-delegated-attempt/c21-delegated-execution-receipt.json` (`356fafb9…`).
+
+- **Manual PowerShell JSON step eliminated:** `run_s2_student_language_pilot.py --delegated-c21` (`runner_sha256 =
+  8691bf113b57a78094bd7738719cfdf2f0ec2dfcd0631687afaf7e4798213423`) implements `EXPLICIT_OWNER_DELEGATED_EXECUTION`
+  (`owner_decision = DELEGATED_BY_EXPLICIT_OWNER_INSTRUCTION`, never writing the Owner-reserved direct string by
+  automation per `AGENTS.md §4`), pinned strictly to `K-1` (`<= 16` / `USD 1.00`), `S-2` (`<= 36` / `USD 2.00`), `R-1`
+  (`<= 18` / `USD 1.00`) on `gemini-2.5-flash` (no fallback), refusing `H-1` and `--live` ledger bypasses.
+- **Two-tier hard budget & secret protection:** campaign-scoped `GlobalBudgetLedger` + atomic `.lock` enforce
+  `MAX_TOTAL_REQUESTS = 70` and `MAX_TOTAL_SPEND_USD = 4.00` across pilots and retries (including mid-run interrupts);
+  partial/missing usage is recorded as `UNKNOWN` and charged at `request_ceiling_usd` (never `0.0`); `AQ.…` API keys and
+  `ya29.…` OAuth tokens are blocked by `check_publication_safety.py` and redacted by `redact_secrets()`.
+- **Templates refreshed to `8691bf11…`:** `k1` `ee581d674cbc578731422f58c2b6376b24198cfe`, `s2`
+  `528622dda95180b022ab0c0580a0ebf04dc83d19`, `r1` `f20279a96e6dd0ac71a4526e7f0333209b811707` (superseding C19 blobs
+  `a6ccbf2e…` / `05f2a546…` / `71792f77…`).
+- **Real `--delegated-c21` run:** `GEMINI_API_KEY` (`AQ.…`) was loaded in memory from root `backend/.env` without copying
+  or printing, and execution halted deterministically before request 1 with `PAID_PROJECT_NOT_VERIFIED` (`0` HTTP
+  requests, `0` approvals minted, `USD 0.00`) because C21 §I explicitly withheld paid-project confirmation and the host
+  lacks `GOOGLE_CLOUD_PROJECT` / Cloud Billing OAuth credentials.
+- **Review:** fresh-context, adversarial. Round 1 `NOT_READY` (`4 MAJOR`, `4 MINOR`, `2 NIT`); Round 2 **`READY`**
+  (`0 BLOCKER`, `0 MAJOR`, `0 MINOR`, `0 NIT`).
+- **Status:** live `K-1` / `S-2` / `R-1` and `H-1` remain `NOT_MEASURED`; overall `HYBRID_NOT_READY`. Next exact action:
+  clear `PAID_PROJECT_NOT_VERIFIED` via either option in the twenty-first addendum of `owner-go-request.md`.

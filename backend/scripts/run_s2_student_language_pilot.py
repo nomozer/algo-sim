@@ -25,6 +25,8 @@ import json
 import math
 import os
 import re
+import shutil
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -542,23 +544,257 @@ def supplementary(rows: list[dict[str, Any]], study: str = "S-2") -> dict[str, A
                 r["attribution"] for r in rows if r["attribution"]).items()))}
 
 
-# ── live authorization (§4) ──────────────────────────────────────────────────────────────────────────────────────────
+# ── live authorization (§4 & C21 EXPLICIT_OWNER_DELEGATED_EXECUTION) ────────────────────────────────────────────────
 
-#: The six §4 gates as approval fields (plus the identity bindings). The Owner writes the file; this runner never does.
+#: The six §4 gates as approval fields (plus the identity bindings). Direct approvals are Owner-written (`APPROVED_BY_USER`
+#: is never written by automation); C21 adds `EXPLICIT_OWNER_DELEGATED_EXECUTION` (`DELEGATED_DECISION`) for K-1, S-2, R-1.
 APPROVAL_FIELDS = ("pilot", "model", "paid_project_confirmed", "max_requests", "max_usd", "input_usd_per_million",
                    "output_usd_per_million", "corpus_sha256", "measured_system", "runner_sha256",
                    "paired_harness_sha256", "scorer_sha256")
+DELEGATED_MODE = "EXPLICIT_OWNER_DELEGATED_EXECUTION"
+DELEGATED_DECISION = "DELEGATED_BY_EXPLICIT_OWNER_INSTRUCTION"
+DELEGATED_AUTHORIZED_MODEL = "gemini-2.5-flash"
+DELEGATED_PILOT_CAPS: dict[str, tuple[int, float]] = {"K-1": (16, 1.0), "S-2": (36, 2.0), "R-1": (18, 1.0)}
+DELEGATED_SUITE_ORDER = ("K-1", "S-2", "R-1")
+DELEGATED_GLOBAL_MAX_REQUESTS = 70
+DELEGATED_GLOBAL_MAX_USD = 4.0
+PAID_VERIFICATION_SOURCES = ("CLOUD_BILLING_API", "EXPLICIT_OWNER_PAID_ATTESTATION")
+SUITE_FATAL_STOPS = {"PROVIDER_MODEL_UNAVAILABLE", "PROVIDER_AUTH_ERROR", "PROVIDER_BLOCK", "INFRASTRUCTURE_STREAK",
+                     "UNAUTHORIZED_ENDPOINT_OR_MODEL", "IDENTITY_CHANGED", "CORPUS_CHANGED", "APPROVAL_CHANGED",
+                     "GLOBAL_REQUEST_CAP", "GLOBAL_COST_CEILING"}
+_SECRET_RE = re.compile(
+    r"AIza[0-9A-Za-z_\-]{20,}|\bAQ\.[0-9A-Za-z_.\-]{16,}|\bya29\.[0-9A-Za-z_.\-]{16,}|Bearer\s+[A-Za-z0-9_.\-~+/=]{12,}"
+)
+_GCP_PROJECT_RE = re.compile(r"[a-z][a-z0-9\-]{4,28}[a-z0-9]")
 
 
-def authorize_live(corpus_path: Path, approval_path: Path | None) -> dict[str, Any]:
+def redact_secrets(text: str, extra_secrets: tuple[str, ...] = ()) -> str:
+    out = str(text)
+    for sec in extra_secrets:
+        if isinstance(sec, str) and len(sec.strip()) >= 8:
+            out = out.replace(sec, "[REDACTED_SECRET]").replace(sec.strip(), "[REDACTED_SECRET]")
+    return _SECRET_RE.sub("[REDACTED_SECRET]", out)
+
+
+def resolve_root_dotenv(repo_cwd: Path | None = None) -> Path:
+    cwd = repo_cwd or BACKEND.parent
+    try:
+        common = subprocess.run(["git", "rev-parse", "--git-common-dir"], cwd=cwd, capture_output=True, check=True,
+                                text=True).stdout.strip()
+        git_dir = (cwd / common).resolve()
+        if git_dir.name == ".git":
+            return git_dir.parent / "backend" / ".env"
+    except (OSError, subprocess.CalledProcessError):
+        pass
+    return cwd / "backend" / ".env"
+
+
+def _parse_dotenv_memory(dotenv_path: Path | None, keys: tuple[str, ...]) -> dict[str, str]:
+    if dotenv_path is None or not dotenv_path.is_file():
+        return {}
+    found: dict[str, str] = {}
+    for raw_line in dotenv_path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        k, v = line.split("=", 1)
+        k = k.removeprefix("export ").strip()
+        if k not in keys:
+            continue
+        v = v.strip()
+        if len(v) >= 2 and v[0] == v[-1] and v[0] in ("'", '"'):
+            v = v[1:-1]
+        if v:
+            found[k] = v
+    return found
+
+
+def load_env_credentials(dotenv_path: Path | None = None, env: dict[str, str] | None = None) -> dict[str, Any]:
+    src_env = os.environ if env is None else env
+    wanted = ("GEMINI_API_KEY", "GOOGLE_CLOUD_PROJECT", "GCP_PROJECT", "GOOGLE_OAUTH_ACCESS_TOKEN")
+    file_vals = _parse_dotenv_memory(dotenv_path, wanted)
+
+    def pick(*names: str) -> tuple[str | None, str]:
+        for n in names:
+            if val := (src_env.get(n) or "").strip():
+                return val, "process_env"
+        for n in names:
+            if val := (file_vals.get(n) or "").strip():
+                return val, "root_dotenv"
+        return None, "missing"
+
+    api_key, api_key_source = pick("GEMINI_API_KEY")
+    project_id, project_source = pick("GOOGLE_CLOUD_PROJECT", "GCP_PROJECT")
+    oauth_token, oauth_source = pick("GOOGLE_OAUTH_ACCESS_TOKEN")
+    return {"api_key": api_key, "api_key_source": api_key_source, "project_id": project_id,
+            "project_source": project_source, "oauth_token": oauth_token, "oauth_source": oauth_source}
+
+
+def _default_billing_get(url: str, headers: dict[str, str], timeout: float) -> tuple[int, Any]:
+    import httpx
+    res = httpx.get(url, headers=headers, timeout=timeout)
+    try:
+        return res.status_code, res.json()
+    except ValueError:
+        return res.status_code, None
+
+
+def verify_paid_project(*, project_id: str | None = None, oauth_token: str | None = None,
+                        attestation_path: Path | None = None, repo_root: Path | None = None,
+                        http_get=None) -> dict[str, Any]:
+    """Trustworthy paid-project check (C21 §I/§IV). Presence of `GEMINI_API_KEY` or `.env` NEVER confirms paid billing."""
+    if project_id and not _GCP_PROJECT_RE.fullmatch(project_id):
+        return {"verified": False, "stop_reason": "PAID_PROJECT_NOT_VERIFIED",
+                "detail": "invalid Google Cloud project_id format"}
+    if attestation_path is not None:
+        if not attestation_path.is_file():
+            return {"verified": False, "stop_reason": "PAID_PROJECT_NOT_VERIFIED",
+                    "detail": "paid-project attestation file does not exist"}
+        try:
+            att = json.loads(attestation_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            return {"verified": False, "stop_reason": "PAID_PROJECT_NOT_VERIFIED",
+                    "detail": "paid-project attestation file is unreadable"}
+        att_proj = (att.get("project_id") or "").strip() if isinstance(att, dict) else ""
+        stmt_ref = att.get("statement_ref", "").strip() if isinstance(att, dict) and isinstance(att.get("statement_ref"), str) else ""
+        stmt_quote = att.get("statement_quote", "").strip() if isinstance(att, dict) and isinstance(att.get("statement_quote"), str) else ""
+        if not (isinstance(att, dict)
+                and att.get("schema") == "owner-paid-project-attestation/1"
+                and att.get("authorization_source") == "EXPLICIT_OWNER_SEPARATE_STATEMENT"
+                and att.get("paid_project_confirmed") is True
+                and stmt_ref and stmt_ref != "CONTINUATION_21_MASTER_DIRECTIVE"
+                and len(stmt_quote) >= 10
+                and (not att_proj or _GCP_PROJECT_RE.fullmatch(att_proj))):
+            return {"verified": False, "stop_reason": "PAID_PROJECT_NOT_VERIFIED",
+                    "detail": "paid-project attestation lacks required separate explicit Owner confirmation fields"}
+        if project_id and att_proj and project_id != att_proj:
+            return {"verified": False, "stop_reason": "PAID_PROJECT_NOT_VERIFIED",
+                    "detail": "project_id mismatch between environment and paid-project attestation"}
+        resolved_att = attestation_path.resolve()
+        root = (repo_root or BACKEND.parent).resolve()
+        try:
+            stored_att_path = resolved_att.relative_to(root).as_posix()
+        except ValueError:
+            stored_att_path = str(resolved_att)
+        return {"verified": True, "source": "EXPLICIT_OWNER_PAID_ATTESTATION",
+                "attestation_sha256": sha256_file(attestation_path),
+                "attestation_path": stored_att_path,
+                "statement_ref": stmt_ref,
+                "project_id": att_proj or project_id}
+    token = (oauth_token or "").strip() or None
+    if token and token.startswith(("AIza", "AQ.")):
+        return {"verified": False, "stop_reason": "PAID_PROJECT_NOT_VERIFIED",
+                "detail": "Cloud Billing OAuth access token cannot be a Gemini API key"}
+    if project_id and not token and http_get is None and shutil.which("gcloud"):
+        try:
+            proc = subprocess.run(["gcloud", "auth", "application-default", "print-access-token"],
+                                  capture_output=True, text=True, timeout=10, check=False)
+            if proc.returncode == 0 and proc.stdout.strip():
+                token = proc.stdout.strip()
+        except (OSError, subprocess.SubprocessError):
+            token = None
+    if project_id and token:
+        getter = http_get or _default_billing_get
+        try:
+            status, body = getter(f"https://cloudbilling.googleapis.com/v1/projects/{project_id}/billingInfo",
+                                  {"Authorization": f"Bearer {token}"}, 15.0)
+        except Exception as exc:  # noqa: BLE001
+            return {"verified": False, "stop_reason": "PAID_PROJECT_NOT_VERIFIED",
+                    "detail": redact_secrets(f"Cloud Billing API error: {type(exc).__name__}", (token,))}
+        if (status == 200 and isinstance(body, dict) and body.get("billingEnabled") is True
+                and body.get("projectId") == project_id):
+            return {"verified": True, "source": "CLOUD_BILLING_API", "project_id": project_id, "billing_enabled": True}
+        return {"verified": False, "stop_reason": "PAID_PROJECT_NOT_VERIFIED",
+                "detail": f"Cloud Billing API did not confirm active billing (status={status}, "
+                          f"billingEnabled={body.get('billingEnabled') if isinstance(body, dict) else None})"}
+    return {"verified": False, "stop_reason": "PAID_PROJECT_NOT_VERIFIED",
+            "detail": "No Cloud Billing API credentials/project_id and no separate explicit Owner paid-project "
+                      "attestation; GEMINI_API_KEY/.env presence never implies paid billing."}
+
+
+def _check_delegated_terms(study: str, approval: dict[str, Any]) -> None:
+    if approval.get("authorization_mode") != DELEGATED_MODE or approval.get("owner_decision") != DELEGATED_DECISION:
+        raise LiveRefused("delegated approval must pair EXPLICIT_OWNER_DELEGATED_EXECUTION with its delegated decision")
+    if study not in DELEGATED_PILOT_CAPS:
+        raise LiveRefused(f"{study} is outside EXPLICIT_OWNER_DELEGATED_EXECUTION scope; separate Owner approval needed")
+    if approval["model"] != DELEGATED_AUTHORIZED_MODEL:
+        raise LiveRefused(f"delegated model must be {DELEGATED_AUTHORIZED_MODEL}")
+    req_cap, usd_cap = DELEGATED_PILOT_CAPS[study]
+    if approval["max_requests"] > req_cap:
+        raise LiveRefused(f"delegated max_requests exceeds {study} cap {req_cap}")
+    if approval["max_usd"] > usd_cap:
+        raise LiveRefused(f"delegated max_usd exceeds {study} cap {usd_cap}")
+    d = approval.get("delegation")
+    if not isinstance(d, dict) or d.get("authorization_source") != "EXPLICIT_OWNER_INSTRUCTION":
+        raise LiveRefused("delegated approval lacks EXPLICIT_OWNER_INSTRUCTION provenance")
+    for k in ("directive_id", "candidate_commit", "issued_at"):
+        if not isinstance(d.get(k), str) or not d[k].strip():
+            raise LiveRefused(f"delegation lacks {k}")
+    if d.get("authorized_model") != DELEGATED_AUTHORIZED_MODEL:
+        raise LiveRefused("delegation authorized_model invalid")
+    pilots = d.get("authorized_pilots")
+    if not (isinstance(pilots, list) and pilots and set(pilots) <= set(DELEGATED_PILOT_CAPS) and study in pilots):
+        raise LiveRefused("delegation authorized_pilots invalid")
+    g_req = d.get("global_max_requests")
+    if type(g_req) is not int or not 0 < g_req <= DELEGATED_GLOBAL_MAX_REQUESTS or approval["max_requests"] > g_req:
+        raise LiveRefused("delegation global_max_requests invalid")
+    g_usd = d.get("global_max_usd")
+    if (type(g_usd) not in (int, float) or not math.isfinite(g_usd)
+            or not 0 < g_usd <= DELEGATED_GLOBAL_MAX_USD or approval["max_usd"] > g_usd):
+        raise LiveRefused("delegation global_max_usd invalid")
+    if not re.fullmatch(r"[0-9a-f]{40}", str(d.get("template_git_blob") or "")):
+        raise LiveRefused("delegation template_git_blob invalid")
+    pv = d.get("paid_project_verification")
+    if not isinstance(pv, dict) or pv.get("verified") is not True or pv.get("source") not in PAID_VERIFICATION_SOURCES:
+        raise LiveRefused("delegation paid_project_verification invalid")
+    if pv["source"] == "CLOUD_BILLING_API":
+        if not (pv.get("billing_enabled") is True and isinstance(pv.get("project_id"), str)
+                and _GCP_PROJECT_RE.fullmatch(pv["project_id"].strip())):
+            raise LiveRefused("delegation paid_project_verification lacks Cloud Billing confirmation")
+    elif not (re.fullmatch(r"[0-9a-f]{64}", str(pv.get("attestation_sha256") or ""))
+              and isinstance(pv.get("attestation_path"), str) and pv["attestation_path"].strip()
+              and isinstance(pv.get("statement_ref"), str) and pv["statement_ref"].strip()
+              and pv["statement_ref"].strip() not in {d["directive_id"].strip(), "CONTINUATION_21_MASTER_DIRECTIVE"}):
+        raise LiveRefused("delegation paid_project_verification lacks Owner attestation binding")
+    cand_file = BACKEND.parent / "docs" / "evaluation" / "semantic-benchmark" / "EVALUATION_CANDIDATE.json"
+    if cand_file.is_file():
+        cand = json.loads(cand_file.read_text(encoding="utf-8"))
+        if (cand.get("measured_system") or {}).get("tree_hash") != approval["measured_system"]:
+            raise LiveRefused("delegated approval measured_system differs from frozen EVALUATION_CANDIDATE.json")
+
+
+def authorize_live(corpus_path: Path, approval_path: Path | None,
+                   *, allow_delegated: bool = False,
+                   trusted_paid_verification: dict[str, Any] | None = None,
+                   repo_root: Path | None = None) -> dict[str, Any]:
     if os.environ.get("ALLOW_LIVE_AI") != "1" or not os.environ.get("GEMINI_API_KEY"):
         raise LiveRefused("ALLOW_LIVE_AI=1 and GEMINI_API_KEY are required")
     if approval_path is None or not approval_path.is_file():
         raise LiveRefused("an Owner approval file is required")
     approval = json.loads(approval_path.read_text(encoding="utf-8"))
-    if approval.get("owner_decision") != "APPROVED_BY_USER":                   # §4.1 execution authorization
-        raise LiveRefused("approval is not APPROVED_BY_USER")
-    return check_approval_terms(corpus_path.read_bytes(), approval)
+    direct = approval.get("owner_decision") == "APPROVED_BY_USER" and "authorization_mode" not in approval
+    delegated = (approval.get("authorization_mode") == DELEGATED_MODE
+                 and approval.get("owner_decision") == DELEGATED_DECISION)
+    if not (direct or delegated):                                                # §4.1 execution authorization
+        raise LiveRefused("approval is neither APPROVED_BY_USER nor EXPLICIT_OWNER_DELEGATED_EXECUTION")
+    if delegated and not allow_delegated:
+        raise LiveRefused("delegated approvals must run via --delegated-c21 under the global budget ledger")
+    checked = check_approval_terms(corpus_path.read_bytes(), approval)
+    if delegated:
+        pv = checked["delegation"]["paid_project_verification"]
+        if pv["source"] == "EXPLICIT_OWNER_PAID_ATTESTATION":
+            raw_att = Path(pv["attestation_path"])
+            apath = raw_att if raw_att.is_absolute() else (repo_root or BACKEND.parent) / raw_att
+            recheck = verify_paid_project(attestation_path=apath, repo_root=repo_root)
+            if not recheck["verified"] or recheck.get("attestation_sha256") != pv["attestation_sha256"]:
+                raise LiveRefused("delegated paid-project attestation file is missing, altered, or invalid")
+        elif pv["source"] == "CLOUD_BILLING_API":
+            if trusted_paid_verification != pv:
+                recheck = verify_paid_project(project_id=pv["project_id"],
+                                              oauth_token=os.environ.get("GOOGLE_OAUTH_ACCESS_TOKEN"))
+                if not recheck["verified"] or recheck.get("project_id") != pv["project_id"]:
+                    raise LiveRefused("delegated Cloud Billing verification could not be confirmed: PAID_PROJECT_NOT_VERIFIED")
+    return checked
 
 
 def check_approval_terms(corpus_bytes: bytes, approval: dict[str, Any]) -> dict[str, Any]:
@@ -589,6 +825,9 @@ def check_approval_terms(corpus_bytes: bytes, approval: dict[str, Any]) -> dict[
         v = approval[key]
         if type(v) not in (int, float) or not math.isfinite(v) or v <= 0:
             raise LiveRefused(f"{key} must be a finite positive number")
+    if ("authorization_mode" in approval or "delegation" in approval
+            or approval.get("owner_decision") == DELEGATED_DECISION):
+        _check_delegated_terms(study, approval)
     validate_corpus(corpus)
     worst = worst_case_request_usd(corpus, approval)
     if approval["max_requests"] * worst > approval["max_usd"]:                  # §4.5
@@ -606,13 +845,178 @@ def worst_case_request_usd(corpus: dict[str, Any], approval: dict[str, Any]) -> 
     return prompt * approval["input_usd_per_million"] / 1e6 + MAX_OUTPUT_TOKENS * approval["output_usd_per_million"] / 1e6
 
 
-# ── run ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+# ── two-tier budget & run ────────────────────────────────────────────────────────────────────────────────────────────
 
-def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None, *, sleep=time.sleep) -> dict[str, Any]:
+def _has_verified_usage(usage: dict[str, dict[str, int]] | None) -> bool:
+    """A live response without positive prompt AND output tokens has unverified usage: never priced at 0.0 (C21 §VI)."""
+    return (bool(usage)
+            and sum(v.get("prompt_tokens", 0) for v in usage.values()) > 0
+            and sum(v.get("candidates_tokens", 0) + v.get("thoughts_tokens", 0) for v in usage.values()) > 0)
+
+
+class GlobalBudgetLedger:
+    """Cross-pilot hard cap (`MAX_TOTAL_REQUESTS = 70`, `MAX_TOTAL_SPEND_USD = 4.00`) guarded by an exclusive lock."""
+
+    def __init__(self, out_dir: Path, max_requests: int = DELEGATED_GLOBAL_MAX_REQUESTS,
+                 max_usd: float = DELEGATED_GLOBAL_MAX_USD) -> None:
+        if type(max_requests) is not int or not 0 < max_requests <= DELEGATED_GLOBAL_MAX_REQUESTS:
+            raise LiveRefused(f"global_max_requests must be in 1..{DELEGATED_GLOBAL_MAX_REQUESTS}")
+        if type(max_usd) not in (int, float) or not math.isfinite(max_usd) or not 0 < max_usd <= DELEGATED_GLOBAL_MAX_USD:
+            raise LiveRefused(f"global_max_usd must be in (0, {DELEGATED_GLOBAL_MAX_USD}]")
+        out_dir.mkdir(parents=True, exist_ok=True)
+        self.ledger_path = out_dir / "c21-global-budget-ledger.json"
+        self.lock_path = out_dir / "c21-global-budget.lock"
+        if self.ledger_path.exists() or self.lock_path.exists():
+            raise LiveRefused("global budget ledger or lock already exists; refusing to share or re-spend global budget")
+        self.max_requests = max_requests
+        self.max_usd = float(max_usd)
+        self.requests_used = 0
+        self.spent_upper_usd = 0.0
+        self.pilots_recorded: list[dict[str, Any]] = []
+        self._lock_held = False
+
+    def acquire(self) -> None:
+        try:
+            with self.lock_path.open("x", encoding="utf-8", newline="\n") as f:
+                json.dump({"pid": os.getpid(), "acquired_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}, f)
+        except FileExistsError as exc:
+            raise LiveRefused("global budget lock already held; refusing concurrent live run") from exc
+        self._lock_held = True
+        if self.ledger_path.exists():
+            self.release()
+            raise LiveRefused("global budget ledger already exists; refusing to re-spend global budget")
+        self._flush()
+
+    def release(self) -> None:
+        if self._lock_held and self.lock_path.exists():
+            self.lock_path.unlink()
+        self._lock_held = False
+
+    def finish_pilot(self, study: str, http_requests: int, spent_upper: float) -> None:
+        self.requests_used += int(http_requests)
+        self.spent_upper_usd += float(spent_upper)
+        self.pilots_recorded.append({"study": study, "http_requests": int(http_requests),
+                                     "spent_upper_usd": float(spent_upper)})
+        self._flush()
+
+    def _flush(self) -> None:
+        self.ledger_path.write_text(json.dumps({
+            "max_requests": self.max_requests, "max_usd": self.max_usd,
+            "requests_used": self.requests_used, "spent_upper_usd": self.spent_upper_usd,
+            "pilots": self.pilots_recorded,
+        }, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
+
+
+def _pilot_budget(approval: dict[str, Any], global_budget: GlobalBudgetLedger | None = None):
+    from app.ai import gemini
+    from app.ai.telemetry import usage_report
+
+    class TwoTierBudget(gemini.ApiBudget):
+        def __init__(self) -> None:
+            super().__init__(max_api_calls=int(approval["max_requests"]))
+            self.spent_before_arm = 0.0
+            self.arm_ceilings: list[float] = []
+            self.arm_start_requests = 0
+            self.stop_reason: str | None = None
+            self._pending_request_counted = False
+
+        def start_arm(self, spent: float) -> None:
+            self.spent_before_arm, self.arm_ceilings = spent, []
+            self.arm_start_requests = self.http_requests
+            self._pending_request_counted = False
+
+        def arm_upper(self) -> float:
+            usage = usage_report()
+            verified = _has_verified_usage(usage)
+            known = P.usd(usage, approval) if verified else 0.0
+            reported = sum(v.get("calls", 0) for v in usage.values()) if verified else 0
+            unreported = self.arm_ceilings[reported:]
+            return (known if isinstance(known, float) else 0.0) + sum(unreported)
+
+        def abort_before_send(self, reason: str, message: str) -> None:
+            if self._pending_request_counted and self.http_requests > self.arm_start_requests:
+                self.http_requests -= 1                     # blocked before wire send: 0 bytes left the process
+                self._pending_request_counted = False
+            self.aborted, self.stop_reason = True, reason
+            raise gemini.BudgetExceeded(message)
+
+        def reserve(self, ceiling: float) -> None:
+            pilot_projected = self.spent_before_arm + self.arm_upper() + ceiling
+            if pilot_projected > approval["max_usd"]:
+                self.abort_before_send("COST_CEILING", "the next request could exceed pilot max_usd")
+            if global_budget is not None and global_budget.spent_upper_usd + pilot_projected > global_budget.max_usd:
+                self.abort_before_send("GLOBAL_COST_CEILING", "the next request could exceed global max_usd")
+            self.arm_ceilings.append(ceiling)
+            self._pending_request_counted = False
+
+        def note_request(self, is_retry: bool) -> None:
+            if global_budget is not None and global_budget.requests_used + self.http_requests + 1 > global_budget.max_requests:
+                self.aborted, self.stop_reason = True, "GLOBAL_REQUEST_CAP"
+                raise gemini.BudgetExceeded("the next request would exceed global max_requests")
+            try:
+                super().note_request(is_retry)
+                self._pending_request_counted = True
+            except gemini.BudgetExceeded:
+                self.stop_reason = self.stop_reason or "REQUEST_CAP"
+                raise
+
+    return TwoTierBudget()
+
+
+def _guard_pilot_sends(budget, approval: dict[str, Any], *, identity: dict[str, str], corpus_path: Path,
+                       approval_path: Path | None = None, expected_approval_sha: str | None = None):
+    import httpx
+    from app.ai import gemini
+
+    sync_post, async_post = httpx.post, httpx.AsyncClient.post
+    expected_url = f"https://generativelanguage.googleapis.com/v1beta/models/{approval['model']}:generateContent"
+
+    def preflight_each_request(url: str, payload: Any) -> None:
+        if url != expected_url or gemini.MODEL != approval["model"]:
+            budget.abort_before_send("UNAUTHORIZED_ENDPOINT_OR_MODEL", "endpoint or model differs from approved model")
+        if runtime_identity() != identity:
+            budget.abort_before_send("IDENTITY_CHANGED", "runtime identity changed before request")
+        if not corpus_path.is_file() or sha256_file(corpus_path) != approval["corpus_sha256"]:
+            budget.abort_before_send("CORPUS_CHANGED", "corpus bytes changed before request")
+        if approval_path is not None:
+            marker = approval_path.with_name(approval_path.name + ".consumed")
+            if (not approval_path.is_file() or not marker.is_file()
+                    or sha256_file(approval_path) != expected_approval_sha):
+                budget.abort_before_send("APPROVAL_CHANGED", "approval or claim marker changed before request")
+        budget.reserve(P.request_ceiling_usd(payload, approval))
+
+    def guarded_sync(url, *args, **kwargs):
+        preflight_each_request(str(url), kwargs.get("json"))
+        return sync_post(url, *args, **kwargs)
+
+    async def guarded_async(self, url, *args, **kwargs):
+        preflight_each_request(str(url), kwargs.get("json"))
+        return await async_post(self, url, *args, **kwargs)
+
+    httpx.post, httpx.AsyncClient.post = guarded_sync, guarded_async
+
+    def undo() -> None:
+        httpx.post, httpx.AsyncClient.post = sync_post, async_post
+    return undo
+
+
+def _classify_provider_http_stop(status_code: int, error_body: Any) -> str | None:
+    text = json.dumps(error_body or {}, ensure_ascii=False).lower()
+    if status_code == 404 or (status_code in (400, 403)
+                              and any(w in text for w in ("not found", "not supported", "model"))):
+        return "PROVIDER_MODEL_UNAVAILABLE"
+    if status_code in (401, 403):
+        return "PROVIDER_AUTH_ERROR"
+    return None
+
+
+def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None, *, sleep=time.sleep,
+             global_budget: GlobalBudgetLedger | None = None, approval_path: Path | None = None) -> dict[str, Any]:
     """`approval is None` ⇒ gold replay; otherwise live under the approved terms, re-checked against the exact corpus
     bytes run (the Owner decision and the environment are checked by `authorize_live`, the CLI's only live entry, and
     `live_transport` refuses every send unless ALLOW_LIVE_AI=1). Rows are flushed as they complete into a new file (never overwritten); a stop is reported, never hidden."""
     from app.ai import gemini
+    from app.ai.function_calling import ProviderHTTPError
     from app.ai.telemetry import reset_usage, usage_report
     from app.ai.typed_fact_next_extraction import ReplayExtractor, TransportExtractor
 
@@ -620,14 +1024,20 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
     corpus_bytes = corpus_path.read_bytes()
     if live:
         check_approval_terms(corpus_bytes, approval)
+        if ("authorization_mode" in approval or "delegation" in approval
+                or approval.get("owner_decision") == DELEGATED_DECISION) and global_budget is None:
+            raise LiveRefused("delegated live execution requires GlobalBudgetLedger")
     corpus = json.loads(corpus_bytes.decode("utf-8"))
     validate_corpus(corpus)
     study = study_of(corpus)
     identity = runtime_identity()
+    expected_approval_sha = sha256_file(approval_path) if (live and approval_path is not None) else None
+    active_secrets = tuple(x for x in (os.environ.get("GEMINI_API_KEY"), os.environ.get("GOOGLE_OAUTH_ACCESS_TOKEN"))
+                           if x)
     sink = out_path.open("x", encoding="utf-8", newline="\n")
 
     def emit(record: dict[str, Any]) -> None:
-        sink.write(json.dumps(record, ensure_ascii=False, default=str) + "\n")
+        sink.write(redact_secrets(json.dumps(record, ensure_ascii=False, default=str), active_secrets) + "\n")
         sink.flush()
 
     klass = ("OFFLINE_DETERMINISTIC_FIXTURE_TEST" if not live else "INDEPENDENT_HYBRID_EVALUATION" if study == "H-1"
@@ -635,11 +1045,13 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
     emit({"type": "header", "study": study, "measurement_class": klass,
           "corpus_sha256": hashlib.sha256(corpus_bytes).hexdigest(),
           "runtime_identity": identity})
-    budget = P._cost_capped_budget(approval) if live else None
+    budget = _pilot_budget(approval, global_budget) if live else None
     gemini.set_budget(budget)
-    undo_guard = P._guard_sends(budget, approval) if live else (lambda: None)
+    undo_guard = (_guard_pilot_sends(budget, approval, identity=identity, corpus_path=corpus_path,
+                                     approval_path=approval_path, expected_approval_sha=expected_approval_sha)
+                  if live else (lambda: None))
     rows: list[dict[str, Any]] = []
-    spent, streak, stop_reason = 0.0, 0, None
+    spent, streak, stop_reason, in_arm = 0.0, 0, None, False
     try:
         for case in corpus["cases"]:
             if live and runtime_identity() != identity:
@@ -648,11 +1060,22 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
             reset_usage()
             if budget is not None:
                 budget.start_arm(spent)
+                in_arm = True
             start = time.perf_counter()
-            technical, extra = False, {}
+            technical, extra, provider_http_stop = False, {}, None
             try:
                 if live:
-                    extractor = TransportExtractor(P.hybrid_transport(os.environ["GEMINI_API_KEY"], sleep=sleep))
+                    inner_send = P.hybrid_transport(os.environ["GEMINI_API_KEY"], sleep=sleep)
+
+                    def tracked_send(req: dict[str, Any]) -> dict[str, Any]:
+                        nonlocal provider_http_stop
+                        try:
+                            return inner_send(req)
+                        except ProviderHTTPError as http_err:
+                            provider_http_stop = _classify_provider_http_stop(http_err.status_code, http_err.body)
+                            raise
+
+                    extractor = TransportExtractor(tracked_send)
                     observed, extra = observe(case["problem_text"], extractor, deadline_s=P.HYBRID_LIVE_DEADLINE_S)
                 else:
                     gold = case.get("gold_extraction")
@@ -662,12 +1085,15 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
             except Exception as exc:  # noqa: BLE001 — infrastructure, never a model or geometry result
                 technical, observed, extra = True, {"status": "NOT_RECOVERABLE"}, {"exception": type(exc).__name__}
             usage = usage_report()
+            row_requests = (budget.http_requests - budget.arm_start_requests) if budget else 0
+            reported_calls = sum(v.get("calls", 0) for v in usage.values()) if usage else 0
+            verified_usage = _has_verified_usage(usage) and reported_calls == row_requests
             upper = budget.arm_upper() if budget is not None else "UNKNOWN"
             row = {"type": "row", "case_id": case["id"], "stratum": case["stratum"],
-                   "latency_s": time.perf_counter() - start, "usage": usage or "UNKNOWN",
-                   "http_requests": (budget.http_requests - budget.arm_start_requests) if budget else 0,
-                   "usd": (P.usd(usage, approval) if usage or not live
-                           else 0.0 if budget.http_requests == budget.arm_start_requests else "UNKNOWN"),
+                   "latency_s": time.perf_counter() - start, "usage": usage if verified_usage else "UNKNOWN",
+                   "http_requests": row_requests,
+                   "usd": (P.usd(usage, approval) if (verified_usage or not live)
+                           else 0.0 if row_requests == 0 else "UNKNOWN"),
                    "usd_upper": upper, "technical_failure": technical,
                    "expected": expected_record(case), "observed": observed, **extra}
             row["end_to_end_status_only"] = end_to_end_correct(row["expected"], observed)
@@ -694,9 +1120,12 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
             rows.append(row)
             emit(row)
             spent += upper if isinstance(upper, float) else 0.0
+            in_arm = False
             streak = streak + 1 if technical else 0
             if budget is not None and budget.aborted:
                 stop_reason = budget.stop_reason or "REQUEST_CAP"
+            elif provider_http_stop:
+                stop_reason = provider_http_stop
             elif extra.get("hybrid_code") in P.PROVIDER_BLOCK:
                 stop_reason = "PROVIDER_BLOCK"
             elif streak >= 3:                                                    # §4.4 circuit breaker
@@ -707,8 +1136,12 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
         stop_reason = f"INTERRUPTED:{type(exc).__name__}"
         raise
     finally:
+        if in_arm and budget is not None:
+            spent += budget.arm_upper()
         undo_guard()
         gemini.set_budget(None)
+        if global_budget is not None and budget is not None:
+            global_budget.finish_pilot(study, budget.http_requests, spent)
         score = _score([{"case_id": r["case_id"], "expected": r["expected"],
                                          "observed": r["observed"]} for r in rows])
         latencies = [r["latency_s"] for r in rows if not r["technical_failure"]]
@@ -731,16 +1164,309 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
     return {**out, "runtime_identity": identity, "rows": rows}
 
 
+def default_c21_pilot_specs(run_dir: Path | None = None) -> dict[str, dict[str, Any]]:
+    base = run_dir or (BACKEND.parent / "docs" / "evaluation" / "geometry" / "runs"
+                       / "hybrid-master-backend-replacement")
+    return {
+        "K-1": {"slug": "k1", "corpus_path": base / "k1-live-pilot-corpus.json",
+                "template_path": base / "k1-owner-approval.template.json",
+                "max_requests": 16, "max_usd": 1.0},
+        "S-2": {"slug": "s2", "corpus_path": base / "s2-student-language-pilot-corpus.json",
+                "template_path": base / "s2-owner-approval.template.json",
+                "max_requests": 36, "max_usd": 2.0},
+        "R-1": {"slug": "r1", "corpus_path": base / "r1-live-pilot-corpus.json",
+                "template_path": base / "r1-owner-approval.template.json",
+                "max_requests": 18, "max_usd": 1.0},
+    }
+
+
+def _git_blob_sha(path: Path, cwd: Path) -> str:
+    return subprocess.run(["git", "hash-object", str(path)], cwd=cwd, capture_output=True, check=True,
+                          text=True).stdout.strip()
+
+
+def issue_delegated_approval(*, study: str, spec: dict[str, Any], out_dir: Path, git_cwd: Path,
+                             directive_id: str, candidate_commit: str, global_max_requests: int,
+                             global_max_usd: float, paid_verification: dict[str, Any]) -> tuple[Path, dict[str, Any]]:
+    if paid_verification.get("verified") is not True:
+        raise LiveRefused("cannot issue a delegated approval without verified paid project status")
+    tpath, cpath = Path(spec["template_path"]), Path(spec["corpus_path"])
+    blob = _git_blob_sha(tpath, git_cwd)
+    if spec.get("expected_template_blob") and blob != spec["expected_template_blob"]:
+        raise LiveRefused(f"{study} template git blob {blob} differs from expected {spec['expected_template_blob']}")
+    tmpl = json.loads(tpath.read_text(encoding="utf-8"))
+    if tmpl.get("owner_decision") != "PENDING_OWNER_DECISION" or tmpl.get("paid_project_confirmed") is not False:
+        raise LiveRefused(f"{study} template is not in clean PENDING_OWNER_DECISION / paid=false state")
+    issued_at = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    approval = {
+        **tmpl,
+        "authorization_mode": DELEGATED_MODE,
+        "owner_decision": DELEGATED_DECISION,
+        "paid_project_confirmed": True,
+        "max_requests": min(int(spec["max_requests"]), int(global_max_requests)),
+        "max_usd": min(float(spec["max_usd"]), float(global_max_usd)),
+        "delegation": {
+            "authorization_source": "EXPLICIT_OWNER_INSTRUCTION",
+            "directive_id": directive_id,
+            "authorized_pilots": list(DELEGATED_SUITE_ORDER),
+            "authorized_model": DELEGATED_AUTHORIZED_MODEL,
+            "candidate_commit": candidate_commit,
+            "global_max_requests": int(global_max_requests),
+            "global_max_usd": float(global_max_usd),
+            "issued_at": issued_at,
+            "template_path": str(tpath.name),
+            "template_git_blob": blob,
+            "paid_project_verification": paid_verification,
+        },
+    }
+    check_approval_terms(cpath.read_bytes(), approval)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    apath = out_dir / f"{spec['slug']}-delegated-approval.json"
+    with apath.open("x", encoding="utf-8", newline="\n") as f:
+        f.write(json.dumps(approval, ensure_ascii=False, indent=1) + "\n")
+    return apath, approval
+
+
+def _write_sanitized_json(path: Path, payload: dict[str, Any], secrets: tuple[str, ...]) -> None:
+    text = redact_secrets(json.dumps(payload, ensure_ascii=False, indent=1, default=str) + "\n", secrets)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text, encoding="utf-8", newline="\n")
+
+
+def run_delegated_c21_suite(
+    *,
+    out_dir: Path,
+    ledger_dir: Path | None = None,
+    dotenv_path: Path | None = None,
+    paid_attestation_path: Path | None = None,
+    pilot_specs: dict[str, dict[str, Any]] | None = None,
+    git_cwd: Path | None = None,
+    directive_id: str = "CONTINUATION_21_MASTER_DIRECTIVE",
+    candidate_commit: str = "15d236eb",
+    global_max_requests: int = DELEGATED_GLOBAL_MAX_REQUESTS,
+    global_max_usd: float = DELEGATED_GLOBAL_MAX_USD,
+    billing_http_get=None,
+    sleep=time.sleep,
+) -> dict[str, Any]:
+    """C21 automatic sequence: Preflight -> Paid-Project Gate -> K-1 -> S-2 -> R-1 under two-tier caps."""
+    from app.ai import gemini
+    from app.ai.pipeline import route_policy_snapshot
+
+    repo_cwd = git_cwd or BACKEND.parent
+    specs = pilot_specs or default_c21_pilot_specs()
+    if tuple(specs) != DELEGATED_SUITE_ORDER:
+        raise LiveRefused(f"delegated suite order must be {DELEGATED_SUITE_ORDER}")
+    ident = runtime_identity()
+    if ident["model"] != DELEGATED_AUTHORIZED_MODEL or gemini.MODEL != DELEGATED_AUTHORIZED_MODEL:
+        raise LiveRefused(f"runtime model is not {DELEGATED_AUTHORIZED_MODEL}")
+    if route_policy_snapshot({}).geometry_compiler_mode != "LLM_ONLY":
+        raise LiveRefused("production default mode is no longer LLM_ONLY")
+    cand_file = BACKEND.parent / "docs" / "evaluation" / "semantic-benchmark" / "EVALUATION_CANDIDATE.json"
+    if cand_file.is_file():
+        cand = json.loads(cand_file.read_text(encoding="utf-8"))
+        if (cand.get("measured_system") or {}).get("tree_hash") != ident["measured_system"]:
+            raise LiveRefused("measured_system differs from frozen EVALUATION_CANDIDATE.json")
+        if cand.get("cache_version") != ident["cache_version"]:
+            raise LiveRefused("cache_version differs from frozen EVALUATION_CANDIDATE.json")
+
+    verified_templates: dict[str, dict[str, Any]] = {}
+    for study in DELEGATED_SUITE_ORDER:
+        sp = specs[study]
+        cpath, tpath = Path(sp["corpus_path"]), Path(sp["template_path"])
+        cbytes = cpath.read_bytes()
+        corpus = json.loads(cbytes.decode("utf-8"))
+        if study_of(corpus) != study:
+            raise LiveRefused(f"corpus study mismatch for {study}")
+        validate_corpus(corpus)
+        csha = hashlib.sha256(cbytes).hexdigest()
+        blob = _git_blob_sha(tpath, repo_cwd)
+        if sp.get("expected_template_blob") and blob != sp["expected_template_blob"]:
+            raise LiveRefused(f"{study} template blob {blob} != expected {sp['expected_template_blob']}")
+        tmpl = json.loads(tpath.read_text(encoding="utf-8"))
+        if tmpl.get("pilot") != study:
+            raise LiveRefused(f"{study} template pilot mismatch")
+        if tmpl.get("owner_decision") != "PENDING_OWNER_DECISION" or tmpl.get("paid_project_confirmed") is not False:
+            raise LiveRefused(f"{study} template must have PENDING_OWNER_DECISION and paid_project_confirmed=false")
+        if tmpl.get("max_requests") != int(sp["max_requests"]) or tmpl.get("max_usd") != float(sp["max_usd"]):
+            raise LiveRefused(f"{study} template cap mismatch")
+        if tmpl.get("corpus_sha256") != csha:
+            raise LiveRefused(f"{study} template corpus_sha256 does not match corpus")
+        for k in ("model", "measured_system", "runner_sha256", "paired_harness_sha256", "scorer_sha256"):
+            if tmpl.get(k) != ident[k]:
+                raise LiveRefused(f"{study} template {k} does not match current runtime identity")
+        verified_templates[study] = {"template_name": tpath.name, "template_git_blob": blob, "corpus_sha256": csha,
+                                     "cases": len(corpus["cases"]), "max_requests": int(sp["max_requests"]),
+                                     "max_usd": float(sp["max_usd"])}
+
+    resolved_dotenv = dotenv_path if dotenv_path is not None else resolve_root_dotenv(repo_cwd)
+    creds = load_env_credentials(resolved_dotenv)
+    secrets = tuple(x for x in (creds.get("api_key"), creds.get("oauth_token")) if x)
+    paid_check = verify_paid_project(project_id=creds["project_id"], oauth_token=creds["oauth_token"],
+                                     attestation_path=paid_attestation_path, repo_root=repo_cwd,
+                                     http_get=billing_http_get)
+
+    verified_conditions = [
+        "candidate_product_freeze_matched",
+        "default_mode_llm_only_preserved",
+        "authorized_model_gemini_2_5_flash_pinned_no_fallback",
+        "corpora_k1_s2_r1_validated",
+        "approval_templates_k1_s2_r1_bound_to_runtime_identity",
+    ]
+    unverified_conditions: list[str] = []
+    if creds["api_key"]:
+        verified_conditions.append(f"gemini_api_key_present_via_{creds['api_key_source']}")
+    else:
+        unverified_conditions.append("gemini_api_key_missing")
+    if paid_check["verified"]:
+        verified_conditions.append(f"paid_project_verified_via_{paid_check['source'].lower()}")
+    else:
+        unverified_conditions.append("paid_project_billing_status_unverified")
+
+    receipt_path = out_dir / "c21-delegated-execution-receipt.json"
+    base_receipt: dict[str, Any] = {
+        "schema": "c21-delegated-execution-receipt/1",
+        "authorization_mode": DELEGATED_MODE,
+        "authorization_source": "EXPLICIT_OWNER_INSTRUCTION",
+        "directive_id": directive_id,
+        "authorized_scope": list(DELEGATED_SUITE_ORDER),
+        "excluded_scope": ["H-1", "PRODUCTION_CUTOVER", "MERGE_PUSH"],
+        "authorized_model": DELEGATED_AUTHORIZED_MODEL,
+        "candidate_commit": candidate_commit,
+        "runtime_identity": ident,
+        "per_pilot_caps": {k: {"max_requests": v[0], "max_usd": v[1]} for k, v in DELEGATED_PILOT_CAPS.items()},
+        "global_caps": {"max_requests": int(global_max_requests), "max_usd": float(global_max_usd)},
+        "executed_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "credentials_summary": {"api_key_present": bool(creds["api_key"]), "api_key_source": creds["api_key_source"],
+                                "project_id_present": bool(creds["project_id"]),
+                                "project_source": creds["project_source"],
+                                "oauth_token_present": bool(creds["oauth_token"])},
+        "paid_project_verification": paid_check,
+        "templates_verified": verified_templates,
+        "verified_conditions": verified_conditions,
+        "unverified_conditions": unverified_conditions,
+    }
+
+    if not creds["api_key"] or not paid_check["verified"]:
+        blocker = "MISSING_API_KEY" if not creds["api_key"] else paid_check["stop_reason"]
+        out_dir.mkdir(parents=True, exist_ok=True)
+        receipt = {
+            **base_receipt,
+            "status": "BLOCKED_PREFLIGHT",
+            "stop_reason": blocker,
+            "model_availability": "NOT_MEASURED_PRE_REQUEST_GATE_BLOCKED",
+            "approvals_created": [],
+            "total_http_requests": 0,
+            "total_spent_upper_usd": 0.0,
+            "total_spent_reported_usd": "NOT_MEASURED",
+            "pilots": [],
+        }
+        _write_sanitized_json(receipt_path, receipt, secrets)
+        return receipt
+
+    campaign_ledger_dir = ledger_dir or Path(next(iter(specs.values()))["template_path"]).parent
+    ledger = GlobalBudgetLedger(campaign_ledger_dir, max_requests=global_max_requests, max_usd=global_max_usd)
+    prev_allow = os.environ.get("ALLOW_LIVE_AI")
+    prev_key = os.environ.get("GEMINI_API_KEY")
+    approvals_created: list[dict[str, Any]] = []
+    pilot_summaries: list[dict[str, Any]] = []
+    suite_stop: str | None = None
+    interrupted = False
+    receipt: dict[str, Any] = {}
+    ledger.acquire()
+    try:
+        os.environ["ALLOW_LIVE_AI"] = "1"
+        os.environ["GEMINI_API_KEY"] = creds["api_key"]
+        for study in DELEGATED_SUITE_ORDER:
+            sp = specs[study]
+            apath, _ = issue_delegated_approval(
+                study=study, spec=sp, out_dir=out_dir, git_cwd=repo_cwd, directive_id=directive_id,
+                candidate_commit=candidate_commit, global_max_requests=global_max_requests,
+                global_max_usd=global_max_usd, paid_verification=paid_check,
+            )
+            approvals_created.append({"study": study, "file": apath.name, "sha256": sha256_file(apath)})
+            verified_approval = authorize_live(Path(sp["corpus_path"]), apath, allow_delegated=True,
+                                               trusted_paid_verification=paid_check, repo_root=repo_cwd)
+            p_out = out_dir / f"{sp['slug']}-live.jsonl"
+            P.claim_approval(apath, p_out)
+            res = evaluate(Path(sp["corpus_path"]), p_out, verified_approval, sleep=sleep,
+                           global_budget=ledger, approval_path=apath)
+            pilot_summaries.append({
+                "study": study, "output_file": p_out.name, "output_sha256": sha256_file(p_out),
+                "completed": res["completed"], "stop_reason": res["stop_reason"],
+                "cases_run": res["cases_run"], "cases_planned": res["cases_planned"],
+                "cases_not_measured": res["cases_not_measured"],
+                "http_requests": res["http_requests"],
+                "live_answered_rows": sum(r["http_requests"] > 0 and not r["technical_failure"] for r in res["rows"]),
+                "spent_upper_usd": res["spent_upper_usd"], "spent_reported_usd": res["spent_reported_usd"],
+                "latency_median_s": res["latency_median_s"], "latency_p90_s": res["latency_p90_s"],
+                "metrics": res["score"]["metrics"], "supplementary": res["supplementary"],
+            })
+            if res["stop_reason"] in SUITE_FATAL_STOPS:
+                suite_stop = res["stop_reason"]
+                break
+    except BaseException as exc:
+        interrupted = True
+        suite_stop = f"INTERRUPTED:{type(exc).__name__}"
+        raise
+    finally:
+        if prev_allow is None:
+            os.environ.pop("ALLOW_LIVE_AI", None)
+        else:
+            os.environ["ALLOW_LIVE_AI"] = prev_allow
+        if prev_key is None:
+            os.environ.pop("GEMINI_API_KEY", None)
+        else:
+            os.environ["GEMINI_API_KEY"] = prev_key
+        ledger.release()
+        reported_vals = [p["spent_reported_usd"] for p in pilot_summaries]
+        total_reported = ("UNKNOWN" if interrupted or not pilot_summaries
+                          or any(not isinstance(v, float) for v in reported_vals)
+                          else sum(reported_vals))
+        complete = (not interrupted and suite_stop is None and len(pilot_summaries) == len(DELEGATED_SUITE_ORDER)
+                    and all(p["completed"] for p in pilot_summaries))
+        model_avail = ("PROVIDER_MODEL_UNAVAILABLE" if suite_stop == "PROVIDER_MODEL_UNAVAILABLE"
+                       else "VERIFIED_LIVE" if any(p.get("live_answered_rows", 0) > 0 for p in pilot_summaries)
+                       else "UNKNOWN")
+        receipt = {
+            **base_receipt,
+            "status": "INTERRUPTED" if interrupted else "COMPLETE" if complete else "INCOMPLETE",
+            "stop_reason": suite_stop or next((p["stop_reason"] for p in pilot_summaries if p["stop_reason"]), None),
+            "model_availability": model_avail,
+            "approvals_created": approvals_created,
+            "total_http_requests": ledger.requests_used,
+            "total_spent_upper_usd": ledger.spent_upper_usd,
+            "total_spent_reported_usd": total_reported,
+            "pilots": pilot_summaries,
+        }
+        _write_sanitized_json(receipt_path, receipt, secrets)
+    return receipt
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    p.add_argument("--corpus", type=Path, required=True)
+    p.add_argument("--corpus", type=Path)
     p.add_argument("--out", type=Path)
+    p.add_argument("--out-dir", type=Path)
+    p.add_argument("--dotenv", type=Path)
+    p.add_argument("--paid-attestation", type=Path)
     mode = p.add_mutually_exclusive_group(required=True)
     mode.add_argument("--dry-run", action="store_true")
     mode.add_argument("--live", action="store_true")
     mode.add_argument("--manifest", action="store_true", help="validate the corpus, print the identity to bind; no run")
+    mode.add_argument("--delegated-c21", action="store_true",
+                      help="run Continuation 21 automatic K-1 -> S-2 -> R-1 suite under EXPLICIT_OWNER_DELEGATED_EXECUTION")
     p.add_argument("--approval-file", type=Path)
     a = p.parse_args(argv)
+    if a.delegated_c21:
+        if a.out_dir is None:
+            p.error("--out-dir is required for --delegated-c21")
+        rec = run_delegated_c21_suite(out_dir=a.out_dir, dotenv_path=a.dotenv, paid_attestation_path=a.paid_attestation)
+        print(json.dumps({k: rec[k] for k in ("status", "stop_reason", "model_availability", "total_http_requests",
+                                              "total_spent_upper_usd", "approvals_created", "unverified_conditions")},
+                         ensure_ascii=False, indent=1, default=str))
+        return 0 if rec["status"] == "COMPLETE" else 2
+    if a.corpus is None:
+        p.error("--corpus is required unless --delegated-c21 is used")
     if a.manifest:
         validate_corpus(json.loads(a.corpus.read_text(encoding="utf-8")))
         print(json.dumps({"corpus_sha256": sha256_file(a.corpus), "runtime_identity": runtime_identity(),
@@ -751,7 +1477,7 @@ def main(argv: list[str] | None = None) -> int:
     approval = authorize_live(a.corpus, a.approval_file) if a.live else None
     if approval is not None:
         P.claim_approval(a.approval_file, a.out)
-    out = evaluate(a.corpus, a.out, approval)
+    out = evaluate(a.corpus, a.out, approval, approval_path=a.approval_file if a.live else None)
     print(json.dumps({k: out[k] for k in ("measurement_class", "stop_reason", "completed", "cases_run",
                                           "http_requests", "spent_upper_usd")}
                      | {"metrics": out["score"]["metrics"], "supplementary": out["supplementary"]},

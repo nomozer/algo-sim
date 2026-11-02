@@ -125,6 +125,18 @@ CODE_COMMIT = 51ba6135a76e1daf761c021ce5c03de34acbae62
 CANDIDATE_COMMIT = 15d236eb
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_MASTER_C18_DEFINITION_COMPOSITION (approval templates); C19 receipts -c19 / -r2 superseded by r3 (scoring rules tightened by review rounds 1–2 before any live run); historical receipts unchanged
+CORRECTED_BY = HYBRID_MASTER_C21_OWNER_DELEGATED_LIVE_EXECUTION (templates 05f2a546 / 71792f77 / a6ccbf2e and manual PowerShell issuance commands superseded by --delegated-c21 and templates 528622dd / f20279a9 / ee581d67 on runner 8691bf11; C19 gold-replay receipts and candidate 15d236eb unchanged)
+
+## CONTINUATION_ID = HYBRID_MASTER_C21_OWNER_DELEGATED_LIVE_EXECUTION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/hybrid-live-validation-c21.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = INFRASTRUCTURE_PREFLIGHT_VERIFICATION + OFFLINE_DETERMINISTIC_FIXTURE_TEST (0 live provider requests; DELEGATED_AUTOMATION_READY_AND_VERIFIED; live execution BLOCKED_PREFLIGHT at PAID_PROJECT_NOT_VERIFIED before request 1) — EXPLICIT_OWNER_DELEGATED_EXECUTION (DELEGATED_BY_EXPLICIT_OWNER_INSTRUCTION, never writing the Owner-reserved direct string by automation) for K-1 (<=16/$1), S-2 (<=36/$2), R-1 (<=18/$1) on gemini-2.5-flash only (H-1 excluded), campaign-locked GlobalBudgetLedger (70 requests / USD 4.00), partial/missing usage marked UNKNOWN and charged at ceiling, AQ. and ya29. secret protection, templates refreshed to runner 8691bf11 (k1 ee581d67, s2 528622dd, r1 f20279a9), independent review READY in round 2; no product change
+VERIFICATION = hybrid-live-validation-c21.md; c21-delegated-attempt/c21-delegated-execution-receipt.json; k1-owner-approval.template.json; s2-owner-approval.template.json; r1-owner-approval.template.json; owner-go-request.md (twenty-first addendum); HYBRID_MASTER_EPIC_CURRENT_STATE.md
+CODE_COMMIT = 51ba6135a76e1daf761c021ce5c03de34acbae62 (product unchanged; scripts/tests/docs only)
+CANDIDATE_COMMIT = 15d236eb
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C19_HYBRID_FIRST_EVALUATION (approval templates 05f2a546 / 71792f77 / a6ccbf2e and manual PowerShell issuance workflow superseded; C19 gold-replay receipts unchanged)
 CORRECTED_BY = NONE
 ## WAVE_ID = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION
 

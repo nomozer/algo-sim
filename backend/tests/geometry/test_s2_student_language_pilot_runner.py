@@ -422,7 +422,8 @@ def test_one_approval_one_live_run_and_a_second_is_refused_before_any_request(tm
     monkeypatch.setattr(R, "authorize_live", lambda c, a: _terms(corpus))
     runs = []
 
-    def ran(c, out, terms):
+    def ran(c, out, terms, *, approval_path=None):
+        assert approval_path == approval
         runs.append(out)
         raise _Ran
     monkeypatch.setattr(R, "evaluate", ran)
@@ -821,3 +822,449 @@ def test_c19_review_major2_an_h1_corpus_needs_every_stratum_and_a_gold_for_every
     mutate(cases)
     with pytest.raises(R.LiveRefused, match=why):
         R.validate_corpus({"study": "H-1", "authoring": _ATTESTED, "cases": cases})
+
+
+# ── C21: EXPLICIT_OWNER_DELEGATED_EXECUTION, paid-project gate, secret hygiene, two-tier global budget ──────────────
+
+_FAKE_AQ_KEY = "AQ." + "Ab8RN6FakeStudioSecretKeyForOfflineTestsOnly12345"
+
+
+def _delegated_terms(corpus_path, pilot="K-1", max_requests=16, max_usd=1.0, **over):
+    ident = R.runtime_identity()
+    delegation = {
+        "authorization_source": "EXPLICIT_OWNER_INSTRUCTION",
+        "directive_id": "CONTINUATION_21_MASTER_DIRECTIVE",
+        "authorized_pilots": ["K-1", "S-2", "R-1"],
+        "authorized_model": "gemini-2.5-flash",
+        "candidate_commit": "15d236eb",
+        "global_max_requests": 70,
+        "global_max_usd": 4.0,
+        "issued_at": "2026-11-02T14:00:00Z",
+        "template_path": f"{pilot.lower().replace('-', '')}-owner-approval.template.json",
+        "template_git_blob": "a" * 40,
+        "paid_project_verification": {
+            "verified": True,
+            "source": "CLOUD_BILLING_API",
+            "project_id": "algosim-paid-test",
+            "billing_enabled": True,
+        },
+    }
+    if "delegation" in over and isinstance(over["delegation"], dict):
+        delegation = {**delegation, **over.pop("delegation")}
+    return {
+        "authorization_mode": R.DELEGATED_MODE,
+        "owner_decision": R.DELEGATED_DECISION,
+        "pilot": pilot,
+        "model": ident["model"],
+        "paid_project_confirmed": True,
+        "max_requests": max_requests,
+        "max_usd": max_usd,
+        "input_usd_per_million": 0.30,
+        "output_usd_per_million": 2.50,
+        "corpus_sha256": R.sha256_file(corpus_path),
+        "measured_system": ident["measured_system"],
+        "runner_sha256": ident["runner_sha256"],
+        "paired_harness_sha256": ident["paired_harness_sha256"],
+        "scorer_sha256": ident["scorer_sha256"],
+        "delegation": delegation,
+        **over,
+    }
+
+
+def test_c21_delegated_authorization_accepts_in_scope_pilots_and_refuses_h1_or_forged_terms(tmp_path, monkeypatch):
+    monkeypatch.setenv("ALLOW_LIVE_AI", "1")
+    monkeypatch.setenv("GEMINI_API_KEY", _FAKE_AQ_KEY)
+    k1 = _write_study(tmp_path / "k1", "K-1", [_k1("K-A01")]) if ((tmp_path / "k1").mkdir() or True) else None
+    ap = tmp_path / "k1-delegated.json"
+    terms = _delegated_terms(k1, pilot="K-1", max_requests=16, max_usd=1.0)
+    ap.write_text(json.dumps(terms, ensure_ascii=False), encoding="utf-8")
+    # MAJOR-1: CLI --live (allow_delegated=False) and evaluate(..., global_budget=None) refuse delegated terms
+    monkeypatch.setattr(httpx, "post", lambda *a, **k: pytest.fail("delegated bypass sent a request"))
+    with pytest.raises(R.LiveRefused, match="delegated-c21"):
+        R.authorize_live(k1, ap, trusted_paid_verification=terms["delegation"]["paid_project_verification"])
+    with pytest.raises(R.LiveRefused, match="delegated-c21"):
+        R.main(["--corpus", str(k1), "--live", "--approval-file", str(ap), "--out", str(tmp_path / "bypass.jsonl")])
+    with pytest.raises(R.LiveRefused, match="GlobalBudgetLedger"):
+        R.evaluate(k1, tmp_path / "direct.jsonl", terms, sleep=lambda s: None)
+    # Forged CLOUD_BILLING_API JSON on disk without live/verified Cloud Billing confirmation is refused even when allow_delegated=True
+    with pytest.raises(R.LiveRefused, match="Cloud Billing|PAID_PROJECT_NOT_VERIFIED"):
+        R.authorize_live(k1, ap, allow_delegated=True)
+    assert R.authorize_live(
+        k1, ap, allow_delegated=True, trusted_paid_verification=terms["delegation"]["paid_project_verification"]
+    )["pilot"] == "K-1"
+
+    # H-1 is outside EXPLICIT_OWNER_DELEGATED_EXECUTION even with an Owner-attested independent author
+    h1 = tmp_path / "h1.json"
+    h1.write_text(json.dumps({"study": "H-1", "authoring": _ATTESTED, "cases": _h1_cases()}, ensure_ascii=False),
+                  encoding="utf-8")
+    with pytest.raises(R.LiveRefused, match="outside EXPLICIT_OWNER_DELEGATED_EXECUTION"):
+        R.check_approval_terms(h1.read_bytes(), _delegated_terms(h1, pilot="H-1", max_requests=13, max_usd=1.0))
+
+    # Per-pilot USD cap (S-2 <= $2.0, K-1 <= $1.0, R-1 <= $1.0) and global caps (<= 70 req, <= $4.0) enforced
+    s2 = _write(tmp_path, [_case("S2-A-I02_ve")])
+    assert R.check_approval_terms(s2.read_bytes(), _delegated_terms(s2, pilot="S-2", max_requests=36, max_usd=2.0))
+    with pytest.raises(R.LiveRefused, match="max_usd"):
+        R.check_approval_terms(s2.read_bytes(), _delegated_terms(s2, pilot="S-2", max_requests=36, max_usd=2.01))
+    with pytest.raises(R.LiveRefused, match="global_max_requests"):
+        R.check_approval_terms(k1.read_bytes(), _delegated_terms(k1, delegation={"global_max_requests": 71}))
+    with pytest.raises(R.LiveRefused, match="global_max_usd"):
+        R.check_approval_terms(k1.read_bytes(), _delegated_terms(k1, delegation={"global_max_usd": 4.01}))
+    with pytest.raises(R.LiveRefused, match="paid_project_verification"):
+        R.check_approval_terms(k1.read_bytes(), _delegated_terms(
+            k1, delegation={"paid_project_verification": {"verified": True, "source": "DOTENV_PRESENT"}}))
+    with pytest.raises(R.LiveRefused, match="authorized_pilots"):
+        R.check_approval_terms(k1.read_bytes(), _delegated_terms(
+            k1, delegation={"authorized_pilots": ["K-1", "H-1"]}))
+
+
+def test_c21_paid_project_verifier_never_treats_dotenv_as_paid_and_verifies_trustworthy_sources(tmp_path):
+    # Neither project/OAuth nor attestation -> PAID_PROJECT_NOT_VERIFIED with zero HTTP calls
+    calls = []
+    res = R.verify_paid_project(http_get=lambda *a, **k: calls.append(a))
+    assert res["verified"] is False and res["stop_reason"] == "PAID_PROJECT_NOT_VERIFIED" and calls == []
+
+    # Cloud Billing API: validates project_id, rejects API keys passed as OAuth tokens, and requires matching projectId + billingEnabled
+    def fake_billing_unpaid(url, headers, timeout):
+        calls.append((url, headers))
+        assert _FAKE_AQ_KEY not in json.dumps(headers)
+        return 200, {"projectId": "algosim-paid-01", "billingEnabled": False}
+
+    assert R.verify_paid_project(project_id="bad/id", oauth_token="tok-123456789012",
+                                 http_get=lambda *a, **k: pytest.fail("invalid project_id called HTTP"))["verified"] is False
+    assert R.verify_paid_project(project_id="algosim-paid-01", oauth_token=_FAKE_AQ_KEY,
+                                 http_get=lambda *a, **k: pytest.fail("API key sent to billing HTTP"))["verified"] is False
+    unpaid = R.verify_paid_project(project_id="algosim-paid-01", oauth_token="tok-123456789012", http_get=fake_billing_unpaid)
+    assert unpaid["verified"] is False and unpaid["stop_reason"] == "PAID_PROJECT_NOT_VERIFIED"
+    no_pid = R.verify_paid_project(
+        project_id="algosim-paid-01", oauth_token="tok-123456789012",
+        http_get=lambda u, h, t: (200, {"billingEnabled": True}),
+    )
+    assert no_pid["verified"] is False
+
+    paid = R.verify_paid_project(
+        project_id="algosim-paid-01", oauth_token="tok-123456789012",
+        http_get=lambda u, h, t: (200, {"projectId": "algosim-paid-01", "billingEnabled": True}),
+    )
+    assert paid["verified"] is True and paid["source"] == "CLOUD_BILLING_API"
+
+    # Separate explicit Owner paid-project attestation file (forbids C21 directive self-reference & trivial quotes; relative path inside repo)
+    bad_att = tmp_path / "self-ref.json"
+    bad_att.write_text(json.dumps({
+        "schema": "owner-paid-project-attestation/1",
+        "authorization_source": "EXPLICIT_OWNER_SEPARATE_STATEMENT",
+        "statement_ref": "CONTINUATION_21_MASTER_DIRECTIVE",
+        "statement_quote": "Project gan voi backend/.env da bat Paid Cloud Billing.",
+        "paid_project_confirmed": True,
+    }), encoding="utf-8")
+    assert R.verify_paid_project(attestation_path=bad_att)["verified"] is False
+
+    att = tmp_path / "paid-attestation.json"
+    att.write_text(json.dumps({
+        "schema": "owner-paid-project-attestation/1",
+        "authorization_source": "EXPLICIT_OWNER_SEPARATE_STATEMENT",
+        "statement_ref": "CONTINUATION_22_OWNER_MESSAGE",
+        "statement_quote": "Project gan voi backend/.env da bat Paid Cloud Billing.",
+        "paid_project_confirmed": True,
+    }, ensure_ascii=False), encoding="utf-8")
+    by_att = R.verify_paid_project(attestation_path=att, repo_root=tmp_path,
+                                   http_get=lambda *a, **k: pytest.fail("unexpected HTTP"))
+    assert by_att["verified"] is True and by_att["source"] == "EXPLICIT_OWNER_PAID_ATTESTATION"
+    assert by_att["attestation_sha256"] == R.sha256_file(att)
+    assert by_att["attestation_path"] == "paid-attestation.json"
+    # MINOR-1: standalone ya29. OAuth tokens are redacted even without extra_secrets
+    fake_ya29 = "ya29." + "a0AfH6SMB" + "z" * 40
+    assert fake_ya29 not in R.redact_secrets(f"gcloud token={fake_ya29}")
+
+
+def _mini_suite_spec(tmp_path):
+    """Builds a miniature 3-pilot Git-tracked template + corpus fixture for K-1, S-2, R-1."""
+    import subprocess
+    repo = tmp_path / "suite_repo"
+    repo.mkdir()
+    subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
+    ident = R.runtime_identity()
+    pilots = {}
+    for slug, study, case, req_cap, usd_cap in (
+        ("k1", "K-1", _k1("K-A01"), 16, 1.0),
+        ("s2", "S-2", _case("S2-B-I11_mo_phong_va_tinh_SC"), 36, 2.0),
+        ("r1", "R-1", _r1_case(), 18, 1.0),
+    ):
+        cpath = repo / f"{slug}-corpus.json"
+        body = {"cases": [case]} if study == "S-2" else {"study": study, "cases": [case]}
+        cpath.write_text(json.dumps(body, ensure_ascii=False), encoding="utf-8", newline="\n")
+        tpath = repo / f"{slug}-owner-approval.template.json"
+        tmpl = {
+            "owner_decision": "PENDING_OWNER_DECISION",
+            "pilot": study,
+            "model": ident["model"],
+            "paid_project_confirmed": False,
+            "max_requests": req_cap,
+            "max_usd": usd_cap,
+            "input_usd_per_million": 0.30,
+            "output_usd_per_million": 2.50,
+            "corpus_sha256": R.sha256_file(cpath),
+            "measured_system": ident["measured_system"],
+            "runner_sha256": ident["runner_sha256"],
+            "paired_harness_sha256": ident["paired_harness_sha256"],
+            "scorer_sha256": ident["scorer_sha256"],
+        }
+        tpath.write_text(json.dumps(tmpl, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
+        blob = subprocess.run(["git", "hash-object", str(tpath)], cwd=repo, capture_output=True, check=True,
+                              text=True).stdout.strip()
+        pilots[study] = {"slug": slug, "corpus_path": cpath, "template_path": tpath, "expected_template_blob": blob,
+                         "max_requests": req_cap, "max_usd": usd_cap}
+    return repo, pilots
+
+
+def test_c21_suite_halts_before_first_request_when_paid_not_verified_and_redacts_aq_key(tmp_path, monkeypatch):
+    repo, pilots = _mini_suite_spec(tmp_path)
+    dotenv = tmp_path / "root.env"
+    dotenv.write_text(f"# root env\nGEMINI_API_KEY={_FAKE_AQ_KEY}\n", encoding="utf-8")
+    monkeypatch.delenv("ALLOW_LIVE_AI", raising=False)
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    monkeypatch.setattr(httpx, "post", lambda *a, **k: pytest.fail("blocked run sent a Gemini request"))
+    out_dir = tmp_path / "c21_blocked"
+    receipt = R.run_delegated_c21_suite(
+        out_dir=out_dir, dotenv_path=dotenv, pilot_specs=pilots, git_cwd=repo, sleep=lambda s: None,
+    )
+    assert receipt["status"] == "BLOCKED_PREFLIGHT"
+    assert receipt["stop_reason"] == "PAID_PROJECT_NOT_VERIFIED"
+    assert receipt["total_http_requests"] == 0 and receipt["total_spent_upper_usd"] == 0.0
+    assert receipt["approvals_created"] == []
+    assert "ALLOW_LIVE_AI" not in R.os.environ
+    for f in out_dir.rglob("*"):
+        if f.is_file():
+            text = f.read_text(encoding="utf-8")
+            assert _FAKE_AQ_KEY not in text and "AQ." not in text
+            assert "APPROVED" + "_BY_USER" not in text
+
+
+def test_c21_suite_executes_k1_s2_r1_automatically_and_enforces_global_caps_and_model_check(tmp_path, monkeypatch):
+    repo, pilots = _mini_suite_spec(tmp_path)
+    dotenv = tmp_path / "root.env"
+    dotenv.write_text(f"GEMINI_API_KEY={_FAKE_AQ_KEY}\n", encoding="utf-8")
+    att = tmp_path / "paid.json"
+    att.write_text(json.dumps({
+        "schema": "owner-paid-project-attestation/1",
+        "authorization_source": "EXPLICIT_OWNER_SEPARATE_STATEMENT",
+        "statement_ref": "OWNER_PAID_CONFIRMATION_TEST",
+        "statement_quote": "Confirmed paid Cloud Billing enabled.",
+        "paid_project_confirmed": True,
+    }), encoding="utf-8")
+    monkeypatch.delenv("ALLOW_LIVE_AI", raising=False)
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+
+    # 1. Full K-1 -> S-2 -> R-1 automatic execution with mock Gemini returning gold extractions
+    golds = [_k1("K-A01")["gold_extraction"], _case("S2-B-I11_mo_phong_va_tinh_SC")["gold_extraction"],
+             _r1_case()["gold_extraction"]]
+    seq = iter(golds)
+    calls = []
+
+    def mock_post(url, **kwargs):
+        calls.append(url)
+        assert url.endswith("/models/gemini-2.5-flash:generateContent")
+        return Provider(_body(next(seq)))(url, **kwargs)
+
+    monkeypatch.setattr(httpx, "post", mock_post)
+    out_ok = tmp_path / "c21_ok"
+    res = R.run_delegated_c21_suite(
+        out_dir=out_ok, dotenv_path=dotenv, paid_attestation_path=att, pilot_specs=pilots, git_cwd=repo,
+        sleep=lambda s: None,
+    )
+    assert res["status"] == "COMPLETE" and res["stop_reason"] is None
+    assert res["total_http_requests"] == 3 and len(calls) == 3
+    assert [p["study"] for p in res["pilots"]] == ["K-1", "S-2", "R-1"]
+    assert all(p["completed"] for p in res["pilots"])
+    assert len(res["approvals_created"]) == 3
+    assert "ALLOW_LIVE_AI" not in R.os.environ and "GEMINI_API_KEY" not in R.os.environ
+    for f in out_ok.rglob("*"):
+        if f.is_file():
+            txt = f.read_text(encoding="utf-8")
+            assert _FAKE_AQ_KEY not in txt and "APPROVED" + "_BY_USER" not in txt
+
+    # MAJOR-2a: Re-running against ANY out_dir (same or new!) is refused by the shared campaign ledger in repo
+    with pytest.raises(R.LiveRefused, match="global budget ledger"):
+        R.run_delegated_c21_suite(out_dir=out_ok, dotenv_path=dotenv, paid_attestation_path=att, pilot_specs=pilots,
+                                  git_cwd=repo, sleep=lambda s: None)
+    with pytest.raises(R.LiveRefused, match="global budget ledger"):
+        R.run_delegated_c21_suite(out_dir=tmp_path / "c21_other_outdir", dotenv_path=dotenv, paid_attestation_path=att,
+                                  pilot_specs=pilots, git_cwd=repo, sleep=lambda s: None)
+
+    # 2. Global request cap (< sum of per-pilot caps) halts before the 3rd request (fresh test ledger_dir)
+    seq2 = iter(golds)
+    calls2 = []
+    monkeypatch.setattr(httpx, "post", lambda url, **kw: (calls2.append(url), Provider(_body(next(seq2)))(url, **kw))[1])
+    res_cap = R.run_delegated_c21_suite(
+        out_dir=tmp_path / "c21_reqcap", ledger_dir=tmp_path / "ledger_reqcap", dotenv_path=dotenv,
+        paid_attestation_path=att, pilot_specs=pilots, git_cwd=repo, global_max_requests=2, sleep=lambda s: None,
+    )
+    assert len(calls2) == 2 and res_cap["total_http_requests"] == 2
+    assert res_cap["stop_reason"] == "GLOBAL_REQUEST_CAP"
+
+    # 3. PROVIDER_MODEL_UNAVAILABLE (HTTP 404 on K-1 request 1) halts immediately after 1 request, skipping S-2 & R-1
+    calls3 = []
+    monkeypatch.setattr(httpx, "post", lambda url, **kw: (calls3.append(url), Provider(default=404)(url, **kw))[1])
+    res_404 = R.run_delegated_c21_suite(
+        out_dir=tmp_path / "c21_404", ledger_dir=tmp_path / "ledger_404", dotenv_path=dotenv,
+        paid_attestation_path=att, pilot_specs=pilots, git_cwd=repo, sleep=lambda s: None,
+    )
+    assert len(calls3) == 1 and res_404["total_http_requests"] == 1
+    assert res_404["stop_reason"] == "PROVIDER_MODEL_UNAVAILABLE"
+    assert [p["study"] for p in res_404["pilots"]] == ["K-1"]
+
+    # 4. Global USD ceiling (< sum of per-pilot caps) blocks before exceeding global_max_usd across pilots
+    tiny_pilots = {k: {**v, "max_requests": 1, "max_usd": 0.25} for k, v in pilots.items()}
+    for sp in tiny_pilots.values():
+        tpath = Path(sp["template_path"])
+        t = json.loads(tpath.read_text(encoding="utf-8"))
+        t.update(max_requests=1, max_usd=0.25)
+        tpath.write_text(json.dumps(t, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
+        import subprocess
+        sp["expected_template_blob"] = subprocess.run(
+            ["git", "hash-object", str(tpath)], cwd=repo, capture_output=True, check=True, text=True
+        ).stdout.strip()
+    calls4 = []
+    # Return empty usageMetadata so each sent request is charged at its full provable ceiling (~0.025 USD)
+    no_usage_seq = iter([{** _body(g), "usageMetadata": {}} for g in golds])
+    monkeypatch.setattr(httpx, "post",
+                        lambda url, **kw: (calls4.append(url), Provider(next(no_usage_seq))(url, **kw))[1])
+    res_usd = R.run_delegated_c21_suite(
+        out_dir=tmp_path / "c21_usdcap", ledger_dir=tmp_path / "ledger_usd1", dotenv_path=dotenv,
+        paid_attestation_path=att, pilot_specs=tiny_pilots, git_cwd=repo, global_max_usd=0.26, sleep=lambda s: None,
+    )
+    assert res_usd["total_spent_upper_usd"] <= 0.26
+    calls5 = []
+    no_usage_seq2 = iter([{**_body(g), "usageMetadata": {}} for g in golds])
+    monkeypatch.setattr(httpx, "post",
+                        lambda url, **kw: (calls5.append(url), Provider(next(no_usage_seq2))(url, **kw))[1])
+    one_ceil = res_usd["pilots"][0]["spent_upper_usd"]
+    tight_pilots = {k: {**v, "max_usd": one_ceil * 1.2} for k, v in tiny_pilots.items()}
+    for sp in tight_pilots.values():
+        tpath = Path(sp["template_path"])
+        t = json.loads(tpath.read_text(encoding="utf-8"))
+        t.update(max_usd=one_ceil * 1.2)
+        tpath.write_text(json.dumps(t, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
+        import subprocess
+        sp["expected_template_blob"] = subprocess.run(
+            ["git", "hash-object", str(tpath)], cwd=repo, capture_output=True, check=True, text=True
+        ).stdout.strip()
+    res_tight = R.run_delegated_c21_suite(
+        out_dir=tmp_path / "c21_tight_usd", ledger_dir=tmp_path / "ledger_usd2", dotenv_path=dotenv,
+        paid_attestation_path=att, pilot_specs=tight_pilots, git_cwd=repo, global_max_usd=one_ceil * 2.5,
+        sleep=lambda s: None,
+    )
+    assert len(calls5) == 2 and res_tight["total_http_requests"] == 2
+    assert res_tight["stop_reason"] == "GLOBAL_COST_CEILING"
+    assert res_tight["total_spent_upper_usd"] <= one_ceil * 2.5
+
+
+def test_c21_review_r1_interrupt_persists_ledger_and_receipt_and_100pct_failure_is_not_verified_live(tmp_path, monkeypatch):
+    repo, pilots = _mini_suite_spec(tmp_path)
+    dotenv = tmp_path / "root.env"
+    dotenv.write_text(f"GEMINI_API_KEY={_FAKE_AQ_KEY}\n", encoding="utf-8")
+    att = repo / "paid.json"
+    att.write_text(json.dumps({
+        "schema": "owner-paid-project-attestation/1",
+        "authorization_source": "EXPLICIT_OWNER_SEPARATE_STATEMENT",
+        "statement_ref": "OWNER_PAID_CONFIRMATION_R2",
+        "statement_quote": "Confirmed paid Cloud Billing enabled for AlgoSim.",
+        "paid_project_confirmed": True,
+    }), encoding="utf-8")
+    monkeypatch.delenv("ALLOW_LIVE_AI", raising=False)
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+
+    # MAJOR-2b: KeyboardInterrupt during S-2 after K-1 spent 1 request still records ledger spend and writes receipt
+    n = [0]
+
+    def interrupt_on_second(url, **kw):
+        n[0] += 1
+        if n[0] == 2:
+            raise KeyboardInterrupt
+        return Provider(_body(_k1("K-A01")["gold_extraction"]))(url, **kw)
+
+    monkeypatch.setattr(httpx, "post", interrupt_on_second)
+    int_out = tmp_path / "c21_interrupted"
+    int_led = tmp_path / "ledger_int"
+    with pytest.raises(KeyboardInterrupt):
+        R.run_delegated_c21_suite(out_dir=int_out, ledger_dir=int_led, dotenv_path=dotenv, paid_attestation_path=att,
+                                  pilot_specs=pilots, git_cwd=repo, sleep=lambda s: None)
+    assert not (int_led / "c21-global-budget.lock").exists()
+    led_data = json.loads((int_led / "c21-global-budget-ledger.json").read_text(encoding="utf-8"))
+    rec_data = json.loads((int_out / "c21-delegated-execution-receipt.json").read_text(encoding="utf-8"))
+    assert led_data["requests_used"] == 2 and led_data["spent_upper_usd"] > 0.0
+    assert rec_data["status"] == "INTERRUPTED" and rec_data["total_http_requests"] == 2
+
+    # Atomic acquire() TOCTOU race guard if lock appears between __init__ and acquire()
+    race_dir = tmp_path / "ledger_race"
+    race_ledger = R.GlobalBudgetLedger(race_dir)
+    (race_dir / "c21-global-budget.lock").write_text("{}", encoding="utf-8")
+    with pytest.raises(R.LiveRefused, match="lock already held"):
+        race_ledger.acquire()
+
+    # MAJOR-4: 100%-failed HTTP 400 (generic bad request, not model-not-found) reports model_availability == UNKNOWN
+    monkeypatch.setattr(httpx, "post", Provider(default=400))
+    fail_res = R.run_delegated_c21_suite(
+        out_dir=tmp_path / "c21_all_fail", ledger_dir=tmp_path / "ledger_fail", dotenv_path=dotenv,
+        paid_attestation_path=att, pilot_specs=pilots, git_cwd=repo, sleep=lambda s: None,
+    )
+    assert fail_res["model_availability"] == "UNKNOWN"
+
+    # MINOR-4: Mutating template max_usd or owner_decision is caught at preflight before paid_check
+    bad_pilots = deepcopy(pilots)
+    kt = Path(bad_pilots["K-1"]["template_path"])
+    t_obj = json.loads(kt.read_text(encoding="utf-8"))
+    t_obj["owner_decision"] = "SOMETHING_ELSE"
+    kt.write_text(json.dumps(t_obj, indent=1) + "\n", encoding="utf-8", newline="\n")
+    bad_pilots["K-1"].pop("expected_template_blob", None)
+    with pytest.raises(R.LiveRefused, match="PENDING_OWNER_DECISION"):
+        R.run_delegated_c21_suite(out_dir=tmp_path / "c21_bad_tmpl", dotenv_path=dotenv, pilot_specs=bad_pilots,
+                                  git_cwd=repo, sleep=lambda s: None)
+
+
+def test_c21_malformed_usage_without_prompt_tokens_is_unknown_never_zero(tmp_path, monkeypatch):
+    case = _case("S2-A-I02_ve")
+    body = _body(case["gold_extraction"])
+    body["usageMetadata"] = {"modelVersion": "gemini-2.5-flash"}   # non-empty dict, 0 prompt tokens -> UNKNOWN, not 0.0
+    out = _live(tmp_path, monkeypatch, Provider(body), [case])
+    row = out["rows"][0]
+    assert row["usd"] == "UNKNOWN" and out["spent_reported_usd"] == "UNKNOWN"
+    assert isinstance(row["usd_upper"], float) and row["usd_upper"] > 0.0
+
+    # Missing output tokens on a candidate-bearing response also stays UNKNOWN and charges full ceiling
+    body2 = _body(case["gold_extraction"])
+    body2["usageMetadata"] = {"promptTokenCount": 9000}
+    out2 = _live(tmp_path / "m2", monkeypatch, Provider(body2), [case]) if ((tmp_path / "m2").mkdir() or True) else None
+    assert out2["rows"][0]["usd"] == "UNKNOWN" and out2["spent_reported_usd"] == "UNKNOWN"
+
+    # MAJOR-3: Partial transient retry (503 without usage -> 200 with usage) sends 2 HTTP requests while only 1 has usage;
+    # reported USD must be UNKNOWN (never pricing the first attempt at 0.0), while usd_upper includes both attempts.
+    ok_body = _body(case["gold_extraction"])
+    out3 = _live(tmp_path / "m3", monkeypatch, Provider(503, ok_body), [case]) if ((tmp_path / "m3").mkdir() or True) else None
+    r3 = out3["rows"][0]
+    assert r3["http_requests"] == 2 and r3["usd"] == "UNKNOWN" and out3["spent_reported_usd"] == "UNKNOWN"
+    single_usd = R.P.usd(
+        {"hybrid_extraction": {"prompt_tokens": 9000, "candidates_tokens": 700, "thoughts_tokens": 0, "calls": 1}},
+        _terms(_write(tmp_path / "m3c", [case])) if ((tmp_path / "m3c").mkdir() or True) else None,
+    )
+    assert r3["usd_upper"] > single_usd
+
+
+def test_c21_registered_approval_templates_bind_current_runtime_identity_and_stale_runner_is_refused():
+    ident = R.runtime_identity()
+    specs = R.default_c21_pilot_specs()
+    for study, sp in specs.items():
+        tmpl = json.loads(Path(sp["template_path"]).read_text(encoding="utf-8"))
+        assert tmpl["owner_decision"] == "PENDING_OWNER_DECISION" and tmpl["paid_project_confirmed"] is False
+        assert tmpl["pilot"] == study and tmpl["model"] == "gemini-2.5-flash"
+        assert tmpl["max_requests"] == sp["max_requests"] and tmpl["max_usd"] == sp["max_usd"]
+        cbytes = Path(sp["corpus_path"]).read_bytes().replace(b"\r\n", b"\n")
+        assert tmpl["corpus_sha256"] in (R.sha256_file(Path(sp["corpus_path"])),
+                                         R.hashlib.sha256(cbytes).hexdigest())
+        for k in ("measured_system", "runner_sha256", "paired_harness_sha256", "scorer_sha256"):
+            assert tmpl[k] == ident[k], f"{study} template {k} drifted from runtime_identity"
+        stale = {k: v for k, v in tmpl.items() if k != "owner_decision"} | {
+            "paid_project_confirmed": True,
+            "runner_sha256": "e3d3b2ec063c4b9332ae46bbfe7afc0cc81a362033f95a5d84a633276880ea4a",
+        }
+        with pytest.raises(R.LiveRefused, match="runner_sha256"):
+            R.check_approval_terms(cbytes, stale)

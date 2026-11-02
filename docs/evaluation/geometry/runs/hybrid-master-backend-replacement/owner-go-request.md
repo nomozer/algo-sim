@@ -562,3 +562,30 @@ Then run (ALLOW_LIVE_AI=1 and GEMINI_API_KEY in the environment):
 | 6 | Source Gate wording (R1-G01/G02) | add the two closed wordings (product change: new candidate, review, T3; templates re-issued; R-1 becomes development data for it), or keep them as declared limits |
 | 7 | S-1 (diacritics), D1/D2, P-1..P-3, named "Gọi H là trực tâm …" | `DEFERRED_PENDING_EVIDENCE` |
 | 8 | Integration and cleanup | merge / push: `INTEGRATION_PENDING_OWNER_GO`. `.superpowers\worktrees\hm-t3-7e9e479d` re-verified (unregistered, no `.git`, no reparse point, tracked copies and regenerable artefacts only); deletion was refused by the tool's safety classifier again. Owner command: `Remove-Item -Recurse -Force D:\Documents\projects\algo-sim\.superpowers\worktrees\hm-t3-7e9e479d` |
+
+## Addendum — twenty-first continuation (Owner-delegated automatic execution; manual PowerShell JSON step retired), 2026-11-02. It supersedes the manual approval commands of the nineteenth addendum.
+
+Still `0` live Gemini calls and `USD 0.00`; candidate `15d236eb` is untouched (`51ba6135`, 118 files `3711d4ee…`). The
+nineteenth-addendum template blobs (`05f2a546…`, `71792f77…`, `a6ccbf2e…`) no longer bind because
+`run_s2_student_language_pilot.py` was updated (`runner_sha256 =
+8691bf113b57a78094bd7738719cfdf2f0ec2dfcd0631687afaf7e4798213423`); refreshed template blobs are K-1
+`ee581d674cbc578731422f58c2b6376b24198cfe`, S-2 `528622dda95180b022ab0c0580a0ebf04dc83d19`, and R-1
+`f20279a96e6dd0ac71a4526e7f0333209b811707`.
+
+**What changed:** Owner-delegated mode (`EXPLICIT_OWNER_DELEGATED_EXECUTION`, `DELEGATED_BY_EXPLICIT_OWNER_INSTRUCTION`)
+runs `K-1 → S-2 → R-1` automatically via one command (`--delegated-c21`) under per-pilot caps (`16/$1`, `36/$2`,
+`18/$1`) and a campaign-locked global budget (`70` requests / `USD 4.00`), without any manual PowerShell JSON editing.
+On this machine, `--delegated-c21` loaded `GEMINI_API_KEY` from root `backend/.env` in memory and halted before request 1
+at `PAID_PROJECT_NOT_VERIFIED` (`c21-delegated-attempt/c21-delegated-execution-receipt.json`, `356fafb9…`), because the
+C21 directive explicitly did not confirm paid billing and no `GOOGLE_CLOUD_PROJECT` / Cloud Billing OAuth or separate
+Owner paid-project attestation was present. Report: `hybrid-live-validation-c21.md`.
+
+**How to unlock automatic `K-1 → S-2 → R-1` execution (no PowerShell JSON script needed):**
+
+| Option | Action needed from Owner |
+|---|---|
+| **Option A (fastest — one sentence in chat)** | Reply with a separate explicit confirmation that the GCP project behind `D:\Documents\projects\algo-sim\backend\.env` has Paid Cloud Billing enabled; the agent records `owner-paid-project-attestation/1` quoting that message and runs `python scripts/run_s2_student_language_pilot.py --delegated-c21 --paid-attestation <file> --out-dir <run-dir>` automatically. |
+| **Option B (API verification)** | Set `GOOGLE_CLOUD_PROJECT=<project-id>` (the exact project that issued `GEMINI_API_KEY`) and provide Cloud Billing read auth (`gcloud auth application-default login` or `GOOGLE_OAUTH_ACCESS_TOKEN`), then run `python scripts/run_s2_student_language_pilot.py --delegated-c21 --out-dir <run-dir>`. |
+
+Items 4–8 of the nineteenth addendum (`H-1` independent author, discovery claim closure, `R1-G01/G02` Source Gate
+wording after live evidence, deferred `S-1`/`D1-D2`, and `INTEGRATION_PENDING_OWNER_GO`) remain unchanged.
