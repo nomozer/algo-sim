@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "ALGOSIM_MASTER_HYBRID_BACKEND_REPLACEMENT (sixteenth continuation: planner /24 provenance-classified search telemetry)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-master-described-points/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "1725590664c916d3ee1e79b8095f36dab28f43da8732339a25ef95c5b525b5c1",
+  "current_product_commit": "9c561ca62e1a193697e5b7b69f1bdf77fa8bd770",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Backend only, offline, on top of the 0fe38a29 candidate: planner /24 records each planner-made step's provenance at emission (source_defined for descriptor contracts and DEFINITION_FUNCTIONS steps, registered for declared-rule policies and hand-written decompositions, search_generated otherwise) and labels a plan DISCOVERED_FUNCTION_COMPOSITION only with a search-generated step. /23 labelled every plan that built a point the question describes 'discovered' (route-b-composition-relabel.json, r1-composition-relabel.json). Calls, auxiliary certificates, answers and envelopes are unchanged (independent /23-vs-/24 comparison on 753 plans; 41/41 preview fixtures verify through the declared /23 -> /24 identity delta; Wave 3 phase-q 0 transitions). Independent review READY in round 2. LLM_ONLY, its cache identity, prompts, frontend, and route A schemas are unchanged.",
+  "cache_version": 131,
+  "cache_version_hien_tai": 131,
+  "cache_decision": "NO BUMP: LLM_ONLY untouched (CACHE_VERSION keys the /api/analyze response cache); Route D rows are keyed by the Route D surface, which includes the planner version (/24), so they invalidate on their own; refusals are never cached.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements are not rescored; their composition labels are corrected by r1-composition-relabel.json and route-b-composition-relabel(-r2).json."
+  }
+}
