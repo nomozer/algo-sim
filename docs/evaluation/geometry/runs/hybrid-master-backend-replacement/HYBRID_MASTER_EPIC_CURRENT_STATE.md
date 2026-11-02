@@ -958,3 +958,19 @@ No product change: candidate `15d236eb` preserved (`51ba6135`, `118` files `3711
   (`0 BLOCKER`, `0 MAJOR`, `0 MINOR`, `0 NIT`).
 - **Status:** live `K-1` / `S-2` / `R-1` and `H-1` remain `NOT_MEASURED`; overall `HYBRID_NOT_READY`. Next exact action:
   clear `PAID_PROJECT_NOT_VERIFIED` via either option in the twenty-first addendum of `owner-go-request.md`.
+
+## Twenty-second continuation (Real product integration — Hybrid end-to-end, existing frontend & production delivery), 2026-11-03: `PRODUCT_INTEGRATION_VERIFIED` · `LIVE_PROVIDER_NOT_MEASURED` · `PRODUCTION_RELEASE_BLOCKED`
+
+Report: `ALGOSIM_REAL_PRODUCT_INTEGRATION_REPORT.md`. `0` live Gemini calls (`USD 0.00`).
+
+- **End-to-end Hybrid `/4` product wiring (`6fc6b309`, `d17116cb`):**
+  - Backend (`main.py`, `hybrid_offline.py`, `typed_fact_next_extraction.py`, `function_calling.py`, `runtime_identity.py`): selectable `HYBRID_ROUTE_MODE` (`off` default `LLM_ONLY` with `D-01` lazy-import isolation; `staging-replay` explicitly tagged `REPLAY_STAGING_SIMULATED` / `simulated: true`; `live` requiring `ALLOW_LIVE_AI=1` + `GEMINI_API_KEY`, deterministic domain gate before provider, deadline-bounded retry `TransportExtractor` catching dedicated `HybridTransportTimeout` with `ApiBudget` retry accounting, route-isolated `ROUTE_D_CACHE_POLICY` keyed on normalized `GEMINI_MODEL` + `typed_fact_next_surface_fingerprint()` + `Registry /31` · `Planner /26` · `Engine /22` · `Adapter /4`, and sanitized `no-store` HTTP `502`/`503`/`504` `INFRASTRUCTURE_FAILURE` payloads without falling back to `LLM_ONLY`).
+  - Existing React frontend (`hybrid-preview-adapter.ts`, `SimulationWorkspace.tsx`, `photo-problem-flow.ts`, `store.ts`, `core/types.ts`): validates Category B (`ENGINE_DERIVED_SECTION`, `plane-section-certificate/1`) plane sections, displays verified `route-d-clarification/1` questions across `UnsupportedNotice` and Photo Review -> Build, and clears stale `active` / `activeAssignment` / `semanticFocus` / `unsupported` state across recoverable errors/refusals (`M18`).
+- **Real runtime & browser verification:**
+  - `16/16` scope/refusal categories (`41/41` cases) verified end-to-end (`product-integration-16-classes-verification.json`);
+  - `6/6` real Playwright Chromium + `uvicorn` E2E user flows PASS with `0` page errors (`product-e2e-browser-receipt.json`);
+  - `docker compose config --quiet` PASS and `npm run build` PASS.
+- **Candidate freeze & Full T3:**
+  - Product `d17116cb`, frozen candidate `123e57da` (`118` files `730045ff…`, clean tree `cay_lam_viec_sach = true`; `../hybrid-master-product-integration/`); prior candidate `15d236eb` (`51ba6135` / `3711d4ee…`) and all C18/C19/C21 receipts preserved; pilot templates re-bound to `730045ff…` and LF-normalized `runner_sha256 = e9c6ad43…` (`k1` `2199eb32…`, `s2` `a6792fce…`, `r1` `9f832e67…`).
+  - Full T3 Attempt 2 on clean detached `hm-t3-123e57da`: **`FULL_PRODUCT_GATE_PASS`** (`16,648` pytest, `1,486` vitest, `tsc -b && vite build` PASS, demo `5/5`, crash `6/6`, pre/post `--verify` `MATCH`; `full-t3-123e57da.json`).
+- **Remaining release gates:** `PAID_PROJECT_NOT_VERIFIED`, live `K-1`/`S-2`/`R-1` and `H-1` `NOT_MEASURED`, `GENUINE_DISCOVERY_NOT_ESTABLISHED`, and explicit Owner cutover/merge/push GO required.

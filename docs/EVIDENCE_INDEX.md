@@ -137,6 +137,18 @@ CODE_COMMIT = 51ba6135a76e1daf761c021ce5c03de34acbae62 (product unchanged; scrip
 CANDIDATE_COMMIT = 15d236eb
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_MASTER_C19_HYBRID_FIRST_EVALUATION (approval templates 05f2a546 / 71792f77 / a6ccbf2e and manual PowerShell issuance workflow superseded; C19 gold-replay receipts unchanged)
+CORRECTED_BY = HYBRID_MASTER_C22_REAL_PRODUCT_INTEGRATION (approval templates ee581d67 / 528622dd / f20279a9 re-bound to product d17116cb / candidate 123e57da / measured_system 730045ff and LF-normalized runner e9c6ad43 -> blobs 2199eb32 / a6792fce / 9f832e67; C21 receipt and preserved 15d236eb candidate unchanged)
+
+## CONTINUATION_ID = HYBRID_MASTER_C22_REAL_PRODUCT_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/ALGOSIM_REAL_PRODUCT_INTEGRATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-master-backend-replacement/
+CLASSIFICATION = PRODUCT_RUNTIME_REPLAY_VERIFICATION_NOT_LIVE_PROVIDER + REAL_BROWSER_AND_UVICORN_NETWORK_E2E_STAGING_REPLAY (0 live provider requests; PRODUCT_INTEGRATION_VERIFIED; LIVE_PROVIDER_NOT_MEASURED; PRODUCTION_RELEASE_BLOCKED; GENUINE_DISCOVERY_NOT_ESTABLISHED) — selectable Hybrid /4 end-to-end runtime (HYBRID_ROUTE_MODE = off default LLM_ONLY | staging-replay REPLAY_STAGING_SIMULATED | live with ALLOW_LIVE_AI=1 + GEMINI_API_KEY + deadline-bounded retry TransportExtractor + ROUTE_D_CACHE_POLICY isolation + sanitized 502/503/504 INFRASTRUCTURE_FAILURE), existing React UI integration (Category B plane-section-certificate/1 rendering, route-d-clarification/1 user questions across workspace & Photo Review -> Build, M18 store resets), 16/16 scope/refusal categories (41/41 cases) verified, 6/6 Playwright Chromium + uvicorn E2E user flows PASS (0 page errors), CRLF-normalized pilot sha256_bytes/sha256_file, candidate 123e57da (product d17116cb, 118 files 730045ff; prior candidate 15d236eb preserved), Full T3 FULL_PRODUCT_GATE_PASS (attempt 2: 16648 pytest, 1486 vitest), publication range f986e897..HEAD PASS
+VERIFICATION = ALGOSIM_REAL_PRODUCT_INTEGRATION_REPORT.md; product-integration-16-classes-verification.json; product-e2e-browser-receipt.json; product-integration-adversarial-review.md; full-t3-123e57da.json; k1-owner-approval.template.json; s2-owner-approval.template.json; r1-owner-approval.template.json; ../hybrid-master-product-integration/frozen-evaluation-candidate.json; ../hybrid-master-product-integration/candidate_divergence.json
+CODE_COMMIT = d17116cbc4b4f4065f198a19de0957cc51eeb82e
+CANDIDATE_COMMIT = 123e57da
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_MASTER_C21_OWNER_DELEGATED_LIVE_EXECUTION (pilot approval template blobs ee581d67 / 528622dd / f20279a9 re-bound to candidate 123e57da / measured_system 730045ff / LF-normalized runner e9c6ad43 -> blobs 2199eb32 / a6792fce / 9f832e67; candidate divergence chain updated via hybrid-master-product-integration/candidate_divergence.json while preserving 15d236eb and all C18/C19/C21 receipts)
 CORRECTED_BY = NONE
 ## WAVE_ID = ALGOSIM_W4_END_TO_END_GEOMETRY_AND_PEDAGOGICAL_SIMULATION
 
