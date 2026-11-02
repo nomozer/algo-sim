@@ -75,6 +75,10 @@ def typed_fact_next_surface_fingerprint() -> str:
     return hashlib.sha256(json.dumps(framing, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
 
 
+class HybridTransportTimeout(TimeoutError):
+    """Raised when the live Hybrid product route exhausts its per-attempt or overall deadline."""
+
+
 class TransportExtractor:
     """One source-only request using the existing provider framing and response parser."""
 
@@ -87,11 +91,9 @@ class TransportExtractor:
             body = self.transport(request)
         except LiveAIDisabled:
             raise _TuChoiAI("LIVE_AI_DISABLED", "live AI disabled") from None
-        except TimeoutError:
+        except HybridTransportTimeout:
             raise _TuChoiAI("HYBRID_DEADLINE_EXCEEDED", "transport timed out") from None
-        except Exception as exc:
-            if any(cls.__name__.endswith("TimeoutException") for cls in type(exc).__mro__):
-                raise _TuChoiAI("HYBRID_DEADLINE_EXCEEDED", "transport timed out") from None
+        except Exception:
             raise _TuChoiAI("PROVIDER_ERROR", "transport failed") from None
         return parse_response(body, {})
 

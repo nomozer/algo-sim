@@ -252,10 +252,7 @@ def run_local_replay(problem_text: str, corpus_path: str) -> HybridOfflineResult
 
 
 _REPLAY_CORPUS_CACHE: dict[tuple[str, int, int], dict[str, dict]] = {}
-
-
-class HybridTransportTimeout(TimeoutError):
-    """Raised when live Hybrid extraction exhausts per-attempt or overall route deadline."""
+HybridTransportTimeout = _tfn_extraction.HybridTransportTimeout
 
 
 def _finite_pos(value: object, default: float) -> float:

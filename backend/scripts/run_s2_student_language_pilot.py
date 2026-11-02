@@ -72,8 +72,12 @@ _SYMMETRIC_PAIRS = (("line1", "line2"), ("plane1", "plane2"))
 _OPERAND = re.compile(r"^[A-Z][A-Z0-9']*(?:\.[A-Z0-9']+)?$|\d|√|π|^a$")
 
 
+def sha256_bytes(data: bytes) -> str:
+    return hashlib.sha256(data.replace(b"\r\n", b"\n")).hexdigest()
+
+
 def sha256_file(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    return sha256_bytes(path.read_bytes())
 
 
 def runtime_identity() -> dict[str, str]:
@@ -812,7 +816,7 @@ def check_approval_terms(corpus_bytes: bytes, approval: dict[str, Any]) -> dict[
             raise LiveRefused("an H-1 corpus needs an Owner-attested author independent of the implementer")
     if approval["paid_project_confirmed"] is not True:                           # §4.3
         raise LiveRefused("the paid project / key is not confirmed")
-    if approval["corpus_sha256"] != hashlib.sha256(corpus_bytes).hexdigest():   # §4.6 data scope
+    if approval["corpus_sha256"] != sha256_bytes(corpus_bytes):                 # §4.6 data scope
         raise LiveRefused("corpus hash differs from the approved data scope")
     identity = runtime_identity()
     for key in ("model", "measured_system", "runner_sha256", "paired_harness_sha256", "scorer_sha256"):   # §4.2
@@ -1043,7 +1047,7 @@ def evaluate(corpus_path: Path, out_path: Path, approval: dict[str, Any] | None,
     klass = ("OFFLINE_DETERMINISTIC_FIXTURE_TEST" if not live else "INDEPENDENT_HYBRID_EVALUATION" if study == "H-1"
              else "LIVE_DEVELOPMENT_PILOT")                                       # review MINOR-4: H-1 passed its gate
     emit({"type": "header", "study": study, "measurement_class": klass,
-          "corpus_sha256": hashlib.sha256(corpus_bytes).hexdigest(),
+          "corpus_sha256": sha256_bytes(corpus_bytes),
           "runtime_identity": identity})
     budget = _pilot_budget(approval, global_budget) if live else None
     gemini.set_budget(budget)

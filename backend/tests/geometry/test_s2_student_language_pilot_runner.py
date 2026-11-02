@@ -1268,3 +1268,19 @@ def test_c21_registered_approval_templates_bind_current_runtime_identity_and_sta
         }
         with pytest.raises(R.LiveRefused, match="runner_sha256"):
             R.check_approval_terms(cbytes, stale)
+
+
+def test_sha256_file_and_approval_terms_are_invariant_under_windows_crlf_checkout(tmp_path):
+    lf_py = tmp_path / "runner_lf.py"
+    crlf_py = tmp_path / "runner_crlf.py"
+    lf_py.write_bytes(b"def f():\n    return 1\n")
+    crlf_py.write_bytes(b"def f():\r\n    return 1\r\n")
+    assert R.sha256_file(lf_py) == R.sha256_file(crlf_py)
+    assert R.P.sha256_file(lf_py) == R.P.sha256_file(crlf_py)
+
+    specs = R.default_c21_pilot_specs()
+    k1_corpus_lf = Path(specs["K-1"]["corpus_path"]).read_bytes().replace(b"\r\n", b"\n")
+    k1_corpus_crlf = k1_corpus_lf.replace(b"\n", b"\r\n")
+    k1_tmpl = json.loads(Path(specs["K-1"]["template_path"]).read_text(encoding="utf-8"))
+    k1_approved = {k: v for k, v in k1_tmpl.items() if k != "owner_decision"} | {"paid_project_confirmed": True}
+    assert R.check_approval_terms(k1_corpus_crlf, k1_approved)["pilot"] == "K-1"

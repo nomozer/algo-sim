@@ -64,7 +64,7 @@ class LiveRefused(RuntimeError):
 
 
 def sha256_bytes(data: bytes) -> str:
-    return hashlib.sha256(data).hexdigest()
+    return hashlib.sha256(data.replace(b"\r\n", b"\n")).hexdigest()
 
 
 def sha256_file(path: Path) -> str:
@@ -160,7 +160,7 @@ def runtime_identity() -> dict[str, str]:
     from app.ai import gemini
     skills = hashlib.sha256()
     for p in sorted((BACKEND / "app" / "ai" / "skills").glob("*.md")):
-        skills.update(p.name.encode() + b"\0" + p.read_bytes())
+        skills.update(p.name.encode() + b"\0" + p.read_bytes().replace(b"\r\n", b"\n"))
     cache = re.search(r'^CACHE_VERSION = "([^"]+)"', (BACKEND / "app" / "main.py").read_text(encoding="utf-8"), re.M)
     return {"measured_system": F.measured_system_hash()[0], "cache_version": cache.group(1) if cache else "UNKNOWN",
             "model": gemini.MODEL, "skills_sha256": skills.hexdigest(), "harness_sha256": sha256_file(Path(__file__))}
